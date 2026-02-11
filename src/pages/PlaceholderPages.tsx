@@ -33,13 +33,6 @@ export const FindCare = () => (
   />
 );
 
-export const HealthMap = () => (
-  <PlaceholderPage
-    title="Interactive Health Map"
-    description="Explore healthcare facilities, shortage areas, and community health data across all 83 Michigan counties."
-  />
-);
-
 export const FinancialHelp = () => (
   <PlaceholderPage
     title="Financial Assistance Hub"
