@@ -6,9 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import HealthMapPage from "./pages/HealthMapPage";
 import {
   FindCare,
-  HealthMap,
   FinancialHelp,
   QualityRatings,
   Conditions,
@@ -35,7 +35,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/find-care" element={<FindCare />} />
-            <Route path="/health-map" element={<HealthMap />} />
+            <Route path="/health-map" element={<HealthMapPage />} />
             <Route path="/financial-help" element={<FinancialHelp />} />
             <Route path="/quality" element={<QualityRatings />} />
             <Route path="/conditions" element={<Conditions />} />
