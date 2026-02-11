@@ -8,10 +8,10 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import HealthMapPage from "./pages/HealthMapPage";
 import AboutPage from "./pages/AboutPage";
+import FindCarePage from "./pages/FindCarePage";
+import FinancialHelpPage from "./pages/FinancialHelpPage";
+import QualityRatingsPage from "./pages/QualityRatingsPage";
 import {
-  FindCare,
-  FinancialHelp,
-  QualityRatings,
   Conditions,
   Resources,
   News,
@@ -34,10 +34,10 @@ const App = () => (
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/find-care" element={<FindCare />} />
+            <Route path="/find-care" element={<FindCarePage />} />
             <Route path="/health-map" element={<HealthMapPage />} />
-            <Route path="/financial-help" element={<FinancialHelp />} />
-            <Route path="/quality" element={<QualityRatings />} />
+            <Route path="/financial-help" element={<FinancialHelpPage />} />
+            <Route path="/quality" element={<QualityRatingsPage />} />
             <Route path="/conditions" element={<Conditions />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/news" element={<News />} />

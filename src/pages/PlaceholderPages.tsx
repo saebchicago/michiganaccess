@@ -26,27 +26,6 @@ const PlaceholderPage = ({ title, description }: PlaceholderPageProps) => (
   </Layout>
 );
 
-export const FindCare = () => (
-  <PlaceholderPage
-    title="Find Care Near You"
-    description="Search doctors, hospitals, and urgent care by location, specialty, quality ratings, and insurance accepted."
-  />
-);
-
-export const FinancialHelp = () => (
-  <PlaceholderPage
-    title="Financial Assistance Hub"
-    description="Find free and reduced-cost care, insurance enrollment help, prescription assistance, and social services."
-  />
-);
-
-export const QualityRatings = () => (
-  <PlaceholderPage
-    title="Quality & Safety Ratings"
-    description="Compare hospitals and providers using independent safety grades, clinical quality metrics, and patient experience scores."
-  />
-);
-
 export const Conditions = () => (
   <PlaceholderPage title="Health Conditions" description="Evidence-based health information, treatment options, and care pathways for major conditions." />
 );
