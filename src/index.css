@@ -173,3 +173,14 @@
 .leaflet-control {
   z-index: 41 !important;
 }
+
+/* Print styles for site report */
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print\:hidden { display: none !important; }
+  .print\:block { display: block !important; }
+  @page { margin: 0.5in; size: letter; }
+  section { break-inside: avoid-page; }
+  table { font-size: 9px; }
+  tr { break-inside: avoid; }
+}
