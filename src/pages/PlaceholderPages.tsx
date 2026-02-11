@@ -82,7 +82,3 @@ export const Learn = () => (
 export const HealthData = () => (
   <PlaceholderPage title="Michigan Health Data Dashboard" description="Interactive dashboards showing health trends, access indicators, and equity metrics." />
 );
-
-export const About = () => (
-  <PlaceholderPage title="About & How to Use" description="Our mission, methodology, data sources, and how we rank healthcare providers." />
-);
