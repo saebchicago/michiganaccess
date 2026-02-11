@@ -14,7 +14,277 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      facilities: {
+        Row: {
+          accepting_new_patients: boolean | null
+          address: string
+          city: string
+          county: string
+          created_at: string
+          digital_capabilities: Json | null
+          facility_type: string
+          hours: string | null
+          id: string
+          insurance_accepted: string[] | null
+          is_blue_distinction: boolean | null
+          is_magnet: boolean | null
+          joint_commission: boolean | null
+          languages: string[] | null
+          latitude: number
+          leapfrog_grade: string | null
+          longitude: number
+          name: string
+          phone: string | null
+          public_transit: boolean | null
+          quality_score: number | null
+          services: string[] | null
+          specialties: string[] | null
+          state: string
+          system_affiliation: string | null
+          telehealth_available: boolean | null
+          updated_at: string
+          walk_in: boolean | null
+          website: string | null
+          wheelchair_accessible: boolean | null
+          zip: string
+        }
+        Insert: {
+          accepting_new_patients?: boolean | null
+          address: string
+          city: string
+          county: string
+          created_at?: string
+          digital_capabilities?: Json | null
+          facility_type?: string
+          hours?: string | null
+          id?: string
+          insurance_accepted?: string[] | null
+          is_blue_distinction?: boolean | null
+          is_magnet?: boolean | null
+          joint_commission?: boolean | null
+          languages?: string[] | null
+          latitude: number
+          leapfrog_grade?: string | null
+          longitude: number
+          name: string
+          phone?: string | null
+          public_transit?: boolean | null
+          quality_score?: number | null
+          services?: string[] | null
+          specialties?: string[] | null
+          state?: string
+          system_affiliation?: string | null
+          telehealth_available?: boolean | null
+          updated_at?: string
+          walk_in?: boolean | null
+          website?: string | null
+          wheelchair_accessible?: boolean | null
+          zip: string
+        }
+        Update: {
+          accepting_new_patients?: boolean | null
+          address?: string
+          city?: string
+          county?: string
+          created_at?: string
+          digital_capabilities?: Json | null
+          facility_type?: string
+          hours?: string | null
+          id?: string
+          insurance_accepted?: string[] | null
+          is_blue_distinction?: boolean | null
+          is_magnet?: boolean | null
+          joint_commission?: boolean | null
+          languages?: string[] | null
+          latitude?: number
+          leapfrog_grade?: string | null
+          longitude?: number
+          name?: string
+          phone?: string | null
+          public_transit?: boolean | null
+          quality_score?: number | null
+          services?: string[] | null
+          specialties?: string[] | null
+          state?: string
+          system_affiliation?: string | null
+          telehealth_available?: boolean | null
+          updated_at?: string
+          walk_in?: boolean | null
+          website?: string | null
+          wheelchair_accessible?: boolean | null
+          zip?: string
+        }
+        Relationships: []
+      }
+      financial_programs: {
+        Row: {
+          application_url: string | null
+          coverage_area: string | null
+          created_at: string
+          description: string | null
+          eligibility_criteria: Json | null
+          fpl_threshold: number | null
+          how_to_apply: string | null
+          id: string
+          is_active: boolean | null
+          organization: string | null
+          phone: string | null
+          program_name: string
+          program_type: string
+          services_covered: string[] | null
+        }
+        Insert: {
+          application_url?: string | null
+          coverage_area?: string | null
+          created_at?: string
+          description?: string | null
+          eligibility_criteria?: Json | null
+          fpl_threshold?: number | null
+          how_to_apply?: string | null
+          id?: string
+          is_active?: boolean | null
+          organization?: string | null
+          phone?: string | null
+          program_name: string
+          program_type: string
+          services_covered?: string[] | null
+        }
+        Update: {
+          application_url?: string | null
+          coverage_area?: string | null
+          created_at?: string
+          description?: string | null
+          eligibility_criteria?: Json | null
+          fpl_threshold?: number | null
+          how_to_apply?: string | null
+          id?: string
+          is_active?: boolean | null
+          organization?: string | null
+          phone?: string | null
+          program_name?: string
+          program_type?: string
+          services_covered?: string[] | null
+        }
+        Relationships: []
+      }
+      providers: {
+        Row: {
+          accepting_new_patients: boolean | null
+          board_certified: boolean | null
+          created_at: string
+          facility_id: string | null
+          first_name: string
+          gender: string | null
+          id: string
+          languages: string[] | null
+          last_name: string
+          medical_school: string | null
+          patient_rating: number | null
+          photo_url: string | null
+          specialty: string
+          subspecialty: string | null
+          telehealth_available: boolean | null
+          title: string | null
+          years_experience: number | null
+        }
+        Insert: {
+          accepting_new_patients?: boolean | null
+          board_certified?: boolean | null
+          created_at?: string
+          facility_id?: string | null
+          first_name: string
+          gender?: string | null
+          id?: string
+          languages?: string[] | null
+          last_name: string
+          medical_school?: string | null
+          patient_rating?: number | null
+          photo_url?: string | null
+          specialty: string
+          subspecialty?: string | null
+          telehealth_available?: boolean | null
+          title?: string | null
+          years_experience?: number | null
+        }
+        Update: {
+          accepting_new_patients?: boolean | null
+          board_certified?: boolean | null
+          created_at?: string
+          facility_id?: string | null
+          first_name?: string
+          gender?: string | null
+          id?: string
+          languages?: string[] | null
+          last_name?: string
+          medical_school?: string | null
+          patient_rating?: number | null
+          photo_url?: string | null
+          specialty?: string
+          subspecialty?: string | null
+          telehealth_available?: boolean | null
+          title?: string | null
+          years_experience?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "providers_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "facilities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quality_metrics: {
+        Row: {
+          data_source: string | null
+          facility_id: string
+          id: string
+          metric_name: string
+          metric_type: string
+          national_average: number | null
+          period: string | null
+          state_average: number | null
+          unit: string | null
+          updated_at: string
+          value: number | null
+        }
+        Insert: {
+          data_source?: string | null
+          facility_id: string
+          id?: string
+          metric_name: string
+          metric_type: string
+          national_average?: number | null
+          period?: string | null
+          state_average?: number | null
+          unit?: string | null
+          updated_at?: string
+          value?: number | null
+        }
+        Update: {
+          data_source?: string | null
+          facility_id?: string
+          id?: string
+          metric_name?: string
+          metric_type?: string
+          national_average?: number | null
+          period?: string | null
+          state_average?: number | null
+          unit?: string | null
+          updated_at?: string
+          value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quality_metrics_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "facilities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
