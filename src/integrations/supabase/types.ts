@@ -14,6 +14,87 @@ export type Database = {
   }
   public: {
     Tables: {
+      community_resources: {
+        Row: {
+          accepts_insurance: boolean | null
+          address: string | null
+          city: string
+          county: string
+          created_at: string
+          description: string | null
+          eligibility_notes: string | null
+          hours: string | null
+          id: string
+          is_active: boolean | null
+          is_free: boolean | null
+          languages: string[] | null
+          latitude: number | null
+          longitude: number | null
+          organization: string | null
+          phone: string | null
+          resource_name: string
+          resource_type: string
+          services_offered: string[] | null
+          state: string
+          updated_at: string
+          walk_in_available: boolean | null
+          website: string | null
+          zip: string | null
+        }
+        Insert: {
+          accepts_insurance?: boolean | null
+          address?: string | null
+          city: string
+          county: string
+          created_at?: string
+          description?: string | null
+          eligibility_notes?: string | null
+          hours?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_free?: boolean | null
+          languages?: string[] | null
+          latitude?: number | null
+          longitude?: number | null
+          organization?: string | null
+          phone?: string | null
+          resource_name: string
+          resource_type: string
+          services_offered?: string[] | null
+          state?: string
+          updated_at?: string
+          walk_in_available?: boolean | null
+          website?: string | null
+          zip?: string | null
+        }
+        Update: {
+          accepts_insurance?: boolean | null
+          address?: string | null
+          city?: string
+          county?: string
+          created_at?: string
+          description?: string | null
+          eligibility_notes?: string | null
+          hours?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_free?: boolean | null
+          languages?: string[] | null
+          latitude?: number | null
+          longitude?: number | null
+          organization?: string | null
+          phone?: string | null
+          resource_name?: string
+          resource_type?: string
+          services_offered?: string[] | null
+          state?: string
+          updated_at?: string
+          walk_in_available?: boolean | null
+          website?: string | null
+          zip?: string | null
+        }
+        Relationships: []
+      }
       facilities: {
         Row: {
           accepting_new_patients: boolean | null
