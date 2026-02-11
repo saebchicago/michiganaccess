@@ -11,9 +11,9 @@ import AboutPage from "./pages/AboutPage";
 import FindCarePage from "./pages/FindCarePage";
 import FinancialHelpPage from "./pages/FinancialHelpPage";
 import QualityRatingsPage from "./pages/QualityRatingsPage";
+import CommunityResourcesPage from "./pages/CommunityResourcesPage";
+import HealthConditionsPage from "./pages/HealthConditionsPage";
 import {
-  Conditions,
-  Resources,
   News,
   Costs,
   Wellness,
@@ -38,8 +38,8 @@ const App = () => (
             <Route path="/health-map" element={<HealthMapPage />} />
             <Route path="/financial-help" element={<FinancialHelpPage />} />
             <Route path="/quality" element={<QualityRatingsPage />} />
-            <Route path="/conditions" element={<Conditions />} />
-            <Route path="/resources" element={<Resources />} />
+            <Route path="/conditions" element={<HealthConditionsPage />} />
+            <Route path="/resources" element={<CommunityResourcesPage />} />
             <Route path="/news" element={<News />} />
             <Route path="/costs" element={<Costs />} />
             <Route path="/wellness" element={<Wellness />} />

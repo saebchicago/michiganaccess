@@ -15,6 +15,8 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { Separator } from "@/components/ui/separator";
 import { useFacilities, type Facility } from "@/hooks/useFacilities";
 import { Link } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ProviderDirectory from "@/components/findcare/ProviderDirectory";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -170,6 +172,17 @@ export default function FindCarePage() {
       </section>
 
       <div className="container py-8">
+        <Tabs defaultValue="facilities" className="mb-6">
+          <TabsList>
+            <TabsTrigger value="facilities"><Building2 className="mr-1.5 h-4 w-4" />Facilities</TabsTrigger>
+            <TabsTrigger value="providers"><Stethoscope className="mr-1.5 h-4 w-4" />Providers</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="providers" className="mt-4">
+            <ProviderDirectory facilities={facilities} />
+          </TabsContent>
+
+          <TabsContent value="facilities" className="mt-4">
         <div className="flex gap-8">
           {/* Desktop Sidebar */}
           <aside className="hidden w-64 flex-shrink-0 lg:block">
@@ -387,6 +400,8 @@ export default function FindCarePage() {
             )}
           </div>
         </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </Layout>
   );
