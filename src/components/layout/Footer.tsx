@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Phone, ExternalLink } from "lucide-react";
 
@@ -40,7 +41,7 @@ const footerSections = [
   },
 ];
 
-const Footer = () => (
+const Footer = forwardRef(() => (
   <footer className="border-t border-border bg-muted/50">
     {/* Crisis Banner */}
     <div className="bg-michigan-coral/10 border-b border-michigan-coral/20">
@@ -126,6 +127,6 @@ const Footer = () => (
       </div>
     </div>
   </footer>
-);
+));
 
 export default Footer;
