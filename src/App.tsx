@@ -13,6 +13,7 @@ import FinancialHelpPage from "./pages/FinancialHelpPage";
 import QualityRatingsPage from "./pages/QualityRatingsPage";
 import CommunityResourcesPage from "./pages/CommunityResourcesPage";
 import HealthConditionsPage from "./pages/HealthConditionsPage";
+import SiteReportPage from "./pages/SiteReportPage";
 import {
   News,
   Costs,
@@ -47,6 +48,7 @@ const App = () => (
             <Route path="/support" element={<Support />} />
             <Route path="/learn" element={<Learn />} />
             <Route path="/data" element={<HealthData />} />
+            <Route path="/site-report" element={<SiteReportPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
