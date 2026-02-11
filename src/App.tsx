@@ -7,6 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import HealthMapPage from "./pages/HealthMapPage";
+import AboutPage from "./pages/AboutPage";
 import {
   FindCare,
   FinancialHelp,
@@ -20,7 +21,6 @@ import {
   Support,
   Learn,
   HealthData,
-  About,
 } from "./pages/PlaceholderPages";
 
 const queryClient = new QueryClient();
@@ -47,7 +47,7 @@ const App = () => (
             <Route path="/support" element={<Support />} />
             <Route path="/learn" element={<Learn />} />
             <Route path="/data" element={<HealthData />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>

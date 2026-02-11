@@ -73,8 +73,29 @@ function buildPopupContent(facility: Facility): string {
   const qualityLabel = getQualityLabel(facility.quality_score);
   const typeLabel = FACILITY_TYPE_LABELS[facility.facility_type] || facility.facility_type;
 
+  // Choice architecture labels
+  const choiceLabels: string[] = [];
+  if (facility.facility_type === 'fqhc') {
+    choiceLabels.push('<div style="background:#2D5F3F;color:#fff;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;margin-bottom:6px;">✅ No one turned away · Sliding scale fees</div>');
+  }
+  if (facility.services && facility.services.length >= 7) {
+    choiceLabels.push('<div style="background:#0A4C95;color:#fff;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;margin-bottom:6px;">🏥 Comprehensive care at this location</div>');
+  }
+  if (facility.quality_score && facility.quality_score >= 90 && facility.is_magnet && facility.is_blue_distinction) {
+    choiceLabels.push('<div style="background:#F4A460;color:#fff;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;margin-bottom:6px;">⭐ Best overall match nearby</div>');
+  }
+
+  // Digital access summary
+  const dc = facility.digital_capabilities as Record<string, boolean> | null;
+  const digitalFeatures: string[] = [];
+  if (dc?.online_scheduling) digitalFeatures.push('Schedule Online');
+  if (dc?.patient_portal) digitalFeatures.push('Patient Portal');
+  if (facility.telehealth_available) digitalFeatures.push('Telehealth');
+  if (dc?.rx_refills) digitalFeatures.push('Rx Refills Online');
+
   return `
-    <div style="min-width:260px;max-width:320px;font-family:system-ui,sans-serif;">
+    <div style="min-width:280px;max-width:340px;font-family:system-ui,sans-serif;">
+      ${choiceLabels.join('')}
       <div style="font-size:15px;font-weight:700;color:#003B5C;margin-bottom:2px;">${facility.name}</div>
       ${facility.system_affiliation ? `<div style="font-size:12px;color:#64748b;margin-bottom:6px;">${facility.system_affiliation}</div>` : ''}
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
@@ -84,14 +105,19 @@ function buildPopupContent(facility: Facility): string {
       ${badges.length ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">${badges.join('')}</div>` : ''}
       <div style="font-size:12px;color:#334155;margin-bottom:4px;">📍 ${facility.address}, ${facility.city}, MI ${facility.zip}</div>
       ${facility.phone ? `<div style="font-size:12px;color:#334155;margin-bottom:4px;">📞 <a href="tel:${facility.phone}" style="color:#0A4C95;">${facility.phone}</a></div>` : ''}
-      ${facility.telehealth_available ? '<div style="font-size:11px;color:#00A3A1;margin-bottom:4px;">📱 Telehealth Available</div>' : ''}
+      ${digitalFeatures.length > 0 ? `
+        <div style="margin:6px 0;display:flex;flex-wrap:wrap;gap:3px;">
+          ${digitalFeatures.map(f => `<span style="background:#e0f7f7;color:#00A3A1;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:500;">🖥️ ${f}</span>`).join('')}
+        </div>` : ''}
       ${facility.services && facility.services.length > 0 ? `
-        <div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px;">
+        <div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:3px;">
           ${facility.services.slice(0, 5).map(s => `<span style="background:#f1f5f9;color:#475569;padding:1px 6px;border-radius:3px;font-size:10px;">${s}</span>`).join('')}
           ${facility.services.length > 5 ? `<span style="color:#64748b;font-size:10px;">+${facility.services.length - 5} more</span>` : ''}
         </div>` : ''}
+      ${facility.languages && facility.languages.length > 1 ? `
+        <div style="font-size:10px;color:#64748b;margin-top:4px;">🌐 Languages: ${facility.languages.join(', ')}</div>` : ''}
       ${facility.website ? `<div style="margin-top:8px;"><a href="${facility.website}" target="_blank" rel="noopener" style="color:#0A4C95;font-size:12px;font-weight:600;text-decoration:none;">Visit Website →</a></div>` : ''}
-      <div style="margin-top:4px;font-size:9px;color:#94a3b8;">Quality scores are demo data for prototype purposes. Sources: CMS, Leapfrog, ANCC (demo)</div>
+      <div style="margin-top:6px;border-top:1px solid #e2e8f0;padding-top:4px;font-size:9px;color:#94a3b8;">Quality scores are demo data. Sources: CMS, Leapfrog, ANCC (demo) · <a href="/about#methodology" style="color:#0A4C95;">How we rank →</a></div>
     </div>
   `;
 }

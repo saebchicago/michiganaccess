@@ -163,3 +163,13 @@
     box-shadow: 0 12px 40px -8px hsl(var(--michigan-blue) / 0.2);
   }
 }
+
+/* Leaflet map z-index overrides so sheets/dialogs render above map */
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 40 !important;
+}
+.leaflet-control {
+  z-index: 41 !important;
+}
