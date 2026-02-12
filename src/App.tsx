@@ -14,15 +14,13 @@ import QualityRatingsPage from "./pages/QualityRatingsPage";
 import CommunityResourcesPage from "./pages/CommunityResourcesPage";
 import HealthConditionsPage from "./pages/HealthConditionsPage";
 import SiteReportPage from "./pages/SiteReportPage";
-import {
-  News,
-  Costs,
-  Wellness,
-  ClinicalTrials,
-  Support,
-  Learn,
-  HealthData,
-} from "./pages/PlaceholderPages";
+import HealthNewsPage from "./pages/HealthNewsPage";
+import CostTransparencyPage from "./pages/CostTransparencyPage";
+import PreventionWellnessPage from "./pages/PreventionWellnessPage";
+import ClinicalTrialsPage from "./pages/ClinicalTrialsPage";
+import SupportGroupsPage from "./pages/SupportGroupsPage";
+import HealthDataDashboardPage from "./pages/HealthDataDashboardPage";
+import { Learn } from "./pages/PlaceholderPages";
 
 const queryClient = new QueryClient();
 
@@ -41,13 +39,13 @@ const App = () => (
             <Route path="/quality" element={<QualityRatingsPage />} />
             <Route path="/conditions" element={<HealthConditionsPage />} />
             <Route path="/resources" element={<CommunityResourcesPage />} />
-            <Route path="/news" element={<News />} />
-            <Route path="/costs" element={<Costs />} />
-            <Route path="/wellness" element={<Wellness />} />
-            <Route path="/clinical-trials" element={<ClinicalTrials />} />
-            <Route path="/support" element={<Support />} />
+            <Route path="/news" element={<HealthNewsPage />} />
+            <Route path="/costs" element={<CostTransparencyPage />} />
+            <Route path="/wellness" element={<PreventionWellnessPage />} />
+            <Route path="/clinical-trials" element={<ClinicalTrialsPage />} />
+            <Route path="/support" element={<SupportGroupsPage />} />
             <Route path="/learn" element={<Learn />} />
-            <Route path="/data" element={<HealthData />} />
+            <Route path="/data" element={<HealthDataDashboardPage />} />
             <Route path="/site-report" element={<SiteReportPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="*" element={<NotFound />} />
