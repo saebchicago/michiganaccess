@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Heart, ChevronDown } from "lucide-react";
+import { Menu, X, Heart, ChevronDown, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
@@ -30,8 +30,19 @@ const navLinks = [
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [moreOpen, setMoreOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handlePrintReport = () => {
+    if (location.pathname === "/site-report") {
+      window.print();
+    } else {
+      navigate("/site-report");
+      // Wait for page to load then print
+      setTimeout(() => window.print(), 2000);
+    }
+  };
 
   return (
     <motion.header
@@ -110,7 +121,16 @@ const Header = () => {
         </nav>
 
         {/* CTA + Mobile */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <Button
+            size="icon"
+            onClick={handlePrintReport}
+            className="bg-primary hover:bg-primary/90 h-9 w-9 rounded-lg"
+            title="Download Site Report as PDF"
+          >
+            <Download className="h-4 w-4" />
+            <span className="sr-only">Download PDF Report</span>
+          </Button>
           <Button size="sm" className="hidden sm:flex bg-gradient-michigan hover:opacity-90 transition-opacity">
             Get Help Now
           </Button>
