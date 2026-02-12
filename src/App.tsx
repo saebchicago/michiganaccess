@@ -20,7 +20,7 @@ import PreventionWellnessPage from "./pages/PreventionWellnessPage";
 import ClinicalTrialsPage from "./pages/ClinicalTrialsPage";
 import SupportGroupsPage from "./pages/SupportGroupsPage";
 import HealthDataDashboardPage from "./pages/HealthDataDashboardPage";
-import { Learn } from "./pages/PlaceholderPages";
+import LearnPage from "./pages/LearnPage";
 
 const queryClient = new QueryClient();
 
@@ -44,7 +44,7 @@ const App = () => (
             <Route path="/wellness" element={<PreventionWellnessPage />} />
             <Route path="/clinical-trials" element={<ClinicalTrialsPage />} />
             <Route path="/support" element={<SupportGroupsPage />} />
-            <Route path="/learn" element={<Learn />} />
+            <Route path="/learn" element={<LearnPage />} />
             <Route path="/data" element={<HealthDataDashboardPage />} />
             <Route path="/site-report" element={<SiteReportPage />} />
             <Route path="/about" element={<AboutPage />} />
