@@ -22,6 +22,7 @@ const navLinks = [
       { label: "Support Groups", href: "/support" },
       { label: "Health Education", href: "/learn" },
       { label: "Health Data", href: "/data" },
+      { label: "Site Report", href: "/site-report" },
       { label: "About", href: "/about" },
     ],
   },

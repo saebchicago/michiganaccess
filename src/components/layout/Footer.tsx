@@ -37,6 +37,7 @@ const footerSections = [
       { label: "Cost Transparency", href: "/costs" },
       { label: "Data Sources", href: "/about#data-sources" },
       { label: "Methodology", href: "/about#methodology" },
+      { label: "Site Report", href: "/site-report" },
     ],
   },
 ];
