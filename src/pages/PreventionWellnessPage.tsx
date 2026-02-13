@@ -5,6 +5,8 @@ import {
   Calendar, CheckCircle2, Clock, MapPin, ExternalLink, Dumbbell, Sun
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import TransportationCallout from "@/components/shared/TransportationCallout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -86,6 +88,7 @@ export default function PreventionWellnessPage() {
     <Layout>
       <section className="bg-gradient-to-b from-michigan-forest/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
+          <Breadcrumbs items={[{ label: "Prevention & Wellness" }]} />
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
             <span className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest">
               Prevention & Wellness
@@ -231,6 +234,8 @@ export default function PreventionWellnessPage() {
             </div>
           </TabsContent>
         </Tabs>
+
+        <TransportationCallout />
 
         <Card className="border-border/50 bg-muted/30">
           <CardContent className="py-4">

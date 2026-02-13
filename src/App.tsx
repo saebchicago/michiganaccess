@@ -22,6 +22,7 @@ import SupportGroupsPage from "./pages/SupportGroupsPage";
 import HealthDataDashboardPage from "./pages/HealthDataDashboardPage";
 import LearnPage from "./pages/LearnPage";
 import TransportationPage from "./pages/TransportationPage";
+import ContactPage from "./pages/ContactPage";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
             <Route path="/learn" element={<LearnPage />} />
             <Route path="/data" element={<HealthDataDashboardPage />} />
             <Route path="/transportation" element={<TransportationPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/site-report" element={<SiteReportPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="*" element={<NotFound />} />

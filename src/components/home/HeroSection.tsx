@@ -57,7 +57,7 @@ const HeroSection = () => {
             transition={{ delay: 0.4 }}
             className="mb-10 text-lg text-primary-foreground/80 md:text-xl"
           >
-            Find quality care. Access financial help. Navigate your health journey.
+            Resources for Health, Safety, and Transportation across Michigan.
           </motion.p>
 
           {/* Search Bar */}

@@ -5,6 +5,8 @@ import {
   Baby, Ribbon, Activity, Shield, AlertTriangle, MessageCircle, ExternalLink
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import TransportationCallout from "@/components/shared/TransportationCallout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -138,6 +140,7 @@ export default function SupportGroupsPage() {
 
       <section className="bg-gradient-to-b from-michigan-teal/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
+          <Breadcrumbs items={[{ label: "Support Groups" }]} />
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
             <span className="mb-4 inline-block rounded-full bg-michigan-teal/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-teal">
               Support & Community
@@ -245,6 +248,8 @@ export default function SupportGroupsPage() {
             ))}
           </div>
         </motion.section>
+
+        <TransportationCallout />
 
         <Card className="border-border/50 bg-muted/30">
           <CardContent className="py-4">
