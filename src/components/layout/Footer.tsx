@@ -9,6 +9,7 @@ const footerSections = [
       { label: "Find Care Near You", href: "/find-care" },
       { label: "Financial Assistance", href: "/financial-help" },
       { label: "Community Resources", href: "/resources" },
+      { label: "Transportation & Safety", href: "/transportation" },
       { label: "Health Map", href: "/health-map" },
     ],
   },
@@ -64,10 +65,10 @@ const Footer = forwardRef(() => (
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-michigan">
               <Heart className="h-4 w-4 text-primary-foreground" fill="currentColor" />
             </div>
-            <span className="text-sm font-bold text-foreground">Michigan Health</span>
+            <span className="text-sm font-bold text-foreground">Michigan Access</span>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            A citizen-driven initiative to improve health access for all Michigan families. Independent, non-commercial,
+            A citizen-driven initiative to improve healthcare, education, and transportation access for all Michigan families. Independent, non-commercial,
             data-driven.
           </p>
           <div className="mt-4 flex items-center gap-1.5 rounded-md bg-michigan-forest/10 px-3 py-2">

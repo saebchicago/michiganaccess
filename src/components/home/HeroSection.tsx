@@ -48,7 +48,7 @@ const HeroSection = () => {
             transition={{ delay: 0.3 }}
             className="mb-6 text-4xl font-bold leading-tight tracking-tight text-primary-foreground md:text-5xl lg:text-6xl"
           >
-            Your Guide to Healthcare in Michigan
+            Your Guide to Resources in Michigan
           </motion.h1>
 
           <motion.p

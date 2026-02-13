@@ -15,6 +15,7 @@ const navLinks = [
     children: [
       { label: "Health Conditions", href: "/conditions" },
       { label: "Community Resources", href: "/resources" },
+      { label: "Transportation & Safety", href: "/transportation" },
       { label: "Health News", href: "/news" },
       { label: "Cost Transparency", href: "/costs" },
       { label: "Prevention & Wellness", href: "/wellness" },
@@ -58,8 +59,8 @@ const Header = () => {
             <Heart className="h-5 w-5 text-primary-foreground" fill="currentColor" />
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-bold leading-tight text-foreground">Michigan Health</span>
-            <span className="text-[10px] font-medium leading-tight text-muted-foreground">Access Platform</span>
+            <span className="text-sm font-bold leading-tight text-foreground">Michigan Access</span>
+            <span className="text-[10px] font-medium leading-tight text-muted-foreground">Resources for Every Resident</span>
           </div>
         </Link>
 
