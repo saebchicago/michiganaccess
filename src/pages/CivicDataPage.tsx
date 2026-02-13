@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Landmark, FileText, Users, DollarSign, Vote, Calendar, ExternalLink, TrendingUp, BarChart3, Scale, Building2 } from "lucide-react";
+import { Landmark, FileText, Users, DollarSign, Vote, Calendar, ExternalLink, TrendingUp, BarChart3, Scale, Building2, BookOpen, Search, Globe } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -20,13 +20,13 @@ const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 
 // --- Demo Data ---
 const budgetData = [
-  { dept: "Education", amount: 16.8, pct: 28 },
-  { dept: "Health & Human Services", amount: 10.2, pct: 17 },
-  { dept: "Transportation", amount: 5.8, pct: 10 },
-  { dept: "Corrections", amount: 4.1, pct: 7 },
-  { dept: "Environment", amount: 2.3, pct: 4 },
-  { dept: "Public Safety", amount: 2.1, pct: 3 },
-  { dept: "Other", amount: 18.7, pct: 31 },
+  { dept: "Education", shortLabel: "Education", amount: 16.8, pct: 28 },
+  { dept: "Health & Human Services", shortLabel: "Health/HHS", amount: 10.2, pct: 17 },
+  { dept: "Transportation", shortLabel: "Transport", amount: 5.8, pct: 10 },
+  { dept: "Corrections", shortLabel: "Corrections", amount: 4.1, pct: 7 },
+  { dept: "Environment", shortLabel: "Environment", amount: 2.3, pct: 4 },
+  { dept: "Public Safety", shortLabel: "Pub. Safety", amount: 2.1, pct: 3 },
+  { dept: "Other", shortLabel: "Other", amount: 18.7, pct: 31 },
 ];
 
 const budgetPie = budgetData.map((d, i) => ({
@@ -144,10 +144,10 @@ const CivicDataPage = () => {
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={350}>
-                        <BarChart data={budgetData} layout="vertical" margin={{ left: 30 }}>
+                        <BarChart data={budgetData} layout="vertical" margin={{ left: 10, right: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 20%, 90%)" />
                           <XAxis type="number" unit="B" tickFormatter={(v) => `$${v}`} />
-                          <YAxis dataKey="dept" type="category" width={140} tick={{ fontSize: 11 }} />
+                          <YAxis dataKey="dept" type="category" width={160} tick={{ fontSize: 12 }} />
                           <Tooltip formatter={(v: number) => [`$${v}B`, "Spending"]} />
                           <Bar dataKey="amount" fill="hsl(209, 86%, 31%)" radius={[0, 4, 4, 0]} />
                         </BarChart>
@@ -163,16 +163,24 @@ const CivicDataPage = () => {
                       <CardDescription>Percentage breakdown of state spending</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <ResponsiveContainer width="100%" height={300}>
+                      <ResponsiveContainer width="100%" height={320}>
                         <PieChart>
-                          <Pie data={budgetPie} cx="50%" cy="50%" outerRadius={110} innerRadius={55} paddingAngle={2} dataKey="amount" label={({ dept, pct }) => `${dept}: ${pct}%`}>
+                          <Pie data={budgetPie} cx="50%" cy="50%" outerRadius={100} innerRadius={50} paddingAngle={2} dataKey="amount" label={({ shortLabel, pct }) => `${shortLabel} ${pct}%`} labelLine={{ strokeWidth: 1 }}>
                             {budgetPie.map((entry, i) => (
                               <Cell key={i} fill={entry.color} />
                             ))}
                           </Pie>
-                          <Tooltip formatter={(v: number) => `$${v}B`} />
+                          <Tooltip formatter={(v: number, _name: string, props: any) => [`$${v}B (${props.payload.pct}%)`, props.payload.dept]} />
                         </PieChart>
                       </ResponsiveContainer>
+                      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                        {budgetPie.map((d) => (
+                          <div key={d.dept} className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <span className="inline-block h-3 w-3 shrink-0 rounded-sm" style={{ backgroundColor: d.color }} />
+                            <span>{d.dept} ({d.pct}%)</span>
+                          </div>
+                        ))}
+                      </div>
                       <p className="mt-4 text-sm text-muted-foreground">
                         <strong>Education leads</strong> at 28% of the budget, followed by Health & Human Services at 17%.
                       </p>
@@ -389,7 +397,97 @@ const CivicDataPage = () => {
         </div>
       </section>
 
-      {/* Cross-references */}
+
+      {/* Open Data & Civic Engagement */}
+      <section className="border-t border-border bg-muted/30 py-12 md:py-16">
+        <div className="container">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="mx-auto max-w-4xl">
+            <motion.div variants={fadeUp} className="mb-8 text-center">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-michigan-teal/10 px-4 py-1.5">
+                <Globe className="h-4 w-4 text-michigan-teal" />
+                <span className="text-sm font-medium text-michigan-teal">Open Data & Transparency</span>
+              </div>
+              <h2 className="mb-2 text-2xl font-bold text-foreground md:text-3xl">How to Request Open Data</h2>
+              <p className="text-muted-foreground">
+                Michigan residents, journalists, researchers, and organizations all have the right to request government data. Here's how.
+              </p>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="grid gap-6 md:grid-cols-2">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <FileText className="h-5 w-5 text-michigan-teal" />
+                    Filing a FOIA Request
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm text-muted-foreground">
+                  <p>The <strong>Freedom of Information Act (FOIA)</strong> gives anyone the right to request records from any Michigan public body — no reason needed.</p>
+                  <ol className="list-decimal space-y-1 pl-5">
+                    <li><strong>Identify the agency</strong> that holds the data (state department, county, city, school district, etc.).</li>
+                    <li><strong>Write a specific request</strong> describing the records you want. Be as precise as possible.</li>
+                    <li><strong>Submit via email, mail, or online portal.</strong> Many agencies have FOIA coordinators listed on their websites.</li>
+                    <li><strong>Expect a response within 5 business days.</strong> The agency must acknowledge your request and provide a cost estimate if fees apply.</li>
+                  </ol>
+                  <p className="pt-2">
+                    <a href="https://www.michigan.gov/treasury/local/foil" target="_blank" rel="noopener" className="font-medium text-primary hover:underline">
+                      Michigan FOIA Guide & Templates <ExternalLink className="ml-1 inline h-3 w-3" />
+                    </a>
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Search className="h-5 w-5 text-michigan-teal" />
+                    Already-Open Data Portals
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3 text-sm text-muted-foreground">
+                  <p>Before filing a request, check if the data is already publicly available through these top resources:</p>
+                  <ul className="space-y-2">
+                    {[
+                      { name: "Michigan Open Data Portal", url: "https://data.michigan.gov", desc: "State government datasets — health, education, infrastructure, and more" },
+                      { name: "Data.gov", url: "https://data.gov", desc: "Federal open data including Michigan-specific datasets from EPA, HHS, DOT" },
+                      { name: "U.S. Census Bureau", url: "https://data.census.gov", desc: "Demographics, economics, housing data by county, city, and tract" },
+                      { name: "Michigan Legislature", url: "https://www.legislature.mi.gov", desc: "Bills, voting records, committee schedules, and session archives" },
+                      { name: "MiSchoolData", url: "https://www.mischooldata.org", desc: "K-12 school performance, enrollment, graduation rates" },
+                    ].map((r) => (
+                      <li key={r.name} className="flex flex-col">
+                        <a href={r.url} target="_blank" rel="noopener" className="font-medium text-primary hover:underline">
+                          {r.name} <ExternalLink className="ml-1 inline h-3 w-3" />
+                        </a>
+                        <span className="text-xs">{r.desc}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="mt-6">
+              <Card className="border-michigan-teal/20 bg-michigan-teal/5">
+                <CardContent className="flex flex-col gap-4 p-6 md:flex-row md:items-center">
+                  <BookOpen className="h-8 w-8 shrink-0 text-michigan-teal" />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground">Can't find the data you need?</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Contact the agency's FOIA coordinator directly, reach out to organizations like the <strong>Michigan Press Association</strong> or <strong>Reporters Committee for Freedom of the Press</strong> for guidance, or attend a public meeting to request data be made available proactively.
+                    </p>
+                  </div>
+                  <Button variant="outline" asChild>
+                    <a href="https://www.rcfp.org/open-government-guide/michigan/" target="_blank" rel="noopener">
+                      MI Open Gov Guide <ExternalLink className="ml-2 h-3 w-3" />
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       <section className="py-8">
         <div className="container space-y-4">
           <EnvironmentCallout />
