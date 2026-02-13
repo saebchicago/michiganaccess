@@ -10,6 +10,8 @@ import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, R
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import TransportationCallout from "@/components/shared/TransportationCallout";
+import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
+import CivicDataCallout from "@/components/shared/CivicDataCallout";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -476,9 +478,11 @@ const EnvironmentPage = () => {
         </div>
       </section>
 
-      {/* Cross-reference */}
+      {/* Cross-references */}
       <section className="py-8">
-        <div className="container">
+        <div className="container space-y-4">
+          <HealthSafetyCallout />
+          <CivicDataCallout />
           <TransportationCallout />
         </div>
       </section>

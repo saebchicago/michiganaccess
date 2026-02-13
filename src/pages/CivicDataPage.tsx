@@ -9,6 +9,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import EnvironmentCallout from "@/components/shared/EnvironmentCallout";
+import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -384,6 +386,14 @@ const CivicDataPage = () => {
               </motion.div>
             </TabsContent>
           </Tabs>
+        </div>
+      </section>
+
+      {/* Cross-references */}
+      <section className="py-8">
+        <div className="container space-y-4">
+          <EnvironmentCallout />
+          <HealthSafetyCallout />
         </div>
       </section>
 
