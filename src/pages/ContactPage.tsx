@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, CheckCircle2, Mail } from "lucide-react";
+import { Send, CheckCircle2, Mail, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,12 +21,25 @@ const subjects = ["General Inquiry", "Feedback", "Partnership", "Data Question"]
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.email.trim() || !form.subject || !form.message.trim()) return;
-    setSubmitted(true);
+    setSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-contact-email", {
+        body: form,
+      });
+      if (error) throw error;
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Contact form error:", err);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -86,8 +101,9 @@ export default function ContactPage() {
                     <Label htmlFor="contact-message">Message</Label>
                     <Textarea id="contact-message" placeholder="How can we help?" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} required maxLength={1000} rows={5} className="mt-1.5" />
                   </div>
-                  <Button type="submit" className="w-full bg-gradient-michigan hover:opacity-90" disabled={!form.name || !form.email || !form.subject || !form.message}>
-                    <Send className="mr-2 h-4 w-4" />Send Message
+                  <Button type="submit" className="w-full bg-gradient-michigan hover:opacity-90" disabled={sending || !form.name || !form.email || !form.subject || !form.message}>
+                    {sending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Send className="mr-2 h-4 w-4" />}
+                    {sending ? "Sending..." : "Send Message"}
                   </Button>
                 </form>
               </CardContent>
