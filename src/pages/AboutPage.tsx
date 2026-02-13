@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import {
   Shield, BarChart3, Globe, Users, Heart, Scale, Database,
   ExternalLink, BookOpen, Award, Target, Lightbulb, CheckCircle2,
@@ -117,16 +118,17 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-navy/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
+          <Breadcrumbs items={[{ label: "About" }]} />
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
             <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
-              About This Platform
+              About Michigan Access
             </span>
           </motion.div>
           <motion.h1 variants={fadeUp} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
-            Helping Michigan Families Navigate Healthcare
+            Helping Michigan Families Navigate Health, Safety & Transportation
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            An independent, data-driven civic resource built to improve health access and outcomes for all Michigan residents — regardless of income, insurance status, or background.
+            An independent, data-driven civic resource built to improve health, safety, and transportation access for all Michigan residents — regardless of income, insurance status, or background.
           </motion.p>
         </div>
       </section>

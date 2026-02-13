@@ -25,6 +25,7 @@ const navLinks = [
       { label: "Health Data", href: "/data" },
       { label: "Site Report", href: "/site-report" },
       { label: "About", href: "/about" },
+      { label: "Contact Us", href: "/contact" },
     ],
   },
 ];
@@ -60,7 +61,7 @@ const Header = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-bold leading-tight text-foreground">Michigan Access</span>
-            <span className="text-[10px] font-medium leading-tight text-muted-foreground">Resources for Every Resident</span>
+            <span className="text-[10px] font-medium leading-tight text-muted-foreground">Resources for Health, Safety & Transportation</span>
           </div>
         </Link>
 

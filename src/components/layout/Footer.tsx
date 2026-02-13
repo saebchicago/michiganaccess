@@ -39,6 +39,7 @@ const footerSections = [
       { label: "Data Sources", href: "/about#data-sources" },
       { label: "Methodology", href: "/about#methodology" },
       { label: "Site Report", href: "/site-report" },
+      { label: "Contact Us", href: "/contact" },
     ],
   },
 ];
@@ -68,8 +69,7 @@ const Footer = forwardRef(() => (
             <span className="text-sm font-bold text-foreground">Michigan Access</span>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            A citizen-driven initiative to improve healthcare, education, and transportation access for all Michigan families. Independent, non-commercial,
-            data-driven.
+            Resources for Health, Safety, and Transportation — helping Michigan families navigate healthcare, education, and community services. Independent, non-commercial, data-driven.
           </p>
           <div className="mt-4 flex items-center gap-1.5 rounded-md bg-michigan-forest/10 px-3 py-2">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-michigan-forest">
