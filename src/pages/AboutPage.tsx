@@ -138,7 +138,7 @@ export default function AboutPage() {
           <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8 lg:p-12">
             <h2 className="mb-4 text-2xl font-bold text-foreground">Our Mission</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Michigan Health Access Platform exists to help Michigan residents navigate the complex healthcare landscape, find quality care, access financial assistance, and make informed health decisions. We believe everyone deserves access to trustworthy health information and resources, regardless of income, insurance status, or background.
+              Michigan Access exists to help Michigan residents navigate healthcare, education, and transportation — finding quality care, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy resources, regardless of income, insurance status, or background.
             </p>
             <div className="mt-8 grid gap-6 sm:grid-cols-3">
               {[
