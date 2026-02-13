@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Hospital, DollarSign, BookOpen, Users } from "lucide-react";
+import { Hospital, DollarSign, BookOpen, Users, Bus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const actions = [
@@ -40,6 +40,15 @@ const actions = [
     bgClass: "bg-michigan-gold/10",
     iconClass: "text-michigan-gold",
   },
+  {
+    icon: Bus,
+    title: "Transportation & Safety",
+    description: "Public transit, school buses, AI safety cameras, accessible rides for seniors",
+    href: "/transportation",
+    color: "michigan-coral",
+    bgClass: "bg-michigan-coral/10",
+    iconClass: "text-michigan-coral",
+  },
 ];
 
 const container = {
@@ -62,7 +71,7 @@ const QuickActions = () => (
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-50px" }}
-        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5"
       >
         {actions.map((action) => (
           <motion.div key={action.title} variants={item}>
