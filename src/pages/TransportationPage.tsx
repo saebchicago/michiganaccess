@@ -44,14 +44,14 @@ const ridership = [
 ];
 
 const stopArmViolations = [
-  { county: "Wayne", violations: 4200, hasBusPatrol: false },
-  { county: "Oakland", violations: 2800, hasBusPatrol: false },
-  { county: "Macomb", violations: 2100, hasBusPatrol: false },
-  { county: "Kent", violations: 1400, hasBusPatrol: false },
-  { county: "Washtenaw", violations: 1100, hasBusPatrol: false },
-  { county: "Dearborn*", violations: 620, hasBusPatrol: true },
-  { county: "Genesee", violations: 950, hasBusPatrol: false },
-  { county: "Ingham", violations: 780, hasBusPatrol: false },
+  { county: "Wayne", violations: 4200, hasAICamera: false },
+  { county: "Oakland", violations: 2800, hasAICamera: false },
+  { county: "Macomb", violations: 2100, hasAICamera: false },
+  { county: "Kent", violations: 1400, hasAICamera: false },
+  { county: "Washtenaw", violations: 1100, hasAICamera: false },
+  { county: "Dearborn*", violations: 620, hasAICamera: true },
+  { county: "Genesee", violations: 950, hasAICamera: false },
+  { county: "Ingham", violations: 780, hasAICamera: false },
 ];
 
 const seniorAccess = [
@@ -124,8 +124,8 @@ const sections: Section[] = [
     color: "text-michigan-coral",
     description: "Learn how AI-powered stop-arm cameras protect students, what Michigan law requires of drivers near school buses, and how to report unsafe behavior.",
     resources: [
-      { title: "What Are AI Stop-Arm Cameras?", description: "Cameras mount on school buses and automatically record vehicles that illegally pass a stopped bus. AI identifies the license plate and a citation is issued.", link: "https://www.buspatrol.com/how-it-works/", region: "Statewide", audienceTags: ["parents", "students"] },
-      { title: "BusPatrol in Dearborn — Michigan's First Citywide Deployment", description: "Every district school bus in Dearborn is equipped with BusPatrol AI stop-arm cameras, partnering with the city to enforce violations and protect students.", link: "https://www.buspatrol.com/dearborn/", region: "Metro Detroit", audienceTags: ["parents", "students"] },
+      { title: "What Are AI Stop-Arm Cameras?", description: "Cameras mount on school buses and automatically record vehicles that illegally pass a stopped bus. AI identifies the license plate and a citation is issued.", link: "https://www.michigan.gov/mde/services/pupil-transportation", region: "Statewide", audienceTags: ["parents", "students"] },
+      { title: "School Bus Safety Technology", description: "Learn about AI and camera technologies being deployed in Michigan school districts to enhance stop-arm safety and protect students from dangerous driving near school buses.", link: "https://www.michigan.gov/mde/services/pupil-transportation", region: "Metro Detroit", audienceTags: ["parents", "students"] },
       { title: "Michigan Stop-Arm Law Explained (MCL 257.682)", description: "Michigan law requires all vehicles to stop at least 20 feet from a school bus displaying flashing red lights. Violations carry fines up to $500 and points.", link: "https://www.legislature.mi.gov/", region: "Statewide", audienceTags: ["parents", "students"] },
       { title: "Report Dangerous Driving Near School Buses", description: "See a driver blow past a stopped school bus? Report it. Many districts and law-enforcement agencies accept tips.", link: "https://www.michigan.gov/msp/", region: "Statewide", audienceTags: ["parents", "students"] },
       { title: "National School Bus Safety Council Resources", description: "Free parent guides, videos, and classroom activities about school-bus safety.", link: "https://www.napt.org/school-bus-safety", region: "Statewide", audienceTags: ["parents", "students"] },
@@ -254,7 +254,7 @@ function DataChartsTab() {
               <Camera className="h-4 w-4 text-michigan-coral" />
               School Bus Stop-Arm Violations by County
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Annual estimated violations — Dearborn* shows impact of BusPatrol AI cameras</p>
+            <p className="text-xs text-muted-foreground">Annual estimated violations — Dearborn* shows impact of AI camera enforcement</p>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={280}>
@@ -265,17 +265,17 @@ function DataChartsTab() {
                 <Tooltip formatter={(v: number) => [v.toLocaleString(), "Violations"]} />
                 <Bar dataKey="violations" radius={[4, 4, 0, 0]}>
                   {stopArmViolations.map((entry, index) => (
-                    <Cell key={index} fill={entry.hasBusPatrol ? "hsl(145, 32%, 30%)" : "hsl(0, 100%, 71%)"} />
+                    <Cell key={index} fill={entry.hasAICamera ? "hsl(145, 32%, 30%)" : "hsl(0, 100%, 71%)"} />
                   ))}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
             <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
               <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-sm bg-michigan-coral" /> No AI cameras</span>
-              <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-sm bg-michigan-forest" /> BusPatrol deployed</span>
+              <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-sm bg-michigan-forest" /> AI camera deployed</span>
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              <strong>Insight:</strong> Dearborn — Michigan's first citywide BusPatrol deployment — shows 71% fewer violations per bus compared to similar-sized districts. AI-enforced accountability deters illegal passing before it happens.
+              <strong>Insight:</strong> Dearborn — a leader in AI-powered stop-arm enforcement — shows 71% fewer violations per bus compared to similar-sized districts. AI-enforced accountability deters illegal passing before it happens.
             </p>
           </CardContent>
         </Card>
@@ -313,7 +313,7 @@ function DataChartsTab() {
   );
 }
 
-function BusPatrolExplainer() {
+function StopArmCameraExplainer() {
   return (
     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
       <Card className="border-michigan-coral/20 bg-michigan-coral/5">
@@ -330,7 +330,7 @@ function BusPatrolExplainer() {
                 <span className="flex items-center gap-2"><Zap className="h-4 w-4 text-michigan-coral" />Technology Overview</span>
               </AccordionTrigger>
               <AccordionContent className="text-sm text-muted-foreground leading-relaxed space-y-2">
-                <p>AI-powered stop-arm camera systems — like BusPatrol — mount multiple cameras on the exterior of school buses. When the bus stops and activates its red flashing lights and extended stop arm, the cameras begin recording.</p>
+                <p>AI-powered stop-arm camera systems mount multiple cameras on the exterior of school buses. When the bus stops and activates its red flashing lights and extended stop arm, the cameras begin recording.</p>
                 <p>Computer vision AI analyzes the footage in real-time to detect any vehicle that illegally passes the stopped bus. The system identifies the vehicle's license plate with high accuracy, and a citation is automatically generated and mailed to the registered owner — similar to a red-light camera ticket.</p>
                 <p>This removes the burden from bus drivers (who previously had to memorize plates while watching children) and increases enforcement 10–50x beyond what police patrols alone can achieve.</p>
               </AccordionContent>
@@ -356,22 +356,22 @@ function BusPatrolExplainer() {
               <AccordionTrigger className="text-sm font-semibold">
                 <span className="flex items-center gap-2"><Scale className="h-4 w-4 text-michigan-forest" />Michigan Legal Framework (MCL 257.682)</span>
               </AccordionTrigger>
-              <AccordionContent className="text-sm text-muted-foreground leading-relaxed space-y-2">
+               <AccordionContent className="text-sm text-muted-foreground leading-relaxed space-y-2">
                 <p><strong>Michigan law (MCL 257.682)</strong> requires all vehicles to stop at least 20 feet from a school bus that is displaying alternating flashing red lights and has its stop arm extended. This applies to vehicles approaching from both directions unless on a divided highway.</p>
                 <p><strong>Penalties:</strong> Violators face fines up to $500 for a first offense and points on their driving record. If a violation results in injury, penalties increase significantly including possible criminal charges.</p>
-                <p>Michigan municipalities are authorized to use automated camera enforcement on school buses, enabling programs like BusPatrol to issue civil citations based on camera evidence.</p>
+                <p>Michigan municipalities are authorized to use automated camera enforcement on school buses, enabling AI-based citation systems to issue civil citations based on camera evidence.</p>
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="dearborn" className="border rounded-lg px-4">
               <AccordionTrigger className="text-sm font-semibold">
-                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-michigan-coral" />Dearborn Case Study: Before & After</span>
+                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-michigan-coral" />Dearborn Case Study: AI Enforcement Success</span>
               </AccordionTrigger>
               <AccordionContent className="text-sm text-muted-foreground leading-relaxed space-y-3">
-                <p><strong>Dearborn Public Schools</strong> became Michigan's first district to equip every school bus with BusPatrol AI stop-arm cameras, partnering with the city of Dearborn for enforcement.</p>
+                <p><strong>Dearborn Public Schools</strong> became Michigan's first district to equip every school bus with AI-powered stop-arm cameras, partnering with the city of Dearborn for automated enforcement.</p>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-lg border border-michigan-coral/20 bg-background p-3">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-coral mb-1">Before BusPatrol</p>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-coral mb-1">Before AI Deployment</p>
                     <ul className="text-xs space-y-1">
                       <li>• ~2,100 annual stop-arm violations estimated</li>
                       <li>• Drivers relied on memorizing license plates</li>
@@ -380,7 +380,7 @@ function BusPatrolExplainer() {
                     </ul>
                   </div>
                   <div className="rounded-lg border border-michigan-forest/20 bg-background p-3">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-forest mb-1">After BusPatrol</p>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-forest mb-1">After AI Deployment</p>
                     <ul className="text-xs space-y-1">
                       <li>• ~620 annual violations (71% reduction)</li>
                       <li>• 95%+ of violations result in citations</li>
@@ -587,9 +587,9 @@ export default function TransportationPage() {
             <DataChartsTab />
           </TabsContent>
 
-          {/* BUSPATROL TAB */}
+          {/* AI STOP-ARM CAMERAS TAB */}
           <TabsContent value="buspatrol" className="space-y-6">
-            <BusPatrolExplainer />
+            <StopArmCameraExplainer />
           </TabsContent>
         </Tabs>
 
