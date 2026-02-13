@@ -8,11 +8,13 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 const navLinks = [
   { label: "Find Care", href: "/find-care" },
   { label: "Health Map", href: "/health-map" },
-  { label: "Financial Help", href: "/financial-help" },
-  { label: "Quality Ratings", href: "/quality" },
+  { label: "Environment", href: "/environment" },
+  { label: "Civic Data", href: "/civic-data" },
   {
     label: "More",
     children: [
+      { label: "Financial Help", href: "/financial-help" },
+      { label: "Quality Ratings", href: "/quality" },
       { label: "Health Conditions", href: "/conditions" },
       { label: "Community Resources", href: "/resources" },
       { label: "Transportation & Safety", href: "/transportation" },

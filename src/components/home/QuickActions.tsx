@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Hospital, DollarSign, BookOpen, Users, Bus } from "lucide-react";
+import { Hospital, DollarSign, BookOpen, Users, Bus, Leaf, Landmark } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const actions = [
@@ -21,12 +21,28 @@ const actions = [
     iconClass: "text-michigan-coral",
   },
   {
+    icon: Leaf,
+    title: "Environment",
+    description: "Air quality, water safety, clean energy, Great Lakes conservation, recycling",
+    href: "/environment",
+    bgClass: "bg-michigan-forest/10",
+    iconClass: "text-michigan-forest",
+  },
+  {
+    icon: Landmark,
+    title: "Civic Data",
+    description: "State budget, FOIA requests, voter info, elected officials, public meetings",
+    href: "/civic-data",
+    bgClass: "bg-michigan-navy/10",
+    iconClass: "text-michigan-navy",
+  },
+  {
     icon: DollarSign,
     title: "Financial Help",
     description: "Free and reduced-cost care, insurance enrollment, prescription assistance",
     href: "/financial-help",
-    bgClass: "bg-michigan-forest/10",
-    iconClass: "text-michigan-forest",
+    bgClass: "bg-michigan-gold/10",
+    iconClass: "text-michigan-gold",
   },
   {
     icon: BookOpen,
@@ -41,8 +57,8 @@ const actions = [
     title: "Community Resources",
     description: "Food, housing, transportation, support groups, social services",
     href: "/resources",
-    bgClass: "bg-michigan-gold/10",
-    iconClass: "text-michigan-gold",
+    bgClass: "bg-michigan-sky/10",
+    iconClass: "text-michigan-sky",
   },
 ];
 
@@ -66,7 +82,7 @@ const QuickActions = () => (
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-50px" }}
-        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5"
+        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7"
       >
         {actions.map((action) => (
           <motion.div key={action.title} variants={item}>

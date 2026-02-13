@@ -57,7 +57,7 @@ const HeroSection = () => {
             transition={{ delay: 0.4 }}
             className="mb-10 text-lg text-primary-foreground/80 md:text-xl"
           >
-            Resources for Health, Safety, and Transportation across Michigan.
+            Resources for Health, Safety, Transportation, Environment & Civic Engagement across Michigan.
           </motion.p>
 
           {/* Search Bar */}

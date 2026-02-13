@@ -23,6 +23,8 @@ import HealthDataDashboardPage from "./pages/HealthDataDashboardPage";
 import LearnPage from "./pages/LearnPage";
 import TransportationPage from "./pages/TransportationPage";
 import ContactPage from "./pages/ContactPage";
+import EnvironmentPage from "./pages/EnvironmentPage";
+import CivicDataPage from "./pages/CivicDataPage";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +52,8 @@ const App = () => (
             <Route path="/data" element={<HealthDataDashboardPage />} />
             <Route path="/transportation" element={<TransportationPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/environment" element={<EnvironmentPage />} />
+            <Route path="/civic-data" element={<CivicDataPage />} />
             <Route path="/site-report" element={<SiteReportPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="*" element={<NotFound />} />

@@ -14,17 +14,19 @@ const footerSections = [
     ],
   },
   {
-    title: "Learn",
+    title: "Environment & Civic",
     links: [
+      { label: "Environment & Sustainability", href: "/environment" },
+      { label: "Civic Data & Open Government", href: "/civic-data" },
       { label: "Health Conditions", href: "/conditions" },
       { label: "Quality Ratings", href: "/quality" },
-      { label: "Health Education", href: "/learn" },
-      { label: "Prevention & Wellness", href: "/wellness" },
     ],
   },
   {
-    title: "Connect",
+    title: "Learn & Connect",
     links: [
+      { label: "Health Education", href: "/learn" },
+      { label: "Prevention & Wellness", href: "/wellness" },
       { label: "Support Groups", href: "/support" },
       { label: "Clinical Trials", href: "/clinical-trials" },
       { label: "Health News", href: "/news" },
@@ -37,7 +39,6 @@ const footerSections = [
       { label: "About This Platform", href: "/about" },
       { label: "Cost Transparency", href: "/costs" },
       { label: "Data Sources", href: "/about#data-sources" },
-      { label: "Methodology", href: "/about#methodology" },
       { label: "Site Report", href: "/site-report" },
       { label: "Contact Us", href: "/contact" },
     ],
@@ -69,7 +70,7 @@ const Footer = forwardRef(() => (
             <span className="text-sm font-bold text-foreground">Michigan Access</span>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Resources for Health, Safety, and Transportation — helping Michigan families navigate healthcare, education, and community services. Independent, non-commercial, data-driven.
+            Resources for Health, Safety, Transportation, Environment & Civic Engagement — helping Michigan families navigate healthcare, community services, and government. Independent, non-commercial, data-driven.
           </p>
           <div className="mt-4 flex items-center gap-1.5 rounded-md bg-michigan-forest/10 px-3 py-2">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-michigan-forest">
