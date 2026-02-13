@@ -487,7 +487,7 @@ export default function TransportationPage() {
           <TabsList className="w-full justify-start flex-wrap h-auto gap-1 p-1">
             <TabsTrigger value="resources">Resources</TabsTrigger>
             <TabsTrigger value="data">Data & Trends</TabsTrigger>
-            <TabsTrigger value="buspatrol">AI Stop-Arm Cameras</TabsTrigger>
+            <TabsTrigger value="stoparm">AI Stop-Arm Cameras</TabsTrigger>
           </TabsList>
 
           {/* RESOURCES TAB */}
@@ -588,7 +588,7 @@ export default function TransportationPage() {
           </TabsContent>
 
           {/* AI STOP-ARM CAMERAS TAB */}
-          <TabsContent value="buspatrol" className="space-y-6">
+          <TabsContent value="stoparm" className="space-y-6">
             <StopArmCameraExplainer />
           </TabsContent>
         </Tabs>
