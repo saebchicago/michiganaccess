@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-michigan.jpg";
 
 const searchCategories = [
-  { icon: MapPin, label: "Location", placeholder: "ZIP code or city..." },
+  { icon: MapPin, label: "Location", placeholder: "City or county name..." },
   { icon: Stethoscope, label: "Condition", placeholder: "e.g. diabetes, mental health..." },
   { icon: Building2, label: "Service", placeholder: "e.g. urgent care, mammogram..." },
 ];
