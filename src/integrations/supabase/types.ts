@@ -14,6 +14,87 @@ export type Database = {
   }
   public: {
     Tables: {
+      community_events: {
+        Row: {
+          address: string | null
+          city: string
+          contact_email: string | null
+          contact_phone: string | null
+          county: string
+          created_at: string
+          description: string | null
+          end_time: string | null
+          event_date: string
+          event_type: string
+          id: string
+          is_active: boolean | null
+          is_free: boolean | null
+          location_name: string
+          organizer: string | null
+          registration_required: boolean | null
+          registration_url: string | null
+          start_time: string | null
+          state: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+          website: string | null
+          zip: string | null
+        }
+        Insert: {
+          address?: string | null
+          city: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          county: string
+          created_at?: string
+          description?: string | null
+          end_time?: string | null
+          event_date: string
+          event_type?: string
+          id?: string
+          is_active?: boolean | null
+          is_free?: boolean | null
+          location_name: string
+          organizer?: string | null
+          registration_required?: boolean | null
+          registration_url?: string | null
+          start_time?: string | null
+          state?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          website?: string | null
+          zip?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string
+          contact_email?: string | null
+          contact_phone?: string | null
+          county?: string
+          created_at?: string
+          description?: string | null
+          end_time?: string | null
+          event_date?: string
+          event_type?: string
+          id?: string
+          is_active?: boolean | null
+          is_free?: boolean | null
+          location_name?: string
+          organizer?: string | null
+          registration_required?: boolean | null
+          registration_url?: string | null
+          start_time?: string | null
+          state?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          website?: string | null
+          zip?: string | null
+        }
+        Relationships: []
+      }
       community_resources: {
         Row: {
           accepts_insurance: boolean | null
