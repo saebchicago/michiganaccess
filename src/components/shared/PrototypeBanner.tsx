@@ -1,0 +1,58 @@
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, BarChart3 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+
+const STORAGE_KEY = "michigan-access-prototype-banner-dismissed";
+
+export default function PrototypeBanner() {
+  const [dismissed, setDismissed] = useState(true);
+
+  useEffect(() => {
+    setDismissed(localStorage.getItem(STORAGE_KEY) === "true");
+  }, []);
+
+  const dismiss = () => {
+    setDismissed(true);
+    localStorage.setItem(STORAGE_KEY, "true");
+  };
+
+  if (dismissed) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: "auto", opacity: 1 }}
+        exit={{ height: 0, opacity: 0 }}
+        className="border-b border-michigan-sky/20 bg-michigan-sky/10"
+        role="banner"
+      >
+        <div className="container flex items-center gap-3 py-2.5">
+          <BarChart3 className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+          <p className="flex-1 text-xs text-foreground leading-relaxed">
+            <span className="font-semibold">📊 Portfolio Prototype:</span>{" "}
+            Demonstrating data integration methodology using 2024–2025 public datasets.{" "}
+            <Link to="/methodology" className="font-medium text-primary underline underline-offset-2 hover:text-primary/80">
+              View our data methodology
+            </Link>{" "}
+            and{" "}
+            <Link to="/technical" className="font-medium text-primary underline underline-offset-2 hover:text-primary/80">
+              technical architecture
+            </Link>.
+          </p>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-6 w-6 shrink-0"
+            onClick={dismiss}
+            aria-label="Dismiss prototype banner"
+          >
+            <X className="h-3 w-3" />
+          </Button>
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
