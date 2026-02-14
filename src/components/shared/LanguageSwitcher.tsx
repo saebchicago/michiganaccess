@@ -11,10 +11,19 @@ import {
 const languages = [
   { code: "en", label: "English" },
   { code: "es", label: "Español" },
+  { code: "ar", label: "العربية", dir: "rtl" },
+  { code: "bn", label: "বাংলা" },
 ];
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
+
+  const handleLanguageChange = (code: string) => {
+    i18n.changeLanguage(code);
+    const dir = code === "ar" ? "rtl" : "ltr";
+    document.documentElement.dir = dir;
+    document.documentElement.lang = code;
+  };
 
   return (
     <DropdownMenu>
@@ -27,7 +36,7 @@ const LanguageSwitcher = () => {
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            onClick={() => i18n.changeLanguage(lang.code)}
+            onClick={() => handleLanguageChange(lang.code)}
             className={i18n.language === lang.code ? "font-semibold text-primary" : ""}
           >
             {lang.label}
