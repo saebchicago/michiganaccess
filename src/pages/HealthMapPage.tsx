@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Layers, Info } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
 import HealthMap from "@/components/map/HealthMap";
 import MapLayerControls, { LAYERS } from "@/components/map/MapLayerControls";
@@ -12,6 +13,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 const DEFAULT_LAYERS = LAYERS.filter((l) => l.defaultOn).map((l) => l.id);
 
 export default function HealthMapPage() {
+  const { t } = useTranslation();
   const [activeLayers, setActiveLayers] = useState<string[]>(DEFAULT_LAYERS);
   const { data: facilities = [], isLoading } = useFacilities();
 
@@ -35,11 +37,10 @@ export default function HealthMapPage() {
         >
           <div className="flex items-center gap-2">
             <MapPin className="h-5 w-5 text-primary" />
-            <h2 className="text-lg font-bold text-foreground">Health Map</h2>
+            <h2 className="text-lg font-bold text-foreground">{t('healthMap.title')}</h2>
           </div>
           <p className="text-xs text-muted-foreground">
-            Explore healthcare facilities across Michigan. Toggle layers to show
-            different facility types. Markers are color-coded by quality score.
+            {t('healthMap.description')}
           </p>
           <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
           <MapLegend />
@@ -47,11 +48,9 @@ export default function HealthMapPage() {
             <div className="flex items-start gap-2">
               <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted-foreground" />
               <div>
-                <p className="text-[10px] font-semibold text-muted-foreground">DATA NOTICE</p>
+                <p className="text-[10px] font-semibold text-muted-foreground">{t('healthMap.dataNotice')}</p>
                 <p className="text-[10px] text-muted-foreground">
-                  Facility names and locations are real Michigan healthcare facilities sourced from CMS Hospital Compare.
-                  Quality scores reflect available public data from CMS, Leapfrog Group, ANCC Magnet Recognition, and BCBSM Blue Distinction.
-                  Some metrics may have a 3–12 month lag from source agencies.
+                  {t('healthMap.dataNoticeText')}
                 </p>
               </div>
             </div>
@@ -64,11 +63,11 @@ export default function HealthMapPage() {
             <SheetTrigger asChild>
               <Button size="sm" variant="secondary" className="shadow-md">
                 <Layers className="mr-1.5 h-4 w-4" />
-                Layers
+                {t('healthMap.layers')}
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-80 overflow-y-auto">
-              <SheetTitle>Map Layers</SheetTitle>
+              <SheetTitle>{t('healthMap.mapLayers')}</SheetTitle>
               <div className="mt-4 flex flex-col gap-4">
                 <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
                 <MapLegend />
@@ -87,7 +86,7 @@ export default function HealthMapPage() {
                 className="flex flex-col items-center gap-3"
               >
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-                <p className="text-sm font-medium text-muted-foreground">Loading facilities…</p>
+                <p className="text-sm font-medium text-muted-foreground">{t('healthMap.loading')}</p>
               </motion.div>
             </div>
           )}
