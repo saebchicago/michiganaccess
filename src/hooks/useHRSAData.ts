@@ -26,7 +26,6 @@ export function useHRSAData(state: string = "MI", limit: number = 50) {
     queryKey: ["hrsa-data", state, limit],
     queryFn: async () => {
       const params = new URLSearchParams({
-        dataset: "health-centers",
         state,
         limit: String(limit),
       });
