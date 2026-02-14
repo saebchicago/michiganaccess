@@ -9,7 +9,7 @@ verify_jwt = false
 [functions.cms-data-proxy]
 verify_jwt = false
 
-[functions.hrsa-proxy]
+[functions.hrsa-data]
 verify_jwt = false
 
 [functions.cdc-proxy]

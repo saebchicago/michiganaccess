@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, MapPin, Star, Shield, Heart, Filter, X, Phone, ExternalLink,
-  Wifi, Clock, Users, Award, ChevronDown, Building2, Stethoscope, Activity
+  Wifi, Clock, Users, Award, ChevronDown, Building2, Stethoscope, Activity, Radio
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { useFacilities, type Facility } from "@/hooks/useFacilities";
+import { useHRSAData } from "@/hooks/useHRSAData";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProviderDirectory from "@/components/findcare/ProviderDirectory";
@@ -67,7 +68,51 @@ function compositeScore(f: Facility): number {
 type SortBy = "composite" | "quality" | "name";
 
 export default function FindCarePage() {
-  const { data: facilities = [], isLoading } = useFacilities();
+  const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities();
+  const { data: hrsaData, isLoading: hrsaLoading } = useHRSAData("MI", 50);
+
+  // Merge HRSA live FQHCs with DB facilities, deduplicating by name
+  const facilities = useMemo(() => {
+    const dbNames = new Set(dbFacilities.map((f) => f.name.toLowerCase()));
+    const hrsaFacilities: Facility[] = (hrsaData?.results || [])
+      .filter((h) => h.name && h.lat && h.lng && !dbNames.has(h.name.toLowerCase()))
+      .map((h) => ({
+        id: `hrsa-${h.name}-${h.zip}`,
+        name: h.name,
+        address: h.address || "",
+        city: h.city || "",
+        county: "",
+        state: h.state || "MI",
+        zip: h.zip || "",
+        phone: h.phone || null,
+        latitude: h.lat,
+        longitude: h.lng,
+        facility_type: "fqhc",
+        quality_score: null,
+        services: null,
+        specialties: null,
+        languages: null,
+        hours: null,
+        website: null,
+        accepting_new_patients: null,
+        telehealth_available: null,
+        walk_in: null,
+        wheelchair_accessible: null,
+        public_transit: null,
+        insurance_accepted: null,
+        system_affiliation: null,
+        is_magnet: null,
+        is_blue_distinction: null,
+        joint_commission: null,
+        leapfrog_grade: null,
+        digital_capabilities: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }));
+    return [...dbFacilities, ...hrsaFacilities];
+  }, [dbFacilities, hrsaData]);
+
+  const isLoading = dbLoading;
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<SortBy>("composite");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
@@ -204,6 +249,11 @@ export default function FindCarePage() {
                 <p className="text-sm text-muted-foreground">
                   <strong className="text-foreground">{filtered.length}</strong> facilities
                 </p>
+                {hrsaData && hrsaData.count > 0 && (
+                  <Badge variant="outline" className="text-[10px] border-michigan-teal/30 text-michigan-teal">
+                    <Radio className="mr-1 h-3 w-3" /> +{hrsaData.count} live HRSA
+                  </Badge>
+                )}
                 {/* Mobile filter */}
                 <Sheet>
                   <SheetTrigger asChild>
