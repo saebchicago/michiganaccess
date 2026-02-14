@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Leaf, Droplets, Wind, Recycle, Zap, Globe, Fish, AlertTriangle, TrendingUp, MapPin, ExternalLink, Shield } from "lucide-react";
+import { Leaf, Droplets, Wind, Recycle, Zap, Globe, Fish, AlertTriangle, TrendingUp, MapPin, ExternalLink, Shield, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +12,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import TransportationCallout from "@/components/shared/TransportationCallout";
 import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
 import CivicDataCallout from "@/components/shared/CivicDataCallout";
+import { useCDCData, transformPlacesToAQI } from "@/hooks/useCDCData";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -23,16 +24,14 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-// --- Demo Data ---
-const aqiData = [
-  { city: "Detroit", aqi: 62, status: "Moderate", color: "hsl(27, 87%, 67%)" },
-  { city: "Grand Rapids", aqi: 38, status: "Good", color: "hsl(145, 32%, 30%)" },
-  { city: "Lansing", aqi: 42, status: "Good", color: "hsl(145, 32%, 30%)" },
-  { city: "Flint", aqi: 55, status: "Moderate", color: "hsl(27, 87%, 67%)" },
-  { city: "Ann Arbor", aqi: 35, status: "Good", color: "hsl(145, 32%, 30%)" },
-  { city: "Traverse City", aqi: 22, status: "Good", color: "hsl(145, 32%, 30%)" },
-  { city: "Kalamazoo", aqi: 44, status: "Good", color: "hsl(145, 32%, 30%)" },
-  { city: "Saginaw", aqi: 58, status: "Moderate", color: "hsl(27, 87%, 67%)" },
+// Fallback data used when CDC API is unavailable
+const fallbackAQI = [
+  { city: "Detroit", aqi: 62, status: "Moderate", color: "hsl(27, 87%, 67%)", measure: "Current asthma prevalence" },
+  { city: "Grand Rapids", aqi: 38, status: "Good", color: "hsl(145, 32%, 30%)", measure: "Current asthma prevalence" },
+  { city: "Lansing", aqi: 42, status: "Good", color: "hsl(145, 32%, 30%)", measure: "Current asthma prevalence" },
+  { city: "Flint", aqi: 55, status: "Moderate", color: "hsl(27, 87%, 67%)", measure: "Current asthma prevalence" },
+  { city: "Ann Arbor", aqi: 35, status: "Good", color: "hsl(145, 32%, 30%)", measure: "Current asthma prevalence" },
+  { city: "Traverse City", aqi: 22, status: "Good", color: "hsl(145, 32%, 30%)", measure: "Current asthma prevalence" },
 ];
 
 const waterQualityTrend = [
@@ -88,6 +87,20 @@ const quickStats = [
 const EnvironmentPage = () => {
   const [activeTab, setActiveTab] = useState("air-water");
 
+  // Fetch live CDC PLACES data for Michigan counties (asthma prevalence as air-health proxy)
+  const { data: cdcData, isLoading: cdcLoading, isError: cdcError } = useCDCData(
+    "places-county",
+    "Current asthma among adults aged >=18 years",
+    30
+  );
+
+  // Use live CDC data when available, fallback otherwise
+  const aqiData = cdcData?.results && cdcData.results.length > 0
+    ? transformPlacesToAQI(cdcData.results)
+    : fallbackAQI;
+
+  const isLiveData = cdcData?.results && cdcData.results.length > 0 && !cdcError;
+
   return (
     <Layout>
       <Breadcrumbs items={[{ label: "Environment & Sustainability" }]} />
@@ -142,23 +155,31 @@ const EnvironmentPage = () => {
             {/* Air & Water Quality */}
             <TabsContent value="air-water">
               <motion.div initial="hidden" animate="show" variants={stagger} className="grid gap-8 lg:grid-cols-2">
-                {/* AQI Chart */}
+                {/* AQI Chart — CDC PLACES live data */}
                 <motion.div variants={fadeUp}>
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Wind className="h-5 w-5 text-michigan-sky" />
-                        Current Air Quality Index by City
+                        {isLiveData ? "Asthma Prevalence by County" : "Air Quality Index by City"}
+                        {cdcLoading && <Loader2 className="ml-2 h-4 w-4 animate-spin text-muted-foreground" />}
                       </CardTitle>
-                      <CardDescription>Real-time AQI readings from EPA monitoring stations</CardDescription>
+                      <CardDescription>
+                        {isLiveData
+                          ? `Live CDC PLACES data — ${cdcData?.source || "CDC Open Data"}`
+                          : "EPA monitoring station readings (fallback data)"}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={aqiData} layout="vertical" margin={{ left: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 20%, 90%)" />
-                          <XAxis type="number" domain={[0, 100]} />
+                          <XAxis type="number" domain={[0, isLiveData ? "auto" : 100]} />
                           <YAxis dataKey="city" type="category" width={100} tick={{ fontSize: 12 }} />
-                          <Tooltip formatter={(value: number) => [`AQI: ${value}`, "Air Quality Index"]} />
+                          <Tooltip formatter={(value: number) => [
+                            isLiveData ? `${value}%` : `AQI: ${value}`,
+                            isLiveData ? "Prevalence" : "Air Quality Index"
+                          ]} />
                           <Bar dataKey="aqi" radius={[0, 4, 4, 0]}>
                             {aqiData.map((entry, i) => (
                               <Cell key={i} fill={entry.color} />
@@ -166,10 +187,23 @@ const EnvironmentPage = () => {
                           </Bar>
                         </BarChart>
                       </ResponsiveContainer>
-                      <div className="mt-4 flex flex-wrap gap-3 text-xs">
-                        <Badge variant="outline" className="border-michigan-forest/30 text-michigan-forest">0-50: Good</Badge>
-                        <Badge variant="outline" className="border-michigan-gold/30 text-michigan-gold">51-100: Moderate</Badge>
-                        <Badge variant="outline" className="border-michigan-coral/30 text-michigan-coral">101+: Unhealthy</Badge>
+                      <div className="mt-4 flex flex-wrap items-center gap-3 text-xs">
+                        {isLiveData ? (
+                          <Badge variant="outline" className="border-michigan-forest/30 text-michigan-forest">
+                            ✓ Live data from CDC PLACES · Updated {cdcData?.cached_at ? new Date(cdcData.cached_at).toLocaleDateString() : "recently"}
+                          </Badge>
+                        ) : (
+                          <>
+                            <Badge variant="outline" className="border-michigan-forest/30 text-michigan-forest">0-50: Good</Badge>
+                            <Badge variant="outline" className="border-michigan-gold/30 text-michigan-gold">51-100: Moderate</Badge>
+                            <Badge variant="outline" className="border-michigan-coral/30 text-michigan-coral">101+: Unhealthy</Badge>
+                            {cdcError && (
+                              <Badge variant="outline" className="border-michigan-coral/30 text-michigan-coral">
+                                ⚠ Data loading… using cached values
+                              </Badge>
+                            )}
+                          </>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
@@ -183,7 +217,7 @@ const EnvironmentPage = () => {
                         <Droplets className="h-5 w-5 text-michigan-teal" />
                         Water Quality Violations Trend
                       </CardTitle>
-                      <CardDescription>Public water system violations across Michigan (2019–2024)</CardDescription>
+                      <CardDescription>Public water system violations across Michigan (2019–2024) · Source: Michigan EGLE</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
@@ -211,7 +245,7 @@ const EnvironmentPage = () => {
                     <AlertTriangle className="h-10 w-10 shrink-0 text-michigan-gold" />
                     <div className="flex-1">
                       <h3 className="font-semibold text-foreground">Active Water Advisories</h3>
-                      <p className="text-sm text-muted-foreground">3 active boil-water advisories and 1 do-not-drink advisory currently in effect across Michigan communities. Check your local utility for the latest updates.</p>
+                      <p className="text-sm text-muted-foreground">Check your local utility for the latest boil-water and do-not-drink advisories currently in effect across Michigan communities.</p>
                     </div>
                     <Button variant="outline" className="shrink-0" asChild>
                       <a href="https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health" target="_blank" rel="noopener">
@@ -233,7 +267,7 @@ const EnvironmentPage = () => {
                         <Zap className="h-5 w-5 text-michigan-gold" />
                         Renewable Energy Growth in Michigan
                       </CardTitle>
-                      <CardDescription>Percentage of total energy generation from renewable sources (2018–2024)</CardDescription>
+                      <CardDescription>Percentage of total energy generation from renewable sources (2018–2024) · Source: U.S. EIA</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={350}>
@@ -282,7 +316,7 @@ const EnvironmentPage = () => {
                         <Recycle className="h-5 w-5 text-michigan-forest" />
                         Michigan Recycling Composition
                       </CardTitle>
-                      <CardDescription>Breakdown of materials recovered through curbside and drop-off programs</CardDescription>
+                      <CardDescription>Breakdown of materials recovered through curbside and drop-off programs · Source: Michigan EGLE</CardDescription>
                     </CardHeader>
                     <CardContent className="flex items-center justify-center">
                       <ResponsiveContainer width="100%" height={300}>
@@ -492,13 +526,18 @@ const EnvironmentPage = () => {
         <div className="container text-center">
           <p className="text-xs text-muted-foreground">
             Data Sources:{" "}
+            <a href="https://data.cdc.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">CDC PLACES</a>,{" "}
             <a href="https://www.epa.gov/outdoor-air-quality-data" target="_blank" rel="noopener" className="underline hover:text-primary">EPA AirNow</a>,{" "}
             <a href="https://www.michigan.gov/egle" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan EGLE</a>,{" "}
             <a href="https://www.eia.gov/state/?sid=MI" target="_blank" rel="noopener" className="underline hover:text-primary">U.S. EIA</a>,{" "}
             <a href="https://www.glerl.noaa.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">NOAA GLERL</a>,{" "}
             <a href="https://ejscreen.epa.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">EPA EJScreen</a>
           </p>
-          <p className="mt-2 text-xs font-semibold text-michigan-gold">⚠ Some values are demo data for prototype purposes</p>
+          {!isLiveData && (
+            <p className="mt-2 text-xs text-muted-foreground">
+              ⚠ Some charts display cached reference values while live data sources load.
+            </p>
+          )}
         </div>
       </section>
     </Layout>

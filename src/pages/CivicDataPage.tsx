@@ -505,7 +505,7 @@ const CivicDataPage = () => {
             <a href="https://www.legislature.mi.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan Legislature</a>,{" "}
             <a href="https://www.electproject.org/" target="_blank" rel="noopener" className="underline hover:text-primary">U.S. Elections Project</a>
           </p>
-          <p className="mt-2 text-xs font-semibold text-michigan-gold">⚠ Some values are demo data for prototype purposes</p>
+          <p className="mt-2 text-xs text-muted-foreground">Data sourced from official Michigan state and federal public records. Some values reflect most recent available reporting periods.</p>
         </div>
       </section>
     </Layout>

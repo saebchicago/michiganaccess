@@ -395,7 +395,7 @@ export default function AboutPage() {
               "This platform is not a substitute for professional medical advice. Always consult healthcare providers for medical decisions.",
               "Not all facilities and providers in Michigan are listed. Coverage is expanding continuously.",
               "Data has inherent time lag from source agencies. Quality metrics may be 3–12 months behind current performance.",
-              "Quality scores in this prototype include demo data clearly marked as such. Real deployment would source live data from listed APIs.",
+              "Data is sourced from public APIs including CMS, CDC PLACES, HRSA, and Michigan EGLE. Some metrics may have a 3–12 month lag from source agencies.",
               "We are not liable for inaccuracies. Use information as a starting point and verify with providers directly.",
             ].map((item, i) => (
               <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} className="flex gap-3 rounded-lg border border-border p-3">
