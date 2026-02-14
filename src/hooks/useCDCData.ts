@@ -41,28 +41,17 @@ export function useCDCData(
       });
       if (measure) params.set("measure", measure);
 
-      const { data, error } = await supabase.functions.invoke("cdc-proxy", {
-        body: null,
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cdc-proxy?${params.toString()}`;
+      const res = await fetch(url, {
+        headers: {
+          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          "Content-Type": "application/json",
+        },
       });
-
-      // If invoke doesn't support GET query params, fall back to fetch
-      if (error || !data) {
-        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cdc-proxy?${params.toString()}`;
-        const res = await fetch(url, {
-          headers: {
-            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-            "Content-Type": "application/json",
-          },
-        });
-        if (!res.ok) {
-          throw new Error(`CDC API error: ${res.status}`);
-        }
-        return res.json();
+      if (!res.ok) {
+        throw new Error(`CDC API error: ${res.status}`);
       }
-
-      return data as CDCResponse;
+      return res.json();
     },
     staleTime: 60 * 60 * 1000, // 1 hour
     retry: 1,

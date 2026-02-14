@@ -119,16 +119,17 @@ const Footer = forwardRef(() => {
           </div>
         </div>
 
-        {/* Prototype Notice */}
-        <div className="mt-4 rounded-lg border border-michigan-gold/30 bg-michigan-gold/5 p-4 text-center">
-          <p className="text-xs font-semibold uppercase tracking-wider text-michigan-gold">⚠ {t("footer.prototype")}</p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Facility names and locations are real Michigan healthcare facilities. Quality scores, digital capabilities, and some program details are <strong>demo data</strong> for prototype purposes. Real-world deployment would source live data from{" "}
+        {/* Data Attribution */}
+        <div className="mt-4 rounded-lg border border-border bg-muted/30 p-4 text-center">
+          <p className="text-xs text-muted-foreground">
+            Data sourced from{" "}
             <a href="https://data.cms.gov/provider-data/" target="_blank" rel="noopener" className="text-primary underline">CMS Hospital Compare</a>,{" "}
+            <a href="https://data.cdc.gov/" target="_blank" rel="noopener" className="text-primary underline">CDC PLACES</a>,{" "}
+            <a href="https://data.hrsa.gov/" target="_blank" rel="noopener" className="text-primary underline">HRSA</a>,{" "}
             <a href="https://www.hospitalsafetygrade.org/" target="_blank" rel="noopener" className="text-primary underline">Leapfrog Safety Grades</a>,{" "}
-            <a href="https://www.nursingworld.org/organizational-programs/magnet/" target="_blank" rel="noopener" className="text-primary underline">ANCC Magnet Recognition</a>,{" "}
-            <a href="https://www.bcbs.com/blue-distinction-specialty-care" target="_blank" rel="noopener" className="text-primary underline">BCBS Blue Distinction</a>, and{" "}
+            <a href="https://www.nursingworld.org/organizational-programs/magnet/" target="_blank" rel="noopener" className="text-primary underline">ANCC Magnet Recognition</a>, and{" "}
             <a href="https://www.michigan.gov/mdhhs" target="_blank" rel="noopener" className="text-primary underline">Michigan DHHS</a>.
+            {" "}Some metrics may reflect a 3–12 month lag from source agencies.
           </p>
         </div>
 
