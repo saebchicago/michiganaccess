@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   Heart, Baby, Ribbon, Activity, Star, MapPin, Phone, ExternalLink,
   Stethoscope, Shield, Users, Wifi, Building2, ChevronRight, Apple, Brain
@@ -81,6 +82,7 @@ function scoreFacilityForPathway(f: Facility, pw: Pathway): number {
 }
 
 export default function HealthConditionsPage() {
+  const { t } = useTranslation();
   const { data: facilities = [], isLoading: facLoading } = useFacilities();
   const { data: providers = [], isLoading: provLoading } = useProviders();
   const [activePathway, setActivePathway] = useState("diabetes");
@@ -109,14 +111,14 @@ export default function HealthConditionsPage() {
         <div className="container max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
-              Care Pathways
+              {t('conditions.badge')}
             </span>
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-3 text-3xl font-bold text-foreground lg:text-5xl">
-            Health Condition Guides
+            {t('conditions.title')}
           </motion.h1>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Find the best care for your condition — facilities, specialists, and support services ranked by quality and accessibility.
+            {t('conditions.subtitle')}
           </motion.p>
         </div>
       </section>
@@ -151,9 +153,9 @@ export default function HealthConditionsPage() {
         ) : (
           <Tabs defaultValue="facilities">
             <TabsList>
-              <TabsTrigger value="facilities">Top Facilities ({rankedFacilities.length})</TabsTrigger>
-              <TabsTrigger value="providers">Specialists ({relevantProviders.length})</TabsTrigger>
-              <TabsTrigger value="support">Support Services</TabsTrigger>
+              <TabsTrigger value="facilities">{t('conditions.topFacilities')} ({rankedFacilities.length})</TabsTrigger>
+              <TabsTrigger value="providers">{t('conditions.specialists')} ({relevantProviders.length})</TabsTrigger>
+              <TabsTrigger value="support">{t('conditions.supportServices')}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="facilities" className="mt-4 space-y-3">

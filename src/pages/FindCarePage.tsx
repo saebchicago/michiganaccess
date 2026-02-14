@@ -4,6 +4,7 @@ import {
   Search, MapPin, Star, Shield, Heart, Filter, X, Phone, ExternalLink,
   Wifi, Clock, Users, Award, ChevronDown, Building2, Stethoscope, Activity, Radio
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -68,6 +69,7 @@ function compositeScore(f: Facility): number {
 type SortBy = "composite" | "quality" | "name";
 
 export default function FindCarePage() {
+  const { t } = useTranslation();
   const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities();
   const { data: hrsaData, isLoading: hrsaLoading } = useHRSAData("MI", 50);
 
@@ -196,31 +198,31 @@ export default function FindCarePage() {
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-10 lg:py-16">
         <div className="container max-w-4xl text-center">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-3 text-3xl font-bold text-foreground lg:text-5xl">
-            Find Care Near You
-          </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Search Michigan healthcare facilities by location, specialty, quality ratings, and services.
-          </motion.p>
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mx-auto mt-6 max-w-xl">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search by name, city, county, or specialty..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="h-12 pl-12 text-base shadow-michigan"
-              />
-            </div>
-          </motion.div>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-3 text-3xl font-bold text-foreground lg:text-5xl">
+              {t('findCare.title')}
+            </motion.h1>
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="mx-auto max-w-2xl text-lg text-muted-foreground">
+              {t('findCare.subtitle')}
+            </motion.p>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mx-auto mt-6 max-w-xl">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder={t('findCare.searchPlaceholder')}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="h-12 pl-12 text-base shadow-michigan"
+                />
+              </div>
+            </motion.div>
         </div>
       </section>
 
       <div className="container py-8">
         <Tabs defaultValue="facilities" className="mb-6">
           <TabsList>
-            <TabsTrigger value="facilities"><Building2 className="mr-1.5 h-4 w-4" />Facilities</TabsTrigger>
-            <TabsTrigger value="providers"><Stethoscope className="mr-1.5 h-4 w-4" />Providers</TabsTrigger>
+            <TabsTrigger value="facilities"><Building2 className="mr-1.5 h-4 w-4" />{t('findCare.facilities')}</TabsTrigger>
+            <TabsTrigger value="providers"><Stethoscope className="mr-1.5 h-4 w-4" />{t('findCare.providers')}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="providers" className="mt-4">
@@ -232,7 +234,7 @@ export default function FindCarePage() {
           {/* Desktop Sidebar */}
           <aside className="hidden w-64 flex-shrink-0 lg:block">
             <div className="sticky top-20 space-y-4">
-              <h3 className="text-sm font-bold text-foreground">Filters</h3>
+              <h3 className="text-sm font-bold text-foreground">{t('findCare.filters')}</h3>
               <FiltersContent />
               <Separator />
               <Link to="/about#methodology" className="flex items-center gap-1.5 text-xs text-primary hover:underline">
@@ -247,7 +249,7 @@ export default function FindCarePage() {
             <div className="mb-4 flex items-center justify-between flex-wrap gap-3">
               <div className="flex items-center gap-3">
                 <p className="text-sm text-muted-foreground">
-                  <strong className="text-foreground">{filtered.length}</strong> facilities
+                  <strong className="text-foreground">{filtered.length}</strong> {t('findCare.facilitiesCount')}
                 </p>
                 {hrsaData && hrsaData.count > 0 && (
                   <Badge variant="outline" className="text-[10px] border-michigan-teal/30 text-michigan-teal">
@@ -258,11 +260,11 @@ export default function FindCarePage() {
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button size="sm" variant="outline" className="lg:hidden">
-                      <Filter className="mr-1.5 h-4 w-4" /> Filters
+                      <Filter className="mr-1.5 h-4 w-4" /> {t('findCare.filters')}
                     </Button>
                   </SheetTrigger>
                   <SheetContent side="left" className="w-80 overflow-y-auto">
-                    <SheetTitle>Filters</SheetTitle>
+                    <SheetTitle>{t('findCare.filters')}</SheetTitle>
                     <div className="mt-4">
                       <FiltersContent />
                     </div>
@@ -278,9 +280,9 @@ export default function FindCarePage() {
                 <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortBy)}>
                   <SelectTrigger className="w-44"><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="composite">Best Overall Match</SelectItem>
-                    <SelectItem value="quality">Quality Score</SelectItem>
-                    <SelectItem value="name">Name (A-Z)</SelectItem>
+                    <SelectItem value="composite">{t('findCare.bestMatch')}</SelectItem>
+                    <SelectItem value="quality">{t('findCare.qualityScore')}</SelectItem>
+                    <SelectItem value="name">{t('findCare.nameAZ')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -293,16 +295,16 @@ export default function FindCarePage() {
                   <Card className="border-primary/20">
                     <CardContent className="py-4">
                       <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-semibold text-foreground">Side-by-Side Comparison</h3>
+                        <h3 className="font-semibold text-foreground">{t('findCare.comparison')}</h3>
                         <Button size="sm" variant="ghost" onClick={() => { setCompareIds([]); setShowCompare(false); }}>
-                          <X className="h-4 w-4 mr-1" /> Clear
+                          <X className="h-4 w-4 mr-1" /> {t('findCare.clear')}
                         </Button>
                       </div>
                       <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                           <thead>
                             <tr className="border-b">
-                              <th className="py-2 text-left text-xs text-muted-foreground">Metric</th>
+                              <th className="py-2 text-left text-xs text-muted-foreground">{t('findCare.metric')}</th>
                               {compareList.map((f) => (
                                 <th key={f.id} className="py-2 text-left text-xs font-semibold text-foreground max-w-[200px] truncate">{f.name}</th>
                               ))}
@@ -341,8 +343,8 @@ export default function FindCarePage() {
               </div>
             ) : filtered.length === 0 ? (
               <div className="py-20 text-center">
-                <p className="text-lg font-medium text-foreground">No facilities found</p>
-                <p className="text-sm text-muted-foreground">Try adjusting your search or filters</p>
+                <p className="text-lg font-medium text-foreground">{t('findCare.noResults')}</p>
+                <p className="text-sm text-muted-foreground">{t('findCare.noResultsHint')}</p>
               </div>
             ) : (
               <div className="space-y-4">
