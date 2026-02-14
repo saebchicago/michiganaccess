@@ -1,5 +1,3 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -10,9 +8,9 @@ const corsHeaders = {
 const MI_LAT = 44.3148;
 const MI_LNG = -85.6024;
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+    return new Response(null, { headers: corsHeaders });
   }
 
   try {
@@ -92,7 +90,7 @@ serve(async (req) => {
     // Both failed — return graceful fallback
     console.error("All HRSA endpoints returned non-JSON or empty");
     return new Response(
-      JSON.stringify({ error: "HRSA API requires registration token", results: [], count: 0, fallback: true, source: "HRSA" }),
+      JSON.stringify({ error: "HRSA API unavailable", results: [], count: 0, fallback: true, source: "HRSA" }),
       { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   } catch (error) {
