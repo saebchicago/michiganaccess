@@ -46,6 +46,10 @@ const Footer = forwardRef(() => {
         { label: "Data Sources", href: "/about#data-sources" },
         { label: t("nav.siteReport"), href: "/site-report" },
         { label: t("nav.contact"), href: "/contact" },
+        { label: "Methodology", href: "/methodology" },
+        { label: "Research", href: "/research" },
+        { label: "Impact", href: "/impact" },
+        { label: "Technical", href: "/technical" },
       ],
     },
   ];
