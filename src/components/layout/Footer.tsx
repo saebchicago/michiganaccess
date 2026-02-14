@@ -33,7 +33,7 @@ const Footer = forwardRef(() => {
         { label: t("nav.healthEducation"), href: "/learn" },
         { label: t("nav.prevention"), href: "/wellness" },
         { label: t("nav.supportGroups"), href: "/support" },
-        { label: "Community Events", href: "/events" },
+        { label: t("nav.communityEvents"), href: "/events" },
         { label: t("nav.clinicalTrials"), href: "/clinical-trials" },
         { label: t("nav.healthNews"), href: "/news" },
         { label: t("nav.healthData"), href: "/data" },

@@ -36,7 +36,7 @@ const Header = () => {
         { label: t("nav.healthEducation"), href: "/learn" },
         { label: t("nav.healthData"), href: "/data" },
         { label: t("nav.partnerships"), href: "/partnerships" },
-        { label: "Community Events", href: "/events" },
+        { label: t("nav.communityEvents"), href: "/events" },
         { label: t("nav.siteReport"), href: "/site-report" },
         { label: t("nav.about"), href: "/about" },
         { label: t("nav.contact"), href: "/contact" },

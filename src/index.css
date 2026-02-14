@@ -203,3 +203,31 @@
   table { font-size: 9px; }
   tr { break-inside: avoid; }
 }
+
+/* RTL support for Arabic */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .flex {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .flex-col {
+  flex-direction: column;
+}
+
+[dir="rtl"] .gap-2\.5 {
+  gap: 0.625rem;
+}
+
+[dir="rtl"] .ml-auto {
+  margin-left: unset;
+  margin-right: auto;
+}
+
+[dir="rtl"] .mr-auto {
+  margin-right: unset;
+  margin-left: auto;
+}
