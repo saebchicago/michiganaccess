@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import Header from "./Header";
 import Footer from "./Footer";
 import CrisisBar from "@/components/shared/CrisisBar";
-import HealthAlertBanner from "@/components/shared/HealthAlertBanner";
-import PrototypeBanner from "@/components/shared/PrototypeBanner";
 import AIChatWidget from "@/components/shared/AIChatWidget";
 
 interface LayoutProps {
@@ -13,9 +11,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => (
   <div className="flex min-h-screen flex-col">
-    <PrototypeBanner />
     <CrisisBar />
-    <HealthAlertBanner />
     <Header />
     <motion.main
       id="main-content"

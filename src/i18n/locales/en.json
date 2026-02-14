@@ -5,6 +5,9 @@
     "environment": "Environment",
     "civicData": "Civic Data",
     "more": "More",
+    "findHelp": "Find Help",
+    "serviceCategories": "Services",
+    "eligibility": "Eligibility",
     "financialHelp": "Financial Help",
     "qualityRatings": "Quality Ratings",
     "healthConditions": "Health Conditions",
@@ -21,12 +24,14 @@
     "communityEvents": "Community Events",
     "siteReport": "Site Report",
     "about": "About",
-    "contact": "Contact Us"
+    "contact": "Contact"
   },
   "hero": {
+    "title": "Access Michigan Services, Simplified",
+    "subtitle": "One structured gateway to health, housing, food, and family services across all 83 counties.",
+    "ctaFindServices": "Find Services",
+    "ctaExplore": "Explore Resources",
     "tagline": "A Citizen-Driven Initiative",
-    "title": "Your Guide to Resources in Michigan",
-    "subtitle": "Resources for Health, Safety, Transportation, Environment & Civic Engagement across Michigan.",
     "search": "Search",
     "location": "Location",
     "condition": "Condition",
@@ -34,6 +39,21 @@
     "locationPlaceholder": "City or county name...",
     "conditionPlaceholder": "e.g. diabetes, mental health...",
     "servicePlaceholder": "e.g. urgent care, mammogram..."
+  },
+  "access": {
+    "sectionTitle": "Start Here",
+    "sectionSubtitle": "Three pathways to the services Michigan residents need most.",
+    "housingTitle": "Housing & Stability",
+    "housingDesc": "Emergency shelter, rental assistance, utility programs, and pathways to stable housing across Michigan.",
+    "foodTitle": "Food & Essential Support",
+    "foodDesc": "SNAP enrollment, food banks, WIC, prescription assistance, and financial aid programs statewide.",
+    "healthTitle": "Health & Family Services",
+    "healthDesc": "Find doctors, clinics, mental health support, prenatal care, and insurance enrollment options nearby.",
+    "cta": "Get Started"
+  },
+  "systems": {
+    "title": "What Is Michigan Access?",
+    "description": "Michigan Access is an independent, non-commercial resource that organizes public service information from across state agencies into a single, structured interface. It does not replace government services — it makes them easier to find, understand, and act on."
   },
   "crisis": {
     "title": "Need Immediate Help?",
@@ -63,7 +83,7 @@
     "findCare": "Find Care Now",
     "findCareDesc": "Search doctors, hospitals, urgent care by location and specialty",
     "transportation": "Transportation & Safety",
-    "transportationDesc": "Public transit, school buses, AI stop-arm cameras, accessible rides for seniors",
+    "transportationDesc": "Public transit, school buses, automated enforcement, accessible rides for seniors",
     "environment": "Environment",
     "environmentDesc": "Air quality, water safety, clean energy, Great Lakes conservation, recycling",
     "civicData": "Civic Data",
@@ -88,11 +108,11 @@
     "title": "How This Platform Helps You",
     "subtitle": "Built for Michigan families, by someone who cares",
     "findQualityCare": "Find Quality Care",
-    "findQualityCareDesc": "Compare healthcare options using independent quality ratings, patient safety scores, and service availability. Make informed decisions about where to receive care.",
+    "findQualityCareDesc": "Compare healthcare options using independent quality ratings, patient safety scores, and service availability.",
     "navigateSystems": "Navigate Complex Systems",
-    "navigateSystemsDesc": "Understand insurance options, find financial assistance, access social services. We break down complexity so you can focus on your health.",
+    "navigateSystemsDesc": "Understand insurance options, find financial assistance, access social services.",
     "stayInformed": "Stay Informed",
-    "stayInformedDesc": "Track Michigan health trends, learn about conditions, discover prevention strategies. Knowledge empowers better health decisions."
+    "stayInformedDesc": "Track Michigan health trends, learn about conditions, discover prevention strategies."
   },
   "featuredTopics": {
     "title": "Featured Health Topics",
@@ -114,6 +134,7 @@
     "independent": "Independent, Non-Commercial Initiative",
     "dataFrom": "Data from CMS, HRSA, CDC, Michigan DHHS",
     "noAds": "No Advertising · No Data Selling",
+    "privacyFirst": "No Cookies · No Personal Data Collection",
     "builtToServe": "Built to Serve Michigan Residents"
   },
   "footer": {
@@ -121,7 +142,7 @@
     "envCivic": "Environment & Civic",
     "learnConnect": "Learn & Connect",
     "about": "About",
-    "disclaimer": "This platform is an independent, non-commercial civic resource. It does not collect personal data, use cookies for tracking, display advertising, or sell information. All data is sourced from publicly available government datasets.",
+    "disclaimer": "This platform is an independent, non-commercial civic resource. It does not collect personal data, use cookies for tracking, display advertising, or sell information.",
     "noAds": "No advertising · No data selling · Built to serve Michigan residents",
     "prototype": "Prototype / Portfolio Demonstration",
     "ethicalNote": "This project is built with an ethical, non-commercial ethos — prioritizing public benefit over profit.",
@@ -132,9 +153,11 @@
     "research": "Research",
     "impact": "Impact",
     "technical": "Technical",
-    "brandDescription": "Resources for Health, Safety, Transportation, Environment & Civic Engagement — helping Michigan families navigate healthcare, community services, and government. Independent, non-commercial, data-driven.",
+    "brandDescription": "An independent civic resource organizing Michigan's public services into one structured, accessible interface.",
     "independentBadge": "✓ Independent · Non-Commercial",
-    "dataSourcedFrom": "Data sourced from"
+    "dataSourcedFrom": "Data sourced from",
+    "privacyStatement": "No cookies, no tracking, no personal data collected.",
+    "dataAttribution": "Data: CMS · HRSA · CDC · Michigan DHHS · Leapfrog"
   },
   "accessibility": {
     "highContrast": "High Contrast",

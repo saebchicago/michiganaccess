@@ -5,6 +5,9 @@
     "environment": "Medio Ambiente",
     "civicData": "Datos Cívicos",
     "more": "Más",
+    "findHelp": "Encontrar Ayuda",
+    "serviceCategories": "Servicios",
+    "eligibility": "Elegibilidad",
     "financialHelp": "Ayuda Financiera",
     "qualityRatings": "Calificaciones de Calidad",
     "healthConditions": "Condiciones de Salud",
@@ -21,12 +24,14 @@
     "communityEvents": "Eventos Comunitarios",
     "siteReport": "Informe del Sitio",
     "about": "Acerca de",
-    "contact": "Contáctenos"
+    "contact": "Contacto"
   },
   "hero": {
     "tagline": "Una Iniciativa Ciudadana",
-    "title": "Su Guía de Recursos en Michigan",
-    "subtitle": "Recursos de Salud, Seguridad, Transporte, Medio Ambiente y Participación Cívica en Michigan.",
+    "title": "Acceda a los Servicios de Michigan, Simplificado",
+    "subtitle": "Un portal estructurado para salud, vivienda, alimentos y servicios familiares en los 83 condados.",
+    "ctaFindServices": "Buscar Servicios",
+    "ctaExplore": "Explorar Recursos",
     "search": "Buscar",
     "location": "Ubicación",
     "condition": "Condición",
@@ -34,6 +39,21 @@
     "locationPlaceholder": "Ciudad o condado...",
     "conditionPlaceholder": "ej. diabetes, salud mental...",
     "servicePlaceholder": "ej. atención urgente, mamografía..."
+  },
+  "access": {
+    "sectionTitle": "Comience Aquí",
+    "sectionSubtitle": "Tres caminos hacia los servicios que más necesitan los residentes de Michigan.",
+    "housingTitle": "Vivienda y Estabilidad",
+    "housingDesc": "Refugio de emergencia, asistencia de alquiler, programas de servicios públicos y caminos hacia vivienda estable en Michigan.",
+    "foodTitle": "Alimentos y Apoyo Esencial",
+    "foodDesc": "Inscripción en SNAP, bancos de alimentos, WIC, asistencia con recetas y programas de ayuda financiera estatal.",
+    "healthTitle": "Salud y Servicios Familiares",
+    "healthDesc": "Encuentre médicos, clínicas, apoyo de salud mental, atención prenatal y opciones de inscripción en seguros.",
+    "cta": "Comenzar"
+  },
+  "systems": {
+    "title": "¿Qué Es Michigan Access?",
+    "description": "Michigan Access es un recurso independiente y no comercial que organiza información de servicios públicos de agencias estatales en una interfaz única y estructurada. No reemplaza los servicios gubernamentales — los hace más fáciles de encontrar, entender y usar."
   },
   "crisis": {
     "title": "¿Necesita Ayuda Inmediata?",
@@ -45,7 +65,7 @@
     "call988": "Llame al 988",
     "call211": "Llame al 2-1-1"
   },
-  "getHelp": "Obtener Ayuda Ahora",
+  "getHelp": "Obtener Ayuda",
   "prototype": {
     "title": "Prototipo de Portafolio:",
     "description": "Demostrando metodología de integración de datos usando conjuntos de datos públicos 2024–2025.",
@@ -63,7 +83,7 @@
     "findCare": "Buscar Atención Ahora",
     "findCareDesc": "Buscar médicos, hospitales, atención urgente por ubicación y especialidad",
     "transportation": "Transporte y Seguridad",
-    "transportationDesc": "Transporte público, autobuses escolares, cámaras de brazo de parada con IA, viajes accesibles para personas mayores",
+    "transportationDesc": "Transporte público, autobuses escolares, vigilancia automatizada, viajes accesibles para personas mayores",
     "environment": "Medio Ambiente",
     "environmentDesc": "Calidad del aire, seguridad del agua, energía limpia, conservación de los Grandes Lagos, reciclaje",
     "civicData": "Datos Cívicos",
@@ -86,34 +106,35 @@
   },
   "howItHelps": {
     "title": "Cómo Esta Plataforma Le Ayuda",
-    "subtitle": "Creado para familias de Michigan, por alguien que se preocupa",
+    "subtitle": "Creado para familias de Michigan",
     "findQualityCare": "Encontrar Atención de Calidad",
-    "findQualityCareDesc": "Compare opciones de atención médica usando calificaciones de calidad independientes, puntajes de seguridad del paciente y disponibilidad de servicios.",
+    "findQualityCareDesc": "Compare opciones de atención médica usando calificaciones de calidad independientes.",
     "navigateSystems": "Navegar Sistemas Complejos",
-    "navigateSystemsDesc": "Entienda opciones de seguro, encuentre asistencia financiera, acceda a servicios sociales. Simplificamos la complejidad para que pueda enfocarse en su salud.",
+    "navigateSystemsDesc": "Entienda opciones de seguro, encuentre asistencia financiera, acceda a servicios sociales.",
     "stayInformed": "Manténgase Informado",
-    "stayInformedDesc": "Siga las tendencias de salud de Michigan, aprenda sobre condiciones, descubra estrategias de prevención. El conocimiento empodera mejores decisiones de salud."
+    "stayInformedDesc": "Siga las tendencias de salud de Michigan, descubra estrategias de prevención."
   },
   "featuredTopics": {
     "title": "Temas de Salud Destacados",
-    "subtitle": "Manténgase informado sobre lo que más importa a las familias de Michigan",
+    "subtitle": "Manténgase informado sobre lo que más importa",
     "seasonalHealth": "Salud Estacional",
     "fluTitle": "Temporada de Gripe: Dónde Vacunarse",
-    "fluDesc": "Encuentre sitios de vacunación cerca de usted. Opciones sin cita y con cita disponibles en los 83 condados.",
+    "fluDesc": "Encuentre sitios de vacunación cerca de usted.",
     "heartHealth": "Salud Cardíaca",
     "heartTitle": "Enfermedad Cardíaca: Prevención y Tratamiento",
-    "heartDesc": "La causa #1 de muerte en Michigan. Conozca estrategias de prevención y encuentre atención cardíaca de primera calidad.",
+    "heartDesc": "La causa #1 de muerte en Michigan.",
     "mentalHealth": "Salud Mental",
     "mentalTitle": "Nuevos Servicios de Crisis Disponibles",
-    "mentalDesc": "Línea 988 de Crisis y Suicidio ahora activa. Nuevos centros comunitarios de salud mental abriendo en todo el estado.",
+    "mentalDesc": "Línea 988 ahora activa.",
     "communityWin": "Logro Comunitario",
     "maternalTitle": "Tasas de Mortalidad Materna Mejorando",
-    "maternalDesc": "Michigan ve una mejora del 12% en resultados maternos. Nuevos programas expandiendo el acceso a atención prenatal."
+    "maternalDesc": "Michigan ve una mejora del 12% en resultados maternos."
   },
   "trust": {
     "independent": "Iniciativa Independiente y No Comercial",
     "dataFrom": "Datos de CMS, HRSA, CDC, Michigan DHHS",
     "noAds": "Sin Publicidad · Sin Venta de Datos",
+    "privacyFirst": "Sin Cookies · Sin Recolección de Datos Personales",
     "builtToServe": "Creado para Servir a los Residentes de Michigan"
   },
   "footer": {
@@ -121,20 +142,22 @@
     "envCivic": "Medio Ambiente y Cívico",
     "learnConnect": "Aprender y Conectar",
     "about": "Acerca de",
-    "disclaimer": "Esta plataforma es un recurso cívico independiente y no comercial. No recopila datos personales, no usa cookies para rastreo, no muestra publicidad ni vende información. Todos los datos provienen de conjuntos de datos gubernamentales disponibles públicamente.",
-    "noAds": "Sin publicidad · Sin venta de datos · Creado para servir a los residentes de Michigan",
+    "disclaimer": "Esta plataforma es un recurso cívico independiente y no comercial.",
+    "noAds": "Sin publicidad · Sin venta de datos",
     "prototype": "Prototipo / Demostración de Portafolio",
-    "ethicalNote": "Este proyecto está construido con una ética no comercial — priorizando el beneficio público sobre las ganancias.",
+    "ethicalNote": "Priorizando el beneficio público sobre las ganancias.",
     "ethicalTitle": "Plataforma Ética y No Comercial",
     "dataSources": "Fuentes de Datos",
-    "dataSourceNote": "Algunas métricas pueden reflejar un retraso de 3 a 12 meses desde las agencias fuente.",
+    "dataSourceNote": "Algunas métricas pueden reflejar un retraso de 3 a 12 meses.",
     "methodology": "Metodología",
     "research": "Investigación",
     "impact": "Impacto",
     "technical": "Técnico",
-    "brandDescription": "Recursos de Salud, Seguridad, Transporte, Medio Ambiente y Participación Cívica — ayudando a familias de Michigan a navegar la atención médica, servicios comunitarios y gobierno. Independiente, no comercial, basado en datos.",
+    "brandDescription": "Un recurso cívico independiente que organiza los servicios públicos de Michigan en una interfaz estructurada y accesible.",
     "independentBadge": "✓ Independiente · No Comercial",
-    "dataSourcedFrom": "Datos obtenidos de"
+    "dataSourcedFrom": "Datos obtenidos de",
+    "privacyStatement": "Sin cookies, sin rastreo, sin datos personales recopilados.",
+    "dataAttribution": "Datos: CMS · HRSA · CDC · Michigan DHHS · Leapfrog"
   },
   "accessibility": {
     "highContrast": "Alto Contraste",
@@ -142,10 +165,10 @@
   },
   "partnership": {
     "title": "Portal de Asociaciones",
-    "subtitle": "Las organizaciones sin fines de lucro, organizaciones comunitarias y proveedores de servicios pueden enviar recursos para su inclusión en Michigan Access.",
+    "subtitle": "Las organizaciones pueden enviar recursos para su inclusión en Michigan Access.",
     "orgName": "Nombre de la Organización",
     "contactName": "Nombre del Contacto",
-    "contactEmail": "Correo Electrónico del Contacto",
+    "contactEmail": "Correo Electrónico",
     "orgType": "Tipo de Organización",
     "description": "Descripción de Servicios",
     "services": "Servicios Ofrecidos",
@@ -154,7 +177,7 @@
     "city": "Ciudad",
     "county": "Condado",
     "submit": "Enviar para Revisión",
-    "success": "Su envío ha sido recibido y será revisado por nuestro equipo.",
+    "success": "Su envío ha sido recibido.",
     "nonprofit": "Sin Fines de Lucro",
     "government": "Agencia Gubernamental",
     "healthcare": "Proveedor de Salud",

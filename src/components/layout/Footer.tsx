@@ -1,14 +1,13 @@
-import { forwardRef } from "react";
 import { Link } from "react-router-dom";
-import { Heart, Phone, ExternalLink, Scale } from "lucide-react";
+import { Heart, Phone, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const Footer = forwardRef(() => {
+const Footer = () => {
   const { t } = useTranslation();
 
   const footerSections = [
     {
-      title: t("footer.findHelp"),
+      title: t("nav.findHelp"),
       links: [
         { label: t("nav.findCare"), href: "/find-care" },
         { label: t("nav.financialHelp"), href: "/financial-help" },
@@ -18,34 +17,20 @@ const Footer = forwardRef(() => {
       ],
     },
     {
-      title: t("footer.envCivic"),
+      title: t("nav.serviceCategories"),
       links: [
+        { label: t("nav.healthConditions"), href: "/conditions" },
         { label: t("nav.environment"), href: "/environment" },
         { label: t("nav.civicData"), href: "/civic-data" },
-        { label: t("nav.healthConditions"), href: "/conditions" },
         { label: t("nav.qualityRatings"), href: "/quality" },
-        { label: t("nav.partnerships"), href: "/partnerships" },
-      ],
-    },
-    {
-      title: t("footer.learnConnect"),
-      links: [
-        { label: t("nav.healthEducation"), href: "/learn" },
-        { label: t("nav.prevention"), href: "/wellness" },
-        { label: t("nav.supportGroups"), href: "/support" },
-        { label: t("nav.communityEvents"), href: "/events" },
-        { label: t("nav.clinicalTrials"), href: "/clinical-trials" },
-        { label: t("nav.healthNews"), href: "/news" },
+        { label: t("nav.costTransparency"), href: "/costs" },
         { label: t("nav.healthData"), href: "/data" },
       ],
     },
     {
-      title: t("footer.about"),
+      title: t("nav.about"),
       links: [
         { label: t("nav.about"), href: "/about" },
-        { label: t("nav.costTransparency"), href: "/costs" },
-        { label: t("footer.dataSources"), href: "/about#data-sources" },
-        { label: t("nav.siteReport"), href: "/site-report" },
         { label: t("nav.contact"), href: "/contact" },
         { label: t("footer.methodology"), href: "/methodology" },
         { label: t("footer.research"), href: "/research" },
@@ -56,48 +41,46 @@ const Footer = forwardRef(() => {
   ];
 
   return (
-    <footer className="border-t border-border bg-muted/50" role="contentinfo">
-      {/* Crisis Banner */}
-      <div className="bg-michigan-coral/10 border-b border-michigan-coral/20">
-        <div className="container flex flex-wrap items-center justify-center gap-4 py-3 text-sm">
-          <Phone className="h-4 w-4 text-michigan-coral" aria-hidden="true" />
-          <span className="font-medium">{t("crisis.inCrisis")}</span>
+    <footer className="border-t border-border bg-muted/30" role="contentinfo">
+      {/* Crisis strip */}
+      <div className="border-b border-border bg-muted/50">
+        <div className="container flex flex-wrap items-center justify-center gap-3 py-2.5 text-sm">
+          <Phone className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
           <span className="text-muted-foreground">
-            {t("crisis.call988")} <strong>(988)</strong> · {t("crisis.textHome")} · {t("crisis.call211")} <strong>(2-1-1)</strong>
+            {t("crisis.inCrisis")} <a href="tel:988" className="font-semibold text-foreground hover:underline">988</a>
+            {" · "}
+            {t("crisis.textHome")}
+            {" · "}
+            <a href="tel:211" className="font-semibold text-foreground hover:underline">2-1-1</a>
           </span>
         </div>
       </div>
 
       <div className="container py-12">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-michigan">
-                <Heart className="h-4 w-4 text-primary-foreground" fill="currentColor" aria-hidden="true" />
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-michigan">
+                <Heart className="h-3.5 w-3.5 text-primary-foreground" fill="currentColor" aria-hidden="true" />
               </div>
               <span className="text-sm font-bold text-foreground">Michigan Access</span>
             </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
+            <p className="text-xs text-muted-foreground leading-relaxed max-w-xs">
               {t("footer.brandDescription")}
             </p>
-            <div className="mt-4 flex items-center gap-1.5 rounded-md bg-michigan-forest/10 px-3 py-2">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-michigan-forest">
-                {t("footer.independentBadge")}
-              </span>
-            </div>
           </div>
 
           {/* Link sections */}
           {footerSections.map((section) => (
             <nav key={section.title} aria-label={section.title}>
-              <h4 className="mb-3 text-sm font-semibold text-foreground">{section.title}</h4>
+              <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                      className="text-sm text-foreground/70 transition-colors hover:text-primary"
                     >
                       {link.label}
                     </Link>
@@ -108,54 +91,21 @@ const Footer = forwardRef(() => {
           ))}
         </div>
 
-        {/* Ethical Disclaimer */}
-        <div className="mt-8 rounded-lg border border-primary/20 bg-primary/5 p-4">
-          <div className="flex items-start gap-3">
-            <Scale className="h-5 w-5 text-primary mt-0.5 shrink-0" aria-hidden="true" />
-            <div>
-              <p className="text-xs font-semibold text-foreground mb-1">{t("footer.ethicalTitle")}</p>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                {t("footer.disclaimer")}
-              </p>
-              <p className="text-xs text-muted-foreground mt-1 italic">
-                {t("footer.ethicalNote")}
-              </p>
+        {/* Privacy + attribution */}
+        <div className="mt-10 border-t border-border pt-6">
+          <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Lock className="h-3 w-3 shrink-0" aria-hidden="true" />
+              <span>{t("footer.privacyStatement")}</span>
             </div>
+            <p className="text-xs text-muted-foreground">
+              {t("footer.dataAttribution")}
+            </p>
           </div>
-        </div>
-
-        {/* Data Attribution */}
-        <div className="mt-4 rounded-lg border border-border bg-muted/30 p-4 text-center">
-          <p className="text-xs text-muted-foreground">
-            {t("footer.dataSourcedFrom")}{" "}
-            <a href="https://data.cms.gov/provider-data/" target="_blank" rel="noopener" className="text-primary underline">CMS Hospital Compare</a>,{" "}
-            <a href="https://data.cdc.gov/" target="_blank" rel="noopener" className="text-primary underline">CDC PLACES</a>,{" "}
-            <a href="https://data.hrsa.gov/" target="_blank" rel="noopener" className="text-primary underline">HRSA</a>,{" "}
-            <a href="https://www.hospitalsafetygrade.org/" target="_blank" rel="noopener" className="text-primary underline">Leapfrog Safety Grades</a>,{" "}
-            <a href="https://www.nursingworld.org/organizational-programs/magnet/" target="_blank" rel="noopener" className="text-primary underline">ANCC Magnet Recognition</a>, and{" "}
-            <a href="https://www.michigan.gov/mdhhs" target="_blank" rel="noopener" className="text-primary underline">Michigan DHHS</a>.
-            {" "}{t("footer.dataSourceNote")}
-          </p>
-        </div>
-
-        {/* Bottom */}
-        <div className="mt-6 flex flex-col items-center gap-4 border-t border-border pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
-          <p className="text-xs text-muted-foreground">
-            {t("footer.dataSources")}:{" "}
-            <a href="https://data.cms.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">CMS</a>,{" "}
-            <a href="https://data.hrsa.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">HRSA</a>,{" "}
-            <a href="https://www.michigan.gov/mdhhs" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan DHHS</a>,{" "}
-            <a href="https://www.cdc.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">CDC</a>,{" "}
-            <a href="https://www.hospitalsafetygrade.org/" target="_blank" rel="noopener" className="underline hover:text-primary">Leapfrog Group</a>,{" "}
-            <a href="https://www.countyhealthrankings.org/explore-health-rankings/michigan" target="_blank" rel="noopener" className="underline hover:text-primary">County Health Rankings</a>
-          </p>
-          <p className="text-xs text-muted-foreground">
-            {t("footer.noAds")}
-          </p>
         </div>
       </div>
     </footer>
   );
-});
+};
 
 export default Footer;

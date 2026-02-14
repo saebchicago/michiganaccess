@@ -1,18 +1,14 @@
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
-import QuickActions from "@/components/home/QuickActions";
-import StatsBar from "@/components/home/StatsBar";
-import FeaturedTopics from "@/components/home/FeaturedTopics";
-import HowItHelps from "@/components/home/HowItHelps";
+import CoreAccessGrid from "@/components/home/CoreAccessGrid";
+import SystemsExplainer from "@/components/home/SystemsExplainer";
 import TrustIndicators from "@/components/home/TrustIndicators";
 
 const Index = () => (
   <Layout>
     <HeroSection />
-    <QuickActions />
-    <StatsBar />
-    <FeaturedTopics />
-    <HowItHelps />
+    <CoreAccessGrid />
+    <SystemsExplainer />
     <TrustIndicators />
   </Layout>
 );

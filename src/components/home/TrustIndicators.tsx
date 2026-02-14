@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Database, Ban, Lock } from "lucide-react";
+import { ShieldCheck, Database, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const TrustIndicators = () => {
   const { t } = useTranslation();
 
   const indicators = [
-    { icon: ShieldCheck, label: t("trust.independent") },
     { icon: Database, label: t("trust.dataFrom") },
-    { icon: Ban, label: t("trust.noAds") },
-    { icon: Lock, label: t("trust.builtToServe") },
+    { icon: ShieldCheck, label: t("trust.noAds") },
+    { icon: Lock, label: t("trust.privacyFirst") },
   ];
 
   return (
