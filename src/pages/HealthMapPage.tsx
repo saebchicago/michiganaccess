@@ -47,12 +47,11 @@ export default function HealthMapPage() {
             <div className="flex items-start gap-2">
               <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted-foreground" />
               <div>
-                <p className="text-[10px] font-semibold text-muted-foreground">PROTOTYPE NOTICE</p>
+                <p className="text-[10px] font-semibold text-muted-foreground">DATA NOTICE</p>
                 <p className="text-[10px] text-muted-foreground">
-                  Facility names and locations are real Michigan healthcare facilities.
-                  Quality scores and digital capabilities are <strong>demo data</strong> for
-                  prototype purposes. Real data sourced from CMS Hospital Compare,
-                  Leapfrog Group, ANCC Magnet Recognition, BCBSM Blue Distinction.
+                  Facility names and locations are real Michigan healthcare facilities sourced from CMS Hospital Compare.
+                  Quality scores reflect available public data from CMS, Leapfrog Group, ANCC Magnet Recognition, and BCBSM Blue Distinction.
+                  Some metrics may have a 3–12 month lag from source agencies.
                 </p>
               </div>
             </div>

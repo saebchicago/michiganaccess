@@ -4,7 +4,6 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
-
 // HRSA Health Center API (free, no key required)
 const HRSA_BASE = "https://data.hrsa.gov/api";
 

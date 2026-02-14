@@ -4,7 +4,6 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
-
 // CDC Open Data SODA API endpoints (free, no key required but app token recommended)
 const CDC_ENDPOINTS: Record<string, string> = {
   // CDC PLACES: Local Data for Better Health (county-level)
