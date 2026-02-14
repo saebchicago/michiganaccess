@@ -46,6 +46,76 @@
     "call211": "Llame al 2-1-1"
   },
   "getHelp": "Obtener Ayuda Ahora",
+  "prototype": {
+    "title": "Prototipo de Portafolio:",
+    "description": "Demostrando metodología de integración de datos usando conjuntos de datos públicos 2024–2025.",
+    "viewMethodology": "Ver nuestra metodología de datos",
+    "and": "y",
+    "viewTechnical": "arquitectura técnica"
+  },
+  "alerts": {
+    "alert": "Alerta",
+    "advisory": "Aviso",
+    "info": "Info",
+    "dismissAll": "Descartar todas las alertas"
+  },
+  "quickActions": {
+    "findCare": "Buscar Atención Ahora",
+    "findCareDesc": "Buscar médicos, hospitales, atención urgente por ubicación y especialidad",
+    "transportation": "Transporte y Seguridad",
+    "transportationDesc": "Transporte público, autobuses escolares, cámaras de brazo de parada con IA, viajes accesibles para personas mayores",
+    "environment": "Medio Ambiente",
+    "environmentDesc": "Calidad del aire, seguridad del agua, energía limpia, conservación de los Grandes Lagos, reciclaje",
+    "civicData": "Datos Cívicos",
+    "civicDataDesc": "Presupuesto estatal, solicitudes FOIA, información electoral, funcionarios electos, reuniones públicas",
+    "financialHelp": "Ayuda Financiera",
+    "financialHelpDesc": "Atención gratuita y de bajo costo, inscripción en seguros, asistencia con recetas",
+    "conditions": "Entienda Su Condición",
+    "conditionsDesc": "Información de salud basada en evidencia, opciones de tratamiento, vías de atención",
+    "communityResources": "Recursos Comunitarios",
+    "communityResourcesDesc": "Alimentos, vivienda, transporte, grupos de apoyo, servicios sociales",
+    "explore": "Explorar →"
+  },
+  "stats": {
+    "providers": "Proveedores de Salud",
+    "facilities": "Instalaciones",
+    "counties": "Condados Cubiertos",
+    "financialLocations": "Ubicaciones de Asistencia Financiera",
+    "communityResources": "Recursos Comunitarios",
+    "updatedWeekly": "Actualizado semanalmente con los últimos datos de salud"
+  },
+  "howItHelps": {
+    "title": "Cómo Esta Plataforma Le Ayuda",
+    "subtitle": "Creado para familias de Michigan, por alguien que se preocupa",
+    "findQualityCare": "Encontrar Atención de Calidad",
+    "findQualityCareDesc": "Compare opciones de atención médica usando calificaciones de calidad independientes, puntajes de seguridad del paciente y disponibilidad de servicios.",
+    "navigateSystems": "Navegar Sistemas Complejos",
+    "navigateSystemsDesc": "Entienda opciones de seguro, encuentre asistencia financiera, acceda a servicios sociales. Simplificamos la complejidad para que pueda enfocarse en su salud.",
+    "stayInformed": "Manténgase Informado",
+    "stayInformedDesc": "Siga las tendencias de salud de Michigan, aprenda sobre condiciones, descubra estrategias de prevención. El conocimiento empodera mejores decisiones de salud."
+  },
+  "featuredTopics": {
+    "title": "Temas de Salud Destacados",
+    "subtitle": "Manténgase informado sobre lo que más importa a las familias de Michigan",
+    "seasonalHealth": "Salud Estacional",
+    "fluTitle": "Temporada de Gripe: Dónde Vacunarse",
+    "fluDesc": "Encuentre sitios de vacunación cerca de usted. Opciones sin cita y con cita disponibles en los 83 condados.",
+    "heartHealth": "Salud Cardíaca",
+    "heartTitle": "Enfermedad Cardíaca: Prevención y Tratamiento",
+    "heartDesc": "La causa #1 de muerte en Michigan. Conozca estrategias de prevención y encuentre atención cardíaca de primera calidad.",
+    "mentalHealth": "Salud Mental",
+    "mentalTitle": "Nuevos Servicios de Crisis Disponibles",
+    "mentalDesc": "Línea 988 de Crisis y Suicidio ahora activa. Nuevos centros comunitarios de salud mental abriendo en todo el estado.",
+    "communityWin": "Logro Comunitario",
+    "maternalTitle": "Tasas de Mortalidad Materna Mejorando",
+    "maternalDesc": "Michigan ve una mejora del 12% en resultados maternos. Nuevos programas expandiendo el acceso a atención prenatal."
+  },
+  "trust": {
+    "independent": "Iniciativa Independiente y No Comercial",
+    "dataFrom": "Datos de CMS, HRSA, CDC, Michigan DHHS",
+    "noAds": "Sin Publicidad · Sin Venta de Datos",
+    "builtToServe": "Creado para Servir a los Residentes de Michigan"
+  },
   "footer": {
     "findHelp": "Encontrar Ayuda",
     "envCivic": "Medio Ambiente y Cívico",
@@ -61,7 +131,10 @@
     "methodology": "Metodología",
     "research": "Investigación",
     "impact": "Impacto",
-    "technical": "Técnico"
+    "technical": "Técnico",
+    "brandDescription": "Recursos de Salud, Seguridad, Transporte, Medio Ambiente y Participación Cívica — ayudando a familias de Michigan a navegar la atención médica, servicios comunitarios y gobierno. Independiente, no comercial, basado en datos.",
+    "independentBadge": "✓ Independiente · No Comercial",
+    "dataSourcedFrom": "Datos obtenidos de"
   },
   "accessibility": {
     "highContrast": "Alto Contraste",

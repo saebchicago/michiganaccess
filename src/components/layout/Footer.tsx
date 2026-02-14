@@ -79,11 +79,11 @@ const Footer = forwardRef(() => {
               <span className="text-sm font-bold text-foreground">Michigan Access</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Resources for Health, Safety, Transportation, Environment & Civic Engagement — helping Michigan families navigate healthcare, community services, and government. Independent, non-commercial, data-driven.
+              {t("footer.brandDescription")}
             </p>
             <div className="mt-4 flex items-center gap-1.5 rounded-md bg-michigan-forest/10 px-3 py-2">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-michigan-forest">
-                ✓ Independent · Non-Commercial
+                {t("footer.independentBadge")}
               </span>
             </div>
           </div>
@@ -127,7 +127,7 @@ const Footer = forwardRef(() => {
         {/* Data Attribution */}
         <div className="mt-4 rounded-lg border border-border bg-muted/30 p-4 text-center">
           <p className="text-xs text-muted-foreground">
-            Data sourced from{" "}
+            {t("footer.dataSourcedFrom")}{" "}
             <a href="https://data.cms.gov/provider-data/" target="_blank" rel="noopener" className="text-primary underline">CMS Hospital Compare</a>,{" "}
             <a href="https://data.cdc.gov/" target="_blank" rel="noopener" className="text-primary underline">CDC PLACES</a>,{" "}
             <a href="https://data.hrsa.gov/" target="_blank" rel="noopener" className="text-primary underline">HRSA</a>,{" "}

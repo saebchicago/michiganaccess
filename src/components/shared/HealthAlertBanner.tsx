@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, Info, X, ShieldAlert, ChevronDown, ChevronUp } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useHealthAlerts, type HealthAlert } from "@/hooks/useHealthAlerts";
 import { Button } from "@/components/ui/button";
 
@@ -40,6 +41,7 @@ const severityConfig = {
 };
 
 export default function HealthAlertBanner() {
+  const { t } = useTranslation();
   const { data: alerts = [] } = useHealthAlerts();
   const [dismissed, setDismissedState] = useState<string[]>([]);
   const [expanded, setExpanded] = useState(false);
@@ -63,6 +65,12 @@ export default function HealthAlertBanner() {
     setDismissed(next);
   };
 
+  const getSeverityLabel = (severity: string) => {
+    if (severity === "critical") return t("alerts.alert");
+    if (severity === "warning") return t("alerts.advisory");
+    return t("alerts.info");
+  };
+
   const topAlert = visible[0];
   const remaining = visible.slice(1);
   const config = severityConfig[topAlert.severity];
@@ -83,7 +91,7 @@ export default function HealthAlertBanner() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase ${config.badge}`}>
-                  {topAlert.severity === "critical" ? "Alert" : topAlert.severity === "warning" ? "Advisory" : "Info"}
+                  {getSeverityLabel(topAlert.severity)}
                 </span>
                 <span className="text-xs font-semibold text-foreground">{topAlert.title}</span>
                 <span className="text-[10px] text-muted-foreground">· {topAlert.source}</span>
@@ -97,7 +105,7 @@ export default function HealthAlertBanner() {
                   variant="ghost"
                   className="h-6 px-1.5 text-[10px]"
                   onClick={() => setExpanded(!expanded)}
-                  aria-label={expanded ? "Collapse alerts" : `Show ${remaining.length} more alert${remaining.length > 1 ? "s" : ""}`}
+                  aria-label={expanded ? "Collapse alerts" : `Show ${remaining.length} more`}
                 >
                   +{remaining.length}
                   {expanded ? <ChevronUp className="ml-0.5 h-3 w-3" /> : <ChevronDown className="ml-0.5 h-3 w-3" />}
@@ -133,7 +141,7 @@ export default function HealthAlertBanner() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase ${c.badge}`}>
-                        {alert.severity === "critical" ? "Alert" : alert.severity === "warning" ? "Advisory" : "Info"}
+                        {getSeverityLabel(alert.severity)}
                       </span>
                       <span className="text-xs font-semibold text-foreground">{alert.title}</span>
                     </div>
@@ -151,7 +159,7 @@ export default function HealthAlertBanner() {
       {visible.length > 1 && (
         <div className="container flex justify-end py-1">
           <button onClick={dismissAll} className="text-[10px] text-muted-foreground hover:text-foreground transition-colors">
-            Dismiss all alerts
+            {t("alerts.dismissAll")}
           </button>
         </div>
       )}
