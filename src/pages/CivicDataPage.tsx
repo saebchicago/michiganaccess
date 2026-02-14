@@ -163,9 +163,9 @@ const CivicDataPage = () => {
                       <CardDescription>Percentage breakdown of state spending</CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <ResponsiveContainer width="100%" height={320}>
-                        <PieChart>
-                          <Pie data={budgetPie} cx="50%" cy="50%" outerRadius={100} innerRadius={50} paddingAngle={2} dataKey="amount" label={({ shortLabel, pct }) => `${shortLabel} ${pct}%`} labelLine={{ strokeWidth: 1 }}>
+                      <ResponsiveContainer width="100%" height={380}>
+                        <PieChart margin={{ top: 20, right: 40, bottom: 20, left: 40 }}>
+                          <Pie data={budgetPie} cx="50%" cy="50%" outerRadius={90} innerRadius={45} paddingAngle={2} dataKey="amount" label={({ pct }) => `${pct}%`} labelLine={{ strokeWidth: 1 }}>
                             {budgetPie.map((entry, i) => (
                               <Cell key={i} fill={entry.color} />
                             ))}
