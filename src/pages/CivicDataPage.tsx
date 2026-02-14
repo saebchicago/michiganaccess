@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { Landmark, FileText, Users, DollarSign, Vote, Calendar, ExternalLink, TrendingUp, BarChart3, Scale, Building2, BookOpen, Search, Globe } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -77,6 +78,7 @@ const quickStats = [
 ];
 
 const CivicDataPage = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("budget");
 
   return (
@@ -89,13 +91,13 @@ const CivicDataPage = () => {
           <motion.div initial="hidden" animate="show" variants={stagger} className="mx-auto max-w-3xl text-center">
             <motion.div variants={fadeUp} className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5">
               <Landmark className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Civic Data & Open Government</span>
+              <span className="text-sm font-medium text-primary">{t('civic.badge')}</span>
             </motion.div>
             <motion.h1 variants={fadeUp} className="mb-4 text-4xl font-bold text-foreground md:text-5xl">
-              Michigan Open Government Hub
+              {t('civic.title')}
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground">
-              Budget transparency, FOIA tracking, voter engagement, elected officials, and public meeting schedules — empowering informed civic participation.
+              {t('civic.subtitle')}
             </motion.p>
           </motion.div>
         </div>
@@ -123,11 +125,11 @@ const CivicDataPage = () => {
         <div className="container">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-8 grid w-full grid-cols-2 md:grid-cols-5 gap-1">
-              <TabsTrigger value="budget" className="text-xs sm:text-sm">Budget</TabsTrigger>
-              <TabsTrigger value="foia" className="text-xs sm:text-sm">FOIA Tracker</TabsTrigger>
-              <TabsTrigger value="elections" className="text-xs sm:text-sm">Elections</TabsTrigger>
-              <TabsTrigger value="officials" className="text-xs sm:text-sm">Officials</TabsTrigger>
-              <TabsTrigger value="meetings" className="text-xs sm:text-sm">Public Meetings</TabsTrigger>
+              <TabsTrigger value="budget" className="text-xs sm:text-sm">{t('civic.budget')}</TabsTrigger>
+              <TabsTrigger value="foia" className="text-xs sm:text-sm">{t('civic.foiaTracker')}</TabsTrigger>
+              <TabsTrigger value="elections" className="text-xs sm:text-sm">{t('civic.elections')}</TabsTrigger>
+              <TabsTrigger value="officials" className="text-xs sm:text-sm">{t('civic.officials')}</TabsTrigger>
+              <TabsTrigger value="meetings" className="text-xs sm:text-sm">{t('civic.publicMeetings')}</TabsTrigger>
             </TabsList>
 
             {/* Budget */}

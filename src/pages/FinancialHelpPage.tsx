@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   Heart, DollarSign, Shield, Phone, ExternalLink, ChevronDown, ChevronUp,
   Users, Baby, Stethoscope, Pill, CheckCircle2, HelpCircle, ArrowRight, Calculator
@@ -31,6 +32,7 @@ const programTypeLabels: Record<string, { label: string; icon: typeof Heart; col
 };
 
 export default function FinancialHelpPage() {
+  const { t } = useTranslation();
   const { data: programs = [], isLoading } = useFinancialPrograms();
   const [householdSize, setHouseholdSize] = useState<number>(1);
   const [income, setIncome] = useState<string>("");
@@ -69,14 +71,14 @@ export default function FinancialHelpPage() {
         <div className="container max-w-4xl text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
             <span className="mb-4 inline-block rounded-full bg-michigan-coral/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-coral">
-              Financial Assistance Hub
+              {t('financial.badge')}
             </span>
           </motion.div>
           <motion.h1 variants={fadeUp} custom={1} initial="hidden" animate="visible" className="mb-3 text-3xl font-bold text-foreground lg:text-5xl">
-            Help Paying for Healthcare
+            {t('financial.title')}
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Find free and reduced-cost care, insurance options, prescription savings, and social services available to Michigan residents.
+            {t('financial.subtitle')}
           </motion.p>
         </div>
       </section>
@@ -91,15 +93,15 @@ export default function FinancialHelpPage() {
                   <Calculator className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <CardTitle className="text-lg">Quick Eligibility Screener</CardTitle>
-                  <p className="text-sm text-muted-foreground">See which programs you may qualify for based on household size and income</p>
+                  <CardTitle className="text-lg">{t('financial.eligibilityScreener')}</CardTitle>
+                  <p className="text-sm text-muted-foreground">{t('financial.eligibilityDesc')}</p>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
                 <div className="flex-1">
-                  <label className="mb-1.5 block text-sm font-medium text-foreground">Household Size</label>
+                  <label className="mb-1.5 block text-sm font-medium text-foreground">{t('financial.householdSize')}</label>
                   <Select value={String(householdSize)} onValueChange={(v) => setHouseholdSize(Number(v))}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
@@ -110,7 +112,7 @@ export default function FinancialHelpPage() {
                   </Select>
                 </div>
                 <div className="flex-1">
-                  <label className="mb-1.5 block text-sm font-medium text-foreground">Annual Household Income</label>
+                  <label className="mb-1.5 block text-sm font-medium text-foreground">{t('financial.annualIncome')}</label>
                   <div className="relative">
                     <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
@@ -125,7 +127,7 @@ export default function FinancialHelpPage() {
                 <div className="flex-shrink-0">
                   {fplPercent !== null && (
                     <div className="rounded-lg bg-background border border-border px-4 py-2.5 text-center">
-                      <p className="text-xs text-muted-foreground">Your FPL</p>
+                      <p className="text-xs text-muted-foreground">{t('financial.yourFPL')}</p>
                       <p className={`text-xl font-bold ${fplPercent <= 138 ? "text-michigan-forest" : fplPercent <= 250 ? "text-michigan-teal" : fplPercent <= 400 ? "text-michigan-gold" : "text-muted-foreground"}`}>
                         {fplPercent}%
                       </p>
@@ -148,8 +150,8 @@ export default function FinancialHelpPage() {
 
         {/* Filter */}
         <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-sm font-medium text-muted-foreground">Filter:</span>
-          <Button size="sm" variant={filterType === "all" ? "default" : "outline"} onClick={() => setFilterType("all")}>All Programs</Button>
+          <span className="text-sm font-medium text-muted-foreground">{t('findCare.filters')}:</span>
+          <Button size="sm" variant={filterType === "all" ? "default" : "outline"} onClick={() => setFilterType("all")}>{t('financial.allPrograms')}</Button>
           {Object.entries(programTypeLabels).map(([key, { label }]) => (
             <Button key={key} size="sm" variant={filterType === key ? "default" : "outline"} onClick={() => setFilterType(key)}>
               {label.split(" /")[0]}
@@ -210,13 +212,13 @@ export default function FinancialHelpPage() {
                                 <Separator />
                                 {prog.how_to_apply && (
                                   <div>
-                                    <p className="text-xs font-semibold text-foreground mb-1">How to Apply</p>
+                                    <p className="text-xs font-semibold text-foreground mb-1">{t('financial.howToApply')}</p>
                                     <p className="text-sm text-muted-foreground">{prog.how_to_apply}</p>
                                   </div>
                                 )}
                                 {prog.services_covered && prog.services_covered.length > 0 && (
                                   <div>
-                                    <p className="text-xs font-semibold text-foreground mb-1">Services Covered</p>
+                                    <p className="text-xs font-semibold text-foreground mb-1">{t('financial.servicesCovered')}</p>
                                     <div className="flex flex-wrap gap-1.5">
                                       {prog.services_covered.map((s) => (
                                         <Badge key={s} variant="secondary" className="text-[10px]">{s}</Badge>
@@ -253,7 +255,7 @@ export default function FinancialHelpPage() {
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
           <Card className="border-michigan-coral/20 bg-michigan-coral/5">
             <CardContent className="py-6">
-              <h3 className="mb-3 text-lg font-bold text-foreground">Need Immediate Help?</h3>
+              <h3 className="mb-3 text-lg font-bold text-foreground">{t('financial.needImmediateHelp')}</h3>
               <div className="grid gap-3 sm:grid-cols-3">
                 <div className="rounded-lg bg-background border border-border p-3 text-center">
                   <p className="text-2xl font-bold text-michigan-coral">2-1-1</p>

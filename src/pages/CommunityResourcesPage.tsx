@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import {
   Apple, Home, Bus, Brain, Phone, ExternalLink, MapPin, Clock,
   Globe, Heart, Shield, Users, Filter, Search
@@ -102,6 +103,7 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
 }
 
 export default function CommunityResourcesPage() {
+  const { t } = useTranslation();
   const { data: resources = [], isLoading } = useCommunityResources();
   const [activeTab, setActiveTab] = useState("all");
   const [county, setCounty] = useState("All Counties");
@@ -135,19 +137,19 @@ export default function CommunityResourcesPage() {
         <div className="container max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <span className="mb-4 inline-block rounded-full bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-accent">
-              Community Support
+              {t('resources.badge')}
             </span>
           </motion.div>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-3 text-3xl font-bold text-foreground lg:text-5xl">
-            Community Resources
+            {t('resources.title')}
           </motion.h1>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Health goes beyond the doctor's office. Find food, housing, transportation, and mental health support near you.
+            {t('resources.subtitle')}
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mx-auto mt-6 max-w-xl">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-              <Input placeholder="Search resources, services, or organizations..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-12 pl-12 text-base shadow-michigan" />
+              <Input placeholder={t('resources.searchPlaceholder')} value={search} onChange={(e) => setSearch(e.target.value)} className="h-12 pl-12 text-base shadow-michigan" />
             </div>
           </motion.div>
         </div>

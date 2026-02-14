@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { Leaf, Droplets, Wind, Recycle, Zap, Globe, Fish, AlertTriangle, TrendingUp, MapPin, ExternalLink, Shield, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -85,6 +86,7 @@ const quickStats = [
 ];
 
 const EnvironmentPage = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("air-water");
 
   // Fetch live CDC PLACES data for Michigan counties (no measure filter — get diverse health metrics)
@@ -111,13 +113,13 @@ const EnvironmentPage = () => {
           <motion.div initial="hidden" animate="show" variants={stagger} className="mx-auto max-w-3xl text-center">
             <motion.div variants={fadeUp} className="mb-4 inline-flex items-center gap-2 rounded-full bg-michigan-forest/10 px-4 py-1.5">
               <Leaf className="h-4 w-4 text-michigan-forest" />
-              <span className="text-sm font-medium text-michigan-forest">Environment & Sustainability</span>
+              <span className="text-sm font-medium text-michigan-forest">{t('environment.badge')}</span>
             </motion.div>
             <motion.h1 variants={fadeUp} className="mb-4 text-4xl font-bold text-foreground md:text-5xl">
-              Michigan's Environmental Health
+              {t('environment.title')}
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground">
-              Air quality, water safety, clean energy progress, recycling programs, and environmental justice — data-driven insights for Michigan's natural resources.
+              {t('environment.subtitle')}
             </motion.p>
           </motion.div>
         </div>
@@ -145,11 +147,11 @@ const EnvironmentPage = () => {
         <div className="container">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-8 grid w-full grid-cols-2 md:grid-cols-5 gap-1">
-              <TabsTrigger value="air-water" className="text-xs sm:text-sm">Air & Water</TabsTrigger>
-              <TabsTrigger value="energy" className="text-xs sm:text-sm">Clean Energy</TabsTrigger>
-              <TabsTrigger value="recycling" className="text-xs sm:text-sm">Recycling</TabsTrigger>
-              <TabsTrigger value="great-lakes" className="text-xs sm:text-sm">Great Lakes</TabsTrigger>
-              <TabsTrigger value="justice" className="text-xs sm:text-sm">Env. Justice</TabsTrigger>
+              <TabsTrigger value="air-water" className="text-xs sm:text-sm">{t('environment.airWater')}</TabsTrigger>
+              <TabsTrigger value="energy" className="text-xs sm:text-sm">{t('environment.cleanEnergy')}</TabsTrigger>
+              <TabsTrigger value="recycling" className="text-xs sm:text-sm">{t('environment.recycling')}</TabsTrigger>
+              <TabsTrigger value="great-lakes" className="text-xs sm:text-sm">{t('environment.greatLakes')}</TabsTrigger>
+              <TabsTrigger value="justice" className="text-xs sm:text-sm">{t('environment.envJustice')}</TabsTrigger>
             </TabsList>
 
             {/* Air & Water Quality */}
