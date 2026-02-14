@@ -1,4 +1,7 @@
 {
+  "breadcrumbs": {
+    "home": "Inicio"
+  },
   "nav": {
     "findCare": "Buscar Atención",
     "healthMap": "Mapa de Salud",

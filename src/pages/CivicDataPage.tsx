@@ -70,11 +70,11 @@ const publicMeetings = [
   { body: "Transportation Commission", date: "Mar 25, 2026", time: "10:00 AM", location: "MDOT Building, Lansing", type: "Regular" },
 ];
 
-const quickStats = [
-  { icon: Landmark, label: "State Departments", value: "19", color: "text-primary" },
-  { icon: FileText, label: "FOIA Requests (2024)", value: "19,500", color: "text-michigan-teal" },
-  { icon: Vote, label: "2024 Voter Turnout", value: "68.9%", color: "text-michigan-forest" },
-  { icon: DollarSign, label: "FY2025 Budget", value: "$60B", color: "text-michigan-gold" },
+const getQuickStats = (t: (key: string) => string) => [
+  { icon: Landmark, label: t('civic.stateDepts'), value: "19", color: "text-primary" },
+  { icon: FileText, label: t('civic.foiaRequests'), value: "19,500", color: "text-michigan-teal" },
+  { icon: Vote, label: t('civic.voterTurnout'), value: "68.9%", color: "text-michigan-forest" },
+  { icon: DollarSign, label: t('civic.fyBudget'), value: "$60B", color: "text-michigan-gold" },
 ];
 
 const CivicDataPage = () => {
@@ -83,7 +83,7 @@ const CivicDataPage = () => {
 
   return (
     <Layout>
-      <Breadcrumbs items={[{ label: "Civic Data & Open Government" }]} />
+      <Breadcrumbs items={[{ label: t('civic.badge') }]} />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-michigan-navy/5 to-background py-16 md:py-20">
@@ -107,7 +107,7 @@ const CivicDataPage = () => {
       <section className="border-b border-border bg-card py-6">
         <div className="container">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {quickStats.map((stat) => (
+            {getQuickStats(t).map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="flex items-center gap-3 rounded-lg bg-background p-4">
                 <stat.icon className={`h-8 w-8 ${stat.color} shrink-0`} />
                 <div>
@@ -140,9 +140,9 @@ const CivicDataPage = () => {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <DollarSign className="h-5 w-5 text-michigan-gold" />
-                        FY2025 State Budget by Department
+                        {t('civic.budgetByDept')}
                       </CardTitle>
-                      <CardDescription>Total: ~$60 billion (General Fund + Federal)</CardDescription>
+                      <CardDescription>{t('civic.budgetTotal')}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={350}>
@@ -161,8 +161,8 @@ const CivicDataPage = () => {
                 <motion.div variants={fadeUp}>
                   <Card>
                     <CardHeader>
-                      <CardTitle>Budget Allocation</CardTitle>
-                      <CardDescription>Percentage breakdown of state spending</CardDescription>
+                      <CardTitle>{t('civic.budgetAllocation')}</CardTitle>
+                      <CardDescription>{t('civic.budgetAllocDesc')}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={380}>
@@ -184,7 +184,7 @@ const CivicDataPage = () => {
                         ))}
                       </div>
                       <p className="mt-4 text-sm text-muted-foreground">
-                        <strong>Education leads</strong> at 28% of the budget, followed by Health & Human Services at 17%.
+                        <strong>{t('civic.educationLeads')}</strong> at 28% of the budget, followed by Health & Human Services at 17%.
                       </p>
                     </CardContent>
                   </Card>
@@ -200,9 +200,9 @@ const CivicDataPage = () => {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <FileText className="h-5 w-5 text-michigan-teal" />
-                        FOIA Request Volume & Outcomes
+                        {t('civic.foiaVolume')}
                       </CardTitle>
-                      <CardDescription>Michigan Freedom of Information Act requests to state agencies (2019–2024)</CardDescription>
+                      <CardDescription>{t('civic.foiaVolumeDesc')}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={350}>
@@ -224,7 +224,7 @@ const CivicDataPage = () => {
                 <motion.div variants={fadeUp} className="mt-8">
                   <Accordion type="single" collapsible>
                     <AccordionItem value="how">
-                      <AccordionTrigger>How to File a FOIA Request in Michigan</AccordionTrigger>
+                      <AccordionTrigger>{t('civic.howToFOIA')}</AccordionTrigger>
                       <AccordionContent className="text-muted-foreground space-y-2">
                         <p>Any person, business, or organization can submit a FOIA request. Michigan law does not require you to state your reason for the request.</p>
                         <ol className="list-decimal pl-5 space-y-1">
@@ -239,7 +239,7 @@ const CivicDataPage = () => {
                       </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="cost">
-                      <AccordionTrigger>What does it cost?</AccordionTrigger>
+                      <AccordionTrigger>{t('civic.foiaCost')}</AccordionTrigger>
                       <AccordionContent className="text-muted-foreground">
                         Agencies can charge for search, review, and copying, but the first $20 of costs is waived for most requests. Indigent citizens may request fee waivers. Electronic records are generally less expensive than paper copies.
                       </AccordionContent>
@@ -257,9 +257,9 @@ const CivicDataPage = () => {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Vote className="h-5 w-5 text-michigan-forest" />
-                        Michigan Voter Turnout vs. National Average
+                        {t('civic.voterTurnoutChart')}
                       </CardTitle>
-                      <CardDescription>Percentage of eligible voters who cast ballots (2016–2024)</CardDescription>
+                      <CardDescription>{t('civic.voterTurnoutDesc')}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
@@ -309,7 +309,7 @@ const CivicDataPage = () => {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Scale className="h-5 w-5 text-primary" />
-                        Statewide Elected Officials
+                        {t('civic.electedOfficials')}
                       </CardTitle>
                       <CardDescription>Current executive branch leadership</CardDescription>
                     </CardHeader>

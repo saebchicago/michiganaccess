@@ -1,4 +1,7 @@
 {
+  "breadcrumbs": {
+    "home": "الرئيسية"
+  },
   "nav": {
     "findCare": "البحث عن رعاية",
     "healthMap": "خريطة الصحة",
