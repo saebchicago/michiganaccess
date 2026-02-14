@@ -4,29 +4,39 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { Suspense, lazy } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import HealthMapPage from "./pages/HealthMapPage";
-import AboutPage from "./pages/AboutPage";
-import FindCarePage from "./pages/FindCarePage";
-import FinancialHelpPage from "./pages/FinancialHelpPage";
-import QualityRatingsPage from "./pages/QualityRatingsPage";
-import CommunityResourcesPage from "./pages/CommunityResourcesPage";
-import HealthConditionsPage from "./pages/HealthConditionsPage";
-import SiteReportPage from "./pages/SiteReportPage";
-import HealthNewsPage from "./pages/HealthNewsPage";
-import CostTransparencyPage from "./pages/CostTransparencyPage";
-import PreventionWellnessPage from "./pages/PreventionWellnessPage";
-import ClinicalTrialsPage from "./pages/ClinicalTrialsPage";
-import SupportGroupsPage from "./pages/SupportGroupsPage";
-import HealthDataDashboardPage from "./pages/HealthDataDashboardPage";
-import LearnPage from "./pages/LearnPage";
-import TransportationPage from "./pages/TransportationPage";
-import ContactPage from "./pages/ContactPage";
-import EnvironmentPage from "./pages/EnvironmentPage";
-import CivicDataPage from "./pages/CivicDataPage";
+
+// Lazy load pages for performance
+const HealthMapPage = lazy(() => import("./pages/HealthMapPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const FindCarePage = lazy(() => import("./pages/FindCarePage"));
+const FinancialHelpPage = lazy(() => import("./pages/FinancialHelpPage"));
+const QualityRatingsPage = lazy(() => import("./pages/QualityRatingsPage"));
+const CommunityResourcesPage = lazy(() => import("./pages/CommunityResourcesPage"));
+const HealthConditionsPage = lazy(() => import("./pages/HealthConditionsPage"));
+const SiteReportPage = lazy(() => import("./pages/SiteReportPage"));
+const HealthNewsPage = lazy(() => import("./pages/HealthNewsPage"));
+const CostTransparencyPage = lazy(() => import("./pages/CostTransparencyPage"));
+const PreventionWellnessPage = lazy(() => import("./pages/PreventionWellnessPage"));
+const ClinicalTrialsPage = lazy(() => import("./pages/ClinicalTrialsPage"));
+const SupportGroupsPage = lazy(() => import("./pages/SupportGroupsPage"));
+const HealthDataDashboardPage = lazy(() => import("./pages/HealthDataDashboardPage"));
+const LearnPage = lazy(() => import("./pages/LearnPage"));
+const TransportationPage = lazy(() => import("./pages/TransportationPage"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
+const EnvironmentPage = lazy(() => import("./pages/EnvironmentPage"));
+const CivicDataPage = lazy(() => import("./pages/CivicDataPage"));
+const PartnershipPage = lazy(() => import("./pages/PartnershipPage"));
 
 const queryClient = new QueryClient();
+
+const PageLoader = () => (
+  <div className="flex min-h-screen items-center justify-center">
+    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+  </div>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -35,29 +45,32 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AnimatePresence mode="wait">
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/find-care" element={<FindCarePage />} />
-            <Route path="/health-map" element={<HealthMapPage />} />
-            <Route path="/financial-help" element={<FinancialHelpPage />} />
-            <Route path="/quality" element={<QualityRatingsPage />} />
-            <Route path="/conditions" element={<HealthConditionsPage />} />
-            <Route path="/resources" element={<CommunityResourcesPage />} />
-            <Route path="/news" element={<HealthNewsPage />} />
-            <Route path="/costs" element={<CostTransparencyPage />} />
-            <Route path="/wellness" element={<PreventionWellnessPage />} />
-            <Route path="/clinical-trials" element={<ClinicalTrialsPage />} />
-            <Route path="/support" element={<SupportGroupsPage />} />
-            <Route path="/learn" element={<LearnPage />} />
-            <Route path="/data" element={<HealthDataDashboardPage />} />
-            <Route path="/transportation" element={<TransportationPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/environment" element={<EnvironmentPage />} />
-            <Route path="/civic-data" element={<CivicDataPage />} />
-            <Route path="/site-report" element={<SiteReportPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/find-care" element={<FindCarePage />} />
+              <Route path="/health-map" element={<HealthMapPage />} />
+              <Route path="/financial-help" element={<FinancialHelpPage />} />
+              <Route path="/quality" element={<QualityRatingsPage />} />
+              <Route path="/conditions" element={<HealthConditionsPage />} />
+              <Route path="/resources" element={<CommunityResourcesPage />} />
+              <Route path="/news" element={<HealthNewsPage />} />
+              <Route path="/costs" element={<CostTransparencyPage />} />
+              <Route path="/wellness" element={<PreventionWellnessPage />} />
+              <Route path="/clinical-trials" element={<ClinicalTrialsPage />} />
+              <Route path="/support" element={<SupportGroupsPage />} />
+              <Route path="/learn" element={<LearnPage />} />
+              <Route path="/data" element={<HealthDataDashboardPage />} />
+              <Route path="/transportation" element={<TransportationPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/environment" element={<EnvironmentPage />} />
+              <Route path="/civic-data" element={<CivicDataPage />} />
+              <Route path="/partnerships" element={<PartnershipPage />} />
+              <Route path="/site-report" element={<SiteReportPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </AnimatePresence>
       </BrowserRouter>
     </TooltipProvider>

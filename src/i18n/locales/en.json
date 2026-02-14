@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "findCare": "Find Care",
+    "healthMap": "Health Map",
+    "environment": "Environment",
+    "civicData": "Civic Data",
+    "more": "More",
+    "financialHelp": "Financial Help",
+    "qualityRatings": "Quality Ratings",
+    "healthConditions": "Health Conditions",
+    "communityResources": "Community Resources",
+    "transportation": "Transportation & Safety",
+    "healthNews": "Health News",
+    "costTransparency": "Cost Transparency",
+    "prevention": "Prevention & Wellness",
+    "clinicalTrials": "Clinical Trials",
+    "supportGroups": "Support Groups",
+    "healthEducation": "Health Education",
+    "healthData": "Health Data",
+    "partnerships": "Partnerships",
+    "siteReport": "Site Report",
+    "about": "About",
+    "contact": "Contact Us"
+  },
+  "hero": {
+    "tagline": "A Citizen-Driven Initiative",
+    "title": "Your Guide to Resources in Michigan",
+    "subtitle": "Resources for Health, Safety, Transportation, Environment & Civic Engagement across Michigan.",
+    "search": "Search",
+    "location": "Location",
+    "condition": "Condition",
+    "service": "Service",
+    "locationPlaceholder": "City or county name...",
+    "conditionPlaceholder": "e.g. diabetes, mental health...",
+    "servicePlaceholder": "e.g. urgent care, mammogram..."
+  },
+  "crisis": {
+    "title": "Need Immediate Help?",
+    "suicideCrisis": "Suicide & Crisis Lifeline",
+    "crisisText": "Crisis Text Line",
+    "textHome": "Text HOME to 741741",
+    "resources": "United Way resource line",
+    "inCrisis": "In Crisis?",
+    "call988": "Call 988",
+    "call211": "Call 2-1-1"
+  },
+  "getHelp": "Get Help Now",
+  "footer": {
+    "findHelp": "Find Help",
+    "envCivic": "Environment & Civic",
+    "learnConnect": "Learn & Connect",
+    "about": "About",
+    "disclaimer": "This platform is an independent, non-commercial civic resource. It does not collect personal data, use cookies for tracking, display advertising, or sell information. All data is sourced from publicly available government datasets.",
+    "noAds": "No advertising · No data selling · Built to serve Michigan residents",
+    "prototype": "Prototype / Portfolio Demonstration",
+    "ethicalNote": "This project is built with an ethical, non-commercial ethos — prioritizing public benefit over profit."
+  },
+  "accessibility": {
+    "highContrast": "High Contrast",
+    "language": "Language"
+  },
+  "partnership": {
+    "title": "Partnership Portal",
+    "subtitle": "Non-profits, community organizations, and service providers can submit resources for inclusion on Michigan Access.",
+    "orgName": "Organization Name",
+    "contactName": "Contact Name",
+    "contactEmail": "Contact Email",
+    "orgType": "Organization Type",
+    "description": "Description of Services",
+    "services": "Services Offered",
+    "website": "Website",
+    "phone": "Phone",
+    "city": "City",
+    "county": "County",
+    "submit": "Submit for Review",
+    "success": "Your submission has been received and will be reviewed by our team.",
+    "nonprofit": "Non-Profit",
+    "government": "Government Agency",
+    "healthcare": "Healthcare Provider",
+    "community": "Community Organization",
+    "other": "Other"
+  }
+}

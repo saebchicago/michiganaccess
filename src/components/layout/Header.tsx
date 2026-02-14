@@ -2,48 +2,52 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Heart, ChevronDown, Download } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-
-const navLinks = [
-  { label: "Find Care", href: "/find-care" },
-  { label: "Health Map", href: "/health-map" },
-  { label: "Environment", href: "/environment" },
-  { label: "Civic Data", href: "/civic-data" },
-  {
-    label: "More",
-    children: [
-      { label: "Financial Help", href: "/financial-help" },
-      { label: "Quality Ratings", href: "/quality" },
-      { label: "Health Conditions", href: "/conditions" },
-      { label: "Community Resources", href: "/resources" },
-      { label: "Transportation & Safety", href: "/transportation" },
-      { label: "Health News", href: "/news" },
-      { label: "Cost Transparency", href: "/costs" },
-      { label: "Prevention & Wellness", href: "/wellness" },
-      { label: "Clinical Trials", href: "/clinical-trials" },
-      { label: "Support Groups", href: "/support" },
-      { label: "Health Education", href: "/learn" },
-      { label: "Health Data", href: "/data" },
-      { label: "Site Report", href: "/site-report" },
-      { label: "About", href: "/about" },
-      { label: "Contact Us", href: "/contact" },
-    ],
-  },
-];
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
+import HighContrastToggle from "@/components/shared/HighContrastToggle";
 
 const Header = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const [moreOpen, setMoreOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navLinks = [
+    { label: t("nav.findCare"), href: "/find-care" },
+    { label: t("nav.healthMap"), href: "/health-map" },
+    { label: t("nav.environment"), href: "/environment" },
+    { label: t("nav.civicData"), href: "/civic-data" },
+    {
+      label: t("nav.more"),
+      children: [
+        { label: t("nav.financialHelp"), href: "/financial-help" },
+        { label: t("nav.qualityRatings"), href: "/quality" },
+        { label: t("nav.healthConditions"), href: "/conditions" },
+        { label: t("nav.communityResources"), href: "/resources" },
+        { label: t("nav.transportation"), href: "/transportation" },
+        { label: t("nav.healthNews"), href: "/news" },
+        { label: t("nav.costTransparency"), href: "/costs" },
+        { label: t("nav.prevention"), href: "/wellness" },
+        { label: t("nav.clinicalTrials"), href: "/clinical-trials" },
+        { label: t("nav.supportGroups"), href: "/support" },
+        { label: t("nav.healthEducation"), href: "/learn" },
+        { label: t("nav.healthData"), href: "/data" },
+        { label: t("nav.partnerships"), href: "/partnerships" },
+        { label: t("nav.siteReport"), href: "/site-report" },
+        { label: t("nav.about"), href: "/about" },
+        { label: t("nav.contact"), href: "/contact" },
+      ],
+    },
+  ];
 
   const handlePrintReport = () => {
     if (location.pathname === "/site-report") {
       window.print();
     } else {
       navigate("/site-report");
-      // Wait for page to load then print
       setTimeout(() => window.print(), 2000);
     }
   };
@@ -54,12 +58,16 @@ const Header = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md"
+      role="banner"
     >
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-primary focus:text-primary-foreground focus:p-2 focus:rounded">
+        Skip to main content
+      </a>
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
+        <Link to="/" className="flex items-center gap-2.5 group" aria-label="Michigan Access Home">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-michigan">
-            <Heart className="h-5 w-5 text-primary-foreground" fill="currentColor" />
+            <Heart className="h-5 w-5 text-primary-foreground" fill="currentColor" aria-hidden="true" />
           </div>
           <div className="flex flex-col">
             <span className="text-sm font-bold leading-tight text-foreground">Michigan Access</span>
@@ -68,7 +76,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {navLinks.map((link) =>
             link.children ? (
               <div
@@ -77,9 +85,13 @@ const Header = () => {
                 onMouseEnter={() => setMoreOpen(true)}
                 onMouseLeave={() => setMoreOpen(false)}
               >
-                <button className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+                <button
+                  className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  aria-expanded={moreOpen}
+                  aria-haspopup="true"
+                >
                   {link.label}
-                  <ChevronDown className="h-3.5 w-3.5" />
+                  <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
                 </button>
                 <AnimatePresence>
                   {moreOpen && (
@@ -89,12 +101,14 @@ const Header = () => {
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.2 }}
                       className="absolute right-0 top-full mt-1 w-56 rounded-lg border border-border bg-card p-2 shadow-lg"
+                      role="menu"
                     >
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           to={child.href}
                           onClick={() => setMoreOpen(false)}
+                          role="menuitem"
                           className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted ${
                             location.pathname === child.href
                               ? "font-medium text-primary"
@@ -117,6 +131,7 @@ const Header = () => {
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
+                aria-current={location.pathname === link.href ? "page" : undefined}
               >
                 {link.label}
               </Link>
@@ -124,8 +139,10 @@ const Header = () => {
           )}
         </nav>
 
-        {/* CTA + Mobile */}
-        <div className="flex items-center gap-2">
+        {/* Actions */}
+        <div className="flex items-center gap-1">
+          <HighContrastToggle />
+          <LanguageSwitcher />
           <Button
             size="icon"
             onClick={handlePrintReport}
@@ -135,8 +152,8 @@ const Header = () => {
             <Download className="h-4 w-4" />
             <span className="sr-only">Download PDF Report</span>
           </Button>
-          <Button size="sm" className="hidden sm:flex bg-gradient-michigan hover:opacity-90 transition-opacity">
-            Get Help Now
+          <Button size="sm" className="hidden sm:flex bg-gradient-michigan hover:opacity-90 transition-opacity" asChild>
+            <a href="tel:988">{t("getHelp")}</a>
           </Button>
 
           {/* Mobile menu */}
@@ -187,7 +204,9 @@ const Header = () => {
                   )
                 )}
                 <div className="mt-6 px-3">
-                  <Button className="w-full bg-gradient-michigan">Get Help Now</Button>
+                  <Button className="w-full bg-gradient-michigan" asChild>
+                    <a href="tel:988">{t("getHelp")}</a>
+                  </Button>
                 </div>
               </div>
             </SheetContent>
