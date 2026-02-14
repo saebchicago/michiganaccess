@@ -54,7 +54,14 @@
     "disclaimer": "This platform is an independent, non-commercial civic resource. It does not collect personal data, use cookies for tracking, display advertising, or sell information. All data is sourced from publicly available government datasets.",
     "noAds": "No advertising · No data selling · Built to serve Michigan residents",
     "prototype": "Prototype / Portfolio Demonstration",
-    "ethicalNote": "This project is built with an ethical, non-commercial ethos — prioritizing public benefit over profit."
+    "ethicalNote": "This project is built with an ethical, non-commercial ethos — prioritizing public benefit over profit.",
+    "ethicalTitle": "Ethical & Non-Commercial Platform",
+    "dataSources": "Data Sources",
+    "dataSourceNote": "Some metrics may reflect a 3–12 month lag from source agencies.",
+    "methodology": "Methodology",
+    "research": "Research",
+    "impact": "Impact",
+    "technical": "Technical"
   },
   "accessibility": {
     "highContrast": "High Contrast",
