@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 
 const STORAGE_KEY = "michigan-access-prototype-banner-dismissed";
 
 export default function PrototypeBanner() {
+  const { t } = useTranslation();
   const [dismissed, setDismissed] = useState(true);
 
   useEffect(() => {
@@ -32,14 +34,14 @@ export default function PrototypeBanner() {
         <div className="container flex items-center gap-3 py-2.5">
           <BarChart3 className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
           <p className="flex-1 text-xs text-foreground leading-relaxed">
-            <span className="font-semibold">📊 Portfolio Prototype:</span>{" "}
-            Demonstrating data integration methodology using 2024–2025 public datasets.{" "}
+            <span className="font-semibold">📊 {t("prototype.title")}</span>{" "}
+            {t("prototype.description")}{" "}
             <Link to="/methodology" className="font-medium text-primary underline underline-offset-2 hover:text-primary/80">
-              View our data methodology
+              {t("prototype.viewMethodology")}
             </Link>{" "}
-            and{" "}
+            {t("prototype.and")}{" "}
             <Link to="/technical" className="font-medium text-primary underline underline-offset-2 hover:text-primary/80">
-              technical architecture
+              {t("prototype.viewTechnical")}
             </Link>.
           </p>
           <Button
