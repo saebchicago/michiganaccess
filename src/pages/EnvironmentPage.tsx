@@ -78,11 +78,11 @@ const envJusticeAreas = [
   { area: "Saginaw", issue: "Industrial legacy, flood vulnerability", pop: "44,000", priority: "Moderate" },
 ];
 
-const quickStats = [
-  { icon: Wind, label: "Air Quality Monitoring Stations", value: "94", color: "text-michigan-sky" },
-  { icon: Droplets, label: "Public Water Systems Monitored", value: "1,400+", color: "text-michigan-teal" },
-  { icon: Recycle, label: "State Recycling Rate", value: "19%", color: "text-michigan-forest" },
-  { icon: Zap, label: "Renewable Energy Share", value: "13.2%", color: "text-michigan-gold" },
+const getQuickStats = (t: (key: string) => string) => [
+  { icon: Wind, label: t('environment.airMonitoring'), value: "94", color: "text-michigan-sky" },
+  { icon: Droplets, label: t('environment.waterSystems'), value: "1,400+", color: "text-michigan-teal" },
+  { icon: Recycle, label: t('environment.recyclingRate'), value: "19%", color: "text-michigan-forest" },
+  { icon: Zap, label: t('environment.renewableShare'), value: "13.2%", color: "text-michigan-gold" },
 ];
 
 const EnvironmentPage = () => {
@@ -105,7 +105,7 @@ const EnvironmentPage = () => {
 
   return (
     <Layout>
-      <Breadcrumbs items={[{ label: "Environment & Sustainability" }]} />
+      <Breadcrumbs items={[{ label: t('environment.badge') }]} />
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-michigan-forest/10 via-michigan-teal/5 to-background py-16 md:py-20">
@@ -129,7 +129,7 @@ const EnvironmentPage = () => {
       <section className="border-b border-border bg-card py-6">
         <div className="container">
           <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {quickStats.map((stat) => (
+            {getQuickStats(t).map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="flex items-center gap-3 rounded-lg bg-background p-4">
                 <stat.icon className={`h-8 w-8 ${stat.color} shrink-0`} />
                 <div>
@@ -163,13 +163,13 @@ const EnvironmentPage = () => {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Wind className="h-5 w-5 text-michigan-sky" />
-                        {isLiveData ? "Asthma Prevalence by County" : "Air Quality Index by City"}
+                        {isLiveData ? t('environment.asthmaPrevalence') : t('environment.aqiByCity')}
                         {cdcLoading && <Loader2 className="ml-2 h-4 w-4 animate-spin text-muted-foreground" />}
                       </CardTitle>
                       <CardDescription>
                         {isLiveData
-                          ? `Live CDC PLACES data — ${cdcData?.source || "CDC Open Data"}`
-                          : "EPA monitoring station readings (fallback data)"}
+                          ? `${t('environment.liveData')} — ${cdcData?.source || "CDC Open Data"}`
+                          : t('environment.fallbackData')}
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -217,9 +217,9 @@ const EnvironmentPage = () => {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Droplets className="h-5 w-5 text-michigan-teal" />
-                        Water Quality Violations Trend
+                        {t('environment.waterViolations')}
                       </CardTitle>
-                      <CardDescription>Public water system violations across Michigan (2019–2024) · Source: Michigan EGLE</CardDescription>
+                      <CardDescription>{t('environment.waterViolationsDesc')}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
@@ -233,7 +233,7 @@ const EnvironmentPage = () => {
                         </LineChart>
                       </ResponsiveContainer>
                       <p className="mt-4 text-sm text-muted-foreground">
-                        <strong>Improving trend:</strong> Violations decreased 50% since 2019 with ongoing Flint, Benton Harbor, and statewide infrastructure investments.
+                        <strong>{t('environment.improvingTrend')}</strong> {t('environment.improvingTrendDesc')}
                       </p>
                     </CardContent>
                   </Card>
@@ -246,12 +246,12 @@ const EnvironmentPage = () => {
                   <CardContent className="flex flex-col gap-4 p-6 md:flex-row md:items-center">
                     <AlertTriangle className="h-10 w-10 shrink-0 text-michigan-gold" />
                     <div className="flex-1">
-                      <h3 className="font-semibold text-foreground">Active Water Advisories</h3>
-                      <p className="text-sm text-muted-foreground">Check your local utility for the latest boil-water and do-not-drink advisories currently in effect across Michigan communities.</p>
+                      <h3 className="font-semibold text-foreground">{t('environment.activeAdvisories')}</h3>
+                      <p className="text-sm text-muted-foreground">{t('environment.advisoriesDesc')}</p>
                     </div>
                     <Button variant="outline" className="shrink-0" asChild>
                       <a href="https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health" target="_blank" rel="noopener">
-                        Check Advisories <ExternalLink className="ml-2 h-3 w-3" />
+                        {t('environment.checkAdvisories')} <ExternalLink className="ml-2 h-3 w-3" />
                       </a>
                     </Button>
                   </CardContent>
@@ -267,9 +267,9 @@ const EnvironmentPage = () => {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Zap className="h-5 w-5 text-michigan-gold" />
-                        Renewable Energy Growth in Michigan
+                        {t('environment.renewableGrowth')}
                       </CardTitle>
-                      <CardDescription>Percentage of total energy generation from renewable sources (2018–2024) · Source: U.S. EIA</CardDescription>
+                      <CardDescription>{t('environment.renewableGrowthDesc')}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={350}>
@@ -299,7 +299,7 @@ const EnvironmentPage = () => {
                         <h3 className="mb-2 font-semibold text-foreground">{item.title}</h3>
                         <p className="mb-4 text-sm text-muted-foreground">{item.desc}</p>
                         <a href={item.link} target="_blank" rel="noopener" className="text-sm font-medium text-primary hover:underline">
-                          Learn more <ExternalLink className="ml-1 inline h-3 w-3" />
+                          {t('environment.learnMore')} <ExternalLink className="ml-1 inline h-3 w-3" />
                         </a>
                       </CardContent>
                     </Card>

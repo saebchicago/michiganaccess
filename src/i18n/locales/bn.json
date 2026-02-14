@@ -1,4 +1,7 @@
 {
+  "breadcrumbs": {
+    "home": "হোম"
+  },
   "nav": {
     "findCare": "সেবা খুঁজুন",
     "healthMap": "স্বাস্থ্য মানচিত্র",
