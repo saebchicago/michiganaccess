@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "findCare": "Buscar Atención",
+    "healthMap": "Mapa de Salud",
+    "environment": "Medio Ambiente",
+    "civicData": "Datos Cívicos",
+    "more": "Más",
+    "financialHelp": "Ayuda Financiera",
+    "qualityRatings": "Calificaciones de Calidad",
+    "healthConditions": "Condiciones de Salud",
+    "communityResources": "Recursos Comunitarios",
+    "transportation": "Transporte y Seguridad",
+    "healthNews": "Noticias de Salud",
+    "costTransparency": "Transparencia de Costos",
+    "prevention": "Prevención y Bienestar",
+    "clinicalTrials": "Ensayos Clínicos",
+    "supportGroups": "Grupos de Apoyo",
+    "healthEducation": "Educación en Salud",
+    "healthData": "Datos de Salud",
+    "partnerships": "Asociaciones",
+    "siteReport": "Informe del Sitio",
+    "about": "Acerca de",
+    "contact": "Contáctenos"
+  },
+  "hero": {
+    "tagline": "Una Iniciativa Ciudadana",
+    "title": "Su Guía de Recursos en Michigan",
+    "subtitle": "Recursos de Salud, Seguridad, Transporte, Medio Ambiente y Participación Cívica en Michigan.",
+    "search": "Buscar",
+    "location": "Ubicación",
+    "condition": "Condición",
+    "service": "Servicio",
+    "locationPlaceholder": "Ciudad o condado...",
+    "conditionPlaceholder": "ej. diabetes, salud mental...",
+    "servicePlaceholder": "ej. atención urgente, mamografía..."
+  },
+  "crisis": {
+    "title": "¿Necesita Ayuda Inmediata?",
+    "suicideCrisis": "Línea de Crisis y Suicidio",
+    "crisisText": "Línea de Texto de Crisis",
+    "textHome": "Envíe HOME al 741741",
+    "resources": "Línea de recursos United Way",
+    "inCrisis": "¿En Crisis?",
+    "call988": "Llame al 988",
+    "call211": "Llame al 2-1-1"
+  },
+  "getHelp": "Obtener Ayuda Ahora",
+  "footer": {
+    "findHelp": "Encontrar Ayuda",
+    "envCivic": "Medio Ambiente y Cívico",
+    "learnConnect": "Aprender y Conectar",
+    "about": "Acerca de",
+    "disclaimer": "Esta plataforma es un recurso cívico independiente y no comercial. No recopila datos personales, no usa cookies para rastreo, no muestra publicidad ni vende información. Todos los datos provienen de conjuntos de datos gubernamentales disponibles públicamente.",
+    "noAds": "Sin publicidad · Sin venta de datos · Creado para servir a los residentes de Michigan",
+    "prototype": "Prototipo / Demostración de Portafolio",
+    "ethicalNote": "Este proyecto está construido con una ética no comercial — priorizando el beneficio público sobre las ganancias."
+  },
+  "accessibility": {
+    "highContrast": "Alto Contraste",
+    "language": "Idioma"
+  },
+  "partnership": {
+    "title": "Portal de Asociaciones",
+    "subtitle": "Las organizaciones sin fines de lucro, organizaciones comunitarias y proveedores de servicios pueden enviar recursos para su inclusión en Michigan Access.",
+    "orgName": "Nombre de la Organización",
+    "contactName": "Nombre del Contacto",
+    "contactEmail": "Correo Electrónico del Contacto",
+    "orgType": "Tipo de Organización",
+    "description": "Descripción de Servicios",
+    "services": "Servicios Ofrecidos",
+    "website": "Sitio Web",
+    "phone": "Teléfono",
+    "city": "Ciudad",
+    "county": "Condado",
+    "submit": "Enviar para Revisión",
+    "success": "Su envío ha sido recibido y será revisado por nuestro equipo.",
+    "nonprofit": "Sin Fines de Lucro",
+    "government": "Agencia Gubernamental",
+    "healthcare": "Proveedor de Salud",
+    "community": "Organización Comunitaria",
+    "other": "Otro"
+  }
+}

@@ -275,6 +275,60 @@ export type Database = {
         }
         Relationships: []
       }
+      partnership_submissions: {
+        Row: {
+          city: string | null
+          contact_email: string
+          contact_name: string
+          county: string | null
+          description: string
+          id: string
+          organization_name: string
+          organization_type: string
+          phone: string | null
+          reviewed_at: string | null
+          reviewer_notes: string | null
+          services_offered: string[] | null
+          status: string
+          submitted_at: string
+          website: string | null
+        }
+        Insert: {
+          city?: string | null
+          contact_email: string
+          contact_name: string
+          county?: string | null
+          description: string
+          id?: string
+          organization_name: string
+          organization_type?: string
+          phone?: string | null
+          reviewed_at?: string | null
+          reviewer_notes?: string | null
+          services_offered?: string[] | null
+          status?: string
+          submitted_at?: string
+          website?: string | null
+        }
+        Update: {
+          city?: string | null
+          contact_email?: string
+          contact_name?: string
+          county?: string | null
+          description?: string
+          id?: string
+          organization_name?: string
+          organization_type?: string
+          phone?: string | null
+          reviewed_at?: string | null
+          reviewer_notes?: string | null
+          services_offered?: string[] | null
+          status?: string
+          submitted_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       providers: {
         Row: {
           accepting_new_patients: boolean | null
