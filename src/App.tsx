@@ -31,6 +31,10 @@ const CivicDataPage = lazy(() => import("./pages/CivicDataPage"));
 const PartnershipPage = lazy(() => import("./pages/PartnershipPage"));
 const CommunityEventsPage = lazy(() => import("./pages/CommunityEventsPage"));
 const EmbedWidget = lazy(() => import("./pages/EmbedWidget"));
+const MethodologyPage = lazy(() => import("./pages/MethodologyPage"));
+const ResearchPage = lazy(() => import("./pages/ResearchPage"));
+const ImpactPage = lazy(() => import("./pages/ImpactPage"));
+const TechnicalPage = lazy(() => import("./pages/TechnicalPage"));
 
 const queryClient = new QueryClient();
 
@@ -72,6 +76,10 @@ const App = () => (
               <Route path="/events" element={<CommunityEventsPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/embed" element={<EmbedWidget />} />
+              <Route path="/methodology" element={<MethodologyPage />} />
+              <Route path="/research" element={<ResearchPage />} />
+              <Route path="/impact" element={<ImpactPage />} />
+              <Route path="/technical" element={<TechnicalPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
