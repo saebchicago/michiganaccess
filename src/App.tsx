@@ -29,6 +29,7 @@ const ContactPage = lazy(() => import("./pages/ContactPage"));
 const EnvironmentPage = lazy(() => import("./pages/EnvironmentPage"));
 const CivicDataPage = lazy(() => import("./pages/CivicDataPage"));
 const PartnershipPage = lazy(() => import("./pages/PartnershipPage"));
+const EmbedWidget = lazy(() => import("./pages/EmbedWidget"));
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,7 @@ const App = () => (
               <Route path="/partnerships" element={<PartnershipPage />} />
               <Route path="/site-report" element={<SiteReportPage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/embed" element={<EmbedWidget />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

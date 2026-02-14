@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import UpdateLog from "@/components/shared/UpdateLog";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import {
@@ -376,6 +377,11 @@ export default function AboutPage() {
             ))}
           </div>
         </section>
+
+        <Separator />
+
+        {/* Update Log */}
+        <UpdateLog />
 
         <Separator />
 
