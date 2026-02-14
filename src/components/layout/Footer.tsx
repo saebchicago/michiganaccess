@@ -44,13 +44,13 @@ const Footer = forwardRef(() => {
       links: [
         { label: t("nav.about"), href: "/about" },
         { label: t("nav.costTransparency"), href: "/costs" },
-        { label: "Data Sources", href: "/about#data-sources" },
+        { label: t("footer.dataSources"), href: "/about#data-sources" },
         { label: t("nav.siteReport"), href: "/site-report" },
         { label: t("nav.contact"), href: "/contact" },
-        { label: "Methodology", href: "/methodology" },
-        { label: "Research", href: "/research" },
-        { label: "Impact", href: "/impact" },
-        { label: "Technical", href: "/technical" },
+        { label: t("footer.methodology"), href: "/methodology" },
+        { label: t("footer.research"), href: "/research" },
+        { label: t("footer.impact"), href: "/impact" },
+        { label: t("footer.technical"), href: "/technical" },
       ],
     },
   ];
@@ -113,7 +113,7 @@ const Footer = forwardRef(() => {
           <div className="flex items-start gap-3">
             <Scale className="h-5 w-5 text-primary mt-0.5 shrink-0" aria-hidden="true" />
             <div>
-              <p className="text-xs font-semibold text-foreground mb-1">Ethical & Non-Commercial Platform</p>
+              <p className="text-xs font-semibold text-foreground mb-1">{t("footer.ethicalTitle")}</p>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 {t("footer.disclaimer")}
               </p>
@@ -134,14 +134,14 @@ const Footer = forwardRef(() => {
             <a href="https://www.hospitalsafetygrade.org/" target="_blank" rel="noopener" className="text-primary underline">Leapfrog Safety Grades</a>,{" "}
             <a href="https://www.nursingworld.org/organizational-programs/magnet/" target="_blank" rel="noopener" className="text-primary underline">ANCC Magnet Recognition</a>, and{" "}
             <a href="https://www.michigan.gov/mdhhs" target="_blank" rel="noopener" className="text-primary underline">Michigan DHHS</a>.
-            {" "}Some metrics may reflect a 3–12 month lag from source agencies.
+            {" "}{t("footer.dataSourceNote")}
           </p>
         </div>
 
         {/* Bottom */}
         <div className="mt-6 flex flex-col items-center gap-4 border-t border-border pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
           <p className="text-xs text-muted-foreground">
-            Data Sources:{" "}
+            {t("footer.dataSources")}:{" "}
             <a href="https://data.cms.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">CMS</a>,{" "}
             <a href="https://data.hrsa.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">HRSA</a>,{" "}
             <a href="https://www.michigan.gov/mdhhs" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan DHHS</a>,{" "}

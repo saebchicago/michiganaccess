@@ -54,7 +54,14 @@
     "disclaimer": "Esta plataforma es un recurso cívico independiente y no comercial. No recopila datos personales, no usa cookies para rastreo, no muestra publicidad ni vende información. Todos los datos provienen de conjuntos de datos gubernamentales disponibles públicamente.",
     "noAds": "Sin publicidad · Sin venta de datos · Creado para servir a los residentes de Michigan",
     "prototype": "Prototipo / Demostración de Portafolio",
-    "ethicalNote": "Este proyecto está construido con una ética no comercial — priorizando el beneficio público sobre las ganancias."
+    "ethicalNote": "Este proyecto está construido con una ética no comercial — priorizando el beneficio público sobre las ganancias.",
+    "ethicalTitle": "Plataforma Ética y No Comercial",
+    "dataSources": "Fuentes de Datos",
+    "dataSourceNote": "Algunas métricas pueden reflejar un retraso de 3 a 12 meses desde las agencias fuente.",
+    "methodology": "Metodología",
+    "research": "Investigación",
+    "impact": "Impacto",
+    "technical": "Técnico"
   },
   "accessibility": {
     "highContrast": "Alto Contraste",
