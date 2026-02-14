@@ -39,6 +39,10 @@ const Header = () => {
         { label: t("nav.siteReport"), href: "/site-report" },
         { label: t("nav.about"), href: "/about" },
         { label: t("nav.contact"), href: "/contact" },
+        { label: "Methodology", href: "/methodology" },
+        { label: "Research", href: "/research" },
+        { label: "Impact", href: "/impact" },
+        { label: "Technical", href: "/technical" },
       ],
     },
   ];
@@ -100,7 +104,7 @@ const Header = () => {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute right-0 top-full mt-1 w-56 rounded-lg border border-border bg-card p-2 shadow-lg"
+                      className="absolute right-0 top-full mt-1 w-56 max-h-[70vh] overflow-y-auto rounded-lg border border-border bg-card p-2 shadow-lg"
                       role="menu"
                     >
                       {link.children.map((child) => (
