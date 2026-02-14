@@ -87,11 +87,11 @@ const quickStats = [
 const EnvironmentPage = () => {
   const [activeTab, setActiveTab] = useState("air-water");
 
-  // Fetch live CDC PLACES data for Michigan counties (asthma prevalence as air-health proxy)
+  // Fetch live CDC PLACES data for Michigan counties (no measure filter — get diverse health metrics)
   const { data: cdcData, isLoading: cdcLoading, isError: cdcError } = useCDCData(
     "places-county",
-    "Current asthma among adults aged >=18 years",
-    30
+    "",
+    50
   );
 
   // Use live CDC data when available, fallback otherwise
