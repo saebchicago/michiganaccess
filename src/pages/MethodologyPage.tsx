@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -18,7 +19,7 @@ const fade = {
 const flowSteps = [
   {
     icon: Database,
-    title: "Public Data Sources",
+    titleKey: "publicDataSources",
     color: "bg-primary/10 text-primary",
     items: [
       "Federal: CMS, CDC PLACES, HRSA, Census",
@@ -28,7 +29,7 @@ const flowSteps = [
   },
   {
     icon: Shield,
-    title: "Quality Assurance Layer",
+    titleKey: "qualityAssurance",
     color: "bg-michigan-forest/10 text-michigan-forest",
     items: [
       "Automated validation checks",
@@ -38,7 +39,7 @@ const flowSteps = [
   },
   {
     icon: Users,
-    title: "User-Centered Presentation",
+    titleKey: "userCentered",
     color: "bg-michigan-teal/10 text-michigan-teal",
     items: [
       "Plain language (8th-grade level)",
@@ -49,7 +50,7 @@ const flowSteps = [
   },
   {
     icon: Heart,
-    title: "Community Outcomes",
+    titleKey: "communityOutcomes",
     color: "bg-michigan-coral/10 text-michigan-coral",
     items: [
       "Reduced barriers to care",
@@ -94,21 +95,22 @@ const scoringWeights = [
 ];
 
 export default function MethodologyPage() {
-  usePageMeta({ title: "Data Methodology", description: "A replicable framework for integrating fragmented public datasets into accessible, equity-centered civic infrastructure.", path: "/methodology" });
+  const { t } = useTranslation();
+  usePageMeta({ title: t("methodologyPage.badge"), description: t("methodologyPage.subtitle"), path: "/methodology" });
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
-          <Breadcrumbs items={[{ label: "Methodology" }]} />
+          <Breadcrumbs items={[{ label: t("methodologyPage.badge") }]} />
           <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
-            Data Methodology
+            {t("methodologyPage.badge")}
           </motion.span>
           <motion.h1 variants={fade} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
-            How We Transform Public Data Into Community Impact
+            {t("methodologyPage.title")}
           </motion.h1>
           <motion.p variants={fade} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            A replicable framework for integrating fragmented datasets into accessible, equity-centered civic infrastructure.
+            {t("methodologyPage.subtitle")}
           </motion.p>
         </div>
       </section>
@@ -122,21 +124,21 @@ export default function MethodologyPage() {
                 <Database className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Data Integration Framework</h2>
-                <p className="text-sm text-muted-foreground">From raw public data to actionable community resource</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("methodologyPage.frameworkTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("methodologyPage.frameworkSubtitle")}</p>
               </div>
             </div>
           </motion.div>
 
           <div className="grid gap-4 md:grid-cols-4">
             {flowSteps.map((step, i) => (
-              <motion.div key={step.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i} className="relative">
+              <motion.div key={step.titleKey} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i} className="relative">
                 <Card className="h-full hover-lift">
                   <CardContent className="pt-6">
                     <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg ${step.color.split(" ")[0]}`}>
                       <step.icon className={`h-5 w-5 ${step.color.split(" ")[1]}`} />
                     </div>
-                    <h3 className="mb-2 text-sm font-bold text-foreground">{step.title}</h3>
+                    <h3 className="mb-2 text-sm font-bold text-foreground">{t(`methodologyPage.${step.titleKey}`)}</h3>
                     <ul className="space-y-1">
                       {step.items.map((item) => (
                         <li key={item} className="flex items-start gap-1.5 text-xs text-muted-foreground">
@@ -165,8 +167,8 @@ export default function MethodologyPage() {
                 <Heart className="h-5 w-5 text-michigan-coral" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Equity-Centered Design Principles</h2>
-                <p className="text-sm text-muted-foreground">Every decision filtered through health equity</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("methodologyPage.equityTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("methodologyPage.equitySubtitle")}</p>
               </div>
             </div>
           </motion.div>
@@ -181,7 +183,7 @@ export default function MethodologyPage() {
                     <p className="mb-3 text-xs text-muted-foreground">{p.desc}</p>
                     <div className="rounded-md bg-muted/50 p-2.5 border border-border">
                       <p className="text-[11px] text-muted-foreground">
-                        <span className="font-semibold text-foreground">Example:</span> {p.example}
+                        <span className="font-semibold text-foreground">{t("methodologyPage.example")}:</span> {p.example}
                       </p>
                     </div>
                   </CardContent>
@@ -201,15 +203,15 @@ export default function MethodologyPage() {
                 <BarChart3 className="h-5 w-5 text-michigan-forest" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Quality Ranking Methodology</h2>
-                <p className="text-sm text-muted-foreground">Transparent, reproducible composite scoring</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("methodologyPage.rankingTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("methodologyPage.rankingSubtitle")}</p>
               </div>
             </div>
           </motion.div>
 
           {/* Formula */}
           <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-6">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">Composite Score Formula</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">{t("methodologyPage.formulaLabel")}</p>
             <p className="font-mono text-sm text-foreground leading-relaxed">
               COMPOSITE = <span className="text-primary font-bold">40%</span> Geographic Access + <span className="text-michigan-forest font-bold">30%</span> Clinical Quality + <span className="text-michigan-teal font-bold">15%</span> Service Comprehensiveness + <span className="text-michigan-sky font-bold">15%</span> Digital Accessibility
             </p>
@@ -241,7 +243,7 @@ export default function MethodologyPage() {
           <div className="rounded-xl border-2 border-michigan-coral/30 bg-michigan-coral/5 p-6">
             <div className="flex items-center gap-2 mb-3">
               <Shield className="h-5 w-5 text-michigan-coral" />
-              <h3 className="text-sm font-bold text-foreground">Equity Override Rules</h3>
+              <h3 className="text-sm font-bold text-foreground">{t("methodologyPage.equityOverrideTitle")}</h3>
             </div>
             <ul className="space-y-2">
               {[
@@ -261,7 +263,7 @@ export default function MethodologyPage() {
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             <Card className="border-destructive/20">
               <CardContent className="pt-6">
-                <h4 className="mb-3 text-sm font-bold text-destructive">Standard Distance Ranking</h4>
+                <h4 className="mb-3 text-sm font-bold text-destructive">{t("methodologyPage.standardRanking")}</h4>
                 <ol className="space-y-2 text-xs text-muted-foreground">
                   <li className="flex gap-2"><span className="font-bold text-foreground">1.</span> Large Health System — 2.1 mi</li>
                   <li className="flex gap-2"><span className="font-bold text-foreground">2.</span> Specialty Practice — 3.4 mi</li>
@@ -273,7 +275,7 @@ export default function MethodologyPage() {
             </Card>
             <Card className="border-michigan-forest/20">
               <CardContent className="pt-6">
-                <h4 className="mb-3 text-sm font-bold text-michigan-forest">Equity-Adjusted Ranking</h4>
+                <h4 className="mb-3 text-sm font-bold text-michigan-forest">{t("methodologyPage.equityRanking")}</h4>
                 <ol className="space-y-2 text-xs text-muted-foreground">
                   <li className="flex gap-2"><span className="font-bold text-foreground">1.</span> Large Health System — 2.1 mi <span className="text-michigan-forest">· Quality: A</span></li>
                   <li className="flex gap-2"><span className="font-bold text-foreground">2.</span> <span className="font-semibold text-michigan-forest">FQHC — 5.8 mi · "No one turned away"</span></li>

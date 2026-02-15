@@ -471,7 +471,10 @@
     "transportTitle": "النقل كبنية تحتية صحية",
     "transportSubtitle": "بحث العمليات للوصول الخارجي",
     "marketIntelTitle": "البيانات العامة كذكاء سوقي",
-    "marketIntelSubtitle": "تحليل استراتيجي لتطوير السوق"
+    "marketIntelSubtitle": "تحليل استراتيجي لتطوير السوق",
+    "ambulatoryTitle": "مقاييس عمليات العيادات الخارجية",
+    "ambulatorySubtitle": "مكاسب كفاءة مبنية على البيانات لإدارة مراكز العيادات الخارجية",
+    "ambulatoryNote": "مقاييس مستمدة من نمذجة بحوث العمليات باستخدام بيانات HPSA والنقل والاستخدام العامة. التوقعات مبنية على أدبيات تحسين العيادات الخارجية المراجعة من الأقران."
   },
   "technicalPage": {
     "badge": "البنية التقنية",
@@ -492,6 +495,9 @@
     "providersCount": "مقدمو الخدمات",
     "horizontalScaling": "التوسع الأفقي",
     "geoCDN": "CDN جغرافي",
-    "whiteLabelReady": "جاهز للعلامة البيضاء"
+    "whiteLabelReady": "جاهز للعلامة البيضاء",
+    "interopTitle": "معايير التشغيل البيني للرعاية الصحية",
+    "interopSubtitle": "محاذاة FHIR و HL7 و USCDI للتكامل مع أنظمة الصحة",
+    "interopNote": "بنية مصممة للتكامل المستقبلي مع EHR/HIE. نماذج البيانات تُعيَّن إلى موارد FHIR R4، مما يتيح تشغيلاً بينياً سلساً مع أنظمة Trinity Health و Corewell Health و HFHS."
   }
 }

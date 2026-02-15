@@ -471,7 +471,10 @@
     "transportTitle": "Transporte como Infraestructura de Salud",
     "transportSubtitle": "Investigación de Operaciones para Acceso Ambulatorio",
     "marketIntelTitle": "Datos Públicos como Inteligencia de Mercado",
-    "marketIntelSubtitle": "Análisis Estratégico para Desarrollo de Mercado"
+    "marketIntelSubtitle": "Análisis Estratégico para Desarrollo de Mercado",
+    "ambulatoryTitle": "Métricas de Operaciones Ambulatorias",
+    "ambulatorySubtitle": "Ganancias de eficiencia basadas en datos para la gestión de centros ambulatorios",
+    "ambulatoryNote": "Métricas derivadas de modelos de investigación de operaciones usando datos públicos de HPSA, tránsito y utilización. Proyecciones basadas en literatura revisada por pares sobre optimización ambulatoria."
   },
   "technicalPage": {
     "badge": "Arquitectura Técnica",
@@ -492,6 +495,9 @@
     "providersCount": "Proveedores",
     "horizontalScaling": "Escalado Horizontal",
     "geoCDN": "CDN Geográfico",
-    "whiteLabelReady": "Listo para Marca Blanca"
+    "whiteLabelReady": "Listo para Marca Blanca",
+    "interopTitle": "Estándares de Interoperabilidad Sanitaria",
+    "interopSubtitle": "Alineación con FHIR, HL7 y USCDI para integración con sistemas de salud",
+    "interopNote": "Arquitectura diseñada para futura integración con EHR/HIE. Los modelos de datos se mapean a recursos FHIR R4, permitiendo interoperabilidad fluida con los sistemas de Trinity Health, Corewell Health y HFHS."
   }
 }

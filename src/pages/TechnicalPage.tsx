@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -7,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import {
   Monitor, Server, Database, Shield, Zap, Globe,
   ArrowDown, CheckCircle2, Layers, Lock, Eye,
-  Smartphone, BarChart3, Code, Cloud
+  Smartphone, BarChart3, Code, Cloud, FileText, Link2, Share2
 } from "lucide-react";
 
 const fade = {
@@ -17,7 +18,7 @@ const fade = {
 
 const archLayers = [
   {
-    title: "User Layer",
+    titleKey: "userLayer",
     icon: Monitor,
     color: "bg-primary text-primary-foreground",
     items: [
@@ -27,7 +28,7 @@ const archLayers = [
     ],
   },
   {
-    title: "Application Layer",
+    titleKey: "appLayer",
     icon: Code,
     color: "bg-michigan-teal text-accent-foreground",
     items: [
@@ -37,7 +38,7 @@ const archLayers = [
     ],
   },
   {
-    title: "Edge Compute Layer",
+    titleKey: "edgeLayer",
     icon: Cloud,
     color: "bg-michigan-forest text-primary-foreground",
     items: [
@@ -47,7 +48,7 @@ const archLayers = [
     ],
   },
   {
-    title: "Data Layer",
+    titleKey: "dataLayer",
     icon: Database,
     color: "bg-michigan-navy text-primary-foreground",
     items: [
@@ -66,34 +67,56 @@ const securityItems = [
 ];
 
 const scalabilityMetrics = [
-  { label: "Page Views/Month", value: "1M+", desc: "With edge caching" },
-  { label: "p95 Page Load", value: "<3s", desc: "Sub-3-second latency" },
-  { label: "Counties Covered", value: "83", desc: "All Michigan counties" },
-  { label: "Providers", value: "20,000+", desc: "Facilities + individual providers" },
+  { labelKey: "pageViews", value: "1M+", desc: "With edge caching" },
+  { labelKey: "pageLoad", value: "<3s", desc: "Sub-3-second latency" },
+  { labelKey: "countiesCovered", value: "83", desc: "All Michigan counties" },
+  { labelKey: "providersCount", value: "20,000+", desc: "Facilities + individual providers" },
 ];
 
 const growthPlan = [
-  { title: "Horizontal Scaling", desc: "Connection pooling + read replicas for high-traffic periods", icon: Server },
-  { title: "Geographic CDN", desc: "CDN distribution for statewide latency <100ms", icon: Globe },
-  { title: "White-Label Ready", desc: "Replicable architecture for other states (Ohio, Indiana, Wisconsin)", icon: Layers },
+  { titleKey: "horizontalScaling", desc: "Connection pooling + read replicas for high-traffic periods", icon: Server },
+  { titleKey: "geoCDN", desc: "CDN distribution for statewide latency <100ms", icon: Globe },
+  { titleKey: "whiteLabelReady", desc: "Replicable architecture for other states (Ohio, Indiana, Wisconsin)", icon: Layers },
+];
+
+const interopStandards = [
+  {
+    icon: Share2,
+    title: "FHIR R4 (Fast Healthcare Interoperability Resources)",
+    desc: "Data model aligned with HL7 FHIR R4 resource types. Provider directories map to Practitioner, PractitionerRole, Organization, and Location resources. Enables future integration with health system EHRs and HIEs.",
+    tags: ["HL7 FHIR R4", "RESTful API", "JSON"],
+  },
+  {
+    icon: FileText,
+    title: "USCDI v3 (US Core Data for Interoperability)",
+    desc: "Data elements mapped to ONC's USCDI standard for patient access and clinical data exchange. Supports CMS Interoperability & Patient Access final rule compliance for partner health systems.",
+    tags: ["ONC USCDI v3", "Patient Access API", "21st Century Cures"],
+  },
+  {
+    icon: Link2,
+    title: "HL7 CDA & ADT Integration-Ready",
+    desc: "Architecture supports ingestion of HL7 v2 ADT messages and CDA documents for real-time bed availability, ED wait times, and discharge planning — critical for ambulatory network optimization.",
+    tags: ["HL7 v2", "CDA R2", "ADT Messages"],
+  },
 ];
 
 export default function TechnicalPage() {
-  usePageMeta({ title: "Technical Architecture", description: "Production-grade architecture with public sector considerations for scale and impact.", path: "/technical" });
+  const { t } = useTranslation();
+  usePageMeta({ title: t("technicalPage.badge"), description: t("technicalPage.subtitle"), path: "/technical" });
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-navy/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
-          <Breadcrumbs items={[{ label: "Technical Architecture" }]} />
+          <Breadcrumbs items={[{ label: t("technicalPage.badge") }]} />
           <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-michigan-navy/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-navy">
-            Technical Architecture
+            {t("technicalPage.badge")}
           </motion.span>
           <motion.h1 variants={fade} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
-            Built for Scale, Designed for Impact
+            {t("technicalPage.title")}
           </motion.h1>
           <motion.p variants={fade} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Production-grade architecture with public sector considerations.
+            {t("technicalPage.subtitle")}
           </motion.p>
         </div>
       </section>
@@ -107,21 +130,21 @@ export default function TechnicalPage() {
                 <Layers className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">System Architecture</h2>
-                <p className="text-sm text-muted-foreground">Four-layer stack with security at every tier</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("technicalPage.archTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("technicalPage.archSubtitle")}</p>
               </div>
             </div>
           </motion.div>
 
           <div className="space-y-3">
             {archLayers.map((layer, i) => (
-              <motion.div key={layer.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
+              <motion.div key={layer.titleKey} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
                 <Card className="overflow-hidden">
                   <CardContent className="p-0">
                     <div className="flex flex-col sm:flex-row">
                       <div className={`flex items-center gap-3 px-5 py-4 sm:w-56 ${layer.color}`}>
                         <layer.icon className="h-5 w-5" />
-                        <span className="text-sm font-bold">{layer.title}</span>
+                        <span className="text-sm font-bold">{t(`technicalPage.${layer.titleKey}`)}</span>
                       </div>
                       <div className="flex-1 p-4">
                         <ul className="space-y-1">
@@ -149,7 +172,7 @@ export default function TechnicalPage() {
           <div className="mt-8 rounded-xl border-2 border-michigan-forest/20 bg-michigan-forest/5 p-6">
             <div className="flex items-center gap-2 mb-4">
               <Shield className="h-5 w-5 text-michigan-forest" />
-              <h3 className="text-sm font-bold text-foreground">Security & Compliance</h3>
+              <h3 className="text-sm font-bold text-foreground">{t("technicalPage.securityTitle")}</h3>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               {securityItems.map((s) => (
@@ -164,6 +187,56 @@ export default function TechnicalPage() {
 
         <Separator />
 
+        {/* Healthcare Interoperability Standards - NEW */}
+        <section>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
+                <Share2 className="h-5 w-5 text-michigan-coral" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">{t("technicalPage.interopTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("technicalPage.interopSubtitle")}</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="space-y-4">
+            {interopStandards.map((std, i) => (
+              <motion.div key={std.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
+                <Card className="hover-lift">
+                  <CardContent className="pt-6">
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-michigan-coral/10">
+                        <std.icon className="h-5 w-5 text-michigan-coral" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="mb-1 text-sm font-bold text-foreground">{std.title}</h4>
+                        <p className="mb-3 text-xs text-muted-foreground leading-relaxed">{std.desc}</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {std.tags.map((tag) => (
+                            <span key={tag} className="rounded-full bg-michigan-coral/10 px-2.5 py-0.5 text-[10px] font-semibold text-michigan-coral">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-6 rounded-lg border border-border bg-muted/50 p-4">
+            <p className="text-xs text-muted-foreground">
+              <span className="font-semibold text-foreground">{t("technicalPage.interopNote")}</span>
+            </p>
+          </div>
+        </section>
+
+        <Separator />
+
         {/* Scalability */}
         <section>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
@@ -172,20 +245,19 @@ export default function TechnicalPage() {
                 <Zap className="h-5 w-5 text-michigan-teal" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Scalability Strategy</h2>
-                <p className="text-sm text-muted-foreground">Current capacity and growth plan</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("technicalPage.scalabilityTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("technicalPage.scalabilitySubtitle")}</p>
               </div>
             </div>
           </motion.div>
 
-          {/* Current metrics */}
           <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-8">
             {scalabilityMetrics.map((m, i) => (
-              <motion.div key={m.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
+              <motion.div key={m.labelKey} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
                 <Card className="text-center hover-lift">
                   <CardContent className="pt-6 pb-4">
                     <p className="text-2xl font-bold text-primary">{m.value}</p>
-                    <p className="text-xs font-semibold text-foreground mt-1">{m.label}</p>
+                    <p className="text-xs font-semibold text-foreground mt-1">{t(`technicalPage.${m.labelKey}`)}</p>
                     <p className="text-[10px] text-muted-foreground">{m.desc}</p>
                   </CardContent>
                 </Card>
@@ -193,14 +265,13 @@ export default function TechnicalPage() {
             ))}
           </div>
 
-          {/* Growth plan */}
           <div className="grid gap-4 sm:grid-cols-3">
             {growthPlan.map((g, i) => (
-              <motion.div key={g.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
+              <motion.div key={g.titleKey} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
                 <Card className="h-full hover-lift">
                   <CardContent className="pt-6">
                     <g.icon className="mb-3 h-5 w-5 text-michigan-teal" />
-                    <h4 className="mb-1 text-sm font-bold text-foreground">{g.title}</h4>
+                    <h4 className="mb-1 text-sm font-bold text-foreground">{t(`technicalPage.${g.titleKey}`)}</h4>
                     <p className="text-xs text-muted-foreground">{g.desc}</p>
                   </CardContent>
                 </Card>

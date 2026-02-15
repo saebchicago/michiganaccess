@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import UpdateLog from "@/components/shared/UpdateLog";
 import Layout from "@/components/layout/Layout";
@@ -115,23 +116,24 @@ const rankingFactors = [
 ];
 
 export default function AboutPage() {
-  usePageMeta({ title: "About", description: "An independent, data-driven civic resource built to improve health, safety, and transportation access for all Michigan residents.", path: "/about" });
+  const { t } = useTranslation();
+  usePageMeta({ title: t("aboutPage.badge"), description: t("aboutPage.subtitle"), path: "/about" });
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-navy/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
-          <Breadcrumbs items={[{ label: "About" }]} />
+          <Breadcrumbs items={[{ label: t("nav.about") }]} />
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
             <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
-              About Michigan Access
+              {t("aboutPage.badge")}
             </span>
           </motion.div>
           <motion.h1 variants={fadeUp} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
-            Helping Michigan Families Navigate Health, Safety & Transportation
+            {t("aboutPage.title")}
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            An independent, data-driven civic resource built to improve health, safety, and transportation access for all Michigan residents — regardless of income, insurance status, or background.
+            {t("aboutPage.subtitle")}
           </motion.p>
         </div>
       </section>
@@ -141,22 +143,22 @@ export default function AboutPage() {
         {/* Mission */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
           <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8 lg:p-12">
-            <h2 className="mb-4 text-2xl font-bold text-foreground">Our Mission</h2>
+            <h2 className="mb-4 text-2xl font-bold text-foreground">{t("aboutPage.missionTitle")}</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Michigan Access exists to help Michigan residents navigate healthcare, education, and transportation — finding quality care, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy resources, regardless of income, insurance status, or background.
+              {t("aboutPage.missionDesc")}
             </p>
             <div className="mt-8 grid gap-6 sm:grid-cols-3">
               {[
-                { icon: Scale, title: "Independent & Objective", desc: "No advertising, no paid placements. Rankings based on publicly available, third-party quality data." },
-                { icon: Users, title: "Resident-First", desc: "Every design decision optimizes for the person seeking care — not for health systems or insurers." },
-                { icon: Database, title: "Data-Driven & Transparent", desc: "All data sources cited. Methodology published. Rankings explainable and reproducible." },
+                { icon: Scale, titleKey: "independentTitle", descKey: "independentDesc" },
+                { icon: Users, titleKey: "residentFirstTitle", descKey: "residentFirstDesc" },
+                { icon: Database, titleKey: "dataDrivenTitle", descKey: "dataDrivenDesc" },
               ].map((item, i) => (
-                <motion.div key={item.title} variants={fadeUp} custom={i + 1} className="flex flex-col items-center text-center">
+                <motion.div key={item.titleKey} variants={fadeUp} custom={i + 1} className="flex flex-col items-center text-center">
                   <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
                     <item.icon className="h-6 w-6 text-primary" />
                   </div>
-                  <h3 className="mb-1 text-sm font-semibold text-foreground">{item.title}</h3>
-                  <p className="text-xs text-muted-foreground">{item.desc}</p>
+                  <h3 className="mb-1 text-sm font-semibold text-foreground">{t(`aboutPage.${item.titleKey}`)}</h3>
+                  <p className="text-xs text-muted-foreground">{t(`aboutPage.${item.descKey}`)}</p>
                 </motion.div>
               ))}
             </div>
@@ -171,14 +173,14 @@ export default function AboutPage() {
                 <Target className="h-5 w-5 text-michigan-forest" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">How We Rank Healthcare Providers</h2>
-                <p className="text-sm text-muted-foreground">Transparent methodology — no hidden criteria</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("aboutPage.rankingTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("aboutPage.rankingSubtitle")}</p>
               </div>
             </div>
           </motion.div>
 
           <p className="mb-8 text-muted-foreground leading-relaxed">
-            When you search for care, our platform ranks results using a weighted composite score based on four objective dimensions. The highest-quality, most accessible, most comprehensive providers naturally rank first — not because they paid us, but because they objectively perform better on metrics that matter to patients.
+            {t("aboutPage.rankingDesc")}
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -206,12 +208,8 @@ export default function AboutPage() {
             <div className="flex items-start gap-3">
               <Info className="mt-0.5 h-5 w-5 flex-shrink-0 text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium text-foreground">User Control</p>
-                <p className="text-sm text-muted-foreground">
-                  You can always re-sort by distance only, insurance accepted, quality score, or other dimensions.
-                  Safety-net options (FQHCs, community health centers, public hospitals) are <strong>never filtered out by default</strong> and receive
-                  dedicated callouts like "No one turned away" and "Sliding scale fees available."
-                </p>
+                <p className="text-sm font-medium text-foreground">{t("aboutPage.userControl")}</p>
+                <p className="text-sm text-muted-foreground">{t("aboutPage.userControlDesc")}</p>
               </div>
             </div>
           </div>
@@ -227,34 +225,19 @@ export default function AboutPage() {
                 <Lightbulb className="h-5 w-5 text-michigan-teal" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Transparent Choice Architecture</h2>
-                <p className="text-sm text-muted-foreground">How we guide without bias</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("aboutPage.choiceArchTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("aboutPage.choiceArchSubtitle")}</p>
               </div>
             </div>
           </motion.div>
 
           <div className="space-y-4">
             {[
-              {
-                title: "Distance-First, Quality-Enhanced",
-                desc: "Default sort is distance. When facilities are similarly close (within 2 miles), higher quality scores break the tie — nudging toward safer, more comprehensive options naturally.",
-              },
-              {
-                title: "Visual Quality Cues",
-                desc: "Badges (🏆 Magnet, ⭐ Leapfrog A, 💙 Blue Distinction) highlight objectively accredited facilities. Labels like 'Most comprehensive nearby' appear only when data supports them.",
-              },
-              {
-                title: "Safety-Net Visibility",
-                desc: "FQHCs and community health centers always appear with prominent 'Recommended affordable option' and 'No one turned away' callouts. They are never suppressed by quality filters.",
-              },
-              {
-                title: "Condition-Specific Pathways",
-                desc: "When searching for a specific condition, results default to showing programs with integrated specialty quality, support services (social work, behavioral health, nutrition), and accessible locations.",
-              },
-              {
-                title: "Full User Control",
-                desc: "Users can always re-sort, change filters, and explore all options. Ranking criteria are explained here and linked from every search results page.",
-              },
+              { title: "Distance-First, Quality-Enhanced", desc: "Default sort is distance. When facilities are similarly close (within 2 miles), higher quality scores break the tie — nudging toward safer, more comprehensive options naturally." },
+              { title: "Visual Quality Cues", desc: "Badges (🏆 Magnet, ⭐ Leapfrog A, 💙 Blue Distinction) highlight objectively accredited facilities. Labels like 'Most comprehensive nearby' appear only when data supports them." },
+              { title: "Safety-Net Visibility", desc: "FQHCs and community health centers always appear with prominent 'Recommended affordable option' and 'No one turned away' callouts. They are never suppressed by quality filters." },
+              { title: "Condition-Specific Pathways", desc: "When searching for a specific condition, results default to showing programs with integrated specialty quality, support services (social work, behavioral health, nutrition), and accessible locations." },
+              { title: "Full User Control", desc: "Users can always re-sort, change filters, and explore all options. Ranking criteria are explained here and linked from every search results page." },
             ].map((item, i) => (
               <motion.div key={item.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} className="flex gap-3">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-michigan-forest" />
@@ -277,8 +260,8 @@ export default function AboutPage() {
                 <Heart className="h-5 w-5 text-michigan-coral" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Community Benefit & Health Equity</h2>
-                <p className="text-sm text-muted-foreground">Addressing social determinants of health</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("aboutPage.communityBenefitTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("aboutPage.communityBenefitSubtitle")}</p>
               </div>
             </div>
           </motion.div>
@@ -315,8 +298,8 @@ export default function AboutPage() {
                 <Database className="h-5 w-5 text-michigan-blue" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Data Sources</h2>
-                <p className="text-sm text-muted-foreground">All data publicly available and independently verifiable</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("aboutPage.dataSourcesTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("aboutPage.dataSourcesSubtitle")}</p>
               </div>
             </div>
           </motion.div>
@@ -355,8 +338,8 @@ export default function AboutPage() {
                 <BarChart3 className="h-5 w-5 text-michigan-sky" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Technology & Scalability</h2>
-                <p className="text-sm text-muted-foreground">Built for growth and sustainability</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("aboutPage.technologyTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("aboutPage.technologySubtitle")}</p>
               </div>
             </div>
           </motion.div>
@@ -382,7 +365,6 @@ export default function AboutPage() {
 
         <Separator />
 
-        {/* Update Log */}
         <UpdateLog />
 
         <Separator />
@@ -390,7 +372,7 @@ export default function AboutPage() {
         {/* Limitations */}
         <section>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
-            <h2 className="mb-4 text-2xl font-bold text-foreground">Limitations & Disclaimers</h2>
+            <h2 className="mb-4 text-2xl font-bold text-foreground">{t("aboutPage.limitationsTitle")}</h2>
           </motion.div>
           <div className="space-y-3">
             {[
@@ -413,9 +395,9 @@ export default function AboutPage() {
           className="rounded-2xl border border-michigan-gold/30 bg-michigan-gold/5 p-8 text-center"
         >
           <FileText className="mx-auto mb-3 h-8 w-8 text-michigan-gold" />
-          <h3 className="mb-2 text-lg font-bold text-foreground">Portfolio Prototype</h3>
+          <h3 className="mb-2 text-lg font-bold text-foreground">{t("aboutPage.portfolioTitle")}</h3>
           <p className="mx-auto max-w-2xl text-sm text-muted-foreground">
-            This platform was created as a working prototype to demonstrate strategic market development methodology, data-driven community benefit design, and full-stack healthcare technology execution capability. It represents a functional proof-of-concept that could be deployed with live data integrations for real-world use.
+            {t("aboutPage.portfolioDesc")}
           </p>
         </motion.div>
       </div>
