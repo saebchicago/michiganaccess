@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { Suspense, lazy } from "react";
+import { CountyProvider } from "./contexts/CountyContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -48,6 +49,7 @@ const PageLoader = () => (
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <CountyProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -90,6 +92,7 @@ const App = () => (
         </AnimatePresence>
       </BrowserRouter>
     </TooltipProvider>
+    </CountyProvider>
   </QueryClientProvider>
 );
 

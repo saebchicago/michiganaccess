@@ -24,13 +24,16 @@ export interface CommunityResource {
   is_active: boolean | null;
 }
 
-export function useCommunityResources(resourceType?: string) {
+export function useCommunityResources(resourceType?: string, county?: string | null) {
   return useQuery({
-    queryKey: ["community_resources", resourceType],
+    queryKey: ["community_resources", resourceType, county],
     queryFn: async () => {
       let query = supabase.from("community_resources").select("*");
       if (resourceType) {
         query = query.eq("resource_type", resourceType);
+      }
+      if (county) {
+        query = query.eq("county", county);
       }
       const { data, error } = await query.order("resource_name");
       if (error) throw error;

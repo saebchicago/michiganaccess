@@ -500,5 +500,13 @@
     "interopTitle": "معايير التشغيل البيني للرعاية الصحية",
     "interopSubtitle": "محاذاة FHIR و HL7 و USCDI للتكامل مع أنظمة الصحة",
     "interopNote": "بنية مصممة للتكامل المستقبلي مع EHR/HIE. نماذج البيانات تُعيَّن إلى موارد FHIR R4، مما يتيح تشغيلاً بينياً سلساً مع أنظمة Trinity Health و Corewell Health و HFHS."
+  },
+  "county": {
+    "selectCounty": "اختر مقاطعتك",
+    "allMichigan": "كل ميشيغان",
+    "searchPlaceholder": "البحث عن المقاطعات...",
+    "noResults": "لم يتم العثور على مقاطعات",
+    "clearSelection": "مسح فلتر المقاطعة",
+    "viewing": "عرض"
   }
 }

@@ -37,9 +37,9 @@ export function useCommunityEvents(filters?: {
   eventType?: string;
   county?: string;
   search?: string;
-}) {
+}, countyFilter?: string | null) {
   return useQuery({
-    queryKey: ["community_events", filters],
+    queryKey: ["community_events", filters, countyFilter],
     queryFn: async () => {
       let query = (supabase as any)
         .from("community_events")
@@ -50,8 +50,9 @@ export function useCommunityEvents(filters?: {
       if (filters?.eventType) {
         query = query.eq("event_type", filters.eventType);
       }
-      if (filters?.county) {
-        query = query.eq("county", filters.county);
+      const effectiveCounty = filters?.county || countyFilter;
+      if (effectiveCounty) {
+        query = query.eq("county", effectiveCounty);
       }
       if (filters?.search) {
         query = query.or(
