@@ -507,6 +507,9 @@
     "searchPlaceholder": "Buscar condados...",
     "noResults": "No se encontraron condados",
     "clearSelection": "Borrar filtro de condado",
-    "viewing": "Viendo"
+    "viewing": "Viendo",
+    "welcomeTo": "Recursos del Condado {{county}}",
+    "facilitiesStat": "instalaciones",
+    "resourcesStat": "recursos"
   }
 }

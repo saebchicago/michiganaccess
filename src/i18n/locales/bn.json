@@ -507,6 +507,9 @@
     "searchPlaceholder": "কাউন্টি অনুসন্ধান করুন...",
     "noResults": "কোনো কাউন্টি পাওয়া যায়নি",
     "clearSelection": "কাউন্টি ফিল্টার মুছুন",
-    "viewing": "দেখছেন"
+    "viewing": "দেখছেন",
+    "welcomeTo": "{{county}} কাউন্টি সম্পদ",
+    "facilitiesStat": "সুবিধা",
+    "resourcesStat": "সম্পদ"
   }
 }

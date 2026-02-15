@@ -507,6 +507,9 @@
     "searchPlaceholder": "Search counties...",
     "noResults": "No counties found",
     "clearSelection": "Clear county filter",
-    "viewing": "Viewing"
+    "viewing": "Viewing",
+    "welcomeTo": "{{county}} County Resources",
+    "facilitiesStat": "facilities",
+    "resourcesStat": "resources"
   }
 }
