@@ -500,5 +500,13 @@
     "interopTitle": "Healthcare Interoperability Standards",
     "interopSubtitle": "FHIR, HL7, and USCDI alignment for health system integration",
     "interopNote": "Architecture designed for future EHR/HIE integration. Data models map to FHIR R4 resources, enabling seamless interoperability with Trinity Health Epic, Corewell Health, and HFHS systems."
+  },
+  "county": {
+    "selectCounty": "Select your county",
+    "allMichigan": "All Michigan",
+    "searchPlaceholder": "Search counties...",
+    "noResults": "No counties found",
+    "clearSelection": "Clear county filter",
+    "viewing": "Viewing"
   }
 }

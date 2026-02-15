@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import HighContrastToggle from "@/components/shared/HighContrastToggle";
+import CountySelector from "@/components/shared/CountySelector";
 
 const Header = () => {
   const { t } = useTranslation();
@@ -94,6 +95,7 @@ const Header = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-1">
+          <CountySelector variant="header" />
           <HighContrastToggle />
           <LanguageSwitcher />
           <Button size="sm" className="hidden sm:flex bg-gradient-michigan hover:opacity-90 transition-opacity" asChild>
@@ -147,7 +149,13 @@ const Header = () => {
                     </Link>
                   )
                 )}
-                <div className="mt-4 border-t border-border pt-4 px-3">
+                <div className="mt-4 border-t border-border pt-4 px-3 space-y-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                      {t("county.selectCounty")}
+                    </p>
+                    <CountySelector variant="compact" />
+                  </div>
                   <Link
                     to="/install"
                     onClick={() => setMobileOpen(false)}
