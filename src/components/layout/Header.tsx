@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, Heart, ChevronDown } from "lucide-react";
+import { Menu, Heart, ChevronDown, Download } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -147,7 +147,17 @@ const Header = () => {
                     </Link>
                   )
                 )}
-                <div className="mt-6 px-3">
+                <div className="mt-4 border-t border-border pt-4 px-3">
+                  <Link
+                    to="/install"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2 rounded-md px-0 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Download className="h-4 w-4" />
+                    {t("nav.installApp")}
+                  </Link>
+                </div>
+                <div className="mt-2 px-3">
                   <Button className="w-full bg-gradient-michigan" asChild>
                     <a href="tel:988">{t("getHelp")}</a>
                   </Button>
