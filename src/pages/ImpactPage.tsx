@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -7,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import {
   Brain, Bus, BarChart3, MapPin, Wifi, Building2, Users,
   ArrowRight, CheckCircle2, TrendingUp, Target, Lightbulb,
-  AlertTriangle, DollarSign, FileText, Globe
+  AlertTriangle, DollarSign, FileText, Globe, Clock, Activity, Stethoscope
 } from "lucide-react";
 
 const fade = {
@@ -79,27 +80,36 @@ const caseStudies = [
   },
 ];
 
+const ambulatoryMetrics = [
+  { icon: Clock, label: "No-Show Rate Reduction", value: "23% → 14%", desc: "Projected via transit-integrated scheduling and automated reminders" },
+  { icon: Activity, label: "Patient Throughput", value: "+18%", desc: "Optimized same-day scheduling with multi-specialist co-location modeling" },
+  { icon: Stethoscope, label: "First-Visit Resolution", value: "72%", desc: "Pre-visit eligibility screening + integrated referral pathways" },
+  { icon: TrendingUp, label: "Panel Capacity Utilization", value: "85%", desc: "Provider panel optimization using HPSA + demand forecasting data" },
+];
+
 export default function ImpactPage() {
-  usePageMeta({ title: "Community Impact", description: "Case studies demonstrating how integrated public data informs strategic planning and reduces health disparities.", path: "/impact" });
+  const { t } = useTranslation();
+  usePageMeta({ title: t("impactPage.badge"), description: t("impactPage.subtitle"), path: "/impact" });
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-forest/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
-          <Breadcrumbs items={[{ label: "Impact" }]} />
+          <Breadcrumbs items={[{ label: t("impactPage.badge") }]} />
           <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest">
-            Case Studies
+            {t("impactPage.badge")}
           </motion.span>
           <motion.h1 variants={fade} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
-            Community Impact Through Data-Driven Design
+            {t("impactPage.title")}
           </motion.h1>
           <motion.p variants={fade} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Methodology-focused case studies demonstrating how integrated public data informs strategic planning and reduces health disparities. Methods replicable for health systems, government agencies, and community organizations.
+            {t("impactPage.subtitle")}
           </motion.p>
         </div>
       </section>
 
       <div className="container max-w-5xl py-12 space-y-16">
+        {/* Case Studies */}
         {caseStudies.map((cs, ci) => (
           <motion.section key={cs.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
             <div className="flex items-center gap-3 mb-6">
@@ -112,25 +122,23 @@ export default function ImpactPage() {
               </div>
             </div>
 
-            {/* Challenge */}
             <div className={`rounded-xl border-2 ${cs.bgColor} p-5 mb-6`}>
               <div className="flex items-start gap-2">
                 <AlertTriangle className={`mt-0.5 h-4 w-4 shrink-0 ${cs.color}`} />
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Challenge</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">{t("impactPage.challenge")}</p>
                   <p className="text-sm text-foreground">{cs.challenge}</p>
                 </div>
               </div>
             </div>
 
-            {/* Steps */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
               {cs.steps.map((step, si) => (
                 <motion.div key={step.title} variants={fade} custom={si + 1}>
                   <Card className="h-full hover-lift">
                     <CardContent className="pt-5">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-primary-foreground bg-primary`}>{si + 1}</span>
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-primary-foreground bg-primary">{si + 1}</span>
                         <step.icon className={`h-4 w-4 ${cs.color}`} />
                       </div>
                       <h4 className="mb-1 text-xs font-bold text-foreground">{step.title}</h4>
@@ -141,9 +149,8 @@ export default function ImpactPage() {
               ))}
             </div>
 
-            {/* Stakeholders */}
             <div className="rounded-lg border border-border bg-muted/50 p-5 mb-3">
-              <h4 className="mb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Opportunities for Stakeholders</h4>
+              <h4 className="mb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">{t("impactPage.stakeholders")}</h4>
               <ul className="space-y-2">
                 {cs.stakeholders.map((s) => (
                   <li key={s} className="flex items-start gap-2 text-xs text-muted-foreground">
@@ -154,12 +161,50 @@ export default function ImpactPage() {
             </div>
 
             <p className="text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">Transferable to:</span> {cs.transferable}
+              <span className="font-semibold text-foreground">{t("impactPage.transferableTo")}:</span> {cs.transferable}
             </p>
 
             {ci < caseStudies.length - 1 && <Separator className="mt-12" />}
           </motion.section>
         ))}
+
+        <Separator />
+
+        {/* Ambulatory Operations Metrics - NEW */}
+        <section>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-sky/10">
+                <Activity className="h-5 w-5 text-michigan-sky" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">{t("impactPage.ambulatoryTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("impactPage.ambulatorySubtitle")}</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-6">
+            {ambulatoryMetrics.map((m, i) => (
+              <motion.div key={m.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
+                <Card className="text-center hover-lift h-full">
+                  <CardContent className="pt-6 pb-4">
+                    <m.icon className="mx-auto mb-2 h-5 w-5 text-michigan-sky" />
+                    <p className="text-xl font-bold text-primary">{m.value}</p>
+                    <p className="text-xs font-semibold text-foreground mt-1">{m.label}</p>
+                    <p className="text-[10px] text-muted-foreground mt-1">{m.desc}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="rounded-lg border border-border bg-muted/50 p-4">
+            <p className="text-xs text-muted-foreground">
+              <span className="font-semibold text-foreground">{t("impactPage.ambulatoryNote")}</span>
+            </p>
+          </div>
+        </section>
       </div>
     </Layout>
   );

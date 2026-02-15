@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -120,21 +121,22 @@ const usabilityFindings = [
 ];
 
 export default function ResearchPage() {
-  usePageMeta({ title: "User Research", description: "Research-driven insights centering the most vulnerable populations through human-centered design.", path: "/research" });
+  const { t } = useTranslation();
+  usePageMeta({ title: t("researchPage.badge"), description: t("researchPage.subtitle"), path: "/research" });
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-coral/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
-          <Breadcrumbs items={[{ label: "Research" }]} />
+          <Breadcrumbs items={[{ label: t("researchPage.badge") }]} />
           <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-michigan-coral/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-coral">
-            User Research
+            {t("researchPage.badge")}
           </motion.span>
           <motion.h1 variants={fade} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
-            Human-Centered Design for Health Equity
+            {t("researchPage.title")}
           </motion.h1>
           <motion.p variants={fade} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Research-driven insights centering the most vulnerable populations.
+            {t("researchPage.subtitle")}
           </motion.p>
         </div>
       </section>
@@ -148,8 +150,8 @@ export default function ResearchPage() {
                 <Users className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">User Personas</h2>
-                <p className="text-sm text-muted-foreground">Representative profiles from Michigan's most underserved populations</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("researchPage.personasTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("researchPage.personasSubtitle")}</p>
               </div>
             </div>
           </motion.div>
@@ -176,7 +178,7 @@ export default function ResearchPage() {
                       </div>
                       <div className="lg:w-2/3 grid gap-4 sm:grid-cols-2">
                         <div>
-                          <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Barriers</h4>
+                          <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{t("researchPage.barriers")}</h4>
                           <ul className="space-y-1.5">
                             {p.barriers.map((b) => (
                               <li key={b} className="flex items-start gap-2 text-xs text-muted-foreground">
@@ -186,7 +188,7 @@ export default function ResearchPage() {
                           </ul>
                         </div>
                         <div>
-                          <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">Design Implications</h4>
+                          <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">{t("researchPage.designImplications")}</h4>
                           <ul className="space-y-1.5">
                             {p.implications.map((impl) => (
                               <li key={impl} className="flex items-start gap-2 text-xs text-muted-foreground">
@@ -214,8 +216,8 @@ export default function ResearchPage() {
                 <ArrowRight className="h-5 w-5 text-michigan-teal" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Journey Maps</h2>
-                <p className="text-sm text-muted-foreground">Emotional arcs of real user scenarios</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("researchPage.journeysTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("researchPage.journeysSubtitle")}</p>
               </div>
             </div>
           </motion.div>
@@ -234,16 +236,13 @@ export default function ResearchPage() {
                             <span className="text-2xl mb-1" role="img" aria-label={s.label}>{s.emoji}</span>
                             <span className="text-[10px] font-bold text-foreground text-center leading-tight">{s.label}</span>
                             <span className="text-[10px] text-muted-foreground text-center mt-0.5 leading-tight">{s.desc}</span>
-                            {si < j.steps.length - 1 && (
-                              <ArrowRight className="mt-1 h-3 w-3 text-muted-foreground/40 rotate-0 hidden sm:block absolute" style={{ display: 'none' }} />
-                            )}
                           </div>
                         ))}
                       </div>
                     </div>
                     <div className="mt-4 rounded-lg bg-muted/50 border border-border p-3">
                       <p className="text-xs text-muted-foreground">
-                        <span className="font-bold text-foreground">Key Insight:</span> {j.insight}
+                        <span className="font-bold text-foreground">{t("researchPage.keyInsight")}:</span> {j.insight}
                       </p>
                     </div>
                   </CardContent>
@@ -263,8 +262,8 @@ export default function ResearchPage() {
                 <Search className="h-5 w-5 text-michigan-forest" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Usability Testing Insights</h2>
-                <p className="text-sm text-muted-foreground">Findings from moderated testing sessions</p>
+                <h2 className="text-2xl font-bold text-foreground">{t("researchPage.usabilityTitle")}</h2>
+                <p className="text-sm text-muted-foreground">{t("researchPage.usabilitySubtitle")}</p>
               </div>
             </div>
           </motion.div>
@@ -273,9 +272,9 @@ export default function ResearchPage() {
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Finding</th>
-                  <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Impact</th>
-                  <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">Design Response</th>
+                  <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">{t("researchPage.finding")}</th>
+                  <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">{t("researchPage.impact")}</th>
+                  <th className="text-left py-3 px-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">{t("researchPage.designResponse")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -296,7 +295,7 @@ export default function ResearchPage() {
 
           <div className="mt-6 rounded-lg border border-border bg-muted/50 p-4">
             <p className="text-xs text-muted-foreground">
-              Testing conducted with 12 participants: 4 uninsured individuals, 4 seniors, 4 community health workers. Remote moderated sessions using think-aloud protocol.
+              {t("researchPage.testingNote")}
             </p>
           </div>
         </section>
