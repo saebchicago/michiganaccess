@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -119,6 +120,7 @@ const usabilityFindings = [
 ];
 
 export default function ResearchPage() {
+  usePageMeta({ title: "User Research", description: "Research-driven insights centering the most vulnerable populations through human-centered design.", path: "/research" });
   return (
     <Layout>
       {/* Hero */}

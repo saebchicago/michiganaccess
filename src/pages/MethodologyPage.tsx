@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -93,6 +94,7 @@ const scoringWeights = [
 ];
 
 export default function MethodologyPage() {
+  usePageMeta({ title: "Data Methodology", description: "A replicable framework for integrating fragmented public datasets into accessible, equity-centered civic infrastructure.", path: "/methodology" });
   return (
     <Layout>
       {/* Hero */}

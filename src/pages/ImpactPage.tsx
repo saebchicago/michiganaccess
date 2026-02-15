@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -79,6 +80,7 @@ const caseStudies = [
 ];
 
 export default function ImpactPage() {
+  usePageMeta({ title: "Community Impact", description: "Case studies demonstrating how integrated public data informs strategic planning and reduces health disparities.", path: "/impact" });
   return (
     <Layout>
       {/* Hero */}

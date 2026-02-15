@@ -36,6 +36,7 @@ const Footer = () => {
         { label: t("footer.research"), href: "/research" },
         { label: t("footer.impact"), href: "/impact" },
         { label: t("footer.technical"), href: "/technical" },
+        { label: "Accessibility", href: "/accessibility" },
       ],
     },
   ];

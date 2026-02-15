@@ -1,4 +1,5 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, MapPin, Star, Shield, Heart, Filter, X, Phone, ExternalLink,
@@ -70,6 +71,7 @@ type SortBy = "composite" | "quality" | "name";
 
 export default function FindCarePage() {
   const { t } = useTranslation();
+  usePageMeta({ title: "Find Care Near You", description: "Search Michigan healthcare facilities by location, specialty, quality ratings, and services.", path: "/find-care" });
   const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities();
   const { data: hrsaData, isLoading: hrsaLoading } = useHRSAData("MI", 50);
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Send, CheckCircle2, Mail, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -20,6 +21,7 @@ const fadeUp = {
 const subjects = ["General Inquiry", "Feedback", "Partnership", "Data Question"];
 
 export default function ContactPage() {
+  usePageMeta({ title: "Contact Us", description: "Have a question, suggestion, or partnership idea? Get in touch with Michigan Access.", path: "/contact" });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });

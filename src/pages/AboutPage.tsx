@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import UpdateLog from "@/components/shared/UpdateLog";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -114,6 +115,7 @@ const rankingFactors = [
 ];
 
 export default function AboutPage() {
+  usePageMeta({ title: "About", description: "An independent, data-driven civic resource built to improve health, safety, and transportation access for all Michigan residents.", path: "/about" });
   return (
     <Layout>
       {/* Hero */}

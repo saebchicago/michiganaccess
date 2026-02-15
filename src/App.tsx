@@ -35,6 +35,7 @@ const MethodologyPage = lazy(() => import("./pages/MethodologyPage"));
 const ResearchPage = lazy(() => import("./pages/ResearchPage"));
 const ImpactPage = lazy(() => import("./pages/ImpactPage"));
 const TechnicalPage = lazy(() => import("./pages/TechnicalPage"));
+const AccessibilityPage = lazy(() => import("./pages/AccessibilityPage"));
 
 const queryClient = new QueryClient();
 
@@ -80,6 +81,7 @@ const App = () => (
               <Route path="/research" element={<ResearchPage />} />
               <Route path="/impact" element={<ImpactPage />} />
               <Route path="/technical" element={<TechnicalPage />} />
+              <Route path="/accessibility" element={<AccessibilityPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

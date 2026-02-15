@@ -47,8 +47,8 @@ const HeroSection = () => {
             </Button>
             <Button
               size="lg"
-              variant="outline"
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 px-8 text-base"
+              variant="ghost"
+              className="border-2 border-white/60 text-white hover:bg-white/15 hover:border-white px-8 text-base font-medium"
               asChild
             >
               <Link to="/resources">
