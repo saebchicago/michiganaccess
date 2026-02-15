@@ -3,6 +3,7 @@ import HeroSection from "@/components/home/HeroSection";
 import CoreAccessGrid from "@/components/home/CoreAccessGrid";
 import SystemsExplainer from "@/components/home/SystemsExplainer";
 import TrustIndicators from "@/components/home/TrustIndicators";
+import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -13,6 +14,7 @@ const Index = () => {
   });
   return (
   <Layout>
+    <CountyWelcomeBanner />
     <HeroSection />
     <CoreAccessGrid />
     <SystemsExplainer />

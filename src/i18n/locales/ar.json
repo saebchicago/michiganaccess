@@ -507,6 +507,9 @@
     "searchPlaceholder": "البحث عن المقاطعات...",
     "noResults": "لم يتم العثور على مقاطعات",
     "clearSelection": "مسح فلتر المقاطعة",
-    "viewing": "عرض"
+    "viewing": "عرض",
+    "welcomeTo": "موارد مقاطعة {{county}}",
+    "facilitiesStat": "مرافق",
+    "resourcesStat": "موارد"
   }
 }

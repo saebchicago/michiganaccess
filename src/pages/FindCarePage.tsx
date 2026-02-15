@@ -17,6 +17,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import { Separator } from "@/components/ui/separator";
 import { useFacilities, type Facility } from "@/hooks/useFacilities";
 import { useHRSAData } from "@/hooks/useHRSAData";
+import { useCounty } from "@/contexts/CountyContext";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProviderDirectory from "@/components/findcare/ProviderDirectory";
@@ -71,8 +72,9 @@ type SortBy = "composite" | "quality" | "name";
 
 export default function FindCarePage() {
   const { t } = useTranslation();
+  const { county: selectedCounty } = useCounty();
   usePageMeta({ title: "Find Care Near You", description: "Search Michigan healthcare facilities by location, specialty, quality ratings, and services.", path: "/find-care" });
-  const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities();
+  const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities(undefined, selectedCounty);
   const { data: hrsaData, isLoading: hrsaLoading } = useHRSAData("MI", 50);
 
   // Merge HRSA live FQHCs with DB facilities, deduplicating by name
