@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { useCommunityEvents, EVENT_TYPES, type CommunityEvent } from "@/hooks/useCommunityEvents";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCounty } from "@/contexts/CountyContext";
 
 const typeIcons: Record<string, typeof Heart> = {
   health_fair: Heart,
@@ -158,14 +159,17 @@ function EventCard({ event }: { event: CommunityEvent }) {
 }
 
 export default function CommunityEventsPage() {
+  const { county: globalCounty } = useCounty();
   const [search, setSearch] = useState("");
   const [eventType, setEventType] = useState<string>("");
   const [county, setCounty] = useState<string>("");
 
+  const effectiveCounty = county || globalCounty || undefined;
+
   const { data: allEvents } = useCommunityEvents({});
   const { data: events, isLoading } = useCommunityEvents({
     eventType: eventType || undefined,
-    county: county || undefined,
+    county: effectiveCounty || undefined,
     search: search || undefined,
   });
 

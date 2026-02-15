@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCommunityResources, type CommunityResource } from "@/hooks/useCommunityResources";
+import { useCounty } from "@/contexts/CountyContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -105,8 +106,9 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
 
 export default function CommunityResourcesPage() {
   const { t } = useTranslation();
+  const { county: globalCounty } = useCounty();
   usePageMeta({ title: "Community Resources", description: "Food, housing, transportation, and support services available to Michigan residents.", path: "/resources" });
-  const { data: resources = [], isLoading } = useCommunityResources();
+  const { data: resources = [], isLoading } = useCommunityResources(undefined, globalCounty);
   const [activeTab, setActiveTab] = useState("all");
   const [county, setCounty] = useState("All Counties");
   const [search, setSearch] = useState("");
