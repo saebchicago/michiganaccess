@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -78,6 +79,7 @@ const growthPlan = [
 ];
 
 export default function TechnicalPage() {
+  usePageMeta({ title: "Technical Architecture", description: "Production-grade architecture with public sector considerations for scale and impact.", path: "/technical" });
   return (
     <Layout>
       {/* Hero */}

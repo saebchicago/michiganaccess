@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
@@ -104,6 +105,7 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
 
 export default function CommunityResourcesPage() {
   const { t } = useTranslation();
+  usePageMeta({ title: "Community Resources", description: "Food, housing, transportation, and support services available to Michigan residents.", path: "/resources" });
   const { data: resources = [], isLoading } = useCommunityResources();
   const [activeTab, setActiveTab] = useState("all");
   const [county, setCounty] = useState("All Counties");

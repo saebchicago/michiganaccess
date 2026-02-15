@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
@@ -33,6 +34,7 @@ const programTypeLabels: Record<string, { label: string; icon: typeof Heart; col
 
 export default function FinancialHelpPage() {
   const { t } = useTranslation();
+  usePageMeta({ title: "Financial Help", description: "Find free and reduced-cost care, insurance options, and prescription savings for Michigan residents.", path: "/financial-help" });
   const { data: programs = [], isLoading } = useFinancialPrograms();
   const [householdSize, setHouseholdSize] = useState<number>(1);
   const [income, setIncome] = useState<string>("");

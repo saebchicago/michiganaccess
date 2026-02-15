@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Leaf, Droplets, Wind, Recycle, Zap, Globe, Fish, AlertTriangle, TrendingUp, MapPin, ExternalLink, Shield, Loader2 } from "lucide-react";
@@ -87,6 +88,7 @@ const getQuickStats = (t: (key: string) => string) => [
 
 const EnvironmentPage = () => {
   const { t } = useTranslation();
+  usePageMeta({ title: "Environment & Sustainability", description: "Air quality, water safety, clean energy, recycling, and environmental justice data for Michigan.", path: "/environment" });
   const [activeTab, setActiveTab] = useState("air-water");
 
   // Fetch live CDC PLACES data for Michigan counties (no measure filter — get diverse health metrics)

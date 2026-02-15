@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { MapPin, Layers, Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
@@ -14,6 +15,7 @@ const DEFAULT_LAYERS = LAYERS.filter((l) => l.defaultOn).map((l) => l.id);
 
 export default function HealthMapPage() {
   const { t } = useTranslation();
+  usePageMeta({ title: "Health Map", description: "Interactive map of Michigan healthcare facilities with quality scores, transit access, and layer controls.", path: "/health-map" });
   const [activeLayers, setActiveLayers] = useState<string[]>(DEFAULT_LAYERS);
   const { data: facilities = [], isLoading } = useFacilities();
 

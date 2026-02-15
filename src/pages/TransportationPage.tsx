@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import {
   Bus, GraduationCap, ShieldCheck, Accessibility, Search,
@@ -419,6 +420,7 @@ function StopArmCameraExplainer() {
 /* ------------------------------------------------------------------ */
 
 export default function TransportationPage() {
+  usePageMeta({ title: "Transportation & Safety", description: "Public transit, school bus safety, accessible rides, and transportation resources across Michigan.", path: "/transportation" });
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("transit");
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Landmark, FileText, Users, DollarSign, Vote, Calendar, ExternalLink, TrendingUp, BarChart3, Scale, Building2, BookOpen, Search, Globe } from "lucide-react";
@@ -79,6 +80,7 @@ const getQuickStats = (t: (key: string) => string) => [
 
 const CivicDataPage = () => {
   const { t } = useTranslation();
+  usePageMeta({ title: "Civic Data & Open Government", description: "Budget transparency, FOIA tracking, voter engagement, and elected officials for Michigan.", path: "/civic-data" });
   const [activeTab, setActiveTab] = useState("budget");
 
   return (
