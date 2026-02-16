@@ -13,6 +13,8 @@ import EducationSpotlights from "@/components/shared/EducationSpotlights";
 import LegalCivicSpotlights from "@/components/shared/LegalCivicSpotlights";
 import VeteransSeniorsSpotlights from "@/components/shared/VeteransSeniorsSpotlights";
 import YouthFamilySpotlights from "@/components/shared/YouthFamilySpotlights";
+import DisasterPrepSpotlights from "@/components/shared/DisasterPrepSpotlights";
+import CulturalRecSpotlights from "@/components/shared/CulturalRecSpotlights";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -35,6 +37,8 @@ const Index = () => {
     <LegalCivicSpotlights />
     <VeteransSeniorsSpotlights />
     <YouthFamilySpotlights />
+    <DisasterPrepSpotlights />
+    <CulturalRecSpotlights />
     <SystemsExplainer />
     <TrustIndicators />
   </Layout>
