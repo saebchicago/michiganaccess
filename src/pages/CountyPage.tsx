@@ -20,7 +20,7 @@ import { useCommunityEvents } from "@/hooks/useCommunityEvents";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import CountyCivicSection from "@/components/county/CountyCivicSection";
 import DownloadCountyGuide from "@/components/county/DownloadCountyGuide";
-import PageFeedback from "@/components/shared/PageFeedback";
+
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -270,7 +270,7 @@ export default function CountyPage() {
           </CardContent>
         </Card>
       </div>
-      <PageFeedback />
+      
     </Layout>
   );
 }
