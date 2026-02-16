@@ -1,0 +1,268 @@
+import { useParams, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { useEffect, lazy, Suspense } from "react";
+import {
+  MapPin, Users, Heart, Building2, Phone, ExternalLink,
+  ArrowLeft, TrendingUp, TrendingDown, Minus, Globe, Calendar
+} from "lucide-react";
+import Layout from "@/components/layout/Layout";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { slugToCounty, getCountyLinks } from "@/utils/countyUtils";
+import { getCountyProfile } from "@/data/michigan-county-profiles";
+import { useCounty, type MichiganCounty } from "@/contexts/CountyContext";
+import { useFacilities } from "@/hooks/useFacilities";
+import { useCommunityResources } from "@/hooks/useCommunityResources";
+import { useCommunityEvents } from "@/hooks/useCommunityEvents";
+import SpotlightTabs from "@/components/shared/SpotlightTabs";
+
+const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.05, duration: 0.3 } }),
+};
+
+const TrendIcon = ({ trend }: { trend?: "up" | "down" | "stable" }) => {
+  if (trend === "up") return <TrendingUp className="h-3 w-3 text-michigan-coral" />;
+  if (trend === "down") return <TrendingDown className="h-3 w-3 text-michigan-forest" />;
+  return <Minus className="h-3 w-3 text-muted-foreground" />;
+};
+
+export default function CountyPage() {
+  const { slug } = useParams<{ slug: string }>();
+  const county = slugToCounty(slug || "");
+  const { setCounty } = useCounty();
+
+  usePageMeta({
+    title: county ? `${county} County` : "County Not Found",
+    description: county ? `Health resources, facilities, and community programs in ${county} County, Michigan.` : "County not found.",
+    path: `/county/${slug}`,
+  });
+
+  // Set global county context when visiting this page
+  useEffect(() => {
+    if (county) setCounty(county);
+  }, [county, setCounty]);
+
+  if (!county) {
+    return (
+      <Layout>
+        <div className="container py-20 text-center">
+          <h1 className="text-2xl font-bold text-foreground">County Not Found</h1>
+          <p className="mt-2 text-muted-foreground">The county "{slug}" was not recognized.</p>
+          <Link to="/">
+            <Button className="mt-4"><ArrowLeft className="mr-2 h-4 w-4" />Back to Home</Button>
+          </Link>
+        </div>
+      </Layout>
+    );
+  }
+
+  const profile = getCountyProfile(county);
+  const links = getCountyLinks(county);
+  const { data: facilities = [] } = useFacilities(undefined, county);
+  const { data: resources = [] } = useCommunityResources(undefined, county);
+  const { data: events = [] } = useCommunityEvents(undefined, county);
+
+  const facilityCounts = facilities.reduce((acc, f) => {
+    acc[f.facility_type] = (acc[f.facility_type] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  return (
+    <Layout>
+      <Breadcrumbs items={[{ label: "Counties", href: "/health-map" }, { label: `${county} County` }]} />
+
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/8 via-primary/3 to-background py-12 md:py-16">
+        <div className="container">
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <div className="mb-3 flex items-center gap-2">
+                <MapPin className="h-5 w-5 text-primary" />
+                <Badge variant="outline" className="text-xs">{profile.countyType}</Badge>
+              </div>
+              <h1 className="mb-2 text-3xl font-bold text-foreground md:text-4xl">
+                {county} County
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                {profile.majorCities.length > 0
+                  ? `Home to ${profile.majorCities.join(", ")} · Population ${profile.population.toLocaleString()}`
+                  : `Population ${profile.population.toLocaleString()}`}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link to="/find-care">
+                <Button variant="outline" size="sm"><Building2 className="mr-1.5 h-4 w-4" />Find Care</Button>
+              </Link>
+              <Link to="/resources">
+                <Button variant="outline" size="sm"><Heart className="mr-1.5 h-4 w-4" />Resources</Button>
+              </Link>
+              <Link to="/health-map">
+                <Button variant="outline" size="sm"><MapPin className="mr-1.5 h-4 w-4" />Health Map</Button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="container py-8 space-y-10">
+        {/* Quick Stats */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid gap-4 grid-cols-2 md:grid-cols-4">
+          {[
+            { label: "Healthcare Facilities", value: facilities.length, icon: Building2, color: "text-primary" },
+            { label: "Community Resources", value: resources.length, icon: Heart, color: "text-michigan-teal" },
+            { label: "Upcoming Events", value: events.length, icon: Calendar, color: "text-michigan-gold" },
+            { label: "Population", value: profile.population.toLocaleString(), icon: Users, color: "text-michigan-forest" },
+          ].map((stat, i) => (
+            <motion.div key={stat.label} variants={fadeUp} custom={i}>
+              <Card>
+                <CardContent className="flex items-center gap-3 py-4">
+                  <stat.icon className={`h-8 w-8 ${stat.color} flex-shrink-0`} />
+                  <div>
+                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                    <p className="text-xs text-muted-foreground">{stat.label}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Health Highlights */}
+        <section>
+          <h2 className="mb-4 text-xl font-bold text-foreground">Health Highlights</h2>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {profile.healthHighlights.map((h) => (
+              <Card key={h.label}>
+                <CardContent className="flex items-center justify-between py-3">
+                  <div>
+                    <p className="text-xs text-muted-foreground">{h.label}</p>
+                    <p className="text-lg font-bold text-foreground">{h.value}</p>
+                  </div>
+                  <TrendIcon trend={h.trend} />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Map */}
+        <section>
+          <h2 className="mb-4 text-xl font-bold text-foreground">Facilities Map</h2>
+          <Suspense fallback={<div className="h-[400px] rounded-lg bg-muted animate-pulse" />}>
+            <EmbeddedMap facilities={facilities} county={county} height="400px" />
+          </Suspense>
+        </section>
+
+        {/* Facility Breakdown */}
+        {facilities.length > 0 && (
+          <section>
+            <h2 className="mb-4 text-xl font-bold text-foreground">Facility Types</h2>
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(facilityCounts).map(([type, count]) => (
+                <Badge key={type} variant="secondary" className="text-sm py-1 px-3">
+                  {type.replace(/_/g, " ")} · {count}
+                </Badge>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Top Facilities List */}
+        {facilities.length > 0 && (
+          <section>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-foreground">Top Facilities</h2>
+              <Link to="/find-care">
+                <Button variant="ghost" size="sm">View all →</Button>
+              </Link>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {facilities.slice(0, 6).map((f, i) => (
+                <motion.div key={f.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+                  <Card className="h-full hover-lift">
+                    <CardContent className="py-4 space-y-2">
+                      <div className="flex items-start justify-between">
+                        <h3 className="font-semibold text-sm text-foreground">{f.name}</h3>
+                        {f.quality_score && (
+                          <Badge variant="outline" className="text-[10px] flex-shrink-0">
+                            {f.quality_score}/100
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        <MapPin className="inline h-3 w-3 mr-1" />{f.address}, {f.city}
+                      </p>
+                      <Badge variant="secondary" className="text-[10px]">{f.facility_type.replace(/_/g, " ")}</Badge>
+                      <div className="flex gap-2 pt-1">
+                        {f.phone && (
+                          <a href={`tel:${f.phone}`}>
+                            <Button size="sm" variant="outline" className="h-6 text-[10px] px-2">
+                              <Phone className="mr-1 h-3 w-3" />Call
+                            </Button>
+                          </a>
+                        )}
+                        {f.website && (
+                          <a href={f.website} target="_blank" rel="noopener">
+                            <Button size="sm" variant="outline" className="h-6 text-[10px] px-2">
+                              <ExternalLink className="mr-1 h-3 w-3" />Website
+                            </Button>
+                          </a>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Explore Resources (reuse SpotlightTabs) */}
+        <SpotlightTabs />
+
+        {/* External Links */}
+        <section>
+          <h2 className="mb-4 text-xl font-bold text-foreground">Official Resources</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: "Michigan.gov County Page", href: links.michiganGov, icon: Globe },
+              { label: "County Health Rankings", href: links.healthRankings, icon: TrendingUp },
+              { label: "Census Data", href: links.census, icon: Users },
+              { label: "211 Resource Finder", href: links.unitedWay211, icon: Phone },
+            ].map((link) => (
+              <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+                <Card className="h-full hover-lift cursor-pointer">
+                  <CardContent className="flex items-center gap-3 py-4">
+                    <link.icon className="h-5 w-5 text-primary flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{link.label}</p>
+                      <p className="text-[10px] text-muted-foreground flex items-center gap-1">
+                        <ExternalLink className="h-2.5 w-2.5" /> Opens in new tab
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* Privacy Notice */}
+        <Card className="border-muted bg-muted/30">
+          <CardContent className="py-3 text-center">
+            <p className="text-xs text-muted-foreground">
+              🔒 Michigan Access does not collect personal data. All information shown is from public sources.
+              No cookies or tracking. <Link to="/accessibility" className="text-primary underline">Learn more</Link>
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </Layout>
+  );
+}

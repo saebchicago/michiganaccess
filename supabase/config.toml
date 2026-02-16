@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.appeal-generator]
 verify_jwt = false
+
+[functions.arcgis-proxy]
+verify_jwt = false
