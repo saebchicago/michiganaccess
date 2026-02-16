@@ -40,6 +40,7 @@ const AccessibilityPage = lazy(() => import("./pages/AccessibilityPage"));
 const InstallPage = lazy(() => import("./pages/InstallPage"));
 const InsuranceAppealsPage = lazy(() => import("./pages/InsuranceAppealsPage"));
 const PartnersPage = lazy(() => import("./pages/PartnersPage"));
+const CountyPage = lazy(() => import("./pages/CountyPage"));
 
 const queryClient = new QueryClient();
 
@@ -90,6 +91,7 @@ const App = () => (
               <Route path="/install" element={<InstallPage />} />
               <Route path="/health/insurance-appeals" element={<InsuranceAppealsPage />} />
               <Route path="/partners" element={<PartnersPage />} />
+              <Route path="/county/:slug" element={<CountyPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, lazy, Suspense } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -24,7 +24,9 @@ import ProviderDirectory from "@/components/findcare/ProviderDirectory";
 import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
 import CareTeamReminders from "@/components/shared/CareTeamReminders";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
-import { ClipboardList, Bell } from "lucide-react";
+import { ClipboardList, Bell, Map } from "lucide-react";
+
+const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -227,11 +229,18 @@ export default function FindCarePage() {
       </section>
 
       <div className="container py-8">
-        <Tabs defaultValue="facilities" className="mb-6">
+         <Tabs defaultValue="facilities" className="mb-6">
           <TabsList>
             <TabsTrigger value="facilities"><Building2 className="mr-1.5 h-4 w-4" />{t('findCare.facilities')}</TabsTrigger>
             <TabsTrigger value="providers"><Stethoscope className="mr-1.5 h-4 w-4" />{t('findCare.providers')}</TabsTrigger>
+            <TabsTrigger value="map"><Map className="mr-1.5 h-4 w-4" />Map View</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="map" className="mt-4">
+            <Suspense fallback={<div className="h-[500px] rounded-lg bg-muted animate-pulse" />}>
+              <EmbeddedMap facilities={facilities} county={selectedCounty} height="500px" />
+            </Suspense>
+          </TabsContent>
 
           <TabsContent value="providers" className="mt-4">
             <ProviderDirectory facilities={facilities} />
