@@ -126,7 +126,6 @@ export default function SectorOverlayControls({ activeOverlays, onToggleOverlay 
           overlays={SAFETY_OVERLAYS}
           activeOverlays={activeOverlays}
           onToggleOverlay={onToggleOverlay}
-          partnerBadge="BusPatrol"
         />
       </div>
 
@@ -157,7 +156,7 @@ export default function SectorOverlayControls({ activeOverlays, onToggleOverlay 
       </div>
 
       <p className="mt-3 text-[10px] text-muted-foreground">
-        Static: Michigan GIS, MDOT, EGLE, EPA (hourly). Live: GTFS-RT (30s). School zone data powered by BusPatrol.
+        Static: Michigan GIS, MDOT, EGLE, EPA (hourly). Live: GTFS-RT (30s). School zone data from automated enforcement systems.
       </p>
     </motion.div>
   );

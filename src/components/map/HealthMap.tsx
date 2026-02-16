@@ -351,7 +351,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
       // ... keep existing code
     }
 
-    // BusPatrol School Zone Safety (demo data for Michigan school zones)
+    // School Zone Safety (demo data for Michigan school zones)
     if (showBusPatrol) {
       const lg = L.layerGroup();
       const schoolZones = [
@@ -370,7 +370,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
         const severity = sz.violations > 30 ? "#DC2626" : sz.violations > 15 ? "#F59E0B" : "#22C55E";
         const icon = L.divIcon({
           html: `<div style="width:28px;height:28px;border-radius:50%;background:${severity};border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:system-ui;">${sz.violations}</div>`,
-          className: "buspatrol-marker",
+          className: "school-safety-marker",
           iconSize: [28, 28],
           iconAnchor: [14, 14],
           popupAnchor: [0, -14],
@@ -384,7 +384,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
               ${sz.violations} stop-arm violations (30 days)
             </div>
             <div style="font-size:10px;color:#475569;">Category: ${sz.violations > 30 ? "High Risk" : sz.violations > 15 ? "Moderate" : "Low"}</div>
-            <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: BusPatrol Demo Data</div>
+            <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: Automated enforcement demo data</div>
           </div>
         `);
         lg.addLayer(marker);
