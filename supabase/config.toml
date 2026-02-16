@@ -23,3 +23,6 @@ verify_jwt = false
 
 [functions.arcgis-proxy]
 verify_jwt = false
+
+[functions.gtfs-rt-proxy]
+verify_jwt = false
