@@ -9,6 +9,8 @@ import CommunityProgramSpotlights from "@/components/shared/CommunityProgramSpot
 import TransportationSpotlights from "@/components/shared/TransportationSpotlights";
 import EnergySpotlights from "@/components/shared/EnergySpotlights";
 import EnvironmentSpotlights from "@/components/shared/EnvironmentSpotlights";
+import EducationSpotlights from "@/components/shared/EducationSpotlights";
+import LegalCivicSpotlights from "@/components/shared/LegalCivicSpotlights";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -27,6 +29,8 @@ const Index = () => {
     <TransportationSpotlights />
     <EnergySpotlights />
     <EnvironmentSpotlights />
+    <EducationSpotlights />
+    <LegalCivicSpotlights />
     <SystemsExplainer />
     <TrustIndicators />
   </Layout>
