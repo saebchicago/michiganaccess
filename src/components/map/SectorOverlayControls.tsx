@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Bus, Wind, Zap, Construction, Train, Radio } from "lucide-react";
+import { Bus, Wind, Zap, Construction, Train, Radio, CloudSun } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 export const SECTOR_OVERLAYS = [
   { id: "county-boundaries", label: "County Boundaries", icon: Construction, defaultOn: true, color: "text-primary" },
+  { id: "aqi-stations", label: "EPA AQI Index", icon: CloudSun, defaultOn: false, color: "text-michigan-forest" },
   { id: "mdot-workzones", label: "MDOT Work Zones", icon: Construction, defaultOn: false, color: "text-michigan-coral" },
-  { id: "egle-air", label: "Air Quality Sites", icon: Wind, defaultOn: false, color: "text-michigan-sky" },
+  { id: "egle-air", label: "EGLE Air Monitors", icon: Wind, defaultOn: false, color: "text-michigan-sky" },
   { id: "ev-stations", label: "EV Charging", icon: Zap, defaultOn: false, color: "text-michigan-gold" },
   { id: "ddot-routes", label: "DDOT Bus Routes", icon: Bus, defaultOn: false, color: "text-michigan-coral" },
   { id: "cata-routes", label: "CATA Bus Routes", icon: Train, defaultOn: false, color: "text-michigan-teal" },
@@ -89,7 +90,7 @@ export default function SectorOverlayControls({ activeOverlays, onToggleOverlay 
       </div>
 
       <p className="mt-3 text-[10px] text-muted-foreground">
-        Static data: Michigan GIS, MDOT, EGLE (hourly). Live tracking: GTFS-RT (30s).
+        Static: Michigan GIS, MDOT, EGLE, EPA (hourly). Live: GTFS-RT (30s).
       </p>
     </motion.div>
   );

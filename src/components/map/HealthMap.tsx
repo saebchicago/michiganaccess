@@ -12,6 +12,7 @@ import CountyBoundaryLayer from "./CountyBoundaryLayer";
 import VehiclePositionLayer from "./VehiclePositionLayer";
 import { useArcGISData, type ArcGISLayer } from "@/hooks/useArcGISData";
 import { useGTFSRealtime } from "@/hooks/useGTFSRealtime";
+import { useAirQuality } from "@/hooks/useAirQuality";
 
 // Fix default icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -142,6 +143,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   const showCATA = activeOverlays.includes("cata-routes");
   const showDDOTLive = activeOverlays.includes("ddot-live");
   const showTheRideLive = activeOverlays.includes("theride-live");
+  const showAQI = activeOverlays.includes("aqi-stations");
 
   const { data: workzoneData } = useArcGISData("mdot-workzones", showWorkzones);
   const { data: airData } = useArcGISData("egle-air", showAir);
@@ -150,6 +152,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   const { data: cataData } = useArcGISData("cata-routes", showCATA);
   const { data: ddotLive } = useGTFSRealtime("ddot", showDDOTLive);
   const { data: therideLive } = useGTFSRealtime("theride", showTheRideLive);
+  const { data: aqiData } = useAirQuality(showAQI);
 
   const allLiveVehicles = useMemo(() => {
     const vehicles = [];
@@ -342,7 +345,54 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
       lg.addTo(map);
       overlayLayersRef.current["cata"] = lg;
     }
-  }, [showWorkzones, showAir, showEV, showDDOT, showCATA, workzoneData, airData, evData, ddotData, cataData]);
+    // AQI Stations
+    if (showAQI && aqiData?.stations) {
+      const lg = L.layerGroup();
+      for (const station of aqiData.stations) {
+        const textColor = station.aqi <= 100 ? "#000" : "#fff";
+        const icon = L.divIcon({
+          html: `<div style="
+            width:32px;height:32px;border-radius:50%;
+            background:${station.color};border:2px solid #fff;
+            box-shadow:0 2px 6px rgba(0,0,0,0.3);
+            display:flex;align-items:center;justify-content:center;
+            font-size:11px;font-weight:700;color:${textColor};
+            font-family:system-ui,sans-serif;
+          ">${station.aqi}</div>`,
+          className: "aqi-marker",
+          iconSize: [32, 32],
+          iconAnchor: [16, 16],
+          popupAnchor: [0, -16],
+        });
+
+        const timeStr = station.lastUpdated
+          ? new Date(station.lastUpdated).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+          : "N/A";
+
+        const marker = L.marker([station.latitude, station.longitude], { icon });
+        marker.bindPopup(`
+          <div style="font-family:system-ui,sans-serif;min-width:200px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <span style="width:28px;height:28px;border-radius:50%;background:${station.color};display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:${textColor};">${station.aqi}</span>
+              <div>
+                <div style="font-size:13px;font-weight:700;color:#003B5C;">${station.name}</div>
+                ${station.city ? `<div style="font-size:11px;color:#64748b;">${station.city}, MI</div>` : ""}
+              </div>
+            </div>
+            <div style="background:${station.color};color:${textColor};padding:4px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-bottom:6px;">
+              ${station.category}
+            </div>
+            <div style="font-size:11px;color:#475569;">Parameter: ${station.parameter}</div>
+            <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Updated: ${timeStr}</div>
+            <div style="font-size:9px;color:#94a3b8;margin-top:2px;">Source: EPA / OpenAQ</div>
+          </div>
+        `);
+        lg.addLayer(marker);
+      }
+      lg.addTo(map);
+      overlayLayersRef.current["aqi"] = lg;
+    }
+  }, [showWorkzones, showAir, showEV, showDDOT, showCATA, showAQI, workzoneData, airData, evData, ddotData, cataData, aqiData]);
 
   const handleCountyClick = useCallback((name: string) => {
     // Strip "County" suffix if present from ArcGIS data
