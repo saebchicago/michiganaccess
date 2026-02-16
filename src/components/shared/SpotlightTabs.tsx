@@ -4,9 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import {
   Heart, Bus, Zap, TreePine, GraduationCap, Scale, Medal, Baby, ShieldAlert, Palette,
-  Search, ExternalLink, Share2, X,
+  Search, ExternalLink, Share2, X, Star,
 } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { toast } from "sonner";
@@ -144,6 +145,22 @@ const handleShare = async (program: SearchableProgram) => {
   }
 };
 
+// Curated "recommended" program titles per county (top picks), plus statewide defaults
+const RECOMMENDED_TITLES: Record<string, string[]> = {
+  Wayne: ["Meals on Wheels Michigan", "Lakeshore Legal Aid", "Detroit at Work", "Detroit Public Library", "Wayne County Emergency Management", "SMART & DDOT Transit (Metro Detroit)"],
+  Oakland: ["Area Agency on Aging 1-B", "Lakeshore Legal Aid", "DTE Energy Efficiency Programs", "SMART & DDOT Transit (Metro Detroit)", "AARP Michigan", "Michigan Legal Help"],
+  Kent: ["Senior Resources of West Michigan", "The Rapid (Grand Rapids)", "Grand Rapids Public Library", "Legal Aid of Western Michigan", "Kent County Emergency Management", "West Michigan Works! Training"],
+  Genesee: ["Lakeshore Legal Aid", "Michigan Reconnect", "LIHEAP Heating Assistance", "Meals on Wheels Michigan", "American Red Cross – Michigan", "Michigan Legal Help"],
+  Washtenaw: ["Area Agency on Aging 1-B", "Michigan Reconnect", "Michigan Works! Career Services", "EGLE Air Quality Alerts", "Michigan Activity Pass", "Michigan Legal Help"],
+  Ingham: ["Michigan Works! Career Services", "Michigan Reconnect", "LIHEAP Heating Assistance", "Consumers Energy Efficiency Rebates", "Michigan Activity Pass", "AARP Michigan"],
+};
+
+const STATEWIDE_RECOMMENDED = [
+  "Meals on Wheels Michigan", "Michigan Legal Help", "LIHEAP Heating Assistance",
+  "Michigan Reconnect", "American Red Cross – Michigan", "Michigan Activity Pass",
+  "AARP Michigan", "Michigan Works! Career Services",
+];
+
 const SpotlightTabs = () => {
   const [search, setSearch] = useState("");
   const { county } = useCounty();
@@ -161,6 +178,15 @@ const SpotlightTabs = () => {
       return countyMatch && textMatch;
     });
   }, [search, county]);
+
+  const recommended = useMemo(() => {
+    const titles = county && RECOMMENDED_TITLES[county]
+      ? RECOMMENDED_TITLES[county]
+      : STATEWIDE_RECOMMENDED;
+    return titles
+      .map((t) => ALL_PROGRAMS.find((p) => p.title === t))
+      .filter(Boolean) as SearchableProgram[];
+  }, [county]);
 
   const isSearching = search.trim().length > 0;
 
@@ -248,26 +274,68 @@ const SpotlightTabs = () => {
             )}
           </div>
         ) : (
-          /* Tabbed category view */
-          <Tabs defaultValue="community" className="w-full">
-            <TabsList className="flex flex-wrap justify-center gap-1 h-auto bg-transparent p-0 mb-2">
-              {SECTIONS.map(({ value, label, icon: Icon }) => (
-                <TabsTrigger
-                  key={value}
-                  value={value}
-                  className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-full px-3 py-1.5 text-xs font-medium border border-border data-[state=active]:border-primary transition-colors"
-                >
-                  <Icon className="h-3.5 w-3.5 mr-1.5" />
-                  {label}
-                </TabsTrigger>
+          <>
+            {/* Recommended for You */}
+            <div className="max-w-5xl mx-auto mb-8">
+              <div className="flex items-center gap-2 mb-4">
+                <Star className="h-5 w-5 text-primary fill-primary" />
+                <h3 className="text-lg font-semibold text-foreground">
+                  Recommended for {county ? `${county} County` : "You"}
+                </h3>
+              </div>
+              <Carousel opts={{ align: "start", loop: true }} className="w-full">
+                <CarouselContent>
+                  {recommended.map((program) => {
+                    const meta = CATEGORY_META[program.category];
+                    return (
+                      <CarouselItem key={`rec-${program.title}`} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                        <Card className="h-full hover-lift border-primary/20">
+                          <CardContent className="p-4 space-y-2 flex flex-col h-full">
+                            <div className="flex items-center justify-between">
+                              <Badge variant="outline" className="text-[10px]">
+                                {meta?.label || program.category}
+                              </Badge>
+                              <Star className="h-3 w-3 text-primary fill-primary" />
+                            </div>
+                            <h4 className="font-semibold text-sm text-foreground leading-snug">{program.title}</h4>
+                            <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-2">{program.description}</p>
+                            <Button variant="outline" size="sm" className="w-full mt-auto" asChild>
+                              <a href={program.url} target="_blank" rel="noopener noreferrer">
+                                Go to Program <ExternalLink className="h-3 w-3 ml-1" />
+                              </a>
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      </CarouselItem>
+                    );
+                  })}
+                </CarouselContent>
+                <CarouselPrevious className="hidden md:flex" />
+                <CarouselNext className="hidden md:flex" />
+              </Carousel>
+            </div>
+
+            {/* Tabbed category view */}
+            <Tabs defaultValue="community" className="w-full">
+              <TabsList className="flex flex-wrap justify-center gap-1 h-auto bg-transparent p-0 mb-2">
+                {SECTIONS.map(({ value, label, icon: Icon }) => (
+                  <TabsTrigger
+                    key={value}
+                    value={value}
+                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-full px-3 py-1.5 text-xs font-medium border border-border data-[state=active]:border-primary transition-colors"
+                  >
+                    <Icon className="h-3.5 w-3.5 mr-1.5" />
+                    {label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              {SECTIONS.map(({ value, component: Component }) => (
+                <TabsContent key={value} value={value} className="mt-0">
+                  <Component />
+                </TabsContent>
               ))}
-            </TabsList>
-            {SECTIONS.map(({ value, component: Component }) => (
-              <TabsContent key={value} value={value} className="mt-0">
-                <Component />
-              </TabsContent>
-            ))}
-          </Tabs>
+            </Tabs>
+          </>
         )}
       </div>
     </section>
