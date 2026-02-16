@@ -21,6 +21,9 @@ import { useCounty } from "@/contexts/CountyContext";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProviderDirectory from "@/components/findcare/ProviderDirectory";
+import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
+import CareTeamReminders from "@/components/shared/CareTeamReminders";
+import { ClipboardList, Bell } from "lucide-react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -458,6 +461,28 @@ export default function FindCarePage() {
         </div>
           </TabsContent>
         </Tabs>
+
+        {/* Prep Tools */}
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <div className="space-y-4">
+            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
+              <ClipboardList className="h-5 w-5 text-primary" />
+              Prepare for Your Visit
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Get ready before your appointment. Download a checklist to bring with you.
+            </p>
+            <VisitPrepChecklist
+              trigger={
+                <Button variant="outline">
+                  <ClipboardList className="h-4 w-4" />
+                  Open Visit Prep Checklist
+                </Button>
+              }
+            />
+          </div>
+          <CareTeamReminders />
+        </div>
       </div>
     </Layout>
   );
