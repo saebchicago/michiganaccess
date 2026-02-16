@@ -200,7 +200,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   // Update facility markers with clustering
   useEffect(() => {
     const map = mapInstanceRef.current;
-    if (!map) return;
+    if (!map || !map.getContainer()?.parentNode) return;
 
     // Remove old cluster
     if (clusterRef.current) {
@@ -223,18 +223,37 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
       cluster.addLayer(marker);
     });
 
-    map.addLayer(cluster);
-    clusterRef.current = cluster;
+    try {
+      if (map.getContainer()?.parentNode) {
+        map.addLayer(cluster);
+        clusterRef.current = cluster;
+      }
+    } catch {
+      // Map destroyed during layer add
+    }
   }, [facilities, activeLayers]);
 
   // Sector overlay layers
   useEffect(() => {
     const map = mapInstanceRef.current;
-    if (!map) return;
+    if (!map || !map.getContainer()?.parentNode) return;
 
-    // Clear old overlays
-    Object.values(overlayLayersRef.current).forEach((lg) => map.removeLayer(lg));
+    // Clear old overlays safely
+    Object.values(overlayLayersRef.current).forEach((lg) => {
+      try { map.removeLayer(lg); } catch {}
+    });
     overlayLayersRef.current = {};
+
+    const safeAddToMap = (lg: L.LayerGroup, key: string) => {
+      try {
+        if (map.getContainer()?.parentNode) {
+          lg.addTo(map);
+          overlayLayersRef.current[key] = lg;
+        }
+      } catch {
+        // Map was destroyed between check and add
+      }
+    };
 
     // MDOT Work Zones
     if (showWorkzones && workzoneData?.data) {
@@ -252,8 +271,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
           },
         }).addTo(lg);
       } catch {}
-      lg.addTo(map);
-      overlayLayersRef.current["workzones"] = lg;
+      safeAddToMap(lg, "workzones");
     }
 
     // Air Quality
@@ -272,8 +290,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
           },
         }).addTo(lg);
       } catch {}
-      lg.addTo(map);
-      overlayLayersRef.current["air"] = lg;
+      safeAddToMap(lg, "air");
     }
 
     // EV Stations
@@ -292,8 +309,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
           },
         }).addTo(lg);
       } catch {}
-      lg.addTo(map);
-      overlayLayersRef.current["ev"] = lg;
+      safeAddToMap(lg, "ev");
     }
     // DDOT Bus Routes
     if (showDDOT && ddotData?.data) {
@@ -317,8 +333,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
           },
         }).addTo(lg);
       } catch {}
-      lg.addTo(map);
-      overlayLayersRef.current["ddot"] = lg;
+      safeAddToMap(lg, "ddot");
     }
 
     // CATA Bus Routes
@@ -343,8 +358,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
           },
         }).addTo(lg);
       } catch {}
-      lg.addTo(map);
-      overlayLayersRef.current["cata"] = lg;
+      safeAddToMap(lg, "cata");
     }
     // AQI Stations
     if (showAQI && aqiData?.stations) {
@@ -389,8 +403,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
         `);
         lg.addLayer(marker);
       }
-      lg.addTo(map);
-      overlayLayersRef.current["buspatrol"] = lg;
+      safeAddToMap(lg, "buspatrol");
     }
   }, [showWorkzones, showAir, showEV, showDDOT, showCATA, showAQI, showBusPatrol, workzoneData, airData, evData, ddotData, cataData, aqiData]);
 
