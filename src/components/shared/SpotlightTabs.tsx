@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import {
   Heart, Bus, Zap, TreePine, GraduationCap, Scale, Medal, Baby, ShieldAlert, Palette,
-  Search, ExternalLink, Share2, X, Star,
+  Search, ExternalLink, Share2, X, Star, LayoutGrid,
 } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { toast } from "sonner";
@@ -163,6 +163,7 @@ const STATEWIDE_RECOMMENDED = [
 
 const SpotlightTabs = () => {
   const [search, setSearch] = useState("");
+  const [browseAll, setBrowseAll] = useState(false);
   const { county } = useCounty();
 
   const searchResults = useMemo(() => {
@@ -188,7 +189,12 @@ const SpotlightTabs = () => {
       .filter(Boolean) as SearchableProgram[];
   }, [county]);
 
+  const allPrograms = useMemo(() => {
+    return ALL_PROGRAMS.filter((p) => !p.counties || !county || p.counties.includes(county));
+  }, [county]);
+
   const isSearching = search.trim().length > 0;
+  const showGrid = isSearching || browseAll;
 
   return (
     <section className="py-12" aria-labelledby="spotlights-heading">
@@ -225,20 +231,27 @@ const SpotlightTabs = () => {
           </div>
         </div>
 
-        {isSearching ? (
-          /* Search results view */
+        {showGrid ? (
+          /* Grid results view (search or browse all) */
           <div className="max-w-5xl mx-auto">
-            <p className="text-sm text-muted-foreground mb-4">
-              <strong className="text-foreground">{searchResults.length}</strong> program{searchResults.length !== 1 ? "s" : ""} found
-              {county ? ` for ${county} County` : ""}
-            </p>
-            {searchResults.length === 0 ? (
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-sm text-muted-foreground">
+                <strong className="text-foreground">{(isSearching ? searchResults : allPrograms).length}</strong> program{(isSearching ? searchResults : allPrograms).length !== 1 ? "s" : ""}
+                {isSearching ? " found" : " available"}{county ? ` for ${county} County` : ""}
+              </p>
+              {browseAll && (
+                <Button variant="ghost" size="sm" onClick={() => { setBrowseAll(false); setSearch(""); }}>
+                  <X className="h-4 w-4 mr-1" /> Back to tabs
+                </Button>
+              )}
+            </div>
+            {(isSearching ? searchResults : allPrograms).length === 0 ? (
               <div className="py-12 text-center">
                 <p className="text-muted-foreground">No programs match your search. Try a different term.</p>
               </div>
             ) : (
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {searchResults.map((program) => {
+                {(isSearching ? searchResults : allPrograms).map((program) => {
                   const meta = CATEGORY_META[program.category];
                   return (
                     <Card key={`${program.category}-${program.title}`} className="h-full hover-lift">
@@ -313,6 +326,14 @@ const SpotlightTabs = () => {
                 <CarouselPrevious className="hidden md:flex" />
                 <CarouselNext className="hidden md:flex" />
               </Carousel>
+            </div>
+
+            {/* Browse All button */}
+            <div className="text-center mb-6">
+              <Button variant="outline" onClick={() => setBrowseAll(true)} className="gap-2">
+                <LayoutGrid className="h-4 w-4" />
+                Browse All Programs
+              </Button>
             </div>
 
             {/* Tabbed category view */}
