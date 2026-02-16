@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      appeal_outcomes: {
+        Row: {
+          appeal_type: string
+          carrier: string | null
+          county: string | null
+          created_at: string
+          denial_reason: string | null
+          estimated_savings: number | null
+          id: string
+          outcome: string
+        }
+        Insert: {
+          appeal_type?: string
+          carrier?: string | null
+          county?: string | null
+          created_at?: string
+          denial_reason?: string | null
+          estimated_savings?: number | null
+          id?: string
+          outcome?: string
+        }
+        Update: {
+          appeal_type?: string
+          carrier?: string | null
+          county?: string | null
+          created_at?: string
+          denial_reason?: string | null
+          estimated_savings?: number | null
+          id?: string
+          outcome?: string
+        }
+        Relationships: []
+      }
       community_events: {
         Row: {
           address: string | null

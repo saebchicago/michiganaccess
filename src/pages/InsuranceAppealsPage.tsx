@@ -1,0 +1,99 @@
+import Layout from "@/components/layout/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Shield, ArrowDown } from "lucide-react";
+import AppealFlowchart from "@/components/appeals/AppealFlowchart";
+import AIAppealGenerator from "@/components/appeals/AIAppealGenerator";
+import MedicaidSpecialist from "@/components/appeals/MedicaidSpecialist";
+import ImpactDashboard from "@/components/appeals/ImpactDashboard";
+import PersonaCarousel from "@/components/appeals/PersonaCarousel";
+import DoctorKit from "@/components/appeals/DoctorKit";
+import EnterprisePartners from "@/components/appeals/EnterprisePartners";
+
+const InsuranceAppealsPage = () => {
+  usePageMeta({
+    title: "Insurance Denial Appeal Tool — Free",
+    description:
+      "Fight health insurance denials in Michigan. Free AI-powered appeal letter generator, Medicaid fair hearing templates, and DIFS external review guidance. 70%+ success rate.",
+    path: "/health/insurance-appeals",
+  });
+
+  return (
+    <Layout>
+      {/* Hero */}
+      <section className="relative bg-gradient-hero py-16 md:py-24 text-primary-foreground overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--teal)/0.15),transparent_60%)]" />
+        <div className="container relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-3xl mx-auto text-center space-y-6"
+          >
+            <Badge className="bg-white/15 text-white border-white/25">
+              <Shield className="h-3 w-3 mr-1" />
+              Michigan Insurance Appeals Hub
+            </Badge>
+            <h1 className="text-3xl md:text-5xl font-bold leading-tight">
+              Your Insurance Denial Is{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/70">
+                Not Final
+              </span>
+            </h1>
+            <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
+              68% of internal appeals and 82% of DIFS external reviews are decided in the patient's favor. 
+              Michigan Access gives you the tools to fight back—free, private, and proven.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button size="lg" variant="secondary" asChild>
+                <a href="#ai-generator">
+                  Generate Appeal Letter
+                </a>
+              </Button>
+              <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" asChild>
+                <a href="#flowchart">
+                  See the Process <ArrowDown className="h-4 w-4" />
+                </a>
+              </Button>
+            </div>
+            <p className="text-xs text-primary-foreground/60">
+              No personal health information stored · No account required · 100% free
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main content sections */}
+      <div className="container py-12 space-y-16">
+        {/* Persona-driven navigation */}
+        <PersonaCarousel />
+
+        {/* Flowchart */}
+        <div id="flowchart">
+          <AppealFlowchart />
+        </div>
+
+        {/* AI Generator */}
+        <div id="ai-generator">
+          <AIAppealGenerator />
+        </div>
+
+        {/* Medicaid Specialist */}
+        <MedicaidSpecialist />
+
+        {/* Doctor Kit */}
+        <DoctorKit />
+
+        {/* Impact Dashboard */}
+        <ImpactDashboard />
+
+        {/* Enterprise CTA */}
+        <EnterprisePartners />
+      </div>
+    </Layout>
+  );
+};
+
+export default InsuranceAppealsPage;
