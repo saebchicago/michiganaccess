@@ -18,6 +18,7 @@ import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
 import { useCommunityEvents } from "@/hooks/useCommunityEvents";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
+import CountyCivicSection from "@/components/county/CountyCivicSection";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -222,6 +223,9 @@ export default function CountyPage() {
             </div>
           </section>
         )}
+
+        {/* Civic & Government */}
+        <CountyCivicSection county={county} countyType={profile.countyType} />
 
         {/* Explore Resources (reuse SpotlightTabs) */}
         <SpotlightTabs />

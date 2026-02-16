@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
@@ -9,7 +9,9 @@ import { useCounty } from "@/contexts/CountyContext";
 import { useNavigate } from "react-router-dom";
 import { countyToSlug, COUNTY_CENTERS } from "@/utils/countyUtils";
 import CountyBoundaryLayer from "./CountyBoundaryLayer";
+import VehiclePositionLayer from "./VehiclePositionLayer";
 import { useArcGISData, type ArcGISLayer } from "@/hooks/useArcGISData";
+import { useGTFSRealtime } from "@/hooks/useGTFSRealtime";
 
 // Fix default icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -138,12 +140,23 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   const showEV = activeOverlays.includes("ev-stations");
   const showDDOT = activeOverlays.includes("ddot-routes");
   const showCATA = activeOverlays.includes("cata-routes");
+  const showDDOTLive = activeOverlays.includes("ddot-live");
+  const showTheRideLive = activeOverlays.includes("theride-live");
 
   const { data: workzoneData } = useArcGISData("mdot-workzones", showWorkzones);
   const { data: airData } = useArcGISData("egle-air", showAir);
   const { data: evData } = useArcGISData("ev-stations", showEV);
   const { data: ddotData } = useArcGISData("ddot-routes", showDDOT);
   const { data: cataData } = useArcGISData("cata-routes", showCATA);
+  const { data: ddotLive } = useGTFSRealtime("ddot", showDDOTLive);
+  const { data: therideLive } = useGTFSRealtime("theride", showTheRideLive);
+
+  const allLiveVehicles = useMemo(() => {
+    const vehicles = [];
+    if (showDDOTLive && ddotLive?.vehicles) vehicles.push(...ddotLive.vehicles);
+    if (showTheRideLive && therideLive?.vehicles) vehicles.push(...therideLive.vehicles);
+    return vehicles;
+  }, [showDDOTLive, showTheRideLive, ddotLive, therideLive]);
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
@@ -346,6 +359,16 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
         selectedCounty={county}
         onCountyClick={handleCountyClick}
       />
+      <VehiclePositionLayer
+        map={mapInstanceRef.current}
+        vehicles={allLiveVehicles}
+        visible={showDDOTLive || showTheRideLive}
+      />
+      {(showDDOTLive || showTheRideLive) && allLiveVehicles.length > 0 && (
+        <div className="absolute bottom-2 left-2 z-[1000] rounded bg-card/90 border border-border px-2 py-1 text-[10px] text-muted-foreground shadow">
+          🚌 {allLiveVehicles.length} buses live · Refreshes every 30s
+        </div>
+      )}
     </div>
   );
 }
