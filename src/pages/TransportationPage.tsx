@@ -5,11 +5,14 @@ import {
   Bus, GraduationCap, ShieldCheck, Accessibility, Search,
   ExternalLink, MapPin, Users, AlertTriangle, CheckCircle2,
   Camera, Eye, BookOpen, Phone, Train, Car, BarChart3, TrendingUp,
-  ChevronDown, ChevronUp, Lock, Scale, Zap
+  ChevronDown, ChevronUp, Lock, Scale, Zap, ClipboardList
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
+import SchoolSafetyCallout from "@/components/shared/SchoolSafetyCallout";
+import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
+import CareTeamReminders from "@/components/shared/CareTeamReminders";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -599,6 +602,24 @@ export default function TransportationPage() {
         {activeTab === "safety" && (
           <HealthSafetyCallout />
         )}
+
+        {/* School Safety callout — on school tab */}
+        {activeTab === "school" && (
+          <SchoolSafetyCallout />
+        )}
+
+        {/* Visit Prep + Reminders */}
+        <div className="grid gap-6 md:grid-cols-2">
+          <Card className="border-border">
+            <CardContent className="py-6 text-center space-y-3">
+              <ClipboardList className="h-8 w-8 mx-auto text-primary" />
+              <p className="text-sm font-semibold text-foreground">Prepare for Your Visit</p>
+              <p className="text-xs text-muted-foreground">Clinic visit or school day checklist—download and print.</p>
+              <VisitPrepChecklist />
+            </CardContent>
+          </Card>
+          <CareTeamReminders />
+        </div>
 
         {/* Crisis / Accessibility banner */}
         <Card className="border-michigan-teal/20 bg-michigan-teal/5">

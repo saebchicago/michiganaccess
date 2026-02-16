@@ -5,6 +5,7 @@ import SystemsExplainer from "@/components/home/SystemsExplainer";
 import TrustIndicators from "@/components/home/TrustIndicators";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import CountyInfoCard from "@/components/home/CountyInfoCard";
+import CommunityProgramSpotlights from "@/components/shared/CommunityProgramSpotlights";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -19,6 +20,7 @@ const Index = () => {
     <HeroSection />
     <CountyInfoCard />
     <CoreAccessGrid />
+    <CommunityProgramSpotlights />
     <SystemsExplainer />
     <TrustIndicators />
   </Layout>

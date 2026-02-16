@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Home, Apple, HeartPulse, ArrowRight } from "lucide-react";
+import { Home, Apple, HeartPulse, Shield, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -43,6 +43,14 @@ const CoreAccessGrid = () => {
       iconBg: "bg-michigan-forest/8",
       iconColor: "text-michigan-forest",
     },
+    {
+      icon: Shield,
+      title: "Insurance Appeals",
+      description: "Fight health insurance denials with free AI-powered appeal letters, DIFS external review guidance, and Medicaid fair hearing templates.",
+      href: "/health/insurance-appeals",
+      iconBg: "bg-primary/8",
+      iconColor: "text-primary",
+    },
   ];
 
   return (
@@ -62,7 +70,7 @@ const CoreAccessGrid = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
           {tiles.map((tile) => (
             <motion.div key={tile.href + tile.title} variants={item}>
