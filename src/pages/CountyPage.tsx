@@ -11,6 +11,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { slugToCounty, getCountyLinks } from "@/utils/countyUtils";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
 import { useCounty, type MichiganCounty } from "@/contexts/CountyContext";
@@ -20,6 +21,36 @@ import { useCommunityEvents } from "@/hooks/useCommunityEvents";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import CountyCivicSection from "@/components/county/CountyCivicSection";
 import DownloadCountyGuide from "@/components/county/DownloadCountyGuide";
+
+// National benchmarks (Census ACS 2023, HRSA, USDA)
+const BENCHMARKS: Record<string, { state: string; us: string }> = {
+  "Uninsured rate":    { state: "6.5%", us: "8.0%" },
+  "Food insecurity":   { state: "13.2%", us: "13.5%" },
+  "Primary care ratio": { state: "1,280:1", us: "1,310:1" },
+};
+
+const StatSkeleton = () => (
+  <Card>
+    <CardContent className="flex items-center gap-3 py-4">
+      <Skeleton className="h-8 w-8 rounded" />
+      <div className="space-y-1.5 flex-1">
+        <Skeleton className="h-6 w-16" />
+        <Skeleton className="h-3 w-24" />
+      </div>
+    </CardContent>
+  </Card>
+);
+
+const HealthSkeleton = () => (
+  <Card>
+    <CardContent className="py-4 space-y-2">
+      <Skeleton className="h-3 w-20" />
+      <Skeleton className="h-6 w-16" />
+      <Skeleton className="h-4 w-32" />
+      <Skeleton className="h-3 w-28" />
+    </CardContent>
+  </Card>
+);
 
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
@@ -67,11 +98,15 @@ export default function CountyPage() {
 
   const profile = getCountyProfile(county);
   const links = getCountyLinks(county);
-  const { data: facilities = [] } = useFacilities(undefined, county);
-  const { data: resources = [] } = useCommunityResources(undefined, county);
-  const { data: events = [] } = useCommunityEvents(undefined, county);
+  const { data: facilities, isLoading: loadingFacilities } = useFacilities(undefined, county);
+  const { data: resources, isLoading: loadingResources } = useCommunityResources(undefined, county);
+  const { data: events, isLoading: loadingEvents } = useCommunityEvents(undefined, county);
+  const safeF = facilities ?? [];
+  const safeR = resources ?? [];
+  const safeE = events ?? [];
+  const isStatsLoading = loadingFacilities || loadingResources || loadingEvents;
 
-  const facilityCounts = facilities.reduce((acc, f) => {
+  const facilityCounts = safeF.reduce((acc, f) => {
     acc[f.facility_type] = (acc[f.facility_type] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -117,24 +152,30 @@ export default function CountyPage() {
       <div className="container py-8 space-y-10">
         {/* Quick Stats */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid gap-4 grid-cols-2 md:grid-cols-4">
-          {[
-            { label: "Healthcare Facilities", value: facilities.length, icon: Building2, color: "text-primary" },
-            { label: "Community Resources", value: resources.length, icon: Heart, color: "text-michigan-teal" },
-            { label: "Upcoming Events", value: events.length, icon: Calendar, color: "text-michigan-gold" },
-            { label: "Population", value: profile.population.toLocaleString(), icon: Users, color: "text-michigan-forest" },
-          ].map((stat, i) => (
-            <motion.div key={stat.label} variants={fadeUp} custom={i}>
-              <Card>
-                <CardContent className="flex items-center gap-3 py-4">
-                  <stat.icon className={`h-8 w-8 ${stat.color} flex-shrink-0`} />
-                  <div>
-                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+          {isStatsLoading ? (
+            <>
+              <StatSkeleton /><StatSkeleton /><StatSkeleton /><StatSkeleton />
+            </>
+          ) : (
+            [
+              { label: "Healthcare Facilities", value: safeF.length, icon: Building2, color: "text-primary" },
+              { label: "Community Resources", value: safeR.length, icon: Heart, color: "text-michigan-teal" },
+              { label: "Upcoming Events", value: safeE.length, icon: Calendar, color: "text-michigan-gold" },
+              { label: "Population", value: profile.population.toLocaleString(), icon: Users, color: "text-michigan-forest" },
+            ].map((stat, i) => (
+              <motion.div key={stat.label} variants={fadeUp} custom={i}>
+                <Card>
+                  <CardContent className="flex items-center gap-3 py-4">
+                    <stat.icon className={`h-8 w-8 ${stat.color} flex-shrink-0`} />
+                    <div>
+                      <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                      <p className="text-xs text-muted-foreground">{stat.label}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))
+          )}
         </motion.div>
 
         {/* Health Highlights */}
@@ -142,18 +183,25 @@ export default function CountyPage() {
           <h2 className="mb-4 text-xl font-bold text-foreground">Health Highlights</h2>
           <div className="grid gap-3 sm:grid-cols-3">
             {profile.healthHighlights.map((h) => {
-              const stateAvg = h.label === "Uninsured rate" ? "6.5%" : h.label === "Food insecurity" ? "13.2%" : undefined;
+              const bench = BENCHMARKS[h.label];
               const isRatio = h.label === "Primary care ratio";
               const numericVal = parseFloat(h.value.replace(/[^0-9.]/g, ""));
-              const stateVal = stateAvg ? parseFloat(stateAvg.replace(/[^0-9.]/g, "")) : undefined;
-              const isBetter = stateVal !== undefined ? numericVal < stateVal : undefined;
+
+              // State comparison
+              const stateVal = bench ? parseFloat(bench.state.replace(/[^0-9.]/g, "")) : undefined;
+              const isBetterState = stateVal !== undefined ? numericVal < stateVal : undefined;
+
+              // US comparison
+              const usVal = bench ? parseFloat(bench.us.replace(/[^0-9.]/g, "")) : undefined;
+              const isBetterUS = usVal !== undefined ? numericVal < usVal : undefined;
+
               const actionLink = h.label === "Uninsured rate"
                 ? { href: "/financial-help", text: "Find coverage options →" }
                 : h.label === "Primary care ratio"
                 ? { href: "/find-care", text: "View community health centers →" }
                 : { href: "/resources", text: "Find food assistance →" };
 
-              // Determine severity for primary care ratio
+              // Severity for primary care ratio
               let ratioSeverity: "good" | "moderate" | "high" | undefined;
               if (isRatio) {
                 const ratioNum = parseInt(h.value.split(":")[0].replace(/[^0-9]/g, ""));
@@ -169,16 +217,27 @@ export default function CountyPage() {
                     </div>
                     <p className="text-xl font-bold text-foreground">{h.value}</p>
 
-                    {/* State comparison */}
-                    {stateAvg && (
-                      <div className="flex items-center gap-1.5">
-                        <Badge
-                          variant={isBetter ? "secondary" : "destructive"}
-                          className={`text-[10px] px-1.5 py-0 ${isBetter ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
-                        >
-                          {isBetter ? "Below" : "Above"} state avg
-                        </Badge>
-                        <span className="text-[10px] text-muted-foreground">MI: {stateAvg}</span>
+                    {/* State + US comparisons */}
+                    {bench && (
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <Badge
+                            variant={isBetterState ? "secondary" : "destructive"}
+                            className={`text-[10px] px-1.5 py-0 ${isBetterState ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
+                          >
+                            {isBetterState ? "Below" : "Above"} state avg
+                          </Badge>
+                          <span className="text-[10px] text-muted-foreground">MI: {bench.state}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <Badge
+                            variant={isBetterUS ? "secondary" : "destructive"}
+                            className={`text-[10px] px-1.5 py-0 ${isBetterUS ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
+                          >
+                            {isBetterUS ? "Below" : "Above"} US avg
+                          </Badge>
+                          <span className="text-[10px] text-muted-foreground">US: {bench.us}</span>
+                        </div>
                       </div>
                     )}
 
@@ -228,12 +287,12 @@ export default function CountyPage() {
         <section>
           <h2 className="mb-4 text-xl font-bold text-foreground">Facilities Map</h2>
           <Suspense fallback={<div className="h-[400px] rounded-lg bg-muted animate-pulse" />}>
-            <EmbeddedMap facilities={facilities} county={county} height="400px" />
+            <EmbeddedMap facilities={safeF} county={county} height="400px" />
           </Suspense>
         </section>
 
         {/* Facility Breakdown */}
-        {facilities.length > 0 && (
+        {safeF.length > 0 && (
           <section>
             <h2 className="mb-4 text-xl font-bold text-foreground">Facility Types</h2>
             <div className="flex flex-wrap gap-2">
@@ -247,7 +306,7 @@ export default function CountyPage() {
         )}
 
         {/* Top Facilities List */}
-        {facilities.length > 0 && (
+        {safeF.length > 0 && (
           <section>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-foreground">Top Facilities</h2>
@@ -256,7 +315,7 @@ export default function CountyPage() {
               </Link>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {facilities.slice(0, 6).map((f, i) => (
+              {safeF.slice(0, 6).map((f, i) => (
                 <motion.div key={f.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
                   <Card className="h-full hover-lift">
                     <CardContent className="py-4 space-y-2">
