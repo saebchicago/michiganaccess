@@ -52,8 +52,9 @@ export default function CountyBoundaryLayer({ map, selectedCounty, onCountyClick
         const name = feature.properties?.NAME;
         const pop = feature.properties?.POPULATION;
         
+        const displayName = name?.replace(/\s+County$/i, "").trim() || name;
         layer.bindTooltip(
-          `<strong>${name} County</strong>${pop ? `<br/>Pop: ${Number(pop).toLocaleString()}` : ""}`,
+          `<strong>${displayName} County</strong>${pop ? `<br/>Pop: ${Number(pop).toLocaleString()}` : ""}`,
           { sticky: true, className: "county-tooltip" }
         );
 

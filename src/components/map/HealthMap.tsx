@@ -136,10 +136,14 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   const showWorkzones = activeOverlays.includes("mdot-workzones");
   const showAir = activeOverlays.includes("egle-air");
   const showEV = activeOverlays.includes("ev-stations");
+  const showDDOT = activeOverlays.includes("ddot-routes");
+  const showCATA = activeOverlays.includes("cata-routes");
 
   const { data: workzoneData } = useArcGISData("mdot-workzones", showWorkzones);
   const { data: airData } = useArcGISData("egle-air", showAir);
   const { data: evData } = useArcGISData("ev-stations", showEV);
+  const { data: ddotData } = useArcGISData("ddot-routes", showDDOT);
+  const { data: cataData } = useArcGISData("cata-routes", showCATA);
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
@@ -274,11 +278,64 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
       lg.addTo(map);
       overlayLayersRef.current["ev"] = lg;
     }
-  }, [showWorkzones, showAir, showEV, workzoneData, airData, evData]);
+    // DDOT Bus Routes
+    if (showDDOT && ddotData?.data) {
+      const lg = L.layerGroup();
+      try {
+        L.geoJSON(ddotData.data, {
+          style: () => ({
+            color: "#E85D4A",
+            weight: 3,
+            opacity: 0.7,
+            dashArray: "5, 8",
+          }),
+          pointToLayer: (feature, latlng) => {
+            return L.circleMarker(latlng, {
+              radius: 4, fillColor: "#E85D4A", color: "#fff", weight: 1, fillOpacity: 0.9,
+            });
+          },
+          onEachFeature: (feature, layer) => {
+            const p = feature.properties || {};
+            layer.bindPopup(`<strong>🚌 DDOT ${p.ROUTE_NUM || p.route_short_name || ""}</strong><br/>${p.ROUTE_NAME || p.route_long_name || "Bus Route"}`);
+          },
+        }).addTo(lg);
+      } catch {}
+      lg.addTo(map);
+      overlayLayersRef.current["ddot"] = lg;
+    }
+
+    // CATA Bus Routes
+    if (showCATA && cataData?.data) {
+      const lg = L.layerGroup();
+      try {
+        L.geoJSON(cataData.data, {
+          style: () => ({
+            color: "#00A3A1",
+            weight: 3,
+            opacity: 0.7,
+            dashArray: "5, 8",
+          }),
+          pointToLayer: (feature, latlng) => {
+            return L.circleMarker(latlng, {
+              radius: 4, fillColor: "#00A3A1", color: "#fff", weight: 1, fillOpacity: 0.9,
+            });
+          },
+          onEachFeature: (feature, layer) => {
+            const p = feature.properties || {};
+            layer.bindPopup(`<strong>🚌 CATA ${p.route_short_name || ""}</strong><br/>${p.route_long_name || "Bus Route"}`);
+          },
+        }).addTo(lg);
+      } catch {}
+      lg.addTo(map);
+      overlayLayersRef.current["cata"] = lg;
+    }
+  }, [showWorkzones, showAir, showEV, showDDOT, showCATA, workzoneData, airData, evData, ddotData, cataData]);
 
   const handleCountyClick = useCallback((name: string) => {
-    setCounty(name as any);
-    navigate(`/county/${countyToSlug(name)}`);
+    // Strip "County" suffix if present from ArcGIS data
+    const cleanName = name.replace(/\s+County$/i, "").trim();
+    setCounty(cleanName as any);
+    navigate(`/county/${countyToSlug(cleanName)}`);
   }, [setCounty, navigate]);
 
   return (

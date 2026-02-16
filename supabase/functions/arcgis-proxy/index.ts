@@ -20,9 +20,17 @@ const ENDPOINTS: Record<string, string> = {
   "egle-air":
     "https://gis.michigan.opendata.arcgis.com/datasets/egle-air-quality-monitoring/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson&outSR=4326",
 
-  // EV charging stations (public data)
+// EV charging stations (public data)
   "ev-stations":
     "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Alternative_Fueling_Stations/FeatureServer/0/query?where=State%3D%27MI%27+AND+Fuel_Type%3D%27ELEC%27&outFields=Station_Name,Street_Address,City,ZIP,EV_Level2_EVSE_Num,EV_DC_Fast_Count,EV_Network,Latitude,Longitude&f=geojson&outSR=4326&resultRecordCount=500",
+
+  // DDOT bus routes (Detroit Department of Transportation)
+  "ddot-routes":
+    "https://services2.arcgis.com/qvkbeam7Wirber6j/arcgis/rest/services/DDOT_Routes/FeatureServer/0/query?where=1%3D1&outFields=ROUTE_NUM,ROUTE_NAME,DIRECTION,SHAPE_LEN&f=geojson&outSR=4326",
+
+  // CATA bus routes (Capital Area Transportation Authority - Lansing)
+  "cata-routes":
+    "https://services2.arcgis.com/qvkbeam7Wirber6j/arcgis/rest/services/CATA_Routes/FeatureServer/0/query?where=1%3D1&outFields=route_id,route_long_name,route_short_name&f=geojson&outSR=4326",
 };
 
 // In-memory cache with 1-hour TTL
@@ -66,6 +74,8 @@ Deno.serve(async (req) => {
       "gis-michigan.opendata.arcgis.com",
       "services1.arcgis.com",
       "services2.arcgis.com",
+      "data.detroitmi.gov",
+      "gis.ridecata.com",
     ];
     if (!trustedDomains.some((d) => parsed.hostname.endsWith(d))) {
       return new Response(

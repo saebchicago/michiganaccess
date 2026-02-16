@@ -4,7 +4,9 @@ export type ArcGISLayer =
   | "county-boundaries"
   | "mdot-workzones"
   | "egle-air"
-  | "ev-stations";
+  | "ev-stations"
+  | "ddot-routes"
+  | "cata-routes";
 
 interface ArcGISResponse {
   data: GeoJSON.FeatureCollection;
