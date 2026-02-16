@@ -148,9 +148,10 @@ const EnvironmentPage = () => {
       <section className="py-12 md:py-16">
         <div className="container">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="mb-8 grid w-full grid-cols-2 md:grid-cols-5 gap-1">
+             <TabsList className="mb-8 grid w-full grid-cols-3 md:grid-cols-6 gap-1">
               <TabsTrigger value="air-water" className="text-xs sm:text-sm">{t('environment.airWater')}</TabsTrigger>
               <TabsTrigger value="energy" className="text-xs sm:text-sm">{t('environment.cleanEnergy')}</TabsTrigger>
+              <TabsTrigger value="programs" className="text-xs sm:text-sm">Programs & Rebates</TabsTrigger>
               <TabsTrigger value="recycling" className="text-xs sm:text-sm">{t('environment.recycling')}</TabsTrigger>
               <TabsTrigger value="great-lakes" className="text-xs sm:text-sm">{t('environment.greatLakes')}</TabsTrigger>
               <TabsTrigger value="justice" className="text-xs sm:text-sm">{t('environment.envJustice')}</TabsTrigger>
@@ -306,6 +307,142 @@ const EnvironmentPage = () => {
                       </CardContent>
                     </Card>
                   ))}
+                </motion.div>
+              </motion.div>
+            </TabsContent>
+
+            {/* Programs & Rebates — Sustainability & Energy */}
+            <TabsContent value="programs">
+              <motion.div initial="hidden" animate="show" variants={stagger} className="space-y-8">
+                {/* Residential Rebates */}
+                <motion.div variants={fadeUp}>
+                  <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    <Zap className="h-5 w-5 text-michigan-gold" /> Residential Rebates
+                  </h2>
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <Card className="hover:border-michigan-gold/30 transition-colors">
+                      <CardContent className="p-6">
+                        <h3 className="font-semibold text-foreground mb-2">HOMES Rebate (MiHER)</h3>
+                        <p className="text-sm text-muted-foreground mb-3">Up to $8,000 for whole-home energy efficiency upgrades including insulation, air sealing, and HVAC improvements.</p>
+                        <Badge variant="outline" className="mr-2 text-xs">Income-based</Badge>
+                        <Badge variant="outline" className="text-xs">Federal IRA</Badge>
+                        <Button variant="outline" size="sm" className="mt-4 w-full" asChild>
+                          <a href="https://www.michigan.gov/egle/about/organization/climate-and-energy/miher" target="_blank" rel="noopener">
+                            Apply Now <ExternalLink className="ml-2 h-3 w-3" />
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                    <Card className="hover:border-michigan-gold/30 transition-colors">
+                      <CardContent className="p-6">
+                        <h3 className="font-semibold text-foreground mb-2">HEAR Rebate (MiHER)</h3>
+                        <p className="text-sm text-muted-foreground mb-3">Point-of-sale rebates up to $14,000 for heat pumps, electric stoves, insulation, and electrical panel upgrades.</p>
+                        <Badge variant="outline" className="mr-2 text-xs">Low/Moderate Income</Badge>
+                        <Badge variant="outline" className="text-xs">Electrification</Badge>
+                        <Button variant="outline" size="sm" className="mt-4 w-full" asChild>
+                          <a href="https://www.michigan.gov/egle/about/organization/climate-and-energy/miher" target="_blank" rel="noopener">
+                            Learn More <ExternalLink className="ml-2 h-3 w-3" />
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </motion.div>
+
+                {/* Clean Financing */}
+                <motion.div variants={fadeUp}>
+                  <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-michigan-teal" /> Clean Financing
+                  </h2>
+                  <Card className="hover:border-michigan-teal/30 transition-colors">
+                    <CardContent className="p-6">
+                      <h3 className="font-semibold text-foreground mb-2">Michigan Saves — Low-Interest Green Loans</h3>
+                      <p className="text-sm text-muted-foreground mb-3">Affordable financing for solar panels, HVAC systems, insulation, windows, and EV chargers. No home equity required. Rates as low as 4.99% APR through participating lenders statewide.</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Badge variant="outline" className="text-xs">Solar</Badge>
+                        <Badge variant="outline" className="text-xs">HVAC</Badge>
+                        <Badge variant="outline" className="text-xs">Insulation</Badge>
+                        <Badge variant="outline" className="text-xs">EV Chargers</Badge>
+                      </div>
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://michigansaves.org/" target="_blank" rel="noopener">
+                          Explore Loans <ExternalLink className="ml-2 h-3 w-3" />
+                        </a>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* Utility Programs */}
+                <motion.div variants={fadeUp}>
+                  <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    <Leaf className="h-5 w-5 text-michigan-forest" /> Utility Programs
+                  </h2>
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <Card className="hover:border-michigan-forest/30 transition-colors">
+                      <CardContent className="p-6">
+                        <h3 className="font-semibold text-foreground mb-2">DTE Energy Rebates</h3>
+                        <p className="text-sm text-muted-foreground mb-3">Rebates for smart thermostats, insulation, and efficient appliances. Income-qualified customers may receive free home upgrades.</p>
+                        <Button variant="outline" size="sm" asChild>
+                          <a href="https://www.dteenergy.com/us/en/residential/save-money-energy.html" target="_blank" rel="noopener">
+                            DTE Programs <ExternalLink className="ml-2 h-3 w-3" />
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                    <Card className="hover:border-michigan-forest/30 transition-colors">
+                      <CardContent className="p-6">
+                        <h3 className="font-semibold text-foreground mb-2">Consumers Energy Solar Gardens</h3>
+                        <p className="text-sm text-muted-foreground mb-3">Subscribe to community solar without rooftop panels. Receive bill credits for your share of locally generated clean energy.</p>
+                        <Button variant="outline" size="sm" asChild>
+                          <a href="https://www.consumersenergy.com/residential/renewable-energy/solar-gardens" target="_blank" rel="noopener">
+                            Solar Gardens <ExternalLink className="ml-2 h-3 w-3" />
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </motion.div>
+
+                {/* Workforce & Training */}
+                <motion.div variants={fadeUp}>
+                  <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    <Globe className="h-5 w-5 text-primary" /> Workforce & Training
+                  </h2>
+                  <Card className="hover:border-primary/30 transition-colors">
+                    <CardContent className="p-6">
+                      <h3 className="font-semibold text-foreground mb-2">Going PRO Talent Fund</h3>
+                      <p className="text-sm text-muted-foreground mb-3">State-funded training grants for employers to train new and current workers in high-demand industries including clean energy, advanced manufacturing, and skilled trades.</p>
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://www.michigan.gov/leo/bureaus-agencies/wd/programs/going-pro" target="_blank" rel="noopener">
+                          Learn More <ExternalLink className="ml-2 h-3 w-3" />
+                        </a>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* Connectivity */}
+                <motion.div variants={fadeUp}>
+                  <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-michigan-sky" /> Connectivity & Broadband
+                  </h2>
+                  <Card className="hover:border-michigan-sky/30 transition-colors">
+                    <CardContent className="p-6">
+                      <h3 className="font-semibold text-foreground mb-2">Michigan High-Speed Internet Office (MIHI)</h3>
+                      <p className="text-sm text-muted-foreground mb-3">$5.3 billion in federal investment to connect every Michigan home and business with affordable high-speed internet. Check eligibility for the Affordable Connectivity Program (ACP) and local broadband grants.</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Badge variant="outline" className="text-xs">BEAD Program</Badge>
+                        <Badge variant="outline" className="text-xs">ACP Subsidy</Badge>
+                        <Badge variant="outline" className="text-xs">Rural Priority</Badge>
+                      </div>
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://www.michigan.gov/leo/bureaus-agencies/mihi" target="_blank" rel="noopener">
+                          Check Availability <ExternalLink className="ml-2 h-3 w-3" />
+                        </a>
+                      </Button>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               </motion.div>
             </TabsContent>
