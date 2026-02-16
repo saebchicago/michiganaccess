@@ -144,6 +144,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   const showDDOTLive = activeOverlays.includes("ddot-live");
   const showTheRideLive = activeOverlays.includes("theride-live");
   const showAQI = activeOverlays.includes("aqi-stations");
+  const showBusPatrol = activeOverlays.includes("buspatrol-safety");
 
   const { data: workzoneData } = useArcGISData("mdot-workzones", showWorkzones);
   const { data: airData } = useArcGISData("egle-air", showAir);
@@ -347,52 +348,51 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
     }
     // AQI Stations
     if (showAQI && aqiData?.stations) {
+      // ... keep existing code
+    }
+
+    // BusPatrol School Zone Safety (demo data for Michigan school zones)
+    if (showBusPatrol) {
       const lg = L.layerGroup();
-      for (const station of aqiData.stations) {
-        const textColor = station.aqi <= 100 ? "#000" : "#fff";
+      const schoolZones = [
+        { lat: 42.3314, lng: -83.0458, name: "Cass Technical HS", violations: 47, zone: "Detroit" },
+        { lat: 42.3830, lng: -83.1022, name: "Renaissance Academy", violations: 32, zone: "Detroit" },
+        { lat: 42.4473, lng: -83.1502, name: "Southfield Regional", violations: 28, zone: "Southfield" },
+        { lat: 42.7325, lng: -84.5555, name: "Eastern HS", violations: 19, zone: "Lansing" },
+        { lat: 42.2808, lng: -83.7430, name: "Pioneer HS", violations: 15, zone: "Ann Arbor" },
+        { lat: 43.0125, lng: -83.6875, name: "Central HS", violations: 22, zone: "Flint" },
+        { lat: 42.9634, lng: -85.6681, name: "Ottawa Hills HS", violations: 12, zone: "Grand Rapids" },
+        { lat: 42.5195, lng: -83.1760, name: "Berkley HS", violations: 18, zone: "Berkley" },
+        { lat: 42.4929, lng: -83.0148, name: "Grosse Pointe South", violations: 8, zone: "Grosse Pointe" },
+        { lat: 42.3080, lng: -83.4816, name: "Canton HS", violations: 14, zone: "Canton" },
+      ];
+      for (const sz of schoolZones) {
+        const severity = sz.violations > 30 ? "#DC2626" : sz.violations > 15 ? "#F59E0B" : "#22C55E";
         const icon = L.divIcon({
-          html: `<div style="
-            width:32px;height:32px;border-radius:50%;
-            background:${station.color};border:2px solid #fff;
-            box-shadow:0 2px 6px rgba(0,0,0,0.3);
-            display:flex;align-items:center;justify-content:center;
-            font-size:11px;font-weight:700;color:${textColor};
-            font-family:system-ui,sans-serif;
-          ">${station.aqi}</div>`,
-          className: "aqi-marker",
-          iconSize: [32, 32],
-          iconAnchor: [16, 16],
-          popupAnchor: [0, -16],
+          html: `<div style="width:28px;height:28px;border-radius:50%;background:${severity};border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;font-family:system-ui;">${sz.violations}</div>`,
+          className: "buspatrol-marker",
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+          popupAnchor: [0, -14],
         });
-
-        const timeStr = station.lastUpdated
-          ? new Date(station.lastUpdated).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-          : "N/A";
-
-        const marker = L.marker([station.latitude, station.longitude], { icon });
+        const marker = L.marker([sz.lat, sz.lng], { icon });
         marker.bindPopup(`
           <div style="font-family:system-ui,sans-serif;min-width:200px;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-              <span style="width:28px;height:28px;border-radius:50%;background:${station.color};display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:${textColor};">${station.aqi}</span>
-              <div>
-                <div style="font-size:13px;font-weight:700;color:#003B5C;">${station.name}</div>
-                ${station.city ? `<div style="font-size:11px;color:#64748b;">${station.city}, MI</div>` : ""}
-              </div>
+            <div style="font-size:13px;font-weight:700;color:#003B5C;margin-bottom:4px;">🛑 ${sz.name}</div>
+            <div style="font-size:11px;color:#64748b;margin-bottom:6px;">${sz.zone}, MI</div>
+            <div style="background:${severity};color:#fff;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-bottom:6px;">
+              ${sz.violations} stop-arm violations (30 days)
             </div>
-            <div style="background:${station.color};color:${textColor};padding:4px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-bottom:6px;">
-              ${station.category}
-            </div>
-            <div style="font-size:11px;color:#475569;">Parameter: ${station.parameter}</div>
-            <div style="font-size:10px;color:#94a3b8;margin-top:4px;">Updated: ${timeStr}</div>
-            <div style="font-size:9px;color:#94a3b8;margin-top:2px;">Source: EPA / OpenAQ</div>
+            <div style="font-size:10px;color:#475569;">Category: ${sz.violations > 30 ? "High Risk" : sz.violations > 15 ? "Moderate" : "Low"}</div>
+            <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: BusPatrol Demo Data</div>
           </div>
         `);
         lg.addLayer(marker);
       }
       lg.addTo(map);
-      overlayLayersRef.current["aqi"] = lg;
+      overlayLayersRef.current["buspatrol"] = lg;
     }
-  }, [showWorkzones, showAir, showEV, showDDOT, showCATA, showAQI, workzoneData, airData, evData, ddotData, cataData, aqiData]);
+  }, [showWorkzones, showAir, showEV, showDDOT, showCATA, showAQI, showBusPatrol, workzoneData, airData, evData, ddotData, cataData, aqiData]);
 
   const handleCountyClick = useCallback((name: string) => {
     // Strip "County" suffix if present from ArcGIS data
