@@ -6,6 +6,7 @@ import {
   Database, RefreshCw, Layers
 } from "lucide-react";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -206,6 +207,11 @@ export default function HealthSystemsPage() {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Michigan Access provides health systems with actionable community-level data to strengthen CHNA reporting, optimize referral pathways, and quantify community benefit ROI.
           </p>
+          <Button variant="outline" size="sm" className="mt-2" asChild>
+            <Link to="/partnerships/health-systems/one-pager">
+              <FileText className="h-4 w-4 mr-1" /> Download One-Pager (PDF)
+            </Link>
+          </Button>
         </motion.div>
 
         {/* Value Props */}
