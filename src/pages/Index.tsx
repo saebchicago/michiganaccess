@@ -7,7 +7,6 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import CountyInfoCard from "@/components/home/CountyInfoCard";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
-import PageFeedback from "@/components/shared/PageFeedback";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -26,7 +25,6 @@ const Index = () => {
     <SpotlightTabs />
     <SystemsExplainer />
     <TrustIndicators />
-    <PageFeedback />
   </Layout>
   );
 };

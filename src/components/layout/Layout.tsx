@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import CrisisBar from "@/components/shared/CrisisBar";
 import AIChatWidget from "@/components/shared/AIChatWidget";
 import PrintButton from "@/components/shared/PrintButton";
+import PageFeedback from "@/components/shared/PageFeedback";
 
 interface LayoutProps {
   children: ReactNode;
@@ -24,6 +25,7 @@ const Layout = ({ children }: LayoutProps) => (
     >
       {children}
     </motion.main>
+    <PageFeedback />
     <Footer />
     <PrintButton />
     <AIChatWidget />
