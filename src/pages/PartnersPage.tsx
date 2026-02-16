@@ -236,7 +236,7 @@ const PartnersPage = () => {
                   Ready to explore how Michigan Access can support your community health strategy?
                 </p>
                 <Button className="bg-michigan-teal hover:bg-michigan-teal/90 text-white shrink-0" asChild>
-                  <Link to="/partnerships">
+                  <Link to="/partnerships/health-systems">
                     Schedule Discussion <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
