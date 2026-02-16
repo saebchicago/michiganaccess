@@ -7,6 +7,8 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import CountyInfoCard from "@/components/home/CountyInfoCard";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
+import SystemImpactBar from "@/components/home/SystemImpactBar";
+import EngineeringFAQ from "@/components/home/EngineeringFAQ";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -16,16 +18,18 @@ const Index = () => {
     path: "/",
   });
   return (
-  <Layout>
-    <CountyWelcomeBanner />
-    <HeroSection />
-    <CountyInfoCard />
-    <CoreAccessGrid />
-    <GuidedPathways />
-    <SpotlightTabs />
-    <SystemsExplainer />
-    <TrustIndicators />
-  </Layout>
+    <Layout>
+      <CountyWelcomeBanner />
+      <HeroSection />
+      <SystemImpactBar />
+      <CountyInfoCard />
+      <CoreAccessGrid />
+      <GuidedPathways />
+      <SpotlightTabs />
+      <EngineeringFAQ />
+      <SystemsExplainer />
+      <TrustIndicators />
+    </Layout>
   );
 };
 
