@@ -41,6 +41,7 @@ const InstallPage = lazy(() => import("./pages/InstallPage"));
 const InsuranceAppealsPage = lazy(() => import("./pages/InsuranceAppealsPage"));
 const PartnersPage = lazy(() => import("./pages/PartnersPage"));
 const HealthSystemsPage = lazy(() => import("./pages/HealthSystemsPage"));
+const PartnershipOnePager = lazy(() => import("./pages/PartnershipOnePager"));
 const CountyPage = lazy(() => import("./pages/CountyPage"));
 
 const queryClient = new QueryClient();
@@ -93,6 +94,7 @@ const App = () => (
               <Route path="/health/insurance-appeals" element={<InsuranceAppealsPage />} />
               <Route path="/partners" element={<PartnersPage />} />
               <Route path="/partnerships/health-systems" element={<HealthSystemsPage />} />
+              <Route path="/partnerships/health-systems/one-pager" element={<PartnershipOnePager />} />
               <Route path="/county/:slug" element={<CountyPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
