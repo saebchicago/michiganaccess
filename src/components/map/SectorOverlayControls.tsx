@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Bus, Wind, Zap, Construction, Train, Radio, CloudSun } from "lucide-react";
+import { Bus, Wind, Zap, Construction, Train, Radio, CloudSun, ShieldAlert } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 export const SECTOR_OVERLAYS = [
@@ -12,6 +12,7 @@ export const SECTOR_OVERLAYS = [
   { id: "ev-stations", label: "EV Charging", icon: Zap, defaultOn: false, color: "text-michigan-gold" },
   { id: "ddot-routes", label: "DDOT Bus Routes", icon: Bus, defaultOn: false, color: "text-michigan-coral" },
   { id: "cata-routes", label: "CATA Bus Routes", icon: Train, defaultOn: false, color: "text-michigan-teal" },
+  { id: "buspatrol-safety", label: "School Zone Safety", icon: ShieldAlert, defaultOn: false, color: "text-destructive" },
 ] as const;
 
 export const REALTIME_OVERLAYS = [

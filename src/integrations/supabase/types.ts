@@ -389,6 +389,30 @@ export type Database = {
         }
         Relationships: []
       }
+      page_feedback: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          is_helpful: boolean
+          page_path: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          is_helpful: boolean
+          page_path: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          is_helpful?: boolean
+          page_path?: string
+        }
+        Relationships: []
+      }
       partnership_submissions: {
         Row: {
           city: string | null
