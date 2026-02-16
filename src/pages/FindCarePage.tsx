@@ -23,16 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProviderDirectory from "@/components/findcare/ProviderDirectory";
 import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
 import CareTeamReminders from "@/components/shared/CareTeamReminders";
-import CommunityProgramSpotlights from "@/components/shared/CommunityProgramSpotlights";
-import TransportationSpotlights from "@/components/shared/TransportationSpotlights";
-import EnergySpotlights from "@/components/shared/EnergySpotlights";
-import EnvironmentSpotlights from "@/components/shared/EnvironmentSpotlights";
-import EducationSpotlights from "@/components/shared/EducationSpotlights";
-import LegalCivicSpotlights from "@/components/shared/LegalCivicSpotlights";
-import VeteransSeniorsSpotlights from "@/components/shared/VeteransSeniorsSpotlights";
-import YouthFamilySpotlights from "@/components/shared/YouthFamilySpotlights";
-import DisasterPrepSpotlights from "@/components/shared/DisasterPrepSpotlights";
-import CulturalRecSpotlights from "@/components/shared/CulturalRecSpotlights";
+import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import { ClipboardList, Bell } from "lucide-react";
 
 const fadeUp = {
@@ -473,16 +464,7 @@ export default function FindCarePage() {
         </Tabs>
 
         {/* Community SDOH Resources */}
-        <CommunityProgramSpotlights />
-        <TransportationSpotlights />
-        <EnergySpotlights />
-        <EnvironmentSpotlights />
-        <EducationSpotlights />
-        <LegalCivicSpotlights />
-        <VeteransSeniorsSpotlights />
-        <YouthFamilySpotlights />
-        <DisasterPrepSpotlights />
-        <CulturalRecSpotlights />
+        <SpotlightTabs />
 
         {/* Prep Tools */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">

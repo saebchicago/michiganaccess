@@ -5,16 +5,7 @@ import SystemsExplainer from "@/components/home/SystemsExplainer";
 import TrustIndicators from "@/components/home/TrustIndicators";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import CountyInfoCard from "@/components/home/CountyInfoCard";
-import CommunityProgramSpotlights from "@/components/shared/CommunityProgramSpotlights";
-import TransportationSpotlights from "@/components/shared/TransportationSpotlights";
-import EnergySpotlights from "@/components/shared/EnergySpotlights";
-import EnvironmentSpotlights from "@/components/shared/EnvironmentSpotlights";
-import EducationSpotlights from "@/components/shared/EducationSpotlights";
-import LegalCivicSpotlights from "@/components/shared/LegalCivicSpotlights";
-import VeteransSeniorsSpotlights from "@/components/shared/VeteransSeniorsSpotlights";
-import YouthFamilySpotlights from "@/components/shared/YouthFamilySpotlights";
-import DisasterPrepSpotlights from "@/components/shared/DisasterPrepSpotlights";
-import CulturalRecSpotlights from "@/components/shared/CulturalRecSpotlights";
+import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -29,16 +20,7 @@ const Index = () => {
     <HeroSection />
     <CountyInfoCard />
     <CoreAccessGrid />
-    <CommunityProgramSpotlights />
-    <TransportationSpotlights />
-    <EnergySpotlights />
-    <EnvironmentSpotlights />
-    <EducationSpotlights />
-    <LegalCivicSpotlights />
-    <VeteransSeniorsSpotlights />
-    <YouthFamilySpotlights />
-    <DisasterPrepSpotlights />
-    <CulturalRecSpotlights />
+    <SpotlightTabs />
     <SystemsExplainer />
     <TrustIndicators />
   </Layout>
