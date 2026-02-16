@@ -141,17 +141,86 @@ export default function CountyPage() {
         <section>
           <h2 className="mb-4 text-xl font-bold text-foreground">Health Highlights</h2>
           <div className="grid gap-3 sm:grid-cols-3">
-            {profile.healthHighlights.map((h) => (
-              <Card key={h.label}>
-                <CardContent className="flex items-center justify-between py-3">
-                  <div>
-                    <p className="text-xs text-muted-foreground">{h.label}</p>
-                    <p className="text-lg font-bold text-foreground">{h.value}</p>
-                  </div>
-                  <TrendIcon trend={h.trend} />
-                </CardContent>
-              </Card>
-            ))}
+            {profile.healthHighlights.map((h) => {
+              const stateAvg = h.label === "Uninsured rate" ? "6.5%" : h.label === "Food insecurity" ? "13.2%" : undefined;
+              const isRatio = h.label === "Primary care ratio";
+              const numericVal = parseFloat(h.value.replace(/[^0-9.]/g, ""));
+              const stateVal = stateAvg ? parseFloat(stateAvg.replace(/[^0-9.]/g, "")) : undefined;
+              const isBetter = stateVal !== undefined ? numericVal < stateVal : undefined;
+              const actionLink = h.label === "Uninsured rate"
+                ? { href: "/financial-help", text: "Find coverage options →" }
+                : h.label === "Primary care ratio"
+                ? { href: "/find-care", text: "View community health centers →" }
+                : { href: "/resources", text: "Find food assistance →" };
+
+              // Determine severity for primary care ratio
+              let ratioSeverity: "good" | "moderate" | "high" | undefined;
+              if (isRatio) {
+                const ratioNum = parseInt(h.value.split(":")[0].replace(/[^0-9]/g, ""));
+                ratioSeverity = ratioNum > 3000 ? "high" : ratioNum > 1500 ? "moderate" : "good";
+              }
+
+              return (
+                <Card key={h.label} className="hover-lift">
+                  <CardContent className="py-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs text-muted-foreground">{h.label}</p>
+                      <TrendIcon trend={h.trend} />
+                    </div>
+                    <p className="text-xl font-bold text-foreground">{h.value}</p>
+
+                    {/* State comparison */}
+                    {stateAvg && (
+                      <div className="flex items-center gap-1.5">
+                        <Badge
+                          variant={isBetter ? "secondary" : "destructive"}
+                          className={`text-[10px] px-1.5 py-0 ${isBetter ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
+                        >
+                          {isBetter ? "Below" : "Above"} state avg
+                        </Badge>
+                        <span className="text-[10px] text-muted-foreground">MI: {stateAvg}</span>
+                      </div>
+                    )}
+
+                    {/* Ratio severity */}
+                    {isRatio && ratioSeverity && (
+                      <div>
+                        <Badge
+                          variant="outline"
+                          className={`text-[10px] px-1.5 py-0 ${
+                            ratioSeverity === "high"
+                              ? "border-destructive/30 text-destructive"
+                              : ratioSeverity === "moderate"
+                              ? "border-michigan-gold/30 text-michigan-gold"
+                              : "border-michigan-forest/30 text-michigan-forest"
+                          }`}
+                        >
+                          {ratioSeverity === "high" ? "Shortage area" : ratioSeverity === "moderate" ? "Below average" : "Adequate"}
+                        </Badge>
+                        {ratioSeverity !== "good" && (
+                          <p className="text-[10px] text-muted-foreground mt-1">Wait times may be longer</p>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Trend context */}
+                    {h.trend && h.trend !== "stable" && (
+                      <p className="text-[10px] text-muted-foreground">
+                        {h.trend === "down" ? "📉 Improving over prior year" : "📈 Increased from prior year"}
+                      </p>
+                    )}
+
+                    {/* Actionable link */}
+                    <Link
+                      to={actionLink.href}
+                      className="block text-xs font-medium text-primary hover:underline pt-1"
+                    >
+                      {actionLink.text}
+                    </Link>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </section>
 

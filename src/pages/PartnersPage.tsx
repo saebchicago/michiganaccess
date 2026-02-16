@@ -40,12 +40,12 @@ const PARTNER_CATEGORIES = [
   {
     category: "Health System Partners",
     description: "Community benefit reporting, CHNA data integration, and population health impact tracking",
-    examples: ["Henry Ford Health System", "Corewell Health", "Trinity Health"],
+    examples: ["Regional health systems", "Academic medical centers", "Community hospitals"],
     icon: Heart,
   },
   {
     category: "Innovation & Safety Partners",
-    description: "Student transportation safety, digital hall pass systems, and family communication platforms",
+    description: "Student transportation safety, digital education platforms, and family communication systems",
     examples: ["School bus safety technology providers", "Digital education platforms"],
     icon: GraduationCap,
   },
