@@ -13,6 +13,7 @@ import { useFacilities } from "@/hooks/useFacilities";
 import { useCounty } from "@/contexts/CountyContext";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import MapFirstVisitTooltip from "@/components/map/MapFirstVisitTooltip";
 
 const DEFAULT_LAYERS = LAYERS.filter((l) => l.defaultOn).map((l) => l.id);
 
@@ -100,6 +101,9 @@ export default function HealthMapPage() {
             </SheetContent>
           </Sheet>
         </div>
+
+        {/* First-visit tooltip */}
+        <MapFirstVisitTooltip />
 
         {/* Map */}
         <div className="relative flex-1">

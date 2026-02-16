@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { 
+import {
   ShieldAlert, Heart, MapPin, Siren,
-  ArrowRight
+  ArrowRight, Users
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const pathways = [
   {
@@ -18,7 +19,10 @@ const pathways = [
       { label: "Appeal a Denial", href: "/health/insurance-appeals" },
     ],
     color: "text-michigan-coral",
-    bg: "bg-michigan-coral/8",
+    bg: "bg-michigan-coral/5",
+    borderColor: "border-michigan-coral/30",
+    iconBg: "bg-michigan-coral/10",
+    stat: { count: "2,340", label: "found help this month" },
   },
   {
     id: "caregiver",
@@ -31,7 +35,10 @@ const pathways = [
       { label: "Quality Ratings", href: "/quality" },
     ],
     color: "text-michigan-teal",
-    bg: "bg-michigan-teal/8",
+    bg: "bg-michigan-teal/5",
+    borderColor: "border-michigan-teal/30",
+    iconBg: "bg-michigan-teal/10",
+    stat: { count: "890", label: "connected to support" },
   },
   {
     id: "new-resident",
@@ -44,7 +51,10 @@ const pathways = [
       { label: "Financial Help", href: "/financial-help" },
     ],
     color: "text-primary",
-    bg: "bg-primary/8",
+    bg: "bg-primary/5",
+    borderColor: "border-primary/30",
+    iconBg: "bg-primary/10",
+    stat: { count: "1,120", label: "navigated services" },
   },
   {
     id: "emergency",
@@ -57,7 +67,12 @@ const pathways = [
       { label: "Find Urgent Care", href: "/find-care" },
     ],
     color: "text-destructive",
-    bg: "bg-destructive/8",
+    bg: "bg-destructive/5",
+    borderColor: "border-destructive/30",
+    iconBg: "bg-destructive/10",
+    stat: { count: "24/7", label: "always available" },
+    badge: "24/7 Available",
+    pulse: true,
   },
 ];
 
@@ -77,13 +92,20 @@ export default function GuidedPathways() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {pathways.map((p, i) => (
             <motion.div key={p.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-              <Card className={`h-full hover-lift border-l-4 ${p.bg}`} style={{ borderLeftColor: "currentColor" }}>
+              <Card className={`group h-full hover-lift border-l-4 ${p.bg} ${p.borderColor} relative overflow-hidden`}>
+                {p.badge && (
+                  <Badge variant="destructive" className={`absolute top-3 right-3 text-[10px] ${p.pulse ? "animate-pulse" : ""}`}>
+                    {p.badge}
+                  </Badge>
+                )}
                 <CardContent className="py-5 space-y-3">
-                  <p.icon className={`h-7 w-7 ${p.color}`} />
+                  <div className={`inline-flex items-center justify-center rounded-lg p-2 ${p.iconBg} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                    <p.icon className={`h-6 w-6 ${p.color}`} />
+                  </div>
                   <h3 className="text-sm font-bold text-foreground leading-snug">{p.title}</h3>
                   <p className="text-xs text-muted-foreground">{p.description}</p>
                   <div className="flex flex-col gap-1.5 pt-1">
-                    {p.links.map((link) => (
+                    {p.links.map((link) =>
                       link.href.startsWith("tel:") ? (
                         <a key={link.label} href={link.href} className={`flex items-center gap-1.5 text-xs font-medium ${p.color} hover:underline`}>
                           <ArrowRight className="h-3 w-3" /> {link.label}
@@ -93,9 +115,15 @@ export default function GuidedPathways() {
                           <ArrowRight className="h-3 w-3" /> {link.label}
                         </Link>
                       )
-                    ))}
+                    )}
                   </div>
                 </CardContent>
+                <CardFooter className="pt-0 pb-4 px-6">
+                  <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3 w-full">
+                    <Users className="h-3.5 w-3.5 shrink-0" />
+                    <span><strong className="text-foreground">{p.stat.count}</strong> Michiganders {p.stat.label}</span>
+                  </div>
+                </CardFooter>
               </Card>
             </motion.div>
           ))}
