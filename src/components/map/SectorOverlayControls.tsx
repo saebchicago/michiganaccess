@@ -1,13 +1,15 @@
 import { motion } from "framer-motion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Bus, Wind, Zap, Construction } from "lucide-react";
+import { Bus, Wind, Zap, Construction, Train } from "lucide-react";
 
 export const SECTOR_OVERLAYS = [
   { id: "county-boundaries", label: "County Boundaries", icon: Construction, defaultOn: true, color: "text-primary" },
   { id: "mdot-workzones", label: "MDOT Work Zones", icon: Construction, defaultOn: false, color: "text-michigan-coral" },
   { id: "egle-air", label: "Air Quality Sites", icon: Wind, defaultOn: false, color: "text-michigan-sky" },
   { id: "ev-stations", label: "EV Charging", icon: Zap, defaultOn: false, color: "text-michigan-gold" },
+  { id: "ddot-routes", label: "DDOT Bus Routes", icon: Bus, defaultOn: false, color: "text-michigan-coral" },
+  { id: "cata-routes", label: "CATA Bus Routes", icon: Train, defaultOn: false, color: "text-michigan-teal" },
 ] as const;
 
 interface SectorOverlayControlsProps {
