@@ -163,6 +163,88 @@ const PartnersPage = () => {
           </div>
         </section>
 
+        {/* For Health Systems */}
+        <section aria-labelledby="health-systems-heading" className="py-4">
+          <div className="text-center mb-8">
+            <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 mb-3">
+              <Heart className="h-3 w-3 mr-1" />
+              For Healthcare Organizations
+            </Badge>
+            <h2 id="health-systems-heading" className="text-2xl font-bold text-foreground">
+              Amplify Community Benefit Impact
+            </h2>
+            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
+              See how Michigan Access can support your community health needs assessment, referral intelligence, and population health initiatives.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {[
+              {
+                icon: BarChart3,
+                title: "Referral Analytics",
+                description: "Understand which resources residents access in your service area. Identify referral patterns and gaps in the care continuum.",
+                bullets: ["Service area resource utilization", "Referral pathway mapping", "Community navigation trends"],
+              },
+              {
+                icon: Map,
+                title: "Gap Analysis",
+                description: "Identify unmet needs with real usage data across all 83 counties. Pinpoint where services are needed most.",
+                bullets: ["County-level shortage identification", "Social determinant mapping", "Service desert detection"],
+              },
+              {
+                icon: TrendingUp,
+                title: "Community Benefit ROI",
+                description: "Quantify the impact of charity care and SDOH interventions with aggregated, non-identifiable platform data.",
+                bullets: ["CHNA data integration", "IRS Schedule H alignment", "Population health benchmarking"],
+              },
+            ].map((feature, i) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card className="h-full hover-lift border-michigan-teal/10">
+                  <CardHeader className="pb-2">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10 text-michigan-teal mb-2">
+                      <feature.icon className="h-5 w-5" />
+                    </div>
+                    <CardTitle className="text-base">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <p className="text-sm text-muted-foreground">{feature.description}</p>
+                    <ul className="space-y-1">
+                      {feature.bullets.map((b) => (
+                        <li key={b} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                          <span className="mt-1.5 h-1 w-1 rounded-full bg-michigan-teal/50 flex-shrink-0" />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Card className="inline-block border-michigan-teal/20 bg-michigan-teal/5">
+              <CardContent className="py-4 px-8 flex flex-col sm:flex-row items-center gap-4">
+                <p className="text-sm text-foreground">
+                  Ready to explore how Michigan Access can support your community health strategy?
+                </p>
+                <Button className="bg-michigan-teal hover:bg-michigan-teal/90 text-white shrink-0" asChild>
+                  <Link to="/partnerships">
+                    Schedule Discussion <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
         {/* CTA */}
         <div className="text-center space-y-4 py-8">
           <h3 className="text-xl font-semibold text-foreground">
