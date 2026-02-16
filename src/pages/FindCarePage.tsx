@@ -27,6 +27,8 @@ import CommunityProgramSpotlights from "@/components/shared/CommunityProgramSpot
 import TransportationSpotlights from "@/components/shared/TransportationSpotlights";
 import EnergySpotlights from "@/components/shared/EnergySpotlights";
 import EnvironmentSpotlights from "@/components/shared/EnvironmentSpotlights";
+import EducationSpotlights from "@/components/shared/EducationSpotlights";
+import LegalCivicSpotlights from "@/components/shared/LegalCivicSpotlights";
 import { ClipboardList, Bell } from "lucide-react";
 
 const fadeUp = {
@@ -471,6 +473,8 @@ export default function FindCarePage() {
         <TransportationSpotlights />
         <EnergySpotlights />
         <EnvironmentSpotlights />
+        <EducationSpotlights />
+        <LegalCivicSpotlights />
 
         {/* Prep Tools */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
