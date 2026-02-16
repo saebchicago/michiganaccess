@@ -419,6 +419,29 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
           🚌 {allLiveVehicles.length} buses live · Refreshes every 30s
         </div>
       )}
+      {showAQI && (
+        <div className="absolute bottom-2 right-2 z-[1000] rounded-lg bg-card/95 border border-border p-3 shadow-lg backdrop-blur-sm" style={{ minWidth: 160 }}>
+          <h4 className="mb-2 text-[11px] font-bold uppercase tracking-wider text-foreground">EPA Air Quality Index</h4>
+          {[
+            { range: "0–50", label: "Good", color: "#00E400" },
+            { range: "51–100", label: "Moderate", color: "#FFFF00", dark: true },
+            { range: "101–150", label: "Unhealthy (Sensitive)", color: "#FF7E00" },
+            { range: "151–200", label: "Unhealthy", color: "#FF0000" },
+            { range: "201–300", label: "Very Unhealthy", color: "#8F3F97" },
+            { range: "301+", label: "Hazardous", color: "#7E0023" },
+          ].map((cat) => (
+            <div key={cat.range} className="flex items-center gap-2 py-0.5">
+              <span
+                className="inline-block h-3.5 w-3.5 rounded-full border border-border"
+                style={{ backgroundColor: cat.color }}
+              />
+              <span className="text-[10px] font-medium text-foreground">{cat.range}</span>
+              <span className="text-[10px] text-muted-foreground">{cat.label}</span>
+            </div>
+          ))}
+          <p className="mt-1.5 text-[9px] text-muted-foreground">Source: EPA AirNow · Updated hourly</p>
+        </div>
+      )}
     </div>
   );
 }
