@@ -6,6 +6,9 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import CountyInfoCard from "@/components/home/CountyInfoCard";
 import CommunityProgramSpotlights from "@/components/shared/CommunityProgramSpotlights";
+import TransportationSpotlights from "@/components/shared/TransportationSpotlights";
+import EnergySpotlights from "@/components/shared/EnergySpotlights";
+import EnvironmentSpotlights from "@/components/shared/EnvironmentSpotlights";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -21,6 +24,9 @@ const Index = () => {
     <CountyInfoCard />
     <CoreAccessGrid />
     <CommunityProgramSpotlights />
+    <TransportationSpotlights />
+    <EnergySpotlights />
+    <EnvironmentSpotlights />
     <SystemsExplainer />
     <TrustIndicators />
   </Layout>

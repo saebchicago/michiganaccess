@@ -193,7 +193,7 @@
   z-index: 41 !important;
 }
 
-/* Print styles for site report */
+/* Print styles for site report and PDF export */
 @media print {
   body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .print\:hidden { display: none !important; }
@@ -202,6 +202,15 @@
   section { break-inside: avoid-page; }
   table { font-size: 9px; }
   tr { break-inside: avoid; }
+  header, footer, [role="complementary"], .fixed { display: none !important; }
+  main { padding: 0 !important; }
+  .container { max-width: 100% !important; padding: 0 1rem !important; }
+  .hover-lift:hover { transform: none; box-shadow: none; }
+  .overflow-hidden { overflow: visible !important; }
+  /* Show all carousel items in print */
+  [aria-roledescription="carousel"] .overflow-hidden { overflow: visible !important; }
+  [aria-roledescription="carousel"] .flex { flex-wrap: wrap !important; }
+  [aria-roledescription="slide"] { flex: 0 0 33% !important; padding: 0.5rem !important; }
 }
 
 /* RTL support for Arabic */

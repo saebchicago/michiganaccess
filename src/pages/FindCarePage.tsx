@@ -24,6 +24,9 @@ import ProviderDirectory from "@/components/findcare/ProviderDirectory";
 import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
 import CareTeamReminders from "@/components/shared/CareTeamReminders";
 import CommunityProgramSpotlights from "@/components/shared/CommunityProgramSpotlights";
+import TransportationSpotlights from "@/components/shared/TransportationSpotlights";
+import EnergySpotlights from "@/components/shared/EnergySpotlights";
+import EnvironmentSpotlights from "@/components/shared/EnvironmentSpotlights";
 import { ClipboardList, Bell } from "lucide-react";
 
 const fadeUp = {
@@ -465,6 +468,9 @@ export default function FindCarePage() {
 
         {/* Community SDOH Resources */}
         <CommunityProgramSpotlights />
+        <TransportationSpotlights />
+        <EnergySpotlights />
+        <EnvironmentSpotlights />
 
         {/* Prep Tools */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
