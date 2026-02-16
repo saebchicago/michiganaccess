@@ -23,6 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProviderDirectory from "@/components/findcare/ProviderDirectory";
 import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
 import CareTeamReminders from "@/components/shared/CareTeamReminders";
+import CommunityProgramSpotlights from "@/components/shared/CommunityProgramSpotlights";
 import { ClipboardList, Bell } from "lucide-react";
 
 const fadeUp = {
@@ -461,6 +462,9 @@ export default function FindCarePage() {
         </div>
           </TabsContent>
         </Tabs>
+
+        {/* Community SDOH Resources */}
+        <CommunityProgramSpotlights />
 
         {/* Prep Tools */}
         <div className="mt-10 grid gap-6 md:grid-cols-2">
