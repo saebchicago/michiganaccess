@@ -195,6 +195,70 @@ export default function MethodologyPage() {
 
         <Separator />
 
+        {/* Data Normalization */}
+        <section>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
+                <Layers className="h-5 w-5 text-michigan-teal" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">Data Normalization & Ingestion</h2>
+                <p className="text-sm text-muted-foreground">How raw federal datasets become usable civic infrastructure</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="space-y-4 mb-6">
+            {[
+              {
+                source: "HRSA Data Warehouse",
+                desc: "Health Professional Shortage Area (HPSA) designations, Uniform Data System (UDS) reports from 45+ Michigan FQHCs, and health center service area boundaries. Ingested via REST API with county-level FIPS normalization.",
+                frequency: "Quarterly refresh",
+              },
+              {
+                source: "CDC PLACES",
+                desc: "County- and census-tract-level chronic disease prevalence estimates (asthma, diabetes, obesity, mental health). Standardized to per-100K rates with age-adjusted denominators for cross-county comparison.",
+                frequency: "Annual refresh",
+              },
+              {
+                source: "CMS Hospital Compare",
+                desc: "Hospital quality star ratings, patient experience (HCAHPS), timely and effective care measures, readmission rates. Mapped to internal facility IDs with Leapfrog and ANCC supplementary overlays.",
+                frequency: "Monthly refresh",
+              },
+              {
+                source: "Michigan DHHS",
+                desc: "Medicaid enrollment counts, Healthy Michigan Plan participation, licensed facility registries, and behavioral health authority service areas. Geocoded to county centroids for map display.",
+                frequency: "Semi-annual refresh",
+              },
+            ].map((src, i) => (
+              <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
+                <Card className="hover-lift">
+                  <CardContent className="pt-6">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <h4 className="text-sm font-bold text-foreground mb-1">{src.source}</h4>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{src.desc}</p>
+                      </div>
+                      <span className="shrink-0 rounded-full bg-michigan-teal/10 px-2.5 py-0.5 text-[10px] font-semibold text-michigan-teal">
+                        {src.frequency}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="rounded-lg border border-border bg-muted/50 p-4">
+            <p className="text-xs text-muted-foreground">
+              <span className="font-semibold text-foreground">Normalization Pipeline:</span> All datasets undergo schema mapping → FIPS code standardization → deduplication → geocoding → confidence scoring before entering the presentation layer. Records with incomplete geographic identifiers are flagged for manual review rather than dropped, ensuring rural and tribal area coverage.
+            </p>
+          </div>
+        </section>
+
+        <Separator />
+
         {/* Quality Ranking Methodology */}
         <section>
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
