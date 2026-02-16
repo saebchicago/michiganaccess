@@ -176,10 +176,17 @@
 
   .hover-lift {
     @apply transition-all duration-300;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
   .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px -6px hsl(var(--michigan-blue) / 0.15);
+    transform: translateY(-4px);
+    box-shadow:
+      0 10px 25px -5px hsl(var(--michigan-blue) / 0.12),
+      0 8px 10px -6px hsl(var(--michigan-blue) / 0.08);
+  }
+  .hover-lift:hover .resource-icon,
+  .hover-lift:hover [data-icon] {
+    transform: scale(1.1) rotate(3deg);
   }
 }
 
