@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.michigan-chat]
 verify_jwt = false
+
+[functions.appeal-generator]
+verify_jwt = false
