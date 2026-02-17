@@ -12,6 +12,7 @@ import EngineeringFAQ from "@/components/home/EngineeringFAQ";
 import SmartRecommendations from "@/components/home/SmartRecommendations";
 import OnboardingTour from "@/components/shared/OnboardingTour";
 import HealthEquitySection from "@/components/home/HealthEquitySection";
+import SuccessStories from "@/components/home/SuccessStories";
 import AudienceSelector, { useAudience } from "@/components/home/AudienceSelector";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
@@ -38,6 +39,7 @@ const Index = () => {
             <CoreAccessGrid />
             <SpotlightTabs />
             <GuidedPathways />
+            <SuccessStories />
             <SmartRecommendations />
             <TrustIndicators />
           </>
@@ -52,6 +54,7 @@ const Index = () => {
             <CoreAccessGrid />
             <CountyInfoCard />
             <SpotlightTabs />
+            <SuccessStories />
             <SmartRecommendations />
             <GuidedPathways />
             <TrustIndicators />
@@ -66,6 +69,7 @@ const Index = () => {
             <HealthEquitySection />
             <SmartRecommendations />
             <GuidedPathways />
+            <SuccessStories />
             <SpotlightTabs />
             <EngineeringFAQ />
             <SystemsExplainer />
@@ -81,6 +85,7 @@ const Index = () => {
             <SmartRecommendations />
             <CoreAccessGrid />
             <GuidedPathways />
+            <SuccessStories />
             <SpotlightTabs />
             <EngineeringFAQ />
             <SystemsExplainer />
