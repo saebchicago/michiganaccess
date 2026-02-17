@@ -423,7 +423,17 @@ function StopArmCameraExplainer() {
 /* ------------------------------------------------------------------ */
 
 export default function TransportationPage() {
-  usePageMeta({ title: "Transportation & Safety", description: "Public transit, school bus safety, accessible rides, and transportation resources across Michigan.", path: "/transportation" });
+  usePageMeta({
+    title: "Transportation & Safety",
+    description: "Public transit, school bus safety, accessible rides, and transportation resources across Michigan.",
+    path: "/transportation",
+    jsonLd: {
+      "@type": "WebPage",
+      "name": "Transportation & Safety — Michigan Access",
+      "description": "Public transit routes, school bus safety data, and accessible transportation options across Michigan.",
+      "url": "https://michiganaccess.lovable.app/transportation",
+    },
+  });
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("transit");
 

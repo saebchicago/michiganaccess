@@ -5,6 +5,7 @@ import {
   Users, Shield, FlaskConical, Beaker, CheckCircle2, ArrowRight
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -105,6 +106,18 @@ const phaseColors: Record<string, string> = {
 };
 
 export default function ClinicalTrialsPage() {
+  usePageMeta({
+    title: "Clinical Trials",
+    description: "Search active clinical trials at Michigan's leading research institutions. Find enrolling studies for cancer, diabetes, neurology, and more.",
+    path: "/clinical-trials",
+    jsonLd: {
+      "@type": "WebPage",
+      "name": "Clinical Trials — Michigan Access",
+      "description": "Active clinical trials at Michigan research institutions.",
+      "url": "https://michiganaccess.lovable.app/clinical-trials",
+      "specialty": { "@type": "MedicalSpecialty", "name": "Clinical Research" },
+    },
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [conditionFilter, setConditionFilter] = useState("All Conditions");
   const [phaseFilter, setPhaseFilter] = useState("All Phases");

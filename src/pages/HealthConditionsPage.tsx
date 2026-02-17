@@ -6,6 +6,7 @@ import {
   Stethoscope, Shield, Users, Wifi, Building2, ChevronRight, Apple, Brain
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -83,6 +84,17 @@ function scoreFacilityForPathway(f: Facility, pw: Pathway): number {
 
 export default function HealthConditionsPage() {
   const { t } = useTranslation();
+  usePageMeta({
+    title: "Health Conditions",
+    description: "Find specialized care pathways for diabetes, heart disease, cancer, maternal health, and more across Michigan.",
+    path: "/conditions",
+    jsonLd: {
+      "@type": "MedicalWebPage",
+      "name": "Health Conditions — Michigan Access",
+      "about": { "@type": "MedicalCondition", "name": "Common health conditions in Michigan" },
+      "url": "https://michiganaccess.lovable.app/conditions",
+    },
+  });
   const { data: facilities = [], isLoading: facLoading } = useFacilities();
   const { data: providers = [], isLoading: provLoading } = useProviders();
   const [activePathway, setActivePathway] = useState("diabetes");
