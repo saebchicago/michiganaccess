@@ -4,6 +4,7 @@ import { Download, Smartphone, Monitor, Share2, MoreVertical, Plus, CheckCircle2
 import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
+import NotificationPrompt from "@/components/shared/NotificationPrompt";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -164,14 +165,17 @@ const InstallPage = () => {
           </div>
         </div>
 
+        {/* Notification opt-in */}
+        <NotificationPrompt className="mt-8" />
+
         {/* Benefits */}
-        <div className="mt-10 rounded-xl border border-border bg-muted/50 p-6">
+        <div className="mt-8 rounded-xl border border-border bg-muted/50 p-6">
           <h2 className="mb-4 text-center text-sm font-semibold uppercase tracking-wider text-muted-foreground">Why install?</h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {[
               { icon: "⚡", title: "Instant access", desc: "Launch from your home screen like any app" },
               { icon: "📶", title: "Works offline", desc: "Previously viewed pages load without internet" },
-              { icon: "🔔", title: "Full screen", desc: "No browser bar — a native app experience" },
+              { icon: "🔔", title: "Notifications", desc: "Get alerts when new services open near you" },
             ].map((b) => (
               <div key={b.title} className="text-center">
                 <div className="text-2xl">{b.icon}</div>
