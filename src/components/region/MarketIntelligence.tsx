@@ -1,6 +1,7 @@
 import { useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, MapPin, AlertTriangle, Building2, FileDown } from "lucide-react";
+import ShareButton from "@/components/shared/ShareButton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -172,14 +173,17 @@ export default function MarketIntelligence({ region, facilities }: Props) {
         </div>
       )}
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <p className="text-[9px] text-muted-foreground">
           Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI — for planning purposes only.
         </p>
-        <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => downloadMarketBrief(region, gaps, systemDensity, totalFacilities, highNeedCounties.length)}>
-          <FileDown className="h-3.5 w-3.5" />
-          Download Market Brief
-        </Button>
+        <div className="flex gap-2">
+          <ShareButton title={`Market Brief: ${region.name}`} description={`Ambulatory gap analysis for ${region.name} — ${totalFacilities} facilities across ${region.counties.length} counties.`} />
+          <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => downloadMarketBrief(region, gaps, systemDensity, totalFacilities, highNeedCounties.length)}>
+            <FileDown className="h-3.5 w-3.5" />
+            Download Market Brief
+          </Button>
+        </div>
       </div>
     </section>
   );
