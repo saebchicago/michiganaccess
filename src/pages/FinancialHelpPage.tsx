@@ -34,7 +34,18 @@ const programTypeLabels: Record<string, { label: string; icon: typeof Heart; col
 
 export default function FinancialHelpPage() {
   const { t } = useTranslation();
-  usePageMeta({ title: "Financial Help", description: "Find free and reduced-cost care, insurance options, and prescription savings for Michigan residents.", path: "/financial-help" });
+  usePageMeta({
+    title: "Financial Help",
+    description: "Find free and reduced-cost care, insurance options, and prescription savings for Michigan residents.",
+    path: "/financial-help",
+    jsonLd: {
+      "@type": "WebPage",
+      "name": "Financial Help — Michigan Access",
+      "description": "Free and reduced-cost healthcare, insurance programs, and prescription assistance for Michigan residents.",
+      "url": "https://michiganaccess.lovable.app/financial-help",
+      "provider": { "@type": "Organization", "name": "Michigan Access" },
+    },
+  });
   const { data: programs = [], isLoading } = useFinancialPrograms();
   const [householdSize, setHouseholdSize] = useState<number>(1);
   const [income, setIncome] = useState<string>("");

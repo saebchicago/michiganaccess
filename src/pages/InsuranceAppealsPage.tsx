@@ -18,6 +18,18 @@ const InsuranceAppealsPage = () => {
     description:
       "Fight health insurance denials in Michigan. Free AI-powered appeal letter generator, Medicaid fair hearing templates, and DIFS external review guidance. 70%+ success rate.",
     path: "/health/insurance-appeals",
+    jsonLd: {
+      "@type": "HowTo",
+      "name": "How to Appeal a Health Insurance Denial in Michigan",
+      "description": "Step-by-step guide to fighting insurance denials using Michigan's internal appeal and DIFS external review processes.",
+      "url": "https://michiganaccess.lovable.app/health/insurance-appeals",
+      "totalTime": "PT30M",
+      "step": [
+        { "@type": "HowToStep", "name": "Review your denial letter", "text": "Identify the reason for denial and gather supporting documentation." },
+        { "@type": "HowToStep", "name": "File internal appeal", "text": "Submit a formal appeal to your insurance company within 180 days." },
+        { "@type": "HowToStep", "name": "Request DIFS external review", "text": "If denied again, file for external review with Michigan DIFS." },
+      ],
+    },
   });
 
   return (

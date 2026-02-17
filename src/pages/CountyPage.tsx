@@ -24,6 +24,7 @@ import CountyCivicSection from "@/components/county/CountyCivicSection";
 import DownloadCountyGuide from "@/components/county/DownloadCountyGuide";
 import MunicipalToolkit from "@/components/county/MunicipalToolkit";
 import RecentlyViewedBar from "@/components/county/RecentlyViewedBar";
+import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 
 // National benchmarks (Census ACS 2023, HRSA, USDA)
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
@@ -78,6 +79,13 @@ export default function CountyPage() {
     title: county ? `${county} County` : "County Not Found",
     description: county ? `Health resources, facilities, and community programs in ${county} County, Michigan.` : "County not found.",
     path: `/county/${slug}`,
+    jsonLd: county ? {
+      "@type": "GovernmentService",
+      "name": `${county} County Health & Community Resources`,
+      "serviceArea": { "@type": "AdministrativeArea", "name": `${county} County, Michigan` },
+      "provider": { "@type": "Organization", "name": "Michigan Access" },
+      "url": `https://michiganaccess.lovable.app/county/${slug}`,
+    } : undefined,
   });
 
   // Set global county context when visiting this page
@@ -295,6 +303,18 @@ export default function CountyPage() {
               );
             })}
           </div>
+
+          {/* Sparkline for uninsured rate trend */}
+          {(() => {
+            const uninsuredH = profile.healthHighlights.find(h => h.label === "Uninsured rate");
+            return uninsuredH ? (
+              <Card className="mt-4">
+                <CardContent className="py-4">
+                  <UninsuredSparkline currentRate={uninsuredH.value} county={county} />
+                </CardContent>
+              </Card>
+            ) : null;
+          })()}
         </section>
 
         {/* Map */}

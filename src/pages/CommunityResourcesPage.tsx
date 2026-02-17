@@ -109,7 +109,18 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
 export default function CommunityResourcesPage() {
   const { t } = useTranslation();
   const { county: globalCounty } = useCounty();
-  usePageMeta({ title: "Community Resources", description: "Food, housing, transportation, and support services available to Michigan residents.", path: "/resources" });
+  usePageMeta({
+    title: "Community Resources",
+    description: "Food, housing, transportation, and support services available to Michigan residents.",
+    path: "/resources",
+    jsonLd: {
+      "@type": "WebPage",
+      "name": "Community Resources — Michigan Access",
+      "description": "Food, housing, transportation, and mental health support services across all 83 Michigan counties.",
+      "url": "https://michiganaccess.lovable.app/resources",
+      "provider": { "@type": "Organization", "name": "Michigan Access" },
+    },
+  });
   const { data: resources = [], isLoading } = useCommunityResources(undefined, globalCounty);
   const [activeTab, setActiveTab] = useState("all");
   const [county, setCounty] = useState("All Counties");
