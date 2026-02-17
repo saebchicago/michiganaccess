@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MapPin, Building2, Heart, FileText, Loader2, X } from "lucide-react";
+import { Search, MapPin, Building2, Heart, FileText, Loader2, X, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
@@ -40,13 +40,28 @@ interface SearchResult {
   category: "county" | "facility" | "resource" | "page";
 }
 
+const RECENT_KEY = "mi-access-recent-searches";
+const MAX_RECENT = 5;
+
+function getRecentSearches(): string[] {
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY) || "[]"); } catch { return []; }
+}
+function saveRecentSearch(term: string) {
+  const recent = getRecentSearches().filter((t) => t !== term);
+  recent.unshift(term);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(recent.slice(0, MAX_RECENT))); } catch {}
+}
+
 export default function SiteSearch() {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const navigate = useNavigate();
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => { if (open) setRecentSearches(getRecentSearches()); }, [open]);
 
   // Keyboard shortcut
   useEffect(() => {
@@ -124,11 +139,14 @@ export default function SiteSearch() {
   }, [query, search]);
 
   const handleSelect = (href: string) => {
+    if (query.length >= 2) saveRecentSearch(query);
     setOpen(false);
     setQuery("");
     setResults([]);
     navigate(href);
   };
+
+  const handleRecentClick = (term: string) => setQuery(term);
 
   const iconFor = (cat: string) => {
     switch (cat) {
@@ -181,6 +199,21 @@ export default function SiteSearch() {
               )}
             </div>
             <CommandList>
+              {query.length < 2 && recentSearches.length > 0 && (
+                <CommandGroup heading="Recent Searches">
+                  {recentSearches.map((term) => (
+                    <CommandItem
+                      key={term}
+                      value={term}
+                      onSelect={() => handleRecentClick(term)}
+                      className="flex items-center gap-3 cursor-pointer"
+                    >
+                      <Clock className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">{term}</span>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
               {query.length >= 2 && !loading && results.length === 0 && (
                 <CommandEmpty>No results found for "{query}"</CommandEmpty>
               )}
