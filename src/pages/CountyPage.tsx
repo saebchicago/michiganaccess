@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { slugToCounty, getCountyLinks } from "@/utils/countyUtils";
+import { slugToCounty, getCountyLinks, countyToSlug } from "@/utils/countyUtils";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
 import { getRegionForCounty } from "@/data/michigan-regions";
 import { useCounty, type MichiganCounty } from "@/contexts/CountyContext";
@@ -24,7 +24,6 @@ import CountyCivicSection from "@/components/county/CountyCivicSection";
 import DownloadCountyGuide from "@/components/county/DownloadCountyGuide";
 import MunicipalToolkit from "@/components/county/MunicipalToolkit";
 import RecentlyViewedBar from "@/components/county/RecentlyViewedBar";
-import { countyToSlug } from "@/utils/countyUtils";
 
 // National benchmarks (Census ACS 2023, HRSA, USDA)
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
