@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { MICHIGAN_REGIONS, type MichiganRegion } from "@/data/michigan-regions";
 
 export const MICHIGAN_COUNTIES = [
   "Alcona", "Alger", "Allegan", "Alpena", "Antrim", "Arenac", "Baraga", "Barry",
@@ -20,11 +21,17 @@ interface CountyContextValue {
   county: MichiganCounty | null;
   setCounty: (county: MichiganCounty | null) => void;
   countyLabel: string;
+  region: MichiganRegion | null;
+  setRegion: (region: MichiganRegion | null) => void;
+  /** Counties currently active (filtered by region if set, or single county) */
+  activeCounties: MichiganCounty[];
+  filterLabel: string;
 }
 
 const CountyContext = createContext<CountyContextValue | undefined>(undefined);
 
 const STORAGE_KEY = "michigan-access-county";
+const REGION_STORAGE_KEY = "michigan-access-region";
 
 export function CountyProvider({ children }: { children: ReactNode }) {
   const [county, setCountyState] = useState<MichiganCounty | null>(() => {
@@ -32,6 +39,17 @@ export function CountyProvider({ children }: { children: ReactNode }) {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored && (MICHIGAN_COUNTIES as readonly string[]).includes(stored)) {
         return stored as MichiganCounty;
+      }
+    } catch {}
+    return null;
+  });
+
+  const [region, setRegionState] = useState<MichiganRegion | null>(() => {
+    try {
+      const stored = localStorage.getItem(REGION_STORAGE_KEY);
+      if (stored) {
+        const found = MICHIGAN_REGIONS.find((r) => r.id === stored);
+        return found ?? null;
       }
     } catch {}
     return null;
@@ -47,11 +65,42 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, [county]);
 
-  const setCounty = (c: MichiganCounty | null) => setCountyState(c);
+  useEffect(() => {
+    try {
+      if (region) {
+        localStorage.setItem(REGION_STORAGE_KEY, region.id);
+      } else {
+        localStorage.removeItem(REGION_STORAGE_KEY);
+      }
+    } catch {}
+  }, [region]);
+
+  const setCounty = (c: MichiganCounty | null) => {
+    setCountyState(c);
+    if (c) setRegionState(null); // county overrides region
+  };
+
+  const setRegion = (r: MichiganRegion | null) => {
+    setRegionState(r);
+    if (r) setCountyState(null); // region overrides county
+  };
+
   const countyLabel = county ? `${county} County` : "All Michigan";
 
+  const filterLabel = county
+    ? `${county} County`
+    : region
+    ? region.name
+    : "All Michigan";
+
+  const activeCounties: MichiganCounty[] = county
+    ? [county]
+    : region
+    ? region.counties
+    : [...MICHIGAN_COUNTIES];
+
   return (
-    <CountyContext.Provider value={{ county, setCounty, countyLabel }}>
+    <CountyContext.Provider value={{ county, setCounty, countyLabel, region, setRegion, activeCounties, filterLabel }}>
       {children}
     </CountyContext.Provider>
   );

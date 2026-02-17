@@ -12,7 +12,7 @@ import RegionalGateway from "@/components/home/RegionalGateway";
 import EngineeringFAQ from "@/components/home/EngineeringFAQ";
 import SmartRecommendations from "@/components/home/SmartRecommendations";
 import OnboardingTour from "@/components/shared/OnboardingTour";
-import HealthEquitySection from "@/components/home/HealthEquitySection";
+
 import SuccessStories from "@/components/home/SuccessStories";
 import AudienceSelector, { useAudience } from "@/components/home/AudienceSelector";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -32,7 +32,6 @@ const Index = () => {
       case "health-system":
         return (
           <>
-            <HealthEquitySection />
             <EngineeringFAQ />
             <RegionalGateway />
             <SystemsExplainer />
@@ -48,7 +47,6 @@ const Index = () => {
       case "policymaker":
         return (
           <>
-            <HealthEquitySection />
             <RegionalGateway />
             <EngineeringFAQ />
             <SystemsExplainer />
@@ -67,7 +65,6 @@ const Index = () => {
             <RegionalGateway />
             <CoreAccessGrid />
             <CountyInfoCard />
-            <HealthEquitySection />
             <SmartRecommendations />
             <GuidedPathways />
             <SuccessStories />
@@ -80,7 +77,6 @@ const Index = () => {
       default: // "resident" or null
         return (
           <>
-            <HealthEquitySection />
             <RegionalGateway />
             <CountyInfoCard />
             <SmartRecommendations />
