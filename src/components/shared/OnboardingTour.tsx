@@ -93,7 +93,7 @@ export default function OnboardingTour() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.3 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90vw] max-w-sm pointer-events-auto"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-sm pointer-events-auto"
         >
           <div className="rounded-xl border border-border bg-card p-5 shadow-lg space-y-3">
             <div className="flex items-start justify-between">
