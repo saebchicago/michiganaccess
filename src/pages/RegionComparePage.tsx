@@ -15,6 +15,7 @@ import { getCountyProfile } from "@/data/michigan-county-profiles";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
 import { toast } from "@/hooks/use-toast";
+import RegionRadarChart from "@/components/region/RegionRadarChart";
 
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
   "Uninsured rate": { state: "6.5%", us: "8.0%" },
@@ -388,6 +389,26 @@ export default function RegionComparePage() {
                   </div>
                 </CardContent>
               </Card>
+            </section>
+
+            {/* Radar Chart */}
+            <section>
+              <RegionRadarChart
+                regions={compareData.map(({ region, stats }) => {
+                  const ur = stats.metrics.find(m => m.label === "Uninsured rate");
+                  const fi = stats.metrics.find(m => m.label === "Food insecurity");
+                  const pcr = stats.metrics.find(m => m.label === "Primary care ratio");
+                  return {
+                    regionName: region.name,
+                    color: region.color,
+                    uninsuredRate: ur?.numericAvg ?? 6.5,
+                    foodInsecurity: fi?.numericAvg ?? 13.2,
+                    primaryCareRatio: pcr?.numericAvg ?? 1280,
+                    facilitiesPer100k: stats.totalPop > 0 ? (stats.facilityCount / stats.totalPop) * 100000 : 0,
+                    resourcesPer100k: stats.totalPop > 0 ? (stats.resourceCount / stats.totalPop) * 100000 : 0,
+                  };
+                })}
+              />
             </section>
 
             <p className="text-[10px] text-muted-foreground text-center">
