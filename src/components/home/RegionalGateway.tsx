@@ -30,6 +30,25 @@ const REGION_LABEL_POS: Record<string, { x: number; y: number }> = {
   southeast: { x: 255, y: 220 },
 };
 
+// Approximate population and composite health grades per region
+const REGION_POP: Record<string, number> = {
+  southeast: 4_800_000,
+  "south-central": 1_600_000,
+  west: 1_900_000,
+  "east-central": 1_100_000,
+  northwest: 600_000,
+  "upper-peninsula": 300_000,
+};
+
+const REGION_GRADE: Record<string, { grade: string; color: string }> = {
+  southeast: { grade: "B+", color: "text-green-600" },
+  "south-central": { grade: "B", color: "text-green-600" },
+  west: { grade: "B+", color: "text-green-600" },
+  "east-central": { grade: "C+", color: "text-yellow-600" },
+  northwest: { grade: "B−", color: "text-green-600" },
+  "upper-peninsula": { grade: "C", color: "text-yellow-600" },
+};
+
 export default function RegionalGateway() {
   const navigate = useNavigate();
   const [hovered, setHovered] = useState<string | null>(null);
@@ -102,7 +121,7 @@ export default function RegionalGateway() {
 
             {/* Hover info card */}
             <div className="w-full max-w-xs min-h-[100px]">
-              {hoveredRegion ? (
+             {hoveredRegion ? (
                 <motion.div
                   key={hoveredRegion.id}
                   initial={{ opacity: 0, x: 8 }}
@@ -114,8 +133,26 @@ export default function RegionalGateway() {
                     <h3 className="text-sm font-bold text-foreground">{hoveredRegion.name}</h3>
                   </div>
                   <p className="text-xs text-muted-foreground">{hoveredRegion.description}</p>
-                  <p className="text-xs text-muted-foreground">
-                    <span className="font-medium text-foreground">{hoveredRegion.counties.length}</span> counties
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                    <div>
+                      <span className="text-muted-foreground">Counties: </span>
+                      <span className="font-medium text-foreground">{hoveredRegion.counties.length}</span>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Pop. est: </span>
+                      <span className="font-medium text-foreground">
+                        {REGION_POP[hoveredRegion.id] ? `${(REGION_POP[hoveredRegion.id] / 1_000_000).toFixed(1)}M` : "—"}
+                      </span>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-muted-foreground">Health Grade: </span>
+                      <span className={`font-bold ${REGION_GRADE[hoveredRegion.id]?.color || "text-foreground"}`}>
+                        {REGION_GRADE[hoveredRegion.id]?.grade || "—"}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-primary font-medium cursor-pointer hover:underline">
+                    Click to explore →
                   </p>
                 </motion.div>
               ) : (
