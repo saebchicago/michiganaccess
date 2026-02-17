@@ -24,22 +24,79 @@ const Index = () => {
 
   const { audience, select } = useAudience();
 
+  // Audience-specific section ordering
+  const renderSections = () => {
+    switch (audience) {
+      case "health-system":
+        return (
+          <>
+            <HealthEquitySection />
+            <EngineeringFAQ />
+            <RegionalGateway />
+            <SystemsExplainer />
+            <CountyInfoCard />
+            <CoreAccessGrid />
+            <SpotlightTabs />
+            <GuidedPathways />
+            <SmartRecommendations />
+            <TrustIndicators />
+          </>
+        );
+      case "policymaker":
+        return (
+          <>
+            <HealthEquitySection />
+            <RegionalGateway />
+            <EngineeringFAQ />
+            <SystemsExplainer />
+            <CoreAccessGrid />
+            <CountyInfoCard />
+            <SpotlightTabs />
+            <SmartRecommendations />
+            <GuidedPathways />
+            <TrustIndicators />
+          </>
+        );
+      case "provider":
+        return (
+          <>
+            <RegionalGateway />
+            <CoreAccessGrid />
+            <CountyInfoCard />
+            <HealthEquitySection />
+            <SmartRecommendations />
+            <GuidedPathways />
+            <SpotlightTabs />
+            <EngineeringFAQ />
+            <SystemsExplainer />
+            <TrustIndicators />
+          </>
+        );
+      default: // "resident" or null
+        return (
+          <>
+            <HealthEquitySection />
+            <RegionalGateway />
+            <CountyInfoCard />
+            <SmartRecommendations />
+            <CoreAccessGrid />
+            <GuidedPathways />
+            <SpotlightTabs />
+            <EngineeringFAQ />
+            <SystemsExplainer />
+            <TrustIndicators />
+          </>
+        );
+    }
+  };
+
   return (
     <Layout>
       <OnboardingTour />
       <CountyWelcomeBanner />
       <HeroSection />
       <AudienceSelector audience={audience} onSelect={select} />
-      <HealthEquitySection />
-      <RegionalGateway />
-      <CountyInfoCard />
-      <SmartRecommendations />
-      <CoreAccessGrid />
-      <GuidedPathways />
-      <SpotlightTabs />
-      <EngineeringFAQ />
-      <SystemsExplainer />
-      <TrustIndicators />
+      {renderSections()}
     </Layout>
   );
 };
