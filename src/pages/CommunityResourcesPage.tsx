@@ -168,7 +168,23 @@ export default function CommunityResourcesPage() {
             <TabsTrigger value="list"><List className="mr-1.5 h-4 w-4" />List View</TabsTrigger>
             <TabsTrigger value="map"><Map className="mr-1.5 h-4 w-4" />Map View</TabsTrigger>
           </TabsList>
-          <TabsContent value="map" className="mt-4">
+          <TabsContent value="map" className="mt-4 space-y-3">
+            {/* Map Legend with real-time counts */}
+            <div className="flex flex-wrap gap-3 items-center">
+              {categories.map((cat) => {
+                const geoCount = resources.filter(r => r.resource_type === cat.key && r.latitude && r.longitude).length;
+                return (
+                  <div key={cat.key} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <div className={`h-2.5 w-2.5 rounded-full`} style={{ background: cat.key === "food" ? "#2D5F3F" : cat.key === "housing" ? "#003B5C" : cat.key === "transportation" ? "#00A3A1" : "#E85D4A" }} />
+                    <span>{cat.label}</span>
+                    <Badge variant="secondary" className="text-[10px] px-1 py-0 h-4">{geoCount}</Badge>
+                  </div>
+                );
+              })}
+              <span className="text-[10px] text-muted-foreground ml-auto">
+                {resources.filter(r => r.latitude && r.longitude).length} of {resources.length} mapped
+              </span>
+            </div>
             <Suspense fallback={<div className="h-[500px] rounded-lg bg-muted animate-pulse" />}>
               <EmbeddedMap
                 resources={resources.filter(r => r.latitude && r.longitude).map(r => ({
@@ -183,7 +199,7 @@ export default function CommunityResourcesPage() {
                 height="500px"
               />
             </Suspense>
-            <p className="mt-2 text-[10px] text-muted-foreground text-center">
+            <p className="text-[10px] text-muted-foreground text-center">
               Showing {resources.filter(r => r.latitude && r.longitude).length} resources with verified locations
             </p>
           </TabsContent>
