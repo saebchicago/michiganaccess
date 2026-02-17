@@ -389,6 +389,72 @@ export type Database = {
         }
         Relationships: []
       }
+      municipalities: {
+        Row: {
+          council_agenda_url: string | null
+          council_minutes_url: string | null
+          county: string
+          created_at: string
+          foia_contact_email: string | null
+          foia_policy_url: string | null
+          foia_portal_url: string | null
+          id: string
+          meeting_location: string | null
+          meeting_schedule: string | null
+          municipality_type: string
+          name: string
+          population: number | null
+          property_tax_rate: number | null
+          safety_response_avg: number | null
+          state_avg_safety_response: number | null
+          state_avg_tax_rate: number | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          council_agenda_url?: string | null
+          council_minutes_url?: string | null
+          county: string
+          created_at?: string
+          foia_contact_email?: string | null
+          foia_policy_url?: string | null
+          foia_portal_url?: string | null
+          id?: string
+          meeting_location?: string | null
+          meeting_schedule?: string | null
+          municipality_type?: string
+          name: string
+          population?: number | null
+          property_tax_rate?: number | null
+          safety_response_avg?: number | null
+          state_avg_safety_response?: number | null
+          state_avg_tax_rate?: number | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          council_agenda_url?: string | null
+          council_minutes_url?: string | null
+          county?: string
+          created_at?: string
+          foia_contact_email?: string | null
+          foia_policy_url?: string | null
+          foia_portal_url?: string | null
+          id?: string
+          meeting_location?: string | null
+          meeting_schedule?: string | null
+          municipality_type?: string
+          name?: string
+          population?: number | null
+          property_tax_rate?: number | null
+          safety_response_avg?: number | null
+          state_avg_safety_response?: number | null
+          state_avg_tax_rate?: number | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       page_feedback: {
         Row: {
           comment: string | null
