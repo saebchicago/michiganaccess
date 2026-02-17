@@ -2,13 +2,14 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { BarChart3, Users, MapPin, ArrowLeft, Check, Download } from "lucide-react";
+import { BarChart3, Users, MapPin, ArrowLeft, Check, Download, Eye } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { MICHIGAN_REGIONS, type MichiganRegion } from "@/data/michigan-regions";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
 import { useFacilities } from "@/hooks/useFacilities";
@@ -62,16 +63,14 @@ function getRegionStats(region: MichiganRegion, facilities: any[], resources: an
   return { totalPop, metrics, facilityCount: regionFacilities.length, resourceCount: regionResources.length, resourceBreakdown };
 }
 
-function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<typeof getRegionStats> }[], allMetricLabels: string[]) {
+function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<typeof getRegionStats> }[], allMetricLabels: string[], isExecutive: boolean) {
   const rows: string[][] = [];
-  // Header
   rows.push(["Metric", ...compareData.map(d => d.region.name), "MI Avg", "US Avg"]);
-  // Population
   rows.push(["Population", ...compareData.map(d => d.stats.totalPop.toString())]);
   rows.push(["Counties", ...compareData.map(d => d.region.counties.length.toString())]);
   rows.push(["Facilities", ...compareData.map(d => d.stats.facilityCount.toString())]);
   rows.push(["Resources", ...compareData.map(d => d.stats.resourceCount.toString())]);
-  // Health metrics
+
   const benchmarks: Record<string, { state: string; us: string }> = {
     "Uninsured rate": { state: "6.5%", us: "8.0%" },
     "Food insecurity": { state: "13.2%", us: "13.5%" },
@@ -84,7 +83,28 @@ function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<type
       return m?.value ?? "—";
     }), bench?.state ?? "", bench?.us ?? ""]);
   });
-  // Resource breakdown
+
+  // Executive metrics
+  if (isExecutive) {
+    rows.push([]);
+    rows.push(["--- Executive Metrics ---"]);
+    rows.push(["Facilities per 100K Pop", ...compareData.map(d =>
+      d.stats.totalPop > 0 ? ((d.stats.facilityCount / d.stats.totalPop) * 100000).toFixed(1) : "—"
+    ), "", ""]);
+    rows.push(["Resources per 100K Pop", ...compareData.map(d =>
+      d.stats.totalPop > 0 ? ((d.stats.resourceCount / d.stats.totalPop) * 100000).toFixed(1) : "—"
+    ), "", ""]);
+    allMetricLabels.forEach(label => {
+      const bench = benchmarks[label];
+      if (!bench) return;
+      const benchVal = parseFloat(bench.state.replace(/[^0-9.]/g, ""));
+      rows.push([`${label} vs MI Avg (pts)`, ...compareData.map(d => {
+        const m = d.stats.metrics.find(x => x.label === label);
+        return m ? (m.numericAvg - benchVal).toFixed(1) : "—";
+      }), "0", ""]);
+    });
+  }
+
   rows.push([]);
   rows.push(["Resource Type", ...compareData.map(d => d.region.name)]);
   RESOURCE_TYPES.forEach(type => {
@@ -96,10 +116,10 @@ function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<type
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `michigan_regional_comparison_${new Date().toISOString().split("T")[0]}.csv`;
+  a.download = `michigan_regional_${isExecutive ? "executive_" : ""}comparison_${new Date().toISOString().split("T")[0]}.csv`;
   a.click();
   URL.revokeObjectURL(url);
-  toast({ title: "CSV downloaded", description: "Regional comparison data exported successfully." });
+  toast({ title: "CSV downloaded", description: `${isExecutive ? "Executive" : "Standard"} comparison data exported.` });
 }
 
 export default function RegionComparePage() {
@@ -110,6 +130,7 @@ export default function RegionComparePage() {
   });
 
   const [selected, setSelected] = useState<string[]>(["southeast", "west"]);
+  const [isExecutive, setIsExecutive] = useState(false);
   const { data: facilities = [] } = useFacilities(undefined, undefined);
   const { data: resources = [] } = useCommunityResources(undefined, undefined);
 
@@ -173,11 +194,16 @@ export default function RegionComparePage() {
 
         {compareData.length >= 2 && (
           <>
-            {/* Export */}
-            <div className="flex justify-end">
-              <Button variant="outline" size="sm" onClick={() => exportCSV(compareData, allMetricLabels)} className="gap-1.5">
+            {/* Controls */}
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-2">
+                <Eye className="h-4 w-4 text-muted-foreground" />
+                <label className="text-xs font-medium text-foreground cursor-pointer" htmlFor="exec-toggle">Executive View</label>
+                <Switch id="exec-toggle" checked={isExecutive} onCheckedChange={setIsExecutive} />
+              </div>
+              <Button variant="outline" size="sm" onClick={() => exportCSV(compareData, allMetricLabels, isExecutive)} className="gap-1.5">
                 <Download className="h-3.5 w-3.5" />
-                Download CSV Report
+                Download {isExecutive ? "Executive " : ""}CSV Report
               </Button>
             </div>
 
@@ -249,6 +275,71 @@ export default function RegionComparePage() {
                 </CardContent>
               </Card>
             </section>
+
+            {/* Executive Metrics */}
+            {isExecutive && (
+              <section>
+                <h2 className="mb-4 text-lg font-bold text-foreground flex items-center gap-2">
+                  <Eye className="h-5 w-5 text-primary" />
+                  Executive Benchmarks
+                </h2>
+                <Card>
+                  <CardContent className="py-0">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b">
+                            <th className="py-3 text-left font-medium text-muted-foreground text-xs">Metric</th>
+                            {compareData.map(({ region }) => (
+                              <th key={region.id} className="py-3 text-center font-medium text-xs" style={{ color: region.color }}>{region.name}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-b">
+                            <td className="py-2.5 text-xs text-foreground font-medium">Facilities per 100K</td>
+                            {compareData.map(({ region, stats }) => (
+                              <td key={region.id} className="py-2.5 text-center text-xs font-semibold text-foreground">
+                                {stats.totalPop > 0 ? ((stats.facilityCount / stats.totalPop) * 100000).toFixed(1) : "—"}
+                              </td>
+                            ))}
+                          </tr>
+                          <tr className="border-b">
+                            <td className="py-2.5 text-xs text-foreground font-medium">Resources per 100K</td>
+                            {compareData.map(({ region, stats }) => (
+                              <td key={region.id} className="py-2.5 text-center text-xs font-semibold text-foreground">
+                                {stats.totalPop > 0 ? ((stats.resourceCount / stats.totalPop) * 100000).toFixed(1) : "—"}
+                              </td>
+                            ))}
+                          </tr>
+                          {allMetricLabels.map(label => {
+                            const bench = BENCHMARKS[label];
+                            if (!bench) return null;
+                            const benchVal = parseFloat(bench.state.replace(/[^0-9.]/g, ""));
+                            return (
+                              <tr key={label} className="border-b last:border-0">
+                                <td className="py-2.5 text-xs text-foreground font-medium">{label} gap vs MI</td>
+                                {compareData.map(({ region, stats }) => {
+                                  const m = stats.metrics.find(x => x.label === label);
+                                  const diff = m ? m.numericAvg - benchVal : null;
+                                  return (
+                                    <td key={region.id} className="py-2.5 text-center">
+                                      <span className={`text-xs font-semibold ${diff && diff > 0 ? "text-destructive" : "text-michigan-forest"}`}>
+                                        {diff !== null ? `${diff > 0 ? "+" : ""}${diff.toFixed(1)} pts` : "—"}
+                                      </span>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
+            )}
 
             {/* Resource distribution comparison */}
             <section>

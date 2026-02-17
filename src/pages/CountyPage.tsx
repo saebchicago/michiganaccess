@@ -23,6 +23,8 @@ import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import CountyCivicSection from "@/components/county/CountyCivicSection";
 import DownloadCountyGuide from "@/components/county/DownloadCountyGuide";
 import MunicipalToolkit from "@/components/county/MunicipalToolkit";
+import RecentlyViewedBar from "@/components/county/RecentlyViewedBar";
+import { countyToSlug } from "@/utils/countyUtils";
 
 // National benchmarks (Census ACS 2023, HRSA, USDA)
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
@@ -117,6 +119,9 @@ export default function CountyPage() {
   return (
     <Layout>
       <Breadcrumbs items={[{ label: "Counties", href: "/health-map" }, { label: `${county} County` }]} />
+      <div className="container mt-2">
+        <RecentlyViewedBar currentCounty={county} currentSlug={slug || ""} />
+      </div>
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/8 via-primary/3 to-background py-12 md:py-16">
@@ -330,12 +335,17 @@ export default function CountyPage() {
                   <Card className="h-full hover-lift">
                     <CardContent className="py-4 space-y-2">
                       <div className="flex items-start justify-between">
-                        <h3 className="font-semibold text-sm text-foreground">{f.name}</h3>
-                        {f.quality_score && (
-                          <Badge variant="outline" className="text-[10px] flex-shrink-0">
-                            {f.quality_score}/100
-                          </Badge>
-                        )}
+                       <h3 className="font-semibold text-sm text-foreground">{f.name}</h3>
+                        <div className="flex items-center gap-1 flex-shrink-0">
+                          {f.joint_commission && (
+                            <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[9px] px-1 py-0">✓ Verified</Badge>
+                          )}
+                          {f.quality_score && (
+                            <Badge variant="outline" className="text-[10px]">
+                              {f.quality_score}/100
+                            </Badge>
+                          )}
+                        </div>
                       </div>
                       <p className="text-xs text-muted-foreground">
                         <MapPin className="inline h-3 w-3 mr-1" />{f.address}, {f.city}

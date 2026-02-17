@@ -17,6 +17,7 @@ import { countyToSlug } from "@/utils/countyUtils";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
 import ResourceGapAnalysis from "@/components/region/ResourceGapAnalysis";
+import MarketIntelligence from "@/components/region/MarketIntelligence";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -211,6 +212,11 @@ export default function RegionPage() {
             ))}
           </div>
         </section>
+
+        {/* Market Intelligence (all regions) */}
+        {regionFacilities.length > 0 && (
+          <MarketIntelligence region={region} facilities={regionFacilities} />
+        )}
 
         {/* Resource Gap Analysis */}
         {resources.length > 0 && (
