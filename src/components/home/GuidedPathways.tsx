@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ResourceChecklist from "./ResourceChecklist";
 
 const pathways = [
   {
@@ -118,11 +119,14 @@ export default function GuidedPathways() {
                     )}
                   </div>
                 </CardContent>
-                <CardFooter className="pt-0 pb-4 px-6">
+                <CardFooter className="pt-0 pb-4 px-6 flex-col gap-2">
                   <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3 w-full">
                     <Users className="h-3.5 w-3.5 shrink-0" />
                     <span><strong className="text-foreground">{p.stat.count}</strong> Michiganders {p.stat.label}</span>
                   </div>
+                  {p.id !== "emergency" && (
+                    <ResourceChecklist pathwayId={p.id} pathwayTitle={p.title} color={p.color} />
+                  )}
                 </CardFooter>
               </Card>
             </motion.div>
