@@ -44,6 +44,7 @@ const HealthSystemsPage = lazy(() => import("./pages/HealthSystemsPage"));
 const PartnershipOnePager = lazy(() => import("./pages/PartnershipOnePager"));
 const CountyPage = lazy(() => import("./pages/CountyPage"));
 const ComplexCarePage = lazy(() => import("./pages/ComplexCarePage"));
+const LifeNavigatorPage = lazy(() => import("./pages/LifeNavigatorPage"));
 
 const queryClient = new QueryClient();
 
@@ -97,6 +98,7 @@ const App = () => (
               <Route path="/partnerships/health-systems" element={<HealthSystemsPage />} />
               <Route path="/partnerships/health-systems/one-pager" element={<PartnershipOnePager />} />
               <Route path="/complex-care" element={<ComplexCarePage />} />
+              <Route path="/life-navigator" element={<LifeNavigatorPage />} />
               <Route path="/county/:slug" element={<CountyPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

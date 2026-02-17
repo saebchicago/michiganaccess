@@ -145,6 +145,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   const showTheRideLive = activeOverlays.includes("theride-live");
   const showAQI = activeOverlays.includes("aqi-stations");
   const showBusPatrol = activeOverlays.includes("buspatrol-safety");
+  const showPedestrian = activeOverlays.includes("pedestrian-risk");
 
   const { data: workzoneData } = useArcGISData("mdot-workzones", showWorkzones);
   const { data: airData } = useArcGISData("egle-air", showAir);
@@ -405,7 +406,47 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
       }
       safeAddToMap(lg, "buspatrol");
     }
-  }, [showWorkzones, showAir, showEV, showDDOT, showCATA, showAQI, showBusPatrol, workzoneData, airData, evData, ddotData, cataData, aqiData]);
+
+    // Pedestrian Risk Zones (MTCF data — demo hotspots)
+    if (showPedestrian) {
+      const lg = L.layerGroup();
+      const hotspots = [
+        { lat: 42.3314, lng: -83.0458, name: "Downtown Detroit", injuries: 142, change: "+14%" },
+        { lat: 42.3370, lng: -83.0495, name: "Midtown Detroit", injuries: 87, change: "+11%" },
+        { lat: 42.4316, lng: -83.0220, name: "8 Mile / Woodward", injuries: 63, change: "+18%" },
+        { lat: 42.9634, lng: -85.6681, name: "Downtown Grand Rapids", injuries: 54, change: "+9%" },
+        { lat: 42.7325, lng: -84.5555, name: "Downtown Lansing", injuries: 48, change: "+12%" },
+        { lat: 43.0125, lng: -83.6875, name: "Downtown Flint", injuries: 39, change: "+16%" },
+        { lat: 42.2808, lng: -83.7430, name: "Ann Arbor Central", injuries: 31, change: "+7%" },
+        { lat: 42.3223, lng: -83.1763, name: "Dearborn / Michigan Ave", injuries: 44, change: "+13%" },
+        { lat: 42.4865, lng: -83.1446, name: "Royal Oak / Woodward", injuries: 27, change: "+10%" },
+        { lat: 42.3362, lng: -83.1499, name: "West Vernor / Springwells", injuries: 36, change: "+15%" },
+      ];
+      for (const hs of hotspots) {
+        const severity = hs.injuries > 80 ? "#DC2626" : hs.injuries > 40 ? "#F59E0B" : "#FB923C";
+        const radius = Math.min(25, Math.max(12, hs.injuries / 6));
+        const circle = L.circleMarker([hs.lat, hs.lng], {
+          radius,
+          fillColor: severity,
+          color: "#fff",
+          weight: 2,
+          fillOpacity: 0.55,
+        });
+        circle.bindPopup(`
+          <div style="font-family:system-ui,sans-serif;min-width:200px;">
+            <div style="font-size:13px;font-weight:700;color:#003B5C;margin-bottom:4px;">🚶 ${hs.name}</div>
+            <div style="background:${severity};color:#fff;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-bottom:6px;">
+              ${hs.injuries} pedestrian injuries · ${hs.change} YoY
+            </div>
+            <div style="font-size:10px;color:#475569;">70% of fatalities occur at night or in high-risk zones</div>
+            <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: Michigan Traffic Crash Facts (MTCF) · Demo data</div>
+          </div>
+        `);
+        lg.addLayer(circle);
+      }
+      safeAddToMap(lg, "pedestrian");
+    }
+  }, [showWorkzones, showAir, showEV, showDDOT, showCATA, showAQI, showBusPatrol, showPedestrian, workzoneData, airData, evData, ddotData, cataData, aqiData]);
 
   const handleCountyClick = useCallback((name: string) => {
     // Strip "County" suffix if present from ArcGIS data

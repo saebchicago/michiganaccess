@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
   Apple, Home, Bus, Brain, Phone, ExternalLink, MapPin, Clock,
-  Globe, Heart, Shield, Users, Filter, Search
+  Globe, Heart, Shield, Users, Filter, Search, Map, List
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,6 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCommunityResources, type CommunityResource } from "@/hooks/useCommunityResources";
 import { useCounty } from "@/contexts/CountyContext";
+
+const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -160,6 +162,32 @@ export default function CommunityResourcesPage() {
       </section>
 
       <div className="container max-w-6xl py-8 space-y-6">
+        {/* View toggle: List / Map */}
+        <Tabs defaultValue="list">
+          <TabsList>
+            <TabsTrigger value="list"><List className="mr-1.5 h-4 w-4" />List View</TabsTrigger>
+            <TabsTrigger value="map"><Map className="mr-1.5 h-4 w-4" />Map View</TabsTrigger>
+          </TabsList>
+          <TabsContent value="map" className="mt-4">
+            <Suspense fallback={<div className="h-[500px] rounded-lg bg-muted animate-pulse" />}>
+              <EmbeddedMap
+                resources={resources.filter(r => r.latitude && r.longitude).map(r => ({
+                  latitude: r.latitude ?? null,
+                  longitude: r.longitude ?? null,
+                  resource_name: r.resource_name,
+                  resource_type: r.resource_type,
+                  address: r.address,
+                  city: r.city,
+                }))}
+                county={globalCounty}
+                height="500px"
+              />
+            </Suspense>
+            <p className="mt-2 text-[10px] text-muted-foreground text-center">
+              Showing {resources.filter(r => r.latitude && r.longitude).length} resources with verified locations
+            </p>
+          </TabsContent>
+          <TabsContent value="list" className="mt-4 space-y-6">
         {/* Category stats */}
         <div className="grid gap-3 grid-cols-2 sm:grid-cols-4">
           {categories.map((cat, i) => (
@@ -214,6 +242,8 @@ export default function CommunityResourcesPage() {
             <p className="text-xs text-muted-foreground mt-1">Michigan Crisis Line: <a href="tel:8885526642" className="text-primary underline">888-552-6642</a> · United Way 211: Dial <strong>211</strong></p>
           </CardContent>
         </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </Layout>
   );
