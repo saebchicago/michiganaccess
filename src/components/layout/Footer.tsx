@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Heart, Phone, Lock } from "lucide-react";
+import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
@@ -95,8 +95,34 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Privacy + attribution */}
+        {/* System Status (moved from homepage) */}
         <div className="mt-10 border-t border-border pt-6">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <div className="h-1.5 w-1.5 rounded-full bg-michigan-forest animate-pulse" />
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+              System Status — All Services Operational
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            {[
+              { icon: MapPin, value: "83/83", label: "Counties" },
+              { icon: Shield, value: "✓", label: "Verified" },
+              { icon: Database, value: "6", label: "Data Feeds" },
+              { icon: Activity, value: "<3s", label: "p95 Load" },
+              { icon: FileText, value: "15K+", label: "Resources" },
+            ].map((m) => (
+              <div key={m.label} className="flex items-center gap-1.5">
+                <m.icon className="h-3 w-3 text-primary" />
+                <span className="text-xs font-bold text-foreground">{m.value}</span>
+                <span className="text-[10px] text-muted-foreground">{m.label}</span>
+                <CheckCircle2 className="h-2.5 w-2.5 text-michigan-forest" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Privacy + attribution */}
+        <div className="mt-6 border-t border-border pt-6">
           <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Lock className="h-3 w-3 shrink-0" aria-hidden="true" />

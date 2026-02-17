@@ -1,0 +1,132 @@
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { MapPin } from "lucide-react";
+import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
+import MunicipalitySearch from "./MunicipalitySearch";
+
+// SVG paths for Michigan's 6 planning regions (simplified polygons)
+const REGION_PATHS: Record<string, string> = {
+  "upper-peninsula":
+    "M30 30 L60 20 L120 15 L180 25 L200 40 L190 55 L160 65 L120 60 L80 55 L50 50 L30 45 Z",
+  northwest:
+    "M120 75 L180 70 L200 80 L210 110 L200 150 L180 170 L150 180 L120 170 L100 140 L105 100 Z",
+  "east-central":
+    "M200 80 L250 75 L270 90 L275 130 L260 160 L230 170 L200 150 L210 110 Z",
+  west:
+    "M80 140 L120 170 L150 180 L140 220 L130 260 L110 280 L80 270 L60 240 L55 200 L60 160 Z",
+  "south-central":
+    "M150 180 L180 170 L200 150 L230 170 L240 200 L230 240 L200 260 L170 260 L140 240 L130 260 L140 220 Z",
+  southeast:
+    "M230 170 L260 160 L280 180 L285 220 L275 260 L250 280 L220 270 L200 260 L230 240 L240 200 Z",
+};
+
+const REGION_LABEL_POS: Record<string, { x: number; y: number }> = {
+  "upper-peninsula": { x: 115, y: 40 },
+  northwest: { x: 155, y: 125 },
+  "east-central": { x: 240, y: 120 },
+  west: { x: 85, y: 210 },
+  "south-central": { x: 185, y: 215 },
+  southeast: { x: 255, y: 220 },
+};
+
+export default function RegionalGateway() {
+  const navigate = useNavigate();
+  const [hovered, setHovered] = useState<string | null>(null);
+  const hoveredRegion = MICHIGAN_REGIONS.find((r) => r.id === hovered);
+
+  return (
+    <section className="border-y border-border bg-card py-10">
+      <div className="container">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="space-y-6"
+        >
+          <div className="text-center space-y-2">
+            <div className="flex items-center justify-center gap-2">
+              <MapPin className="h-4 w-4 text-primary" />
+              <h2 className="text-lg font-bold text-foreground">Regional Gateway</h2>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+              Explore Michigan by region or search for your city, village, or township below.
+            </p>
+          </div>
+
+          {/* Municipality Search */}
+          <MunicipalitySearch />
+
+          {/* SVG Map + Info panel */}
+          <div className="flex flex-col items-center gap-6 md:flex-row md:justify-center">
+            <svg
+              viewBox="0 0 310 300"
+              className="w-full max-w-xs md:max-w-sm h-auto"
+              role="img"
+              aria-label="Interactive map of Michigan's 6 regions"
+            >
+              {MICHIGAN_REGIONS.map((region) => {
+                const path = REGION_PATHS[region.id];
+                const label = REGION_LABEL_POS[region.id];
+                if (!path) return null;
+                const isHovered = hovered === region.id;
+                return (
+                  <g key={region.id}>
+                    <path
+                      d={path}
+                      fill={isHovered ? region.color : `${region.color}33`}
+                      stroke={region.color}
+                      strokeWidth={isHovered ? 2.5 : 1.5}
+                      className="cursor-pointer transition-all duration-200"
+                      onMouseEnter={() => setHovered(region.id)}
+                      onMouseLeave={() => setHovered(null)}
+                      onClick={() => navigate(`/region/${region.id}`)}
+                      role="button"
+                      aria-label={`Go to ${region.name}`}
+                    />
+                    {label && (
+                      <text
+                        x={label.x}
+                        y={label.y}
+                        textAnchor="middle"
+                        className="pointer-events-none select-none fill-foreground text-[8px] font-semibold"
+                      >
+                        {region.name.replace("Michigan", "MI").replace("Northern Lower ", "N. Lower ")}
+                      </text>
+                    )}
+                  </g>
+                );
+              })}
+            </svg>
+
+            {/* Hover info card */}
+            <div className="w-full max-w-xs min-h-[100px]">
+              {hoveredRegion ? (
+                <motion.div
+                  key={hoveredRegion.id}
+                  initial={{ opacity: 0, x: 8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="rounded-lg border border-border bg-muted/50 p-4 space-y-2"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="h-3 w-3 rounded-full" style={{ background: hoveredRegion.color }} />
+                    <h3 className="text-sm font-bold text-foreground">{hoveredRegion.name}</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground">{hoveredRegion.description}</p>
+                  <p className="text-xs text-muted-foreground">
+                    <span className="font-medium text-foreground">{hoveredRegion.counties.length}</span> counties
+                  </p>
+                </motion.div>
+              ) : (
+                <div className="rounded-lg border border-dashed border-border/60 p-4 text-center text-xs text-muted-foreground">
+                  Hover over a region to see details, or click to explore.
+                </div>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
