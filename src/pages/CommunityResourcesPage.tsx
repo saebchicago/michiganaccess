@@ -26,10 +26,10 @@ const fadeUp = {
 };
 
 const categories = [
-  { key: "food", label: "Food & Nutrition", icon: Apple, color: "text-michigan-forest" },
-  { key: "housing", label: "Housing & Shelter", icon: Home, color: "text-primary" },
-  { key: "transportation", label: "Transportation", icon: Bus, color: "text-michigan-teal" },
-  { key: "mental_health", label: "Mental Health", icon: Brain, color: "text-michigan-coral" },
+  { key: "food", aliases: ["food", "food_nutrition"], label: "Food & Nutrition", icon: Apple, color: "text-michigan-forest" },
+  { key: "housing", aliases: ["housing", "housing_shelter"], label: "Housing & Shelter", icon: Home, color: "text-primary" },
+  { key: "transportation", aliases: ["transportation"], label: "Transportation", icon: Bus, color: "text-michigan-teal" },
+  { key: "mental_health", aliases: ["mental_health", "substance_abuse"], label: "Mental Health", icon: Brain, color: "text-michigan-coral" },
 ];
 
 const counties = [
@@ -37,7 +37,7 @@ const counties = [
 ];
 
 function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
-  const cat = categories.find((c) => c.key === r.resource_type);
+  const cat = categories.find((c) => c.aliases.includes(r.resource_type));
   const Icon = cat?.icon || Heart;
   return (
     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i % 10}>
@@ -132,7 +132,10 @@ export default function CommunityResourcesPage() {
 
   const filtered = useMemo(() => {
     let result = [...resources];
-    if (activeTab !== "all") result = result.filter((r) => r.resource_type === activeTab);
+    if (activeTab !== "all") {
+      const activeCat = categories.find(c => c.key === activeTab);
+      if (activeCat) result = result.filter((r) => activeCat.aliases.includes(r.resource_type));
+    }
     if (county !== "All Counties") result = result.filter((r) => r.county === county);
     if (search) {
       const q = search.toLowerCase();
@@ -148,7 +151,7 @@ export default function CommunityResourcesPage() {
 
   const counts = useMemo(() => {
     const c: Record<string, number> = { all: resources.length };
-    categories.forEach((cat) => { c[cat.key] = resources.filter((r) => r.resource_type === cat.key).length; });
+    categories.forEach((cat) => { c[cat.key] = resources.filter((r) => cat.aliases.includes(r.resource_type)).length; });
     return c;
   }, [resources]);
 
