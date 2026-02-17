@@ -125,6 +125,22 @@ export default function LearnPage() {
   const [systolic, setSystolic] = useState(120);
   const [diastolic, setDiastolic] = useState(80);
 
+  // Heart disease risk calculator state
+  const [hdAge, setHdAge] = useState(50);
+  const [hdCholesterol, setHdCholesterol] = useState(200);
+  const [hdHdl, setHdHdl] = useState(50);
+  const [hdSmoker, setHdSmoker] = useState(false);
+  const [hdDiabetic, setHdDiabetic] = useState(false);
+  const [hdSystolic, setHdSystolic] = useState(130);
+
+  // Diabetes risk calculator state
+  const [dbAge, setDbAge] = useState(45);
+  const [dbBmi, setDbBmi] = useState(27);
+  const [dbWaist, setDbWaist] = useState(36);
+  const [dbFamilyHistory, setDbFamilyHistory] = useState(false);
+  const [dbInactive, setDbInactive] = useState(false);
+  const [dbHighBP, setDbHighBP] = useState(false);
+
   usePageMeta({
     title: "Health Education Library",
     description: "Plain-language health education, symptom body map, clinical jargon decoder, health calculators, and doctor visit prep tools.",
@@ -148,6 +164,34 @@ export default function LearnPage() {
 
   const bpCategory = systolic < 120 && diastolic < 80 ? "Normal" : systolic < 130 && diastolic < 80 ? "Elevated" : systolic < 140 || diastolic < 90 ? "High (Stage 1)" : "High (Stage 2)";
   const bpColor = bpCategory === "Normal" ? "text-michigan-forest" : bpCategory === "Elevated" ? "text-michigan-gold" : "text-michigan-coral";
+
+  // Simplified Framingham-inspired heart disease risk (10-year estimate)
+  const hdRiskScore = (() => {
+    let score = 0;
+    if (hdAge >= 40) score += (hdAge - 40) * 0.5;
+    if (hdCholesterol > 200) score += (hdCholesterol - 200) * 0.05;
+    if (hdHdl < 40) score += 8; else if (hdHdl < 50) score += 4;
+    if (hdSmoker) score += 8;
+    if (hdDiabetic) score += 6;
+    if (hdSystolic > 130) score += (hdSystolic - 130) * 0.15;
+    return Math.min(Math.max(Math.round(score), 1), 50);
+  })();
+  const hdRiskLabel = hdRiskScore < 10 ? "Low" : hdRiskScore < 20 ? "Moderate" : "High";
+  const hdRiskColor = hdRiskScore < 10 ? "text-michigan-forest" : hdRiskScore < 20 ? "text-michigan-gold" : "text-michigan-coral";
+
+  // ADA-inspired diabetes risk score
+  const dbRiskScore = (() => {
+    let score = 0;
+    if (dbAge >= 40 && dbAge < 50) score += 1; else if (dbAge >= 50 && dbAge < 60) score += 2; else if (dbAge >= 60) score += 3;
+    if (dbBmi >= 25 && dbBmi < 30) score += 1; else if (dbBmi >= 30 && dbBmi < 40) score += 2; else if (dbBmi >= 40) score += 3;
+    if (dbWaist > 40) score += 2; else if (dbWaist > 35) score += 1;
+    if (dbFamilyHistory) score += 2;
+    if (dbInactive) score += 1;
+    if (dbHighBP) score += 1;
+    return score;
+  })();
+  const dbRiskLabel = dbRiskScore <= 3 ? "Low" : dbRiskScore <= 6 ? "Moderate" : "High";
+  const dbRiskColor = dbRiskScore <= 3 ? "text-michigan-forest" : dbRiskScore <= 6 ? "text-michigan-gold" : "text-michigan-coral";
 
   return (
     <Layout>
@@ -302,6 +346,106 @@ export default function LearnPage() {
                       <p><strong className="text-michigan-gold">Elevated:</strong> 120-129 / below 80</p>
                       <p><strong className="text-michigan-coral">High Stage 1:</strong> 130-139 / 80-89</p>
                       <p><strong className="text-michigan-coral">High Stage 2:</strong> 140+ / 90+</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* Heart Disease Risk Calculator */}
+              <Card>
+                <CardContent className="py-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Heart className="h-5 w-5 text-michigan-coral" />
+                    <h3 className="text-lg font-bold text-foreground">Heart Disease Risk</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-4">Simplified 10-year cardiovascular risk estimate based on Framingham-style factors.</p>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Age: {hdAge}</label>
+                      <Slider value={[hdAge]} onValueChange={v => setHdAge(v[0])} min={20} max={80} step={1} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Total Cholesterol: {hdCholesterol} mg/dL</label>
+                      <Slider value={[hdCholesterol]} onValueChange={v => setHdCholesterol(v[0])} min={100} max={350} step={5} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">HDL ("Good") Cholesterol: {hdHdl} mg/dL</label>
+                      <Slider value={[hdHdl]} onValueChange={v => setHdHdl(v[0])} min={20} max={100} step={1} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Systolic BP: {hdSystolic} mmHg</label>
+                      <Slider value={[hdSystolic]} onValueChange={v => setHdSystolic(v[0])} min={90} max={200} step={1} />
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                        <input type="checkbox" checked={hdSmoker} onChange={e => setHdSmoker(e.target.checked)} className="rounded border-border" />
+                        Current smoker
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                        <input type="checkbox" checked={hdDiabetic} onChange={e => setHdDiabetic(e.target.checked)} className="rounded border-border" />
+                        Diabetic
+                      </label>
+                    </div>
+                    <Separator />
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-foreground">{hdRiskScore}%</p>
+                      <p className={`text-sm font-semibold ${hdRiskColor}`}>10-Year Risk: {hdRiskLabel}</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
+                      <p><strong className="text-michigan-forest">Low:</strong> Below 10%</p>
+                      <p><strong className="text-michigan-gold">Moderate:</strong> 10–19%</p>
+                      <p><strong className="text-michigan-coral">High:</strong> 20% or more</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Diabetes Risk Assessment */}
+              <Card>
+                <CardContent className="py-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Activity className="h-5 w-5 text-michigan-gold" />
+                    <h3 className="text-lg font-bold text-foreground">Diabetes Risk Assessment</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-4">Based on ADA risk factors for Type 2 diabetes. Higher scores suggest increased risk.</p>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Age: {dbAge}</label>
+                      <Slider value={[dbAge]} onValueChange={v => setDbAge(v[0])} min={18} max={85} step={1} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">BMI: {dbBmi}</label>
+                      <Slider value={[dbBmi]} onValueChange={v => setDbBmi(v[0])} min={15} max={50} step={1} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Waist Circumference: {dbWaist} inches</label>
+                      <Slider value={[dbWaist]} onValueChange={v => setDbWaist(v[0])} min={24} max={60} step={1} />
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                      <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                        <input type="checkbox" checked={dbFamilyHistory} onChange={e => setDbFamilyHistory(e.target.checked)} className="rounded border-border" />
+                        Family history
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                        <input type="checkbox" checked={dbInactive} onChange={e => setDbInactive(e.target.checked)} className="rounded border-border" />
+                        Physically inactive
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                        <input type="checkbox" checked={dbHighBP} onChange={e => setDbHighBP(e.target.checked)} className="rounded border-border" />
+                        High blood pressure
+                      </label>
+                    </div>
+                    <Separator />
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-foreground">{dbRiskScore}</p>
+                      <p className={`text-sm font-semibold ${dbRiskColor}`}>Risk Level: {dbRiskLabel}</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
+                      <p><strong className="text-michigan-forest">Low (0–3):</strong> Maintain healthy habits</p>
+                      <p><strong className="text-michigan-gold">Moderate (4–6):</strong> Talk to your doctor about screening</p>
+                      <p><strong className="text-michigan-coral">High (7+):</strong> Get tested — schedule an A1C test</p>
                     </div>
                   </div>
                 </CardContent>
