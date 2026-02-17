@@ -1,0 +1,261 @@
+import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { BarChart3, Users, MapPin, ArrowLeft, Check } from "lucide-react";
+import Layout from "@/components/layout/Layout";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { MICHIGAN_REGIONS, type MichiganRegion } from "@/data/michigan-regions";
+import { getCountyProfile } from "@/data/michigan-county-profiles";
+import { useFacilities } from "@/hooks/useFacilities";
+import { useCommunityResources } from "@/hooks/useCommunityResources";
+
+const BENCHMARKS: Record<string, { state: string; us: string }> = {
+  "Uninsured rate": { state: "6.5%", us: "8.0%" },
+  "Food insecurity": { state: "13.2%", us: "13.5%" },
+  "Primary care ratio": { state: "1,280:1", us: "1,310:1" },
+};
+
+const RESOURCE_TYPES = ["food", "housing", "transportation", "mental_health", "health", "legal", "education"];
+
+function getRegionStats(region: MichiganRegion, facilities: any[], resources: any[]) {
+  let totalPop = 0;
+  const metricSums: Record<string, { sum: number; count: number }> = {};
+
+  region.counties.forEach(c => {
+    const p = getCountyProfile(c);
+    totalPop += p.population;
+    p.healthHighlights.forEach(h => {
+      let num: number;
+      if (h.label.includes("ratio")) {
+        num = parseInt(h.value.split(":")[0].replace(/,/g, ""), 10);
+      } else {
+        num = parseFloat(h.value.replace(/%/g, ""));
+      }
+      if (!isNaN(num)) {
+        if (!metricSums[h.label]) metricSums[h.label] = { sum: 0, count: 0 };
+        metricSums[h.label].sum += num;
+        metricSums[h.label].count += 1;
+      }
+    });
+  });
+
+  const metrics = Object.entries(metricSums).map(([label, { sum, count }]) => ({
+    label,
+    value: label.includes("ratio") ? `${Math.round(sum / count).toLocaleString()}:1` : `${(sum / count).toFixed(1)}%`,
+    numericAvg: sum / count,
+  }));
+
+  const regionFacilities = facilities.filter(f => region.counties.includes(f.county));
+  const regionResources = resources.filter(r => region.counties.includes(r.county));
+
+  const resourceBreakdown: Record<string, number> = {};
+  RESOURCE_TYPES.forEach(t => {
+    resourceBreakdown[t] = regionResources.filter(r => r.resource_type === t).length;
+  });
+
+  return { totalPop, metrics, facilityCount: regionFacilities.length, resourceCount: regionResources.length, resourceBreakdown };
+}
+
+export default function RegionComparePage() {
+  usePageMeta({
+    title: "Regional Comparison Dashboard — Michigan Health Access",
+    description: "Compare health metrics, access gaps, and resources across Michigan regions side-by-side.",
+    path: "/regions/compare",
+  });
+
+  const [selected, setSelected] = useState<string[]>(["southeast", "west"]);
+  const { data: facilities = [] } = useFacilities(undefined, undefined);
+  const { data: resources = [] } = useCommunityResources(undefined, undefined);
+
+  const toggle = (id: string) => {
+    setSelected(prev => prev.includes(id) ? prev.filter(x => x !== id) : prev.length < 4 ? [...prev, id] : prev);
+  };
+
+  const compareData = useMemo(() => {
+    return selected.map(id => {
+      const region = MICHIGAN_REGIONS.find(r => r.id === id)!;
+      return { region, stats: getRegionStats(region, facilities, resources) };
+    });
+  }, [selected, facilities, resources]);
+
+  const allMetricLabels = useMemo(() => {
+    const labels = new Set<string>();
+    compareData.forEach(d => d.stats.metrics.forEach(m => labels.add(m.label)));
+    return Array.from(labels);
+  }, [compareData]);
+
+  return (
+    <Layout>
+      <Breadcrumbs items={[{ label: "Regions", href: "/regions" }, { label: "Compare" }]} />
+
+      <section className="bg-gradient-to-br from-primary/8 via-primary/3 to-background py-10">
+        <div className="container">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <Badge variant="outline" className="mb-3 text-xs">Benchmarking Tool</Badge>
+            <h1 className="text-3xl font-bold text-foreground md:text-4xl mb-2">Regional Comparison</h1>
+            <p className="text-muted-foreground max-w-2xl">
+              Select up to 4 regions to compare health metrics, resource coverage, and access gaps side-by-side.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="container py-8 space-y-8">
+        {/* Region selector */}
+        <section>
+          <h2 className="mb-3 text-sm font-semibold text-muted-foreground uppercase tracking-wider">Select Regions to Compare</h2>
+          <div className="flex flex-wrap gap-2">
+            {MICHIGAN_REGIONS.map(r => (
+              <Button
+                key={r.id}
+                variant={selected.includes(r.id) ? "default" : "outline"}
+                size="sm"
+                onClick={() => toggle(r.id)}
+                className="gap-1.5"
+                disabled={!selected.includes(r.id) && selected.length >= 4}
+              >
+                <div className="h-2.5 w-2.5 rounded-full" style={{ background: r.color }} />
+                {r.name}
+                {selected.includes(r.id) && <Check className="h-3 w-3" />}
+              </Button>
+            ))}
+          </div>
+          {selected.length < 2 && (
+            <p className="mt-2 text-xs text-muted-foreground">Select at least 2 regions to compare.</p>
+          )}
+        </section>
+
+        {compareData.length >= 2 && (
+          <>
+            {/* Overview cards */}
+            <section>
+              <h2 className="mb-4 text-lg font-bold text-foreground">Overview</h2>
+              <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${compareData.length}, minmax(0, 1fr))` }}>
+                {compareData.map(({ region, stats }) => (
+                  <Card key={region.id} className="border-t-4" style={{ borderTopColor: region.color }}>
+                    <CardContent className="py-4 space-y-2">
+                      <Link to={`/region/${region.id}`} className="text-sm font-bold text-foreground hover:underline">{region.name}</Link>
+                      <div className="space-y-1 text-xs text-muted-foreground">
+                        <p className="flex items-center gap-1"><Users className="h-3 w-3" /> Pop. {stats.totalPop.toLocaleString()}</p>
+                        <p className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {region.counties.length} counties</p>
+                        <p>{stats.facilityCount} facilities · {stats.resourceCount} resources</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </section>
+
+            {/* Health metrics comparison */}
+            <section>
+              <h2 className="mb-4 text-lg font-bold text-foreground flex items-center gap-2">
+                <BarChart3 className="h-5 w-5 text-primary" />
+                Health Metrics Comparison
+              </h2>
+              <Card>
+                <CardContent className="py-0">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="py-3 text-left font-medium text-muted-foreground text-xs">Metric</th>
+                          {compareData.map(({ region }) => (
+                            <th key={region.id} className="py-3 text-center font-medium text-xs" style={{ color: region.color }}>{region.name}</th>
+                          ))}
+                          <th className="py-3 text-center font-medium text-muted-foreground text-xs">MI Avg</th>
+                          <th className="py-3 text-center font-medium text-muted-foreground text-xs">US Avg</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {allMetricLabels.map(label => {
+                          const bench = BENCHMARKS[label];
+                          return (
+                            <tr key={label} className="border-b last:border-0">
+                              <td className="py-2.5 text-xs text-foreground font-medium">{label}</td>
+                              {compareData.map(({ region, stats }) => {
+                                const m = stats.metrics.find(x => x.label === label);
+                                const benchVal = bench ? parseFloat(bench.state.replace(/[^0-9.]/g, "")) : null;
+                                const worse = m && benchVal ? m.numericAvg > benchVal : false;
+                                return (
+                                  <td key={region.id} className="py-2.5 text-center">
+                                    <span className={`text-xs font-semibold ${worse ? "text-destructive" : "text-foreground"}`}>
+                                      {m?.value ?? "—"}
+                                    </span>
+                                  </td>
+                                );
+                              })}
+                              <td className="py-2.5 text-center text-xs text-muted-foreground">{bench?.state ?? "—"}</td>
+                              <td className="py-2.5 text-center text-xs text-muted-foreground">{bench?.us ?? "—"}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </section>
+
+            {/* Resource distribution comparison */}
+            <section>
+              <h2 className="mb-4 text-lg font-bold text-foreground">Resource Distribution</h2>
+              <Card>
+                <CardContent className="py-0">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="py-3 text-left font-medium text-muted-foreground text-xs">Resource Type</th>
+                          {compareData.map(({ region }) => (
+                            <th key={region.id} className="py-3 text-center font-medium text-xs" style={{ color: region.color }}>{region.name}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {RESOURCE_TYPES.map(type => {
+                          const max = Math.max(...compareData.map(d => d.stats.resourceBreakdown[type] || 0));
+                          return (
+                            <tr key={type} className="border-b last:border-0">
+                              <td className="py-2.5 text-xs text-foreground font-medium capitalize">{type.replace(/_/g, " ")}</td>
+                              {compareData.map(({ region, stats }) => {
+                                const count = stats.resourceBreakdown[type] || 0;
+                                const isMax = count === max && count > 0;
+                                return (
+                                  <td key={region.id} className="py-2.5 text-center">
+                                    <span className={`text-xs font-semibold ${isMax ? "text-michigan-forest" : count === 0 ? "text-muted-foreground" : "text-foreground"}`}>
+                                      {count}
+                                    </span>
+                                    {isMax && count > 0 && <span className="text-[9px] text-michigan-forest ml-1">★</span>}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        })}
+                        <tr className="border-t-2">
+                          <td className="py-2.5 text-xs font-bold text-foreground">Total</td>
+                          {compareData.map(({ region, stats }) => (
+                            <td key={region.id} className="py-2.5 text-center text-xs font-bold text-foreground">{stats.resourceCount}</td>
+                          ))}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </section>
+
+            <p className="text-[10px] text-muted-foreground text-center">
+              Data sourced from MDHHS, HRSA, and community resource partners. Metrics represent county-level averages within each region.
+            </p>
+          </>
+        )}
+      </div>
+    </Layout>
+  );
+}

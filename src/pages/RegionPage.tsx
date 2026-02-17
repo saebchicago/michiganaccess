@@ -16,6 +16,7 @@ import { getCountyProfile, COUNTY_PROFILES } from "@/data/michigan-county-profil
 import { countyToSlug } from "@/utils/countyUtils";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
+import ResourceGapAnalysis from "@/components/region/ResourceGapAnalysis";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -75,6 +76,7 @@ export default function RegionPage() {
   const { totalPop, avgMetrics } = useMemo(() => region ? aggregateRegionMetrics(region) : { totalPop: 0, avgMetrics: [] }, [region]);
   const { data: facilities = [] } = useFacilities(undefined, undefined);
   const { data: resources = [] } = useCommunityResources(undefined, undefined);
+  const regionResources2 = useMemo(() => resources.filter(r => region?.counties.includes(r.county as any)), [resources, region]);
 
   if (!region) {
     return (
@@ -209,6 +211,11 @@ export default function RegionPage() {
             ))}
           </div>
         </section>
+
+        {/* Resource Gap Analysis */}
+        {resources.length > 0 && (
+          <ResourceGapAnalysis region={region} regionResources={regionResources2} allResources={resources} />
+        )}
 
         {/* Resource types breakdown */}
         {regionResources.length > 0 && (
