@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   DollarSign, TrendingDown, Search, Building2, MapPin, Info,
   Calculator, Pill, Shield, ArrowRight, ExternalLink, BarChart3
@@ -114,6 +115,17 @@ const prescriptions = [
 export default function CostTransparencyPage() {
   const [selectedProcedure, setSelectedProcedure] = useState<string>(procedures[0].name);
   const [insuranceType, setInsuranceType] = useState<string>("uninsured");
+
+  usePageMeta({
+    title: "Cost Transparency",
+    description: "Compare healthcare costs across Michigan facilities. Know before you go — the same procedure can cost 3-5x more depending on where you go.",
+    path: "/costs",
+    jsonLd: {
+      "@type": "WebPage",
+      name: "Healthcare Cost Transparency — Michigan Access",
+      description: "Compare procedure costs and prescription prices across Michigan healthcare facilities.",
+    },
+  });
 
   const procedure = procedures.find(p => p.name === selectedProcedure) || procedures[0];
 

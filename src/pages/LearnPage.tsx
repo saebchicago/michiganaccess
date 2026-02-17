@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   BookOpen, Search, Baby, GraduationCap, Heart, Users, Brain,
   Stethoscope, Activity, Bone, Eye, Ear, Wind, Droplets,
-  ChevronRight, MessageCircle, Shield, Lightbulb, ArrowRight
+  ChevronRight, MessageCircle, Shield, Lightbulb, ArrowRight,
+  Calculator, Scale, Thermometer, HeartPulse
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Slider } from "@/components/ui/slider";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -116,11 +119,35 @@ export default function LearnPage() {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [jargonSearch, setJargonSearch] = useState("");
 
+  // Health calculator state
+  const [bmiHeight, setBmiHeight] = useState(67); // inches
+  const [bmiWeight, setBmiWeight] = useState(150); // lbs
+  const [systolic, setSystolic] = useState(120);
+  const [diastolic, setDiastolic] = useState(80);
+
+  usePageMeta({
+    title: "Health Education Library",
+    description: "Plain-language health education, symptom body map, clinical jargon decoder, health calculators, and doctor visit prep tools.",
+    path: "/learn",
+    jsonLd: {
+      "@type": "MedicalWebPage",
+      name: "Health Education Library — Michigan Access",
+      about: { "@type": "MedicalCondition", name: "General health education" },
+    },
+  });
+
+  const bmi = ((bmiWeight / (bmiHeight * bmiHeight)) * 703).toFixed(1);
+  const bmiCategory = parseFloat(bmi) < 18.5 ? "Underweight" : parseFloat(bmi) < 25 ? "Normal" : parseFloat(bmi) < 30 ? "Overweight" : "Obese";
+  const bmiColor = parseFloat(bmi) < 18.5 ? "text-michigan-gold" : parseFloat(bmi) < 25 ? "text-michigan-forest" : parseFloat(bmi) < 30 ? "text-michigan-gold" : "text-michigan-coral";
+
   const filteredJargon = jargonTerms.filter(j =>
     !jargonSearch || j.term.toLowerCase().includes(jargonSearch.toLowerCase()) || j.plain.toLowerCase().includes(jargonSearch.toLowerCase())
   );
 
   const selectedBody = bodyRegions.find(r => r.id === selectedRegion);
+
+  const bpCategory = systolic < 120 && diastolic < 80 ? "Normal" : systolic < 130 && diastolic < 80 ? "Elevated" : systolic < 140 || diastolic < 90 ? "High (Stage 1)" : "High (Stage 2)";
+  const bpColor = bpCategory === "Normal" ? "text-michigan-forest" : bpCategory === "Elevated" ? "text-michigan-gold" : "text-michigan-coral";
 
   return (
     <Layout>
@@ -144,6 +171,7 @@ export default function LearnPage() {
         <Tabs defaultValue="body-map" className="w-full">
           <TabsList className="flex flex-wrap h-auto gap-1">
             <TabsTrigger value="body-map" className="gap-1.5"><Stethoscope className="h-3.5 w-3.5" />Symptom Body Map</TabsTrigger>
+            <TabsTrigger value="calculators" className="gap-1.5"><Calculator className="h-3.5 w-3.5" />Health Calculators</TabsTrigger>
             <TabsTrigger value="life-stage" className="gap-1.5"><Users className="h-3.5 w-3.5" />Learn by Life Stage</TabsTrigger>
             <TabsTrigger value="jargon" className="gap-1.5"><BookOpen className="h-3.5 w-3.5" />Jargon Decoder</TabsTrigger>
             <TabsTrigger value="visit-prep" className="gap-1.5"><MessageCircle className="h-3.5 w-3.5" />Doctor Visit Prep</TabsTrigger>
@@ -210,6 +238,84 @@ export default function LearnPage() {
                 </Card>
               </motion.div>
             )}
+          </TabsContent>
+
+          {/* ───── HEALTH CALCULATORS TAB ───── */}
+          <TabsContent value="calculators" className="space-y-6 mt-6">
+            <p className="text-sm text-muted-foreground">Simple health tools to help you understand your numbers. <strong>These are not diagnostic tools</strong> — discuss results with your healthcare provider.</p>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* BMI Calculator */}
+              <Card>
+                <CardContent className="py-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Scale className="h-5 w-5 text-michigan-teal" />
+                    <h3 className="text-lg font-bold text-foreground">BMI Calculator</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-2 block">Height: {Math.floor(bmiHeight / 12)}'{bmiHeight % 12}"</label>
+                      <Slider value={[bmiHeight]} onValueChange={v => setBmiHeight(v[0])} min={48} max={84} step={1} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-2 block">Weight: {bmiWeight} lbs</label>
+                      <Slider value={[bmiWeight]} onValueChange={v => setBmiWeight(v[0])} min={80} max={400} step={1} />
+                    </div>
+                    <Separator />
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-foreground">{bmi}</p>
+                      <p className={`text-sm font-semibold ${bmiColor}`}>{bmiCategory}</p>
+                    </div>
+                    <div className="flex justify-between text-[10px] text-muted-foreground px-1">
+                      <span>Underweight<br/>&lt;18.5</span>
+                      <span className="text-michigan-forest">Normal<br/>18.5–24.9</span>
+                      <span>Overweight<br/>25–29.9</span>
+                      <span>Obese<br/>30+</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Blood Pressure Checker */}
+              <Card>
+                <CardContent className="py-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <HeartPulse className="h-5 w-5 text-michigan-coral" />
+                    <h3 className="text-lg font-bold text-foreground">Blood Pressure Check</h3>
+                  </div>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-2 block">Systolic (top number): {systolic} mmHg</label>
+                      <Slider value={[systolic]} onValueChange={v => setSystolic(v[0])} min={80} max={200} step={1} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-2 block">Diastolic (bottom number): {diastolic} mmHg</label>
+                      <Slider value={[diastolic]} onValueChange={v => setDiastolic(v[0])} min={40} max={130} step={1} />
+                    </div>
+                    <Separator />
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-foreground">{systolic}/{diastolic}</p>
+                      <p className={`text-sm font-semibold ${bpColor}`}>{bpCategory}</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
+                      <p><strong className="text-michigan-forest">Normal:</strong> Below 120/80</p>
+                      <p><strong className="text-michigan-gold">Elevated:</strong> 120-129 / below 80</p>
+                      <p><strong className="text-michigan-coral">High Stage 1:</strong> 130-139 / 80-89</p>
+                      <p><strong className="text-michigan-coral">High Stage 2:</strong> 140+ / 90+</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card className="border-primary/20">
+              <CardContent className="py-4">
+                <p className="text-xs text-muted-foreground">
+                  <Shield className="inline h-3 w-3 mr-1 text-primary" />
+                  These calculators provide general health information only. They do not account for individual factors like muscle mass, age, or medical conditions. Always consult your healthcare provider for personalized health assessments.
+                </p>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* ───── LIFE STAGE TAB ───── */}
