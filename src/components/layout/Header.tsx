@@ -41,6 +41,17 @@ const Header = () => {
       ],
     },
     {
+      label: "Strategy",
+      children: [
+        { label: "Executive Summary", href: "/executive-summary" },
+        { label: "Health Equity", href: "/equity" },
+        { label: "Lean Healthcare", href: "/lean-healthcare" },
+        { label: "For Health Systems", href: "/for-health-systems" },
+        { label: "Case Studies", href: "/case-studies" },
+        { label: "Impact Dashboard", href: "/impact" },
+      ],
+    },
+    {
       label: t("nav.eligibility"),
       href: "/financial-help",
     },

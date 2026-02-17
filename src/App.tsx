@@ -48,6 +48,11 @@ const LifeNavigatorPage = lazy(() => import("./pages/LifeNavigatorPage"));
 const RegionsPage = lazy(() => import("./pages/RegionsPage"));
 const RegionPage = lazy(() => import("./pages/RegionPage"));
 const RegionComparePage = lazy(() => import("./pages/RegionComparePage"));
+const EquityPage = lazy(() => import("./pages/EquityPage"));
+const LeanHealthcarePage = lazy(() => import("./pages/LeanHealthcarePage"));
+const ForHealthSystemsPage = lazy(() => import("./pages/ForHealthSystemsPage"));
+const ExecutiveSummaryPage = lazy(() => import("./pages/ExecutiveSummaryPage"));
+const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 
 const queryClient = new QueryClient();
 
@@ -106,6 +111,11 @@ const App = () => (
               <Route path="/regions" element={<RegionsPage />} />
               <Route path="/regions/compare" element={<RegionComparePage />} />
               <Route path="/region/:regionId" element={<RegionPage />} />
+              <Route path="/equity" element={<EquityPage />} />
+              <Route path="/lean-healthcare" element={<LeanHealthcarePage />} />
+              <Route path="/for-health-systems" element={<ForHealthSystemsPage />} />
+              <Route path="/executive-summary" element={<ExecutiveSummaryPage />} />
+              <Route path="/case-studies" element={<CaseStudiesPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
