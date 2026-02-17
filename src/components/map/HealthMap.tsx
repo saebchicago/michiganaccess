@@ -11,6 +11,7 @@ import { countyToSlug, COUNTY_CENTERS } from "@/utils/countyUtils";
 import CountyBoundaryLayer from "./CountyBoundaryLayer";
 import VehiclePositionLayer from "./VehiclePositionLayer";
 import { useArcGISData, type ArcGISLayer } from "@/hooks/useArcGISData";
+import { matchesSystem } from "./NetworkFilter";
 import { useGTFSRealtime } from "@/hooks/useGTFSRealtime";
 import { useAirQuality } from "@/hooks/useAirQuality";
 
@@ -121,13 +122,14 @@ interface HealthMapProps {
   facilities: Facility[];
   activeLayers: string[];
   activeOverlays?: string[];
+  selectedSystem?: string | null;
   onSearchLocation?: (lat: number, lon: number) => void;
 }
 
 const MICHIGAN_CENTER: [number, number] = [44.3148, -85.6024];
 const MICHIGAN_ZOOM = 7;
 
-export default function HealthMap({ facilities, activeLayers, activeOverlays = [] }: HealthMapProps) {
+export default function HealthMap({ facilities, activeLayers, activeOverlays = [], selectedSystem = null }: HealthMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
   const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
@@ -217,9 +219,10 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
 
     facilities.forEach((f) => {
       if (!activeLayers.includes(f.facility_type)) return;
-      const color = getQualityColor(f.quality_score);
+      const isMatch = !selectedSystem || matchesSystem(f.system_affiliation, selectedSystem);
+      const color = isMatch ? getQualityColor(f.quality_score) : "#d1d5db";
       const icon = createMarkerIcon(color, f.facility_type);
-      const marker = L.marker([f.latitude, f.longitude], { icon });
+      const marker = L.marker([f.latitude, f.longitude], { icon, opacity: isMatch ? 1 : 0.4 });
       marker.bindPopup(buildPopupContent(f), { maxWidth: 320 });
       cluster.addLayer(marker);
     });
@@ -232,7 +235,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
     } catch {
       // Map destroyed during layer add
     }
-  }, [facilities, activeLayers]);
+  }, [facilities, activeLayers, selectedSystem]);
 
   // Sector overlay layers
   useEffect(() => {

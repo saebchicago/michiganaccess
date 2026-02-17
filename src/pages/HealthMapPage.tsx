@@ -14,6 +14,7 @@ import { useCounty } from "@/contexts/CountyContext";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import MapFirstVisitTooltip from "@/components/map/MapFirstVisitTooltip";
+import NetworkFilter from "@/components/map/NetworkFilter";
 
 const DEFAULT_LAYERS = LAYERS.filter((l) => l.defaultOn).map((l) => l.id);
 
@@ -23,6 +24,7 @@ export default function HealthMapPage() {
   usePageMeta({ title: "Health Map", description: "Interactive map of Michigan healthcare facilities with quality scores, transit access, and layer controls.", path: "/health-map" });
   const [activeLayers, setActiveLayers] = useState<string[]>(DEFAULT_LAYERS);
   const [activeOverlays, setActiveOverlays] = useState<string[]>(["county-boundaries"]);
+  const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
   const { data: facilities = [], isLoading } = useFacilities(undefined, county);
 
   const toggleLayer = useCallback((layerId: string) => {
@@ -66,6 +68,7 @@ export default function HealthMapPage() {
 
           <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
           <SectorOverlayControls activeOverlays={activeOverlays} onToggleOverlay={toggleOverlay} />
+          <NetworkFilter selectedSystem={selectedSystem} onSelect={setSelectedSystem} />
           <MapLegend />
 
           <div className="mt-auto rounded-lg border border-border bg-muted/50 p-3">
@@ -96,6 +99,7 @@ export default function HealthMapPage() {
                 <MapSearchControl onLocationSelect={handleSearchLocation} />
                 <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
                 <SectorOverlayControls activeOverlays={activeOverlays} onToggleOverlay={toggleOverlay} />
+                <NetworkFilter selectedSystem={selectedSystem} onSelect={setSelectedSystem} />
                 <MapLegend />
               </div>
             </SheetContent>
@@ -123,6 +127,7 @@ export default function HealthMapPage() {
             facilities={facilities}
             activeLayers={activeLayers}
             activeOverlays={activeOverlays}
+            selectedSystem={selectedSystem}
           />
         </div>
       </div>
