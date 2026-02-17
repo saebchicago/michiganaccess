@@ -22,6 +22,8 @@ export interface CommunityResource {
   walk_in_available: boolean | null;
   services_offered: string[] | null;
   is_active: boolean | null;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 export function useCommunityResources(resourceType?: string, county?: string | null) {

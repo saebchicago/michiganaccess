@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useProviders, type Provider } from "@/hooks/useProviders";
 import { type Facility } from "@/hooks/useFacilities";
+import ValueBadges from "@/components/civic/ValueBadges";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -115,6 +116,7 @@ export default function ProviderDirectory({ facilities }: Props) {
                       {p.accepting_new_patients && <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]"><Users className="mr-0.5 h-2.5 w-2.5" />Accepting</Badge>}
                       {p.telehealth_available && <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]"><Wifi className="mr-0.5 h-2.5 w-2.5" />Telehealth</Badge>}
                     </div>
+                    <ValueBadges specialty={p.specialty} boardCertified={p.board_certified} yearsExperience={p.years_experience} />
 
                     <div className="text-[11px] text-muted-foreground space-y-0.5">
                       {p.years_experience && <p><Stethoscope className="mr-1 inline h-3 w-3" />{p.years_experience} years experience</p>}

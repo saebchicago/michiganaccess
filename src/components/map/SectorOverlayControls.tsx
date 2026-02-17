@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Bus, Wind, Zap, Construction, Train, Radio, CloudSun, ShieldAlert, Hospital, Leaf } from "lucide-react";
+import { Bus, Wind, Zap, Construction, Train, Radio, CloudSun, ShieldAlert, Hospital, Leaf, Footprints } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const HEALTH_OVERLAYS = [
@@ -19,6 +19,7 @@ const TRANSPORT_OVERLAYS = [
 
 const SAFETY_OVERLAYS = [
   { id: "buspatrol-safety", label: "School Zone Safety", icon: ShieldAlert, defaultOn: false, color: "text-destructive" },
+  { id: "pedestrian-risk", label: "Pedestrian Risk Zones", icon: Footprints, defaultOn: false, color: "text-michigan-coral", badge: "MTCF" },
 ];
 
 // Re-export combined for backward compat
