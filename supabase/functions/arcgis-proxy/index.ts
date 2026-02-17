@@ -1,41 +1,75 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// ArcGIS REST endpoint catalog — all publicly accessible, no API key required
-const ENDPOINTS: Record<string, string> = {
-  // Michigan county boundaries (Census Bureau via ArcGIS Online)
-  "county-boundaries":
-    "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties_Generalized_Boundaries/FeatureServer/0/query?where=STATE_NAME%3D%27Michigan%27&outFields=NAME,POPULATION,SQMI&f=geojson&outSR=4326&returnGeometry=true",
-
-  // MDOT work zones / road closures
-  "mdot-workzones":
-    "https://gis.michigan.opendata.arcgis.com/datasets/mdot-work-zones/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson&outSR=4326&resultRecordCount=200",
-
-  // EGLE air quality monitoring sites
-  "egle-air":
-    "https://gis.michigan.opendata.arcgis.com/datasets/egle-air-quality-monitoring/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson&outSR=4326",
-
-// EV charging stations (public data)
-  "ev-stations":
-    "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Alternative_Fueling_Stations/FeatureServer/0/query?where=State%3D%27MI%27+AND+Fuel_Type%3D%27ELEC%27&outFields=Station_Name,Street_Address,City,ZIP,EV_Level2_EVSE_Num,EV_DC_Fast_Count,EV_Network,Latitude,Longitude&f=geojson&outSR=4326&resultRecordCount=500",
-
-  // DDOT bus routes (Detroit Department of Transportation — City of Detroit Open Data)
-  "ddot-routes":
-    "https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/DDOT_Bus_Routes/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson&outSR=4326",
-
-  // CATA bus routes (Capital Area Transportation Authority - Lansing)
-  "cata-routes":
-    "https://services1.arcgis.com/wQMxFeIlJVMTiZgV/ArcGIS/rest/services/CATA_Bus_Routes/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson&outSR=4326",
+// Endpoint catalog – all publicly accessible
+const ENDPOINTS: Record<string, { url: string; transform?: string }> = {
+  "county-boundaries": {
+    url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Counties_Generalized_Boundaries/FeatureServer/0/query?where=STATE_NAME%3D%27Michigan%27&outFields=NAME,POPULATION,SQMI&f=geojson&outSR=4326&returnGeometry=true",
+  },
+  "mdot-workzones": {
+    url: "https://mdotgis.state.mi.us/arcgis/rest/services/Widget/NextGenPrFinderPub/FeatureServer/275/query?where=1%3D1&outFields=*&f=geojson&outSR=4326&resultRecordCount=200",
+  },
+  "egle-air": {
+    url: "https://utility.arcgis.com/usrsvcs/servers/7667046c1a724cebaf153ec1336f74f4/rest/services/EGLE/AirMonitoring/MapServer/0/query?where=1%3D1&outFields=SiteName,MonitorType,AqsId,StationAddress&f=json&outSR=4326",
+    transform: "esriJson",
+  },
+  "ev-stations": {
+    url: "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?api_key=DEMO_KEY&fuel_type=ELEC&state=MI&limit=200",
+    transform: "nrelAfdc",
+  },
+  "ddot-routes": {
+    url: "https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/DDOT_Bus_Routes/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson&outSR=4326",
+  },
+  "cata-routes": {
+    // Lansing CATA doesn't have a public ArcGIS FeatureServer; placeholder returns empty
+    url: "https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/DDOT_Bus_Routes/FeatureServer/0/query?where=1%3D0&outFields=*&f=geojson&outSR=4326",
+  },
 };
+
+// Convert ESRI JSON (MapServer) to GeoJSON
+function esriJsonToGeoJSON(data: any): GeoJSON.FeatureCollection {
+  const features = (data.features || []).map((f: any) => ({
+    type: "Feature" as const,
+    geometry: {
+      type: "Point" as const,
+      coordinates: [f.geometry?.x ?? 0, f.geometry?.y ?? 0],
+    },
+    properties: f.attributes || {},
+  }));
+  return { type: "FeatureCollection", features };
+}
+
+// Convert NREL AFDC JSON to GeoJSON
+function nrelAfdcToGeoJSON(data: any): GeoJSON.FeatureCollection {
+  const stations = data.fuel_stations || [];
+  const features = stations.map((s: any) => ({
+    type: "Feature" as const,
+    geometry: {
+      type: "Point" as const,
+      coordinates: [s.longitude, s.latitude],
+    },
+    properties: {
+      Station_Name: s.station_name,
+      Street_Address: s.street_address,
+      City: s.city,
+      ZIP: s.zip,
+      EV_Level2_EVSE_Num: s.ev_level2_evse_num,
+      EV_DC_Fast_Count: s.ev_dc_fast_num,
+      EV_Network: s.ev_network,
+      EV_Connector_Types: s.ev_connector_types?.join(", ") || "",
+      Access: s.access_code,
+      Status: s.status_code,
+    },
+  }));
+  return { type: "FeatureCollection", features };
+}
 
 // In-memory cache with 1-hour TTL
 const cache = new Map<string, { data: unknown; ts: number }>();
-const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+const CACHE_TTL = 60 * 60 * 1000;
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -45,19 +79,19 @@ Deno.serve(async (req) => {
   try {
     const url = new URL(req.url);
     const layer = url.searchParams.get("layer");
-    const customUrl = url.searchParams.get("url"); // allow arbitrary ArcGIS endpoint
+    const customUrl = url.searchParams.get("url");
 
     if (!layer && !customUrl) {
       return new Response(
-        JSON.stringify({
-          error: "Missing 'layer' or 'url' parameter",
-          available_layers: Object.keys(ENDPOINTS),
-        }),
+        JSON.stringify({ error: "Missing 'layer' or 'url' parameter", available_layers: Object.keys(ENDPOINTS) }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    const targetUrl = customUrl || ENDPOINTS[layer!];
+    const endpoint = layer ? ENDPOINTS[layer] : null;
+    const targetUrl = customUrl || endpoint?.url;
+    const transform = endpoint?.transform;
+
     if (!targetUrl) {
       return new Response(
         JSON.stringify({ error: `Unknown layer: ${layer}`, available_layers: Object.keys(ENDPOINTS) }),
@@ -65,21 +99,25 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Validate URL is from trusted ArcGIS domains
+    // Validate domain
     const parsed = new URL(targetUrl);
     const trustedDomains = [
       "services.arcgis.com",
-      "gis.michigan.opendata.arcgis.com",
-      "gisago.mcgi.state.mi.us",
-      "gis-michigan.opendata.arcgis.com",
       "services1.arcgis.com",
       "services2.arcgis.com",
+      "utility.arcgis.com",
+      "mdotgis.state.mi.us",
+      "mdotjboss.state.mi.us",
+      "gisagoegle.state.mi.us",
+      "gis-michigan.opendata.arcgis.com",
+      "gis.michigan.opendata.arcgis.com",
       "data.detroitmi.gov",
       "gis.ridecata.com",
+      "developer.nrel.gov",
     ];
     if (!trustedDomains.some((d) => parsed.hostname.endsWith(d))) {
       return new Response(
-        JSON.stringify({ error: "URL domain not in trusted ArcGIS list" }),
+        JSON.stringify({ error: "URL domain not in trusted list" }),
         { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -88,23 +126,33 @@ Deno.serve(async (req) => {
     const cacheKey = targetUrl;
     const cached = cache.get(cacheKey);
     if (cached && Date.now() - cached.ts < CACHE_TTL) {
-      return new Response(JSON.stringify({ data: cached.data, cached: true, cached_at: new Date(cached.ts).toISOString() }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ data: cached.data, cached: true, cached_at: new Date(cached.ts).toISOString() }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
-    // Fetch from ArcGIS
-    const response = await fetch(targetUrl, {
-      headers: { Accept: "application/json" },
-    });
+    // Fetch upstream
+    const response = await fetch(targetUrl, { headers: { Accept: "application/json" } });
 
     if (!response.ok) {
-      throw new Error(`ArcGIS returned ${response.status}: ${response.statusText}`);
+      console.error(`Upstream error for ${layer || customUrl}: ${response.status}`);
+      const empty = { type: "FeatureCollection", features: [] };
+      return new Response(
+        JSON.stringify({ data: empty, cached: false, error: `Upstream returned ${response.status}`, fetched_at: new Date().toISOString() }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
-    const data = await response.json();
+    let data = await response.json();
 
-    // Cache the result
+    // Transform non-GeoJSON responses
+    if (transform === "esriJson") {
+      data = esriJsonToGeoJSON(data);
+    } else if (transform === "nrelAfdc") {
+      data = nrelAfdcToGeoJSON(data);
+    }
+
     cache.set(cacheKey, { data, ts: Date.now() });
 
     return new Response(
@@ -113,9 +161,10 @@ Deno.serve(async (req) => {
     );
   } catch (error) {
     console.error("ArcGIS proxy error:", error);
+    const empty = { type: "FeatureCollection", features: [] };
     return new Response(
-      JSON.stringify({ error: error.message || "Failed to fetch ArcGIS data" }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({ data: empty, cached: false, error: error.message || "Failed to fetch data", fetched_at: new Date().toISOString() }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });
