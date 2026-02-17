@@ -22,6 +22,7 @@ import { useCommunityEvents } from "@/hooks/useCommunityEvents";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import CountyCivicSection from "@/components/county/CountyCivicSection";
 import DownloadCountyGuide from "@/components/county/DownloadCountyGuide";
+import MunicipalToolkit from "@/components/county/MunicipalToolkit";
 
 // National benchmarks (Census ACS 2023, HRSA, USDA)
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
@@ -363,6 +364,9 @@ export default function CountyPage() {
             </div>
           </section>
         )}
+
+        {/* Municipalities & Governance Toolkit */}
+        <MunicipalToolkit county={county} />
 
         {/* Civic & Government */}
         <CountyCivicSection county={county} countyType={profile.countyType} />

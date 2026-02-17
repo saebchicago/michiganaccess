@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { BarChart3, Users, MapPin, ArrowLeft, Check } from "lucide-react";
+import { BarChart3, Users, MapPin, ArrowLeft, Check, Download } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,6 +13,7 @@ import { MICHIGAN_REGIONS, type MichiganRegion } from "@/data/michigan-regions";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
+import { toast } from "@/hooks/use-toast";
 
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
   "Uninsured rate": { state: "6.5%", us: "8.0%" },
@@ -59,6 +60,46 @@ function getRegionStats(region: MichiganRegion, facilities: any[], resources: an
   });
 
   return { totalPop, metrics, facilityCount: regionFacilities.length, resourceCount: regionResources.length, resourceBreakdown };
+}
+
+function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<typeof getRegionStats> }[], allMetricLabels: string[]) {
+  const rows: string[][] = [];
+  // Header
+  rows.push(["Metric", ...compareData.map(d => d.region.name), "MI Avg", "US Avg"]);
+  // Population
+  rows.push(["Population", ...compareData.map(d => d.stats.totalPop.toString())]);
+  rows.push(["Counties", ...compareData.map(d => d.region.counties.length.toString())]);
+  rows.push(["Facilities", ...compareData.map(d => d.stats.facilityCount.toString())]);
+  rows.push(["Resources", ...compareData.map(d => d.stats.resourceCount.toString())]);
+  // Health metrics
+  const benchmarks: Record<string, { state: string; us: string }> = {
+    "Uninsured rate": { state: "6.5%", us: "8.0%" },
+    "Food insecurity": { state: "13.2%", us: "13.5%" },
+    "Primary care ratio": { state: "1,280:1", us: "1,310:1" },
+  };
+  allMetricLabels.forEach(label => {
+    const bench = benchmarks[label];
+    rows.push([label, ...compareData.map(d => {
+      const m = d.stats.metrics.find(x => x.label === label);
+      return m?.value ?? "—";
+    }), bench?.state ?? "", bench?.us ?? ""]);
+  });
+  // Resource breakdown
+  rows.push([]);
+  rows.push(["Resource Type", ...compareData.map(d => d.region.name)]);
+  RESOURCE_TYPES.forEach(type => {
+    rows.push([type.replace(/_/g, " "), ...compareData.map(d => (d.stats.resourceBreakdown[type] || 0).toString())]);
+  });
+
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `michigan_regional_comparison_${new Date().toISOString().split("T")[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast({ title: "CSV downloaded", description: "Regional comparison data exported successfully." });
 }
 
 export default function RegionComparePage() {
@@ -132,6 +173,14 @@ export default function RegionComparePage() {
 
         {compareData.length >= 2 && (
           <>
+            {/* Export */}
+            <div className="flex justify-end">
+              <Button variant="outline" size="sm" onClick={() => exportCSV(compareData, allMetricLabels)} className="gap-1.5">
+                <Download className="h-3.5 w-3.5" />
+                Download CSV Report
+              </Button>
+            </div>
+
             {/* Overview cards */}
             <section>
               <h2 className="mb-4 text-lg font-bold text-foreground">Overview</h2>
