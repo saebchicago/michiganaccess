@@ -32,9 +32,7 @@ const categories = [
   { key: "mental_health", aliases: ["mental_health", "substance_abuse"], label: "Mental Health", icon: Brain, color: "text-michigan-coral" },
 ];
 
-const counties = [
-  "All Counties", "Genesee", "Ingham", "Kent", "Oakland", "Washtenaw", "Wayne"
-];
+// Counties list is now dynamically derived from loaded resources
 
 function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
   const cat = categories.find((c) => c.aliases.includes(r.resource_type));
@@ -110,7 +108,7 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
 
 export default function CommunityResourcesPage() {
   const { t } = useTranslation();
-  const { county: globalCounty, region, activeCounties } = useCounty();
+  const { county: globalCounty } = useCounty();
   usePageMeta({
     title: "Community Resources",
     description: "Food, housing, transportation, and support services available to Michigan residents.",
@@ -123,12 +121,16 @@ export default function CommunityResourcesPage() {
       "provider": { "@type": "Organization", "name": "Michigan Access" },
     },
   });
-  // Use single county if set, else region counties, else all (undefined)
-  const countyFilter = globalCounty ? globalCounty : region ? activeCounties : undefined;
-  const { data: resources = [], isLoading } = useCommunityResources(undefined, countyFilter as string | string[] | undefined);
+  // Load ALL resources — local dropdown and tabs handle filtering
+  const { data: resources = [], isLoading } = useCommunityResources();
   const [activeTab, setActiveTab] = useState("all");
   const [county, setCounty] = useState("All Counties");
   const [search, setSearch] = useState("");
+
+  const availableCounties = useMemo(() => {
+    const set = new Set(resources.map(r => r.county));
+    return ["All Counties", ...Array.from(set).sort()];
+  }, [resources]);
 
   const filtered = useMemo(() => {
     let result = [...resources];
@@ -248,7 +250,7 @@ export default function CommunityResourcesPage() {
           <Select value={county} onValueChange={setCounty}>
             <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
             <SelectContent>
-              {counties.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+              {availableCounties.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
