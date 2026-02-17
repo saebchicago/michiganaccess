@@ -80,7 +80,7 @@ type SortBy = "composite" | "quality" | "name";
 
 export default function FindCarePage() {
   const { t } = useTranslation();
-  const { county: selectedCounty } = useCounty();
+  const { county: selectedCounty, region, activeCounties } = useCounty();
   usePageMeta({
     title: "Find Care Near You",
     description: "Search Michigan healthcare facilities by location, specialty, quality ratings, and services.",
@@ -93,7 +93,9 @@ export default function FindCarePage() {
       "specialty": "Primary Care, Behavioral Health, Urgent Care",
     },
   });
-  const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities(undefined, selectedCounty);
+  // Use single county if set, else region counties, else all (undefined)
+  const countyFilter = selectedCounty ? selectedCounty : region ? activeCounties : undefined;
+  const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities(undefined, countyFilter as string | string[] | undefined);
   const { data: hrsaData, isLoading: hrsaLoading } = useHRSAData("MI", 50);
 
   // Merge HRSA live FQHCs with DB facilities, deduplicating by name

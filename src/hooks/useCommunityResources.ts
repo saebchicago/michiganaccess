@@ -26,7 +26,7 @@ export interface CommunityResource {
   longitude: number | null;
 }
 
-export function useCommunityResources(resourceType?: string, county?: string | null) {
+export function useCommunityResources(resourceType?: string, county?: string | string[] | null) {
   return useQuery({
     queryKey: ["community_resources", resourceType, county],
     queryFn: async () => {
@@ -35,7 +35,11 @@ export function useCommunityResources(resourceType?: string, county?: string | n
         query = query.eq("resource_type", resourceType);
       }
       if (county) {
-        query = query.eq("county", county);
+        if (Array.isArray(county)) {
+          query = query.in("county", county);
+        } else {
+          query = query.eq("county", county);
+        }
       }
       const { data, error } = await query.order("resource_name");
       if (error) throw error;

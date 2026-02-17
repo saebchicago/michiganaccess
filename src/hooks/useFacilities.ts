@@ -4,7 +4,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export type Facility = Tables<"facilities">;
 
-export function useFacilities(facilityTypes?: string[], county?: string | null) {
+export function useFacilities(facilityTypes?: string[], county?: string | string[] | null) {
   return useQuery({
     queryKey: ["facilities", facilityTypes, county],
     queryFn: async () => {
@@ -13,7 +13,11 @@ export function useFacilities(facilityTypes?: string[], county?: string | null) 
         query = query.in("facility_type", facilityTypes);
       }
       if (county) {
-        query = query.eq("county", county);
+        if (Array.isArray(county)) {
+          query = query.in("county", county);
+        } else {
+          query = query.eq("county", county);
+        }
       }
       const { data, error } = await query;
       if (error) throw error;
