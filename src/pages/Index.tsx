@@ -11,6 +11,8 @@ import RegionalGateway from "@/components/home/RegionalGateway";
 import EngineeringFAQ from "@/components/home/EngineeringFAQ";
 import SmartRecommendations from "@/components/home/SmartRecommendations";
 import OnboardingTour from "@/components/shared/OnboardingTour";
+import HealthEquitySection from "@/components/home/HealthEquitySection";
+import AudienceSelector, { useAudience } from "@/components/home/AudienceSelector";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -19,11 +21,16 @@ const Index = () => {
     description: "One structured gateway to health, housing, food, and family services across all 83 Michigan counties.",
     path: "/",
   });
+
+  const { audience, select } = useAudience();
+
   return (
     <Layout>
       <OnboardingTour />
       <CountyWelcomeBanner />
       <HeroSection />
+      <AudienceSelector audience={audience} onSelect={select} />
+      <HealthEquitySection />
       <RegionalGateway />
       <CountyInfoCard />
       <SmartRecommendations />
