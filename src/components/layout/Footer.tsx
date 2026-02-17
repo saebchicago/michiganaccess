@@ -39,6 +39,8 @@ const Footer = () => {
         { label: t("footer.technical"), href: "/technical" },
         { label: "Accessibility", href: "/accessibility" },
         { label: "Partner Impact", href: "/partners" },
+        { label: "Press & Media", href: "/press" },
+        { label: "Site Map", href: "/sitemap" },
         { label: t("nav.installApp"), href: "/install" },
       ],
     },
