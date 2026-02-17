@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFacilities, type Facility } from "@/hooks/useFacilities";
 import { useQualityMetrics, type QualityMetric } from "@/hooks/useQualityMetrics";
 import { Link } from "react-router-dom";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
@@ -42,6 +43,17 @@ const gradeColors: Record<string, string> = {
 };
 
 export default function QualityRatingsPage() {
+  usePageMeta({
+    title: "Quality Ratings",
+    description: "Compare hospital quality scores, patient safety grades, and accreditation status across Michigan healthcare facilities.",
+    path: "/quality",
+    jsonLd: {
+      "@type": "WebPage",
+      "name": "Quality Ratings — Michigan Access",
+      "description": "Hospital quality scores, Leapfrog grades, and accreditation for Michigan facilities.",
+      "url": "https://michiganaccess.lovable.app/quality",
+    },
+  });
   const { data: facilities = [], isLoading: facLoading } = useFacilities(["hospital"]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { data: metrics = [], isLoading: metLoading } = useQualityMetrics(
