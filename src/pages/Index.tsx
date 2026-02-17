@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
+import ComparisonTable from "@/components/home/ComparisonTable";
 import CoreAccessGrid from "@/components/home/CoreAccessGrid";
 import GuidedPathways from "@/components/home/GuidedPathways";
 import SystemsExplainer from "@/components/home/SystemsExplainer";
@@ -101,6 +102,7 @@ const Index = () => {
       <CountyWelcomeBanner />
       <HeroSection />
       <AudienceSelector audience={audience} onSelect={select} />
+      <ComparisonTable />
       {renderSections()}
     </Layout>
   );
