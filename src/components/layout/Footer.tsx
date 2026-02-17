@@ -121,8 +121,24 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Privacy + attribution */}
+        {/* Data Sources */}
         <div className="mt-6 border-t border-border pt-6">
+          <details className="group">
+            <summary className="flex items-center justify-center gap-2 cursor-pointer text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors">
+              <Database className="h-3 w-3" />
+              Data Sources
+              <span className="transition-transform group-open:rotate-180">▾</span>
+            </summary>
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+              {["CMS (Medicare)", "HRSA (Health Resources)", "CDC (Public Health)", "MDHHS (Michigan)", "Leapfrog (Safety)", "EPA AirNow"].map((src) => (
+                <span key={src} className="text-xs text-muted-foreground">{src}</span>
+              ))}
+            </div>
+          </details>
+        </div>
+
+        {/* Privacy + attribution */}
+        <div className="mt-4 border-t border-border pt-4">
           <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Lock className="h-3 w-3 shrink-0" aria-hidden="true" />

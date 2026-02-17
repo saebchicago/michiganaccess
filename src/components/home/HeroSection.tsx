@@ -109,6 +109,15 @@ const HeroSection = () => {
               {t("hero.subtitle")}
             </motion.p>
 
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.55, duration: 0.5 }}
+              className="mt-2 text-xs text-primary-foreground/50 tracking-wide"
+            >
+              Unlike government portals or health plans, we rank by quality — not who pays for placement.
+            </motion.p>
+
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}

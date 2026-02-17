@@ -410,9 +410,12 @@ export default function CountyPage() {
           </div>
         </section>
 
-        {/* Privacy Notice */}
+        {/* Last Updated + Privacy Notice */}
         <Card className="border-muted bg-muted/30">
-          <CardContent className="py-3 text-center">
+          <CardContent className="py-3 text-center space-y-1">
+            <p className="text-[10px] text-muted-foreground">
+              Last updated: {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })} · Data from CMS, HRSA, CDC, MDHHS
+            </p>
             <p className="text-xs text-muted-foreground">
               🔒 Michigan Access does not collect personal data. All information shown is from public sources.
               No cookies or tracking. <Link to="/accessibility" className="text-primary underline">Learn more</Link>
