@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 import CountySelector from "@/components/shared/CountySelector";
+import SiteSearch from "@/components/shared/SiteSearch";
 
 const Header = () => {
   const { t } = useTranslation();
@@ -109,6 +110,7 @@ const Header = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-1">
+          <SiteSearch />
           <CountySelector variant="header" />
           <ThemeToggle />
           <LanguageSwitcher />
