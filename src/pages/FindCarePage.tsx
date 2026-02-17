@@ -79,7 +79,18 @@ type SortBy = "composite" | "quality" | "name";
 export default function FindCarePage() {
   const { t } = useTranslation();
   const { county: selectedCounty } = useCounty();
-  usePageMeta({ title: "Find Care Near You", description: "Search Michigan healthcare facilities by location, specialty, quality ratings, and services.", path: "/find-care" });
+  usePageMeta({
+    title: "Find Care Near You",
+    description: "Search Michigan healthcare facilities by location, specialty, quality ratings, and services.",
+    path: "/find-care",
+    jsonLd: {
+      "@type": "MedicalWebPage",
+      "name": "Find Care Near You — Michigan Access",
+      "about": { "@type": "MedicalCondition", "name": "Healthcare Access" },
+      "audience": { "@type": "PeopleAudience", "geographicArea": { "@type": "State", "name": "Michigan" } },
+      "specialty": "Primary Care, Behavioral Health, Urgent Care",
+    },
+  });
   const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities(undefined, selectedCounty);
   const { data: hrsaData, isLoading: hrsaLoading } = useHRSAData("MI", 50);
 
