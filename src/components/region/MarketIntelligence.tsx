@@ -1,8 +1,9 @@
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
-import { TrendingUp, MapPin, AlertTriangle, Building2 } from "lucide-react";
+import { TrendingUp, MapPin, AlertTriangle, Building2, FileDown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { type Facility } from "@/hooks/useFacilities";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
 import type { MichiganRegion } from "@/data/michigan-regions";
@@ -171,9 +172,63 @@ export default function MarketIntelligence({ region, facilities }: Props) {
         </div>
       )}
 
-      <p className="text-[9px] text-muted-foreground">
-        Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI — for planning purposes only.
-      </p>
+      <div className="flex items-center justify-between">
+        <p className="text-[9px] text-muted-foreground">
+          Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI — for planning purposes only.
+        </p>
+        <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => downloadMarketBrief(region, gaps, systemDensity, totalFacilities, highNeedCounties.length)}>
+          <FileDown className="h-3.5 w-3.5" />
+          Download Market Brief
+        </Button>
+      </div>
     </section>
   );
+}
+
+function downloadMarketBrief(
+  region: MichiganRegion,
+  gaps: { county: string; sviScore: number; population: number; facilityCount: number; pcpCount: number }[],
+  systemDensity: [string, number][],
+  totalFacilities: number,
+  highNeedCount: number
+) {
+  const date = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  const rows = (gaps as any[])
+    .map((g) => `<tr><td>${g.county}</td><td style="text-align:center">${g.population.toLocaleString()}</td><td style="text-align:center">${g.facilityCount}</td><td style="text-align:center">${g.pcpCount}</td><td style="text-align:center;font-weight:600;color:${g.sviScore >= 4 ? "#dc2626" : g.sviScore >= 3 ? "#ea580c" : "#16a34a"}">${g.sviScore >= 4 ? "Critical" : g.sviScore >= 3 ? "High" : g.sviScore >= 1 ? "Moderate" : "Low"}</td></tr>`)
+    .join("");
+  const systemList = systemDensity.map(([s, c]) => `${s} (${c} site${c > 1 ? "s" : ""})`).join(" · ");
+
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Market Brief – ${region.name}</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui,-apple-system,sans-serif;color:#1a1a1a;padding:40px 48px;max-width:900px;margin:auto}
+h1{font-size:20px;margin-bottom:4px}h2{font-size:14px;font-weight:600;margin:20px 0 8px;border-bottom:1px solid #e5e7eb;padding-bottom:4px}
+.meta{font-size:11px;color:#6b7280;margin-bottom:16px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.card{border:1px solid #e5e7eb;border-radius:8px;padding:12px}.card .label{font-size:10px;color:#6b7280}.card .value{font-size:22px;font-weight:700}
+.card .sub{font-size:9px;color:#9ca3af}table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:6px 8px;border-bottom:1px solid #f3f4f6;text-align:left}
+th{font-size:10px;color:#6b7280;font-weight:500;text-transform:uppercase}.systems{font-size:11px;color:#374151;margin-top:4px}
+.footer{margin-top:24px;font-size:9px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:8px}
+@media print{body{padding:24px 32px}}</style></head><body>
+<h1>Market Brief: ${region.name}</h1>
+<p class="meta">Michigan Access · Ambulatory Gap Analysis · ${date}</p>
+<div class="grid">
+<div class="card"><p class="label">Total Facilities</p><p class="value">${totalFacilities}</p><p class="sub">Across ${region.counties.length} counties</p></div>
+<div class="card"><p class="label">High-Need Counties</p><p class="value">${highNeedCount}</p><p class="sub">SVI proxy ≥ 3</p></div>
+<div class="card"><p class="label">System Networks</p><p class="value">${systemDensity.length}</p><p class="sub">Active in region</p></div></div>
+<h2>County Access Gap Analysis</h2>
+<table><thead><tr><th>County</th><th style="text-align:center">Population</th><th style="text-align:center">Facilities</th><th style="text-align:center">PCP Sites</th><th style="text-align:center">Vulnerability</th></tr></thead><tbody>${rows}</tbody></table>
+${systemDensity.length > 0 ? `<h2>Regional System Presence</h2><p class="systems">${systemList}</p>` : ""}
+<p class="footer">Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI — for planning purposes only. Source: Michigan Access (michiganaccess.lovable.app)</p>
+</body></html>`;
+
+  const blob = new Blob([html], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const w = window.open(url, "_blank");
+  if (w) {
+    w.onload = () => { w.print(); URL.revokeObjectURL(url); };
+  } else {
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `market-brief-${region.name.toLowerCase().replace(/\s+/g, "-")}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 }
