@@ -15,6 +15,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCommunityResources, type CommunityResource } from "@/hooks/useCommunityResources";
 import { useCounty } from "@/contexts/CountyContext";
+import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
+import ReferralToolkit from "@/components/shared/ReferralToolkit";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -262,6 +264,8 @@ export default function CommunityResourcesPage() {
           </div>
         )}
 
+        <NearbyServicesPrompt className="mt-4" />
+
         {/* Crisis banner */}
         <Card className="border-michigan-coral/20 bg-michigan-coral/5">
           <CardContent className="py-4 text-center">
@@ -269,6 +273,8 @@ export default function CommunityResourcesPage() {
             <p className="text-xs text-muted-foreground mt-1">Michigan Crisis Line: <a href="tel:8885526642" className="text-primary underline">888-552-6642</a> · United Way 211: Dial <strong>211</strong></p>
           </CardContent>
         </Card>
+
+        <ReferralToolkit pageTitle="Community Resources" />
           </TabsContent>
         </Tabs>
       </div>

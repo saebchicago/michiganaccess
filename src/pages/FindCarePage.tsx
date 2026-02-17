@@ -24,6 +24,8 @@ import ProviderDirectory from "@/components/findcare/ProviderDirectory";
 import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
 import CareTeamReminders from "@/components/shared/CareTeamReminders";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
+import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
+import ReferralToolkit from "@/components/shared/ReferralToolkit";
 import { ClipboardList, Bell, Map } from "lucide-react";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
@@ -487,6 +489,8 @@ export default function FindCarePage() {
         <SpotlightTabs />
 
         {/* Prep Tools */}
+        <NearbyServicesPrompt className="mt-6" />
+
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           <div className="space-y-4">
             <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
@@ -506,6 +510,10 @@ export default function FindCarePage() {
             />
           </div>
           <CareTeamReminders />
+        </div>
+
+        <div className="mt-8">
+          <ReferralToolkit pageTitle="Find Care Near You" />
         </div>
       </div>
     </Layout>
