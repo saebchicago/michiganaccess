@@ -53,7 +53,7 @@ const LeanHealthcarePage = lazy(() => import("./pages/LeanHealthcarePage"));
 const ForHealthSystemsPage = lazy(() => import("./pages/ForHealthSystemsPage"));
 const ExecutiveSummaryPage = lazy(() => import("./pages/ExecutiveSummaryPage"));
 const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
-
+const ChangelogPage = lazy(() => import("./pages/ChangelogPage"));
 const queryClient = new QueryClient();
 
 const PageLoader = () => (
@@ -116,6 +116,7 @@ const App = () => (
               <Route path="/for-health-systems" element={<ForHealthSystemsPage />} />
               <Route path="/executive-summary" element={<ExecutiveSummaryPage />} />
               <Route path="/case-studies" element={<CaseStudiesPage />} />
+              <Route path="/changelog" element={<ChangelogPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
