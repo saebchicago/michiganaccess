@@ -5,6 +5,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import UpdateLog from "@/components/shared/UpdateLog";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import HealthEquitySection from "@/components/home/HealthEquitySection";
 import {
   Shield, BarChart3, Globe, Users, Heart, Scale, Database,
   ExternalLink, BookOpen, Award, Target, Lightbulb, CheckCircle2,
@@ -138,8 +139,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div className="container max-w-5xl py-12 space-y-16">
+      {/* Health Equity in Action */}
+      <HealthEquitySection />
 
+      <div className="container max-w-5xl py-12 space-y-16">
         {/* Mission */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
           <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8 lg:p-12">
