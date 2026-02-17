@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import TransportationCallout from "@/components/shared/TransportationCallout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -108,6 +109,17 @@ const conditionIcons: Record<string, typeof Heart> = {
 };
 
 export default function SupportGroupsPage() {
+  usePageMeta({
+    title: "Support Groups & Peer Support",
+    description: "Find support groups, peer mentoring, caregiver resources, and crisis services across Michigan.",
+    path: "/support",
+    jsonLd: {
+      "@type": "WebPage",
+      name: "Support Groups — Michigan Access",
+      description: "Directory of support groups and peer support services in Michigan.",
+    },
+  });
+
   const [searchQuery, setSearchQuery] = useState("");
   const [conditionFilter, setConditionFilter] = useState("All Conditions");
   const [formatFilter, setFormatFilter] = useState("All Formats");

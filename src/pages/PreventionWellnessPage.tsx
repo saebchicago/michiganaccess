@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import TransportationCallout from "@/components/shared/TransportationCallout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -80,6 +81,17 @@ const priorityStyles = {
 };
 
 export default function PreventionWellnessPage() {
+  usePageMeta({
+    title: "Prevention & Wellness",
+    description: "Age-specific screening recommendations, vaccine schedules, and evidence-based wellness guidance for Michigan residents.",
+    path: "/wellness",
+    jsonLd: {
+      "@type": "MedicalWebPage",
+      name: "Prevention & Wellness — Michigan Access",
+      about: { "@type": "MedicalCondition", name: "Preventive healthcare" },
+    },
+  });
+
   const [ageGroup, setAgeGroup] = useState("40-64");
 
   const screenings = screeningsByAge[ageGroup] || [];
