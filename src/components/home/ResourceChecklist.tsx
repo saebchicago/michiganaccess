@@ -13,7 +13,7 @@ interface Props {
 
 export default function ResourceChecklist({ pathwayId, pathwayTitle, color }: Props) {
   const [open, setOpen] = useState(false);
-  const { items, toggle, completed, total, percent } = useResourceChecklist(pathwayId);
+  const { items, toggle, completed, total, percent, communityCount } = useResourceChecklist(pathwayId);
 
   if (total === 0) return null;
 
@@ -30,6 +30,9 @@ export default function ResourceChecklist({ pathwayId, pathwayTitle, color }: Pr
         </span>
         {open ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
       </button>
+      <p className="text-[10px] text-muted-foreground mt-1">
+        Join {communityCount.toLocaleString()} Michiganders who started this pathway
+      </p>
       <AnimatePresence>
         {open && (
           <motion.div

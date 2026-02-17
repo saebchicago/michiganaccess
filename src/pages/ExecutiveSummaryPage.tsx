@@ -74,6 +74,34 @@ const ExecutiveSummaryPage = () => {
             <p className="text-muted-foreground max-w-2xl mx-auto">A statewide population health navigation platform delivering measurable equity, efficiency, and financial impact across all 83 Michigan counties.</p>
           </motion.div>
 
+          {/* 30-Second Pitch Infographic */}
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="mb-12">
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/[0.03] overflow-hidden">
+              <CardContent className="py-6 px-6 md:px-10">
+                <h2 className="text-sm font-bold text-primary uppercase tracking-wider mb-5 text-center">⚡ The 30-Second Pitch</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center mb-6">
+                  {[
+                    { value: "83", label: "Counties covered", sub: "100% of Michigan" },
+                    { value: "15K+", label: "Resources indexed", sub: "Health · Housing · Food" },
+                    { value: "12 min", label: "Avg. navigation time", sub: "Down from 4.5 hours" },
+                    { value: "$11M+", label: "Annual value created", sub: "ED diversion + recoveries" },
+                  ].map((s) => (
+                    <div key={s.label} className="space-y-1">
+                      <p className="text-2xl md:text-3xl font-black text-primary tabular-nums">{s.value}</p>
+                      <p className="text-xs font-semibold text-foreground">{s.label}</p>
+                      <p className="text-[10px] text-muted-foreground">{s.sub}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex items-center justify-center gap-2 md:gap-4 text-[10px] text-muted-foreground flex-wrap">
+                  {["Quality-ranked (not pay-to-play)", "Equity-adjusted scoring", "FHIR R4 interop ready", "Free & no login"].map((t) => (
+                    <span key={t} className="flex items-center gap-1"><span className="h-1.5 w-1.5 rounded-full bg-primary inline-block" />{t}</span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
           <div className="grid gap-4 sm:grid-cols-2 mb-12">
             {quadrants.map((q, i) => (
               <motion.div key={q.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
