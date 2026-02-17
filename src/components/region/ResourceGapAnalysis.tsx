@@ -14,13 +14,14 @@ interface Props {
 }
 
 const RESOURCE_TYPES = [
-  { key: "food", label: "Food & Nutrition", color: "hsl(145, 40%, 30%)" },
-  { key: "housing", label: "Housing & Shelter", color: "hsl(215, 65%, 28%)" },
-  { key: "transportation", label: "Transportation", color: "hsl(186, 50%, 36%)" },
-  { key: "mental_health", label: "Mental Health", color: "hsl(10, 75%, 60%)" },
-  { key: "health", label: "Health Services", color: "hsl(280, 40%, 45%)" },
-  { key: "legal", label: "Legal Aid", color: "hsl(30, 70%, 50%)" },
-  { key: "education", label: "Education", color: "hsl(200, 45%, 40%)" },
+  { key: "food", aliases: ["food", "food_nutrition"], label: "Food & Nutrition", color: "hsl(145, 40%, 30%)" },
+  { key: "housing", aliases: ["housing", "housing_shelter"], label: "Housing & Shelter", color: "hsl(215, 65%, 28%)" },
+  { key: "transportation", aliases: ["transportation"], label: "Transportation", color: "hsl(186, 50%, 36%)" },
+  { key: "mental_health", aliases: ["mental_health", "substance_abuse"], label: "Mental Health", color: "hsl(10, 75%, 60%)" },
+  { key: "health", aliases: ["health", "health_services", "health_insurance"], label: "Health Services", color: "hsl(280, 40%, 45%)" },
+  { key: "legal", aliases: ["legal", "domestic_violence"], label: "Legal Aid", color: "hsl(30, 70%, 50%)" },
+  { key: "education", aliases: ["education", "employment"], label: "Education & Employment", color: "hsl(200, 45%, 40%)" },
+  { key: "other", aliases: ["information_referral"], label: "Information & Referral", color: "hsl(0, 0%, 50%)" },
 ];
 
 const fadeUp = {
@@ -34,8 +35,8 @@ export default function ResourceGapAnalysis({ region, regionResources, allResour
     const regionPop = region.counties.length;
 
     return RESOURCE_TYPES.map(type => {
-      const regionCount = regionResources.filter(r => r.resource_type === type.key).length;
-      const stateCount = allResources.filter(r => r.resource_type === type.key).length;
+      const regionCount = regionResources.filter(r => type.aliases.includes(r.resource_type)).length;
+      const stateCount = allResources.filter(r => type.aliases.includes(r.resource_type)).length;
       const stateAvgPerRegion = stateCount / totalRegions;
       const countyAvg = regionPop > 0 ? regionCount / regionPop : 0;
       const stateCountyAvg = stateCount / 83; // MI has 83 counties
