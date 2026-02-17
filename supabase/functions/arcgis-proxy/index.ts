@@ -115,7 +115,7 @@ Deno.serve(async (req) => {
       "gis.ridecata.com",
       "developer.nrel.gov",
     ];
-    if (!trustedDomains.some((d) => parsed.hostname.endsWith(d))) {
+    if (!trustedDomains.some((d) => parsed.hostname === d || parsed.hostname.endsWith("." + d))) {
       return new Response(
         JSON.stringify({ error: "URL domain not in trusted list" }),
         { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
