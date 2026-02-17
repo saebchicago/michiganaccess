@@ -110,7 +110,7 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
 
 export default function CommunityResourcesPage() {
   const { t } = useTranslation();
-  const { county: globalCounty } = useCounty();
+  const { county: globalCounty, region, activeCounties } = useCounty();
   usePageMeta({
     title: "Community Resources",
     description: "Food, housing, transportation, and support services available to Michigan residents.",
@@ -123,7 +123,9 @@ export default function CommunityResourcesPage() {
       "provider": { "@type": "Organization", "name": "Michigan Access" },
     },
   });
-  const { data: resources = [], isLoading } = useCommunityResources(undefined, globalCounty);
+  // Use single county if set, else region counties, else all (undefined)
+  const countyFilter = globalCounty ? globalCounty : region ? activeCounties : undefined;
+  const { data: resources = [], isLoading } = useCommunityResources(undefined, countyFilter as string | string[] | undefined);
   const [activeTab, setActiveTab] = useState("all");
   const [county, setCounty] = useState("All Counties");
   const [search, setSearch] = useState("");
