@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { slugToCounty, getCountyLinks } from "@/utils/countyUtils";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
+import { getRegionForCounty } from "@/data/michigan-regions";
 import { useCounty, type MichiganCounty } from "@/contexts/CountyContext";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
@@ -97,6 +98,7 @@ export default function CountyPage() {
   }
 
   const profile = getCountyProfile(county);
+  const region = getRegionForCounty(county);
   const links = getCountyLinks(county);
   const { data: facilities, isLoading: loadingFacilities } = useFacilities(undefined, county);
   const { data: resources, isLoading: loadingResources } = useCommunityResources(undefined, county);
@@ -120,9 +122,16 @@ export default function CountyPage() {
         <div className="container">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0} className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
-              <div className="mb-3 flex items-center gap-2">
+              <div className="mb-3 flex items-center gap-2 flex-wrap">
                 <MapPin className="h-5 w-5 text-primary" />
                 <Badge variant="outline" className="text-xs">{profile.countyType}</Badge>
+                {region && (
+                  <Link to={`/region/${region.id}`}>
+                    <Badge className="text-xs cursor-pointer hover:opacity-80 transition-opacity" style={{ background: region.color, color: "#fff" }}>
+                      {region.name} →
+                    </Badge>
+                  </Link>
+                )}
               </div>
               <h1 className="mb-2 text-3xl font-bold text-foreground md:text-4xl">
                 {county} County
