@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { MapPin, Users, Building2, ArrowRight, BarChart3 } from "lucide-react";
+import { MapPin, Users, ArrowRight, BarChart3, GitCompare } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -35,6 +36,13 @@ export default function RegionsPage() {
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="mx-auto max-w-2xl text-lg text-muted-foreground">
             Compare health outcomes, access gaps, and community resources across Michigan's six geographic regions.
           </motion.p>
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+            <Link to="/regions/compare">
+              <Button variant="outline" className="mt-4 gap-2">
+                <GitCompare className="h-4 w-4" /> Compare Regions Side-by-Side
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </section>
 

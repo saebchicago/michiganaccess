@@ -47,6 +47,7 @@ const ComplexCarePage = lazy(() => import("./pages/ComplexCarePage"));
 const LifeNavigatorPage = lazy(() => import("./pages/LifeNavigatorPage"));
 const RegionsPage = lazy(() => import("./pages/RegionsPage"));
 const RegionPage = lazy(() => import("./pages/RegionPage"));
+const RegionComparePage = lazy(() => import("./pages/RegionComparePage"));
 
 const queryClient = new QueryClient();
 
@@ -103,6 +104,7 @@ const App = () => (
               <Route path="/life-navigator" element={<LifeNavigatorPage />} />
               <Route path="/county/:slug" element={<CountyPage />} />
               <Route path="/regions" element={<RegionsPage />} />
+              <Route path="/regions/compare" element={<RegionComparePage />} />
               <Route path="/region/:regionId" element={<RegionPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
