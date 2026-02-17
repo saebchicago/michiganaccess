@@ -141,6 +141,15 @@ export default function LearnPage() {
   const [dbInactive, setDbInactive] = useState(false);
   const [dbHighBP, setDbHighBP] = useState(false);
 
+  // Waist-to-hip ratio state
+  const [whrWaist, setWhrWaist] = useState(32);
+  const [whrHip, setWhrHip] = useState(38);
+  const [whrGender, setWhrGender] = useState<"male" | "female">("female");
+
+  // Target heart rate state
+  const [thrAge, setThrAge] = useState(35);
+  const [thrResting, setThrResting] = useState(72);
+
   usePageMeta({
     title: "Health Education Library",
     description: "Plain-language health education, symptom body map, clinical jargon decoder, health calculators, and doctor visit prep tools.",
@@ -192,6 +201,21 @@ export default function LearnPage() {
   })();
   const dbRiskLabel = dbRiskScore <= 3 ? "Low" : dbRiskScore <= 6 ? "Moderate" : "High";
   const dbRiskColor = dbRiskScore <= 3 ? "text-michigan-forest" : dbRiskScore <= 6 ? "text-michigan-gold" : "text-michigan-coral";
+
+  // Waist-to-hip ratio
+  const whrRatio = (whrWaist / whrHip).toFixed(2);
+  const whrRisk = whrGender === "male"
+    ? (parseFloat(whrRatio) < 0.90 ? "Low" : parseFloat(whrRatio) < 1.0 ? "Moderate" : "High")
+    : (parseFloat(whrRatio) < 0.80 ? "Low" : parseFloat(whrRatio) < 0.85 ? "Moderate" : "High");
+  const whrColor = whrRisk === "Low" ? "text-michigan-forest" : whrRisk === "Moderate" ? "text-michigan-gold" : "text-michigan-coral";
+
+  // Target heart rate zones (Karvonen method)
+  const thrMax = 220 - thrAge;
+  const thrReserve = thrMax - thrResting;
+  const thrModLow = Math.round(thrReserve * 0.5 + thrResting);
+  const thrModHigh = Math.round(thrReserve * 0.7 + thrResting);
+  const thrVigLow = Math.round(thrReserve * 0.7 + thrResting);
+  const thrVigHigh = Math.round(thrReserve * 0.85 + thrResting);
 
   return (
     <Layout>
@@ -447,6 +471,101 @@ export default function LearnPage() {
                       <p><strong className="text-michigan-gold">Moderate (4–6):</strong> Talk to your doctor about screening</p>
                       <p><strong className="text-michigan-coral">High (7+):</strong> Get tested — schedule an A1C test</p>
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {/* Waist-to-Hip Ratio */}
+              <Card>
+                <CardContent className="py-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Scale className="h-5 w-5 text-michigan-forest" />
+                    <h3 className="text-lg font-bold text-foreground">Waist-to-Hip Ratio</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-4">A key indicator of cardiovascular and metabolic risk. Measures fat distribution around your midsection.</p>
+                  <div className="space-y-3">
+                    <div className="flex gap-3">
+                      <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                        <input type="radio" name="whrGender" checked={whrGender === "female"} onChange={() => setWhrGender("female")} /> Female
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-foreground cursor-pointer">
+                        <input type="radio" name="whrGender" checked={whrGender === "male"} onChange={() => setWhrGender("male")} /> Male
+                      </label>
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Waist: {whrWaist} inches</label>
+                      <Slider value={[whrWaist]} onValueChange={v => setWhrWaist(v[0])} min={20} max={60} step={0.5} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Hip: {whrHip} inches</label>
+                      <Slider value={[whrHip]} onValueChange={v => setWhrHip(v[0])} min={28} max={65} step={0.5} />
+                    </div>
+                    <Separator />
+                    <div className="text-center">
+                      <p className="text-3xl font-bold text-foreground">{whrRatio}</p>
+                      <p className={`text-sm font-semibold ${whrColor}`}>Risk: {whrRisk}</p>
+                    </div>
+                    <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
+                      {whrGender === "male" ? (
+                        <>
+                          <p><strong className="text-michigan-forest">Low:</strong> Below 0.90</p>
+                          <p><strong className="text-michigan-gold">Moderate:</strong> 0.90–0.99</p>
+                          <p><strong className="text-michigan-coral">High:</strong> 1.00 or above</p>
+                        </>
+                      ) : (
+                        <>
+                          <p><strong className="text-michigan-forest">Low:</strong> Below 0.80</p>
+                          <p><strong className="text-michigan-gold">Moderate:</strong> 0.80–0.84</p>
+                          <p><strong className="text-michigan-coral">High:</strong> 0.85 or above</p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Target Heart Rate Zone */}
+              <Card>
+                <CardContent className="py-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <HeartPulse className="h-5 w-5 text-michigan-coral" />
+                    <h3 className="text-lg font-bold text-foreground">Target Heart Rate Zones</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-4">Karvonen method — personalized training zones based on your age and resting heart rate.</p>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Age: {thrAge}</label>
+                      <Slider value={[thrAge]} onValueChange={v => setThrAge(v[0])} min={15} max={85} step={1} />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium text-foreground mb-1 block">Resting Heart Rate: {thrResting} bpm</label>
+                      <Slider value={[thrResting]} onValueChange={v => setThrResting(v[0])} min={40} max={110} step={1} />
+                    </div>
+                    <Separator />
+                    <div className="text-center mb-2">
+                      <p className="text-sm text-muted-foreground">Max Heart Rate</p>
+                      <p className="text-2xl font-bold text-foreground">{thrMax} bpm</p>
+                    </div>
+                    <div className="space-y-2 bg-muted/40 rounded-lg p-3">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-sm font-semibold text-michigan-forest">Moderate Zone (50–70%)</p>
+                          <p className="text-xs text-muted-foreground">Walking, light jogging, cycling</p>
+                        </div>
+                        <p className="text-sm font-bold text-foreground">{thrModLow}–{thrModHigh} bpm</p>
+                      </div>
+                      <Separator />
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-sm font-semibold text-michigan-coral">Vigorous Zone (70–85%)</p>
+                          <p className="text-xs text-muted-foreground">Running, HIIT, swimming laps</p>
+                        </div>
+                        <p className="text-sm font-bold text-foreground">{thrVigLow}–{thrVigHigh} bpm</p>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Aim for 150 min/week moderate or 75 min/week vigorous activity (AHA guidelines).</p>
                   </div>
                 </CardContent>
               </Card>
