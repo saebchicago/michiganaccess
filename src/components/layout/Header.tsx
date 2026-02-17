@@ -36,6 +36,8 @@ const Header = () => {
         { label: t("nav.costTransparency"), href: "/costs" },
         { label: t("nav.prevention"), href: "/wellness" },
         { label: t("nav.healthData"), href: "/data" },
+        { label: "Life Navigator", href: "/life-navigator" },
+        { label: "Regions", href: "/regions" },
       ],
     },
     {
