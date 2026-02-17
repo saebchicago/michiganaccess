@@ -55,8 +55,10 @@ const FACILITY_TYPE_LABELS: Record<string, string> = {
   pharmacy: "Pharmacy",
 };
 
-function createMarkerIcon(color: string, type: string) {
+function createMarkerIcon(color: string, type: string, pulse = false) {
+  const pulseRing = pulse ? `<circle cx="12" cy="12" r="11" fill="none" stroke="${color}" stroke-width="2" opacity="0.5"><animate attributeName="r" from="11" to="20" dur="1.5s" repeatCount="indefinite"/><animate attributeName="opacity" from="0.6" to="0" dur="1.5s" repeatCount="indefinite"/></circle>` : "";
   const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36" width="28" height="40">
+    ${pulseRing}
     <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 24 12 24s12-15 12-24C24 5.4 18.6 0 12 0z" fill="${color}" stroke="#fff" stroke-width="1.5"/>
     <circle cx="12" cy="12" r="5" fill="#fff" opacity="0.9"/>
     ${type === 'fqhc' ? '<text x="12" y="15" text-anchor="middle" font-size="8" font-weight="bold" fill="' + color + '">+</text>' :
@@ -68,7 +70,7 @@ function createMarkerIcon(color: string, type: string) {
 
   return L.divIcon({
     html: svgIcon,
-    className: "custom-marker",
+    className: `custom-marker${pulse ? " pulse-marker" : ""}`,
     iconSize: [28, 40],
     iconAnchor: [14, 40],
     popupAnchor: [0, -40],
@@ -221,7 +223,9 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
       if (!activeLayers.includes(f.facility_type)) return;
       const isMatch = !selectedSystem || matchesSystem(f.system_affiliation, selectedSystem);
       const color = isMatch ? getQualityColor(f.quality_score) : "#d1d5db";
-      const icon = createMarkerIcon(color, f.facility_type);
+      // Pulse high-priority gap markers: low quality + behavioral health or FQHC with no quality data
+      const isGapArea = isMatch && (!f.quality_score || f.quality_score < 60) && (f.facility_type === "behavioral_health" || f.facility_type === "fqhc");
+      const icon = createMarkerIcon(color, f.facility_type, isGapArea);
       const marker = L.marker([f.latitude, f.longitude], { icon, opacity: isMatch ? 1 : 0.4 });
       marker.bindPopup(buildPopupContent(f), { maxWidth: 320 });
       cluster.addLayer(marker);

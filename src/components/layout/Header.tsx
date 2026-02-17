@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
-import HighContrastToggle from "@/components/shared/HighContrastToggle";
+import ThemeToggle from "@/components/shared/ThemeToggle";
 import CountySelector from "@/components/shared/CountySelector";
 
 const Header = () => {
@@ -99,7 +99,7 @@ const Header = () => {
         {/* Actions */}
         <div className="flex items-center gap-1">
           <CountySelector variant="header" />
-          <HighContrastToggle />
+          <ThemeToggle />
           <LanguageSwitcher />
           <Button size="sm" className="hidden sm:flex bg-gradient-michigan hover:opacity-90 transition-opacity" asChild>
             <a href="tel:988">{t("getHelp")}</a>

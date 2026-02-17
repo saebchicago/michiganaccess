@@ -9,6 +9,8 @@ import CountyInfoCard from "@/components/home/CountyInfoCard";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import RegionalGateway from "@/components/home/RegionalGateway";
 import EngineeringFAQ from "@/components/home/EngineeringFAQ";
+import SmartRecommendations from "@/components/home/SmartRecommendations";
+import OnboardingTour from "@/components/shared/OnboardingTour";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -19,10 +21,12 @@ const Index = () => {
   });
   return (
     <Layout>
+      <OnboardingTour />
       <CountyWelcomeBanner />
       <HeroSection />
       <RegionalGateway />
       <CountyInfoCard />
+      <SmartRecommendations />
       <CoreAccessGrid />
       <GuidedPathways />
       <SpotlightTabs />

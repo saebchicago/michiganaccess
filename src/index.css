@@ -188,6 +188,15 @@
   .hover-lift:hover [data-icon] {
     transform: scale(1.1) rotate(3deg);
   }
+
+  /* Pulse animation for gap-area markers */
+  .pulse-marker {
+    animation: marker-pulse 2s ease-in-out infinite;
+  }
+  @keyframes marker-pulse {
+    0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+    50% { filter: drop-shadow(0 0 8px hsl(var(--destructive) / 0.5)); }
+  }
 }
 
 /* Leaflet map z-index overrides so sheets/dialogs render above map */
