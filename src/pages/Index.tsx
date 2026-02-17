@@ -7,7 +7,7 @@ import TrustIndicators from "@/components/home/TrustIndicators";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import CountyInfoCard from "@/components/home/CountyInfoCard";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
-import SystemImpactBar from "@/components/home/SystemImpactBar";
+import RegionalGateway from "@/components/home/RegionalGateway";
 import EngineeringFAQ from "@/components/home/EngineeringFAQ";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
@@ -21,7 +21,7 @@ const Index = () => {
     <Layout>
       <CountyWelcomeBanner />
       <HeroSection />
-      <SystemImpactBar />
+      <RegionalGateway />
       <CountyInfoCard />
       <CoreAccessGrid />
       <GuidedPathways />
