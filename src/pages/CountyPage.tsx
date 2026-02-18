@@ -83,7 +83,7 @@ export default function CountyPage() {
       "@type": "GovernmentService",
       "name": `${county} County Health & Community Resources`,
       "serviceArea": { "@type": "AdministrativeArea", "name": `${county} County, Michigan` },
-      "provider": { "@type": "Organization", "name": "Michigan Access" },
+      "provider": { "@type": "Organization", "name": "Access Michigan" },
       "url": `https://accessmi.org/county/${slug}`,
     } : undefined,
   });
@@ -446,7 +446,7 @@ export default function CountyPage() {
               Last updated: {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })} · Data from CMS, HRSA, CDC, MDHHS
             </p>
             <p className="text-xs text-muted-foreground">
-              🔒 Michigan Access does not collect personal data. All information shown is from public sources.
+              🔒 Access Michigan does not collect personal data. All information shown is from public sources.
               No cookies or tracking. <Link to="/accessibility" className="text-primary underline">Learn more</Link>
             </p>
           </CardContent>

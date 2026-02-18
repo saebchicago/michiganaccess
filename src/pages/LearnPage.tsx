@@ -123,7 +123,7 @@ export default function LearnPage() {
     path: "/learn",
     jsonLd: {
       "@type": "MedicalWebPage",
-      name: "Health Education Library — Michigan Access",
+      name: "Health Education Library — Access Michigan",
       about: { "@type": "MedicalCondition", name: "General health education" },
     },
   });

@@ -16,7 +16,7 @@ const EnterprisePartners = () => (
               Health System Partners
             </Badge>
             <h2 id="enterprise-heading" className="text-2xl font-bold">
-              Integrate Michigan Access Into Your CHNA Reporting
+              Integrate Access Michigan Into Your CHNA Reporting
             </h2>
             <p className="text-primary-foreground/80 text-sm leading-relaxed max-w-lg">
               Track community benefit metrics, insurance appeal outcomes, and population health impact 

@@ -24,7 +24,7 @@ const updates = [
     title: "Embeddable Widgets for County Spin-offs",
     items: [
       "Created /embed route with lightweight, iframe-ready quick-search widget",
-      "Counties and organizations can embed Michigan Access search on their own sites",
+      "Counties and organizations can embed Access Michigan search on their own sites",
       "Widget adapts to container size with responsive design",
     ],
   },
@@ -65,7 +65,7 @@ const updates = [
     color: "text-primary",
     title: "Initial Prototype",
     items: [
-      "Michigan Access branding and Michigan-themed design system",
+      "Access Michigan branding and Michigan-themed design system",
       "Responsive layout with Tailwind CSS semantic tokens",
       "SEO meta tags, JSON-LD structured data, Open Graph",
       "Supabase backend with RLS-protected public data tables",

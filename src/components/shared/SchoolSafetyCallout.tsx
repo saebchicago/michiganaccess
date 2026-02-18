@@ -13,7 +13,7 @@ const SchoolSafetyCallout = () => (
           Designed to complement school bus safety, digital hall pass, and family communication tools used by Michigan school districts.
         </p>
         <p className="text-xs text-muted-foreground mt-1">
-          Michigan Access supports student and family safety through better coordination with school transportation and health services.
+          Access Michigan supports student and family safety through better coordination with school transportation and health services.
         </p>
       </div>
     </CardContent>

@@ -65,7 +65,7 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
   const printRef = useRef<HTMLDivElement>(null);
 
   const currentUrl = pageUrl || (typeof window !== "undefined" ? window.location.href : "");
-  const title = pageTitle || "Michigan Access";
+  const title = pageTitle || "Access Michigan";
   const referralUrl = `${currentUrl}${currentUrl.includes("?") ? "&" : "?"}ref=share`;
 
   const copyReferralLink = useCallback(async () => {

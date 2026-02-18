@@ -88,7 +88,7 @@ function SystemImpactCalculator() {
 }
 
 const ForHealthSystemsPage = () => {
-  usePageMeta({ title: "For Health Systems — Michigan Access", description: "Ambulatory network optimization, community benefit ROI, and referral leakage analysis for operations leaders.", path: "/for-health-systems" });
+  usePageMeta({ title: "For Health Systems — Access Michigan", description: "Ambulatory network optimization, community benefit ROI, and referral leakage analysis for operations leaders.", path: "/for-health-systems" });
 
   return (
     <Layout>
@@ -125,7 +125,7 @@ const ForHealthSystemsPage = () => {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button asChild><Link to="/partnerships/health-systems" className="gap-2">View Integration Guide <ArrowRight className="h-4 w-4" /></Link></Button>
             <Button asChild variant="outline"><Link to="/lean-healthcare" className="gap-2">Lean Methodology <ArrowRight className="h-4 w-4" /></Link></Button>
-            <ShareButton title="Michigan Access for Health Systems" description="Ambulatory optimization, community benefit ROI, and referral leakage analysis." />
+            <ShareButton title="Access Michigan for Health Systems" description="Ambulatory optimization, community benefit ROI, and referral leakage analysis." />
           </div>
         </div>
       </section>

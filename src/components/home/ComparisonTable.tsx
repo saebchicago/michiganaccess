@@ -47,7 +47,7 @@ export default function ComparisonTable() {
           How We Compare
         </h2>
         <p className="text-sm text-muted-foreground text-center mb-6">
-          Michigan Access vs. other resource directories
+          Access Michigan vs. other resource directories
         </p>
 
         <div className="rounded-lg border bg-card shadow-sm overflow-hidden">
@@ -55,7 +55,7 @@ export default function ComparisonTable() {
             <TableHeader>
               <TableRow className="bg-muted/50">
                 <TableHead className="w-[45%] text-xs font-semibold">Feature</TableHead>
-                <TableHead className="text-center text-xs font-semibold text-primary">Michigan Access</TableHead>
+                <TableHead className="text-center text-xs font-semibold text-primary">Access Michigan</TableHead>
                 <TableHead className="text-center text-xs font-semibold">211</TableHead>
                 <TableHead className="text-center text-xs font-semibold">Health Plan Dirs</TableHead>
               </TableRow>

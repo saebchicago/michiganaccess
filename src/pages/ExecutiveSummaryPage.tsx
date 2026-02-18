@@ -62,7 +62,7 @@ const audiences = [
 ];
 
 const ExecutiveSummaryPage = () => {
-  usePageMeta({ title: "Executive Summary — Michigan Access", description: "The problem, the solution, the impact, and the value of Michigan's civic health infrastructure.", path: "/executive-summary" });
+  usePageMeta({ title: "Executive Summary — Access Michigan", description: "The problem, the solution, the impact, and the value of Michigan's civic health infrastructure.", path: "/executive-summary" });
 
   return (
     <Layout>
@@ -70,7 +70,7 @@ const ExecutiveSummaryPage = () => {
         <div className="container max-w-5xl">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <Badge variant="outline" className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary">Executive Summary</Badge>
-            <h1 className="text-3xl font-bold text-foreground lg:text-4xl mb-3">Michigan Access: Civic Health Infrastructure</h1>
+            <h1 className="text-3xl font-bold text-foreground lg:text-4xl mb-3">Access Michigan: Civic Health Infrastructure</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">A statewide population health navigation platform delivering measurable equity, efficiency, and financial impact across all 83 Michigan counties.</p>
           </motion.div>
 
@@ -143,7 +143,7 @@ const ExecutiveSummaryPage = () => {
 
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button asChild><Link to="/case-studies" className="gap-2">View Case Studies <ArrowRight className="h-4 w-4" /></Link></Button>
-            <ShareButton title="Michigan Access Executive Summary" description="Problem → Solution → Impact → Value for Michigan's civic health infrastructure." />
+            <ShareButton title="Access Michigan Executive Summary" description="Problem → Solution → Impact → Value for Michigan's civic health infrastructure." />
           </div>
         </div>
       </section>

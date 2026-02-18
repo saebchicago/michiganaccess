@@ -123,7 +123,7 @@ export default function CostTransparencyPage() {
     path: "/costs",
     jsonLd: {
       "@type": "WebPage",
-      name: "Healthcare Cost Transparency — Michigan Access",
+      name: "Healthcare Cost Transparency — Access Michigan",
       description: "Compare procedure costs and prescription prices across Michigan healthcare facilities.",
     },
   });

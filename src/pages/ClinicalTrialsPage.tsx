@@ -112,7 +112,7 @@ export default function ClinicalTrialsPage() {
     path: "/clinical-trials",
     jsonLd: {
       "@type": "WebPage",
-      "name": "Clinical Trials — Michigan Access",
+      "name": "Clinical Trials — Access Michigan",
       "description": "Active clinical trials at Michigan research institutions.",
       "url": "https://accessmi.org/clinical-trials",
       "specialty": { "@type": "MedicalSpecialty", "name": "Clinical Research" },

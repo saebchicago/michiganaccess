@@ -24,7 +24,7 @@ const METRICS = [
 const IMPACT_STORIES = [
   {
     title: "Closing the Care Gap in Rural Michigan",
-    story: "A family in the Upper Peninsula used Michigan Access to locate the nearest FQHC, discover sliding-scale payment options, and generate an appeal letter when their child's specialist referral was denied. The appeal was successful within 21 days.",
+    story: "A family in the Upper Peninsula used Access Michigan to locate the nearest FQHC, discover sliding-scale payment options, and generate an appeal letter when their child's specialist referral was denied. The appeal was successful within 21 days.",
     outcome: "Specialist care secured. $3,200 in denied charges overturned.",
   },
   {
@@ -58,7 +58,7 @@ const PartnersPage = () => {
   usePageMeta({
     title: "Partner Impact Dashboard",
     description:
-      "Michigan Access community impact metrics and partnership opportunities for health systems, school districts, and civic technology providers.",
+      "Access Michigan community impact metrics and partnership opportunities for health systems, school districts, and civic technology providers.",
     path: "/partners",
   });
 
@@ -81,7 +81,7 @@ const PartnersPage = () => {
             Partner Impact Dashboard
           </h1>
           <p className="text-muted-foreground text-lg">
-            Aggregated, non-identifiable metrics showing how Michigan Access serves communities across all 83 counties.
+            Aggregated, non-identifiable metrics showing how Access Michigan serves communities across all 83 counties.
           </p>
         </motion.div>
 
@@ -115,7 +115,7 @@ const PartnersPage = () => {
             Impact Stories
           </h2>
           <p className="text-center text-sm text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Anonymized scenarios illustrating how Michigan Access supports community health outcomes. These are representative examples, not individual user data.
+            Anonymized scenarios illustrating how Access Michigan supports community health outcomes. These are representative examples, not individual user data.
           </p>
           <div className="grid gap-6 md:grid-cols-3">
             {IMPACT_STORIES.map((story) => (
@@ -140,7 +140,7 @@ const PartnersPage = () => {
             Potential Partner Categories
           </h2>
           <p className="text-center text-sm text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Michigan Access is designed to integrate with health systems and civic technology platforms. These represent partnership categories we're exploring—not current endorsements.
+            Access Michigan is designed to integrate with health systems and civic technology platforms. These represent partnership categories we're exploring—not current endorsements.
           </p>
           <div className="grid gap-6 md:grid-cols-2">
             {PARTNER_CATEGORIES.map((cat) => (
@@ -177,7 +177,7 @@ const PartnersPage = () => {
               Amplify Community Benefit Impact
             </h2>
             <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-              See how Michigan Access can support your community health needs assessment, referral intelligence, and population health initiatives.
+              See how Access Michigan can support your community health needs assessment, referral intelligence, and population health initiatives.
             </p>
           </div>
 
@@ -236,7 +236,7 @@ const PartnersPage = () => {
             <Card className="inline-block border-michigan-teal/20 bg-michigan-teal/5">
               <CardContent className="py-4 px-8 flex flex-col sm:flex-row items-center gap-4">
                 <p className="text-sm text-foreground">
-                  Ready to explore how Michigan Access can support your community health strategy?
+                  Ready to explore how Access Michigan can support your community health strategy?
                 </p>
                 <Button className="bg-michigan-teal hover:bg-michigan-teal/90 text-white shrink-0" asChild>
                   <Link to="/partnerships/health-systems">
@@ -288,7 +288,7 @@ const PartnersPage = () => {
             ))}
           </div>
           <p className="text-center text-[10px] text-muted-foreground mt-4">
-            All exports are strictly anonymized and aggregated. Michigan Access never collects or shares personal health information.
+            All exports are strictly anonymized and aggregated. Access Michigan never collects or shares personal health information.
           </p>
         </section>
 
@@ -301,7 +301,7 @@ const PartnersPage = () => {
         {/* CTA */}
         <div className="text-center space-y-4 py-8">
           <h3 className="text-xl font-semibold text-foreground">
-            Interested in partnering with Michigan Access?
+            Interested in partnering with Access Michigan?
           </h3>
           <p className="text-sm text-muted-foreground max-w-lg mx-auto">
             We welcome conversations with health systems, school districts, and civic technology providers about community impact collaboration.

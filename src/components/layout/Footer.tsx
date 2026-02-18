@@ -70,7 +70,7 @@ const Footer = () => {
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-michigan">
                 <Heart className="h-3.5 w-3.5 text-primary-foreground" fill="currentColor" aria-hidden="true" />
               </div>
-              <span className="text-sm font-bold text-foreground">Michigan Access</span>
+              <span className="text-sm font-bold text-foreground">Access Michigan</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed max-w-xs">
               {t("footer.brandDescription")}
@@ -142,7 +142,7 @@ const Footer = () => {
         {/* Trust statement */}
         <div className="mt-4 border-t border-border pt-4">
           <p className="text-center text-xs text-muted-foreground max-w-xl mx-auto mb-3">
-            Michigan Access is a community-oriented project to help Michiganders understand and navigate services. Content is informational and will improve over time with community feedback.
+            Access Michigan is a community-oriented project to help Michiganders understand and navigate services. Content is informational and will improve over time with community feedback.
           </p>
           <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">

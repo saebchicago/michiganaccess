@@ -34,7 +34,7 @@ export default function EmbedWidget() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-michigan">
             <Heart className="h-4 w-4 text-primary-foreground" fill="currentColor" />
           </div>
-          <span className="text-sm font-bold text-foreground">Michigan Access</span>
+          <span className="text-sm font-bold text-foreground">Access Michigan</span>
         </div>
 
         <p className="text-center text-xs text-muted-foreground">
@@ -51,7 +51,7 @@ export default function EmbedWidget() {
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               placeholder="Search by city, condition, or service…"
               className="border-0 bg-transparent pl-10 focus-visible:ring-0"
-              aria-label="Search Michigan Access"
+              aria-label="Search Access Michigan"
             />
           </div>
           <Button onClick={handleSearch} size="sm" className="bg-gradient-michigan">
@@ -76,7 +76,7 @@ export default function EmbedWidget() {
         </div>
 
         <p className="text-center text-[9px] text-muted-foreground">
-          Powered by <a href="https://accessmi.org" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan Access</a> · Non-commercial civic resource
+          Powered by <a href="https://accessmi.org" target="_blank" rel="noopener" className="underline hover:text-primary">Access Michigan</a> · Non-commercial civic resource
         </p>
       </div>
     </div>

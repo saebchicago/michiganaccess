@@ -429,7 +429,7 @@ export default function TransportationPage() {
     path: "/transportation",
     jsonLd: {
       "@type": "WebPage",
-      "name": "Transportation & Safety — Michigan Access",
+      "name": "Transportation & Safety — Access Michigan",
       "description": "Public transit routes, school bus safety data, and accessible transportation options across Michigan.",
       "url": "https://accessmi.org/transportation",
     },

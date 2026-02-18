@@ -23,7 +23,7 @@ const CASE_STUDIES = [
   {
     title: "Regional Health System — CHNA Enhancement",
     challenge: "A mid-Michigan health system needed granular, county-level social determinant data to supplement their triennial Community Health Needs Assessment but lacked the internal analytics capacity to aggregate and visualize it.",
-    solution: "Integrated Michigan Access referral and resource-usage data into their existing CHNA workflow, providing real-time views of transportation barriers, food insecurity hotspots, and uninsured populations across their 12-county service area.",
+    solution: "Integrated Access Michigan referral and resource-usage data into their existing CHNA workflow, providing real-time views of transportation barriers, food insecurity hotspots, and uninsured populations across their 12-county service area.",
     outcomes: [
       "42% reduction in CHNA data-gathering time",
       "Identified 3 previously unknown service deserts",
@@ -34,7 +34,7 @@ const CASE_STUDIES = [
   {
     title: "Academic Medical Center — Referral Intelligence",
     challenge: "An academic medical center's community benefit office struggled to track whether patients referred to social services actually connected with those resources, creating a blind spot in their continuum of care.",
-    solution: "Deployed Michigan Access referral pathway analytics to map post-discharge resource utilization across community health workers, FQHC navigators, and social service organizations.",
+    solution: "Deployed Access Michigan referral pathway analytics to map post-discharge resource utilization across community health workers, FQHC navigators, and social service organizations.",
     outcomes: [
       "68% visibility into post-referral engagement",
       "Reduced 30-day readmissions by 11% in pilot counties",
@@ -45,7 +45,7 @@ const CASE_STUDIES = [
   {
     title: "Rural Hospital Network — Access Gap Mapping",
     challenge: "A 4-hospital rural network knew patients traveled long distances for care but lacked data to quantify access gaps or advocate for mobile health investments.",
-    solution: "Used Michigan Access geo-mapped provider shortage data, transit overlay, and community resource density to build an evidence-based case for mobile clinic deployment.",
+    solution: "Used Access Michigan geo-mapped provider shortage data, transit overlay, and community resource density to build an evidence-based case for mobile clinic deployment.",
     outcomes: [
       "Secured $1.2M in grant funding for mobile units",
       "Documented 15-county primary care desert footprint",
@@ -120,7 +120,7 @@ function HealthSystemContactForm() {
           <Building2 className="h-5 w-5 text-michigan-teal" />
           Schedule a Partnership Discussion
         </CardTitle>
-        <p className="text-sm text-muted-foreground">Tell us about your organization and how Michigan Access can support your community health strategy.</p>
+        <p className="text-sm text-muted-foreground">Tell us about your organization and how Access Michigan can support your community health strategy.</p>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -155,7 +155,7 @@ function HealthSystemContactForm() {
             </div>
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium">How can Michigan Access support your organization? *</label>
+            <label className="mb-1.5 block text-sm font-medium">How can Access Michigan support your organization? *</label>
             <Textarea rows={4} value={form.description} onChange={(e) => update("description", e.target.value)} placeholder="e.g., CHNA data integration, referral analytics, community benefit reporting..." required />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -182,7 +182,7 @@ function HealthSystemContactForm() {
 export default function HealthSystemsPage() {
   usePageMeta({
     title: "Health System Partnerships",
-    description: "CHNA data integration, referral analytics, and community benefit ROI for Michigan health systems. Partner with Michigan Access.",
+    description: "CHNA data integration, referral analytics, and community benefit ROI for Michigan health systems. Partner with Access Michigan.",
     path: "/partnerships/health-systems",
   });
 
@@ -205,7 +205,7 @@ export default function HealthSystemsPage() {
             Amplify Community Health Impact
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Michigan Access provides health systems with actionable community-level data to strengthen CHNA reporting, optimize referral pathways, and quantify community benefit ROI.
+            Access Michigan provides health systems with actionable community-level data to strengthen CHNA reporting, optimize referral pathways, and quantify community benefit ROI.
           </p>
           <Button variant="outline" size="sm" className="mt-2" asChild>
             <Link to="/partnerships/health-systems/one-pager">
@@ -298,7 +298,7 @@ export default function HealthSystemsPage() {
               Impact Case Studies
             </Badge>
             <h2 id="cases-heading" className="text-2xl font-bold text-foreground">
-              How Health Systems Use Michigan Access
+              How Health Systems Use Access Michigan
             </h2>
             <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
               Representative scenarios illustrating integration approaches. These are anonymized composite examples, not endorsements of specific organizations.

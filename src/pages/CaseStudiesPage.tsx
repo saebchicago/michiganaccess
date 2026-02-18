@@ -64,7 +64,7 @@ const studies = [
 ];
 
 const CaseStudiesPage = () => {
-  usePageMeta({ title: "Case Studies — Michigan Access", description: "Three detailed scenarios: ambulatory gap analysis, insurance appeal automation, and SDOH navigation impact.", path: "/case-studies" });
+  usePageMeta({ title: "Case Studies — Access Michigan", description: "Three detailed scenarios: ambulatory gap analysis, insurance appeal automation, and SDOH navigation impact.", path: "/case-studies" });
 
   return (
     <Layout>
@@ -125,7 +125,7 @@ const CaseStudiesPage = () => {
           </div>
 
           <div className="mt-10 text-center">
-            <ShareButton title="Michigan Access Case Studies" description="Ambulatory gap analysis, insurance appeal automation, and SDOH navigation — measurable impact across Michigan." />
+            <ShareButton title="Access Michigan Case Studies" description="Ambulatory gap analysis, insurance appeal automation, and SDOH navigation — measurable impact across Michigan." />
           </div>
         </div>
       </section>

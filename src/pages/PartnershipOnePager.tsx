@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function PartnershipOnePager() {
   usePageMeta({
-    title: "Partnership One-Pager — Michigan Access",
+    title: "Partnership One-Pager — Access Michigan",
     description: "Downloadable partnership capabilities summary for health system decision-makers.",
     path: "/partnerships/health-systems/one-pager",
   });
@@ -46,7 +46,7 @@ export default function PartnershipOnePager() {
           {/* Header */}
           <div className="text-center border-b border-michigan-teal/20 pb-6">
             <p className="text-xs uppercase tracking-widest text-michigan-teal font-semibold mb-2">Partnership Capabilities</p>
-            <h1 className="text-3xl font-bold text-foreground">Michigan Access</h1>
+            <h1 className="text-3xl font-bold text-foreground">Access Michigan</h1>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
               Community-level health intelligence for CHNA reporting, referral optimization, and community benefit quantification across all 83 Michigan counties.
             </p>
@@ -126,7 +126,7 @@ export default function PartnershipOnePager() {
             <div className="rounded-lg border border-michigan-teal/20 bg-michigan-teal/5 p-4 space-y-2">
               <h3 className="font-semibold text-sm text-foreground">Regional Health System — CHNA Enhancement</h3>
               <p className="text-xs text-muted-foreground">
-                A mid-Michigan health system integrated Michigan Access data into their triennial CHNA workflow, achieving a 42% reduction in data-gathering time, identifying 3 previously unknown service deserts, and streamlining IRS Schedule H documentation.
+                A mid-Michigan health system integrated Access Michigan data into their triennial CHNA workflow, achieving a 42% reduction in data-gathering time, identifying 3 previously unknown service deserts, and streamlining IRS Schedule H documentation.
               </p>
             </div>
           </section>

@@ -22,7 +22,7 @@ const travelBurden = [
 ];
 
 const EquityPage = () => {
-  usePageMeta({ title: "Health Equity Framework — Michigan Access", description: "Equity-centered design methodology closing access gaps across all 83 Michigan counties.", path: "/equity" });
+  usePageMeta({ title: "Health Equity Framework — Access Michigan", description: "Equity-centered design methodology closing access gaps across all 83 Michigan counties.", path: "/equity" });
 
   return (
     <Layout>
@@ -31,7 +31,7 @@ const EquityPage = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <Badge variant="outline" className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary">Equity Framework</Badge>
             <h1 className="text-3xl font-bold text-foreground lg:text-4xl mb-3">Health Equity Through Systems Engineering</h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">How Michigan Access uses equity-centered algorithms to close navigation gaps for vulnerable populations across all 83 counties.</p>
+            <p className="text-muted-foreground max-w-2xl mx-auto">How Access Michigan uses equity-centered algorithms to close navigation gaps for vulnerable populations across all 83 counties.</p>
           </motion.div>
 
           {/* Problem → Solution → Impact */}
@@ -105,7 +105,7 @@ const EquityPage = () => {
           </Card>
 
           <div className="text-center">
-            <ShareButton title="Michigan Access Equity Framework" description="How equity-centered algorithms close access gaps across 83 Michigan counties." />
+            <ShareButton title="Access Michigan Equity Framework" description="How equity-centered algorithms close access gaps across 83 Michigan counties." />
           </div>
         </div>
       </section>

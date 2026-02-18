@@ -79,11 +79,11 @@ const Header = () => {
       </a>
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group" aria-label="Michigan Access Home">
+        <Link to="/" className="flex items-center gap-2.5 group" aria-label="Access Michigan Home">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-michigan">
             <Heart className="h-4 w-4 text-primary-foreground" fill="currentColor" aria-hidden="true" />
           </div>
-          <span className="text-sm font-bold text-foreground">Michigan Access</span>
+          <span className="text-sm font-bold text-foreground">Access Michigan</span>
         </Link>
 
         {/* Desktop Nav */}
