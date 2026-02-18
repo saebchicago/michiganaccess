@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Search, Shield, Sparkles } from "lucide-react";
+import { ArrowRight, Search, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import BenefitsWizard from "./BenefitsWizard";
@@ -169,17 +169,6 @@ const HeroSection = () => {
                 <Link to="/resources">
                   {t("hero.ctaExplore")}
                   <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                </Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="ghost"
-                className="border-2 border-white/40 text-white/90 hover:bg-white/15 hover:border-white px-6 text-sm font-medium"
-                asChild
-              >
-                <Link to="/health/insurance-appeals">
-                  <Shield className="mr-2 h-4 w-4" aria-hidden="true" />
-                  Fight a Denial
                 </Link>
               </Button>
             </motion.div>
