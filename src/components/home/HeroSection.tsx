@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Search, Shield, Sparkles } from "lucide-react";
@@ -60,6 +60,34 @@ const MichiganOutline = () => (
 const HeroSection = () => {
   const { t } = useTranslation();
   const [wizardOpen, setWizardOpen] = useState(false);
+  const [detectedCounty, setDetectedCounty] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check localStorage first for previously detected county
+    const cached = localStorage.getItem("mi-geo-county");
+    if (cached) { setDetectedCounty(cached); return; }
+
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&zoom=10`,
+            { headers: { "Accept-Language": "en" } }
+          );
+          const data = await res.json();
+          const county = data?.address?.county?.replace(/ County$/i, "");
+          if (county && data?.address?.state === "Michigan") {
+            setDetectedCounty(county);
+            localStorage.setItem("mi-geo-county", county);
+          }
+        } catch {}
+      },
+      () => {},
+      { timeout: 5000, maximumAge: 86400000 }
+    );
+  }, []);
 
   return (
     <>
@@ -94,10 +122,21 @@ const HeroSection = () => {
               transition={{ delay: 0.15, duration: 0.5 }}
               className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl lg:text-6xl"
             >
-              {t("hero.title").replace("Simplified", "")}{" "}
-              <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
-                Simplified
-              </span>
+              {detectedCounty ? (
+                <>
+                  Resources for you in{" "}
+                  <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
+                    {detectedCounty} County
+                  </span>
+                </>
+              ) : (
+                <>
+                  {t("hero.title").replace("Simplified", "")}{" "}
+                  <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
+                    Simplified
+                  </span>
+                </>
+              )}
             </motion.h1>
 
             <motion.p
