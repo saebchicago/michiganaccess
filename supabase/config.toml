@@ -29,3 +29,6 @@ verify_jwt = false
 
 [functions.airnow-proxy]
 verify_jwt = false
+
+[functions.feedback-export]
+verify_jwt = false

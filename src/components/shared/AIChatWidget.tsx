@@ -12,6 +12,9 @@ const SUGGESTIONS = [
   "Where can I find free clinics near Detroit?",
   "How do I apply for Medicaid in Michigan?",
   "What mental health resources are available?",
+  "What school bus safety programs exist in Michigan?",
+  "How can I find Safe Routes to School in my county?",
+  "What transportation options are available for seniors?",
 ];
 
 export default function AIChatWidget() {
