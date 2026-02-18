@@ -13,6 +13,7 @@ import EngineeringFAQ from "@/components/home/EngineeringFAQ";
 import SmartRecommendations from "@/components/home/SmartRecommendations";
 import OnboardingTour from "@/components/shared/OnboardingTour";
 import SectionNav from "@/components/home/SectionNav";
+import QuickActionGrid from "@/components/home/QuickActionGrid";
 
 import SuccessStories from "@/components/home/SuccessStories";
 import AudienceSelector, { useAudience } from "@/components/home/AudienceSelector";
@@ -99,6 +100,7 @@ const Index = () => {
       <SectionNav />
       <CountyWelcomeBanner />
       <HeroSection />
+      <QuickActionGrid />
       <AudienceSelector audience={audience} onSelect={select} />
       <ComparisonTable />
       {renderSections()}
