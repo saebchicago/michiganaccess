@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { MapPin } from "lucide-react";
+import { useState, useCallback } from "react";
+import { MapPin, Navigation, Loader2, ShieldCheck } from "lucide-react";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
 import MunicipalitySearch from "./MunicipalitySearch";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // SVG paths for Michigan's 6 planning regions (simplified polygons)
 const REGION_PATHS: Record<string, string> = {
@@ -51,8 +55,49 @@ const REGION_GRADE: Record<string, { grade: string; color: string }> = {
 
 export default function RegionalGateway() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [hovered, setHovered] = useState<string | null>(null);
+  const [geoOpen, setGeoOpen] = useState(false);
+  const [geoStatus, setGeoStatus] = useState<"idle" | "loading">("idle");
   const hoveredRegion = MICHIGAN_REGIONS.find((r) => r.id === hovered);
+
+  const handleUseLocation = useCallback(() => {
+    if (!navigator.geolocation) {
+      toast.error("Geolocation is not supported by your browser");
+      return;
+    }
+    setGeoStatus("loading");
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude, longitude } = pos.coords;
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&zoom=10`,
+            { headers: { "Accept-Language": "en" } }
+          );
+          const data = await res.json();
+          const county = data?.address?.county?.replace(/ County$/i, "");
+          if (county && data?.address?.state === "Michigan") {
+            localStorage.setItem("mi-geo-county", county);
+            toast.success(`Located: ${county} County`);
+            navigate(`/county/${county.toLowerCase().replace(/[.\s]+/g, "-")}`);
+          } else {
+            toast.info("It looks like you're outside Michigan — showing all regions.");
+          }
+        } catch {
+          toast.error("Could not determine your county. Try searching instead.");
+        }
+        setGeoStatus("idle");
+        setGeoOpen(false);
+      },
+      () => {
+        setGeoStatus("idle");
+        setGeoOpen(false);
+        toast.error("Location access denied. You can search for your county instead.");
+      },
+      { timeout: 8000, maximumAge: 300000 }
+    );
+  }, [navigate]);
 
   return (
     <section className="border-y border-border bg-card py-10">
@@ -77,47 +122,83 @@ export default function RegionalGateway() {
           {/* Municipality Search */}
           <MunicipalitySearch />
 
-          {/* SVG Map + Info panel */}
+          {/* SVG Map + Location popover + Info panel */}
           <div className="flex flex-col items-center gap-6 md:flex-row md:justify-center">
-            <svg
-              viewBox="0 0 310 300"
-              className="w-full max-w-xs md:max-w-sm h-auto"
-              role="img"
-              aria-label="Interactive map of Michigan's 6 regions"
-            >
-              {MICHIGAN_REGIONS.map((region) => {
-                const path = REGION_PATHS[region.id];
-                const label = REGION_LABEL_POS[region.id];
-                if (!path) return null;
-                const isHovered = hovered === region.id;
-                return (
-                  <g key={region.id}>
-                    <path
-                      d={path}
-                      fill={isHovered ? region.color : `${region.color}33`}
-                      stroke={region.color}
-                      strokeWidth={isHovered ? 2.5 : 1.5}
-                      className="cursor-pointer transition-all duration-200"
-                      onMouseEnter={() => setHovered(region.id)}
-                      onMouseLeave={() => setHovered(null)}
-                      onClick={() => navigate(`/region/${region.id}`)}
-                      role="button"
-                      aria-label={`Go to ${region.name}`}
-                    />
-                    {label && (
-                      <text
-                        x={label.x}
-                        y={label.y}
-                        textAnchor="middle"
-                        className="pointer-events-none select-none fill-foreground text-[8px] font-semibold"
-                      >
-                        {region.name.replace("Michigan", "MI").replace("Northern Lower ", "N. Lower ")}
-                      </text>
-                    )}
-                  </g>
-                );
-              })}
-            </svg>
+            <div className="relative">
+              <Popover open={geoOpen} onOpenChange={setGeoOpen}>
+                <PopoverTrigger asChild>
+                  <div
+                    className="cursor-pointer"
+                    onMouseEnter={() => { if (!isMobile && !localStorage.getItem("mi-geo-county")) setGeoOpen(true); }}
+                    onClick={() => { if (isMobile && !localStorage.getItem("mi-geo-county")) setGeoOpen(true); }}
+                  >
+                    <svg
+                      viewBox="0 0 310 300"
+                      className="w-full max-w-xs md:max-w-sm h-auto"
+                      role="img"
+                      aria-label="Interactive map of Michigan's 6 regions"
+                    >
+                      {MICHIGAN_REGIONS.map((region) => {
+                        const path = REGION_PATHS[region.id];
+                        const label = REGION_LABEL_POS[region.id];
+                        if (!path) return null;
+                        const isHovered = hovered === region.id;
+                        return (
+                          <g key={region.id}>
+                            <path
+                              d={path}
+                              fill={isHovered ? region.color : `${region.color}33`}
+                              stroke={region.color}
+                              strokeWidth={isHovered ? 2.5 : 1.5}
+                              className="cursor-pointer transition-all duration-200"
+                              onMouseEnter={() => setHovered(region.id)}
+                              onMouseLeave={() => setHovered(null)}
+                              onClick={(e) => { e.stopPropagation(); navigate(`/region/${region.id}`); }}
+                              role="button"
+                              aria-label={`Go to ${region.name}`}
+                            />
+                            {label && (
+                              <text
+                                x={label.x}
+                                y={label.y}
+                                textAnchor="middle"
+                                className="pointer-events-none select-none fill-foreground text-[8px] font-semibold"
+                              >
+                                {region.name.replace("Michigan", "MI").replace("Northern Lower ", "N. Lower ")}
+                              </text>
+                            )}
+                          </g>
+                        );
+                      })}
+                    </svg>
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-72 p-3" side="top" align="center">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                      <ShieldCheck className="h-4 w-4 text-primary" />
+                      Find your county automatically
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      We can detect your county to show local resources. Your location is never stored, sold, or tracked.
+                    </p>
+                    <Button
+                      size="sm"
+                      className="w-full gap-1.5 text-xs"
+                      onClick={handleUseLocation}
+                      disabled={geoStatus === "loading"}
+                    >
+                      {geoStatus === "loading" ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        <Navigation className="h-3.5 w-3.5" />
+                      )}
+                      {geoStatus === "loading" ? "Locating…" : "Use my location"}
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
 
             {/* Hover info card */}
             <div className="w-full max-w-xs min-h-[100px]">
