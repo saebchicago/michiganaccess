@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState, useCallback } from "react";
-import { MapPin, Navigation, Loader2, ShieldCheck } from "lucide-react";
+import { useState, useCallback, useMemo } from "react";
+import { MapPin, Navigation, Loader2, ShieldCheck, X } from "lucide-react";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
 import MunicipalitySearch from "./MunicipalitySearch";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -60,6 +60,9 @@ export default function RegionalGateway() {
   const [geoOpen, setGeoOpen] = useState(false);
   const [geoStatus, setGeoStatus] = useState<"idle" | "loading">("idle");
   const hoveredRegion = MICHIGAN_REGIONS.find((r) => r.id === hovered);
+
+  // Read once on mount; memoize to prevent re-reads
+  const hasGeoCache = useMemo(() => !!localStorage.getItem("mi-geo-county"), []);
 
   const handleUseLocation = useCallback(() => {
     if (!navigator.geolocation) {
@@ -128,9 +131,13 @@ export default function RegionalGateway() {
               <Popover open={geoOpen} onOpenChange={setGeoOpen}>
                 <PopoverTrigger asChild>
                   <div
-                    className="cursor-pointer"
-                    onMouseEnter={() => { if (!isMobile && !localStorage.getItem("mi-geo-county")) setGeoOpen(true); }}
-                    onClick={() => { if (isMobile && !localStorage.getItem("mi-geo-county")) setGeoOpen(true); }}
+                    className="cursor-pointer outline-none"
+                    tabIndex={0}
+                    role="group"
+                    aria-label="Michigan regional map — focus to find your county"
+                    onMouseEnter={() => { if (!isMobile && !hasGeoCache) setGeoOpen(true); }}
+                    onFocus={() => { if (!hasGeoCache) setGeoOpen(true); }}
+                    onClick={() => { if (isMobile && !hasGeoCache) setGeoOpen(true); }}
                   >
                     <svg
                       viewBox="0 0 310 300"
@@ -175,9 +182,18 @@ export default function RegionalGateway() {
                 </PopoverTrigger>
                 <PopoverContent className="w-72 p-3" side="top" align="center">
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                      <ShieldCheck className="h-4 w-4 text-primary" />
-                      Find your county automatically
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                        <ShieldCheck className="h-4 w-4 text-primary" />
+                        Find your county automatically
+                      </div>
+                      <button
+                        onClick={() => setGeoOpen(false)}
+                        className="p-0.5 text-muted-foreground hover:text-foreground rounded"
+                        aria-label="Close location popover"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">
                       We can detect your county to show local resources. Your location is never stored, sold, or tracked.

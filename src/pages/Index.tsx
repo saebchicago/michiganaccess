@@ -100,9 +100,9 @@ const Index = () => {
       <SectionNav />
       <CountyWelcomeBanner />
       <HeroSection />
-      <StakeholderCTAs />
       <QuickActionGrid />
       <AudienceSelector audience={audience} onSelect={select} />
+      <StakeholderCTAs />
       <ComparisonTable />
       {renderSections()}
     </Layout>

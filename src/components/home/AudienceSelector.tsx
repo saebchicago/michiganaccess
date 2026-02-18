@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 export type Audience = "resident" | "provider" | "health-system" | "policymaker";
 
 const audiences = [
-  { id: "resident" as Audience, label: "I'm a Resident", icon: User, desc: "Find care, resources & benefits" },
-  { id: "provider" as Audience, label: "I'm a Provider", icon: Stethoscope, desc: "Referral tools & gap data" },
-  { id: "health-system" as Audience, label: "I'm a Health System Leader", icon: Building2, desc: "Market intelligence & ROI" },
-  { id: "policymaker" as Audience, label: "I'm a Policymaker", icon: Landmark, desc: "Equity metrics & impact data" },
+  { id: "resident" as Audience, label: "Resident", icon: User, desc: "Find care, resources & benefits" },
+  { id: "provider" as Audience, label: "Provider", icon: Stethoscope, desc: "Referral tools & gap data" },
+  { id: "health-system" as Audience, label: "Health System", icon: Building2, desc: "Market intelligence & ROI" },
+  { id: "policymaker" as Audience, label: "Policymaker", icon: Landmark, desc: "Equity metrics & impact data" },
 ];
 
 const STORAGE_KEY = "mi-access-audience";
@@ -33,8 +33,9 @@ interface Props {
 
 export default function AudienceSelector({ audience, onSelect }: Props) {
   return (
-    <section className="py-4">
+    <section className="py-4" aria-label="Personalize your experience">
       <div className="container">
+        <p className="text-xs text-muted-foreground text-center mb-2">Personalize content for:</p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {audiences.map((a) => {
             const active = audience === a.id;
@@ -43,10 +44,11 @@ export default function AudienceSelector({ audience, onSelect }: Props) {
                 key={a.id}
                 variant={active ? "default" : "outline"}
                 size="sm"
-                className={`gap-2 text-xs transition-all ${active ? "shadow-md" : "hover:border-primary/40"}`}
+                className={`gap-1.5 text-xs transition-all ${active ? "shadow-md" : "hover:border-primary/40"}`}
                 onClick={() => onSelect(a.id)}
+                aria-pressed={active}
               >
-                <a.icon className="h-3.5 w-3.5" />
+                <a.icon className="h-3.5 w-3.5" aria-hidden="true" />
                 {a.label}
               </Button>
             );

@@ -37,19 +37,19 @@ const cards = [
 
 export default function StakeholderCTAs() {
   return (
-    <section className="py-16 bg-muted/30" aria-label="Stakeholder pathways">
+    <section id="stakeholders" className="py-12 bg-muted/30" aria-label="Stakeholder pathways">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-8"
         >
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
-            Built for Every Stakeholder
+          <h2 className="text-xl font-bold text-foreground sm:text-2xl">For Organizations & Leaders</h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Institutional tools for health systems, community orgs, and government agencies.
           </p>
-          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Who uses Michigan Access?</h2>
         </motion.div>
 
         <div className="grid gap-6 md:grid-cols-3">

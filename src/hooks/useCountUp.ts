@@ -9,10 +9,17 @@ export function useCountUp(end: number, duration = 1200, start = 0) {
     const el = ref.current;
     if (!el) return;
 
+    // Respect prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !triggered.current) {
           triggered.current = true;
+          if (prefersReducedMotion) {
+            setValue(end);
+            return;
+          }
           const startTime = performance.now();
           const animate = (now: number) => {
             const progress = Math.min((now - startTime) / duration, 1);
