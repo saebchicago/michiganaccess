@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { SITE_NAME, BASE_URL, DEFAULT_OG_IMAGE } from "@/config/site";
 
 interface PageMeta {
   title: string;
@@ -7,10 +8,6 @@ interface PageMeta {
   ogImage?: string;
   jsonLd?: Record<string, unknown>;
 }
-
-const SITE_NAME = "Michigan Access";
-const BASE_URL = "https://michiganaccess.lovable.app";
-const DEFAULT_OG_IMAGE = "https://lovable.dev/opengraph-image-p98pqg.png";
 
 export function usePageMeta({ title, description, path, ogImage, jsonLd }: PageMeta) {
   useEffect(() => {

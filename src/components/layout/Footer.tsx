@@ -139,8 +139,11 @@ const Footer = () => {
           </details>
         </div>
 
-        {/* Privacy + attribution */}
+        {/* Trust statement */}
         <div className="mt-4 border-t border-border pt-4">
+          <p className="text-center text-xs text-muted-foreground max-w-xl mx-auto mb-3">
+            Michigan Access is a community-oriented project to help Michiganders understand and navigate services. Content is informational and will improve over time with community feedback.
+          </p>
           <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Lock className="h-3 w-3 shrink-0" aria-hidden="true" />
