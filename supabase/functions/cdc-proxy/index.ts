@@ -24,9 +24,9 @@ serve(async (req) => {
   try {
     const url = new URL(req.url);
     const dataset = url.searchParams.get("dataset") || "places-county";
-    const state = url.searchParams.get("state") || "Michigan";
     const measure = url.searchParams.get("measure") || "";
-    const limit = Math.min(Number(url.searchParams.get("limit") || "50"), 200);
+    const limitRaw = Number(url.searchParams.get("limit") || "50");
+    const limit = Math.min(Number.isFinite(limitRaw) ? Math.max(1, Math.floor(limitRaw)) : 50, 200);
 
     const endpoint = CDC_ENDPOINTS[dataset];
     if (!endpoint) {
@@ -38,14 +38,18 @@ serve(async (req) => {
       );
     }
 
-    // Build SODA query
+    // Sanitize measure: allow only alphanumeric, spaces, hyphens, underscores
+    const safeMeasure = measure.replace(/[^a-zA-Z0-9_\s\-]/g, "").slice(0, 100);
+
+    // Build SODA query — state is hardcoded to Michigan only
+    const baseWhere = "stateabbr='MI'";
     const params = new URLSearchParams({
       "$limit": String(limit),
-      "$where": `stateabbr='MI' OR statedesc='${state}'`,
+      "$where": baseWhere,
     });
 
-    if (measure) {
-      params.set("$where", `(stateabbr='MI' OR statedesc='${state}') AND measure='${measure}'`);
+    if (safeMeasure) {
+      params.set("$where", `${baseWhere} AND measure='${safeMeasure}'`);
     }
 
     const apiUrl = `${endpoint}?${params.toString()}`;
