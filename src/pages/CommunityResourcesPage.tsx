@@ -98,7 +98,7 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
           )}
 
           <div className="flex flex-wrap gap-2 pt-1 items-center">
-            <ShareMenu title={r.resource_name} url={`https://michiganaccess.lovable.app/resources`} />
+            <ShareMenu title={r.resource_name} url={`https://accessmi.org/resources`} />
             {r.address && (
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${r.address}, ${r.city}, ${r.state} ${r.zip || ""}`)}`}
@@ -136,7 +136,7 @@ export default function CommunityResourcesPage() {
       "@type": "WebPage",
       "name": "Community Resources — Michigan Access",
       "description": "Food, housing, transportation, and mental health support services across all 83 Michigan counties.",
-      "url": "https://michiganaccess.lovable.app/resources",
+      "url": "https://accessmi.org/resources",
       "provider": { "@type": "Organization", "name": "Michigan Access" },
     },
   });

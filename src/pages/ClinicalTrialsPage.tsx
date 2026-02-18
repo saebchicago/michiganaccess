@@ -114,7 +114,7 @@ export default function ClinicalTrialsPage() {
       "@type": "WebPage",
       "name": "Clinical Trials — Michigan Access",
       "description": "Active clinical trials at Michigan research institutions.",
-      "url": "https://michiganaccess.lovable.app/clinical-trials",
+      "url": "https://accessmi.org/clinical-trials",
       "specialty": { "@type": "MedicalSpecialty", "name": "Clinical Research" },
     },
   });

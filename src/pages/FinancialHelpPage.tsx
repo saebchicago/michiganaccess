@@ -43,7 +43,7 @@ export default function FinancialHelpPage() {
       "@type": "WebPage",
       "name": "Financial Help — Michigan Access",
       "description": "Free and reduced-cost healthcare, insurance programs, and prescription assistance for Michigan residents.",
-      "url": "https://michiganaccess.lovable.app/financial-help",
+      "url": "https://accessmi.org/financial-help",
       "provider": { "@type": "Organization", "name": "Michigan Access" },
     },
   });

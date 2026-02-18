@@ -220,7 +220,7 @@ th{font-size:10px;color:#6b7280;font-weight:500;text-transform:uppercase}.system
 <h2>County Access Gap Analysis</h2>
 <table><thead><tr><th>County</th><th style="text-align:center">Population</th><th style="text-align:center">Facilities</th><th style="text-align:center">PCP Sites</th><th style="text-align:center">Vulnerability</th></tr></thead><tbody>${rows}</tbody></table>
 ${systemDensity.length > 0 ? `<h2>Regional System Presence</h2><p class="systems">${systemList}</p>` : ""}
-<p class="footer">Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI — for planning purposes only. Source: Michigan Access (michiganaccess.lovable.app)</p>
+<p class="footer">Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI — for planning purposes only. Source: Michigan Access (accessmi.org)</p>
 </body></html>`;
 
   const blob = new Blob([html], { type: "text/html" });

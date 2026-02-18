@@ -84,7 +84,7 @@ export default function CountyPage() {
       "name": `${county} County Health & Community Resources`,
       "serviceArea": { "@type": "AdministrativeArea", "name": `${county} County, Michigan` },
       "provider": { "@type": "Organization", "name": "Michigan Access" },
-      "url": `https://michiganaccess.lovable.app/county/${slug}`,
+      "url": `https://accessmi.org/county/${slug}`,
     } : undefined,
   });
 

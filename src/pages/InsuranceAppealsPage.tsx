@@ -23,7 +23,7 @@ const InsuranceAppealsPage = () => {
       "@type": "HowTo",
       "name": "How to Appeal a Health Insurance Denial in Michigan",
       "description": "Step-by-step guide to fighting insurance denials using Michigan's internal appeal and DIFS external review processes.",
-      "url": "https://michiganaccess.lovable.app/health/insurance-appeals",
+      "url": "https://accessmi.org/health/insurance-appeals",
       "totalTime": "PT30M",
       "step": [
         { "@type": "HowToStep", "name": "Review your denial letter", "text": "Identify the reason for denial and gather supporting documentation." },

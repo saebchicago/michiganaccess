@@ -250,7 +250,7 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
                       <div style="margin:20px;padding:16px;border:2px solid #1e3a5f;border-radius:8px">
                       <svg width="${svgSize}" height="${svgSize}" viewBox="0 0 ${svgSize} ${svgSize}"><rect width="${svgSize}" height="${svgSize}" fill="white"/>${rects}</svg></div>
                       <p>Scan with your phone camera</p><p class="loc">📍 ${qrLocation}</p>
-                      <p style="font-size:11px;color:#999;margin-top:16px">michiganaccess.lovable.app</p></body></html>`);
+                      <p style="font-size:11px;color:#999;margin-top:16px">accessmi.org</p></body></html>`);
                     printW.document.close();
                     printW.print();
                   }}

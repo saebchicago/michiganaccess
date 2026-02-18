@@ -135,7 +135,7 @@ export default function PartnershipOnePager() {
           <section className="text-center border-t border-michigan-teal/20 pt-6">
             <h2 className="text-lg font-bold text-foreground mb-2">Start the Conversation</h2>
             <p className="text-xs text-muted-foreground mb-3">Our partnerships team responds within 2 business days.</p>
-            <p className="text-sm text-michigan-teal font-medium">michiganaccess.lovable.app/partnerships/health-systems</p>
+            <p className="text-sm text-michigan-teal font-medium">accessmi.org/partnerships/health-systems</p>
           </section>
         </div>
       </div>

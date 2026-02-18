@@ -431,7 +431,7 @@ export default function TransportationPage() {
       "@type": "WebPage",
       "name": "Transportation & Safety — Michigan Access",
       "description": "Public transit routes, school bus safety data, and accessible transportation options across Michigan.",
-      "url": "https://michiganaccess.lovable.app/transportation",
+      "url": "https://accessmi.org/transportation",
     },
   });
   const [search, setSearch] = useState("");

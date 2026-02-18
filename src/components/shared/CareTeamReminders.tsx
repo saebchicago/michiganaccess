@@ -20,7 +20,7 @@ const generateICS = (reminders: Reminder[]): string => {
 DTSTART;VALUE=DATE:${date}
 DTEND;VALUE=DATE:${date}
 SUMMARY:${r.text}
-DESCRIPTION:Reminder from Michigan Access - michiganaccess.lovable.app
+DESCRIPTION:Reminder from Michigan Access - accessmi.org
 STATUS:CONFIRMED
 END:VEVENT`;
     })

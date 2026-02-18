@@ -52,7 +52,7 @@ export default function QualityRatingsPage() {
       "@type": "WebPage",
       "name": "Quality Ratings — Michigan Access",
       "description": "Hospital quality scores, Leapfrog grades, and accreditation for Michigan facilities.",
-      "url": "https://michiganaccess.lovable.app/quality",
+      "url": "https://accessmi.org/quality",
     },
   });
   const { data: facilities = [], isLoading: facLoading } = useFacilities(["hospital"]);
