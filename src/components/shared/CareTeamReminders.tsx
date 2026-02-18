@@ -20,7 +20,7 @@ const generateICS = (reminders: Reminder[]): string => {
 DTSTART;VALUE=DATE:${date}
 DTEND;VALUE=DATE:${date}
 SUMMARY:${r.text}
-DESCRIPTION:Reminder from Michigan Access - accessmi.org
+DESCRIPTION:Reminder from Access Michigan - accessmi.org
 STATUS:CONFIRMED
 END:VEVENT`;
     })
@@ -28,7 +28,7 @@ END:VEVENT`;
 
   return `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Michigan Access//Reminders//EN
+PRODID:-//Access Michigan//Reminders//EN
 CALSCALE:GREGORIAN
 ${events}
 END:VCALENDAR`;

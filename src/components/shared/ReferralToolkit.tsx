@@ -80,9 +80,9 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
   }, [referralUrl]);
 
   const shareViaEmail = useCallback(() => {
-    const subject = encodeURIComponent(`Check out ${title} — Michigan Access`);
+     const subject = encodeURIComponent(`Check out ${title} — Access Michigan`);
     const body = encodeURIComponent(
-      `I found this helpful resource on Michigan Access and thought you might benefit:\n\n${title}\n${referralUrl}\n\nMichigan Access helps residents find healthcare, financial help, community resources, and more across all 83 counties.`
+      `I found this helpful resource on Access Michigan and thought you might benefit:\n\n${title}\n${referralUrl}\n\nAccess Michigan helps residents find healthcare, financial help, community resources, and more across all 83 counties.`
     );
     window.open(`mailto:?subject=${subject}&body=${body}`);
   }, [title, referralUrl]);
@@ -91,8 +91,8 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${title} — Michigan Access`,
-          text: "I found this helpful resource on Michigan Access.",
+           title: `${title} — Access Michigan`,
+          text: "I found this helpful resource on Access Michigan.",
           url: referralUrl,
         });
       } catch { /* User cancelled */ }
@@ -124,13 +124,13 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
         .footer{margin-top:20px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#888}
       </style></head><body>
       <h1>🏥 ${title}</h1>
-      <p class="subtitle">Michigan Access — Your guide to services across Michigan</p>
+      <p class="subtitle">Access Michigan — Your guide to services across Michigan</p>
       <div class="crisis"><strong>In Crisis?</strong> Call <strong>988</strong> (Suicide & Crisis Lifeline) · Text HOME to 741741 · Call <strong>211</strong> for local services</div>
       ${resourceList ? `<h2 style="font-size:16px;margin-top:20px">Key Resources</h2>${resourceList}` : ""}
       <p style="margin-top:16px;font-size:13px">Visit online for more services, interactive maps, and real-time information:</p>
       <p class="url">${currentUrl.replace(/[?&].*/, "")}</p>
       <div class="footer">
-        <p>Michigan Access — Independent, non-commercial civic resource</p>
+        <p>Access Michigan — Independent, non-commercial civic resource</p>
         <p>No cookies · No tracking · No personal data collected</p>
         <p>Printed ${new Date().toLocaleDateString()}</p>
       </div>
@@ -226,7 +226,7 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
                 </div>
                 <div className="bg-white p-4 rounded-lg border border-border text-center">
                   <QRCodeSVG data={`${currentUrl.replace(/[?&].*/, "")}?ref=qr-${qrLocation.toLowerCase().replace(/\s+/g, "-")}`} size={160} />
-                  <p className="text-xs text-muted-foreground mt-2 font-medium">Michigan Access</p>
+                  <p className="text-xs text-muted-foreground mt-2 font-medium">Access Michigan</p>
                   <p className="text-[10px] text-muted-foreground">Scan to find services near you</p>
                   <p className="text-[10px] text-primary mt-1">Posted at: {qrLocation}</p>
                 </div>
@@ -243,10 +243,10 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
                     const rects = matrix.flatMap((row, r) =>
                       row.map((cell, c) => cell ? `<rect x="${c*cellSize}" y="${r*cellSize}" width="${cellSize}" height="${cellSize}" fill="#1e3a5f"/>` : "")
                     ).join("");
-                    printW.document.write(`<!DOCTYPE html><html><head><title>QR Code — Michigan Access</title>
+                     printW.document.write(`<!DOCTYPE html><html><head><title>QR Code — Access Michigan</title>
                       <style>body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:Arial,sans-serif;margin:0}
                       h1{font-size:24px;color:#1e3a5f;margin-bottom:8px}p{font-size:14px;color:#666;margin:4px 0}.loc{font-size:12px;color:#0A4C95;margin-top:8px}</style></head>
-                      <body><h1>🏥 Michigan Access</h1><p>Find healthcare, services & resources</p>
+                       <body><h1>🏥 Access Michigan</h1><p>Find healthcare, services & resources</p>
                       <div style="margin:20px;padding:16px;border:2px solid #1e3a5f;border-radius:8px">
                       <svg width="${svgSize}" height="${svgSize}" viewBox="0 0 ${svgSize} ${svgSize}"><rect width="${svgSize}" height="${svgSize}" fill="white"/>${rects}</svg></div>
                       <p>Scan with your phone camera</p><p class="loc">📍 ${qrLocation}</p>

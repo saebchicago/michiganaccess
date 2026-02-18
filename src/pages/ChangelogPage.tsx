@@ -27,7 +27,7 @@ const entries: ChangelogEntry[] = [
     icon: Shield,
     tag: "feature",
     items: [
-      "Added 'How We Compare' table: Michigan Access vs 211 vs Health Plan Directories",
+      "Added 'How We Compare' table: Access Michigan vs 211 vs Health Plan Directories",
       "New Success Stories section with real impact metrics on homepage",
       "30-Second Pitch infographic on Executive Summary page",
       "Achievement toasts & community completion stats on Resource Checklists",
@@ -88,9 +88,9 @@ const entries: ChangelogEntry[] = [
 const RSS_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Michigan Access Changelog</title>
+     <title>Access Michigan Changelog</title>
     <link>https://accessmi.org/changelog</link>
-    <description>Monthly platform updates for Michigan Access — statewide civic health infrastructure.</description>
+    <description>Monthly platform updates for Access Michigan — statewide civic health infrastructure.</description>
     <language>en-us</language>
     <atom:link href="https://accessmi.org/changelog.xml" rel="self" type="application/rss+xml"/>
     ${entries.map((e) => `<item>
@@ -107,15 +107,15 @@ function downloadRSS() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "michigan-access-changelog.xml";
+  a.download = "access-michigan-changelog.xml";
   a.click();
   URL.revokeObjectURL(url);
 }
 
 const ChangelogPage = () => {
   usePageMeta({
-    title: "What's New — Michigan Access",
-    description: "Monthly platform updates, new features, and data expansions for Michigan Access.",
+     title: "What's New — Access Michigan",
+    description: "Monthly platform updates, new features, and data expansions for Access Michigan.",
     path: "/changelog",
   });
 

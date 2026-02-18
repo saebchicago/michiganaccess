@@ -87,7 +87,7 @@ const SECTIONS: SitemapSection[] = [
     title: "About & Resources",
     icon: BookOpen,
     links: [
-      { label: "About Michigan Access", href: "/about" },
+      { label: "About Access Michigan", href: "/about" },
       { label: "Contact Us", href: "/contact" },
       { label: "Methodology", href: "/methodology" },
       { label: "Research", href: "/research" },
@@ -104,7 +104,7 @@ const SECTIONS: SitemapSection[] = [
 export default function SitemapPage() {
   usePageMeta({
     title: "Site Map",
-    description: "Complete navigation tree for Michigan Access — find any page or feature quickly.",
+    description: "Complete navigation tree for Access Michigan — find any page or feature quickly.",
     path: "/sitemap",
   });
 
@@ -118,7 +118,7 @@ export default function SitemapPage() {
             </Badge>
             <h1 className="text-3xl font-bold text-foreground mb-2">Site Map</h1>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              Every page on Michigan Access, organized by category.
+              Every page on Access Michigan, organized by category.
             </p>
           </motion.div>
 

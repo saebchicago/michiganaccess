@@ -65,7 +65,7 @@ const testingMethods = [
 export default function AccessibilityPage() {
   usePageMeta({
     title: "Accessibility Statement",
-    description: "Michigan Access is committed to WCAG 2.1 AA compliance, ensuring equitable access to public service information for all Michigan residents.",
+    description: "Access Michigan is committed to WCAG 2.1 AA compliance, ensuring equitable access to public service information for all Michigan residents.",
     path: "/accessibility",
   });
 
@@ -82,7 +82,7 @@ export default function AccessibilityPage() {
             Accessibility Statement
           </motion.h1>
           <motion.p variants={fade} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Michigan Access is committed to ensuring equitable access to public service information for all Michigan residents, regardless of ability, device, or language.
+            Access Michigan is committed to ensuring equitable access to public service information for all Michigan residents, regardless of ability, device, or language.
           </motion.p>
         </div>
       </section>
@@ -96,7 +96,7 @@ export default function AccessibilityPage() {
               <h2 className="text-2xl font-bold text-foreground">Our Commitment</h2>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">
-              Michigan Access strives to conform to the <strong>Web Content Accessibility Guidelines (WCAG) 2.1 Level AA</strong> standards. These guidelines are developed by the World Wide Web Consortium (W3C) and are widely regarded as the international standard for web accessibility.
+              Access Michigan strives to conform to the <strong>Web Content Accessibility Guidelines (WCAG) 2.1 Level AA</strong> standards. These guidelines are developed by the World Wide Web Consortium (W3C) and are widely regarded as the international standard for web accessibility.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               As a civic resource serving vulnerable populations — including uninsured residents, seniors with limited digital literacy, refugees navigating language barriers, and people with disabilities — accessibility is not an afterthought. It is a core design principle that informs every decision we make.
@@ -204,7 +204,7 @@ export default function AccessibilityPage() {
             <Mail className="mx-auto mb-4 h-8 w-8 text-michigan-teal" />
             <h2 className="text-2xl font-bold text-foreground mb-3">Report an Accessibility Barrier</h2>
             <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto mb-6">
-              If you encounter any accessibility barriers while using Michigan Access, we want to know. Your feedback helps us improve the platform for everyone.
+              If you encounter any accessibility barriers while using Access Michigan, we want to know. Your feedback helps us improve the platform for everyone.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="/contact" className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:opacity-90 transition-opacity">

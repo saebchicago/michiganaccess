@@ -134,7 +134,7 @@ export default function CommunityResourcesPage() {
     path: "/resources",
     jsonLd: {
       "@type": "WebPage",
-      "name": "Community Resources — Michigan Access",
+      "name": "Community Resources — Access Michigan",
       "description": "Food, housing, transportation, and mental health support services across all 83 Michigan counties.",
       "url": "https://accessmi.org/resources",
       "provider": { "@type": "Organization", "name": "Access Michigan" },

@@ -56,8 +56,8 @@
     "cta": "Comenzar"
   },
   "systems": {
-    "title": "¿Qué Es Michigan Access?",
-    "description": "Michigan Access es un recurso independiente y no comercial que organiza información de servicios públicos de agencias estatales en una interfaz única y estructurada. No reemplaza los servicios gubernamentales — los hace más fáciles de encontrar, entender y usar."
+    "title": "¿Qué Es Access Michigan?",
+    "description": "Access Michigan es un recurso independiente y no comercial que organiza información de servicios públicos de agencias estatales en una interfaz única y estructurada. No reemplaza los servicios gubernamentales — los hace más fáciles de encontrar, entender y usar."
   },
   "crisis": {
     "title": "¿Necesita Ayuda Inmediata?",
@@ -169,7 +169,7 @@
   },
   "partnership": {
     "title": "Portal de Asociaciones",
-    "subtitle": "Las organizaciones pueden enviar recursos para su inclusión en Michigan Access.",
+    "subtitle": "Las organizaciones pueden enviar recursos para su inclusión en Access Michigan.",
     "orgName": "Nombre de la Organización",
     "contactName": "Nombre del Contacto",
     "contactEmail": "Correo Electrónico",

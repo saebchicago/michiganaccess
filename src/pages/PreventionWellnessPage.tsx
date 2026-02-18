@@ -87,7 +87,7 @@ export default function PreventionWellnessPage() {
     path: "/wellness",
     jsonLd: {
       "@type": "MedicalWebPage",
-      name: "Prevention & Wellness — Michigan Access",
+      name: "Prevention & Wellness — Access Michigan",
       about: { "@type": "MedicalCondition", name: "Preventive healthcare" },
     },
   });

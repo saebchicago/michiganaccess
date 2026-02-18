@@ -109,7 +109,7 @@ export default function AIChatWidget() {
             className="fixed bottom-6 right-6 z-50 flex w-[360px] max-w-[calc(100vw-2rem)] flex-col rounded-2xl border bg-background shadow-2xl sm:w-[400px]"
             style={{ height: "min(560px, calc(100vh - 6rem))" }}
             role="dialog"
-            aria-label="Michigan Access AI Assistant"
+            aria-label="Access Michigan AI Assistant"
           >
             {/* Header */}
             <div className="flex items-center justify-between border-b px-4 py-3">
@@ -118,7 +118,7 @@ export default function AIChatWidget() {
                   <Bot className="h-4 w-4 text-primary" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Michigan Access Assistant</p>
+                  <p className="text-sm font-semibold text-foreground">Access Michigan Assistant</p>
                   <p className="text-[10px] text-muted-foreground">AI-powered · No data collected</p>
                 </div>
               </div>
@@ -132,7 +132,7 @@ export default function AIChatWidget() {
               {messages.length === 0 && (
                 <div className="space-y-3">
                   <div className="rounded-lg bg-muted/50 p-3">
-                    <p className="text-sm text-foreground font-medium">👋 Hi! I'm the Michigan Access Assistant.</p>
+                    <p className="text-sm text-foreground font-medium">👋 Hi! I'm the Access Michigan Assistant.</p>
                     <p className="mt-1 text-xs text-muted-foreground">
                       Ask me about healthcare facilities, financial help, community resources, or any Michigan public service.
                     </p>

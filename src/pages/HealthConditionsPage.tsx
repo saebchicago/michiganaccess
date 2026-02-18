@@ -91,7 +91,7 @@ export default function HealthConditionsPage() {
     path: "/conditions",
     jsonLd: {
       "@type": "MedicalWebPage",
-      "name": "Health Conditions — Michigan Access",
+      "name": "Health Conditions — Access Michigan",
       "about": { "@type": "MedicalCondition", "name": "Common health conditions in Michigan" },
       "url": "https://accessmi.org/conditions",
     },
