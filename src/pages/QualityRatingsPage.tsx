@@ -15,6 +15,7 @@ import { useFacilities, type Facility } from "@/hooks/useFacilities";
 import { useQualityMetrics, type QualityMetric } from "@/hooks/useQualityMetrics";
 import { Link } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
@@ -145,6 +146,9 @@ export default function QualityRatingsPage() {
 
   return (
     <Layout>
+      <div className="container pt-6">
+        <Breadcrumbs items={[{ label: "Services", href: "/find-care" }, { label: "Quality Ratings" }]} />
+      </div>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-forest/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
