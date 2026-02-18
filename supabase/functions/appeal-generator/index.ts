@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { z } from "https://esm.sh/zod@3.23.8";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -9,7 +10,7 @@ const corsHeaders = {
 // In-memory rate limiter
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 const WINDOW_MS = 60_000;
-const MAX_REQUESTS = 5; // 5 appeals per minute per IP
+const MAX_REQUESTS = 5;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
@@ -28,6 +29,21 @@ function cleanup() {
     if (now > val.resetAt) rateLimitMap.delete(key);
   }
 }
+
+const allowedCarriers = [
+  "BCBS Michigan", "HAP", "Priority Health", "Molina Healthcare",
+  "Medicare Advantage", "Employer-sponsored (ERISA)", "Other", ""
+] as const;
+
+const allowedAppealTypes = ["internal", "external", "expedited", "federal"] as const;
+
+const appealSchema = z.object({
+  denialType: z.string().trim().max(200, "Denial type too long").default("Standard denial"),
+  carrier: z.string().trim().max(100, "Carrier name too long").default("Unknown carrier"),
+  serviceDescription: z.string().trim().min(1, "Service description is required").max(1000, "Service description too long"),
+  denialReason: z.string().trim().max(1000, "Denial reason too long").default("Medical necessity"),
+  appealType: z.enum(allowedAppealTypes).default("internal"),
+});
 
 const SYSTEM_PROMPT = `You are an expert health insurance appeal letter generator for Michigan residents. You create professional, compelling appeal letters that maximize the chance of overturning insurance denials.
 
@@ -81,17 +97,27 @@ serve(async (req) => {
   }
 
   try {
-    const { denialType, carrier, serviceDescription, denialReason, appealType } = await req.json();
+    const raw = await req.json();
+    const parsed = appealSchema.safeParse(raw);
+
+    if (!parsed.success) {
+      return new Response(
+        JSON.stringify({ error: "Validation failed", details: parsed.error.flatten().fieldErrors }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const { denialType, carrier, serviceDescription, denialReason, appealType } = parsed.data;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
-    const userPrompt = `Generate a ${appealType || 'internal'} appeal letter for the following denial:
+    const userPrompt = `Generate a ${appealType} appeal letter for the following denial:
 
-Carrier: ${carrier || 'Unknown carrier'}
-Service Denied: ${serviceDescription || 'Medical service'}
-Reason for Denial: ${denialReason || 'Medical necessity'}
-Denial Type: ${denialType || 'Standard denial'}
+Carrier: ${carrier}
+Service Denied: ${serviceDescription}
+Reason for Denial: ${denialReason}
+Denial Type: ${denialType}
 
 Generate a complete, ready-to-customize appeal letter with all bracketed placeholders for personal information. Include specific Michigan regulations and carrier-specific appeal procedures.`;
 
