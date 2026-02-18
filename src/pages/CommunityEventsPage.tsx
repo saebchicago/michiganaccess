@@ -125,6 +125,17 @@ function EventCard({ event }: { event: CommunityEvent }) {
 
           <div className="flex flex-wrap gap-2 pt-2 border-t items-center">
             <ShareMenu title={event.title} url={`https://michiganaccess.lovable.app/events`} />
+            {event.address && (
+              <Button size="sm" variant="default" asChild>
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${event.address}, ${event.city}, MI ${event.zip || ""}`)}`}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <MapPin className="h-3 w-3" /> Get Directions
+                </a>
+              </Button>
+            )}
             {event.registration_required && event.registration_url && (
               <Button size="sm" asChild>
                 <a href={event.registration_url} target="_blank" rel="noopener noreferrer">

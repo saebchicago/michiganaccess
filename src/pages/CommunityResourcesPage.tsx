@@ -50,9 +50,11 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
               <h3 className="font-semibold text-foreground text-sm">{r.resource_name}</h3>
               {r.organization && <p className="text-xs text-muted-foreground">{r.organization}</p>}
             </div>
-            <div className="flex gap-1.5 flex-shrink-0">
+            <div className="flex gap-1.5 flex-shrink-0 flex-wrap justify-end">
               {r.is_free && <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">Free</Badge>}
-              {r.walk_in_available && <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">Walk-in</Badge>}
+              {r.walk_in_available && <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">Walk-ins Welcome</Badge>}
+              {r.languages && r.languages.length > 1 && <Badge className="bg-michigan-sky/10 text-michigan-sky border-michigan-sky/20 text-[10px]">Bilingual Staff</Badge>}
+              {r.accepts_insurance && <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">Takes Insurance</Badge>}
             </div>
           </div>
 

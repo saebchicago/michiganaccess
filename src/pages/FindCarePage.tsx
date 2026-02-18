@@ -462,6 +462,15 @@ export default function FindCarePage() {
 
                               {/* Actions */}
                               <div className="mt-3 flex flex-wrap gap-2">
+                                <a
+                                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${f.address}, ${f.city}, ${f.state} ${f.zip}`)}`}
+                                  target="_blank"
+                                  rel="noopener"
+                                >
+                                  <Button size="sm" variant="default" className="h-8 text-xs">
+                                    <MapPin className="mr-1 h-3 w-3" /> Get Directions
+                                  </Button>
+                                </a>
                                 {f.phone && (
                                   <a href={`tel:${f.phone}`}>
                                     <Button size="sm" variant="outline" className="h-8 text-xs">
