@@ -89,15 +89,15 @@ const RSS_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Michigan Access Changelog</title>
-    <link>https://michiganaccess.lovable.app/changelog</link>
+    <link>https://accessmi.org/changelog</link>
     <description>Monthly platform updates for Michigan Access — statewide civic health infrastructure.</description>
     <language>en-us</language>
-    <atom:link href="https://michiganaccess.lovable.app/changelog.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://accessmi.org/changelog.xml" rel="self" type="application/rss+xml"/>
     ${entries.map((e) => `<item>
       <title>${e.month} ${e.year}: ${e.title}</title>
       <description>${e.items.join("; ")}</description>
       <pubDate>${new Date(`${e.month} 1, ${e.year}`).toUTCString()}</pubDate>
-      <guid>https://michiganaccess.lovable.app/changelog#${e.month.toLowerCase()}-${e.year}</guid>
+      <guid>https://accessmi.org/changelog#${e.month.toLowerCase()}-${e.year}</guid>
     </item>`).join("\n    ")}
   </channel>
 </rss>`;

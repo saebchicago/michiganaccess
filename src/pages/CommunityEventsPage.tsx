@@ -124,7 +124,7 @@ function EventCard({ event }: { event: CommunityEvent }) {
           </div>
 
           <div className="flex flex-wrap gap-2 pt-2 border-t items-center">
-            <ShareMenu title={event.title} url={`https://michiganaccess.lovable.app/events`} />
+            <ShareMenu title={event.title} url={`https://accessmi.org/events`} />
             {event.address && (
               <Button size="sm" variant="default" asChild>
                 <a

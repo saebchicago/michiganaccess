@@ -93,7 +93,7 @@ export default function HealthConditionsPage() {
       "@type": "MedicalWebPage",
       "name": "Health Conditions — Michigan Access",
       "about": { "@type": "MedicalCondition", "name": "Common health conditions in Michigan" },
-      "url": "https://michiganaccess.lovable.app/conditions",
+      "url": "https://accessmi.org/conditions",
     },
   });
   const { data: facilities = [], isLoading: facLoading } = useFacilities();

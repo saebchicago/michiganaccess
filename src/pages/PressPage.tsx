@@ -53,7 +53,7 @@ export default function PressPage() {
     jsonLd: {
       "@type": "WebPage",
       "name": "Press Kit — Michigan Access",
-      "url": "https://michiganaccess.lovable.app/press",
+      "url": "https://accessmi.org/press",
     },
   });
 

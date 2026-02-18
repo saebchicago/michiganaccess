@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 /**
  * Embeddable widget for county spin-offs.
- * Counties can iframe this page: <iframe src="https://michiganaccess.lovable.app/embed" />
+ * Counties can iframe this page: <iframe src="https://accessmi.org/embed" />
  * Lightweight, self-contained quick-search widget.
  */
 export default function EmbedWidget() {
@@ -19,7 +19,7 @@ export default function EmbedWidget() {
       const isIframe = window.self !== window.top;
       const url = `/find-care?q=${encodeURIComponent(query)}`;
       if (isIframe) {
-        window.open(`https://michiganaccess.lovable.app${url}`, "_blank");
+        window.open(`https://accessmi.org${url}`, "_blank");
       } else {
         navigate(url);
       }
@@ -62,7 +62,7 @@ export default function EmbedWidget() {
         {/* Quick links */}
         <div className="flex items-center justify-center gap-4 text-[11px] text-muted-foreground">
           <a
-            href="https://michiganaccess.lovable.app/find-care"
+            href="https://accessmi.org/find-care"
             target="_blank"
             rel="noopener"
             className="flex items-center gap-1 hover:text-primary"
@@ -76,7 +76,7 @@ export default function EmbedWidget() {
         </div>
 
         <p className="text-center text-[9px] text-muted-foreground">
-          Powered by <a href="https://michiganaccess.lovable.app" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan Access</a> · Non-commercial civic resource
+          Powered by <a href="https://accessmi.org" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan Access</a> · Non-commercial civic resource
         </p>
       </div>
     </div>
