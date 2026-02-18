@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { z } from "https://esm.sh/zod@3.23.8";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -8,20 +9,33 @@ const corsHeaders = {
 
 const RECIPIENT_EMAIL = "saeb@fulbrightmail.org";
 
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name too long"),
+  email: z.string().trim().email("Invalid email").max(255, "Email too long"),
+  subject: z.string().trim().min(1, "Subject is required").max(200, "Subject too long"),
+  message: z.string().trim().min(1, "Message is required").max(5000, "Message too long"),
+});
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { name, email, subject, message } = await req.json();
+    const raw = await req.json();
+    const parsed = contactSchema.safeParse(raw);
 
-    if (!name || !email || !subject || !message) {
-      return new Response(JSON.stringify({ error: "All fields are required" }), {
+    if (!parsed.success) {
+      return new Response(JSON.stringify({
+        error: "Validation failed",
+        details: parsed.error.flatten().fieldErrors,
+      }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    const { name, email, subject, message } = parsed.data;
 
     // Store in database
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
@@ -61,8 +75,6 @@ serve(async (req) => {
             max_tokens: 200,
           }),
         });
-        // We can't actually send email without an email service,
-        // but the message is safely stored in the database
         console.log("Contact message stored successfully for:", email);
       } catch (e) {
         console.log("AI summary skipped:", e);
