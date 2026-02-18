@@ -17,6 +17,7 @@ import { useCommunityResources, type CommunityResource } from "@/hooks/useCommun
 import { useCounty } from "@/contexts/CountyContext";
 import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
 import ReferralToolkit from "@/components/shared/ReferralToolkit";
+import ShareMenu from "@/components/shared/ShareMenu";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -88,7 +89,8 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
             <p className="text-[11px] text-muted-foreground"><Globe className="mr-1 inline h-3 w-3" />{r.languages.join(", ")}</p>
           )}
 
-          <div className="flex flex-wrap gap-2 pt-1">
+          <div className="flex flex-wrap gap-2 pt-1 items-center">
+            <ShareMenu title={r.resource_name} url={`https://michiganaccess.lovable.app/resources`} />
             {r.phone && (
               <a href={`tel:${r.phone}`}>
                 <Button size="sm" variant="outline" className="h-7 text-xs"><Phone className="mr-1 h-3 w-3" />{r.phone}</Button>
