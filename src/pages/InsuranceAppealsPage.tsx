@@ -11,6 +11,7 @@ import ImpactDashboard from "@/components/appeals/ImpactDashboard";
 import PersonaCarousel from "@/components/appeals/PersonaCarousel";
 import DoctorKit from "@/components/appeals/DoctorKit";
 import EnterprisePartners from "@/components/appeals/EnterprisePartners";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const InsuranceAppealsPage = () => {
   usePageMeta({
@@ -34,6 +35,9 @@ const InsuranceAppealsPage = () => {
 
   return (
     <Layout>
+      <div className="container pt-6">
+        <Breadcrumbs items={[{ label: "Find Help", href: "/find-care" }, { label: "Insurance Appeals" }]} />
+      </div>
       {/* Hero */}
       <section className="relative bg-gradient-hero py-16 md:py-24 text-primary-foreground overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--teal)/0.15),transparent_60%)]" />

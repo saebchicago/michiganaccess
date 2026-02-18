@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MilestoneStepper from "@/components/civic/MilestoneStepper";
 import RegionalMetricCard from "@/components/civic/RegionalMetricCard";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 export default function LifeNavigatorPage() {
   usePageMeta({
@@ -15,6 +16,9 @@ export default function LifeNavigatorPage() {
 
   return (
     <Layout>
+      <div className="container pt-6">
+        <Breadcrumbs items={[{ label: "Life Navigator" }]} />
+      </div>
       <section className="bg-gradient-to-b from-primary/5 to-background py-10 lg:py-14">
         <div className="container max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

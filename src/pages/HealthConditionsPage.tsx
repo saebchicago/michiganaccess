@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFacilities, type Facility } from "@/hooks/useFacilities";
 import { useProviders, type Provider } from "@/hooks/useProviders";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -119,6 +120,9 @@ export default function HealthConditionsPage() {
 
   return (
     <Layout>
+      <div className="container pt-6">
+        <Breadcrumbs items={[{ label: "Services", href: "/find-care" }, { label: "Health Conditions" }]} />
+      </div>
       <section className="bg-gradient-to-b from-primary/5 to-background py-10 lg:py-16">
         <div className="container max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

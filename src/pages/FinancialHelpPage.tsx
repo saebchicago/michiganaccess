@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { useFinancialPrograms } from "@/hooks/useFinancialPrograms";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -79,6 +80,9 @@ export default function FinancialHelpPage() {
 
   return (
     <Layout>
+      <div className="container pt-6">
+        <Breadcrumbs items={[{ label: "Financial Help" }]} />
+      </div>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-coral/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">

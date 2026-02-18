@@ -17,6 +17,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell
 } from "recharts";
 import { Link } from "react-router-dom";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -142,6 +143,9 @@ export default function CostTransparencyPage() {
 
   return (
     <Layout>
+      <div className="container pt-6">
+        <Breadcrumbs items={[{ label: "Services", href: "/find-care" }, { label: "Cost Transparency" }]} />
+      </div>
       <section className="bg-gradient-to-b from-michigan-gold/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>

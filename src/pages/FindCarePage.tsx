@@ -26,6 +26,7 @@ import CareTeamReminders from "@/components/shared/CareTeamReminders";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
 import ReferralToolkit from "@/components/shared/ReferralToolkit";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { ClipboardList, Bell, Map } from "lucide-react";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
@@ -220,6 +221,9 @@ export default function FindCarePage() {
 
   return (
     <Layout>
+      <div className="container pt-6">
+        <Breadcrumbs items={[{ label: "Find Care" }]} />
+      </div>
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-10 lg:py-16">
         <div className="container max-w-4xl text-center">
