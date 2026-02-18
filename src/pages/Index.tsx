@@ -1,3 +1,4 @@
+import { AccessChat } from "@/components/AccessChat";
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import ComparisonTable from "@/components/home/ComparisonTable";
@@ -98,6 +99,7 @@ const Index = () => {
     <Layout>
       <OnboardingTour />
       <SectionNav />
+      <AccessChat />
       <CountyWelcomeBanner />
       <HeroSection />
       <QuickActionGrid />
