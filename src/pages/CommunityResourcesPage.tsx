@@ -91,6 +91,15 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
 
           <div className="flex flex-wrap gap-2 pt-1 items-center">
             <ShareMenu title={r.resource_name} url={`https://michiganaccess.lovable.app/resources`} />
+            {r.address && (
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${r.address}, ${r.city}, ${r.state} ${r.zip || ""}`)}`}
+                target="_blank"
+                rel="noopener"
+              >
+                <Button size="sm" variant="default" className="h-7 text-xs"><MapPin className="mr-1 h-3 w-3" />Get Directions</Button>
+              </a>
+            )}
             {r.phone && (
               <a href={`tel:${r.phone}`}>
                 <Button size="sm" variant="outline" className="h-7 text-xs"><Phone className="mr-1 h-3 w-3" />{r.phone}</Button>
