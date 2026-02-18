@@ -31,6 +31,7 @@ import {
 import { useCommunityEvents, EVENT_TYPES, type CommunityEvent } from "@/hooks/useCommunityEvents";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCounty } from "@/contexts/CountyContext";
+import ShareMenu from "@/components/shared/ShareMenu";
 
 const typeIcons: Record<string, typeof Heart> = {
   health_fair: Heart,
@@ -122,7 +123,8 @@ function EventCard({ event }: { event: CommunityEvent }) {
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2 pt-2 border-t">
+          <div className="flex flex-wrap gap-2 pt-2 border-t items-center">
+            <ShareMenu title={event.title} url={`https://michiganaccess.lovable.app/events`} />
             {event.registration_required && event.registration_url && (
               <Button size="sm" asChild>
                 <a href={event.registration_url} target="_blank" rel="noopener noreferrer">
