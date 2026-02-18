@@ -9,23 +9,23 @@ import { Download, FileText, Image, BarChart3, Mail, ExternalLink } from "lucide
 const ASSETS = [
   {
     title: "Platform Overview (PDF)",
-    description: "Two-page executive summary of Michigan Access — mission, metrics, and partnership model.",
+    description: "Two-page executive summary of Access Michigan — mission, metrics, and partnership model.",
     icon: FileText,
-    filename: "Michigan_Access_Overview.pdf",
+    filename: "Access_Michigan_Overview.pdf",
     size: "2.1 MB",
   },
   {
     title: "Logo & Brand Assets (ZIP)",
     description: "Primary logo, favicon, and color palette in SVG, PNG, and EPS formats.",
     icon: Image,
-    filename: "Michigan_Access_Brand_Kit.zip",
+    filename: "Access_Michigan_Brand_Kit.zip",
     size: "4.8 MB",
   },
   {
     title: "Impact Data Sheet",
     description: "Key statistics: 83 counties, 15K+ resources, equity scoring methodology, and outcomes data.",
     icon: BarChart3,
-    filename: "Michigan_Access_Impact_Data.pdf",
+    filename: "Access_Michigan_Impact_Data.pdf",
     size: "1.3 MB",
   },
 ];
@@ -48,11 +48,11 @@ const COVERAGE = [
 export default function PressPage() {
   usePageMeta({
     title: "Press & Media Kit",
-    description: "Download press assets, platform facts, and media resources for Michigan Access coverage.",
+    description: "Download press assets, platform facts, and media resources for Access Michigan coverage.",
     path: "/press",
     jsonLd: {
       "@type": "WebPage",
-      "name": "Press Kit — Michigan Access",
+      "name": "Press Kit — Access Michigan",
       "url": "https://accessmi.org/press",
     },
   });
@@ -67,7 +67,7 @@ export default function PressPage() {
             </Badge>
             <h1 className="text-3xl font-bold text-foreground mb-2">Media Kit</h1>
             <p className="text-muted-foreground max-w-lg mx-auto">
-              Everything journalists, partners, and researchers need to cover Michigan Access.
+              Everything journalists, partners, and researchers need to cover Access Michigan.
             </p>
           </motion.div>
         </div>
@@ -117,11 +117,11 @@ export default function PressPage() {
 
         {/* Boilerplate */}
         <section>
-          <h2 className="text-lg font-bold text-foreground mb-3">About Michigan Access</h2>
+          <h2 className="text-lg font-bold text-foreground mb-3">About Access Michigan</h2>
           <Card>
             <CardContent className="py-4">
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Michigan Access is an independent, non-commercial civic technology platform that organizes 
+                Access Michigan is an independent, non-commercial civic technology platform that organizes 
                 health, housing, food, and family services across all 83 Michigan counties into one structured, 
                 accessible interface. The platform integrates real-time data from CMS, HRSA, CDC, and MDHHS 
                 to provide equity-weighted search results, quality ratings, and community resource navigation — 

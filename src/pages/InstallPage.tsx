@@ -13,7 +13,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 const InstallPage = () => {
   const { t } = useTranslation();
-  usePageMeta({ title: "Install App", description: "Install Michigan Access on your device for instant access to services.", path: "/install" });
+  usePageMeta({ title: "Install App", description: "Install Access Michigan on your device for instant access to services.", path: "/install" });
 
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [installed, setInstalled] = useState(false);
@@ -58,7 +58,7 @@ const InstallPage = () => {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-michigan">
             <Download className="h-8 w-8 text-primary-foreground" />
           </div>
-          <h1 className="text-3xl font-bold text-foreground md:text-4xl">Install Michigan Access</h1>
+          <h1 className="text-3xl font-bold text-foreground md:text-4xl">Install Access Michigan</h1>
           <p className="mt-3 text-muted-foreground">
             Add to your home screen for instant, app-like access — no app store needed.
           </p>
@@ -68,7 +68,7 @@ const InstallPage = () => {
         {installed ? (
           <div className="mb-10 flex items-center justify-center gap-2 rounded-xl border border-border bg-card p-5 text-center">
             <CheckCircle2 className="h-6 w-6 text-michigan-forest" />
-            <span className="font-semibold text-foreground">Michigan Access is installed on this device!</span>
+            <span className="font-semibold text-foreground">Access Michigan is installed on this device!</span>
           </div>
         ) : deferredPrompt ? (
           <div className="mb-10 text-center">

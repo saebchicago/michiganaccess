@@ -71,7 +71,7 @@ const sources = [
 
 const LeanHealthcarePage = () => {
   usePageMeta({
-    title: "Lean Healthcare Engineering — Michigan Access",
+    title: "Lean Healthcare Engineering — Access Michigan",
     description: "Management engineering methodology: throughput optimization, leakage reduction, and value-based care ROI projections with sourced citations.",
     path: "/lean-healthcare",
   });
@@ -213,7 +213,7 @@ const LeanHealthcarePage = () => {
             </Card>
 
             <div className="text-center">
-              <ShareButton title="Lean Healthcare Engineering — Michigan Access" description="Throughput optimization, leakage reduction, and value-based care projected ROI methodology." />
+              <ShareButton title="Lean Healthcare Engineering — Access Michigan" description="Throughput optimization, leakage reduction, and value-based care projected ROI methodology." />
             </div>
           </div>
         </section>

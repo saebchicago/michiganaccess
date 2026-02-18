@@ -76,7 +76,7 @@ export default function SiteReportPage() {
       {/* Print button — hidden in print */}
       <div className="print:hidden mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Michigan Access — Full Site Report</h1>
+          <h1 className="text-2xl font-bold">Access Michigan — Full Site Report</h1>
           <p className="text-muted-foreground text-xs mt-1">
             Use your browser's <strong>Print → Save as PDF</strong> (Ctrl/Cmd+P) to export this page.
           </p>
@@ -88,7 +88,7 @@ export default function SiteReportPage() {
 
       {/* Header for PDF */}
       <div className="hidden print:block mb-6">
-        <h1 className="text-xl font-bold">Michigan Access — Comprehensive Site Report</h1>
+        <h1 className="text-xl font-bold">Access Michigan — Comprehensive Site Report</h1>
         <p className="text-xs text-muted-foreground">Generated {new Date().toLocaleDateString()}</p>
       </div>
 
@@ -111,7 +111,7 @@ export default function SiteReportPage() {
 
       {/* ── 1. SITE OVERVIEW ── */}
       <Section title="1. Site Overview & Architecture">
-        <p>Michigan Access is a public civic-infrastructure platform providing free, transparent access to healthcare facility data, provider directories, community resources, transportation tools, financial assistance programs, and quality metrics across the state of Michigan.</p>
+        <p>Access Michigan is a public civic-infrastructure platform providing free, transparent access to healthcare facility data, provider directories, community resources, transportation tools, financial assistance programs, and quality metrics across the state of Michigan.</p>
         <ul className="list-disc list-inside mt-2 space-y-0.5 text-xs">
           <li><strong>Tech stack:</strong> React 18 + Vite + TypeScript + Tailwind CSS + shadcn/ui</li>
           <li><strong>Backend:</strong> Lovable Cloud (Supabase) — 5 public tables, all read-only via RLS</li>
@@ -399,7 +399,7 @@ export default function SiteReportPage() {
 
       {/* Footer */}
       <div className="text-center text-[10px] text-muted-foreground border-t border-border pt-4 mt-8">
-        <p>Michigan Access — Site Report — Generated {new Date().toLocaleString()}</p>
+        <p>Access Michigan — Site Report — Generated {new Date().toLocaleString()}</p>
         <p>This document is for review purposes. All data is publicly available civic infrastructure.</p>
       </div>
     </div>

@@ -54,7 +54,7 @@ function generateICS(municipality: Municipality): string {
 
   return `BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Michigan Access//Municipal Meetings//EN
+PRODID:-//Access Michigan//Municipal Meetings//EN
 BEGIN:VEVENT
 DTSTART:${formatDate(nextMeeting)}
 DURATION:PT2H

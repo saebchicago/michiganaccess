@@ -26,7 +26,7 @@ export default function NotificationPrompt({ className = "" }: { className?: str
       if (result === "granted") {
         toast.success("Notifications enabled! You'll receive alerts about new services near you.");
         // Show a demo notification
-        new Notification("Michigan Access", {
+        new Notification("Access Michigan", {
           body: "You'll now receive alerts about new services and health updates.",
           icon: "/pwa-192x192.png",
         });

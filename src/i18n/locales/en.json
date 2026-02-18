@@ -56,8 +56,8 @@
     "cta": "Get Started"
   },
   "systems": {
-    "title": "What Is Michigan Access?",
-    "description": "Michigan Access is an independent, non-commercial resource that organizes public service information from across state agencies into a single, structured interface. It does not replace government services — it makes them easier to find, understand, and act on."
+    "title": "What Is Access Michigan?",
+    "description": "Access Michigan is an independent, non-commercial resource that organizes public service information from across state agencies into a single, structured interface. It does not replace government services — it makes them easier to find, understand, and act on."
   },
   "crisis": {
     "title": "Need Immediate Help?",
@@ -169,7 +169,7 @@
   },
   "partnership": {
     "title": "Partnership Portal",
-    "subtitle": "Non-profits, community organizations, and service providers can submit resources for inclusion on Michigan Access.",
+    "subtitle": "Non-profits, community organizations, and service providers can submit resources for inclusion on Access Michigan.",
     "orgName": "Organization Name",
     "contactName": "Contact Name",
     "contactEmail": "Contact Email",
@@ -390,11 +390,11 @@
     "eligibility": "Eligibility"
   },
   "aboutPage": {
-    "badge": "About Michigan Access",
+    "badge": "About Access Michigan",
     "title": "Helping Michigan Families Navigate Health, Safety & Transportation",
     "subtitle": "An independent, data-driven civic resource built to improve health, safety, and transportation access for all Michigan residents — regardless of income, insurance status, or background.",
     "missionTitle": "Our Mission",
-    "missionDesc": "Michigan Access exists to help Michigan residents navigate healthcare, education, and transportation — finding quality care, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy resources, regardless of income, insurance status, or background.",
+    "missionDesc": "Access Michigan exists to help Michigan residents navigate healthcare, education, and transportation — finding quality care, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy resources, regardless of income, insurance status, or background.",
     "independentTitle": "Independent & Objective",
     "independentDesc": "No advertising, no paid placements. Rankings based on publicly available, third-party quality data.",
     "residentFirstTitle": "Resident-First",

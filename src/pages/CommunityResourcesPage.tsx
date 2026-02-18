@@ -137,7 +137,7 @@ export default function CommunityResourcesPage() {
       "name": "Community Resources — Michigan Access",
       "description": "Food, housing, transportation, and mental health support services across all 83 Michigan counties.",
       "url": "https://accessmi.org/resources",
-      "provider": { "@type": "Organization", "name": "Michigan Access" },
+      "provider": { "@type": "Organization", "name": "Access Michigan" },
     },
   });
   // Load ALL resources — local dropdown and tabs handle filtering

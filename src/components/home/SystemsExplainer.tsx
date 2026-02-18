@@ -26,7 +26,7 @@ const SystemsExplainer = () => (
         className="mx-auto max-w-2xl text-center"
       >
         <h2 id="systems-heading" className="text-xl font-semibold text-foreground sm:text-2xl">
-          What Is Michigan Access?
+          What Is Access Michigan?
         </h2>
         <p className="mt-3 text-base text-muted-foreground leading-relaxed">
           An <strong className="text-foreground">independent, non-commercial navigation platform</strong> that does what government portals don't.

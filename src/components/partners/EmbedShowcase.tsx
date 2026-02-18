@@ -8,19 +8,19 @@ const WIDGETS = [
   {
     name: "Care Finder Widget",
     description: "Embed a quick-search widget for healthcare, community resources, and support across Michigan.",
-    embedCode: `<iframe src="https://accessmi.org/embed" width="100%" height="280" frameborder="0" title="Michigan Access Care Finder"></iframe>`,
+    embedCode: `<iframe src="https://accessmi.org/embed" width="100%" height="280" frameborder="0" title="Access Michigan Care Finder"></iframe>`,
     previewUrl: "/embed",
   },
   {
     name: "County Dashboard Widget",
     description: "Embed a county-specific health overview for your service area. Replace [county] with the county slug.",
-    embedCode: `<iframe src="https://accessmi.org/county/wayne" width="100%" height="600" frameborder="0" title="Michigan Access County Dashboard"></iframe>`,
+    embedCode: `<iframe src="https://accessmi.org/county/wayne" width="100%" height="600" frameborder="0" title="Access Michigan County Dashboard"></iframe>`,
     previewUrl: "/county/wayne",
   },
   {
     name: "Resource Directory Widget",
     description: "Filterable community resource directory with 601+ entries. Ideal for 211 integrations and health system portals.",
-    embedCode: `<iframe src="https://accessmi.org/resources" width="100%" height="700" frameborder="0" title="Michigan Access Resources"></iframe>`,
+    embedCode: `<iframe src="https://accessmi.org/resources" width="100%" height="700" frameborder="0" title="Access Michigan Resources"></iframe>`,
     previewUrl: "/resources",
   },
 ];
@@ -39,7 +39,7 @@ export default function EmbedShowcase() {
           Embeddable Widgets
         </Badge>
         <h2 id="embed-heading" className="text-2xl font-bold text-foreground">
-          Embed Michigan Access on Your Site
+          Embed Access Michigan on Your Site
         </h2>
         <p className="mt-2 text-muted-foreground max-w-2xl mx-auto text-sm">
           Copy-paste iframe widgets for health system portals, county websites, and community organization pages. No API key required.

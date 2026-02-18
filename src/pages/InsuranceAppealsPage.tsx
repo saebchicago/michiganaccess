@@ -60,7 +60,7 @@ const InsuranceAppealsPage = () => {
             </h1>
             <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
               68% of internal appeals and 82% of DIFS external reviews are decided in the patient's favor. 
-              Michigan Access gives you the tools to fight back—free, private, and proven.
+              Access Michigan gives you the tools to fight back—free, private, and proven.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" variant="secondary" asChild>

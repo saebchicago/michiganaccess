@@ -14,7 +14,7 @@ interface TourStep {
 const STEPS: TourStep[] = [
   {
     id: "welcome",
-    title: "Welcome to Michigan Access",
+    title: "Welcome to Access Michigan",
     description: "Your one-stop gateway to health, housing, and civic services across all 83 counties.",
     icon: <Building2 className="h-5 w-5 text-primary" />,
   },

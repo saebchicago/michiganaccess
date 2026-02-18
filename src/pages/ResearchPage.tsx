@@ -71,7 +71,7 @@ const journeys = [
     steps: [
       { emoji: "😰", label: "Symptom Recognition", desc: '"I feel sick but have no insurance"' },
       { emoji: "😕", label: "Google Search", desc: '"49 results — which are affordable?"' },
-      { emoji: "🤔", label: "Discover Michigan Access", desc: "Via 2-1-1 referral" },
+      { emoji: "🤔", label: "Discover Access Michigan", desc: "Via 2-1-1 referral" },
       { emoji: "😊", label: 'Filter by "Sliding Scale"', desc: '"3 clinics within 5 miles"' },
       { emoji: "✅", label: "Validate Legitimacy", desc: "Sees .gov data sources, 988 resources" },
       { emoji: "✅", label: "Take Action", desc: "Calls clinic, confirms $20 fee, books appointment" },

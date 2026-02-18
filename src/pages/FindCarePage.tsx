@@ -88,7 +88,7 @@ export default function FindCarePage() {
     path: "/find-care",
     jsonLd: {
       "@type": "MedicalWebPage",
-      "name": "Find Care Near You — Michigan Access",
+      "name": "Find Care Near You — Access Michigan",
       "about": { "@type": "MedicalCondition", "name": "Healthcare Access" },
       "audience": { "@type": "PeopleAudience", "geographicArea": { "@type": "State", "name": "Michigan" } },
       "specialty": "Primary Care, Behavioral Health, Urgent Care",
