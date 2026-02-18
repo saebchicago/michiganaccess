@@ -31,6 +31,8 @@ const categories = [
   { key: "housing", aliases: ["housing", "housing_shelter"], label: "Housing & Shelter", icon: Home, color: "text-primary" },
   { key: "transportation", aliases: ["transportation"], label: "Transportation", icon: Bus, color: "text-michigan-teal" },
   { key: "mental_health", aliases: ["mental_health", "substance_abuse"], label: "Mental Health", icon: Brain, color: "text-michigan-coral" },
+  { key: "veterans_seniors", aliases: ["veterans_seniors"], label: "Veterans & Seniors", icon: Shield, color: "text-michigan-gold" },
+  { key: "education", aliases: ["education"], label: "Education & Training", icon: Globe, color: "text-michigan-sky" },
 ];
 
 // Counties list is now dynamically derived from loaded resources

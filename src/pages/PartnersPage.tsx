@@ -251,6 +251,47 @@ const PartnersPage = () => {
         {/* Embeddable Widgets */}
         <EmbedShowcase />
 
+        {/* CHNA Data Export */}
+        <section aria-labelledby="chna-heading" className="py-4">
+          <div className="text-center mb-6">
+            <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 mb-3">
+              <FileText className="h-3 w-3 mr-1" />
+              CHNA-Ready Data
+            </Badge>
+            <h2 id="chna-heading" className="text-2xl font-bold text-foreground">
+              Community Health Needs Assessment Export
+            </h2>
+            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto text-sm">
+              Download anonymized, aggregated platform data formatted for IRS Schedule H reporting and CHNA documentation. No personal data is ever collected or shared.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              { title: "Resource Gap Analysis", desc: "County-level resource density vs. need indicators across food, housing, transportation, and mental health sectors.", format: "CSV" },
+              { title: "Facility Utilization Metrics", desc: "Aggregated page views and referral patterns by facility type and county, benchmarked against state averages.", format: "CSV" },
+              { title: "Community Feedback Summary", desc: "Anonymized satisfaction rates and thematic analysis of user feedback by page and sector.", format: "PDF" },
+            ].map((item) => (
+              <Card key={item.title} className="hover-lift border-michigan-forest/10">
+                <CardContent className="pt-6 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-sm text-foreground">{item.title}</h3>
+                    <Badge variant="outline" className="text-[10px]">{item.format}</Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                  <Button variant="outline" size="sm" className="w-full text-xs" asChild>
+                    <Link to="/contact?subject=CHNA%20Data%20Request">
+                      <FileText className="mr-1.5 h-3 w-3" />Request Export
+                    </Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <p className="text-center text-[10px] text-muted-foreground mt-4">
+            All exports are strictly anonymized and aggregated. Michigan Access never collects or shares personal health information.
+          </p>
+        </section>
+
         {/* Anonymous Metrics */}
         <MetricsAPI />
 
