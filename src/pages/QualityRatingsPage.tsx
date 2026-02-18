@@ -50,7 +50,7 @@ export default function QualityRatingsPage() {
     path: "/quality",
     jsonLd: {
       "@type": "WebPage",
-      "name": "Quality Ratings — Michigan Access",
+      "name": "Quality Ratings — Access Michigan",
       "description": "Hospital quality scores, Leapfrog grades, and accreditation for Michigan facilities.",
       "url": "https://accessmi.org/quality",
     },
