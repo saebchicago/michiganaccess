@@ -46,23 +46,64 @@ export default function AIChatWidget() {
         return [...prev, { role: "assistant", content: assistantSoFar }];
       });
     };
+      // Build OpenAI-style messages from the widget's message history
+const historyMessages = messages.map((m) => ({
+  role: m.role === "user" ? "user" : "assistant",
+  content: m.content,
+}));
 
-    try {
-      const resp = await fetch(CHAT_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+const userMsg = {
+  role: "user" as const,
+  content: input.trim(),
+};
+
+setMessages((prev) => [...prev, userMsg]);
+setInput("");
+setIsLoading(true);
+setError(null);
+
+try {
+  const resp = await fetch("/.netlify/functions/chat-mistral", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are the Michigan Access Assistant for accessmi.org. Help residents understand Michigan services, benefits, and MI-Access assessments. Be accurate, concise, and avoid making up facts.",
         },
-        body: JSON.stringify({ messages: [...messages, userMsg] }),
-      });
+        ...historyMessages,
+        userMsg,
+      ],
+    }),
+  });
 
-      if (!resp.ok || !resp.body) {
-        const errData = await resp.json().catch(() => ({}));
-        upsert(errData.error || "Sorry, I'm having trouble right now. Please try again.");
-        setIsLoading(false);
-        return;
-      }
+  if (!resp.ok) {
+    const errData = await resp.json().catch(() => ({}));
+    console.error("Mistral error:", errData);
+    setError("Sorry, I’m having trouble right now. Please try again.");
+    setIsLoading(false);
+    return;
+  }
+
+  const data = await resp.json();
+  const replyText: string = data.reply || "";
+
+  const assistantMsg = {
+    role: "assistant" as const,
+    content: replyText,
+  };
+
+  setMessages((prev) => [...prev, assistantMsg]);
+} catch (err) {
+  console.error(err);
+  setError("Sorry, I couldn’t connect. Please try again later.");
+} finally {
+  setIsLoading(false);
+}
 
       const reader = resp.body.getReader();
       const decoder = new TextDecoder();
