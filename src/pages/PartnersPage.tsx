@@ -10,6 +10,9 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import EmbedShowcase from "@/components/partners/EmbedShowcase";
+import MetricsAPI from "@/components/partners/MetricsAPI";
+import EventCalendarPreview from "@/components/partners/EventCalendarPreview";
 
 const METRICS = [
   { icon: Map, label: "FQHC Map Views", value: "12,400+", trend: "+18% this quarter" },
@@ -244,6 +247,15 @@ const PartnersPage = () => {
             </Card>
           </div>
         </section>
+
+        {/* Embeddable Widgets */}
+        <EmbedShowcase />
+
+        {/* Anonymous Metrics */}
+        <MetricsAPI />
+
+        {/* Event Calendar */}
+        <EventCalendarPreview />
 
         {/* CTA */}
         <div className="text-center space-y-4 py-8">
