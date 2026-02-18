@@ -14,14 +14,14 @@ import SmartRecommendations from "@/components/home/SmartRecommendations";
 import OnboardingTour from "@/components/shared/OnboardingTour";
 import SectionNav from "@/components/home/SectionNav";
 import QuickActionGrid from "@/components/home/QuickActionGrid";
-
+import StakeholderCTAs from "@/components/home/StakeholderCTAs";
 import SuccessStories from "@/components/home/SuccessStories";
 import AudienceSelector, { useAudience } from "@/components/home/AudienceSelector";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
   usePageMeta({
-    title: "Michigan Access — Statewide Services Gateway",
+    title: "Michigan Access: Health, Transport & Safety Hub | Powered by Open Data",
     description: "One structured gateway to health, housing, food, and family services across all 83 Michigan counties.",
     path: "/",
   });
@@ -100,6 +100,7 @@ const Index = () => {
       <SectionNav />
       <CountyWelcomeBanner />
       <HeroSection />
+      <StakeholderCTAs />
       <QuickActionGrid />
       <AudienceSelector audience={audience} onSelect={select} />
       <ComparisonTable />
