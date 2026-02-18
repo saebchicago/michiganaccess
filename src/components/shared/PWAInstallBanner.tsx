@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const DISMISS_KEY = "mi-pwa-banner-dismissed";
+const DISMISS_KEY = "mi-pwa-banner-dismissed-at";
 const VISIT_KEY = "mi-visit-count";
 const MIN_VISITS = 2;
+const SUPPRESS_DAYS = 60;
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -19,17 +20,25 @@ export default function PWAInstallBanner() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
-    // Skip if not mobile, already installed, or dismissed
+    // Never show in standalone/installed mode
     if (!isMobile) return;
     if (window.matchMedia("(display-mode: standalone)").matches) return;
-    if (sessionStorage.getItem(DISMISS_KEY)) return;
+    if ((navigator as any).standalone === true) return;
+
+    // Check persistent dismiss with 60-day window
+    try {
+      const dismissedAt = localStorage.getItem(DISMISS_KEY);
+      if (dismissedAt) {
+        const elapsed = Date.now() - Number(dismissedAt);
+        if (elapsed < SUPPRESS_DAYS * 24 * 60 * 60 * 1000) return;
+      }
+    } catch {}
 
     // Track visits
     const count = Number(localStorage.getItem(VISIT_KEY) || "0") + 1;
     localStorage.setItem(VISIT_KEY, String(count));
     if (count < MIN_VISITS) return;
 
-    // Show after short delay for better UX
     const timer = setTimeout(() => setShow(true), 2500);
 
     const handler = (e: Event) => {
@@ -46,7 +55,7 @@ export default function PWAInstallBanner() {
 
   const dismiss = () => {
     setShow(false);
-    sessionStorage.setItem(DISMISS_KEY, "1");
+    try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch {}
   };
 
   const handleInstall = async () => {

@@ -63,30 +63,9 @@ const HeroSection = () => {
   const [detectedCounty, setDetectedCounty] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check localStorage first for previously detected county
+    // Only use cached county — never request geolocation on page load
     const cached = localStorage.getItem("mi-geo-county");
-    if (cached) { setDetectedCounty(cached); return; }
-
-    if (!navigator.geolocation) return;
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        try {
-          const { latitude, longitude } = pos.coords;
-          const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&zoom=10`,
-            { headers: { "Accept-Language": "en" } }
-          );
-          const data = await res.json();
-          const county = data?.address?.county?.replace(/ County$/i, "");
-          if (county && data?.address?.state === "Michigan") {
-            setDetectedCounty(county);
-            localStorage.setItem("mi-geo-county", county);
-          }
-        } catch {}
-      },
-      () => {},
-      { timeout: 5000, maximumAge: 86400000 }
-    );
+    if (cached) setDetectedCounty(cached);
   }, []);
 
   return (
