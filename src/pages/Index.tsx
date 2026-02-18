@@ -12,6 +12,7 @@ import RegionalGateway from "@/components/home/RegionalGateway";
 import EngineeringFAQ from "@/components/home/EngineeringFAQ";
 import SmartRecommendations from "@/components/home/SmartRecommendations";
 import OnboardingTour from "@/components/shared/OnboardingTour";
+import SectionNav from "@/components/home/SectionNav";
 
 import SuccessStories from "@/components/home/SuccessStories";
 import AudienceSelector, { useAudience } from "@/components/home/AudienceSelector";
@@ -95,6 +96,7 @@ const Index = () => {
   return (
     <Layout>
       <OnboardingTour />
+      <SectionNav />
       <CountyWelcomeBanner />
       <HeroSection />
       <AudienceSelector audience={audience} onSelect={select} />
