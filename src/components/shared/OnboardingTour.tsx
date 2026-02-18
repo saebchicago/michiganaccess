@@ -70,64 +70,66 @@ export default function OnboardingTour() {
     localStorage.setItem(STORAGE_KEY, "true");
   }, []);
 
-  if (!visible || step < 0) return null;
-
-  const current = STEPS[step];
+  const current = step >= 0 && step < STEPS.length ? STEPS[step] : null;
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[9999] pointer-events-none">
-        {/* Subtle backdrop */}
+      {visible && current && (
         <motion.div
+          key="onboarding-tour"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-foreground/10 pointer-events-auto"
-          onClick={dismiss}
-        />
-
-        {/* Tour card */}
-        <motion.div
-          key={current.id}
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.95 }}
-          transition={{ duration: 0.3 }}
-          className="absolute bottom-20 left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-sm pointer-events-auto md:bottom-6"
+          className="fixed inset-0 z-[9999] pointer-events-none"
         >
-          <div className="rounded-xl border border-border bg-card p-5 shadow-lg space-y-3">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-2">
-                {current.icon}
-                <h3 className="text-sm font-bold text-foreground">{current.title}</h3>
+          {/* Subtle backdrop */}
+          <div
+            className="absolute inset-0 bg-foreground/10 pointer-events-auto"
+            onClick={dismiss}
+          />
+
+          {/* Tour card */}
+          <motion.div
+            key={current.id}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.3 }}
+            className="absolute bottom-20 left-1/2 -translate-x-1/2 w-[calc(100vw-2rem)] max-w-sm pointer-events-auto md:bottom-6"
+          >
+            <div className="rounded-xl border border-border bg-card p-5 shadow-lg space-y-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-2">
+                  {current.icon}
+                  <h3 className="text-sm font-bold text-foreground">{current.title}</h3>
+                </div>
+                <button onClick={dismiss} className="text-muted-foreground hover:text-foreground" aria-label="Close tour">
+                  <X className="h-4 w-4" />
+                </button>
               </div>
-              <button onClick={dismiss} className="text-muted-foreground hover:text-foreground" aria-label="Close tour">
-                <X className="h-4 w-4" />
-              </button>
+              <p className="text-xs text-muted-foreground leading-relaxed">{current.description}</p>
+              <div className="flex items-center justify-between">
+                <div className="flex gap-1.5">
+                  {STEPS.map((_, i) => (
+                    <div
+                      key={i}
+                      className={`h-1.5 w-1.5 rounded-full transition-colors ${i === step ? "bg-primary" : "bg-border"}`}
+                    />
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="ghost" className="text-xs" onClick={dismiss}>
+                    Skip
+                  </Button>
+                  <Button size="sm" className="text-xs" onClick={next}>
+                    {step === STEPS.length - 1 ? "Get Started" : "Next"}
+                  </Button>
+                </div>
+              </div>
             </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">{current.description}</p>
-            <div className="flex items-center justify-between">
-              {/* Step dots */}
-              <div className="flex gap-1.5">
-                {STEPS.map((_, i) => (
-                  <div
-                    key={i}
-                    className={`h-1.5 w-1.5 rounded-full transition-colors ${i === step ? "bg-primary" : "bg-border"}`}
-                  />
-                ))}
-              </div>
-              <div className="flex gap-2">
-                <Button size="sm" variant="ghost" className="text-xs" onClick={dismiss}>
-                  Skip
-                </Button>
-                <Button size="sm" className="text-xs" onClick={next}>
-                  {step === STEPS.length - 1 ? "Get Started" : "Next"}
-                </Button>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </motion.div>
-      </div>
+      )}
     </AnimatePresence>
   );
 }
