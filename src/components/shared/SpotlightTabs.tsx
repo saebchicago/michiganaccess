@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,16 +10,6 @@ import {
 } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { toast } from "sonner";
-import CommunityProgramSpotlights from "./CommunityProgramSpotlights";
-import TransportationSpotlights from "./TransportationSpotlights";
-import EnergySpotlights from "./EnergySpotlights";
-import EnvironmentSpotlights from "./EnvironmentSpotlights";
-import EducationSpotlights from "./EducationSpotlights";
-import LegalCivicSpotlights from "./LegalCivicSpotlights";
-import VeteransSeniorsSpotlights from "./VeteransSeniorsSpotlights";
-import YouthFamilySpotlights from "./YouthFamilySpotlights";
-import DisasterPrepSpotlights from "./DisasterPrepSpotlights";
-import CulturalRecSpotlights from "./CulturalRecSpotlights";
 
 interface SearchableProgram {
   title: string;
@@ -123,16 +112,16 @@ const ALL_PROGRAMS: SearchableProgram[] = [
 ];
 
 const SECTIONS = [
-  { value: "community", label: "Community", icon: Heart, component: CommunityProgramSpotlights },
-  { value: "transportation", label: "Transportation", icon: Bus, component: TransportationSpotlights },
-  { value: "energy", label: "Energy", icon: Zap, component: EnergySpotlights },
-  { value: "environment", label: "Environment", icon: TreePine, component: EnvironmentSpotlights },
-  { value: "education", label: "Education", icon: GraduationCap, component: EducationSpotlights },
-  { value: "legal", label: "Legal & Civic", icon: Scale, component: LegalCivicSpotlights },
-  { value: "veterans", label: "Veterans & Seniors", icon: Medal, component: VeteransSeniorsSpotlights },
-  { value: "youth", label: "Youth & Family", icon: Baby, component: YouthFamilySpotlights },
-  { value: "disaster", label: "Disaster Prep", icon: ShieldAlert, component: DisasterPrepSpotlights },
-  { value: "cultural", label: "Culture & Rec", icon: Palette, component: CulturalRecSpotlights },
+  { value: "community", label: "Community", icon: Heart },
+  { value: "transportation", label: "Transportation", icon: Bus },
+  { value: "energy", label: "Energy", icon: Zap },
+  { value: "environment", label: "Environment", icon: TreePine },
+  { value: "education", label: "Education", icon: GraduationCap },
+  { value: "legal", label: "Legal & Civic", icon: Scale },
+  { value: "veterans", label: "Veterans & Seniors", icon: Medal },
+  { value: "youth", label: "Youth & Family", icon: Baby },
+  { value: "disaster", label: "Disaster Prep", icon: ShieldAlert },
+  { value: "cultural", label: "Culture & Rec", icon: Palette },
 ] as const;
 
 const handleShare = async (program: SearchableProgram) => {
@@ -336,26 +325,56 @@ const SpotlightTabs = () => {
               </Button>
             </div>
 
-            {/* Tabbed category view */}
-            <Tabs defaultValue="community" className="w-full">
-              <TabsList className="flex flex-wrap justify-center gap-1 h-auto bg-transparent p-0 mb-2">
-                {SECTIONS.map(({ value, label, icon: Icon }) => (
-                  <TabsTrigger
-                    key={value}
-                    value={value}
-                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-full px-3 py-1.5 text-xs font-medium border border-border data-[state=active]:border-primary transition-colors"
-                  >
-                    <Icon className="h-3.5 w-3.5 mr-1.5" />
-                    {label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-              {SECTIONS.map(({ value, component: Component }) => (
-                <TabsContent key={value} value={value} className="mt-0">
-                  <Component />
-                </TabsContent>
-              ))}
-            </Tabs>
+            {/* Category carousels */}
+            <div className="space-y-10">
+              {SECTIONS.map(({ value, label, icon: Icon }) => {
+                const categoryPrograms = ALL_PROGRAMS.filter(
+                  (p) => p.category === label &&
+                    (!p.counties || !county || p.counties.includes(county))
+                );
+                if (categoryPrograms.length === 0) return null;
+                return (
+                  <div key={value}>
+                    <div className="flex items-center gap-2 mb-4">
+                      <Icon className="h-5 w-5 text-primary" />
+                      <h3 className="text-lg font-semibold text-foreground">{label}</h3>
+                      <Badge variant="secondary" className="text-[10px]">{categoryPrograms.length}</Badge>
+                    </div>
+                    <Carousel opts={{ align: "start", loop: categoryPrograms.length > 3 }} className="w-full">
+                      <CarouselContent>
+                        {categoryPrograms.map((program) => (
+                          <CarouselItem key={`${value}-${program.title}`} className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                            <Card className="h-full hover-lift">
+                              <CardContent className="p-4 space-y-2 flex flex-col h-full">
+                                <h4 className="font-semibold text-sm text-foreground leading-snug">{program.title}</h4>
+                                <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-3">{program.description}</p>
+                                <div className="flex flex-wrap gap-1">
+                                  {program.eligibility.slice(0, 2).map((tag) => (
+                                    <Badge key={tag} variant="secondary" className="text-[10px] capitalize">{tag}</Badge>
+                                  ))}
+                                </div>
+                                <div className="flex gap-2 mt-auto">
+                                  <Button variant="outline" size="sm" className="flex-1" asChild>
+                                    <a href={program.url} target="_blank" rel="noopener noreferrer">
+                                      Learn More <ExternalLink className="h-3 w-3 ml-1" />
+                                    </a>
+                                  </Button>
+                                  <Button variant="ghost" size="sm" className="px-2" onClick={() => handleShare(program)} aria-label={`Share ${program.title}`}>
+                                    <Share2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious className="hidden md:flex" />
+                      <CarouselNext className="hidden md:flex" />
+                    </Carousel>
+                  </div>
+                );
+              })}
+            </div>
           </>
         )}
       </div>
