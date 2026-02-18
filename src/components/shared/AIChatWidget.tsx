@@ -31,113 +31,49 @@ export default function AIChatWidget() {
   const send = useCallback(async (text: string) => {
     if (!text.trim() || isLoading) return;
     const userMsg: Msg = { role: "user", content: text.trim() };
+    const historyMessages = messages.map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
+
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsLoading(true);
 
-    let assistantSoFar = "";
-    const upsert = (chunk: string) => {
-      assistantSoFar += chunk;
-      setMessages((prev) => {
-        const last = prev[prev.length - 1];
-        if (last?.role === "assistant") {
-          return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: assistantSoFar } : m));
-        }
-        return [...prev, { role: "assistant", content: assistantSoFar }];
+    try {
+      const resp = await fetch("/.netlify/functions/chat-mistral", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are the Access Michigan Assistant for accessmi.org. Help residents understand Michigan services, benefits, and MI-Access assessments. Be accurate, concise, and avoid making up facts.",
+            },
+            ...historyMessages,
+            { role: "user", content: text.trim() },
+          ],
+        }),
       });
-    };
-      // Build OpenAI-style messages from the widget's message history
-const historyMessages = messages.map((m) => ({
-  role: m.role === "user" ? "user" : "assistant",
-  content: m.content,
-}));
 
-const userMsg = {
-  role: "user" as const,
-  content: input.trim(),
-};
-
-setMessages((prev) => [...prev, userMsg]);
-setInput("");
-setIsLoading(true);
-setError(null);
-
-try {
-  const resp = await fetch("/.netlify/functions/chat-mistral", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are the Michigan Access Assistant for accessmi.org. Help residents understand Michigan services, benefits, and MI-Access assessments. Be accurate, concise, and avoid making up facts.",
-        },
-        ...historyMessages,
-        userMsg,
-      ],
-    }),
-  });
-
-  if (!resp.ok) {
-    const errData = await resp.json().catch(() => ({}));
-    console.error("Mistral error:", errData);
-    setError("Sorry, I’m having trouble right now. Please try again.");
-    setIsLoading(false);
-    return;
-  }
-
-  const data = await resp.json();
-  const replyText: string = data.reply || "";
-
-  const assistantMsg = {
-    role: "assistant" as const,
-    content: replyText,
-  };
-
-  setMessages((prev) => [...prev, assistantMsg]);
-} catch (err) {
-  console.error(err);
-  setError("Sorry, I couldn’t connect. Please try again later.");
-} finally {
-  setIsLoading(false);
-}
-
-      const reader = resp.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let streamDone = false;
-
-      while (!streamDone) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
-
-        let newlineIdx: number;
-        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
-          let line = buffer.slice(0, newlineIdx);
-          buffer = buffer.slice(newlineIdx + 1);
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (line.startsWith(":") || line.trim() === "") continue;
-          if (!line.startsWith("data: ")) continue;
-          const json = line.slice(6).trim();
-          if (json === "[DONE]") { streamDone = true; break; }
-          try {
-            const parsed = JSON.parse(json);
-            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-            if (content) upsert(content);
-          } catch {
-            buffer = line + "\n" + buffer;
-            break;
-          }
-        }
+      if (!resp.ok) {
+        const errData = await resp.json().catch(() => ({}));
+        console.error("Mistral error:", errData);
+        setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, I'm having trouble right now. Please try again." }]);
+        setIsLoading(false);
+        return;
       }
-    } catch {
-      upsert("Sorry, I couldn't connect. Please try again later.");
+
+      const data = await resp.json();
+      const replyText: string = data.reply || "";
+      setMessages((prev) => [...prev, { role: "assistant", content: replyText }]);
+    } catch (err) {
+      console.error(err);
+      setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, I couldn't connect. Please try again later." }]);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [messages, isLoading]);
 
   return (
