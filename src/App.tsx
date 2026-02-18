@@ -56,6 +56,7 @@ const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 const ChangelogPage = lazy(() => import("./pages/ChangelogPage"));
 const PressPage = lazy(() => import("./pages/PressPage"));
 const SitemapPage = lazy(() => import("./pages/SitemapPage"));
+const CountyRedirect = lazy(() => import("./pages/CountyRedirect"));
 const queryClient = new QueryClient();
 
 const PageLoader = () => (
@@ -121,6 +122,8 @@ const App = () => (
               <Route path="/changelog" element={<ChangelogPage />} />
               <Route path="/press" element={<PressPage />} />
               <Route path="/sitemap" element={<SitemapPage />} />
+              {/* County shortcut: /wayne → /county/wayne */}
+              <Route path="/:slug" element={<CountyRedirect />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
