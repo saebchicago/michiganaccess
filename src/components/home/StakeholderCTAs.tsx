@@ -6,8 +6,9 @@ const cards = [
   {
     icon: Building2,
     title: "Health System Leaders",
-    subtitle: "HFHS · Corewell · Trinity",
-    description: "Track referral patterns, optimize ambulatory networks, and measure community health ROI across your service area.",
+    subtitle: "Hospital Networks in Michigan",
+    description:
+      "Track referral patterns, optimize ambulatory networks, and measure community health ROI across your service area.",
     cta: "Explore Pilot Program",
     href: "/partners",
     gradient: "from-primary to-michigan-navy",
@@ -16,7 +17,8 @@ const cards = [
     icon: HandHeart,
     title: "Community Organizations",
     subtitle: "Non-profits · FQHCs · Coalitions",
-    description: "Amplify your services to the residents who need them most. Measure impact with institutional-grade analytics.",
+    description:
+      "Amplify your services to the residents who need them most. Measure impact with institutional-grade analytics.",
     cta: "Collaborate With Us",
     href: "/partnerships",
     gradient: "from-michigan-forest to-michigan-teal",
@@ -25,7 +27,8 @@ const cards = [
     icon: Landmark,
     title: "Government & Policy",
     subtitle: "County Health · MDHHS · Legislature",
-    description: "Gap analysis, SDOH mapping, and outcome tracking to inform evidence-based policy across all 83 counties.",
+    description:
+      "Gap analysis, SDOH mapping, and outcome tracking to inform evidence-based policy across all 83 counties.",
     cta: "View Impact Data",
     href: "/impact",
     gradient: "from-michigan-blue to-michigan-sky",
@@ -46,9 +49,7 @@ export default function StakeholderCTAs() {
           <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
             Built for Every Stakeholder
           </p>
-          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-            Who uses Michigan Access?
-          </h2>
+          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Who uses Michigan Access?</h2>
         </motion.div>
 
         <div className="grid gap-6 md:grid-cols-3">
