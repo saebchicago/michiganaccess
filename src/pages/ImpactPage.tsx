@@ -5,6 +5,8 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import EngineeringFAQ from "@/components/home/EngineeringFAQ";
+import ComparisonTable from "@/components/home/ComparisonTable";
 import {
   Brain, Bus, BarChart3, MapPin, Wifi, Building2, Users,
   ArrowRight, CheckCircle2, TrendingUp, Target, Lightbulb,
@@ -74,7 +76,7 @@ const caseStudies = [
       "Health Systems: Data-driven expansion into markets with unmet need + low saturation",
       "Grant Alignment: HRSA, SAMHSA funding priorities match identified gaps",
       "Community Partnership: Approach counties with solutions to documented needs",
-      "Government: FOIA trends reveal cross-jurisdiction challenges (15 counties requested school safety data → signals coordinated solution opportunity)",
+      "Government: FOIA trends reveal cross-jurisdiction challenges",
     ],
     transferable: "Education infrastructure, environmental justice, transit optimization",
   },
@@ -89,7 +91,7 @@ const ambulatoryMetrics = [
 
 export default function ImpactPage() {
   const { t } = useTranslation();
-  usePageMeta({ title: t("impactPage.badge"), description: t("impactPage.subtitle"), path: "/impact" });
+  usePageMeta({ title: "Our Impact & Technology", description: "How Access Michigan drives better health outcomes through data and engineering.", path: "/impact" });
   return (
     <Layout>
       {/* Hero */}
@@ -206,6 +208,12 @@ export default function ImpactPage() {
           </div>
         </section>
       </div>
+
+        {/* Platform Comparison — relocated from homepage */}
+        <ComparisonTable />
+
+        {/* System Architecture FAQ — relocated from homepage */}
+        <EngineeringFAQ />
     </Layout>
   );
 }

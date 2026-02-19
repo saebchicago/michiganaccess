@@ -1,39 +1,20 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Search, Sparkles } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { Search, Sparkles, Apple, ShieldCheck, Home, Bus, HeartPulse, Baby, Pill, FileWarning } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BenefitsWizard from "./BenefitsWizard";
 
-/* Floating icon that drifts across the hero */
-const FloatingIcon = ({
-  icon,
-  duration,
-  delay,
-  startX,
-  startY,
-  endX,
-  endY,
-}: {
-  icon: string;
-  duration: number;
-  delay: number;
-  startX: string;
-  startY: string;
-  endX: string;
-  endY: string;
-}) => (
-  <motion.span
-    aria-hidden="true"
-    className="absolute text-2xl opacity-[0.12] select-none pointer-events-none"
-    style={{ left: startX, top: startY }}
-    animate={{ x: endX, y: endY, opacity: [0, 0.12, 0.12, 0] }}
-    transition={{ duration, delay, repeat: Infinity, ease: "linear" }}
-  >
-    {icon}
-  </motion.span>
-);
+const quickPills = [
+  { icon: Apple, label: "Food", href: "/resources" },
+  { icon: ShieldCheck, label: "Medicaid", href: "/financial-help" },
+  { icon: Home, label: "Housing", href: "/resources" },
+  { icon: HeartPulse, label: "Urgent Care", href: "/find-care" },
+  { icon: Bus, label: "Transit", href: "/transportation" },
+  { icon: FileWarning, label: "Appeal a Denial", href: "/health/insurance-appeals" },
+  { icon: Pill, label: "Rx Help", href: "/financial-help" },
+  { icon: Baby, label: "Family", href: "/resources" },
+];
 
 /* Simplified Michigan outline as SVG watermark */
 const MichiganOutline = () => (
@@ -42,13 +23,11 @@ const MichiganOutline = () => (
     className="absolute right-0 top-1/2 -translate-y-1/2 h-[120%] w-auto opacity-[0.04]"
     aria-hidden="true"
   >
-    {/* Lower Peninsula simplified */}
     <path
       d="M200 180 L240 200 L270 250 L280 310 L260 370 L220 400 L180 410 L140 380 L120 330 L130 270 L150 220 Z"
       fill="currentColor"
       className="text-primary-foreground"
     />
-    {/* Upper Peninsula simplified */}
     <path
       d="M100 140 L160 120 L220 130 L240 150 L200 170 L140 165 L100 155 Z"
       fill="currentColor"
@@ -58,31 +37,23 @@ const MichiganOutline = () => (
 );
 
 const HeroSection = () => {
-  const { t } = useTranslation();
+  const navigate = useNavigate();
   const [wizardOpen, setWizardOpen] = useState(false);
-  const [detectedCounty, setDetectedCounty] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    // Only use cached county — never request geolocation on page load
-    const cached = localStorage.getItem("mi-geo-county");
-    if (cached) setDetectedCounty(cached);
-  }, []);
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/find-care?q=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <>
       <section className="relative overflow-hidden bg-gradient-hero" aria-label="Hero">
-        {/* Michigan state outline watermark */}
         <MichiganOutline />
 
-        {/* Floating service icons */}
-        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-          <FloatingIcon icon="🏥" duration={22} delay={0} startX="10%" startY="20%" endX="60vw" endY="-5vh" />
-          <FloatingIcon icon="🚌" duration={28} delay={6} startX="80%" startY="70%" endX="-50vw" endY="-20vh" />
-          <FloatingIcon icon="🏠" duration={32} delay={12} startX="20%" startY="80%" endX="40vw" endY="-40vh" />
-          <FloatingIcon icon="🍎" duration={26} delay={18} startX="70%" startY="30%" endX="-30vw" endY="10vh" />
-        </div>
-
-        {/* Noise texture overlay for depth */}
+        {/* Noise texture */}
         <div
           className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
           style={{
@@ -93,89 +64,97 @@ const HeroSection = () => {
           aria-hidden="true"
         />
 
-        <div className="container relative z-10 py-20 md:py-28 lg:py-32">
+        <div className="container relative z-10 py-20 md:py-28 lg:py-36">
           <div className="mx-auto max-w-2xl text-center">
             <motion.h1
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.5 }}
-              className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl lg:text-6xl"
+              className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-tight"
             >
-              {detectedCounty ? (
-                <>
-                  Resources for you in{" "}
-                  <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
-                    {detectedCounty} County
-                  </span>
-                </>
-              ) : (
-                <>
-                  {t("hero.title").replace("Simplified", "")}{" "}
-                  <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
-                    Simplified
-                  </span>
-                </>
-              )}
+              One search for Michigan's{" "}
+              <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
+                health, food, and housing
+              </span>{" "}
+              services.
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-5 text-lg text-primary-foreground/80 md:text-xl"
+              className="mt-5 text-base text-primary-foreground/70 md:text-lg"
             >
-              {t("hero.subtitle")}
+              Free. Quality-ranked. Covering all 83 counties.
             </motion.p>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.55, duration: 0.5 }}
-              className="mt-2 text-xs text-primary-foreground/50 tracking-wide"
-            >
-              Unlike government portals or health plans, we rank by quality — not who pays for placement.
-            </motion.p>
-
-            <motion.div
+            {/* Search Bar — 1.5x larger */}
+            <motion.form
+              onSubmit={handleSearch}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.5 }}
-              className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:flex-wrap"
+              className="mt-8 mx-auto max-w-xl"
+            >
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" aria-hidden="true" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="How can we help you today?"
+                  className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-32 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
+                  aria-label="Search for services"
+                />
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-primary hover:bg-primary/90 px-6 font-semibold shadow-lg"
+                >
+                  Search
+                </Button>
+              </div>
+            </motion.form>
+
+            {/* Quick-link pills */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="mt-6 flex flex-wrap items-center justify-center gap-2"
+            >
+              {quickPills.map((pill) => (
+                <Link
+                  key={pill.label}
+                  to={pill.href}
+                  className="group inline-flex items-center gap-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
+                >
+                  <pill.icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  {pill.label}
+                </Link>
+              ))}
+            </motion.div>
+
+            {/* Benefits CTA */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.75, duration: 0.5 }}
+              className="mt-6"
             >
               <Button
                 size="lg"
-                className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 px-8 text-base font-semibold shadow-lg"
-                asChild
-              >
-                <Link to="/find-care">
-                  <Search className="mr-2 h-4 w-4" aria-hidden="true" />
-                  {t("hero.ctaFindServices")}
-                </Link>
-              </Button>
-              <Button
-                size="lg"
                 onClick={() => setWizardOpen(true)}
-                className="bg-michigan-gold text-foreground hover:bg-michigan-gold/90 px-8 text-base font-semibold border-0 shadow-lg"
+                className="bg-michigan-gold text-foreground hover:bg-michigan-gold/90 px-8 text-base font-semibold border-0 shadow-lg rounded-full"
               >
                 <Sparkles className="mr-2 h-4 w-4" aria-hidden="true" />
                 Check My Benefits
-              </Button>
-              <Button
-                size="lg"
-                variant="ghost"
-                className="border-2 border-white/60 text-white hover:bg-white/15 hover:border-white px-8 text-base font-medium"
-                asChild
-              >
-                <Link to="/resources">
-                  {t("hero.ctaExplore")}
-                  <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-                </Link>
               </Button>
             </motion.div>
           </div>
         </div>
 
-        {/* Subtle geometric accents */}
+        {/* Geometric accents */}
         <div className="absolute inset-0 opacity-[0.04]" aria-hidden="true">
           <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-primary-foreground blur-3xl" />
           <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-primary-foreground blur-3xl" />
