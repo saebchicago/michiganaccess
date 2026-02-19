@@ -422,6 +422,68 @@ export default function HealthDataDashboardPage() {
 
           <TabsContent value="energy" className="mt-6 space-y-6">
             <EnergyBurdenMap />
+            {/* EIA SEDS Time-Series */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-michigan-gold" />
+                  Michigan Residential Electricity Price vs. U.S. Average
+                </CardTitle>
+                <p className="text-xs text-muted-foreground">Cents per kWh, 1990–2023. As of 2023, Source: EIA State Energy Data System (SEDS), last updated Oct 2024.</p>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={280}>
+                  <LineChart data={[
+                    { year: "1990", michigan: 7.5, us: 7.8 },
+                    { year: "1995", michigan: 8.1, us: 8.4 },
+                    { year: "2000", michigan: 8.4, us: 8.2 },
+                    { year: "2005", michigan: 9.3, us: 9.5 },
+                    { year: "2010", michigan: 12.4, us: 11.5 },
+                    { year: "2015", michigan: 14.8, us: 12.7 },
+                    { year: "2018", michigan: 16.1, us: 12.9 },
+                    { year: "2020", michigan: 16.8, us: 13.0 },
+                    { year: "2022", michigan: 18.3, us: 15.1 },
+                    { year: "2023", michigan: 19.1, us: 15.8 },
+                  ]}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="year" tick={{ fontSize: 11 }} />
+                    <YAxis tick={{ fontSize: 11 }} tickFormatter={v => `${v}¢`} />
+                    <Tooltip formatter={(v: number) => `${v}¢/kWh`} />
+                    <Legend />
+                    <Line type="monotone" dataKey="michigan" name="Michigan" stroke="hsl(209, 86%, 31%)" strokeWidth={2} dot={{ r: 3 }} />
+                    <Line type="monotone" dataKey="us" name="U.S. Average" stroke="hsl(var(--muted-foreground))" strokeWidth={2} strokeDasharray="5 5" dot={{ r: 3 }} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Per-Capita Residential Energy Consumption</CardTitle>
+                <p className="text-xs text-muted-foreground">Million BTU per person, 2000–2023. Source: EIA SEDS, last updated Oct 2024.</p>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={250}>
+                  <AreaChart data={[
+                    { year: "2000", michigan: 72, us: 68 },
+                    { year: "2005", michigan: 70, us: 66 },
+                    { year: "2010", michigan: 67, us: 63 },
+                    { year: "2015", michigan: 64, us: 60 },
+                    { year: "2018", michigan: 62, us: 58 },
+                    { year: "2020", michigan: 63, us: 59 },
+                    { year: "2022", michigan: 61, us: 57 },
+                    { year: "2023", michigan: 60, us: 56 },
+                  ]}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis dataKey="year" tick={{ fontSize: 11 }} />
+                    <YAxis tick={{ fontSize: 11 }} />
+                    <Tooltip formatter={(v: number) => `${v} MMBTU/person`} />
+                    <Legend />
+                    <Area type="monotone" dataKey="michigan" name="Michigan" stroke="hsl(180, 100%, 32%)" fill="hsl(180, 100%, 32%)" fillOpacity={0.15} />
+                    <Area type="monotone" dataKey="us" name="U.S. Average" stroke="hsl(var(--muted-foreground))" fill="hsl(var(--muted-foreground))" fillOpacity={0.08} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="disparities" className="mt-6 space-y-6">
@@ -439,7 +501,7 @@ export default function HealthDataDashboardPage() {
           <CardContent className="py-4">
             <p className="text-xs text-muted-foreground leading-relaxed">
               <Shield className="inline h-3.5 w-3.5 mr-1 text-primary" />
-              <strong>Data Sources:</strong> CDC WONDER, BRFSS, CMS, Michigan DHHS Vital Records, County Health Rankings & Roadmaps (University of Wisconsin), HRSA Area Health Resources Files. Data reflects most recent available reporting periods (2023–2025). Some figures are age-adjusted.
+              <strong>Data Sources & Methodology:</strong> CDC WONDER, BRFSS, CDC PLACES, CMS Hospital Compare, MDHHS Vital Records & Health Equity Data, County Health Rankings & Roadmaps (University of Wisconsin), HRSA Area Health Resources Files, IHME Global Burden of Disease, ACEEE LEAD Tool, EIA State Energy Data System (SEDS), DTE Outage Reports. Data reflects most recent available reporting periods (2023–2025). Some figures are age-adjusted. Energy burden = % of household income spent on energy costs; thresholds: &gt;6% high burden, &gt;10% severe burden (DOE/ACEEE). See <a href="/methodology" className="text-primary hover:underline">Methodology</a> for full documentation.
             </p>
           </CardContent>
         </Card>

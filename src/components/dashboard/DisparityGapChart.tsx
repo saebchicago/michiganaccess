@@ -46,6 +46,10 @@ export default function DisparityGapChart() {
             Gap magnitude between highest and lowest racial/ethnic group for each health indicator.
             Higher values indicate greater inequity requiring targeted intervention.
           </p>
+          <p className="text-[10px] text-muted-foreground mt-1">
+            <strong>How to read:</strong> For rate-based metrics, the gap is shown as a ratio (e.g., 2.6× means the highest group's rate is 2.6 times the lowest).
+            For life expectancy, the gap is shown in years. Data sourced from MDHHS Health Equity reports, CDC WONDER, and County Health Rankings 2024.
+          </p>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={320}>

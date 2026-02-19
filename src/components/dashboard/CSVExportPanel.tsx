@@ -30,8 +30,9 @@ const EQUITY_DATA = [
   { metric: "Heart Disease (%)", white: 10.5, black: 13.8, hispanic: 9.2, asian: 7.1 },
 ];
 
-function toCsv(headers: string[], rows: (string | number)[][]) {
-  return [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+function toCsv(headers: string[], rows: (string | number)[][], metadata?: string[]) {
+  const metaLines = metadata ? metadata.map(m => `# ${m}`).join("\n") + "\n" : "";
+  return metaLines + [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
 }
 
 function downloadCsv(filename: string, content: string) {
@@ -52,7 +53,13 @@ const EXPORTS = [
     action: () => {
       const headers = ["County", "Life Expectancy", "Insured Rate %", "PCP per 100k", "Obesity Rate %", "Infant Mortality /1k", "Diabetes Rate %", "Health Rank /83"];
       const rows = COUNTY_DATA.map((c) => [c.county, c.lifeExpectancy, c.insuredRate, c.pcpPer100k, c.obesityRate, c.infantMortality, c.diabetesRate, c.healthRank]);
-      downloadCsv(`michigan-county-health-${new Date().toISOString().slice(0, 10)}.csv`, toCsv(headers, rows));
+      const meta = [
+        "Source: County Health Rankings 2024, MDHHS Vital Records, CDC BRFSS",
+        "Reference Year: 2023-2024",
+        "Documentation: https://accessmi.org/methodology",
+        `Generated: ${new Date().toISOString()}`,
+      ];
+      downloadCsv(`michigan-county-health-${new Date().toISOString().slice(0, 10)}.csv`, toCsv(headers, rows, meta));
     },
   },
   {
@@ -64,7 +71,14 @@ const EXPORTS = [
         const vals = [d.white, d.black, d.hispanic, d.asian];
         return [d.metric, d.white, d.black, d.hispanic, d.asian, (Math.max(...vals) - Math.min(...vals)).toFixed(1)];
       });
-      downloadCsv(`michigan-equity-disparity-${new Date().toISOString().slice(0, 10)}.csv`, toCsv(headers, rows));
+      const meta = [
+        "Source: MDHHS Health Equity Data, CDC WONDER, County Health Rankings 2024",
+        "Reference Year: 2023-2024",
+        "Note: Disparity gap = difference between highest and lowest group value",
+        "Documentation: https://accessmi.org/methodology",
+        `Generated: ${new Date().toISOString()}`,
+      ];
+      downloadCsv(`michigan-equity-disparity-${new Date().toISOString().slice(0, 10)}.csv`, toCsv(headers, rows, meta));
     },
   },
 ];
@@ -96,7 +110,7 @@ export default function CSVExportPanel() {
         ))}
         <p className="text-[10px] text-muted-foreground flex items-center gap-1 pt-1">
           <Shield className="h-3 w-3" />
-          All exports contain anonymized, aggregate data only. Sources: CDC BRFSS, County Health Rankings, Michigan DHHS.
+          All exports contain anonymized, aggregate data with source metadata. Sources: CDC BRFSS, County Health Rankings, MDHHS Health Equity, ACEEE LEAD Tool, EIA SEDS.
         </p>
       </CardContent>
     </Card>

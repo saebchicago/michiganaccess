@@ -212,24 +212,52 @@ export default function MethodologyPage() {
           <div className="space-y-4 mb-6">
             {[
               {
-                source: "HRSA Data Warehouse",
-                desc: "Health Professional Shortage Area (HPSA) designations, Uniform Data System (UDS) reports from 45+ Michigan FQHCs, and health center service area boundaries. Ingested via REST API with county-level FIPS normalization.",
-                frequency: "Quarterly refresh",
+                source: "MDHHS Health Equity & Vital Records",
+                desc: "Michigan Department of Health & Human Services racial/ethnic disparity indices, infant mortality reports, chronic disease prevalence by demographics, and Healthy Michigan Plan enrollment. County-level indicators including preventable hospitalizations and life expectancy.",
+                frequency: "Annual refresh",
+                url: "https://www.michigan.gov/mdhhs",
               },
               {
-                source: "CDC PLACES",
+                source: "County Health Rankings & Roadmaps",
+                desc: "University of Wisconsin Population Health Institute rankings across health outcomes and health factors for all 83 Michigan counties. Includes uninsured rates, PCP ratios, food insecurity, and premature mortality.",
+                frequency: "Annual release (March)",
+                url: "https://www.countyhealthrankings.org/explore-health-rankings/michigan",
+              },
+              {
+                source: "CDC PLACES & BRFSS",
                 desc: "County- and census-tract-level chronic disease prevalence estimates (asthma, diabetes, obesity, mental health). Standardized to per-100K rates with age-adjusted denominators for cross-county comparison.",
                 frequency: "Annual refresh",
+                url: "https://www.cdc.gov/places/",
               },
               {
                 source: "CMS Hospital Compare",
                 desc: "Hospital quality star ratings, patient experience (HCAHPS), timely and effective care measures, readmission rates. Mapped to internal facility IDs with Leapfrog and ANCC supplementary overlays.",
                 frequency: "Monthly refresh",
+                url: "https://data.cms.gov/",
               },
               {
-                source: "Michigan DHHS",
-                desc: "Medicaid enrollment counts, Healthy Michigan Plan participation, licensed facility registries, and behavioral health authority service areas. Geocoded to county centroids for map display.",
-                frequency: "Semi-annual refresh",
+                source: "HRSA Data Warehouse",
+                desc: "Health Professional Shortage Area (HPSA) designations, Uniform Data System (UDS) reports from 45+ Michigan FQHCs, and health center service area boundaries. Ingested via REST API with county-level FIPS normalization.",
+                frequency: "Quarterly refresh",
+                url: "https://data.hrsa.gov/",
+              },
+              {
+                source: "IHME Global Burden of Disease",
+                desc: "Institute for Health Metrics and Evaluation disease burden estimates, risk factor analysis, and mortality trend modeling. Used for cross-state and international benchmarking in the Research Tools tab.",
+                frequency: "Annual refresh",
+                url: "https://www.healthdata.org/",
+              },
+              {
+                source: "ACEEE LEAD Tool & DOE",
+                desc: "American Council for an Energy-Efficient Economy Low-income Energy Affordability Data tool. County-level energy burden (% of household income on energy), using DOE thresholds: >6% high burden, >10% severe burden.",
+                frequency: "Biennial refresh",
+                url: "https://www.aceee.org/",
+              },
+              {
+                source: "EIA State Energy Data System (SEDS)",
+                desc: "U.S. Energy Information Administration state-level energy price, consumption, and expenditure data. Used for Michigan vs. U.S. residential electricity price and per-capita consumption time-series charts.",
+                frequency: "Annual release (Oct)",
+                url: "https://www.eia.gov/state/seds/",
               },
             ].map((src, i) => (
               <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
@@ -237,7 +265,9 @@ export default function MethodologyPage() {
                   <CardContent className="pt-6">
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
-                        <h4 className="text-sm font-bold text-foreground mb-1">{src.source}</h4>
+                        <h4 className="text-sm font-bold text-foreground mb-1">
+                          <a href={src.url} target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline">{src.source}</a>
+                        </h4>
                         <p className="text-xs text-muted-foreground leading-relaxed">{src.desc}</p>
                       </div>
                       <span className="shrink-0 rounded-full bg-michigan-teal/10 px-2.5 py-0.5 text-[10px] font-semibold text-michigan-teal">
@@ -253,6 +283,9 @@ export default function MethodologyPage() {
           <div className="rounded-lg border border-border bg-muted/50 p-4">
             <p className="text-xs text-muted-foreground">
               <span className="font-semibold text-foreground">Normalization Pipeline:</span> All datasets undergo schema mapping → FIPS code standardization → deduplication → geocoding → confidence scoring before entering the presentation layer. Records with incomplete geographic identifiers are flagged for manual review rather than dropped, ensuring rural and tribal area coverage.
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              <span className="font-semibold text-foreground">Caveats:</span> Some county-level data may be suppressed for small populations (&lt;20 events) to protect privacy. Energy burden estimates are modeled from census tract-level data and may not reflect individual household circumstances. MDHHS disparity indices use age-adjusted rates; year-over-year comparisons should account for methodology changes. All data has inherent lag (typically 1–2 years from collection to publication).
             </p>
           </div>
         </section>

@@ -91,7 +91,7 @@ const ambulatoryMetrics = [
 
 export default function ImpactPage() {
   const { t } = useTranslation();
-  usePageMeta({ title: "Our Impact & Technology", description: "How Access Michigan drives better health outcomes through data and engineering.", path: "/impact" });
+  usePageMeta({ title: t("impactPage.badge"), description: t("impactPage.subtitle"), path: "/impact" });
   return (
     <Layout>
       {/* Hero */}

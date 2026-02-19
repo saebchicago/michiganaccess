@@ -5,10 +5,12 @@ import { Badge } from "@/components/ui/badge";
 const EMBEDS = [
   {
     title: "IHME GBD Compare — Disease Burden Explorer",
-    description: "Interactive visualization of global and Michigan-specific disease burden, risk factors, and mortality trends from the Institute for Health Metrics and Evaluation.",
+    description: "Compare Michigan-specific disease burden, risk factors, and mortality trends against national and global benchmarks. Use the GBD Compare tool to explore age-standardized rates for conditions like cardiovascular disease, diabetes, and substance use disorders.",
     src: "https://vizhub.healthdata.org/gbd-compare/",
     source: "University of Washington IHME",
     sourceUrl: "https://www.healthdata.org/research-analysis/gbd",
+    fullSiteUrl: "https://vizhub.healthdata.org/gbd-compare/",
+    fullSiteLabel: "Open full IHME GBD Compare in new tab",
   },
   {
     title: "CDC NCHS — Vital Statistics Rapid Release",
@@ -16,6 +18,8 @@ const EMBEDS = [
     src: "https://www.cdc.gov/nchs/nvss/vsrr.htm",
     source: "CDC National Center for Health Statistics",
     sourceUrl: "https://www.cdc.gov/nchs/",
+    fullSiteUrl: "https://www.cdc.gov/nchs/nvss/vsrr.htm",
+    fullSiteLabel: "Open CDC NCHS Vital Statistics in new tab",
   },
 ];
 
@@ -48,15 +52,26 @@ export default function ExternalEmbeds() {
                 referrerPolicy="no-referrer"
               />
             </div>
-            <a
-              href={embed.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-            >
-              <ExternalLink className="h-3 w-3" />
-              {embed.source}
-            </a>
+            <div className="flex items-center gap-4">
+              <a
+                href={embed.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+              >
+                <ExternalLink className="h-3 w-3" />
+                {embed.source}
+              </a>
+              <a
+                href={embed.fullSiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary hover:underline"
+              >
+                <ExternalLink className="h-3 w-3" />
+                {embed.fullSiteLabel}
+              </a>
+            </div>
           </CardContent>
         </Card>
       ))}
