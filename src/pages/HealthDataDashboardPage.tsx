@@ -7,6 +7,7 @@ import {
 import ExternalEmbeds from "@/components/dashboard/ExternalEmbeds";
 import DisparityGapChart from "@/components/dashboard/DisparityGapChart";
 import CSVExportPanel from "@/components/dashboard/CSVExportPanel";
+import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -138,6 +139,7 @@ export default function HealthDataDashboardPage() {
             <TabsTrigger value="equity">Health Equity</TabsTrigger>
             <TabsTrigger value="mortality">Leading Causes</TabsTrigger>
             <TabsTrigger value="counties">County Compare</TabsTrigger>
+            <TabsTrigger value="heatmap">County Heatmap</TabsTrigger>
             <TabsTrigger value="disparities">Disparity Gaps</TabsTrigger>
             <TabsTrigger value="research">Research Tools</TabsTrigger>
           </TabsList>
@@ -410,6 +412,10 @@ export default function HealthDataDashboardPage() {
               </CardContent>
             </Card>
           </TabsContent>
+          <TabsContent value="heatmap" className="mt-6 space-y-6">
+            <CountyChoropleth />
+          </TabsContent>
+
           <TabsContent value="disparities" className="mt-6 space-y-6">
             <DisparityGapChart />
             <CSVExportPanel />
