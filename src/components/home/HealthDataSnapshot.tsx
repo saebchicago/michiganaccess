@@ -1,14 +1,15 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, Download, BarChart3, Zap } from "lucide-react";
+import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, BarChart3 } from "lucide-react";
 import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
 import EnergyBurdenMap from "@/components/dashboard/EnergyBurdenMap";
+import CountySelector from "@/components/shared/CountySelector";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  AreaChart, Area, Cell,
+  AreaChart, Area,
 } from "recharts";
 
 const fadeUp = {
@@ -66,7 +67,6 @@ export default function HealthDataSnapshot() {
           </h2>
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
             Key health indicators powered by CDC, CMS, and County Health Rankings data.
-            Explore the full interactive dashboard for deep-dive analysis.
           </p>
         </motion.div>
 
@@ -91,8 +91,8 @@ export default function HealthDataSnapshot() {
           ))}
         </div>
 
-        {/* Charts Row */}
-        <div className="grid gap-6 lg:grid-cols-2 mb-8">
+        {/* Charts — hidden on mobile, replaced with county dropdown */}
+        <div className="hidden md:grid gap-6 lg:grid-cols-2 mb-8">
           {/* Chronic Disease Comparison */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
             <Card>
@@ -162,19 +162,30 @@ export default function HealthDataSnapshot() {
           </motion.div>
         </div>
 
-        {/* County Choropleth Heatmap */}
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
-          <CountyChoropleth compact />
-        </motion.div>
+        {/* Mobile: county dropdown instead of charts */}
+        <div className="md:hidden mb-8">
+          <Card>
+            <CardContent className="py-5">
+              <h3 className="text-sm font-semibold text-foreground mb-3">Locate Resources by County</h3>
+              <CountySelector variant="compact" />
+            </CardContent>
+          </Card>
+        </div>
 
-        {/* Energy Burden Heatmap */}
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2.5}>
-          <EnergyBurdenMap compact />
-        </motion.div>
+        {/* County Choropleth Heatmap — hidden on mobile */}
+        <div className="hidden md:block">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+            <CountyChoropleth compact />
+          </motion.div>
+
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2.5}>
+            <EnergyBurdenMap compact />
+          </motion.div>
+        </div>
 
         {/* Disparity Spotlight + CTA */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
-          <Card className="border-michigan-coral/20 bg-michigan-coral/5">
+          <Card className="border-michigan-coral/20 bg-michigan-coral/5 mt-6">
             <CardContent className="py-5">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <div className="flex-1">

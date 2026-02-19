@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield } from "lucide-react";
+import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
@@ -38,10 +38,20 @@ const Footer = () => {
         { label: t("footer.impact"), href: "/impact" },
         { label: t("footer.technical"), href: "/technical" },
         { label: "Accessibility", href: "/accessibility" },
-        { label: "Partner Impact", href: "/partners" },
         { label: "Press & Media", href: "/press" },
         { label: "Site Map", href: "/sitemap" },
         { label: t("nav.installApp"), href: "/install" },
+      ],
+    },
+    {
+      title: "Partners",
+      links: [
+        { label: "Health System Leaders", href: "/partners" },
+        { label: "Community Organizations", href: "/partnerships" },
+        { label: "Government & Policy", href: "/impact" },
+        { label: "For Health Systems", href: "/for-health-systems" },
+        { label: "Case Studies", href: "/case-studies" },
+        { label: "Partner Impact", href: "/partners" },
       ],
     },
   ];
@@ -63,7 +73,7 @@ const Footer = () => {
       </div>
 
       <div className="container py-12">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -83,7 +93,7 @@ const Footer = () => {
               <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link) => (
-                  <li key={link.href}>
+                  <li key={link.href + link.label}>
                     <Link
                       to={link.href}
                       className="text-sm text-foreground/70 transition-colors hover:text-primary"
@@ -97,7 +107,7 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* System Status (moved from homepage) */}
+        {/* System Status */}
         <div className="mt-10 border-t border-border pt-6">
           <div className="flex items-center justify-center gap-2 mb-3">
             <div className="h-1.5 w-1.5 rounded-full bg-michigan-forest animate-pulse" />

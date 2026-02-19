@@ -84,13 +84,13 @@ const fadeUp = {
 
 export default function GuidedPathways() {
   return (
-    <section className="py-12 bg-muted/30">
+    <section className="py-16 bg-muted/30">
       <div className="container">
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-8 text-center">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-10 text-center">
           <h2 className="text-2xl font-bold text-foreground md:text-3xl">How can we help you today?</h2>
           <p className="mt-2 text-muted-foreground">Choose what fits your situation — we'll guide you to the right resources.</p>
         </motion.div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {pathways.map((p, i) => (
             <motion.div key={p.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
               <Card className={`group h-full hover-lift border-l-4 ${p.bg} ${p.borderColor} relative overflow-hidden`}>
@@ -99,13 +99,13 @@ export default function GuidedPathways() {
                     {p.badge}
                   </Badge>
                 )}
-                <CardContent className="py-5 space-y-3">
-                  <div className={`inline-flex items-center justify-center rounded-lg p-2 ${p.iconBg} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
+                <CardContent className="py-6 space-y-4">
+                  <div className={`inline-flex items-center justify-center rounded-lg p-2.5 ${p.iconBg} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
                     <p.icon className={`h-6 w-6 ${p.color}`} />
                   </div>
                   <h3 className="text-sm font-bold text-foreground leading-snug">{p.title}</h3>
                   <p className="text-xs text-muted-foreground">{p.description}</p>
-                  <div className="flex flex-col gap-1.5 pt-1">
+                  <div className="flex flex-col gap-2 pt-1">
                     {p.links.map((link) =>
                       link.href.startsWith("tel:") ? (
                         <a key={link.label} href={link.href} className={`flex items-center gap-1.5 text-xs font-medium ${p.color} hover:underline`}>
@@ -119,7 +119,7 @@ export default function GuidedPathways() {
                     )}
                   </div>
                 </CardContent>
-                <CardFooter className="pt-0 pb-4 px-6 flex-col gap-2">
+                <CardFooter className="pt-0 pb-5 px-6 flex-col gap-2">
                   <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3 w-full">
                     <Users className="h-3.5 w-3.5 shrink-0" />
                     <span><strong className="text-foreground">{p.stat.count}</strong> Michiganders {p.stat.label}</span>
