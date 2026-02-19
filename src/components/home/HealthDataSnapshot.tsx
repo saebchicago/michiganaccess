@@ -42,15 +42,15 @@ const kpis = [
 ];
 
 const CHART_COLORS = {
-  mi: "hsl(209, 86%, 31%)",
-  us: "hsl(var(--muted-foreground))",
-  insured: "hsl(145, 32%, 30%)",
-  telehealth: "hsl(180, 100%, 32%)",
+  mi: "hsl(190, 100%, 50%)",
+  us: "hsl(220, 20%, 55%)",
+  insured: "hsl(150, 100%, 50%)",
+  telehealth: "hsl(190, 100%, 50%)",
 };
 
 export default function HealthDataSnapshot() {
   return (
-    <section id="health-data" className="py-14 bg-muted/20" aria-labelledby="health-data-title">
+    <section id="health-data" className="py-14 bg-slate-900 text-white" aria-labelledby="health-data-title">
       <div className="container max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -58,14 +58,14 @@ export default function HealthDataSnapshot() {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <Badge variant="outline" className="mb-3 text-xs uppercase tracking-wider border-primary/30 text-primary">
+          <Badge variant="outline" className="mb-3 text-xs uppercase tracking-wider border-cyan-400/40 text-cyan-300">
             <BarChart3 className="mr-1.5 h-3 w-3" />
             Health Data Snapshot
           </Badge>
-          <h2 id="health-data-title" className="text-2xl font-bold text-foreground lg:text-3xl mb-2">
+          <h2 id="health-data-title" className="text-2xl font-bold text-white lg:text-3xl mb-2">
             Michigan Health at a Glance
           </h2>
-          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm text-slate-400 max-w-2xl mx-auto">
             Key health indicators powered by CDC, CMS, and County Health Rankings data.
           </p>
         </motion.div>
@@ -74,14 +74,14 @@ export default function HealthDataSnapshot() {
         <div className="grid gap-3 grid-cols-2 lg:grid-cols-4 mb-8">
           {kpis.map((kpi, i) => (
             <motion.div key={kpi.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-              <Card className="h-full">
+              <Card className="h-full bg-slate-800/60 border-slate-700/50">
                 <CardContent className="py-4">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <kpi.icon className="h-4 w-4 text-primary" />
-                    <span className="text-[11px] text-muted-foreground font-medium">{kpi.label}</span>
+                    <kpi.icon className="h-4 w-4 text-cyan-400" />
+                    <span className="text-[11px] text-slate-400 font-medium">{kpi.label}</span>
                   </div>
-                  <p className="text-xl font-bold text-foreground">{kpi.value}</p>
-                  <p className={`text-[11px] mt-0.5 flex items-center gap-1 ${kpi.up ? "text-michigan-forest" : "text-michigan-coral"}`}>
+                  <p className="text-xl font-bold text-white">{kpi.value}</p>
+                  <p className={`text-[11px] mt-0.5 flex items-center gap-1 ${kpi.up ? "text-emerald-400" : "text-rose-400"}`}>
                     {kpi.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
                     {kpi.delta}
                   </p>
@@ -95,13 +95,13 @@ export default function HealthDataSnapshot() {
         <div className="hidden md:grid gap-6 lg:grid-cols-2 mb-8">
           {/* Chronic Disease Comparison */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
-            <Card>
+            <Card className="bg-slate-800/60 border-slate-700/50">
               <CardContent className="pt-5 pb-3">
-                <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
-                  <Activity className="h-4 w-4 text-michigan-coral" />
+                <h3 className="text-sm font-semibold text-white mb-1 flex items-center gap-2">
+                  <Activity className="h-4 w-4 text-rose-400" />
                   Chronic Disease: Michigan vs. National
                 </h3>
-                <p className="text-[11px] text-muted-foreground mb-3">Prevalence rates (%) — Source: CDC BRFSS</p>
+                <p className="text-[11px] text-slate-400 mb-3">Prevalence rates (%) — Source: CDC BRFSS</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={chronicData} barGap={2}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -116,10 +116,10 @@ export default function HealthDataSnapshot() {
                   </BarChart>
                 </ResponsiveContainer>
                 <div className="flex gap-4 mt-2 justify-center">
-                  <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                  <span className="text-[10px] text-slate-400 flex items-center gap-1">
                     <span className="h-2 w-2 rounded-full" style={{ background: CHART_COLORS.mi }} /> Michigan
                   </span>
-                  <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                  <span className="text-[10px] text-slate-400 flex items-center gap-1">
                     <span className="h-2 w-2 rounded-full" style={{ background: CHART_COLORS.us }} /> National
                   </span>
                 </div>
@@ -129,13 +129,13 @@ export default function HealthDataSnapshot() {
 
           {/* Access Trends */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
-            <Card>
+            <Card className="bg-slate-800/60 border-slate-700/50">
               <CardContent className="pt-5 pb-3">
-                <h3 className="text-sm font-semibold text-foreground mb-1 flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-michigan-forest" />
+                <h3 className="text-sm font-semibold text-white mb-1 flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4 text-emerald-400" />
                   Healthcare Access Trends (2020–2025)
                 </h3>
-                <p className="text-[11px] text-muted-foreground mb-3">Insurance coverage & telehealth adoption — Source: CMS, MDHHS</p>
+                <p className="text-[11px] text-slate-400 mb-3">Insurance coverage & telehealth adoption — Source: CMS, MDHHS</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <AreaChart data={accessTrends}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -150,10 +150,10 @@ export default function HealthDataSnapshot() {
                   </AreaChart>
                 </ResponsiveContainer>
                 <div className="flex gap-4 mt-2 justify-center">
-                  <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                  <span className="text-[10px] text-slate-400 flex items-center gap-1">
                     <span className="h-2 w-2 rounded-full" style={{ background: CHART_COLORS.insured }} /> Insured Rate
                   </span>
-                  <span className="text-[10px] text-muted-foreground flex items-center gap-1">
+                  <span className="text-[10px] text-slate-400 flex items-center gap-1">
                     <span className="h-2 w-2 rounded-full" style={{ background: CHART_COLORS.telehealth }} /> Telehealth
                   </span>
                 </div>
@@ -164,9 +164,9 @@ export default function HealthDataSnapshot() {
 
         {/* Mobile: county dropdown instead of charts */}
         <div className="md:hidden mb-8">
-          <Card>
+          <Card className="bg-slate-800/60 border-slate-700/50">
             <CardContent className="py-5">
-              <h3 className="text-sm font-semibold text-foreground mb-3">Locate Resources by County</h3>
+              <h3 className="text-sm font-semibold text-white mb-3">Locate Resources by County</h3>
               <CountySelector variant="compact" />
             </CardContent>
           </Card>
@@ -185,18 +185,18 @@ export default function HealthDataSnapshot() {
 
         {/* Disparity Spotlight + CTA */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
-          <Card className="border-michigan-coral/20 bg-michigan-coral/5 mt-6">
+          <Card className="border-rose-500/20 bg-rose-950/30 mt-6">
             <CardContent className="py-5">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <div className="flex-1">
-                  <p className="text-sm font-semibold text-foreground mb-1">
+                  <p className="text-sm font-semibold text-white mb-1">
                     Key Disparity: Infant Mortality
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-slate-300">
                     Black infants in Michigan face 2.6× the mortality rate of white infants — among the widest gaps nationally.
                     Michigan's Maternal Health Equity Initiative allocates $120M toward doula coverage and extended postpartum Medicaid.
                   </p>
-                  <p className="text-[10px] text-muted-foreground mt-1">Source: CDC WONDER, Michigan DHHS Vital Records, 2024</p>
+                  <p className="text-[10px] text-slate-500 mt-1">Source: CDC WONDER, Michigan DHHS Vital Records, 2024</p>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
                   <Button asChild size="sm" variant="default" className="gap-1.5">
