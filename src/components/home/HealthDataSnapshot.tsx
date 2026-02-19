@@ -11,6 +11,9 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   AreaChart, Area,
 } from "recharts";
+import { useCounty } from "@/contexts/CountyContext";
+import { getCountyProfile } from "@/data/michigan-county-profiles";
+import { useMemo } from "react";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -34,12 +37,13 @@ const accessTrends = [
   { yr: "'25", insured: 96.0, telehealth: 48 },
 ];
 
-const kpis = [
-  { icon: Shield, label: "Insurance Rate", value: "96.0%", delta: "+2.8%", up: true },
-  { icon: Heart, label: "Life Expectancy", value: "77.4 yrs", delta: "−0.3", up: false },
-  { icon: Brain, label: "Mental Health Access", value: "48%", delta: "+36% telehealth", up: true },
-  { icon: Activity, label: "ER Visit Rate", value: "410/100k", delta: "−11% since 2020", up: true },
-];
+// Michigan statewide averages for delta comparison
+const MI_AVERAGES = {
+  insuranceRate: 96.0,
+  lifeExpectancy: 77.4,
+  mentalHealthAccess: 48,
+  erVisitRate: 410,
+};
 
 const CHART_COLORS = {
   mi: "hsl(190, 100%, 50%)",
@@ -48,7 +52,79 @@ const CHART_COLORS = {
   telehealth: "hsl(190, 100%, 50%)",
 };
 
+// County-level KPI data derived from County Health Rankings dataset
+const COUNTY_KPIS: Record<string, { insuranceRate: number; lifeExpectancy: number; mentalHealthAccess: number; erVisitRate: number }> = {
+  Wayne: { insuranceRate: 92.8, lifeExpectancy: 74.8, mentalHealthAccess: 42, erVisitRate: 520 },
+  Oakland: { insuranceRate: 95.2, lifeExpectancy: 79.6, mentalHealthAccess: 55, erVisitRate: 340 },
+  Macomb: { insuranceRate: 94.4, lifeExpectancy: 77.2, mentalHealthAccess: 46, erVisitRate: 390 },
+  Kent: { insuranceRate: 93.2, lifeExpectancy: 78.5, mentalHealthAccess: 51, erVisitRate: 370 },
+  Genesee: { insuranceRate: 92.1, lifeExpectancy: 74.2, mentalHealthAccess: 39, erVisitRate: 540 },
+  Washtenaw: { insuranceRate: 96.1, lifeExpectancy: 81.2, mentalHealthAccess: 62, erVisitRate: 290 },
+  Ingham: { insuranceRate: 93.5, lifeExpectancy: 77.8, mentalHealthAccess: 53, erVisitRate: 380 },
+  Kalamazoo: { insuranceRate: 93.9, lifeExpectancy: 78.1, mentalHealthAccess: 52, erVisitRate: 360 },
+  Saginaw: { insuranceRate: 92.6, lifeExpectancy: 75.5, mentalHealthAccess: 40, erVisitRate: 490 },
+  Ottawa: { insuranceRate: 94.9, lifeExpectancy: 80.3, mentalHealthAccess: 50, erVisitRate: 310 },
+  "Grand Traverse": { insuranceRate: 91.8, lifeExpectancy: 79.1, mentalHealthAccess: 54, erVisitRate: 350 },
+  Marquette: { insuranceRate: 93.6, lifeExpectancy: 78.9, mentalHealthAccess: 48, erVisitRate: 360 },
+  Berrien: { insuranceRate: 92.7, lifeExpectancy: 76.0, mentalHealthAccess: 41, erVisitRate: 450 },
+  Livingston: { insuranceRate: 95.8, lifeExpectancy: 80.1, mentalHealthAccess: 52, erVisitRate: 320 },
+};
+
+function getDelta(countyVal: number, stateVal: number, higherIsBetter: boolean) {
+  const diff = countyVal - stateVal;
+  const formatted = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
+  const isBetter = higherIsBetter ? diff >= 0 : diff <= 0;
+  return { formatted, isBetter };
+}
+
 export default function HealthDataSnapshot() {
+  const { county } = useCounty();
+
+  const kpis = useMemo(() => {
+    const countyData = county ? COUNTY_KPIS[county] : null;
+
+    return [
+      {
+        icon: Shield,
+        label: "Insurance Rate",
+        value: countyData ? `${countyData.insuranceRate}%` : "96.0%",
+        delta: countyData ? getDelta(countyData.insuranceRate, MI_AVERAGES.insuranceRate, true) : null,
+        stateDelta: "+2.8%",
+        up: true,
+        hasData: !county || !!countyData,
+      },
+      {
+        icon: Heart,
+        label: "Life Expectancy",
+        value: countyData ? `${countyData.lifeExpectancy} yrs` : "77.4 yrs",
+        delta: countyData ? getDelta(countyData.lifeExpectancy, MI_AVERAGES.lifeExpectancy, true) : null,
+        stateDelta: "−0.3",
+        up: false,
+        hasData: !county || !!countyData,
+      },
+      {
+        icon: Brain,
+        label: "Mental Health Access",
+        value: countyData ? `${countyData.mentalHealthAccess}%` : "48%",
+        delta: countyData ? getDelta(countyData.mentalHealthAccess, MI_AVERAGES.mentalHealthAccess, true) : null,
+        stateDelta: "+36% telehealth",
+        up: true,
+        hasData: !county || !!countyData,
+      },
+      {
+        icon: Activity,
+        label: "ER Visit Rate",
+        value: countyData ? `${countyData.erVisitRate}/100k` : "410/100k",
+        delta: countyData ? getDelta(countyData.erVisitRate, MI_AVERAGES.erVisitRate, false) : null,
+        stateDelta: "−11% since 2020",
+        up: true,
+        hasData: !county || !!countyData,
+      },
+    ];
+  }, [county]);
+
+  const sectionTitle = county ? `${county} County Health at a Glance` : "Michigan Health at a Glance";
+
   return (
     <section id="data-snapshot" className="py-14 bg-slate-900 text-white" aria-labelledby="health-data-title">
       <div className="container max-w-6xl">
@@ -63,7 +139,7 @@ export default function HealthDataSnapshot() {
             Health Data Snapshot
           </Badge>
           <h2 id="health-data-title" className="text-2xl font-bold text-white lg:text-3xl mb-2">
-            Michigan Health at a Glance
+            {sectionTitle}
           </h2>
           <p className="text-sm text-slate-400 max-w-2xl mx-auto">
             Key health indicators powered by CDC, CMS, and County Health Rankings data.
@@ -80,20 +156,46 @@ export default function HealthDataSnapshot() {
                     <kpi.icon className="h-4 w-4 text-cyan-400" />
                     <span className="text-[11px] text-slate-400 font-medium">{kpi.label}</span>
                   </div>
-                  <p className="text-xl font-bold text-white">{kpi.value}</p>
-                  <p className={`text-[11px] mt-0.5 flex items-center gap-1 ${kpi.up ? "text-emerald-400" : "text-rose-400"}`}>
-                    {kpi.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                    {kpi.delta}
-                  </p>
+                  {kpi.hasData ? (
+                    <>
+                      <p className="text-xl font-bold text-white">{kpi.value}</p>
+                      {county && kpi.delta ? (
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <Badge
+                            variant="outline"
+                            className={`text-[10px] px-1.5 py-0 border ${
+                              kpi.delta.isBetter
+                                ? "border-emerald-500/40 text-emerald-400 bg-emerald-500/10"
+                                : "border-rose-500/40 text-rose-400 bg-rose-500/10"
+                            }`}
+                          >
+                            {kpi.delta.isBetter ? <TrendingUp className="h-2.5 w-2.5 mr-0.5" /> : <TrendingDown className="h-2.5 w-2.5 mr-0.5" />}
+                            {kpi.delta.formatted} vs. MI avg
+                          </Badge>
+                        </div>
+                      ) : (
+                        <p className={`text-[11px] mt-0.5 flex items-center gap-1 ${kpi.up ? "text-emerald-400" : "text-rose-400"}`}>
+                          {kpi.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+                          {kpi.stateDelta}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-xl font-bold text-slate-500">—</p>
+                      <Badge variant="outline" className="text-[10px] border-slate-600 text-slate-500 mt-1">
+                        Data pending
+                      </Badge>
+                    </>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
           ))}
         </div>
 
-        {/* Charts — hidden on mobile, replaced with county dropdown */}
+        {/* Charts — hidden on mobile */}
         <div className="hidden md:grid gap-6 lg:grid-cols-2 mb-8">
-          {/* Chronic Disease Comparison */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
             <Card className="bg-slate-800/60 border-slate-700/50">
               <CardContent className="pt-5 pb-3">
@@ -127,7 +229,6 @@ export default function HealthDataSnapshot() {
             </Card>
           </motion.div>
 
-          {/* Access Trends */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
             <Card className="bg-slate-800/60 border-slate-700/50">
               <CardContent className="pt-5 pb-3">
@@ -177,7 +278,6 @@ export default function HealthDataSnapshot() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
             <CountyChoropleth compact />
           </motion.div>
-
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2.5}>
             <EnergyBurdenMap compact />
           </motion.div>

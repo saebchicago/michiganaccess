@@ -1,4 +1,4 @@
-import { useState, useMemo, lazy, Suspense } from "react";
+import { useState, useMemo, useEffect, lazy, Suspense } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -143,8 +143,13 @@ export default function CommunityResourcesPage() {
   // Load ALL resources — local dropdown and tabs handle filtering
   const { data: resources = [], isLoading } = useCommunityResources();
   const [activeTab, setActiveTab] = useState("all");
-  const [county, setCounty] = useState("All Counties");
+  const [county, setCounty] = useState(globalCounty || "All Counties");
   const [search, setSearch] = useState("");
+
+  // Sync local county filter with global context
+  useEffect(() => {
+    if (globalCounty) setCounty(globalCounty);
+  }, [globalCounty]);
 
   const availableCounties = useMemo(() => {
     const set = new Set(resources.map(r => r.county));

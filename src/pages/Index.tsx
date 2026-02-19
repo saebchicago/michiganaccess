@@ -29,18 +29,27 @@ const Index = () => {
       <OnboardingTour />
       <SectionNav />
       <CountyWelcomeBanner />
+      {/* 1. Hero */}
       <HeroSection />
+      {/* 2. How Can We Help */}
       <GuidedPathways />
       <AuthorityStrip />
+      {/* 3. County Health Snapshot — moved up */}
+      <HealthDataSnapshot />
+      {/* 4. Explore Community Resources */}
+      <SpotlightTabs />
+      {/* 5. Start Here — core access grid */}
       <CoreAccessGrid />
+      {/* 6. Regional Gateway */}
       <RegionalGateway />
       <CountyInfoCard />
       <SmartRecommendations />
-      <SuccessStories />
-      <SpotlightTabs />
+      {/* 7. What is Access Michigan */}
       <SystemsExplainer />
       <TrustIndicators />
-      <HealthDataSnapshot />
+      {/* 8. How Access Michigan Works (formerly Example Journeys) */}
+      <SuccessStories />
+      {/* 9. AI Chat */}
       <AccessChat />
     </Layout>
   );

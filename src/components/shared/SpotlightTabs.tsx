@@ -3,13 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import {
   Heart, Bus, Zap, TreePine, GraduationCap, Scale, Medal, Baby, ShieldAlert, Palette,
-  Search, ExternalLink, Share2, X, Star, LayoutGrid,
+  Search, ExternalLink, Share2, X, Star, LayoutGrid, ChevronDown, ChevronUp,
 } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 interface SearchableProgram {
   title: string;
@@ -134,7 +134,6 @@ const handleShare = async (program: SearchableProgram) => {
   }
 };
 
-// Curated "recommended" program titles per county (top picks), plus statewide defaults
 const RECOMMENDED_TITLES: Record<string, string[]> = {
   Wayne: ["Meals on Wheels Michigan", "Lakeshore Legal Aid", "Detroit at Work", "Detroit Public Library", "Wayne County Emergency Management", "SMART & DDOT Transit (Metro Detroit)"],
   Oakland: ["Area Agency on Aging 1-B", "Lakeshore Legal Aid", "DTE Energy Efficiency Programs", "SMART & DDOT Transit (Metro Detroit)", "AARP Michigan", "Michigan Legal Help"],
@@ -149,6 +148,73 @@ const STATEWIDE_RECOMMENDED = [
   "Michigan Reconnect", "American Red Cross – Michigan", "Michigan Activity Pass",
   "AARP Michigan", "Michigan Works! Career Services",
 ];
+
+const MAX_VISIBLE = 6;
+
+function ProgramCard({ program }: { program: SearchableProgram }) {
+  const meta = CATEGORY_META[program.category];
+  return (
+    <Card className="h-full hover-lift">
+      <CardContent className="p-4 space-y-2 flex flex-col h-full">
+        <div className="flex items-center justify-between">
+          <Badge variant="outline" className="text-[10px]">
+            {meta?.label || program.category}
+          </Badge>
+          {!program.counties && <Badge variant="secondary" className="text-[10px]">Statewide</Badge>}
+        </div>
+        <h4 className="font-semibold text-sm text-foreground leading-snug">{program.title}</h4>
+        <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-3">{program.description}</p>
+        <div className="flex flex-wrap gap-1">
+          {program.eligibility.slice(0, 2).map((tag) => (
+            <Badge key={tag} variant="secondary" className="text-[10px] capitalize">{tag}</Badge>
+          ))}
+        </div>
+        <div className="flex gap-2 mt-auto">
+          <Button variant="outline" size="sm" className="flex-1" asChild>
+            <a href={program.url} target="_blank" rel="noopener noreferrer">
+              Visit Program <ExternalLink className="h-3 w-3 ml-1" />
+            </a>
+          </Button>
+          <Button variant="ghost" size="sm" className="px-2" onClick={() => handleShare(program)} aria-label={`Share ${program.title}`}>
+            <Share2 className="h-4 w-4" />
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function CategoryGrid({ label, icon: Icon, programs, county }: { label: string; icon: React.ElementType; programs: SearchableProgram[]; county: string | null }) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? programs : programs.slice(0, MAX_VISIBLE);
+  const hasMore = programs.length > MAX_VISIBLE;
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 mb-4">
+        <Icon className="h-5 w-5 text-primary" />
+        <h3 className="text-lg font-semibold text-foreground">{label}</h3>
+        <Badge variant="secondary" className="text-[10px]">{programs.length}</Badge>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {visible.map((program) => (
+          <ProgramCard key={`${label}-${program.title}`} program={program} />
+        ))}
+      </div>
+      {hasMore && (
+        <div className="text-center mt-4">
+          <Button variant="ghost" size="sm" onClick={() => setExpanded(!expanded)} className="gap-1.5 text-muted-foreground">
+            {expanded ? (
+              <><ChevronUp className="h-4 w-4" /> Show less</>
+            ) : (
+              <><ChevronDown className="h-4 w-4" /> Show {programs.length - MAX_VISIBLE} more</>
+            )}
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 const SpotlightTabs = () => {
   const [search, setSearch] = useState("");
@@ -221,7 +287,6 @@ const SpotlightTabs = () => {
         </div>
 
         {showGrid ? (
-          /* Grid results view (search or browse all) */
           <div className="max-w-5xl mx-auto">
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-muted-foreground">
@@ -230,7 +295,7 @@ const SpotlightTabs = () => {
               </p>
               {browseAll && (
                 <Button variant="ghost" size="sm" onClick={() => { setBrowseAll(false); setSearch(""); }}>
-                  <X className="h-4 w-4 mr-1" /> Back to tabs
+                  <X className="h-4 w-4 mr-1" /> Back to categories
                 </Button>
               )}
             </div>
@@ -240,44 +305,15 @@ const SpotlightTabs = () => {
               </div>
             ) : (
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {(isSearching ? searchResults : allPrograms).map((program) => {
-                  const meta = CATEGORY_META[program.category];
-                  return (
-                    <Card key={`${program.category}-${program.title}`} className="h-full hover-lift">
-                      <CardContent className="p-5 space-y-3 flex flex-col h-full">
-                        <div className="flex items-center justify-between">
-                          <Badge variant="outline" className="text-[10px]">
-                            {meta?.label || program.category}
-                          </Badge>
-                          {!program.counties && <Badge variant="secondary" className="text-[10px]">Statewide</Badge>}
-                        </div>
-                        <h3 className="font-semibold text-sm text-foreground leading-snug">{program.title}</h3>
-                        <p className="text-xs text-muted-foreground leading-relaxed flex-1">{program.description}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {program.eligibility.map((tag) => (
-                            <Badge key={tag} variant="secondary" className="text-[10px] capitalize">{tag}</Badge>
-                          ))}
-                        </div>
-                        <div className="flex gap-2 mt-auto">
-                          <Button variant="outline" size="sm" className="flex-1" asChild>
-                            <a href={program.url} target="_blank" rel="noopener noreferrer">
-                              Go to Program <ExternalLink className="h-3 w-3 ml-1" />
-                            </a>
-                          </Button>
-                          <Button variant="ghost" size="sm" className="px-2" onClick={() => handleShare(program)} aria-label={`Share ${program.title}`}>
-                            <Share2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
+                {(isSearching ? searchResults : allPrograms).map((program) => (
+                  <ProgramCard key={`grid-${program.category}-${program.title}`} program={program} />
+                ))}
               </div>
             )}
           </div>
         ) : (
           <>
-            {/* Recommended for You */}
+            {/* Recommended for You — 3x2 grid */}
             <div className="max-w-5xl mx-auto mb-8">
               <div className="flex items-center gap-2 mb-4">
                 <Star className="h-5 w-5 text-primary fill-primary" />
@@ -285,93 +321,44 @@ const SpotlightTabs = () => {
                   Recommended for {county ? `${county} County` : "You"}
                 </h3>
               </div>
-              <Carousel opts={{ align: "start", loop: true }} className="w-full">
-                <CarouselContent>
-                  {recommended.map((program) => {
-                    const meta = CATEGORY_META[program.category];
-                    return (
-                      <CarouselItem key={`rec-${program.title}`} className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                        <Card className="h-full hover-lift border-primary/20">
-                          <CardContent className="p-4 space-y-2 flex flex-col h-full">
-                            <div className="flex items-center justify-between">
-                              <Badge variant="outline" className="text-[10px]">
-                                {meta?.label || program.category}
-                              </Badge>
-                              <Star className="h-3 w-3 text-primary fill-primary" />
-                            </div>
-                            <h4 className="font-semibold text-sm text-foreground leading-snug">{program.title}</h4>
-                            <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-2">{program.description}</p>
-                            <Button variant="outline" size="sm" className="w-full mt-auto" asChild>
-                              <a href={program.url} target="_blank" rel="noopener noreferrer">
-                                Go to Program <ExternalLink className="h-3 w-3 ml-1" />
-                              </a>
-                            </Button>
-                          </CardContent>
-                        </Card>
-                      </CarouselItem>
-                    );
-                  })}
-                </CarouselContent>
-                <CarouselPrevious className="hidden md:flex" />
-                <CarouselNext className="hidden md:flex" />
-              </Carousel>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {recommended.slice(0, 6).map((program) => (
+                  <ProgramCard key={`rec-${program.title}`} program={program} />
+                ))}
+              </div>
+              {county && (
+                <div className="text-center mt-4">
+                  <Button variant="link" size="sm" onClick={() => setBrowseAll(true)} className="text-primary gap-1">
+                    View all recommendations for {county} County →
+                  </Button>
+                </div>
+              )}
             </div>
 
             {/* Browse All button */}
-            <div className="text-center mb-6">
+            <div className="text-center mb-8">
               <Button variant="outline" onClick={() => setBrowseAll(true)} className="gap-2">
                 <LayoutGrid className="h-4 w-4" />
                 Browse All Programs
               </Button>
             </div>
 
-            {/* Category carousels */}
+            {/* Category grids (replace carousels) */}
             <div className="space-y-10">
-              {SECTIONS.map(({ value, label, icon: Icon }) => {
+              {SECTIONS.map(({ value, label, icon }) => {
                 const categoryPrograms = ALL_PROGRAMS.filter(
                   (p) => p.category === label &&
                     (!p.counties || !county || p.counties.includes(county))
                 );
                 if (categoryPrograms.length === 0) return null;
                 return (
-                  <div key={value}>
-                    <div className="flex items-center gap-2 mb-4">
-                      <Icon className="h-5 w-5 text-primary" />
-                      <h3 className="text-lg font-semibold text-foreground">{label}</h3>
-                      <Badge variant="secondary" className="text-[10px]">{categoryPrograms.length}</Badge>
-                    </div>
-                    <Carousel opts={{ align: "start", loop: categoryPrograms.length > 3 }} className="w-full">
-                      <CarouselContent>
-                        {categoryPrograms.map((program) => (
-                          <CarouselItem key={`${value}-${program.title}`} className="sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                            <Card className="h-full hover-lift">
-                              <CardContent className="p-4 space-y-2 flex flex-col h-full">
-                                <h4 className="font-semibold text-sm text-foreground leading-snug">{program.title}</h4>
-                                <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-3">{program.description}</p>
-                                <div className="flex flex-wrap gap-1">
-                                  {program.eligibility.slice(0, 2).map((tag) => (
-                                    <Badge key={tag} variant="secondary" className="text-[10px] capitalize">{tag}</Badge>
-                                  ))}
-                                </div>
-                                <div className="flex gap-2 mt-auto">
-                                  <Button variant="outline" size="sm" className="flex-1" asChild>
-                                    <a href={program.url} target="_blank" rel="noopener noreferrer">
-                                      Learn More <ExternalLink className="h-3 w-3 ml-1" />
-                                    </a>
-                                  </Button>
-                                  <Button variant="ghost" size="sm" className="px-2" onClick={() => handleShare(program)} aria-label={`Share ${program.title}`}>
-                                    <Share2 className="h-4 w-4" />
-                                  </Button>
-                                </div>
-                              </CardContent>
-                            </Card>
-                          </CarouselItem>
-                        ))}
-                      </CarouselContent>
-                      <CarouselPrevious className="hidden md:flex" />
-                      <CarouselNext className="hidden md:flex" />
-                    </Carousel>
-                  </div>
+                  <CategoryGrid
+                    key={value}
+                    label={label}
+                    icon={icon}
+                    programs={categoryPrograms}
+                    county={county}
+                  />
                 );
               })}
             </div>
