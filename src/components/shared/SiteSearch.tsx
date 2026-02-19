@@ -91,20 +91,20 @@ export default function SiteSearch() {
     const [counties, facilities, resources] = await Promise.all([
       supabase
         .from("municipalities")
-        .select("name, county, municipality_type")
-        .ilike("name", `%${q}%`)
+        .select("name, county, municipality_type, population")
+        .or(`name.ilike.%${q}%,county.ilike.%${q}%`)
         .order("population", { ascending: false })
-        .limit(4),
+        .limit(6),
       supabase
         .from("facilities")
         .select("name, city, county, facility_type")
-        .ilike("name", `%${q}%`)
-        .limit(4),
+        .or(`name.ilike.%${q}%,city.ilike.%${q}%,county.ilike.%${q}%`)
+        .limit(5),
       supabase
         .from("community_resources")
         .select("resource_name, city, county, resource_type")
-        .ilike("resource_name", `%${q}%`)
-        .limit(4),
+        .or(`resource_name.ilike.%${q}%,county.ilike.%${q}%,city.ilike.%${q}%`)
+        .limit(5),
     ]);
 
     const countyResults: SearchResult[] = (counties.data ?? []).map((m) => ({
