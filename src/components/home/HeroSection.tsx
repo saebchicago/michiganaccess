@@ -69,11 +69,11 @@ const HeroSection = () => {
               transition={{ delay: 0.15, duration: 0.5 }}
               className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-tight"
             >
-              One search for Michigan's{" "}
+              Your neighbor's guide to{" "}
               <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
-                health, food, and housing
+                health, food, housing &amp; more
               </span>{" "}
-              services.
+              across Michigan.
             </motion.h1>
 
             <motion.p
@@ -82,7 +82,7 @@ const HeroSection = () => {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="mt-5 text-base text-primary-foreground/70 md:text-lg"
             >
-              Free. Quality-ranked. Covering all 83 counties.
+              No sign-up needed. Free, confidential, and built for every county.
             </motion.p>
 
             {/* Search Bar — 1.5x larger */}
@@ -99,7 +99,7 @@ const HeroSection = () => {
                   type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="How can we help you today?"
+                  placeholder="Search for food pantries, clinics, transit, insurance help…"
                   className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-32 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
                   aria-label="Search for services"
                 />

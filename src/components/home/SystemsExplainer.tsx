@@ -29,7 +29,7 @@ const SystemsExplainer = () => (
           What Is Access Michigan?
         </h2>
         <p className="mt-3 text-base text-muted-foreground leading-relaxed">
-          An <strong className="text-foreground">independent, non-commercial navigation platform</strong> that does what government portals don't.
+          A <strong className="text-foreground">free, independent resource hub</strong> that connects you with the right services — without the runaround.
         </p>
       </motion.div>
 

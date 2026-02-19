@@ -23,7 +23,7 @@ const pathways = [
     bg: "bg-michigan-coral/5",
     borderColor: "border-michigan-coral/30",
     iconBg: "bg-michigan-coral/10",
-    stat: { count: "2,340", label: "found help this month" },
+    encouragement: "You're not alone — thousands of neighbors have found help here.",
   },
   {
     id: "caregiver",
@@ -39,7 +39,7 @@ const pathways = [
     bg: "bg-michigan-teal/5",
     borderColor: "border-michigan-teal/30",
     iconBg: "bg-michigan-teal/10",
-    stat: { count: "890", label: "connected to support" },
+    encouragement: "Caregiving is hard — let us help you find support nearby.",
   },
   {
     id: "new-resident",
@@ -55,7 +55,7 @@ const pathways = [
     bg: "bg-primary/5",
     borderColor: "border-primary/30",
     iconBg: "bg-primary/10",
-    stat: { count: "1,120", label: "navigated services" },
+    encouragement: "Welcome to Michigan — we'll help you get settled.",
   },
   {
     id: "emergency",
@@ -71,7 +71,7 @@ const pathways = [
     bg: "bg-destructive/5",
     borderColor: "border-destructive/30",
     iconBg: "bg-destructive/10",
-    stat: { count: "24/7", label: "always available" },
+    encouragement: "Help is available 24/7 — you can call right now.",
     badge: "24/7 Available",
     pulse: true,
   },
@@ -122,7 +122,7 @@ export default function GuidedPathways() {
                 <CardFooter className="pt-0 pb-5 px-6 flex-col gap-2">
                   <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3 w-full">
                     <Users className="h-3.5 w-3.5 shrink-0" />
-                    <span><strong className="text-foreground">{p.stat.count}</strong> Michiganders {p.stat.label}</span>
+                    <span className="italic">{p.encouragement}</span>
                   </div>
                   {p.id !== "emergency" && (
                     <ResourceChecklist pathwayId={p.id} pathwayTitle={p.title} color={p.color} />
