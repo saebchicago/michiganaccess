@@ -212,7 +212,7 @@ th{font-size:10px;color:#6b7280;font-weight:500;text-transform:uppercase}.system
 .footer{margin-top:24px;font-size:9px;color:#9ca3af;border-top:1px solid #e5e7eb;padding-top:8px}
 @media print{body{padding:24px 32px}}</style></head><body>
 <h1>Market Brief: ${region.name}</h1>
-<p class="meta">Michigan Access · Ambulatory Gap Analysis · ${date}</p>
+<p class="meta">Access Michigan · Ambulatory Gap Analysis · ${date}</p>
 <div class="grid">
 <div class="card"><p class="label">Total Facilities</p><p class="value">${totalFacilities}</p><p class="sub">Across ${region.counties.length} counties</p></div>
 <div class="card"><p class="label">High-Need Counties</p><p class="value">${highNeedCount}</p><p class="sub">SVI proxy ≥ 3</p></div>
