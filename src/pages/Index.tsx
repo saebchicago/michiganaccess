@@ -1,6 +1,7 @@
 import { AccessChat } from "@/components/AccessChat";
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
+import HealthDataSnapshot from "@/components/home/HealthDataSnapshot";
 import ComparisonTable from "@/components/home/ComparisonTable";
 import CoreAccessGrid from "@/components/home/CoreAccessGrid";
 import GuidedPathways from "@/components/home/GuidedPathways";
@@ -34,8 +35,9 @@ const Index = () => {
     switch (audience) {
       case "health-system":
         return (
-          <>
+           <>
             <EngineeringFAQ />
+            <HealthDataSnapshot />
             <RegionalGateway />
             <SystemsExplainer />
             <CountyInfoCard />
@@ -79,10 +81,11 @@ const Index = () => {
         );
       default: // "resident" or null
         return (
-          <>
+           <>
             <RegionalGateway />
             <CountyInfoCard />
             <SmartRecommendations />
+            <HealthDataSnapshot />
             <CoreAccessGrid />
             <GuidedPathways />
             <SuccessStories />
