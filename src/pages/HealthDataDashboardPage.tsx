@@ -2,12 +2,13 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   BarChart3, TrendingUp, TrendingDown, Activity, Heart, Brain, Users,
-  MapPin, Shield, Baby, Stethoscope, Download
+  MapPin, Shield, Baby, Stethoscope, Download, Zap
 } from "lucide-react";
 import ExternalEmbeds from "@/components/dashboard/ExternalEmbeds";
 import DisparityGapChart from "@/components/dashboard/DisparityGapChart";
 import CSVExportPanel from "@/components/dashboard/CSVExportPanel";
 import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
+import EnergyBurdenMap from "@/components/dashboard/EnergyBurdenMap";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -133,16 +134,19 @@ export default function HealthDataDashboardPage() {
         </div>
 
         <Tabs defaultValue="chronic">
-          <TabsList className="flex-wrap">
-            <TabsTrigger value="chronic">Chronic Disease</TabsTrigger>
-            <TabsTrigger value="access">Healthcare Access</TabsTrigger>
-            <TabsTrigger value="equity">Health Equity</TabsTrigger>
-            <TabsTrigger value="mortality">Leading Causes</TabsTrigger>
-            <TabsTrigger value="counties">County Compare</TabsTrigger>
-            <TabsTrigger value="heatmap">County Heatmap</TabsTrigger>
-            <TabsTrigger value="disparities">Disparity Gaps</TabsTrigger>
-            <TabsTrigger value="research">Research Tools</TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto -mx-4 px-4 pb-1">
+            <TabsList className="inline-flex w-max min-w-full sm:w-auto sm:min-w-0 gap-1">
+              <TabsTrigger value="chronic" className="text-xs sm:text-sm whitespace-nowrap">Chronic Disease</TabsTrigger>
+              <TabsTrigger value="access" className="text-xs sm:text-sm whitespace-nowrap">Healthcare Access</TabsTrigger>
+              <TabsTrigger value="equity" className="text-xs sm:text-sm whitespace-nowrap">Health Equity</TabsTrigger>
+              <TabsTrigger value="mortality" className="text-xs sm:text-sm whitespace-nowrap">Leading Causes</TabsTrigger>
+              <TabsTrigger value="counties" className="text-xs sm:text-sm whitespace-nowrap">County Compare</TabsTrigger>
+              <TabsTrigger value="heatmap" className="text-xs sm:text-sm whitespace-nowrap">County Heatmap</TabsTrigger>
+              <TabsTrigger value="energy" className="text-xs sm:text-sm whitespace-nowrap">Energy Burden</TabsTrigger>
+              <TabsTrigger value="disparities" className="text-xs sm:text-sm whitespace-nowrap">Disparity Gaps</TabsTrigger>
+              <TabsTrigger value="research" className="text-xs sm:text-sm whitespace-nowrap">Research Tools</TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="chronic" className="mt-6 space-y-6">
             <Card>
@@ -414,6 +418,10 @@ export default function HealthDataDashboardPage() {
           </TabsContent>
           <TabsContent value="heatmap" className="mt-6 space-y-6">
             <CountyChoropleth />
+          </TabsContent>
+
+          <TabsContent value="energy" className="mt-6 space-y-6">
+            <EnergyBurdenMap />
           </TabsContent>
 
           <TabsContent value="disparities" className="mt-6 space-y-6">
