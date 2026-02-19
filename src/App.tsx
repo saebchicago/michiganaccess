@@ -56,6 +56,7 @@ const CaseStudiesPage = lazy(() => import("./pages/CaseStudiesPage"));
 const ChangelogPage = lazy(() => import("./pages/ChangelogPage"));
 const PressPage = lazy(() => import("./pages/PressPage"));
 const SitemapPage = lazy(() => import("./pages/SitemapPage"));
+const SupportPage = lazy(() => import("./pages/SupportPage"));
 const CountyRedirect = lazy(() => import("./pages/CountyRedirect"));
 const queryClient = new QueryClient();
 
@@ -86,7 +87,7 @@ const App = () => (
               <Route path="/costs" element={<CostTransparencyPage />} />
               <Route path="/wellness" element={<PreventionWellnessPage />} />
               <Route path="/clinical-trials" element={<ClinicalTrialsPage />} />
-              <Route path="/support" element={<SupportGroupsPage />} />
+              <Route path="/support-groups" element={<SupportGroupsPage />} />
               <Route path="/learn" element={<LearnPage />} />
               <Route path="/data" element={<HealthDataDashboardPage />} />
               <Route path="/transportation" element={<TransportationPage />} />
@@ -123,6 +124,7 @@ const App = () => (
               <Route path="/changelog" element={<ChangelogPage />} />
               <Route path="/press" element={<PressPage />} />
               <Route path="/sitemap" element={<SitemapPage />} />
+              <Route path="/support" element={<SupportPage />} />
               {/* County shortcut: /wayne → /county/wayne */}
               <Route path="/:slug" element={<CountyRedirect />} />
               <Route path="*" element={<NotFound />} />

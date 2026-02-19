@@ -40,6 +40,7 @@ const Footer = () => {
         { label: "Accessibility", href: "/accessibility" },
         { label: "Press & Media", href: "/press" },
         { label: "Site Map", href: "/sitemap" },
+        { label: "Support Us", href: "/support" },
         { label: t("nav.installApp"), href: "/install" },
       ],
     },
