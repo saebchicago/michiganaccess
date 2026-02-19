@@ -71,8 +71,8 @@
   },
   "getHelp": "Get Help Now",
   "prototype": {
-    "title": "Portfolio Prototype:",
-    "description": "Demonstrating data integration methodology using 2024–2025 public datasets.",
+    "title": "Public Beta:",
+    "description": "Built by a Michigan resident, improving every week with community feedback and open data integration.",
     "viewMethodology": "View our data methodology",
     "and": "and",
     "viewTechnical": "technical architecture"
@@ -87,15 +87,13 @@
     "findCare": "Find Care Now",
     "findCareDesc": "Search doctors, hospitals, urgent care by location and specialty",
     "transportation": "Transportation & Safety",
-    "transportationDesc": "Public transit, school buses, automated enforcement, accessible rides for seniors",
-    "environment": "Environment",
-    "environmentDesc": "Air quality, water safety, clean energy, Great Lakes conservation, recycling",
+    "transportationDesc": "Public transit, school bus safety, automated enforcement, accessible rides for seniors",
+    "environment": "Energy & Environment",
+    "environmentDesc": "DTE programs, utility assistance, air quality, water safety, Great Lakes conservation, clean energy",
     "civicData": "Civic Data",
     "civicDataDesc": "State budget, FOIA requests, voter info, elected officials, public meetings",
     "financialHelp": "Financial Help",
     "financialHelpDesc": "Free and reduced-cost care, insurance enrollment, prescription assistance",
-    "conditions": "Understand Your Condition",
-    "conditionsDesc": "Evidence-based health information, treatment options, care pathways",
     "communityResources": "Community Resources",
     "communityResourcesDesc": "Food, housing, transportation, support groups, social services",
     "explore": "Explore →"
@@ -119,7 +117,7 @@
     "stayInformedDesc": "Track Michigan health trends, learn about conditions, discover prevention strategies."
   },
   "featuredTopics": {
-    "title": "Featured Health Topics",
+     "title": "Featured Topics",
     "subtitle": "Stay informed about what matters most to Michigan families",
     "seasonalHealth": "Seasonal Health",
     "fluTitle": "Flu Season: Where to Get Vaccinated",
@@ -148,7 +146,7 @@
     "about": "About",
     "disclaimer": "This platform is an independent, non-commercial civic resource. It does not collect personal data, use cookies for tracking, display advertising, or sell information.",
     "noAds": "No advertising · No data selling · Built to serve Michigan residents",
-    "prototype": "Prototype / Portfolio Demonstration",
+    "prototype": "Public Beta",
     "ethicalNote": "This project is built with an ethical, non-commercial ethos — prioritizing public benefit over profit.",
     "ethicalTitle": "Ethical & Non-Commercial Platform",
     "dataSources": "Data Sources",
@@ -161,7 +159,7 @@
     "independentBadge": "✓ Independent · Non-Commercial",
     "dataSourcedFrom": "Data sourced from",
     "privacyStatement": "No cookies, no tracking, no personal data collected.",
-    "dataAttribution": "Data: CMS · HRSA · CDC · Michigan DHHS · Leapfrog"
+    "dataAttribution": "Data: CMS · HRSA · CDC · MDHHS · Leapfrog · EPA · NHTSA · EIA"
   },
   "accessibility": {
     "highContrast": "High Contrast",
@@ -394,7 +392,7 @@
     "title": "Helping Michigan Families Navigate Health, Safety & Transportation",
     "subtitle": "An independent, data-driven civic resource built to improve health, safety, and transportation access for all Michigan residents — regardless of income, insurance status, or background.",
     "missionTitle": "Our Mission",
-    "missionDesc": "Access Michigan exists to help Michigan residents navigate healthcare, education, and transportation — finding quality care, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy resources, regardless of income, insurance status, or background.",
+    "missionDesc": "Access Michigan exists to help Michigan residents navigate healthcare, energy, transportation, safety, and public services — finding quality resources, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy information, regardless of income, insurance status, or background.",
     "independentTitle": "Independent & Objective",
     "independentDesc": "No advertising, no paid placements. Rankings based on publicly available, third-party quality data.",
     "residentFirstTitle": "Resident-First",
@@ -419,8 +417,8 @@
     "technologyTitle": "Technology & Scalability",
     "technologySubtitle": "Built for growth and sustainability",
     "limitationsTitle": "Limitations & Disclaimers",
-    "portfolioTitle": "Portfolio Prototype",
-    "portfolioDesc": "This platform was created as a working prototype to demonstrate strategic market development methodology, data-driven community benefit design, and full-stack healthcare technology execution capability. It represents a functional proof-of-concept that could be deployed with live data integrations for real-world use."
+     "portfolioTitle": "Public Beta",
+    "portfolioDesc": "Access Michigan is a working public beta — a community-oriented civic resource built to help Michigan residents navigate health, safety, energy, transportation, and public services. It is continuously improving with community feedback and open data integration."
   },
   "methodologyPage": {
     "badge": "Data Methodology",

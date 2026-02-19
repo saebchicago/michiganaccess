@@ -9,7 +9,7 @@ import HealthEquitySection from "@/components/home/HealthEquitySection";
 import {
   Shield, BarChart3, Globe, Users, Heart, Scale, Database,
   ExternalLink, BookOpen, Award, Target, Lightbulb, CheckCircle2,
-  ArrowRight, Info, FileText
+  ArrowRight, Info, Sparkles
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -393,14 +393,17 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Prototype badge */}
+        {/* Public Beta badge */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}
-          className="rounded-2xl border border-michigan-gold/30 bg-michigan-gold/5 p-8 text-center"
+          className="rounded-2xl border border-primary/20 bg-primary/5 p-8 text-center"
         >
-          <FileText className="mx-auto mb-3 h-8 w-8 text-michigan-gold" />
+          <Sparkles className="mx-auto mb-3 h-8 w-8 text-primary" />
           <h3 className="mb-2 text-lg font-bold text-foreground">{t("aboutPage.portfolioTitle")}</h3>
           <p className="mx-auto max-w-2xl text-sm text-muted-foreground">
             {t("aboutPage.portfolioDesc")}
+          </p>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Want to support this project? <Link to="/contact" className="font-medium text-primary hover:underline">Learn how →</Link>
           </p>
         </motion.div>
       </div>
