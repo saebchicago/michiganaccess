@@ -50,7 +50,7 @@ const CHART_COLORS = {
 
 export default function HealthDataSnapshot() {
   return (
-    <section id="health-data" className="py-14 bg-slate-900 text-white" aria-labelledby="health-data-title">
+    <section id="data-snapshot" className="py-14 bg-slate-900 text-white" aria-labelledby="health-data-title">
       <div className="container max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

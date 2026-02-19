@@ -140,10 +140,10 @@ const HeroSection = () => {
               className="mt-5"
             >
               <a
-                href="#health-data"
+                href="#data-snapshot"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById("health-data")?.scrollIntoView({ behavior: "smooth" });
+                  document.getElementById("data-snapshot")?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="text-sm text-primary-foreground/50 hover:text-primary-foreground/80 hover:underline transition-colors"
               >
