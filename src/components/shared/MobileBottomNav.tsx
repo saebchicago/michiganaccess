@@ -50,7 +50,7 @@ export default function MobileBottomNav() {
             <span>More</span>
           </button>
         </SheetTrigger>
-        <SheetContent side="bottom" className="rounded-t-2xl pb-8">
+        <SheetContent side="bottom" className="z-[60] rounded-t-2xl pb-8">
           <SheetHeader>
             <SheetTitle>More Pages</SheetTitle>
           </SheetHeader>

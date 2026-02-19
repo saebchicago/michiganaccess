@@ -35,7 +35,7 @@ const allowedCarriers = [
   "Medicare Advantage", "Employer-sponsored (ERISA)", "Other", ""
 ] as const;
 
-const allowedAppealTypes = ["internal", "external", "expedited", "federal"] as const;
+const allowedAppealTypes = ["internal", "external", "expedited", "federal", "fair-hearing"] as const;
 
 const appealSchema = z.object({
   denialType: z.string().trim().max(200, "Denial type too long").default("Standard denial"),
