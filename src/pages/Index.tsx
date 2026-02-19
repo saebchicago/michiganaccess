@@ -15,6 +15,7 @@ import SmartRecommendations from "@/components/home/SmartRecommendations";
 import OnboardingTour from "@/components/shared/OnboardingTour";
 import SectionNav from "@/components/home/SectionNav";
 import SuccessStories from "@/components/home/SuccessStories";
+import SocialProofStrip from "@/components/home/SocialProofStrip";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -34,6 +35,7 @@ const Index = () => {
       {/* 2. How Can We Help */}
       <GuidedPathways />
       <AuthorityStrip />
+      <SocialProofStrip />
       {/* 3. County Health Snapshot — moved up */}
       <HealthDataSnapshot />
       {/* 4. Explore Community Resources */}

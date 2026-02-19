@@ -15,6 +15,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { useFinancialPrograms } from "@/hooks/useFinancialPrograms";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import DataTimestamp from "@/components/shared/DataTimestamp";
+import ContentSkeleton from "@/components/shared/ContentSkeleton";
+import EmptyState from "@/components/shared/EmptyState";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -43,11 +46,15 @@ export default function FinancialHelpPage() {
     description: "Find free and reduced-cost care, insurance options, and prescription savings for Michigan residents.",
     path: "/financial-help",
     jsonLd: {
-      "@type": "WebPage",
+      "@type": "FAQPage",
       "name": "Financial Help — Access Michigan",
       "description": "Free and reduced-cost healthcare, insurance programs, and prescription assistance for Michigan residents.",
       "url": "https://accessmi.org/financial-help",
-      "provider": { "@type": "Organization", "name": "Access Michigan" },
+      "mainEntity": [
+        { "@type": "Question", "name": "What is the Federal Poverty Level and how does it affect my eligibility?", "acceptedAnswer": { "@type": "Answer", "text": "The FPL is a measure of income used by the federal government to determine eligibility for programs. In 2024, the FPL for a single person is $15,060. Many programs cover individuals up to 138-400% of FPL." } },
+        { "@type": "Question", "name": "How do I apply for Healthy Michigan Plan (Medicaid)?", "acceptedAnswer": { "@type": "Answer", "text": "Apply online at Michigan.gov/MIBridges, by phone at 844-799-9876, or in person at your local DHHS office. You may qualify if your income is at or below 138% of the Federal Poverty Level." } },
+        { "@type": "Question", "name": "Are charity care programs really free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Michigan hospitals are required to have financial assistance policies. Most offer free or reduced-cost care to patients at or below 200% FPL. You do not need insurance to apply." } },
+      ],
     },
   });
   const { data: programs = [], isLoading } = useFinancialPrograms();
@@ -183,6 +190,7 @@ export default function FinancialHelpPage() {
         {/* Filter */}
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-sm font-medium text-muted-foreground">{t('findCare.filters')}:</span>
+          <DataTimestamp table="financial_programs" />
           <Button size="sm" variant={filterType === "all" ? "default" : "outline"} onClick={() => setFilterType("all")}>{t('financial.allPrograms')}</Button>
           {Object.entries(programTypeLabels).map(([key, { label }]) => (
             <Button key={key} size="sm" variant={filterType === key ? "default" : "outline"} onClick={() => setFilterType(key)}>
@@ -193,9 +201,9 @@ export default function FinancialHelpPage() {
 
         {/* Programs by category */}
         {isLoading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          </div>
+          <ContentSkeleton variant="rows" count={5} />
+        ) : Object.keys(grouped).length === 0 ? (
+          <EmptyState title="No programs found" subtitle="Try adjusting your income or filter settings" onReset={() => { setFilterType("all"); setIncome(""); }} />
         ) : (
           Object.entries(grouped).map(([type, progs]) => {
             const meta = programTypeLabels[type] || { label: type, icon: HelpCircle, color: "text-muted-foreground" };

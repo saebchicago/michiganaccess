@@ -30,6 +30,11 @@ const InsuranceAppealsPage = () => {
         { "@type": "HowToStep", "name": "File internal appeal", "text": "Submit a formal appeal to your insurance company within 180 days." },
         { "@type": "HowToStep", "name": "Request DIFS external review", "text": "If denied again, file for external review with Michigan DIFS." },
       ],
+      "mainEntity": [
+        { "@type": "Question", "name": "How long do I have to appeal a health insurance denial in Michigan?", "acceptedAnswer": { "@type": "Answer", "text": "You have 180 days from the date of denial to file an internal appeal with your insurance company." } },
+        { "@type": "Question", "name": "What is the success rate for insurance appeals?", "acceptedAnswer": { "@type": "Answer", "text": "68% of internal appeals and 82% of DIFS external reviews are decided in the patient's favor." } },
+        { "@type": "Question", "name": "Does Access Michigan store my health information?", "acceptedAnswer": { "@type": "Answer", "text": "No. Access Michigan does not store any personal health information. All appeal letter generation happens locally." } },
+      ],
     },
   });
 
