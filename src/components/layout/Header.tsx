@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, Heart, ChevronDown, Download, LogOut, Sparkles } from "lucide-react";
 import BenefitsWizard from "@/components/home/BenefitsWizard";
@@ -49,8 +49,9 @@ const Header = () => {
       ],
     },
     {
-      label: "Strategy",
+      label: "Data & Impact",
       children: [
+        { label: "Health Data Snapshot", href: "/#data-snapshot" },
         { label: "Executive Summary", href: "/executive-summary" },
         { label: "Health Equity", href: "/equity" },
         { label: "Lean Healthcare", href: "/lean-healthcare" },
@@ -236,6 +237,7 @@ const Header = () => {
 
 function DropdownNav({ label, items, currentPath }: { label: string; items: { label: string; href: string }[]; currentPath: string }) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div
@@ -261,21 +263,35 @@ function DropdownNav({ label, items, currentPath }: { label: string; items: { la
             className="absolute left-0 top-full mt-1 w-52 rounded-lg border border-border bg-card p-1.5 shadow-lg"
             role="menu"
           >
-            {items.map((child) => (
-              <Link
-                key={child.href}
-                to={child.href}
-                onClick={() => setOpen(false)}
-                role="menuitem"
-                className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted ${
-                  currentPath === child.href
-                    ? "font-medium text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {child.label}
-              </Link>
-            ))}
+            {items.map((child) => {
+              const isAnchor = child.href.includes("#");
+              const handleClick = () => {
+                setOpen(false);
+                if (isAnchor) {
+                  const [path, hash] = child.href.split("#");
+                  if (currentPath === (path || "/")) {
+                    document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    navigate(child.href);
+                  }
+                }
+              };
+              return (
+                <Link
+                  key={child.href}
+                  to={child.href}
+                  onClick={handleClick}
+                  role="menuitem"
+                  className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted ${
+                    currentPath === child.href
+                      ? "font-medium text-primary"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {child.label}
+                </Link>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>
