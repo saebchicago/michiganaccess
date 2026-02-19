@@ -223,6 +223,16 @@ export default function FindCarePage() {
     <Layout>
       <div className="container pt-6">
         <Breadcrumbs items={[{ label: "Find Care" }]} />
+        {selectedCounty && (
+          <div className="bg-primary/10 border border-primary/20 rounded-lg px-4 py-2.5 flex items-center justify-between gap-3 mt-3">
+            <div className="flex items-center gap-2 text-sm">
+              <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="text-foreground">
+                Showing facilities for <strong>{selectedCounty} County</strong>.
+              </span>
+            </div>
+          </div>
+        )}
       </div>
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-10 lg:py-16">
