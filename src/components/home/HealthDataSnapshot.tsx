@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, Download, BarChart3 } from "lucide-react";
+import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -160,8 +161,13 @@ export default function HealthDataSnapshot() {
           </motion.div>
         </div>
 
-        {/* Disparity Spotlight + CTA */}
+        {/* County Choropleth Heatmap */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+          <CountyChoropleth compact />
+        </motion.div>
+
+        {/* Disparity Spotlight + CTA */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
           <Card className="border-michigan-coral/20 bg-michigan-coral/5">
             <CardContent className="py-5">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
