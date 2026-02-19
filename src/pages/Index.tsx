@@ -102,7 +102,6 @@ const Index = () => {
     <Layout>
       <OnboardingTour />
       <SectionNav />
-      <AccessChat />
       <CountyWelcomeBanner />
       <HeroSection />
       <QuickActionGrid />
@@ -110,6 +109,7 @@ const Index = () => {
       <StakeholderCTAs />
       <ComparisonTable />
       {renderSections()}
+      <AccessChat />
     </Layout>
   );
 };
