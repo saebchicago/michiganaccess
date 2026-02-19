@@ -1,18 +1,16 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Apple, ShieldCheck, Home, Bus, HeartPulse, Baby, Pill, FileWarning } from "lucide-react";
+import { Search, Apple, ShieldCheck, Bus, HeartPulse, Pill, FileWarning } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const quickPills = [
-  { icon: Apple, label: "Food", href: "/resources" },
-  { icon: ShieldCheck, label: "Medicaid", href: "/financial-help" },
-  { icon: Home, label: "Housing", href: "/resources" },
-  { icon: HeartPulse, label: "Urgent Care", href: "/find-care" },
-  { icon: Bus, label: "Transit", href: "/transportation" },
-  { icon: FileWarning, label: "Appeal a Denial", href: "/health/insurance-appeals" },
-  { icon: Pill, label: "Rx Help", href: "/financial-help" },
-  { icon: Baby, label: "Family", href: "/resources" },
+  { icon: HeartPulse, label: "Find a Doctor", href: "/find-care" },
+  { icon: Pill, label: "Utility Assistance", href: "/financial-help" },
+  { icon: Bus, label: "Bus Safety", href: "/transportation" },
+  { icon: Apple, label: "Free Food", href: "/resources" },
+  { icon: FileWarning, label: "Insurance Help", href: "/health/insurance-appeals" },
+  { icon: ShieldCheck, label: "Air Quality", href: "/environment" },
 ];
 
 /* Simplified Michigan outline as SVG watermark */
@@ -69,9 +67,9 @@ const HeroSection = () => {
               transition={{ delay: 0.15, duration: 0.5 }}
               className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-tight"
             >
-              Your neighbor's guide to{" "}
+              Your guide to{" "}
               <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
-                health, food, housing &amp; more
+                health, safety, energy &amp; services
               </span>{" "}
               across Michigan.
             </motion.h1>
@@ -99,7 +97,7 @@ const HeroSection = () => {
                   type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for food pantries, clinics, transit, insurance help…"
+                  placeholder="Search clinics, transit, energy programs, food pantries, insurance help…"
                   className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-32 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
                   aria-label="Search for services"
                 />

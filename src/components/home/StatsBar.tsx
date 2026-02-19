@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Building2, Users, MapPin, Heart, FileText } from "lucide-react";
+import { Building2, Users, MapPin, Heart, FileText, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const StatsBar = () => {
@@ -10,6 +10,7 @@ const StatsBar = () => {
     { icon: Building2, value: "500+", label: t("stats.facilities") },
     { icon: MapPin, value: "83", label: t("stats.counties") },
     { icon: Heart, value: "200+", label: t("stats.financialLocations") },
+    { icon: Zap, value: "120+", label: "Utility & Energy Programs" },
     { icon: FileText, value: "15,000+", label: t("stats.communityResources") },
   ];
 
@@ -21,7 +22,7 @@ const StatsBar = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5"
+          className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6"
         >
           {stats.map((stat, i) => (
             <motion.div

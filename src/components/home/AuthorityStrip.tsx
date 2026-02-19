@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const sources = ["CDC", "CMS", "Michigan DHHS", "County Health Rankings"];
+const sources = ["CDC", "CMS", "Michigan DHHS", "County Health Rankings", "EPA", "NHTSA", "EIA"];
 
 export default function AuthorityStrip() {
   return (

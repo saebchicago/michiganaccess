@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark } from "lucide-react";
+import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
@@ -147,6 +147,19 @@ const Footer = () => {
               ))}
             </div>
           </details>
+        </div>
+
+        {/* Public Beta Badge */}
+        <div className="mt-4 border-t border-border pt-4">
+          <div className="mx-auto max-w-xl rounded-lg border border-michigan-gold/20 bg-michigan-gold/[0.08] px-4 py-3 text-center">
+            <p className="flex items-center justify-center gap-1.5 text-xs text-foreground">
+              <Sparkles className="h-3.5 w-3.5 text-michigan-gold" />
+              <span className="font-semibold">Access Michigan is in Public Beta</span> — built by a Michigan resident, improving every week with community feedback.
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Have a suggestion? <Link to="/contact" className="font-medium text-primary hover:underline">We'd love to hear from you.</Link>
+            </p>
+          </div>
         </div>
 
         {/* Trust statement */}

@@ -71,8 +71,8 @@
   },
   "getHelp": "Obtener Ayuda",
   "prototype": {
-    "title": "Prototipo de Portafolio:",
-    "description": "Demostrando metodología de integración de datos usando conjuntos de datos públicos 2024–2025.",
+    "title": "Beta Pública:",
+    "description": "Creado por un residente de Michigan, mejorando cada semana con comentarios de la comunidad e integración de datos abiertos.",
     "viewMethodology": "Ver nuestra metodología de datos",
     "and": "y",
     "viewTechnical": "arquitectura técnica"
@@ -148,7 +148,7 @@
     "about": "Acerca de",
     "disclaimer": "Esta plataforma es un recurso cívico independiente y no comercial.",
     "noAds": "Sin publicidad · Sin venta de datos",
-    "prototype": "Prototipo / Demostración de Portafolio",
+    "prototype": "Beta Pública",
     "ethicalNote": "Priorizando el beneficio público sobre las ganancias.",
     "ethicalTitle": "Plataforma Ética y No Comercial",
     "dataSources": "Fuentes de Datos",
@@ -419,8 +419,8 @@
     "technologyTitle": "Tecnología y Escalabilidad",
     "technologySubtitle": "Construido para el crecimiento y la sostenibilidad",
     "limitationsTitle": "Limitaciones y Descargos de Responsabilidad",
-    "portfolioTitle": "Prototipo de Portafolio",
-    "portfolioDesc": "Esta plataforma fue creada como un prototipo funcional para demostrar metodología de desarrollo de mercado estratégico, diseño de beneficio comunitario basado en datos y capacidad de ejecución tecnológica de salud completa."
+     "portfolioTitle": "Beta Pública",
+    "portfolioDesc": "Access Michigan es una beta pública funcional — un recurso cívico orientado a la comunidad construido para ayudar a los residentes de Michigan a navegar salud, seguridad, energía, transporte y servicios públicos. Mejora continuamente con comentarios de la comunidad e integración de datos abiertos."
   },
   "methodologyPage": {
     "badge": "Metodología de Datos",

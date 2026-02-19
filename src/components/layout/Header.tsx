@@ -27,19 +27,21 @@ const Header = () => {
       label: t("nav.findHelp"),
       children: [
         { label: t("nav.findCare"), href: "/find-care" },
-        { label: t("nav.healthMap"), href: "/health-map" },
-        { label: t("nav.financialHelp"), href: "/financial-help" },
         { label: t("nav.communityResources"), href: "/resources" },
+        { label: t("nav.financialHelp"), href: "/financial-help" },
         { label: t("nav.transportation"), href: "/transportation" },
+        { label: t("nav.healthMap"), href: "/health-map" },
       ],
     },
     {
-      label: t("nav.serviceCategories"),
+      label: "Explore Services",
       children: [
+        { label: "Energy & Utilities", href: "/environment" },
+        { label: "School & Bus Safety", href: "/transportation" },
         { label: t("nav.healthConditions"), href: "/conditions" },
         { label: "Insurance Appeals", href: "/health/insurance-appeals" },
-        { label: t("nav.environment"), href: "/environment" },
-        { label: t("nav.civicData"), href: "/civic-data" },
+        { label: "Air & Water Quality", href: "/environment" },
+        { label: "Civic Data & FOIA", href: "/civic-data" },
         { label: t("nav.qualityRatings"), href: "/quality" },
         { label: t("nav.costTransparency"), href: "/costs" },
         { label: t("nav.prevention"), href: "/wellness" },
@@ -59,10 +61,6 @@ const Header = () => {
         { label: "Case Studies", href: "/case-studies" },
         { label: "Impact Dashboard", href: "/impact" },
       ],
-    },
-    {
-      label: t("nav.eligibility"),
-      href: "/financial-help",
     },
     {
       label: t("nav.about"),

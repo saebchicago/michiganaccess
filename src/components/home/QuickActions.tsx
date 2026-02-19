@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Hospital, DollarSign, BookOpen, Users, Bus, Leaf, Landmark } from "lucide-react";
+import { Hospital, DollarSign, Users, Bus, Leaf, Landmark } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -29,14 +29,6 @@ const QuickActions = () => {
       iconClass: "text-primary",
     },
     {
-      icon: Bus,
-      title: t("quickActions.transportation"),
-      description: t("quickActions.transportationDesc"),
-      href: "/transportation",
-      bgClass: "bg-michigan-coral/10",
-      iconClass: "text-michigan-coral",
-    },
-    {
       icon: Leaf,
       title: t("quickActions.environment"),
       description: t("quickActions.environmentDesc"),
@@ -45,12 +37,12 @@ const QuickActions = () => {
       iconClass: "text-michigan-forest",
     },
     {
-      icon: Landmark,
-      title: t("quickActions.civicData"),
-      description: t("quickActions.civicDataDesc"),
-      href: "/civic-data",
-      bgClass: "bg-michigan-navy/10",
-      iconClass: "text-michigan-navy",
+      icon: Bus,
+      title: t("quickActions.transportation"),
+      description: t("quickActions.transportationDesc"),
+      href: "/transportation",
+      bgClass: "bg-michigan-coral/10",
+      iconClass: "text-michigan-coral",
     },
     {
       icon: DollarSign,
@@ -61,20 +53,20 @@ const QuickActions = () => {
       iconClass: "text-michigan-gold",
     },
     {
-      icon: BookOpen,
-      title: t("quickActions.conditions"),
-      description: t("quickActions.conditionsDesc"),
-      href: "/conditions",
-      bgClass: "bg-accent/10",
-      iconClass: "text-accent",
-    },
-    {
       icon: Users,
       title: t("quickActions.communityResources"),
       description: t("quickActions.communityResourcesDesc"),
       href: "/resources",
       bgClass: "bg-michigan-sky/10",
       iconClass: "text-michigan-sky",
+    },
+    {
+      icon: Landmark,
+      title: t("quickActions.civicData"),
+      description: t("quickActions.civicDataDesc"),
+      href: "/civic-data",
+      bgClass: "bg-michigan-navy/10",
+      iconClass: "text-michigan-navy",
     },
   ];
 
@@ -86,7 +78,7 @@ const QuickActions = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
         >
           {actions.map((action) => (
             <motion.div key={action.href} variants={item}>
