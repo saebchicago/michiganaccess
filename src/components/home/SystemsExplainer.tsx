@@ -11,7 +11,7 @@ const features = [
 
 const stakeholders = [
   { label: "For Health Systems", desc: "Track referral patterns and community benefit impact", href: "/partners" },
-  { label: "For Nonprofits", desc: "Amplify your services to residents who need them", href: "/partnership" },
+  { label: "For Nonprofits", desc: "Amplify your services to residents who need them", href: "/partnerships" },
   { label: "For Policymakers", desc: "Identify gaps with real usage data", href: "/impact" },
 ];
 
