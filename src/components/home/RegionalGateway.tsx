@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useCallback, useMemo } from "react";
-import { MapPin, Navigation, Loader2, ShieldCheck, X, HeartPulse, Zap, Bus } from "lucide-react";
+import { MapPin, Navigation, Loader2, ShieldCheck, X, HeartPulse, Zap, Bus, ArrowRight } from "lucide-react";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
 import MunicipalitySearch from "./MunicipalitySearch";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -34,7 +34,6 @@ const REGION_LABEL_POS: Record<string, { x: number; y: number }> = {
   southeast: { x: 255, y: 220 },
 };
 
-// Approximate population and composite health grades per region
 const REGION_POP: Record<string, number> = {
   southeast: 4_800_000,
   "south-central": 1_600_000,
@@ -44,16 +43,6 @@ const REGION_POP: Record<string, number> = {
   "upper-peninsula": 300_000,
 };
 
-const REGION_GRADE: Record<string, { grade: string; color: string }> = {
-  southeast: { grade: "B+", color: "text-green-600" },
-  "south-central": { grade: "B", color: "text-green-600" },
-  west: { grade: "B+", color: "text-green-600" },
-  "east-central": { grade: "C+", color: "text-yellow-600" },
-  northwest: { grade: "B−", color: "text-green-600" },
-  "upper-peninsula": { grade: "C", color: "text-yellow-600" },
-};
-
-// Cross-sector vital metrics per region
 const REGION_VITALS: Record<string, { uninsuredRate: string; energyBurden: string; transitScore: string }> = {
   southeast: { uninsuredRate: "5.2%", energyBurden: "3.8%", transitScore: "72" },
   "south-central": { uninsuredRate: "6.1%", energyBurden: "4.2%", transitScore: "58" },
@@ -71,7 +60,6 @@ export default function RegionalGateway() {
   const [geoStatus, setGeoStatus] = useState<"idle" | "loading">("idle");
   const hoveredRegion = MICHIGAN_REGIONS.find((r) => r.id === hovered);
 
-  // Read once on mount; memoize to prevent re-reads
   const hasGeoCache = useMemo(() => !!localStorage.getItem("mi-geo-county"), []);
 
   const handleUseLocation = useCallback(() => {
@@ -113,173 +101,258 @@ export default function RegionalGateway() {
   }, [navigate]);
 
   return (
-    <section className="border-y border-border bg-card py-10">
-      <div className="container">
+    <section className="relative py-16 md:py-20 overflow-hidden">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] via-accent/[0.03] to-michigan-gold/[0.04] dark:from-primary/[0.08] dark:via-accent/[0.06] dark:to-michigan-gold/[0.06]" />
+      <div className="absolute inset-0 opacity-[0.025]" style={{
+        backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000' fill-opacity='0.15'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+      }} aria-hidden="true" />
+
+      <div className="container relative z-10">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="space-y-6"
+          className="space-y-8"
         >
-          <div className="text-center space-y-2">
-            <div className="flex items-center justify-center gap-2">
-              <MapPin className="h-4 w-4 text-primary" />
-              <h2 className="text-lg font-bold text-foreground">Regional Gateway</h2>
+          {/* Header */}
+          <div className="text-center space-y-3">
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary">
+              <MapPin className="h-3.5 w-3.5" />
+              Explore by Region
             </div>
-            <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              Explore Michigan by region or search for your city, village, or township below.
+            <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+              Find resources near you
+            </h2>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+              Select your region on the map, search for your city, or let us detect your county automatically.
             </p>
           </div>
 
-          {/* Municipality Search */}
-          <MunicipalitySearch />
+          {/* Municipality Search — prominent */}
+          <div className="max-w-lg mx-auto">
+            <MunicipalitySearch />
+          </div>
 
-          {/* SVG Map + Location popover + Info panel */}
-          <div className="flex flex-col items-center gap-6 md:flex-row md:justify-center">
-            <div className="relative">
-              <Popover open={geoOpen} onOpenChange={setGeoOpen}>
-                <PopoverTrigger asChild>
-                  <div
-                    className="cursor-pointer outline-none"
-                    tabIndex={0}
-                    role="group"
-                    aria-label="Michigan regional map — focus to find your county"
-                    onMouseEnter={() => { if (!isMobile && !hasGeoCache) setGeoOpen(true); }}
-                    onFocus={() => { if (!hasGeoCache) setGeoOpen(true); }}
-                    onClick={() => { if (isMobile && !hasGeoCache) setGeoOpen(true); }}
-                  >
-                    <svg
-                      viewBox="0 0 310 300"
-                      className="w-full max-w-xs md:max-w-sm h-auto"
-                      role="img"
-                      aria-label="Interactive map of Michigan's 6 regions"
+          {/* Map + Info panel */}
+          <div className="flex flex-col items-center gap-8 lg:flex-row lg:justify-center lg:items-start">
+            {/* Map container with decorative ring */}
+            <div className="relative flex-shrink-0">
+              <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-sm" aria-hidden="true" />
+              <div className="relative rounded-2xl border border-border/60 bg-card/80 backdrop-blur-sm p-4 md:p-6 shadow-lg">
+                <Popover open={geoOpen} onOpenChange={setGeoOpen}>
+                  <PopoverTrigger asChild>
+                    <div
+                      className="cursor-pointer outline-none"
+                      tabIndex={0}
+                      role="group"
+                      aria-label="Michigan regional map — focus to find your county"
+                      onMouseEnter={() => { if (!isMobile && !hasGeoCache) setGeoOpen(true); }}
+                      onFocus={() => { if (!hasGeoCache) setGeoOpen(true); }}
+                      onClick={() => { if (isMobile && !hasGeoCache) setGeoOpen(true); }}
                     >
-                      {MICHIGAN_REGIONS.map((region) => {
-                        const path = REGION_PATHS[region.id];
-                        const label = REGION_LABEL_POS[region.id];
-                        if (!path) return null;
-                        const isHovered = hovered === region.id;
-                        return (
-                          <g key={region.id}>
-                            <path
-                              d={path}
-                              fill={isHovered ? region.color : `${region.color}33`}
-                              stroke={region.color}
-                              strokeWidth={isHovered ? 2.5 : 1.5}
-                              className="cursor-pointer transition-all duration-200"
-                              onMouseEnter={() => setHovered(region.id)}
-                              onMouseLeave={() => setHovered(null)}
-                              onClick={(e) => { e.stopPropagation(); navigate(`/region/${region.id}`); }}
-                              role="button"
-                              aria-label={`Go to ${region.name}`}
-                            />
-                            {label && (
-                              <text
-                                x={label.x}
-                                y={label.y}
-                                textAnchor="middle"
-                                className="pointer-events-none select-none fill-foreground text-[8px] font-semibold"
-                              >
-                                {region.name.replace("Michigan", "MI").replace("Northern Lower ", "N. Lower ")}
-                              </text>
-                            )}
-                          </g>
-                        );
-                      })}
-                    </svg>
-                  </div>
-                </PopoverTrigger>
-                <PopoverContent className="w-72 p-3" side="top" align="center">
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                        <ShieldCheck className="h-4 w-4 text-primary" />
-                        Find your county automatically
-                      </div>
-                      <button
-                        onClick={() => setGeoOpen(false)}
-                        className="p-0.5 text-muted-foreground hover:text-foreground rounded"
-                        aria-label="Close location popover"
+                      <svg
+                        viewBox="0 0 310 300"
+                        className="w-64 h-auto md:w-80"
+                        role="img"
+                        aria-label="Interactive map of Michigan's 6 regions"
                       >
-                        <X className="h-3.5 w-3.5" />
-                      </button>
+                        {/* Subtle grid lines for polish */}
+                        <defs>
+                          <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.2" className="text-border" />
+                          </pattern>
+                        </defs>
+                        <rect width="310" height="300" fill="url(#grid)" opacity="0.3" />
+
+                        {MICHIGAN_REGIONS.map((region) => {
+                          const path = REGION_PATHS[region.id];
+                          const label = REGION_LABEL_POS[region.id];
+                          if (!path) return null;
+                          const isHovered = hovered === region.id;
+                          return (
+                            <g key={region.id}>
+                              <path
+                                d={path}
+                                fill={isHovered ? region.color : `${region.color}22`}
+                                stroke={region.color}
+                                strokeWidth={isHovered ? 3 : 1.5}
+                                className="cursor-pointer transition-all duration-300"
+                                style={{
+                                  filter: isHovered ? `drop-shadow(0 0 8px ${region.color}66)` : "none",
+                                }}
+                                onMouseEnter={() => setHovered(region.id)}
+                                onMouseLeave={() => setHovered(null)}
+                                onClick={(e) => { e.stopPropagation(); navigate(`/region/${region.id}`); }}
+                                role="button"
+                                aria-label={`Go to ${region.name}`}
+                              />
+                              {label && (
+                                <text
+                                  x={label.x}
+                                  y={label.y}
+                                  textAnchor="middle"
+                                  className="pointer-events-none select-none fill-foreground text-[8px] font-semibold"
+                                  style={{ opacity: isHovered ? 1 : 0.7 }}
+                                >
+                                  {region.name.replace("Michigan", "MI").replace("Northern Lower ", "N. Lower ")}
+                                </text>
+                              )}
+                            </g>
+                          );
+                        })}
+                      </svg>
                     </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      We can detect your county to show local resources. Your location is never stored, sold, or tracked.
-                    </p>
-                    <Button
-                      size="sm"
-                      className="w-full gap-1.5 text-xs"
-                      onClick={handleUseLocation}
-                      disabled={geoStatus === "loading"}
-                    >
-                      {geoStatus === "loading" ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      ) : (
-                        <Navigation className="h-3.5 w-3.5" />
-                      )}
-                      {geoStatus === "loading" ? "Locating…" : "Use my location"}
-                    </Button>
-                  </div>
-                </PopoverContent>
-              </Popover>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-72 p-3" side="top" align="center">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                          <ShieldCheck className="h-4 w-4 text-primary" />
+                          Find your county automatically
+                        </div>
+                        <button
+                          onClick={() => setGeoOpen(false)}
+                          className="p-0.5 text-muted-foreground hover:text-foreground rounded"
+                          aria-label="Close location popover"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        We can detect your county to show local resources. Your location is never stored, sold, or tracked.
+                      </p>
+                      <Button
+                        size="sm"
+                        className="w-full gap-1.5 text-xs"
+                        onClick={handleUseLocation}
+                        disabled={geoStatus === "loading"}
+                      >
+                        {geoStatus === "loading" ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <Navigation className="h-3.5 w-3.5" />
+                        )}
+                        {geoStatus === "loading" ? "Locating…" : "Use my location"}
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Use Location CTA below map */}
+                <div className="mt-3 flex justify-center">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="gap-1.5 text-xs rounded-full"
+                    onClick={handleUseLocation}
+                    disabled={geoStatus === "loading"}
+                  >
+                    {geoStatus === "loading" ? (
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    ) : (
+                      <Navigation className="h-3.5 w-3.5" />
+                    )}
+                    {geoStatus === "loading" ? "Locating…" : "Detect my county"}
+                  </Button>
+                </div>
+              </div>
             </div>
 
-            {/* Hover info card */}
-            <div className="w-full max-w-xs min-h-[100px]">
-             {hoveredRegion ? (
+            {/* Hover info card — right side */}
+            <div className="w-full max-w-sm lg:pt-4">
+              {hoveredRegion ? (
                 <motion.div
                   key={hoveredRegion.id}
-                  initial={{ opacity: 0, x: 8 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="rounded-lg border border-border bg-muted/50 p-4 space-y-2"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="rounded-xl border border-border bg-card shadow-md overflow-hidden"
                 >
-                  <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-full" style={{ background: hoveredRegion.color }} />
-                    <h3 className="text-sm font-bold text-foreground">{hoveredRegion.name}</h3>
+                  {/* Colored header strip */}
+                  <div
+                    className="h-1.5"
+                    style={{ background: `linear-gradient(90deg, ${hoveredRegion.color}, ${hoveredRegion.color}88)` }}
+                  />
+                  <div className="p-5 space-y-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-4 w-4 rounded-full shadow-sm" style={{ background: hoveredRegion.color }} />
+                      <h3 className="text-base font-bold text-foreground">{hoveredRegion.name}</h3>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{hoveredRegion.description}</p>
+
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                      <div>
+                        <span className="text-muted-foreground">Counties: </span>
+                        <span className="font-semibold text-foreground">{hoveredRegion.counties.length}</span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Pop. est: </span>
+                        <span className="font-semibold text-foreground">
+                          {REGION_POP[hoveredRegion.id] ? `${(REGION_POP[hoveredRegion.id] / 1_000_000).toFixed(1)}M` : "—"}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Cross-sector vital metrics */}
+                    {REGION_VITALS[hoveredRegion.id] && (
+                      <div className="border-t border-border/50 pt-3 space-y-2">
+                        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Cross-Sector Vitals</p>
+                        <div className="grid grid-cols-3 gap-2">
+                          <div className="rounded-lg bg-destructive/5 p-2.5 text-center">
+                            <HeartPulse className="h-4 w-4 text-destructive mx-auto mb-1" />
+                            <p className="text-xs font-bold text-foreground">{REGION_VITALS[hoveredRegion.id].uninsuredRate}</p>
+                            <p className="text-[9px] text-muted-foreground">Uninsured</p>
+                          </div>
+                          <div className="rounded-lg bg-michigan-gold/10 p-2.5 text-center">
+                            <Zap className="h-4 w-4 text-michigan-gold mx-auto mb-1" />
+                            <p className="text-xs font-bold text-foreground">{REGION_VITALS[hoveredRegion.id].energyBurden}</p>
+                            <p className="text-[9px] text-muted-foreground">Energy Burden</p>
+                          </div>
+                          <div className="rounded-lg bg-primary/5 p-2.5 text-center">
+                            <Bus className="h-4 w-4 text-primary mx-auto mb-1" />
+                            <p className="text-xs font-bold text-foreground">{REGION_VITALS[hoveredRegion.id].transitScore}/100</p>
+                            <p className="text-[9px] text-muted-foreground">Transit</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <Button
+                      size="sm"
+                      className="w-full gap-1.5 text-xs mt-1"
+                      onClick={() => navigate(`/region/${hoveredRegion.id}`)}
+                    >
+                      Explore {hoveredRegion.name} <ArrowRight className="h-3.5 w-3.5" />
+                    </Button>
                   </div>
-                  <p className="text-xs text-muted-foreground">{hoveredRegion.description}</p>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
-                    <div>
-                      <span className="text-muted-foreground">Counties: </span>
-                      <span className="font-medium text-foreground">{hoveredRegion.counties.length}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Pop. est: </span>
-                      <span className="font-medium text-foreground">
-                        {REGION_POP[hoveredRegion.id] ? `${(REGION_POP[hoveredRegion.id] / 1_000_000).toFixed(1)}M` : "—"}
-                      </span>
-                    </div>
-                  </div>
-                  {/* Cross-sector vital metrics */}
-                  {REGION_VITALS[hoveredRegion.id] && (
-                    <div className="border-t border-border/50 pt-2 mt-1 space-y-1.5">
-                      <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Cross-Sector Vitals</p>
-                      <div className="flex items-center gap-1.5 text-xs">
-                        <HeartPulse className="h-3.5 w-3.5 text-destructive flex-shrink-0" />
-                        <span className="text-muted-foreground">Uninsured:</span>
-                        <span className="font-semibold text-foreground">{REGION_VITALS[hoveredRegion.id].uninsuredRate}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs">
-                        <Zap className="h-3.5 w-3.5 text-amber-500 flex-shrink-0" />
-                        <span className="text-muted-foreground">Energy Burden:</span>
-                        <span className="font-semibold text-foreground">{REGION_VITALS[hoveredRegion.id].energyBurden}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs">
-                        <Bus className="h-3.5 w-3.5 text-primary flex-shrink-0" />
-                        <span className="text-muted-foreground">Transit Score:</span>
-                        <span className="font-semibold text-foreground">{REGION_VITALS[hoveredRegion.id].transitScore}/100</span>
-                      </div>
-                    </div>
-                  )}
-                  <p className="text-[10px] text-primary font-medium cursor-pointer hover:underline">
-                    Click to explore →
-                  </p>
                 </motion.div>
               ) : (
-                <div className="rounded-lg border border-dashed border-border/60 p-4 text-center text-xs text-muted-foreground">
-                  Hover over a region to see details, or click to explore.
+                <div className="rounded-xl border border-dashed border-border/60 bg-card/50 p-8 text-center space-y-3">
+                  <div className="inline-flex items-center justify-center rounded-full bg-primary/10 p-3">
+                    <MapPin className="h-5 w-5 text-primary" />
+                  </div>
+                  <p className="text-sm font-medium text-foreground">Select a region</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed max-w-[200px] mx-auto">
+                    Hover or tap a region on the map to see local health, energy, and transit data.
+                  </p>
+                </div>
+              )}
+
+              {/* Quick region links for mobile */}
+              {isMobile && (
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  {MICHIGAN_REGIONS.map((region) => (
+                    <button
+                      key={region.id}
+                      onClick={() => navigate(`/region/${region.id}`)}
+                      className="flex items-center gap-2 rounded-lg border border-border bg-card p-2.5 text-left text-xs hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ background: region.color }} />
+                      <span className="font-medium text-foreground truncate">{region.name.replace("Michigan", "MI")}</span>
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
