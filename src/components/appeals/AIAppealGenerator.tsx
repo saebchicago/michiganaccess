@@ -67,7 +67,7 @@ const AIAppealGenerator = () => {
           body: JSON.stringify({
             carrier: CARRIERS.find((c) => c.value === carrier)?.label || carrier,
             denialType: DENIAL_TYPES.find((d) => d.value === denialType)?.label || denialType,
-            appealType: APPEAL_TYPES.find((a) => a.value === appealType)?.label || appealType,
+            appealType: appealType || "internal",
             serviceDescription,
             denialReason,
           }),
