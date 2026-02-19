@@ -120,7 +120,7 @@ const HeroSection = () => {
               transition={{ delay: 0.6, duration: 0.5 }}
               className="mt-6 flex flex-wrap items-center justify-center gap-2"
             >
-              {quickPills.map((pill) => (
+            {quickPills.map((pill) => (
                 <Link
                   key={pill.label}
                   to={pill.href}
@@ -130,6 +130,25 @@ const HeroSection = () => {
                   {pill.label}
                 </Link>
               ))}
+            </motion.div>
+
+            {/* Stakeholder Shortcut */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.75, duration: 0.5 }}
+              className="mt-5"
+            >
+              <a
+                href="#health-data"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("health-data")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="text-sm text-primary-foreground/50 hover:text-primary-foreground/80 hover:underline transition-colors"
+              >
+                For Providers &amp; Policymakers: View Live System Data &amp; Impact →
+              </a>
             </motion.div>
 
           </div>

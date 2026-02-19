@@ -4,6 +4,7 @@ import HeroSection from "@/components/home/HeroSection";
 import HealthDataSnapshot from "@/components/home/HealthDataSnapshot";
 import CoreAccessGrid from "@/components/home/CoreAccessGrid";
 import GuidedPathways from "@/components/home/GuidedPathways";
+import AuthorityStrip from "@/components/home/AuthorityStrip";
 import SystemsExplainer from "@/components/home/SystemsExplainer";
 import TrustIndicators from "@/components/home/TrustIndicators";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
@@ -30,6 +31,7 @@ const Index = () => {
       <CountyWelcomeBanner />
       <HeroSection />
       <GuidedPathways />
+      <AuthorityStrip />
       <CoreAccessGrid />
       <RegionalGateway />
       <CountyInfoCard />
