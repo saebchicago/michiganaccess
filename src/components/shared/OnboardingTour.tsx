@@ -45,10 +45,14 @@ export default function OnboardingTour() {
   const [step, setStep] = useState(-1);
   const [visible, setVisible] = useState(false);
 
+  const dismiss = useCallback(() => {
+    setVisible(false);
+    localStorage.setItem(STORAGE_KEY, "true");
+  }, []);
+
   useEffect(() => {
     const done = localStorage.getItem(STORAGE_KEY);
     if (!done) {
-      // Delay showing to let page render
       const timer = setTimeout(() => {
         setStep(0);
         setVisible(true);
@@ -57,18 +61,21 @@ export default function OnboardingTour() {
     }
   }, []);
 
+  // Auto-dismiss after 10 seconds
+  useEffect(() => {
+    if (visible) {
+      const autoDismiss = setTimeout(() => dismiss(), 10000);
+      return () => clearTimeout(autoDismiss);
+    }
+  }, [visible, dismiss]);
+
   const next = useCallback(() => {
     if (step < STEPS.length - 1) {
       setStep((s) => s + 1);
     } else {
       dismiss();
     }
-  }, [step]);
-
-  const dismiss = useCallback(() => {
-    setVisible(false);
-    localStorage.setItem(STORAGE_KEY, "true");
-  }, []);
+  }, [step, dismiss]);
 
   const current = step >= 0 && step < STEPS.length ? STEPS[step] : null;
 

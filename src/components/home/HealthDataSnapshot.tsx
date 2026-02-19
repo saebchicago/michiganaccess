@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, Download, BarChart3 } from "lucide-react";
+import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, Download, BarChart3, Zap } from "lucide-react";
 import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
+import EnergyBurdenMap from "@/components/dashboard/EnergyBurdenMap";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -164,6 +165,11 @@ export default function HealthDataSnapshot() {
         {/* County Choropleth Heatmap */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
           <CountyChoropleth compact />
+        </motion.div>
+
+        {/* Energy Burden Heatmap */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2.5}>
+          <EnergyBurdenMap compact />
         </motion.div>
 
         {/* Disparity Spotlight + CTA */}
