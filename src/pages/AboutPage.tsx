@@ -403,7 +403,7 @@ export default function AboutPage() {
             {t("aboutPage.portfolioDesc")}
           </p>
           <p className="mt-4 text-sm text-muted-foreground">
-            Want to support this project? <Link to="/contact" className="font-medium text-primary hover:underline">Learn how →</Link>
+            Want to support this project? <Link to="/support" className="font-medium text-primary hover:underline">Learn how →</Link>
           </p>
         </motion.div>
       </div>

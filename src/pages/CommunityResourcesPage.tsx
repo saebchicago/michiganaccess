@@ -18,6 +18,9 @@ import { useCounty } from "@/contexts/CountyContext";
 import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
 import ReferralToolkit from "@/components/shared/ReferralToolkit";
 import ShareMenu from "@/components/shared/ShareMenu";
+import DataTimestamp from "@/components/shared/DataTimestamp";
+import ContentSkeleton from "@/components/shared/ContentSkeleton";
+import EmptyState from "@/components/shared/EmptyState";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -280,10 +283,13 @@ export default function CommunityResourcesPage() {
 
         {/* Filters */}
         <div className="flex items-center justify-between flex-wrap gap-3">
-          <p className="text-sm text-muted-foreground">
-            <strong className="text-foreground">{filtered.length}</strong> resources
-            {activeTab !== "all" && ` in ${categories.find((c) => c.key === activeTab)?.label}`}
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-sm text-muted-foreground">
+              <strong className="text-foreground">{filtered.length}</strong> resources
+              {activeTab !== "all" && ` in ${categories.find((c) => c.key === activeTab)?.label}`}
+            </p>
+            <DataTimestamp table="community_resources" />
+          </div>
           <Select value={county} onValueChange={setCounty}>
             <SelectTrigger className="w-48"><SelectValue /></SelectTrigger>
             <SelectContent>
@@ -294,14 +300,11 @@ export default function CommunityResourcesPage() {
 
         {/* Results */}
         {isLoading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-          </div>
+          <ContentSkeleton variant="cards" count={6} />
         ) : filtered.length === 0 ? (
-          <div className="py-20 text-center">
-            <p className="text-lg font-medium text-foreground">No resources found</p>
-            <p className="text-sm text-muted-foreground">Try adjusting your filters or search</p>
-          </div>
+          <EmptyState
+            onReset={() => { setSearch(""); setActiveTab("all"); setCounty("All Counties"); }}
+          />
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
             {filtered.map((r, i) => <ResourceCard key={r.id} r={r} i={i} />)}

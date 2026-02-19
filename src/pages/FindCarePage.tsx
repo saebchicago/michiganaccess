@@ -27,6 +27,9 @@ import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
 import ReferralToolkit from "@/components/shared/ReferralToolkit";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import DataTimestamp from "@/components/shared/DataTimestamp";
+import ContentSkeleton from "@/components/shared/ContentSkeleton";
+import EmptyState from "@/components/shared/EmptyState";
 import { ClipboardList, Bell, Map } from "lucide-react";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
@@ -300,6 +303,7 @@ export default function FindCarePage() {
                 <p className="text-sm text-muted-foreground">
                   <strong className="text-foreground">{filtered.length}</strong> {t('findCare.facilitiesCount')}
                 </p>
+                <DataTimestamp table="facilities" />
                 {hrsaData && hrsaData.count > 0 && (
                   <Badge variant="outline" className="text-[10px] border-michigan-teal/30 text-michigan-teal">
                     <Radio className="mr-1 h-3 w-3" /> +{hrsaData.count} live HRSA
@@ -387,14 +391,11 @@ export default function FindCarePage() {
 
             {/* Facility Cards */}
             {isLoading ? (
-              <div className="flex items-center justify-center py-20">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-              </div>
+              <ContentSkeleton variant="rows" count={6} />
             ) : filtered.length === 0 ? (
-              <div className="py-20 text-center">
-                <p className="text-lg font-medium text-foreground">{t('findCare.noResults')}</p>
-                <p className="text-sm text-muted-foreground">{t('findCare.noResultsHint')}</p>
-              </div>
+              <EmptyState
+                onReset={() => { setSearch(""); setSelectedTypes([]); setFilterAccepting(false); setFilterTelehealth(false); setFilterWalkIn(false); }}
+              />
             ) : (
               <div className="space-y-4">
                 {filtered.map((f, i) => {
