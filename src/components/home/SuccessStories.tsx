@@ -1,28 +1,33 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Search, FileText, MapPin, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const useCases = [
   {
     icon: Search,
     title: "Find Affordable Care",
-    description: "Search for sliding-scale dental, medical, or mental health services by county — and get matched in under 2 minutes.",
+    description: "Search for sliding-scale dental, medical, or mental health services by county — results in under 2 minutes.",
     color: "text-michigan-teal",
     bg: "bg-michigan-teal/10",
+    cta: { label: "Search Now", href: "/find-care" },
   },
   {
     icon: FileText,
     title: "Appeal an Insurance Denial",
-    description: "Use the appeal generator to build a structured letter after a claim denial, with guidance on DIFS external review and Medicaid fair hearings.",
+    description: "Build a structured appeal letter step-by-step after a claim denial, with guidance on your review options.",
     color: "text-michigan-forest",
     bg: "bg-michigan-forest/10",
+    cta: { label: "Start an Appeal", href: "/health/insurance-appeals" },
   },
   {
     icon: MapPin,
     title: "Coordinate Senior Services",
-    description: "Discover Meals on Wheels, free ride programs, and caregiver resources for an elderly family member — all from a single search.",
+    description: "Find Meals on Wheels, free ride programs, and caregiver resources for an elderly family member — all from one search.",
     color: "text-primary",
     bg: "bg-primary/10",
+    cta: { label: "Explore Resources", href: "/resources" },
   },
 ];
 
@@ -56,6 +61,11 @@ const SuccessStories = () => (
                 </div>
                 <h3 className="text-sm font-bold text-foreground">{uc.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{uc.description}</p>
+                <Button variant="ghost" size="sm" className="mt-2 w-fit px-0 text-primary hover:bg-transparent" asChild>
+                  <Link to={uc.cta.href}>
+                    {uc.cta.label} <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           </motion.div>

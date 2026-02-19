@@ -46,7 +46,7 @@ const CoreAccessGrid = () => {
     {
       icon: Shield,
       title: "Insurance Appeals",
-      description: "Fight health insurance denials with free AI-powered appeal letters, DIFS external review guidance, and Medicaid fair hearing templates.",
+      description: "Got a claim denied? Build a free appeal letter step-by-step, learn your rights, and file for an independent review.",
       href: "/health/insurance-appeals",
       iconBg: "bg-primary/8",
       iconColor: "text-primary",
