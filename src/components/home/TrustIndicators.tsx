@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ShieldCheck, Database, Lock } from "lucide-react";
+import { ShieldCheck, Database, Lock, Heart } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const TrustIndicators = () => {
@@ -9,6 +9,7 @@ const TrustIndicators = () => {
     { icon: Database, label: t("trust.dataFrom") },
     { icon: ShieldCheck, label: t("trust.noAds") },
     { icon: Lock, label: t("trust.privacyFirst") },
+    { icon: Heart, label: "Confidential, free, and accessible to all" },
   ];
 
   return (

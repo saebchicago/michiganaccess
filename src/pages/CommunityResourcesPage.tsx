@@ -183,6 +183,19 @@ export default function CommunityResourcesPage() {
 
   return (
     <Layout>
+      {/* County context banner — above hero for immediate visibility */}
+      {globalCounty && (
+        <div className="bg-primary/10 border-b border-primary/20 px-4 py-2.5">
+          <div className="container flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 text-sm">
+              <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="text-foreground">
+                Showing resources for <strong>{globalCounty} County</strong>.
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
       <section className="bg-gradient-to-b from-accent/5 to-background py-10 lg:py-16">
         <div className="container max-w-4xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>

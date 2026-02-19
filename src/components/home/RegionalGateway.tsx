@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useCallback, useMemo } from "react";
-import { MapPin, Navigation, Loader2, ShieldCheck, X } from "lucide-react";
+import { MapPin, Navigation, Loader2, ShieldCheck, X, HeartPulse, Zap, Bus } from "lucide-react";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
 import MunicipalitySearch from "./MunicipalitySearch";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -51,6 +51,16 @@ const REGION_GRADE: Record<string, { grade: string; color: string }> = {
   "east-central": { grade: "C+", color: "text-yellow-600" },
   northwest: { grade: "B−", color: "text-green-600" },
   "upper-peninsula": { grade: "C", color: "text-yellow-600" },
+};
+
+// Cross-sector vital metrics per region
+const REGION_VITALS: Record<string, { uninsuredRate: string; energyBurden: string; transitScore: string }> = {
+  southeast: { uninsuredRate: "5.2%", energyBurden: "3.8%", transitScore: "72" },
+  "south-central": { uninsuredRate: "6.1%", energyBurden: "4.2%", transitScore: "58" },
+  west: { uninsuredRate: "5.8%", energyBurden: "4.0%", transitScore: "54" },
+  "east-central": { uninsuredRate: "7.4%", energyBurden: "5.6%", transitScore: "38" },
+  northwest: { uninsuredRate: "8.1%", energyBurden: "5.1%", transitScore: "32" },
+  "upper-peninsula": { uninsuredRate: "9.3%", energyBurden: "6.8%", transitScore: "18" },
 };
 
 export default function RegionalGateway() {
@@ -241,13 +251,28 @@ export default function RegionalGateway() {
                         {REGION_POP[hoveredRegion.id] ? `${(REGION_POP[hoveredRegion.id] / 1_000_000).toFixed(1)}M` : "—"}
                       </span>
                     </div>
-                    <div className="col-span-2">
-                      <span className="text-muted-foreground">Health Grade: </span>
-                      <span className={`font-bold ${REGION_GRADE[hoveredRegion.id]?.color || "text-foreground"}`}>
-                        {REGION_GRADE[hoveredRegion.id]?.grade || "—"}
-                      </span>
-                    </div>
                   </div>
+                  {/* Cross-sector vital metrics */}
+                  {REGION_VITALS[hoveredRegion.id] && (
+                    <div className="border-t border-border/50 pt-2 mt-1 space-y-1.5">
+                      <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Cross-Sector Vitals</p>
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <HeartPulse className="h-3.5 w-3.5 text-destructive flex-shrink-0" />
+                        <span className="text-muted-foreground">Uninsured:</span>
+                        <span className="font-semibold text-foreground">{REGION_VITALS[hoveredRegion.id].uninsuredRate}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <Zap className="h-3.5 w-3.5 text-amber-500 flex-shrink-0" />
+                        <span className="text-muted-foreground">Energy Burden:</span>
+                        <span className="font-semibold text-foreground">{REGION_VITALS[hoveredRegion.id].energyBurden}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 text-xs">
+                        <Bus className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground">Transit Score:</span>
+                        <span className="font-semibold text-foreground">{REGION_VITALS[hoveredRegion.id].transitScore}/100</span>
+                      </div>
+                    </div>
+                  )}
                   <p className="text-[10px] text-primary font-medium cursor-pointer hover:underline">
                     Click to explore →
                   </p>
