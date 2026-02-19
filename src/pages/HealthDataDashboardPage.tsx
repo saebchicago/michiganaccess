@@ -4,6 +4,9 @@ import {
   BarChart3, TrendingUp, TrendingDown, Activity, Heart, Brain, Users,
   MapPin, Shield, Baby, Stethoscope, Download
 } from "lucide-react";
+import ExternalEmbeds from "@/components/dashboard/ExternalEmbeds";
+import DisparityGapChart from "@/components/dashboard/DisparityGapChart";
+import CSVExportPanel from "@/components/dashboard/CSVExportPanel";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -135,6 +138,8 @@ export default function HealthDataDashboardPage() {
             <TabsTrigger value="equity">Health Equity</TabsTrigger>
             <TabsTrigger value="mortality">Leading Causes</TabsTrigger>
             <TabsTrigger value="counties">County Compare</TabsTrigger>
+            <TabsTrigger value="disparities">Disparity Gaps</TabsTrigger>
+            <TabsTrigger value="research">Research Tools</TabsTrigger>
           </TabsList>
 
           <TabsContent value="chronic" className="mt-6 space-y-6">
@@ -404,6 +409,15 @@ export default function HealthDataDashboardPage() {
                 </ResponsiveContainer>
               </CardContent>
             </Card>
+          </TabsContent>
+          <TabsContent value="disparities" className="mt-6 space-y-6">
+            <DisparityGapChart />
+            <CSVExportPanel />
+          </TabsContent>
+
+          <TabsContent value="research" className="mt-6 space-y-6">
+            <ExternalEmbeds />
+            <CSVExportPanel />
           </TabsContent>
         </Tabs>
 
