@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Sparkles, Apple, ShieldCheck, Home, Bus, HeartPulse, Baby, Pill, FileWarning } from "lucide-react";
+import { Search, Apple, ShieldCheck, Home, Bus, HeartPulse, Baby, Pill, FileWarning } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import BenefitsWizard from "./BenefitsWizard";
 
 const quickPills = [
   { icon: Apple, label: "Food", href: "/resources" },
@@ -38,7 +37,6 @@ const MichiganOutline = () => (
 
 const HeroSection = () => {
   const navigate = useNavigate();
-  const [wizardOpen, setWizardOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (e: React.FormEvent) => {
@@ -49,8 +47,7 @@ const HeroSection = () => {
   };
 
   return (
-    <>
-      <section className="relative overflow-hidden bg-gradient-hero" aria-label="Hero">
+    <section className="relative overflow-hidden bg-gradient-hero" aria-label="Hero">
         <MichiganOutline />
 
         {/* Noise texture */}
@@ -135,22 +132,6 @@ const HeroSection = () => {
               ))}
             </motion.div>
 
-            {/* Benefits CTA */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.75, duration: 0.5 }}
-              className="mt-6"
-            >
-              <Button
-                size="lg"
-                onClick={() => setWizardOpen(true)}
-                className="bg-michigan-gold text-foreground hover:bg-michigan-gold/90 px-8 text-base font-semibold border-0 shadow-lg rounded-full"
-              >
-                <Sparkles className="mr-2 h-4 w-4" aria-hidden="true" />
-                Check My Benefits
-              </Button>
-            </motion.div>
           </div>
         </div>
 
@@ -160,9 +141,6 @@ const HeroSection = () => {
           <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-primary-foreground blur-3xl" />
         </div>
       </section>
-
-      <BenefitsWizard open={wizardOpen} onOpenChange={setWizardOpen} />
-    </>
   );
 };
 
