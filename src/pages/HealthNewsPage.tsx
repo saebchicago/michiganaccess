@@ -168,7 +168,7 @@ export default function HealthNewsPage() {
                       <span className="text-xs text-muted-foreground">
                         <Calendar className="inline h-3 w-3 mr-1" />{new Date(articles[0].date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                       </span>
-                      <span className="text-xs text-muted-foreground">Source: {articles[0].source}</span>
+                      <a href={articles[0].sourceUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline inline-flex items-center gap-1">Visit Source Website <ExternalLink className="h-3 w-3" /></a>
                       {articles[0].tags.map(t => <Badge key={t} variant="secondary" className="text-[10px]">{t}</Badge>)}
                     </div>
                   </div>
@@ -198,7 +198,9 @@ export default function HealthNewsPage() {
                           <span className="text-xs text-muted-foreground">
                             <Calendar className="inline h-3 w-3 mr-1" />{new Date(article.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                           </span>
-                          <span className="text-xs text-muted-foreground">Source: {article.source}</span>
+                          <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
+                            Visit Source Website <ExternalLink className="h-3 w-3" />
+                          </a>
                         </div>
                         <div className="flex gap-1">
                           {article.tags.slice(0, 3).map(t => <Badge key={t} variant="secondary" className="text-[10px]">{t}</Badge>)}

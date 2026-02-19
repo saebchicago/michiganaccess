@@ -33,6 +33,9 @@ const programTypeLabels: Record<string, { label: string; icon: typeof Heart; col
   social_services: { label: "Social Services & SDOH", icon: Users, color: "text-michigan-teal" },
 };
 
+type IncomeUnit = "annual" | "monthly" | "hourly";
+const incomeMultipliers: Record<IncomeUnit, number> = { annual: 1, monthly: 12, hourly: 2080 };
+
 export default function FinancialHelpPage() {
   const { t } = useTranslation();
   usePageMeta({
@@ -50,14 +53,16 @@ export default function FinancialHelpPage() {
   const { data: programs = [], isLoading } = useFinancialPrograms();
   const [householdSize, setHouseholdSize] = useState<number>(1);
   const [income, setIncome] = useState<string>("");
+  const [incomeUnit, setIncomeUnit] = useState<IncomeUnit>("annual");
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
   const [filterType, setFilterType] = useState<string>("all");
 
   const fplPercent = useMemo(() => {
     const inc = parseFloat(income);
     if (!inc || !FPL_2024[householdSize]) return null;
-    return Math.round((inc / FPL_2024[householdSize]) * 100);
-  }, [income, householdSize]);
+    const annualIncome = inc * incomeMultipliers[incomeUnit];
+    return Math.round((annualIncome / FPL_2024[householdSize]) * 100);
+  }, [income, householdSize, incomeUnit]);
 
   const eligiblePrograms = useMemo(() => {
     if (fplPercent === null) return programs;
@@ -129,16 +134,26 @@ export default function FinancialHelpPage() {
                   </Select>
                 </div>
                 <div className="flex-1">
-                  <label className="mb-1.5 block text-sm font-medium text-foreground">{t('financial.annualIncome')}</label>
-                  <div className="relative">
-                    <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                      type="number"
-                      placeholder="e.g. 35000"
-                      value={income}
-                      onChange={(e) => setIncome(e.target.value)}
-                      className="pl-9"
-                    />
+                  <label className="mb-1.5 block text-sm font-medium text-foreground">Income</label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        type="number"
+                        placeholder={incomeUnit === "annual" ? "e.g. 35000" : incomeUnit === "monthly" ? "e.g. 2900" : "e.g. 17"}
+                        value={income}
+                        onChange={(e) => setIncome(e.target.value)}
+                        className="pl-9"
+                      />
+                    </div>
+                    <Select value={incomeUnit} onValueChange={(v) => setIncomeUnit(v as IncomeUnit)}>
+                      <SelectTrigger className="w-[110px]"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="annual">Annual</SelectItem>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="hourly">Hourly</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className="flex-shrink-0">
