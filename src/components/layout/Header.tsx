@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, Heart, ChevronDown, Download, LogOut } from "lucide-react";
+import { Menu, Heart, ChevronDown, Download, LogOut, Sparkles } from "lucide-react";
+import BenefitsWizard from "@/components/home/BenefitsWizard";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
@@ -14,6 +15,7 @@ const Header = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [wizardOpen, setWizardOpen] = useState(false);
 
   const handleQuickExit = () => {
     // Replace current history entry so back button doesn't return here
@@ -72,6 +74,7 @@ const Header = () => {
   ];
 
   return (
+    <>
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -119,6 +122,14 @@ const Header = () => {
           <CountySelector variant="header" />
           <ThemeToggle />
           <LanguageSwitcher />
+          <Button
+            size="sm"
+            onClick={() => setWizardOpen(true)}
+            className="hidden sm:flex bg-michigan-gold text-foreground hover:bg-michigan-gold/90 rounded-full px-3 gap-1.5 text-xs font-semibold shadow-sm"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            Check Benefits
+          </Button>
           <Button size="sm" className="hidden sm:flex bg-gradient-michigan hover:opacity-90 transition-opacity" asChild>
             <a href="tel:988">{t("getHelp")}</a>
           </Button>
@@ -218,6 +229,8 @@ const Header = () => {
         </div>
       </div>
     </motion.header>
+    <BenefitsWizard open={wizardOpen} onOpenChange={setWizardOpen} />
+    </>
   );
 };
 

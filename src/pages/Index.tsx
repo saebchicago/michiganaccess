@@ -29,16 +29,16 @@ const Index = () => {
       <SectionNav />
       <CountyWelcomeBanner />
       <HeroSection />
-      <HealthDataSnapshot />
+      <GuidedPathways />
+      <CoreAccessGrid />
       <RegionalGateway />
       <CountyInfoCard />
       <SmartRecommendations />
-      <CoreAccessGrid />
-      <GuidedPathways />
       <SuccessStories />
       <SpotlightTabs />
       <SystemsExplainer />
       <TrustIndicators />
+      <HealthDataSnapshot />
       <AccessChat />
     </Layout>
   );
