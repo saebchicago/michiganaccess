@@ -85,7 +85,7 @@ export default function AIChatWidget() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            className="fixed bottom-6 right-6 z-50"
+            className="fixed bottom-20 right-4 z-50 lg:bottom-6 lg:right-6"
           >
             <Button
               onClick={() => setOpen(true)}
@@ -106,7 +106,7 @@ export default function AIChatWidget() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-6 right-6 z-50 flex w-[360px] max-w-[calc(100vw-2rem)] flex-col rounded-2xl border bg-background shadow-2xl sm:w-[400px]"
+            className="fixed bottom-20 right-4 z-50 flex w-[360px] max-w-[calc(100vw-2rem)] flex-col rounded-2xl border bg-background shadow-2xl sm:w-[400px] lg:bottom-6 lg:right-6"
             style={{ height: "min(560px, calc(100vh - 6rem))" }}
             role="dialog"
             aria-label="Access Michigan AI Assistant"
