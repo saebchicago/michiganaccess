@@ -1,13 +1,17 @@
-import { MapPin, Clock, HelpCircle, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { MapPin, Clock, HelpCircle, ArrowRight, ChevronDown } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { Link } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function ContextBar() {
   const { filterLabel, county, setCounty, region, setRegion } = useCounty();
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     (async () => {
@@ -34,8 +38,79 @@ export default function ContextBar() {
     setRegion(null);
   };
 
+  // Mobile: collapsed pill
+  if (isMobile) {
+    return (
+      <div className="border-b border-border/50 bg-muted/30">
+        {/* Aria-live region for county changes */}
+        <div aria-live="polite" className="sr-only">
+          {county ? `Now showing ${county} County data` : region ? `Now showing ${region} region data` : "Showing all Michigan data"}
+        </div>
+
+        {!mobileExpanded ? (
+          <button
+            onClick={() => setMobileExpanded(true)}
+            className="container flex items-center gap-2 h-8 text-[11px] text-muted-foreground w-full"
+            aria-expanded={false}
+            aria-label="Expand location bar"
+          >
+            <MapPin className="h-3 w-3 shrink-0" aria-hidden="true" />
+            <span className="font-medium text-foreground truncate">{filterLabel}</span>
+            <span className="text-primary text-[10px]">Change</span>
+            <ChevronDown className="h-2.5 w-2.5 ml-auto" />
+          </button>
+        ) : (
+          <div className="container flex flex-wrap items-center gap-2 py-2 text-[11px] text-muted-foreground">
+            <div className="flex items-center gap-1 shrink-0">
+              <MapPin className="h-3 w-3" aria-hidden="true" />
+              <span className="font-medium text-foreground">{filterLabel}</span>
+              {(county || region) && (
+                <button onClick={handleClear} className="text-primary hover:underline ml-1 inline-flex items-center gap-0.5">
+                  Change <ArrowRight className="h-2.5 w-2.5" />
+                </button>
+              )}
+              {!county && !region && (
+                <Link
+                  to="/#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.querySelector<HTMLButtonElement>('[aria-label="Select county"]')?.click();
+                  }}
+                  className="text-primary hover:underline ml-1 inline-flex items-center gap-0.5"
+                >
+                  Set location <ArrowRight className="h-2.5 w-2.5" />
+                </Link>
+              )}
+            </div>
+            {lastUpdated && (
+              <>
+                <span className="text-border">·</span>
+                <div className="flex items-center gap-1 shrink-0">
+                  <Clock className="h-2.5 w-2.5" aria-hidden="true" />
+                  <span>Updated {lastUpdated}</span>
+                </div>
+              </>
+            )}
+            <button
+              onClick={() => setMobileExpanded(false)}
+              className="ml-auto text-primary text-[10px]"
+            >
+              Collapse
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Desktop: full bar
   return (
     <div className="border-b border-border/50 bg-muted/30">
+      {/* Aria-live region for county changes */}
+      <div aria-live="polite" className="sr-only">
+        {county ? `Now showing ${county} County data` : region ? `Now showing ${region} region data` : "Showing all Michigan data"}
+      </div>
+
       <div className="container flex items-center gap-3 h-8 text-[11px] text-muted-foreground overflow-x-auto">
         {/* Location */}
         <div className="flex items-center gap-1 shrink-0">
@@ -54,7 +129,6 @@ export default function ContextBar() {
               to="/#"
               onClick={(e) => {
                 e.preventDefault();
-                // Scroll to county selector or open it
                 document.querySelector<HTMLButtonElement>('[aria-label="Select county"]')?.click();
               }}
               className="text-primary hover:underline ml-1 inline-flex items-center gap-0.5"

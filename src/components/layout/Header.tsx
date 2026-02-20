@@ -10,6 +10,7 @@ import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 import CountySelector from "@/components/shared/CountySelector";
 import SiteSearch from "@/components/shared/SiteSearch";
+import { useCounty } from "@/contexts/CountyContext";
 
 const Header = () => {
   const { t } = useTranslation();
@@ -245,20 +246,20 @@ const Header = () => {
 
 /** Desktop persistent search input that opens the SiteSearch dialog */
 function DesktopSearchTrigger() {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const { county } = useCounty();
+  const placeholder = county ? `Search services near ${county}…` : "Search services…";
 
   return (
     <div className="hidden lg:flex items-center">
       <button
         onClick={() => {
-          // Trigger Ctrl+K programmatically
           document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }));
         }}
-        className="flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted transition-colors min-w-[180px]"
-        aria-label="Search site (⌘K)"
+        className="flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted transition-colors min-w-[200px]"
+        aria-label={`Search site (⌘K). ${placeholder}`}
       >
         <Search className="h-3.5 w-3.5" />
-        <span>Search…</span>
+        <span className="truncate">{placeholder}</span>
         <kbd className="ml-auto rounded border border-border bg-background px-1 py-0.5 font-mono text-[10px]">⌘K</kbd>
       </button>
     </div>
