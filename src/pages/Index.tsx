@@ -54,7 +54,7 @@ const Index = () => {
       <TrustIndicators />
       {/* 8. How Access Michigan Works (formerly Example Journeys) */}
       <SuccessStories />
-      {/* 9. AI Chat */}
+      {/* 9. AI Chat — positioned just above footer */}
       <AccessChat />
     </Layout>
   );
