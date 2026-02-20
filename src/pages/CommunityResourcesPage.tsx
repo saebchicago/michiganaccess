@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCommunityResources, type CommunityResource } from "@/hooks/useCommunityResources";
 import { useCounty } from "@/contexts/CountyContext";
 import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
+import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
 import ReferralToolkit from "@/components/shared/ReferralToolkit";
 import ShareMenu from "@/components/shared/ShareMenu";
 import DataTimestamp from "@/components/shared/DataTimestamp";
@@ -311,6 +312,7 @@ export default function CommunityResourcesPage() {
           </div>
         )}
 
+        <NearbyResourceFinder />
         <NearbyServicesPrompt className="mt-4" />
 
         {/* Crisis banner */}
