@@ -1,12 +1,15 @@
-import { useState } from "react";
-import { MapPin, Clock, HelpCircle, ArrowRight, ChevronDown, User, DollarSign, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { MapPin, Clock, HelpCircle, ArrowRight, ChevronDown, User, DollarSign, X, Users } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { Link } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Badge } from "@/components/ui/badge";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const AUDIENCE_LABELS: Record<string, string> = {
   resident: "Resident",
@@ -14,6 +17,80 @@ const AUDIENCE_LABELS: Record<string, string> = {
   "health-system": "Health System",
   policymaker: "Policymaker",
 };
+
+function EligibilityPopover() {
+  const { eligibility, setEligibility, clearEligibility } = useCounty();
+  const [open, setOpen] = useState(false);
+  const [hhSize, setHhSize] = useState(eligibility.householdSize?.toString() ?? "");
+  const [income, setIncome] = useState(eligibility.annualIncome?.toString() ?? "");
+
+  const handleSave = () => {
+    const size = parseInt(hhSize);
+    const inc = parseFloat(income);
+    if (size > 0 && inc >= 0) {
+      setEligibility({ householdSize: size, annualIncome: inc });
+      setOpen(false);
+    }
+  };
+
+  const handleClear = () => {
+    clearEligibility();
+    setHhSize("");
+    setIncome("");
+    setOpen(false);
+  };
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline">
+          <Users className="h-2.5 w-2.5" />
+          {eligibility.fplPercent ? `${eligibility.fplPercent}% FPL` : "Set income"}
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="w-56 p-3 space-y-3" side="bottom" align="start">
+        <p className="text-xs font-semibold text-foreground">Eligibility Quick-Set</p>
+        <div className="space-y-2">
+          <div>
+            <Label htmlFor="hh-size" className="text-[10px]">Household size</Label>
+            <Input
+              id="hh-size"
+              type="number"
+              min={1}
+              max={20}
+              placeholder="e.g. 3"
+              value={hhSize}
+              onChange={(e) => setHhSize(e.target.value)}
+              className="h-7 text-xs"
+            />
+          </div>
+          <div>
+            <Label htmlFor="annual-inc" className="text-[10px]">Annual income ($)</Label>
+            <Input
+              id="annual-inc"
+              type="number"
+              min={0}
+              placeholder="e.g. 32000"
+              value={income}
+              onChange={(e) => setIncome(e.target.value)}
+              className="h-7 text-xs"
+            />
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Button size="sm" className="flex-1 h-7 text-[10px]" onClick={handleSave}>
+            Apply
+          </Button>
+          {eligibility.fplPercent && (
+            <Button variant="ghost" size="sm" className="h-7 text-[10px]" onClick={handleClear}>
+              Clear
+            </Button>
+          )}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
 
 export default function ContextBar() {
   const { filterLabel, county, setCounty, region, setRegion, audience, setAudience, eligibility, clearEligibility } = useCounty();
@@ -180,6 +257,7 @@ export default function ContextBar() {
         {/* Persona & Eligibility chips */}
         {audienceChip}
         {eligibilityChip}
+        {!eligibility.fplPercent && <EligibilityPopover />}
 
         <span className="text-border">·</span>
 
