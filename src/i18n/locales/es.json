@@ -501,8 +501,12 @@
     "interopSubtitle": "Alineación con FHIR, HL7 y USCDI para integración con sistemas de salud",
     "interopNote": "Arquitectura diseñada para futura integración con EHR/HIE. Los modelos de datos se mapean a recursos FHIR R4, permitiendo interoperabilidad fluida con los sistemas de Trinity Health, Corewell Health y HFHS."
   },
+  "home": {
+    "exploreData": "Explorar Datos e Ideas",
+    "collapseData": "Colapsar Datos e Ideas"
+  },
   "wizard": {
-    "title": "Encontrar Programas para Mí",
+    "cta": "Encontrar Programas para Mí",
     "intro": "Responde 3 preguntas rápidas — encontraremos programas adaptados a tu situación. Sin registro. Sin datos almacenados.",
     "stepOf": "Paso {{step}} de 4",
     "seconds": "~60 segundos",

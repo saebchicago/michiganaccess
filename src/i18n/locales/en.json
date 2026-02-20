@@ -499,7 +499,12 @@
     "interopSubtitle": "FHIR, HL7, and USCDI alignment for health system integration",
     "interopNote": "Architecture designed for future EHR/HIE integration. Data models map to FHIR R4 resources, enabling seamless interoperability with Trinity Health Epic, Corewell Health, and HFHS systems."
   },
+  "home": {
+    "exploreData": "Explore Data & Insights",
+    "collapseData": "Collapse Data & Insights"
+  },
   "wizard": {
+    "cta": "Find Programs for Me",
     "title": "Find Programs for Me",
     "intro": "Answer 3 quick questions — we'll find programs matched to your situation. No sign-up. No data stored.",
     "stepOf": "Step {{step}} of 4",
