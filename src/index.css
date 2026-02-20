@@ -189,6 +189,33 @@
     transform: scale(1.1) rotate(3deg);
   }
 
+  /* Resource card accent border slide-in */
+  .card-accent-border {
+    position: relative;
+    overflow: hidden;
+  }
+  .card-accent-border::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: hsl(var(--primary));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.25s ease-out;
+  }
+  .card-accent-border:hover::before {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+
+  /* Caption text utility */
+  .text-caption {
+    @apply text-xs font-medium uppercase tracking-[0.05em] text-muted-foreground;
+  }
+
   /* Pulse animation for gap-area markers */
   .pulse-marker {
     animation: marker-pulse 2s ease-in-out infinite;

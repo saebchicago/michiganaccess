@@ -94,9 +94,7 @@ const Header = () => {
       className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md"
       role="banner"
     >
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-primary focus:text-primary-foreground focus:p-2 focus:rounded">
-        Skip to main content
-      </a>
+      {/* Skip links handled by SkipToContent component in Layout */}
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 group" aria-label="Access Michigan Home">
