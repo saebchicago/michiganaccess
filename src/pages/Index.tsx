@@ -19,12 +19,14 @@ import SuccessStories from "@/components/home/SuccessStories";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
 import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
 import AudienceSelector from "@/components/home/AudienceSelector";
+import DiscoveryWizard from "@/components/home/DiscoveryWizard";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 
 const Index = () => {
   const [dataExpanded, setDataExpanded] = useState(false);
+  const [wizardOpen, setWizardOpen] = useState(false);
 
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
@@ -42,6 +44,15 @@ const Index = () => {
 
       {/* ── Layer 2: Search & Top Pathways ── */}
       <HeroSection />
+
+      {/* Wizard CTA */}
+      <div className="container py-4 flex justify-center">
+        <Button onClick={() => setWizardOpen(true)} size="lg" className="gap-2 rounded-full shadow-lg">
+          <Sparkles className="h-4 w-4" /> Find Programs for Me
+        </Button>
+      </div>
+      <DiscoveryWizard open={wizardOpen} onOpenChange={setWizardOpen} />
+
       <AudienceSelector />
       <GuidedPathways />
       <AuthorityStrip />

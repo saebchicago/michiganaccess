@@ -14,6 +14,7 @@ import {
 import { useCounty } from "@/contexts/CountyContext";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
 import { useMemo } from "react";
+import DataActionBanners from "@/components/home/DataActionBanners";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -193,6 +194,9 @@ export default function HealthDataSnapshot() {
             </motion.div>
           ))}
         </div>
+
+        {/* Data-to-Action Banners */}
+        <DataActionBanners />
 
         {/* Charts — hidden on mobile */}
         <div className="hidden md:grid gap-6 lg:grid-cols-2 mb-8">
