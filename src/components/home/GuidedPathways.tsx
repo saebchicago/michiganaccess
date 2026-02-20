@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -6,6 +7,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import ResourceChecklist from "./ResourceChecklist";
 
 const pathways = [
@@ -24,6 +26,7 @@ const pathways = [
     borderColor: "border-michigan-coral/30",
     iconBg: "bg-michigan-coral/10",
     encouragement: "You're not alone — this tool is here to help you find options.",
+    outcomes: ["Find free or low-cost clinics", "Check Medicaid eligibility", "Get financial help"],
   },
   {
     id: "caregiver",
@@ -40,6 +43,7 @@ const pathways = [
     borderColor: "border-michigan-teal/30",
     iconBg: "bg-michigan-teal/10",
     encouragement: "Caregiving is hard — let us help you find support nearby.",
+    outcomes: ["Connect with support groups", "Find respite care options", "Compare quality ratings"],
   },
   {
     id: "new-resident",
@@ -56,6 +60,7 @@ const pathways = [
     borderColor: "border-primary/30",
     iconBg: "bg-primary/10",
     encouragement: "Welcome to Michigan — we'll help you get settled.",
+    outcomes: ["Find nearby providers", "Explore your county's services", "Enroll in coverage"],
   },
   {
     id: "emergency",
@@ -74,6 +79,7 @@ const pathways = [
     encouragement: "Help is available 24/7 — you can call right now.",
     badge: "24/7 Available",
     pulse: true,
+    outcomes: ["Reach a crisis counselor", "Find urgent care nearby", "Get connected to 211"],
   },
 ];
 
@@ -83,6 +89,8 @@ const fadeUp = {
 };
 
 export default function GuidedPathways() {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+
   return (
     <section className="py-16 bg-muted/30">
       <div className="container">
@@ -91,46 +99,94 @@ export default function GuidedPathways() {
           <p className="mt-2 text-muted-foreground">Choose what fits your situation — we'll guide you to the right resources.</p>
         </motion.div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {pathways.map((p, i) => (
-            <motion.div key={p.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-              <Card className={`group h-full hover-lift border-l-4 ${p.bg} ${p.borderColor} relative overflow-hidden`}>
-                {p.badge && (
-                  <Badge variant="destructive" className={`absolute top-3 right-3 text-[10px] ${p.pulse ? "animate-pulse" : ""}`}>
-                    {p.badge}
-                  </Badge>
-                )}
-                <CardContent className="py-6 space-y-4">
-                  <div className={`inline-flex items-center justify-center rounded-lg p-2.5 ${p.iconBg} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                    <p.icon className={`h-6 w-6 ${p.color}`} />
-                  </div>
-                  <h3 className="text-sm font-bold text-foreground leading-snug">{p.title}</h3>
-                  <p className="text-xs text-muted-foreground">{p.description}</p>
-                  <div className="flex flex-col gap-2 pt-1">
-                    {p.links.map((link) =>
-                      link.href.startsWith("tel:") ? (
-                        <a key={link.label} href={link.href} className={`flex items-center gap-1.5 text-xs font-medium ${p.color} hover:underline`}>
-                          <ArrowRight className="h-3 w-3" /> {link.label}
-                        </a>
-                      ) : (
-                        <Link key={link.label} to={link.href} className={`flex items-center gap-1.5 text-xs font-medium ${p.color} hover:underline`}>
-                          <ArrowRight className="h-3 w-3" /> {link.label}
-                        </Link>
-                      )
-                    )}
-                  </div>
-                </CardContent>
-                <CardFooter className="pt-0 pb-5 px-6 flex-col gap-2">
-                  <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3 w-full">
-                    <Users className="h-3.5 w-3.5 shrink-0" />
-                    <span className="italic">{p.encouragement}</span>
-                  </div>
-                  {p.id !== "emergency" && (
-                    <ResourceChecklist pathwayId={p.id} pathwayTitle={p.title} color={p.color} />
-                  )}
-                </CardFooter>
-              </Card>
-            </motion.div>
-          ))}
+          {pathways.map((p, i) => {
+            const isExpanded = expandedId === p.id;
+            return (
+              <motion.div key={p.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Card
+                      className={`group h-full border-l-4 ${p.bg} ${p.borderColor} relative overflow-hidden cursor-pointer transition-all duration-200 motion-safe:hover:scale-[1.02] motion-safe:hover:shadow-lg motion-reduce:hover:shadow-md`}
+                      onClick={() => setExpandedId(isExpanded ? null : p.id)}
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={isExpanded}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setExpandedId(isExpanded ? null : p.id);
+                        }
+                      }}
+                    >
+                      {p.badge && (
+                        <Badge variant="destructive" className={`absolute top-3 right-3 text-[10px] ${p.pulse ? "animate-pulse" : ""}`}>
+                          {p.badge}
+                        </Badge>
+                      )}
+                      <CardContent className="py-6 space-y-4">
+                        <div className={`inline-flex items-center justify-center rounded-lg p-2.5 ${p.iconBg} transition-transform duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-3`}>
+                          <p.icon className={`h-6 w-6 ${p.color}`} />
+                        </div>
+                        <h3 className="text-sm font-bold text-foreground leading-snug">{p.title}</h3>
+                        <p className="text-xs text-muted-foreground">{p.description}</p>
+
+                        {/* Links — always visible on mobile as full-width buttons */}
+                        <div className="flex flex-col gap-2 pt-1">
+                          {p.links.map((link) =>
+                            link.href.startsWith("tel:") ? (
+                              <a
+                                key={link.label}
+                                href={link.href}
+                                onClick={(e) => e.stopPropagation()}
+                                className={`flex items-center gap-1.5 text-xs font-medium ${p.color} hover:underline sm:py-0 py-2 min-h-[44px] sm:min-h-0`}
+                              >
+                                <ArrowRight className="h-3 w-3" /> {link.label}
+                              </a>
+                            ) : (
+                              <Link
+                                key={link.label}
+                                to={link.href}
+                                onClick={(e) => e.stopPropagation()}
+                                className={`flex items-center gap-1.5 text-xs font-medium ${p.color} hover:underline sm:py-0 py-2 min-h-[44px] sm:min-h-0`}
+                              >
+                                <ArrowRight className="h-3 w-3" /> {link.label}
+                              </Link>
+                            )
+                          )}
+                        </div>
+                      </CardContent>
+                      <CardFooter className="pt-0 pb-5 px-6 flex-col gap-2">
+                        <div className="flex items-center gap-2 text-[11px] text-muted-foreground border-t border-border pt-3 w-full">
+                          <Users className="h-3.5 w-3.5 shrink-0" />
+                          <span className="italic">{p.encouragement}</span>
+                        </div>
+
+                        {/* Progress + checklist: only visible after card is clicked */}
+                        {isExpanded && p.id !== "emergency" && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            className="w-full"
+                          >
+                            <p className="text-[10px] text-muted-foreground mb-1">Step 1 of 3 · ~2 min</p>
+                            <ResourceChecklist pathwayId={p.id} pathwayTitle={p.title} color={p.color} />
+                          </motion.div>
+                        )}
+                      </CardFooter>
+                    </Card>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="max-w-[200px] text-xs">
+                    <p className="font-semibold mb-1">Preview steps:</p>
+                    <ul className="space-y-0.5">
+                      {p.outcomes.map((o) => (
+                        <li key={o}>• {o}</li>
+                      ))}
+                    </ul>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
