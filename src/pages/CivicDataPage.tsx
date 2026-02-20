@@ -13,6 +13,7 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import EnvironmentCallout from "@/components/shared/EnvironmentCallout";
 import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
+import FOIARequestBuilder from "@/components/civic/FOIARequestBuilder";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -489,6 +490,13 @@ const CivicDataPage = () => {
               </Card>
             </motion.div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* FOIA Request Builder */}
+      <section className="py-12">
+        <div className="container max-w-3xl">
+          <FOIARequestBuilder />
         </div>
       </section>
 

@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import HealthCalculators from "@/components/learn/HealthCalculators";
+import DrugDataWidget from "@/components/learn/DrugDataWidget";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -355,11 +356,14 @@ export default function LearnPage() {
           </TabsContent>
         </Tabs>
 
+        {/* Drug Data Widget */}
+        <DrugDataWidget />
+
         <Card className="border-border/50 bg-muted/30">
           <CardContent className="py-4">
             <p className="text-xs text-muted-foreground leading-relaxed">
               <Shield className="inline h-3.5 w-3.5 mr-1 text-primary" />
-              <strong>Disclaimer:</strong> This health education content is for informational purposes only and does not replace professional medical advice. Content sourced from CDC, USPSTF, AAP, CMS, and Michigan DHHS. Always consult your healthcare provider for diagnosis and treatment.
+              <strong>Disclaimer:</strong> This health education content is for informational purposes only and does not replace professional medical advice. Content sourced from CDC, USPSTF, AAP, CMS, Michigan DHHS, and openFDA. Always consult your healthcare provider for diagnosis and treatment.
             </p>
           </CardContent>
         </Card>
