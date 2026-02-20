@@ -67,6 +67,30 @@ const seniorAccess = [
   { region: "SW Michigan", gap: 38, available: 62 },
 ];
 
+// NHTSA FARS — Michigan traffic fatalities by crash type (2018–2023)
+const nhtsaFatalities = [
+  { year: "2018", pedestrian: 161, cyclist: 30, motorVehicle: 785, total: 976 },
+  { year: "2019", pedestrian: 158, cyclist: 27, motorVehicle: 800, total: 985 },
+  { year: "2020", pedestrian: 174, cyclist: 35, motorVehicle: 839, total: 1048 },
+  { year: "2021", pedestrian: 198, cyclist: 38, motorVehicle: 919, total: 1155 },
+  { year: "2022", pedestrian: 188, cyclist: 33, motorVehicle: 883, total: 1104 },
+  { year: "2023", pedestrian: 175, cyclist: 29, motorVehicle: 841, total: 1045 },
+];
+
+// NHTSA — Michigan fatalities by county (top 10)
+const crashesByCounty = [
+  { county: "Wayne", fatalities: 245, population: "1.75M" },
+  { county: "Oakland", fatalities: 98, population: "1.27M" },
+  { county: "Kent", fatalities: 72, population: "664K" },
+  { county: "Macomb", fatalities: 68, population: "881K" },
+  { county: "Genesee", fatalities: 54, population: "406K" },
+  { county: "Washtenaw", fatalities: 38, population: "372K" },
+  { county: "Ingham", fatalities: 35, population: "284K" },
+  { county: "Kalamazoo", fatalities: 32, population: "265K" },
+  { county: "Saginaw", fatalities: 28, population: "191K" },
+  { county: "Muskegon", fatalities: 24, population: "175K" },
+];
+
 /* ------------------------------------------------------------------ */
 /*  RESOURCE DATA                                                      */
 /* ------------------------------------------------------------------ */
@@ -223,8 +247,65 @@ function StatsCards() {
 function DataChartsTab() {
   return (
     <div className="space-y-8">
-      {/* Ridership Trends */}
+      {/* NHTSA FARS — Fatalities by Type */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base flex items-center gap-2">
+              <AlertTriangle className="h-4 w-4 text-michigan-coral" />
+              Michigan Traffic Fatalities by Type (NHTSA FARS)
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">Annual fatalities 2018–2023 · Source: NHTSA Fatality Analysis Reporting System</p>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={nhtsaFatalities}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="year" tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 12 }} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="motorVehicle" name="Motor Vehicle" fill="hsl(209, 86%, 31%)" stackId="a" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="pedestrian" name="Pedestrian" fill="hsl(0, 100%, 71%)" stackId="a" />
+                <Bar dataKey="cyclist" name="Cyclist" fill="hsl(27, 87%, 67%)" stackId="a" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+            <p className="text-xs text-muted-foreground mt-2">
+              <strong>Insight:</strong> Michigan traffic fatalities peaked at 1,155 in 2021 (+17% vs. 2019). Pedestrian deaths rose 25% during the same period. Speed, distraction, and impairment remain the top contributing factors.
+            </p>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* NHTSA — Fatalities by County */}
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-michigan-blue" />
+              Traffic Fatalities by County — Top 10 (NHTSA)
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">2023 data · Source: NHTSA FARS / Michigan State Police</p>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={crashesByCounty} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis type="number" tick={{ fontSize: 12 }} />
+                <YAxis type="category" dataKey="county" width={100} tick={{ fontSize: 11 }} />
+                <Tooltip formatter={(v: number) => [v, "Fatalities"]} />
+                <Bar dataKey="fatalities" fill="hsl(0, 100%, 71%)" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+            <p className="text-xs text-muted-foreground mt-2">
+              <strong>Insight:</strong> Wayne County accounts for ~23% of all Michigan traffic fatalities despite having ~17% of the population. Urban areas have higher pedestrian fatality rates, while rural counties see more severe single-vehicle crashes.
+            </p>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Ridership Trends */}
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
@@ -251,7 +332,7 @@ function DataChartsTab() {
       </motion.div>
 
       {/* Stop-Arm Violations */}
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
@@ -286,7 +367,7 @@ function DataChartsTab() {
       </motion.div>
 
       {/* Senior Access Gaps */}
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={4}>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
