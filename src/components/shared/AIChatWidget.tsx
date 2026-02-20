@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useDragControls } from "framer-motion";
 import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
@@ -17,12 +17,25 @@ const SUGGESTIONS = [
   "What transportation options are available for seniors?",
 ];
 
+const FAB_STORAGE_KEY = "am-chat-fab-pos";
+
+function getStoredPosition(): { x: number; y: number } | null {
+  try {
+    const stored = localStorage.getItem(FAB_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : null;
+  } catch {
+    return null;
+  }
+}
+
 export default function AIChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [fabPosition, setFabPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const constraintsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -78,19 +91,32 @@ export default function AIChatWidget() {
 
   return (
     <>
-      {/* FAB */}
+      {/* Drag boundary (full viewport) */}
+      <div ref={constraintsRef} className="fixed inset-0 pointer-events-none z-40" aria-hidden />
+
+      {/* Draggable FAB */}
       <AnimatePresence>
         {!open && (
           <motion.div
+            drag
+            dragConstraints={constraintsRef}
+            dragElastic={0.1}
+            dragMomentum={false}
+            onDragEnd={(_e, info) => {
+              const pos = { x: info.point.x, y: info.point.y };
+              setFabPosition({ x: info.offset.x + fabPosition.x, y: info.offset.y + fabPosition.y });
+              try { localStorage.setItem(FAB_STORAGE_KEY, JSON.stringify(pos)); } catch {}
+            }}
             initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
+            animate={{ scale: 1, x: fabPosition.x, y: fabPosition.y }}
             exit={{ scale: 0 }}
-            className="fixed bottom-20 right-4 z-50 lg:bottom-6 lg:right-6"
+            whileDrag={{ scale: 1.1 }}
+            className="fixed bottom-20 right-4 z-50 lg:bottom-6 lg:right-6 cursor-grab active:cursor-grabbing touch-none"
           >
             <Button
               onClick={() => setOpen(true)}
               size="lg"
-              className="h-14 w-14 rounded-full shadow-lg"
+              className="h-14 w-14 rounded-full shadow-lg pointer-events-auto"
               aria-label="Open AI assistant"
             >
               <MessageCircle className="h-6 w-6" />

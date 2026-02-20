@@ -16,6 +16,7 @@ import OnboardingTour from "@/components/shared/OnboardingTour";
 import SectionNav from "@/components/home/SectionNav";
 import SuccessStories from "@/components/home/SuccessStories";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
+import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -38,6 +39,8 @@ const Index = () => {
       <SocialProofStrip />
       {/* 3. County Health Snapshot — moved up */}
       <HealthDataSnapshot />
+      {/* 3.5. Nearby Resource Finder */}
+      <NearbyResourceFinder />
       {/* 4. Explore Community Resources */}
       <SpotlightTabs />
       {/* 5. Start Here — core access grid */}
