@@ -1,14 +1,22 @@
 import { useState } from "react";
-import { MapPin, Clock, HelpCircle, ArrowRight, ChevronDown } from "lucide-react";
+import { MapPin, Clock, HelpCircle, ArrowRight, ChevronDown, User, DollarSign, X } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { Link } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Badge } from "@/components/ui/badge";
+
+const AUDIENCE_LABELS: Record<string, string> = {
+  resident: "Resident",
+  provider: "Provider",
+  "health-system": "Health System",
+  policymaker: "Policymaker",
+};
 
 export default function ContextBar() {
-  const { filterLabel, county, setCounty, region, setRegion } = useCounty();
+  const { filterLabel, county, setCounty, region, setRegion, audience, setAudience, eligibility, clearEligibility } = useCounty();
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState(false);
   const isMobile = useIsMobile();
@@ -38,13 +46,41 @@ export default function ContextBar() {
     setRegion(null);
   };
 
+  const hasFilters = !!(county || region || audience || eligibility.fplPercent);
+
+  const audienceChip = audience ? (
+    <Badge variant="secondary" className="text-[10px] gap-1 py-0 h-5 font-normal">
+      <User className="h-2.5 w-2.5" aria-hidden="true" />
+      {AUDIENCE_LABELS[audience]}
+      <button onClick={() => setAudience(null)} aria-label="Clear persona filter" className="ml-0.5 hover:text-destructive">
+        <X className="h-2 w-2" />
+      </button>
+    </Badge>
+  ) : null;
+
+  const eligibilityChip = eligibility.fplPercent ? (
+    <Badge variant="secondary" className="text-[10px] gap-1 py-0 h-5 font-normal">
+      <DollarSign className="h-2.5 w-2.5" aria-hidden="true" />
+      {eligibility.fplPercent}% FPL
+      <button onClick={clearEligibility} aria-label="Clear eligibility filter" className="ml-0.5 hover:text-destructive">
+        <X className="h-2 w-2" />
+      </button>
+    </Badge>
+  ) : null;
+
+  // Aria-live announcement
+  const announcement = [
+    county ? `${county} County` : region ? `${region.name} region` : "All Michigan",
+    audience ? `for ${AUDIENCE_LABELS[audience]}s` : "",
+    eligibility.fplPercent ? `at ${eligibility.fplPercent}% FPL` : "",
+  ].filter(Boolean).join(" ");
+
   // Mobile: collapsed pill
   if (isMobile) {
     return (
       <div className="border-b border-border/50 bg-muted/30">
-        {/* Aria-live region for county changes */}
         <div aria-live="polite" className="sr-only">
-          {county ? `Now showing ${county} County data` : region ? `Now showing ${region} region data` : "Showing all Michigan data"}
+          Now showing {announcement} data and services.
         </div>
 
         {!mobileExpanded ? (
@@ -56,6 +92,8 @@ export default function ContextBar() {
           >
             <MapPin className="h-3 w-3 shrink-0" aria-hidden="true" />
             <span className="font-medium text-foreground truncate">{filterLabel}</span>
+            {audienceChip}
+            {eligibilityChip}
             <span className="text-primary text-[10px]">Change</span>
             <ChevronDown className="h-2.5 w-2.5 ml-auto" />
           </button>
@@ -82,6 +120,8 @@ export default function ContextBar() {
                 </Link>
               )}
             </div>
+            {audienceChip}
+            {eligibilityChip}
             {lastUpdated && (
               <>
                 <span className="text-border">·</span>
@@ -106,9 +146,8 @@ export default function ContextBar() {
   // Desktop: full bar
   return (
     <div className="border-b border-border/50 bg-muted/30">
-      {/* Aria-live region for county changes */}
       <div aria-live="polite" className="sr-only">
-        {county ? `Now showing ${county} County data` : region ? `Now showing ${region} region data` : "Showing all Michigan data"}
+        Now showing {announcement} data and services.
       </div>
 
       <div className="container flex items-center gap-3 h-8 text-[11px] text-muted-foreground overflow-x-auto">
@@ -138,6 +177,10 @@ export default function ContextBar() {
           )}
         </div>
 
+        {/* Persona & Eligibility chips */}
+        {audienceChip}
+        {eligibilityChip}
+
         <span className="text-border">·</span>
 
         {/* Data freshness */}
@@ -159,8 +202,8 @@ export default function ContextBar() {
             </button>
           </TooltipTrigger>
           <TooltipContent side="bottom" className="max-w-xs text-xs">
-            This bar shows your current location filter and when data was last refreshed.
-            All data is sourced from public agencies (CMS, HRSA, CDC, EPA).{" "}
+            This bar shows your active filters — location, persona, and eligibility — which
+            control all data and recommendations across the site.{" "}
             <Link to="/data-validation" className="text-primary underline">
               Learn more
             </Link>

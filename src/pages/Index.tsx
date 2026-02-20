@@ -17,6 +17,7 @@ import SectionNav from "@/components/home/SectionNav";
 import SuccessStories from "@/components/home/SuccessStories";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
 import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
+import AudienceSelector from "@/components/home/AudienceSelector";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
@@ -33,6 +34,8 @@ const Index = () => {
       <CountyWelcomeBanner />
       {/* 1. Hero */}
       <HeroSection />
+      {/* 1.5 Persona selector — controls what content is prioritized */}
+      <AudienceSelector />
       {/* 2. How Can We Help */}
       <GuidedPathways />
       <AuthorityStrip />
