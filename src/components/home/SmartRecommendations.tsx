@@ -64,20 +64,27 @@ const CATEGORY_RECS: Record<string, { label: string; path: string; why: string }
   ],
 };
 
+// Persona-based default category when no history
+const AUDIENCE_DEFAULT_CAT: Record<string, string> = {
+  resident: "find-care",
+  provider: "health",
+  "health-system": "health",
+  policymaker: "civic",
+};
+
 export default function SmartRecommendations() {
-  const { county } = useCounty();
+  const { county, audience } = useCounty();
   const history = getBrowsingHistory();
 
   const recommendations = useMemo(() => {
-    if (history.length === 0) return null;
-
-    // Find the most visited category
+    // Find the most visited category, or fall back to persona default
     const catCounts: Record<string, number> = {};
     history.forEach((h) => {
       catCounts[h.category] = (catCounts[h.category] || 0) + 1;
     });
 
-    const topCat = Object.entries(catCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "find-care";
+    const topCatFromHistory = Object.entries(catCounts).sort((a, b) => b[1] - a[1])[0]?.[0];
+    const topCat = topCatFromHistory || (audience ? AUDIENCE_DEFAULT_CAT[audience] : null) || "find-care";
     const recs = CATEGORY_RECS[topCat] || CATEGORY_RECS["find-care"];
 
     // Filter out pages already visited recently
@@ -86,12 +93,13 @@ export default function SmartRecommendations() {
 
     return {
       category: topCat,
-      lastVisited: history[0],
+      lastVisited: history[0] ?? null,
       items: filtered.length > 0 ? filtered : recs.slice(0, 2),
     };
-  }, [history]);
+  }, [history, audience]);
 
-  if (!recommendations || history.length < 2) return null;
+  // Show if we have history OR a persona set
+  if (!audience && history.length < 2) return null;
 
   return (
     <section className="py-6">
@@ -112,9 +120,15 @@ export default function SmartRecommendations() {
             )}
           </div>
           <p className="text-xs text-muted-foreground">
-            Based on your interest in{" "}
-            <span className="font-medium text-foreground">{recommendations.lastVisited.label}</span>,
-            others in your region also explored:
+            {recommendations.lastVisited ? (
+              <>Based on your interest in{" "}
+              <span className="font-medium text-foreground">{recommendations.lastVisited.label}</span>,
+              others in your region also explored:</>
+            ) : audience ? (
+              <>Suggested for <span className="font-medium text-foreground">{audience === "health-system" ? "health systems" : `${audience}s`}</span>:</>
+            ) : (
+              <>Popular resources in your area:</>
+            )}
           </p>
           <div className="grid gap-2 sm:grid-cols-3">
             {recommendations.items.map((rec) => (
