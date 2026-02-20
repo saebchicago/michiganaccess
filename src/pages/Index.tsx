@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { AccessChat } from "@/components/AccessChat";
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -25,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 
 const Index = () => {
+  const { t } = useTranslation();
   const [dataExpanded, setDataExpanded] = useState(false);
   const [wizardOpen, setWizardOpen] = useState(false);
 
@@ -48,7 +50,7 @@ const Index = () => {
       {/* Wizard CTA */}
       <div className="container py-4 flex justify-center">
         <Button onClick={() => setWizardOpen(true)} size="lg" className="gap-2 rounded-full shadow-lg">
-          <Sparkles className="h-4 w-4" /> Find Programs for Me
+          <Sparkles className="h-4 w-4" /> {t("wizard.cta")}
         </Button>
       </div>
       <DiscoveryWizard open={wizardOpen} onOpenChange={setWizardOpen} />
@@ -75,7 +77,7 @@ const Index = () => {
               aria-expanded={dataExpanded}
             >
               {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-              {dataExpanded ? "Collapse Data & Insights" : "Explore Data & Insights"}
+              {dataExpanded ? t("home.collapseData") : t("home.exploreData")}
             </Button>
           </div>
           {dataExpanded && (
