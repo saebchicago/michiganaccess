@@ -19,7 +19,7 @@ const Header = () => {
   const [wizardOpen, setWizardOpen] = useState(false);
 
   const handleQuickExit = () => {
-    window.location.replace("https://www.google.com");
+    window.location.replace("https://www.weather.com");
   };
 
   // Escape key triggers Quick Exit for safety

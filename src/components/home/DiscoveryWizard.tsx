@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   HeartPulse, Zap, Home, Apple, HelpCircle, ArrowRight, ArrowLeft,
   CheckCircle2, Sparkles, Users, DollarSign, MapPin, Share2, Save,
@@ -46,13 +47,14 @@ const FPL_BASE = 15060;
 const FPL_PER = 5380;
 const getFPL = (size: number) => FPL_BASE + FPL_PER * (size - 1);
 
-const SITUATIONS = [
-  { id: "healthcare", icon: HeartPulse, label: "I need healthcare", color: "border-emerald-500/40 bg-emerald-500/10" },
-  { id: "bills", icon: DollarSign, label: "I'm struggling with bills", color: "border-amber-500/40 bg-amber-500/10" },
-  { id: "housing", icon: Home, label: "I need housing", color: "border-blue-500/40 bg-blue-500/10" },
-  { id: "food", icon: Apple, label: "I need food / energy help", color: "border-orange-500/40 bg-orange-500/10" },
-  { id: "energy", icon: Zap, label: "I need energy help", color: "border-yellow-500/40 bg-yellow-500/10" },
-  { id: "other", icon: HelpCircle, label: "Something else", color: "border-slate-500/40 bg-slate-500/10" },
+// Situation IDs — labels resolved via i18n at render time
+const SITUATION_IDS = [
+  { id: "healthcare", icon: HeartPulse, color: "border-emerald-500/40 bg-emerald-500/10" },
+  { id: "bills",      icon: DollarSign, color: "border-amber-500/40 bg-amber-500/10" },
+  { id: "housing",    icon: Home,       color: "border-blue-500/40 bg-blue-500/10" },
+  { id: "food",       icon: Apple,      color: "border-orange-500/40 bg-orange-500/10" },
+  { id: "energy",     icon: Zap,        color: "border-yellow-500/40 bg-yellow-500/10" },
+  { id: "other",      icon: HelpCircle, color: "border-slate-500/40 bg-slate-500/10" },
 ];
 
 const categoryColors: Record<string, string> = {
@@ -76,6 +78,7 @@ interface DiscoveryWizardProps {
 }
 
 export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardProps) {
+  const { t } = useTranslation();
   const { county, setCounty, eligibility, setEligibility } = useCounty();
 
   const [step, setStep] = useState(1);
@@ -135,20 +138,20 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
-            <Sparkles className="h-5 w-5 text-primary" /> Find Programs for Me
+            <Sparkles className="h-5 w-5 text-primary" /> {t("wizard.title")}
           </DialogTitle>
           <DialogDescription>
             {step < 4
-              ? "Answer 3 quick questions — we'll find programs matched to your situation. No sign-up. No data stored."
-              : `We found ${results.length} programs for you`}
+              ? t("wizard.intro")
+              : t("wizard.foundPrograms", { count: results.length })}
           </DialogDescription>
         </DialogHeader>
 
         {/* Progress */}
         <div className="space-y-1.5">
           <div className="flex justify-between text-xs text-muted-foreground">
-            <span>Step {step} of 4</span>
-            <span>~60 seconds</span>
+            <span>{t("wizard.stepOf", { step })}</span>
+            <span>{t("wizard.seconds")}</span>
           </div>
           <Progress value={(step / 4) * 100} className="h-1.5" />
         </div>
@@ -157,9 +160,9 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
           {/* ─── Step 1: Situation ─── */}
           {step === 1 && (
             <motion.div key="s1" {...step_anim} className="space-y-3 py-2">
-              <p className="text-sm font-medium">What do you need help with?</p>
+              <p className="text-sm font-medium">{t("wizard.step1Title")}</p>
               <div className="grid grid-cols-2 gap-2">
-                {SITUATIONS.map((s) => (
+                {SITUATION_IDS.map((s) => (
                   <button
                     key={s.id}
                     onClick={() => setSituation(s.id)}
@@ -168,12 +171,12 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
                     }`}
                   >
                     <s.icon className="h-4 w-4 shrink-0" />
-                    <span className="text-xs font-medium">{s.label}</span>
+                    <span className="text-xs font-medium">{t(`wizard.sit_${s.id}`)}</span>
                   </button>
                 ))}
               </div>
               <Button onClick={goNext} disabled={!situation} className="w-full">
-                Next <ArrowRight className="ml-2 h-4 w-4" />
+                {t("wizard.next")} <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </motion.div>
           )}
@@ -183,7 +186,7 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
             <motion.div key="s2" {...step_anim} className="space-y-5 py-2">
               <div className="space-y-3">
                 <label className="text-sm font-medium flex items-center gap-2">
-                  <Users className="h-4 w-4" /> Household Size
+                  <Users className="h-4 w-4" /> {t("wizard.step2HhSize")}
                 </label>
                 <div className="flex items-center gap-3">
                   <Button variant="outline" size="icon" className="h-9 w-9" onClick={() => setHhSize(Math.max(1, hhSize - 1))}>−</Button>
@@ -195,7 +198,7 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
 
               <div className="space-y-3">
                 <label className="text-sm font-medium flex items-center gap-2">
-                  <DollarSign className="h-4 w-4" /> Annual Household Income
+                  <DollarSign className="h-4 w-4" /> {t("wizard.step2Income")}
                 </label>
                 <Slider
                   value={[income]}
@@ -213,10 +216,10 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
 
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                  <ArrowLeft className="mr-2 h-4 w-4" /> {t("wizard.back")}
                 </Button>
                 <Button onClick={goNext} className="flex-1">
-                  Next <ArrowRight className="ml-2 h-4 w-4" />
+                  {t("wizard.next")} <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </motion.div>
@@ -226,11 +229,11 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
           {step === 3 && (
             <motion.div key="s3" {...step_anim} className="space-y-4 py-2">
               <label className="text-sm font-medium flex items-center gap-2">
-                <MapPin className="h-4 w-4" /> Your County
+                <MapPin className="h-4 w-4" /> {t("wizard.step3County")}
               </label>
               <Select value={selectedCounty} onValueChange={setSelectedCounty}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select county…" />
+                  <SelectValue placeholder={t("county.searchPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent className="max-h-60">
                   {MICHIGAN_COUNTIES.map((c) => (
@@ -238,13 +241,13 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground">Used to show local programs. Not saved externally.</p>
+              <p className="text-xs text-muted-foreground">{t("wizard.step3Note")}</p>
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => setStep(2)} className="flex-1">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                  <ArrowLeft className="mr-2 h-4 w-4" /> {t("wizard.back")}
                 </Button>
                 <Button onClick={goNext} className="flex-1">
-                  See My Programs <CheckCircle2 className="ml-2 h-4 w-4" />
+                  {t("wizard.seePrograms")} <CheckCircle2 className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </motion.div>
@@ -256,7 +259,7 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
               {results.length > 0 ? (
                 <>
                   <p className="text-sm text-muted-foreground">
-                    Based on your info, you may qualify for <strong className="text-foreground">{results.length} programs</strong>:
+                    {t("wizard.qualifyText", { count: results.length })}
                   </p>
                   <div className="space-y-2.5 max-h-[45vh] overflow-y-auto pr-1">
                     {results.map((p, i) => (
@@ -277,10 +280,10 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
                             </div>
                             <div className="flex items-center justify-between mt-2.5">
                               <span className="text-[11px] text-muted-foreground">
-                                {p.eligibility === "all" ? "All residents" : `≤ ${p.eligibility}% FPL`}
+                                {p.eligibility === "all" ? t("wizard.allResidents") : t("wizard.fplLabel", { pct: p.eligibility })}
                               </span>
                               <Button variant="ghost" size="sm" className="h-7 text-xs text-primary" asChild>
-                                <Link to={p.link}>Apply Now <ArrowRight className="ml-1 h-3 w-3" /></Link>
+                                <Link to={p.link}>{t("wizard.applyNow")} <ArrowRight className="ml-1 h-3 w-3" /></Link>
                               </Button>
                             </div>
                           </CardContent>
@@ -290,36 +293,31 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
                   </div>
                 </>
               ) : (
-                /* Empty state */
                 <div className="flex flex-col items-center justify-center gap-3 py-10 text-center">
                   <MapPin className="h-12 w-12 text-muted-foreground/40" />
-                  <h3 className="text-base font-semibold">No exact match found</h3>
-                  <p className="text-sm text-muted-foreground max-w-xs">
-                    We didn't find an exact match, but help is still available. Call 2-1-1 for a live referral.
-                  </p>
+                  <h3 className="text-base font-semibold">{t("wizard.emptyTitle")}</h3>
+                  <p className="text-sm text-muted-foreground max-w-xs">{t("wizard.emptyBody")}</p>
                   <a href="tel:211" className="inline-flex items-center gap-1.5 text-sm font-medium text-primary">
-                    <Phone className="h-4 w-4" /> Call 2-1-1
+                    <Phone className="h-4 w-4" /> {t("wizard.call211")}
                   </a>
                 </div>
               )}
 
-              <p className="text-[11px] text-muted-foreground text-center">
-                These are estimates only. Final eligibility is determined by each program.
-              </p>
+              <p className="text-[11px] text-muted-foreground text-center">{t("wizard.disclaimer")}</p>
 
               <div className="flex gap-2">
                 <Button variant="outline" onClick={() => setStep(3)} className="flex-1">
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                  <ArrowLeft className="mr-2 h-4 w-4" /> {t("wizard.back")}
                 </Button>
                 <Button variant="outline" onClick={handleSave} disabled={saved || results.length === 0} className="flex-1">
-                  <Save className="mr-2 h-4 w-4" /> {saved ? "Saved!" : "Save Results"}
+                  <Save className="mr-2 h-4 w-4" /> {saved ? t("wizard.saved") : t("wizard.saveResults")}
                 </Button>
-                <Button variant="outline" size="icon" onClick={handleShare} title="Copy share link">
+                <Button variant="outline" size="icon" onClick={handleShare} title={t("wizard.shareLink")}>
                   <Share2 className="h-4 w-4" />
                 </Button>
               </div>
               <Button variant="ghost" onClick={reset} className="w-full text-xs">
-                Start Over
+                {t("wizard.startOver")}
               </Button>
             </motion.div>
           )}
