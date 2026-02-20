@@ -8,6 +8,7 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import TransportationCallout from "@/components/shared/TransportationCallout";
+import MentalHealthSpotlights from "@/components/shared/MentalHealthSpotlights";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -260,6 +261,8 @@ export default function SupportGroupsPage() {
             ))}
           </div>
         </motion.section>
+
+        <MentalHealthSpotlights />
 
         <TransportationCallout />
 

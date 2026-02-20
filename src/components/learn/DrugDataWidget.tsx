@@ -79,11 +79,14 @@ export default function DrugDataWidget() {
 
     try {
       let searchTerms: string[] = [];
-      if (query.trim()) searchTerms.push(`(brand_name:"${encodeURIComponent(query.trim())}"+generic_name:"${encodeURIComponent(query.trim())}")`);
+      if (query.trim()) {
+        const q = encodeURIComponent(query.trim());
+        searchTerms.push(`(openfda.brand_name:"${q}"+openfda.generic_name:"${q}")`);
+      }
       if (therapyArea !== "all") {
         const keywords = THERAPY_KEYWORDS[therapyArea];
         if (keywords?.length) {
-          searchTerms.push(`(pharm_class_epc:"${keywords[0]}")`);
+          searchTerms.push(`(openfda.pharm_class_epc:"${encodeURIComponent(keywords[0])}")`);
         }
       }
 
