@@ -153,23 +153,48 @@ const MAX_VISIBLE = 6;
 
 function ProgramCard({ program }: { program: SearchableProgram }) {
   const meta = CATEGORY_META[program.category];
+  const costLabel = program.eligibility.some(e => e.includes("low-income")) ? "Free / Sliding scale" : "Free";
+  const urgency = program.category === "Disaster Prep" ? "24/7" : program.eligibility.includes("all residents") ? "Open enrollment" : "Apply anytime";
+
   return (
     <Card className="h-full hover-lift">
       <CardContent className="p-4 space-y-2 flex flex-col h-full">
+        {/* Row 1: Category + Availability */}
         <div className="flex items-center justify-between">
           <Badge variant="outline" className="text-[10px]">
             {meta?.label || program.category}
           </Badge>
-          {!program.counties && <Badge variant="secondary" className="text-[10px]">Statewide</Badge>}
+          <Badge variant="secondary" className="text-[10px]">
+            {program.counties ? `${program.counties.length} counties` : "Statewide"}
+          </Badge>
         </div>
+
+        {/* Title */}
         <h4 className="font-semibold text-sm text-foreground leading-snug">{program.title}</h4>
+
+        {/* Description */}
         <p className="text-xs text-muted-foreground leading-relaxed flex-1 line-clamp-3">{program.description}</p>
-        <div className="flex flex-wrap gap-1">
-          {program.eligibility.slice(0, 2).map((tag) => (
-            <Badge key={tag} variant="secondary" className="text-[10px] capitalize">{tag}</Badge>
-          ))}
+
+        {/* Normalized schema fields */}
+        <div className="space-y-1.5 pt-1 border-t border-border/40">
+          {/* Who it's for */}
+          <div className="flex flex-wrap gap-1">
+            {program.eligibility.slice(0, 3).map((tag) => (
+              <Badge key={tag} variant="secondary" className="text-[10px] capitalize">{tag}</Badge>
+            ))}
+          </div>
+          {/* Cost + Urgency row */}
+          <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+            <span className="inline-flex items-center gap-0.5">
+              <span className="font-medium text-michigan-forest">$</span> {costLabel}
+            </span>
+            <span className="text-border">·</span>
+            <span>{urgency}</span>
+          </div>
         </div>
-        <div className="flex gap-2 mt-auto">
+
+        {/* Actions */}
+        <div className="flex gap-2 mt-auto pt-1">
           <Button variant="outline" size="sm" className="flex-1" asChild>
             <a href={program.url} target="_blank" rel="noopener noreferrer">
               Visit Program <ExternalLink className="h-3 w-3 ml-1" />
