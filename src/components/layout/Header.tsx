@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, Heart, ChevronDown, Download, LogOut, Sparkles } from "lucide-react";
+import { Menu, Heart, ChevronDown, Download, LogOut, Sparkles, Search } from "lucide-react";
 import BenefitsWizard from "@/components/home/BenefitsWizard";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,6 @@ const Header = () => {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && !e.ctrlKey && !e.altKey && !e.metaKey) {
-        // Don't trigger if user is in an input/modal
         const tag = (e.target as HTMLElement)?.tagName;
         if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
         handleQuickExit();
@@ -35,6 +34,7 @@ const Header = () => {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
+  /* Simplified to 4 top-level items */
   const navLinks = [
     {
       label: t("nav.findHelp"),
@@ -47,7 +47,7 @@ const Header = () => {
       ],
     },
     {
-      label: "Explore Services",
+      label: "Services",
       children: [
         { label: "Energy & Utilities", href: "/environment" },
         { label: "School & Bus Safety", href: "/transportation" },
@@ -58,26 +58,22 @@ const Header = () => {
         { label: t("nav.qualityRatings"), href: "/quality" },
         { label: t("nav.costTransparency"), href: "/costs" },
         { label: t("nav.prevention"), href: "/wellness" },
-        { label: t("nav.healthData"), href: "/data" },
         { label: "Life Navigator", href: "/life-navigator" },
         { label: "Regions", href: "/regions" },
       ],
     },
     {
-      label: "Data & Impact",
+      label: t("nav.about"),
       children: [
-        { label: "Health Data Snapshot", href: "/#data-snapshot" },
+        { label: "About Access Michigan", href: "/about" },
+        { label: "Data & Methods", href: "/data-validation" },
+        { label: t("nav.healthData"), href: "/data" },
         { label: "Executive Summary", href: "/executive-summary" },
         { label: "Health Equity", href: "/equity" },
-        { label: "Lean Healthcare", href: "/lean-healthcare" },
         { label: "For Health Systems", href: "/for-health-systems" },
-        { label: "Case Studies", href: "/case-studies" },
         { label: "Impact Dashboard", href: "/impact" },
+        { label: "Case Studies", href: "/case-studies" },
       ],
-    },
-    {
-      label: t("nav.about"),
-      href: "/about",
     },
     {
       label: t("nav.contact"),
@@ -94,7 +90,6 @@ const Header = () => {
       className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md"
       role="banner"
     >
-      {/* Skip links handled by SkipToContent component in Layout */}
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 group" aria-label="Access Michigan Home">
@@ -128,7 +123,12 @@ const Header = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-1">
-          <SiteSearch />
+          {/* Desktop persistent search */}
+          <DesktopSearchTrigger />
+          {/* Mobile search icon */}
+          <div className="lg:hidden">
+            <SiteSearch />
+          </div>
           <CountySelector variant="header" />
           <ThemeToggle />
           <LanguageSwitcher />
@@ -144,7 +144,7 @@ const Header = () => {
             <a href="tel:988">{t("getHelp")}</a>
           </Button>
 
-          {/* Quick Exit — safety feature */}
+          {/* Quick Exit */}
           <Button
             size="sm"
             onClick={handleQuickExit}
@@ -167,7 +167,6 @@ const Header = () => {
             <SheetContent side="right" className="w-80 overflow-y-auto">
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <div className="mt-6 flex flex-col gap-1">
-                {/* Quick Exit for mobile */}
                 <Button
                   onClick={handleQuickExit}
                   className="mb-3 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-full gap-1.5 text-xs font-semibold"
@@ -243,6 +242,28 @@ const Header = () => {
     </>
   );
 };
+
+/** Desktop persistent search input that opens the SiteSearch dialog */
+function DesktopSearchTrigger() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  return (
+    <div className="hidden lg:flex items-center">
+      <button
+        onClick={() => {
+          // Trigger Ctrl+K programmatically
+          document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }));
+        }}
+        className="flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted transition-colors min-w-[180px]"
+        aria-label="Search site (⌘K)"
+      >
+        <Search className="h-3.5 w-3.5" />
+        <span>Search…</span>
+        <kbd className="ml-auto rounded border border-border bg-background px-1 py-0.5 font-mono text-[10px]">⌘K</kbd>
+      </button>
+    </div>
+  );
+}
 
 function DropdownNav({ label, items, currentPath }: { label: string; items: { label: string; href: string }[]; currentPath: string }) {
   const [open, setOpen] = useState(false);

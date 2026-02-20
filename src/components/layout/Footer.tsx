@@ -17,7 +17,7 @@ const Footer = () => {
       ],
     },
     {
-      title: t("nav.serviceCategories"),
+      title: "Services",
       links: [
         { label: t("nav.healthConditions"), href: "/conditions" },
         { label: "Insurance Appeals", href: "/health/insurance-appeals" },
