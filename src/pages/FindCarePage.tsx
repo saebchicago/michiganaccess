@@ -26,6 +26,7 @@ import CareTeamReminders from "@/components/shared/CareTeamReminders";
 import SpotlightTabs from "@/components/shared/SpotlightTabs";
 import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
 import ReferralToolkit from "@/components/shared/ReferralToolkit";
+import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import DataTimestamp from "@/components/shared/DataTimestamp";
 import ContentSkeleton from "@/components/shared/ContentSkeleton";
@@ -540,6 +541,8 @@ export default function FindCarePage() {
           </div>
           <CareTeamReminders />
         </div>
+
+        <NearbyResourceFinder />
 
         <div className="mt-8">
           <ReferralToolkit pageTitle="Find Care Near You" />
