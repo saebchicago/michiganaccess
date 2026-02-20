@@ -211,8 +211,11 @@ export default function NearbyResourceFinder() {
             Find Services Near You
           </h2>
           <p className="mt-2 text-sm text-muted-foreground max-w-lg mx-auto">
-            Enter a Michigan address to discover pantries, clinics, shelters, and more within your area. 
+            Enter a Michigan address to discover resources within your area based on our database. Results are not exhaustive of all available services. 
             <span className="font-medium text-primary"> 100% private — no data stored.</span>
+          </p>
+          <p className="text-[10px] text-muted-foreground max-w-md mx-auto mt-1">
+            This is not a 911 service. Call 911 for emergencies. Check with providers directly to confirm hours and eligibility.
           </p>
         </div>
 

@@ -9,13 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 
-// Static baseline stats (updated periodically)
-const BASELINE_STATS = {
-  appealsAssisted: 1247,
-  totalSaved: 3548000,
-  avgSavings: 2847,
-  successRate: 72,
-};
+// No baseline stats — all metrics come from live anonymous self-reports only
 
 const ImpactDashboard = () => {
   const { toast } = useToast();
@@ -44,9 +38,9 @@ const ImpactDashboard = () => {
     .filter((o) => o.outcome === "won" && o.estimated_savings)
     .reduce((sum, o) => sum + Number(o.estimated_savings), 0);
 
-  const totalAppeals = BASELINE_STATS.appealsAssisted + outcomes.length;
-  const totalSaved = BASELINE_STATS.totalSaved + liveSaved;
-  const totalWins = Math.round(BASELINE_STATS.appealsAssisted * (BASELINE_STATS.successRate / 100)) + liveWins;
+  const totalAppeals = outcomes.length;
+  const totalSaved = liveSaved;
+  const successRate = totalAppeals > 0 ? Math.round((liveWins / totalAppeals) * 100) : 0;
 
   const handleSubmitOutcome = async () => {
     if (!reportOutcome) return;
@@ -81,43 +75,40 @@ const ImpactDashboard = () => {
         </p>
       </div>
 
-      {/* Stats grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-bl-full" />
-          <CardContent className="pt-6">
-            <Users className="h-5 w-5 text-primary mb-2" />
-            <p className="text-3xl font-bold text-foreground">{totalAppeals.toLocaleString()}</p>
-            <p className="text-sm text-muted-foreground">Appeals assisted</p>
-          </CardContent>
-        </Card>
-        <Card className="relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-accent/5 rounded-bl-full" />
-          <CardContent className="pt-6">
-            <DollarSign className="h-5 w-5 text-accent mb-2" />
-            <p className="text-3xl font-bold text-foreground">
-              ${(totalSaved / 1000000).toFixed(1)}M
+      {/* Stats grid — live self-reported data only */}
+      {totalAppeals > 0 ? (
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Card className="relative overflow-hidden">
+            <CardContent className="pt-6">
+              <Users className="h-5 w-5 text-primary mb-2" />
+              <p className="text-3xl font-bold text-foreground">{totalAppeals.toLocaleString()}</p>
+              <p className="text-sm text-muted-foreground">Self-reported outcomes</p>
+            </CardContent>
+          </Card>
+          <Card className="relative overflow-hidden">
+            <CardContent className="pt-6">
+              <TrendingUp className="h-5 w-5 text-primary mb-2" />
+              <p className="text-3xl font-bold text-foreground">{successRate}%</p>
+              <p className="text-sm text-muted-foreground">Reported success rate</p>
+            </CardContent>
+          </Card>
+          <Card className="relative overflow-hidden">
+            <CardContent className="pt-6">
+              <DollarSign className="h-5 w-5 text-accent mb-2" />
+              <p className="text-3xl font-bold text-foreground">${totalSaved.toLocaleString()}</p>
+              <p className="text-sm text-muted-foreground">Self-reported savings</p>
+            </CardContent>
+          </Card>
+        </div>
+      ) : (
+        <Card className="bg-muted/30">
+          <CardContent className="pt-6 text-center">
+            <p className="text-sm text-muted-foreground">
+              No community outcomes reported yet. Be the first to share your anonymous result below.
             </p>
-            <p className="text-sm text-muted-foreground">Saved for Michigan families</p>
           </CardContent>
         </Card>
-        <Card className="relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-primary/5 rounded-bl-full" />
-          <CardContent className="pt-6">
-            <TrendingUp className="h-5 w-5 text-primary mb-2" />
-            <p className="text-3xl font-bold text-foreground">{BASELINE_STATS.successRate}%</p>
-            <p className="text-sm text-muted-foreground">Overall success rate</p>
-          </CardContent>
-        </Card>
-        <Card className="relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-accent/5 rounded-bl-full" />
-          <CardContent className="pt-6">
-            <BarChart3 className="h-5 w-5 text-accent mb-2" />
-            <p className="text-3xl font-bold text-foreground">${BASELINE_STATS.avgSavings.toLocaleString()}</p>
-            <p className="text-sm text-muted-foreground">Average savings per win</p>
-          </CardContent>
-        </Card>
-      </div>
+      )}
 
       {/* Report your outcome */}
       <Card>

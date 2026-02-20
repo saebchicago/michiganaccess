@@ -89,6 +89,7 @@ const SECTIONS: SitemapSection[] = [
     links: [
       { label: "About Access Michigan", href: "/about" },
       { label: "Contact Us", href: "/contact" },
+      { label: "Data Sources & Validation", href: "/data-validation", badge: "New" },
       { label: "Methodology", href: "/methodology" },
       { label: "Research", href: "/research" },
       { label: "Technical Documentation", href: "/technical" },

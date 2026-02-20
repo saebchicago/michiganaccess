@@ -354,7 +354,7 @@ export default function SubstanceAbuseInsights() {
         <CardContent className="py-3">
           <p className="text-[11px] text-muted-foreground leading-relaxed">
             <Shield className="inline h-3.5 w-3.5 mr-1 text-primary" />
-            <strong>Sources:</strong> Michigan MODA Dashboard, MI-SUDDR, CDC WONDER, Monitoring the Future 2024, U-M Injury Prevention Center. Data is modeled/estimated and may differ from final published figures. For crisis help, call <strong>988</strong> or <strong>1-800-662-4357</strong> (SAMHSA).
+            <strong>Sources:</strong> Michigan MODA Dashboard, MI-SUDDR, CDC WONDER, Monitoring the Future 2024, U-M Injury Prevention Center. <strong>All data shown is modeled or estimated from published reports and may differ from final official figures.</strong> Visualizations are for informational and advocacy support, not individualized risk prediction. For crisis help, call <strong>988</strong> or <strong>1-800-662-4357</strong> (SAMHSA).
           </p>
         </CardContent>
       </Card>

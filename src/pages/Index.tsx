@@ -21,8 +21,8 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
   usePageMeta({
-    title: "Access Michigan: Health, Transport & Safety Hub | Powered by Open Data",
-    description: "One structured gateway to health, housing, food, and family services across all 83 Michigan counties.",
+    title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
+    description: "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
     path: "/",
   });
 

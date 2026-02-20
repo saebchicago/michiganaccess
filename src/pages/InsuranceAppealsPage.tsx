@@ -17,7 +17,7 @@ const InsuranceAppealsPage = () => {
   usePageMeta({
     title: "Insurance Denial Appeal Tool — Free",
     description:
-      "Fight health insurance denials in Michigan. Free AI-powered appeal letter generator, Medicaid fair hearing templates, and DIFS external review guidance. 70%+ success rate.",
+      "Fight health insurance denials in Michigan. Free appeal letter generator, Medicaid fair hearing templates, and DIFS external review guidance.",
     path: "/health/insurance-appeals",
     jsonLd: {
       "@type": "HowTo",
@@ -32,7 +32,7 @@ const InsuranceAppealsPage = () => {
       ],
       "mainEntity": [
         { "@type": "Question", "name": "How long do I have to appeal a health insurance denial in Michigan?", "acceptedAnswer": { "@type": "Answer", "text": "You have 180 days from the date of denial to file an internal appeal with your insurance company." } },
-        { "@type": "Question", "name": "What is the success rate for insurance appeals?", "acceptedAnswer": { "@type": "Answer", "text": "68% of internal appeals and 82% of DIFS external reviews are decided in the patient's favor." } },
+        { "@type": "Question", "name": "Can I appeal a health insurance denial?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Michigan law gives you the right to an internal appeal with your insurer and, if denied again, an external review through DIFS." } },
         { "@type": "Question", "name": "Does Access Michigan store my health information?", "acceptedAnswer": { "@type": "Answer", "text": "No. Access Michigan does not store any personal health information. All appeal letter generation happens locally." } },
       ],
     },
@@ -64,8 +64,8 @@ const InsuranceAppealsPage = () => {
               </span>
             </h1>
             <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
-              68% of internal appeals and 82% of DIFS external reviews are decided in the patient's favor. 
-              Access Michigan gives you the tools to fight back—free, private, and proven.
+              Michigan law guarantees your right to appeal. Access Michigan gives you free tools
+              to build your case — no sign-up, no data stored.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" variant="secondary" asChild>

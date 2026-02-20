@@ -15,27 +15,27 @@ import MetricsAPI from "@/components/partners/MetricsAPI";
 import EventCalendarPreview from "@/components/partners/EventCalendarPreview";
 
 const METRICS = [
-  { icon: Map, label: "FQHC Map Views", value: "12,400+", trend: "+18% this quarter" },
-  { icon: Shield, label: "Coverage Pathfinder Runs", value: "3,200+", trend: "+24% this quarter" },
-  { icon: FileText, label: "Insurance Appeals Generated", value: "1,850+", trend: "+42% since launch" },
-  { icon: ClipboardList, label: "Visit Checklists Downloaded", value: "890+", trend: "New feature" },
+  { icon: Map, label: "Counties Covered", value: "83/83", trend: "All Michigan counties" },
+  { icon: Shield, label: "Community Resources", value: "700+", trend: "Verified & active" },
+  { icon: FileText, label: "Live Data Feeds", value: "7", trend: "CDC, CMS, EPA, HRSA, EIA, NHTSA, openFDA" },
+  { icon: ClipboardList, label: "Municipalities Tracked", value: "170+", trend: "Governance & FOIA data" },
 ];
 
-const IMPACT_STORIES = [
+const ILLUSTRATIVE_SCENARIOS = [
   {
-    title: "Closing the Care Gap in Rural Michigan",
-    story: "A family in the Upper Peninsula used Access Michigan to locate the nearest FQHC, discover sliding-scale payment options, and generate an appeal letter when their child's specialist referral was denied. The appeal was successful within 21 days.",
-    outcome: "Specialist care secured. $3,200 in denied charges overturned.",
+    title: "Finding Sliding-Scale Care in Rural Michigan",
+    story: "Illustrative scenario: A family in the Upper Peninsula could use Access Michigan to locate the nearest FQHC, discover sliding-scale payment options, and generate an appeal letter if a referral were denied.",
+    outcome: "Illustrative — not a real person or observed outcome.",
   },
   {
     title: "Connecting Seniors to Transportation",
-    story: "An 82-year-old in Genesee County found non-emergency medical transportation options through the platform, allowing her to attend her twice-weekly dialysis appointments without relying on family members who work during the day.",
-    outcome: "96% appointment adherence maintained over 6 months.",
+    story: "Illustrative scenario: A senior in Genesee County could find non-emergency medical transportation options through the platform to attend regular appointments.",
+    outcome: "Illustrative — demonstrates platform capabilities, not measured results.",
   },
   {
     title: "School-Based Health Awareness",
-    story: "A Detroit parent used the community program spotlight to find school-based health centers near her children's schools, reducing missed school days from health-related absences by connecting her kids with on-site mental health services.",
-    outcome: "30% reduction in health-related school absences.",
+    story: "Illustrative scenario: A parent could use the community program spotlight to find school-based health centers near their children's schools.",
+    outcome: "Illustrative — shows possible use case, not a documented outcome.",
   },
 ];
 
@@ -81,7 +81,7 @@ const PartnersPage = () => {
             Partner Impact Dashboard
           </h1>
           <p className="text-muted-foreground text-lg">
-            Aggregated, non-identifiable metrics showing how Access Michigan serves communities across all 83 counties.
+            Platform coverage and database metrics for Access Michigan across all 83 counties.
           </p>
         </motion.div>
 
@@ -109,16 +109,16 @@ const PartnersPage = () => {
           ))}
         </div>
 
-        {/* Impact stories */}
+        {/* Illustrative scenarios */}
         <section aria-labelledby="stories-heading">
           <h2 id="stories-heading" className="text-2xl font-bold text-foreground mb-6 text-center">
-            Impact Stories
+            Illustrative Scenarios
           </h2>
           <p className="text-center text-sm text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Anonymized scenarios illustrating how Access Michigan supports community health outcomes. These are representative examples, not individual user data.
+            These are <strong>hypothetical examples</strong> showing how residents might use Access Michigan. They are not real people or measured outcomes.
           </p>
           <div className="grid gap-6 md:grid-cols-3">
-            {IMPACT_STORIES.map((story) => (
+            {ILLUSTRATIVE_SCENARIOS.map((story) => (
               <Card key={story.title} className="h-full">
                 <CardHeader>
                   <CardTitle className="text-base">{story.title}</CardTitle>

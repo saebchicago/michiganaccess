@@ -352,12 +352,13 @@ export default function NarcanLocator() {
       </Tabs>
 
       <Card className="border-border/50 bg-muted/30">
-        <CardContent className="py-3">
+        <CardContent className="py-3 space-y-1.5">
           <p className="text-xs text-muted-foreground leading-relaxed">
             <Shield className="inline h-3.5 w-3.5 mr-1 text-primary" />
-            <strong>Sources:</strong> Michigan DHHS Standing Order, county health departments, pharmacy chains.
-            Availability may vary — call ahead to confirm stock. For overdose emergencies, call <strong>911</strong> immediately.
-            Michigan's Good Samaritan Law protects callers from prosecution.
+            <strong>This is not a 911 service.</strong> Call 911 for emergencies. This list shows naloxone distribution points from our curated database and is not exhaustive of all options in Michigan. Call ahead to confirm availability, hours, and eligibility.
+          </p>
+          <p className="text-[10px] text-muted-foreground">
+            Sources: Michigan DHHS Standing Order, county health departments, pharmacy chains. Michigan's Good Samaritan Law protects callers from prosecution.
           </p>
         </CardContent>
       </Card>

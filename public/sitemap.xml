@@ -38,6 +38,7 @@
   <url><loc>https://accessmi.org/technical</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://accessmi.org/accessibility</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://accessmi.org/changelog</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://accessmi.org/data-validation</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://accessmi.org/press</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://accessmi.org/sitemap</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <url><loc>https://accessmi.org/install</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>

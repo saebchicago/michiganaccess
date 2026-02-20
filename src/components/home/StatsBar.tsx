@@ -6,12 +6,12 @@ const StatsBar = () => {
   const { t } = useTranslation();
 
   const stats = [
-    { icon: Users, value: "20,000+", label: t("stats.providers") },
-    { icon: Building2, value: "500+", label: t("stats.facilities") },
+    { icon: Building2, value: "88", label: "Healthcare Facilities" },
     { icon: MapPin, value: "83", label: t("stats.counties") },
-    { icon: Heart, value: "200+", label: t("stats.financialLocations") },
-    { icon: Zap, value: "120+", label: "Utility & Energy Programs" },
-    { icon: FileText, value: "15,000+", label: t("stats.communityResources") },
+    { icon: Heart, value: "700+", label: "Community Resources" },
+    { icon: Users, value: "170+", label: "Municipalities Tracked" },
+    { icon: FileText, value: "11", label: "Financial Aid Programs" },
+    { icon: Zap, value: "7", label: "Live Data Feeds" },
   ];
 
   return (
