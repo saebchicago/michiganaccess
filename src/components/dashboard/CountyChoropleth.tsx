@@ -195,6 +195,12 @@ export default function CountyChoropleth({ compact = false }: { compact?: boolea
           {sortedData.map((d) => {
             const colorIdx = getColorIndex(d.value!, min, max);
             const isHovered = hoveredCounty === d.name;
+            // Pattern overlay for colorblind accessibility
+            const patternStyle = colorIdx >= 3
+              ? { backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px)` }
+              : colorIdx <= 1
+              ? { backgroundImage: `repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(255,255,255,0.15) 3px, rgba(255,255,255,0.15) 5px)` }
+              : {};
             return (
               <Tooltip key={d.name}>
                 <TooltipTrigger asChild>
@@ -210,10 +216,12 @@ export default function CountyChoropleth({ compact = false }: { compact?: boolea
                         background: HEATMAP_COLORS[colorIdx],
                         aspectRatio: "1",
                         boxShadow: isHovered ? "0 0 0 2px hsl(var(--primary))" : "none",
+                        ...patternStyle,
                       }}
                       whileHover={{ scale: 1.15, zIndex: 10 }}
                       transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                      aria-label={`${d.name}: ${formatValue(d.value!, metric)}`}
+                      role="gridcell"
+                      aria-label={`${d.name} County: ${formatValue(d.value!, metric)} — rank ${sortedData.indexOf(d) + 1} of ${sortedData.length}`}
                     >
                       <span className="absolute inset-0 flex items-center justify-center text-[7px] sm:text-[8px] font-bold text-white/90 leading-none text-center px-0.5 drop-shadow-sm">
                         {d.name.length > 6 ? d.name.substring(0, 5) + "…" : d.name}

@@ -83,7 +83,7 @@ const QuickActions = () => {
           {actions.map((action) => (
             <motion.div key={action.href} variants={item}>
               <Link to={action.href} className="block h-full">
-                <Card className="group h-full border-border/50 transition-all duration-300 hover:border-primary/30 hover:shadow-michigan hover:-translate-y-1">
+                <Card className="group h-full card-accent-border border-border/50 transition-all duration-300 hover:border-primary/30 hover:shadow-michigan hover:-translate-y-1">
                   <CardContent className="flex flex-col items-start p-6">
                     <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${action.bgClass} transition-transform group-hover:scale-110`}>
                       <action.icon className={`h-6 w-6 ${action.iconClass}`} />
