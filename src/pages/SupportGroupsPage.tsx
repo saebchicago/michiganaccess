@@ -10,6 +10,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import TransportationCallout from "@/components/shared/TransportationCallout";
 import MentalHealthSpotlights from "@/components/shared/MentalHealthSpotlights";
 import SubstanceAbuseInsights from "@/components/shared/SubstanceAbuseInsights";
+import NarcanLocator from "@/components/shared/NarcanLocator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -266,6 +267,8 @@ export default function SupportGroupsPage() {
         <MentalHealthSpotlights />
 
         <SubstanceAbuseInsights />
+
+        <NarcanLocator />
 
         <TransportationCallout />
 
