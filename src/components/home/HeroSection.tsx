@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Apple, ShieldCheck, Bus, HeartPulse, Pill, FileWarning } from "lucide-react";
+import { Search, Apple, Bus, HeartPulse, Pill } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const quickPills = [
-  { icon: HeartPulse, label: "Find a Doctor", href: "/find-care" },
-  { icon: Pill, label: "Utility Assistance", href: "/financial-help" },
-  { icon: Bus, label: "Bus Safety", href: "/transportation" },
-  { icon: Apple, label: "Free Food", href: "/resources" },
-  { icon: FileWarning, label: "Insurance Help", href: "/health/insurance-appeals" },
-  { icon: ShieldCheck, label: "Air Quality", href: "/environment" },
+  { icon: HeartPulse, label: "Find Care", href: "/find-care" },
+  { icon: Pill, label: "Financial Help", href: "/financial-help" },
+  { icon: Apple, label: "Community Resources", href: "/resources" },
+  { icon: Bus, label: "More Services", href: "/wellness" },
 ];
 
 /* Simplified Michigan outline as SVG watermark */
@@ -130,22 +128,18 @@ const HeroSection = () => {
               ))}
             </motion.div>
 
-            {/* Stakeholder Shortcut */}
+            {/* Secondary CTA */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.75, duration: 0.5 }}
-              className="mt-5"
+              className="mt-5 flex items-center justify-center gap-3"
             >
               <a
-                href="#data-snapshot"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("data-snapshot")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="text-sm text-primary-foreground/50 hover:text-primary-foreground/80 hover:underline transition-colors"
+                href="tel:988"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 border border-white/20 px-4 py-2 text-sm font-medium text-primary-foreground/90 hover:bg-white/25 transition-all"
               >
-                For Providers &amp; Policymakers: View Live System Data &amp; Impact →
+                Get help now — 988 / 2-1-1
               </a>
             </motion.div>
 

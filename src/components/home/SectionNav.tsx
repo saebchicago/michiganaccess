@@ -1,15 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Route, Layers, MapPin } from "lucide-react";
+import { LayoutGrid, X, Route, Layers, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
-interface NavSection {
+interface NavTab {
   label: string;
   icon: React.ReactNode;
   items: { label: string; href: string }[];
 }
 
-const SECTIONS: NavSection[] = [
+const TABS: NavTab[] = [
   {
     label: "Pathways",
     icon: <Route className="h-3.5 w-3.5" />,
@@ -22,7 +23,7 @@ const SECTIONS: NavSection[] = [
     ],
   },
   {
-    label: "Sectors",
+    label: "Services",
     icon: <Layers className="h-3.5 w-3.5" />,
     items: [
       { label: "Health Conditions", href: "/conditions" },
@@ -49,10 +50,9 @@ const SECTIONS: NavSection[] = [
 
 export default function SectionNav() {
   const [visible, setVisible] = useState(false);
-  const [openIdx, setOpenIdx] = useState<number | null>(null);
-  const [focusIdx, setFocusIdx] = useState(-1);
-  const navRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 340);
@@ -60,143 +60,96 @@ export default function SectionNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) {
-        setOpenIdx(null);
-        setFocusIdx(-1);
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        setOpen(false);
       }
     };
-    document.addEventListener("mousedown", handler);
+    if (open) document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  }, [open]);
 
-  // Focus the active menu item when focusIdx changes
+  // Close on Escape
   useEffect(() => {
-    if (focusIdx >= 0 && itemRefs.current[focusIdx]) {
-      itemRefs.current[focusIdx]?.focus();
-    }
-  }, [focusIdx]);
-
-  const handleTriggerKeyDown = (e: React.KeyboardEvent, i: number) => {
-    const items = SECTIONS[i].items;
-    switch (e.key) {
-      case "ArrowDown":
-      case "Enter":
-      case " ":
-        e.preventDefault();
-        setOpenIdx(i);
-        setFocusIdx(0);
-        itemRefs.current = [];
-        break;
-      case "ArrowRight":
-        e.preventDefault();
-        setOpenIdx(Math.min(i + 1, SECTIONS.length - 1));
-        setFocusIdx(-1);
-        break;
-      case "ArrowLeft":
-        e.preventDefault();
-        setOpenIdx(Math.max(i - 1, 0));
-        setFocusIdx(-1);
-        break;
-      case "Escape":
-        e.preventDefault();
-        setOpenIdx(null);
-        setFocusIdx(-1);
-        break;
-    }
-  };
-
-  const handleItemKeyDown = (e: React.KeyboardEvent, sectionIdx: number, itemIdx: number) => {
-    const items = SECTIONS[sectionIdx].items;
-    switch (e.key) {
-      case "ArrowDown":
-        e.preventDefault();
-        setFocusIdx(Math.min(itemIdx + 1, items.length - 1));
-        break;
-      case "ArrowUp":
-        e.preventDefault();
-        if (itemIdx === 0) {
-          setFocusIdx(-1);
-          // Return focus to trigger button
-          (navRef.current?.querySelectorAll<HTMLButtonElement>('[aria-haspopup="true"]')[sectionIdx])?.focus();
-        } else {
-          setFocusIdx(itemIdx - 1);
-        }
-        break;
-      case "Escape":
-      case "Tab":
-        setOpenIdx(null);
-        setFocusIdx(-1);
-        break;
-      case "Home":
-        e.preventDefault();
-        setFocusIdx(0);
-        break;
-      case "End":
-        e.preventDefault();
-        setFocusIdx(items.length - 1);
-        break;
-    }
-  };
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    if (open) document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [open]);
 
   if (!visible) return null;
 
   return (
     <motion.div
-      ref={navRef}
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className="fixed top-16 left-0 right-0 z-40 border-b border-border/50 bg-background/95 backdrop-blur-md"
       role="navigation"
       aria-label="Section navigation"
     >
-      <div className="container flex items-center gap-1 h-10">
-        {SECTIONS.map((section, i) => (
-          <div key={section.label} className="relative">
-            <button
-              onClick={() => { setOpenIdx(openIdx === i ? null : i); setFocusIdx(-1); }}
-              onKeyDown={(e) => handleTriggerKeyDown(e, i)}
-              className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-              aria-expanded={openIdx === i}
-              aria-haspopup="true"
-              aria-controls={`section-menu-${i}`}
+      <div className="container flex items-center h-10" ref={panelRef}>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setOpen(!open)}
+          className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground h-8 px-3"
+          aria-expanded={open}
+          aria-haspopup="true"
+        >
+          {open ? <X className="h-3.5 w-3.5" /> : <LayoutGrid className="h-3.5 w-3.5" />}
+          Browse
+        </Button>
+
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 4 }}
+              transition={{ duration: 0.12 }}
+              className="absolute left-0 top-full w-full border-b border-border bg-card shadow-lg z-50"
             >
-              {section.icon}
-              {section.label}
-              <ChevronDown className={`h-3 w-3 transition-transform ${openIdx === i ? "rotate-180" : ""}`} />
-            </button>
-            <AnimatePresence>
-              {openIdx === i && (
-                <motion.div
-                  id={`section-menu-${i}`}
-                  role="menu"
-                  aria-label={`${section.label} menu`}
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 4 }}
-                  transition={{ duration: 0.12 }}
-                  className="absolute left-0 top-full mt-1 w-48 rounded-lg border border-border bg-card p-1 shadow-lg z-50"
-                >
-                  {section.items.map((item, j) => (
+              <div className="container py-4">
+                {/* Tabs */}
+                <div className="flex gap-1 mb-3 border-b border-border pb-2" role="tablist">
+                  {TABS.map((tab, i) => (
+                    <button
+                      key={tab.label}
+                      role="tab"
+                      aria-selected={activeTab === i}
+                      onClick={() => setActiveTab(i)}
+                      className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                        activeTab === i
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      {tab.icon}
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Tab content */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1" role="tabpanel">
+                  {TABS[activeTab].items.map((item) => (
                     <Link
                       key={item.href}
-                      ref={(el) => { itemRefs.current[j] = el; }}
                       to={item.href}
-                      role="menuitem"
-                      tabIndex={focusIdx === j ? 0 : -1}
-                      onClick={() => { setOpenIdx(null); setFocusIdx(-1); }}
-                      onKeyDown={(e) => handleItemKeyDown(e, i, j)}
-                      className="block rounded-md px-3 py-2 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:bg-muted focus-visible:text-foreground focus-visible:outline-none"
+                      onClick={() => setOpen(false)}
+                      className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                     >
                       {item.label}
                     </Link>
                   ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
