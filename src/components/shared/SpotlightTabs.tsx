@@ -216,10 +216,17 @@ function CategoryGrid({ label, icon: Icon, programs, county }: { label: string; 
   );
 }
 
+// Persona → preferred categories mapping
+const PERSONA_CATEGORIES: Record<string, string[]> = {
+  provider: ["Community", "Transportation", "Veterans & Seniors"],
+  "health-system": ["Community", "Energy", "Education"],
+  policymaker: ["Legal & Civic", "Environment", "Energy", "Disaster Prep"],
+};
+
 const SpotlightTabs = () => {
   const [search, setSearch] = useState("");
   const [browseAll, setBrowseAll] = useState(false);
-  const { county } = useCounty();
+  const { county, audience } = useCounty();
 
   const searchResults = useMemo(() => {
     if (!search.trim()) return [];
@@ -247,6 +254,18 @@ const SpotlightTabs = () => {
   const allPrograms = useMemo(() => {
     return ALL_PROGRAMS.filter((p) => !p.counties || !county || p.counties.includes(county));
   }, [county]);
+
+  // Persona-prioritized category ordering
+  const personaSections = useMemo(() => {
+    if (!audience || audience === "resident") return SECTIONS;
+    const preferred = PERSONA_CATEGORIES[audience] || [];
+    const sorted = [...SECTIONS].sort((a, b) => {
+      const aP = preferred.includes(a.label) ? 0 : 1;
+      const bP = preferred.includes(b.label) ? 0 : 1;
+      return aP - bP;
+    });
+    return sorted;
+  }, [audience]);
 
   const isSearching = search.trim().length > 0;
   const showGrid = isSearching || browseAll;
@@ -343,9 +362,14 @@ const SpotlightTabs = () => {
               </Button>
             </div>
 
-            {/* Category grids (replace carousels) */}
+            {/* Category grids — persona-prioritized */}
+            {audience && audience !== "resident" && (
+              <p className="text-xs text-muted-foreground text-center mb-2">
+                Showing categories most relevant to <span className="font-medium text-foreground capitalize">{audience === "health-system" ? "health systems" : `${audience}s`}</span> first
+              </p>
+            )}
             <div className="space-y-10">
-              {SECTIONS.map(({ value, label, icon }) => {
+              {personaSections.map(({ value, label, icon }) => {
                 const categoryPrograms = ALL_PROGRAMS.filter(
                   (p) => p.category === label &&
                     (!p.counties || !county || p.counties.includes(county))
