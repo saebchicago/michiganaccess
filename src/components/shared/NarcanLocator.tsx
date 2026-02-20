@@ -1,8 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   MapPin, Phone, ExternalLink, Clock, Search, Pill, Shield,
-  ChevronDown, ChevronUp, Download, AlertTriangle
+  ChevronDown, ChevronUp, Download, AlertTriangle, List, Map
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,9 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useCounty } from "@/contexts/CountyContext";
 import { toast } from "sonner";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -65,6 +68,66 @@ const TYPE_LABELS: Record<string, { label: string; color: string }> = {
   hospital: { label: "Hospital", color: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300" },
 };
 
+const MARKER_COLORS: Record<string, string> = {
+  pharmacy: "#3b82f6",
+  health_dept: "#10b981",
+  community: "#f59e0b",
+  hospital: "#8b5cf6",
+};
+
+function NarcanMap({ locations }: { locations: NarcanLocation[] }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.remove();
+      mapInstanceRef.current = null;
+    }
+
+    const map = L.map(containerRef.current, { scrollWheelZoom: false }).setView([44.3, -84.6], 6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    locations.forEach((loc) => {
+      const color = MARKER_COLORS[loc.type] || "#6b7280";
+      const icon = L.divIcon({
+        className: "narcan-marker",
+        html: `<div style="background:${color};width:14px;height:14px;border-radius:50%;border:2px solid white;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>`,
+        iconSize: [14, 14],
+        iconAnchor: [7, 7],
+      });
+      const marker = L.marker([loc.lat, loc.lng], { icon }).addTo(map);
+      const freeTag = loc.isFree ? '<span style="color:#059669;font-weight:600">Free Narcan</span> · ' : '';
+      marker.bindPopup(
+        `<div style="min-width:180px">
+          <strong>${loc.name}</strong><br/>
+          <span style="font-size:12px;color:#666">${TYPE_LABELS[loc.type].label} · ${loc.county} County</span><br/>
+          <span style="font-size:12px">${freeTag}${loc.address}, ${loc.city}</span>
+          ${loc.phone ? `<br/><a href="tel:${loc.phone}" style="font-size:12px">📞 ${loc.phone}</a>` : ''}
+          ${loc.hours ? `<br/><span style="font-size:11px;color:#888">🕐 ${loc.hours}</span>` : ''}
+          <br/><a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.address + ", " + loc.city + ", MI")}" target="_blank" style="font-size:12px">Get Directions →</a>
+        </div>`
+      );
+    });
+
+    if (locations.length > 0) {
+      const bounds = L.latLngBounds(locations.map(l => [l.lat, l.lng] as [number, number]));
+      map.fitBounds(bounds, { padding: [30, 30] });
+    }
+
+    mapInstanceRef.current = map;
+    return () => {
+      map.remove();
+      mapInstanceRef.current = null;
+    };
+  }, [locations]);
+
+  return <div ref={containerRef} style={{ height: "450px", width: "100%" }} />;
+}
+
 export default function NarcanLocator() {
   const { county: ctxCounty } = useCounty();
   const [search, setSearch] = useState("");
@@ -72,6 +135,9 @@ export default function NarcanLocator() {
   const [countyFilter, setCountyFilter] = useState(ctxCounty || "all");
   const [freeOnly, setFreeOnly] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<string>("list");
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<L.Map | null>(null);
 
   const counties = useMemo(() => {
     const set = new Set(NARCAN_LOCATIONS.map(l => l.county));
@@ -196,79 +262,94 @@ export default function NarcanLocator() {
         </CardContent>
       </Card>
 
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">{filtered.length} locations found</p>
-        <Button variant="outline" size="sm" onClick={downloadCSV} className="gap-1 text-xs">
-          <Download className="h-3.5 w-3.5" />CSV
-        </Button>
-      </div>
+      <Tabs value={viewMode} onValueChange={setViewMode}>
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">{filtered.length} locations found</p>
+          <div className="flex items-center gap-2">
+            <TabsList className="h-8">
+              <TabsTrigger value="list" className="text-xs gap-1 px-2.5"><List className="h-3.5 w-3.5" />List</TabsTrigger>
+              <TabsTrigger value="map" className="text-xs gap-1 px-2.5"><Map className="h-3.5 w-3.5" />Map</TabsTrigger>
+            </TabsList>
+            <Button variant="outline" size="sm" onClick={downloadCSV} className="gap-1 text-xs">
+              <Download className="h-3.5 w-3.5" />CSV
+            </Button>
+          </div>
+        </div>
 
-      {/* Results */}
-      <div className="space-y-2">
-        {filtered.map((loc, i) => {
-          const isExpanded = expanded === loc.name;
-          const typeStyle = TYPE_LABELS[loc.type];
-          return (
-            <motion.div key={loc.name} variants={fadeUp} custom={i % 6}>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => setExpanded(isExpanded ? null : loc.name)}>
-                <CardContent className="py-3">
-                  <div className="flex items-start gap-3">
-                    <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg bg-michigan-teal/10 flex-shrink-0 mt-0.5">
-                      <Pill className="h-4 w-4 text-michigan-teal" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <h3 className="font-semibold text-foreground text-sm">{loc.name}</h3>
-                        <Badge className={`text-[10px] border-0 ${typeStyle.color}`}>{typeStyle.label}</Badge>
-                        {loc.isFree && <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">Free</Badge>}
-                        {loc.training && <Badge variant="outline" className="text-[10px]">Training</Badge>}
-                        {loc.hasFitKits && <Badge variant="outline" className="text-[10px]">Test Kits</Badge>}
-                      </div>
-                      <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{loc.address}, {loc.city}</span>
-                        <span>{loc.county} County</span>
-                        {loc.hours && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{loc.hours}</span>}
-                      </div>
-
-                      {isExpanded && (
-                        <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} className="mt-3 pt-3 border-t border-border flex flex-wrap gap-2">
-                          {loc.phone && (
-                            <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
-                              <a href={`tel:${loc.phone}`}><Phone className="h-3 w-3" />{loc.phone}</a>
-                            </Button>
+        <TabsContent value="list" className="mt-3">
+          <div className="space-y-2">
+            {filtered.map((loc, i) => {
+              const isExpanded = expanded === loc.name;
+              const typeStyle = TYPE_LABELS[loc.type];
+              return (
+                <motion.div key={loc.name} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(i * 0.03, 0.3), duration: 0.3 }}>
+                  <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => setExpanded(isExpanded ? null : loc.name)}>
+                    <CardContent className="py-3">
+                      <div className="flex items-start gap-3">
+                        <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg bg-michigan-teal/10 flex-shrink-0 mt-0.5">
+                          <Pill className="h-4 w-4 text-michigan-teal" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            <h3 className="font-semibold text-foreground text-sm">{loc.name}</h3>
+                            <Badge className={`text-[10px] border-0 ${typeStyle.color}`}>{typeStyle.label}</Badge>
+                            {loc.isFree && <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">Free</Badge>}
+                            {loc.training && <Badge variant="outline" className="text-[10px]">Training</Badge>}
+                            {loc.hasFitKits && <Badge variant="outline" className="text-[10px]">Test Kits</Badge>}
+                          </div>
+                          <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{loc.address}, {loc.city}</span>
+                            <span>{loc.county} County</span>
+                            {loc.hours && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{loc.hours}</span>}
+                          </div>
+                          {isExpanded && (
+                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} className="mt-3 pt-3 border-t border-border flex flex-wrap gap-2">
+                              {loc.phone && (
+                                <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
+                                  <a href={`tel:${loc.phone}`}><Phone className="h-3 w-3" />{loc.phone}</a>
+                                </Button>
+                              )}
+                              {loc.website && (
+                                <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
+                                  <a href={loc.website} target="_blank" rel="noopener"><ExternalLink className="h-3 w-3" />Website</a>
+                                </Button>
+                              )}
+                              <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
+                                <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.address + ", " + loc.city + ", MI")}`} target="_blank" rel="noopener">
+                                  <MapPin className="h-3 w-3" />Directions
+                                </a>
+                              </Button>
+                            </motion.div>
                           )}
-                          {loc.website && (
-                            <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
-                              <a href={loc.website} target="_blank" rel="noopener"><ExternalLink className="h-3 w-3" />Website</a>
-                            </Button>
-                          )}
-                          <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
-                            <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.address + ", " + loc.city + ", MI")}`} target="_blank" rel="noopener">
-                              <MapPin className="h-3 w-3" />Directions
-                            </a>
-                          </Button>
-                        </motion.div>
-                      )}
-                    </div>
-                    <button className="text-muted-foreground" aria-label={isExpanded ? "Collapse" : "Expand"}>
-                      {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                    </button>
-                  </div>
+                        </div>
+                        <button className="text-muted-foreground" aria-label={isExpanded ? "Collapse" : "Expand"}>
+                          {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        </button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
+            {filtered.length === 0 && (
+              <Card>
+                <CardContent className="py-8 text-center">
+                  <Pill className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">No locations found. Try adjusting your filters.</p>
                 </CardContent>
               </Card>
-            </motion.div>
-          );
-        })}
-      </div>
+            )}
+          </div>
+        </TabsContent>
 
-      {filtered.length === 0 && (
-        <Card>
-          <CardContent className="py-8 text-center">
-            <Pill className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-            <p className="text-sm text-muted-foreground">No locations found. Try adjusting your filters.</p>
-          </CardContent>
-        </Card>
-      )}
+        <TabsContent value="map" className="mt-3">
+          <Card>
+            <CardContent className="p-0 overflow-hidden rounded-lg">
+              <NarcanMap locations={filtered} />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
       <Card className="border-border/50 bg-muted/30">
         <CardContent className="py-3">
