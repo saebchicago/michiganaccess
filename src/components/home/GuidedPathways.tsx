@@ -106,7 +106,7 @@ export default function GuidedPathways() {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Card
-                      className={`group h-full border-l-4 ${p.bg} ${p.borderColor} relative overflow-hidden cursor-pointer transition-all duration-200 motion-safe:hover:scale-[1.02] motion-safe:hover:shadow-lg motion-reduce:hover:shadow-md`}
+                      className={`group h-full border-l-4 ${p.bg} ${p.borderColor} relative overflow-hidden cursor-pointer transition-all duration-200 motion-safe:hover:scale-[1.02] motion-safe:hover:shadow-lg motion-reduce:hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`}
                       onClick={() => setExpandedId(isExpanded ? null : p.id)}
                       role="button"
                       tabIndex={0}
