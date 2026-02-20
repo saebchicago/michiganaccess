@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, Heart, ChevronDown, Download, LogOut, Sparkles } from "lucide-react";
@@ -18,9 +18,22 @@ const Header = () => {
   const [wizardOpen, setWizardOpen] = useState(false);
 
   const handleQuickExit = () => {
-    // Replace current history entry so back button doesn't return here
     window.location.replace("https://www.google.com");
   };
+
+  // Escape key triggers Quick Exit for safety
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        // Don't trigger if user is in an input/modal
+        const tag = (e.target as HTMLElement)?.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+        handleQuickExit();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   const navLinks = [
     {
