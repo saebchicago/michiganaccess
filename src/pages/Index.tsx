@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { AccessChat } from "@/components/AccessChat";
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -19,8 +20,12 @@ import SocialProofStrip from "@/components/home/SocialProofStrip";
 import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
 import AudienceSelector from "@/components/home/AudienceSelector";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { Button } from "@/components/ui/button";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Index = () => {
+  const [dataExpanded, setDataExpanded] = useState(false);
+
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
     description: "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
@@ -31,33 +36,53 @@ const Index = () => {
     <Layout>
       <OnboardingTour />
       <SectionNav />
+
+      {/* ── Layer 1: Crisis & Urgent Help (always pinned via CrisisBar in Layout) ── */}
       <CountyWelcomeBanner />
-      {/* 1. Hero */}
+
+      {/* ── Layer 2: Search & Top Pathways ── */}
       <HeroSection />
-      {/* 1.5 Persona selector — controls what content is prioritized */}
       <AudienceSelector />
-      {/* 2. How Can We Help */}
       <GuidedPathways />
       <AuthorityStrip />
       <SocialProofStrip />
-      {/* 3. County Health Snapshot — moved up */}
+
+      {/* ── Layer 3: Personalized Snapshot (region-reactive) ── */}
       <HealthDataSnapshot />
-      {/* 3.5. Nearby Resource Finder */}
       <NearbyResourceFinder />
-      {/* 4. Explore Community Resources */}
       <SpotlightTabs />
-      {/* 5. Start Here — core access grid */}
       <CoreAccessGrid />
-      {/* 6. Regional Gateway */}
+
+      {/* ── Layer 4: Data Insights (collapsed by default) ── */}
+      <section className="py-6">
+        <div className="container">
+          <div className="flex items-center justify-center">
+            <Button
+              variant="outline"
+              onClick={() => setDataExpanded(!dataExpanded)}
+              className="gap-2 text-sm"
+              aria-expanded={dataExpanded}
+            >
+              {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              {dataExpanded ? "Collapse Data & Insights" : "Explore Data & Insights"}
+            </Button>
+          </div>
+          {dataExpanded && (
+            <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
+              <CountyInfoCard />
+              <SmartRecommendations />
+              <SystemsExplainer />
+              <TrustIndicators />
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── Layer 5: Regional Gateway & Use Cases ── */}
       <RegionalGateway />
-      <CountyInfoCard />
-      <SmartRecommendations />
-      {/* 7. What is Access Michigan */}
-      <SystemsExplainer />
-      <TrustIndicators />
-      {/* 8. How Access Michigan Works (formerly Example Journeys) */}
       <SuccessStories />
-      {/* 9. AI Chat — positioned just above footer */}
+
+      {/* AI Chat — positioned just above footer */}
       <AccessChat />
     </Layout>
   );
