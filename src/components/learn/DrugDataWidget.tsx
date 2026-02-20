@@ -291,7 +291,7 @@ export default function DrugDataWidget() {
           <div className="text-center py-8 text-muted-foreground space-y-2">
             <FlaskConical className="h-10 w-10 mx-auto opacity-30" />
             <p className="text-sm">Search for FDA-approved drugs by name or browse by therapy area.</p>
-            <p className="text-xs">Powered by the U.S. FDA openFDA API · Updated daily</p>
+            <p className="text-xs">Data from <a href="https://open.fda.gov/" target="_blank" rel="noopener" className="text-primary hover:underline">openFDA</a> · This is not medical advice. Consult a healthcare provider before making medication decisions.</p>
           </div>
         )}
       </CardContent>

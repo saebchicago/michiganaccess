@@ -23,7 +23,7 @@ const pathways = [
     bg: "bg-michigan-coral/5",
     borderColor: "border-michigan-coral/30",
     iconBg: "bg-michigan-coral/10",
-    encouragement: "You're not alone — thousands of neighbors have found help here.",
+    encouragement: "You're not alone — this tool is here to help you find options.",
   },
   {
     id: "caregiver",
