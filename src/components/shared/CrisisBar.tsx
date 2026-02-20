@@ -6,6 +6,7 @@ const CrisisBar = () => {
 
   return (
     <div
+      id="crisis-bar"
       className="bg-michigan-coral/10 border-b border-michigan-coral/20"
       role="banner"
       aria-label="Crisis resources"

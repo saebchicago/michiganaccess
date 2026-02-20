@@ -122,7 +122,7 @@ const Footer = () => {
               { icon: Shield, value: "✓", label: "Verified" },
               { icon: Database, value: "6", label: "Data Feeds" },
               { icon: Activity, value: "<3s", label: "p95 Load" },
-              { icon: FileText, value: "15K+", label: "Resources" },
+              { icon: FileText, value: "700+", label: "Resources" },
             ].map((m) => (
               <div key={m.label} className="flex items-center gap-1.5">
                 <m.icon className="h-3 w-3 text-primary" />
@@ -134,20 +134,30 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Data Sources */}
+        {/* Data Partners */}
         <div className="mt-6 border-t border-border pt-6">
-          <details className="group">
-            <summary className="flex items-center justify-center gap-2 cursor-pointer text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors">
-              <Database className="h-3 w-3" />
-              Data Sources
-              <span className="transition-transform group-open:rotate-180">▾</span>
-            </summary>
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              {["CMS (Medicare)", "HRSA (Health Resources)", "CDC (Public Health)", "MDHHS (Michigan)", "Leapfrog (Safety)", "EPA AirNow"].map((src) => (
-                <span key={src} className="text-xs text-muted-foreground">{src}</span>
-              ))}
-            </div>
-          </details>
+          <p className="text-center text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+            Data Partners & Sources
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            {[
+              { label: "MDHHS", icon: Building2 },
+              { label: "Michigan 211", icon: Phone },
+              { label: "CMS (Medicare)", icon: Shield },
+              { label: "HRSA", icon: HandHeart },
+              { label: "CDC", icon: Activity },
+              { label: "EPA AirNow", icon: Landmark },
+              { label: "Leapfrog (Safety)", icon: CheckCircle2 },
+            ].map((src) => (
+              <div key={src.label} className="flex items-center gap-1.5">
+                <src.icon className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
+                <span className="text-xs text-muted-foreground">{src.label}</span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2 text-center text-[10px] text-muted-foreground">
+            <Link to="/data-validation" className="hover:underline text-primary">View full data sources & methodology →</Link>
+          </p>
         </div>
 
         {/* Public Beta Badge */}
