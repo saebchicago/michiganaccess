@@ -2,13 +2,14 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   BarChart3, TrendingUp, TrendingDown, Activity, Heart, Brain, Users,
-  MapPin, Shield, Baby, Stethoscope, Download, Zap
+  MapPin, Shield, Baby, Stethoscope, Download, Zap, Pill
 } from "lucide-react";
 import ExternalEmbeds from "@/components/dashboard/ExternalEmbeds";
 import DisparityGapChart from "@/components/dashboard/DisparityGapChart";
 import CSVExportPanel from "@/components/dashboard/CSVExportPanel";
 import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
 import EnergyBurdenMap from "@/components/dashboard/EnergyBurdenMap";
+import DrugPriceLookup from "@/components/learn/DrugPriceLookup";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -488,10 +489,12 @@ export default function HealthDataDashboardPage() {
 
           <TabsContent value="disparities" className="mt-6 space-y-6">
             <DisparityGapChart />
+            <EnergyBurdenMap />
             <CSVExportPanel />
           </TabsContent>
 
           <TabsContent value="research" className="mt-6 space-y-6">
+            <DrugPriceLookup />
             <ExternalEmbeds />
             <CSVExportPanel />
           </TabsContent>

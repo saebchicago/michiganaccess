@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AccessChat } from "@/components/AccessChat";
 import Layout from "@/components/layout/Layout";
+import DrugPriceLookup from "@/components/learn/DrugPriceLookup";
 import HeroSection from "@/components/home/HeroSection";
 import HealthDataSnapshot from "@/components/home/HealthDataSnapshot";
 import CoreAccessGrid from "@/components/home/CoreAccessGrid";
@@ -82,6 +83,7 @@ const Index = () => {
           </div>
           {dataExpanded && (
             <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
+              <DrugPriceLookup />
               <CountyInfoCard />
               <SmartRecommendations />
               <SystemsExplainer />

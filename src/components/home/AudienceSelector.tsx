@@ -1,11 +1,10 @@
-import { User, Stethoscope, Building2, Landmark } from "lucide-react";
+import { User, Building2, Landmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCounty, type Audience } from "@/contexts/CountyContext";
 import { useTranslation } from "react-i18next";
 
 const audienceIds = [
   { id: "resident" as Audience, icon: User, tKey: "resident" },
-  { id: "provider" as Audience, icon: Stethoscope, tKey: "provider" },
   { id: "health-system" as Audience, icon: Building2, tKey: "health_system" },
   { id: "policymaker" as Audience, icon: Landmark, tKey: "policymaker" },
 ];

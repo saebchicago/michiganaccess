@@ -109,6 +109,16 @@ const ALL_PROGRAMS: SearchableProgram[] = [
   { title: "Michigan History Center", description: "Museums, archives, and historical sites preserving Michigan's heritage. Free admission days and educational programs.", eligibility: ["all residents"], url: "https://www.michigan.gov/mhc", category: "Culture & Rec" },
   { title: "Pure Michigan Trails", description: "Over 13,000 miles of multi-use trails for hiking, biking, and skiing. Trail maps, conditions, and accessibility info.", eligibility: ["all residents"], url: "https://www.michigan.org/trails", category: "Culture & Rec" },
   { title: "Michigan Philharmonic & Local Arts", description: "Affordable and free concerts, community theater, and cultural festivals across Michigan communities.", eligibility: ["all residents"], url: "https://www.michiganphil.org", category: "Culture & Rec" },
+  // Beyond Resources — Faith, Housing, Multi-Sector
+  { title: "Kalamazoo Gospel Mission", description: "Emergency shelter, meals, addiction recovery, medical/dental clinic, and workforce training for individuals experiencing homelessness.", eligibility: ["homeless", "families", "low-income"], url: "https://www.kzoogospel.org", category: "Community", counties: ["Kalamazoo"] },
+  { title: "Storehouse of Community Resources", description: "Food assistance, education programs, disaster relief, clothing, and emergency support for families in Southwest Michigan.", eligibility: ["families", "low-income"], url: "https://storehousemi.org", category: "Community", counties: ["Kalamazoo", "Van Buren", "Allegan", "Calhoun"] },
+  { title: "Wayne Metropolitan Community Action Agency", description: "Housing stability, energy assistance, workforce development, education, and emergency services for Wayne County residents.", eligibility: ["low-income", "families", "seniors"], url: "https://www.waynemetro.org", category: "Community", counties: ["Wayne"] },
+  { title: "CNS Healthcare — Community Mental Health", description: "Outpatient mental health, substance abuse treatment, psychiatric services, and crisis intervention across Southeast Michigan.", eligibility: ["all residents"], url: "https://www.cnshealthcare.org", category: "Community", counties: ["Wayne", "Oakland", "Washtenaw", "Livingston"] },
+  { title: "Connect4Care — Family Resource Network", description: "Care coordination connecting families to health, social services, education, and community resources across Michigan.", eligibility: ["families", "children"], url: "https://connect4care.org", category: "Youth & Family" },
+  { title: "St. Patrick Senior Center", description: "Transportation, recreation, meals, health screenings, and social programs for seniors in Detroit and Wayne County.", eligibility: ["seniors"], url: "https://stpatsrctr.org", category: "Veterans & Seniors", counties: ["Wayne"] },
+  { title: "Neighborhood Legal Services Michigan", description: "Free civil legal aid for health-related legal issues, family law, housing, and public benefits in Southeast Michigan.", eligibility: ["low-income", "families"], url: "https://nlsmichigan.org", category: "Legal & Civic", counties: ["Wayne", "Oakland", "Macomb"] },
+  { title: "Community Foundation for Southeast Michigan", description: "Grants for environmental stewardship, arts, education, and community development across 7 Southeast Michigan counties.", eligibility: ["communities", "organizations"], url: "https://cfsem.org", category: "Environment", counties: ["Wayne", "Oakland", "Macomb", "Monroe", "Washtenaw", "Livingston", "St. Clair"] },
+  { title: "National Association of Conservation Districts — MI", description: "Local conservation districts supporting recycling, soil health, water quality, and outdoor recreation in Michigan communities.", eligibility: ["all residents"], url: "https://www.nacdnet.org", category: "Environment" },
 ];
 
 const SECTIONS = [
@@ -243,8 +253,7 @@ function CategoryGrid({ label, icon: Icon, programs, county }: { label: string; 
 
 // Persona → preferred categories mapping
 const PERSONA_CATEGORIES: Record<string, string[]> = {
-  provider: ["Community", "Transportation", "Veterans & Seniors"],
-  "health-system": ["Community", "Energy", "Education"],
+  "health-system": ["Community", "Energy", "Education", "Transportation", "Veterans & Seniors"],
   policymaker: ["Legal & Civic", "Environment", "Energy", "Disaster Prep"],
 };
 

@@ -17,7 +17,7 @@ export const MICHIGAN_COUNTIES = [
 
 export type MichiganCounty = (typeof MICHIGAN_COUNTIES)[number];
 
-export type Audience = "resident" | "provider" | "health-system" | "policymaker";
+export type Audience = "resident" | "health-system" | "policymaker";
 
 export interface EligibilityProfile {
   householdSize: number | null;
