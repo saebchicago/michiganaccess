@@ -147,6 +147,16 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
             </p>
           </div>
           <div className="flex gap-2 flex-wrap">
+            <div className="relative">
+              <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+              <Input
+                placeholder="Find county…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-[140px] h-8 text-xs pl-7"
+                aria-label="Search for a county"
+              />
+            </div>
             <Select value={metric} onValueChange={(v) => setMetric(v as Metric)}>
               <SelectTrigger className="w-[160px] h-8 text-xs">
                 <SelectValue />
