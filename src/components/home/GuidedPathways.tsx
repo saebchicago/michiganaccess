@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -88,11 +88,11 @@ const fadeUp = {
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.35 } }),
 };
 
-export default function GuidedPathways() {
+const GuidedPathways = forwardRef<HTMLElement>(function GuidedPathways(_props, ref) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   return (
-    <section className="py-16 bg-muted/30">
+    <section ref={ref} className="py-16 bg-muted/30">
       <div className="container">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-10 text-center">
           <h2 className="text-2xl font-bold text-foreground md:text-3xl">How can we help you today?</h2>
@@ -191,4 +191,6 @@ export default function GuidedPathways() {
       </div>
     </section>
   );
-}
+});
+
+export default GuidedPathways;
