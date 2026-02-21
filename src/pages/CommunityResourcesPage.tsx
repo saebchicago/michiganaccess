@@ -18,6 +18,7 @@ import { useCounty } from "@/contexts/CountyContext";
 import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
 import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
 import ReferralToolkit from "@/components/shared/ReferralToolkit";
+import ResourceSubmissionForm from "@/components/shared/ResourceSubmissionForm";
 import ShareMenu from "@/components/shared/ShareMenu";
 import DataTimestamp from "@/components/shared/DataTimestamp";
 import ContentSkeleton from "@/components/shared/ContentSkeleton";
@@ -323,6 +324,7 @@ export default function CommunityResourcesPage() {
           </CardContent>
         </Card>
 
+        <ResourceSubmissionForm />
         <ReferralToolkit pageTitle="Community Resources" />
           </TabsContent>
         </Tabs>

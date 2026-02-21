@@ -651,6 +651,69 @@ export type Database = {
           },
         ]
       }
+      resource_submissions: {
+        Row: {
+          address: string | null
+          city: string | null
+          contact_email: string
+          contact_name: string
+          county: string | null
+          description: string
+          id: string
+          is_free: boolean | null
+          languages: string[] | null
+          organization_name: string
+          phone: string | null
+          resource_type: string
+          reviewed_at: string | null
+          services_offered: string[] | null
+          status: string
+          submitted_at: string
+          walk_in_available: boolean | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          contact_email: string
+          contact_name: string
+          county?: string | null
+          description: string
+          id?: string
+          is_free?: boolean | null
+          languages?: string[] | null
+          organization_name: string
+          phone?: string | null
+          resource_type?: string
+          reviewed_at?: string | null
+          services_offered?: string[] | null
+          status?: string
+          submitted_at?: string
+          walk_in_available?: boolean | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          contact_email?: string
+          contact_name?: string
+          county?: string | null
+          description?: string
+          id?: string
+          is_free?: boolean | null
+          languages?: string[] | null
+          organization_name?: string
+          phone?: string | null
+          resource_type?: string
+          reviewed_at?: string | null
+          services_offered?: string[] | null
+          status?: string
+          submitted_at?: string
+          walk_in_available?: boolean | null
+          website?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
