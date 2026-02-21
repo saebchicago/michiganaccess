@@ -1,10 +1,11 @@
 import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MapPin, Download, Filter, ArrowRight, Info } from "lucide-react";
+import { MapPin, Download, Filter, ArrowRight, Info, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { COUNTY_PROFILES, getCountyProfile, type CountyProfile } from "@/data/michigan-county-profiles";
@@ -73,6 +74,11 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
   const [metric, setMetric] = useState<Metric>("uninsured");
   const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
   const [typeFilter, setTypeFilter] = useState<"all" | "urban" | "suburban" | "rural">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const activeHighlight = searchQuery
+    ? Object.keys(COUNTY_PROFILES).find(n => n.toLowerCase().startsWith(searchQuery.toLowerCase())) ?? highlightCounty
+    : highlightCounty;
 
   const metricConfig = METRICS.find(m => m.id === metric)!;
 
@@ -141,6 +147,16 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
             </p>
           </div>
           <div className="flex gap-2 flex-wrap">
+            <div className="relative">
+              <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground" />
+              <Input
+                placeholder="Find county…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-[140px] h-8 text-xs pl-7"
+                aria-label="Search for a county"
+              />
+            </div>
             <Select value={metric} onValueChange={(v) => setMetric(v as Metric)}>
               <SelectTrigger className="w-[160px] h-8 text-xs">
                 <SelectValue />
@@ -217,7 +233,7 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
                         aspectRatio: "1",
                         boxShadow: isHovered
                           ? "0 0 0 2px hsl(var(--primary))"
-                          : highlightCounty && d.name === highlightCounty
+                          : activeHighlight && d.name === activeHighlight
                           ? "0 0 0 3px hsl(var(--primary)), 0 0 8px hsl(var(--primary) / 0.4)"
                           : "none",
                         ...patternStyle,
