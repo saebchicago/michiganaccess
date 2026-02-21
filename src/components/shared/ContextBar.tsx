@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { MapPin, Clock, HelpCircle, ArrowRight, ChevronDown, User, DollarSign, X, Users } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 
 const AUDIENCE_LABELS: Record<string, string> = {
   resident: "Resident",
@@ -24,27 +25,44 @@ const SUB_PERSONA_LABELS: Record<string, string> = {
   disabled: "Disability",
 };
 
+// 2025 Federal Poverty Guidelines (contiguous US)
+const FPL_BASE = 15650;
+const FPL_PER_PERSON = 5380;
+function computeFPL(householdSize: number, annualIncome: number): number {
+  const threshold = FPL_BASE + FPL_PER_PERSON * Math.max(0, householdSize - 1);
+  return Math.round((annualIncome / threshold) * 100);
+}
+
 function EligibilityPopover() {
   const { eligibility, setEligibility, clearEligibility } = useCounty();
   const [open, setOpen] = useState(false);
-  const [hhSize, setHhSize] = useState(eligibility.householdSize?.toString() ?? "");
-  const [income, setIncome] = useState(eligibility.annualIncome?.toString() ?? "");
+  const [hhSize, setHhSize] = useState(eligibility.householdSize?.toString() ?? "1");
+  const [income, setIncome] = useState(eligibility.annualIncome ?? 30000);
+
+  const hhNum = Math.max(1, parseInt(hhSize) || 1);
+  const fplPreview = useMemo(() => computeFPL(hhNum, income), [hhNum, income]);
 
   const handleSave = () => {
-    const size = parseInt(hhSize);
-    const inc = parseFloat(income);
-    if (size > 0 && inc >= 0) {
-      setEligibility({ householdSize: size, annualIncome: inc });
+    if (hhNum > 0 && income >= 0) {
+      setEligibility({ householdSize: hhNum, annualIncome: income });
       setOpen(false);
     }
   };
 
   const handleClear = () => {
     clearEligibility();
-    setHhSize("");
-    setIncome("");
+    setHhSize("1");
+    setIncome(30000);
     setOpen(false);
   };
+
+  // Sync from global state when popover opens
+  useEffect(() => {
+    if (open) {
+      setHhSize(eligibility.householdSize?.toString() ?? "1");
+      setIncome(eligibility.annualIncome ?? 30000);
+    }
+  }, [open, eligibility.householdSize, eligibility.annualIncome]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -54,35 +72,58 @@ function EligibilityPopover() {
           {eligibility.fplPercent ? `${eligibility.fplPercent}% FPL` : "Set income"}
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-56 p-3 space-y-3" side="bottom" align="start">
+      <PopoverContent className="w-72 p-4 space-y-4" side="bottom" align="start">
         <p className="text-xs font-semibold text-foreground">Eligibility Quick-Set</p>
+
+        {/* Household size */}
+        <div className="space-y-1">
+          <Label htmlFor="hh-size" className="text-[10px]">Household size</Label>
+          <Input
+            id="hh-size"
+            type="number"
+            min={1}
+            max={20}
+            placeholder="e.g. 3"
+            value={hhSize}
+            onChange={(e) => setHhSize(e.target.value)}
+            className="h-7 text-xs"
+          />
+        </div>
+
+        {/* Income slider */}
         <div className="space-y-2">
-          <div>
-            <Label htmlFor="hh-size" className="text-[10px]">Household size</Label>
-            <Input
-              id="hh-size"
-              type="number"
-              min={1}
-              max={20}
-              placeholder="e.g. 3"
-              value={hhSize}
-              onChange={(e) => setHhSize(e.target.value)}
-              className="h-7 text-xs"
-            />
+          <div className="flex items-center justify-between">
+            <Label htmlFor="income-slider" className="text-[10px]">Annual income</Label>
+            <span className="text-xs font-semibold text-foreground">${income.toLocaleString()}</span>
           </div>
-          <div>
-            <Label htmlFor="annual-inc" className="text-[10px]">Annual income ($)</Label>
-            <Input
-              id="annual-inc"
-              type="number"
-              min={0}
-              placeholder="e.g. 32000"
-              value={income}
-              onChange={(e) => setIncome(e.target.value)}
-              className="h-7 text-xs"
-            />
+          <Slider
+            id="income-slider"
+            min={0}
+            max={150000}
+            step={1000}
+            value={[income]}
+            onValueChange={([v]) => setIncome(v)}
+            className="w-full"
+            aria-label="Annual household income"
+          />
+          <div className="flex justify-between text-[9px] text-muted-foreground">
+            <span>$0</span>
+            <span>$75k</span>
+            <span>$150k</span>
           </div>
         </div>
+
+        {/* FPL preview */}
+        <div className="rounded-md bg-muted/50 border border-border p-2 text-center">
+          <p className="text-[10px] text-muted-foreground">Estimated FPL</p>
+          <p className={`text-lg font-bold ${fplPreview <= 138 ? "text-michigan-forest" : fplPreview <= 250 ? "text-michigan-gold" : "text-foreground"}`}>
+            {fplPreview}%
+          </p>
+          <p className="text-[9px] text-muted-foreground mt-0.5">
+            {fplPreview <= 138 ? "Likely Medicaid eligible" : fplPreview <= 250 ? "May qualify for subsidies" : "Above subsidy threshold"}
+          </p>
+        </div>
+
         <div className="flex gap-2">
           <Button size="sm" className="flex-1 h-7 text-[10px]" onClick={handleSave}>
             Apply
@@ -97,7 +138,6 @@ function EligibilityPopover() {
     </Popover>
   );
 }
-
 export default function ContextBar() {
   const { filterLabel, county, setCounty, region, setRegion, audience, setAudience, subPersonas, toggleSubPersona, eligibility, clearEligibility } = useCounty();
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
@@ -171,7 +211,7 @@ export default function ContextBar() {
   // Mobile: collapsed pill
   if (isMobile) {
     return (
-      <div className="border-b border-border/50 bg-muted/30">
+      <div className="sticky top-16 z-40 border-b border-border/50 bg-background/95 backdrop-blur-md">
         <div aria-live="polite" className="sr-only">
           Now showing {announcement} data and services.
         </div>
@@ -240,7 +280,7 @@ export default function ContextBar() {
 
   // Desktop: full bar
   return (
-    <div className="border-b border-border/50 bg-muted/30">
+    <div className="sticky top-16 z-40 border-b border-border/50 bg-background/95 backdrop-blur-md">
       <div aria-live="polite" className="sr-only">
         Now showing {announcement} data and services.
       </div>
