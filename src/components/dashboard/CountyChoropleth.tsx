@@ -233,7 +233,7 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
                         aspectRatio: "1",
                         boxShadow: isHovered
                           ? "0 0 0 2px hsl(var(--primary))"
-                          : highlightCounty && d.name === highlightCounty
+                          : activeHighlight && d.name === activeHighlight
                           ? "0 0 0 3px hsl(var(--primary)), 0 0 8px hsl(var(--primary) / 0.4)"
                           : "none",
                         ...patternStyle,
