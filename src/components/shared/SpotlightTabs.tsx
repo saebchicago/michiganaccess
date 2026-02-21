@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -49,6 +50,21 @@ const ALL_PROGRAMS: SearchableProgram[] = [
   { title: "ADA Paratransit Services", description: "Door-to-door transportation for individuals with disabilities who cannot use fixed-route transit.", eligibility: ["disabilities", "seniors"], url: "https://www.michigan.gov/mdot/travel/public-transit", category: "Transportation" },
   { title: "SMART & DDOT Transit (Metro Detroit)", description: "Regional bus networks serving Wayne, Oakland, and Macomb counties with fixed routes and FAST express service.", eligibility: ["commuters", "families"], url: "https://www.smartbus.org", category: "Transportation", counties: ["Wayne", "Oakland", "Macomb"] },
   { title: "The Rapid (Grand Rapids)", description: "Bus rapid transit and fixed routes serving Kent County including Silver Line and Laker Line services.", eligibility: ["commuters", "families"], url: "https://www.ridetherapid.org", category: "Transportation", counties: ["Kent"] },
+  { title: "MyRide2 Mobility Management", description: "Door-to-door rides for seniors and people with disabilities in Oakland, Macomb, Washtenaw, and Wayne counties via Lyft partnership.", eligibility: ["seniors", "disabilities"], url: "https://myride2.com", category: "Transportation", counties: ["Oakland", "Macomb", "Washtenaw", "Wayne"] },
+  { title: "MTA Flint Your Ride", description: "Personalized demand-response transit for Genesee County residents — curb-to-curb service with advance scheduling.", eligibility: ["all residents"], url: "https://www.mtaflint.org/your-ride", category: "Transportation", counties: ["Genesee"] },
+  { title: "Hope Network Specialized Transportation", description: "Medical, employment, and social rides for individuals with disabilities and barriers to transportation across Michigan.", eligibility: ["disabilities", "job seekers"], url: "https://hopenetwork.org/transportation", category: "Transportation" },
+  { title: "Western Oakland Transportation Authority (WOTA)", description: "Door-to-door demand-response rides prioritizing seniors, persons with disabilities, and veterans in western Oakland County.", eligibility: ["seniors", "disabilities", "veterans"], url: "https://ridewota.org", category: "Transportation", counties: ["Oakland"] },
+  { title: "RideLink (Kent County)", description: "Transportation coordination for seniors 60+ in Kent County connecting to medical appointments and essential services.", eligibility: ["seniors"], url: "https://www.ridetherapid.org/additional-services/ridelink", category: "Transportation", counties: ["Kent"] },
+  { title: "Metro Share (Kalamazoo)", description: "Free ADA-accessible vehicles for agencies serving seniors and persons with disabilities in Kalamazoo, Portage, and Vicksburg.", eligibility: ["seniors", "disabilities"], url: "https://www.kmetro.com/metro-share", category: "Transportation", counties: ["Kalamazoo"] },
+  { title: "Kent County Way 2 Go!", description: "Door-to-door rides for older adults and persons with disabilities throughout Kent County via advance reservation.", eligibility: ["seniors", "disabilities"], url: "https://www.kentcountymi.gov/213/Transportation", category: "Transportation", counties: ["Kent"] },
+  { title: "AgeWays myride2 (SE Michigan)", description: "Mobility management and Lyft partnership for seniors in southeast Michigan connecting to healthcare and community services.", eligibility: ["seniors"], url: "https://ageways.org/senior-services/transportation-for-seniors", category: "Transportation", counties: ["Monroe", "Lenawee", "Hillsdale", "Jackson", "Livingston"] },
+  { title: "Buchanan Dial-A-Ride", description: "Curb-to-curb demand-response transit within Buchanan City and Township in Berrien County.", eligibility: ["all residents"], url: "https://mywaythere.org", category: "Transportation", counties: ["Berrien"] },
+  { title: "Pride Care Medical Transport", description: "Non-emergency medical transportation serving southwest Michigan with wheelchair-accessible vehicles.", eligibility: ["medicaid", "disabilities"], url: "https://pridecare.com", category: "Transportation", counties: ["Berrien", "Cass", "Van Buren", "Kalamazoo"] },
+  { title: "Niles Dial-A-Ride", description: "Demand-response and deviated fixed-route transit in Niles City and Township in Berrien County.", eligibility: ["all residents"], url: "https://www.nilesmi.org/departments_and_divisions/dial_a_ride_transportation/index.php", category: "Transportation", counties: ["Berrien"] },
+  { title: "Greater Niles Senior Center Transport", description: "Medical appointment transportation for seniors in Niles, Buchanan, and South Bend areas.", eligibility: ["seniors"], url: "https://nilesseniorcenter.org", category: "Transportation", counties: ["Berrien", "Cass"] },
+  { title: "Medic 1 Ambulance (Berrien County)", description: "Emergency and non-emergency medical treatment and transport services throughout Berrien County.", eligibility: ["all residents"], url: "https://medic1ambulance.org", category: "Transportation", counties: ["Berrien"] },
+  { title: "Altran Transit Authority (Alger County)", description: "Dial-a-ride public transit serving Alger County in Michigan's Upper Peninsula.", eligibility: ["all residents", "rural"], url: "https://altranbus.com", category: "Transportation", counties: ["Alger"] },
+  { title: "Thunder Bay Transportation Authority", description: "Dial-a-ride transit serving Alcona and Alpena counties in northeast Michigan's rural communities.", eligibility: ["all residents", "rural"], url: "https://thunderbaytransportation.com", category: "Transportation", counties: ["Alcona", "Alpena"] },
   // Energy
   { title: "Michigan Home Energy Rebate (MiHER)", description: "Federal rebates up to $8,000 for home energy efficiency upgrades including insulation, HVAC, and heat pumps.", eligibility: ["homeowners", "families"], url: "https://www.michigan.gov/egle/about/organization/materials-management/energy/mi-home-energy-rebate", category: "Energy" },
   { title: "LIHEAP Heating Assistance", description: "Low-Income Home Energy Assistance Program helps pay heating bills. Apply through your local MDHHS office.", eligibility: ["low-income", "seniors"], url: "https://www.michigan.gov/mdhhs/assistance-programs/energy", category: "Energy" },
@@ -167,7 +183,8 @@ function ProgramCard({ program }: { program: SearchableProgram }) {
   const urgency = program.category === "Disaster Prep" ? "24/7" : program.eligibility.includes("all residents") ? "Open enrollment" : "Apply anytime";
 
   return (
-    <Card className="h-full hover-lift">
+    <Card className="group relative h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20">
+      <div className="absolute left-0 top-0 h-full w-1 bg-primary/0 transition-all duration-300 group-hover:bg-primary" />
       <CardContent className="p-4 space-y-2 flex flex-col h-full">
         {/* Row 1: Category + Availability */}
         <div className="flex items-center justify-between">
@@ -232,8 +249,16 @@ function CategoryGrid({ label, icon: Icon, programs, county }: { label: string; 
         <Badge variant="secondary" className="text-[10px]">{programs.length}</Badge>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((program) => (
-          <ProgramCard key={`${label}-${program.title}`} program={program} />
+        {visible.map((program, i) => (
+          <motion.div
+            key={`${label}-${program.title}`}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ delay: i * 0.06, duration: 0.35 }}
+          >
+            <ProgramCard program={program} />
+          </motion.div>
         ))}
       </div>
       {hasMore && (
