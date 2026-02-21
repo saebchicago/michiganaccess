@@ -20,6 +20,7 @@ import SectionNav from "@/components/home/SectionNav";
 import SuccessStories from "@/components/home/SuccessStories";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
 import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
+import TransportationSafetyCallout from "@/components/home/TransportationSafetyCallout";
 import AudienceSelector from "@/components/home/AudienceSelector";
 import DiscoveryWizard from "@/components/home/DiscoveryWizard";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -66,6 +67,7 @@ const Index = () => {
       <NearbyResourceFinder />
       <SpotlightTabs />
       <CoreAccessGrid />
+      <TransportationSafetyCallout />
 
       {/* ── Layer 4: Data Insights (collapsed by default) ── */}
       <section className="py-6">
