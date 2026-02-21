@@ -19,6 +19,8 @@ export type MichiganCounty = (typeof MICHIGAN_COUNTIES)[number];
 
 export type Audience = "resident" | "health-system" | "policymaker";
 
+export type SubPersona = "caregiver" | "immigrant" | "disabled";
+
 export interface EligibilityProfile {
   householdSize: number | null;
   annualIncome: number | null;
@@ -37,6 +39,9 @@ interface CountyContextValue {
   /** Persona / audience filter */
   audience: Audience | null;
   setAudience: (audience: Audience | null) => void;
+  /** Sub-persona tags (active within Resident persona) */
+  subPersonas: SubPersona[];
+  toggleSubPersona: (sp: SubPersona) => void;
   /** Eligibility profile for FPL-based filtering */
   eligibility: EligibilityProfile;
   setEligibility: (e: Partial<Pick<EligibilityProfile, "householdSize" | "annualIncome">>) => void;
@@ -49,6 +54,7 @@ const STORAGE_KEY = "michigan-access-county";
 const REGION_STORAGE_KEY = "michigan-access-region";
 const AUDIENCE_STORAGE_KEY = "mi-access-audience";
 const ELIGIBILITY_STORAGE_KEY = "mi-access-eligibility";
+const SUBPERSONA_STORAGE_KEY = "mi-access-subpersonas";
 
 /** 2024 Federal Poverty Level base + per-person increment */
 const getFPLThreshold = (householdSize: number): number => {
@@ -98,6 +104,14 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     return { householdSize: null, annualIncome: null };
   });
 
+  const [subPersonas, setSubPersonas] = useState<SubPersona[]>(() => {
+    try {
+      const stored = localStorage.getItem(SUBPERSONA_STORAGE_KEY);
+      if (stored) return JSON.parse(stored);
+    } catch {}
+    return [];
+  });
+
   // Persist county
   useEffect(() => {
     try {
@@ -129,6 +143,13 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, [eligibilityInputs]);
 
+  // Persist sub-personas
+  useEffect(() => {
+    try {
+      localStorage.setItem(SUBPERSONA_STORAGE_KEY, JSON.stringify(subPersonas));
+    } catch {}
+  }, [subPersonas]);
+
   const setCounty = (c: MichiganCounty | null) => {
     setCountyState(c);
     if (c) setRegionState(null);
@@ -141,6 +162,12 @@ export function CountyProvider({ children }: { children: ReactNode }) {
 
   const setAudience = (a: Audience | null) => {
     setAudienceState(a);
+  };
+
+  const toggleSubPersona = (sp: SubPersona) => {
+    setSubPersonas((prev) =>
+      prev.includes(sp) ? prev.filter((s) => s !== sp) : [...prev, sp]
+    );
   };
 
   const setEligibility = (partial: Partial<Pick<EligibilityProfile, "householdSize" | "annualIncome">>) => {
@@ -183,6 +210,7 @@ export function CountyProvider({ children }: { children: ReactNode }) {
         region, setRegion,
         activeCounties, filterLabel,
         audience, setAudience,
+        subPersonas, toggleSubPersona,
         eligibility, setEligibility, clearEligibility,
       }}
     >
