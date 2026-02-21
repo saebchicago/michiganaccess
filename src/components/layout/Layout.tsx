@@ -37,8 +37,8 @@ const Layout = ({ children }: LayoutProps) => (
         {children}
       </motion.main>
     </ErrorBoundary>
-    <Footer />
     <PageFeedback />
+    <Footer />
     <PrintButton />
     <PWAInstallBanner />
     <ScrollToTop />
