@@ -74,6 +74,11 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
   const [metric, setMetric] = useState<Metric>("uninsured");
   const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
   const [typeFilter, setTypeFilter] = useState<"all" | "urban" | "suburban" | "rural">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const activeHighlight = searchQuery
+    ? Object.keys(COUNTY_PROFILES).find(n => n.toLowerCase().startsWith(searchQuery.toLowerCase())) ?? highlightCounty
+    : highlightCounty;
 
   const metricConfig = METRICS.find(m => m.id === metric)!;
 
