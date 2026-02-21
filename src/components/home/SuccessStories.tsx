@@ -54,16 +54,17 @@ const SuccessStories = () => (
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
           >
-            <Card className="h-full hover-lift">
+            <Card className="group relative h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20">
+              <div className="absolute left-0 top-0 h-full w-1 bg-primary/0 transition-all duration-300 group-hover:bg-primary" />
               <CardContent className="py-6 space-y-3">
-                <div className={`inline-flex items-center justify-center rounded-lg p-2.5 ${uc.bg}`}>
+                <div className={`inline-flex items-center justify-center rounded-lg p-2.5 ${uc.bg} transition-transform duration-300 group-hover:scale-110`}>
                   <uc.icon className={`h-6 w-6 ${uc.color}`} />
                 </div>
                 <h3 className="text-sm font-bold text-foreground">{uc.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{uc.description}</p>
                 <Button variant="ghost" size="sm" className="mt-2 w-fit px-0 text-primary hover:bg-transparent" asChild>
                   <Link to={uc.cta.href}>
-                    {uc.cta.label} <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                    {uc.cta.label} <ArrowRight className="ml-1 h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </Button>
               </CardContent>
