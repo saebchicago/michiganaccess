@@ -507,6 +507,7 @@
   },
   "wizard": {
     "cta": "Encontrar Programas para Mí",
+    "title": "Encontrar Programas para Mí",
     "intro": "Responde 3 preguntas rápidas — encontraremos programas adaptados a tu situación. Sin registro. Sin datos almacenados.",
     "stepOf": "Paso {{step}} de 4",
     "seconds": "~60 segundos",
