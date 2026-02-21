@@ -1,553 +1,400 @@
-import { useState, useMemo, useCallback, useEffect, lazy, Suspense } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Search, MapPin, Star, Shield, Heart, Filter, X, Phone, ExternalLink,
-  Wifi, Clock, Users, Award, ChevronDown, Building2, Stethoscope, Activity, Radio
+  Search, MapPin, X, Phone, Stethoscope, Heart, Brain, DollarSign,
+  Filter, ChevronDown, ChevronUp,
 } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
-import { useFacilities, type Facility } from "@/hooks/useFacilities";
-import { useHRSAData } from "@/hooks/useHRSAData";
-import { useCounty } from "@/contexts/CountyContext";
-import { Link } from "react-router-dom";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ProviderDirectory from "@/components/findcare/ProviderDirectory";
-import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
-import CareTeamReminders from "@/components/shared/CareTeamReminders";
-import SpotlightTabs from "@/components/shared/SpotlightTabs";
-import NearbyServicesPrompt from "@/components/shared/NearbyServicesPrompt";
-import ReferralToolkit from "@/components/shared/ReferralToolkit";
-import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import DataTimestamp from "@/components/shared/DataTimestamp";
-import ContentSkeleton from "@/components/shared/ContentSkeleton";
-import EmptyState from "@/components/shared/EmptyState";
-import { ClipboardList, Bell, Map } from "lucide-react";
+import HelpCategoryCombobox from "@/components/findcare/HelpCategoryCombobox";
+import SpecialtyPicker from "@/components/findcare/SpecialtyPicker";
+import NPIResultCard from "@/components/findcare/NPIResultCard";
+import StaticResourceCard from "@/components/findcare/StaticResourceCard";
+import DVSafetyInterstitial from "@/components/findcare/DVSafetyInterstitial";
+import { useNPISearch } from "@/hooks/useNPISearch";
+import { findCategory, type HelpCategory } from "@/data/findhelp-categories";
+import { STATIC_RESOURCES } from "@/data/findhelp-resources";
+import { Link } from "react-router-dom";
 
-const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.05, duration: 0.3 } }),
-};
-
-const facilityTypeLabels: Record<string, string> = {
-  hospital: "Hospital",
-  fqhc: "Community Health Center",
-  urgent_care: "Urgent Care",
-  specialty: "Specialty Center",
-  behavioral_health: "Behavioral Health",
-};
-
-function qualityBadges(f: Facility) {
-  const badges: { label: string; color: string }[] = [];
-  if (f.leapfrog_grade === "A") badges.push({ label: `⭐ Leapfrog A`, color: "bg-michigan-gold/10 text-michigan-gold border-michigan-gold/20" });
-  if (f.is_magnet) badges.push({ label: "🏆 Magnet", color: "bg-primary/10 text-primary border-primary/20" });
-  if (f.is_blue_distinction) badges.push({ label: "💙 Blue Distinction", color: "bg-michigan-sky/10 text-michigan-sky border-michigan-sky/20" });
-  if (f.joint_commission) badges.push({ label: "✓ Joint Commission", color: "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" });
-  return badges;
+/* ── Crisis banner ────────────────────────────── */
+function CrisisBanner() {
+  const [dismissed, setDismissed] = useState(() => sessionStorage.getItem("crisis-banner-dismissed") === "1");
+  if (dismissed) return null;
+  return (
+    <div className="bg-muted border-b border-border px-4 py-2.5">
+      <div className="container flex items-center justify-between gap-3 text-sm">
+        <p className="text-foreground">
+          <strong>Need immediate help?</strong>{" "}
+          <a href="tel:988" className="underline font-semibold">988</a> (crisis) ·{" "}
+          <a href="tel:211" className="underline font-semibold">2-1-1</a> (any need) ·{" "}
+          <a href="tel:911" className="underline font-semibold">911</a> (emergency)
+        </p>
+        <button
+          onClick={() => { setDismissed(true); sessionStorage.setItem("crisis-banner-dismissed", "1"); }}
+          className="shrink-0 rounded-md p-1 hover:bg-muted-foreground/10 transition-colors"
+          aria-label="Dismiss crisis banner"
+        >
+          <X className="h-4 w-4 text-muted-foreground" />
+        </button>
+      </div>
+    </div>
+  );
 }
 
-function qualityColor(score: number | null) {
-  if (!score) return "text-muted-foreground";
-  if (score >= 80) return "text-michigan-gold";
-  if (score >= 70) return "text-michigan-teal";
-  if (score >= 60) return "text-michigan-blue";
-  return "text-muted-foreground";
-}
+/* ── Quick-link cards for initial state ────────── */
+const QUICK_LINKS: { label: string; value: string; icon: typeof Heart; color: string }[] = [
+  { label: "Find a Doctor", value: "doctor", icon: Stethoscope, color: "bg-primary/10 text-primary" },
+  { label: "Mental Health Support", value: "mental-health", icon: Brain, color: "bg-michigan-teal/10 text-michigan-teal" },
+  { label: "Food Assistance", value: "food", icon: Heart, color: "bg-michigan-coral/10 text-michigan-coral" },
+  { label: "Help Paying Bills", value: "financial", icon: DollarSign, color: "bg-michigan-gold/10 text-michigan-gold" },
+];
 
-function compositeScore(f: Facility): number {
-  const qualityWeight = 0.3;
-  const digitalWeight = 0.15;
-  const serviceWeight = 0.15;
-  // quality (0-100)
-  const quality = (f.quality_score || 0);
-  // digital (0-100)
-  const dc = f.digital_capabilities as Record<string, boolean> | null;
-  const digitalFeatures = dc ? Object.values(dc).filter(Boolean).length : 0;
-  const digital = (digitalFeatures / 3) * 100;
-  // services (0-100)
-  const serviceCount = f.services?.length || 0;
-  const service = Math.min(serviceCount / 8, 1) * 100;
-  return Math.round(quality * qualityWeight + digital * digitalWeight + service * serviceWeight);
-}
-
-type SortBy = "composite" | "quality" | "name";
-
+/* ── Main page ────────────────────────────────── */
 export default function FindCarePage() {
-  const { t } = useTranslation();
-  const { county: selectedCounty, region, activeCounties } = useCounty();
   usePageMeta({
-    title: "Find Care Near You",
-    description: "Search Michigan healthcare facilities by location, specialty, quality ratings, and services.",
+    title: "Find Help — Access Michigan",
+    description: "Find doctors, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.",
     path: "/find-care",
     jsonLd: {
       "@type": "MedicalWebPage",
-      "name": "Find Care Near You — Access Michigan",
+      "name": "Find Help — Access Michigan",
       "about": { "@type": "MedicalCondition", "name": "Healthcare Access" },
       "audience": { "@type": "PeopleAudience", "geographicArea": { "@type": "State", "name": "Michigan" } },
-      "specialty": "Primary Care, Behavioral Health, Urgent Care",
     },
   });
-  // Use single county if set, else region counties, else all (undefined)
-  const countyFilter = selectedCounty ? selectedCounty : region ? activeCounties : undefined;
-  const { data: dbFacilities = [], isLoading: dbLoading } = useFacilities(undefined, countyFilter as string | string[] | undefined);
-  const { data: hrsaData, isLoading: hrsaLoading } = useHRSAData("MI", 50);
 
-  // Merge HRSA live FQHCs with DB facilities, deduplicating by name
-  const facilities = useMemo(() => {
-    const dbNames = new Set(dbFacilities.map((f) => f.name.toLowerCase()));
-    const hrsaFacilities: Facility[] = (hrsaData?.results || [])
-      .filter((h) => h.name && h.lat && h.lng && !dbNames.has(h.name.toLowerCase()))
-      .map((h) => ({
-        id: `hrsa-${h.name}-${h.zip}`,
-        name: h.name,
-        address: h.address || "",
-        city: h.city || "",
-        county: "",
-        state: h.state || "MI",
-        zip: h.zip || "",
-        phone: h.phone || null,
-        latitude: h.lat,
-        longitude: h.lng,
-        facility_type: "fqhc",
-        quality_score: null,
-        services: null,
-        specialties: null,
-        languages: null,
-        hours: null,
-        website: null,
-        accepting_new_patients: null,
-        telehealth_available: null,
-        walk_in: null,
-        wheelchair_accessible: null,
-        public_transit: null,
-        insurance_accepted: null,
-        system_affiliation: null,
-        is_magnet: null,
-        is_blue_distinction: null,
-        joint_commission: null,
-        leapfrog_grade: null,
-        digital_capabilities: null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }));
-    return [...dbFacilities, ...hrsaFacilities];
-  }, [dbFacilities, hrsaData]);
+  const [categoryValue, setCategoryValue] = useState("");
+  const [category, setCategory] = useState<HelpCategory | null>(null);
+  const [specialty, setSpecialty] = useState("");
+  const [location, setLocation] = useState("");
+  const [hasSearched, setHasSearched] = useState(false);
 
-  const isLoading = dbLoading;
-  const [search, setSearch] = useState("");
-  const [sortBy, setSortBy] = useState<SortBy>("composite");
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [filterAccepting, setFilterAccepting] = useState(false);
-  const [filterTelehealth, setFilterTelehealth] = useState(false);
-  const [filterWalkIn, setFilterWalkIn] = useState(false);
-  const [compareIds, setCompareIds] = useState<string[]>([]);
-  const [showCompare, setShowCompare] = useState(false);
+  // NPI search
+  const npi = useNPISearch();
 
-  const toggleType = useCallback((type: string) => {
-    setSelectedTypes((prev) => prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]);
-  }, []);
+  // Filters for NPI results
+  const [filterType, setFilterType] = useState<"all" | "individual" | "org">("all");
+  const [filterGender, setFilterGender] = useState<"all" | "F" | "M">("all");
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
-  const toggleCompare = useCallback((id: string) => {
-    setCompareIds((prev) => {
-      if (prev.includes(id)) return prev.filter((i) => i !== id);
-      if (prev.length >= 3) return prev;
-      return [...prev, id];
-    });
-  }, []);
+  const activeFilterCount = useMemo(() => {
+    let c = 0;
+    if (filterType !== "all") c++;
+    if (filterGender !== "all") c++;
+    return c;
+  }, [filterType, filterGender]);
 
-  const filtered = useMemo(() => {
-    let result = [...facilities];
-    if (search) {
-      const q = search.toLowerCase();
-      result = result.filter((f) =>
-        f.name.toLowerCase().includes(q) ||
-        f.city.toLowerCase().includes(q) ||
-        f.county.toLowerCase().includes(q) ||
-        f.specialties?.some((s) => s.toLowerCase().includes(q)) ||
-        f.services?.some((s) => s.toLowerCase().includes(q))
-      );
+  const filteredNPI = useMemo(() => {
+    let r = npi.results;
+    if (filterType === "individual") r = r.filter((p) => !p.isOrganization);
+    if (filterType === "org") r = r.filter((p) => p.isOrganization);
+    if (filterGender !== "all") r = r.filter((p) => p.gender === filterGender);
+    return r;
+  }, [npi.results, filterType, filterGender]);
+
+  const handleCategoryChange = useCallback((val: string, cat: HelpCategory) => {
+    setCategoryValue(val);
+    setCategory(cat);
+    setSpecialty("");
+    setHasSearched(false);
+    npi.reset();
+  }, [npi]);
+
+  const handleQuickLink = useCallback((val: string) => {
+    const cat = findCategory(val);
+    if (cat) {
+      setCategoryValue(val);
+      setCategory(cat);
+      setSpecialty("");
+      setHasSearched(false);
+      npi.reset();
+      // For static categories, show immediately
+      if (cat.mode === "static") {
+        setHasSearched(true);
+      }
     }
-    if (selectedTypes.length > 0) result = result.filter((f) => selectedTypes.includes(f.facility_type));
-    if (filterAccepting) result = result.filter((f) => f.accepting_new_patients);
-    if (filterTelehealth) result = result.filter((f) => f.telehealth_available);
-    if (filterWalkIn) result = result.filter((f) => f.walk_in);
+  }, [npi]);
 
-    result.sort((a, b) => {
-      if (sortBy === "quality") return (b.quality_score || 0) - (a.quality_score || 0);
-      if (sortBy === "name") return a.name.localeCompare(b.name);
-      return compositeScore(b) - compositeScore(a);
-    });
-    return result;
-  }, [facilities, search, selectedTypes, filterAccepting, filterTelehealth, filterWalkIn, sortBy]);
+  const handleSearch = useCallback(() => {
+    if (!category) return;
+    setHasSearched(true);
 
-  const compareList = useMemo(() => facilities.filter((f) => compareIds.includes(f.id)), [facilities, compareIds]);
+    if (category.mode === "npi") {
+      const taxonomies = category.showSpecialtyPicker && specialty
+        ? [specialty]
+        : category.taxonomies || [];
+      npi.search(taxonomies, category.enumerationType || "NPI-1", location);
+    }
+    // Static mode just sets hasSearched=true, cards render instantly
+  }, [category, specialty, location, npi]);
 
+  const clearFilters = useCallback(() => {
+    setFilterType("all");
+    setFilterGender("all");
+  }, []);
+
+  const isInitial = !hasSearched;
+  const isNPIMode = category?.mode === "npi";
+  const isStaticMode = category?.mode === "static";
+  const isDV = categoryValue === "dv";
+  const staticResources = isStaticMode ? STATIC_RESOURCES[categoryValue] || [] : [];
+
+  /* ── Filter sidebar content ── */
   const FiltersContent = () => (
     <div className="space-y-5">
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Facility Type</p>
-        {Object.entries(facilityTypeLabels).map(([key, label]) => (
-          <label key={key} className="flex items-center gap-2 py-1.5 cursor-pointer">
-            <Checkbox checked={selectedTypes.includes(key)} onCheckedChange={() => toggleType(key)} />
-            <span className="text-sm text-foreground">{label}</span>
-          </label>
-        ))}
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Provider Type</p>
+        <label className="flex items-center gap-2 py-1.5 cursor-pointer">
+          <Checkbox checked={filterType === "individual"} onCheckedChange={(c) => setFilterType(c ? "individual" : "all")} />
+          <span className="text-sm">Individual providers (doctors, therapists)</span>
+        </label>
+        <label className="flex items-center gap-2 py-1.5 cursor-pointer">
+          <Checkbox checked={filterType === "org"} onCheckedChange={(c) => setFilterType(c ? "org" : "all")} />
+          <span className="text-sm">Organizations (clinics, hospitals, health centers)</span>
+        </label>
       </div>
       <Separator />
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Availability</p>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Gender</p>
         <label className="flex items-center gap-2 py-1.5 cursor-pointer">
-          <Checkbox checked={filterAccepting} onCheckedChange={(c) => setFilterAccepting(!!c)} />
-          <span className="text-sm">Accepting new patients</span>
+          <Checkbox checked={filterGender === "F"} onCheckedChange={(c) => setFilterGender(c ? "F" : "all")} />
+          <span className="text-sm">Female</span>
         </label>
         <label className="flex items-center gap-2 py-1.5 cursor-pointer">
-          <Checkbox checked={filterTelehealth} onCheckedChange={(c) => setFilterTelehealth(!!c)} />
-          <span className="text-sm">Telehealth available</span>
-        </label>
-        <label className="flex items-center gap-2 py-1.5 cursor-pointer">
-          <Checkbox checked={filterWalkIn} onCheckedChange={(c) => setFilterWalkIn(!!c)} />
-          <span className="text-sm">Walk-in / No appointment</span>
+          <Checkbox checked={filterGender === "M"} onCheckedChange={(c) => setFilterGender(c ? "M" : "all")} />
+          <span className="text-sm">Male</span>
         </label>
       </div>
+      {activeFilterCount > 0 && (
+        <>
+          <Separator />
+          <button onClick={clearFilters} className="text-sm text-primary hover:underline">Clear filters</button>
+        </>
+      )}
     </div>
   );
 
   return (
     <Layout>
-      {/* County context banner — above hero for immediate visibility */}
-      {selectedCounty && (
-        <div className="bg-primary/10 border-b border-primary/20 px-4 py-2.5">
-          <div className="container flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 text-sm">
-              <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-              <span className="text-foreground">
-                Showing facilities for <strong>{selectedCounty} County</strong>.
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-      <div className="container pt-6">
-        <Breadcrumbs items={[{ label: "Find Care" }]} />
+      <CrisisBanner />
+
+      <div className="container pt-4">
+        <Breadcrumbs items={[{ label: "Find Help" }]} />
       </div>
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-primary/5 to-background py-10 lg:py-16">
-        <div className="container max-w-4xl text-center">
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-3 text-3xl font-bold text-foreground lg:text-5xl">
-              {t('findCare.title')}
-            </motion.h1>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              {t('findCare.subtitle')}
-            </motion.p>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mx-auto mt-6 max-w-xl">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+
+      {/* ── Hero Search ── */}
+      <section className="bg-gradient-to-b from-primary/5 to-background py-8 lg:py-12">
+        <div className="container max-w-3xl">
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-2 text-3xl font-bold text-foreground lg:text-4xl text-center"
+          >
+            Find Help
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="mx-auto max-w-xl text-center text-muted-foreground mb-6"
+          >
+            Find doctors, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="space-y-3"
+          >
+            {/* Category combobox */}
+            <HelpCategoryCombobox value={categoryValue} onChange={handleCategoryChange} />
+
+            {/* Specialty picker — only for doctor category */}
+            <AnimatePresence>
+              {category?.showSpecialtyPicker && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <SpecialtyPicker value={specialty} onChange={setSpecialty} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Location input + search button */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="relative flex-1">
+                <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
-                  placeholder={t('findCare.searchPlaceholder')}
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="h-12 pl-12 text-base shadow-michigan"
+                  placeholder="City, ZIP code, or county"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="h-12 pl-10 text-base"
+                  aria-label="Where in Michigan?"
+                  onKeyDown={(e) => { if (e.key === "Enter") handleSearch(); }}
                 />
               </div>
-            </motion.div>
+              <Button
+                onClick={handleSearch}
+                disabled={!category}
+                className="h-12 px-8 text-base font-semibold sm:w-auto w-full"
+                size="lg"
+              >
+                <Search className="mr-2 h-4 w-4" />
+                Find Help
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* 211 callout */}
+          <p className="mt-4 text-center text-sm text-muted-foreground">
+            Or call{" "}
+            <a href="tel:211" className="font-bold text-primary underline">2-1-1</a>{" "}
+            — free, confidential help 24/7
+          </p>
         </div>
       </section>
 
+      {/* ── Results area ── */}
       <div className="container py-8">
-         <Tabs defaultValue="facilities" className="mb-6">
-          <TabsList>
-            <TabsTrigger value="facilities"><Building2 className="mr-1.5 h-4 w-4" />{t('findCare.facilities')}</TabsTrigger>
-            <TabsTrigger value="providers"><Stethoscope className="mr-1.5 h-4 w-4" />{t('findCare.providers')}</TabsTrigger>
-            <TabsTrigger value="map"><Map className="mr-1.5 h-4 w-4" />Map View</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="map" className="mt-4">
-            <Suspense fallback={<div className="h-[500px] rounded-lg bg-muted animate-pulse" />}>
-              <EmbeddedMap facilities={facilities} county={selectedCounty} height="500px" />
-            </Suspense>
-          </TabsContent>
-
-          <TabsContent value="providers" className="mt-4">
-            <ProviderDirectory facilities={facilities} />
-          </TabsContent>
-
-          <TabsContent value="facilities" className="mt-4">
-        <div className="flex gap-8">
-          {/* Desktop Sidebar */}
-          <aside className="hidden w-64 flex-shrink-0 lg:block">
-            <div className="sticky top-20 space-y-4">
-              <h3 className="text-sm font-bold text-foreground">{t('findCare.filters')}</h3>
-              <FiltersContent />
-              <Separator />
-              <Link to="/about#methodology" className="flex items-center gap-1.5 text-xs text-primary hover:underline">
-                <Shield className="h-3.5 w-3.5" /> How we rank results
-              </Link>
+        {/* Initial state — quick link cards */}
+        {isInitial && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="max-w-3xl mx-auto"
+          >
+            <p className="text-sm font-medium text-muted-foreground mb-4 text-center">Common needs:</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {QUICK_LINKS.map((ql) => (
+                <button
+                  key={ql.value}
+                  onClick={() => handleQuickLink(ql.value)}
+                  className="group flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center transition-all hover:border-primary/30 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${ql.color} transition-transform group-hover:scale-110`}>
+                    <ql.icon className="h-5 w-5" />
+                  </div>
+                  <span className="text-sm font-medium text-foreground">{ql.label}</span>
+                </button>
+              ))}
             </div>
-          </aside>
+          </motion.div>
+        )}
 
-          {/* Results */}
-          <div className="flex-1 min-w-0">
-            {/* Controls bar */}
-            <div className="mb-4 flex items-center justify-between flex-wrap gap-3">
-              <div className="flex items-center gap-3">
+        {/* NPI loading state */}
+        {isNPIMode && npi.isLoading && (
+          <div className="max-w-3xl mx-auto" aria-live="polite">
+            <p className="text-sm text-muted-foreground mb-4">Searching providers across Michigan…</p>
+            <div className="space-y-3">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-32 rounded-lg bg-muted animate-pulse" />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* NPI error */}
+        {isNPIMode && npi.error && (
+          <div className="max-w-3xl mx-auto text-center py-12" role="alert">
+            <p className="text-muted-foreground mb-4">{npi.error}</p>
+            <Button variant="outline" onClick={handleSearch}>Try Again</Button>
+          </div>
+        )}
+
+        {/* NPI results */}
+        {isNPIMode && npi.searched && !npi.isLoading && !npi.error && (
+          <div className="flex gap-8">
+            {/* Desktop filter sidebar */}
+            <aside className="hidden lg:block w-56 shrink-0">
+              <div className="sticky top-20 space-y-4">
+                <h3 className="text-sm font-bold text-foreground">Narrow Your Results</h3>
+                <FiltersContent />
+              </div>
+            </aside>
+
+            <div className="flex-1 min-w-0">
+              {/* Results header */}
+              <div className="mb-4 flex items-center justify-between flex-wrap gap-3" aria-live="polite">
                 <p className="text-sm text-muted-foreground">
-                  <strong className="text-foreground">{filtered.length}</strong> {t('findCare.facilitiesCount')}
+                  Showing <strong className="text-foreground">{filteredNPI.length}</strong> providers
+                  {location && <> near <strong className="text-foreground">{location}</strong></>}
                 </p>
-                <DataTimestamp table="facilities" />
-                {hrsaData && hrsaData.count > 0 && (
-                  <Badge variant="outline" className="text-[10px] border-michigan-teal/30 text-michigan-teal">
-                    <Radio className="mr-1 h-3 w-3" /> +{hrsaData.count} live HRSA
-                  </Badge>
-                )}
-                {/* Mobile filter */}
+                {/* Mobile filter trigger */}
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button size="sm" variant="outline" className="lg:hidden">
-                      <Filter className="mr-1.5 h-4 w-4" /> {t('findCare.filters')}
+                      <Filter className="mr-1.5 h-4 w-4" />
+                      Filters{activeFilterCount > 0 ? ` (${activeFilterCount})` : ""}
                     </Button>
                   </SheetTrigger>
-                  <SheetContent side="left" className="w-80 overflow-y-auto">
-                    <SheetTitle>{t('findCare.filters')}</SheetTitle>
-                    <div className="mt-4">
+                  <SheetContent side="bottom" className="rounded-t-2xl">
+                    <SheetTitle>Narrow Your Results</SheetTitle>
+                    <div className="mt-4 pb-6">
                       <FiltersContent />
                     </div>
                   </SheetContent>
                 </Sheet>
               </div>
-              <div className="flex items-center gap-3">
-                {compareIds.length > 0 && (
-                  <Button size="sm" variant="secondary" onClick={() => setShowCompare(!showCompare)}>
-                    Compare ({compareIds.length}/3)
-                  </Button>
-                )}
-                <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortBy)}>
-                  <SelectTrigger className="w-44"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="composite">{t('findCare.bestMatch')}</SelectItem>
-                    <SelectItem value="quality">{t('findCare.qualityScore')}</SelectItem>
-                    <SelectItem value="name">{t('findCare.nameAZ')}</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
 
-            {/* Comparison panel */}
-            <AnimatePresence>
-              {showCompare && compareList.length > 0 && (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="mb-6 overflow-hidden">
-                  <Card className="border-primary/20">
-                    <CardContent className="py-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-semibold text-foreground">{t('findCare.comparison')}</h3>
-                        <Button size="sm" variant="ghost" onClick={() => { setCompareIds([]); setShowCompare(false); }}>
-                          <X className="h-4 w-4 mr-1" /> {t('findCare.clear')}
-                        </Button>
-                      </div>
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                          <thead>
-                            <tr className="border-b">
-                              <th className="py-2 text-left text-xs text-muted-foreground">{t('findCare.metric')}</th>
-                              {compareList.map((f) => (
-                                <th key={f.id} className="py-2 text-left text-xs font-semibold text-foreground max-w-[200px] truncate">{f.name}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {[
-                              { label: "Quality Score", fn: (f: Facility) => `${f.quality_score || "N/A"}/100` },
-                              { label: "Leapfrog Grade", fn: (f: Facility) => f.leapfrog_grade || "N/A" },
-                              { label: "Magnet", fn: (f: Facility) => f.is_magnet ? "Yes ✓" : "No" },
-                              { label: "Telehealth", fn: (f: Facility) => f.telehealth_available ? "Yes ✓" : "No" },
-                              { label: "Walk-In", fn: (f: Facility) => f.walk_in ? "Yes ✓" : "No" },
-                              { label: "Services", fn: (f: Facility) => `${f.services?.length || 0} available` },
-                              { label: "Specialties", fn: (f: Facility) => f.specialties?.join(", ") || "N/A" },
-                            ].map((row) => (
-                              <tr key={row.label} className="border-b border-border/50">
-                                <td className="py-2 text-xs text-muted-foreground">{row.label}</td>
-                                {compareList.map((f) => (
-                                  <td key={f.id} className="py-2 text-xs text-foreground">{row.fn(f)}</td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+              {filteredNPI.length === 0 ? (
+                <div className="py-12 text-center space-y-3">
+                  <p className="text-muted-foreground">
+                    No results found{specialty && <> for <strong>{specialty}</strong></>}{location && <> near <strong>{location}</strong></>}.
+                  </p>
+                  <div className="text-sm text-muted-foreground space-y-1">
+                    <p>• Try a nearby city or ZIP code</p>
+                    <p>• Try a broader specialty (e.g., "Internal Medicine" instead of "Endocrinology")</p>
+                    <p>• Call <a href="tel:211" className="text-primary underline font-semibold">2-1-1</a> — a real person can help you find care, free and confidential</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid gap-3 md:grid-cols-2">
+                  {filteredNPI.map((p, i) => (
+                    <NPIResultCard key={p.npi} provider={p} index={i} />
+                  ))}
+                </div>
               )}
-            </AnimatePresence>
-
-            {/* Facility Cards */}
-            {isLoading ? (
-              <ContentSkeleton variant="rows" count={6} />
-            ) : filtered.length === 0 ? (
-              <EmptyState
-                onReset={() => { setSearch(""); setSelectedTypes([]); setFilterAccepting(false); setFilterTelehealth(false); setFilterWalkIn(false); }}
-              />
-            ) : (
-              <div className="space-y-4">
-                {filtered.map((f, i) => {
-                  const badges = qualityBadges(f);
-                  const dc = f.digital_capabilities as Record<string, boolean> | null;
-                  const isFqhc = f.facility_type === "fqhc";
-                  const isCompared = compareIds.includes(f.id);
-                  return (
-                    <motion.div key={f.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i % 10}>
-                      <Card className={`hover-lift ${isCompared ? "ring-2 ring-primary" : ""}`}>
-                        <CardContent className="py-4">
-                          <div className="flex items-start gap-4">
-                            {/* Score circle */}
-                            <div className="hidden sm:flex flex-col items-center">
-                              <div className={`flex h-14 w-14 items-center justify-center rounded-full border-2 ${f.quality_score && f.quality_score >= 80 ? "border-michigan-gold bg-michigan-gold/5" : f.quality_score && f.quality_score >= 70 ? "border-michigan-teal bg-michigan-teal/5" : "border-border bg-muted/50"}`}>
-                                <span className={`text-lg font-bold ${qualityColor(f.quality_score)}`}>{f.quality_score || "—"}</span>
-                              </div>
-                              <span className="mt-1 text-[9px] text-muted-foreground">Quality</span>
-                            </div>
-
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-start justify-between gap-2">
-                                <div>
-                                  <div className="flex items-center gap-2 flex-wrap">
-                                    <h3 className="font-semibold text-foreground">{f.name}</h3>
-                                    <Badge variant="outline" className="text-[10px]">{facilityTypeLabels[f.facility_type] || f.facility_type}</Badge>
-                                  </div>
-                                  <p className="text-xs text-muted-foreground mt-0.5">
-                                    <MapPin className="mr-1 inline h-3 w-3" />{f.address}, {f.city}, {f.state} {f.zip} · {f.county} County
-                                  </p>
-                                </div>
-                                <Checkbox
-                                  checked={isCompared}
-                                  onCheckedChange={() => toggleCompare(f.id)}
-                                  disabled={!isCompared && compareIds.length >= 3}
-                                  className="mt-1"
-                                  aria-label="Add to compare"
-                                />
-                              </div>
-
-                              {/* Badges */}
-                              {(badges.length > 0 || isFqhc) && (
-                                <div className="mt-2 flex flex-wrap gap-1.5">
-                                  {isFqhc && (
-                                    <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">
-                                      ✅ No one turned away
-                                    </Badge>
-                                  )}
-                                  {badges.map((b) => (
-                                    <Badge key={b.label} className={`${b.color} text-[10px]`}>{b.label}</Badge>
-                                  ))}
-                                  {f.services && f.services.length >= 6 && (
-                                    <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">🏥 Comprehensive care</Badge>
-                                  )}
-                                </div>
-                              )}
-
-                              {/* Quick info */}
-                              <div className="mt-2 flex flex-wrap gap-3 text-xs text-muted-foreground">
-                                {f.accepting_new_patients && <span className="flex items-center gap-1"><Users className="h-3 w-3" /> Accepting patients</span>}
-                                {f.telehealth_available && <span className="flex items-center gap-1"><Wifi className="h-3 w-3" /> Telehealth</span>}
-                                {f.walk_in && <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> Walk-in</span>}
-                                {dc?.patient_portal && <span className="flex items-center gap-1"><Activity className="h-3 w-3" /> Portal</span>}
-                                {f.system_affiliation && <span className="flex items-center gap-1"><Building2 className="h-3 w-3" /> {f.system_affiliation}</span>}
-                              </div>
-
-                              {/* Specialties */}
-                              {f.specialties && f.specialties.length > 0 && (
-                                <div className="mt-2 flex flex-wrap gap-1">
-                                  {f.specialties.slice(0, 5).map((s) => (
-                                    <Badge key={s} variant="secondary" className="text-[10px]">{s}</Badge>
-                                  ))}
-                                  {f.specialties.length > 5 && (
-                                    <Badge variant="secondary" className="text-[10px]">+{f.specialties.length - 5} more</Badge>
-                                  )}
-                                </div>
-                              )}
-
-                              {/* Actions */}
-                              <div className="mt-3 flex flex-wrap gap-2">
-                                <a
-                                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${f.address}, ${f.city}, ${f.state} ${f.zip}`)}`}
-                                  target="_blank"
-                                  rel="noopener"
-                                >
-                                  <Button size="sm" variant="default" className="h-8 text-xs">
-                                    <MapPin className="mr-1 h-3 w-3" /> Get Directions
-                                  </Button>
-                                </a>
-                                {f.phone && (
-                                  <a href={`tel:${f.phone}`}>
-                                    <Button size="sm" variant="outline" className="h-8 text-xs">
-                                      <Phone className="mr-1 h-3 w-3" /> {f.phone}
-                                    </Button>
-                                  </a>
-                                )}
-                                {f.website && (
-                                  <a href={f.website} target="_blank" rel="noopener">
-                                    <Button size="sm" variant="outline" className="h-8 text-xs">
-                                      <ExternalLink className="mr-1 h-3 w-3" /> Website
-                                    </Button>
-                                  </a>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            )}
+            </div>
           </div>
-        </div>
-          </TabsContent>
-        </Tabs>
+        )}
 
-        {/* Community SDOH Resources */}
-        <SpotlightTabs />
+        {/* Static resource cards */}
+        {isStaticMode && hasSearched && (
+          <div className="max-w-3xl mx-auto space-y-4">
+            {/* DV safety interstitial */}
+            {isDV && <DVSafetyInterstitial />}
 
-        {/* Prep Tools */}
-        <NearbyServicesPrompt className="mt-6" />
-
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <ClipboardList className="h-5 w-5 text-primary" />
-              Prepare for Your Visit
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Get ready before your appointment. Download a checklist to bring with you.
-            </p>
-            <VisitPrepChecklist
-              trigger={
-                <Button variant="outline">
-                  <ClipboardList className="h-4 w-4" />
-                  Open Visit Prep Checklist
-                </Button>
-              }
-            />
+            <div className="grid gap-3 md:grid-cols-2">
+              {staticResources.map((r, i) => (
+                <StaticResourceCard key={r.name} resource={r} index={i} />
+              ))}
+            </div>
           </div>
-          <CareTeamReminders />
-        </div>
-
-        <NearbyResourceFinder />
-
-        <div className="mt-8">
-          <ReferralToolkit pageTitle="Find Care Near You" />
-        </div>
+        )}
       </div>
+
+      {/* ── Disclaimer ── */}
+      {hasSearched && (
+        <div className="container pb-10">
+          <Separator className="mb-6" />
+          <p className="text-xs text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Provider data from the CMS National Provider Registry (NPPES), updated monthly. Listings may not reflect current availability or insurance acceptance. Always call to verify. Community resource links are maintained by their respective organizations. This site does not collect or store your search information.
+          </p>
+        </div>
+      )}
     </Layout>
   );
 }

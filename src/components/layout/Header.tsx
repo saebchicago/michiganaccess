@@ -40,7 +40,7 @@ const Header = () => {
     {
       label: t("nav.findHelp"),
       children: [
-        { label: t("nav.findCare"), href: "/find-care" },
+        { label: "Find Help", href: "/find-care" },
         { label: t("nav.communityResources"), href: "/resources" },
         { label: t("nav.financialHelp"), href: "/financial-help" },
         { label: t("nav.transportation"), href: "/transportation" },
