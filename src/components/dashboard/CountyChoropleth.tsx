@@ -1,10 +1,11 @@
 import { useState, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MapPin, Download, Filter, ArrowRight, Info } from "lucide-react";
+import { MapPin, Download, Filter, ArrowRight, Info, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { COUNTY_PROFILES, getCountyProfile, type CountyProfile } from "@/data/michigan-county-profiles";
