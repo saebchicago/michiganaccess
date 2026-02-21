@@ -645,36 +645,130 @@ export default function TransportationPage() {
 
             {/* Safety Checklist — on safety tab */}
             {activeTab === "safety" && (
-              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <CheckCircle2 className="h-5 w-5 text-michigan-forest" />
-                      Parent & Caregiver Bus Safety Checklist
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
-                      {safetyChecklist.map((item, i) => (
-                        <motion.li
-                          key={i}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                          variants={fadeUp}
-                          custom={i}
-                          className="flex gap-3 items-start"
-                        >
-                          <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-michigan-forest/10">
-                            <item.icon className="h-3.5 w-3.5 text-michigan-forest" />
+              <>
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-lg">
+                        <CheckCircle2 className="h-5 w-5 text-michigan-forest" />
+                        Parent & Caregiver Bus Safety Checklist
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-3">
+                        {safetyChecklist.map((item, i) => (
+                          <motion.li
+                            key={i}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            variants={fadeUp}
+                            custom={i}
+                            className="flex gap-3 items-start"
+                          >
+                            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-michigan-forest/10">
+                              <item.icon className="h-3.5 w-3.5 text-michigan-forest" />
+                            </div>
+                            <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                {/* Transportation Safety — MDOT Tips & BusPatrol Integration */}
+                <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+                  <Card className="border-michigan-coral/20">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-lg">
+                        <ShieldCheck className="h-5 w-5 text-michigan-coral" />
+                        Transportation Safety
+                      </CardTitle>
+                      <p className="text-xs text-muted-foreground">School bus safety guidance sourced from MDOT and partner integration resources</p>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      {/* MDOT School Bus Safety Tips */}
+                      <div>
+                        <h4 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
+                          <GraduationCap className="h-4 w-4 text-michigan-forest" />
+                          MDOT School Bus Safety Tips
+                        </h4>
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {[
+                            { tip: "Arrive at the bus stop 5 minutes early. Never chase a moving bus.", icon: Bus },
+                            { tip: "Wait until the bus stops completely and the door opens before approaching.", icon: Eye },
+                            { tip: "Cross the street at least 10 feet in front of the bus where the driver can see you.", icon: Users },
+                            { tip: "Never walk behind a school bus — drivers cannot see you.", icon: AlertTriangle },
+                            { tip: "Use handrails when boarding and exiting. Watch for drawstrings or loose straps.", icon: CheckCircle2 },
+                            { tip: "If you drop something near the bus, tell the driver instead of picking it up yourself.", icon: ShieldCheck },
+                          ].map((item, i) => (
+                            <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} className="flex gap-2.5 items-start rounded-lg border border-border p-3 bg-muted/20">
+                              <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded bg-michigan-forest/10">
+                                <item.icon className="h-3 w-3 text-michigan-forest" />
+                              </div>
+                              <p className="text-xs text-muted-foreground leading-relaxed">{item.tip}</p>
+                            </motion.div>
+                          ))}
+                        </div>
+                        <p className="text-[10px] text-muted-foreground mt-3">
+                          Source: <a href="https://www.michigan.gov/mdot/travel/safety/school-bus-safety" target="_blank" rel="noopener noreferrer" className="text-primary underline">MDOT School Bus Safety</a> · <a href="https://www.michigan.gov/mde/services/pupil-transportation" target="_blank" rel="noopener noreferrer" className="text-primary underline">MDE Pupil Transportation</a>
+                        </p>
+                      </div>
+
+                      {/* BusPatrol Integration for Partners */}
+                      <div className="border-t border-border pt-5">
+                        <h4 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
+                          <Camera className="h-4 w-4 text-michigan-coral" />
+                          BusPatrol Integration — Partner Guidance
+                        </h4>
+                        <div className="rounded-lg border border-michigan-coral/15 bg-michigan-coral/5 p-4 space-y-3">
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            <strong className="text-foreground">BusPatrol</strong> provides AI-powered stop-arm camera systems that automatically detect and cite drivers who illegally pass stopped school buses. Michigan districts like <strong>Dearborn</strong> have seen up to a <strong>71% reduction</strong> in stop-arm violations after deployment.
+                          </p>
+                          <Accordion type="single" collapsible>
+                            <AccordionItem value="integration">
+                              <AccordionTrigger className="text-xs font-semibold py-2">How Districts & Partners Can Integrate</AccordionTrigger>
+                              <AccordionContent className="text-xs text-muted-foreground space-y-2">
+                                <ul className="list-disc ml-4 space-y-1.5">
+                                  <li><strong>School districts:</strong> Contact BusPatrol to schedule a no-cost pilot program. Cameras install on existing buses with no upfront cost to the district.</li>
+                                  <li><strong>Law enforcement:</strong> Partner with BusPatrol to review AI-flagged violations and issue civil citations automatically, reducing officer workload.</li>
+                                  <li><strong>Municipal governments:</strong> Pass local ordinances enabling stop-arm camera enforcement (authorized under Michigan MCL 257.682).</li>
+                                  <li><strong>Public interest firms:</strong> Use Access Michigan's stop-arm data and violation trends to support safety advocacy, grant applications, and community education campaigns.</li>
+                                </ul>
+                              </AccordionContent>
+                            </AccordionItem>
+                            <AccordionItem value="data">
+                              <AccordionTrigger className="text-xs font-semibold py-2">Available Data & Metrics</AccordionTrigger>
+                              <AccordionContent className="text-xs text-muted-foreground space-y-2">
+                                <ul className="list-disc ml-4 space-y-1.5">
+                                  <li>Stop-arm violation counts by county (see Data & Trends tab)</li>
+                                  <li>Before/after violation reduction rates for camera-equipped districts</li>
+                                  <li>NHTSA FARS crash fatality data for Michigan counties</li>
+                                  <li>Senior transportation gap analysis by region</li>
+                                </ul>
+                                <p className="mt-2">All data is available for CSV export in the <strong>Data & Trends</strong> tab above.</p>
+                              </AccordionContent>
+                            </AccordionItem>
+                          </Accordion>
+                          <div className="flex gap-2 flex-wrap pt-1">
+                            <a href="https://www.buspatrol.com" target="_blank" rel="noopener noreferrer">
+                              <Button size="sm" variant="outline" className="h-7 text-xs">
+                                <ExternalLink className="mr-1 h-3 w-3" />BusPatrol.com
+                              </Button>
+                            </a>
+                            <a href="https://www.michigan.gov/mde/services/pupil-transportation" target="_blank" rel="noopener noreferrer">
+                              <Button size="sm" variant="outline" className="h-7 text-xs">
+                                <ExternalLink className="mr-1 h-3 w-3" />MDE Pupil Transportation
+                              </Button>
+                            </a>
                           </div>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{item.text}</p>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </>
             )}
           </TabsContent>
 
