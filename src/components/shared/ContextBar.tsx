@@ -18,6 +18,12 @@ const AUDIENCE_LABELS: Record<string, string> = {
   policymaker: "Policymaker",
 };
 
+const SUB_PERSONA_LABELS: Record<string, string> = {
+  caregiver: "Caregiver",
+  immigrant: "Immigrant",
+  disabled: "Disability",
+};
+
 function EligibilityPopover() {
   const { eligibility, setEligibility, clearEligibility } = useCounty();
   const [open, setOpen] = useState(false);
@@ -93,7 +99,7 @@ function EligibilityPopover() {
 }
 
 export default function ContextBar() {
-  const { filterLabel, county, setCounty, region, setRegion, audience, setAudience, eligibility, clearEligibility } = useCounty();
+  const { filterLabel, county, setCounty, region, setRegion, audience, setAudience, subPersonas, toggleSubPersona, eligibility, clearEligibility } = useCounty();
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState(false);
   const isMobile = useIsMobile();
@@ -145,10 +151,20 @@ export default function ContextBar() {
     </Badge>
   ) : null;
 
+  const subPersonaChips = subPersonas.length > 0 ? subPersonas.map((sp) => (
+    <Badge key={sp} variant="secondary" className="text-[10px] gap-1 py-0 h-5 font-normal">
+      {SUB_PERSONA_LABELS[sp]}
+      <button onClick={() => toggleSubPersona(sp)} aria-label={`Remove ${SUB_PERSONA_LABELS[sp]} filter`} className="ml-0.5 hover:text-destructive">
+        <X className="h-2 w-2" />
+      </button>
+    </Badge>
+  )) : null;
+
   // Aria-live announcement
   const announcement = [
     county ? `${county} County` : region ? `${region.name} region` : "All Michigan",
     audience ? `for ${AUDIENCE_LABELS[audience]}s` : "",
+    subPersonas.length > 0 ? `as ${subPersonas.map(sp => SUB_PERSONA_LABELS[sp]).join(", ")}` : "",
     eligibility.fplPercent ? `at ${eligibility.fplPercent}% FPL` : "",
   ].filter(Boolean).join(" ");
 
@@ -170,6 +186,7 @@ export default function ContextBar() {
             <MapPin className="h-3 w-3 shrink-0" aria-hidden="true" />
             <span className="font-medium text-foreground truncate">{filterLabel}</span>
             {audienceChip}
+            {subPersonaChips}
             {eligibilityChip}
             <span className="text-primary text-[10px]">Change</span>
             <ChevronDown className="h-2.5 w-2.5 ml-auto" />
@@ -198,6 +215,7 @@ export default function ContextBar() {
               )}
             </div>
             {audienceChip}
+            {subPersonaChips}
             {eligibilityChip}
             {lastUpdated && (
               <>
@@ -254,8 +272,9 @@ export default function ContextBar() {
           )}
         </div>
 
-        {/* Persona & Eligibility chips */}
+        {/* Persona, Sub-persona & Eligibility chips */}
         {audienceChip}
+        {subPersonaChips}
         {eligibilityChip}
         {!eligibility.fplPercent && <EligibilityPopover />}
 

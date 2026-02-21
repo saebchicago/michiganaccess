@@ -3,7 +3,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, MapPin, X, Phone, Stethoscope, Heart, Brain, DollarSign,
-  Filter, ChevronDown, ChevronUp,
+  Filter, ChevronDown, ChevronUp, Accessibility,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -83,14 +83,16 @@ export default function FindCarePage() {
   // Filters for NPI results
   const [filterType, setFilterType] = useState<"all" | "individual" | "org">("all");
   const [filterGender, setFilterGender] = useState<"all" | "F" | "M">("all");
+  const [filterADA, setFilterADA] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const activeFilterCount = useMemo(() => {
     let c = 0;
     if (filterType !== "all") c++;
     if (filterGender !== "all") c++;
+    if (filterADA) c++;
     return c;
-  }, [filterType, filterGender]);
+  }, [filterType, filterGender, filterADA]);
 
   const filteredNPI = useMemo(() => {
     let r = npi.results;
@@ -139,6 +141,7 @@ export default function FindCarePage() {
   const clearFilters = useCallback(() => {
     setFilterType("all");
     setFilterGender("all");
+    setFilterADA(false);
   }, []);
 
   const isInitial = !hasSearched;
@@ -171,6 +174,16 @@ export default function FindCarePage() {
         <label className="flex items-center gap-2 py-1.5 cursor-pointer">
           <Checkbox checked={filterGender === "M"} onCheckedChange={(c) => setFilterGender(c ? "M" : "all")} />
           <span className="text-sm">Male</span>
+        </label>
+      </div>
+      <Separator />
+      <div>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+          <Accessibility className="h-3 w-3" /> Accessibility
+        </p>
+        <label className="flex items-center gap-2 py-1.5 cursor-pointer">
+          <Checkbox checked={filterADA} onCheckedChange={(c) => setFilterADA(!!c)} />
+          <span className="text-sm">ADA / Wheelchair Accessible</span>
         </label>
       </div>
       {activeFilterCount > 0 && (

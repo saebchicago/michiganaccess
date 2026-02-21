@@ -85,7 +85,7 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
   const [situation, setSituation] = useState<string | null>(null);
   const [hhSize, setHhSize] = useState(eligibility.householdSize ?? 1);
   const [income, setIncome] = useState(eligibility.annualIncome ?? 30000);
-  const [selectedCounty, setSelectedCounty] = useState<string>(county ?? "");
+  const [selectedCounty, setSelectedCounty] = useState<string>(county ?? "Oakland");
   const [saved, setSaved] = useState(false);
 
   const fplPct = useMemo(() => Math.round((income / getFPL(hhSize)) * 100), [income, hhSize]);
@@ -106,7 +106,7 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
     setSituation(null);
     setHhSize(eligibility.householdSize ?? 1);
     setIncome(eligibility.annualIncome ?? 30000);
-    setSelectedCounty(county ?? "");
+    setSelectedCounty(county ?? "Oakland");
     setSaved(false);
   };
 
