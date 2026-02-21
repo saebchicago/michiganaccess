@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, Heart, ChevronDown, Download, LogOut, Sparkles, Search } from "lucide-react";
+import { Menu, Heart, ChevronDown, Download, Sparkles, Search } from "lucide-react";
 import BenefitsWizard from "@/components/home/BenefitsWizard";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -18,22 +18,7 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [wizardOpen, setWizardOpen] = useState(false);
 
-  const handleQuickExit = () => {
-    window.location.replace("https://www.weather.com");
-  };
-
-  // Escape key triggers Quick Exit for safety
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !e.ctrlKey && !e.altKey && !e.metaKey) {
-        const tag = (e.target as HTMLElement)?.tagName;
-        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-        handleQuickExit();
-      }
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, []);
+  // Quick Exit is now handled by QuickExitBar component
 
   /* Simplified to 4 top-level items */
   const navLinks = [
@@ -145,17 +130,7 @@ const Header = () => {
             <a href="tel:988">{t("getHelp")}</a>
           </Button>
 
-          {/* Quick Exit */}
-          <Button
-            size="sm"
-            onClick={handleQuickExit}
-            className="hidden sm:flex bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-full px-3 gap-1.5 text-xs font-semibold shadow-sm"
-            aria-label="Quick exit — leave this site immediately"
-            title="Leave this site immediately"
-          >
-            <LogOut className="h-3.5 w-3.5" />
-            Quick Exit
-          </Button>
+          {/* Quick Exit moved to QuickExitBar in Layout */}
 
           {/* Mobile menu */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -168,13 +143,7 @@ const Header = () => {
             <SheetContent side="right" className="w-80 overflow-y-auto">
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <div className="mt-6 flex flex-col gap-1">
-                <Button
-                  onClick={handleQuickExit}
-                  className="mb-3 bg-destructive hover:bg-destructive/90 text-destructive-foreground rounded-full gap-1.5 text-xs font-semibold"
-                >
-                  <LogOut className="h-3.5 w-3.5" />
-                  Quick Exit
-                </Button>
+                {/* Quick Exit moved to QuickExitBar */}
 
                 {navLinks.map((link) =>
                   link.children ? (

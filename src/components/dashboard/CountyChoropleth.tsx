@@ -69,7 +69,7 @@ interface CountyEntry {
   profile: CountyProfile;
 }
 
-export default function CountyChoropleth({ compact = false }: { compact?: boolean }) {
+export default function CountyChoropleth({ compact = false, highlightCounty }: { compact?: boolean; highlightCounty?: string }) {
   const [metric, setMetric] = useState<Metric>("uninsured");
   const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
   const [typeFilter, setTypeFilter] = useState<"all" | "urban" | "suburban" | "rural">("all");
@@ -215,7 +215,11 @@ export default function CountyChoropleth({ compact = false }: { compact?: boolea
                       style={{
                         background: HEATMAP_COLORS[colorIdx],
                         aspectRatio: "1",
-                        boxShadow: isHovered ? "0 0 0 2px hsl(var(--primary))" : "none",
+                        boxShadow: isHovered
+                          ? "0 0 0 2px hsl(var(--primary))"
+                          : highlightCounty && d.name === highlightCounty
+                          ? "0 0 0 3px hsl(var(--primary)), 0 0 8px hsl(var(--primary) / 0.4)"
+                          : "none",
                         ...patternStyle,
                       }}
                       whileHover={{ scale: 1.15, zIndex: 10 }}

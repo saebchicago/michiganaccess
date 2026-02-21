@@ -13,6 +13,7 @@ import MobileBottomNav from "@/components/shared/MobileBottomNav";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import SkipToContent from "@/components/shared/SkipToContent";
 import RouteAnnouncer from "@/components/shared/RouteAnnouncer";
+import QuickExitBar from "@/components/shared/QuickExitBar";
 
 interface LayoutProps {
   children: ReactNode;
@@ -44,6 +45,7 @@ const Layout = ({ children }: LayoutProps) => (
     <ScrollToTop />
     <MobileBottomNav />
     <AIChatWidget />
+    <QuickExitBar />
   </div>
 );
 

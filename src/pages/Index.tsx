@@ -26,6 +26,7 @@ import DiscoveryWizard from "@/components/home/DiscoveryWizard";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
+import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -92,6 +93,13 @@ const Index = () => {
               <TrustIndicators />
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ── Uninsured Heatmap (Oakland highlighted) ── */}
+      <section className="py-8">
+        <div className="container max-w-5xl">
+          <CountyChoropleth highlightCounty="Oakland" />
         </div>
       </section>
 
