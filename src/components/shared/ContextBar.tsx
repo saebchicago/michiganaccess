@@ -257,6 +257,7 @@ export default function ContextBar() {
             {audienceChip}
             {subPersonaChips}
             {eligibilityChip}
+            {!eligibility.fplPercent && <EligibilityPopover />}
             {lastUpdated && (
               <>
                 <span className="text-border">·</span>
