@@ -36,6 +36,7 @@ export default function SearchTrendsPage() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [days, setDays] = useState("30");
+  const [sourceFilter, setSourceFilter] = useState("all");
 
   usePageMeta({
     title: "Search Trends",
@@ -47,7 +48,7 @@ export default function SearchTrendsPage() {
     async function fetchData() {
       setLoading(true);
       try {
-        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/search-analytics?days=${days}`;
+        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/search-analytics?days=${days}&source=${sourceFilter}`;
         const res = await fetch(url, {
           headers: {
             apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
@@ -64,7 +65,7 @@ export default function SearchTrendsPage() {
       }
     }
     fetchData();
-  }, [days]);
+  }, [days, sourceFilter]);
 
   const downloadCSV = () => {
     if (!data) return;
@@ -104,17 +105,29 @@ export default function SearchTrendsPage() {
       <div className="container py-8 space-y-8">
         {/* Controls */}
         <div className="flex items-center justify-between flex-wrap gap-3">
-          <Select value={days} onValueChange={setDays}>
-            <SelectTrigger className="w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="7">Last 7 days</SelectItem>
-              <SelectItem value="14">Last 14 days</SelectItem>
-              <SelectItem value="30">Last 30 days</SelectItem>
-              <SelectItem value="90">Last 90 days</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex items-center gap-3 flex-wrap">
+            <Select value={days} onValueChange={setDays}>
+              <SelectTrigger className="w-40">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="7">Last 7 days</SelectItem>
+                <SelectItem value="14">Last 14 days</SelectItem>
+                <SelectItem value="30">Last 30 days</SelectItem>
+                <SelectItem value="90">Last 90 days</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={sourceFilter} onValueChange={setSourceFilter}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="All Sources" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Sources</SelectItem>
+                <SelectItem value="hero">Hero Search Only</SelectItem>
+                <SelectItem value="command-palette">Command Palette Only</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <Button variant="outline" size="sm" onClick={downloadCSV} disabled={!data}>
             <Download className="mr-1.5 h-4 w-4" />Export CSV
           </Button>
