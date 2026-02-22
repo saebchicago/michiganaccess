@@ -9,6 +9,7 @@ import { useCounty } from "@/contexts/CountyContext";
 import { useNavigate } from "react-router-dom";
 import { countyToSlug, COUNTY_CENTERS } from "@/utils/countyUtils";
 import CountyBoundaryLayer from "./CountyBoundaryLayer";
+import EnergyBurdenChoropleth from "./EnergyBurdenChoropleth";
 import VehiclePositionLayer from "./VehiclePositionLayer";
 import { useArcGISData, type ArcGISLayer } from "@/hooks/useArcGISData";
 import { matchesSystem } from "./NetworkFilter";
@@ -150,6 +151,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   const showAQI = activeOverlays.includes("aqi-stations");
   const showBusPatrol = activeOverlays.includes("buspatrol-safety");
   const showPedestrian = activeOverlays.includes("pedestrian-risk");
+  const showEnergyBurden = activeOverlays.includes("energy-burden");
 
   const { data: workzoneData } = useArcGISData("mdot-workzones", showWorkzones);
   const { data: airData } = useArcGISData("egle-air", showAir);
@@ -469,6 +471,10 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
         map={mapInstanceRef.current}
         selectedCounty={county}
         onCountyClick={handleCountyClick}
+      />
+      <EnergyBurdenChoropleth
+        map={mapInstanceRef.current}
+        visible={showEnergyBurden}
       />
       <VehiclePositionLayer
         map={mapInstanceRef.current}
