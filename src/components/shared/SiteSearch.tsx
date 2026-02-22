@@ -9,6 +9,18 @@ import { countyToSlug } from "@/utils/countyUtils";
 import { getSearchSuggestions, getPopularSuggestions, getMisspellingCorrection, parseComboQuery, type SearchSuggestion } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
 
+const SITE_SEARCH_COMMAND_EVENT = "mi-access:site-search";
+
+type SiteSearchCommand = "open" | "close" | "toggle";
+
+export function commandSiteSearch(command: SiteSearchCommand = "open") {
+  document.dispatchEvent(
+    new CustomEvent(SITE_SEARCH_COMMAND_EVENT, {
+      detail: { command },
+    })
+  );
+}
+
 const ACTION_SHORTCUTS = [
   { command: "/call", label: "Find crisis lines & hotlines", href: "/find-care", icon: "📞" },
   { command: "/food", label: "Find food assistance near you", href: "/resources", icon: "🍎" },
@@ -56,12 +68,19 @@ const RECENT_KEY = "mi-access-recent-searches";
 const MAX_RECENT = 5;
 
 function getRecentSearches(): string[] {
-  try { return JSON.parse(localStorage.getItem(RECENT_KEY) || "[]"); } catch { return []; }
+  try {
+    return JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
+  } catch {
+    return [];
+  }
 }
+
 function saveRecentSearch(term: string) {
   const recent = getRecentSearches().filter((t) => t !== term);
   recent.unshift(term);
-  try { localStorage.setItem(RECENT_KEY, JSON.stringify(recent.slice(0, MAX_RECENT))); } catch {}
+  try {
+    localStorage.setItem(RECENT_KEY, JSON.stringify(recent.slice(0, MAX_RECENT)));
+  } catch {}
 }
 
 export default function SiteSearch() {
@@ -75,17 +94,36 @@ export default function SiteSearch() {
   const navigate = useNavigate();
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
-  useEffect(() => { if (open) setRecentSearches(getRecentSearches()); }, [open]);
+  useEffect(() => {
+    if (open) setRecentSearches(getRecentSearches());
+  }, [open]);
 
   useEffect(() => {
+    const onCommand = (event: Event) => {
+      const detail = (event as CustomEvent<{ command: SiteSearchCommand }>).detail;
+      const command = detail?.command;
+      if (!command) return;
+
+      if (command === "open") setOpen(true);
+      else if (command === "close") setOpen(false);
+      else setOpen((o) => !o);
+    };
+
+    document.addEventListener(SITE_SEARCH_COMMAND_EVENT, onCommand as EventListener);
+
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        setOpen((o) => !o);
+        commandSiteSearch("toggle");
       }
     };
+
     document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
+
+    return () => {
+      document.removeEventListener(SITE_SEARCH_COMMAND_EVENT, onCommand as EventListener);
+      document.removeEventListener("keydown", handler);
+    };
   }, []);
 
   const search = useCallback(async (q: string) => {
@@ -105,8 +143,7 @@ export default function SiteSearch() {
     const term = q.toLowerCase();
 
     // Static pages filter
-    const pageResults: SearchResult[] = STATIC_PAGES
-      .filter((p) => p.label.toLowerCase().includes(term))
+    const pageResults: SearchResult[] = STATIC_PAGES.filter((p) => p.label.toLowerCase().includes(term))
       .slice(0, 4)
       .map((p) => ({ ...p, category: "page" as const }));
 
@@ -114,7 +151,6 @@ export default function SiteSearch() {
     const { term: searchTerm, county: comboCounty } = parseComboQuery(q);
 
     // DB queries in parallel
-    const countyFilter = comboCounty ? `county.eq.${comboCounty}` : "";
     const [counties, facilities, resources] = await Promise.all([
       supabase
         .from("municipalities")
@@ -122,15 +158,25 @@ export default function SiteSearch() {
         .or(`name.ilike.%${searchTerm}%,county.ilike.%${searchTerm}%`)
         .order("population", { ascending: false })
         .limit(6),
+
       supabase
         .from("facilities")
         .select("name, city, county, facility_type")
-        .or(`name.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,county.ilike.%${searchTerm}%${comboCounty ? `,county.eq.${comboCounty}` : ""}`)
+        .or(
+          `name.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,county.ilike.%${searchTerm}%${
+            comboCounty ? `,county.eq.${comboCounty}` : ""
+          }`
+        )
         .limit(5),
+
       supabase
         .from("community_resources")
         .select("resource_name, city, county, resource_type")
-        .or(`resource_name.ilike.%${searchTerm}%,county.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%${comboCounty ? `,county.eq.${comboCounty}` : ""}`)
+        .or(
+          `resource_name.ilike.%${searchTerm}%,county.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%${
+            comboCounty ? `,county.eq.${comboCounty}` : ""
+          }`
+        )
         .limit(5),
     ]);
 
@@ -176,6 +222,7 @@ export default function SiteSearch() {
         correctedTo: correction ?? undefined,
       });
     }
+
     setOpen(false);
     setQuery("");
     setResults([]);
@@ -193,22 +240,33 @@ export default function SiteSearch() {
 
   const iconFor = (cat: string) => {
     switch (cat) {
-      case "county": return <MapPin className="h-4 w-4 text-primary" />;
-      case "facility": return <Building2 className="h-4 w-4 text-primary" />;
-      case "resource": return <Heart className="h-4 w-4 text-destructive" />;
-      case "suggestion": return <Sparkles className="h-4 w-4 text-accent" />;
-      default: return <FileText className="h-4 w-4 text-muted-foreground" />;
+      case "county":
+        return <MapPin className="h-4 w-4 text-primary" />;
+      case "facility":
+        return <Building2 className="h-4 w-4 text-primary" />;
+      case "resource":
+        return <Heart className="h-4 w-4 text-destructive" />;
+      case "suggestion":
+        return <Sparkles className="h-4 w-4 text-accent" />;
+      default:
+        return <FileText className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
   const groupLabel = (cat: string) => {
     switch (cat) {
-      case "page": return "Pages";
-      case "county": return "Counties & Cities";
-      case "facility": return "Facilities";
-      case "resource": return "Resources";
-      case "suggestion": return "Suggestions";
-      default: return cat;
+      case "page":
+        return "Pages";
+      case "county":
+        return "Counties & Cities";
+      case "facility":
+        return "Facilities";
+      case "resource":
+        return "Resources";
+      case "suggestion":
+        return "Suggestions";
+      default:
+        return cat;
     }
   };
 
@@ -226,7 +284,7 @@ export default function SiteSearch() {
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setOpen(true)}
+        onClick={() => commandSiteSearch("open")}
         className="relative"
         aria-label="Search site"
       >
@@ -246,26 +304,25 @@ export default function SiteSearch() {
                 <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-muted-foreground" />
               )}
             </div>
+
             <CommandList>
               {/* Action Shortcuts when query starts with / */}
               {query.startsWith("/") && (
                 <CommandGroup heading="⚡ Action Shortcuts">
-                  {ACTION_SHORTCUTS
-                    .filter((s) => s.command.startsWith(query.toLowerCase()) || query === "/")
-                    .map((s) => (
-                      <CommandItem
-                        key={s.command}
-                        value={`action-${s.command}`}
-                        onSelect={() => handleSelect(s.href)}
-                        className="flex items-center gap-3 cursor-pointer"
-                      >
-                        <span className="text-base">{s.icon}</span>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium">{s.label}</p>
-                          <p className="text-[10px] text-muted-foreground font-mono">{s.command}</p>
-                        </div>
-                      </CommandItem>
-                    ))}
+                  {ACTION_SHORTCUTS.filter((s) => s.command.startsWith(query.toLowerCase()) || query === "/").map((s) => (
+                    <CommandItem
+                      key={s.command}
+                      value={`action-${s.command}`}
+                      onSelect={() => handleSelect(s.href)}
+                      className="flex items-center gap-3 cursor-pointer"
+                    >
+                      <span className="text-base">{s.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium">{s.label}</p>
+                        <p className="text-[10px] text-muted-foreground font-mono">{s.command}</p>
+                      </div>
+                    </CommandItem>
+                  ))}
                 </CommandGroup>
               )}
 
@@ -285,26 +342,33 @@ export default function SiteSearch() {
               )}
 
               {/* Smart suggestions (keyword/county matches) */}
-              {query.length >= 2 && !query.startsWith("/") && smartSuggestions.length > 0 && smartSuggestions[0].category !== "popular" && (
-                <CommandGroup heading="Quick Matches">
-                  {smartSuggestions.slice(0, 4).map((s, i) => (
-                    <CommandItem
-                      key={`smart-${i}`}
-                      value={`smart-${s.label}`}
-                      onSelect={() => handleSelect(s.href)}
-                      className="flex items-center gap-3 cursor-pointer"
-                    >
-                      {s.category === "county" ? <MapPin className="h-4 w-4 text-primary" /> :
-                       s.category === "correction" ? <Sparkles className="h-4 w-4 text-warm-gold" /> :
-                       <Search className="h-4 w-4 text-accent" />}
-                      <span className="text-sm">{s.label}</span>
-                      {s.category === "correction" && s.matchedTerm && (
-                        <span className="text-xs text-muted-foreground ml-auto italic">corrected</span>
-                      )}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
+              {query.length >= 2 &&
+                !query.startsWith("/") &&
+                smartSuggestions.length > 0 &&
+                smartSuggestions[0].category !== "popular" && (
+                  <CommandGroup heading="Quick Matches">
+                    {smartSuggestions.slice(0, 4).map((s, i) => (
+                      <CommandItem
+                        key={`smart-${i}`}
+                        value={`smart-${s.label}`}
+                        onSelect={() => handleSelect(s.href)}
+                        className="flex items-center gap-3 cursor-pointer"
+                      >
+                        {s.category === "county" ? (
+                          <MapPin className="h-4 w-4 text-primary" />
+                        ) : s.category === "correction" ? (
+                          <Sparkles className="h-4 w-4 text-warm-gold" />
+                        ) : (
+                          <Search className="h-4 w-4 text-accent" />
+                        )}
+                        <span className="text-sm">{s.label}</span>
+                        {s.category === "correction" && s.matchedTerm && (
+                          <span className="text-xs text-muted-foreground ml-auto italic">corrected</span>
+                        )}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                )}
 
               {/* Recent searches */}
               {query.length < 2 && recentSearches.length > 0 && (
@@ -370,18 +434,18 @@ export default function SiteSearch() {
                       {iconFor(cat)}
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{item.label}</p>
-                        {item.sublabel && (
-                          <p className="text-xs text-muted-foreground truncate">{item.sublabel}</p>
-                        )}
+                        {item.sublabel && <p className="text-xs text-muted-foreground truncate">{item.sublabel}</p>}
                       </div>
                     </CommandItem>
                   ))}
                 </CommandGroup>
               ))}
             </CommandList>
+
             <div className="border-t border-border px-3 py-2 text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
               <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">⌘K</kbd>
-              to toggle · type a county name for local results · type <kbd className="rounded border border-border bg-muted px-1 py-0 font-mono text-[10px]">/</kbd> for shortcuts
+              to toggle · type a county name for local results · type <kbd className="rounded border border-border bg-muted px-1 py-0 font-mono text-[10px]">/</kbd> for
+              shortcuts
             </div>
           </Command>
         </DialogContent>
