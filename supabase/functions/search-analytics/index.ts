@@ -17,16 +17,23 @@ Deno.serve(async (req) => {
 
     const url = new URL(req.url);
     const days = parseInt(url.searchParams.get("days") || "30");
+    const sourceFilter = url.searchParams.get("source") || "all";
     const limitDays = Math.min(Math.max(days, 1), 90);
     const since = new Date(Date.now() - limitDays * 86400000).toISOString();
 
     // Top search terms (aggregated, no PII)
-    const { data: topTerms } = await supabase
+    let query = supabase
       .from("search_analytics")
-      .select("search_term, had_correction, corrected_to, result_count, created_at")
+      .select("search_term, search_source, had_correction, corrected_to, result_count, created_at")
       .gte("created_at", since)
       .order("created_at", { ascending: false })
       .limit(1000);
+
+    if (sourceFilter !== "all") {
+      query = query.eq("search_source", sourceFilter);
+    }
+
+    const { data: topTerms } = await query;
 
     const rows = topTerms ?? [];
 
