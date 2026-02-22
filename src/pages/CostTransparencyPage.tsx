@@ -1,4 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
+import DataProvenance from "@/components/shared/DataProvenance";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import {
@@ -391,15 +392,10 @@ export default function CostTransparencyPage() {
           </TabsContent>
         </Tabs>
 
-        {/* Source note */}
-        <Card className="border-border/50 bg-muted/30">
-          <CardContent className="py-4">
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              <Info className="inline h-3.5 w-3.5 mr-1 text-primary" />
-              <strong>Data Sources:</strong> Procedure costs based on CMS Hospital Price Transparency data, Healthcare Bluebook fair price estimates, and facility-reported chargemaster data. Prescription prices from GoodRx, Costco Pharmacy, and Mark Cuban Cost Plus Drugs. Prices are estimates and may vary based on individual circumstances, complexity, and insurance plan.
-            </p>
-          </CardContent>
-        </Card>
+        <DataProvenance
+          source="CMS Price Transparency, Healthcare Bluebook, GoodRx, Cost Plus Drugs"
+          updated="2024–2025 estimates"
+        />
       </div>
     </Layout>
   );

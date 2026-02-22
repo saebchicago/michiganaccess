@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import DataProvenance from "@/components/shared/DataProvenance";
 import { motion } from "framer-motion";
 import {
   Shield, Award, BarChart3, Star, Building2, ChevronDown, Info, ExternalLink,
@@ -397,6 +398,11 @@ export default function QualityRatingsPage() {
             </Link>
           </div>
         </section>
+
+        <DataProvenance
+          source="CMS Hospital Compare, Leapfrog Hospital Safety Grade, Joint Commission"
+          updated="Q4 2024"
+        />
       </div>
     </Layout>
   );

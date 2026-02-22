@@ -1,4 +1,5 @@
 import { useState, useMemo, lazy, Suspense } from "react";
+import DataProvenance from "@/components/shared/DataProvenance";
 import { motion } from "framer-motion";
 import {
   BarChart3, TrendingUp, TrendingDown, Activity, Heart, Brain, Users,
@@ -510,14 +511,10 @@ export default function HealthDataDashboardPage() {
           </TabsContent>
         </Tabs>
 
-        <Card className="border-border/50 bg-muted/30">
-          <CardContent className="py-4">
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              <Shield className="inline h-3.5 w-3.5 mr-1 text-primary" />
-              <strong>Data Sources & Methodology:</strong> CDC WONDER, BRFSS, CDC PLACES, CMS Hospital Compare, MDHHS Vital Records & Health Equity Data, County Health Rankings & Roadmaps (University of Wisconsin), HRSA Area Health Resources Files, IHME Global Burden of Disease, ACEEE LEAD Tool, EIA State Energy Data System (SEDS), DTE Outage Reports. Data reflects most recent available reporting periods (2023–2025). Some figures are age-adjusted. Energy burden = % of household income spent on energy costs; thresholds: &gt;6% high burden, &gt;10% severe burden (DOE/ACEEE). See <a href="/methodology" className="text-primary hover:underline">Methodology</a> for full documentation.
-            </p>
-          </CardContent>
-        </Card>
+        <DataProvenance
+          source="CDC WONDER, BRFSS, CMS Hospital Compare, MDHHS, HRSA, EIA SEDS, DTE"
+          updated="2023–2025 reporting periods"
+        />
       </div>
     </Layout>
   );
