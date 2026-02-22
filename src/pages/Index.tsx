@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
 import CommunityAlerts from "@/components/home/CommunityAlerts";
+import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -46,6 +47,7 @@ const Index = () => {
       <SectionNav />
 
       {/* ── Layer 1: Crisis & Urgent Help (always pinned via CrisisBar in Layout) ── */}
+      <OutageAlertBanner />
       <CountyWelcomeBanner />
 
       {/* ── Layer 2: Search & Top Pathways ── */}
