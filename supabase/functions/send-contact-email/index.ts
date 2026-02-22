@@ -1,13 +1,14 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { z } from "https://esm.sh/zod@3.23.8";
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
-const RECIPIENT_EMAIL = "saeb@fulbrightmail.org";
+const RECIPIENT_EMAILS = ["saeb@fulbrightmail.org", "saeb.ahsan@gmail.com"];
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name too long"),
@@ -54,30 +55,29 @@ serve(async (req) => {
       });
     }
 
-    // Send notification email via Lovable AI gateway (simple notification)
-    const apiKey = Deno.env.get("LOVABLE_API_KEY");
-    if (apiKey) {
+    // Send email notification via Resend
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (resendKey) {
       try {
-        const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: "google/gemini-2.5-flash-lite",
-            messages: [
-              {
-                role: "user",
-                content: `Format this contact form submission as a clean email summary:\n\nFrom: ${name} (${email})\nSubject: ${subject}\nMessage: ${message}\n\nKeep it brief and professional.`,
-              },
-            ],
-            max_tokens: 200,
-          }),
+        const resend = new Resend(resendKey);
+        await resend.emails.send({
+          from: "Access Michigan <onboarding@resend.dev>",
+          to: RECIPIENT_EMAILS,
+          subject: `Contact Form: ${subject}`,
+          html: `
+            <h2>New Contact Message</h2>
+            <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">From</td><td style="padding:6px;border-bottom:1px solid #eee">${name}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Email</td><td style="padding:6px;border-bottom:1px solid #eee">${email}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Subject</td><td style="padding:6px;border-bottom:1px solid #eee">${subject}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Message</td><td style="padding:6px;border-bottom:1px solid #eee">${message}</td></tr>
+            </table>
+            <p style="margin-top:16px;font-size:12px;color:#888">Sent via Access Michigan contact form.</p>
+          `,
         });
-        console.log("Contact message stored successfully for:", email);
-      } catch (e) {
-        console.log("AI summary skipped:", e);
+        console.log("Contact email notification sent for:", email);
+      } catch (emailErr) {
+        console.error("Email send failed:", emailErr);
       }
     }
 

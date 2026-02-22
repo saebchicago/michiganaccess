@@ -1,10 +1,11 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { z } from "https://esm.sh/zod@3.23.8";
+import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 const RECIPIENT_EMAILS = ["saeb@fulbrightmail.org", "saeb.ahsan@gmail.com"];
@@ -79,8 +80,39 @@ serve(async (req) => {
       });
     }
 
-    // Log notification for admin
-    console.log(`New resource submission from ${data.contact_name} (${data.contact_email}): ${data.organization_name} — ${data.resource_type} in ${data.county || 'unspecified'} county`);
+    // Send email notification via Resend
+    const resendKey = Deno.env.get("RESEND_API_KEY");
+    if (resendKey) {
+      try {
+        const resend = new Resend(resendKey);
+        await resend.emails.send({
+          from: "Access Michigan <onboarding@resend.dev>",
+          to: RECIPIENT_EMAILS,
+          subject: `New Resource Submission: ${data.organization_name}`,
+          html: `
+            <h2>New Resource Submission</h2>
+            <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Organization</td><td style="padding:6px;border-bottom:1px solid #eee">${data.organization_name}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Contact</td><td style="padding:6px;border-bottom:1px solid #eee">${data.contact_name} (${data.contact_email})</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Type</td><td style="padding:6px;border-bottom:1px solid #eee">${data.resource_type}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">County</td><td style="padding:6px;border-bottom:1px solid #eee">${data.county || "Not specified"}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">City</td><td style="padding:6px;border-bottom:1px solid #eee">${data.city || "Not specified"}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Description</td><td style="padding:6px;border-bottom:1px solid #eee">${data.description}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Services</td><td style="padding:6px;border-bottom:1px solid #eee">${data.services_offered.join(", ") || "None listed"}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Free?</td><td style="padding:6px;border-bottom:1px solid #eee">${data.is_free ? "Yes" : "No"}</td></tr>
+              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Walk-in?</td><td style="padding:6px;border-bottom:1px solid #eee">${data.walk_in_available ? "Yes" : "No"}</td></tr>
+              ${data.phone ? `<tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Phone</td><td style="padding:6px;border-bottom:1px solid #eee">${data.phone}</td></tr>` : ""}
+              ${data.website ? `<tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Website</td><td style="padding:6px;border-bottom:1px solid #eee">${data.website}</td></tr>` : ""}
+            </table>
+            <p style="margin-top:16px;font-size:12px;color:#888">Submitted via Access Michigan resource directory.</p>
+          `,
+        });
+        console.log("Email notification sent for resource submission:", data.organization_name);
+      } catch (emailErr) {
+        console.error("Email send failed:", emailErr);
+        // Don't fail the request if email fails
+      }
+    }
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
