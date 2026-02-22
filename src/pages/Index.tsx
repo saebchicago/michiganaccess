@@ -1,34 +1,40 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { AccessChat } from "@/components/AccessChat";
 import Layout from "@/components/layout/Layout";
-import DrugPriceLookup from "@/components/learn/DrugPriceLookup";
 import HeroSection from "@/components/home/HeroSection";
-import HealthDataSnapshot from "@/components/home/HealthDataSnapshot";
-import CoreAccessGrid from "@/components/home/CoreAccessGrid";
 import GuidedPathways from "@/components/home/GuidedPathways";
 import AuthorityStrip from "@/components/home/AuthorityStrip";
-import SystemsExplainer from "@/components/home/SystemsExplainer";
-import TrustIndicators from "@/components/home/TrustIndicators";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
-import CountyInfoCard from "@/components/home/CountyInfoCard";
-import SpotlightTabs from "@/components/shared/SpotlightTabs";
-import RegionalGateway from "@/components/home/RegionalGateway";
-import SmartRecommendations from "@/components/home/SmartRecommendations";
-import OnboardingTour from "@/components/shared/OnboardingTour";
-import SectionNav from "@/components/home/SectionNav";
-import SuccessStories from "@/components/home/SuccessStories";
-import SocialProofStrip from "@/components/home/SocialProofStrip";
-import NearbyResourceFinder from "@/components/home/NearbyResourceFinder";
-import TransportationSafetyCallout from "@/components/home/TransportationSafetyCallout";
 import AudienceSelector from "@/components/home/AudienceSelector";
 import DiscoveryWizard from "@/components/home/DiscoveryWizard";
+import OutageAlertBanner from "@/components/home/OutageAlertBanner";
+import SocialProofStrip from "@/components/home/SocialProofStrip";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
-import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
-import CommunityAlerts from "@/components/home/CommunityAlerts";
-import OutageAlertBanner from "@/components/home/OutageAlertBanner";
+
+// ── Layer 3+: lazy-loaded below the fold ──
+const HealthDataSnapshot = lazy(() => import("@/components/home/HealthDataSnapshot"));
+const NearbyResourceFinder = lazy(() => import("@/components/home/NearbyResourceFinder"));
+const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
+const TransportationSafetyCallout = lazy(() => import("@/components/home/TransportationSafetyCallout"));
+const SpotlightTabs = lazy(() => import("@/components/shared/SpotlightTabs"));
+const CommunityAlerts = lazy(() => import("@/components/home/CommunityAlerts"));
+const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
+const SuccessStories = lazy(() => import("@/components/home/SuccessStories"));
+const DrugPriceLookup = lazy(() => import("@/components/learn/DrugPriceLookup"));
+const CountyInfoCard = lazy(() => import("@/components/home/CountyInfoCard"));
+const SmartRecommendations = lazy(() => import("@/components/home/SmartRecommendations"));
+const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer"));
+const TrustIndicators = lazy(() => import("@/components/home/TrustIndicators"));
+const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
+
+const SectionFallback = () => (
+  <div className="py-8 flex justify-center">
+    <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+  </div>
+);
 
 const Index = () => {
   const { t } = useTranslation();
@@ -43,17 +49,21 @@ const Index = () => {
 
   return (
     <Layout>
-      <OnboardingTour />
-      <SectionNav />
-
-      {/* ── Layer 1: Crisis & Urgent Help (always pinned via CrisisBar in Layout) ── */}
+      {/* ═══════════════════════════════════════════════════════════════════
+          LAYER 1 — IMMEDIATE HELP
+          Always visible. Crisis resources + outage alerts + county context.
+          CrisisBar is already pinned in Layout.
+      ═══════════════════════════════════════════════════════════════════ */}
       <OutageAlertBanner />
       <CountyWelcomeBanner />
 
-      {/* ── Layer 2: Search & Top Pathways ── */}
+      {/* ═══════════════════════════════════════════════════════════════════
+          LAYER 2 — SEARCH & GUIDED PATHWAYS
+          Primary decision interface: hero search, persona selector,
+          wizard CTA, and guided pathways.
+      ═══════════════════════════════════════════════════════════════════ */}
       <HeroSection />
 
-      {/* Wizard CTA */}
       <div className="container py-4 flex justify-center">
         <Button onClick={() => setWizardOpen(true)} size="lg" className="gap-2 rounded-full shadow-lg">
           <Sparkles className="h-4 w-4" /> {t("wizard.cta")}
@@ -66,54 +76,62 @@ const Index = () => {
       <AuthorityStrip />
       <SocialProofStrip />
 
-      {/* ── Layer 3: Personalized Snapshot (region-reactive) ── */}
-      <HealthDataSnapshot />
-      <NearbyResourceFinder />
-      <SpotlightTabs />
-      <CoreAccessGrid />
-      <TransportationSafetyCallout />
+      {/* ═══════════════════════════════════════════════════════════════════
+          LAYER 3 — PERSONALIZED SNAPSHOT
+          Context-aware, region-reactive content. Lazy-loaded.
+      ═══════════════════════════════════════════════════════════════════ */}
+      <Suspense fallback={<SectionFallback />}>
+        <HealthDataSnapshot />
+        <NearbyResourceFinder />
+        <CoreAccessGrid />
+        <TransportationSafetyCallout />
+      </Suspense>
 
-      {/* ── Layer 4: Data Insights (collapsed by default) ── */}
-      <section className="py-6">
-        <div className="container">
-          <div className="flex items-center justify-center">
-            <Button
-              variant="outline"
-              onClick={() => setDataExpanded(!dataExpanded)}
-              className="gap-2 text-sm"
-              aria-expanded={dataExpanded}
-            >
-              {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-              {dataExpanded ? t("home.collapseData") : t("home.exploreData")}
-            </Button>
-          </div>
-          {dataExpanded && (
-            <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
-              <DrugPriceLookup />
-              <CountyInfoCard />
-              <SmartRecommendations />
-              <SystemsExplainer />
-              <TrustIndicators />
+      {/* ═══════════════════════════════════════════════════════════════════
+          LAYER 4 — EXPLORATION (lower priority, progressive disclosure)
+          Community spotlights, alerts, data deep-dives, regional gateways.
+      ═══════════════════════════════════════════════════════════════════ */}
+      <Suspense fallback={<SectionFallback />}>
+        <SpotlightTabs />
+        <CommunityAlerts />
+
+        {/* Data Insights — collapsed by default */}
+        <section className="py-6">
+          <div className="container">
+            <div className="flex items-center justify-center">
+              <Button
+                variant="outline"
+                onClick={() => setDataExpanded(!dataExpanded)}
+                className="gap-2 text-sm"
+                aria-expanded={dataExpanded}
+              >
+                {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                {dataExpanded ? t("home.collapseData") : t("home.exploreData")}
+              </Button>
             </div>
-          )}
-        </div>
-      </section>
+            {dataExpanded && (
+              <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
+                <DrugPriceLookup />
+                <CountyInfoCard />
+                <SmartRecommendations />
+                <SystemsExplainer />
+                <TrustIndicators />
+              </div>
+            )}
+          </div>
+        </section>
 
-      {/* ── Community Alerts & Insights ── */}
-      <CommunityAlerts />
+        <section className="py-8">
+          <div className="container max-w-5xl">
+            <CountyChoropleth highlightCounty="Oakland" />
+          </div>
+        </section>
 
-      {/* ── Uninsured Heatmap (Oakland highlighted) ── */}
-      <section className="py-8">
-        <div className="container max-w-5xl">
-          <CountyChoropleth highlightCounty="Oakland" />
-        </div>
-      </section>
+        <RegionalGateway />
+        <SuccessStories />
+      </Suspense>
 
-      {/* ── Layer 5: Regional Gateway & Use Cases ── */}
-      <RegionalGateway />
-      <SuccessStories />
-
-      {/* AI Chat — positioned just above footer */}
+      {/* AI Chat — just above footer */}
       <AccessChat />
     </Layout>
   );
