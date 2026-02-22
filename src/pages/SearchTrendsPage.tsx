@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { Search, TrendingUp, AlertCircle, BarChart3, PieChart, Download } from "lucide-react";
+import { Search, TrendingUp, AlertCircle, BarChart3, PieChart as PieChartIcon, Download } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
 
 interface AnalyticsData {
@@ -21,10 +21,11 @@ interface AnalyticsData {
   zeroResultRate: number;
   topTerms: { term: string; count: number; zeroResults: number }[];
   dailyVolume: { date: string; count: number }[];
+  sourceBreakdown: { source: string; count: number }[];
   period: string;
 }
 
-const CHART_COLORS = ["hsl(var(--primary))", "hsl(var(--michigan-teal))", "hsl(var(--michigan-gold))", "hsl(var(--michigan-sky))"];
+const CHART_COLORS = ["hsl(var(--primary))", "hsl(var(--michigan-teal))", "hsl(var(--michigan-gold))", "hsl(var(--michigan-sky))", "hsl(var(--accent))"];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -156,6 +157,7 @@ export default function SearchTrendsPage() {
             <TabsList>
               <TabsTrigger value="top-terms"><BarChart3 className="h-4 w-4 mr-1.5" />Top Terms</TabsTrigger>
               <TabsTrigger value="volume"><TrendingUp className="h-4 w-4 mr-1.5" />Volume</TabsTrigger>
+              <TabsTrigger value="sources"><PieChartIcon className="h-4 w-4 mr-1.5" />Sources</TabsTrigger>
               <TabsTrigger value="gaps"><AlertCircle className="h-4 w-4 mr-1.5" />Content Gaps</TabsTrigger>
             </TabsList>
 
@@ -237,6 +239,60 @@ export default function SearchTrendsPage() {
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="sources">
+              <Card>
+                <CardHeader><CardTitle className="text-lg">Search Source Breakdown</CardTitle></CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Where searches originate — hero search bar vs. command palette (⌘K).
+                  </p>
+                  {data.sourceBreakdown && data.sourceBreakdown.length > 0 ? (
+                    <div className="grid gap-6 md:grid-cols-2 items-center">
+                      <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                          <PieChart>
+                            <Pie
+                              data={data.sourceBreakdown.map((s) => ({
+                                name: s.source === "hero" ? "Hero Search" : s.source === "command" ? "Command Palette" : s.source,
+                                value: s.count,
+                              }))}
+                              cx="50%"
+                              cy="50%"
+                              innerRadius={50}
+                              outerRadius={90}
+                              paddingAngle={4}
+                              dataKey="value"
+                              label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                            >
+                              {data.sourceBreakdown.map((_, i) => (
+                                <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
+                              ))}
+                            </Pie>
+                            <Tooltip
+                              contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px" }}
+                            />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      </div>
+                      <div className="space-y-3">
+                        {data.sourceBreakdown.map((s, i) => (
+                          <div key={s.source} className="flex items-center gap-3">
+                            <div className="h-3 w-3 rounded-full flex-shrink-0" style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }} />
+                            <span className="text-sm font-medium text-foreground capitalize">
+                              {s.source === "hero" ? "Hero Search Bar" : s.source === "command" ? "Command Palette (⌘K)" : s.source}
+                            </span>
+                            <span className="text-sm text-muted-foreground ml-auto">{s.count} searches</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">No source data available yet.</p>
+                  )}
                 </CardContent>
               </Card>
             </TabsContent>

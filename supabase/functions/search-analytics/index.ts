@@ -38,7 +38,6 @@ Deno.serve(async (req) => {
 
     // Daily volume
     const dailyMap: Record<string, number> = {};
-    // Source breakdown
     const sourceMap: Record<string, number> = {};
 
     for (const r of rows) {
@@ -53,7 +52,14 @@ Deno.serve(async (req) => {
 
       const day = r.created_at.slice(0, 10);
       dailyMap[day] = (dailyMap[day] || 0) + 1;
+
+      const src = r.search_source || "unknown";
+      sourceMap[src] = (sourceMap[src] || 0) + 1;
     }
+
+    const sourceBreakdown = Object.entries(sourceMap)
+      .map(([source, count]) => ({ source, count }))
+      .sort((a, b) => b.count - a.count);
 
     const topTermsSorted = Object.entries(termCounts)
       .map(([term, data]) => ({ term, ...data }))
@@ -73,6 +79,7 @@ Deno.serve(async (req) => {
         zeroResultRate: totalSearches > 0 ? Math.round((totalZeroResults / totalSearches) * 100) : 0,
         topTerms: topTermsSorted,
         dailyVolume,
+        sourceBreakdown,
         period: `${limitDays} days`,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
