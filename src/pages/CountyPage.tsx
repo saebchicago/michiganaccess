@@ -4,7 +4,8 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, lazy, Suspense } from "react";
 import {
   MapPin, Users, Heart, Building2, Phone, ExternalLink,
-  ArrowLeft, TrendingUp, TrendingDown, Minus, Globe, Calendar
+  ArrowLeft, TrendingUp, TrendingDown, Minus, Globe, Calendar,
+  FileQuestion, Mail
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -55,7 +56,6 @@ const HealthSkeleton = () => (
     </CardContent>
   </Card>
 );
-
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -118,10 +118,25 @@ export default function CountyPage() {
   const safeE = events ?? [];
   const isStatsLoading = loadingFacilities || loadingResources || loadingEvents;
 
+  // Major health systems to prioritize (appear first in listings)
+  const MAJOR_SYSTEMS = ["Corewell Health", "Beaumont", "Henry Ford", "Ascension", "Trinity Health", "Spectrum Health", "Michigan Medicine", "University of Michigan", "McLaren", "Munson"];
+
+  // Sort facilities: major systems first, then by quality score
+  const sortedFacilities = [...safeF].sort((a, b) => {
+    const aIsMajor = MAJOR_SYSTEMS.some(s => a.system_affiliation?.includes(s) || a.name.includes(s));
+    const bIsMajor = MAJOR_SYSTEMS.some(s => b.system_affiliation?.includes(s) || b.name.includes(s));
+    if (aIsMajor && !bIsMajor) return -1;
+    if (!aIsMajor && bIsMajor) return 1;
+    return (b.quality_score ?? 0) - (a.quality_score ?? 0);
+  });
+
   const facilityCounts = safeF.reduce((acc, f) => {
     acc[f.facility_type] = (acc[f.facility_type] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
+
+  // Check for data gaps
+  const hasDataGaps = profile.healthHighlights.length < 3 || safeF.length < 3;
 
   return (
     <Layout>
@@ -339,66 +354,75 @@ export default function CountyPage() {
           </section>
         )}
 
-        {/* Top Facilities List */}
-        {safeF.length > 0 && (
+        {/* Top Facilities List — major systems first */}
+        {sortedFacilities.length > 0 && (
           <section>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-foreground">Top Facilities</h2>
+              <h2 className="text-xl font-bold text-foreground">Top Facilities in {county} County</h2>
               <Link to="/find-care">
                 <Button variant="ghost" size="sm">View all →</Button>
               </Link>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {safeF.slice(0, 6).map((f, i) => (
-                <motion.div key={f.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-                  <Card className="h-full hover-lift">
-                    <CardContent className="py-4 space-y-2">
-                      <div className="flex items-start justify-between">
-                       <h3 className="font-semibold text-sm text-foreground">{f.name}</h3>
-                        <div className="flex items-center gap-1 flex-shrink-0">
-                          {f.joint_commission && (
-                            <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[9px] px-1 py-0">✓ Verified</Badge>
+              {sortedFacilities.slice(0, 6).map((f, i) => {
+                const isMajorSystem = MAJOR_SYSTEMS.some(s => f.system_affiliation?.includes(s) || f.name.includes(s));
+                return (
+                  <motion.div key={f.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+                    <Card className={`h-full hover-lift ${isMajorSystem ? "border-primary/20 bg-primary/[0.02]" : ""}`}>
+                      <CardContent className="py-4 space-y-2">
+                        <div className="flex items-start justify-between">
+                          <h3 className="font-semibold text-sm text-foreground">{f.name}</h3>
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            {isMajorSystem && (
+                              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] px-1 py-0">★ Major System</Badge>
+                            )}
+                            {f.joint_commission && (
+                              <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[9px] px-1 py-0">✓ Verified</Badge>
+                            )}
+                            {f.quality_score && (
+                              <Badge variant="outline" className="text-[10px]">
+                                {f.quality_score}/100
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                        {f.system_affiliation && (
+                          <p className="text-[10px] text-primary font-medium">{f.system_affiliation}</p>
+                        )}
+                        <p className="text-xs text-muted-foreground">
+                          <MapPin className="inline h-3 w-3 mr-1" />{f.address}, {f.city}
+                        </p>
+                        <Badge variant="secondary" className="text-[10px]">{f.facility_type.replace(/_/g, " ")}</Badge>
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          <a
+                            href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${f.address}, ${f.city}, ${f.state} ${f.zip}`)}`}
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            <Button size="sm" variant="default" className="h-6 text-[10px] px-2">
+                              <MapPin className="mr-1 h-3 w-3" />Get Directions
+                            </Button>
+                          </a>
+                          {f.phone && (
+                            <a href={`tel:${f.phone}`}>
+                              <Button size="sm" variant="outline" className="h-6 text-[10px] px-2">
+                                <Phone className="mr-1 h-3 w-3" />Call
+                              </Button>
+                            </a>
                           )}
-                          {f.quality_score && (
-                            <Badge variant="outline" className="text-[10px]">
-                              {f.quality_score}/100
-                            </Badge>
+                          {f.website && (
+                            <a href={f.website} target="_blank" rel="noopener">
+                              <Button size="sm" variant="outline" className="h-6 text-[10px] px-2">
+                                <ExternalLink className="mr-1 h-3 w-3" />Website
+                              </Button>
+                            </a>
                           )}
                         </div>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        <MapPin className="inline h-3 w-3 mr-1" />{f.address}, {f.city}
-                      </p>
-                      <Badge variant="secondary" className="text-[10px]">{f.facility_type.replace(/_/g, " ")}</Badge>
-                      <div className="flex flex-wrap gap-2 pt-1">
-                        <a
-                          href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${f.address}, ${f.city}, ${f.state} ${f.zip}`)}`}
-                          target="_blank"
-                          rel="noopener"
-                        >
-                          <Button size="sm" variant="default" className="h-6 text-[10px] px-2">
-                            <MapPin className="mr-1 h-3 w-3" />Get Directions
-                          </Button>
-                        </a>
-                        {f.phone && (
-                          <a href={`tel:${f.phone}`}>
-                            <Button size="sm" variant="outline" className="h-6 text-[10px] px-2">
-                              <Phone className="mr-1 h-3 w-3" />Call
-                            </Button>
-                          </a>
-                        )}
-                        {f.website && (
-                          <a href={f.website} target="_blank" rel="noopener">
-                            <Button size="sm" variant="outline" className="h-6 text-[10px] px-2">
-                              <ExternalLink className="mr-1 h-3 w-3" />Website
-                            </Button>
-                          </a>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
             </div>
           </section>
         )}
@@ -438,6 +462,36 @@ export default function CountyPage() {
             ))}
           </div>
         </section>
+
+        {/* Data Gap FOIA Callout */}
+        {hasDataGaps && (
+          <Card className="border-michigan-gold/30 bg-michigan-gold/5">
+            <CardContent className="py-4 space-y-2">
+              <div className="flex items-start gap-3">
+                <FileQuestion className="h-5 w-5 text-michigan-gold flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-sm text-foreground">Missing local data?</h3>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Some data for {county} County may be limited. You can request public records through Michigan's Freedom of Information Act (FOIA) 
+                    or contact county officials for the latest information.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <Link to="/civic-data">
+                      <Button size="sm" variant="outline" className="h-7 text-xs">
+                        <FileQuestion className="mr-1 h-3 w-3" />FOIA Request Builder
+                      </Button>
+                    </Link>
+                    <a href={`mailto:?subject=Data Request for ${county} County&body=I am writing to request public health and services data for ${county} County, Michigan.`}>
+                      <Button size="sm" variant="outline" className="h-7 text-xs">
+                        <Mail className="mr-1 h-3 w-3" />Contact Officials
+                      </Button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Last Updated + Privacy Notice */}
         <Card className="border-muted bg-muted/30">

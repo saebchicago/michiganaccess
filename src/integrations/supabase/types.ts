@@ -714,6 +714,36 @@ export type Database = {
         }
         Relationships: []
       }
+      search_analytics: {
+        Row: {
+          corrected_to: string | null
+          created_at: string
+          had_correction: boolean | null
+          id: string
+          result_count: number | null
+          search_source: string
+          search_term: string
+        }
+        Insert: {
+          corrected_to?: string | null
+          created_at?: string
+          had_correction?: boolean | null
+          id?: string
+          result_count?: number | null
+          search_source?: string
+          search_term: string
+        }
+        Update: {
+          corrected_to?: string | null
+          created_at?: string
+          had_correction?: boolean | null
+          id?: string
+          result_count?: number | null
+          search_source?: string
+          search_term?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
