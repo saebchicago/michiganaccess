@@ -1,10 +1,10 @@
 import { useState, useMemo, useEffect, lazy, Suspense } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
   Apple, Home, Bus, Brain, Phone, ExternalLink, MapPin, Clock,
-  Globe, Heart, Shield, Users, Filter, Search, Map, List
+  Globe, Heart, Shield, Users, Filter, Search, Map, List, ChevronDown, ChevronUp, Sparkles
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -130,9 +130,18 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
   );
 }
 
+/* ── Persona → category priority mapping ── */
+const PERSONA_PRIORITY: Record<string, string[]> = {
+  resident: ["food", "housing", "mental_health", "transportation", "info_referral"],
+  "health-system": ["mental_health", "info_referral", "veterans_seniors", "education"],
+  policymaker: ["environment", "info_referral", "disaster_prep", "education"],
+};
+
+const INITIAL_VISIBLE = 5;
+
 export default function CommunityResourcesPage() {
   const { t } = useTranslation();
-  const { county: globalCounty } = useCounty();
+  const { county: globalCounty, audience } = useCounty();
   usePageMeta({
     title: "Community Resources",
     description: "Food, housing, transportation, and support services available to Michigan residents.",
@@ -150,6 +159,8 @@ export default function CommunityResourcesPage() {
   const [activeTab, setActiveTab] = useState("all");
   const [county, setCounty] = useState(globalCounty || "All Counties");
   const [search, setSearch] = useState("");
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   // Sync local county filter with global context
   useEffect(() => {
@@ -185,6 +196,31 @@ export default function CommunityResourcesPage() {
     categories.forEach((cat) => { c[cat.key] = resources.filter((r) => cat.aliases.includes(r.resource_type)).length; });
     return c;
   }, [resources]);
+
+  // Persona-driven category ordering
+  const sortedCategories = useMemo(() => {
+    const priority = PERSONA_PRIORITY[audience || "resident"] || PERSONA_PRIORITY.resident;
+    return [...categories].sort((a, b) => {
+      const ai = priority.indexOf(a.key);
+      const bi = priority.indexOf(b.key);
+      if (ai !== -1 && bi !== -1) return ai - bi;
+      if (ai !== -1) return -1;
+      if (bi !== -1) return 1;
+      return 0;
+    });
+  }, [audience]);
+
+  // Top recommended categories (first 3 from persona priority with resources)
+  const topCategories = useMemo(() =>
+    sortedCategories.filter(c => (counts[c.key] || 0) > 0).slice(0, 3),
+    [sortedCategories, counts]
+  );
+
+  // Visible results: show INITIAL_VISIBLE unless showAll
+  const visibleResults = useMemo(() =>
+    showAll ? filtered : filtered.slice(0, INITIAL_VISIBLE),
+    [filtered, showAll]
+  );
 
   return (
     <Layout>
@@ -266,22 +302,92 @@ export default function CommunityResourcesPage() {
             </p>
           </TabsContent>
           <TabsContent value="list" className="mt-4 space-y-6">
-        {/* Category stats */}
-        <div className="grid gap-3 grid-cols-2 sm:grid-cols-4">
-          {categories.map((cat, i) => (
-            <motion.div key={cat.key} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-              <Card className={`cursor-pointer transition-all ${activeTab === cat.key ? "ring-2 ring-primary" : "hover:bg-muted/50"}`} onClick={() => setActiveTab(activeTab === cat.key ? "all" : cat.key)}>
-                <CardContent className="flex items-center gap-3 py-3">
-                  <cat.icon className={`h-6 w-6 ${cat.color}`} />
-                  <div>
-                    <p className="text-lg font-bold text-foreground">{counts[cat.key] || 0}</p>
-                    <p className="text-[11px] text-muted-foreground">{cat.label}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+        {/* Smart Filter — recommended categories */}
+        {!search && activeTab === "all" && (
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <p className="text-sm font-semibold text-foreground">
+                Recommended for {audience === "policymaker" ? "Policymakers" : audience === "health-system" ? "Health Systems" : "You"}
+              </p>
+            </div>
+            <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
+              {topCategories.map((cat, i) => (
+                <motion.div key={cat.key} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+                  <Card
+                    className={`cursor-pointer transition-all ${activeTab === cat.key ? "ring-2 ring-primary" : "hover:bg-muted/50 hover:shadow-md"}`}
+                    onClick={() => { setActiveTab(cat.key); setShowAll(false); }}
+                  >
+                    <CardContent className="flex items-center gap-3 py-4">
+                      <div className={`flex h-10 w-10 items-center justify-center rounded-lg bg-muted ${cat.color}`}>
+                        <cat.icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground">{cat.label}</p>
+                        <p className="text-xs text-muted-foreground">{counts[cat.key] || 0} resources</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Collapsible full category grid */}
+        <div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setFiltersExpanded(!filtersExpanded)}
+            className="text-muted-foreground hover:text-foreground gap-1.5"
+            aria-expanded={filtersExpanded}
+          >
+            <Filter className="h-4 w-4" />
+            {filtersExpanded ? "Hide all categories" : `Browse all ${categories.length} categories`}
+            {filtersExpanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+          </Button>
+          <AnimatePresence>
+            {filtersExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="grid gap-3 grid-cols-2 sm:grid-cols-4 mt-3">
+                  {sortedCategories.map((cat, i) => (
+                    <motion.div key={cat.key} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+                      <Card
+                        className={`cursor-pointer transition-all ${activeTab === cat.key ? "ring-2 ring-primary" : "hover:bg-muted/50"}`}
+                        onClick={() => { setActiveTab(activeTab === cat.key ? "all" : cat.key); setShowAll(false); }}
+                      >
+                        <CardContent className="flex items-center gap-3 py-3">
+                          <cat.icon className={`h-6 w-6 ${cat.color}`} />
+                          <div>
+                            <p className="text-lg font-bold text-foreground">{counts[cat.key] || 0}</p>
+                            <p className="text-[11px] text-muted-foreground">{cat.label}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
+
+        {/* Active filter chip */}
+        {activeTab !== "all" && (
+          <div className="flex items-center gap-2">
+            <Badge variant="secondary" className="gap-1.5 py-1">
+              {categories.find(c => c.key === activeTab)?.label}
+              <button onClick={() => { setActiveTab("all"); setShowAll(false); }} className="ml-1 hover:text-destructive" aria-label="Clear filter">×</button>
+            </Badge>
+          </div>
+        )}
 
         {/* Filters */}
         <div className="flex items-center justify-between flex-wrap gap-3">
@@ -300,16 +406,33 @@ export default function CommunityResourcesPage() {
           </Select>
         </div>
 
-        {/* Results */}
+        {/* Results — progressive disclosure */}
         {isLoading ? (
           <ContentSkeleton variant="cards" count={6} />
         ) : filtered.length === 0 ? (
           <EmptyState
-            onReset={() => { setSearch(""); setActiveTab("all"); setCounty("All Counties"); }}
+            onReset={() => { setSearch(""); setActiveTab("all"); setCounty("All Counties"); setShowAll(false); }}
           />
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2">
-            {filtered.map((r, i) => <ResourceCard key={r.id} r={r} i={i} />)}
+          <div className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {visibleResults.map((r, i) => <ResourceCard key={r.id} r={r} i={i} />)}
+            </div>
+            {filtered.length > INITIAL_VISIBLE && (
+              <div className="text-center">
+                <Button
+                  variant="outline"
+                  onClick={() => setShowAll(!showAll)}
+                  className="gap-1.5"
+                >
+                  {showAll ? (
+                    <><ChevronUp className="h-4 w-4" />Show fewer results</>
+                  ) : (
+                    <><ChevronDown className="h-4 w-4" />Show all {filtered.length} results</>
+                  )}
+                </Button>
+              </div>
+            )}
           </div>
         )}
 

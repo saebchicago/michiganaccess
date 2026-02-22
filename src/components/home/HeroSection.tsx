@@ -5,6 +5,7 @@ import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, Ale
 import { Button } from "@/components/ui/button";
 import { getSearchSuggestions, getPopularSuggestions, parseComboQuery, getMisspellingCorrection, type SearchSuggestion } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
+import { parseNaturalLanguage } from "@/utils/naturalLanguageParser";
 
 // Extend Window for Web Speech API
 declare global {
@@ -84,15 +85,23 @@ const HeroSection = () => {
     setIsListening(false);
   }, []);
 
+  const [parsedIntent, setParsedIntent] = useState<ReturnType<typeof parseNaturalLanguage> | null>(null);
+
   const updateSuggestions = useCallback((q: string) => {
     if (q.length < 2) {
       setSuggestions(getPopularSuggestions());
       setCorrection(null);
+      setParsedIntent(null);
       return;
     }
     const results = getSearchSuggestions(q);
     const misspelling = getMisspellingCorrection(q);
     setCorrection(misspelling);
+
+    // Parse natural language intent
+    const intent = parseNaturalLanguage(q);
+    setParsedIntent(intent.service || intent.county ? intent : null);
+
     if (results.length === 0) {
       setSuggestions(getPopularSuggestions());
     } else {
@@ -121,8 +130,10 @@ const HeroSection = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
-    const { term, county } = parseComboQuery(searchQuery);
     setShowDropdown(false);
+
+    // Use NLP parser for smart routing
+    const intent = parseNaturalLanguage(searchQuery);
 
     // Log anonymized search
     logSearch({
@@ -133,11 +144,7 @@ const HeroSection = () => {
       correctedTo: correction ?? undefined,
     });
 
-    if (county) {
-      navigate(`/county/${county.toLowerCase().replace(/[\s.]+/g, "-")}?q=${encodeURIComponent(term)}`);
-    } else {
-      navigate(`/find-care?q=${encodeURIComponent(searchQuery.trim())}`);
-    }
+    navigate(intent.resolvedHref);
   };
 
   const handleSuggestionClick = (s: SearchSuggestion) => {
@@ -282,6 +289,19 @@ const HeroSection = () => {
                       <span className="text-muted-foreground">Did you mean</span>
                       <span className="font-semibold text-foreground">{correction}</span>
                       <span className="text-muted-foreground">?</span>
+                    </button>
+                  )}
+
+                  {/* NLP intent banner */}
+                  {parsedIntent && searchQuery.length >= 3 && (
+                    <button
+                      type="button"
+                      onClick={() => { setShowDropdown(false); navigate(parsedIntent.resolvedHref); }}
+                      className="w-full px-4 py-2.5 text-sm text-left bg-primary/5 hover:bg-primary/10 transition-colors flex items-center gap-2 border-b border-border"
+                    >
+                      <Sparkles className="h-3.5 w-3.5 text-primary" />
+                      <span className="text-muted-foreground">{parsedIntent.explanation}</span>
+                      <span className="ml-auto text-xs text-primary font-medium">Go →</span>
                     </button>
                   )}
 
