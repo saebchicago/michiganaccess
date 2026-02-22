@@ -1,9 +1,18 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle } from "lucide-react";
+import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle, Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getSearchSuggestions, getPopularSuggestions, parseComboQuery, getMisspellingCorrection, type SearchSuggestion } from "@/utils/searchUtils";
+import { logSearch } from "@/utils/searchAnalytics";
+
+// Extend Window for Web Speech API
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
 
 const quickPills = [
   { icon: HeartPulse, label: "Find Care", href: "/find-care" },
@@ -39,9 +48,41 @@ const HeroSection = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [correction, setCorrection] = useState<string | null>(null);
+  const [isListening, setIsListening] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const recognitionRef = useRef<any>(null);
+
+  // Web Speech API setup
+  const speechSupported = typeof window !== "undefined" && ("SpeechRecognition" in window || "webkitSpeechRecognition" in window);
+
+  const startListening = useCallback(() => {
+    if (!speechSupported) return;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = event.results[0][0].transcript;
+      setSearchQuery(transcript);
+      setShowDropdown(true);
+      setIsListening(false);
+    };
+    recognition.onerror = () => setIsListening(false);
+    recognition.onend = () => setIsListening(false);
+
+    recognitionRef.current = recognition;
+    recognition.start();
+    setIsListening(true);
+  }, [speechSupported]);
+
+  const stopListening = useCallback(() => {
+    recognitionRef.current?.stop();
+    setIsListening(false);
+  }, []);
 
   const updateSuggestions = useCallback((q: string) => {
     if (q.length < 2) {
@@ -82,6 +123,16 @@ const HeroSection = () => {
     if (!searchQuery.trim()) return;
     const { term, county } = parseComboQuery(searchQuery);
     setShowDropdown(false);
+
+    // Log anonymized search
+    logSearch({
+      term: searchQuery,
+      source: "hero",
+      resultCount: suggestions.length,
+      hadCorrection: !!correction,
+      correctedTo: correction ?? undefined,
+    });
+
     if (county) {
       navigate(`/county/${county.toLowerCase().replace(/[\s.]+/g, "-")}?q=${encodeURIComponent(term)}`);
     } else {
@@ -176,20 +227,35 @@ const HeroSection = () => {
                 onFocus={() => setShowDropdown(true)}
                 onKeyDown={handleKeyDown}
                 placeholder="Search clinics, transit, energy programs, food pantries, insurance help…"
-                className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-32 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
+                className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
                 aria-label="Search for services"
                 aria-autocomplete="list"
                 aria-controls="hero-search-suggestions"
                 aria-activedescendant={activeIndex >= 0 ? `hero-suggestion-${activeIndex}` : undefined}
                 autoComplete="off"
               />
-              <Button
-                type="submit"
-                size="lg"
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-primary hover:bg-primary/90 px-6 font-semibold shadow-lg"
-              >
-                Search
-              </Button>
+              <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                {speechSupported && (
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    onClick={isListening ? stopListening : startListening}
+                    className={`rounded-full h-10 w-10 transition-colors ${isListening ? "text-destructive bg-destructive/10 animate-pulse" : "text-muted-foreground hover:text-foreground"}`}
+                    aria-label={isListening ? "Stop voice search" : "Start voice search"}
+                    title={isListening ? "Listening… tap to stop" : "Voice search"}
+                  >
+                    {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+                  </Button>
+                )}
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="rounded-full bg-primary hover:bg-primary/90 px-6 font-semibold shadow-lg"
+                >
+                  Search
+                </Button>
+              </div>
             </div>
 
             {/* Autocomplete Dropdown */}

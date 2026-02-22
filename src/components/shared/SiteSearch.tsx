@@ -7,6 +7,7 @@ import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, Command
 import { supabase } from "@/integrations/supabase/client";
 import { countyToSlug } from "@/utils/countyUtils";
 import { getSearchSuggestions, getPopularSuggestions, getMisspellingCorrection, parseComboQuery, type SearchSuggestion } from "@/utils/searchUtils";
+import { logSearch } from "@/utils/searchAnalytics";
 
 const STATIC_PAGES = [
   { label: "Find Care", href: "/find-care", category: "page" },
@@ -156,7 +157,16 @@ export default function SiteSearch() {
   }, [query, search]);
 
   const handleSelect = (href: string) => {
-    if (query.length >= 2) saveRecentSearch(query);
+    if (query.length >= 2) {
+      saveRecentSearch(query);
+      logSearch({
+        term: query,
+        source: "command-palette",
+        resultCount: results.length + smartSuggestions.length,
+        hadCorrection: !!correction,
+        correctedTo: correction ?? undefined,
+      });
+    }
     setOpen(false);
     setQuery("");
     setResults([]);
