@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import DataProvenance from "@/components/shared/DataProvenance";
 import { motion } from "framer-motion";
 import { Zap, AlertTriangle, Users, Clock, ArrowUpDown, Filter, Download, Activity, TrendingUp } from "lucide-react";
 import Layout from "@/components/layout/Layout";
@@ -338,14 +339,10 @@ export default function OutagesPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="py-6 text-center space-y-2">
-                <p className="text-sm text-muted-foreground">
-                  Data sources: DTE Energy Outage Center, Consumers Energy Outage Map (Kubra StormCenter API).
-                  Refresh interval: 15 minutes. Historical trends are illustrative estimates.
-                </p>
-              </CardContent>
-            </Card>
+            <DataProvenance
+              source="DTE Energy Outage Center, Consumers Energy (Kubra StormCenter API)"
+              updated="15-min refresh"
+            />
           </TabsContent>
         </Tabs>
       </section>
