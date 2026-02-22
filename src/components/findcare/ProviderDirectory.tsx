@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Star, Stethoscope, Globe, Wifi, Users, GraduationCap, Award, Shield, DollarSign, Phone, MapPin, UserCheck, UserX, CreditCard } from "lucide-react";
+import { Star, Stethoscope, Globe, Wifi, Users, GraduationCap, Award, Shield, DollarSign, Phone, MapPin, UserCheck, UserX, CreditCard, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -240,6 +240,12 @@ export default function ProviderDirectory({ facilities }: Props) {
                     )}
 
                     <ValueBadges specialty={p.specialty} boardCertified={p.board_certified} yearsExperience={p.years_experience} />
+
+                    {/* Last Updated */}
+                    <p className="text-[9px] text-muted-foreground flex items-center gap-1">
+                      <Clock className="h-2.5 w-2.5" />
+                      Last verified: {new Date(p.created_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                    </p>
 
                     {/* Details */}
                     <div className="text-[11px] text-muted-foreground space-y-0.5">

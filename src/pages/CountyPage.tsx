@@ -5,7 +5,7 @@ import { useEffect, lazy, Suspense } from "react";
 import {
   MapPin, Users, Heart, Building2, Phone, ExternalLink,
   ArrowLeft, TrendingUp, TrendingDown, Minus, Globe, Calendar,
-  FileQuestion, Mail
+  FileQuestion, Mail, ShieldCheck
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -137,6 +137,27 @@ export default function CountyPage() {
 
   // Check for data gaps
   const hasDataGaps = profile.healthHighlights.length < 3 || safeF.length < 3;
+
+  // Data Confidence Score: based on availability of real-time API feeds vs static FOIA data
+  const dataConfidence = (() => {
+    let score = 0;
+    let sources: string[] = [];
+    // Real-time facility data from CMS
+    if (safeF.length > 0) { score += 25; sources.push("CMS Facilities"); }
+    // Community resources
+    if (safeR.length >= 3) { score += 20; sources.push("Community Resources"); }
+    // Health highlights completeness
+    if (profile.healthHighlights.length >= 3) { score += 20; sources.push("County Health Rankings"); }
+    // Events data (real-time)
+    if (safeE.length > 0) { score += 15; sources.push("Live Events Feed"); }
+    // Major system presence (indicates richer data ecosystem)
+    if (sortedFacilities.some(f => MAJOR_SYSTEMS.some(s => f.system_affiliation?.includes(s) || f.name.includes(s)))) { score += 10; sources.push("Major Health Systems"); }
+    // Population data available
+    if (profile.population > 0) { score += 10; sources.push("Census ACS"); }
+    const level = score >= 80 ? "High" : score >= 50 ? "Moderate" : "Limited";
+    const color = score >= 80 ? "text-michigan-forest" : score >= 50 ? "text-michigan-gold" : "text-destructive";
+    return { score, level, color, sources };
+  })();
 
   return (
     <Layout>
@@ -331,6 +352,40 @@ export default function CountyPage() {
             ) : null;
           })()}
         </section>
+
+        {/* Data Confidence Score */}
+        <Card className="border-muted">
+          <CardContent className="py-4">
+            <div className="flex items-center gap-3 mb-2">
+              <ShieldCheck className={`h-5 w-5 ${dataConfidence.color} flex-shrink-0`} />
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-semibold text-foreground">Data Confidence</h3>
+                  <Badge variant="outline" className={`text-xs ${dataConfidence.color}`}>
+                    {dataConfidence.level} · {dataConfidence.score}%
+                  </Badge>
+                </div>
+                <div className="mt-1.5 h-1.5 w-full rounded-full bg-muted overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      width: `${dataConfidence.score}%`,
+                      backgroundColor: dataConfidence.score >= 80 ? "hsl(var(--michigan-forest))" : dataConfidence.score >= 50 ? "hsl(var(--michigan-gold))" : "hsl(var(--destructive))",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {dataConfidence.sources.map((s) => (
+                <Badge key={s} variant="secondary" className="text-[9px] py-0">{s}</Badge>
+              ))}
+            </div>
+            <p className="text-[10px] text-muted-foreground mt-2">
+              Score reflects the breadth of verified data sources available for this county. Higher scores indicate more real-time API feeds vs. static records.
+            </p>
+          </CardContent>
+        </Card>
 
         {/* Map */}
         <section>

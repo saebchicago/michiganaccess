@@ -9,6 +9,15 @@ import { countyToSlug } from "@/utils/countyUtils";
 import { getSearchSuggestions, getPopularSuggestions, getMisspellingCorrection, parseComboQuery, type SearchSuggestion } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
 
+const ACTION_SHORTCUTS = [
+  { command: "/call", label: "Find crisis lines & hotlines", href: "/find-care", icon: "📞" },
+  { command: "/food", label: "Find food assistance near you", href: "/resources", icon: "🍎" },
+  { command: "/insurance", label: "Insurance help & appeals", href: "/health/insurance-appeals", icon: "🛡️" },
+  { command: "/shelter", label: "Find housing & shelter", href: "/resources", icon: "🏠" },
+  { command: "/dental", label: "Find affordable dental care", href: "/find-care", icon: "🦷" },
+  { command: "/transport", label: "Transportation assistance", href: "/transportation", icon: "🚌" },
+];
+
 const STATIC_PAGES = [
   { label: "Find Care", href: "/find-care", category: "page" },
   { label: "Health Map", href: "/health-map", category: "page" },
@@ -238,6 +247,28 @@ export default function SiteSearch() {
               )}
             </div>
             <CommandList>
+              {/* Action Shortcuts when query starts with / */}
+              {query.startsWith("/") && (
+                <CommandGroup heading="⚡ Action Shortcuts">
+                  {ACTION_SHORTCUTS
+                    .filter((s) => s.command.startsWith(query.toLowerCase()) || query === "/")
+                    .map((s) => (
+                      <CommandItem
+                        key={s.command}
+                        value={`action-${s.command}`}
+                        onSelect={() => handleSelect(s.href)}
+                        className="flex items-center gap-3 cursor-pointer"
+                      >
+                        <span className="text-base">{s.icon}</span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium">{s.label}</p>
+                          <p className="text-[10px] text-muted-foreground font-mono">{s.command}</p>
+                        </div>
+                      </CommandItem>
+                    ))}
+                </CommandGroup>
+              )}
+
               {/* Misspelling correction */}
               {correction && query.length >= 2 && (
                 <div className="px-3 py-2 border-b border-border">
@@ -254,7 +285,7 @@ export default function SiteSearch() {
               )}
 
               {/* Smart suggestions (keyword/county matches) */}
-              {query.length >= 2 && smartSuggestions.length > 0 && smartSuggestions[0].category !== "popular" && (
+              {query.length >= 2 && !query.startsWith("/") && smartSuggestions.length > 0 && smartSuggestions[0].category !== "popular" && (
                 <CommandGroup heading="Quick Matches">
                   {smartSuggestions.slice(0, 4).map((s, i) => (
                     <CommandItem
@@ -348,9 +379,9 @@ export default function SiteSearch() {
                 </CommandGroup>
               ))}
             </CommandList>
-            <div className="border-t border-border px-3 py-2 text-xs text-muted-foreground flex items-center gap-2">
+            <div className="border-t border-border px-3 py-2 text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
               <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">⌘K</kbd>
-              to toggle search · type a county name for local results
+              to toggle · type a county name for local results · type <kbd className="rounded border border-border bg-muted px-1 py-0 font-mono text-[10px]">/</kbd> for shortcuts
             </div>
           </Command>
         </DialogContent>
