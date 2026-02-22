@@ -1,19 +1,21 @@
-import { ReactNode } from "react";
+import { ReactNode, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import Header from "./Header";
 import Footer from "./Footer";
 import CrisisBar from "@/components/shared/CrisisBar";
 import ContextBar from "@/components/shared/ContextBar";
-import AIChatWidget from "@/components/shared/AIChatWidget";
-import PrintButton from "@/components/shared/PrintButton";
-import PageFeedback from "@/components/shared/PageFeedback";
-import PWAInstallBanner from "@/components/shared/PWAInstallBanner";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
-import MobileBottomNav from "@/components/shared/MobileBottomNav";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import SkipToContent from "@/components/shared/SkipToContent";
 import RouteAnnouncer from "@/components/shared/RouteAnnouncer";
-import QuickExitBar from "@/components/shared/QuickExitBar";
+
+// Deferred: non-critical widgets that don't affect initial render
+const AIChatWidget = lazy(() => import("@/components/shared/AIChatWidget"));
+const PrintButton = lazy(() => import("@/components/shared/PrintButton"));
+const PageFeedback = lazy(() => import("@/components/shared/PageFeedback"));
+const PWAInstallBanner = lazy(() => import("@/components/shared/PWAInstallBanner"));
+const MobileBottomNav = lazy(() => import("@/components/shared/MobileBottomNav"));
+const QuickExitBar = lazy(() => import("@/components/shared/QuickExitBar"));
 
 interface LayoutProps {
   children: ReactNode;
@@ -38,14 +40,16 @@ const Layout = ({ children }: LayoutProps) => (
         {children}
       </motion.main>
     </ErrorBoundary>
-    <PageFeedback />
     <Footer />
-    <PrintButton />
-    <PWAInstallBanner />
     <ScrollToTop />
-    <MobileBottomNav />
-    <AIChatWidget />
-    <QuickExitBar />
+    <Suspense fallback={null}>
+      <PageFeedback />
+      <PrintButton />
+      <PWAInstallBanner />
+      <MobileBottomNav />
+      <AIChatWidget />
+      <QuickExitBar />
+    </Suspense>
   </div>
 );
 

@@ -1,15 +1,17 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import {
   BarChart3, TrendingUp, TrendingDown, Activity, Heart, Brain, Users,
   MapPin, Shield, Baby, Stethoscope, Download, Zap, Pill
 } from "lucide-react";
-import ExternalEmbeds from "@/components/dashboard/ExternalEmbeds";
-import DisparityGapChart from "@/components/dashboard/DisparityGapChart";
-import CSVExportPanel from "@/components/dashboard/CSVExportPanel";
-import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
-import EnergyBurdenMap from "@/components/dashboard/EnergyBurdenMap";
-import DrugPriceLookup from "@/components/learn/DrugPriceLookup";
+
+// Lazy-load heavy dashboard sub-components
+const ExternalEmbeds = lazy(() => import("@/components/dashboard/ExternalEmbeds"));
+const DisparityGapChart = lazy(() => import("@/components/dashboard/DisparityGapChart"));
+const CSVExportPanel = lazy(() => import("@/components/dashboard/CSVExportPanel"));
+const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
+const EnergyBurdenMap = lazy(() => import("@/components/dashboard/EnergyBurdenMap"));
+const DrugPriceLookup = lazy(() => import("@/components/learn/DrugPriceLookup"));
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -418,11 +420,15 @@ export default function HealthDataDashboardPage() {
             </Card>
           </TabsContent>
           <TabsContent value="heatmap" className="mt-6 space-y-6">
-            <CountyChoropleth />
+            <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
+              <CountyChoropleth />
+            </Suspense>
           </TabsContent>
 
           <TabsContent value="energy" className="mt-6 space-y-6">
-            <EnergyBurdenMap />
+            <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
+              <EnergyBurdenMap />
+            </Suspense>
             {/* EIA SEDS Time-Series */}
             <Card>
               <CardHeader>
@@ -488,15 +494,19 @@ export default function HealthDataDashboardPage() {
           </TabsContent>
 
           <TabsContent value="disparities" className="mt-6 space-y-6">
-            <DisparityGapChart />
-            <EnergyBurdenMap />
-            <CSVExportPanel />
+            <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
+              <DisparityGapChart />
+              <EnergyBurdenMap />
+              <CSVExportPanel />
+            </Suspense>
           </TabsContent>
 
           <TabsContent value="research" className="mt-6 space-y-6">
-            <DrugPriceLookup />
-            <ExternalEmbeds />
-            <CSVExportPanel />
+            <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
+              <DrugPriceLookup />
+              <ExternalEmbeds />
+              <CSVExportPanel />
+            </Suspense>
           </TabsContent>
         </Tabs>
 
