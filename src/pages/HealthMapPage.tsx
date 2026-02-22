@@ -1,10 +1,9 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { MapPin, Layers, Info, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
-import HealthMap from "@/components/map/HealthMap";
 import MapLayerControls, { LAYERS } from "@/components/map/MapLayerControls";
 import MapLegend from "@/components/map/MapLegend";
 import SectorOverlayControls from "@/components/map/SectorOverlayControls";
@@ -15,6 +14,9 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import MapFirstVisitTooltip from "@/components/map/MapFirstVisitTooltip";
 import NetworkFilter from "@/components/map/NetworkFilter";
+
+// Lazy-load the heavy map component (520 lines + Leaflet + clustering)
+const HealthMap = lazy(() => import("@/components/map/HealthMap"));
 
 const DEFAULT_LAYERS = LAYERS.filter((l) => l.defaultOn).map((l) => l.id);
 
@@ -40,7 +42,6 @@ export default function HealthMapPage() {
   }, []);
 
   const handleSearchLocation = useCallback((lat: number, lon: number, name: string) => {
-    // Map panning handled via ref — this is a placeholder for future enhancement
     console.log("Navigate to:", lat, lon, name);
   }, []);
 
@@ -63,9 +64,7 @@ export default function HealthMapPage() {
             {county && <span className="block mt-1 font-medium text-primary">Filtered: {county} County</span>}
           </p>
 
-          {/* Address Search */}
           <MapSearchControl onLocationSelect={handleSearchLocation} />
-
           <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
           <SectorOverlayControls activeOverlays={activeOverlays} onToggleOverlay={toggleOverlay} />
           <NetworkFilter selectedSystem={selectedSystem} onSelect={setSelectedSystem} />
@@ -106,10 +105,9 @@ export default function HealthMapPage() {
           </Sheet>
         </div>
 
-        {/* First-visit tooltip */}
         <MapFirstVisitTooltip />
 
-        {/* Map */}
+        {/* Map — lazy loaded */}
         <div className="relative flex-1">
           {isLoading && (
             <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-background/80 backdrop-blur-sm">
@@ -123,12 +121,18 @@ export default function HealthMapPage() {
               </motion.div>
             </div>
           )}
-          <HealthMap
-            facilities={facilities}
-            activeLayers={activeLayers}
-            activeOverlays={activeOverlays}
-            selectedSystem={selectedSystem}
-          />
+          <Suspense fallback={
+            <div className="flex h-full items-center justify-center bg-muted/30">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+            </div>
+          }>
+            <HealthMap
+              facilities={facilities}
+              activeLayers={activeLayers}
+              activeOverlays={activeOverlays}
+              selectedSystem={selectedSystem}
+            />
+          </Suspense>
         </div>
       </div>
     </Layout>

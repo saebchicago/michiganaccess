@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, BarChart3 } from "lucide-react";
-import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
-import EnergyBurdenMap from "@/components/dashboard/EnergyBurdenMap";
+import { lazy, Suspense, useMemo } from "react";
 import CountySelector from "@/components/shared/CountySelector";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,10 @@ import {
 } from "recharts";
 import { useCounty } from "@/contexts/CountyContext";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
-import { useMemo } from "react";
+
+// Heavy map components — lazy loaded
+const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
+const EnergyBurdenMap = lazy(() => import("@/components/dashboard/EnergyBurdenMap"));
 import DataActionBanners from "@/components/home/DataActionBanners";
 
 const fadeUp = {
@@ -279,12 +281,14 @@ export default function HealthDataSnapshot() {
 
         {/* County Choropleth Heatmap — hidden on mobile */}
         <div className="hidden md:block">
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
-            <CountyChoropleth compact />
-          </motion.div>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2.5}>
-            <EnergyBurdenMap compact />
-          </motion.div>
+          <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+              <CountyChoropleth compact />
+            </motion.div>
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2.5}>
+              <EnergyBurdenMap compact />
+            </motion.div>
+          </Suspense>
         </div>
 
         {/* Disparity Spotlight + CTA */}
