@@ -15,6 +15,7 @@ import TransportationCallout from "@/components/shared/TransportationCallout";
 import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
 import CivicDataCallout from "@/components/shared/CivicDataCallout";
 import { useCDCData, transformPlacesToAQI } from "@/hooks/useCDCData";
+import EnergyAssistanceFinder from "@/components/energy/EnergyAssistanceFinder";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -379,6 +380,11 @@ const EnvironmentPage = () => {
                       </CardContent>
                     </Card>
                   ))}
+                </motion.div>
+
+                {/* Energy Assistance Program Finder */}
+                <motion.div variants={fadeUp}>
+                  <EnergyAssistanceFinder />
                 </motion.div>
               </motion.div>
             </TabsContent>
