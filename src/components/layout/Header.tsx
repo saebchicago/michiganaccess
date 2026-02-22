@@ -36,6 +36,7 @@ const Header = () => {
       label: "Services",
       children: [
         { label: "Energy & Utilities", href: "/environment" },
+        { label: "Utility Outages", href: "/outages" },
         { label: "School & Bus Safety", href: "/transportation" },
         { label: t("nav.healthConditions"), href: "/conditions" },
         { label: "Insurance Appeals", href: "/health/insurance-appeals" },

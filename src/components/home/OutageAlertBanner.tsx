@@ -56,14 +56,20 @@ export default function OutageAlertBanner() {
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <Link
-              to="/health-map"
+              to="/outages"
               className={`inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
                 isCritical
                   ? "bg-destructive/20 hover:bg-destructive/30 border border-destructive/30 text-destructive"
                   : "bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-700 dark:text-amber-300"
               }`}
             >
-              View Map <ArrowRight className="h-3 w-3" />
+              View Dashboard <ArrowRight className="h-3 w-3" />
+            </Link>
+            <Link
+              to="/health-map"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Map
             </Link>
             <button
               onClick={() => setDismissed(true)}
