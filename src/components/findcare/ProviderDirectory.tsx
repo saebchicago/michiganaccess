@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { useProviders, type Provider } from "@/hooks/useProviders";
 import { type Facility } from "@/hooks/useFacilities";
 import ValueBadges from "@/components/civic/ValueBadges";
+import ProviderCostComparison from "./ProviderCostComparison";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -281,6 +282,9 @@ export default function ProviderDirectory({ facilities }: Props) {
           })}
         </div>
       )}
+
+      {/* Cost Comparison Tool */}
+      <ProviderCostComparison providers={filtered} facilityMap={facilityMap} />
 
       {/* Disclaimer */}
       <p className="text-[10px] text-muted-foreground text-center mt-4">
