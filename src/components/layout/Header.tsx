@@ -59,6 +59,7 @@ const Header = () => {
         { label: "Health Equity", href: "/equity" },
         { label: "For Health Systems", href: "/for-health-systems" },
         { label: "Impact Dashboard", href: "/impact" },
+        { label: "Search Trends", href: "/admin/search-trends" },
         { label: "Case Studies", href: "/case-studies" },
       ],
     },

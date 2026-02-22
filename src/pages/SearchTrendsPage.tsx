@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { supabase } from "@/integrations/supabase/client";
+
 
 interface AnalyticsData {
   totalSearches: number;
@@ -46,14 +46,12 @@ export default function SearchTrendsPage() {
     async function fetchData() {
       setLoading(true);
       try {
-        const { data: result, error } = await supabase.functions.invoke("search-analytics", {
-          body: null,
-          method: "GET",
-        });
-        // fallback: use fetch directly with query param
         const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/search-analytics?days=${days}`;
         const res = await fetch(url, {
-          headers: { apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY },
+          headers: {
+            apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
         });
         if (res.ok) {
           setData(await res.json());
