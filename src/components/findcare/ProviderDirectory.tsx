@@ -10,6 +10,7 @@ import { useProviders, type Provider } from "@/hooks/useProviders";
 import { type Facility } from "@/hooks/useFacilities";
 import ValueBadges from "@/components/civic/ValueBadges";
 import ProviderCostComparison from "./ProviderCostComparison";
+import { ALL_SPECIALTIES } from "@/data/findhelp-specialties";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -76,9 +77,11 @@ export default function ProviderDirectory({ facilities }: Props) {
     return m;
   }, [facilities]);
 
+  // Merge DB specialties with full SPECIALTY_GROUPS reference list
   const specialties = useMemo(() => {
-    const s = new Set(providers.map((p) => p.specialty));
-    return ["all", ...Array.from(s).sort()];
+    const dbSpecs = new Set(providers.map((p) => p.specialty));
+    const allSpecs = new Set([...dbSpecs, ...ALL_SPECIALTIES.map((s) => s.value)]);
+    return ["all", ...Array.from(allSpecs).sort()];
   }, [providers]);
 
   const languages = useMemo(() => {

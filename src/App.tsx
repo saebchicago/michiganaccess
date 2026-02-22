@@ -59,6 +59,7 @@ const SitemapPage = lazy(() => import("./pages/SitemapPage"));
 const SupportPage = lazy(() => import("./pages/SupportPage"));
 const CountyRedirect = lazy(() => import("./pages/CountyRedirect"));
 const DataValidationPage = lazy(() => import("./pages/DataValidationPage"));
+const OutagesPage = lazy(() => import("./pages/OutagesPage"));
 const queryClient = new QueryClient();
 
 const PageLoader = () => (
@@ -127,6 +128,7 @@ const App = () => (
               <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="/support" element={<SupportPage />} />
               <Route path="/data-validation" element={<DataValidationPage />} />
+              <Route path="/outages" element={<OutagesPage />} />
               {/* County shortcut: /wayne → /county/wayne */}
               <Route path="/:slug" element={<CountyRedirect />} />
               <Route path="*" element={<NotFound />} />
