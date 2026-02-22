@@ -44,3 +44,6 @@ verify_jwt = false
 
 [functions.outage-proxy]
 verify_jwt = false
+
+[functions.search-analytics]
+verify_jwt = false

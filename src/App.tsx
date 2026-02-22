@@ -60,6 +60,7 @@ const SupportPage = lazy(() => import("./pages/SupportPage"));
 const CountyRedirect = lazy(() => import("./pages/CountyRedirect"));
 const DataValidationPage = lazy(() => import("./pages/DataValidationPage"));
 const OutagesPage = lazy(() => import("./pages/OutagesPage"));
+const SearchTrendsPage = lazy(() => import("./pages/SearchTrendsPage"));
 const queryClient = new QueryClient();
 
 const PageLoader = () => (
@@ -129,6 +130,7 @@ const App = () => (
               <Route path="/support" element={<SupportPage />} />
               <Route path="/data-validation" element={<DataValidationPage />} />
               <Route path="/outages" element={<OutagesPage />} />
+              <Route path="/admin/search-trends" element={<SearchTrendsPage />} />
               {/* County shortcut: /wayne → /county/wayne */}
               <Route path="/:slug" element={<CountyRedirect />} />
               <Route path="*" element={<NotFound />} />
