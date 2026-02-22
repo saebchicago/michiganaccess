@@ -27,6 +27,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 import CountyChoropleth from "@/components/dashboard/CountyChoropleth";
+import CommunityAlerts from "@/components/home/CommunityAlerts";
 
 const Index = () => {
   const { t } = useTranslation();
@@ -95,6 +96,9 @@ const Index = () => {
           )}
         </div>
       </section>
+
+      {/* ── Community Alerts & Insights ── */}
+      <CommunityAlerts />
 
       {/* ── Uninsured Heatmap (Oakland highlighted) ── */}
       <section className="py-8">
