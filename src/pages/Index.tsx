@@ -68,7 +68,7 @@ const Index = () => {
           wizard CTA, and guided pathways.
       ═══════════════════════════════════════════════════════════════════ */}
       <HeroSection /> 
-      <div className="container">
+      <div className="container py-4">
         <DataProvenance
           source="Public datasets (State of Michigan + local agencies). Independently organized."
           updated="2026-02-23"
