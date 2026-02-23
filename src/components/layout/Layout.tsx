@@ -8,6 +8,7 @@ import ErrorBoundary from "@/components/shared/ErrorBoundary";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import SkipToContent from "@/components/shared/SkipToContent";
 import RouteAnnouncer from "@/components/shared/RouteAnnouncer";
+import PublicTrustBar from "@/components/shared/PublicTrustBar";
 
 // Deferred: non-critical widgets that don't affect initial render
 const AIChatWidget = lazy(() => import("@/components/shared/AIChatWidget"));
@@ -40,7 +41,8 @@ const Layout = ({ children }: LayoutProps) => (
         {children}
       </motion.main>
     </ErrorBoundary>
-    <Footer />
+    <PublicTrustBar />
+<Footer />
     <ScrollToTop />
     <Suspense fallback={null}>
       <PageFeedback />
