@@ -74,7 +74,7 @@ const Index = () => {
           source="Public datasets (State of Michigan + local agencies). Independently organized."
           updated="2026-02-23"
           methodologyHref="/about"
-          />
+        />
         </div>
 
       <div className="container py-4 flex justify-center">
@@ -93,22 +93,22 @@ const Index = () => {
           LAYER 3 — PERSONALIZED SNAPSHOT
           Context-aware, region-reactive content. Lazy-loaded.
       ═══════════════════════════════════════════════════════════════════ */}
-    <SectionErrorBoundary title="Some content didn’t load"></SectionErrorBoundary>
-      <LazySection>
-        <Suspense fallback={<SectionFallback />}>
-          <HealthDataSnapshot />
-          <NearbyResourceFinder />
-          <CoreAccessGrid />
-          <TransportationSafetyCallout />
-        </Suspense>
-      </LazySection>
-    </SectionErrorBoundary>
+      <SectionErrorBoundary title="Some content didn't load">
+        <LazySection>
+          <Suspense fallback={<SectionFallback />}>
+            <HealthDataSnapshot />
+            <NearbyResourceFinder />
+            <CoreAccessGrid />
+            <TransportationSafetyCallout />
+          </Suspense>
+        </LazySection>
+      </SectionErrorBoundary>
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 4 — EXPLORATION (lower priority, progressive disclosure)
           Community spotlights, alerts, data deep-dives, regional gateways.
       ═══════════════════════════════════════════════════════════════════ */}
-    <SectionErrorBoundary title="Some content didn’t load">
+      <SectionErrorBoundary title="Some content didn't load">
       <LazySection>
         <Suspense fallback={<SectionFallback />}>
           <SpotlightTabs />
@@ -147,15 +147,13 @@ const Index = () => {
             </div>
           </section>
 
-          <div className="container pb-10">
-            <DataProvenance source="State of Michigan & other public sources" updated="2026-02-23" methodologyHref="/about" />
-          </div>
+         
 
           <RegionalGateway />
           <SuccessStories />
-        </Suspense>
-      </LazySection>
-    </SectionErrorBoundary>
+         </Suspense>
+        </LazySection>
+     </SectionErrorBoundary>
 
       {/* AI Chat — just above footer */}
       <AccessChat />
