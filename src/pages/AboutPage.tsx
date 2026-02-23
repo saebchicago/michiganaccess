@@ -2,22 +2,39 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { usePageMeta } from "@/hooks/usePageMeta";
+
 import UpdateLog from "@/components/shared/UpdateLog";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import HealthEquitySection from "@/components/home/HealthEquitySection";
+
 import {
-  Shield, BarChart3, Globe, Users, Heart, Scale, Database,
-  ExternalLink, BookOpen, Award, Target, Lightbulb, CheckCircle2,
-  ArrowRight, Info, Sparkles
+  Shield,
+  BarChart3,
+  Globe,
+  Users,
+  Heart,
+  Scale,
+  Database,
+  ExternalLink,
+  BookOpen,
+  Award,
+  Target,
+  Lightbulb,
+  CheckCircle2,
+  ArrowRight,
+  Info,
+  Sparkles,
 } from "lucide-react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
-    opacity: 1, y: 0,
+    opacity: 1,
+    y: 0,
     transition: { delay: i * 0.1, duration: 0.5 },
   }),
 };
@@ -26,61 +43,71 @@ const dataSources = [
   {
     name: "Centers for Medicare & Medicaid Services (CMS)",
     url: "https://data.cms.gov/provider-data/",
-    description: "Hospital quality metrics, patient safety indicators, readmission rates, mortality data, HCAHPS patient experience scores",
+    description:
+      "Hospital quality metrics, patient safety indicators, readmission rates, mortality data, HCAHPS patient experience scores",
     update: "Quarterly",
   },
   {
     name: "Leapfrog Group Hospital Safety Grades",
     url: "https://www.hospitalsafetygrade.org/",
-    description: "Independent hospital safety grades (A–F) based on errors, injuries, accidents, and infections",
+    description:
+      "Independent hospital safety grades (A–F) based on errors, injuries, accidents, and infections",
     update: "Biannual (Spring/Fall)",
   },
   {
     name: "ANCC Magnet Recognition Program",
     url: "https://www.nursingworld.org/organizational-programs/magnet/",
-    description: "Gold standard for nursing excellence; recognizes superior nursing processes and outcomes",
+    description:
+      "Gold standard for nursing excellence; recognizes superior nursing processes and outcomes",
     update: "Ongoing designation",
   },
   {
     name: "Blue Cross Blue Shield Blue Distinction Centers",
     url: "https://www.bcbs.com/blue-distinction-specialty-care",
-    description: "Specialty care quality designations for cardiac, orthopedic, maternity, cancer, and transplant programs",
+    description:
+      "Specialty care quality designations for cardiac, orthopedic, maternity, cancer, and transplant programs",
     update: "Annual review",
   },
   {
     name: "Health Resources & Services Administration (HRSA)",
     url: "https://data.hrsa.gov/",
-    description: "Health Professional Shortage Areas (HPSAs), Federally Qualified Health Centers, Medically Underserved Areas",
+    description:
+      "Health Professional Shortage Areas (HPSAs), Federally Qualified Health Centers, Medically Underserved Areas",
     update: "Quarterly",
   },
   {
     name: "CDC PLACES & BRFSS",
     url: "https://www.cdc.gov/places/",
-    description: "Chronic disease prevalence, health behavior data, and community health indicators at county/census tract level",
+    description:
+      "Chronic disease prevalence, health behavior data, and community health indicators at county/census tract level",
     update: "Annual",
   },
   {
     name: "Michigan Department of Health & Human Services",
     url: "https://www.michigan.gov/mdhhs",
-    description: "State-level health data, Medicaid/Healthy Michigan Plan information, vital records, disease surveillance",
+    description:
+      "State-level health data, Medicaid/Healthy Michigan Plan information, vital records, disease surveillance",
     update: "Varies by dataset",
   },
   {
     name: "County Health Rankings & Roadmaps",
     url: "https://www.countyhealthrankings.org/explore-health-rankings/michigan",
-    description: "County-level health outcomes, health behaviors, clinical care access, social & economic factors, physical environment",
+    description:
+      "County-level health outcomes, health behaviors, clinical care access, social & economic factors, physical environment",
     update: "Annual (March)",
   },
   {
     name: "U.S. Census Bureau (ACS)",
     url: "https://data.census.gov/",
-    description: "Demographic data, poverty rates, insurance coverage, social determinants indicators",
+    description:
+      "Demographic data, poverty rates, insurance coverage, social determinants indicators",
     update: "Annual estimates",
   },
   {
     name: "ClinicalTrials.gov",
     url: "https://clinicaltrials.gov/",
-    description: "Active clinical trial listings in Michigan by condition, phase, and enrollment status",
+    description:
+      "Active clinical trial listings in Michigan by condition, phase, and enrollment status",
     update: "Real-time",
   },
 ];
@@ -91,34 +118,47 @@ const rankingFactors = [
     weight: 40,
     icon: Globe,
     color: "text-michigan-sky",
-    description: "Closer care is more accessible care. We prioritize healthcare near your location because geographic proximity directly impacts whether residents seek and maintain care.",
+    description:
+      "Closer care is more accessible care. We prioritize healthcare near your location because geographic proximity directly impacts whether residents seek and maintain care.",
   },
   {
     factor: "Quality & Safety Scores",
     weight: 30,
     icon: Shield,
     color: "text-michigan-forest",
-    description: "Independent ratings from Leapfrog (hospital safety), CMS (clinical quality), Blue Distinction Centers (specialty excellence), and ANCC Magnet Recognition (nursing quality). Higher objective ratings rank higher.",
+    description:
+      "Independent ratings from Leapfrog (hospital safety), CMS (clinical quality), Blue Distinction Centers (specialty excellence), and ANCC Magnet Recognition (nursing quality). Higher objective ratings rank higher.",
   },
   {
     factor: "Digital Access",
     weight: 15,
     icon: BarChart3,
     color: "text-michigan-teal",
-    description: "Online scheduling, patient portal, telehealth, electronic records, and prescription refills. Digital access reduces barriers, especially for working families and rural residents.",
+    description:
+      "Online scheduling, patient portal, telehealth, electronic records, and prescription refills. Digital access reduces barriers, especially for working families and rural residents.",
   },
   {
     factor: "Service Comprehensiveness",
     weight: 15,
     icon: Heart,
     color: "text-michigan-blue",
-    description: "Breadth of specialties, integrated support services (behavioral health, social work, nutrition), and on-site ancillary services. Comprehensive facilities reduce care fragmentation.",
+    description:
+      "Breadth of specialties, integrated support services (behavioral health, social work, nutrition), and on-site ancillary services. Comprehensive facilities reduce care fragmentation.",
   },
 ];
 
 export default function AboutPage() {
   const { t } = useTranslation();
-  usePageMeta({ title: t("aboutPage.badge"), description: t("aboutPage.subtitle"), path: "/about" });
+
+  // ✅ Set metadata ONCE, consistently.
+  // If your i18n strings exist, they’ll still drive visible text content.
+  usePageMeta({
+    title: "About & Methodology | Access Michigan",
+    description:
+      "How Access Michigan organizes public datasets, explains ranking logic, and maintains independence from government agencies.",
+    path: "/about",
+  });
+
   return (
     <Layout>
       {/* Hero */}
@@ -130,10 +170,22 @@ export default function AboutPage() {
               {t("aboutPage.badge")}
             </span>
           </motion.div>
-          <motion.h1 variants={fadeUp} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
+          <motion.h1
+            variants={fadeUp}
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            className="mb-4 text-3xl font-bold text-foreground lg:text-5xl"
+          >
             {t("aboutPage.title")}
           </motion.h1>
-          <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
+          <motion.p
+            variants={fadeUp}
+            custom={2}
+            initial="hidden"
+            animate="visible"
+            className="mx-auto max-w-2xl text-lg text-muted-foreground"
+          >
             {t("aboutPage.subtitle")}
           </motion.p>
         </div>
@@ -144,19 +196,29 @@ export default function AboutPage() {
 
       <div className="container max-w-5xl py-12 space-y-16">
         {/* Mission */}
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          custom={0}
+        >
           <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8 lg:p-12">
             <h2 className="mb-4 text-2xl font-bold text-foreground">{t("aboutPage.missionTitle")}</h2>
-            <p className="text-muted-foreground leading-relaxed">
-              {t("aboutPage.missionDesc")}
-            </p>
+            <p className="text-muted-foreground leading-relaxed">{t("aboutPage.missionDesc")}</p>
+
             <div className="mt-8 grid gap-6 sm:grid-cols-3">
               {[
                 { icon: Scale, titleKey: "independentTitle", descKey: "independentDesc" },
                 { icon: Users, titleKey: "residentFirstTitle", descKey: "residentFirstDesc" },
                 { icon: Database, titleKey: "dataDrivenTitle", descKey: "dataDrivenDesc" },
               ].map((item, i) => (
-                <motion.div key={item.titleKey} variants={fadeUp} custom={i + 1} className="flex flex-col items-center text-center">
+                <motion.div
+                  key={item.titleKey}
+                  variants={fadeUp}
+                  custom={i + 1}
+                  className="flex flex-col items-center text-center"
+                >
                   <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
                     <item.icon className="h-6 w-6 text-primary" />
                   </div>
@@ -182,13 +244,18 @@ export default function AboutPage() {
             </div>
           </motion.div>
 
-          <p className="mb-8 text-muted-foreground leading-relaxed">
-            {t("aboutPage.rankingDesc")}
-          </p>
+          <p className="mb-8 text-muted-foreground leading-relaxed">{t("aboutPage.rankingDesc")}</p>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {rankingFactors.map((rf, i) => (
-              <motion.div key={rf.factor} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+              <motion.div
+                key={rf.factor}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i}
+              >
                 <Card className="h-full hover-lift">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
@@ -196,7 +263,9 @@ export default function AboutPage() {
                         <rf.icon className={`h-5 w-5 ${rf.color}`} />
                         <CardTitle className="text-base">{rf.factor}</CardTitle>
                       </div>
-                      <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-bold text-primary">{rf.weight}%</span>
+                      <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-bold text-primary">
+                        {rf.weight}%
+                      </span>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -236,13 +305,33 @@ export default function AboutPage() {
 
           <div className="space-y-4">
             {[
-              { title: "Distance-First, Quality-Enhanced", desc: "Default sort is distance. When facilities are similarly close (within 2 miles), higher quality scores break the tie — nudging toward safer, more comprehensive options naturally." },
-              { title: "Visual Quality Cues", desc: "Badges (🏆 Magnet, ⭐ Leapfrog A, 💙 Blue Distinction) highlight objectively accredited facilities. Labels like 'Most comprehensive nearby' appear only when data supports them." },
-              { title: "Safety-Net Visibility", desc: "FQHCs and community health centers always appear with prominent 'Recommended affordable option' and 'No one turned away' callouts. They are never suppressed by quality filters." },
-              { title: "Condition-Specific Pathways", desc: "When searching for a specific condition, results default to showing programs with integrated specialty quality, support services (social work, behavioral health, nutrition), and accessible locations." },
+              {
+                title: "Distance-First, Quality-Enhanced",
+                desc: "Default sort is distance. When facilities are similarly close (within 2 miles), higher quality scores break the tie — nudging toward safer, more comprehensive options naturally.",
+              },
+              {
+                title: "Visual Quality Cues",
+                desc: "Badges (🏆 Magnet, ⭐ Leapfrog A, 💙 Blue Distinction) highlight objectively accredited facilities. Labels like 'Most comprehensive nearby' appear only when data supports them.",
+              },
+              {
+                title: "Safety-Net Visibility",
+                desc: "FQHCs and community health centers always appear with prominent 'Recommended affordable option' and 'No one turned away' callouts. They are never suppressed by quality filters.",
+              },
+              {
+                title: "Condition-Specific Pathways",
+                desc: "When searching for a specific condition, results default to showing programs with integrated specialty quality, support services (social work, behavioral health, nutrition), and accessible locations.",
+              },
               { title: "Full User Control", desc: "Users can always re-sort, change filters, and explore all options. Ranking criteria are explained here and linked from every search results page." },
             ].map((item, i) => (
-              <motion.div key={item.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} className="flex gap-3">
+              <motion.div
+                key={item.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i}
+                className="flex gap-3"
+              >
                 <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-michigan-forest" />
                 <div>
                   <h3 className="text-sm font-semibold text-foreground">{item.title}</h3>
@@ -271,14 +360,25 @@ export default function AboutPage() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { icon: Users, title: "Social Determinants Integration", desc: "Food, housing, transportation, and financial assistance navigation integrated alongside clinical care — not as afterthought, but as core infrastructure." },
+              {
+                icon: Users,
+                title: "Social Determinants Integration",
+                desc: "Food, housing, transportation, and financial assistance navigation integrated alongside clinical care — not as afterthought, but as core infrastructure.",
+              },
               { icon: Shield, title: "Health Equity Focus", desc: "HPSA overlay maps, Social Vulnerability Index data, and health equity metrics highlight communities needing the most support." },
               { icon: Globe, title: "Culturally Appropriate", desc: "Language service indicators, cultural competency data, and multilingual resource guides for Michigan's diverse populations." },
               { icon: Scale, title: "Financial Navigation", desc: "Charity care programs, Medicaid enrollment, prescription assistance, and sliding-scale services surfaced for every facility." },
               { icon: BookOpen, title: "Health Literacy", desc: "All content written at 8th-grade reading level. Plain-language explanations of complex medical and insurance topics." },
               { icon: Award, title: "Vulnerable Populations", desc: "Dedicated pathways for uninsured, low-income, elderly, pediatric, and disability populations with tailored resource guides." },
             ].map((item, i) => (
-              <motion.div key={item.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+              <motion.div
+                key={item.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i}
+              >
                 <Card className="h-full hover-lift">
                   <CardContent className="pt-6">
                     <item.icon className="mb-3 h-5 w-5 text-michigan-coral" />
@@ -328,6 +428,15 @@ export default function AboutPage() {
                 </div>
               </motion.div>
             ))}
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3 text-sm">
+            <Link to="/privacy" className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 hover:bg-muted">
+              <Shield className="h-4 w-4" /> Privacy
+            </Link>
+            <a href="#methodology" className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 hover:bg-muted">
+              <Target className="h-4 w-4" /> Methodology
+            </a>
           </div>
         </section>
 
@@ -385,7 +494,15 @@ export default function AboutPage() {
               "Data is sourced from public APIs including CMS, CDC PLACES, HRSA, and Michigan EGLE. Some metrics may have a 3–12 month lag from source agencies.",
               "We are not liable for inaccuracies. Use information as a starting point and verify with providers directly.",
             ].map((item, i) => (
-              <motion.div key={i} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} className="flex gap-3 rounded-lg border border-border p-3">
+              <motion.div
+                key={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i}
+                className="flex gap-3 rounded-lg border border-border p-3"
+              >
                 <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted-foreground" />
                 <p className="text-sm text-muted-foreground">{item}</p>
               </motion.div>
@@ -394,18 +511,40 @@ export default function AboutPage() {
         </section>
 
         {/* Public Beta badge */}
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          custom={0}
           className="rounded-2xl border border-primary/20 bg-primary/5 p-8 text-center"
         >
           <Sparkles className="mx-auto mb-3 h-8 w-8 text-primary" />
           <h3 className="mb-2 text-lg font-bold text-foreground">{t("aboutPage.portfolioTitle")}</h3>
-          <p className="mx-auto max-w-2xl text-sm text-muted-foreground">
-            {t("aboutPage.portfolioDesc")}
-          </p>
+          <p className="mx-auto max-w-2xl text-sm text-muted-foreground">{t("aboutPage.portfolioDesc")}</p>
           <p className="mt-4 text-sm text-muted-foreground">
-            Want to support this project? <Link to="/support" className="font-medium text-primary hover:underline">Learn how →</Link>
+            Want to support this project?{" "}
+            <Link to="/support" className="font-medium text-primary hover:underline">
+              Learn how →
+            </Link>
           </p>
         </motion.div>
+
+        {/* Quick links (trust layer) */}
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <Link to="/privacy" className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm hover:bg-muted">
+            <Shield className="h-4 w-4" />
+            Privacy
+          </Link>
+          <a href="#data-sources" className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm hover:bg-muted">
+            <Database className="h-4 w-4" />
+            Data sources
+          </a>
+          <a href="#methodology" className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm hover:bg-muted">
+            <Target className="h-4 w-4" />
+            Methodology
+          </a>
+        </div>
       </div>
     </Layout>
   );
