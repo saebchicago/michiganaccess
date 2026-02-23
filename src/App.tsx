@@ -1,3 +1,4 @@
+import AboutPage from "@/pages/AboutPage";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,9 +28,11 @@ const App = () => (
       <BrowserRouter>
         <AnimatePresence mode="wait">
           <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              {APP_ROUTES.map((route) => (
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/about" element={<AboutPage />} />
+
+               {APP_ROUTES.map((route) => (
                 <Route
                   key={route.path}
                   path={route.path}
