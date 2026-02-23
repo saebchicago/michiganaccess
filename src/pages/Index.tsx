@@ -1,3 +1,4 @@
+import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import { useState, lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
@@ -92,6 +93,7 @@ const Index = () => {
           LAYER 3 — PERSONALIZED SNAPSHOT
           Context-aware, region-reactive content. Lazy-loaded.
       ═══════════════════════════════════════════════════════════════════ */}
+    <SectionErrorBoundary title="Some content didn’t load"></SectionErrorBoundary>
       <LazySection>
         <Suspense fallback={<SectionFallback />}>
           <HealthDataSnapshot />
@@ -100,11 +102,13 @@ const Index = () => {
           <TransportationSafetyCallout />
         </Suspense>
       </LazySection>
+    </SectionErrorBoundary>
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 4 — EXPLORATION (lower priority, progressive disclosure)
           Community spotlights, alerts, data deep-dives, regional gateways.
       ═══════════════════════════════════════════════════════════════════ */}
+    <SectionErrorBoundary title="Some content didn’t load">
       <LazySection>
         <Suspense fallback={<SectionFallback />}>
           <SpotlightTabs />
@@ -151,6 +155,7 @@ const Index = () => {
           <SuccessStories />
         </Suspense>
       </LazySection>
+    </SectionErrorBoundary>
 
       {/* AI Chat — just above footer */}
       <AccessChat />
