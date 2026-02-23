@@ -1,6 +1,7 @@
 import { useState, lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
-import { AccessChat } from "@/components/AccessChat";
+import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
+
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import GuidedPathways from "@/components/home/GuidedPathways";
@@ -12,7 +13,10 @@ import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import SocialProofStrip from "@/components/home/SocialProofStrip";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
+import { AccessChat } from "@/components/AccessChat";
+
+import LazySection from "@/components/shared/LazySection";
+import DataProvenance from "@/components/shared/DataProvenance";
 
 // ── Layer 3+: lazy-loaded below the fold ──
 const HealthDataSnapshot = lazy(() => import("@/components/home/HealthDataSnapshot"));
@@ -43,7 +47,8 @@ const Index = () => {
 
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
-    description: "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
+    description:
+      "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
     path: "/",
   });
 
@@ -80,56 +85,65 @@ const Index = () => {
           LAYER 3 — PERSONALIZED SNAPSHOT
           Context-aware, region-reactive content. Lazy-loaded.
       ═══════════════════════════════════════════════════════════════════ */}
-      <Suspense fallback={<SectionFallback />}>
-        <HealthDataSnapshot />
-        <NearbyResourceFinder />
-        <CoreAccessGrid />
-        <TransportationSafetyCallout />
-      </Suspense>
+      <LazySection>
+        <Suspense fallback={<SectionFallback />}>
+          <HealthDataSnapshot />
+          <NearbyResourceFinder />
+          <CoreAccessGrid />
+          <TransportationSafetyCallout />
+        </Suspense>
+      </LazySection>
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 4 — EXPLORATION (lower priority, progressive disclosure)
           Community spotlights, alerts, data deep-dives, regional gateways.
       ═══════════════════════════════════════════════════════════════════ */}
-      <Suspense fallback={<SectionFallback />}>
-        <SpotlightTabs />
-        <CommunityAlerts />
+      <LazySection>
+        <Suspense fallback={<SectionFallback />}>
+          <SpotlightTabs />
+          <CommunityAlerts />
 
-        {/* Data Insights — collapsed by default */}
-        <section className="py-6">
-          <div className="container">
-            <div className="flex items-center justify-center">
-              <Button
-                variant="outline"
-                onClick={() => setDataExpanded(!dataExpanded)}
-                className="gap-2 text-sm"
-                aria-expanded={dataExpanded}
-              >
-                {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                {dataExpanded ? t("home.collapseData") : t("home.exploreData")}
-              </Button>
-            </div>
-            {dataExpanded && (
-              <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
-                <DrugPriceLookup />
-                <CountyInfoCard />
-                <SmartRecommendations />
-                <SystemsExplainer />
-                <TrustIndicators />
+          {/* Data Insights — collapsed by default */}
+          <section className="py-6">
+            <div className="container">
+              <div className="flex items-center justify-center">
+                <Button
+                  variant="outline"
+                  onClick={() => setDataExpanded((v) => !v)}
+                  className="gap-2 text-sm"
+                  aria-expanded={dataExpanded}
+                >
+                  {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                  {dataExpanded ? t("home.collapseData") : t("home.exploreData")}
+                </Button>
               </div>
-            )}
-          </div>
-        </section>
 
-        <section className="py-8">
-          <div className="container max-w-5xl">
-            <CountyChoropleth highlightCounty="Oakland" />
-          </div>
-        </section>
+              {dataExpanded && (
+                <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
+                  <DrugPriceLookup />
+                  <CountyInfoCard />
+                  <SmartRecommendations />
+                  <SystemsExplainer />
+                  <TrustIndicators />
+                </div>
+              )}
+            </div>
+          </section>
 
-        <RegionalGateway />
-        <SuccessStories />
-      </Suspense>
+          <section className="py-8">
+            <div className="container max-w-5xl">
+              <CountyChoropleth highlightCounty="Oakland" />
+            </div>
+          </section>
+
+          <div className="container pb-10">
+            <DataProvenance source="State of Michigan & other public sources" updated="2026-02-23" methodologyHref="/about" />
+          </div>
+
+          <RegionalGateway />
+          <SuccessStories />
+        </Suspense>
+      </LazySection>
 
       {/* AI Chat — just above footer */}
       <AccessChat />
