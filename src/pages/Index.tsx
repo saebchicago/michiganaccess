@@ -67,7 +67,14 @@ const Index = () => {
           Primary decision interface: hero search, persona selector,
           wizard CTA, and guided pathways.
       ═══════════════════════════════════════════════════════════════════ */}
-      <HeroSection />
+      <HeroSection /> 
+      <div className="container">
+        <DataProvenance
+          source="Public datasets (State of Michigan + local agencies). Independently organized."
+          updated="2026-02-23"
+          methodologyHref="/about"
+          />
+        </div>
 
       <div className="container py-4 flex justify-center">
         <Button onClick={() => setWizardOpen(true)} size="lg" className="gap-2 rounded-full shadow-lg">
