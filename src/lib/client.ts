@@ -1,7 +1,4 @@
-// Stub Supabase client - configure with real credentials later
-const supabaseUrl = "https://placeholder.supabase.co";
-const supabaseAnonKey = "placeholder-key";
-
+// Mock Supabase client for development
 export const supabase = {
   from: (table: string) => ({
     select: () => Promise.resolve({ data: [], error: null }),
@@ -11,7 +8,5 @@ export const supabase = {
   }),
   auth: {
     getSession: () => Promise.resolve({ data: { session: null }, error: null }),
-    signUp: () => Promise.resolve({ data: null, error: null }),
-    signIn: () => Promise.resolve({ data: null, error: null }),
   },
 };
