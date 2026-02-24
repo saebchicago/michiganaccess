@@ -1,243 +1,187 @@
-import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence, useDragControls } from "framer-motion";
-import { MessageCircle, X, Send, Bot, User, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import ReactMarkdown from "react-markdown";
+import { useState, useRef, useEffect } from "react";
+import { Send } from "lucide-react";
+import { chatWithAssistant } from "@/services/aiService";
 
-type Msg = { role: "user" | "assistant"; content: string };
-
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/michigan-chat`;
-
-const SUGGESTIONS = [
-  "Where can I find free clinics near Detroit?",
-  "How do I apply for Medicaid in Michigan?",
-  "What mental health resources are available?",
-  "What school bus safety programs exist in Michigan?",
-  "How can I find Safe Routes to School in my county?",
-  "What transportation options are available for seniors?",
-];
-
-const FAB_STORAGE_KEY = "am-chat-fab-pos";
-
-function getStoredPosition(): { x: number; y: number } | null {
-  try {
-    const stored = localStorage.getItem(FAB_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : null;
-  } catch {
-    return null;
-  }
+interface Message {
+  role: "user" | "assistant";
+  content: string;
 }
 
-export default function AIChatWidget() {
-  const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState<Msg[]>([]);
+export default function AIChat() {
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [fabPosition, setFabPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const constraintsRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    scrollToBottom();
   }, [messages]);
 
-  const send = useCallback(async (text: string) => {
-    if (!text.trim() || isLoading) return;
-    const userMsg: Msg = { role: "user", content: text.trim() };
-    const historyMessages = messages.map((m) => ({
-      role: m.role,
-      content: m.content,
-    }));
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim()) return;
 
-    setMessages((prev) => [...prev, userMsg]);
+    const userMessage = input.trim();
     setInput("");
-    setIsLoading(true);
+    setError(null);
+    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+    setLoading(true);
 
     try {
-      const resp = await fetch("/.netlify/functions/chat-mistral", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [
-            {
-              role: "system",
-              content:
-                "You are the Access Michigan Assistant for accessmi.org. Help residents understand Michigan services, benefits, and MI-Access assessments. Be accurate, concise, and avoid making up facts.",
-            },
-            ...historyMessages,
-            { role: "user", content: text.trim() },
-          ],
-        }),
-      });
+      // Pass conversation history for context
+      const response = await chatWithAssistant(
+        userMessage,
+        messages.map((m) => ({
+          role: m.role,
+          content: m.content,
+        }))
+      );
 
-      if (!resp.ok) {
-        const errData = await resp.json().catch(() => ({}));
-        console.error("Mistral error:", errData);
-        setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, I'm having trouble right now. Please try again." }]);
-        setIsLoading(false);
-        return;
-      }
-
-      const data = await resp.json();
-      const replyText: string = data.reply || "";
-      setMessages((prev) => [...prev, { role: "assistant", content: replyText }]);
-    } catch (err) {
-      console.error(err);
-      setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, I couldn't connect. Please try again later." }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: response }]);
+    } catch (err: any) {
+      const errorMessage = err.message || "Failed to get response. Please try again.";
+      setError(errorMessage);
+      console.error("Chat error:", err);
+      
+      // Show error in chat
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: `Sorry, I'm having trouble right now. ${errorMessage}`,
+        },
+      ]);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
-  }, [messages, isLoading]);
+  };
 
   return (
     <>
-      {/* Drag boundary (full viewport) */}
-      <div ref={constraintsRef} className="fixed inset-0 pointer-events-none z-40" aria-hidden />
+      {/* Floating Chat Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center z-40 transition-all"
+        aria-label="Open chat"
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+          />
+        </svg>
+      </button>
 
-      {/* Draggable FAB */}
-      <AnimatePresence>
-        {!open && (
-          <motion.div
-            drag
-            dragConstraints={constraintsRef}
-            dragElastic={0.1}
-            dragMomentum={false}
-            onDragEnd={(_e, info) => {
-              const pos = { x: info.point.x, y: info.point.y };
-              setFabPosition({ x: info.offset.x + fabPosition.x, y: info.offset.y + fabPosition.y });
-              try { localStorage.setItem(FAB_STORAGE_KEY, JSON.stringify(pos)); } catch {}
-            }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1, x: fabPosition.x, y: fabPosition.y }}
-            exit={{ scale: 0 }}
-            whileDrag={{ scale: 1.1 }}
-            className="fixed bottom-20 right-4 z-50 lg:bottom-6 lg:right-6 cursor-grab active:cursor-grabbing touch-none"
-          >
-            <Button
-              onClick={() => setOpen(true)}
-              size="lg"
-              className="h-14 w-14 rounded-full shadow-lg pointer-events-auto"
-              aria-label="Open AI assistant"
-            >
-              <MessageCircle className="h-6 w-6" />
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Chat panel */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-20 right-4 z-50 flex w-[360px] max-w-[calc(100vw-2rem)] flex-col rounded-2xl border bg-background shadow-2xl sm:w-[400px] lg:bottom-6 lg:right-6"
-            style={{ height: "min(560px, calc(100vh - 6rem))" }}
-            role="dialog"
-            aria-label="Access Michigan AI Assistant"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between border-b px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-                  <Bot className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-foreground">Access Michigan Assistant</p>
-                  <p className="text-[10px] text-muted-foreground">AI-powered · No data collected</p>
-                </div>
-              </div>
-              <Button size="icon" variant="ghost" onClick={() => setOpen(false)} aria-label="Close chat">
-                <X className="h-4 w-4" />
-              </Button>
+      {/* Chat Window */}
+      {isOpen && (
+        <div className="fixed bottom-24 right-6 w-96 bg-white rounded-lg shadow-2xl flex flex-col z-50 h-[500px]">
+          {/* Header */}
+          <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+            <div>
+              <h3 className="font-semibold">Access Michigan Assistant</h3>
+              <p className="text-sm text-blue-100">
+                Questions about Michigan services?
+              </p>
             </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-white hover:bg-blue-700 p-1 rounded"
+            >
+              ✕
+            </button>
+          </div>
 
-            {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
-              {messages.length === 0 && (
-                <div className="space-y-3">
-                  <div className="rounded-lg bg-muted/50 p-3">
-                    <p className="text-sm text-foreground font-medium">👋 Hi! I'm the Access Michigan Assistant.</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Ask me about healthcare facilities, financial help, community resources, or any Michigan public service.
-                    </p>
-                  </div>
-                  <div className="space-y-1.5">
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Try asking:</p>
-                    {SUGGESTIONS.map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => send(s)}
-                        className="block w-full rounded-md border border-border/60 px-3 py-2 text-left text-xs text-foreground hover:bg-muted/50 transition-colors"
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {messages.map((m, i) => (
-                <div key={i} className={`flex gap-2 ${m.role === "user" ? "justify-end" : ""}`}>
-                  {m.role === "assistant" && (
-                    <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                      <Bot className="h-3 w-3 text-primary" />
-                    </div>
-                  )}
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+            {messages.length === 0 ? (
+              <div className="h-full flex flex-col justify-center items-center text-center text-gray-500">
+                <p className="text-sm mb-2">👋 Hi! I can help you find:</p>
+                <ul className="text-xs space-y-1">
+                  <li>Healthcare services</li>
+                  <li>Financial assistance</li>
+                  <li>Housing help</li>
+                  <li>Community resources</li>
+                </ul>
+              </div>
+            ) : (
+              <>
+                {messages.map((msg, idx) => (
                   <div
-                    className={`max-w-[80%] rounded-xl px-3 py-2 text-sm ${
-                      m.role === "user"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted/60 text-foreground"
+                    key={idx}
+                    className={`flex ${
+                      msg.role === "user" ? "justify-end" : "justify-start"
                     }`}
                   >
-                    {m.role === "assistant" ? (
-                      <div className="prose prose-sm dark:prose-invert max-w-none [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1">
-                        <ReactMarkdown>{m.content}</ReactMarkdown>
-                      </div>
-                    ) : (
-                      m.content
-                    )}
-                  </div>
-                  {m.role === "user" && (
-                    <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted">
-                      <User className="h-3 w-3 text-muted-foreground" />
+                    <div
+                      className={`max-w-xs px-3 py-2 rounded-lg text-sm ${
+                        msg.role === "user"
+                          ? "bg-blue-600 text-white rounded-br-none"
+                          : "bg-gray-200 text-gray-900 rounded-bl-none"
+                      }`}
+                    >
+                      {msg.content}
                     </div>
-                  )}
-                </div>
-              ))}
-              {isLoading && messages[messages.length - 1]?.role === "user" && (
-                <div className="flex gap-2">
-                  <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                    <Bot className="h-3 w-3 text-primary" />
                   </div>
-                  <div className="rounded-xl bg-muted/60 px-3 py-2">
-                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                ))}
+                {loading && (
+                  <div className="flex justify-start">
+                    <div className="bg-gray-200 text-gray-900 px-3 py-2 rounded-lg rounded-bl-none text-sm">
+                      <div className="flex space-x-2">
+                        <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce delay-100"></div>
+                        <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce delay-200"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+                <div ref={messagesEndRef} />
+              </>
+            )}
+          </div>
 
-            {/* Input */}
-            <form
-              onSubmit={(e) => { e.preventDefault(); send(input); }}
-              className="flex items-center gap-2 border-t px-3 py-2"
+          {/* Error Message */}
+          {error && (
+            <div className="px-4 py-2 bg-red-50 text-red-700 text-sm border-t border-red-200">
+              {error}
+            </div>
+          )}
+
+          {/* Input Form */}
+          <form
+            onSubmit={handleSendMessage}
+            className="border-t p-3 flex gap-2 bg-white rounded-b-lg"
+          >
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask about services..."
+              disabled={loading}
+              className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 disabled:bg-gray-100"
+            />
+            <button
+              type="submit"
+              disabled={loading || !input.trim()}
+              className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white p-2 rounded transition-colors"
             >
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about Michigan resources..."
-                className="flex-1 bg-transparent text-sm text-foreground placeholder:text-muted-foreground outline-none"
-                disabled={isLoading}
-                aria-label="Type your message"
-              />
-              <Button type="submit" size="icon" disabled={!input.trim() || isLoading} className="h-8 w-8 rounded-full">
-                <Send className="h-3.5 w-3.5" />
-              </Button>
-            </form>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </div>
+      )}
     </>
   );
 }
