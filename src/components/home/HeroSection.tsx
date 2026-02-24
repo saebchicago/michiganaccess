@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle, Mic, MicOff } from "lucide-react";
+import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle, Mic, MicOff, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getSearchSuggestions, getPopularSuggestions, parseComboQuery, getMisspellingCorrection, type SearchSuggestion } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
 import { parseNaturalLanguage } from "@/utils/naturalLanguageParser";
 
-// Extend Window for Web Speech API
 declare global {
   interface Window {
     SpeechRecognition: any;
@@ -55,7 +54,6 @@ const HeroSection = () => {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
   const recognitionRef = useRef<any>(null);
 
-  // Web Speech API setup
   const speechSupported = typeof window !== "undefined" && ("SpeechRecognition" in window || "webkitSpeechRecognition" in window);
 
   const startListening = useCallback(() => {
@@ -98,7 +96,6 @@ const HeroSection = () => {
     const misspelling = getMisspellingCorrection(q);
     setCorrection(misspelling);
 
-    // Parse natural language intent
     const intent = parseNaturalLanguage(q);
     setParsedIntent(intent.service || intent.county ? intent : null);
 
@@ -115,7 +112,6 @@ const HeroSection = () => {
     return () => clearTimeout(debounceRef.current);
   }, [searchQuery, updateSuggestions]);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node) &&
@@ -132,10 +128,8 @@ const HeroSection = () => {
     if (!searchQuery.trim()) return;
     setShowDropdown(false);
 
-    // Use NLP parser for smart routing
     const intent = parseNaturalLanguage(searchQuery);
 
-    // Log anonymized search
     logSearch({
       term: searchQuery,
       source: "hero",
@@ -191,27 +185,36 @@ const HeroSection = () => {
 
       <div className="container relative z-10 py-20 md:py-28 lg:py-36">
         <div className="mx-auto max-w-2xl text-center">
+          {/* Main Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
-            className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl lg:text-[3.25rem] leading-tight"
+            className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl md:text-6xl leading-tight"
           >
-            Your guide to{" "}
-            <span className="bg-gradient-to-r from-michigan-sky via-michigan-teal to-michigan-gold bg-clip-text text-transparent">
-              health, safety, energy &amp; services
-            </span>{" "}
-            across Michigan.
+            Find help near you.
           </motion.h1>
 
+          {/* Subheading */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="mt-5 text-base text-primary-foreground/70 md:text-lg"
+            transition={{ delay: 0.25, duration: 0.5 }}
+            className="mt-4 text-lg text-primary-foreground/80 md:text-xl"
           >
-            No sign-up needed. Free, confidential, and built for every county.
+            Access housing, health, food, legal, and energy help across all 83 Michigan counties.
           </motion.p>
+
+          {/* Privacy Statement */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35, duration: 0.5 }}
+            className="mt-4 flex items-center justify-center gap-2 text-sm text-primary-foreground/90"
+          >
+            <Lock className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+            <span>No account, no tracking, no personal data stored.</span>
+          </motion.div>
 
           {/* Smart Search Bar */}
           <motion.form
@@ -233,9 +236,9 @@ const HeroSection = () => {
                 onChange={(e) => { setSearchQuery(e.target.value); setActiveIndex(-1); }}
                 onFocus={() => setShowDropdown(true)}
                 onKeyDown={handleKeyDown}
-                placeholder="Search clinics, transit, energy programs, food pantries, insurance help…"
+                placeholder="Enter a city, ZIP code, or county…"
                 className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
-                aria-label="Search for services"
+                aria-label="Search for services by location"
                 aria-autocomplete="list"
                 aria-controls="hero-search-suggestions"
                 aria-activedescendant={activeIndex >= 0 ? `hero-suggestion-${activeIndex}` : undefined}
@@ -278,7 +281,6 @@ const HeroSection = () => {
                   transition={{ duration: 0.15 }}
                   className="absolute left-0 right-0 top-full mt-2 rounded-xl bg-white dark:bg-card border border-border shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto"
                 >
-                  {/* Misspelling correction banner */}
                   {correction && searchQuery.length >= 2 && (
                     <button
                       type="button"
@@ -292,7 +294,6 @@ const HeroSection = () => {
                     </button>
                   )}
 
-                  {/* NLP intent banner */}
                   {parsedIntent && searchQuery.length >= 3 && (
                     <button
                       type="button"
@@ -305,7 +306,6 @@ const HeroSection = () => {
                     </button>
                   )}
 
-                  {/* Section label */}
                   {searchQuery.length < 2 && suggestions.length > 0 && (
                     <div className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Popular Searches
@@ -353,7 +353,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-6 flex flex-wrap items-center justify-center gap-2"
+            className="mt-8 flex flex-wrap items-center justify-center gap-2"
           >
             {quickPills.map((pill) => (
               <Link
@@ -365,21 +365,6 @@ const HeroSection = () => {
                 {pill.label}
               </Link>
             ))}
-          </motion.div>
-
-          {/* Secondary CTA */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.75, duration: 0.5 }}
-            className="mt-5 flex items-center justify-center gap-3"
-          >
-            <a
-              href="tel:988"
-              className="inline-flex items-center gap-1.5 rounded-full bg-white/15 border border-white/20 px-4 py-2 text-sm font-medium text-primary-foreground/90 hover:bg-white/25 transition-all"
-            >
-              Get help now — 988 / 2-1-1
-            </a>
           </motion.div>
         </div>
       </div>
