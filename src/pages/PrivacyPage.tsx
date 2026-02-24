@@ -8,4 +8,5 @@ export default function PrivacyPage() {
         <p className="text-muted-foreground">Privacy policy coming soon.</p>
       </div>
     </Layout>
-  )
+  );
+}
