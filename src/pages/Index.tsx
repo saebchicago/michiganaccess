@@ -1,11 +1,13 @@
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import { useState, lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
-import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import GuidedPathways from "@/components/home/GuidedPathways";
+import { EquityInsightCard } from "@/components/shared/EquityInsightCard";
+import { ProfessionalGateway } from "@/components/home/ProfessionalGateway";
 import AuthorityStrip from "@/components/home/AuthorityStrip";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import AudienceSelector from "@/components/home/AudienceSelector";
@@ -75,7 +77,7 @@ const Index = () => {
           updated="2026-02-23"
           methodologyHref="/about"
         />
-        </div>
+      </div>
 
       <div className="container py-4 flex justify-center">
         <Button onClick={() => setWizardOpen(true)} size="lg" className="gap-2 rounded-full shadow-lg">
@@ -88,6 +90,54 @@ const Index = () => {
       <GuidedPathways />
       <AuthorityStrip />
       <SocialProofStrip />
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          EQUITY INSIGHTS — NEW
+          Shows health disparities + data highlights. Links to /data-and-insights
+      ═══════════════════════════════════════════════════════════════════ */}
+      <section className="py-16 container">
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-foreground md:text-3xl mb-2">
+            Health Equity in Michigan
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl">
+            Some Michigan residents face greater barriers to health and opportunity. These insights show where support is needed most.
+          </p>
+        </div>
+        
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+          <EquityInsightCard
+            icon={Heart}
+            title="Black Infant Mortality"
+            stat="2.4x higher"
+            description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
+            color="coral"
+            trend="up"
+            ctaText="View all equity data"
+            ctaHref="/data-and-insights"
+          />
+          <EquityInsightCard
+            icon={Users}
+            title="Rural Uninsured Rate"
+            stat="14%"
+            description="Rural Michiganders are twice as likely to be uninsured as urban residents."
+            color="gold"
+            trend="stable"
+            ctaText="View all equity data"
+            ctaHref="/data-and-insights"
+          />
+          <EquityInsightCard
+            icon={AlertCircle}
+            title="Primary Care Shortage"
+            stat="23 counties"
+            description="Nearly a third of Michigan counties lack adequate primary care providers."
+            color="teal"
+            trend="down"
+            ctaText="View all equity data"
+            ctaHref="/data-and-insights"
+          />
+        </div>
+      </section>
 
       {/* ═══════════════════════════════════════════════════════════════════
           LAYER 3 — PERSONALIZED SNAPSHOT
@@ -109,51 +159,55 @@ const Index = () => {
           Community spotlights, alerts, data deep-dives, regional gateways.
       ═══════════════════════════════════════════════════════════════════ */}
       <SectionErrorBoundary title="Some content didn't load">
-      <LazySection>
-        <Suspense fallback={<SectionFallback />}>
-          <SpotlightTabs />
-          <CommunityAlerts />
+        <LazySection>
+          <Suspense fallback={<SectionFallback />}>
+            <SpotlightTabs />
+            <CommunityAlerts />
 
-          {/* Data Insights — collapsed by default */}
-          <section className="py-6">
-            <div className="container">
-              <div className="flex items-center justify-center">
-                <Button
-                  variant="outline"
-                  onClick={() => setDataExpanded((v) => !v)}
-                  className="gap-2 text-sm"
-                  aria-expanded={dataExpanded}
-                >
-                  {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                  {dataExpanded ? t("home.collapseData") : t("home.exploreData")}
-                </Button>
-              </div>
-
-              {dataExpanded && (
-                <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
-                  <DrugPriceLookup />
-                  <CountyInfoCard />
-                  <SmartRecommendations />
-                  <SystemsExplainer />
-                  <TrustIndicators />
+            {/* Data Insights — collapsed by default */}
+            <section className="py-6">
+              <div className="container">
+                <div className="flex items-center justify-center">
+                  <Button
+                    variant="outline"
+                    onClick={() => setDataExpanded((v) => !v)}
+                    className="gap-2 text-sm"
+                    aria-expanded={dataExpanded}
+                  >
+                    {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                    {dataExpanded ? t("home.collapseData") : t("home.exploreData")}
+                  </Button>
                 </div>
-              )}
-            </div>
-          </section>
 
-          <section className="py-8">
-            <div className="container max-w-5xl">
-              <CountyChoropleth highlightCounty="Oakland" />
-            </div>
-          </section>
+                {dataExpanded && (
+                  <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
+                    <DrugPriceLookup />
+                    <CountyInfoCard />
+                    <SmartRecommendations />
+                    <SystemsExplainer />
+                    <TrustIndicators />
+                  </div>
+                )}
+              </div>
+            </section>
 
-         
+            <section className="py-8">
+              <div className="container max-w-5xl">
+                <CountyChoropleth highlightCounty="Oakland" />
+              </div>
+            </section>
 
-          <RegionalGateway />
-          <SuccessStories />
-         </Suspense>
+            <RegionalGateway />
+            <SuccessStories />
+
+            {/* ═══════════════════════════════════════════════════════════════════
+                PROFESSIONAL GATEWAY — NEW
+                Attract health professionals, researchers, partners.
+            ═══════════════════════════════════════════════════════════════════ */}
+            <ProfessionalGateway />
+          </Suspense>
         </LazySection>
-     </SectionErrorBoundary>
+      </SectionErrorBoundary>
 
       {/* AI Chat — just above footer */}
       <AccessChat />
