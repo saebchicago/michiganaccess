@@ -1,0 +1,127 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+export interface ResourceItem {
+  id: string;
+  name: string;
+  description: string;
+  tags?: string[];
+  cost?: string;
+  cta?: {
+    label: string;
+    href: string;
+  };
+}
+
+interface TruncatedResourceListProps {
+  items: ResourceItem[];
+  initialCount?: number;
+  category?: string;
+  renderItem?: (item: ResourceItem) => React.ReactNode;
+}
+
+export const TruncatedResourceList = ({
+  items,
+  initialCount = 4,
+  category = "items",
+  renderItem,
+}: TruncatedResourceListProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Don't show "Show more" if items fit within initial count
+  const shouldShowButton = items.length > initialCount;
+  const visibleItems = isExpanded ? items : items.slice(0, initialCount);
+  const remainingCount = items.length - initialCount;
+
+  // Default item renderer
+  const defaultRender = (item: ResourceItem) => (
+    <div key={item.id} className="p-4 rounded-lg border border-border bg-card hover:shadow-md transition-shadow">
+      <div className="flex items-start justify-between gap-3 mb-2">
+        <h3 className="font-semibold text-foreground">{item.name}</h3>
+        {item.cost && (
+          <span className="text-xs font-medium text-michigan-teal whitespace-nowrap">
+            {item.cost === "Free" ? "💰 Free" : `💰 ${item.cost}`}
+          </span>
+        )}
+      </div>
+      <p className="text-sm text-muted-foreground mb-3">{item.description}</p>
+      {item.tags && item.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-3">
+          {item.tags.map((tag) => (
+            <span
+              key={tag}
+              className="inline-block rounded-full bg-muted px-2.5 py-1 text-[11px] font-medium text-muted-foreground"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+      {item.cta && (
+        
+          href={item.cta.href}
+          className="inline-flex items-center px-3 py-2 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
+        >
+          {item.cta.label}
+        </a>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="space-y-4">
+      {/* Items Grid */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <AnimatePresence mode="popLayout">
+          {visibleItems.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2, delay: index * 0.05 }}
+              layout
+            >
+              {renderItem ? renderItem(item) : defaultRender(item)}
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+
+      {/* Show More Button */}
+      {shouldShowButton && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex justify-center pt-4"
+        >
+          <Button
+            onClick={() => setIsExpanded(!isExpanded)}
+            variant="outline"
+            className="gap-2"
+            aria-expanded={isExpanded}
+            aria-controls="resource-list"
+          >
+            {isExpanded ? (
+              <>
+                <span>Show less</span>
+                <ChevronDown className="h-4 w-4 rotate-180 transition-transform" aria-hidden="true" />
+              </>
+            ) : (
+              <>
+                <span>
+                  Show {remainingCount} more {category}
+                </span>
+                <ChevronDown className="h-4 w-4 transition-transform" aria-hidden="true" />
+              </>
+            )}
+          </Button>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+export default TruncatedResourceList;

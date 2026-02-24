@@ -8,6 +8,7 @@ import {
   FileQuestion, Mail, ShieldCheck
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { TruncatedResourceList } from "@/components/shared/TruncatedResourceList";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -449,7 +450,7 @@ export default function CountyPage() {
                         </p>
                         <Badge variant="secondary" className="text-[10px]">{f.facility_type.replace(/_/g, " ")}</Badge>
                         <div className="flex flex-wrap gap-2 pt-1">
-                          <a
+                          
                             href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${f.address}, ${f.city}, ${f.state} ${f.zip}`)}`}
                             target="_blank"
                             rel="noopener"
