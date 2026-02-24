@@ -1,13 +1,11 @@
-import { Phone, LogOut } from "lucide-react";
+import { Phone, LogOut, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const CrisisBar = () => {
   const { t } = useTranslation();
 
   const handleQuickExit = () => {
-    // Opens Google in new tab, then attempts to clear history
     window.open("https://google.com", "_blank");
-    // Try to clear history (may not work in all browsers)
     if (window.history.length > 1) {
       window.history.go(-window.history.length);
     }
@@ -21,35 +19,28 @@ const CrisisBar = () => {
       aria-label="Crisis resources and safety options"
     >
       <div className="container flex flex-wrap items-center justify-between gap-2 md:gap-3 py-2.5 text-xs md:text-sm">
-        {/* Crisis Resources */}
-        <div className="flex flex-wrap items-center gap-2 md:gap-3 flex-1">
-          <Phone 
-            className="h-3.5 w-3.5 md:h-4 md:w-4 text-white flex-shrink-0" 
-            aria-hidden="true" 
-          />
-          <span className="font-semibold text-white whitespace-nowrap">
-            {t("crisis.inCrisis")}
-          </span>
-          
-          {/* 988 Link */}
-          
-            href="tel:988"
-            className="font-bold text-white hover:underline focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-michigan-coral rounded px-1"
-            aria-label="Call 988 Suicide and Crisis Lifeline"
-          >
-            988
-          </a>
-          
-          {/* Divider */}
-          <span className="text-white/70 hidden sm:inline">·</span>
-          
-          {/* Text HOME (mobile-friendly) */}
-          <span className="text-white/90 hidden sm:inline">
-            {t("crisis.textHome")} <strong>HOME</strong> to 741741
-          </span>
-          <span className="text-white/90 sm:hidden">
-            Text HOME to 741741
-          </span>
-          
-          {/* Divider */}
-          <span c
+        {/* Crisis Resources Left Side */}
+        <div className="flex items-center gap-1 md:gap-2 text-white">
+          <Phone className="h-4 w-4 flex-shrink-0" />
+          <span className="font-semibold">988</span>
+          <span className="hidden sm:inline">·</span>
+          <span className="hidden sm:inline">Text <strong>HOME</strong> to 741741</span>
+          <span className="sm:hidden">· TEXT HOME</span>
+          <span className="hidden sm:inline">· 211</span>
+        </div>
+
+        {/* Quick Exit Button Right Side */}
+        <button
+          onClick={handleQuickExit}
+          className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/20 hover:bg-white/30 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+          aria-label="Quick exit to Google (safety feature)"
+        >
+          <LogOut className="h-4 w-4" />
+          <span className="hidden sm:inline font-semibold">Exit</span>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default CrisisBar;

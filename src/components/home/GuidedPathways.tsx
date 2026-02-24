@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   ShieldAlert, Heart, MapPin, Siren,
-  ArrowRight, Users, CheckCircle2
+  ArrowRight, Users
 } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -98,7 +98,6 @@ const GuidedPathways = forwardRef<HTMLElement>(function GuidedPathways(_props, r
           <h2 className="text-2xl font-bold text-foreground md:text-3xl">How can we help you today?</h2>
           <p className="mt-2 text-muted-foreground">Pick the situation that fits yours — we'll guide you to the right resources.</p>
         </motion.div>
-
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {pathways.map((p, i) => {
             const isExpanded = expandedId === p.id;
@@ -148,7 +147,7 @@ const GuidedPathways = forwardRef<HTMLElement>(function GuidedPathways(_props, r
                         <div className="flex flex-col gap-2 pt-1">
                           {p.links.map((link) =>
                             link.href.startsWith("tel:") ? (
-                              
+                              <a
                                 key={link.label}
                                 href={link.href}
                                 onClick={(e) => e.stopPropagation()}
@@ -192,10 +191,7 @@ const GuidedPathways = forwardRef<HTMLElement>(function GuidedPathways(_props, r
                       <p className="font-semibold">You'll get help with:</p>
                       <ul className="space-y-0.5">
                         {p.outcomes.map((o) => (
-                          <li key={o} className="flex items-start gap-1.5">
-                            <CheckCircle2 className="h-3 w-3 flex-shrink-0 mt-0.5" />
-                            <span>{o}</span>
-                          </li>
+                          <li key={o}>• {o}</li>
                         ))}
                       </ul>
                     </div>
