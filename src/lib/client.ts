@@ -1,15 +1,17 @@
-// Stub Supabase client for now
+// Stub Supabase client - configure with real credentials later
+const supabaseUrl = "https://placeholder.supabase.co";
+const supabaseAnonKey = "placeholder-key";
+
 export const supabase = {
-  from: () => ({
-    select: () => ({ data: [], error: null }),
-    insert: () => ({ data: null, error: null }),
+  from: (table: string) => ({
+    select: () => Promise.resolve({ data: [], error: null }),
+    insert: (data: any) => Promise.resolve({ data, error: null }),
+    update: (data: any) => Promise.resolve({ data, error: null }),
+    delete: () => Promise.resolve({ data: null, error: null }),
   }),
+  auth: {
+    getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+    signUp: () => Promise.resolve({ data: null, error: null }),
+    signIn: () => Promise.resolve({ data: null, error: null }),
+  },
 };
-```
-
-Or if you want to set up real Supabase:
-
-Create a `.env.local` file in the root of your project:
-```
-VITE_SUPABASE_URL=your_supabase_url_here
-VITE_SUPABASE_ANON_KEY=your_supabase_key_here
