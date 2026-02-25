@@ -62,43 +62,92 @@ function parseResult(r: NPIResult): NPIProvider {
   };
 }
 
+export type NPISearchMode = "specialty" | "name" | "npi";
+
 export function useNPISearch() {
   const [results, setResults] = useState<NPIProvider[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
 
+  /** Search by taxonomy/specialty (existing behavior) */
+  const searchBySpecialty = useCallback(async (
+    taxonomies: string[],
+    enumerationType: string,
+    location: string,
+  ) => {
+    const locParams = resolveLocation(location);
+    const locStr = Object.entries(locParams)
+      .map(([k, v]) => `&${k}=${encodeURIComponent(v)}`)
+      .join("");
+
+    const fetches = taxonomies.map(async (tax) => {
+      const url = `${NPI_BASE}&taxonomy_description=${encodeURIComponent(tax)}&enumeration_type=${enumerationType}${locStr}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`NPI API error: ${res.status}`);
+      const data = await res.json();
+      return (data.results || []) as NPIResult[];
+    });
+
+    const allResults = await Promise.all(fetches);
+    return allResults.flat();
+  }, []);
+
+  /** Search by provider name */
+  const searchByName = useCallback(async (firstName: string, lastName: string) => {
+    const url = `${NPI_BASE}&first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`NPI API error: ${res.status}`);
+    const data = await res.json();
+    return (data.results || []) as NPIResult[];
+  }, []);
+
+  /** Search by NPI number */
+  const searchByNPI = useCallback(async (npiNumber: string) => {
+    const url = `${NPI_BASE}&number=${encodeURIComponent(npiNumber)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`NPI API error: ${res.status}`);
+    const data = await res.json();
+    return (data.results || []) as NPIResult[];
+  }, []);
+
+  /** Unified search dispatcher */
   const search = useCallback(async (
     taxonomies: string[],
     enumerationType: string,
     location: string,
+    mode: NPISearchMode = "specialty",
+    nameQuery?: { firstName: string; lastName: string },
+    npiNumber?: string,
   ) => {
     setIsLoading(true);
     setError(null);
     setSearched(true);
     setResults([]);
 
-    const locParams = resolveLocation(location);
-    const locStr = Object.entries(locParams)
-      .map(([k, v]) => `&${k}=${encodeURIComponent(v)}`)
-      .join("");
-
     try {
-      // Run all taxonomy queries in parallel
-      const fetches = taxonomies.map(async (tax) => {
-        const url = `${NPI_BASE}&taxonomy_description=${encodeURIComponent(tax)}&enumeration_type=${enumerationType}${locStr}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`NPI API error: ${res.status}`);
-        const data = await res.json();
-        return (data.results || []) as NPIResult[];
-      });
+      let rawResults: NPIResult[] = [];
 
-      const allResults = await Promise.all(fetches);
-      const merged = allResults.flat();
+      switch (mode) {
+        case "name":
+          if (nameQuery) {
+            rawResults = await searchByName(nameQuery.firstName, nameQuery.lastName);
+          }
+          break;
+        case "npi":
+          if (npiNumber) {
+            rawResults = await searchByNPI(npiNumber);
+          }
+          break;
+        case "specialty":
+        default:
+          rawResults = await searchBySpecialty(taxonomies, enumerationType, location);
+          break;
+      }
 
       // Deduplicate by NPI number
       const seen = new Set<string>();
-      const unique = merged.filter((r) => {
+      const unique = rawResults.filter((r) => {
         const npi = String(r.number);
         if (seen.has(npi)) return false;
         seen.add(npi);
@@ -106,13 +155,24 @@ export function useNPISearch() {
       });
 
       setResults(unique.map(parseResult));
+
+      // Helpful zero-result messages
+      if (unique.length === 0) {
+        if (mode === "name") {
+          setError("No providers found with that name. They may be listed under a different name or enrolled after the last NPPES update. Try searching by NPI number directly, or call 2-1-1.");
+        } else if (mode === "npi") {
+          setError("No provider found with that NPI number. Double-check the number and try again, or call 2-1-1 for help.");
+        } else {
+          setError("No providers found matching your criteria. Try broadening your search or call 2-1-1 for help.");
+        }
+      }
     } catch (e) {
       setError("Something went wrong. Try again, or call 2-1-1 for help.");
       console.error("NPI search error:", e);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [searchBySpecialty, searchByName, searchByNPI]);
 
   const reset = useCallback(() => {
     setResults([]);

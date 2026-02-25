@@ -1,4 +1,5 @@
 import { MICHIGAN_COUNTIES } from "@/contexts/CountyContext";
+import { MICHIGAN_CITIES, ZIP_TO_COUNTY } from "@/data/michigan-county-seats";
 
 /* ── Keyword dictionary for autocomplete & fuzzy correction ── */
 
@@ -37,6 +38,27 @@ const KEYWORD_SUGGESTIONS: { term: string; label: string; href: string; category
   { term: "utility", label: "Utility Help", href: "/financial-help", category: "service" },
   { term: "outage", label: "Utility Outages", href: "/outages", category: "service" },
   { term: "air quality", label: "Air Quality", href: "/environment", category: "service" },
+  { term: "zoning", label: "Zoning & Land Use", href: "/zoning", category: "service" },
+  // Specialties / Provider types
+  { term: "psychiatrist", label: "Psychiatrist", href: "/find-care", category: "provider" },
+  { term: "cardiologist", label: "Cardiologist", href: "/find-care", category: "provider" },
+  { term: "dermatologist", label: "Dermatologist", href: "/find-care", category: "provider" },
+  { term: "neurologist", label: "Neurologist", href: "/find-care", category: "provider" },
+  { term: "orthopedic", label: "Orthopedic Surgeon", href: "/find-care", category: "provider" },
+  { term: "obgyn", label: "OB/GYN", href: "/find-care", category: "provider" },
+  { term: "ob", label: "OB/GYN", href: "/find-care", category: "provider" },
+  { term: "therapist", label: "Therapist", href: "/find-care", category: "provider" },
+  { term: "counselor", label: "Counselor", href: "/find-care", category: "provider" },
+  { term: "chiropractor", label: "Chiropractor", href: "/find-care", category: "provider" },
+  { term: "optometrist", label: "Optometrist", href: "/find-care", category: "provider" },
+  { term: "ophthalmologist", label: "Ophthalmologist", href: "/find-care", category: "provider" },
+  { term: "find doctor", label: "Find a Doctor", href: "/find-care", category: "provider" },
+  { term: "doctor near me", label: "Find a Doctor Near Me", href: "/find-care", category: "provider" },
+  { term: "physician", label: "Find a Physician", href: "/find-care", category: "provider" },
+  { term: "specialist", label: "Find a Specialist", href: "/find-care", category: "provider" },
+  { term: "find provider", label: "Find a Provider", href: "/find-care", category: "provider" },
+  { term: "npi", label: "NPI Provider Lookup", href: "/find-care", category: "provider" },
+  { term: "my doctor", label: "Find My Doctor", href: "/find-care", category: "provider" },
   // Topics
   { term: "covid", label: "COVID-19 Resources", href: "/conditions", category: "topic" },
   { term: "diabetes", label: "Diabetes Resources", href: "/conditions", category: "topic" },
@@ -46,6 +68,12 @@ const KEYWORD_SUGGESTIONS: { term: string; label: string; href: string; category
   { term: "addiction", label: "Addiction & Recovery", href: "/find-care", category: "topic" },
   { term: "narcan", label: "Narcan / Naloxone Locator", href: "/find-care", category: "topic" },
 ];
+
+/** City suggestions for search autocomplete */
+const CITY_SUGGESTIONS: { city: string; county: string }[] = MICHIGAN_CITIES.map((c) => ({
+  city: c.city,
+  county: c.county,
+}));
 
 const POPULAR_SEARCHES = [
   { label: "Find a Doctor", href: "/find-care" },
@@ -84,6 +112,14 @@ const MISSPELLINGS: Record<string, string> = {
   cancr: "cancer", caner: "cancer",
   asthama: "asthma", asthm: "asthma",
   outag: "outage", outages: "outage",
+  psyciatrist: "psychiatrist", psychitrist: "psychiatrist",
+  cardiologst: "cardiologist", cardioligist: "cardiologist",
+  dermatoligist: "dermatologist", dermatalogist: "dermatologist",
+  nueroligist: "neurologist", neuroligist: "neurologist",
+  thearpist: "therapist", therapst: "therapist",
+  counsler: "counselor", counsleor: "counselor",
+  chiropractir: "chiropractor", chiropractr: "chiropractor",
+  optomitrist: "optometrist", optometirst: "optometrist",
 };
 
 /* ── Levenshtein distance for fuzzy matching ── */
@@ -103,22 +139,34 @@ function levenshtein(a: string, b: string): number {
 export interface SearchSuggestion {
   label: string;
   href: string;
-  category: "keyword" | "county" | "popular" | "correction";
+  category: "keyword" | "county" | "popular" | "correction" | "zip" | "city" | "provider";
   matchedTerm?: string;
 }
 
 /**
  * Autocomplete: given partial input, return matching suggestions.
- * Handles misspelling correction, county matching, keyword matching.
+ * Handles misspelling correction, county matching, city matching, ZIP matching, keyword matching.
  */
 export function getSearchSuggestions(query: string, maxResults = 8): SearchSuggestion[] {
   if (!query || query.length < 2) return [];
   const rawQ = query.toLowerCase().trim();
   const { term: parsedTerm, county: comboCounty } = parseComboQuery(rawQ);
-  // Search both the raw query and parsed term (for combo queries like "food pantry wayne")
   const q = rawQ;
   const altQ = comboCounty ? parsedTerm : null;
   const results: SearchSuggestion[] = [];
+
+  // 0. ZIP code matching
+  if (/^\d{3,5}$/.test(q)) {
+    const prefix3 = q.slice(0, 3);
+    const county = ZIP_TO_COUNTY[prefix3];
+    if (county) {
+      results.push({
+        label: `${county} County (ZIP ${q}*)`,
+        href: `/county/${county.toLowerCase().replace(/[\s.]+/g, "-")}`,
+        category: "zip",
+      });
+    }
+  }
 
   // 1. Direct keyword matches (check both raw and parsed term)
   for (const kw of KEYWORD_SUGGESTIONS) {
@@ -126,11 +174,25 @@ export function getSearchSuggestions(query: string, maxResults = 8): SearchSugge
         (altQ && (kw.term.includes(altQ) || kw.label.toLowerCase().includes(altQ)))) {
       const label = comboCounty ? `${kw.label} in ${comboCounty} County` : kw.label;
       const href = comboCounty ? `/county/${comboCounty.toLowerCase().replace(/[\s.]+/g, "-")}` : kw.href;
-      results.push({ label, href, category: "keyword" });
+      const cat = kw.category === "provider" ? "provider" as const : "keyword" as const;
+      results.push({ label, href, category: cat });
     }
   }
 
-  // 2. County matches
+  // 2. City matches
+  if (!/^\d+$/.test(q)) {
+    for (const cs of CITY_SUGGESTIONS) {
+      if (cs.city.toLowerCase().includes(q)) {
+        results.push({
+          label: `${cs.city}, ${cs.county} County`,
+          href: `/county/${cs.county.toLowerCase().replace(/[\s.]+/g, "-")}`,
+          category: "city",
+        });
+      }
+    }
+  }
+
+  // 3. County matches
   for (const county of MICHIGAN_COUNTIES) {
     if (county.toLowerCase().includes(q)) {
       results.push({
@@ -141,7 +203,7 @@ export function getSearchSuggestions(query: string, maxResults = 8): SearchSugge
     }
   }
 
-  // 3. If few results, try misspelling correction
+  // 4. If few results, try misspelling correction
   if (results.length < 3) {
     const correction = MISSPELLINGS[q];
     if (correction) {
@@ -204,7 +266,6 @@ export function getPopularSuggestions(): SearchSuggestion[] {
 export function getMisspellingCorrection(query: string): string | null {
   const q = query.toLowerCase().trim();
   if (MISSPELLINGS[q]) return MISSPELLINGS[q];
-  // Check first word
   const firstWord = q.split(/\s+/)[0];
   if (firstWord && MISSPELLINGS[firstWord]) return MISSPELLINGS[firstWord];
   return null;
