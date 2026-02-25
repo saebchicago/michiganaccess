@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useEffect, lazy, Suspense } from "react";
@@ -27,6 +27,11 @@ import DownloadCountyGuide from "@/components/county/DownloadCountyGuide";
 import MunicipalToolkit from "@/components/county/MunicipalToolkit";
 import RecentlyViewedBar from "@/components/county/RecentlyViewedBar";
 import UninsuredSparkline from "@/components/county/UninsuredSparkline";
+import SnapshotCard from "@/components/shared/SnapshotCard";
+import DataConfidenceCard, { buildDataConfidence } from "@/components/shared/DataConfidenceCard";
+import ResultHeader from "@/components/shared/ResultHeader";
+import JusticeSection from "@/components/county/JusticeSection";
+import { buildCountySnapshotMetrics } from "@/utils/snapshotMetrics";
 
 // National benchmarks (Census ACS 2023, HRSA, USDA)
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
@@ -89,7 +94,6 @@ export default function CountyPage() {
     } : undefined,
   });
 
-  // Set global county context when visiting this page
   useEffect(() => {
     if (county) setCounty(county);
   }, [county, setCounty]);
@@ -119,10 +123,8 @@ export default function CountyPage() {
   const safeE = events ?? [];
   const isStatsLoading = loadingFacilities || loadingResources || loadingEvents;
 
-  // Major health systems to prioritize (appear first in listings)
   const MAJOR_SYSTEMS = ["Corewell Health", "Beaumont", "Henry Ford", "Ascension", "Trinity Health", "Spectrum Health", "Michigan Medicine", "University of Michigan", "McLaren", "Munson"];
 
-  // Sort facilities: major systems first, then by quality score
   const sortedFacilities = [...safeF].sort((a, b) => {
     const aIsMajor = MAJOR_SYSTEMS.some(s => a.system_affiliation?.includes(s) || a.name.includes(s));
     const bIsMajor = MAJOR_SYSTEMS.some(s => b.system_affiliation?.includes(s) || b.name.includes(s));
@@ -136,29 +138,18 @@ export default function CountyPage() {
     return acc;
   }, {} as Record<string, number>);
 
-  // Check for data gaps
   const hasDataGaps = profile.healthHighlights.length < 3 || safeF.length < 3;
 
-  // Data Confidence Score: based on availability of real-time API feeds vs static FOIA data
-  const dataConfidence = (() => {
-    let score = 0;
-    let sources: string[] = [];
-    // Real-time facility data from CMS
-    if (safeF.length > 0) { score += 25; sources.push("CMS Facilities"); }
-    // Community resources
-    if (safeR.length >= 3) { score += 20; sources.push("Community Resources"); }
-    // Health highlights completeness
-    if (profile.healthHighlights.length >= 3) { score += 20; sources.push("County Health Rankings"); }
-    // Events data (real-time)
-    if (safeE.length > 0) { score += 15; sources.push("Live Events Feed"); }
-    // Major system presence (indicates richer data ecosystem)
-    if (sortedFacilities.some(f => MAJOR_SYSTEMS.some(s => f.system_affiliation?.includes(s) || f.name.includes(s)))) { score += 10; sources.push("Major Health Systems"); }
-    // Population data available
-    if (profile.population > 0) { score += 10; sources.push("Census ACS"); }
-    const level = score >= 80 ? "High" : score >= 50 ? "Moderate" : "Limited";
-    const color = score >= 80 ? "text-michigan-forest" : score >= 50 ? "text-michigan-gold" : "text-destructive";
-    return { score, level, color, sources };
-  })();
+  const dataConfidence = buildDataConfidence({
+    facilityCount: safeF.length,
+    resourceCount: safeR.length,
+    highlightCount: profile.healthHighlights.length,
+    eventCount: safeE.length,
+    hasMajorSystem: sortedFacilities.some(f => MAJOR_SYSTEMS.some(s => f.system_affiliation?.includes(s) || f.name.includes(s))),
+    hasPopulation: profile.population > 0,
+  });
+
+  const snapshotMetrics = buildCountySnapshotMetrics(county);
 
   return (
     <Layout>
@@ -193,7 +184,7 @@ export default function CountyPage() {
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Link to="/find-care">
+              <Link to={`/find-care?county=${encodeURIComponent(county)}&scope=facilities`}>
                 <Button variant="outline" size="sm"><Building2 className="mr-1.5 h-4 w-4" />Find Care</Button>
               </Link>
               <Link to="/resources">
@@ -209,12 +200,17 @@ export default function CountyPage() {
       </section>
 
       <div className="container py-8 space-y-10">
+        {/* Snapshot Card */}
+        <SnapshotCard
+          title={`${county} County at a Glance`}
+          geographyType="county"
+          metrics={snapshotMetrics}
+        />
+
         {/* Quick Stats */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid gap-4 grid-cols-2 md:grid-cols-4">
           {isStatsLoading ? (
-            <>
-              <StatSkeleton /><StatSkeleton /><StatSkeleton /><StatSkeleton />
-            </>
+            <><StatSkeleton /><StatSkeleton /><StatSkeleton /><StatSkeleton /></>
           ) : (
             [
               { label: "Healthcare Facilities", value: safeF.length, icon: Building2, color: "text-primary" },
@@ -245,22 +241,17 @@ export default function CountyPage() {
               const bench = BENCHMARKS[h.label];
               const isRatio = h.label === "Primary care ratio";
               const numericVal = parseFloat(h.value.replace(/[^0-9.]/g, ""));
-
-              // State comparison
               const stateVal = bench ? parseFloat(bench.state.replace(/[^0-9.]/g, "")) : undefined;
               const isBetterState = stateVal !== undefined ? numericVal < stateVal : undefined;
-
-              // US comparison
               const usVal = bench ? parseFloat(bench.us.replace(/[^0-9.]/g, "")) : undefined;
               const isBetterUS = usVal !== undefined ? numericVal < usVal : undefined;
 
               const actionLink = h.label === "Uninsured rate"
                 ? { href: "/financial-help", text: "Find coverage options →" }
                 : h.label === "Primary care ratio"
-                ? { href: "/find-care", text: "View community health centers →" }
+                ? { href: `/find-care?county=${encodeURIComponent(county)}&scope=facilities`, text: "View community health centers →" }
                 : { href: "/resources", text: "Find food assistance →" };
 
-              // Severity for primary care ratio
               let ratioSeverity: "good" | "moderate" | "high" | undefined;
               if (isRatio) {
                 const ratioNum = parseInt(h.value.split(":")[0].replace(/[^0-9]/g, ""));
@@ -275,64 +266,36 @@ export default function CountyPage() {
                       <TrendIcon trend={h.trend} />
                     </div>
                     <p className="text-xl font-bold text-foreground">{h.value}</p>
-
-                    {/* State + US comparisons */}
                     {bench && (
                       <div className="space-y-1">
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          <Badge
-                            variant={isBetterState ? "secondary" : "destructive"}
-                            className={`text-[10px] px-1.5 py-0 ${isBetterState ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
-                          >
+                          <Badge variant={isBetterState ? "secondary" : "destructive"} className={`text-[10px] px-1.5 py-0 ${isBetterState ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}>
                             {isBetterState ? "Below" : "Above"} state avg
                           </Badge>
                           <span className="text-[10px] text-muted-foreground">MI: {bench.state}</span>
                         </div>
                         <div className="flex items-center gap-1.5 flex-wrap">
-                          <Badge
-                            variant={isBetterUS ? "secondary" : "destructive"}
-                            className={`text-[10px] px-1.5 py-0 ${isBetterUS ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
-                          >
+                          <Badge variant={isBetterUS ? "secondary" : "destructive"} className={`text-[10px] px-1.5 py-0 ${isBetterUS ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}>
                             {isBetterUS ? "Below" : "Above"} US avg
                           </Badge>
                           <span className="text-[10px] text-muted-foreground">US: {bench.us}</span>
                         </div>
                       </div>
                     )}
-
-                    {/* Ratio severity */}
                     {isRatio && ratioSeverity && (
                       <div>
-                        <Badge
-                          variant="outline"
-                          className={`text-[10px] px-1.5 py-0 ${
-                            ratioSeverity === "high"
-                              ? "border-destructive/30 text-destructive"
-                              : ratioSeverity === "moderate"
-                              ? "border-michigan-gold/30 text-michigan-gold"
-                              : "border-michigan-forest/30 text-michigan-forest"
-                          }`}
-                        >
+                        <Badge variant="outline" className={`text-[10px] px-1.5 py-0 ${ratioSeverity === "high" ? "border-destructive/30 text-destructive" : ratioSeverity === "moderate" ? "border-michigan-gold/30 text-michigan-gold" : "border-michigan-forest/30 text-michigan-forest"}`}>
                           {ratioSeverity === "high" ? "Shortage area" : ratioSeverity === "moderate" ? "Below average" : "Adequate"}
                         </Badge>
-                        {ratioSeverity !== "good" && (
-                          <p className="text-[10px] text-muted-foreground mt-1">Wait times may be longer</p>
-                        )}
+                        {ratioSeverity !== "good" && <p className="text-[10px] text-muted-foreground mt-1">Wait times may be longer</p>}
                       </div>
                     )}
-
-                    {/* Trend context */}
                     {h.trend && h.trend !== "stable" && (
                       <p className="text-[10px] text-muted-foreground">
                         {h.trend === "down" ? "📉 Improving over prior year" : "📈 Increased from prior year"}
                       </p>
                     )}
-
-                    {/* Actionable link */}
-                    <Link
-                      to={actionLink.href}
-                      className="block text-xs font-medium text-primary hover:underline pt-1"
-                    >
+                    <Link to={actionLink.href} className="block text-xs font-medium text-primary hover:underline pt-1">
                       {actionLink.text}
                     </Link>
                   </CardContent>
@@ -350,43 +313,18 @@ export default function CountyPage() {
                   <UninsuredSparkline currentRate={uninsuredH.value} county={county} />
                 </CardContent>
               </Card>
-            ) : null;
+            ) : (
+              <Card className="mt-4">
+                <CardContent className="py-4 text-center">
+                  <p className="text-sm text-muted-foreground">Uninsured trend data is not yet available for this county.</p>
+                </CardContent>
+              </Card>
+            );
           })()}
         </section>
 
-        {/* Data Confidence Score */}
-        <Card className="border-muted">
-          <CardContent className="py-4">
-            <div className="flex items-center gap-3 mb-2">
-              <ShieldCheck className={`h-5 w-5 ${dataConfidence.color} flex-shrink-0`} />
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-semibold text-foreground">Data Confidence</h3>
-                  <Badge variant="outline" className={`text-xs ${dataConfidence.color}`}>
-                    {dataConfidence.level} · {dataConfidence.score}%
-                  </Badge>
-                </div>
-                <div className="mt-1.5 h-1.5 w-full rounded-full bg-muted overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-500"
-                    style={{
-                      width: `${dataConfidence.score}%`,
-                      backgroundColor: dataConfidence.score >= 80 ? "hsl(var(--michigan-forest))" : dataConfidence.score >= 50 ? "hsl(var(--michigan-gold))" : "hsl(var(--destructive))",
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {dataConfidence.sources.map((s) => (
-                <Badge key={s} variant="secondary" className="text-[9px] py-0">{s}</Badge>
-              ))}
-            </div>
-            <p className="text-[10px] text-muted-foreground mt-2">
-              Score reflects the breadth of verified data sources available for this county. Higher scores indicate more real-time API feeds vs. static records.
-            </p>
-          </CardContent>
-        </Card>
+        {/* Data Confidence */}
+        <DataConfidenceCard data={dataConfidence} />
 
         {/* Map */}
         <section>
@@ -410,12 +348,12 @@ export default function CountyPage() {
           </section>
         )}
 
-        {/* Top Facilities List — major systems first */}
+        {/* Top Facilities */}
         {sortedFacilities.length > 0 && (
           <section>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-foreground">Top Facilities in {county} County</h2>
-              <Link to="/find-care">
+              <ResultHeader label={`Top Facilities in ${county} County`} count={safeF.length} />
+              <Link to={`/find-care?county=${encodeURIComponent(county)}&scope=facilities`}>
                 <Button variant="ghost" size="sm">View all →</Button>
               </Link>
             </div>
@@ -429,50 +367,20 @@ export default function CountyPage() {
                         <div className="flex items-start justify-between">
                           <h3 className="font-semibold text-sm text-foreground">{f.name}</h3>
                           <div className="flex items-center gap-1 flex-shrink-0">
-                            {isMajorSystem && (
-                              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] px-1 py-0">★ Major System</Badge>
-                            )}
-                            {f.joint_commission && (
-                              <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[9px] px-1 py-0">✓ Verified</Badge>
-                            )}
-                            {f.quality_score && (
-                              <Badge variant="outline" className="text-[10px]">
-                                {f.quality_score}/100
-                              </Badge>
-                            )}
+                            {isMajorSystem && <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] px-1 py-0">★ Major System</Badge>}
+                            {f.joint_commission && <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[9px] px-1 py-0">✓ Verified</Badge>}
+                            {f.quality_score && <Badge variant="outline" className="text-[10px]">{f.quality_score}/100</Badge>}
                           </div>
                         </div>
-                        {f.system_affiliation && (
-                          <p className="text-[10px] text-primary font-medium">{f.system_affiliation}</p>
-                        )}
-                        <p className="text-xs text-muted-foreground">
-                          <MapPin className="inline h-3 w-3 mr-1" />{f.address}, {f.city}
-                        </p>
+                        {f.system_affiliation && <p className="text-[10px] text-primary font-medium">{f.system_affiliation}</p>}
+                        <p className="text-xs text-muted-foreground"><MapPin className="inline h-3 w-3 mr-1" />{f.address}, {f.city}</p>
                         <Badge variant="secondary" className="text-[10px]">{f.facility_type.replace(/_/g, " ")}</Badge>
                         <div className="flex flex-wrap gap-2 pt-1">
-                          <a
-                            href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${f.address}, ${f.city}, ${f.state} ${f.zip}`)}`}
-                            target="_blank"
-                            rel="noopener"
-                          >
-                            <Button size="sm" variant="default" className="h-6 text-[10px] px-2">
-                              <MapPin className="mr-1 h-3 w-3" />Get Directions
-                            </Button>
+                          <a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${f.address}, ${f.city}, ${f.state} ${f.zip}`)}`} target="_blank" rel="noopener">
+                            <Button size="sm" variant="default" className="h-6 text-[10px] px-2"><MapPin className="mr-1 h-3 w-3" />Get Directions</Button>
                           </a>
-                          {f.phone && (
-                            <a href={`tel:${f.phone}`}>
-                              <Button size="sm" variant="outline" className="h-6 text-[10px] px-2">
-                                <Phone className="mr-1 h-3 w-3" />Call
-                              </Button>
-                            </a>
-                          )}
-                          {f.website && (
-                            <a href={f.website} target="_blank" rel="noopener">
-                              <Button size="sm" variant="outline" className="h-6 text-[10px] px-2">
-                                <ExternalLink className="mr-1 h-3 w-3" />Website
-                              </Button>
-                            </a>
-                          )}
+                          {f.phone && <a href={`tel:${f.phone}`}><Button size="sm" variant="outline" className="h-6 text-[10px] px-2"><Phone className="mr-1 h-3 w-3" />Call</Button></a>}
+                          {f.website && <a href={f.website} target="_blank" rel="noopener"><Button size="sm" variant="outline" className="h-6 text-[10px] px-2"><ExternalLink className="mr-1 h-3 w-3" />Website</Button></a>}
                         </div>
                       </CardContent>
                     </Card>
@@ -483,16 +391,17 @@ export default function CountyPage() {
           </section>
         )}
 
-        {/* Municipalities & Governance Toolkit */}
+        {/* Municipalities & Governance */}
         <MunicipalToolkit county={county} />
-
-        {/* Civic & Government */}
         <CountyCivicSection county={county} countyType={profile.countyType} />
 
-        {/* Explore Resources (reuse SpotlightTabs) */}
+        {/* Justice & Courts */}
+        <JusticeSection county={county} />
+
+        {/* Explore Resources */}
         <SpotlightTabs />
 
-        {/* External Links */}
+        {/* Official Resources */}
         <section>
           <h2 className="mb-4 text-xl font-bold text-foreground">Official Resources</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -508,9 +417,7 @@ export default function CountyPage() {
                     <link.icon className="h-5 w-5 text-primary flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-foreground">{link.label}</p>
-                      <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                        <ExternalLink className="h-2.5 w-2.5" /> Opens in new tab
-                      </p>
+                      <p className="text-[10px] text-muted-foreground flex items-center gap-1"><ExternalLink className="h-2.5 w-2.5" /> Opens in new tab</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -519,7 +426,7 @@ export default function CountyPage() {
           </div>
         </section>
 
-        {/* Data Gap FOIA Callout */}
+        {/* Data Gap Callout */}
         {hasDataGaps && (
           <Card className="border-michigan-gold/30 bg-michigan-gold/5">
             <CardContent className="py-4 space-y-2">
@@ -528,19 +435,13 @@ export default function CountyPage() {
                 <div>
                   <h3 className="font-semibold text-sm text-foreground">Missing local data?</h3>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Some data for {county} County may be limited. You can request public records through Michigan's Freedom of Information Act (FOIA) 
+                    Some data for {county} County may be limited. You can request public records through Michigan's Freedom of Information Act (FOIA)
                     or contact county officials for the latest information.
                   </p>
                   <div className="flex flex-wrap gap-2 mt-2">
-                    <Link to="/civic-data">
-                      <Button size="sm" variant="outline" className="h-7 text-xs">
-                        <FileQuestion className="mr-1 h-3 w-3" />FOIA Request Builder
-                      </Button>
-                    </Link>
+                    <Link to="/civic-data"><Button size="sm" variant="outline" className="h-7 text-xs"><FileQuestion className="mr-1 h-3 w-3" />FOIA Request Builder</Button></Link>
                     <a href={`mailto:?subject=Data Request for ${county} County&body=I am writing to request public health and services data for ${county} County, Michigan.`}>
-                      <Button size="sm" variant="outline" className="h-7 text-xs">
-                        <Mail className="mr-1 h-3 w-3" />Contact Officials
-                      </Button>
+                      <Button size="sm" variant="outline" className="h-7 text-xs"><Mail className="mr-1 h-3 w-3" />Contact Officials</Button>
                     </a>
                   </div>
                 </div>
@@ -549,7 +450,7 @@ export default function CountyPage() {
           </Card>
         )}
 
-        {/* Last Updated + Privacy Notice */}
+        {/* Last Updated */}
         <Card className="border-muted bg-muted/30">
           <CardContent className="py-3 text-center space-y-1">
             <p className="text-[10px] text-muted-foreground">
