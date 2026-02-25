@@ -48,7 +48,7 @@ export default function SearchTrendsPage() {
     async function fetchData() {
       setLoading(true);
       try {
-        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/search-analytics?days=${days}&source=${sourceFilter}`;
+        const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/search-analytics?days=${days}&source=${sourceFilter}`;
         const res = await fetch(url, {
           headers: {
             apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,

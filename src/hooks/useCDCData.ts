@@ -41,7 +41,7 @@ export function useCDCData(
       });
       if (measure) params.set("measure", measure);
 
-      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cdc-proxy?${params.toString()}`;
+      const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/cdc-proxy?${params.toString()}`;
       const res = await fetch(url, {
         headers: {
           apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,

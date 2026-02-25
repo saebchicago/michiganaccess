@@ -49,7 +49,7 @@ export function useHealthAlerts() {
     queryKey: ["health-alerts"],
     queryFn: async () => {
       try {
-        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cdc-proxy?dataset=places-county&limit=200`;
+        const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/cdc-proxy?dataset=places-county&limit=200`;
         const res = await fetch(url, {
           headers: {
             apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
