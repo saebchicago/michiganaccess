@@ -2,7 +2,7 @@
 // Configure once, use everywhere
 
 const MISTRAL_API_KEY = import.meta.env.VITE_MISTRAL_API_KEY;
-const MISTRAL_API_URL = "https://api.mistral.ai/v1/messages";
+const MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions";
 
 interface Message {
   role: "user" | "assistant" | "system";
@@ -18,7 +18,7 @@ async function callMistral(messages: Message[]): Promise<string> {
   }
 
   try {
-    const response = await fetch(MISTRAL_API_URL, {
+ const response = await fetch(MISTRAL_API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
