@@ -56,13 +56,15 @@ const AIAppealGenerator = () => {
     abortRef.current = new AbortController();
 
     try {
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "https://znahhtdbcgepezrxwnah.supabase.co";
+      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYWhodGRiY2dlcGV6cnh3bmFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4MjkxNjgsImV4cCI6MjA4NjQwNTE2OH0.PUg0QGZtdSYOM3VlO0-OOo9BwqJ4hgiMS2BpM2ZOCks";
       const resp = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/appeal-generator`,
+        `${supabaseUrl}/functions/v1/appeal-generator`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            Authorization: `Bearer ${supabaseKey}`,
           },
           body: JSON.stringify({
             carrier: CARRIERS.find((c) => c.value === carrier)?.label || carrier,
