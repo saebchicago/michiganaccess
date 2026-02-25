@@ -1,7 +1,8 @@
 import { useState, useCallback } from "react";
 import { resolveLocation } from "@/data/michigan-county-seats";
 
-const NPI_BASE = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/npi-proxy?state=MI&limit=50`;
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co";
+const NPI_BASE = `${SUPABASE_URL}/functions/v1/npi-proxy?state=MI&limit=50`;
 
 export interface NPIProvider {
   npi: string;
