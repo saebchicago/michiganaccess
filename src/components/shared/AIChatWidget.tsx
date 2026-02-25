@@ -1,61 +1,101 @@
 import { useState, useRef, useEffect } from "react";
-import { Send } from "lucide-react";
-import { chatWithAssistant } from "@/Services/aiService";
+import { Send, Bot, X, MessageSquare, Loader2 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-export default function AIChat() {
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/michigan-chat`;
+
+export default function AIChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
-    scrollToBottom();
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSendMessage = async (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    const trimmed = input.trim();
+    if (!trimmed || loading) return;
 
-    const userMessage = input.trim();
+    const userMsg: Message = { role: "user", content: trimmed };
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
     setInput("");
-    setError(null);
-    setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setLoading(true);
 
-    try {
-      // Pass conversation history for context
-      const response = await chatWithAssistant(
-        userMessage,
-        messages.map((m) => ({
-          role: m.role,
-          content: m.content,
-        }))
-      );
+    let assistantContent = "";
 
-      setMessages((prev) => [...prev, { role: "assistant", content: response }]);
+    try {
+      const resp = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYWhodGRiY2dlcGV6cnh3bmFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4MjkxNjgsImV4cCI6MjA4NjQwNTE2OH0.PUg0QGZtdSYOM3VlO0-OOo9BwqJ4hgiMS2BpM2ZOCks"}`,
+        },
+        body: JSON.stringify({ messages: newMessages }),
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({ error: "Request failed" }));
+        throw new Error(err.error || `Error ${resp.status}`);
+      }
+
+      if (!resp.body) throw new Error("No response stream");
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        let newlineIdx: number;
+        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+          let line = buffer.slice(0, newlineIdx);
+          buffer = buffer.slice(newlineIdx + 1);
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (!line.startsWith("data: ")) continue;
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") break;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const delta = parsed.choices?.[0]?.delta?.content;
+            if (delta) {
+              assistantContent += delta;
+              setMessages((prev) => {
+                const last = prev[prev.length - 1];
+                if (last?.role === "assistant") {
+                  return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantContent } : m);
+                }
+                return [...prev, { role: "assistant", content: assistantContent }];
+              });
+            }
+          } catch {
+            buffer = line + "\n" + buffer;
+            break;
+          }
+        }
+      }
+
+      // If no assistant content was streamed (non-streaming fallback)
+      if (!assistantContent) {
+        setMessages((prev) => [...prev, { role: "assistant", content: "I couldn't get a response. Please try again." }]);
+      }
     } catch (err: any) {
-      const errorMessage = err.message || "Failed to get response. Please try again.";
-      setError(errorMessage);
       console.error("Chat error:", err);
-      
-      // Show error in chat
       setMessages((prev) => [
         ...prev,
-        {
-          role: "assistant",
-          content: `Sorry, I'm having trouble right now. ${errorMessage}`,
-        },
+        { role: "assistant", content: `Sorry, I'm having trouble right now. ${err.message || "Please try again."}` },
       ]);
     } finally {
       setLoading(false);
@@ -64,87 +104,65 @@ export default function AIChat() {
 
   return (
     <>
-      {/* Floating Chat Button */}
+      {/* FAB */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center z-40 transition-all"
-        aria-label="Open chat"
+        className="fixed bottom-20 right-4 lg:bottom-6 lg:right-6 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center z-40 transition-all"
+        aria-label={isOpen ? "Close chat" : "Open chat assistant"}
       >
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-          />
-        </svg>
+        {isOpen ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
       </button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-96 bg-white rounded-lg shadow-2xl flex flex-col z-50 h-[500px]">
+        <div className="fixed bottom-36 right-4 lg:bottom-24 lg:right-6 w-[calc(100vw-2rem)] max-w-sm bg-background border border-border rounded-xl shadow-2xl flex flex-col z-50 h-[min(500px,70vh)]">
           {/* Header */}
-          <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+          <div className="bg-primary text-primary-foreground p-4 rounded-t-xl flex justify-between items-center">
             <div>
-              <h3 className="font-semibold">Access Michigan Assistant</h3>
-              <p className="text-sm text-blue-100">
-                Questions about Michigan services?
-              </p>
+              <h3 className="font-semibold text-sm">Access Michigan Assistant</h3>
+              <p className="text-xs opacity-80">Ask about Michigan services</p>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="text-white hover:bg-blue-700 p-1 rounded"
-            >
-              ✕
+            <button onClick={() => setIsOpen(false)} className="hover:bg-primary-foreground/20 p-1.5 rounded-lg transition-colors" aria-label="Close">
+              <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/30">
             {messages.length === 0 ? (
-              <div className="h-full flex flex-col justify-center items-center text-center text-gray-500">
-                <p className="text-sm mb-2">👋 Hi! I can help you find:</p>
-                <ul className="text-xs space-y-1">
-                  <li>Healthcare services</li>
-                  <li>Financial assistance</li>
-                  <li>Housing help</li>
-                  <li>Community resources</li>
+              <div className="h-full flex flex-col justify-center items-center text-center text-muted-foreground px-4">
+                <Bot className="h-8 w-8 mb-3 opacity-40" />
+                <p className="text-sm mb-2 font-medium">How can I help?</p>
+                <ul className="text-xs space-y-1 opacity-70">
+                  <li>Find healthcare services</li>
+                  <li>Financial assistance programs</li>
+                  <li>Housing & community resources</li>
+                  <li>Insurance appeal guidance</li>
                 </ul>
               </div>
             ) : (
               <>
                 {messages.map((msg, idx) => (
-                  <div
-                    key={idx}
-                    className={`flex ${
-                      msg.role === "user" ? "justify-end" : "justify-start"
-                    }`}
-                  >
+                  <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                     <div
-                      className={`max-w-xs px-3 py-2 rounded-lg text-sm ${
+                      className={`max-w-[85%] px-3 py-2 rounded-xl text-sm leading-relaxed ${
                         msg.role === "user"
-                          ? "bg-blue-600 text-white rounded-br-none"
-                          : "bg-gray-200 text-gray-900 rounded-bl-none"
+                          ? "bg-primary text-primary-foreground rounded-br-sm"
+                          : "bg-card border border-border text-foreground rounded-bl-sm"
                       }`}
                     >
-                      {msg.content}
+                      {msg.role === "assistant" ? (
+                        <div className="prose prose-sm max-w-none dark:prose-invert">
+                          <ReactMarkdown>{msg.content}</ReactMarkdown>
+                        </div>
+                      ) : msg.content}
                     </div>
                   </div>
                 ))}
-                {loading && (
-                  <div className="flex justify-start">
-                    <div className="bg-gray-200 text-gray-900 px-3 py-2 rounded-lg rounded-bl-none text-sm">
-                      <div className="flex space-x-2">
-                        <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce delay-100"></div>
-                        <div className="w-2 h-2 bg-gray-600 rounded-full animate-bounce delay-200"></div>
-                      </div>
-                    </div>
+                {loading && !messages.some(m => m.role === "assistant" && m === messages[messages.length - 1]) && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span className="text-xs">Thinking…</span>
                   </div>
                 )}
                 <div ref={messagesEndRef} />
@@ -152,30 +170,22 @@ export default function AIChat() {
             )}
           </div>
 
-          {/* Error Message */}
-          {error && (
-            <div className="px-4 py-2 bg-red-50 text-red-700 text-sm border-t border-red-200">
-              {error}
-            </div>
-          )}
-
-          {/* Input Form */}
-          <form
-            onSubmit={handleSendMessage}
-            className="border-t p-3 flex gap-2 bg-white rounded-b-lg"
-          >
+          {/* Input */}
+          <form onSubmit={handleSend} className="border-t border-border p-3 flex gap-2 bg-background rounded-b-xl">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about services..."
+              placeholder="Ask about services…"
               disabled={loading}
-              className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-blue-500 disabled:bg-gray-100"
+              className="flex-1 border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
+              aria-label="Chat message"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white p-2 rounded transition-colors"
+              className="bg-primary hover:bg-primary/90 disabled:opacity-40 text-primary-foreground p-2 rounded-lg transition-colors"
+              aria-label="Send message"
             >
               <Send className="w-4 h-4" />
             </button>
