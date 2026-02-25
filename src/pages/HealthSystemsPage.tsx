@@ -21,35 +21,35 @@ import { supabase } from "@/integrations/supabase/client";
 /* ── Case Studies ── */
 const CASE_STUDIES = [
   {
-    title: "Regional Health System — CHNA Enhancement",
-    challenge: "A mid-Michigan health system needed granular, county-level social determinant data to supplement their triennial Community Health Needs Assessment but lacked the internal analytics capacity to aggregate and visualize it.",
-    solution: "Integrated Access Michigan referral and resource-usage data into their existing CHNA workflow, providing real-time views of transportation barriers, food insecurity hotspots, and uninsured populations across their 12-county service area.",
+    title: "Illustrative: Regional Health System — CHNA Enhancement",
+    challenge: "A mid-Michigan health system needs granular, county-level social determinant data to supplement their triennial Community Health Needs Assessment but lacks the internal analytics capacity to aggregate and visualize it.",
+    solution: "Access Michigan's aggregated public data across 83 counties could supplement CHNA workflows with real-time views of transportation barriers, food insecurity hotspots, and uninsured population indicators.",
     outcomes: [
-      "42% reduction in CHNA data-gathering time",
-      "Identified 3 previously unknown service deserts",
-      "IRS Schedule H documentation streamlined",
+      "Potential: Reduce CHNA data-gathering effort through pre-aggregated public datasets",
+      "Potential: Surface service deserts using HRSA HPSA and CDC SVI data",
+      "Potential: Align IRS Schedule H documentation with county-level need indicators",
     ],
     icon: BarChart3,
   },
   {
-    title: "Academic Medical Center — Referral Intelligence",
-    challenge: "An academic medical center's community benefit office struggled to track whether patients referred to social services actually connected with those resources, creating a blind spot in their continuum of care.",
-    solution: "Deployed Access Michigan referral pathway analytics to map post-discharge resource utilization across community health workers, FQHC navigators, and social service organizations.",
+    title: "Illustrative: Academic Medical Center — Referral Intelligence",
+    challenge: "An academic medical center's community benefit office struggles to track whether patients referred to social services actually connect with those resources, creating a blind spot in their continuum of care.",
+    solution: "Access Michigan's unified resource directory could provide referral pathway mapping across community health workers, FQHC navigators, and social service organizations to support closed-loop tracking.",
     outcomes: [
-      "68% visibility into post-referral engagement",
-      "Reduced 30-day readmissions by 11% in pilot counties",
-      "Enabled closed-loop referral reporting for payers",
+      "Potential: Improve visibility into post-referral resource availability",
+      "Potential: Support readmission reduction efforts through better SDOH navigation",
+      "Potential: Enable referral pathway reporting for payer requirements",
     ],
     icon: Activity,
   },
   {
-    title: "Rural Hospital Network — Access Gap Mapping",
-    challenge: "A 4-hospital rural network knew patients traveled long distances for care but lacked data to quantify access gaps or advocate for mobile health investments.",
-    solution: "Used Access Michigan geo-mapped provider shortage data, transit overlay, and community resource density to build an evidence-based case for mobile clinic deployment.",
+    title: "Illustrative: Rural Hospital Network — Access Gap Mapping",
+    challenge: "A multi-hospital rural network knows patients travel long distances for care but lacks data to quantify access gaps or advocate for mobile health investments.",
+    solution: "Access Michigan's geo-mapped provider shortage data, transit overlay, and community resource density could support evidence-based planning for mobile clinic deployment and grant applications.",
     outcomes: [
-      "Secured $1.2M in grant funding for mobile units",
-      "Documented 15-county primary care desert footprint",
-      "30% increase in preventive screenings in year one",
+      "Potential: Build data-supported grant applications using HRSA shortage data",
+      "Potential: Document primary care desert footprint across service area",
+      "Potential: Identify high-impact locations for preventive screening outreach",
     ],
     icon: Map,
   },
@@ -298,10 +298,10 @@ export default function HealthSystemsPage() {
               Impact Case Studies
             </Badge>
             <h2 id="cases-heading" className="text-2xl font-bold text-foreground">
-              How Health Systems Use Access Michigan
+              How Health Systems Could Use Access Michigan
             </h2>
             <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
-              Representative scenarios illustrating integration approaches. These are anonymized composite examples, not endorsements of specific organizations.
+              Illustrative scenarios showing potential integration approaches. These are <strong>hypothetical examples</strong>, not reports of actual partnerships or measured outcomes.
             </p>
           </div>
 
@@ -333,7 +333,7 @@ export default function HealthSystemsPage() {
                       </div>
                     </div>
                     <div className="md:w-1/3 bg-michigan-teal/5 p-6 flex flex-col justify-center border-t md:border-t-0 md:border-l border-michigan-teal/10">
-                      <span className="text-xs font-semibold uppercase text-michigan-teal tracking-wide mb-3">Outcomes</span>
+                      <span className="text-xs font-semibold uppercase text-michigan-teal tracking-wide mb-3">Potential Outcomes</span>
                       <ul className="space-y-2">
                         {cs.outcomes.map((o) => (
                           <li key={o} className="flex items-start gap-2 text-sm text-foreground">
