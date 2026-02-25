@@ -71,8 +71,40 @@ export const EquityInsightCard = ({
 }: EquityInsightCardProps) => {
   const colors = colorMap[color];
 
-  const CardWrapper = ctaHref ? Link : motion.div;
-  const wrapperProps = ctaHref ? { to: ctaHref } : {};
+  const cardContent = (
+    <Card
+      className={`h-full border-l-4 ${colors.bg} ${colors.border} overflow-hidden transition-all duration-200 motion-safe:hover:shadow-lg motion-reduce:hover:shadow-md ${
+        ctaHref ? "cursor-pointer motion-safe:hover:scale-[1.02]" : ""
+      }`}
+    >
+      <CardContent className="py-6 space-y-4">
+        <div className={`inline-flex items-center justify-center rounded-lg p-3 ${colors.accent}`}>
+          <Icon className={`h-5 w-5 ${colors.icon}`} />
+        </div>
+        <h3 className="text-sm font-bold text-foreground leading-snug">{title}</h3>
+        <div className="space-y-1">
+          <div className="flex items-baseline gap-2">
+            <p className={`text-2xl font-bold ${colors.stat}`}>{stat}</p>
+            {trend && (
+              <span className={`text-xs font-medium ${colors.stat} flex items-center gap-0.5`}>
+                <TrendIcon trend={trend} />
+                {trend === "up" ? "Worsening" : trend === "down" ? "Improving" : "Stable"}
+              </span>
+            )}
+          </div>
+        </div>
+        <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
+        {ctaHref && (
+          <div className="pt-2">
+            <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${colors.icon} group-hover:underline transition-colors`}>
+              {ctaText}
+              <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
 
   return (
     <motion.div
@@ -81,49 +113,7 @@ export const EquityInsightCard = ({
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
     >
-      <CardWrapper {...wrapperProps}>
-        <Card
-          className={`h-full border-l-4 ${colors.bg} ${colors.border} overflow-hidden transition-all duration-200 motion-safe:hover:shadow-lg motion-reduce:hover:shadow-md ${
-            ctaHref ? "cursor-pointer motion-safe:hover:scale-[1.02]" : ""
-          }`}
-        >
-          <CardContent className="py-6 space-y-4">
-            {/* Icon */}
-            <div className={`inline-flex items-center justify-center rounded-lg p-3 ${colors.accent}`}>
-              <Icon className={`h-5 w-5 ${colors.icon}`} />
-            </div>
-
-            {/* Title */}
-            <h3 className="text-sm font-bold text-foreground leading-snug">{title}</h3>
-
-            {/* Stat + Trend */}
-            <div className="space-y-1">
-              <div className="flex items-baseline gap-2">
-                <p className={`text-2xl font-bold ${colors.stat}`}>{stat}</p>
-                {trend && (
-                  <span className={`text-xs font-medium ${colors.stat} flex items-center gap-0.5`}>
-                    <TrendIcon trend={trend} />
-                    {trend === "up" ? "Worsening" : trend === "down" ? "Improving" : "Stable"}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Description */}
-            <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
-
-            {/* CTA */}
-            {ctaHref && (
-              <div className="pt-2">
-                <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${colors.icon} group-hover:underline transition-colors`}>
-                  {ctaText}
-                  <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-                </span>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </CardWrapper>
+      {ctaHref ? <Link to={ctaHref}>{cardContent}</Link> : cardContent}
     </motion.div>
   );
 };

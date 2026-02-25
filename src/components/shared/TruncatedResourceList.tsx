@@ -60,7 +60,7 @@ export const TruncatedResourceList = ({
         </div>
       )}
       {item.cta && (
-        
+        <a
           href={item.cta.href}
           className="inline-flex items-center px-3 py-2 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-colors"
         >
