@@ -9,7 +9,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/s
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 import CountySelector from "@/components/shared/CountySelector";
-import SiteSearch from "@/components/shared/SiteSearch";
+import SiteSearch, { commandSiteSearch } from "@/components/shared/SiteSearch";
 import { useCounty } from "@/contexts/CountyContext";
 import { NAV_GROUPS, isNavGroup, type NavGroup, type NavLink as NavLinkType } from "@/config/routes";
 
@@ -186,7 +186,7 @@ function DesktopSearchTrigger() {
     <div className="hidden lg:flex items-center">
       <button
         onClick={() => {
-          document.dispatchEvent(new CustomEvent("mi-access:site-search", { detail: "open" }));
+          commandSiteSearch("open");
         }}
         className="flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted transition-colors min-w-[200px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         aria-label={`Search site (⌘K). ${placeholder}`}
