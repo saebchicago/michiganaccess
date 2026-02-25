@@ -5,12 +5,14 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 import EngineeringFAQ from "@/components/home/EngineeringFAQ";
 import ComparisonTable from "@/components/home/ComparisonTable";
+import { Link } from "react-router-dom";
 import {
   Brain, Bus, BarChart3, MapPin, Wifi, Building2, Users,
-  ArrowRight, CheckCircle2, TrendingUp, Target, Lightbulb,
-  AlertTriangle, DollarSign, FileText, Globe, Clock, Activity, Stethoscope
+  CheckCircle2, TrendingUp, Target, Lightbulb,
+  AlertTriangle, DollarSign, FileText, Globe, Activity, Info, Rocket
 } from "lucide-react";
 
 const fade = {
@@ -18,99 +20,162 @@ const fade = {
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }),
 };
 
+/* ── Platform Capabilities (verifiable, present-tense) ───────── */
+const platformCapabilities = [
+  { icon: MapPin, value: "83", label: "Counties Covered", source: "Michigan county data" },
+  { icon: FileText, value: "700+", label: "Community Resources", source: "Platform database" },
+  { icon: Globe, value: "4", label: "Languages Supported", source: "EN, ES, AR, BN" },
+  { icon: Activity, value: "15+", label: "Public Data Sources", source: "CMS, HRSA, CDC, MDHHS, etc." },
+  { icon: Brain, value: "AI", label: "Appeal Generator", source: "Denial-code-mapped templates" },
+  { icon: Bus, value: "Live", label: "Transit Integration", source: "GTFS real-time feeds" },
+];
+
+/* ── Exploratory Case Studies (clearly labeled as projected) ── */
 const caseStudies = [
   {
     icon: Brain,
     title: "Closing Mental Health Access Gaps",
-    subtitle: "Strategic Planning Methodology",
+    subtitle: "Exploratory Analysis — Northern Michigan",
     color: "text-michigan-coral",
     bgColor: "bg-michigan-coral/5 border-michigan-coral/20",
-    challenge: "Northern Michigan counties show 35% higher depression rates (CDC PLACES) but 60% fewer mental health providers per capita than state average.",
+    challenge: "Northern Michigan counties show 35% higher depression rates but 60% fewer mental health providers per capita than state average.",
+    challengeSource: "CDC PLACES (2023), HRSA HPSA designations",
     steps: [
-      { title: "Geospatial Access Analysis", desc: "Mapped providers + drive-time isochrones → 12,000 residents >60 minutes from nearest psychiatrist", icon: MapPin },
-      { title: "Telehealth Overlay", desc: "Cross-referenced broadband access (FCC data) → 40% of gap area has sufficient internet", icon: Wifi },
-      { title: "Safety-Net Integration", desc: "FQHC locations mapped → 8 centers have capacity for embedded behavioral health", icon: Building2 },
-      { title: "Sustainability Modeling", desc: "Analyzed Medicaid rates + sliding scale → hybrid telehealth + in-person model viable", icon: DollarSign },
+      { title: "Geospatial Access Analysis", desc: "Map providers + drive-time isochrones to identify residents >60 minutes from nearest psychiatrist", icon: MapPin },
+      { title: "Telehealth Overlay", desc: "Cross-reference broadband access (FCC data) to estimate telehealth-eligible population", icon: Wifi },
+      { title: "Safety-Net Integration", desc: "Identify FQHC locations with capacity for embedded behavioral health", icon: Building2 },
+      { title: "Sustainability Modeling", desc: "Analyze Medicaid rates + sliding scale viability for hybrid care models", icon: DollarSign },
     ],
-    stakeholders: [
-      "Health Systems: IRS Schedule H community benefit alignment, quantifiable underserved population",
-      "Partnership Model: FQHC collaboration reduces capital investment",
-      "Population Health: Measurable reduction in ED visits for mental health crises",
+    potentialApplications: [
+      "Health Systems: IRS Schedule H community benefit alignment with quantifiable underserved populations",
+      "FQHCs: Collaborative model reduces capital investment for behavioral health expansion",
+      "Public Health: Measurable baseline for tracking ED visit reductions for mental health crises",
     ],
-    transferable: "Rural diabetes care, maternity deserts, substance use treatment",
+    transferable: "Rural diabetes care, maternity deserts, substance use treatment access",
   },
   {
     icon: Bus,
-    title: "Transportation-as-Health-Infrastructure",
-    subtitle: "Operations Research for Ambulatory Access",
+    title: "Transportation as Health Infrastructure",
+    subtitle: "Exploratory Analysis — Transit-Health Intersection",
     color: "text-michigan-teal",
     bgColor: "bg-michigan-teal/5 border-michigan-teal/20",
-    challenge: "23% of missed medical appointments attributed to transportation barriers. Transit data siloed from health facility data.",
+    challenge: "An estimated 23% of missed medical appointments are attributed to transportation barriers nationally. Transit data remains siloed from health facility data in most Michigan communities.",
+    challengeSource: "National Academies of Sciences, 2021; APTA Health & Transit reports",
     steps: [
-      { title: "Integrated Transit Mapping", desc: "Overlaid 105 healthcare facilities with public transit routes + schedules", icon: MapPin },
-      { title: "Access Score Calculation", desc: "% of residents within 15-min walk of bus stop + 30-min ride of primary care", icon: BarChart3 },
-      { title: "Gap Identification", desc: "18 high-volume clinics with <40% transit accessibility despite urban location", icon: AlertTriangle },
-      { title: "Optimization Modeling", desc: "3 scenarios tested: route extension (12%), medical partnerships (28%), telehealth follow-ups (35%)", icon: TrendingUp },
+      { title: "Integrated Transit Mapping", desc: "Overlay healthcare facilities with public transit routes and schedules via GTFS feeds", icon: MapPin },
+      { title: "Access Score Calculation", desc: "Calculate % of residents within 15-min walk of bus stop + 30-min ride of primary care", icon: BarChart3 },
+      { title: "Gap Identification", desc: "Identify high-volume clinics with low transit accessibility despite urban location", icon: AlertTriangle },
+      { title: "Scenario Modeling", desc: "Model impact of route extensions, medical shuttle partnerships, and telehealth follow-ups", icon: TrendingUp },
     ],
-    stakeholders: [
-      "Health Systems: No-show reduction ROI quantified",
-      "Ambulatory Strategy: Site new clinics near high-accessibility zones",
-      "Partnership Opportunities: Regional transit authorities seeking healthcare anchors",
+    potentialApplications: [
+      "Health Systems: Quantify no-show reduction potential from transit-aware scheduling",
+      "Ambulatory Strategy: Inform site selection near high-accessibility corridors",
+      "Transit Authorities: Build case for healthcare anchor partnerships",
     ],
-    transferable: "Dialysis access, cancer treatment coordination, senior care",
+    transferable: "Dialysis access, cancer treatment coordination, senior care transportation",
   },
   {
     icon: BarChart3,
-    title: "Public Data as Market Intelligence",
-    subtitle: "Strategic Analysis for Market Development",
+    title: "Public Data as Community Intelligence",
+    subtitle: "Exploratory Analysis — 83-County Landscape",
     color: "text-primary",
     bgColor: "bg-primary/5 border-primary/20",
-    challenge: "Understanding regional health needs requires expensive consulting. Public data exists but is scattered across 83 county health departments.",
+    challenge: "Understanding regional health needs requires expensive consulting. Public data exists but is scattered across 83 county health departments, federal agencies, and state portals.",
+    challengeSource: "IRS Form 990 Schedule H requirements; HRSA UDS data",
     steps: [
-      { title: "FOIA Aggregation", desc: "Compiled county community health needs assessments (IRS-required for nonprofit hospitals)", icon: FileText },
-      { title: "Service Gap Analysis", desc: "Identified Top 5 unmet needs per county. Example: Kent County prioritizes substance use, behavioral health, diabetes prevention", icon: Target },
-      { title: "Competitive Landscape", desc: "Counted existing programs per need → substance use has 60% fewer programs than diabetes (despite similar prevalence)", icon: Globe },
-      { title: "Strategic Whitespace", desc: "Northern counties show 3× higher geriatric care need but no specialized programs", icon: Lightbulb },
+      { title: "Data Aggregation", desc: "Compile county community health needs assessments and publicly available health indicators", icon: FileText },
+      { title: "Service Gap Analysis", desc: "Identify top unmet needs per county by cross-referencing prevalence data with existing programs", icon: Target },
+      { title: "Resource Landscape", desc: "Map existing programs per need category to reveal saturation vs. scarcity", icon: Globe },
+      { title: "Strategic Whitespace", desc: "Identify counties with high need and low existing program coverage", icon: Lightbulb },
     ],
-    stakeholders: [
-      "Health Systems: Data-driven expansion into markets with unmet need + low saturation",
-      "Grant Alignment: HRSA, SAMHSA funding priorities match identified gaps",
-      "Community Partnership: Approach counties with solutions to documented needs",
-      "Government: FOIA trends reveal cross-jurisdiction challenges",
+    potentialApplications: [
+      "Health Systems: Data-driven expansion planning using publicly available indicators",
+      "Grant Writers: Align HRSA, SAMHSA funding applications with documented community gaps",
+      "Community Organizations: Approach counties with solutions matched to documented needs",
+      "Policymakers: Identify cross-jurisdiction challenges from aggregated public data",
     ],
-    transferable: "Education infrastructure, environmental justice, transit optimization",
+    transferable: "Education infrastructure planning, environmental justice mapping, transit optimization",
   },
-];
-
-const ambulatoryMetrics = [
-  { icon: Clock, label: "No-Show Rate Reduction", value: "23% → 14%", desc: "Projected via transit-integrated scheduling and automated reminders" },
-  { icon: Activity, label: "Patient Throughput", value: "+18%", desc: "Optimized same-day scheduling with multi-specialist co-location modeling" },
-  { icon: Stethoscope, label: "First-Visit Resolution", value: "72%", desc: "Pre-visit eligibility screening + integrated referral pathways" },
-  { icon: TrendingUp, label: "Panel Capacity Utilization", value: "85%", desc: "Provider panel optimization using HPSA + demand forecasting data" },
 ];
 
 export default function ImpactPage() {
   const { t } = useTranslation();
-  usePageMeta({ title: t("impactPage.badge"), description: t("impactPage.subtitle"), path: "/impact" });
+  usePageMeta({
+    title: "Impact & Technology | Access Michigan",
+    description: "How Access Michigan uses public data to support health equity analysis across 83 Michigan counties — exploratory case studies and platform capabilities.",
+    path: "/impact",
+  });
+
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-forest/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
-          <Breadcrumbs items={[{ label: t("impactPage.badge") }]} />
+          <Breadcrumbs items={[{ label: "Impact & Technology" }]} />
           <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest">
-            {t("impactPage.badge")}
+            Impact & Technology
           </motion.span>
           <motion.h1 variants={fade} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
-            {t("impactPage.title")}
+            Building Infrastructure for Health Equity
           </motion.h1>
           <motion.p variants={fade} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            {t("impactPage.subtitle")}
+            Access Michigan aggregates 15+ public datasets across all 83 counties to surface actionable insights for residents, health systems, and community organizations.
           </motion.p>
         </div>
       </section>
 
       <div className="container max-w-5xl py-12 space-y-16">
+
+        {/* Platform Status — verifiable facts only */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Rocket className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Platform Capabilities</h2>
+              <p className="text-sm text-muted-foreground">What Access Michigan provides today</p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 grid-cols-2 lg:grid-cols-3 mb-4">
+            {platformCapabilities.map((cap, i) => (
+              <motion.div key={cap.label} variants={fade} custom={i}>
+                <Card className="text-center hover-lift h-full">
+                  <CardContent className="pt-6 pb-4">
+                    <cap.icon className="mx-auto mb-2 h-5 w-5 text-primary" />
+                    <p className="text-2xl font-bold text-primary">{cap.value}</p>
+                    <p className="text-xs font-semibold text-foreground mt-1">{cap.label}</p>
+                    <p className="text-[10px] text-muted-foreground mt-1">{cap.source}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="rounded-lg border border-border bg-muted/50 p-4 flex items-start gap-3">
+            <Info className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
+            <p className="text-xs text-muted-foreground">
+              All figures above reflect current platform data. Access Michigan is in <strong>Public Beta</strong> — capabilities are expanding with community feedback. See <Link to="/data-validation" className="text-primary hover:underline">Data Sources & Validation</Link> for full methodology.
+            </p>
+          </div>
+        </motion.section>
+
+        <Separator />
+
+        {/* Disclaimer banner */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0} className="rounded-xl border-2 border-michigan-gold/30 bg-michigan-gold/5 p-5">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
+            <div>
+              <p className="text-sm font-semibold text-foreground mb-1">Exploratory Case Studies</p>
+              <p className="text-xs text-muted-foreground">
+                The following case studies are <strong>illustrative scenarios</strong> that demonstrate how Access Michigan's data infrastructure could support health equity analysis. They use real public data sources but present <strong>projected methodologies, not measured outcomes</strong>. No endorsement by or partnership with named agencies is implied.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Case Studies */}
         {caseStudies.map((cs, ci) => (
           <motion.section key={cs.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
@@ -119,7 +184,10 @@ export default function ImpactPage() {
                 <cs.icon className={`h-5 w-5 ${cs.color}`} />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">{cs.title}</h2>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <h2 className="text-2xl font-bold text-foreground">{cs.title}</h2>
+                  <Badge variant="outline" className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold">Illustrative</Badge>
+                </div>
                 <p className="text-sm text-muted-foreground">{cs.subtitle}</p>
               </div>
             </div>
@@ -128,12 +196,14 @@ export default function ImpactPage() {
               <div className="flex items-start gap-2">
                 <AlertTriangle className={`mt-0.5 h-4 w-4 shrink-0 ${cs.color}`} />
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">{t("impactPage.challenge")}</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-1">Challenge</p>
                   <p className="text-sm text-foreground">{cs.challenge}</p>
+                  <p className="text-[10px] text-muted-foreground mt-1.5 italic">Source: {cs.challengeSource}</p>
                 </div>
               </div>
             </div>
 
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Proposed Methodology</p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
               {cs.steps.map((step, si) => (
                 <motion.div key={step.title} variants={fade} custom={si + 1}>
@@ -152,9 +222,9 @@ export default function ImpactPage() {
             </div>
 
             <div className="rounded-lg border border-border bg-muted/50 p-5 mb-3">
-              <h4 className="mb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">{t("impactPage.stakeholders")}</h4>
+              <h4 className="mb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Potential Applications</h4>
               <ul className="space-y-2">
-                {cs.stakeholders.map((s) => (
+                {cs.potentialApplications.map((s) => (
                   <li key={s} className="flex items-start gap-2 text-xs text-muted-foreground">
                     <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-michigan-forest" /> {s}
                   </li>
@@ -163,7 +233,7 @@ export default function ImpactPage() {
             </div>
 
             <p className="text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">{t("impactPage.transferableTo")}:</span> {cs.transferable}
+              <span className="font-semibold text-foreground">Transferable to:</span> {cs.transferable}
             </p>
 
             {ci < caseStudies.length - 1 && <Separator className="mt-12" />}
@@ -171,49 +241,13 @@ export default function ImpactPage() {
         ))}
 
         <Separator />
-
-        {/* Ambulatory Operations Metrics - NEW */}
-        <section>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-sky/10">
-                <Activity className="h-5 w-5 text-michigan-sky" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">{t("impactPage.ambulatoryTitle")}</h2>
-                <p className="text-sm text-muted-foreground">{t("impactPage.ambulatorySubtitle")}</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-6">
-            {ambulatoryMetrics.map((m, i) => (
-              <motion.div key={m.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
-                <Card className="text-center hover-lift h-full">
-                  <CardContent className="pt-6 pb-4">
-                    <m.icon className="mx-auto mb-2 h-5 w-5 text-michigan-sky" />
-                    <p className="text-xl font-bold text-primary">{m.value}</p>
-                    <p className="text-xs font-semibold text-foreground mt-1">{m.label}</p>
-                    <p className="text-[10px] text-muted-foreground mt-1">{m.desc}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="rounded-lg border border-border bg-muted/50 p-4">
-            <p className="text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">{t("impactPage.ambulatoryNote")}</span>
-            </p>
-          </div>
-        </section>
       </div>
 
-        {/* Platform Comparison — relocated from homepage */}
-        <ComparisonTable />
+      {/* Platform Comparison */}
+      <ComparisonTable />
 
-        {/* System Architecture FAQ — relocated from homepage */}
-        <EngineeringFAQ />
+      {/* System Architecture FAQ */}
+      <EngineeringFAQ />
     </Layout>
   );
 }
