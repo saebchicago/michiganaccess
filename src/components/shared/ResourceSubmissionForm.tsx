@@ -82,7 +82,7 @@ export default function ResourceSubmissionForm() {
           : [],
         website: form.website || undefined,
       };
-      const { error } = await supabase.functions.invoke("resource-submission", {
+      const { error } = await (supabase as any).functions.invoke("resource-submission", {
         body: payload,
       });
       if (error) throw error;

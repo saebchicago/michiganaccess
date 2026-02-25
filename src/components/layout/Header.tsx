@@ -186,7 +186,7 @@ function DesktopSearchTrigger() {
     <div className="hidden lg:flex items-center">
       <button
         onClick={() => {
-          commandSiteSearch("open");(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }));
+          document.dispatchEvent(new CustomEvent("mi-access:site-search", { detail: "open" }));
         }}
         className="flex items-center gap-2 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted transition-colors min-w-[200px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         aria-label={`Search site (⌘K). ${placeholder}`}

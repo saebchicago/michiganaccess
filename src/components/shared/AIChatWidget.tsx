@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Send } from "lucide-react";
-import { chatWithAssistant } from "@/services/aiService";
+import { chatWithAssistant } from "@/Services/aiService";
 
 interface Message {
   role: "user" | "assistant";

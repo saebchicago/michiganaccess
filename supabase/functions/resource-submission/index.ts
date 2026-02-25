@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { z } from "https://esm.sh/zod@3.23.8";
-import { Resend } from "npm:resend@4.0.0";
+// Resend email via fetch instead of npm import
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -80,37 +80,34 @@ serve(async (req) => {
       });
     }
 
-    // Send email notification via Resend
+    // Send email notification via Resend REST API
     const resendKey = Deno.env.get("RESEND_API_KEY");
     if (resendKey) {
       try {
-        const resend = new Resend(resendKey);
-        await resend.emails.send({
-          from: "Access Michigan <onboarding@resend.dev>",
-          to: RECIPIENT_EMAILS,
-          subject: `New Resource Submission: ${data.organization_name}`,
-          html: `
-            <h2>New Resource Submission</h2>
-            <table style="border-collapse:collapse;width:100%;font-family:sans-serif;font-size:14px">
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Organization</td><td style="padding:6px;border-bottom:1px solid #eee">${data.organization_name}</td></tr>
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Contact</td><td style="padding:6px;border-bottom:1px solid #eee">${data.contact_name} (${data.contact_email})</td></tr>
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Type</td><td style="padding:6px;border-bottom:1px solid #eee">${data.resource_type}</td></tr>
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">County</td><td style="padding:6px;border-bottom:1px solid #eee">${data.county || "Not specified"}</td></tr>
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">City</td><td style="padding:6px;border-bottom:1px solid #eee">${data.city || "Not specified"}</td></tr>
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Description</td><td style="padding:6px;border-bottom:1px solid #eee">${data.description}</td></tr>
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Services</td><td style="padding:6px;border-bottom:1px solid #eee">${data.services_offered.join(", ") || "None listed"}</td></tr>
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Free?</td><td style="padding:6px;border-bottom:1px solid #eee">${data.is_free ? "Yes" : "No"}</td></tr>
-              <tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Walk-in?</td><td style="padding:6px;border-bottom:1px solid #eee">${data.walk_in_available ? "Yes" : "No"}</td></tr>
-              ${data.phone ? `<tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Phone</td><td style="padding:6px;border-bottom:1px solid #eee">${data.phone}</td></tr>` : ""}
-              ${data.website ? `<tr><td style="padding:6px;border-bottom:1px solid #eee;font-weight:bold">Website</td><td style="padding:6px;border-bottom:1px solid #eee">${data.website}</td></tr>` : ""}
-            </table>
-            <p style="margin-top:16px;font-size:12px;color:#888">Submitted via Access Michigan resource directory.</p>
-          `,
+        const emailHtml = `
+          <h2>New Resource Submission</h2>
+          <p><strong>Organization:</strong> ${data.organization_name}</p>
+          <p><strong>Contact:</strong> ${data.contact_name} (${data.contact_email})</p>
+          <p><strong>Type:</strong> ${data.resource_type}</p>
+          <p><strong>County:</strong> ${data.county || "Not specified"}</p>
+          <p><strong>Description:</strong> ${data.description}</p>
+        `;
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${resendKey}`,
+          },
+          body: JSON.stringify({
+            from: "Access Michigan <onboarding@resend.dev>",
+            to: RECIPIENT_EMAILS,
+            subject: `New Resource Submission: ${data.organization_name}`,
+            html: emailHtml,
+          }),
         });
-        console.log("Email notification sent for resource submission:", data.organization_name);
+        console.log("Email notification sent for:", data.organization_name);
       } catch (emailErr) {
         console.error("Email send failed:", emailErr);
-        // Don't fail the request if email fails
       }
     }
 
