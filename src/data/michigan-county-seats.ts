@@ -26,6 +26,69 @@ export const COUNTY_SEATS: Record<string, string> = {
 /** All 83 Michigan counties */
 export const MICHIGAN_COUNTY_NAMES = Object.keys(COUNTY_SEATS);
 
+/** Major Michigan cities with county and representative ZIP */
+export interface MichiganCity {
+  city: string;
+  county: string;
+  zip: string;
+}
+
+export const MICHIGAN_CITIES: MichiganCity[] = [
+  { city: "Detroit", county: "Wayne", zip: "48201" },
+  { city: "Grand Rapids", county: "Kent", zip: "49503" },
+  { city: "Lansing", county: "Ingham", zip: "48933" },
+  { city: "Ann Arbor", county: "Washtenaw", zip: "48104" },
+  { city: "Flint", county: "Genesee", zip: "48502" },
+  { city: "Kalamazoo", county: "Kalamazoo", zip: "49001" },
+  { city: "Dearborn", county: "Wayne", zip: "48124" },
+  { city: "Sterling Heights", county: "Macomb", zip: "48310" },
+  { city: "Warren", county: "Macomb", zip: "48089" },
+  { city: "Pontiac", county: "Oakland", zip: "48341" },
+  { city: "Saginaw", county: "Saginaw", zip: "48601" },
+  { city: "Muskegon", county: "Muskegon", zip: "49440" },
+  { city: "Traverse City", county: "Grand Traverse", zip: "49684" },
+  { city: "Marquette", county: "Marquette", zip: "49855" },
+  { city: "Royal Oak", county: "Oakland", zip: "48067" },
+  { city: "Troy", county: "Oakland", zip: "48083" },
+  { city: "Auburn Hills", county: "Oakland", zip: "48326" },
+  { city: "Southfield", county: "Oakland", zip: "48075" },
+  { city: "Oak Park", county: "Oakland", zip: "48237" },
+  { city: "Farmington Hills", county: "Oakland", zip: "48334" },
+  { city: "Ypsilanti", county: "Washtenaw", zip: "48197" },
+  { city: "Jackson", county: "Jackson", zip: "49201" },
+  { city: "Bay City", county: "Bay", zip: "48706" },
+  { city: "Midland", county: "Midland", zip: "48640" },
+  { city: "Holland", county: "Ottawa", zip: "49423" },
+  { city: "Battle Creek", county: "Calhoun", zip: "49017" },
+  { city: "Mt. Pleasant", county: "Isabella", zip: "48858" },
+  { city: "Alpena", county: "Alpena", zip: "49707" },
+  { city: "Livonia", county: "Wayne", zip: "48150" },
+  { city: "Canton", county: "Wayne", zip: "48187" },
+  { city: "Wyoming", county: "Kent", zip: "49509" },
+  { city: "Rochester Hills", county: "Oakland", zip: "48309" },
+  { city: "Novi", county: "Oakland", zip: "48375" },
+  { city: "Taylor", county: "Wayne", zip: "48180" },
+  { city: "Westland", county: "Wayne", zip: "48185" },
+  { city: "St. Clair Shores", county: "Macomb", zip: "48080" },
+  { city: "Portage", county: "Kalamazoo", zip: "49002" },
+  { city: "East Lansing", county: "Ingham", zip: "48823" },
+  { city: "Roseville", county: "Macomb", zip: "48066" },
+  { city: "Clinton Township", county: "Macomb", zip: "48035" },
+];
+
+/** ZIP prefix → county mapping for common Michigan ZIP codes */
+export const ZIP_TO_COUNTY: Record<string, string> = {
+  "480": "Wayne", "481": "Wayne", "482": "Wayne",
+  "483": "Oakland", "484": "Genesee",
+  "485": "Ingham", "486": "Saginaw", "487": "Bay",
+  "488": "Gratiot", "489": "Kalamazoo",
+  "490": "Kalamazoo", "491": "Kent",
+  "492": "Jackson", "493": "Calhoun",
+  "494": "Muskegon", "495": "Grand Traverse",
+  "496": "Grand Traverse", "497": "Marquette",
+  "498": "Chippewa", "499": "Iron",
+};
+
 /** Resolve a location input to NPI API params */
 export function resolveLocation(input: string): { postal_code?: string; city?: string } {
   const trimmed = input.trim();
@@ -45,6 +108,38 @@ export function resolveLocation(input: string): { postal_code?: string; city?: s
     return { city: COUNTY_SEATS[countyMatch] };
   }
 
+  // City name match — check MICHIGAN_CITIES first (includes suburbs)
+  const cityLower = trimmed.toLowerCase();
+  const cityMatch = MICHIGAN_CITIES.find(
+    (c) => c.city.toLowerCase() === cityLower
+  );
+  if (cityMatch) {
+    return { city: cityMatch.city };
+  }
+
+  // Partial city match against county seats
+  const seatValues = Object.values(COUNTY_SEATS);
+  const seatMatch = seatValues.find(
+    (s) => s.toLowerCase().includes(cityLower) || cityLower.includes(s.toLowerCase())
+  );
+  if (seatMatch) {
+    return { city: seatMatch };
+  }
+
+  // Partial city match against MICHIGAN_CITIES
+  const partialCity = MICHIGAN_CITIES.find(
+    (c) => c.city.toLowerCase().includes(cityLower) || cityLower.includes(c.city.toLowerCase())
+  );
+  if (partialCity) {
+    return { city: partialCity.city };
+  }
+
   // Default: treat as city
   return { city: trimmed };
+}
+
+/** Look up county from a ZIP code (3-5 digits) */
+export function zipToCounty(zip: string): string | null {
+  const prefix3 = zip.slice(0, 3);
+  return ZIP_TO_COUNTY[prefix3] || null;
 }

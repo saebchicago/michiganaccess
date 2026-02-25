@@ -87,6 +87,7 @@ const pages = {
   OutagesPage: lazy(() => import("@/pages/OutagesPage")),
   SearchTrendsPage: lazy(() => import("@/pages/SearchTrendsPage")),
   TermsPage: lazy(() => import("@/pages/TermsPage")),
+  ZoningPage: lazy(() => import("@/pages/ZoningPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -145,6 +146,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/outages", component: pages.OutagesPage, label: "Outages" },
   { path: "/admin/search-trends", component: pages.SearchTrendsPage, label: "Search Trends" },
   { path: "/terms", component: pages.TermsPage, label: "Terms of Use" },
+  { path: "/zoning", component: pages.ZoningPage, label: "Zoning & Land Use" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
@@ -186,6 +188,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Cost Transparency", href: "/costs", i18nKey: "nav.costTransparency" },
       { label: "Prevention & Wellness", href: "/wellness", i18nKey: "nav.prevention" },
       { label: "Life Navigator", href: "/life-navigator" },
+      { label: "Zoning & Land Use", href: "/zoning" },
       { label: "Regions", href: "/regions" },
     ],
   },
