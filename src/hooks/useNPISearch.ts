@@ -94,9 +94,15 @@ export function useNPISearch() {
     return allResults.flat();
   }, []);
 
-  /** Search by provider name */
-  const searchByName = useCallback(async (firstName: string, lastName: string) => {
-    const url = `${NPI_BASE}&first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}`;
+  /** Search by provider name, optionally filtered by location */
+  const searchByName = useCallback(async (firstName: string, lastName: string, location?: string) => {
+    let url = `${NPI_BASE}&first_name=${encodeURIComponent(firstName)}&last_name=${encodeURIComponent(lastName)}`;
+    if (location?.trim()) {
+      const locParams = resolveLocation(location.trim());
+      Object.entries(locParams).forEach(([k, v]) => {
+        url += `&${k}=${encodeURIComponent(v)}`;
+      });
+    }
     const res = await fetch(url);
     if (!res.ok) throw new Error(`NPI API error: ${res.status}`);
     const data = await res.json();
@@ -132,7 +138,7 @@ export function useNPISearch() {
       switch (mode) {
         case "name":
           if (nameQuery) {
-            rawResults = await searchByName(nameQuery.firstName, nameQuery.lastName);
+            rawResults = await searchByName(nameQuery.firstName, nameQuery.lastName, location);
           }
           break;
         case "npi":
