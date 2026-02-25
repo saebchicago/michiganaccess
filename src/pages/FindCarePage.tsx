@@ -97,7 +97,7 @@ export default function FindCarePage() {
   const [categoryValue, setCategoryValue] = useState("");
   const [category, setCategory] = useState<HelpCategory | null>(null);
   const [specialty, setSpecialty] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState(() => searchParams.get("county") || "");
   const [hasSearched, setHasSearched] = useState(false);
 
   // Search mode
