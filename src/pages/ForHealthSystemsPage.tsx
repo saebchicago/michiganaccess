@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Link } from "react-router-dom";
-import { Building2, Network, FileBarChart, GitBranch, ArrowRight, Calculator } from "lucide-react";
+import { Building2, Network, FileBarChart, GitBranch, ArrowRight, Calculator, Info } from "lucide-react";
 import ShareButton from "@/components/shared/ShareButton";
 
 const valueProps = [
@@ -49,9 +49,10 @@ function SystemImpactCalculator() {
       <CardContent className="py-6 space-y-5">
         <div className="flex items-center gap-2 mb-2">
           <Calculator className="h-5 w-5 text-primary" />
-          <h3 className="text-lg font-bold text-foreground">System Impact Calculator</h3>
+          <h3 className="text-lg font-bold text-foreground">Exploratory Impact Calculator</h3>
+          <Badge variant="outline" className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold ml-1">Modeled</Badge>
         </div>
-        <p className="text-xs text-muted-foreground">Estimate the operational and financial impact of integrated navigation for your service area.</p>
+        <p className="text-xs text-muted-foreground">Estimate potential operational impact of integrated navigation for your service area. All outputs are <strong>modeled projections</strong>, not guaranteed outcomes.</p>
 
         <div className="grid sm:grid-cols-3 gap-4">
           <div>
@@ -70,10 +71,10 @@ function SystemImpactCalculator() {
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: "Estimated ED Diversions", value: results.diversions.toLocaleString(), sub: "/year" },
-            { label: "Preserved Capacity Value", value: `$${(results.capacityValue / 1e6).toFixed(1)}M`, sub: "/year" },
-            { label: "SDOH Connections", value: results.sdohConnections.toLocaleString(), sub: "/year" },
-            { label: "Community Benefit Value", value: `$${(results.communityBenefit / 1e6).toFixed(2)}M`, sub: "Schedule H" },
+            { label: "Projected ED Diversions", value: results.diversions.toLocaleString(), sub: "/year (modeled)" },
+            { label: "Projected Capacity Value", value: `$${(results.capacityValue / 1e6).toFixed(1)}M`, sub: "/year (modeled)" },
+            { label: "Projected SDOH Connections", value: results.sdohConnections.toLocaleString(), sub: "/year (modeled)" },
+            { label: "Projected Benefit Value", value: `$${(results.communityBenefit / 1e6).toFixed(2)}M`, sub: "Schedule H (modeled)" },
           ].map((r) => (
             <div key={r.label} className="rounded-lg bg-primary/5 p-3 text-center">
               <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{r.label}</p>
@@ -81,6 +82,12 @@ function SystemImpactCalculator() {
               <p className="text-[10px] text-muted-foreground">{r.sub}</p>
             </div>
           ))}
+        </div>
+
+        <div className="rounded-md bg-muted/30 p-3">
+          <p className="text-[10px] text-muted-foreground leading-relaxed">
+            <strong>Assumptions:</strong> 35% diversion rate for low-acuity ED visits (Weinick et al., Health Affairs); $3,200 avg. ED visit cost (AHRQ HCUP StatBrief #268); 2.4× SDOH referral multiplier; $420 avg. community benefit value per connection (IRS Schedule H benchmarks). All figures are illustrative projections — actual results depend on implementation, market conditions, and system-specific factors.
+          </p>
         </div>
       </CardContent>
     </Card>
@@ -94,10 +101,19 @@ const ForHealthSystemsPage = () => {
     <Layout>
       <section className="py-16">
         <div className="container max-w-5xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
             <Badge variant="outline" className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary">For Operations & Engineering Leaders</Badge>
             <h1 className="text-3xl font-bold text-foreground lg:text-4xl mb-3">Strategic Value for Health Systems</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">Population health infrastructure designed for management engineers, IE/OR professionals, and ambulatory operations leaders.</p>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }} className="rounded-xl border-2 border-michigan-gold/30 bg-michigan-gold/5 p-5 mb-10">
+            <div className="flex items-start gap-3">
+              <Info className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
+              <p className="text-xs text-muted-foreground">
+                <strong className="text-foreground">Exploratory Framework:</strong> Access Michigan is in Public Beta. The value propositions and calculator below present <strong>projected analytical capabilities</strong> based on the platform's data infrastructure and published benchmarks — not measured outcomes. See <a href="/lean-healthcare" className="text-primary hover:underline">Lean Methodology</a> for sourced citations.
+              </p>
+            </div>
           </motion.div>
 
           <div className="grid gap-4 md:grid-cols-3 mb-12">
