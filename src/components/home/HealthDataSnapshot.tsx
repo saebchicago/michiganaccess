@@ -12,6 +12,8 @@ import {
 } from "recharts";
 import { useCounty } from "@/contexts/CountyContext";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
+import SnapshotCard from "@/components/shared/SnapshotCard";
+import { buildStateSnapshotMetrics, buildCountySnapshotMetrics } from "@/utils/snapshotMetrics";
 
 // Heavy map components — lazy loaded
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
@@ -126,6 +128,10 @@ export default function HealthDataSnapshot() {
     ];
   }, [county]);
 
+  const snapshotMetrics = useMemo(() => {
+    return county ? buildCountySnapshotMetrics(county) : buildStateSnapshotMetrics();
+  }, [county]);
+
   const sectionTitle = county ? `${county} County Health at a Glance` : "Michigan Health at a Glance";
 
   return (
@@ -141,13 +147,16 @@ export default function HealthDataSnapshot() {
             <BarChart3 className="mr-1.5 h-3 w-3" />
             Health Data Snapshot
           </Badge>
-          <h2 id="health-data-title" className="text-2xl font-bold text-white lg:text-3xl mb-2">
-            {sectionTitle}
-          </h2>
-          <p className="text-sm text-slate-400 max-w-2xl mx-auto">
-            Key health indicators powered by CDC, CMS, and County Health Rankings data.
-          </p>
         </motion.div>
+
+        {/* SnapshotCard integration */}
+        <div className="mb-8">
+          <SnapshotCard
+            title={sectionTitle}
+            geographyType={county ? "county" : "state"}
+            metrics={snapshotMetrics}
+          />
+        </div>
 
         {/* KPI Cards */}
         <div className="grid gap-3 grid-cols-2 lg:grid-cols-4 mb-8">

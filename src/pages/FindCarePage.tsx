@@ -24,6 +24,7 @@ import { useNPISearch, type NPISearchMode } from "@/hooks/useNPISearch";
 import { findCategory, type HelpCategory } from "@/data/findhelp-categories";
 import { STATIC_RESOURCES } from "@/data/findhelp-resources";
 import { Link, useSearchParams } from "react-router-dom";
+import ResultHeader from "@/components/shared/ResultHeader";
 
 /* ── Crisis banner ────────────────────────────── */
 function CrisisBanner() {
@@ -52,16 +53,28 @@ function CrisisBanner() {
 
 /* ── Quick-link cards for initial state ────────── */
 const QUICK_LINKS: { label: string; value: string; icon: typeof Heart; color: string }[] = [
-  { label: "Find a Doctor", value: "doctor", icon: Stethoscope, color: "bg-primary/10 text-primary" },
-  { label: "Mental Health Support", value: "mental-health", icon: Brain, color: "bg-michigan-teal/10 text-michigan-teal" },
+  { label: "Primary Care", value: "doctor", icon: Stethoscope, color: "bg-primary/10 text-primary" },
+  { label: "Mental Health", value: "mental-health", icon: Brain, color: "bg-michigan-teal/10 text-michigan-teal" },
   { label: "Food Assistance", value: "food", icon: Heart, color: "bg-michigan-coral/10 text-michigan-coral" },
   { label: "Help Paying Bills", value: "financial", icon: DollarSign, color: "bg-michigan-gold/10 text-michigan-gold" },
 ];
 
+/* ── Care type pills for service-line search ── */
+const CARE_TYPES = [
+  { id: "primary-care", label: "Primary Care" },
+  { id: "pediatrics", label: "Pediatrics" },
+  { id: "ob-gyn", label: "OB-GYN" },
+  { id: "behavioral-health", label: "Behavioral Health" },
+  { id: "dental", label: "Dental" },
+  { id: "dermatology", label: "Dermatology" },
+  { id: "cardiology", label: "Cardiology" },
+  { id: "orthopedics", label: "Orthopedics" },
+];
+
 /* ── Search mode tabs ────────────────────────── */
 const MODE_TABS: { mode: NPISearchMode; label: string; icon: typeof Stethoscope }[] = [
-  { mode: "specialty", label: "By Specialty", icon: Stethoscope },
-  { mode: "name", label: "By Doctor Name", icon: User },
+  { mode: "specialty", label: "By Service", icon: Stethoscope },
+  { mode: "name", label: "By Provider Name", icon: User },
   { mode: "npi", label: "By NPI Number", icon: Hash },
 ];
 
@@ -69,7 +82,7 @@ const MODE_TABS: { mode: NPISearchMode; label: string; icon: typeof Stethoscope 
 export default function FindCarePage() {
   usePageMeta({
     title: "Find Help — Access Michigan",
-    description: "Find doctors, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.",
+    description: "Find care, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.",
     path: "/find-care",
     jsonLd: {
       "@type": "MedicalWebPage",
@@ -266,7 +279,7 @@ export default function FindCarePage() {
             transition={{ delay: 0.1 }}
             className="mx-auto max-w-xl text-center text-muted-foreground mb-6"
           >
-            Find doctors, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.
+            Find care, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.
           </motion.p>
 
           {/* ── Mode Selector Tabs ── */}
@@ -551,10 +564,7 @@ export default function FindCarePage() {
             <div className="flex-1 min-w-0">
               {/* Results header */}
               <div className="mb-4 flex items-center justify-between flex-wrap gap-3" aria-live="polite">
-                <p className="text-sm text-muted-foreground">
-                  Showing <strong className="text-foreground">{filteredNPI.length}</strong> providers
-                  {location && <> near <strong className="text-foreground">{location}</strong></>}
-                </p>
+                <ResultHeader label={`Providers${location ? ` near ${location}` : ""}`} count={filteredNPI.length} />
                 {/* Mobile filter trigger */}
                 <Sheet>
                   <SheetTrigger asChild>

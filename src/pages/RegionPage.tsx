@@ -18,6 +18,8 @@ import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
 import ResourceGapAnalysis from "@/components/region/ResourceGapAnalysis";
 import MarketIntelligence from "@/components/region/MarketIntelligence";
+import SnapshotCard from "@/components/shared/SnapshotCard";
+import { buildRegionSnapshotMetrics } from "@/utils/snapshotMetrics";
 
 const EmbeddedMap = lazy(() => import("@/components/map/EmbeddedMap"));
 
@@ -128,6 +130,13 @@ export default function RegionPage() {
       </section>
 
       <div className="container py-8 space-y-10">
+        {/* Region Snapshot */}
+        <SnapshotCard
+          title={`${region.name} at a Glance`}
+          geographyType="region"
+          metrics={buildRegionSnapshotMetrics(region.id)}
+        />
+
         {/* Regional Health Benchmarks */}
         <section>
           <h2 className="mb-4 text-xl font-bold text-foreground flex items-center gap-2">
