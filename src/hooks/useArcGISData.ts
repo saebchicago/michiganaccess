@@ -19,7 +19,7 @@ export function useArcGISData(layer: ArcGISLayer, enabled = true) {
   return useQuery({
     queryKey: ["arcgis", layer],
     queryFn: async (): Promise<ArcGISResponse> => {
-      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/arcgis-proxy?layer=${layer}`;
+      const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/arcgis-proxy?layer=${layer}`;
       const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,

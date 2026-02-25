@@ -41,7 +41,7 @@ export function useHRSAData(state: string = "MI", limit: number = 50) {
           limit: String(limit),
         });
 
-        const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/hrsa-data?${params.toString()}`;
+        const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/hrsa-data?${params.toString()}`;
         const res = await fetch(url, {
           headers: {
             apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,

@@ -33,7 +33,7 @@ export function useAirQuality(enabled = true) {
   return useQuery({
     queryKey: ["aqi-data"],
     queryFn: async (): Promise<AQIResponse> => {
-      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/airnow-proxy`;
+      const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/airnow-proxy`;
       const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,

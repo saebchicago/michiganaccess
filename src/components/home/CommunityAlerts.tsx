@@ -89,8 +89,8 @@ function WeatherAlerts({ county }: { county: string | null }) {
     const cached = getCached<NWSAlert[]>(cacheKey);
     if (cached) { setAlerts(cached); setLoading(false); return; }
 
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const apiKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co";
+    const apiKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYWhodGRiY2dlcGV6cnh3bmFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4MjkxNjgsImV4cCI6MjA4NjQwNTE2OH0.PUg0QGZtdSYOM3VlO0-OOo9BwqJ4hgiMS2BpM2ZOCks";
     const params = county ? `?county=${encodeURIComponent(county)}` : "";
 
     fetch(`${supabaseUrl}/functions/v1/nws-alerts-proxy${params}`, {

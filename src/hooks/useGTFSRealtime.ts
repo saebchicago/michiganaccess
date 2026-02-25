@@ -29,7 +29,7 @@ export function useGTFSRealtime(feed: GTFSFeed, enabled = true) {
   return useQuery({
     queryKey: ["gtfs-rt", feed],
     queryFn: async (): Promise<GTFSRealtimeResponse> => {
-      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/gtfs-rt-proxy?feed=${feed}`;
+      const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/gtfs-rt-proxy?feed=${feed}`;
       const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
