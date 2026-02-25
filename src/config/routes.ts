@@ -86,6 +86,7 @@ const pages = {
   DataValidationPage: lazy(() => import("@/pages/DataValidationPage")),
   OutagesPage: lazy(() => import("@/pages/OutagesPage")),
   SearchTrendsPage: lazy(() => import("@/pages/SearchTrendsPage")),
+  TermsPage: lazy(() => import("@/pages/TermsPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -143,6 +144,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/data-validation", component: pages.DataValidationPage, label: "Data Validation" },
   { path: "/outages", component: pages.OutagesPage, label: "Outages" },
   { path: "/admin/search-trends", component: pages.SearchTrendsPage, label: "Search Trends" },
+  { path: "/terms", component: pages.TermsPage, label: "Terms of Use" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];

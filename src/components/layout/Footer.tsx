@@ -33,7 +33,8 @@ const Footer = () => {
       links: [
         { label: t("nav.about"), href: "/about" },
         { label: t("nav.contact"), href: "/contact" },
-        { label: "Privacy", href: "/privacy" },
+        { label: "Privacy Policy", href: "/privacy" },
+        { label: "Terms of Use", href: "/terms" },
         { label: t("footer.methodology"), href: "/methodology" },
         { label: t("footer.research"), href: "/research" },
         { label: t("footer.impact"), href: "/impact" },
