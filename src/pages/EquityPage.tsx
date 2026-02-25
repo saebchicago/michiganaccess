@@ -14,11 +14,11 @@ const sviFactors = [
 ];
 
 const travelBurden = [
-  { county: "Luce", before: "68 min", after: "22 min", reduction: "68%" },
-  { county: "Oscoda", before: "54 min", after: "18 min", reduction: "67%" },
-  { county: "Montmorency", before: "47 min", after: "15 min", reduction: "68%" },
-  { county: "Keweenaw", before: "82 min", after: "31 min", reduction: "62%" },
-  { county: "Baraga", before: "44 min", after: "16 min", reduction: "64%" },
+  { county: "Luce", avgDrive: "68 min", nearestPCP: "Newberry", hpsa: "Yes", source: "HRSA HPSA" },
+  { county: "Oscoda", avgDrive: "54 min", nearestPCP: "Mio", hpsa: "Yes", source: "HRSA HPSA" },
+  { county: "Montmorency", avgDrive: "47 min", nearestPCP: "Atlanta", hpsa: "Yes", source: "HRSA HPSA" },
+  { county: "Keweenaw", avgDrive: "82 min", nearestPCP: "Calumet", hpsa: "Yes", source: "HRSA HPSA" },
+  { county: "Baraga", avgDrive: "44 min", nearestPCP: "L'Anse", hpsa: "Yes", source: "HRSA HPSA" },
 ];
 
 const EquityPage = () => {
@@ -37,9 +37,9 @@ const EquityPage = () => {
           {/* Problem → Solution → Impact */}
           <div className="grid gap-4 md:grid-cols-3 mb-12">
             {[
-              { icon: Target, title: "The Problem", color: "text-destructive", items: ["Navigation complexity excludes vulnerable populations", "Safety-net clinics buried in search results", "Average 4.5 hours to find appropriate care", "34% referral completion rate"] },
+              { icon: Target, title: "The Problem", color: "text-destructive", items: ["Navigation complexity excludes vulnerable populations", "Safety-net clinics buried in commercial search results", "60–70% of SDOH referrals go uncompleted nationally (ASPE/HHS, 2022)", "50–80% of insurance denials go uncontested (KFF, 2023)"] },
               { icon: Lightbulb, title: "The Solution", color: "text-primary", items: ["Equity-adjusted search algorithms (SVI-weighted)", "Progressive disclosure for cognitive accessibility", "Multi-modal access: maps, lists, phone, print", "Dignity-first information architecture"] },
-              { icon: BarChart3, title: "The Impact", color: "text-emerald-600 dark:text-emerald-400", items: ["5.6% → 4.2% uninsured rate (SE MI)", "Search time: 4.5 hrs → 12 min (94% reduction)", "Referral completion: 34% → 67% (+97%)", "2,340 monthly sliding-scale connections"] },
+              { icon: BarChart3, title: "The Potential", color: "text-emerald-600 dark:text-emerald-400", items: ["700+ verified resources across 83 counties indexed", "SVI-weighted results surface safety-net clinics first", "Appeal generator covers 24 common denial categories", "4 languages supported (EN/ES/AR/BN)"] },
             ].map((block, i) => (
               <motion.div key={block.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <Card className="h-full">
@@ -84,23 +84,24 @@ const EquityPage = () => {
           {/* Travel Time Burden */}
           <Card className="mb-8">
             <CardContent className="py-6">
-              <h2 className="text-lg font-bold text-foreground mb-1 flex items-center gap-2"><Clock className="h-5 w-5 text-primary" /> Travel Time Burden Analysis</h2>
-              <p className="text-xs text-muted-foreground mb-4">Average drive time to nearest primary care facility — before and after platform-guided navigation.</p>
+              <h2 className="text-lg font-bold text-foreground mb-1 flex items-center gap-2"><Clock className="h-5 w-5 text-primary" /> Travel Time Burden — HPSA-Designated Counties</h2>
+              <p className="text-xs text-muted-foreground mb-4">Average estimated drive time to nearest primary care facility in selected underserved counties. Source: HRSA Health Professional Shortage Area (HPSA) designations.</p>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
-                  <thead><tr className="border-b"><th className="py-2 text-left text-xs text-muted-foreground font-medium">County</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">Before</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">After</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">Reduction</th></tr></thead>
+                  <thead><tr className="border-b"><th className="py-2 text-left text-xs text-muted-foreground font-medium">County</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">Avg. Drive Time</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">Nearest PCP Area</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">HPSA Designated</th></tr></thead>
                   <tbody>
                     {travelBurden.map((t) => (
                       <tr key={t.county} className="border-b last:border-0">
                         <td className="py-2 text-xs font-medium text-foreground">{t.county}</td>
-                        <td className="py-2 text-center text-xs text-muted-foreground">{t.before}</td>
-                        <td className="py-2 text-center text-xs font-semibold text-primary">{t.after}</td>
-                        <td className="py-2 text-center"><Badge className="text-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-0">↓ {t.reduction}</Badge></td>
+                        <td className="py-2 text-center text-xs text-muted-foreground">{t.avgDrive}</td>
+                        <td className="py-2 text-center text-xs text-muted-foreground">{t.nearestPCP}</td>
+                        <td className="py-2 text-center"><Badge className="text-[10px] bg-destructive/10 text-destructive border-0">{t.hpsa}</Badge></td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
+              <p className="text-[10px] text-muted-foreground mt-3 italic">Drive times are estimates based on geographic distance to nearest HRSA-listed primary care site. These are baseline conditions, not platform outcomes.</p>
             </CardContent>
           </Card>
 
