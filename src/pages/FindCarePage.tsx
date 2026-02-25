@@ -1,9 +1,9 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, MapPin, X, Phone, Stethoscope, Heart, Brain, DollarSign,
-  Filter, ChevronDown, ChevronUp, Accessibility,
+  Filter, ChevronDown, ChevronUp, Accessibility, User, Hash, Info,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { TruncatedResourceList } from "@/components/shared/TruncatedResourceList";
@@ -20,10 +20,10 @@ import SpecialtyPicker from "@/components/findcare/SpecialtyPicker";
 import NPIResultCard from "@/components/findcare/NPIResultCard";
 import StaticResourceCard from "@/components/findcare/StaticResourceCard";
 import DVSafetyInterstitial from "@/components/findcare/DVSafetyInterstitial";
-import { useNPISearch } from "@/hooks/useNPISearch";
+import { useNPISearch, type NPISearchMode } from "@/hooks/useNPISearch";
 import { findCategory, type HelpCategory } from "@/data/findhelp-categories";
 import { STATIC_RESOURCES } from "@/data/findhelp-resources";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 /* ── Crisis banner ────────────────────────────── */
 function CrisisBanner() {
@@ -58,6 +58,13 @@ const QUICK_LINKS: { label: string; value: string; icon: typeof Heart; color: st
   { label: "Help Paying Bills", value: "financial", icon: DollarSign, color: "bg-michigan-gold/10 text-michigan-gold" },
 ];
 
+/* ── Search mode tabs ────────────────────────── */
+const MODE_TABS: { mode: NPISearchMode; label: string; icon: typeof Stethoscope }[] = [
+  { mode: "specialty", label: "By Specialty", icon: Stethoscope },
+  { mode: "name", label: "By Doctor Name", icon: User },
+  { mode: "npi", label: "By NPI Number", icon: Hash },
+];
+
 /* ── Main page ────────────────────────────────── */
 export default function FindCarePage() {
   usePageMeta({
@@ -72,11 +79,28 @@ export default function FindCarePage() {
     },
   });
 
+  const [searchParams] = useSearchParams();
+
   const [categoryValue, setCategoryValue] = useState("");
   const [category, setCategory] = useState<HelpCategory | null>(null);
   const [specialty, setSpecialty] = useState("");
   const [location, setLocation] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
+
+  // Search mode
+  const [searchMode, setSearchMode] = useState<NPISearchMode>(() => {
+    const modeParam = searchParams.get("mode");
+    if (modeParam === "name" || modeParam === "npi") return modeParam;
+    if (searchParams.get("npi")) return "npi";
+    return "specialty";
+  });
+
+  // Name search fields
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  // NPI search field
+  const [npiNumber, setNpiNumber] = useState(() => searchParams.get("npi") || "");
 
   // NPI search
   const npi = useNPISearch();
@@ -85,7 +109,6 @@ export default function FindCarePage() {
   const [filterType, setFilterType] = useState<"all" | "individual" | "org">("all");
   const [filterGender, setFilterGender] = useState<"all" | "F" | "M">("all");
   const [filterADA, setFilterADA] = useState(false);
-  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const activeFilterCount = useMemo(() => {
     let c = 0;
@@ -103,6 +126,18 @@ export default function FindCarePage() {
     return r;
   }, [npi.results, filterType, filterGender]);
 
+  // Auto-search if ?npi= param is present
+  useEffect(() => {
+    const npiParam = searchParams.get("npi");
+    if (npiParam && /^\d{10}$/.test(npiParam)) {
+      setNpiNumber(npiParam);
+      setSearchMode("npi");
+      setHasSearched(true);
+      npi.search([], "", "", "npi", undefined, npiParam);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleCategoryChange = useCallback((val: string, cat: HelpCategory) => {
     setCategoryValue(val);
     setCategory(cat);
@@ -119,7 +154,6 @@ export default function FindCarePage() {
       setSpecialty("");
       setHasSearched(false);
       npi.reset();
-      // For static categories, show immediately
       if (cat.mode === "static") {
         setHasSearched(true);
       }
@@ -127,17 +161,29 @@ export default function FindCarePage() {
   }, [npi]);
 
   const handleSearch = useCallback(() => {
-    if (!category) return;
     setHasSearched(true);
 
+    if (searchMode === "name") {
+      if (!lastName.trim()) return;
+      npi.search([], "", location, "name", { firstName: firstName.trim(), lastName: lastName.trim() });
+      return;
+    }
+
+    if (searchMode === "npi") {
+      if (!npiNumber.trim() || !/^\d{10}$/.test(npiNumber.trim())) return;
+      npi.search([], "", "", "npi", undefined, npiNumber.trim());
+      return;
+    }
+
+    // Specialty mode (existing)
+    if (!category) return;
     if (category.mode === "npi") {
       const taxonomies = category.showSpecialtyPicker && specialty
         ? [specialty]
         : category.taxonomies || [];
-      npi.search(taxonomies, category.enumerationType || "NPI-1", location);
+      npi.search(taxonomies, category.enumerationType || "NPI-1", location, "specialty");
     }
-    // Static mode just sets hasSearched=true, cards render instantly
-  }, [category, specialty, location, npi]);
+  }, [category, specialty, location, npi, searchMode, firstName, lastName, npiNumber]);
 
   const clearFilters = useCallback(() => {
     setFilterType("all");
@@ -145,8 +191,8 @@ export default function FindCarePage() {
     setFilterADA(false);
   }, []);
 
-  const isInitial = !hasSearched;
-  const isNPIMode = category?.mode === "npi";
+  const isInitial = !hasSearched && searchMode === "specialty";
+  const isNPIMode = searchMode === "name" || searchMode === "npi" || category?.mode === "npi";
   const isStaticMode = category?.mode === "static";
   const isDV = categoryValue === "dv";
   const staticResources = isStaticMode ? STATIC_RESOURCES[categoryValue] || [] : [];
@@ -223,52 +269,167 @@ export default function FindCarePage() {
             Find doctors, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.
           </motion.p>
 
+          {/* ── Mode Selector Tabs ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12 }}
+            className="flex rounded-lg border border-border bg-muted/50 p-1 mb-6 max-w-lg mx-auto"
+            role="tablist"
+            aria-label="Search mode"
+          >
+            {MODE_TABS.map((tab) => (
+              <button
+                key={tab.mode}
+                role="tab"
+                aria-selected={searchMode === tab.mode}
+                onClick={() => { setSearchMode(tab.mode); setHasSearched(false); npi.reset(); }}
+                className={`flex-1 flex items-center justify-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium transition-all ${
+                  searchMode === tab.mode
+                    ? "bg-background text-primary shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <tab.icon className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">{tab.label}</span>
+                <span className="sm:hidden">{tab.label.replace("By ", "")}</span>
+              </button>
+            ))}
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
             className="space-y-3"
           >
-            {/* Category combobox */}
-            <HelpCategoryCombobox value={categoryValue} onChange={handleCategoryChange} />
+            {/* ── Specialty Mode ── */}
+            {searchMode === "specialty" && (
+              <>
+                <HelpCategoryCombobox value={categoryValue} onChange={handleCategoryChange} />
+                <AnimatePresence>
+                  {category?.showSpecialtyPicker && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <SpecialtyPicker value={specialty} onChange={setSpecialty} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      placeholder="City, ZIP code, or county"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="h-12 pl-10 text-base"
+                      aria-label="Where in Michigan?"
+                      onKeyDown={(e) => { if (e.key === "Enter") handleSearch(); }}
+                    />
+                  </div>
+                  <Button
+                    onClick={handleSearch}
+                    disabled={!category}
+                    className="h-12 px-8 text-base font-semibold sm:w-auto w-full"
+                    size="lg"
+                  >
+                    <Search className="mr-2 h-4 w-4" />
+                    Find Help
+                  </Button>
+                </div>
+              </>
+            )}
 
-            {/* Specialty picker — only for doctor category */}
-            <AnimatePresence>
-              {category?.showSpecialtyPicker && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <SpecialtyPicker value={specialty} onChange={setSpecialty} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* ── Name Mode ── */}
+            {searchMode === "name" && (
+              <>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Input
+                    placeholder="First name (optional)"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="h-12 text-base flex-1"
+                    aria-label="Provider first name"
+                    onKeyDown={(e) => { if (e.key === "Enter") handleSearch(); }}
+                  />
+                  <Input
+                    placeholder="Last name (required)"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="h-12 text-base flex-1"
+                    aria-label="Provider last name"
+                    onKeyDown={(e) => { if (e.key === "Enter") handleSearch(); }}
+                  />
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      placeholder="City, ZIP code, or county (optional)"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="h-12 pl-10 text-base"
+                      aria-label="Location filter"
+                      onKeyDown={(e) => { if (e.key === "Enter") handleSearch(); }}
+                    />
+                  </div>
+                  <Button
+                    onClick={handleSearch}
+                    disabled={!lastName.trim()}
+                    className="h-12 px-8 text-base font-semibold sm:w-auto w-full"
+                    size="lg"
+                  >
+                    <Search className="mr-2 h-4 w-4" />
+                    Search by Name
+                  </Button>
+                </div>
+                <div className="flex items-start gap-2 rounded-lg bg-muted/60 border border-border px-3 py-2.5">
+                  <Info className="h-4 w-4 text-michigan-blue shrink-0 mt-0.5" />
+                  <p className="text-xs text-muted-foreground">
+                    Search the national NPI registry — includes all licensed Michigan providers. If a provider enrolled recently, they may appear here even if not in insurance directories.
+                  </p>
+                </div>
+              </>
+            )}
 
-            {/* Location input + search button */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <div className="relative flex-1">
-                <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="City, ZIP code, or county"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="h-12 pl-10 text-base"
-                  aria-label="Where in Michigan?"
-                  onKeyDown={(e) => { if (e.key === "Enter") handleSearch(); }}
-                />
-              </div>
-              <Button
-                onClick={handleSearch}
-                disabled={!category}
-                className="h-12 px-8 text-base font-semibold sm:w-auto w-full"
-                size="lg"
-              >
-                <Search className="mr-2 h-4 w-4" />
-                Find Help
-              </Button>
-            </div>
+            {/* ── NPI Mode ── */}
+            {searchMode === "npi" && (
+              <>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <Hash className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input
+                      placeholder="Enter 10-digit NPI number"
+                      value={npiNumber}
+                      onChange={(e) => setNpiNumber(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                      className="h-12 pl-10 text-base font-mono"
+                      aria-label="NPI number"
+                      onKeyDown={(e) => { if (e.key === "Enter") handleSearch(); }}
+                      maxLength={10}
+                    />
+                  </div>
+                  <Button
+                    onClick={handleSearch}
+                    disabled={!/^\d{10}$/.test(npiNumber.trim())}
+                    className="h-12 px-8 text-base font-semibold sm:w-auto w-full"
+                    size="lg"
+                  >
+                    <Search className="mr-2 h-4 w-4" />
+                    Look Up Provider
+                  </Button>
+                </div>
+                <div className="flex items-start gap-2 rounded-lg bg-muted/60 border border-border px-3 py-2.5">
+                  <Info className="h-4 w-4 text-michigan-blue shrink-0 mt-0.5" />
+                  <p className="text-xs text-muted-foreground">
+                    Every licensed provider has a unique NPI. You can find a provider's NPI on their business card, clinic website, or by asking their office.
+                  </p>
+                </div>
+              </>
+            )}
           </motion.div>
 
           {/* 211 callout */}
@@ -320,16 +481,64 @@ export default function FindCarePage() {
           </div>
         )}
 
-        {/* NPI error */}
-        {isNPIMode && npi.error && (
-          <div className="max-w-3xl mx-auto text-center py-12" role="alert">
-            <p className="text-muted-foreground mb-4">{npi.error}</p>
-            <Button variant="outline" onClick={handleSearch}>Try Again</Button>
+        {/* NPI error / contextual empty state */}
+        {isNPIMode && npi.searched && !npi.isLoading && npi.results.length === 0 && (
+          <div className="max-w-3xl mx-auto" role="alert">
+            <Card className="border-muted">
+              <CardContent className="py-8 text-center space-y-3">
+                <Search className="h-10 w-10 text-muted-foreground/40 mx-auto" />
+                {searchMode === "name" && (
+                  <>
+                    <p className="text-foreground font-medium">
+                      No results found for "{firstName} {lastName}"{location && ` near ${location}`}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Provider may be listed under a different name or enrolled after the last NPPES update. Try searching by NPI number directly, check alternate name spellings, or call{" "}
+                      <a href="tel:211" className="text-primary underline font-semibold">2-1-1</a> for local provider assistance.
+                    </p>
+                  </>
+                )}
+                {searchMode === "npi" && (
+                  <>
+                    <p className="text-foreground font-medium">NPI {npiNumber} not found</p>
+                    <p className="text-sm text-muted-foreground">
+                      Verify the 10-digit number is correct. Call the provider's office to confirm their NPI, or try searching by name instead.
+                    </p>
+                  </>
+                )}
+                {searchMode === "specialty" && (
+                  <>
+                    <p className="text-foreground font-medium">
+                      No providers found{specialty && ` for ${specialty}`}{location && ` near ${location}`}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Try expanding your location, use a broader specialty, or call{" "}
+                      <a href="tel:211" className="text-primary underline font-semibold">2-1-1</a> to locate nearby clinics.
+                    </p>
+                  </>
+                )}
+                <div className="flex flex-wrap justify-center gap-2 pt-2">
+                  {searchMode !== "name" && (
+                    <Button variant="outline" size="sm" onClick={() => setSearchMode("name")}>
+                      <User className="mr-1.5 h-3.5 w-3.5" /> Try Name Search
+                    </Button>
+                  )}
+                  {searchMode !== "npi" && (
+                    <Button variant="outline" size="sm" onClick={() => setSearchMode("npi")}>
+                      <Hash className="mr-1.5 h-3.5 w-3.5" /> Try NPI Lookup
+                    </Button>
+                  )}
+                  <Button variant="outline" size="sm" onClick={handleSearch}>
+                    Try Again
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         )}
 
         {/* NPI results */}
-        {isNPIMode && npi.searched && !npi.isLoading && !npi.error && (
+        {isNPIMode && npi.searched && !npi.isLoading && npi.results.length > 0 && (
           <div className="flex gap-8">
             {/* Desktop filter sidebar */}
             <aside className="hidden lg:block w-56 shrink-0">
@@ -366,13 +575,9 @@ export default function FindCarePage() {
               {filteredNPI.length === 0 ? (
                 <div className="py-12 text-center space-y-3">
                   <p className="text-muted-foreground">
-                    No results found{specialty && <> for <strong>{specialty}</strong></>}{location && <> near <strong>{location}</strong></>}.
+                    No results found after filtering.
                   </p>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <p>• Try a nearby city or ZIP code</p>
-                    <p>• Try a broader specialty (e.g., "Internal Medicine" instead of "Endocrinology")</p>
-                    <p>• Call <a href="tel:211" className="text-primary underline font-semibold">2-1-1</a> — a real person can help you find care, free and confidential</p>
-                  </div>
+                  <button onClick={clearFilters} className="text-sm text-primary hover:underline">Clear filters</button>
                 </div>
               ) : (
                 <div className="grid gap-3 md:grid-cols-2">
@@ -388,9 +593,7 @@ export default function FindCarePage() {
         {/* Static resource cards */}
         {isStaticMode && hasSearched && (
           <div className="max-w-3xl mx-auto space-y-4">
-            {/* DV safety interstitial */}
             {isDV && <DVSafetyInterstitial />}
-
             <div className="grid gap-3 md:grid-cols-2">
               {staticResources.map((r, i) => (
                 <StaticResourceCard key={r.name} resource={r} index={i} />
