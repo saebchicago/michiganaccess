@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle, Mic, MicOff, Lock } from "lucide-react";
+import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle, Mic, MicOff, Lock, User, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getSearchSuggestions, getPopularSuggestions, parseComboQuery, getMisspellingCorrection, type SearchSuggestion } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
@@ -16,8 +16,10 @@ declare global {
 
 const quickPills = [
   { icon: HeartPulse, label: "Find Care", href: "/find-care" },
+  { icon: User, label: "Find a Doctor", href: "/find-care?mode=name" },
   { icon: Pill, label: "Financial Help", href: "/financial-help" },
   { icon: Apple, label: "Community Resources", href: "/resources" },
+  { icon: MapPin, label: "Zoning Info", href: "/zoning" },
   { icon: Bus, label: "More Services", href: "/wellness" },
 ];
 
@@ -37,6 +39,9 @@ const categoryIcon = (cat: string) => {
     case "county": return <MapPin className="h-4 w-4 text-michigan-sky" />;
     case "correction": return <AlertCircle className="h-4 w-4 text-warm-gold" />;
     case "popular": return <TrendingUp className="h-4 w-4 text-muted-foreground" />;
+    case "zip": return <Hash className="h-4 w-4 text-michigan-teal" />;
+    case "city": return <MapPin className="h-4 w-4 text-forest-green" />;
+    case "provider": return <User className="h-4 w-4 text-michigan-blue" />;
     default: return <Search className="h-4 w-4 text-primary" />;
   }
 };
@@ -85,6 +90,9 @@ const HeroSection = () => {
 
   const [parsedIntent, setParsedIntent] = useState<ReturnType<typeof parseNaturalLanguage> | null>(null);
 
+  // NPI detection for 10-digit numbers
+  const npiDetected = /^\d{10}$/.test(searchQuery.trim());
+
   const updateSuggestions = useCallback((q: string) => {
     if (q.length < 2) {
       setSuggestions(getPopularSuggestions());
@@ -127,6 +135,12 @@ const HeroSection = () => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     setShowDropdown(false);
+
+    // If 10-digit number, navigate to NPI lookup
+    if (/^\d{10}$/.test(searchQuery.trim())) {
+      navigate(`/find-care?npi=${searchQuery.trim()}`);
+      return;
+    }
 
     const intent = parseNaturalLanguage(searchQuery);
 
@@ -236,9 +250,9 @@ const HeroSection = () => {
                 onChange={(e) => { setSearchQuery(e.target.value); setActiveIndex(-1); }}
                 onFocus={() => setShowDropdown(true)}
                 onKeyDown={handleKeyDown}
-                placeholder="Enter a city, ZIP code, or county…"
+                placeholder="Search by city, ZIP, county, service, or doctor name…"
                 className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
-                aria-label="Search for services by location"
+                aria-label="Search for services by location, doctor name, or NPI"
                 aria-autocomplete="list"
                 aria-controls="hero-search-suggestions"
                 aria-activedescendant={activeIndex >= 0 ? `hero-suggestion-${activeIndex}` : undefined}
@@ -268,6 +282,11 @@ const HeroSection = () => {
               </div>
             </div>
 
+            {/* Search helper text */}
+            <p className="mt-2 text-xs text-primary-foreground/60 text-center">
+              Search services, ZIP codes, cities, counties — or type a doctor name, specialty, or NPI to find care providers
+            </p>
+
             {/* Autocomplete Dropdown */}
             <AnimatePresence>
               {showDropdown && (
@@ -281,6 +300,19 @@ const HeroSection = () => {
                   transition={{ duration: 0.15 }}
                   className="absolute left-0 right-0 top-full mt-2 rounded-xl bg-white dark:bg-card border border-border shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto"
                 >
+                  {/* NPI detection chip */}
+                  {npiDetected && (
+                    <button
+                      type="button"
+                      onClick={() => { setShowDropdown(false); navigate(`/find-care?npi=${searchQuery.trim()}`); }}
+                      className="w-full px-4 py-2.5 text-sm text-left bg-primary/5 hover:bg-primary/10 transition-colors flex items-center gap-2 border-b border-border"
+                    >
+                      <Hash className="h-3.5 w-3.5 text-primary" />
+                      <span className="text-foreground">Search NPI <strong className="font-mono">{searchQuery.trim()}</strong></span>
+                      <span className="ml-auto text-xs text-primary font-medium">Find Care →</span>
+                    </button>
+                  )}
+
                   {correction && searchQuery.length >= 2 && (
                     <button
                       type="button"
@@ -294,7 +326,7 @@ const HeroSection = () => {
                     </button>
                   )}
 
-                  {parsedIntent && searchQuery.length >= 3 && (
+                  {parsedIntent && searchQuery.length >= 3 && !npiDetected && (
                     <button
                       type="button"
                       onClick={() => { setShowDropdown(false); navigate(parsedIntent.resolvedHref); }}
