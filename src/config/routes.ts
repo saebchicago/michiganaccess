@@ -89,6 +89,8 @@ const pages = {
   TermsPage: lazy(() => import("@/pages/TermsPage")),
   ZoningPage: lazy(() => import("@/pages/ZoningPage")),
   PlacePage: lazy(() => import("@/pages/PlacePage")),
+  CityPlacePage: lazy(() => import("@/pages/CityPlacePage")),
+  ZipPlacePage: lazy(() => import("@/pages/ZipPlacePage")),
   DataAndInsightsPage: lazy(() => import("@/pages/DataAndInsightsPage")),
 };
 
@@ -132,6 +134,8 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/partnerships/health-systems/one-pager", component: pages.PartnershipOnePager, label: "One-Pager" },
   { path: "/complex-care", component: pages.ComplexCarePage, label: "Complex Care" },
   { path: "/life-navigator", component: pages.LifeNavigatorPage, label: "Life Navigator" },
+  { path: "/place/city/:cityName", component: pages.CityPlacePage, label: "City Place" },
+  { path: "/place/zip/:zipcode", component: pages.ZipPlacePage, label: "ZIP Place" },
   { path: "/place/:slug", component: pages.PlacePage, label: "Place" },
   { path: "/county/:slug", component: pages.CountyPage, label: "County" },
   { path: "/regions", component: pages.RegionsPage, label: "Regions" },

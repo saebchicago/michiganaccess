@@ -600,9 +600,14 @@ export default function FindCarePage() {
             </aside>
 
             <div className="flex-1 min-w-0">
-              {/* Results header */}
+              {/* Results header with sort transparency */}
               <div className="mb-3 flex items-center justify-between flex-wrap gap-3" aria-live="polite">
-                <ResultHeader label={`Providers${location ? ` near ${location}` : ""}`} count={filteredNPI.length} />
+                <div className="flex items-center gap-3">
+                  <ResultHeader label={`Providers${location ? ` near ${location}` : ""}`} count={filteredNPI.length} />
+                  <Badge variant="outline" className="text-[10px] gap-1 font-normal">
+                    Sorted by: Relevance
+                  </Badge>
+                </div>
                 {/* Mobile filter trigger */}
                 <Sheet>
                   <SheetTrigger asChild>

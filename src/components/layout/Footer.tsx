@@ -174,8 +174,18 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Trust statement */}
+        {/* Privacy badge */}
         <div className="mt-4 border-t border-border pt-4">
+          <div className="mx-auto max-w-xl rounded-lg border border-michigan-forest/20 bg-michigan-forest/[0.06] px-4 py-3 text-center mb-4">
+            <p className="flex items-center justify-center gap-1.5 text-xs text-foreground">
+              <Lock className="h-3.5 w-3.5 text-michigan-forest" />
+              <span className="font-semibold">Privacy First:</span> We collect no personal health data. All searches are localized, anonymized, and secure.
+            </p>
+          </div>
+        </div>
+
+        {/* Trust statement */}
+        <div className="border-t border-border pt-4">
           <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto mb-3">
             Access Michigan is an independent civic project that helps residents and professionals discover services and understand data.
             We are not Michigan 2-1-1 or MDHHS. We often direct you to them to enroll or get live help.
