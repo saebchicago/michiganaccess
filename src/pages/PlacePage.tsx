@@ -1,9 +1,9 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   MapPin, Heart, Stethoscope, Building2,
-  Download, ExternalLink, Phone, Activity, Shield, ArrowRight, BarChart3, FileText,
+  Download, ExternalLink, Phone, Activity, Shield, ArrowRight, BarChart3, FileText, Users, DollarSign, Home, GraduationCap,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
@@ -21,6 +22,9 @@ import ReportIssue from "@/components/shared/ReportIssue";
 import CommunitySummary from "@/components/place/CommunitySummary";
 import LifeSituationNav from "@/components/place/LifeSituationNav";
 import DataLimitationsNote from "@/components/place/DataLimitationsNote";
+import DemographicBreakdown from "@/components/census/DemographicBreakdown";
+import PlaceNarrative from "@/components/census/PlaceNarrative";
+import ACSIndicatorCard from "@/components/census/ACSIndicatorCard";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 
 /* ── Curated statewide programs ── */
@@ -102,10 +106,53 @@ export default function PlacePage() {
 
         <Separator />
 
-        {/* 3. Domain Indicators + What Stands Out + Actions */}
-        <div id="indicators">
-          <LocalInsightEngine place={place} />
-        </div>
+        {/* 3. Census + Community Data Tabs */}
+        <Tabs defaultValue="indicators" className="w-full">
+          <TabsList className="w-full flex flex-wrap h-auto gap-1 bg-muted/50 p-1">
+            <TabsTrigger value="indicators" className="gap-1.5 text-xs"><Activity className="h-3.5 w-3.5" /> Community Indicators</TabsTrigger>
+            <TabsTrigger value="demographics" className="gap-1.5 text-xs"><Users className="h-3.5 w-3.5" /> Demographics</TabsTrigger>
+            <TabsTrigger value="economics" className="gap-1.5 text-xs"><DollarSign className="h-3.5 w-3.5" /> Economics</TabsTrigger>
+            <TabsTrigger value="housing" className="gap-1.5 text-xs"><Home className="h-3.5 w-3.5" /> Housing</TabsTrigger>
+            <TabsTrigger value="education" className="gap-1.5 text-xs"><GraduationCap className="h-3.5 w-3.5" /> Education</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="indicators" className="mt-6">
+            <div id="indicators">
+              <LocalInsightEngine place={place} />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="demographics" className="mt-6 space-y-6">
+            <PlaceNarrative place={place} />
+            <DemographicBreakdown place={place} />
+          </TabsContent>
+
+          <TabsContent value="economics" className="mt-6">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <ACSIndicatorCard countyName={countyName} tableId="B19013" variableCode="B19013_001E" label="Median Household Income" unit="dollars" direction="higher-is-better" />
+              <ACSIndicatorCard countyName={countyName} tableId="B17001" variableCode="B17001_002E" label="Below Poverty Level" unit="percent" direction="lower-is-better" denominatorCode="B17001_001E" />
+              <ACSIndicatorCard countyName={countyName} tableId="B23025" variableCode="B23025_005E" label="Unemployed" unit="percent" direction="lower-is-better" denominatorCode="B23025_003E" />
+              <ACSIndicatorCard countyName={countyName} tableId="B23025" variableCode="B23025_002E" label="In Labor Force" unit="count" direction="higher-is-better" />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="housing" className="mt-6">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <ACSIndicatorCard countyName={countyName} tableId="B25064" variableCode="B25064_001E" label="Median Gross Rent" unit="dollars" direction="lower-is-better" />
+              <ACSIndicatorCard countyName={countyName} tableId="B25001" variableCode="B25001_001E" label="Total Housing Units" unit="count" />
+              <ACSIndicatorCard countyName={countyName} tableId="B25003" variableCode="B25003_002E" label="Owner-Occupied" unit="percent" direction="higher-is-better" denominatorCode="B25003_001E" />
+              <ACSIndicatorCard countyName={countyName} tableId="B25003" variableCode="B25003_003E" label="Renter-Occupied" unit="percent" denominatorCode="B25003_001E" />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="education" className="mt-6">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <ACSIndicatorCard countyName={countyName} tableId="B15003" variableCode="B15003_022E" label="Bachelor's Degree" unit="percent" direction="higher-is-better" denominatorCode="B15003_001E" />
+              <ACSIndicatorCard countyName={countyName} tableId="B15003" variableCode="B15003_023E" label="Master's Degree" unit="percent" direction="higher-is-better" denominatorCode="B15003_001E" />
+              <ACSIndicatorCard countyName={countyName} tableId="B15003" variableCode="B15003_017E" label="High School Diploma" unit="percent" denominatorCode="B15003_001E" />
+            </div>
+          </TabsContent>
+        </Tabs>
 
         <Separator />
 
