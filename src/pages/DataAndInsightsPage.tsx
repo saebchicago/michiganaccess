@@ -20,6 +20,7 @@ import { toast } from "sonner";
 
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
 const CSVExportPanel = lazy(() => import("@/components/dashboard/CSVExportPanel"));
+const CountyCompare = lazy(() => import("@/components/dashboard/CountyCompare"));
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -80,7 +81,7 @@ const equityInsights = [
 const powerUserActions = [
   { icon: Download, label: "Download county profile as PDF", description: "Get a print-ready summary for any county", href: "/county/wayne" },
   { icon: FileText, label: "Export statewide CSV", description: "All 83 counties, key health metrics", action: "csv" },
-  { icon: BarChart3, label: "Compare two counties", description: "Side-by-side metrics for any two counties", href: "/data" },
+  { icon: BarChart3, label: "Compare two counties", description: "Side-by-side metrics for any two counties", action: "compare" },
   { icon: Copy, label: "Embed the uninsured map", description: "Copy an iframe embed code for your site", action: "embed" },
 ];
 
@@ -104,6 +105,11 @@ export default function DataAndInsightsPage() {
     if (action === "csv") {
       toast.info("CSV export is available in the Dashboards tab below.");
       setActiveTab("dashboards");
+    } else if (action === "compare") {
+      setActiveTab("dashboards");
+      setTimeout(() => {
+        document.getElementById("county-compare")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
     } else if (action === "embed") {
       const code = `<iframe src="https://michiganaccess.lovable.app/embed" width="100%" height="500" frameborder="0" title="Michigan Uninsured Rate Map"></iframe>`;
       navigator.clipboard.writeText(code).then(() => toast.success("Embed code copied to clipboard"));
@@ -225,6 +231,13 @@ export default function DataAndInsightsPage() {
                 <CountyChoropleth highlightCounty="Wayne" />
               </div>
             </Suspense>
+
+            {/* County Comparison */}
+            <div id="county-compare">
+              <Suspense fallback={<SectionFallback />}>
+                <CountyCompare />
+              </Suspense>
+            </div>
 
             {/* CSV Export */}
             <Suspense fallback={<SectionFallback />}>
