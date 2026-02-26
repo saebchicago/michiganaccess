@@ -21,6 +21,7 @@ import { AccessChat } from "@/components/AccessChat";
 
 import LazySection from "@/components/shared/LazySection";
 import DataProvenance from "@/components/shared/DataProvenance";
+import UnderstandMyCommunity from "@/components/place/UnderstandMyCommunity";
 
 // ── Layer 3+: lazy-loaded below the fold ──
 const HealthDataSnapshot = lazy(() => import("@/components/home/HealthDataSnapshot"));
@@ -75,6 +76,12 @@ const Index = () => {
       <AudienceSelector />
       <GuidedPathways />
       <AuthorityStrip />
+
+      {/* ═══ UNDERSTAND MY COMMUNITY CTA ═══ */}
+      <section className="py-10 container max-w-2xl">
+        <UnderstandMyCommunity />
+      </section>
+
       <SocialProofStrip />
 
       {/* ═══ EQUITY INSIGHTS ═══ */}

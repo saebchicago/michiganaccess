@@ -18,6 +18,9 @@ import DiveDeeperSearch from "@/components/place/DiveDeeperSearch";
 import LocalInsightEngine from "@/components/place/LocalInsightEngine";
 import DomainJumpNav from "@/components/place/DomainJumpNav";
 import ReportIssue from "@/components/shared/ReportIssue";
+import CommunitySummary from "@/components/place/CommunitySummary";
+import LifeSituationNav from "@/components/place/LifeSituationNav";
+import DataLimitationsNote from "@/components/place/DataLimitationsNote";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 
 /* ── Curated statewide programs ── */
@@ -90,15 +93,23 @@ export default function PlacePage() {
         </div>
       </section>
 
-      <div className="container py-10 space-y-12">
-        {/* Indicators + What Stands Out */}
+      <div className="container py-10 space-y-10">
+        {/* 1. Community Summary — "3 Things to Know" */}
+        <CommunitySummary place={place} />
+
+        {/* 2. Life Situations */}
+        <LifeSituationNav place={place} />
+
+        <Separator />
+
+        {/* 3. Domain Indicators + What Stands Out + Actions */}
         <div id="indicators">
           <LocalInsightEngine place={place} />
         </div>
 
         <Separator />
 
-        {/* Top Programs */}
+        {/* 4. Top Programs */}
         <section id="programs">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
@@ -143,7 +154,7 @@ export default function PlacePage() {
 
         <Separator />
 
-        {/* Local Resources */}
+        {/* 5. Local Resources */}
         <section id="resources">
           <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
             <Building2 className="h-5 w-5 text-michigan-navy" /> Local Resources & Contacts
@@ -187,7 +198,10 @@ export default function PlacePage() {
 
         <Separator />
 
-        {/* For Professionals */}
+        {/* 6. Trust & Transparency */}
+        <DataLimitationsNote place={place} />
+
+        {/* 7. For Professionals */}
         <section id="analysts" className="rounded-xl border border-border bg-muted/30 p-6 md:p-8">
           <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
             <FileText className="h-5 w-5 text-michigan-navy" /> For Analysts & Professionals
@@ -214,10 +228,10 @@ export default function PlacePage() {
           </div>
         </section>
 
-        {/* Dive Deeper */}
+        {/* 8. Dive Deeper */}
         <DiveDeeperSearch countyName={countyName} />
 
-        {/* Report Issue */}
+        {/* 9. Report Issue */}
         <ReportIssue variant="inline" />
 
         {/* Independence Disclaimer */}
