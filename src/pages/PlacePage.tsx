@@ -26,6 +26,8 @@ import DemographicBreakdown from "@/components/census/DemographicBreakdown";
 import PlaceNarrative from "@/components/census/PlaceNarrative";
 import ACSIndicatorCard from "@/components/census/ACSIndicatorCard";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
+import CommunityReportForm from "@/components/community/CommunityReportForm";
+import CommunityReportCounts from "@/components/community/CommunityReportCounts";
 
 /* ── Curated statewide programs ── */
 const TOP_PROGRAMS = [
@@ -245,8 +247,17 @@ export default function PlacePage() {
 
         <Separator />
 
-        {/* 6. Trust & Transparency */}
-        <DataLimitationsNote place={place} />
+        {/* 6. Community Contributions */}
+        <section id="community" className="space-y-4">
+          <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+            <Heart className="h-5 w-5 text-primary" /> Community Voice
+          </h2>
+          <CommunityReportCounts county={countyName} placeSlug={slug} />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <CommunityReportForm county={countyName} placeSlug={slug} />
+            <DataLimitationsNote place={place} />
+          </div>
+        </section>
 
         {/* 7. For Professionals */}
         <section id="analysts" className="rounded-xl border border-border bg-muted/30 p-6 md:p-8">
