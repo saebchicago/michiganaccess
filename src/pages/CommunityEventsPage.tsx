@@ -32,6 +32,8 @@ import { useCommunityEvents, EVENT_TYPES, type CommunityEvent } from "@/hooks/us
 import { motion, AnimatePresence } from "framer-motion";
 import { useCounty } from "@/contexts/CountyContext";
 import ShareMenu from "@/components/shared/ShareMenu";
+import CommunityEventSubmissionForm from "@/components/community/CommunityEventSubmissionForm";
+import { Separator } from "@/components/ui/separator";
 
 const typeIcons: Record<string, typeof Heart> = {
   health_fair: Heart,
@@ -298,6 +300,11 @@ export default function CommunityEventsPage() {
             <p className="text-muted-foreground">Try adjusting your filters or check back later.</p>
           </div>
         )}
+      </section>
+
+      <section className="container mx-auto max-w-3xl px-4 pb-12">
+        <Separator className="mb-8" />
+        <CommunityEventSubmissionForm />
       </section>
     </Layout>
   );
