@@ -25,6 +25,7 @@ import { findCategory, type HelpCategory } from "@/data/findhelp-categories";
 import { STATIC_RESOURCES } from "@/data/findhelp-resources";
 import { Link, useSearchParams } from "react-router-dom";
 import ResultHeader from "@/components/shared/ResultHeader";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 /* ── Crisis banner ────────────────────────────── */
 function CrisisBanner() {
@@ -123,6 +124,7 @@ export default function FindCarePage() {
   const [filterGender, setFilterGender] = useState<"all" | "F" | "M">("all");
   const [filterADA, setFilterADA] = useState(false);
   const [activeCareType, setActiveCareType] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<"relevance" | "name-az" | "name-za">("relevance");
 
   const activeFilterCount = useMemo(() => {
     let c = 0;
@@ -147,8 +149,14 @@ export default function FindCarePage() {
         });
       }
     }
+    // Sort
+    if (sortBy === "name-az") {
+      r = [...r].sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+    } else if (sortBy === "name-za") {
+      r = [...r].sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+    }
     return r;
-  }, [npi.results, filterType, filterGender, activeCareType]);
+  }, [npi.results, filterType, filterGender, activeCareType, sortBy]);
 
   // Auto-search if ?npi= param is present
   useEffect(() => {
@@ -604,9 +612,17 @@ export default function FindCarePage() {
               <div className="mb-3 flex items-center justify-between flex-wrap gap-3" aria-live="polite">
                 <div className="flex items-center gap-3">
                   <ResultHeader label={`Providers${location ? ` near ${location}` : ""}`} count={filteredNPI.length} />
-                  <Badge variant="outline" className="text-[10px] gap-1 font-normal">
-                    Sorted by: Relevance
-                  </Badge>
+                  <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
+                    <SelectTrigger className="h-7 w-auto text-[10px] gap-1 font-normal border-border">
+                      <span className="text-muted-foreground mr-0.5">Sorted by:</span>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="relevance">Relevance</SelectItem>
+                      <SelectItem value="name-az">Name (A–Z)</SelectItem>
+                      <SelectItem value="name-za">Name (Z–A)</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 {/* Mobile filter trigger */}
                 <Sheet>
