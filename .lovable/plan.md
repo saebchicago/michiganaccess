@@ -1,149 +1,315 @@
 
-# Access Michigan: Cross-Domain Civic Intelligence Upgrade
+# Access Michigan: Census-Scale Civic Intelligence Roadmap
 
-## Overview
-Transform every Place page into a complete cross-domain civic intelligence profile with 10+ indicators across Health, Housing, Energy, Environment, Transportation, Safety, Education, Food, Workforce, and Benefits -- all powered by static curated data (no Socrata/Michigan Open Data), with full provenance, sort transparency on Find Care, dark mode contrast fixes, and comprehensive QA validation.
+## Audit Summary (Feb 2026)
 
-## Architecture Summary
+### Current Strengths
+- ✅ 83 county Place pages with 10-domain cross-domain indicators
+- ✅ Life Situation nav, Community Summary, Sources Table — all rendering
+- ✅ Mobile responsive (390px tested), dark mode + high contrast pass WCAG 2.2 AA
+- ✅ Navigation dropdowns, breadcrumbs, search (⌘K) all functional
+- ✅ 700+ community resources, Find Care (NPI), Energy Assistance, FOIA builder
+- ✅ Real-time feeds: NWS alerts, utility outages, GTFS-RT transit
+
+### Issues Found
+1. **forwardRef warnings** in Header components (DesktopSearchTrigger, SiteSearch, CountySelector) — cosmetic React warnings, non-breaking
+2. **Static data only** — cross-domain indicators are hand-curated for 83 counties, not live API
+3. **No Census API** — no ACS table integration for demographic, economic, housing breakdowns
+4. **No place comparison tool** — can't compare ZIP-to-ZIP or county-to-county side-by-side
+5. **No narrative profiles** — no auto-generated Census Reporter-style storytelling summaries
+6. **Limited granularity** — no census tract or neighborhood-level data
+7. **No community contributions** — no user ratings, crowdsourced resources, or forums
+8. **No embeddable charts** — share/embed limited to iframes, no interactive chart exports
+
+---
+
+## Architecture: Live Census API Integration
 
 ```text
+supabase/functions/
+  └── census-acs-proxy/index.ts     [NEW] Edge function proxying Census Bureau API
 src/
-├── data/
-│   └── cross-domain-indicators.ts    [NEW] Static curated data for all 83 counties
-│   └── domain-actions.ts             [NEW] "What you can do" actions per domain
-├── models/
-│   └── Place.ts                      [EDIT] Expand PlaceIndicator to 10 domains + add domain actions type
-├── components/
-│   └── place/
-│       └── LocalInsightEngine.tsx    [EDIT] Render 10 domains, add "What you can do" panels + Sources table
-│       └── DomainJumpNav.tsx         [EDIT] Add all 10 domain anchors
-│   └── shared/
-│       └── SourcesTable.tsx          [NEW] Reusable sources/methodology panel
-├── pages/
-│   └── PlacePage.tsx                 [EDIT] Minor: integrate expanded engine
-│   └── FindCarePage.tsx              [EDIT] Add sort transparency dropdown
-├── index.css                         [EDIT] Dark mode contrast fixes for gold/coral
+  ├── hooks/
+  │   └── useCensusACS.ts           [NEW] React hook for ACS table queries
+  ├── data/
+  │   └── census-tables.ts          [NEW] ACS table catalog (B19013, B25064, etc.)
+  │   └── census-geographies.ts     [NEW] Michigan FIPS codes (counties, tracts, places)
+  ├── components/
+  │   └── census/
+  │       └── ACSIndicatorCard.tsx   [NEW] Dynamic indicator card from live ACS data
+  │       └── PlaceNarrative.tsx     [NEW] Auto-generated narrative profile
+  │       └── PlaceComparison.tsx    [NEW] Side-by-side place comparison tool
+  │       └── DemographicBreakdown.tsx [NEW] Race/age/income pyramid charts
+  │       └── CensusTableBrowser.tsx [NEW] Searchable ACS table explorer
+  │       └── CensusChartEmbed.tsx   [NEW] Embeddable/exportable chart component
+  ├── pages/
+  │   └── PlacePage.tsx             [EDIT] Integrate ACS data tabs
+  │   └── DataExplorerPage.tsx      [NEW] PolicyMap-style interactive data explorer
+  │   └── CompareplacesPage.tsx     [NEW] Compare places side-by-side
 ```
 
 ---
 
-## Phase 1: Cross-Domain Static Data Layer
+## Phase 1: Census Bureau API Foundation (Priority: HIGHEST)
 
-### 1A. Create `src/data/cross-domain-indicators.ts`
-A single static file containing curated county-level metrics for all 83 counties across 10 domains. Data sourced from publicly available reports (ACS, CHR, USDA, DOE LEAD, FCC, NCES, FBI UCR summaries). Structure:
+### 1A. Create `supabase/functions/census-acs-proxy/index.ts`
+Edge function that proxies requests to `https://api.census.gov/data/{year}/acs/acs5`:
+- Accepts: `{ tables: string[], geography: string, year?: number }`
+- Geography types: state, county, place (city), tract, ZIP (ZCTA)
+- Returns normalized JSON with variable labels resolved
+- Caches responses in-memory (60 min TTL) to reduce API load
+- Census API is **free, no key required** for basic queries (key optional for higher rate limits)
+- Rate limited to 500 queries/day initially
 
+**Key ACS Tables to integrate first:**
+| Table | Topic | Variables |
+|-------|-------|-----------|
+| B19013 | Median Household Income | B19013_001E |
+| B17001 | Poverty Status | B17001_001E, B17001_002E |
+| B25064 | Median Gross Rent | B25064_001E |
+| B25070 | Rent Burden (>30% income) | B25070_007E-010E |
+| B08301 | Commute Mode | B08301_001E-021E |
+| B15003 | Educational Attainment | B15003_001E-025E |
+| B27001 | Health Insurance Coverage | B27001_001E-057E |
+| B01001 | Age & Sex | B01001_001E-049E |
+| B02001 | Race | B02001_001E-010E |
+| B03003 | Hispanic/Latino Origin | B03003_001E-003E |
+| B25001 | Housing Units | B25001_001E |
+| B25003 | Tenure (Own vs Rent) | B25003_001E-003E |
+| B23025 | Employment Status | B23025_001E-007E |
+| B16001 | Language Spoken at Home | B16001_001E-036E |
+| DP05 | Demographic Profile | DP05_0001E-0089E |
+
+### 1B. Create `src/hooks/useCensusACS.ts`
 ```typescript
-export interface CountyCrossDomain {
-  medianIncome: number;        // ACS 5-year
-  povertyRate: number;         // ACS
-  medianRent: number;          // ACS
-  rentBurden: number;          // ACS (% paying >30% income)
-  vehicleAccess: number;       // ACS (% with vehicle)
-  commuteTime: number;         // ACS avg minutes
-  hsGradRate: number;          // NCES/MI DOE
-  unemploymentRate: number;    // BLS LAUS
-  violentCrimeRate: number;    // FBI UCR / MI State Police (per 100k, 0 if unavailable)
-  drinkingWaterCompliance: number; // EPA SDWIS proxy (%)
+interface UseCensusACSOptions {
+  tables: string[];           // e.g., ["B19013", "B17001"]
+  geoType: "county" | "place" | "tract" | "zcta" | "state";
+  geoFips: string;            // e.g., "26163" for Wayne County
+  year?: number;              // default: latest available (2023 ACS 5-year)
+  enabled?: boolean;
+}
+interface CensusResult {
+  table: string;
+  variables: Record<string, { value: number | null; label: string; margin: number | null }>;
 }
 ```
+- Uses `@tanstack/react-query` with 24hr stale time
+- Calls census-acs-proxy edge function
+- Returns typed, labeled results ready for UI
 
-Prepopulate for all 83 counties using publicly reported values. Where a metric is genuinely unavailable, use `null` and the UI renders "Metric pending" with resource-only actions.
+### 1C. Create `src/data/census-tables.ts`
+Catalog of ~50 most-used ACS tables with:
+- Human-readable labels
+- Variable descriptions
+- Unit types (count, percent, dollars, minutes)
+- Domain categorization (demographics, economics, housing, education, health, transportation)
+- State-level comparison values (pre-computed or fetched)
 
-### 1B. Create `src/data/domain-actions.ts`
-Static curated "What you can do" actions per domain with Michigan-specific links:
-
-- **Health**: MI Bridges, Healthy Michigan Plan, Find a Doctor
-- **Housing**: MSHDA, MI Legal Aid housing, HUD counseling
-- **Energy**: LIHEAP, DTE/Consumers rebates, Weatherization
-- **Environment**: EPA MyEnvironment, MI EGLE reports
-- **Transportation**: MDOT transit finder, MI Works transportation
-- **Safety**: Local 911, FEMA alerts, MI State Police
-- **Education**: MI School Data, GreatSchools, Head Start
-- **Food**: SNAP, WIC, Feeding America food bank finder
-- **Workforce**: MI Works, unemployment filing, job training
-- **Benefits**: MI Bridges, 2-1-1, community resources
-
-Each action includes: title, description, href, and independence note where needed.
-
----
-
-## Phase 2: Expand Place Model & Indicator Builder
-
-### 2A. Edit `src/models/Place.ts`
-- Add new domains to `PlaceIndicator.domain`: `"workforce" | "housing" | "justice"`
-- Add new function `buildFullIndicators(place: Place): PlaceIndicator[]` that produces 10-12 indicators by merging existing `healthHighlights` with the new `cross-domain-indicators.ts` data
-- Each indicator includes: source name, source URL, last-updated year, geographic grain, confidence level, and directionality
-- State averages expanded for all new metrics (median income, poverty, rent burden, graduation rate, unemployment, vehicle access, commute time, crime rate, water compliance)
-- Estimated/proxy indicators explicitly labeled with methodology note in `grain` field
-
-### 2B. Edit `buildStandouts()` 
-- Now considers all 10+ indicators (not just the original 6) for "What stands out" ranking
+### 1D. Create `src/data/census-geographies.ts`
+Michigan FIPS lookup:
+- All 83 counties with FIPS codes (26001-26165)
+- Major cities/places with Census PLACE codes
+- ZIP-to-ZCTA mapping
+- Census tract listings for top 10 counties (Wayne, Oakland, Macomb, Kent, etc.)
 
 ---
 
-## Phase 3: Upgrade LocalInsightEngine UI
+## Phase 2: Place Page ACS Integration
 
-### 3A. Edit `src/components/place/LocalInsightEngine.tsx`
-- Replace `buildPlaceIndicators` call with `buildFullIndicators`
-- Group indicators visually by domain (Health, Housing, Energy, Environment, etc.) with domain headers
-- Add "What you can do" action cards below each domain group (collapsible, 3-6 actions each from `domain-actions.ts`)
-- Add a `SourcesTable` component at the bottom showing all sources used on the page
+### 2A. Create `src/components/census/ACSIndicatorCard.tsx`
+Dynamic indicator card that:
+- Fetches a single ACS variable via useCensusACS
+- Displays value with confidence interval (margin of error)
+- Shows comparison to state average (auto-fetched)
+- Includes "Data from {year} ACS 5-Year Estimates" provenance
+- Supports sparkline trend if multi-year data available
 
-### 3B. Create `src/components/shared/SourcesTable.tsx`
-A reusable table showing:
-| Source | Dataset | Last Updated | Grain | Methodology |
-Populated from indicator metadata. Includes "Report an issue / Suggest a dataset" link.
+### 2B. Create `src/components/census/DemographicBreakdown.tsx`
+Interactive demographic visualization:
+- Race/ethnicity horizontal bar chart (B02001 + B03003)
+- Age pyramid (B01001)
+- Income distribution histogram (B19001)
+- Educational attainment stacked bar (B15003)
+- Language diversity treemap (B16001)
+All using Recharts, themed with design system tokens.
 
-### 3C. Edit `src/components/place/DomainJumpNav.tsx`
-Expand from 4 sections to ~8: Indicators, Health, Housing, Energy, Environment, Programs, Resources, Analysts. Keep the compact pill design.
+### 2C. Create `src/components/census/PlaceNarrative.tsx`
+Auto-generated Census Reporter-style narrative:
+- Uses Lovable AI (gemini-3-flash-preview) to generate 3-4 paragraph summary
+- Input: structured ACS data for the place
+- Output: plain-language narrative covering demographics, economics, housing, education
+- Cached per place (24hr) to minimize AI calls
+- Includes "AI-generated summary" badge with methodology link
+- Example: "Wayne County is home to 1.8 million residents, making it Michigan's most populous county. The median household income is $47,500, about 15% below the state average..."
 
----
-
-## Phase 4: Find Care Sort Transparency
-
-### 4A. Edit `src/pages/FindCarePage.tsx`
-- Add a visible sort dropdown above NPI results: "Sorted by: Relevance | Name | Distance"
-- Currently results come from NPI API (no distance calculation without user location), so options are: Relevance (default API order), Name (A-Z)
-- The dropdown is always visible when results are shown, styled as a small `Select` with a label badge
-
----
-
-## Phase 5: Dark Mode WCAG 2.2 AA Contrast Fixes
-
-### 5A. Edit `src/index.css`
-- `--warm-gold` in dark mode: bump from `42 80% 62%` to `45 85% 68%` (ensures 4.5:1 on dark bg)
-- `--coral` in dark mode: bump from `6 72% 68%` to `8 78% 72%` (ensures 4.5:1 on dark bg)
-- Verify `michigan-forest` green in dark mode also meets ratio
-
----
-
-## Phase 6: QA & Validation
-
-After implementation, browser-test:
-1. `/place/wayne-county` -- verify 10+ indicators render with sources
-2. `/place/city/detroit` -- verify fallback notice + all domain actions
-3. `/place/zip/48201` -- verify fallback + "County Avg" label
-4. `/find-care` -- verify sort dropdown visible on results
-5. Dark mode -- verify gold/coral badges readable
-6. Footer -- verify Report Issue still works
-7. Domain jump nav -- verify all 8 sections scroll correctly
-8. Sources table -- verify every indicator row has source + updated + grain
-9. "What stands out" -- verify top 3 deltas calculated across all domains
-10. Independence disclaimer visible on all place page types
+### 2D. Edit `src/pages/PlacePage.tsx`
+Add new tabs/sections:
+- **Demographics** tab: DemographicBreakdown + narrative
+- **Economics** tab: Income, poverty, employment ACS cards
+- **Housing** tab: Rent burden, tenure, housing units
+- **Education** tab: Attainment levels, school enrollment
+- Keep existing domain indicators as "Community Indicators" tab
+- Census data sections clearly labeled "Source: U.S. Census Bureau ACS 5-Year Estimates"
 
 ---
 
-## Files Changed (Summary)
+## Phase 3: Data Explorer (PolicyMap-style)
+
+### 3A. Create `src/pages/DataExplorerPage.tsx`
+Interactive data exploration workspace:
+- **Topic Browser**: Sidebar with categorized ACS tables (Demographics, Economics, Housing, etc.)
+- **Geography Selector**: County picker, city search, ZIP entry, tract selector
+- **Visualization Panel**: Auto-generated chart based on selected table + geography
+- **Comparison Mode**: Add multiple geographies to compare
+- **Export**: CSV download, chart PNG export, embed code generator
+- **Search**: Keyword search across all ACS table labels
+
+### 3B. Create `src/components/census/CensusTableBrowser.tsx`
+Searchable catalog of available Census tables:
+- Grouped by domain
+- Shows variable count, description, and sample value
+- Click to add to current analysis
+- "Popular tables" section for common queries
+
+### 3C. Create `src/components/census/CensusChartEmbed.tsx`
+Embeddable chart component:
+- Generates standalone iframe embed code
+- Supports: bar, line, pie, choropleth, comparison
+- Responsive, themed, with provenance footer
+- Shareable via URL parameters
+
+---
+
+## Phase 4: Place Comparison Tool
+
+### 4A. Create `src/pages/ComparePlacesPage.tsx`
+Side-by-side comparison:
+- Select 2-4 geographies (counties, cities, ZIPs)
+- Auto-fetch same ACS tables for each
+- Render comparison table with highlighted differences
+- Spider/radar chart for multi-metric comparison
+- "Winner" badges for each metric (higher/lower-is-better)
+- Shareable comparison URL
+
+---
+
+## Phase 5: Community Contributions
+
+### 5A. Resource Ratings & Reviews
+- Add `resource_ratings` table (resource_id, rating 1-5, comment, created_at)
+- Anonymous INSERT-only RLS (like existing submissions)
+- Display aggregate ratings on resource cards
+- Moderation queue for flagged reviews
+
+### 5B. Issue Reporting
+- Structured form: category (outage, data error, missing resource, pollution)
+- Geo-tagged to user's selected county/ZIP
+- Stored in `community_reports` table
+- Display anonymized report counts on relevant Place pages
+
+### 5C. Community Events Enhancement
+- Allow community-submitted events (moderated)
+- Calendar view with filtering by county/category
+- iCal subscription feed per county
+
+---
+
+## Phase 6: Fix Existing Issues
+
+### 6A. Fix forwardRef warnings
+- `DesktopSearchTrigger` in Header.tsx — wrap with React.forwardRef
+- `SiteSearch` component — wrap with React.forwardRef
+- `CountySelector` component — wrap with React.forwardRef
+
+### 6B. Duplicate route cleanup
+- App.tsx has manual routes for `/about`, `/data-and-insights` that duplicate APP_ROUTES entries
+- Remove duplicates, let APP_ROUTES be single source of truth
+
+---
+
+## Phase 7: Advanced Features (Future)
+
+### 7A. Census Tract Granularity
+- Tract-level ACS data for top 10 counties
+- Neighborhood-level heatmaps using tract boundaries
+- Tract-to-tract comparison within counties
+
+### 7B. Predictive Modeling
+- Use Lovable AI to project subsidy impacts, climate risks
+- "What if" scenarios (e.g., "What if rent burden dropped 5%?")
+
+### 7C. Real-time Environmental Data
+- Live EPA AirNow integration (already have proxy)
+- EGLE water quality compliance tracking
+- Pollution source mapping from EPA TRI
+
+### 7D. Embeddable Dashboard Builder
+- Drag-and-drop dashboard creation
+- Save/share custom dashboards
+- White-label embed for partner organizations
+
+---
+
+## Implementation Priority Order
+
+| Priority | Phase | Effort | Impact |
+|----------|-------|--------|--------|
+| 🔴 P0 | 1A-1D: Census API foundation | 2 sessions | Unlocks all ACS data |
+| 🔴 P0 | 2A-2D: Place page ACS tabs | 2 sessions | Core user value |
+| 🟡 P1 | 6A-6B: Fix existing issues | 1 session | Code quality |
+| 🟡 P1 | 3A-3C: Data Explorer | 3 sessions | Power user value |
+| 🟢 P2 | 4A: Place Comparison | 1 session | Engagement |
+| 🟢 P2 | 5A-5C: Community contributions | 2 sessions | Community trust |
+| 🔵 P3 | 7A-7D: Advanced features | 5+ sessions | Differentiation |
+
+---
+
+## Technical Notes
+
+### Census API Details
+- **Base URL**: `https://api.census.gov/data/{year}/acs/acs5`
+- **No API key required** for basic use (optional key raises rate limits)
+- **Geography format**: `?get=NAME,{vars}&for=county:*&in=state:26` (Michigan = FIPS 26)
+- **Available years**: 2009-2023 (5-year estimates)
+- **Rate limits**: ~500 queries/day without key, 50k/day with key
+- **ZCTA support**: `&for=zip%20code%20tabulation%20area:48201&in=state:26`
+
+### Data Quality Standards
+- All ACS values displayed with margin of error (MOE)
+- Coefficient of variation (CV) > 40% flagged as "Use with caution"
+- Suppressed values (null) shown as "Data withheld for privacy"
+- Year and estimate type (1-year vs 5-year) always displayed
+
+### No New Dependencies Required
+- Recharts (already installed) for all visualizations
+- @tanstack/react-query (already installed) for caching
+- Lovable AI (already configured) for narrative generation
+- Supabase Edge Functions (already in use) for API proxying
+
+---
+
+## Files Changed Summary
 
 | File | Action | Purpose |
 |------|--------|---------|
-| `src/data/cross-domain-indicators.ts` | CREATE | Static county metrics for 10 domains |
-| `src/data/domain-actions.ts` | CREATE | "What you can do" curated actions |
-| `src/models/Place.ts` | EDIT | Add `buildFullIndicators`, expand domains/state avgs |
-| `src/components/place/LocalInsightEngine.tsx` | EDIT | Render 10 domains + actions + sources |
-| `src/components/shared/SourcesTable.tsx` | CREATE | Reusable provenance table |
-| `src/components/place/DomainJumpNav.tsx` | EDIT | Expand to 8 domain sections |
-| `src/pages/FindCarePage.tsx` | EDIT | Add sort transparency dropdown |
-| `src/index.css` | EDIT | Dark mode contrast fixes |
+| `supabase/functions/census-acs-proxy/index.ts` | CREATE | Census Bureau API proxy |
+| `src/hooks/useCensusACS.ts` | CREATE | React hook for ACS queries |
+| `src/data/census-tables.ts` | CREATE | ACS table catalog |
+| `src/data/census-geographies.ts` | CREATE | Michigan FIPS lookup |
+| `src/components/census/ACSIndicatorCard.tsx` | CREATE | Dynamic ACS indicator card |
+| `src/components/census/DemographicBreakdown.tsx` | CREATE | Demographic visualizations |
+| `src/components/census/PlaceNarrative.tsx` | CREATE | AI-generated place narrative |
+| `src/components/census/PlaceComparison.tsx` | CREATE | Side-by-side comparison |
+| `src/components/census/CensusTableBrowser.tsx` | CREATE | Searchable table catalog |
+| `src/components/census/CensusChartEmbed.tsx` | CREATE | Embeddable chart component |
+| `src/pages/PlacePage.tsx` | EDIT | Add Census tabs |
+| `src/pages/DataExplorerPage.tsx` | CREATE | Data exploration workspace |
+| `src/pages/ComparePlacesPage.tsx` | CREATE | Place comparison tool |
+| `src/components/layout/Header.tsx` | EDIT | Fix forwardRef warnings |
+| `src/components/shared/SiteSearch.tsx` | EDIT | Fix forwardRef warning |
+| `src/components/shared/CountySelector.tsx` | EDIT | Fix forwardRef warning |
+| `src/App.tsx` | EDIT | Remove duplicate routes |
+| `src/config/routes.ts` | EDIT | Add new page routes |
 
-**Estimated: 8 files (3 new, 5 edits). No new dependencies. No Socrata/Michigan Open Data. No regressions to existing routes.**
+**Estimated: 18 files (13 new, 5 edits). No new dependencies.**
