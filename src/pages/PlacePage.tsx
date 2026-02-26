@@ -17,6 +17,7 @@ import { getCountyProfile, COUNTY_PROFILES } from "@/data/michigan-county-profil
 import { getRegionForCounty } from "@/data/michigan-regions";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
+import DiveDeeperSearch from "@/components/place/DiveDeeperSearch";
 
 /* ── Helpers ── */
 function slugToCountyName(slug: string): string | null {
@@ -313,6 +314,9 @@ export default function PlacePage() {
             </Link>
           </div>
         </section>
+
+        {/* ── Dive Deeper: Local Insights ── */}
+        <DiveDeeperSearch countyName={countyName} />
 
         {/* ── Future Panels (scaffolded) ── */}
         <section className="space-y-4">

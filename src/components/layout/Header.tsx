@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
+import GoogleTranslateWidget from "@/components/shared/GoogleTranslateWidget";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 import CountySelector from "@/components/shared/CountySelector";
 import SiteSearch, { commandSiteSearch } from "@/components/shared/SiteSearch";
@@ -86,6 +87,7 @@ const Header = () => {
           <CountySelector variant="header" />
           <ThemeToggle />
           <LanguageSwitcher />
+          <GoogleTranslateWidget />
           <Button
             size="sm"
             onClick={() => setWizardOpen(true)}
