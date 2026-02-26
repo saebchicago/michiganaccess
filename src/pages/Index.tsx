@@ -1,7 +1,8 @@
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import { useState, lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
-import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -26,15 +27,9 @@ const HealthDataSnapshot = lazy(() => import("@/components/home/HealthDataSnapsh
 const NearbyResourceFinder = lazy(() => import("@/components/home/NearbyResourceFinder"));
 const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
 const TransportationSafetyCallout = lazy(() => import("@/components/home/TransportationSafetyCallout"));
-const SpotlightTabs = lazy(() => import("@/components/shared/SpotlightTabs"));
 const CommunityAlerts = lazy(() => import("@/components/home/CommunityAlerts"));
 const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
 const SuccessStories = lazy(() => import("@/components/home/SuccessStories"));
-const DrugPriceLookup = lazy(() => import("@/components/learn/DrugPriceLookup"));
-const CountyInfoCard = lazy(() => import("@/components/home/CountyInfoCard"));
-const SmartRecommendations = lazy(() => import("@/components/home/SmartRecommendations"));
-const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer"));
-const TrustIndicators = lazy(() => import("@/components/home/TrustIndicators"));
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
 
 const SectionFallback = () => (
@@ -45,7 +40,6 @@ const SectionFallback = () => (
 
 const Index = () => {
   const { t } = useTranslation();
-  const [dataExpanded, setDataExpanded] = useState(false);
   const [wizardOpen, setWizardOpen] = useState(false);
 
   usePageMeta({
@@ -57,20 +51,12 @@ const Index = () => {
 
   return (
     <Layout>
-      {/* ═══════════════════════════════════════════════════════════════════
-          LAYER 1 — IMMEDIATE HELP
-          Always visible. Crisis resources + outage alerts + county context.
-          CrisisBar is already pinned in Layout.
-      ═══════════════════════════════════════════════════════════════════ */}
+      {/* ═══ LAYER 1 — IMMEDIATE HELP ═══ */}
       <OutageAlertBanner />
       <CountyWelcomeBanner />
 
-      {/* ═══════════════════════════════════════════════════════════════════
-          LAYER 2 — SEARCH & GUIDED PATHWAYS
-          Primary decision interface: hero search, persona selector,
-          wizard CTA, and guided pathways.
-      ═══════════════════════════════════════════════════════════════════ */}
-      <HeroSection /> 
+      {/* ═══ LAYER 2 — SEARCH & GUIDED PATHWAYS ═══ */}
+      <HeroSection />
       <div className="container py-4">
         <DataProvenance
           source="Public datasets (State of Michigan + local agencies). Independently organized."
@@ -91,58 +77,36 @@ const Index = () => {
       <AuthorityStrip />
       <SocialProofStrip />
 
-      {/* ═══════════════════════════════════════════════════════════════════
-          EQUITY INSIGHTS — NEW
-          Shows health disparities + data highlights. Links to /data-and-insights
-      ═══════════════════════════════════════════════════════════════════ */}
-      <section className="py-16 container">
-        <div className="mb-12">
+      {/* ═══ EQUITY INSIGHTS ═══ */}
+      <section className="py-14 container">
+        <div className="mb-10">
           <h2 className="text-2xl font-bold text-foreground md:text-3xl mb-2">
             Health Equity in Michigan
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Some Michigan residents face greater barriers to health and opportunity. These insights show where support is needed most.
+            Some Michigan residents face greater barriers to health and opportunity.
           </p>
         </div>
-        
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-6">
           <EquityInsightCard
-            icon={Heart}
-            title="Black Infant Mortality"
-            stat="2.4x higher"
+            icon={Heart} title="Black Infant Mortality" stat="2.4x higher"
             description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
-            color="coral"
-            trend="up"
-            ctaText="View all equity data"
-            ctaHref="/data-and-insights"
+            color="coral" trend="up" ctaText="View equity data" ctaHref="/data-and-insights"
           />
           <EquityInsightCard
-            icon={Users}
-            title="Rural Uninsured Rate"
-            stat="14%"
+            icon={Users} title="Rural Uninsured Rate" stat="14%"
             description="Rural Michiganders are twice as likely to be uninsured as urban residents."
-            color="gold"
-            trend="stable"
-            ctaText="View all equity data"
-            ctaHref="/data-and-insights"
+            color="gold" trend="stable" ctaText="View equity data" ctaHref="/data-and-insights"
           />
           <EquityInsightCard
-            icon={AlertCircle}
-            title="Primary Care Shortage"
-            stat="23 counties"
+            icon={AlertCircle} title="Primary Care Shortage" stat="23 counties"
             description="Nearly a third of Michigan counties lack adequate primary care providers."
-            color="teal"
-            trend="down"
-            ctaText="View all equity data"
-            ctaHref="/data-and-insights"
+            color="teal" trend="down" ctaText="View equity data" ctaHref="/data-and-insights"
           />
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════════════════════════════════
-          LAYER 3 — PERSONALIZED SNAPSHOT
-          Context-aware, region-reactive content. Lazy-loaded.
-      ═══════════════════════════════════════════════════════════════════ */}
+      {/* ═══ LAYER 3 — PERSONALIZED SNAPSHOT ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
         <LazySection>
           <Suspense fallback={<SectionFallback />}>
@@ -154,42 +118,26 @@ const Index = () => {
         </LazySection>
       </SectionErrorBoundary>
 
-      {/* ═══════════════════════════════════════════════════════════════════
-          LAYER 4 — EXPLORATION (lower priority, progressive disclosure)
-          Community spotlights, alerts, data deep-dives, regional gateways.
-      ═══════════════════════════════════════════════════════════════════ */}
+      {/* ═══ LAYER 4 — EXPLORATION (compact) ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
         <LazySection>
           <Suspense fallback={<SectionFallback />}>
-            <SpotlightTabs />
-            <CommunityAlerts />
-
-            {/* Data Insights — collapsed by default */}
-            <section className="py-6">
-              <div className="container">
-                <div className="flex items-center justify-center">
-                  <Button
-                    variant="outline"
-                    onClick={() => setDataExpanded((v) => !v)}
-                    className="gap-2 text-sm"
-                    aria-expanded={dataExpanded}
-                  >
-                    {dataExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                    {dataExpanded ? t("home.collapseData") : t("home.exploreData")}
+            {/* Browse all resources CTA instead of full program directory */}
+            <section className="py-10">
+              <div className="container text-center">
+                <h2 className="text-xl font-bold text-foreground mb-3">Explore Community Resources</h2>
+                <p className="text-muted-foreground max-w-lg mx-auto mb-6">
+                  Browse 700+ verified programs across housing, food, health, transportation, energy, education, legal, and more.
+                </p>
+                <Link to="/resources">
+                  <Button size="lg" className="gap-2">
+                    Browse All Programs <ArrowRight className="h-4 w-4" />
                   </Button>
-                </div>
-
-                {dataExpanded && (
-                  <div className="mt-8 space-y-8 animate-in fade-in slide-in-from-top-4 duration-300">
-                    <DrugPriceLookup />
-                    <CountyInfoCard />
-                    <SmartRecommendations />
-                    <SystemsExplainer />
-                    <TrustIndicators />
-                  </div>
-                )}
+                </Link>
               </div>
             </section>
+
+            <CommunityAlerts />
 
             <section className="py-8">
               <div className="container max-w-5xl">
@@ -199,17 +147,11 @@ const Index = () => {
 
             <RegionalGateway />
             <SuccessStories />
-
-            {/* ═══════════════════════════════════════════════════════════════════
-                PROFESSIONAL GATEWAY — NEW
-                Attract health professionals, researchers, partners.
-            ═══════════════════════════════════════════════════════════════════ */}
             <ProfessionalGateway />
           </Suspense>
         </LazySection>
       </SectionErrorBoundary>
 
-      {/* AI Chat — just above footer */}
       <AccessChat />
     </Layout>
   );
