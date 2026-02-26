@@ -29,7 +29,7 @@ export interface Place {
 
 export interface PlaceIndicator {
   id: string;
-  domain: "health" | "housing" | "energy" | "environment" | "transportation" | "safety" | "education" | "food";
+  domain: "health" | "housing" | "energy" | "environment" | "transportation" | "safety" | "education" | "food" | "workforce" | "benefits";
   label: string;
   value: string;
   numericValue: number;
@@ -44,7 +44,7 @@ export interface PlaceIndicator {
   grain: string;
 }
 
-// ── State Averages (curated from CHR, ACS, USDA) ──
+// ── State Averages (curated from CHR, ACS, USDA, BLS, FBI UCR) ──
 export const STATE_AVERAGES: Record<string, { value: number; label: string; unit: string }> = {
   uninsured: { value: 6.5, label: "Uninsured Rate", unit: "%" },
   pcRatio: { value: 1290, label: "Primary Care Ratio", unit: ":1" },
@@ -54,6 +54,12 @@ export const STATE_AVERAGES: Record<string, { value: number; label: string; unit
   graduationRate: { value: 82, label: "HS Graduation Rate", unit: "%" },
   broadband: { value: 87, label: "Broadband Access", unit: "%" },
   drinkingWater: { value: 92, label: "Clean Drinking Water", unit: "% compliant" },
+  medianIncome: { value: 63498, label: "Median Household Income", unit: "$" },
+  povertyRate: { value: 13.8, label: "Poverty Rate", unit: "%" },
+  rentBurden: { value: 47.2, label: "Rent Burden", unit: "%" },
+  vehicleAccess: { value: 92.1, label: "Vehicle Access", unit: "%" },
+  commuteTime: { value: 24.8, label: "Avg Commute", unit: "min" },
+  unemploymentRate: { value: 4.2, label: "Unemployment Rate", unit: "%" },
 };
 
 // ── Parsers ──
@@ -226,117 +232,145 @@ export function resolvePlace(params: {
   return null;
 }
 
-// ── Indicator Builder ──
+// ── Indicator Builder (original, kept for backward compat) ──
 export function buildPlaceIndicators(place: Place): PlaceIndicator[] {
+  return buildFullIndicators(place);
+}
+
+// ── Full Cross-Domain Indicator Builder ──
+import { getCountyCrossDomain, MI_STATE_AVERAGES } from "@/data/cross-domain-indicators";
+
+export function buildFullIndicators(place: Place): PlaceIndicator[] {
   const p = place.countyProfile;
   const hh = p.healthHighlights;
   const grain = place.isFallback ? place.fallbackLabel || "County Average" : place.geoGrainLabel;
+  const countyName = place.parentCounty || place.name.replace(/ County$/, "");
+  const cd = getCountyCrossDomain(countyName);
   const indicators: PlaceIndicator[] = [];
 
+  // ── Health Domain ──
   const uninsured = parseRate(hh[0]?.value || "6.5%");
   indicators.push({
-    id: "uninsured",
-    domain: "health",
-    label: "Uninsured Rate",
-    value: hh[0]?.value || "~6.5%",
-    numericValue: uninsured,
-    unit: "%",
-    stateAvg: 6.5,
-    direction: "lower-is-better",
+    id: "uninsured", domain: "health", label: "Uninsured Rate",
+    value: hh[0]?.value || "~6.5%", numericValue: uninsured, unit: "%",
+    stateAvg: 6.5, direction: "lower-is-better",
     implication: uninsured > 8 ? "Suggests limited insurance access; residents may delay care." : uninsured < 5 ? "Strong insurance coverage; most residents have access to care." : "Near state average for insurance coverage.",
-    source: "County Health Rankings",
-    sourceUrl: "https://www.countyhealthrankings.org/",
-    updated: "2025",
-    grain,
+    source: "County Health Rankings", sourceUrl: "https://www.countyhealthrankings.org/", updated: "2025", grain,
   });
 
   const pcRatio = parseRatio(hh[1]?.value || "1,290:1");
   indicators.push({
-    id: "pc-ratio",
-    domain: "health",
-    label: "Primary Care Ratio",
-    value: hh[1]?.value || "1,290:1",
-    numericValue: pcRatio,
-    unit: ":1",
-    stateAvg: 1290,
-    direction: "lower-is-better",
+    id: "pc-ratio", domain: "health", label: "Primary Care Ratio",
+    value: hh[1]?.value || "1,290:1", numericValue: pcRatio, unit: ":1",
+    stateAvg: 1290, direction: "lower-is-better",
     implication: pcRatio > 3000 ? "Significant provider shortage; may indicate long wait times." : pcRatio < 1000 ? "Strong primary care access relative to population." : "Moderate primary care access.",
-    source: "HRSA Area Health Resources",
-    sourceUrl: "https://data.hrsa.gov/",
-    updated: "2025",
-    grain,
+    source: "HRSA Area Health Resources", sourceUrl: "https://data.hrsa.gov/", updated: "2025", grain,
   });
 
+  // ── Food Domain ──
   const food = parseRate(hh[2]?.value || "13%");
   indicators.push({
-    id: "food-insecurity",
-    domain: "food",
-    label: "Food Insecurity",
-    value: hh[2]?.value || "~13%",
-    numericValue: food,
-    unit: "%",
-    stateAvg: 13.0,
-    direction: "lower-is-better",
+    id: "food-insecurity", domain: "food", label: "Food Insecurity",
+    value: hh[2]?.value || "~13%", numericValue: food, unit: "%",
+    stateAvg: 13.0, direction: "lower-is-better",
     implication: food > 16 ? "Higher food insecurity; residents may benefit from SNAP or food bank services." : food < 10 ? "Lower food insecurity than state average." : "Near state average for food access.",
-    source: "USDA Food Environment Atlas",
-    sourceUrl: "https://www.ers.usda.gov/data-products/food-environment-atlas/",
-    updated: "2024",
-    grain,
+    source: "USDA Food Environment Atlas", sourceUrl: "https://www.ers.usda.gov/data-products/food-environment-atlas/", updated: "2024", grain,
   });
 
-  // Energy burden (estimated from county type)
+  // ── Housing Domain ──
+  if (cd.povertyRate !== null) {
+    indicators.push({
+      id: "poverty-rate", domain: "housing", label: "Poverty Rate",
+      value: `${cd.povertyRate}%`, numericValue: cd.povertyRate, unit: "%",
+      stateAvg: MI_STATE_AVERAGES.povertyRate!, direction: "lower-is-better",
+      implication: cd.povertyRate > 18 ? "Higher poverty rate; residents may face economic barriers to housing and services." : cd.povertyRate < 10 ? "Lower poverty rate than state average." : "Near state average for poverty.",
+      source: "ACS 5-Year Estimates", sourceUrl: "https://data.census.gov/", updated: "2022", grain: "County",
+    });
+  }
+  if (cd.rentBurden !== null) {
+    indicators.push({
+      id: "rent-burden", domain: "housing", label: "Rent Burden",
+      value: `${cd.rentBurden}%`, numericValue: cd.rentBurden, unit: "%",
+      stateAvg: MI_STATE_AVERAGES.rentBurden!, direction: "lower-is-better",
+      implication: cd.rentBurden > 50 ? "Over half of renters pay more than 30% of income on housing." : "Rent burden is near or below state average.",
+      source: "ACS 5-Year Estimates", sourceUrl: "https://data.census.gov/", updated: "2022", grain: "County",
+    });
+  }
+
+  // ── Workforce Domain ──
+  if (cd.medianIncome !== null) {
+    indicators.push({
+      id: "median-income", domain: "workforce", label: "Median Household Income",
+      value: `$${cd.medianIncome.toLocaleString()}`, numericValue: cd.medianIncome, unit: "$",
+      stateAvg: MI_STATE_AVERAGES.medianIncome!, direction: "higher-is-better",
+      implication: cd.medianIncome < 45000 ? "Below state average; residents may qualify for income-based assistance." : cd.medianIncome > 70000 ? "Above state average for household income." : "Near state median household income.",
+      source: "ACS 5-Year Estimates", sourceUrl: "https://data.census.gov/", updated: "2022", grain: "County",
+    });
+  }
+  if (cd.unemploymentRate !== null) {
+    indicators.push({
+      id: "unemployment", domain: "workforce", label: "Unemployment Rate",
+      value: `${cd.unemploymentRate}%`, numericValue: cd.unemploymentRate, unit: "%",
+      stateAvg: MI_STATE_AVERAGES.unemploymentRate!, direction: "lower-is-better",
+      implication: cd.unemploymentRate > 6 ? "Higher unemployment; MI Works and training programs may help." : cd.unemploymentRate < 3.5 ? "Low unemployment relative to state average." : "Near state average for unemployment.",
+      source: "BLS Local Area Unemployment Statistics", sourceUrl: "https://www.bls.gov/lau/", updated: "2024", grain: "County",
+    });
+  }
+
+  // ── Energy Domain ──
   const energyBurden = p.countyType === "rural" ? 4.2 : p.countyType === "suburban" ? 3.3 : 3.8;
   indicators.push({
-    id: "energy-burden",
-    domain: "energy",
-    label: "Energy Burden",
-    value: `~${energyBurden}%`,
-    numericValue: energyBurden,
-    unit: "% of income",
-    stateAvg: 3.5,
-    direction: "lower-is-better",
+    id: "energy-burden", domain: "energy", label: "Energy Burden",
+    value: `~${energyBurden}%`, numericValue: energyBurden, unit: "% of income",
+    stateAvg: 3.5, direction: "lower-is-better",
     implication: energyBurden > 4 ? "Higher energy costs relative to income; LIHEAP may help." : "Energy costs are near or below state average.",
-    source: "DOE LEAD Tool (Estimated)",
-    sourceUrl: "https://www.energy.gov/scep/slsc/lead-tool",
-    updated: "2024",
+    source: "DOE LEAD Tool (Estimated)", sourceUrl: "https://www.energy.gov/scep/slsc/lead-tool", updated: "2024",
     grain: `Estimated from ${p.countyType} classification`,
   });
 
-  // Transportation access proxy
-  const hasTransit = p.countyType === "urban" || p.countyType === "suburban";
-  indicators.push({
-    id: "transit-access",
-    domain: "transportation",
-    label: "Public Transit Access",
-    value: hasTransit ? "Available" : "Limited",
-    numericValue: hasTransit ? 1 : 0,
-    unit: "",
-    stateAvg: 0.5,
-    direction: "higher-is-better",
-    implication: !hasTransit ? "Limited public transit; transportation may be a barrier to care." : "Public transit options available in this area.",
-    source: "MDOT / Local Transit Agencies",
-    sourceUrl: "https://www.michigan.gov/mdot",
-    updated: "2025",
-    grain: "County",
-  });
+  // ── Transportation Domain ──
+  if (cd.vehicleAccess !== null) {
+    indicators.push({
+      id: "vehicle-access", domain: "transportation", label: "Vehicle Access",
+      value: `${cd.vehicleAccess}%`, numericValue: cd.vehicleAccess, unit: "%",
+      stateAvg: MI_STATE_AVERAGES.vehicleAccess!, direction: "higher-is-better",
+      implication: cd.vehicleAccess < 90 ? "Lower vehicle access; transportation may be a barrier to services." : "Most households have vehicle access.",
+      source: "ACS 5-Year Estimates", sourceUrl: "https://data.census.gov/", updated: "2022", grain: "County",
+    });
+  }
 
-  // Broadband proxy
-  const broadband = p.countyType === "rural" ? 72 : p.countyType === "suburban" ? 89 : 93;
-  indicators.push({
-    id: "broadband",
-    domain: "education",
-    label: "Broadband Access",
-    value: `~${broadband}%`,
-    numericValue: broadband,
-    unit: "%",
-    stateAvg: 87,
-    direction: "higher-is-better",
-    implication: broadband < 80 ? "Lower broadband access may limit telehealth and online services." : "Broadband access is near or above state average.",
-    source: "FCC Broadband Data (Estimated)",
-    sourceUrl: "https://broadbandmap.fcc.gov/",
-    updated: "2024",
-    grain: `Estimated from ${p.countyType} classification`,
-  });
+  // ── Education Domain ──
+  if (cd.hsGradRate !== null) {
+    indicators.push({
+      id: "hs-grad-rate", domain: "education", label: "HS Graduation Rate",
+      value: `${cd.hsGradRate}%`, numericValue: cd.hsGradRate, unit: "%",
+      stateAvg: MI_STATE_AVERAGES.hsGradRate ?? 82, direction: "higher-is-better",
+      implication: cd.hsGradRate < 78 ? "Below state average; education access programs may help." : cd.hsGradRate > 88 ? "Above state average graduation rate." : "Near state average for high school graduation.",
+      source: "MI Dept of Education / NCES", sourceUrl: "https://www.mischooldata.org/", updated: "2023", grain: "County",
+    });
+  }
+
+  // ── Safety Domain ──
+  if (cd.violentCrimeRate !== null) {
+    indicators.push({
+      id: "violent-crime", domain: "safety", label: "Violent Crime Rate",
+      value: `${cd.violentCrimeRate} per 100k`, numericValue: cd.violentCrimeRate, unit: "per 100k",
+      stateAvg: MI_STATE_AVERAGES.violentCrimeRate ?? 450, direction: "lower-is-better",
+      implication: cd.violentCrimeRate > 600 ? "Above state average; safety resources and community programs may be relevant." : cd.violentCrimeRate < 200 ? "Below state average for violent crime." : "Near state average for violent crime rate.",
+      source: "FBI UCR / MI State Police", sourceUrl: "https://www.michigan.gov/msp", updated: "2022", grain: "County",
+    });
+  }
+
+  // ── Environment Domain ──
+  if (cd.drinkingWaterCompliance !== null) {
+    indicators.push({
+      id: "water-compliance", domain: "environment", label: "Drinking Water Compliance",
+      value: `${cd.drinkingWaterCompliance}%`, numericValue: cd.drinkingWaterCompliance, unit: "%",
+      stateAvg: MI_STATE_AVERAGES.drinkingWaterCompliance ?? 92, direction: "higher-is-better",
+      implication: cd.drinkingWaterCompliance < 88 ? "Below state average for water compliance; check local water quality reports." : "Meets or exceeds state compliance standards.",
+      source: "EPA SDWIS (Proxy)", sourceUrl: "https://www.epa.gov/enviro/sdwis-search", updated: "2024", grain: "County (Estimated)",
+    });
+  }
 
   return indicators;
 }

@@ -1,19 +1,24 @@
 /**
- * Local Insight Engine — renders cross-domain indicators with comparators,
- * directionality, "What stands out" section, and full provenance.
+ * Local Insight Engine — renders cross-domain indicators grouped by domain,
+ * with "What stands out", "What you can do" actions, and full provenance.
  */
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Heart, Home, Zap, Droplets, Bus, Shield, GraduationCap, Apple,
   TrendingUp, TrendingDown, AlertTriangle, Info, ExternalLink, Minus,
+  Briefcase, HelpCircle, ChevronDown, ChevronUp,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import type { Place, PlaceIndicator } from "@/models/Place";
-import { buildPlaceIndicators, buildStandouts } from "@/models/Place";
+import { buildFullIndicators, buildStandouts } from "@/models/Place";
+import { DOMAIN_ACTIONS, DOMAIN_LABELS, type DomainId } from "@/data/domain-actions";
+import SourcesTable from "@/components/shared/SourcesTable";
 
 const DOMAIN_ICONS: Record<string, React.ElementType> = {
   health: Heart,
@@ -24,11 +29,18 @@ const DOMAIN_ICONS: Record<string, React.ElementType> = {
   safety: Shield,
   education: GraduationCap,
   food: Apple,
+  workforce: Briefcase,
+  benefits: HelpCircle,
 };
+
+const DOMAIN_ORDER: string[] = [
+  "health", "housing", "workforce", "food", "energy",
+  "transportation", "education", "safety", "environment",
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.05, duration: 0.3 } }),
+  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.04, duration: 0.25 } }),
 };
 
 function DeltaChip({ value, stateAvg, direction }: { value: number; stateAvg: number; direction: string }) {
@@ -43,9 +55,58 @@ function DeltaChip({ value, stateAvg, direction }: { value: number; stateAvg: nu
   );
 }
 
+function DomainActionPanel({ domainId }: { domainId: DomainId }) {
+  const [open, setOpen] = useState(false);
+  const actions = DOMAIN_ACTIONS[domainId];
+  if (!actions?.length) return null;
+
+  return (
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger asChild>
+        <Button variant="ghost" size="sm" className="text-xs gap-1 text-primary hover:text-primary/80 px-0 h-7">
+          {open ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+          What you can do ({actions.length})
+        </Button>
+      </CollapsibleTrigger>
+      <CollapsibleContent className="mt-2">
+        <div className="grid gap-2 sm:grid-cols-2">
+          {actions.map((a) => (
+            <a
+              key={a.title}
+              href={a.href}
+              target={a.external ? "_blank" : undefined}
+              rel={a.external ? "noopener noreferrer" : undefined}
+              className="group flex items-start gap-2 rounded-lg border border-border bg-card px-3 py-2.5 hover:border-primary/30 hover:shadow-sm transition-all"
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{a.title}</p>
+                <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{a.description}</p>
+              </div>
+              {a.external && <ExternalLink className="h-3 w-3 text-muted-foreground shrink-0 mt-1" />}
+            </a>
+          ))}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
+
 export default function LocalInsightEngine({ place }: { place: Place }) {
-  const indicators = useMemo(() => buildPlaceIndicators(place), [place]);
+  const indicators = useMemo(() => buildFullIndicators(place), [place]);
   const standouts = useMemo(() => buildStandouts(indicators), [indicators]);
+
+  // Group indicators by domain
+  const grouped = useMemo(() => {
+    const map = new Map<string, PlaceIndicator[]>();
+    for (const ind of indicators) {
+      const arr = map.get(ind.domain) || [];
+      arr.push(ind);
+      map.set(ind.domain, arr);
+    }
+    return DOMAIN_ORDER
+      .filter((d) => map.has(d))
+      .map((d) => ({ domain: d, indicators: map.get(d)! }));
+  }, [indicators]);
 
   return (
     <div className="space-y-8">
@@ -82,51 +143,55 @@ export default function LocalInsightEngine({ place }: { place: Place }) {
         </div>
       )}
 
-      {/* Indicator Grid */}
-      <section>
-        <h2 className="text-xl font-bold text-foreground mb-5 flex items-center gap-2">
-          <Heart className="h-5 w-5 text-primary" /> Cross-Domain Indicators
-        </h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <TooltipProvider delayDuration={200}>
-            {indicators.map((ind, i) => {
-              const Icon = DOMAIN_ICONS[ind.domain] || Heart;
-              return (
-                <motion.div key={ind.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
-                  <Card className="h-full hover:shadow-md transition-shadow">
-                    <CardContent className="py-4 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
-                          <Icon className="h-3.5 w-3.5 text-primary" />
+      {/* Domain-Grouped Indicators */}
+      <TooltipProvider delayDuration={200}>
+        {grouped.map(({ domain, indicators: domainInds }, gi) => {
+          const Icon = DOMAIN_ICONS[domain] || Heart;
+          const label = DOMAIN_LABELS[domain as DomainId] || domain;
+          return (
+            <section key={domain} id={`domain-${domain}`} className="space-y-3">
+              <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+                <Icon className="h-4.5 w-4.5 text-primary" /> {label}
+              </h2>
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {domainInds.map((ind, i) => (
+                  <motion.div key={ind.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={gi * 3 + i}>
+                    <Card className="h-full hover:shadow-md transition-shadow">
+                      <CardContent className="py-4 space-y-2">
+                        <div className="flex items-center justify-between">
                           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{ind.label}</p>
+                          <DeltaChip value={ind.numericValue} stateAvg={ind.stateAvg} direction={ind.direction} />
                         </div>
-                        <DeltaChip value={ind.numericValue} stateAvg={ind.stateAvg} direction={ind.direction} />
-                      </div>
-                      <p className="text-2xl font-bold text-foreground">{ind.value}</p>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{ind.implication}</p>
-                      <div className="flex items-center justify-between pt-1 border-t border-border/50">
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <span className="text-[10px] text-muted-foreground cursor-help underline decoration-dotted">
-                              {ind.source}
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent side="bottom" className="max-w-xs">
-                            <p className="text-xs"><strong>Source:</strong> {ind.source}</p>
-                            <p className="text-xs"><strong>Updated:</strong> {ind.updated}</p>
-                            <p className="text-xs"><strong>Grain:</strong> {ind.grain}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                        <Badge variant="outline" className="text-[9px] h-4 px-1.5">{ind.grain.split(" ")[0]}</Badge>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </TooltipProvider>
-        </div>
-      </section>
+                        <p className="text-2xl font-bold text-foreground">{ind.value}</p>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{ind.implication}</p>
+                        <div className="flex items-center justify-between pt-1 border-t border-border/50">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="text-[10px] text-muted-foreground cursor-help underline decoration-dotted">
+                                {ind.source}
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent side="bottom" className="max-w-xs">
+                              <p className="text-xs"><strong>Source:</strong> {ind.source}</p>
+                              <p className="text-xs"><strong>Updated:</strong> {ind.updated}</p>
+                              <p className="text-xs"><strong>Grain:</strong> {ind.grain}</p>
+                            </TooltipContent>
+                          </Tooltip>
+                          <Badge variant="outline" className="text-[9px] h-4 px-1.5">{ind.grain.split(" ")[0]}</Badge>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+              <DomainActionPanel domainId={domain as DomainId} />
+            </section>
+          );
+        })}
+      </TooltipProvider>
+
+      {/* Sources Table */}
+      <SourcesTable indicators={indicators} />
     </div>
   );
 }
