@@ -1,5 +1,3 @@
-import AboutPage from "@/pages/AboutPage";
-import PrivacyPage from "@/pages/PrivacyPage";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,8 +7,6 @@ import { AnimatePresence } from "framer-motion";
 import { Suspense } from "react";
 import { CountyProvider } from "./contexts/CountyContext";
 import { APP_ROUTES } from "./config/routes";
-import DataAndInsightsPage from "@/pages/DataAndInsightsPage";
-import InsuranceComparisonPage from "@/pages/InsuranceComparisonPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -33,11 +29,6 @@ const App = () => (
           <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/data-and-insights" element={<DataAndInsightsPage />} />
-            <Route path="/insurance-comparison" element={<InsuranceComparisonPage />} />
-
            {APP_ROUTES.map((route) => (
                 <Route
                   key={route.path}

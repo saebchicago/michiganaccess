@@ -93,6 +93,7 @@ const pages = {
   ZipPlacePage: lazy(() => import("@/pages/ZipPlacePage")),
   DataAndInsightsPage: lazy(() => import("@/pages/DataAndInsightsPage")),
   DataExplorerPage: lazy(() => import("@/pages/DataExplorerPage")),
+  ComparePlacesPage: lazy(() => import("@/pages/ComparePlacesPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -114,6 +115,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/data", component: pages.HealthDataDashboardPage, label: "Health Data" },
   { path: "/data-and-insights", component: pages.DataAndInsightsPage, label: "Data & Insights" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
+  { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
   { path: "/transportation", component: pages.TransportationPage, label: "Transportation" },
   { path: "/contact", component: pages.ContactPage, label: "Contact" },
   { path: "/environment", component: pages.EnvironmentPage, label: "Environment" },
@@ -205,6 +207,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     children: [
       { label: "Data & Insights Hub", href: "/data-and-insights", badge: "New" },
       { label: "Data Explorer", href: "/data-explorer", badge: "Census API" },
+      { label: "Compare Counties", href: "/compare", badge: "New" },
       { label: "Health Data Dashboard", href: "/data", i18nKey: "nav.healthData" },
       { label: "Health Equity", href: "/equity" },
       { label: "Data Sources & Methods", href: "/data-validation" },
