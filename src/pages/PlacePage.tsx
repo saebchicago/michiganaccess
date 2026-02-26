@@ -20,14 +20,18 @@ import DataProvenance from "@/components/shared/DataProvenance";
 
 /* ── Helpers ── */
 function slugToCountyName(slug: string): string | null {
-  // Try exact match first
+  // Strip trailing "-county" if present (e.g. "wayne-county" → "wayne")
+  const normalized = slug.replace(/-county$/i, "");
+  // Try exact slug match
   for (const name of Object.keys(COUNTY_PROFILES)) {
-    if (countyToSlug(name) === slug) return name;
+    if (countyToSlug(name) === normalized || countyToSlug(name) === slug) return name;
   }
-  // Try case-insensitive
-  const lower = slug.replace(/-/g, " ").toLowerCase();
-  for (const name of Object.keys(COUNTY_PROFILES)) {
-    if (name.toLowerCase() === lower) return name;
+  // Try case-insensitive space match
+  for (const variant of [normalized, slug]) {
+    const lower = variant.replace(/-/g, " ").toLowerCase();
+    for (const name of Object.keys(COUNTY_PROFILES)) {
+      if (name.toLowerCase() === lower) return name;
+    }
   }
   return null;
 }
@@ -80,13 +84,9 @@ export default function PlacePage() {
     path: `/place/${slug || ""}`,
   });
 
-  // If not a valid county, redirect to 404
-  if (!countyName || !profile) {
-    return <Navigate to="/404" replace />;
-  }
-
-  // Parse metrics for comparison
+  // Parse metrics for comparison (must be before early return for hooks rules)
   const metrics = useMemo(() => {
+    if (!profile) return { uninsured: 0, pcRatio: 0, foodInsecurity: 0 };
     const hh = profile.healthHighlights;
     const uninsured = parseRate(hh[0]?.value || "6.5%");
     const pcRatio = parseRatio(hh[1]?.value || "1,290:1");
@@ -96,6 +96,7 @@ export default function PlacePage() {
 
   // Generate "What stands out" insight
   const standoutInsight = useMemo(() => {
+    if (!profile) return [];
     const insights: string[] = [];
     if (metrics.uninsured > STATE_AVG.uninsured + 2) insights.push(`Higher uninsured rate (${metrics.uninsured}%) than state average (${STATE_AVG.uninsured}%)`);
     else if (metrics.uninsured < STATE_AVG.uninsured - 1) insights.push(`Lower uninsured rate (${metrics.uninsured}%) than state average (${STATE_AVG.uninsured}%)`);
@@ -103,7 +104,12 @@ export default function PlacePage() {
     if (metrics.foodInsecurity > 15) insights.push(`Higher food insecurity (${metrics.foodInsecurity}%) than state average`);
     if (insights.length === 0) insights.push("Health indicators are near or better than state average");
     return insights;
-  }, [metrics]);
+  }, [metrics, profile]);
+
+  // If not a valid county, show not found
+  if (!countyName || !profile) {
+    return <Navigate to="/404" replace />;
+  }
 
   return (
     <Layout>
