@@ -35,7 +35,7 @@ export interface CensusACSResponse {
 }
 
 export function useCensusACS(options: UseCensusACSOptions) {
-  const { tables, geoType, geoFips, year = 2023, enabled = true } = options;
+  const { tables, geoType, geoFips, year = 2022, enabled = true } = options;
 
   return useQuery<CensusACSResponse>({
     queryKey: ["census-acs", tables.join(","), geoType, geoFips, year],

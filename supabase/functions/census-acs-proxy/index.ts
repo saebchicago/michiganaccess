@@ -6,7 +6,7 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
-// Simple in-memory cache (per isolate, ~60 min TTL)
+// In-memory cache (per isolate, ~60 min TTL)
 const cache = new Map<string, { data: unknown; ts: number }>();
 const CACHE_TTL = 60 * 60 * 1000;
 
@@ -18,6 +18,54 @@ function cacheGet(key: string): unknown | null {
     return null;
   }
   return entry.data;
+}
+
+// Version marker for deployment verification
+const PROXY_VERSION = "2.0";
+
+/**
+ * Known key variables for each table — avoids speculative enumeration.
+ * Census API returns 400 if any variable doesn't exist, so we must be precise.
+ */
+const TABLE_VARIABLES: Record<string, string[]> = {
+  B01001: ["B01001_001E","B01001_002E","B01001_026E","B01001_001M"],
+  B02001: ["B02001_001E","B02001_002E","B02001_003E","B02001_004E","B02001_005E","B02001_006E","B02001_007E","B02001_008E"],
+  B03003: ["B03003_001E","B03003_002E","B03003_003E"],
+  B19013: ["B19013_001E","B19013_001M"],
+  B17001: ["B17001_001E","B17001_002E","B17001_001M","B17001_002M"],
+  B23025: ["B23025_001E","B23025_002E","B23025_003E","B23025_004E","B23025_005E","B23025_007E"],
+  B25064: ["B25064_001E","B25064_001M"],
+  B25001: ["B25001_001E"],
+  B25003: ["B25003_001E","B25003_002E","B25003_003E"],
+  B15003: ["B15003_001E","B15003_017E","B15003_021E","B15003_022E","B15003_023E","B15003_025E"],
+  B27001: ["B27001_001E"],
+  B08301: ["B08301_001E","B08301_002E","B08301_010E","B08301_019E","B08301_021E"],
+  B16001: ["B16001_001E","B16001_002E","B16001_003E"],
+  B25070: ["B25070_001E","B25070_007E","B25070_008E","B25070_009E","B25070_010E"],
+};
+
+function buildGeoStr(geoType: string, geoFips: string): string {
+  const stateFips = "26";
+  switch (geoType) {
+    case "state":
+      return `for=state:${stateFips}`;
+    case "county":
+      return geoFips
+        ? `for=county:${geoFips}&in=state:${stateFips}`
+        : `for=county:*&in=state:${stateFips}`;
+    case "place":
+      return `for=place:${geoFips}&in=state:${stateFips}`;
+    case "tract":
+      if (geoFips.includes(":")) {
+        const [c, t] = geoFips.split(":");
+        return `for=tract:${t}&in=state:${stateFips}+county:${c}`;
+      }
+      return `for=tract:*&in=state:${stateFips}+county:${geoFips}`;
+    case "zcta":
+      return `for=zip%20code%20tabulation%20area:${geoFips}&in=state:${stateFips}`;
+    default:
+      return `for=county:*&in=state:${stateFips}`;
+  }
 }
 
 serve(async (req) => {
@@ -40,9 +88,7 @@ serve(async (req) => {
       );
     }
 
-    // Build variable list from table IDs
-    // For profile tables (DP05, etc.) we fetch common variables
-    // For detailed tables (B19013, etc.) we fetch _001E through a reasonable range
+    const geoStr = buildGeoStr(geoType, geoFips);
     const results: Record<string, unknown> = {};
 
     for (const table of tables) {
@@ -53,75 +99,41 @@ serve(async (req) => {
         continue;
       }
 
-      // Build geography string
-      let geoStr = "";
-      const stateFips = "26"; // Michigan
+      // Get known variables for this table, or try discovery
+      let vars = TABLE_VARIABLES[table];
 
-      switch (geoType) {
-        case "state":
-          geoStr = `for=state:${stateFips}`;
-          break;
-        case "county":
-          if (geoFips) {
-            // geoFips should be 3-digit county code (e.g., "163" for Wayne)
-            geoStr = `for=county:${geoFips}&in=state:${stateFips}`;
+      if (!vars) {
+        // For unknown tables, try fetching the group metadata to discover variables
+        try {
+          const groupUrl = `https://api.census.gov/data/${year}/${dataset}/groups/${table}.json`;
+          const groupResp = await fetch(groupUrl);
+          if (groupResp.ok) {
+            const groupData = await groupResp.json();
+            vars = Object.keys(groupData.variables || {})
+              .filter((v: string) => v.endsWith("E") && !v.endsWith("EA"))
+              .slice(0, 30); // limit to 30 vars
           } else {
-            geoStr = `for=county:*&in=state:${stateFips}`;
+            await groupResp.text();
+            vars = [];
           }
-          break;
-        case "place":
-          geoStr = `for=place:${geoFips}&in=state:${stateFips}`;
-          break;
-        case "tract":
-          // geoFips format: "countyFips:tractFips" or just countyFips for all tracts
-          if (geoFips.includes(":")) {
-            const [countyF, tractF] = geoFips.split(":");
-            geoStr = `for=tract:${tractF}&in=state:${stateFips}+county:${countyF}`;
-          } else {
-            geoStr = `for=tract:*&in=state:${stateFips}+county:${geoFips}`;
-          }
-          break;
-        case "zcta":
-          geoStr = `for=zip%20code%20tabulation%20area:${geoFips}&in=state:${stateFips}`;
-          break;
-        default:
-          geoStr = `for=county:*&in=state:${stateFips}`;
+        } catch {
+          vars = [];
+        }
       }
 
-      // Fetch variable list for table from Census API
-      // Strategy: request NAME + key variables for the table
-      const isProfile = table.startsWith("DP") || table.startsWith("S");
-      const varPrefix = table;
-
-      // Fetch up to 50 variables per table (covers most tables)
-      // We'll request the variables group endpoint first
-      let variables: string[] = [];
-
-      if (isProfile) {
-        // Profile tables use different variable naming
-        variables = Array.from({ length: 30 }, (_, i) => {
-          const num = String(i + 1).padStart(4, "0");
-          return `${varPrefix}_${num}E`;
-        });
-      } else {
-        // Detailed tables: B-tables
-        variables = Array.from({ length: 50 }, (_, i) => {
-          const num = String(i + 1).padStart(3, "0");
-          return `${varPrefix}_${num}E`;
-        });
-        // Also request margin of error variables
-        const moeVars = variables.map((v) => v.replace(/E$/, "M"));
-        variables = [...variables, ...moeVars];
+      if (vars.length === 0) {
+        results[table] = { name: "", variables: {}, error: "No known variables for table" };
+        continue;
       }
 
-      // Census API limits to ~50 variables per request, split if needed
-      const chunks: string[][] = [];
-      for (let i = 0; i < variables.length; i += 48) {
-        chunks.push(variables.slice(i, i + 48));
-      }
-
-      let allData: Record<string, string | number | null> = {};
+      // Census API allows ~50 vars per request
+      const allData: Record<string, string | number | null> = {};
       let geoName = "";
+
+      const chunks: string[][] = [];
+      for (let i = 0; i < vars.length; i += 48) {
+        chunks.push(vars.slice(i, i + 48));
+      }
 
       for (const chunk of chunks) {
         const varStr = ["NAME", ...chunk].join(",");
@@ -129,55 +141,35 @@ serve(async (req) => {
 
         const resp = await fetch(apiUrl);
         if (!resp.ok) {
-          // Some variables may not exist — try with fewer
-          if (resp.status === 400) {
-            // Try just the first 10 variables (most tables have at least these)
-            const fallbackVars = chunk.slice(0, 10);
-            const fallbackUrl = `https://api.census.gov/data/${year}/${dataset}?get=NAME,${fallbackVars.join(",")}&${geoStr}`;
-            const fallbackResp = await fetch(fallbackUrl);
-            if (fallbackResp.ok) {
-              const fbData = await fallbackResp.json();
-              if (fbData.length > 1) {
-                const headers = fbData[0] as string[];
-                const row = fbData[1] as (string | null)[];
-                geoName = row[0] || "";
-                for (let j = 1; j < headers.length; j++) {
-                  const val = row[j];
-                  allData[headers[j]] = val !== null ? (isNaN(Number(val)) ? val : Number(val)) : null;
-                }
-              }
-            } else {
-              await fallbackResp.text(); // consume body
-            }
-            continue;
-          }
-          await resp.text(); // consume body
+          console.warn(`Census API ${resp.status} for ${table}: ${await resp.text()}`);
           continue;
         }
 
         const data = await resp.json();
-        if (data.length > 1) {
-          const headers = data[0] as string[];
-          // If multiple rows (all counties), return all; otherwise single row
-          if (data.length === 2) {
-            const row = data[1] as (string | null)[];
-            geoName = row[0] || geoName;
-            for (let j = 1; j < headers.length; j++) {
-              const val = row[j];
-              allData[headers[j]] = val !== null ? (isNaN(Number(val)) ? val : Number(val)) : null;
-            }
-          } else {
-            // Multiple geographies — return array
-            const rows = data.slice(1).map((row: (string | null)[]) => {
-              const obj: Record<string, string | number | null> = {};
-              for (let j = 0; j < headers.length; j++) {
-                const val = row[j];
-                obj[headers[j]] = val !== null ? (isNaN(Number(val)) ? val : Number(val)) : null;
-              }
-              return obj;
-            });
-            allData = { _multi: rows } as any;
+        if (!Array.isArray(data) || data.length < 2) continue;
+
+        const headers = data[0] as string[];
+
+        if (data.length === 2) {
+          // Single geography
+          const row = data[1] as (string | null)[];
+          geoName = row[0] || geoName;
+          for (let j = 1; j < headers.length; j++) {
+            if (headers[j] === "state" || headers[j] === "county") continue;
+            const val = row[j];
+            allData[headers[j]] = val !== null && val !== "" ? (isNaN(Number(val)) ? val : Number(val)) : null;
           }
+        } else {
+          // Multiple geographies — return as array under _multi
+          const rows = data.slice(1).map((row: (string | null)[]) => {
+            const obj: Record<string, string | number | null> = {};
+            for (let j = 0; j < headers.length; j++) {
+              const val = row[j];
+              obj[headers[j]] = val !== null && val !== "" ? (isNaN(Number(val)) ? val : Number(val)) : null;
+            }
+            return obj;
+          });
+          (allData as any)._multi = rows;
         }
       }
 
@@ -188,13 +180,13 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({
+        version: PROXY_VERSION,
         year: Number(year),
         dataset,
         geoType,
         geoFips,
         tables: results,
         source: "U.S. Census Bureau ACS",
-        cached: false,
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
