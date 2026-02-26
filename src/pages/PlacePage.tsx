@@ -2,151 +2,78 @@ import { useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  MapPin, Heart, AlertTriangle, Users, Stethoscope, Building2,
-  Download, ExternalLink, Phone, TrendingUp, TrendingDown, Minus,
-  Activity, Shield, ArrowRight, BarChart3, FileText
+  MapPin, Heart, Stethoscope, Building2,
+  Download, ExternalLink, Phone, Activity, Shield, ArrowRight, BarChart3, FileText,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { getCountyProfile, COUNTY_PROFILES } from "@/data/michigan-county-profiles";
-import { getRegionForCounty } from "@/data/michigan-regions";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
 import DiveDeeperSearch from "@/components/place/DiveDeeperSearch";
+import LocalInsightEngine from "@/components/place/LocalInsightEngine";
+import DomainJumpNav from "@/components/place/DomainJumpNav";
+import ReportIssue from "@/components/shared/ReportIssue";
+import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 
-/* ── Helpers ── */
-function slugToCountyName(slug: string): string | null {
-  // Strip trailing "-county" if present (e.g. "wayne-county" → "wayne")
-  const normalized = slug.replace(/-county$/i, "");
-  // Try exact slug match
-  for (const name of Object.keys(COUNTY_PROFILES)) {
-    if (countyToSlug(name) === normalized || countyToSlug(name) === slug) return name;
-  }
-  // Try case-insensitive space match
-  for (const variant of [normalized, slug]) {
-    const lower = variant.replace(/-/g, " ").toLowerCase();
-    for (const name of Object.keys(COUNTY_PROFILES)) {
-      if (name.toLowerCase() === lower) return name;
-    }
-  }
-  return null;
-}
-
-const TrendIcon = ({ trend }: { trend?: "up" | "down" | "stable" }) => {
-  if (trend === "up") return <TrendingUp className="h-3.5 w-3.5 text-destructive" />;
-  if (trend === "down") return <TrendingDown className="h-3.5 w-3.5 text-michigan-forest" />;
-  return <Minus className="h-3.5 w-3.5 text-muted-foreground" />;
-};
+/* ── Curated statewide programs ── */
+const TOP_PROGRAMS = [
+  { title: "Healthy Michigan Plan (Medicaid)", desc: "Free or low-cost health coverage for adults 19–64 with income up to 138% FPL.", href: "/financial-help", icon: Shield },
+  { title: "SNAP Food Assistance", desc: "Monthly benefits for groceries. Apply through MDHHS.", href: "https://www.michigan.gov/mdhhs/assistance-programs/food", icon: Heart },
+  { title: "LIHEAP Heating Assistance", desc: "Help paying heating bills for income-eligible households.", href: "/environment", icon: Activity },
+  { title: "Michigan 2-1-1", desc: "Free, confidential referrals for housing, food, transportation, and more — 24/7.", href: "tel:211", icon: Phone },
+  { title: "WIC Nutrition Program", desc: "Free nutrition support for pregnant women, new moms, and children under 5.", href: "https://www.michigan.gov/mdhhs/assistance-programs/wic", icon: Heart },
+  { title: "Find a Doctor or Clinic", desc: "Search providers by specialty, location, or NPI across Michigan.", href: "/find-care", icon: Stethoscope },
+];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.06, duration: 0.35 } }),
 };
 
-/* ── Curated statewide programs relevant to any county ── */
-const TOP_PROGRAMS = [
-  { title: "Healthy Michigan Plan (Medicaid)", desc: "Free or low-cost health coverage for adults 19–64 with income up to 138% FPL.", href: "/financial-help", icon: Shield },
-  { title: "SNAP Food Assistance", desc: "Monthly benefits for groceries. Apply through MDHHS.", href: "https://www.michigan.gov/mdhhs/assistance-programs/food", icon: Heart },
-  { title: "LIHEAP Heating Assistance", desc: "Help paying heating bills for income-eligible households.", href: "/environment", icon: Activity },
-  { title: "Michigan 2-1-1", desc: "Free, confidential referrals for housing, food, transportation, and more — 24/7.", href: "tel:211", icon: Phone },
-  { title: "WIC Nutrition Program", desc: "Free nutrition support for pregnant women, new moms, and children under 5.", href: "https://www.michigan.gov/mdhhs/assistance-programs/wic", icon: Users },
-  { title: "Find a Doctor or Clinic", desc: "Search providers by specialty, location, or NPI across Michigan.", href: "/find-care", icon: Stethoscope },
-];
-
-/* ── State Averages for benchmarking ── */
-const STATE_AVG = { uninsured: 6.5, pcRatio: 1290, foodInsecurity: 13.0 };
-
-function parseRate(val: string): number {
-  const m = val.match(/([\d.]+)/);
-  return m ? parseFloat(m[1]) : 0;
-}
-
-function parseRatio(val: string): number {
-  const m = val.match(/([\d,]+)/);
-  return m ? parseFloat(m[1].replace(",", "")) : 0;
-}
-
 export default function PlacePage() {
   const { slug } = useParams<{ slug: string }>();
-  const countyName = slug ? slugToCountyName(slug) : null;
-  const profile = countyName ? getCountyProfile(countyName) : null;
-  const region = countyName ? getRegionForCounty(countyName) : null;
+
+  const place = useMemo(() => slug ? resolvePlace({ type: "county", slug }) : null, [slug]);
 
   usePageMeta({
-    title: countyName ? `${countyName} County, Michigan — Health & Services` : "Place Not Found",
-    description: countyName && profile
-      ? `Health indicators, community programs, and local services for ${countyName} County, Michigan. Population: ${profile.population.toLocaleString()}.`
+    title: place ? `${place.name}, Michigan — Health & Services` : "Place Not Found",
+    description: place
+      ? `Health indicators, community programs, and local services for ${place.name}, Michigan. Population: ${place.countyProfile.population.toLocaleString()}.`
       : "Place not found",
     path: `/place/${slug || ""}`,
   });
 
-  // Parse metrics for comparison (must be before early return for hooks rules)
-  const metrics = useMemo(() => {
-    if (!profile) return { uninsured: 0, pcRatio: 0, foodInsecurity: 0 };
-    const hh = profile.healthHighlights;
-    const uninsured = parseRate(hh[0]?.value || "6.5%");
-    const pcRatio = parseRatio(hh[1]?.value || "1,290:1");
-    const foodInsecurity = parseRate(hh[2]?.value || "13%");
-    return { uninsured, pcRatio, foodInsecurity };
-  }, [profile]);
+  if (!place) return <Navigate to="/404" replace />;
 
-  // Generate "What stands out" insight
-  const standoutInsight = useMemo(() => {
-    if (!profile) return [];
-    const insights: string[] = [];
-    if (metrics.uninsured > STATE_AVG.uninsured + 2) insights.push(`Higher uninsured rate (${metrics.uninsured}%) than state average (${STATE_AVG.uninsured}%)`);
-    else if (metrics.uninsured < STATE_AVG.uninsured - 1) insights.push(`Lower uninsured rate (${metrics.uninsured}%) than state average (${STATE_AVG.uninsured}%)`);
-    if (metrics.pcRatio > 3000) insights.push("Primary care provider shortage area");
-    if (metrics.foodInsecurity > 15) insights.push(`Higher food insecurity (${metrics.foodInsecurity}%) than state average`);
-    if (insights.length === 0) insights.push("Health indicators are near or better than state average");
-    return insights;
-  }, [metrics, profile]);
-
-  // If not a valid county, show not found
-  if (!countyName || !profile) {
-    return <Navigate to="/404" replace />;
-  }
+  const countyName = place.parentCounty!;
+  const profile = place.countyProfile;
 
   return (
     <Layout>
-      <Breadcrumbs items={[
-        { label: "Regions", href: "/regions" },
-        ...(region ? [{ label: region.name, href: `/region/${region.id}` }] : []),
-        { label: `${countyName} County` },
-      ]} />
+      <Breadcrumbs items={buildPlaceBreadcrumbs(place)} />
+      <DomainJumpNav />
 
-      {/* ── Hero ── */}
+      {/* Hero */}
       <section className="bg-gradient-to-br from-primary/8 via-background to-accent/5 py-12 md:py-16">
         <div className="container">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
             <div className="flex items-center gap-2 mb-3">
               <MapPin className="h-5 w-5 text-primary" />
-              {region && <Badge variant="outline" className="text-xs">{region.name}</Badge>}
+              {place.region && <Badge variant="outline" className="text-xs">{place.region.name}</Badge>}
               <Badge variant="secondary" className="text-xs capitalize">{profile.countyType}</Badge>
+              <Badge variant="outline" className="text-xs bg-primary/5 text-primary">{place.geoGrainLabel}</Badge>
             </div>
             <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl mb-3">
-              {countyName} County
+              {place.name}
             </h1>
-            <p className="text-lg text-muted-foreground mb-4">
+            <p className="text-lg text-muted-foreground mb-6">
               Population {profile.population.toLocaleString()} · {profile.majorCities.slice(0, 4).join(", ")}
             </p>
-
-            {/* Standout insight */}
-            <div className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 mb-6">
-              <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1.5 flex items-center gap-1.5">
-                <AlertTriangle className="h-3.5 w-3.5" /> What stands out here
-              </p>
-              <ul className="space-y-1">
-                {standoutInsight.map((s) => (
-                  <li key={s} className="text-sm text-foreground">{s}</li>
-                ))}
-              </ul>
-            </div>
 
             <div className="flex flex-wrap gap-3">
               <Link to={`/find-care?county=${countyName}&scope=facilities`}>
@@ -164,43 +91,15 @@ export default function PlacePage() {
       </section>
 
       <div className="container py-10 space-y-12">
-        {/* ── Key Indicators ── */}
-        <section>
-          <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-            <Activity className="h-5 w-5 text-primary" /> Key Health Indicators
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {profile.healthHighlights.map((h, i) => {
-              let comparison = "";
-              if (h.label.toLowerCase().includes("uninsured")) {
-                const val = parseRate(h.value);
-                const diff = val - STATE_AVG.uninsured;
-                comparison = diff > 0 ? `+${diff.toFixed(1)}pp vs state avg` : `${diff.toFixed(1)}pp vs state avg`;
-              }
-              return (
-                <motion.div key={h.label} initial="hidden" animate="visible" variants={fadeUp} custom={i}>
-                  <Card className="hover:shadow-md transition-shadow">
-                    <CardContent className="py-5">
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{h.label}</p>
-                        <TrendIcon trend={h.trend} />
-                      </div>
-                      <p className="text-2xl font-bold text-foreground">{h.value}</p>
-                      {comparison && (
-                        <p className="text-xs text-muted-foreground mt-1">{comparison}</p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
-        </section>
+        {/* Indicators + What Stands Out */}
+        <div id="indicators">
+          <LocalInsightEngine place={place} />
+        </div>
 
         <Separator />
 
-        {/* ── Top Programs ── */}
-        <section>
+        {/* Top Programs */}
+        <section id="programs">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
               <Heart className="h-5 w-5 text-michigan-coral" /> Top Programs for Residents
@@ -244,8 +143,8 @@ export default function PlacePage() {
 
         <Separator />
 
-        {/* ── Local Logistics ── */}
-        <section>
+        {/* Local Resources */}
+        <section id="resources">
           <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
             <Building2 className="h-5 w-5 text-michigan-navy" /> Local Resources & Contacts
           </h2>
@@ -253,9 +152,9 @@ export default function PlacePage() {
             <Card>
               <CardContent className="py-5 space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Region</p>
-                <p className="text-sm font-medium text-foreground">{region?.name || "Michigan"}</p>
-                {region && (
-                  <Link to={`/region/${region.id}`} className="text-xs text-primary hover:underline flex items-center gap-1">
+                <p className="text-sm font-medium text-foreground">{place.region?.name || "Michigan"}</p>
+                {place.region && (
+                  <Link to={`/region/${place.region.id}`} className="text-xs text-primary hover:underline flex items-center gap-1">
                     View region details <ArrowRight className="h-3 w-3" />
                   </Link>
                 )}
@@ -274,7 +173,7 @@ export default function PlacePage() {
               <CardContent className="py-5 space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">MDHHS Office</p>
                 <a
-                  href={`https://www.michigan.gov/mdhhs/doing-business/providers/county-contacts`}
+                  href="https://www.michigan.gov/mdhhs/doing-business/providers/county-contacts"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-primary hover:underline flex items-center gap-1"
@@ -288,8 +187,8 @@ export default function PlacePage() {
 
         <Separator />
 
-        {/* ── For Professionals ── */}
-        <section className="rounded-xl border border-border bg-muted/30 p-6 md:p-8">
+        {/* For Professionals */}
+        <section id="analysts" className="rounded-xl border border-border bg-muted/30 p-6 md:p-8">
           <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
             <FileText className="h-5 w-5 text-michigan-navy" /> For Analysts & Professionals
           </h2>
@@ -315,33 +214,24 @@ export default function PlacePage() {
           </div>
         </section>
 
-        {/* ── Dive Deeper: Local Insights ── */}
+        {/* Dive Deeper */}
         <DiveDeeperSearch countyName={countyName} />
 
-        {/* ── Future Panels (scaffolded) ── */}
-        <section className="space-y-4">
-          <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" /> Coming Soon
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Card className="border-dashed">
-              <CardContent className="py-6 text-center text-muted-foreground">
-                <p className="text-sm font-medium">Trends Over Time</p>
-                <p className="text-xs mt-1">Historical health indicator trends for {countyName} County</p>
-              </CardContent>
-            </Card>
-            <Card className="border-dashed">
-              <CardContent className="py-6 text-center text-muted-foreground">
-                <p className="text-sm font-medium">Provider Capacity</p>
-                <p className="text-xs mt-1">Real-time provider availability and wait times</p>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
+        {/* Report Issue */}
+        <ReportIssue variant="inline" />
+
+        {/* Independence Disclaimer */}
+        <div className="rounded-lg border border-border bg-muted/30 px-4 py-3">
+          <p className="text-xs text-muted-foreground text-center">
+            <Shield className="inline h-3 w-3 mr-1" />
+            Access Michigan is an <strong>independent civic project</strong>. We are not affiliated with Michigan 2-1-1, MDHHS, or any health system.
+            For live help, call <a href="tel:211" className="font-semibold text-primary hover:underline">2-1-1</a>.
+          </p>
+        </div>
 
         <DataProvenance
-          source="County Health Rankings, Census ACS, MDHHS, HRSA"
-          updated="2026-02-23"
+          source="County Health Rankings, Census ACS, MDHHS, HRSA, DOE LEAD, FCC"
+          updated="2025"
           methodologyHref="/data-validation"
         />
       </div>

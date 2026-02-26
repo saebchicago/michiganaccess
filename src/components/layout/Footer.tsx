@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import ReportIssue from "@/components/shared/ReportIssue";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -184,8 +185,13 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Report Issue */}
+        <div className="mt-4 border-t border-border pt-4">
+          <ReportIssue variant="footer" />
+        </div>
+
         {/* Trust statement */}
-        <div className="border-t border-border pt-4">
+        <div className="border-t border-border pt-4 mt-4">
           <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto mb-3">
             Access Michigan is an independent civic project that helps residents and professionals discover services and understand data.
             We are not Michigan 2-1-1 or MDHHS. We often direct you to them to enroll or get live help.

@@ -23,16 +23,18 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
-    month: "February", year: "2026", title: "Trust & Credibility Suite",
+    month: "February", year: "2026", title: "Hyper-Local Insight Engine & Trust UX",
     icon: Shield,
     tag: "feature",
     items: [
-      "Added 'How We Compare' table: Access Michigan vs 211 vs Health Plan Directories",
-      "New Success Stories section with real impact metrics on homepage",
-      "30-Second Pitch infographic on Executive Summary page",
-      "Achievement toasts & community completion stats on Resource Checklists",
-      "Data Sources expandable in footer with CMS, HRSA, CDC, MDHHS attribution",
-      "Last updated timestamps on all county pages",
+      "Unified Place model with fallback chain: ZIP → City → County → Region → State",
+      "Local Insight Engine with 6 cross-domain indicators, comparators, and plain-language implications",
+      "Sticky domain jump navigation on Place pages",
+      "Sitewide 'Report an issue / Suggest data' feedback component in footer and on every page",
+      "'What stands out here' auto-generated deltas vs state averages",
+      "Full data provenance on every indicator: source, date, grain, methodology link",
+      "Enhanced dark mode contrast for michigan-gold and coral tokens (WCAG 2.2 AA)",
+      "Energy Burden, Broadband Access, and Transit Access proxy indicators added",
     ],
   },
   {
