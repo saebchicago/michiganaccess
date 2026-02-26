@@ -88,6 +88,8 @@ const pages = {
   SearchTrendsPage: lazy(() => import("@/pages/SearchTrendsPage")),
   TermsPage: lazy(() => import("@/pages/TermsPage")),
   ZoningPage: lazy(() => import("@/pages/ZoningPage")),
+  PlacePage: lazy(() => import("@/pages/PlacePage")),
+  DataAndInsightsPage: lazy(() => import("@/pages/DataAndInsightsPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -107,6 +109,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/support-groups", component: pages.SupportGroupsPage, label: "Support Groups" },
   { path: "/learn", component: pages.LearnPage, label: "Learn" },
   { path: "/data", component: pages.HealthDataDashboardPage, label: "Health Data" },
+  { path: "/data-and-insights", component: pages.DataAndInsightsPage, label: "Data & Insights" },
   { path: "/transportation", component: pages.TransportationPage, label: "Transportation" },
   { path: "/contact", component: pages.ContactPage, label: "Contact" },
   { path: "/environment", component: pages.EnvironmentPage, label: "Environment" },
@@ -129,6 +132,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/partnerships/health-systems/one-pager", component: pages.PartnershipOnePager, label: "One-Pager" },
   { path: "/complex-care", component: pages.ComplexCarePage, label: "Complex Care" },
   { path: "/life-navigator", component: pages.LifeNavigatorPage, label: "Life Navigator" },
+  { path: "/place/:slug", component: pages.PlacePage, label: "Place" },
   { path: "/county/:slug", component: pages.CountyPage, label: "County" },
   { path: "/regions", component: pages.RegionsPage, label: "Regions" },
   { path: "/regions/compare", component: pages.RegionComparePage, label: "Region Compare" },
@@ -179,10 +183,8 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     children: [
       { label: "Energy & Utilities", href: "/environment" },
       { label: "Utility Outages", href: "/outages" },
-      { label: "School & Bus Safety", href: "/transportation" },
       { label: "Health Conditions", href: "/conditions", i18nKey: "nav.healthConditions" },
       { label: "Insurance Appeals", href: "/health/insurance-appeals" },
-      { label: "Air & Water Quality", href: "/environment" },
       { label: "Civic Data & FOIA", href: "/civic-data" },
       { label: "Quality Ratings", href: "/quality", i18nKey: "nav.qualityRatings" },
       { label: "Cost Transparency", href: "/costs", i18nKey: "nav.costTransparency" },
@@ -193,24 +195,26 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     ],
   },
   {
+    label: "Data & Insights",
+    children: [
+      { label: "Data & Insights Hub", href: "/data-and-insights", badge: "New" },
+      { label: "Health Data Dashboard", href: "/data", i18nKey: "nav.healthData" },
+      { label: "Health Equity", href: "/equity" },
+      { label: "Data Sources & Methods", href: "/data-validation" },
+      { label: "Regional Comparison", href: "/regions/compare" },
+    ],
+  },
+  {
     label: "About",
     i18nKey: "nav.about",
     children: [
       { label: "About Access Michigan", href: "/about" },
-      { label: "Data & Methods", href: "/data-validation" },
-      { label: "Health Data", href: "/data", i18nKey: "nav.healthData" },
       { label: "Executive Summary", href: "/executive-summary" },
-      { label: "Health Equity", href: "/equity" },
       { label: "For Health Systems", href: "/for-health-systems" },
       { label: "Impact Dashboard", href: "/impact" },
-      { label: "Search Trends", href: "/admin/search-trends" },
       { label: "Case Studies", href: "/case-studies" },
+      { label: "Contact", href: "/contact" },
     ],
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-    i18nKey: "nav.contact",
   },
 ];
 

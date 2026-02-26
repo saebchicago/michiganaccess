@@ -195,13 +195,20 @@ export default function FindCarePage() {
       setCategoryValue(val);
       setCategory(cat);
       setSpecialty("");
-      setHasSearched(false);
-      npi.reset();
       if (cat.mode === "static") {
         setHasSearched(true);
+        npi.reset();
+      } else if (cat.mode === "npi") {
+        // Auto-search immediately for NPI categories
+        setHasSearched(true);
+        const taxonomies = cat.taxonomies || [];
+        npi.search(taxonomies, cat.enumerationType || "NPI-1", location, "specialty");
+      } else {
+        setHasSearched(false);
+        npi.reset();
       }
     }
-  }, [npi]);
+  }, [npi, location]);
 
   const handleSearch = useCallback(() => {
     setHasSearched(true);

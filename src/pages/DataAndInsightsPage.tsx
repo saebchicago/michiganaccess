@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   Database, BarChart3, Heart, Users, AlertCircle, Download,
-  ExternalLink, Code, Lock, MapPin
+  ExternalLink, Code, Lock, MapPin, Copy, FileText, ArrowRight,
+  Newspaper, ChevronRight
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -12,12 +13,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
 import { EquityInsightCard } from "@/components/shared/EquityInsightCard";
+import DataProvenance from "@/components/shared/DataProvenance";
+import { toast } from "sonner";
+
+const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
+const CSVExportPanel = lazy(() => import("@/components/dashboard/CSVExportPanel"));
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.35 } }),
 };
+
+const SectionFallback = () => (
+  <div className="py-8 flex justify-center">
+    <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+  </div>
+);
 
 const datasets = [
   {
@@ -27,7 +40,6 @@ const datasets = [
     records: "2,847 facilities",
     updated: "Monthly",
     formats: ["JSON", "CSV", "GeoJSON"],
-    apiEndpoint: "/api/facilities",
     link: "https://data.cms.gov/",
   },
   {
@@ -37,7 +49,6 @@ const datasets = [
     records: "1,203 centers",
     updated: "Quarterly",
     formats: ["CSV", "JSON"],
-    apiEndpoint: "/api/fqhc",
     link: "https://findahealthcenter.hrsa.gov/",
   },
   {
@@ -47,7 +58,6 @@ const datasets = [
     records: "All Michigan tracts",
     updated: "Every 4 years",
     formats: ["GIS Shapefiles", "CSV"],
-    apiEndpoint: "/api/svi",
     link: "https://www.atsdr.cdc.gov/placeandhealth/svi/",
   },
   {
@@ -57,345 +67,313 @@ const datasets = [
     records: "23 HPSA counties",
     updated: "Annually",
     formats: ["GeoJSON", "CSV"],
-    apiEndpoint: "/api/hpsa",
     link: "https://data.hrsa.gov/",
   },
 ];
 
 const equityInsights = [
-  {
-    icon: Heart,
-    title: "Black Infant Mortality",
-    stat: "2.4x higher",
-    description: "Black infants in Michigan face 2.4 times higher mortality rates than white infants.",
-    color: "coral" as const,
-    trend: "up" as const,
-  },
-  {
-    icon: Users,
-    title: "Rural Uninsured Rate",
-    stat: "14%",
-    description: "Rural Michiganders are twice as likely to be uninsured as urban residents.",
-    color: "gold" as const,
-    trend: "stable" as const,
-  },
-  {
-    icon: AlertCircle,
-    title: "Primary Care Shortage",
-    stat: "23 counties",
-    description: "Nearly a third of Michigan counties lack adequate primary care providers.",
-    color: "teal" as const,
-    trend: "down" as const,
-  },
+  { icon: Heart, title: "Black Infant Mortality", stat: "2.4x higher", description: "Black infants in Michigan face 2.4 times higher mortality rates than white infants.", color: "coral" as const, trend: "up" as const },
+  { icon: Users, title: "Rural Uninsured Rate", stat: "14%", description: "Rural Michiganders are twice as likely to be uninsured as urban residents.", color: "gold" as const, trend: "stable" as const },
+  { icon: AlertCircle, title: "Primary Care Shortage", stat: "23 counties", description: "Nearly a third of Michigan counties lack adequate primary care providers.", color: "teal" as const, trend: "down" as const },
+];
+
+const powerUserActions = [
+  { icon: Download, label: "Download county profile as PDF", description: "Get a print-ready summary for any county", href: "/county/wayne" },
+  { icon: FileText, label: "Export statewide CSV", description: "All 83 counties, key health metrics", action: "csv" },
+  { icon: BarChart3, label: "Compare two counties", description: "Side-by-side metrics for any two counties", href: "/data" },
+  { icon: Copy, label: "Embed the uninsured map", description: "Copy an iframe embed code for your site", action: "embed" },
 ];
 
 export default function DataAndInsightsPage() {
   usePageMeta({
-    title: "Data & Insights — Health Equity Dashboards & Open Data",
-    description:
-      "Real-time health equity dashboards, facility data, and open APIs for researchers, health systems, and civic organizations.",
+    title: "Data & Insights — Dashboards, Equity & Open Data",
+    description: "Real-time health equity dashboards, facility data, and open datasets for researchers, health systems, and civic organizations.",
     path: "/data-and-insights",
     jsonLd: {
       "@type": "DataCatalog",
       "name": "Access Michigan Data & Insights",
       "description": "Health equity dashboards and open data for Michigan",
-      "url": "https://accessmi.org/data-and-insights",
+      "url": "https://michiganaccess.lovable.app/data-and-insights",
       "provider": { "@type": "Organization", "name": "Access Michigan" },
     },
   });
 
   const [activeTab, setActiveTab] = useState("dashboards");
 
+  const handleAction = (action: string) => {
+    if (action === "csv") {
+      toast.info("CSV export is available in the Dashboards tab below.");
+      setActiveTab("dashboards");
+    } else if (action === "embed") {
+      const code = `<iframe src="https://michiganaccess.lovable.app/embed" width="100%" height="500" frameborder="0" title="Michigan Uninsured Rate Map"></iframe>`;
+      navigator.clipboard.writeText(code).then(() => toast.success("Embed code copied to clipboard"));
+    }
+  };
+
   return (
     <Layout>
       <Breadcrumbs items={[{ label: "Data & Insights" }]} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-michigan-navy/10 via-primary/5 to-background py-16 md:py-24">
+      <section className="relative overflow-hidden bg-gradient-to-br from-michigan-navy/10 via-primary/5 to-background py-14 md:py-20">
         <div className="container relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-2xl"
-          >
-            <h1 className="text-4xl font-bold text-foreground md:text-5xl mb-4">
-              Data & Insights
-            </h1>
-            <p className="text-xl text-muted-foreground mb-6">
-              Real-time dashboards, equity metrics, and open data APIs for health professionals, researchers, and civic organizations working to improve health access in Michigan.
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="max-w-2xl">
+            <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl mb-4">Data & Insights</h1>
+            <p className="text-lg text-muted-foreground mb-6">
+              Real-time dashboards, equity metrics, and open data for health professionals, researchers, journalists, planners, and civic organizations.
             </p>
             <div className="flex flex-wrap gap-3">
               <Badge className="bg-michigan-navy text-white">Real-time Data</Badge>
               <Badge variant="outline">Free & Open</Badge>
-              <Badge variant="outline">No API Key Required</Badge>
+              <Badge variant="outline">83 Counties</Badge>
             </div>
           </motion.div>
         </div>
-
-        {/* Decorative elements */}
         <div className="absolute inset-0 opacity-[0.03]" aria-hidden="true">
           <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-primary blur-3xl" />
-          <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-primary blur-3xl" />
         </div>
       </section>
 
-      <div className="container py-12">
-        {/* Tabs */}
+      <div className="container py-10">
+        {/* ── Power-User Quick Actions ── */}
+        <section className="mb-10">
+          <h2 className="text-lg font-bold text-foreground mb-4">Quick Actions</h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {powerUserActions.map((a, i) => (
+              <motion.div key={a.label} initial="hidden" animate="visible" variants={fadeUp} custom={i}>
+                {a.href ? (
+                  <Link to={a.href}>
+                    <Card className="h-full hover:shadow-md hover:border-primary/20 transition-all cursor-pointer group">
+                      <CardContent className="py-5 space-y-2">
+                        <a.icon className="h-5 w-5 text-primary" />
+                        <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{a.label}</p>
+                        <p className="text-xs text-muted-foreground">{a.description}</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ) : (
+                  <Card
+                    className="h-full hover:shadow-md hover:border-primary/20 transition-all cursor-pointer group"
+                    onClick={() => a.action && handleAction(a.action)}
+                  >
+                    <CardContent className="py-5 space-y-2">
+                      <a.icon className="h-5 w-5 text-primary" />
+                      <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{a.label}</p>
+                      <p className="text-xs text-muted-foreground">{a.description}</p>
+                    </CardContent>
+                  </Card>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <Separator className="mb-10" />
+
+        {/* ── Tabs ── */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full max-w-md grid-cols-3">
-            <TabsTrigger value="dashboards" className="gap-2">
-              <BarChart3 className="h-4 w-4" />
-              <span className="hidden sm:inline">Dashboards</span>
+          <TabsList className="grid w-full max-w-lg grid-cols-4">
+            <TabsTrigger value="dashboards" className="gap-1.5">
+              <BarChart3 className="h-4 w-4" /><span className="hidden sm:inline">Dashboards</span>
             </TabsTrigger>
-            <TabsTrigger value="equity" className="gap-2">
-              <Heart className="h-4 w-4" />
-              <span className="hidden sm:inline">Equity</span>
+            <TabsTrigger value="equity" className="gap-1.5">
+              <Heart className="h-4 w-4" /><span className="hidden sm:inline">Equity</span>
             </TabsTrigger>
-            <TabsTrigger value="data" className="gap-2">
-              <Database className="h-4 w-4" />
-              <span className="hidden sm:inline">Open Data</span>
+            <TabsTrigger value="data" className="gap-1.5">
+              <Database className="h-4 w-4" /><span className="hidden sm:inline">Open Data</span>
+            </TabsTrigger>
+            <TabsTrigger value="analysts" className="gap-1.5">
+              <Newspaper className="h-4 w-4" /><span className="hidden sm:inline">For Analysts</span>
             </TabsTrigger>
           </TabsList>
 
           {/* Tab 1: Dashboards */}
           <TabsContent value="dashboards" className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-8"
-            >
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-4">Health Data Dashboards</h2>
-                <p className="text-muted-foreground mb-6">
-                  Explore real-time metrics on facility capacity, provider availability, and community health outcomes by county and region.
-                </p>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground mb-2">Health Data Dashboards</h2>
+              <p className="text-muted-foreground mb-6">
+                Explore real-time metrics on facility capacity, provider availability, and community health outcomes.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Link to="/data">
+                <Card className="hover:shadow-md hover:border-primary/20 transition-all cursor-pointer group h-full">
+                  <CardContent className="py-6 space-y-3">
+                    <BarChart3 className="h-8 w-8 text-primary" />
+                    <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">Full Health Dashboard</h3>
+                    <p className="text-sm text-muted-foreground">Chronic disease, access trends, equity, mortality, and county comparisons.</p>
+                    <span className="text-xs text-primary font-medium flex items-center gap-1">Open dashboard <ChevronRight className="h-3 w-3" /></span>
+                  </CardContent>
+                </Card>
+              </Link>
+              <Link to="/health-map">
+                <Card className="hover:shadow-md hover:border-primary/20 transition-all cursor-pointer group h-full">
+                  <CardContent className="py-6 space-y-3">
+                    <MapPin className="h-8 w-8 text-primary" />
+                    <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">Interactive Health Map</h3>
+                    <p className="text-sm text-muted-foreground">County heatmap with provider locations, shortage areas, and air quality.</p>
+                    <span className="text-xs text-primary font-medium flex items-center gap-1">Open map <ChevronRight className="h-3 w-3" /></span>
+                  </CardContent>
+                </Card>
+              </Link>
+            </div>
+
+            {/* County Choropleth */}
+            <Suspense fallback={<SectionFallback />}>
+              <div className="max-w-4xl mx-auto">
+                <CountyChoropleth highlightCounty="Wayne" />
               </div>
+            </Suspense>
 
-              {/* Placeholder for HealthDataSnapshot */}
-              <Card className="border-2 border-dashed border-muted">
-                <CardContent className="py-12 text-center">
-                  <BarChart3 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="font-semibold text-foreground mb-2">Health Data Dashboard</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Interactive charts showing facility types, provider ratios, and health outcomes by Michigan county.
-                  </p>
-                </CardContent>
-              </Card>
-
-              {/* Placeholder for RegionalGateway */}
-              <Card className="border-2 border-dashed border-muted">
-                <CardContent className="py-12 text-center">
-                  <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="font-semibold text-foreground mb-2">Regional Overview</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Compare health metrics across regions (SE Michigan, UP, etc.) and drill down to individual counties.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
+            {/* CSV Export */}
+            <Suspense fallback={<SectionFallback />}>
+              <CSVExportPanel />
+            </Suspense>
           </TabsContent>
 
-          {/* Tab 2: Equity Data */}
+          {/* Tab 2: Equity */}
           <TabsContent value="equity" className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-8"
-            >
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-4">Health Equity Metrics</h2>
-                <p className="text-muted-foreground mb-6">
-                  Michigan residents face different barriers to health based on geography, income, race, and other factors. These metrics highlight disparities that demand action.
-                </p>
-              </div>
-
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {equityInsights.map((insight, i) => (
-                  <motion.div
-                    key={insight.title}
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeUp}
-                    custom={i}
-                  >
-                    <EquityInsightCard
-                      icon={insight.icon}
-                      title={insight.title}
-                      stat={insight.stat}
-                      description={insight.description}
-                      color={insight.color}
-                      trend={insight.trend}
-                      ctaText={false as any}
-                      ctaHref={undefined}
-                    />
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Methodology */}
-              <Card className="border-michigan-navy/20 bg-michigan-navy/5">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Lock className="h-5 w-5" />
-                    Data Methodology
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 text-sm text-muted-foreground">
-                  <p>
-                    Equity metrics are calculated from publicly available sources including CDC Social Vulnerability Index (SVI), Census Bureau ACS, and HRSA data.
-                  </p>
-                  <p>
-                    We weight results by social vulnerability to ensure insights reach the communities most affected by health disparities.
-                  </p>
-                  <Link to="/about" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
-                    Full methodology →
-                  </Link>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground mb-2">Health Equity Metrics</h2>
+              <p className="text-muted-foreground mb-6">
+                Michigan residents face different barriers to health based on geography, income, race, and other factors.
+              </p>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {equityInsights.map((insight, i) => (
+                <motion.div key={insight.title} initial="hidden" animate="visible" variants={fadeUp} custom={i}>
+                  <EquityInsightCard {...insight} ctaText={false as any} ctaHref={undefined} />
+                </motion.div>
+              ))}
+            </div>
+            <Card className="border-michigan-navy/20 bg-michigan-navy/5">
+              <CardHeader><CardTitle className="text-lg flex items-center gap-2"><Lock className="h-5 w-5" /> Data Methodology</CardTitle></CardHeader>
+              <CardContent className="space-y-3 text-sm text-muted-foreground">
+                <p>Equity metrics are calculated from publicly available sources including CDC Social Vulnerability Index (SVI), Census Bureau ACS, and HRSA data.</p>
+                <Link to="/data-validation" className="text-primary font-medium hover:underline inline-flex items-center gap-1">Full methodology →</Link>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Tab 3: Open Data */}
           <TabsContent value="data" className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-8"
-            >
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-4">Open Datasets & APIs</h2>
-                <p className="text-muted-foreground mb-6">
-                  Download datasets or use our APIs to integrate real-time health data into your applications, research, or dashboards.
-                </p>
-              </div>
-
-              {/* Datasets Grid */}
-              <div className="grid gap-6 lg:grid-cols-2">
-                {datasets.map((dataset, i) => (
-                  <motion.div
-                    key={dataset.id}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeUp}
-                    custom={i}
-                  >
-                    <Card className="h-full border-michigan-navy/10 hover:shadow-lg transition-all">
-                      <CardHeader>
-                        <div className="flex items-start justify-between mb-2">
-                          <CardTitle className="text-base">{dataset.name}</CardTitle>
-                          <Badge variant="outline" className="text-xs">
-                            {dataset.updated}
-                          </Badge>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground mb-2">Open Datasets</h2>
+              <p className="text-muted-foreground mb-6">Download datasets or access APIs to integrate Michigan health data into your work.</p>
+            </div>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {datasets.map((dataset, i) => (
+                <motion.div key={dataset.id} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+                  <Card className="h-full hover:shadow-lg transition-all">
+                    <CardHeader>
+                      <div className="flex items-start justify-between mb-2">
+                        <CardTitle className="text-base">{dataset.name}</CardTitle>
+                        <Badge variant="outline" className="text-xs">{dataset.updated}</Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <p className="text-sm text-muted-foreground">{dataset.description}</p>
+                      <div className="space-y-2 text-xs">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-foreground">{dataset.records}</span>
+                          <span className="text-muted-foreground">records</span>
                         </div>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <p className="text-sm text-muted-foreground">{dataset.description}</p>
-
-                        {/* Metadata */}
-                        <div className="space-y-2 text-xs">
-                          <div className="flex items-center gap-2">
-                            <span className="font-medium text-foreground">{dataset.records}</span>
-                            <span className="text-muted-foreground">records</span>
-                          </div>
-                          <div className="flex flex-wrap gap-1.5">
-                            {dataset.formats.map((fmt) => (
-                              <Badge key={fmt} variant="secondary" className="text-[10px]">
-                                {fmt}
-                              </Badge>
-                            ))}
-                          </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {dataset.formats.map((fmt) => (
+                            <Badge key={fmt} variant="secondary" className="text-[10px]">{fmt}</Badge>
+                          ))}
                         </div>
+                      </div>
+                      <div className="flex gap-2 pt-2">
+                        <a href={dataset.link} target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" variant="outline" className="gap-1.5"><Download className="h-3.5 w-3.5" /> Download</Button>
+                        </a>
+                        <Link to="/technical">
+                          <Button size="sm" variant="ghost" className="gap-1.5"><Code className="h-3.5 w-3.5" /> Docs</Button>
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </TabsContent>
 
-                        {/* API Endpoint */}
-                        <div className="bg-muted/50 rounded-md p-3 font-mono text-xs text-foreground/70 break-all">
-                          {dataset.apiEndpoint}
-                        </div>
+          {/* Tab 4: For Analysts & Journalists */}
+          <TabsContent value="analysts" className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-bold text-foreground mb-2">For Analysts & Journalists</h2>
+              <p className="text-muted-foreground mb-6">
+                Use Access Michigan data in your reporting, research, or policy work.
+              </p>
+            </div>
 
-                        {/* CTAs */}
-                        <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                          <a href={dataset.link} target="_blank" rel="noopener noreferrer">
-                            <Button size="sm" variant="outline" className="w-full sm:w-auto gap-1.5">
-                              <Download className="h-3.5 w-3.5" />
-                              Download
-                            </Button>
-                          </a>
-                          <Link to="/technical">
-                            <Button size="sm" variant="ghost" className="w-full sm:w-auto gap-1.5">
-                              <Code className="h-3.5 w-3.5" />
-                              API Docs
-                            </Button>
-                          </Link>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* API Documentation CTA */}
-              <Card className="border-primary/20 bg-primary/5">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Code className="h-5 w-5" />
-                    Developer Documentation
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-sm text-muted-foreground">
-                    Full API documentation, authentication, rate limits, and code examples are available on our technical documentation site.
-                  </p>
-                  <Link to="/technical">
-                    <Button className="gap-2">
-                      <ExternalLink className="h-4 w-4" />
-                      View API Documentation
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-
-              {/* Privacy & Attribution */}
-              <Card className="border-michigan-navy/20 bg-michigan-navy/5">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Lock className="h-5 w-5" />
-                    Privacy & Attribution
-                  </CardTitle>
-                </CardHeader>
+            <div className="grid gap-6 md:grid-cols-2">
+              <Card>
+                <CardHeader><CardTitle className="text-base">What Data Is Available</CardTitle></CardHeader>
                 <CardContent className="space-y-3 text-sm text-muted-foreground">
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2"><Database className="h-4 w-4 text-primary shrink-0 mt-0.5" /> <span><strong>Health indicators</strong> — uninsured rate, life expectancy, ER visits, primary care ratios for all 83 counties</span></li>
+                    <li className="flex items-start gap-2"><Heart className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" /> <span><strong>Equity metrics</strong> — infant mortality disparities, rural vs. urban gaps, shortage area designations</span></li>
+                    <li className="flex items-start gap-2"><MapPin className="h-4 w-4 text-michigan-teal shrink-0 mt-0.5" /> <span><strong>Facility data</strong> — hospitals, clinics, FQHCs, provider counts by county and specialty</span></li>
+                    <li className="flex items-start gap-2"><FileText className="h-4 w-4 text-michigan-gold shrink-0 mt-0.5" /> <span><strong>Community programs</strong> — 700+ verified resources across 10+ categories</span></li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader><CardTitle className="text-base">Data Freshness & Updates</CardTitle></CardHeader>
+                <CardContent className="space-y-3 text-sm text-muted-foreground">
+                  <ul className="space-y-2">
+                    <li><strong>Provider data (NPPES):</strong> Updated monthly from CMS</li>
+                    <li><strong>County health indicators:</strong> Annual (County Health Rankings)</li>
+                    <li><strong>Social vulnerability:</strong> Every 4 years (CDC SVI)</li>
+                    <li><strong>Air quality:</strong> Real-time (EPA AirNow)</li>
+                    <li><strong>Community programs:</strong> Verified quarterly by Access Michigan</li>
+                  </ul>
+                </CardContent>
+              </Card>
+
+              <Card className="md:col-span-2">
+                <CardHeader><CardTitle className="text-base">How to Cite</CardTitle></CardHeader>
+                <CardContent className="space-y-3 text-sm text-muted-foreground">
+                  <p>When using data from Access Michigan, please cite both the original source and Access Michigan:</p>
+                  <div className="bg-muted rounded-md p-3 font-mono text-xs">
+                    "Access Michigan (2026). [Dataset Name]. Data originally sourced from [CMS/HRSA/CDC/MDHHS]. Retrieved from https://michiganaccess.lovable.app/data-and-insights"
+                  </div>
                   <p>
-                    All data comes from publicly available sources. We do not collect personal data or track API usage.
-                  </p>
-                  <p>
-                    When using our datasets, please attribute to the original source (CMS, HRSA, CDC) and to Access Michigan.
+                    Access Michigan is an independent civic project. We are not affiliated with MDHHS, Michigan 2-1-1, or any government agency.
+                    We organize and present publicly available data to help residents and professionals.
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <Link to="/data-validation"><Button variant="outline" className="gap-2"><FileText className="h-4 w-4" /> Methodology & Sources</Button></Link>
+              <Link to="/technical"><Button variant="outline" className="gap-2"><Code className="h-4 w-4" /> Technical Documentation</Button></Link>
+              <Link to="/contact"><Button variant="ghost" className="gap-2"><ExternalLink className="h-4 w-4" /> Contact for Custom Requests</Button></Link>
+            </div>
           </TabsContent>
         </Tabs>
 
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 rounded-xl bg-michigan-navy/5 border border-michigan-navy/20 p-8 text-center space-y-4"
+        <Separator className="my-10" />
+
+        {/* ── Bottom CTA ── */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          className="rounded-xl bg-michigan-navy/5 border border-michigan-navy/20 p-8 text-center space-y-4"
         >
-          <h2 className="text-2xl font-bold text-foreground">Have questions?</h2>
+          <h2 className="text-2xl font-bold text-foreground">Questions about the data?</h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Contact our team for API access, custom data requests, or partnership opportunities.
+            Contact us for custom data requests, methodology questions, or to report an issue.
           </p>
-          <Link to="/partnerships">
-            <Button size="lg" className="bg-michigan-navy hover:bg-michigan-navy/90">
-              Get in Touch
-            </Button>
+          <Link to="/contact">
+            <Button size="lg" className="bg-michigan-navy hover:bg-michigan-navy/90">Get in Touch</Button>
           </Link>
         </motion.div>
+
+        <DataProvenance source="CMS, HRSA, CDC, MDHHS, Census ACS" updated="2026-02-23" methodologyHref="/data-validation" className="mt-8" />
       </div>
     </Layout>
   );
