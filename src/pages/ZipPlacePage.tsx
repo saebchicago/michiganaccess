@@ -17,6 +17,9 @@ import DataProvenance from "@/components/shared/DataProvenance";
 import LocalInsightEngine from "@/components/place/LocalInsightEngine";
 import DomainJumpNav from "@/components/place/DomainJumpNav";
 import ReportIssue from "@/components/shared/ReportIssue";
+import CommunitySummary from "@/components/place/CommunitySummary";
+import LifeSituationNav from "@/components/place/LifeSituationNav";
+import DataLimitationsNote from "@/components/place/DataLimitationsNote";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 import { toast } from "@/hooks/use-toast";
 
@@ -77,13 +80,23 @@ export default function ZipPlacePage() {
         </div>
       </section>
 
-      <div className="container py-10 space-y-12">
+      <div className="container py-10 space-y-10">
+        {/* Community Summary */}
+        <CommunitySummary place={place} />
+
+        {/* Life Situations */}
+        <LifeSituationNav place={place} />
+
+        <Separator />
+
+        {/* Domain Indicators */}
         <div id="indicators">
           <LocalInsightEngine place={place} />
         </div>
 
         <Separator />
 
+        {/* Resources */}
         <section id="programs">
           <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
             <Heart className="h-5 w-5 text-michigan-coral" /> Resources for ZIP {place.slug}
@@ -111,6 +124,10 @@ export default function ZipPlacePage() {
 
         <Separator />
 
+        {/* Trust & Transparency */}
+        <DataLimitationsNote place={place} />
+
+        {/* Embed */}
         <section id="analysts" className="rounded-xl border border-border bg-muted/30 p-6 md:p-8">
           <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
             <Code className="h-5 w-5 text-primary" /> Embed This Profile
