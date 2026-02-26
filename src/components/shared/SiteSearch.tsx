@@ -180,12 +180,28 @@ export default function SiteSearch() {
         .limit(5),
     ]);
 
-    const countyResults: SearchResult[] = (counties.data ?? []).map((m) => ({
-      label: m.name,
-      sublabel: `${m.county} County · ${m.municipality_type}`,
-      href: `/county/${countyToSlug(m.county)}`,
-      category: "county",
-    }));
+    // Deduplicate county names and link to canonical place pages
+    const seenCounties = new Set<string>();
+    const countyResults: SearchResult[] = [];
+    for (const m of counties.data ?? []) {
+      // Add a canonical place-page result for each unique county
+      if (!seenCounties.has(m.county)) {
+        seenCounties.add(m.county);
+        countyResults.push({
+          label: `${m.county} County`,
+          sublabel: "County profile — health data, programs & resources",
+          href: `/place/${countyToSlug(m.county)}-county`,
+          category: "county",
+        });
+      }
+      // Also add the municipality result
+      countyResults.push({
+        label: m.name,
+        sublabel: `${m.county} County · ${m.municipality_type}`,
+        href: `/place/${countyToSlug(m.county)}-county`,
+        category: "county",
+      });
+    }
 
     const facilityResults: SearchResult[] = (facilities.data ?? []).map((f) => ({
       label: f.name,
