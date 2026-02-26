@@ -12,58 +12,30 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
-import { zipToCounty, MICHIGAN_CITIES } from "@/data/michigan-county-seats";
-import { getRegionForCounty } from "@/data/michigan-regions";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
-import SnapshotCard, { type SnapshotMetric } from "@/components/shared/SnapshotCard";
+import LocalInsightEngine from "@/components/place/LocalInsightEngine";
+import DomainJumpNav from "@/components/place/DomainJumpNav";
+import ReportIssue from "@/components/shared/ReportIssue";
+import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 import { toast } from "@/hooks/use-toast";
-
-function parseRate(val: string): number {
-  const m = val.match(/([\d.]+)/);
-  return m ? parseFloat(m[1]) : 0;
-}
-
-function resolveZip(zip: string): { zip: string; county: string; city?: string } | null {
-  // Check MICHIGAN_CITIES for exact ZIP
-  const cityMatch = MICHIGAN_CITIES.find((c) => c.zip === zip);
-  if (cityMatch) return { zip, county: cityMatch.county, city: cityMatch.city };
-  // Fallback to prefix map
-  const county = zipToCounty(zip);
-  if (county) return { zip, county };
-  return null;
-}
 
 export default function ZipPlacePage() {
   const { zipcode } = useParams<{ zipcode: string }>();
-  const resolved = zipcode ? resolveZip(zipcode) : null;
-  const profile = resolved ? COUNTY_PROFILES[resolved.county] : null;
-  const region = resolved ? getRegionForCounty(resolved.county) : null;
+
+  const place = useMemo(() => zipcode ? resolvePlace({ type: "zip", zipcode }) : null, [zipcode]);
 
   usePageMeta({
-    title: resolved ? `ZIP ${resolved.zip}, Michigan — Health & Services` : "ZIP Code Not Found",
-    description: resolved && profile
-      ? `Health data and services for ZIP code ${resolved.zip} in ${resolved.county} County, Michigan.`
+    title: place ? `ZIP ${place.slug}, Michigan — Health & Services` : "ZIP Code Not Found",
+    description: place
+      ? `Health data and services for ZIP code ${place.slug} in ${place.parentCounty} County, Michigan.`
       : "ZIP code not found",
     path: `/place/zip/${zipcode || ""}`,
   });
 
-  const snapshotMetrics: SnapshotMetric[] = useMemo(() => {
-    if (!profile) return [];
-    const hh = profile.healthHighlights;
-    return [
-      { id: "uninsured", label: "Uninsured Rate (County Avg)", value: hh[0]?.value || "N/A", percentile: Math.round((1 - parseRate(hh[0]?.value || "6.5%") / 15) * 100) },
-      { id: "pcratio", label: "Primary Care Ratio (County Avg)", value: hh[1]?.value || "N/A" },
-      { id: "food", label: "Food Insecurity (County Avg)", value: hh[2]?.value || "N/A", percentile: Math.round((1 - parseRate(hh[2]?.value || "13%") / 25) * 100) },
-    ];
-  }, [profile]);
+  if (!place) return <Navigate to="/404" replace />;
 
-  if (!resolved || !profile) {
-    return <Navigate to="/404" replace />;
-  }
-
-  const embedCode = `<iframe src="${window.location.origin}/embed?county=${encodeURIComponent(resolved.county)}" width="100%" height="400" frameborder="0" title="ZIP ${resolved.zip} Health Profile"></iframe>`;
+  const embedCode = `<iframe src="${window.location.origin}/embed?county=${encodeURIComponent(place.parentCounty || "")}" width="100%" height="400" frameborder="0" title="ZIP ${place.slug} Health Profile"></iframe>`;
 
   const handleCopyEmbed = () => {
     navigator.clipboard.writeText(embedCode);
@@ -72,39 +44,32 @@ export default function ZipPlacePage() {
 
   return (
     <Layout>
-      <Breadcrumbs items={[
-        { label: "Regions", href: "/regions" },
-        ...(region ? [{ label: region.name, href: `/region/${region.id}` }] : []),
-        { label: `${resolved.county} County`, href: `/place/${countyToSlug(resolved.county)}-county` },
-        { label: `ZIP ${resolved.zip}` },
-      ]} />
+      <Breadcrumbs items={buildPlaceBreadcrumbs(place)} />
+      <DomainJumpNav />
 
       <section className="bg-gradient-to-br from-primary/8 via-background to-accent/5 py-12 md:py-16">
         <div className="container">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
             <div className="flex items-center gap-2 mb-3">
               <MapPin className="h-5 w-5 text-primary" />
-              <Badge variant="outline" className="text-xs">{resolved.county} County</Badge>
-              {resolved.city && <Badge variant="secondary" className="text-xs">{resolved.city}</Badge>}
+              <Badge variant="outline" className="text-xs">{place.parentCounty} County</Badge>
+              {place.city && <Badge variant="secondary" className="text-xs">{place.city}</Badge>}
+              <Badge variant="outline" className="text-xs bg-michigan-gold/10 text-michigan-gold border-michigan-gold/30">
+                County Avg
+              </Badge>
             </div>
             <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl mb-3">
-              ZIP Code {resolved.zip}
+              ZIP Code {place.slug}
             </h1>
-            <p className="text-lg text-muted-foreground mb-4">
-              {resolved.city ? `${resolved.city}, ` : ""}{resolved.county} County, Michigan
+            <p className="text-lg text-muted-foreground mb-6">
+              {place.city ? `${place.city}, ` : ""}{place.parentCounty} County, Michigan
             </p>
 
-            <div className="rounded-lg border border-michigan-gold/20 bg-michigan-gold/5 px-4 py-3 mb-6">
-              <p className="text-xs text-muted-foreground">
-                <strong>Note:</strong> ZIP-level health data is limited. Metrics shown reflect the <strong>{resolved.county} County average</strong>.
-              </p>
-            </div>
-
             <div className="flex flex-wrap gap-3">
-              <Link to={`/find-care?county=${resolved.county}&scope=facilities`}>
+              <Link to={`/find-care?county=${place.parentCounty}&scope=facilities`}>
                 <Button className="gap-2"><Stethoscope className="h-4 w-4" /> Find Care Nearby</Button>
               </Link>
-              <Link to={`/place/${countyToSlug(resolved.county)}-county`}>
+              <Link to={`/place/${countyToSlug(place.parentCounty!)}-county`}>
                 <Button variant="outline" className="gap-2"><Building2 className="h-4 w-4" /> County Profile</Button>
               </Link>
             </div>
@@ -113,25 +78,20 @@ export default function ZipPlacePage() {
       </section>
 
       <div className="container py-10 space-y-12">
-        <SnapshotCard title={`ZIP ${resolved.zip} Health Snapshot`} geographyType="county" metrics={snapshotMetrics} />
-
-        <div className="rounded-lg border border-border bg-muted/30 px-4 py-3">
-          <p className="text-xs text-muted-foreground text-center">
-            <Shield className="inline h-3 w-3 mr-1" />
-            Access Michigan is an <strong>independent civic project</strong>. We are not affiliated with Michigan 2-1-1, MDHHS, or any health system.
-          </p>
+        <div id="indicators">
+          <LocalInsightEngine place={place} />
         </div>
 
         <Separator />
 
-        <section>
+        <section id="programs">
           <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-            <Heart className="h-5 w-5 text-michigan-coral" /> Resources for ZIP {resolved.zip}
+            <Heart className="h-5 w-5 text-michigan-coral" /> Resources for ZIP {place.slug}
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { title: "Find a Doctor or Clinic", desc: `Search providers in ${resolved.county} County`, href: `/find-care?county=${resolved.county}&scope=facilities`, icon: Stethoscope },
-              { title: "Community Resources", desc: `Food, housing, transport & more`, href: `/resources?county=${resolved.county}`, icon: Heart },
+              { title: "Find a Doctor or Clinic", desc: `Search providers in ${place.parentCounty} County`, href: `/find-care?county=${place.parentCounty}&scope=facilities`, icon: Stethoscope },
+              { title: "Community Resources", desc: "Food, housing, transport & more", href: `/resources?county=${place.parentCounty}`, icon: Heart },
               { title: "Financial Help", desc: "Medicaid, SNAP, LIHEAP & more", href: "/financial-help", icon: Activity },
             ].map((prog, i) => (
               <Link key={prog.title} to={prog.href}>
@@ -151,21 +111,30 @@ export default function ZipPlacePage() {
 
         <Separator />
 
-        <section className="rounded-xl border border-border bg-muted/30 p-6 md:p-8">
+        <section id="analysts" className="rounded-xl border border-border bg-muted/30 p-6 md:p-8">
           <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
             <Code className="h-5 w-5 text-primary" /> Embed This Profile
           </h2>
           <p className="text-sm text-muted-foreground mb-4">
-            Embed ZIP {resolved.zip}'s health snapshot on any website.
+            Embed ZIP {place.slug}'s health snapshot on any website.
           </p>
           <Button variant="outline" size="sm" className="gap-2" onClick={handleCopyEmbed}>
             <Copy className="h-3.5 w-3.5" /> Copy Embed Code
           </Button>
         </section>
 
+        <ReportIssue variant="inline" />
+
+        <div className="rounded-lg border border-border bg-muted/30 px-4 py-3">
+          <p className="text-xs text-muted-foreground text-center">
+            <Shield className="inline h-3 w-3 mr-1" />
+            Access Michigan is an <strong>independent civic project</strong>. We are not affiliated with Michigan 2-1-1, MDHHS, or any health system.
+          </p>
+        </div>
+
         <DataProvenance
-          source="County Health Rankings, Census ACS, MDHHS — county-level averages shown for ZIP context"
-          updated="2026-02-26"
+          source="County Health Rankings, Census ACS, MDHHS, DOE LEAD, FCC — county-level averages for ZIP context"
+          updated="2025"
           methodologyHref="/data-validation"
         />
       </div>
