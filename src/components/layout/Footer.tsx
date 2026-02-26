@@ -47,14 +47,13 @@ const Footer = () => {
       ],
     },
     {
-      title: "Partners",
+      title: "For Organizations",
       links: [
         { label: "Health System Leaders", href: "/partners" },
         { label: "Community Organizations", href: "/partnerships" },
         { label: "Government & Policy", href: "/impact" },
         { label: "For Health Systems", href: "/for-health-systems" },
         { label: "Case Studies", href: "/case-studies" },
-        { label: "Partner Impact", href: "/partners" },
       ],
     },
   ];
@@ -136,15 +135,15 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Data Partners */}
+        {/* Data Sources */}
         <div className="mt-6 border-t border-border pt-6">
           <p className="text-center text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-            Data Partners & Sources
+            Public Data Sources
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {[
               { label: "MDHHS", icon: Building2 },
-              { label: "Michigan 211", icon: Phone },
+              { label: "Michigan 2-1-1", icon: Phone },
               { label: "CMS (Medicare)", icon: Shield },
               { label: "HRSA", icon: HandHeart },
               { label: "CDC", icon: Activity },
