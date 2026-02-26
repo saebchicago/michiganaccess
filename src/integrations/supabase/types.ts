@@ -128,6 +128,39 @@ export type Database = {
         }
         Relationships: []
       }
+      community_reports: {
+        Row: {
+          category: string
+          county: string | null
+          created_at: string
+          description: string
+          id: string
+          place_slug: string | null
+          status: string
+          zipcode: string | null
+        }
+        Insert: {
+          category?: string
+          county?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          place_slug?: string | null
+          status?: string
+          zipcode?: string | null
+        }
+        Update: {
+          category?: string
+          county?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          place_slug?: string | null
+          status?: string
+          zipcode?: string | null
+        }
+        Relationships: []
+      }
       community_resources: {
         Row: {
           accepts_insurance: boolean | null
@@ -650,6 +683,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      resource_ratings: {
+        Row: {
+          comment: string | null
+          county: string | null
+          created_at: string
+          id: string
+          rating: number
+          resource_id: string
+          resource_type: string
+        }
+        Insert: {
+          comment?: string | null
+          county?: string | null
+          created_at?: string
+          id?: string
+          rating: number
+          resource_id: string
+          resource_type?: string
+        }
+        Update: {
+          comment?: string | null
+          county?: string | null
+          created_at?: string
+          id?: string
+          rating?: number
+          resource_id?: string
+          resource_type?: string
+        }
+        Relationships: []
       }
       resource_submissions: {
         Row: {
