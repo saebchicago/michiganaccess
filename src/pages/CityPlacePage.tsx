@@ -21,6 +21,7 @@ import CommunitySummary from "@/components/place/CommunitySummary";
 import LifeSituationNav from "@/components/place/LifeSituationNav";
 import DataLimitationsNote from "@/components/place/DataLimitationsNote";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
+import MichiganCommunityBrief, { buildBriefMetaDescription } from "@/components/place/MichiganCommunityBrief";
 import { toast } from "@/hooks/use-toast";
 
 const fadeUp = {
@@ -34,9 +35,9 @@ export default function CityPlacePage() {
   const place = useMemo(() => cityName ? resolvePlace({ type: "city", cityName }) : null, [cityName]);
 
   usePageMeta({
-    title: place ? `${place.name}, Michigan — Local Health & Services` : "City Not Found",
+    title: place ? `${place.name} Community Brief — Access Michigan` : "City Not Found",
     description: place
-      ? `Health data, services, and resources for ${place.name}, ${place.parentCounty} County, Michigan.`
+      ? buildBriefMetaDescription(place)
       : "City not found",
     path: `/place/city/${cityName || ""}`,
   });
@@ -87,6 +88,11 @@ export default function CityPlacePage() {
       </section>
 
       <div className="container py-10 space-y-10">
+        {/* Michigan Community Brief */}
+        <MichiganCommunityBrief place={place} />
+
+        <Separator />
+
         {/* Community Summary */}
         <CommunitySummary place={place} />
 

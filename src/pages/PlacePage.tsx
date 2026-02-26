@@ -28,6 +28,7 @@ import ACSIndicatorCard from "@/components/census/ACSIndicatorCard";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 import CommunityReportForm from "@/components/community/CommunityReportForm";
 import CommunityReportCounts from "@/components/community/CommunityReportCounts";
+import MichiganCommunityBrief, { buildBriefMetaDescription } from "@/components/place/MichiganCommunityBrief";
 
 /* ── Curated statewide programs ── */
 const TOP_PROGRAMS = [
@@ -50,9 +51,9 @@ export default function PlacePage() {
   const place = useMemo(() => slug ? resolvePlace({ type: "county", slug }) : null, [slug]);
 
   usePageMeta({
-    title: place ? `${place.name}, Michigan — Health & Services` : "Place Not Found",
+    title: place ? `${place.name} Community Brief — Access Michigan` : "Place Not Found",
     description: place
-      ? `Health indicators, community programs, and local services for ${place.name}, Michigan. Population: ${place.countyProfile.population.toLocaleString()}.`
+      ? buildBriefMetaDescription(place)
       : "Place not found",
     path: `/place/${slug || ""}`,
   });
@@ -100,6 +101,11 @@ export default function PlacePage() {
       </section>
 
       <div className="container py-10 space-y-10">
+        {/* 0. Michigan Community Brief */}
+        <MichiganCommunityBrief place={place} />
+
+        <Separator />
+
         {/* 1. Community Summary — "3 Things to Know" */}
         <CommunitySummary place={place} />
 

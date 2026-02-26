@@ -21,6 +21,7 @@ import CommunitySummary from "@/components/place/CommunitySummary";
 import LifeSituationNav from "@/components/place/LifeSituationNav";
 import DataLimitationsNote from "@/components/place/DataLimitationsNote";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
+import MichiganCommunityBrief, { buildBriefMetaDescription } from "@/components/place/MichiganCommunityBrief";
 import { toast } from "@/hooks/use-toast";
 
 export default function ZipPlacePage() {
@@ -29,9 +30,9 @@ export default function ZipPlacePage() {
   const place = useMemo(() => zipcode ? resolvePlace({ type: "zip", zipcode }) : null, [zipcode]);
 
   usePageMeta({
-    title: place ? `ZIP ${place.slug}, Michigan — Health & Services` : "ZIP Code Not Found",
+    title: place ? `ZIP ${place.slug} Community Brief — Access Michigan` : "ZIP Code Not Found",
     description: place
-      ? `Health data and services for ZIP code ${place.slug} in ${place.parentCounty} County, Michigan.`
+      ? buildBriefMetaDescription(place)
       : "ZIP code not found",
     path: `/place/zip/${zipcode || ""}`,
   });
@@ -81,6 +82,11 @@ export default function ZipPlacePage() {
       </section>
 
       <div className="container py-10 space-y-10">
+        {/* Michigan Community Brief */}
+        <MichiganCommunityBrief place={place} />
+
+        <Separator />
+
         {/* Community Summary */}
         <CommunitySummary place={place} />
 
