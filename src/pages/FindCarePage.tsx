@@ -162,6 +162,25 @@ export default function FindCarePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Auto-search when county + scope params are present (e.g. from county page deep link)
+  useEffect(() => {
+    const countyParam = searchParams.get("county");
+    const scopeParam = searchParams.get("scope");
+    if (countyParam && scopeParam && !hasSearched && searchMode === "specialty") {
+      // Auto-select "doctor" category and trigger search
+      const cat = findCategory("doctor");
+      if (cat) {
+        setCategoryValue("doctor");
+        setCategory(cat);
+        setLocation(countyParam);
+        setHasSearched(true);
+        const taxonomies = cat.taxonomies || [];
+        npi.search(taxonomies, cat.enumerationType || "NPI-1", countyParam, "specialty");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleCategoryChange = useCallback((val: string, cat: HelpCategory) => {
     setCategoryValue(val);
     setCategory(cat);
@@ -624,11 +643,22 @@ export default function FindCarePage() {
               </div>
 
               {filteredNPI.length === 0 ? (
-                <div className="py-12 text-center space-y-3">
-                  <p className="text-muted-foreground">
-                    No results found after filtering.
+                <div className="py-12 text-center space-y-3" role="status">
+                  <Search className="h-10 w-10 text-muted-foreground/40 mx-auto" />
+                  <p className="text-foreground font-medium">
+                    No results for "{CARE_TYPES.find(ct => ct.id === activeCareType)?.label || 'this care type'}"
                   </p>
-                  <button onClick={clearFilters} className="text-sm text-primary hover:underline">Clear filters</button>
+                  <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                    None of the {npi.results.length} providers matched this specialty. Try a different care type above, or clear the filter to see all results.
+                  </p>
+                  <div className="flex justify-center gap-2 pt-1">
+                    <Button variant="outline" size="sm" onClick={() => setActiveCareType(null)}>
+                      Show all {npi.results.length} providers
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={clearFilters}>
+                      Clear all filters
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <div className="grid gap-3 md:grid-cols-2">
