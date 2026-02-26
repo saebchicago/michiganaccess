@@ -59,16 +59,16 @@ const QUICK_LINKS: { label: string; value: string; icon: typeof Heart; color: st
   { label: "Help Paying Bills", value: "financial", icon: DollarSign, color: "bg-michigan-gold/10 text-michigan-gold" },
 ];
 
-/* ── Care type pills for service-line search ── */
-const CARE_TYPES = [
-  { id: "primary-care", label: "Primary Care" },
-  { id: "pediatrics", label: "Pediatrics" },
-  { id: "ob-gyn", label: "OB-GYN" },
-  { id: "behavioral-health", label: "Behavioral Health" },
-  { id: "dental", label: "Dental" },
-  { id: "dermatology", label: "Dermatology" },
-  { id: "cardiology", label: "Cardiology" },
-  { id: "orthopedics", label: "Orthopedics" },
+/* ── Care type pills for service-line filtering ── */
+const CARE_TYPES: { id: string; label: string; match: string[] }[] = [
+  { id: "primary-care", label: "Primary Care", match: ["family medicine", "internal medicine", "general practice"] },
+  { id: "pediatrics", label: "Pediatrics", match: ["pediatric"] },
+  { id: "ob-gyn", label: "OB-GYN", match: ["obstetrics", "gynecol"] },
+  { id: "behavioral-health", label: "Behavioral Health", match: ["psychi", "psychol", "social worker", "counselor", "therapist"] },
+  { id: "dental", label: "Dental", match: ["dentist", "dental", "orthodont"] },
+  { id: "dermatology", label: "Dermatology", match: ["dermatol"] },
+  { id: "cardiology", label: "Cardiology", match: ["cardiol"] },
+  { id: "orthopedics", label: "Orthopedics", match: ["orthop"] },
 ];
 
 /* ── Search mode tabs ────────────────────────── */
@@ -122,22 +122,33 @@ export default function FindCarePage() {
   const [filterType, setFilterType] = useState<"all" | "individual" | "org">("all");
   const [filterGender, setFilterGender] = useState<"all" | "F" | "M">("all");
   const [filterADA, setFilterADA] = useState(false);
+  const [activeCareType, setActiveCareType] = useState<string | null>(null);
 
   const activeFilterCount = useMemo(() => {
     let c = 0;
     if (filterType !== "all") c++;
     if (filterGender !== "all") c++;
     if (filterADA) c++;
+    if (activeCareType) c++;
     return c;
-  }, [filterType, filterGender, filterADA]);
+  }, [filterType, filterGender, filterADA, activeCareType]);
 
   const filteredNPI = useMemo(() => {
     let r = npi.results;
     if (filterType === "individual") r = r.filter((p) => !p.isOrganization);
     if (filterType === "org") r = r.filter((p) => p.isOrganization);
     if (filterGender !== "all") r = r.filter((p) => p.gender === filterGender);
+    if (activeCareType) {
+      const ct = CARE_TYPES.find((t) => t.id === activeCareType);
+      if (ct) {
+        r = r.filter((p) => {
+          const spec = p.specialty.toLowerCase();
+          return ct.match.some((m) => spec.includes(m));
+        });
+      }
+    }
     return r;
-  }, [npi.results, filterType, filterGender]);
+  }, [npi.results, filterType, filterGender, activeCareType]);
 
   // Auto-search if ?npi= param is present
   useEffect(() => {
@@ -202,6 +213,7 @@ export default function FindCarePage() {
     setFilterType("all");
     setFilterGender("all");
     setFilterADA(false);
+    setActiveCareType(null);
   }, []);
 
   const isInitial = !hasSearched && searchMode === "specialty";
@@ -563,7 +575,7 @@ export default function FindCarePage() {
 
             <div className="flex-1 min-w-0">
               {/* Results header */}
-              <div className="mb-4 flex items-center justify-between flex-wrap gap-3" aria-live="polite">
+              <div className="mb-3 flex items-center justify-between flex-wrap gap-3" aria-live="polite">
                 <ResultHeader label={`Providers${location ? ` near ${location}` : ""}`} count={filteredNPI.length} />
                 {/* Mobile filter trigger */}
                 <Sheet>
@@ -580,6 +592,35 @@ export default function FindCarePage() {
                     </div>
                   </SheetContent>
                 </Sheet>
+              </div>
+
+              {/* ── Care-type pill filter bar ── */}
+              <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Filter by care type">
+                {CARE_TYPES.map((ct) => {
+                  const isActive = activeCareType === ct.id;
+                  return (
+                    <button
+                      key={ct.id}
+                      onClick={() => setActiveCareType(isActive ? null : ct.id)}
+                      className={`inline-flex items-center rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
+                        isActive
+                          ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                          : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                      }`}
+                      aria-pressed={isActive}
+                    >
+                      {ct.label}
+                    </button>
+                  );
+                })}
+                {activeCareType && (
+                  <button
+                    onClick={() => setActiveCareType(null)}
+                    className="inline-flex items-center gap-1 rounded-full border border-border bg-muted/50 px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <X className="h-3 w-3" /> Clear
+                  </button>
+                )}
               </div>
 
               {filteredNPI.length === 0 ? (
