@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp } from "lucide-react";
@@ -59,7 +60,7 @@ const TrendIcon = ({ trend }: { trend?: "up" | "down" | "stable" }) => {
   return null;
 };
 
-export const EquityInsightCard = ({
+export const EquityInsightCard = forwardRef<HTMLDivElement, EquityInsightCardProps>(({
   icon: Icon,
   title,
   stat,
@@ -68,7 +69,7 @@ export const EquityInsightCard = ({
   ctaHref = "/data-and-insights",
   color,
   trend,
-}: EquityInsightCardProps) => {
+}, ref) => {
   const colors = colorMap[color];
 
   const cardContent = (
@@ -108,6 +109,7 @@ export const EquityInsightCard = ({
 
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -116,6 +118,8 @@ export const EquityInsightCard = ({
       {ctaHref ? <Link to={ctaHref}>{cardContent}</Link> : cardContent}
     </motion.div>
   );
-};
+});
+
+EquityInsightCard.displayName = "EquityInsightCard";
 
 export default EquityInsightCard;

@@ -48,7 +48,7 @@ export default function FloatingFeedback() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={() => setOpen(true)}
-            className="fixed bottom-20 left-4 lg:bottom-6 lg:left-6 z-40 flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-xs font-medium text-muted-foreground shadow-lg hover:text-foreground hover:shadow-xl transition-all hover:scale-105 active:scale-95"
+            className="fixed bottom-28 left-4 lg:bottom-6 lg:left-6 z-40 flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-xs font-medium text-muted-foreground shadow-lg hover:text-foreground hover:shadow-xl transition-all hover:scale-105 active:scale-95"
             aria-label="Report a data issue"
           >
             <AlertCircle className="h-3.5 w-3.5 text-michigan-coral" />
@@ -64,7 +64,7 @@ export default function FloatingFeedback() {
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-20 left-4 lg:bottom-6 lg:left-6 z-40 w-72 rounded-xl border border-border bg-card p-4 shadow-2xl"
+            className="fixed bottom-28 left-4 lg:bottom-6 lg:left-6 z-40 w-72 rounded-xl border border-border bg-card p-4 shadow-2xl"
           >
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs font-bold text-foreground">Help us fix it</p>
