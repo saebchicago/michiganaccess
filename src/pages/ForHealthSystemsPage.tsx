@@ -111,7 +111,7 @@ const ForHealthSystemsPage = () => {
             <div className="flex items-start gap-3">
               <Info className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
               <p className="text-xs text-muted-foreground">
-                <strong className="text-foreground">Exploratory Framework:</strong> Access Michigan is in Public Beta. The value propositions and calculator below present <strong>projected analytical capabilities</strong> based on the platform's data infrastructure and published benchmarks — not measured outcomes. See <a href="/lean-healthcare" className="text-primary hover:underline">Lean Methodology</a> for sourced citations.
+                <strong className="text-foreground">Exploratory Framework:</strong> Access Michigan is in Public Beta. The value propositions and calculator below present <strong>projected analytical capabilities</strong> based on the platform's data infrastructure and published benchmarks — not measured outcomes. See <a href="/lean-healthcare" className="text-primary hover:underline">Lean Healthcare Engineering</a> for sourced citations.
               </p>
             </div>
           </motion.div>
@@ -140,7 +140,7 @@ const ForHealthSystemsPage = () => {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button asChild><Link to="/partnerships/health-systems" className="gap-2">View Integration Guide <ArrowRight className="h-4 w-4" /></Link></Button>
-            <Button asChild variant="outline"><Link to="/lean-healthcare" className="gap-2">Lean Methodology <ArrowRight className="h-4 w-4" /></Link></Button>
+            <Button asChild variant="outline"><Link to="/lean-healthcare" className="gap-2">Lean Healthcare Engineering <ArrowRight className="h-4 w-4" /></Link></Button>
             <ShareButton title="Access Michigan for Health Systems" description="Ambulatory optimization, community benefit ROI, and referral leakage analysis." />
           </div>
         </div>

@@ -201,7 +201,6 @@ export default function CommunityEventsPage() {
         <div className="container mx-auto max-w-6xl px-4">
           <Breadcrumbs
             items={[
-              { label: "Home", href: "/" },
               { label: "Community Events" },
             ]}
           />

@@ -60,7 +60,7 @@ export default function DataValidationPage() {
   return (
     <Layout>
       <div className="container py-8 max-w-4xl">
-        <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Data Sources & Validation" }]} />
+        <Breadcrumbs items={[{ label: "Data Sources & Validation" }]} />
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="text-center mt-6 mb-10">
           <Badge variant="outline" className="mb-3 text-xs uppercase tracking-wider border-primary/30 text-primary">

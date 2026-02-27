@@ -97,6 +97,40 @@ export function resolvePlace(params: {
 
   if (type === "county" && params.slug) {
     const normalized = params.slug.replace(/-county$/i, "");
+    
+    // Township alias resolution: e.g. "west-bloomfield-township" → Oakland County
+    const TOWNSHIP_ALIASES: Record<string, { county: string; label: string }> = {
+      "west-bloomfield-township": { county: "Oakland", label: "West Bloomfield Township" },
+      "west-bloomfield-twp": { county: "Oakland", label: "West Bloomfield Township" },
+      "clinton-township": { county: "Macomb", label: "Clinton Township" },
+      "clinton-twp": { county: "Macomb", label: "Clinton Township" },
+      "shelby-township": { county: "Macomb", label: "Shelby Township" },
+      "shelby-twp": { county: "Macomb", label: "Shelby Township" },
+      "meridian-township": { county: "Ingham", label: "Meridian Township" },
+      "meridian-twp": { county: "Ingham", label: "Meridian Township" },
+      "oshtemo-township": { county: "Kalamazoo", label: "Oshtemo Township" },
+      "oshtemo-twp": { county: "Kalamazoo", label: "Oshtemo Township" },
+    };
+
+    const townshipMatch = TOWNSHIP_ALIASES[params.slug] || TOWNSHIP_ALIASES[normalized];
+    if (townshipMatch) {
+      const profile = COUNTY_PROFILES[townshipMatch.county];
+      const region = getRegionForCounty(townshipMatch.county) || undefined;
+      return {
+        placeType: "county",
+        slug: `${countyToSlug(townshipMatch.county)}-county`,
+        name: `${townshipMatch.county} County`,
+        parentCounty: townshipMatch.county,
+        region,
+        geoGrainLabel: "County",
+        fallbackChain: ["region", "state"],
+        confidence: "high",
+        countyProfile: profile,
+        isFallback: true,
+        fallbackLabel: `Showing ${townshipMatch.county} County data — ${townshipMatch.label} is part of ${townshipMatch.county} County`,
+      };
+    }
+
     for (const name of Object.keys(COUNTY_PROFILES)) {
       if (countyToSlug(name) === normalized || countyToSlug(name) === params.slug) {
         const profile = COUNTY_PROFILES[name];

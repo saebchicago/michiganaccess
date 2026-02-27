@@ -380,12 +380,36 @@ const HeroSection = () => {
             </AnimatePresence>
           </motion.form>
 
+          {/* Example search pills */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.55, duration: 0.5 }}
+            className="mt-4 flex flex-wrap items-center justify-center gap-2"
+          >
+            <span className="text-xs text-primary-foreground/60">Try:</span>
+            {[
+              { label: "48322 food pantry", query: "48322 food pantry" },
+              { label: "Oakland County mental health", query: "Oakland County mental health" },
+              { label: "West Bloomfield doctor", query: "West Bloomfield doctor" },
+            ].map((ex) => (
+              <button
+                key={ex.label}
+                type="button"
+                onClick={() => { setSearchQuery(ex.query); updateSuggestions(ex.query); inputRef.current?.focus(); }}
+                className="rounded-full bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-1 text-[11px] text-primary-foreground/80 transition-all hover:scale-105"
+              >
+                {ex.label}
+              </button>
+            ))}
+          </motion.div>
+
           {/* Quick-link pills */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-2"
+            transition={{ delay: 0.65, duration: 0.5 }}
+            className="mt-4 flex flex-wrap items-center justify-center gap-2"
           >
             {quickPills.map((pill) => (
               <Link
