@@ -159,7 +159,8 @@ export function getSearchSuggestions(query: string, maxResults = 8): SearchSugge
   const zipServiceMatch = q.match(/^(\d{5})\s+(.+)$/);
   if (zipServiceMatch) {
     const [, zip, service] = zipServiceMatch;
-    const zipCounty = ZIP_TO_COUNTY[zip.slice(0, 3)];
+    const cityMatch = MICHIGAN_CITIES.find(c => c.zip === zip);
+    const zipCounty = cityMatch?.county || ZIP_TO_COUNTY[zip.slice(0, 3)];
     // Find matching keyword for the service part
     const kwMatch = KEYWORD_SUGGESTIONS.find(kw =>
       kw.term.includes(service) || kw.label.toLowerCase().includes(service)

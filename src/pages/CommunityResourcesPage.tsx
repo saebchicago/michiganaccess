@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, lazy, Suspense } from "react";
+import { useSearchParams } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -142,6 +143,9 @@ const INITIAL_VISIBLE = 5;
 export default function CommunityResourcesPage() {
   const { t } = useTranslation();
   const { county: globalCounty, audience } = useCounty();
+  const [searchParams] = useSearchParams();
+  const urlCounty = searchParams.get("county");
+  const urlCategory = searchParams.get("category");
   usePageMeta({
     title: "Community Resources",
     description: "Food, housing, transportation, and support services available to Michigan residents.",
@@ -156,16 +160,24 @@ export default function CommunityResourcesPage() {
   });
   // Load ALL resources — local dropdown and tabs handle filtering
   const { data: resources = [], isLoading } = useCommunityResources();
-  const [activeTab, setActiveTab] = useState("all");
-  const [county, setCounty] = useState(globalCounty || "All Counties");
+
+  // Resolve initial category from URL param
+  const initialTab = useMemo(() => {
+    if (!urlCategory) return "all";
+    const match = categories.find(c => c.key === urlCategory || c.aliases.includes(urlCategory));
+    return match ? match.key : "all";
+  }, [urlCategory]);
+
+  const [activeTab, setActiveTab] = useState(initialTab);
+  const [county, setCounty] = useState(urlCounty || globalCounty || "All Counties");
   const [search, setSearch] = useState("");
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
-  // Sync local county filter with global context
+  // Sync local county filter with global context (only if no URL override)
   useEffect(() => {
-    if (globalCounty) setCounty(globalCounty);
-  }, [globalCounty]);
+    if (!urlCounty && globalCounty) setCounty(globalCounty);
+  }, [globalCounty, urlCounty]);
 
   const availableCounties = useMemo(() => {
     const set = new Set(resources.map(r => r.county));

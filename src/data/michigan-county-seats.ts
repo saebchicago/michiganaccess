@@ -138,8 +138,11 @@ export function resolveLocation(input: string): { postal_code?: string; city?: s
   return { city: trimmed };
 }
 
-/** Look up county from a ZIP code (3-5 digits) */
+/** Look up county from a ZIP code (full 5-digit match first, then 3-digit prefix) */
 export function zipToCounty(zip: string): string | null {
+  // Try exact city match first for accuracy
+  const cityMatch = MICHIGAN_CITIES.find(c => c.zip === zip);
+  if (cityMatch) return cityMatch.county;
   const prefix3 = zip.slice(0, 3);
   return ZIP_TO_COUNTY[prefix3] || null;
 }
