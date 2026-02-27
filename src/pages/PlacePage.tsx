@@ -25,7 +25,7 @@ import DataLimitationsNote from "@/components/place/DataLimitationsNote";
 import DemographicBreakdown from "@/components/census/DemographicBreakdown";
 import PlaceNarrative from "@/components/census/PlaceNarrative";
 import ACSIndicatorCard from "@/components/census/ACSIndicatorCard";
-import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
+import { resolvePlace, buildPlaceBreadcrumbs, buildFullIndicators, type Place } from "@/models/Place";
 import CommunityReportForm from "@/components/community/CommunityReportForm";
 import CommunityReportCounts from "@/components/community/CommunityReportCounts";
 import MichiganCommunityBrief, { buildBriefMetaDescription } from "@/components/place/MichiganCommunityBrief";
@@ -48,6 +48,73 @@ const fadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.06, duration: 0.35 } }),
 };
+
+/* ── Dynamic Hero Component ── */
+function PlaceHero({ place, countyName, profile }: { place: Place; countyName: string; profile: any }) {
+  const indicators = useMemo(() => buildFullIndicators(place), [place]);
+  const pressureCount = useMemo(() => {
+    let p = 0;
+    for (const ind of indicators) {
+      if (ind.numericValue === 0 || ind.stateAvg === 0) continue;
+      const diff = ind.numericValue - ind.stateAvg;
+      const pct = Math.abs(diff / ind.stateAvg) * 100;
+      const isBetter = ind.direction === "lower-is-better" ? diff < 0 : diff > 0;
+      if (!isBetter && pct >= 15) p++;
+    }
+    return p;
+  }, [indicators]);
+
+  // Dynamic hero gradient: calming blue for stable, amber for pressured
+  const heroGradient = pressureCount >= 4
+    ? "from-amber-500/8 via-background to-orange-500/5"
+    : pressureCount >= 2
+    ? "from-primary/6 via-background to-amber-500/4"
+    : "from-primary/8 via-background to-emerald-500/5";
+
+  const borderAccent = pressureCount >= 4
+    ? "border-b-2 border-amber-400/30"
+    : pressureCount >= 2
+    ? "border-b-2 border-primary/20"
+    : "border-b-2 border-emerald-400/20";
+
+  return (
+    <section className={`bg-gradient-to-br ${heroGradient} ${borderAccent} py-12 md:py-16`}>
+      <div className="container">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
+          <div className="flex items-center gap-2 mb-3">
+            <MapPin className="h-5 w-5 text-primary" />
+            {place.region && <Badge variant="outline" className="text-xs">{place.region.name}</Badge>}
+            <Badge variant="secondary" className="text-xs capitalize">{profile.countyType}</Badge>
+            <Badge variant="outline" className="text-xs bg-primary/5 text-primary">{place.geoGrainLabel}</Badge>
+            {pressureCount >= 3 && (
+              <Badge variant="outline" className="text-[10px] border-amber-400/50 text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950">
+                {pressureCount} pressures detected
+              </Badge>
+            )}
+          </div>
+          <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl mb-3">
+            {place.name}
+          </h1>
+          <p className="text-lg text-muted-foreground mb-6">
+            Population {profile.population.toLocaleString()} · {profile.majorCities.slice(0, 4).join(", ")}
+          </p>
+
+          <div className="flex flex-wrap gap-3">
+            <Link to={`/find-care?county=${countyName}&scope=facilities`}>
+              <Button className="gap-2"><Stethoscope className="h-4 w-4" /> Find Care Here</Button>
+            </Link>
+            <Link to={`/county/${countyToSlug(countyName)}`}>
+              <Button variant="outline" className="gap-2"><Building2 className="h-4 w-4" /> Full County Profile</Button>
+            </Link>
+            <Link to="/data-and-insights">
+              <Button variant="outline" className="gap-2"><BarChart3 className="h-4 w-4" /> Data Hub</Button>
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
 
 export default function PlacePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -72,37 +139,8 @@ export default function PlacePage() {
       <Breadcrumbs items={buildPlaceBreadcrumbs(place)} />
       <DomainJumpNav />
 
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-primary/8 via-background to-accent/5 py-12 md:py-16">
-        <div className="container">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
-            <div className="flex items-center gap-2 mb-3">
-              <MapPin className="h-5 w-5 text-primary" />
-              {place.region && <Badge variant="outline" className="text-xs">{place.region.name}</Badge>}
-              <Badge variant="secondary" className="text-xs capitalize">{profile.countyType}</Badge>
-              <Badge variant="outline" className="text-xs bg-primary/5 text-primary">{place.geoGrainLabel}</Badge>
-            </div>
-            <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl mb-3">
-              {place.name}
-            </h1>
-            <p className="text-lg text-muted-foreground mb-6">
-              Population {profile.population.toLocaleString()} · {profile.majorCities.slice(0, 4).join(", ")}
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              <Link to={`/find-care?county=${countyName}&scope=facilities`}>
-                <Button className="gap-2"><Stethoscope className="h-4 w-4" /> Find Care Here</Button>
-              </Link>
-              <Link to={`/county/${countyToSlug(countyName)}`}>
-                <Button variant="outline" className="gap-2"><Building2 className="h-4 w-4" /> Full County Profile</Button>
-              </Link>
-              <Link to="/data-and-insights">
-                <Button variant="outline" className="gap-2"><BarChart3 className="h-4 w-4" /> Data Hub</Button>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Hero — dynamic color based on community signals */}
+      <PlaceHero place={place} countyName={countyName} profile={profile} />
 
       <div className="container py-10 space-y-10">
         {/* 0. Michigan Community Brief */}
