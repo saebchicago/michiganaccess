@@ -17,6 +17,11 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
 
+  // Filter out any "Home" item that duplicates the auto-prepended Home link
+  const filteredItems = items.filter(
+    (item, i) => !(i === 0 && item.label.toLowerCase() === "home" && (!item.href || item.href === "/"))
+  );
+
   // Inject BreadcrumbList JSON-LD
   useEffect(() => {
     const id = "breadcrumb-jsonld";
@@ -30,7 +35,7 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
 
     const itemListElement = [
       { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
-      ...items.map((item, i) => ({
+      ...filteredItems.map((item, i) => ({
         "@type": "ListItem",
         position: i + 2,
         name: item.label,
@@ -48,7 +53,7 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
       const el = document.getElementById(id);
       if (el) el.remove();
     };
-  }, [items, pathname]);
+  }, [filteredItems, pathname]);
 
   return (
     <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -56,7 +61,7 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
         <Home className="h-3 w-3" />
         <span>{t('breadcrumbs.home', 'Home')}</span>
       </Link>
-      {items.map((item, i) => (
+      {filteredItems.map((item, i) => (
         <span key={i} className="flex items-center gap-1.5">
           <ChevronRight className="h-3 w-3" />
           {item.href ? (

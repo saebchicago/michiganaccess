@@ -136,12 +136,15 @@ export default function PlacePage() {
 
   const place = useMemo(() => slug ? resolvePlace({ type: "county", slug }) : null, [slug]);
 
+  // If the resolver returned a township alias redirect, use the resolved slug for canonical URL
+  const canonicalSlug = place?.slug || slug || "";
+
   usePageMeta({
     title: place ? `${place.name} Community Brief — Access Michigan` : "Place Not Found",
     description: place
       ? buildBriefMetaDescription(place)
       : "Place not found",
-    path: `/place/${slug || ""}`,
+    path: `/place/${canonicalSlug}`,
     jsonLd: place ? {
       "@type": "Dataset",
       "name": `${place.name} Community Health Data`,
