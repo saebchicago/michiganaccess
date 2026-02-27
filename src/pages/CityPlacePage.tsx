@@ -23,6 +23,10 @@ import DataLimitationsNote from "@/components/place/DataLimitationsNote";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 import MichiganCommunityBrief, { buildBriefMetaDescription } from "@/components/place/MichiganCommunityBrief";
 import { toast } from "@/hooks/use-toast";
+import LiveEnvironmentalCard from "@/components/environment/LiveEnvironmentalCard";
+import UniversalPreScreener from "@/components/benefits/UniversalPreScreener";
+import ContactRepresentative from "@/components/advocacy/ContactRepresentative";
+import DownloadLocalInsights from "@/components/place/DownloadLocalInsights";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -135,6 +139,20 @@ export default function CityPlacePage() {
             ))}
           </div>
         </section>
+
+        <Separator />
+
+        {/* Environmental Intelligence */}
+        <LiveEnvironmentalCard city={place.city} county={place.parentCounty} />
+
+        {/* Benefits Pre-Screener */}
+        <UniversalPreScreener />
+
+        {/* One-Click Advocacy */}
+        <ContactRepresentative place={place} />
+
+        {/* Download Insights */}
+        <DownloadLocalInsights place={place} />
 
         <Separator />
 

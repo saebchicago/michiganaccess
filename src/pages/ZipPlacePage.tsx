@@ -23,6 +23,10 @@ import DataLimitationsNote from "@/components/place/DataLimitationsNote";
 import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 import MichiganCommunityBrief, { buildBriefMetaDescription } from "@/components/place/MichiganCommunityBrief";
 import { toast } from "@/hooks/use-toast";
+import LiveEnvironmentalCard from "@/components/environment/LiveEnvironmentalCard";
+import UniversalPreScreener from "@/components/benefits/UniversalPreScreener";
+import ContactRepresentative from "@/components/advocacy/ContactRepresentative";
+import DownloadLocalInsights from "@/components/place/DownloadLocalInsights";
 
 export default function ZipPlacePage() {
   const { zipcode } = useParams<{ zipcode: string }>();
@@ -127,6 +131,20 @@ export default function ZipPlacePage() {
             ))}
           </div>
         </section>
+
+        <Separator />
+
+        {/* Environmental Intelligence */}
+        <LiveEnvironmentalCard zipCode={place.zip} city={place.city} county={place.parentCounty} />
+
+        {/* Benefits Pre-Screener */}
+        <UniversalPreScreener />
+
+        {/* One-Click Advocacy */}
+        <ContactRepresentative place={place} />
+
+        {/* Download Insights */}
+        <DownloadLocalInsights place={place} />
 
         <Separator />
 
