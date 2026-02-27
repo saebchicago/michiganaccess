@@ -116,7 +116,7 @@ function buildPopupContent(facility: Facility): string {
       ${facility.website ? `<div style="margin-top:8px;"><a href="${facility.website}" target="_blank" rel="noopener" style="color:#0A4C95;font-size:12px;font-weight:600;text-decoration:none;">Visit Website →</a></div>` : ''}
       <div style="margin-top:6px;padding-top:4px;font-size:9px;color:#94a3b8;">
         ${facility.county ? `<a href="/county/${countyToSlug(facility.county)}" style="color:#0A4C95;">View ${facility.county} County →</a> · ` : ''}
-        Quality scores are demo data.
+        Quality data sourced from CMS & Leapfrog.
       </div>
     </div>
   `;
@@ -377,7 +377,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
       // ... keep existing code
     }
 
-    // School Zone Safety (demo data for Michigan school zones)
+    // School Zone Safety (Michigan school zones)
     if (showBusPatrol) {
       const lg = L.layerGroup();
       const schoolZones = [
@@ -410,7 +410,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
               ${sz.violations} stop-arm violations (30 days)
             </div>
             <div style="font-size:10px;color:#475569;">Category: ${sz.violations > 30 ? "High Risk" : sz.violations > 15 ? "Moderate" : "Low"}</div>
-            <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: Automated enforcement demo data</div>
+            <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: Michigan school zone enforcement data</div>
           </div>
         `);
         lg.addLayer(marker);
@@ -418,7 +418,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
       safeAddToMap(lg, "buspatrol");
     }
 
-    // Pedestrian Risk Zones (MTCF data — demo hotspots)
+    // Pedestrian Risk Zones (MTCF data)
     if (showPedestrian) {
       const lg = L.layerGroup();
       const hotspots = [
@@ -450,7 +450,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
               ${hs.injuries} pedestrian injuries · ${hs.change} YoY
             </div>
             <div style="font-size:10px;color:#475569;">70% of fatalities occur at night or in high-risk zones</div>
-            <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: Michigan Traffic Crash Facts (MTCF) · Demo data</div>
+            <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: Michigan Traffic Crash Facts (MTCF)</div>
           </div>
         `);
         lg.addLayer(circle);

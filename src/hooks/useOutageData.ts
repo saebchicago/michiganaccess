@@ -16,7 +16,7 @@ export interface OutageZone {
 interface OutageResponse {
   zones: OutageZone[];
   meta: {
-    source: "live" | "demo";
+    source: "live" | "demo" | "aggregated";
     timestamp: string;
     totalAffected: number;
     activeOutageCount: number;

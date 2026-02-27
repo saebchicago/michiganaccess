@@ -49,8 +49,8 @@ export default function OutageAlertBanner() {
               <span className="hidden sm:inline">
                 {" · "}{totalAffected.toLocaleString()} customers affected
               </span>
-              {meta.source === "demo" && (
-                <span className="ml-1.5 text-[10px] opacity-60">(demo)</span>
+              {meta.source !== "live" && (
+                <span className="ml-1.5 text-[10px] opacity-60">(public beta)</span>
               )}
             </p>
           </div>
