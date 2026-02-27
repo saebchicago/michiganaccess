@@ -56,8 +56,11 @@ const AIAppealGenerator = () => {
     abortRef.current = new AbortController();
 
     try {
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "https://znahhtdbcgepezrxwnah.supabase.co";
-      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYWhodGRiY2dlcGV6cnh3bmFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4MjkxNjgsImV4cCI6MjA4NjQwNTE2OH0.PUg0QGZtdSYOM3VlO0-OOo9BwqJ4hgiMS2BpM2ZOCks";
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
+      if (!supabaseUrl || !supabaseKey) {
+        throw new Error("Service configuration missing. Please contact support.");
+      }
       const resp = await fetch(
         `${supabaseUrl}/functions/v1/appeal-generator`,
         {

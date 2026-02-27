@@ -7,7 +7,13 @@ interface Message {
   content: string;
 }
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/michigan-chat`;
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+// Prefer Supabase edge function (streaming) when configured; fall back to Netlify function
+const CHAT_URL = SUPABASE_URL
+  ? `${SUPABASE_URL}/functions/v1/michigan-chat`
+  : "/.netlify/functions/chat-mistral";
+// When using the Netlify fallback, responses are non-streaming JSON { reply: string }
+const USE_STREAMING = !!SUPABASE_URL;
 
 export default function AIChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -34,13 +40,17 @@ export default function AIChatWidget() {
     let assistantContent = "";
 
     try {
+      const supabaseKey = USE_STREAMING
+        ? (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || "")
+        : "";
+      const recentMessages = newMessages.slice(-20);
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpuYWhodGRiY2dlcGV6cnh3bmFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4MjkxNjgsImV4cCI6MjA4NjQwNTE2OH0.PUg0QGZtdSYOM3VlO0-OOo9BwqJ4hgiMS2BpM2ZOCks"}`,
+          ...(supabaseKey ? { Authorization: `Bearer ${supabaseKey}` } : {}),
         },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: recentMessages }),
       });
 
       if (!resp.ok) {
@@ -48,48 +58,56 @@ export default function AIChatWidget() {
         throw new Error(err.error || `Error ${resp.status}`);
       }
 
-      if (!resp.body) throw new Error("No response stream");
+      if (!USE_STREAMING) {
+        // Netlify fallback: non-streaming JSON response { reply: string }
+        const data = await resp.json();
+        const reply = data.reply || "I couldn't get a response. Please try again.";
+        setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+        assistantContent = reply;
+      } else {
+        // Supabase edge function: SSE streaming
+        if (!resp.body) throw new Error("No response stream");
 
-      const reader = resp.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
+        const reader = resp.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
 
-        let newlineIdx: number;
-        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
-          let line = buffer.slice(0, newlineIdx);
-          buffer = buffer.slice(newlineIdx + 1);
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (!line.startsWith("data: ")) continue;
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") break;
-          try {
-            const parsed = JSON.parse(jsonStr);
-            const delta = parsed.choices?.[0]?.delta?.content;
-            if (delta) {
-              assistantContent += delta;
-              setMessages((prev) => {
-                const last = prev[prev.length - 1];
-                if (last?.role === "assistant") {
-                  return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantContent } : m);
-                }
-                return [...prev, { role: "assistant", content: assistantContent }];
-              });
+          let newlineIdx: number;
+          while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+            let line = buffer.slice(0, newlineIdx);
+            buffer = buffer.slice(newlineIdx + 1);
+            if (line.endsWith("\r")) line = line.slice(0, -1);
+            if (!line.startsWith("data: ")) continue;
+            const jsonStr = line.slice(6).trim();
+            if (jsonStr === "[DONE]") break;
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const delta = parsed.choices?.[0]?.delta?.content;
+              if (delta) {
+                assistantContent += delta;
+                setMessages((prev) => {
+                  const last = prev[prev.length - 1];
+                  if (last?.role === "assistant") {
+                    return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantContent } : m);
+                  }
+                  return [...prev, { role: "assistant", content: assistantContent }];
+                });
+              }
+            } catch {
+              buffer = line + "\n" + buffer;
+              break;
             }
-          } catch {
-            buffer = line + "\n" + buffer;
-            break;
           }
         }
-      }
 
-      // If no assistant content was streamed (non-streaming fallback)
-      if (!assistantContent) {
-        setMessages((prev) => [...prev, { role: "assistant", content: "I couldn't get a response. Please try again." }]);
+        if (!assistantContent) {
+          setMessages((prev) => [...prev, { role: "assistant", content: "I couldn't get a response. Please try again." }]);
+        }
       }
     } catch (err: any) {
       console.error("Chat error:", err);
@@ -104,18 +122,18 @@ export default function AIChatWidget() {
 
   return (
     <>
-      {/* FAB */}
+      {/* FAB — safe-area-aware via .chat-fab in index.css */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-20 right-4 lg:bottom-6 lg:right-6 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center z-40 transition-all"
+        className="chat-fab w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all"
         aria-label={isOpen ? "Close chat" : "Open chat assistant"}
       >
         {isOpen ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
       </button>
 
-      {/* Chat Window */}
+      {/* Chat Window — safe-area-aware via .chat-window in index.css */}
       {isOpen && (
-        <div className="fixed bottom-36 right-4 lg:bottom-24 lg:right-6 w-[calc(100vw-2rem)] max-w-sm bg-background border border-border rounded-xl shadow-2xl flex flex-col z-50 h-[min(500px,70vh)]">
+        <div className="chat-window w-[calc(100vw-2rem)] max-w-sm bg-background border border-border rounded-xl shadow-2xl flex flex-col h-[min(500px,70vh)]">
           {/* Header */}
           <div className="bg-primary text-primary-foreground p-4 rounded-t-xl flex justify-between items-center">
             <div>

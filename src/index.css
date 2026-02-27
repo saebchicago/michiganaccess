@@ -282,6 +282,61 @@
   img { max-width: 100% !important; }
 }
 
+/* ── Google Translate safety-net ─────────────────────────────────────────── */
+/* Suppress the GT top iframe/banner if a user visits via a translated URL.   */
+/* We use our own i18n (LanguageSwitcher) as the primary translation control. */
+.skiptranslate,
+#google_translate_element,
+.goog-te-banner-frame,
+.goog-te-gadget,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+  visibility: hidden !important;
+}
+/* Prevent GT from shifting the page body down when its top bar injects */
+body.translated-ltr,
+body.translated-rtl {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* ── Safe-area-aware bottom spacing (iPhone home indicator) ────────────────  */
+/* viewport-fit=cover is already set in index.html.                           */
+:root {
+  --bottom-nav-h: 3.5rem;                            /* h-14 = 56px */
+  --sab: env(safe-area-inset-bottom, 0px);
+  --safe-bottom: calc(var(--bottom-nav-h) + var(--sab));
+}
+
+/* Floating chat FAB — clears mobile bottom nav + safe area */
+.chat-fab {
+  position: fixed;
+  bottom: calc(var(--safe-bottom) + 1rem);
+  right: 1rem;
+  z-index: 40;
+}
+@media (min-width: 1024px) {
+  .chat-fab {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+}
+
+/* Floating chat window — sits above the FAB with breathing room */
+.chat-window {
+  position: fixed;
+  bottom: calc(var(--safe-bottom) + 5.5rem);
+  right: 1rem;
+  z-index: 50;
+}
+@media (min-width: 1024px) {
+  .chat-window {
+    bottom: 6rem;
+    right: 1.5rem;
+  }
+}
+
 /* RTL support for Arabic */
 [dir="rtl"] {
   direction: rtl;
