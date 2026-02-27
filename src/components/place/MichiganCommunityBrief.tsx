@@ -97,10 +97,25 @@ const THEME_TEMPLATES: Record<string, (place: Place, signals: ClassifiedSignal[]
   },
 };
 
+/** Detect sparse/low-sample geographies */
+function isSparseData(place: Place, classified: ClassifiedSignal[]): boolean {
+  // Consider sparse if: limited confidence, rural + small pop, or most indicators are zero/fallback
+  if (place.confidence === "limited") return true;
+  const pop = place.countyProfile?.population || 0;
+  if (pop < 15000 && place.countyProfile?.countyType === "rural") return true;
+  const zeroCount = classified.filter(s => s.indicator.numericValue === 0 || s.deviationPct === 0).length;
+  return zeroCount > classified.length * 0.4;
+}
+
 function buildOverview(place: Place, classified: ClassifiedSignal[]): string {
   const strengths = classified.filter(s => s.category === "strength").length;
   const pressures = classified.filter(s => s.category === "pressure" || s.category === "emerging-risk").length;
   const total = classified.length;
+
+  // Sparse data pivot
+  if (isSparseData(place, classified)) {
+    return `${place.name} is a smaller community where some metrics may have limited sample sizes. The insights below blend available data with community-reported trends. We recommend supplementing with local knowledge from 2-1-1 or your county health department. This brief covers ${total} indicators.`;
+  }
 
   let tone: string;
   if (pressures === 0 && strengths > 0) tone = `${place.name} shows several strengths relative to Michigan overall.`;
@@ -284,6 +299,8 @@ export default function MichiganCommunityBrief({ place }: { place: Place }) {
     return counts;
   }, [classified]);
 
+  const sparse = useMemo(() => isSparseData(place, classified), [place, classified]);
+
   return (
     <section id="community-brief" className="space-y-6">
       {/* Header */}
@@ -291,9 +308,16 @@ export default function MichiganCommunityBrief({ place }: { place: Place }) {
         <div className="flex items-center gap-2 mb-2">
           <Compass className="h-5 w-5 text-primary" />
           <h2 className="text-lg font-bold text-foreground">Michigan Community Brief</h2>
+          {sparse && (
+            <Badge variant="outline" className="text-[10px] border-amber-300 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800">
+              Limited Data Geography
+            </Badge>
+          )}
         </div>
         <p className="text-xs text-muted-foreground">
-          A data-driven civic snapshot — every insight below is derived from public indicators shown on this page.
+          {sparse
+            ? "Some indicators in this area have limited sample sizes. Insights blend available data with contextual community trends."
+            : "A data-driven civic snapshot — every insight below is derived from public indicators shown on this page."}
         </p>
       </motion.div>
 

@@ -1,10 +1,11 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, MapPin, X, Phone, Stethoscope, Heart, Brain, DollarSign,
   Filter, ChevronDown, ChevronUp, Accessibility, User, Hash, Info,
 } from "lucide-react";
+import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import Layout from "@/components/layout/Layout";
 import { TruncatedResourceList } from "@/components/shared/TruncatedResourceList";
 import { Card, CardContent } from "@/components/ui/card";
@@ -218,8 +219,15 @@ export default function FindCarePage() {
     }
   }, [npi, location]);
 
+  const resultsRef = useRef<HTMLDivElement>(null);
+
   const handleSearch = useCallback(() => {
     setHasSearched(true);
+
+    // Auto-scroll to results on mobile after a short delay
+    setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 400);
 
     if (searchMode === "name") {
       if (!lastName.trim()) return;
@@ -501,7 +509,7 @@ export default function FindCarePage() {
       </section>
 
       {/* ── Results area ── */}
-      <div className="container py-8">
+      <div ref={resultsRef} className="container py-8 scroll-mt-4">
         {/* Initial state — quick link cards */}
         {isInitial && (
           <motion.div
@@ -598,6 +606,7 @@ export default function FindCarePage() {
 
         {/* NPI results */}
         {isNPIMode && npi.searched && !npi.isLoading && npi.results.length > 0 && (
+          <SectionErrorBoundary title="Search results couldn't load. Try searching again.">
           <div className="flex gap-8">
             {/* Desktop filter sidebar */}
             <aside className="hidden lg:block w-56 shrink-0">
@@ -697,6 +706,7 @@ export default function FindCarePage() {
               )}
             </div>
           </div>
+          </SectionErrorBoundary>
         )}
 
         {/* Static resource cards */}
