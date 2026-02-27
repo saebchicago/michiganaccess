@@ -1,5 +1,5 @@
 import { MICHIGAN_COUNTIES } from "@/contexts/CountyContext";
-import { ZIP_TO_COUNTY } from "@/data/michigan-county-seats";
+import { ZIP_TO_COUNTY, MICHIGAN_CITIES } from "@/data/michigan-county-seats";
 
 /**
  * Natural Language Parser for hero search.
@@ -95,12 +95,18 @@ export function parseNaturalLanguage(query: string): ParsedIntent {
   let service: string | null = null;
   let category: string | null = null;
 
-  // 0. Extract ZIP code and resolve to county
+  // 0. Extract ZIP code and resolve to county (full 5-digit match first, then 3-digit prefix)
   const zipMatch = q.match(/\b(\d{5})\b/);
   if (zipMatch) {
     const zip = zipMatch[1];
-    const zipCounty = ZIP_TO_COUNTY[zip.slice(0, 3)];
-    if (zipCounty) county = zipCounty;
+    // Try exact city match first (more accurate than prefix)
+    const cityMatch = MICHIGAN_CITIES.find(c => c.zip === zip);
+    if (cityMatch) {
+      county = cityMatch.county;
+    } else {
+      const zipCounty = ZIP_TO_COUNTY[zip.slice(0, 3)];
+      if (zipCounty) county = zipCounty;
+    }
     q = q.replace(zip, " ").replace(/\s+/g, " ").trim();
   }
 
