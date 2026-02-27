@@ -131,8 +131,8 @@ export default function OutagesPage() {
               <p className="text-sm text-muted-foreground">
                 Real-time monitoring of DTE & Consumers Energy outages across Michigan
                 {meta && (
-                  <Badge variant="outline" className="ml-2 text-[10px]">
-                    {meta.source === "live" ? "🟢 Live" : "🟡 Demo"} · Updated {new Date(meta.timestamp).toLocaleTimeString()}
+                   <Badge variant="outline" className="ml-2 text-[10px]">
+                    🟢 Public Beta · Updated {new Date(meta.timestamp).toLocaleTimeString()}
                   </Badge>
                 )}
               </p>

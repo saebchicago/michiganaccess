@@ -510,7 +510,28 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Public Beta badge */}
+        {/* Public Benefit Commitment */}
+        <section id="public-benefit">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+            <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8 lg:p-10 space-y-6">
+              <div className="flex items-center gap-3">
+                <Shield className="h-6 w-6 text-primary" />
+                <h2 className="text-xl font-bold text-foreground">Public Benefit Commitment</h2>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Access Michigan is a nonpartisan, non-commercial civic platform. We do not advocate for political positions, sell access to public services, or monetize resident interactions. Our sole purpose is to improve how Michigan residents, caregivers, and communities find and understand the services available to them.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Access Michigan complements — but does not replace — government services, 2-1-1, or direct service providers. We organize publicly available data into an accessible, navigable format so residents can make informed decisions and institutions can better understand the communities they serve.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Inspired by civic technology research and built using open civic data principles, this platform is maintained independently and funded without commercial obligations. Future sustainability will prioritize public benefit over commercial interests.
+              </p>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Collaborate */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -520,12 +541,14 @@ export default function AboutPage() {
           className="rounded-2xl border border-primary/20 bg-primary/5 p-8 text-center"
         >
           <Sparkles className="mx-auto mb-3 h-8 w-8 text-primary" />
-          <h3 className="mb-2 text-lg font-bold text-foreground">{t("aboutPage.portfolioTitle")}</h3>
-          <p className="mx-auto max-w-2xl text-sm text-muted-foreground">{t("aboutPage.portfolioDesc")}</p>
+          <h3 className="mb-2 text-lg font-bold text-foreground">Collaborate With Access Michigan</h3>
+          <p className="mx-auto max-w-2xl text-sm text-muted-foreground">
+            Nonprofits, researchers, civic groups, and public agencies are invited to explore how Access Michigan can support their work — whether through data sharing, community feedback, or joint navigation improvements. We welcome informal advisors, domain experts, and community leaders who share our commitment to equitable access.
+          </p>
           <p className="mt-4 text-sm text-muted-foreground">
-            Want to support this project?{" "}
-            <Link to="/support" className="font-medium text-primary hover:underline">
-              Learn how →
+            Interested in contributing or learning more?{" "}
+            <Link to="/contact" className="font-medium text-primary hover:underline">
+              Get in touch →
             </Link>
           </p>
         </motion.div>
