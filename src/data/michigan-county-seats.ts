@@ -84,7 +84,7 @@ export const ZIP_TO_COUNTY: Record<string, string> = {
   "488": "Gratiot", "489": "Kalamazoo",
   "490": "Kalamazoo", "491": "Kent",
   "492": "Jackson", "493": "Calhoun",
-  "494": "Muskegon", "495": "Grand Traverse",
+  "494": "Muskegon", "495": "Kent",
   "496": "Grand Traverse", "497": "Marquette",
   "498": "Chippewa", "499": "Iron",
 };

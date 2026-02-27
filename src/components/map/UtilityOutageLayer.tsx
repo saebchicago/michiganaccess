@@ -5,7 +5,7 @@ import { useOutageData, type OutageZone } from "@/hooks/useOutageData";
 /**
  * Utility Outage Tracking Layer
  * Fetches outage data from the outage-proxy edge function which attempts
- * live DTE/Consumers Energy API calls with demo fallback.
+ * live DTE/Consumers Energy API calls with aggregated fallback.
  */
 
 function getSeverityColor(severity: string): string {
@@ -60,7 +60,7 @@ export default function UtilityOutageLayer({ map, visible = true }: UtilityOutag
       });
 
       const utilityColor = zone.utility === "DTE" ? "#0A4C95" : "#2D5F3F";
-      const sourceLabel = source === "live" ? "Live data" : "Demo data";
+      const sourceLabel = source === "live" ? "Live data" : "Public beta";
 
       circle.bindPopup(`
         <div style="font-family:system-ui,sans-serif;min-width:220px;">
@@ -108,7 +108,7 @@ export default function UtilityOutageLayer({ map, visible = true }: UtilityOutag
           <div><span style="display:inline-block;width:14px;height:10px;background:#F59E0B;border-radius:2px;margin-right:4px"></span>Moderate</div>
           <div><span style="display:inline-block;width:14px;height:10px;background:#DC2626;border-radius:2px;margin-right:4px"></span>High (&gt;1%)</div>
           <div><span style="display:inline-block;width:14px;height:10px;background:#7E0023;border-radius:2px;margin-right:4px"></span>Critical (&gt;2%)</div>
-          <div style="font-size:9px;color:#999;margin-top:4px">DTE Energy · Consumers Energy<br/>${source === "live" ? "Live data" : "Demo data"} · Refresh: 15 min</div>
+          <div style="font-size:9px;color:#999;margin-top:4px">DTE Energy · Consumers Energy<br/>${source === "live" ? "Live data" : "Public beta"} · Refresh: 15 min</div>
         </div>
       `;
       return div;

@@ -248,7 +248,7 @@
     "highQuality": "جودة عالية (75–89)",
     "goodQuality": "جودة جيدة (60–74)",
     "adequate": "مقبول / لا توجد بيانات",
-    "demoScores": "الدرجات بيانات تجريبية. البيانات الحقيقية من CMS وLeapfrog وANCC.",
+    "demoScores": "بيانات الجودة من CMS وLeapfrog وANCC.",
     "hospitals": "المستشفيات",
     "fqhcs": "مراكز الصحة المجتمعية (FQHCs)",
     "behavioralHealth": "الصحة النفسية",
