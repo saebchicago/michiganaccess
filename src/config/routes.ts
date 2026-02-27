@@ -35,6 +35,8 @@ export interface SitemapSection {
 // ── Lazy Page Imports ───────────────────────────────────────────────────────
 
 const pages = {
+  PrivacyPage: lazy(() => import("@/pages/PrivacyPage")),
+  InsuranceComparisonPage: lazy(() => import("@/pages/InsuranceComparisonPage")),
   HealthMapPage: lazy(() => import("@/pages/HealthMapPage")),
   AboutPage: lazy(() => import("@/pages/AboutPage")),
   FindCarePage: lazy(() => import("@/pages/FindCarePage")),
@@ -100,6 +102,8 @@ const pages = {
 // Order matters: explicit routes MUST come before the /:slug catch-all.
 
 export const APP_ROUTES: RouteEntry[] = [
+  { path: "/privacy", component: pages.PrivacyPage, label: "Privacy Policy" },
+  { path: "/insurance-comparison", component: pages.InsuranceComparisonPage, label: "Compare Insurance" },
   { path: "/find-care", component: pages.FindCarePage, label: "Find Care" },
   { path: "/health-map", component: pages.HealthMapPage, label: "Health Map" },
   { path: "/financial-help", component: pages.FinancialHelpPage, label: "Financial Help" },

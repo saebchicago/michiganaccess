@@ -8,7 +8,12 @@ interface Message {
 }
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const CHAT_URL = SUPABASE_URL ? `${SUPABASE_URL}/functions/v1/michigan-chat` : null;
+// Prefer Supabase edge function (streaming) when configured; fall back to Netlify function
+const CHAT_URL = SUPABASE_URL
+  ? `${SUPABASE_URL}/functions/v1/michigan-chat`
+  : "/.netlify/functions/chat-mistral";
+// When using the Netlify fallback, responses are non-streaming JSON { reply: string }
+const USE_STREAMING = !!SUPABASE_URL;
 
 export default function AIChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -35,17 +40,17 @@ export default function AIChatWidget() {
     let assistantContent = "";
 
     try {
-      if (!CHAT_URL) {
-        throw new Error("Chat service not configured.");
-      }
-      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || "";
+      const supabaseKey = USE_STREAMING
+        ? (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || "")
+        : "";
+      const recentMessages = newMessages.slice(-20);
       const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           ...(supabaseKey ? { Authorization: `Bearer ${supabaseKey}` } : {}),
         },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: recentMessages }),
       });
 
       if (!resp.ok) {
@@ -53,48 +58,56 @@ export default function AIChatWidget() {
         throw new Error(err.error || `Error ${resp.status}`);
       }
 
-      if (!resp.body) throw new Error("No response stream");
+      if (!USE_STREAMING) {
+        // Netlify fallback: non-streaming JSON response { reply: string }
+        const data = await resp.json();
+        const reply = data.reply || "I couldn't get a response. Please try again.";
+        setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+        assistantContent = reply;
+      } else {
+        // Supabase edge function: SSE streaming
+        if (!resp.body) throw new Error("No response stream");
 
-      const reader = resp.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
+        const reader = resp.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
 
-        let newlineIdx: number;
-        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
-          let line = buffer.slice(0, newlineIdx);
-          buffer = buffer.slice(newlineIdx + 1);
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (!line.startsWith("data: ")) continue;
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") break;
-          try {
-            const parsed = JSON.parse(jsonStr);
-            const delta = parsed.choices?.[0]?.delta?.content;
-            if (delta) {
-              assistantContent += delta;
-              setMessages((prev) => {
-                const last = prev[prev.length - 1];
-                if (last?.role === "assistant") {
-                  return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantContent } : m);
-                }
-                return [...prev, { role: "assistant", content: assistantContent }];
-              });
+          let newlineIdx: number;
+          while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+            let line = buffer.slice(0, newlineIdx);
+            buffer = buffer.slice(newlineIdx + 1);
+            if (line.endsWith("\r")) line = line.slice(0, -1);
+            if (!line.startsWith("data: ")) continue;
+            const jsonStr = line.slice(6).trim();
+            if (jsonStr === "[DONE]") break;
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const delta = parsed.choices?.[0]?.delta?.content;
+              if (delta) {
+                assistantContent += delta;
+                setMessages((prev) => {
+                  const last = prev[prev.length - 1];
+                  if (last?.role === "assistant") {
+                    return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantContent } : m);
+                  }
+                  return [...prev, { role: "assistant", content: assistantContent }];
+                });
+              }
+            } catch {
+              buffer = line + "\n" + buffer;
+              break;
             }
-          } catch {
-            buffer = line + "\n" + buffer;
-            break;
           }
         }
-      }
 
-      // If no assistant content was streamed (non-streaming fallback)
-      if (!assistantContent) {
-        setMessages((prev) => [...prev, { role: "assistant", content: "I couldn't get a response. Please try again." }]);
+        if (!assistantContent) {
+          setMessages((prev) => [...prev, { role: "assistant", content: "I couldn't get a response. Please try again." }]);
+        }
       }
     } catch (err: any) {
       console.error("Chat error:", err);
