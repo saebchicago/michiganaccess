@@ -122,18 +122,18 @@ export default function AIChatWidget() {
 
   return (
     <>
-      {/* FAB */}
+      {/* FAB — safe-area-aware via .chat-fab in index.css */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-20 right-4 lg:bottom-6 lg:right-6 w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center z-40 transition-all"
+        className="chat-fab w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all"
         aria-label={isOpen ? "Close chat" : "Open chat assistant"}
       >
         {isOpen ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
       </button>
 
-      {/* Chat Window */}
+      {/* Chat Window — safe-area-aware via .chat-window in index.css */}
       {isOpen && (
-        <div className="fixed bottom-36 right-4 lg:bottom-24 lg:right-6 w-[calc(100vw-2rem)] max-w-sm bg-background border border-border rounded-xl shadow-2xl flex flex-col z-50 h-[min(500px,70vh)]">
+        <div className="chat-window w-[calc(100vw-2rem)] max-w-sm bg-background border border-border rounded-xl shadow-2xl flex flex-col h-[min(500px,70vh)]">
           {/* Header */}
           <div className="bg-primary text-primary-foreground p-4 rounded-t-xl flex justify-between items-center">
             <div>

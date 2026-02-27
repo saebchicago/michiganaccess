@@ -33,7 +33,7 @@ const Layout = ({ children }: LayoutProps) => (
     <ErrorBoundary>
       <motion.main
         id="main-content"
-        className="flex-1 pb-14 lg:pb-0"
+        className="flex-1 pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.1 }}

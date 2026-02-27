@@ -1,10 +1,13 @@
+import React from "react";
 import { Link } from "react-router-dom";
-import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles } from "lucide-react";
+import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles, Timer } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
+import { useFooterStats, DATA_SOURCES, formatLoadTime } from "@/hooks/useFooterStats";
 
 const Footer = () => {
   const { t } = useTranslation();
+  const stats = useFooterStats();
 
   const footerSections = [
     {
@@ -120,11 +123,15 @@ const Footer = () => {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {[
-              { icon: MapPin, value: "83/83", label: "Counties" },
+              { icon: MapPin, value: `${stats.countyCount}/${stats.countyCount}`, label: "Counties" },
               { icon: Shield, value: "✓", label: "Verified" },
-              { icon: Database, value: "6", label: "Data Feeds" },
-              { icon: Activity, value: "< 3s", label: "p95 Load" },
-              { icon: FileText, value: "700+", label: "Resources" },
+              { icon: Database, value: String(stats.dataFeeds), label: "Data Feeds" },
+              {
+                icon: Timer,
+                value: stats.loadMs !== null ? formatLoadTime(stats.loadMs) : "…",
+                label: "Load Time",
+              },
+              { icon: FileText, value: stats.resourceCount, label: "Resources" },
             ].map((m) => (
               <div key={m.label} className="flex items-center gap-1.5">
                 <m.icon className="h-3 w-3 text-primary" />
@@ -134,6 +141,9 @@ const Footer = () => {
               </div>
             ))}
           </div>
+          <p className="text-center text-[10px] text-muted-foreground mt-2">
+            Data refreshed {stats.lastRefresh}
+          </p>
         </div>
 
         {/* Data Sources */}
@@ -142,15 +152,17 @@ const Footer = () => {
             Public Data Sources
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            {[
-              { label: "MDHHS", icon: Building2 },
-              { label: "Michigan 2-1-1", icon: Phone },
-              { label: "CMS (Medicare)", icon: Shield },
-              { label: "HRSA", icon: HandHeart },
-              { label: "CDC", icon: Activity },
-              { label: "EPA AirNow", icon: Landmark },
-              { label: "Leapfrog (Safety)", icon: CheckCircle2 },
-            ].map((src) => (
+            {(
+              [
+                { label: "MDHHS", icon: Building2 },
+                { label: "Michigan 2-1-1", icon: Phone },
+                { label: "CMS (Medicare)", icon: Shield },
+                { label: "HRSA", icon: HandHeart },
+                { label: "CDC", icon: Activity },
+                { label: "EPA AirNow", icon: Landmark },
+                { label: "Leapfrog (Safety)", icon: CheckCircle2 },
+              ] satisfies { label: (typeof DATA_SOURCES)[number]; icon: React.ElementType }[]
+            ).map((src) => (
               <div key={src.label} className="flex items-center gap-1.5">
                 <src.icon className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
                 <span className="text-xs text-muted-foreground">{src.label}</span>

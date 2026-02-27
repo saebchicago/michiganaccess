@@ -19,7 +19,7 @@ export default function PrivacyPage() {
     path: "/privacy",
   });
 
-  const effectiveDate = "February 25, 2025";
+  const effectiveDate = "February 27, 2026";
 
   return (
     <Layout>

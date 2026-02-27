@@ -26,7 +26,11 @@ export default function MobileBottomNav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 flex h-14 items-center justify-around border-t border-border bg-background/95 backdrop-blur-md lg:hidden print:hidden" aria-label="Mobile navigation">
+    <nav
+      className="fixed inset-x-0 bottom-0 z-50 flex min-h-14 items-center justify-around border-t border-border bg-background/95 backdrop-blur-md lg:hidden print:hidden"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      aria-label="Mobile navigation"
+    >
       {items.map((item) => {
         const active = pathname === item.href;
         return (
