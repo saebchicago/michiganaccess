@@ -29,6 +29,10 @@ import { resolvePlace, buildPlaceBreadcrumbs } from "@/models/Place";
 import CommunityReportForm from "@/components/community/CommunityReportForm";
 import CommunityReportCounts from "@/components/community/CommunityReportCounts";
 import MichiganCommunityBrief, { buildBriefMetaDescription } from "@/components/place/MichiganCommunityBrief";
+import LiveEnvironmentalCard from "@/components/environment/LiveEnvironmentalCard";
+import UniversalPreScreener from "@/components/benefits/UniversalPreScreener";
+import ContactRepresentative from "@/components/advocacy/ContactRepresentative";
+import DownloadLocalInsights from "@/components/place/DownloadLocalInsights";
 
 /* ── Curated statewide programs ── */
 const TOP_PROGRAMS = [
@@ -250,6 +254,26 @@ export default function PlacePage() {
             </Card>
           </div>
         </section>
+
+        <Separator />
+
+        {/* 5b. Environmental Intelligence */}
+        <LiveEnvironmentalCard city={place.city} county={countyName} />
+
+        <Separator />
+
+        {/* 5c. Benefits Pre-Screener */}
+        <UniversalPreScreener />
+
+        <Separator />
+
+        {/* 5d. One-Click Advocacy */}
+        <ContactRepresentative place={place} />
+
+        <Separator />
+
+        {/* 5e. Download Local Insights */}
+        <DownloadLocalInsights place={place} />
 
         <Separator />
 
