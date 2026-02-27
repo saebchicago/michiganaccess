@@ -390,10 +390,10 @@ export default function DownloadLocalInsights({ place }: Props) {
 
         {/* Action buttons */}
         <div className="flex flex-wrap gap-2">
-          <Button size="sm" onClick={handleCSV} disabled={!!downloading} className="gap-1.5">
+          <Button size="sm" onClick={handleCSV} disabled={!!downloading} className="gap-1.5 transition-transform hover:scale-[1.03] active:scale-95">
             <Download className="h-3.5 w-3.5" /> Download CSV
           </Button>
-          <Button size="sm" variant="outline" onClick={handlePDF} disabled={!!downloading} className="gap-1.5">
+          <Button size="sm" variant="outline" onClick={handlePDF} disabled={!!downloading} className="gap-1.5 transition-transform hover:scale-[1.03] active:scale-95">
             <FileText className="h-3.5 w-3.5" /> Executive Brief
           </Button>
           {place.region && (

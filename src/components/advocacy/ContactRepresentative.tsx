@@ -109,7 +109,7 @@ export default function ContactRepresentative({ place }: Props) {
           {evidenceStrength && (
             <Badge
               variant="outline"
-              className={`text-[10px] ${
+              className={`text-[10px] transition-transform hover:scale-105 active:scale-95 cursor-default ${
                 evidenceStrength === "high"
                   ? "border-red-400/50 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950"
                   : "border-amber-400/50 text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950"

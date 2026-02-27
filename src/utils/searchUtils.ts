@@ -155,7 +155,37 @@ export function getSearchSuggestions(query: string, maxResults = 8): SearchSugge
   const altQ = comboCounty ? parsedTerm : null;
   const results: SearchSuggestion[] = [];
 
-  // 0. ZIP code matching
+  // 0. ZIP code matching (including "ZIP + service" like "48104 food pantry")
+  const zipServiceMatch = q.match(/^(\d{5})\s+(.+)$/);
+  if (zipServiceMatch) {
+    const [, zip, service] = zipServiceMatch;
+    const zipCounty = ZIP_TO_COUNTY[zip.slice(0, 3)];
+    // Find matching keyword for the service part
+    const kwMatch = KEYWORD_SUGGESTIONS.find(kw =>
+      kw.term.includes(service) || kw.label.toLowerCase().includes(service)
+    );
+    if (kwMatch) {
+      const countySlug = zipCounty ? zipCounty.toLowerCase().replace(/[\s.]+/g, "-") : "";
+      results.push({
+        label: `${kwMatch.label}${zipCounty ? ` near ZIP ${zip} (${zipCounty} County)` : ` near ZIP ${zip}`}`,
+        href: kwMatch.href.startsWith("/find-care")
+          ? `/find-care?county=${zipCounty || ""}&q=${encodeURIComponent(kwMatch.term)}`
+          : kwMatch.href.startsWith("/resources")
+          ? `/resources?county=${zipCounty || ""}`
+          : kwMatch.href,
+        category: "keyword",
+      });
+    }
+    if (zipCounty) {
+      results.push({
+        label: `${zipCounty} County (ZIP ${zip})`,
+        href: `/place/${zipCounty.toLowerCase().replace(/[\s.]+/g, "-")}-county`,
+        category: "zip",
+      });
+    }
+    return results.slice(0, maxResults);
+  }
+
   if (/^\d{3,5}$/.test(q)) {
     const prefix3 = q.slice(0, 3);
     const county = ZIP_TO_COUNTY[prefix3];
