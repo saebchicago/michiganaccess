@@ -157,6 +157,19 @@ async function fetchCountyHealthRankings(county) {
   }
 }
 
+// Valid Michigan county names (83 counties) — used to prevent parameter injection
+const VALID_MICHIGAN_COUNTIES = new Set([
+  'Alcona','Alger','Allegan','Alpena','Antrim','Arenac','Baraga','Barry','Bay','Benzie',
+  'Berrien','Branch','Calhoun','Cass','Charlevoix','Cheboygan','Chippewa','Clare','Clinton',
+  'Crawford','Delta','Dickinson','Eaton','Emmet','Genesee','Gladwin','Gogebic','Grand Traverse',
+  'Gratiot','Hillsdale','Houghton','Huron','Ingham','Ionia','Iosco','Iron','Isabella','Jackson',
+  'Kalamazoo','Kalkaska','Kent','Keweenaw','Lake','Lapeer','Leelanau','Lenawee','Livingston',
+  'Luce','Mackinac','Macomb','Manistee','Marquette','Mason','Mecosta','Menominee','Midland',
+  'Missaukee','Monroe','Montcalm','Montmorency','Muskegon','Newaygo','Oakland','Oceana','Ogemaw',
+  'Ontonagon','Osceola','Oscoda','Otsego','Ottawa','Presque Isle','Roscommon','Saginaw','Sanilac',
+  'Schoolcraft','Shiawassee','St. Clair','St. Joseph','Tuscola','Van Buren','Washtenaw','Wayne','Wexford',
+]);
+
 // --- Route handler ---
 export async function handler(event) {
   if (event.httpMethod === 'OPTIONS') {
@@ -164,8 +177,14 @@ export async function handler(event) {
   }
 
   const params = event.queryStringParameters || {};
-  const county = (params.county || 'Wayne').trim();
+  const rawCounty = (params.county || 'Wayne').trim();
   const sector = (params.sector || 'health').toLowerCase().trim();
+
+  // Validate county against known list to prevent injection / SSRF
+  const county = VALID_MICHIGAN_COUNTIES.has(rawCounty) ? rawCounty : 'Wayne';
+  if (!VALID_MICHIGAN_COUNTIES.has(rawCounty) && rawCounty !== '') {
+    console.warn(`Unknown county requested: ${rawCounty}, defaulting to Wayne`);
+  }
 
   try {
     let data = {};

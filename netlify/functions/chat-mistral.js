@@ -2,8 +2,6 @@
 // Secure Mistral proxy - API key stays server-side
 // Accepts messages[] + optional dataContext from frontend
 
-import { Mistral } from '@mistralai/mistralai';
-
 // CORS headers for all responses
 const CORS = {
   'Content-Type': 'application/json',
@@ -32,7 +30,8 @@ export async function handler(event) {
     return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  const apiKey = process.env.MISTRAL_API_KEY;
+  // Support both MISTRAL_API_KEY (server-side convention) and VITE_MISTRAL_API_KEY
+  const apiKey = process.env.MISTRAL_API_KEY || process.env.VITE_MISTRAL_API_KEY;
   if (!apiKey) {
     return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: 'MISTRAL_API_KEY not configured on server' }) };
   }
@@ -41,6 +40,18 @@ export async function handler(event) {
     const body = JSON.parse(event.body || '{}');
     const incomingMessages = body.messages || [];
     const dataContext = body.dataContext || null;
+
+    // Input size guard: reject oversized payloads
+    if (incomingMessages.length > 50) {
+      return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Too many messages in conversation' }) };
+    }
+
+    // Guard individual message length
+    for (const msg of incomingMessages) {
+      if (typeof msg.content === 'string' && msg.content.length > 8000) {
+        return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Message content too long' }) };
+      }
+    }
 
     // Inject data context into the first system message if it exists
     const messages = incomingMessages.map((msg, idx) => {
@@ -61,15 +72,33 @@ export async function handler(event) {
       });
     }
 
-    const client = new Mistral({ apiKey });
-    const response = await client.chat.complete({
-      model: 'mistral-small-latest', // upgrade to mistral-medium-latest for deeper analysis
-      messages,
-      maxTokens: 1024,
-      temperature: 0.4,
+    // Call Mistral API directly via fetch (no SDK dependency needed)
+    const mistralRes = await fetch('https://api.mistral.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'mistral-small-latest',
+        messages,
+        max_tokens: 1024,
+        temperature: 0.4,
+      }),
     });
 
-    const reply = response.choices?.[0]?.message?.content || '';
+    if (!mistralRes.ok) {
+      const errText = await mistralRes.text().catch(() => '');
+      console.error('Mistral API error:', mistralRes.status, errText);
+      return {
+        statusCode: mistralRes.status === 429 ? 429 : 500,
+        headers: CORS,
+        body: JSON.stringify({ error: mistralRes.status === 429 ? 'Rate limit exceeded' : 'AI service error' }),
+      };
+    }
+
+    const json = await mistralRes.json();
+    const reply = json.choices?.[0]?.message?.content || '';
     return {
       statusCode: 200,
       headers: CORS,

@@ -35,6 +35,9 @@ export function AccessChat() {
     setLoading(true);
     setError(null);
 
+    // Keep last 20 messages to prevent oversized context payloads
+    const historySlice = nextMessages.slice(-20);
+
     try {
       const res = await fetch("/.netlify/functions/chat-mistral", {
         method: "POST",
@@ -46,7 +49,7 @@ export function AccessChat() {
               content:
                 "You are an assistant for accessmi.org helping Michigan residents understand services, benefits, and MI-Access assessments. Be clear, concise, and avoid making up facts.",
             },
-            ...nextMessages,
+            ...historySlice,
           ],
         }),
       });
@@ -147,6 +150,7 @@ export function AccessChat() {
                 disabled={loading}
                 className="flex-1"
                 aria-label="Chat message input"
+                maxLength={1000}
               />
               <Button
                 type="submit"
