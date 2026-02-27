@@ -123,7 +123,7 @@ const Footer = () => {
               { icon: MapPin, value: "83/83", label: "Counties" },
               { icon: Shield, value: "✓", label: "Verified" },
               { icon: Database, value: "6", label: "Data Feeds" },
-              { icon: Activity, value: "<3s", label: "p95 Load" },
+              { icon: Activity, value: "< 3s", label: "p95 Load" },
               { icon: FileText, value: "700+", label: "Resources" },
             ].map((m) => (
               <div key={m.label} className="flex items-center gap-1.5">

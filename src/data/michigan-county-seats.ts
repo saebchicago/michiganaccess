@@ -74,6 +74,8 @@ export const MICHIGAN_CITIES: MichiganCity[] = [
   { city: "East Lansing", county: "Ingham", zip: "48823" },
   { city: "Roseville", county: "Macomb", zip: "48066" },
   { city: "Clinton Township", county: "Macomb", zip: "48035" },
+  { city: "West Bloomfield", county: "Oakland", zip: "48322" },
+  { city: "West Bloomfield Township", county: "Oakland", zip: "48322" },
 ];
 
 /** ZIP prefix → county mapping for common Michigan ZIP codes */

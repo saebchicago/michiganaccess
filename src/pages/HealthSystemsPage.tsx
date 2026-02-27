@@ -190,7 +190,6 @@ export default function HealthSystemsPage() {
     <Layout>
       <div className="container py-8 space-y-14">
         <Breadcrumbs items={[
-          { label: "Home", href: "/" },
           { label: "Partners", href: "/partners" },
           { label: "Health Systems" },
         ]} />

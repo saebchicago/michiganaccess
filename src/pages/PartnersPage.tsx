@@ -65,7 +65,7 @@ const PartnersPage = () => {
   return (
     <Layout>
       <div className="container py-8 space-y-12">
-        <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Partners" }]} />
+        <Breadcrumbs items={[{ label: "Partners" }]} />
 
         {/* Hero */}
         <motion.div

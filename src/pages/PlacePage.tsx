@@ -84,6 +84,13 @@ function PlaceHero({ place, countyName, profile }: { place: Place; countyName: s
   return (
     <section className={`bg-gradient-to-br ${heroGradient} ${borderAccent} py-12 md:py-16`}>
       <div className="container">
+        {/* Township / fallback notice */}
+        {place.isFallback && place.fallbackLabel && (
+          <div className="mb-4 rounded-lg border border-primary/20 bg-primary/5 px-4 py-2.5 text-sm text-foreground">
+            <MapPin className="inline h-3.5 w-3.5 mr-1.5 text-primary" />
+            {place.fallbackLabel}
+          </div>
+        )}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
           <div className="flex items-center gap-2 mb-3">
             <MapPin className="h-5 w-5 text-primary" />
@@ -100,7 +107,7 @@ function PlaceHero({ place, countyName, profile }: { place: Place; countyName: s
             {place.name}
           </h1>
           <p className="text-lg text-muted-foreground mb-6">
-            Population {profile.population.toLocaleString()} · {profile.majorCities.slice(0, 4).join(", ")}
+            Population {profile.population.toLocaleString()} · {profile.majorCities.slice(0, 5).join(", ")}
           </p>
 
           <div className="flex items-center gap-2 mb-4">

@@ -30,8 +30,8 @@ const ZONING_PORTALS: ZoningPortal[] = [
   { name: "Pontiac", type: "city", url: "https://www.pontiac.mi.us" },
   { name: "Kalamazoo", type: "city", url: "https://www.kalamazoocity.org/government/planning" },
   { name: "Oakland County", type: "county", url: "https://www.oakgov.com/planning" },
-  { name: "Macomb County", type: "county", url: "https://www.macombgov.org/Planning" },
-  { name: "Wayne County", type: "county", url: "https://www.waynecounty.com/government/dpw/planning.aspx" },
+  { name: "Macomb County", type: "county", url: "https://www.macombgov.org/planning" },
+  { name: "Wayne County", type: "county", url: "https://www.waynecounty.com/government/planningenvironment" },
   { name: "Kent County", type: "county", url: "https://www.accesskent.com/PlanningAndZoning" },
   { name: "Washtenaw County", type: "county", url: "https://www.washtenaw.org/planning" },
 ];

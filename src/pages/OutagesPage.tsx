@@ -117,7 +117,7 @@ export default function OutagesPage() {
 
   return (
     <Layout>
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Utility Outages" }]} />
+      <Breadcrumbs items={[{ label: "Utility Outages" }]} />
 
       <section className="container py-8 space-y-6">
         {/* Header */}
