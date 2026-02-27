@@ -1,4 +1,5 @@
 import { MICHIGAN_COUNTIES } from "@/contexts/CountyContext";
+import { ZIP_TO_COUNTY } from "@/data/michigan-county-seats";
 
 /**
  * Natural Language Parser for hero search.
@@ -94,6 +95,15 @@ export function parseNaturalLanguage(query: string): ParsedIntent {
   let service: string | null = null;
   let category: string | null = null;
 
+  // 0. Extract ZIP code and resolve to county
+  const zipMatch = q.match(/\b(\d{5})\b/);
+  if (zipMatch) {
+    const zip = zipMatch[1];
+    const zipCounty = ZIP_TO_COUNTY[zip.slice(0, 3)];
+    if (zipCounty) county = zipCounty;
+    q = q.replace(zip, " ").replace(/\s+/g, " ").trim();
+  }
+
   // 1. Extract modifiers
   for (const mod of MODIFIER_KEYWORDS) {
     if (q.includes(mod)) {
@@ -102,17 +112,19 @@ export function parseNaturalLanguage(query: string): ParsedIntent {
     }
   }
 
-  // 2. Extract county (e.g., "in Wayne", "near Oakland")
-  for (const prep of LOCATION_PREPS) {
-    for (const c of MICHIGAN_COUNTIES) {
-      const pattern = new RegExp(`\\b${prep}\\s+${c.toLowerCase()}(?:\\s+county)?\\b`, "i");
-      if (pattern.test(q)) {
-        county = c;
-        q = q.replace(pattern, " ").replace(/\s+/g, " ").trim();
-        break;
+  // 2. Extract county (e.g., "in Wayne", "near Oakland") — skip if already found via ZIP
+  if (!county) {
+    for (const prep of LOCATION_PREPS) {
+      for (const c of MICHIGAN_COUNTIES) {
+        const pattern = new RegExp(`\\b${prep}\\s+${c.toLowerCase()}(?:\\s+county)?\\b`, "i");
+        if (pattern.test(q)) {
+          county = c;
+          q = q.replace(pattern, " ").replace(/\s+/g, " ").trim();
+          break;
+        }
       }
+      if (county) break;
     }
-    if (county) break;
   }
 
   // Also check for bare county name at the end
@@ -142,9 +154,13 @@ export function parseNaturalLanguage(query: string): ParsedIntent {
   const countySlug = county?.toLowerCase().replace(/[\s.]+/g, "-");
 
   if (county && service) {
-    resolvedHref = `/county/${countySlug}?q=${encodeURIComponent(service)}`;
+    if (category && ["food", "housing", "utility", "transportation", "insurance", "financial", "legal"].includes(category)) {
+      resolvedHref = `/resources?category=${category}&county=${encodeURIComponent(county)}`;
+    } else {
+      resolvedHref = `/find-care?county=${encodeURIComponent(county)}&q=${encodeURIComponent(service)}`;
+    }
   } else if (county) {
-    resolvedHref = `/county/${countySlug}`;
+    resolvedHref = `/place/${countySlug}-county`;
   } else if (category && ["food", "housing", "utility", "transportation", "insurance", "financial", "legal"].includes(category)) {
     resolvedHref = `/resources?category=${category}`;
   } else {

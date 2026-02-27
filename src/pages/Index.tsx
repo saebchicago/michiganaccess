@@ -21,11 +21,11 @@ import { AccessChat } from "@/components/AccessChat";
 
 import LazySection from "@/components/shared/LazySection";
 import DataProvenance from "@/components/shared/DataProvenance";
-import UnderstandMyCommunity from "@/components/place/UnderstandMyCommunity";
-import WatchlistPanel from "@/components/shared/WatchlistPanel";
-import BetaImpactCounter from "@/components/shared/BetaImpactCounter";
 
-// ── Layer 3+: lazy-loaded below the fold ──
+// ── Below-fold: lazy-loaded components ──
+const UnderstandMyCommunity = lazy(() => import("@/components/place/UnderstandMyCommunity"));
+const WatchlistPanel = lazy(() => import("@/components/shared/WatchlistPanel"));
+const BetaImpactCounter = lazy(() => import("@/components/shared/BetaImpactCounter"));
 const HealthDataSnapshot = lazy(() => import("@/components/home/HealthDataSnapshot"));
 const NearbyResourceFinder = lazy(() => import("@/components/home/NearbyResourceFinder"));
 const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
@@ -80,42 +80,53 @@ const Index = () => {
       <AuthorityStrip />
 
       {/* ═══ UNDERSTAND MY COMMUNITY CTA ═══ */}
-      <section className="py-10 container max-w-2xl">
-        <UnderstandMyCommunity />
-      </section>
+      <LazySection minHeight="80px">
+        <Suspense fallback={<SectionFallback />}>
+          <section className="py-10 container max-w-2xl">
+            <UnderstandMyCommunity />
+          </section>
+        </Suspense>
+      </LazySection>
 
-      <WatchlistPanel />
-      <BetaImpactCounter />
+      <LazySection minHeight="60px">
+        <Suspense fallback={<SectionFallback />}>
+          <WatchlistPanel />
+          <BetaImpactCounter />
+        </Suspense>
+      </LazySection>
+
       <SocialProofStrip />
 
       {/* ═══ EQUITY INSIGHTS ═══ */}
-      <section className="py-14 container">
-        <div className="mb-10">
-          <h2 className="text-2xl font-bold text-foreground md:text-3xl mb-2">
-            Health Equity in Michigan
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Some Michigan residents face greater barriers to health and opportunity.
-          </p>
-        </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-          <EquityInsightCard
-            icon={Heart} title="Black Infant Mortality" stat="2.4x higher"
-            description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
-            color="coral" trend="up" ctaText="View equity data" ctaHref="/data-and-insights"
-          />
-          <EquityInsightCard
-            icon={Users} title="Rural Uninsured Rate" stat="14%"
-            description="Rural Michiganders are twice as likely to be uninsured as urban residents."
-            color="gold" trend="stable" ctaText="View equity data" ctaHref="/data-and-insights"
-          />
-          <EquityInsightCard
-            icon={AlertCircle} title="Primary Care Shortage" stat="23 counties"
-            description="Nearly a third of Michigan counties lack adequate primary care providers."
-            color="teal" trend="down" ctaText="View equity data" ctaHref="/data-and-insights"
-          />
-        </div>
-      </section>
+      <LazySection minHeight="200px">
+        <section className="py-14 container">
+          <div className="mb-10">
+            <h2 className="text-2xl font-bold text-foreground md:text-3xl mb-2">
+              Health Equity in Michigan
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Some Michigan residents face greater barriers to health and opportunity.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-6">
+            <EquityInsightCard
+              icon={Heart} title="Black Infant Mortality" stat="2.4x higher"
+              description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
+              color="coral" trend="up" ctaText="View equity data" ctaHref="/data-and-insights"
+            />
+            <EquityInsightCard
+              icon={Users} title="Rural Uninsured Rate" stat="14%"
+              description="Rural Michiganders are twice as likely to be uninsured as urban residents."
+              color="gold" trend="stable" ctaText="View equity data" ctaHref="/data-and-insights"
+            />
+            <EquityInsightCard
+              icon={AlertCircle} title="Primary Care Shortage" stat="23 counties"
+              description="Nearly a third of Michigan counties lack adequate primary care providers."
+              color="teal" trend="down" ctaText="View equity data" ctaHref="/data-and-insights"
+            />
+          </div>
+        </section>
+      </LazySection>
 
       {/* ═══ LAYER 3 — PERSONALIZED SNAPSHOT ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
