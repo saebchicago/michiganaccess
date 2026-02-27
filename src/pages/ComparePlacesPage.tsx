@@ -200,7 +200,7 @@ export default function ComparePlacesPage() {
     }
 
     return METRICS.filter((m) => normalizeMetrics.includes(m.key)).map((metric) => {
-      const entry: Record<string, any> = { metric: metric.label };
+      const entry: Record<string, any> = { metric: metric.label, miAvg: 50 };
       const { min, max } = ranges[metric.key] || { min: 0, max: 100 };
       const range = max - min || 1;
 
@@ -208,7 +208,6 @@ export default function ComparePlacesPage() {
         const val = queries[i]?.data ? metric.getValue(queries[i].data) : null;
         if (val !== null) {
           let normalized = ((val - min) / range) * 100;
-          // Invert for lower-is-better metrics
           if (!metric.higherIsBetter) normalized = 100 - normalized;
           entry[selected[i]] = +normalized.toFixed(0);
         }
@@ -288,12 +287,12 @@ export default function ComparePlacesPage() {
           )}
         </div>
 
-        {/* Radar Chart */}
+        {/* Radar Chart with Michigan Average ghost */}
         {radarData.length > 0 && !allLoading && (
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Performance Radar</CardTitle>
-              <p className="text-xs text-muted-foreground">Higher = better. Metrics normalized 0–100 for comparison.</p>
+              <p className="text-xs text-muted-foreground">Higher = better. Metrics normalized 0–100. Dashed line = Michigan state average (50).</p>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={350}>
@@ -301,6 +300,16 @@ export default function ComparePlacesPage() {
                   <PolarGrid stroke="hsl(var(--border))" />
                   <PolarAngleAxis dataKey="metric" tick={{ fontSize: 11 }} />
                   <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
+                  {/* Michigan Average ghost reference */}
+                  <Radar
+                    name="MI Average"
+                    dataKey="miAvg"
+                    stroke="hsl(var(--muted-foreground))"
+                    fill="none"
+                    strokeWidth={1.5}
+                    strokeDasharray="6 3"
+                    dot={false}
+                  />
                   {selected.map((county, i) => (
                     <Radar
                       key={county}

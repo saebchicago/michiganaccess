@@ -1,12 +1,14 @@
 /**
- * ACSIndicatorCard — displays a single ACS metric with comparison to state avg.
+ * ACSIndicatorCard — displays a single ACS metric with comparison to state avg
+ * and a "So What?" contextual tooltip.
  */
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Info } from "lucide-react";
 import { useCensusACS, getCensusValue, getCensusMOE } from "@/hooks/useCensusACS";
 import { getCountyFips } from "@/data/census-geographies";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface Props {
   countyName: string;
@@ -16,38 +18,62 @@ interface Props {
   unit: "dollars" | "count" | "percent" | "ratio";
   stateAvgOverride?: number;
   direction?: "higher-is-better" | "lower-is-better";
-  /** For percent: provide denominator variable code */
   denominatorCode?: string;
 }
 
+/** Contextual "So What?" micro-copy based on metric type and value */
+function getSoWhat(label: string, numericVal: number | null, stateVal: number | null, unit: string): string | null {
+  if (numericVal === null) return null;
+  const l = label.toLowerCase();
+  if (l.includes("median household income")) {
+    const monthly = Math.round(numericVal / 12);
+    return `That's roughly $${monthly.toLocaleString()}/month before taxes for a typical household.`;
+  }
+  if (l.includes("rent") && unit === "dollars") {
+    return `Average monthly housing cost. HUD considers >30% of income "cost-burdened."`;
+  }
+  if (l.includes("poverty")) {
+    return `Percent of residents below the federal poverty threshold — affects eligibility for Medicaid, SNAP, and LIHEAP.`;
+  }
+  if (l.includes("unemploy")) {
+    return `Share of the labor force actively seeking work. Higher rates may signal fewer local job opportunities.`;
+  }
+  if (l.includes("bachelor")) {
+    return `Adults 25+ with a 4-year degree. Higher education correlates with better health outcomes.`;
+  }
+  if (l.includes("owner-occupied") || l.includes("homeowner")) {
+    return `Homeownership builds generational wealth and neighborhood stability.`;
+  }
+  if (l.includes("renter")) {
+    return `Higher renter share often means more residents are sensitive to rent increases.`;
+  }
+  return null;
+}
+
 export default function ACSIndicatorCard({
-  countyName,
-  tableId,
-  variableCode,
-  label,
-  unit,
-  stateAvgOverride,
-  direction = "higher-is-better",
-  denominatorCode,
+  countyName, tableId, variableCode, label, unit,
+  stateAvgOverride, direction = "higher-is-better", denominatorCode,
 }: Props) {
   const fips = getCountyFips(countyName);
 
   const { data, isLoading } = useCensusACS({
-    tables: [tableId],
-    geoType: "county",
-    geoFips: fips || "",
-    enabled: !!fips,
+    tables: [tableId], geoType: "county", geoFips: fips || "", enabled: !!fips,
   });
 
   const { data: stateData } = useCensusACS({
-    tables: [tableId],
-    geoType: "state",
-    geoFips: "26",
-    enabled: !!fips && !stateAvgOverride,
+    tables: [tableId], geoType: "state", geoFips: "26", enabled: !!fips && !stateAvgOverride,
   });
 
   if (isLoading) {
-    return <Card><CardContent className="py-4"><Skeleton className="h-16 w-full" /></CardContent></Card>;
+    return (
+      <Card>
+        <CardContent className="py-4 space-y-2">
+          <Skeleton className="h-3 w-24" />
+          <Skeleton className="h-7 w-20" />
+          <Skeleton className="h-4 w-28" />
+        </CardContent>
+      </Card>
+    );
   }
 
   const rawValue = getCensusValue(data, tableId, variableCode);
@@ -76,11 +102,24 @@ export default function ACSIndicatorCard({
   const diff = numericVal !== null && stateVal !== null ? numericVal - stateVal : null;
   const isBetter = diff !== null ? (direction === "lower-is-better" ? diff < 0 : diff > 0) : null;
   const isNeutral = diff !== null ? Math.abs(diff / (stateVal || 1)) < 0.05 : true;
+  const soWhat = getSoWhat(label, numericVal, stateVal, unit);
 
   return (
     <Card className="hover:shadow-sm transition-shadow">
       <CardContent className="py-4 space-y-1">
-        <p className="text-xs font-medium text-muted-foreground">{label}</p>
+        <div className="flex items-center gap-1.5">
+          <p className="text-xs font-medium text-muted-foreground">{label}</p>
+          {soWhat && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Info className="h-3 w-3 text-muted-foreground/50 cursor-help shrink-0" />
+              </TooltipTrigger>
+              <TooltipContent side="top" className="max-w-[220px] text-xs">
+                {soWhat}
+              </TooltipContent>
+            </Tooltip>
+          )}
+        </div>
         <div className="flex items-baseline gap-2">
           <span className="text-xl font-bold text-foreground">{displayValue}</span>
           {moe !== null && moe > 0 && (

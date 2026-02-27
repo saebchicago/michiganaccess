@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, BarChart3 } from "lucide-react";
 import { lazy, Suspense, useMemo } from "react";
+import { useCountUp } from "@/hooks/useCountUp";
 import CountySelector from "@/components/shared/CountySelector";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,27 @@ import { buildStateSnapshotMetrics, buildCountySnapshotMetrics } from "@/utils/s
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
 const EnergyBurdenMap = lazy(() => import("@/components/dashboard/EnergyBurdenMap"));
 import DataActionBanners from "@/components/home/DataActionBanners";
+
+/** Animated KPI value that counts up on scroll */
+function AnimatedKPIValue({ value }: { value: string }) {
+  const num = parseFloat(value.replace(/[^0-9.]/g, ""));
+  const suffix = value.replace(/[0-9.,]/g, "").trim();
+  const prefix = value.startsWith("$") ? "$" : "";
+  const cleanSuffix = suffix.replace(/^\$/, "");
+  const { value: animated, ref } = useCountUp(isNaN(num) ? 0 : num, 1200);
+
+  if (isNaN(num)) return <p className="text-xl font-bold text-white">{value}</p>;
+
+  const display = num % 1 !== 0
+    ? animated === Math.round(num) ? num.toFixed(1) : animated.toFixed(1)
+    : animated.toLocaleString();
+
+  return (
+    <p className="text-xl font-bold text-white">
+      <span ref={ref as any}>{prefix}{display}{cleanSuffix}</span>
+    </p>
+  );
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -170,7 +192,8 @@ export default function HealthDataSnapshot() {
                   </div>
                   {kpi.hasData ? (
                     <>
-                      <p className="text-xl font-bold text-white">{kpi.value}</p>
+                      <AnimatedKPIValue value={kpi.value} />
+                    
                       {county && kpi.delta ? (
                         <div className="flex items-center gap-1.5 mt-1">
                           <Badge

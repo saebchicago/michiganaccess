@@ -4,7 +4,7 @@
  * Privacy First: all generation happens client-side via Blob.
  */
 import { useCallback, useMemo, useState } from "react";
-import { Download, FileSpreadsheet, FileText, ShieldCheck, CheckCircle2, Loader2 } from "lucide-react";
+import { Download, FileSpreadsheet, FileText, ShieldCheck, CheckCircle2, Loader2, Map } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +12,8 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import type { Place, PlaceIndicator } from "@/models/Place";
 import { buildFullIndicators, buildStandouts } from "@/models/Place";
+import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
+import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 
 interface Props {
   place: Place;
@@ -99,12 +101,41 @@ function generateCSV(place: Place, indicators: PlaceIndicator[]): string {
   ].join("\n");
 }
 
+/* ── SVG Bar Chart for Executive Brief ── */
+function generateBarChartSVG(indicators: PlaceIndicator[]): string {
+  const top = indicators.slice(0, 6);
+  const barH = 28, gap = 8, labelW = 140, chartW = 400, maxBarW = 240;
+  const totalH = top.length * (barH + gap) + 20;
+  const maxVal = Math.max(...top.map(i => Math.max(i.numericValue, i.stateAvg)), 1);
+
+  const bars = top.map((ind, idx) => {
+    const y = idx * (barH + gap) + 10;
+    const localW = Math.max((ind.numericValue / maxVal) * maxBarW, 4);
+    const stateW = Math.max((ind.stateAvg / maxVal) * maxBarW, 4);
+    const signal = classifySignal(ind);
+    const color = signal === "Strength" ? "#16a34a" : signal === "Pressure" ? "#dc2626" : signal === "Emerging Risk" ? "#ea580c" : "#6b7280";
+    return `
+      <text x="0" y="${y + 18}" font-size="11" fill="#374151">${ind.label}</text>
+      <rect x="${labelW}" y="${y}" width="${stateW}" height="${barH / 2}" rx="3" fill="#e5e7eb"/>
+      <rect x="${labelW}" y="${y + barH / 2}" width="${localW}" height="${barH / 2}" rx="3" fill="${color}"/>
+      <text x="${labelW + localW + 4}" y="${y + barH - 4}" font-size="9" fill="${color}">${sanitizeValue(ind.value, ind.numericValue)}</text>
+      <text x="${labelW + stateW + 4}" y="${y + 10}" font-size="9" fill="#9ca3af">MI: ${ind.stateAvg}</text>
+    `;
+  }).join("");
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${chartW}" height="${totalH}" viewBox="0 0 ${chartW} ${totalH}">
+    <text x="${labelW}" y="8" font-size="8" fill="#9ca3af">█ MI Avg  █ Local</text>
+    ${bars}
+  </svg>`;
+}
+
 /* ── Executive Brief PDF (HTML → Print) ── */
 function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): string {
   const standouts = buildStandouts(indicators);
   const strengths = indicators.filter(i => classifySignal(i) === "Strength").slice(0, 3);
   const pressures = indicators.filter(i => classifySignal(i) === "Pressure" || classifySignal(i) === "Emerging Risk").slice(0, 3);
   const today = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  const chartSVG = generateBarChartSVG(indicators);
 
   const scorecard = indicators.slice(0, 8).map(ind => {
     const signal = classifySignal(ind);
@@ -122,7 +153,7 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
 
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${place.name} Community Brief — Access Michigan</title>
 <style>
-  @media print { body { margin: 0; } .no-print { display: none; } }
+  @media print { body { margin: 0; } .no-print { display: none; } @page { size: letter; margin: 0.5in; } }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; color: #1a1a2e; max-width: 800px; margin: 0 auto; padding: 32px; line-height: 1.5; }
   .header { border-bottom: 3px solid #1e3a5f; padding-bottom: 16px; margin-bottom: 24px; }
   .header h1 { font-size: 22px; margin: 0 0 4px; color: #1e3a5f; }
@@ -137,6 +168,7 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
   .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
   .badge-strength { background: #dcfce7; color: #166534; }
   .badge-pressure { background: #fef2f2; color: #991b1b; }
+  .chart-section { text-align: center; margin: 16px 0; }
   .footer { margin-top: 28px; padding-top: 12px; border-top: 2px solid #1e3a5f; font-size: 10px; color: #9ca3af; }
   .btn-print { background: #1e3a5f; color: white; border: none; padding: 10px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-bottom: 20px; }
 </style></head><body>
@@ -150,6 +182,11 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
 <div class="section">
   <h2>Community Health Scorecard</h2>
   <table><thead><tr><th>Indicator</th><th>Local Value</th><th>MI Median</th><th>Deviation</th><th>Signal</th></tr></thead><tbody>${scorecard}</tbody></table>
+</div>
+
+<div class="section chart-section">
+  <h2>Local vs. State Average</h2>
+  ${chartSVG}
 </div>
 
 <div class="section" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
@@ -197,6 +234,44 @@ function downloadBlob(content: string, filename: string, type: string) {
   link.click();
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
+}
+
+/* ── Regional Comparison CSV ── */
+function generateRegionalCSV(place: Place): string | null {
+  const region = MICHIGAN_REGIONS.find(r =>
+    r.counties.includes(place.parentCounty || place.name.replace(/ County$/, "") as any)
+  );
+  if (!region) return null;
+
+  const headers = ["County", "Population", "County Type", "Uninsured Rate", "Primary Care Ratio", "Food Insecurity", "Median Income", "Poverty Rate", "Unemployment Rate", "HS Graduation Rate"];
+
+  const rows = region.counties.map(county => {
+    const profile = COUNTY_PROFILES[county];
+    if (!profile) return null;
+    const hh = profile.healthHighlights;
+    return [
+      county,
+      profile.population,
+      profile.countyType,
+      hh[0]?.value || "N/A",
+      hh[1]?.value || "N/A",
+      hh[2]?.value || "N/A",
+      `"$${profile.population > 0 ? "—" : "—"}"`, // placeholder
+      profile.countyType,
+      "—",
+      "—",
+    ].join(",");
+  }).filter(Boolean);
+
+  return [
+    `# Regional Comparison: ${region.name}`,
+    `# Counties: ${region.counties.length}`,
+    `# Generated: ${new Date().toISOString().split("T")[0]}`,
+    `# Source: County Health Rankings, Census ACS | accessmichigan.org`,
+    "",
+    headers.join(","),
+    ...rows,
+  ].join("\n");
 }
 
 /* ── Component ── */
@@ -315,23 +390,31 @@ export default function DownloadLocalInsights({ place }: Props) {
 
         {/* Action buttons */}
         <div className="flex flex-wrap gap-2">
-          <Button
-            size="sm"
-            onClick={handleCSV}
-            disabled={!!downloading}
-            className="gap-1.5"
-          >
+          <Button size="sm" onClick={handleCSV} disabled={!!downloading} className="gap-1.5">
             <Download className="h-3.5 w-3.5" /> Download CSV
           </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={handlePDF}
-            disabled={!!downloading}
-            className="gap-1.5"
-          >
+          <Button size="sm" variant="outline" onClick={handlePDF} disabled={!!downloading} className="gap-1.5">
             <FileText className="h-3.5 w-3.5" /> Executive Brief
           </Button>
+          {place.region && (
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={!!downloading}
+              className="gap-1.5"
+              onClick={() => {
+                const csv = generateRegionalCSV(place);
+                if (csv) {
+                  const datePart = new Date().toISOString().split("T")[0];
+                  const regionName = place.region!.name.replace(/[^a-zA-Z0-9]+/g, "_");
+                  downloadBlob(csv, `AccessMI_Regional_${regionName}_${datePart}.csv`, "text/csv;charset=utf-8;");
+                  toast.success("Regional comparison downloaded", { description: `${place.region!.counties.length} counties in ${place.region!.name}` });
+                }
+              }}
+            >
+              <Map className="h-3.5 w-3.5" /> Regional Comparison
+            </Button>
+          )}
         </div>
 
         {/* Footer */}

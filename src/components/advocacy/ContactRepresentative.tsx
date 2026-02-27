@@ -80,15 +80,45 @@ export default function ContactRepresentative({ place }: Props) {
     setTimeout(() => setCopied(false), 3000);
   };
 
+  // Evidence strength badge — show when any pressure is in bottom 10%
+  const evidenceStrength = useMemo(() => {
+    const indicators = buildFullIndicators(place);
+    let extremeCount = 0;
+    for (const ind of indicators) {
+      if (ind.numericValue === 0 || ind.stateAvg === 0) continue;
+      const diff = ind.numericValue - ind.stateAvg;
+      const pct = Math.abs(diff / ind.stateAvg) * 100;
+      const isBetter = ind.direction === "lower-is-better" ? diff < 0 : diff > 0;
+      if (!isBetter && pct >= 25) extremeCount++;
+    }
+    if (extremeCount >= 3) return "high";
+    if (extremeCount >= 1) return "moderate";
+    return null;
+  }, [place]);
+
   if (pressures.length === 0) return null;
 
   return (
     <Card className="border-primary/20">
       <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-base">
-          <Building2 className="h-4 w-4 text-primary" />
-          Contact Your Representative
-        </CardTitle>
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Building2 className="h-4 w-4 text-primary" />
+            Contact Your Representative
+          </CardTitle>
+          {evidenceStrength && (
+            <Badge
+              variant="outline"
+              className={`text-[10px] ${
+                evidenceStrength === "high"
+                  ? "border-red-400/50 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950"
+                  : "border-amber-400/50 text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950"
+              }`}
+            >
+              {evidenceStrength === "high" ? "⚡ High Evidence" : "📊 Moderate Evidence"} — data-backed advocacy
+            </Badge>
+          )}
+        </div>
         <p className="text-xs text-muted-foreground">
           Use data from your Community Brief to advocate for your community.
         </p>
