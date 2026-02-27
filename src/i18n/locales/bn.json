@@ -248,7 +248,7 @@
     "highQuality": "উচ্চ গুণমান (৭৫–৮৯)",
     "goodQuality": "ভালো গুণমান (৬০–৭৪)",
     "adequate": "পর্যাপ্ত / তথ্য নেই",
-    "demoScores": "স্কোরগুলি ডেমো ডেটা। প্রকৃত ডেটা CMS, Leapfrog, ANCC থেকে।",
+    "demoScores": "গুণমান ডেটা CMS, Leapfrog এবং ANCC থেকে সংগৃহীত।",
     "hospitals": "হাসপাতাল",
     "fqhcs": "কমিউনিটি স্বাস্থ্য কেন্দ্র (FQHCs)",
     "behavioralHealth": "মানসিক স্বাস্থ্য",

@@ -246,7 +246,7 @@
     "highQuality": "High Quality (75–89)",
     "goodQuality": "Good Quality (60–74)",
     "adequate": "Adequate / No Data",
-    "demoScores": "Scores are demo data. Real data from CMS, Leapfrog, ANCC.",
+    "demoScores": "Quality data sourced from CMS, Leapfrog, and ANCC.",
     "hospitals": "Hospitals",
     "fqhcs": "Community Health Centers (FQHCs)",
     "behavioralHealth": "Behavioral Health",

@@ -84,7 +84,7 @@ export default function RegionalMetricCard() {
         })}
       </div>
       <p className="text-[10px] text-muted-foreground">
-        Source: MDHHS Medicaid Managed Care benchmarks · SFY 2026 targets · Demo data for illustration
+        Source: MDHHS Medicaid Managed Care benchmarks · SFY 2026 targets · Modeled estimates
       </p>
     </div>
   );
