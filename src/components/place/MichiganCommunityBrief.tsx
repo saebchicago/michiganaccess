@@ -9,11 +9,17 @@ import { motion } from "framer-motion";
 import {
   Compass, TrendingUp, TrendingDown, ShieldCheck, AlertTriangle,
   Lightbulb, Zap, ExternalLink, ChevronRight, ArrowUpRight,
-  Users, Briefcase, Heart, Baby, Home as HomeIcon,
+  Users, Briefcase, Heart, Baby, Home as HomeIcon, HelpCircle,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { Place, PlaceIndicator } from "@/models/Place";
 import { buildFullIndicators, STATE_AVERAGES } from "@/models/Place";
 import { DOMAIN_ACTIONS, DOMAIN_LABELS, type DomainId } from "@/data/domain-actions";
@@ -341,16 +347,43 @@ export default function MichiganCommunityBrief({ place }: { place: Place }) {
             })}
           </div>
 
-          {/* Key Insights */}
+          {/* Key Insights with Explainable Math */}
           {insights.length > 0 && (
-            <ul className="space-y-2 pt-2 border-t border-border/50">
-              {insights.map((ins, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-foreground">
-                  <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0 mt-2" />
-                  <span>{ins}</span>
-                </li>
-              ))}
-            </ul>
+            <TooltipProvider>
+              <ul className="space-y-2 pt-2 border-t border-border/50">
+                {classified.slice(0, 5).map((sig, i) => {
+                  const ins = insights[i];
+                  if (!ins) return null;
+                  const localVal = sig.indicator.numericValue;
+                  const stateVal = sig.indicator.stateAvg;
+                  const pctDiff = sig.deviationPct.toFixed(0);
+                  const dirWord = sig.direction === "worse"
+                    ? (sig.indicator.direction === "lower-is-better" ? "above" : "below")
+                    : (sig.indicator.direction === "lower-is-better" ? "below" : "above");
+
+                  return (
+                    <li key={i} className="flex items-start gap-2 text-sm text-foreground group">
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0 mt-2" />
+                      <span className="flex-1">{ins}</span>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button className="shrink-0 mt-0.5 opacity-40 group-hover:opacity-100 transition-opacity" aria-label="How was this calculated?">
+                            <HelpCircle className="h-3.5 w-3.5 text-muted-foreground" />
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent side="left" className="max-w-xs text-left">
+                          <p className="text-[11px] font-semibold mb-0.5">How was this calculated?</p>
+                          <p className="text-[10px] text-muted-foreground font-mono">
+                            {sig.indicator.label}: Local {localVal.toLocaleString(undefined, { maximumFractionDigits: 1 })} vs MI Avg {stateVal.toLocaleString(undefined, { maximumFractionDigits: 1 })} = {pctDiff}% {dirWord}
+                          </p>
+                          <p className="text-[9px] text-muted-foreground mt-1">Source: County Health Rankings + Census ACS</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </li>
+                  );
+                })}
+              </ul>
+            </TooltipProvider>
           )}
         </CardContent>
       </Card>

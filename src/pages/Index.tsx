@@ -22,6 +22,8 @@ import { AccessChat } from "@/components/AccessChat";
 import LazySection from "@/components/shared/LazySection";
 import DataProvenance from "@/components/shared/DataProvenance";
 import UnderstandMyCommunity from "@/components/place/UnderstandMyCommunity";
+import WatchlistPanel from "@/components/shared/WatchlistPanel";
+import BetaImpactCounter from "@/components/shared/BetaImpactCounter";
 
 // ── Layer 3+: lazy-loaded below the fold ──
 const HealthDataSnapshot = lazy(() => import("@/components/home/HealthDataSnapshot"));
@@ -82,6 +84,8 @@ const Index = () => {
         <UnderstandMyCommunity />
       </section>
 
+      <WatchlistPanel />
+      <BetaImpactCounter />
       <SocialProofStrip />
 
       {/* ═══ EQUITY INSIGHTS ═══ */}

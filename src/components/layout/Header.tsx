@@ -85,9 +85,9 @@ const Header = () => {
             <SiteSearch />
           </div>
           <CountySelector variant="header" />
-          <ThemeToggle />
           <LanguageSwitcher />
           <GoogleTranslateWidget />
+          <ThemeToggle />
           <Button
             size="sm"
             onClick={() => setWizardOpen(true)}
