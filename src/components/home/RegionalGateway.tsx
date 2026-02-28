@@ -26,30 +26,45 @@ const REGION_PATHS: Record<string, string> = {
 };
 
 const REGION_LABEL_POS: Record<string, { x: number; y: number }> = {
-  "upper-peninsula": { x: 115, y: 40 },
-  northwest: { x: 155, y: 125 },
-  "east-central": { x: 240, y: 120 },
-  west: { x: 85, y: 210 },
-  "south-central": { x: 185, y: 215 },
-  southeast: { x: 255, y: 220 },
+  "upper-peninsula": { x: 115, y: 38 },
+  northwest:         { x: 155, y: 120 },
+  "east-central":    { x: 240, y: 115 },
+  west:              { x: 85,  y: 205 },
+  "south-central":   { x: 185, y: 210 },
+  southeast:         { x: 255, y: 215 },
 };
 
 const REGION_POP: Record<string, number> = {
-  southeast: 4_800_000,
-  "south-central": 1_600_000,
-  west: 1_900_000,
-  "east-central": 1_100_000,
-  northwest: 600_000,
-  "upper-peninsula": 300_000,
+  southeast:         4_800_000,
+  "south-central":   1_600_000,
+  west:              1_900_000,
+  "east-central":    1_100_000,
+  northwest:           600_000,
+  "upper-peninsula":   300_000,
 };
 
-const REGION_VITALS: Record<string, { uninsuredRate: string; energyBurden: string; transitScore: string }> = {
-  southeast: { uninsuredRate: "5.2%", energyBurden: "3.8%", transitScore: "72" },
-  "south-central": { uninsuredRate: "6.1%", energyBurden: "4.2%", transitScore: "58" },
-  west: { uninsuredRate: "5.8%", energyBurden: "4.0%", transitScore: "54" },
-  "east-central": { uninsuredRate: "7.4%", energyBurden: "5.6%", transitScore: "38" },
-  northwest: { uninsuredRate: "8.1%", energyBurden: "5.1%", transitScore: "32" },
-  "upper-peninsula": { uninsuredRate: "9.3%", energyBurden: "6.8%", transitScore: "18" },
+const REGION_VITALS: Record<string, {
+  uninsuredRate: string;
+  energyBurden: string;
+  transitScore: string;
+  headlineStat: string;
+}> = {
+  southeast:       { uninsuredRate: "5.2%", energyBurden: "3.8%", transitScore: "72", headlineStat: "Best transit access in Michigan" },
+  "south-central": { uninsuredRate: "6.1%", energyBurden: "4.2%", transitScore: "58", headlineStat: "Home to Michigan's capital" },
+  west:            { uninsuredRate: "5.8%", energyBurden: "4.0%", transitScore: "54", headlineStat: "Fastest-growing metro region" },
+  "east-central":  { uninsuredRate: "7.4%", energyBurden: "5.6%", transitScore: "38", headlineStat: "Highest uninsured rate in Lower MI" },
+  northwest:       { uninsuredRate: "8.1%", energyBurden: "5.1%", transitScore: "32", headlineStat: "Seasonal healthcare demand" },
+  "upper-peninsula": { uninsuredRate: "9.3%", energyBurden: "6.8%", transitScore: "18", headlineStat: "Highest energy burden statewide" },
+};
+
+// Two-line short labels that fit inside the SVG region shapes
+const REGION_SHORT_NAME: Record<string, [string, string]> = {
+  "upper-peninsula": ["Upper", "Peninsula"],
+  northwest:         ["N. Lower", "Michigan"],
+  "east-central":    ["East Central", "/ Thumb"],
+  west:              ["West", "Michigan"],
+  "south-central":   ["South", "Central MI"],
+  southeast:         ["Southeast", "Michigan"],
 };
 
 export default function RegionalGateway() {
@@ -101,12 +116,19 @@ export default function RegionalGateway() {
   }, [navigate]);
 
   return (
-    <section className="relative py-16 md:py-20 overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] via-accent/[0.03] to-michigan-gold/[0.04] dark:from-primary/[0.08] dark:via-accent/[0.06] dark:to-michigan-gold/[0.06]" />
-      <div className="absolute inset-0 opacity-[0.025]" style={{
-        backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000' fill-opacity='0.15'%3E%3Ccircle cx='1' cy='1' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-      }} aria-hidden="true" />
+    <section
+      className="relative py-16 md:py-20 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-teal-50/20 dark:from-background dark:via-primary/[0.05] dark:to-accent/[0.04]"
+      aria-label="Explore Michigan by region"
+    >
+      {/* Decorative blur rings */}
+      <div
+        className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-blue-100/50 dark:bg-primary/[0.07] blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-teal-100/40 dark:bg-accent/[0.05] blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
 
       <div className="container relative z-10">
         <motion.div
@@ -116,10 +138,10 @@ export default function RegionalGateway() {
           transition={{ duration: 0.5 }}
           className="space-y-8"
         >
-          {/* Header */}
-          <div className="text-center space-y-3">
+          {/* Section header */}
+          <div className="text-center space-y-2">
             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary">
-              <MapPin className="h-3.5 w-3.5" />
+              <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
               Explore by Region
             </div>
             <h2 className="text-2xl font-bold text-foreground md:text-3xl">
@@ -128,59 +150,94 @@ export default function RegionalGateway() {
             <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
               Select your region on the map, search for your city, or let us detect your county automatically.
             </p>
+            <p className="text-xs text-muted-foreground/60">
+              All 83 counties · 10M+ Michigan residents
+            </p>
           </div>
 
-          {/* Municipality Search — prominent */}
+          {/* Municipality Search */}
           <div className="max-w-lg mx-auto">
             <MunicipalitySearch />
           </div>
 
-          {/* Map + Info panel */}
+          {/* Map + info panel */}
           <div className="flex flex-col items-center gap-8 lg:flex-row lg:justify-center lg:items-start">
-            {/* Map container with decorative ring */}
+
+            {/* ── Map card ── */}
             <div className="relative flex-shrink-0">
-              <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-sm" aria-hidden="true" />
-              <div className="relative rounded-2xl border border-border/60 bg-card/80 backdrop-blur-sm p-4 md:p-6 shadow-lg">
+              {/* Dynamic outer glow that responds to hovered region */}
+              <div
+                className="absolute -inset-2 rounded-2xl blur-md opacity-25 pointer-events-none transition-all duration-500"
+                style={{
+                  background: hovered
+                    ? `radial-gradient(ellipse at center, ${MICHIGAN_REGIONS.find(r => r.id === hovered)?.color ?? "transparent"} 0%, transparent 70%)`
+                    : "linear-gradient(135deg, hsl(205,80%,33%), hsl(174,60%,34%))",
+                }}
+                aria-hidden="true"
+              />
+
+              <div className="relative rounded-2xl border border-border/40 bg-white/90 dark:bg-card/90 backdrop-blur-sm p-4 md:p-6 shadow-xl">
                 <Popover open={geoOpen} onOpenChange={setGeoOpen}>
                   <PopoverTrigger asChild>
                     <div
                       className="cursor-pointer outline-none"
                       tabIndex={0}
                       role="group"
-                      aria-label="Michigan regional map — focus to find your county"
+                      aria-label="Michigan regional map — click to find your county"
                       onMouseEnter={() => { if (!isMobile && !hasGeoCache) setGeoOpen(true); }}
                       onFocus={() => { if (!hasGeoCache) setGeoOpen(true); }}
                       onClick={() => { if (isMobile && !hasGeoCache) setGeoOpen(true); }}
                     >
                       <svg
                         viewBox="0 0 310 300"
-                        className="w-64 h-auto md:w-80"
+                        className="w-full max-w-[280px] md:max-w-[320px] h-auto"
                         role="img"
-                        aria-label="Interactive map of Michigan's 6 regions"
+                        aria-label="Interactive map of Michigan's 6 regions. Click or tap a region to explore."
                       >
-                        {/* Subtle grid lines for polish */}
                         <defs>
-                          <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeWidth="0.2" className="text-border" />
+                          {/* Glow effect applied to hovered region */}
+                          <filter id="region-glow" x="-25%" y="-25%" width="150%" height="150%">
+                            <feGaussianBlur stdDeviation="4" result="blur" />
+                            <feMerge>
+                              <feMergeNode in="blur" />
+                              <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                          </filter>
+                          {/* Subtle dot texture for county-outline depth */}
+                          <pattern id="county-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <circle cx="1" cy="1" r="0.55" fill="#94a3b8" opacity="0.18" />
                           </pattern>
                         </defs>
-                        <rect width="310" height="300" fill="url(#grid)" opacity="0.3" />
+
+                        {/* Dot-grid background */}
+                        <rect width="310" height="300" fill="url(#county-grid)" />
 
                         {MICHIGAN_REGIONS.map((region) => {
                           const path = REGION_PATHS[region.id];
                           const label = REGION_LABEL_POS[region.id];
+                          const [line1, line2] = REGION_SHORT_NAME[region.id] ?? [region.name, ""];
+                          const vitals = REGION_VITALS[region.id];
                           if (!path) return null;
                           const isHovered = hovered === region.id;
+
                           return (
                             <g key={region.id}>
+                              {/* Native browser tooltip */}
+                              <title>
+                                {`${region.name}${vitals ? ` — ${vitals.headlineStat}` : ""}`}
+                              </title>
+
+                              {/* Region polygon */}
                               <path
                                 d={path}
-                                fill={isHovered ? region.color : `${region.color}22`}
+                                fill={isHovered ? region.color : `${region.color}66`}
                                 stroke={region.color}
-                                strokeWidth={isHovered ? 3 : 1.5}
-                                className="cursor-pointer transition-all duration-300"
+                                strokeWidth={isHovered ? 2.5 : 1.5}
+                                strokeOpacity={isHovered ? 1 : 0.75}
+                                filter={isHovered ? "url(#region-glow)" : undefined}
                                 style={{
-                                  filter: isHovered ? `drop-shadow(0 0 8px ${region.color}66)` : "none",
+                                  transition: "fill 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease",
+                                  cursor: "pointer",
                                 }}
                                 onMouseEnter={() => setHovered(region.id)}
                                 onMouseLeave={() => setHovered(null)}
@@ -188,15 +245,44 @@ export default function RegionalGateway() {
                                 role="button"
                                 aria-label={`Go to ${region.name}`}
                               />
+
+                              {/* Line 1 label — white with dark stroke for universal readability */}
                               {label && (
                                 <text
                                   x={label.x}
                                   y={label.y}
                                   textAnchor="middle"
-                                  className="pointer-events-none select-none fill-foreground text-[8px] font-semibold"
-                                  style={{ opacity: isHovered ? 1 : 0.7 }}
+                                  fill="white"
+                                  stroke="rgba(0,0,0,0.55)"
+                                  strokeWidth="3.5"
+                                  paintOrder="stroke"
+                                  fontSize="7.5"
+                                  fontWeight="700"
+                                  letterSpacing="0.4"
+                                  className="pointer-events-none select-none"
+                                  style={{ opacity: isHovered ? 1 : 0.9, transition: "opacity 0.2s ease" }}
                                 >
-                                  {region.name.replace("Michigan", "MI").replace("Northern Lower ", "N. Lower ")}
+                                  {line1}
+                                </text>
+                              )}
+
+                              {/* Line 2 label */}
+                              {label && line2 && (
+                                <text
+                                  x={label.x}
+                                  y={label.y + 10}
+                                  textAnchor="middle"
+                                  fill="white"
+                                  stroke="rgba(0,0,0,0.55)"
+                                  strokeWidth="3.5"
+                                  paintOrder="stroke"
+                                  fontSize="7.5"
+                                  fontWeight="700"
+                                  letterSpacing="0.4"
+                                  className="pointer-events-none select-none"
+                                  style={{ opacity: isHovered ? 1 : 0.9, transition: "opacity 0.2s ease" }}
+                                >
+                                  {line2}
                                 </text>
                               )}
                             </g>
@@ -205,11 +291,12 @@ export default function RegionalGateway() {
                       </svg>
                     </div>
                   </PopoverTrigger>
+
                   <PopoverContent className="w-72 p-3" side="top" align="center">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                          <ShieldCheck className="h-4 w-4 text-primary" />
+                          <ShieldCheck className="h-4 w-4 text-primary" aria-hidden="true" />
                           Find your county automatically
                         </div>
                         <button
@@ -230,9 +317,9 @@ export default function RegionalGateway() {
                         disabled={geoStatus === "loading"}
                       >
                         {geoStatus === "loading" ? (
-                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
                         ) : (
-                          <Navigation className="h-3.5 w-3.5" />
+                          <Navigation className="h-3.5 w-3.5" aria-hidden="true" />
                         )}
                         {geoStatus === "loading" ? "Locating…" : "Use my location"}
                       </Button>
@@ -240,19 +327,19 @@ export default function RegionalGateway() {
                   </PopoverContent>
                 </Popover>
 
-                {/* Use Location CTA below map */}
+                {/* Detect county CTA below map */}
                 <div className="mt-3 flex justify-center">
                   <Button
                     variant="outline"
                     size="sm"
-                    className="gap-1.5 text-xs rounded-full"
+                    className="gap-1.5 text-xs rounded-full border-border/60 hover:border-primary/40 hover:bg-primary/5 transition-colors"
                     onClick={handleUseLocation}
                     disabled={geoStatus === "loading"}
                   >
                     {geoStatus === "loading" ? (
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
                     ) : (
-                      <Navigation className="h-3.5 w-3.5" />
+                      <Navigation className="h-3.5 w-3.5" aria-hidden="true" />
                     )}
                     {geoStatus === "loading" ? "Locating…" : "Detect my county"}
                   </Button>
@@ -260,7 +347,7 @@ export default function RegionalGateway() {
               </div>
             </div>
 
-            {/* Hover info card — right side */}
+            {/* ── Info panel ── */}
             <div className="w-full max-w-sm lg:pt-4">
               {hoveredRegion ? (
                 <motion.div
@@ -270,18 +357,35 @@ export default function RegionalGateway() {
                   transition={{ duration: 0.2 }}
                   className="rounded-xl border border-border bg-card shadow-md overflow-hidden"
                 >
-                  {/* Colored header strip */}
+                  {/* Color-matched top strip */}
                   <div
                     className="h-1.5"
                     style={{ background: `linear-gradient(90deg, ${hoveredRegion.color}, ${hoveredRegion.color}88)` }}
                   />
                   <div className="p-5 space-y-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="h-4 w-4 rounded-full shadow-sm" style={{ background: hoveredRegion.color }} />
+                      <div
+                        className="h-4 w-4 rounded-full shadow-sm ring-2 ring-white/40 dark:ring-black/30 flex-shrink-0"
+                        style={{ background: hoveredRegion.color }}
+                        aria-hidden="true"
+                      />
                       <h3 className="text-base font-bold text-foreground">{hoveredRegion.name}</h3>
                     </div>
+
                     <p className="text-xs text-muted-foreground leading-relaxed">{hoveredRegion.description}</p>
 
+                    {/* Headline stat */}
+                    {REGION_VITALS[hoveredRegion.id] && (
+                      <div
+                        className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold text-white"
+                        style={{ background: hoveredRegion.color }}
+                      >
+                        <MapPin className="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+                        {REGION_VITALS[hoveredRegion.id].headlineStat}
+                      </div>
+                    )}
+
+                    {/* County + pop */}
                     <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
                       <div>
                         <span className="text-muted-foreground">Counties: </span>
@@ -290,29 +394,39 @@ export default function RegionalGateway() {
                       <div>
                         <span className="text-muted-foreground">Pop. est: </span>
                         <span className="font-semibold text-foreground">
-                          {REGION_POP[hoveredRegion.id] ? `${(REGION_POP[hoveredRegion.id] / 1_000_000).toFixed(1)}M` : "—"}
+                          {REGION_POP[hoveredRegion.id]
+                            ? `${(REGION_POP[hoveredRegion.id] / 1_000_000).toFixed(1)}M`
+                            : "—"}
                         </span>
                       </div>
                     </div>
 
-                    {/* Cross-sector vital metrics */}
+                    {/* Cross-sector vitals */}
                     {REGION_VITALS[hoveredRegion.id] && (
                       <div className="border-t border-border/50 pt-3 space-y-2">
-                        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Cross-Sector Vitals</p>
+                        <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
+                          Cross-Sector Vitals
+                        </p>
                         <div className="grid grid-cols-3 gap-2">
                           <div className="rounded-lg bg-destructive/5 p-2.5 text-center">
-                            <HeartPulse className="h-4 w-4 text-destructive mx-auto mb-1" />
-                            <p className="text-xs font-bold text-foreground">{REGION_VITALS[hoveredRegion.id].uninsuredRate}</p>
+                            <HeartPulse className="h-4 w-4 text-destructive mx-auto mb-1" aria-hidden="true" />
+                            <p className="text-xs font-bold text-foreground">
+                              {REGION_VITALS[hoveredRegion.id].uninsuredRate}
+                            </p>
                             <p className="text-[9px] text-muted-foreground">Uninsured</p>
                           </div>
                           <div className="rounded-lg bg-michigan-gold/10 p-2.5 text-center">
-                            <Zap className="h-4 w-4 text-michigan-gold mx-auto mb-1" />
-                            <p className="text-xs font-bold text-foreground">{REGION_VITALS[hoveredRegion.id].energyBurden}</p>
+                            <Zap className="h-4 w-4 text-michigan-gold mx-auto mb-1" aria-hidden="true" />
+                            <p className="text-xs font-bold text-foreground">
+                              {REGION_VITALS[hoveredRegion.id].energyBurden}
+                            </p>
                             <p className="text-[9px] text-muted-foreground">Energy Burden</p>
                           </div>
                           <div className="rounded-lg bg-primary/5 p-2.5 text-center">
-                            <Bus className="h-4 w-4 text-primary mx-auto mb-1" />
-                            <p className="text-xs font-bold text-foreground">{REGION_VITALS[hoveredRegion.id].transitScore}/100</p>
+                            <Bus className="h-4 w-4 text-primary mx-auto mb-1" aria-hidden="true" />
+                            <p className="text-xs font-bold text-foreground">
+                              {REGION_VITALS[hoveredRegion.id].transitScore}/100
+                            </p>
                             <p className="text-[9px] text-muted-foreground">Transit</p>
                           </div>
                         </div>
@@ -321,36 +435,69 @@ export default function RegionalGateway() {
 
                     <Button
                       size="sm"
-                      className="w-full gap-1.5 text-xs mt-1"
+                      className="w-full gap-1.5 text-xs mt-1 hover:opacity-90 transition-opacity"
+                      style={{ background: hoveredRegion.color }}
                       onClick={() => navigate(`/region/${hoveredRegion.id}`)}
                     >
-                      Explore {hoveredRegion.name} <ArrowRight className="h-3.5 w-3.5" />
+                      Explore {hoveredRegion.name}
+                      <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                     </Button>
                   </div>
                 </motion.div>
               ) : (
-                <div className="rounded-xl border border-dashed border-border/60 bg-card/50 p-8 text-center space-y-3">
+                /* Empty state with region legend */
+                <div className="rounded-xl border border-dashed border-border/50 bg-white/60 dark:bg-card/50 p-8 text-center space-y-3 shadow-sm">
                   <div className="inline-flex items-center justify-center rounded-full bg-primary/10 p-3">
-                    <MapPin className="h-5 w-5 text-primary" />
+                    <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
                   </div>
                   <p className="text-sm font-medium text-foreground">Select a region</p>
                   <p className="text-xs text-muted-foreground leading-relaxed max-w-[200px] mx-auto">
                     Hover or tap a region on the map to see local health, energy, and transit data.
                   </p>
+                  {/* Color legend */}
+                  <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5 pt-1">
+                    {MICHIGAN_REGIONS.map((r) => (
+                      <button
+                        key={r.id}
+                        onClick={() => navigate(`/region/${r.id}`)}
+                        className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                      >
+                        <div
+                          className="h-2 w-2 rounded-full flex-shrink-0"
+                          style={{ background: r.color }}
+                          aria-hidden="true"
+                        />
+                        <span className="text-[10px] text-muted-foreground hover:text-foreground transition-colors">
+                          {r.name
+                            .replace(" Michigan", " MI")
+                            .replace("Northern Lower ", "N. Lower ")}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
-              {/* Quick region links for mobile */}
+              {/* Mobile quick-links grid */}
               {isMobile && (
                 <div className="mt-4 grid grid-cols-2 gap-2">
                   {MICHIGAN_REGIONS.map((region) => (
                     <button
                       key={region.id}
                       onClick={() => navigate(`/region/${region.id}`)}
-                      className="flex items-center gap-2 rounded-lg border border-border bg-card p-2.5 text-left text-xs hover:bg-muted/50 transition-colors"
+                      className="flex items-center gap-2 rounded-lg border-l-[3px] border border-border bg-white dark:bg-card p-2.5 text-left text-xs hover:bg-muted/40 transition-colors shadow-sm"
+                      style={{ borderLeftColor: region.color }}
                     >
-                      <div className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ background: region.color }} />
-                      <span className="font-medium text-foreground truncate">{region.name.replace("Michigan", "MI")}</span>
+                      <div
+                        className="h-2.5 w-2.5 rounded-full flex-shrink-0"
+                        style={{ background: region.color }}
+                        aria-hidden="true"
+                      />
+                      <span className="font-medium text-foreground truncate">
+                        {region.name
+                          .replace(" Michigan", " MI")
+                          .replace("Northern Lower ", "N. Lower ")}
+                      </span>
                     </button>
                   ))}
                 </div>

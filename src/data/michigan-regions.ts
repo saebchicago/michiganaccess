@@ -18,7 +18,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Wayne", "Oakland", "Macomb", "Washtenaw", "Livingston", "Monroe", "St. Clair", "Lenawee", "Lapeer"],
     center: [42.45, -83.35],
     zoom: 9,
-    color: "hsl(215, 65%, 28%)",
+    color: "hsl(215, 72%, 30%)",
   },
   {
     id: "south-central",
@@ -27,7 +27,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Ingham", "Kalamazoo", "Calhoun", "Jackson", "Eaton", "Barry", "Branch", "Hillsdale", "Ionia", "Clinton", "Shiawassee", "Gratiot"],
     center: [42.55, -84.55],
     zoom: 9,
-    color: "hsl(186, 50%, 36%)",
+    color: "hsl(174, 60%, 34%)",
   },
   {
     id: "west",
@@ -36,7 +36,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Kent", "Ottawa", "Muskegon", "Allegan", "Berrien", "Van Buren", "Cass", "St. Joseph", "Newaygo", "Oceana", "Mason", "Manistee", "Lake", "Osceola", "Mecosta", "Montcalm"],
     center: [43.1, -85.9],
     zoom: 8,
-    color: "hsl(145, 40%, 30%)",
+    color: "hsl(122, 42%, 29%)",
   },
   {
     id: "east-central",
@@ -45,7 +45,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Genesee", "Saginaw", "Bay", "Midland", "Tuscola", "Huron", "Sanilac", "Arenac", "Gladwin", "Isabella", "Clare", "Gratiot"],
     center: [43.4, -83.8],
     zoom: 9,
-    color: "hsl(30, 70%, 50%)",
+    color: "hsl(32, 88%, 46%)",
   },
   {
     id: "northwest",
@@ -54,7 +54,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Grand Traverse", "Emmet", "Charlevoix", "Antrim", "Benzie", "Leelanau", "Kalkaska", "Wexford", "Missaukee", "Roscommon", "Otsego", "Crawford", "Ogemaw", "Iosco", "Alpena", "Montmorency", "Oscoda", "Presque Isle", "Cheboygan", "Alcona"],
     center: [44.8, -85.0],
     zoom: 8,
-    color: "hsl(280, 40%, 45%)",
+    color: "hsl(205, 80%, 33%)",
   },
   {
     id: "upper-peninsula",
@@ -63,7 +63,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Marquette", "Chippewa", "Delta", "Houghton", "Dickinson", "Menominee", "Baraga", "Gogebic", "Iron", "Keweenaw", "Luce", "Mackinac", "Ontonagon", "Schoolcraft", "Alger"],
     center: [46.3, -86.5],
     zoom: 7,
-    color: "hsl(200, 45%, 40%)",
+    color: "hsl(200, 65%, 40%)",
   },
 ];
 
