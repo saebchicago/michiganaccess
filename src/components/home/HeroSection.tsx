@@ -404,23 +404,28 @@ const HeroSection = () => {
             ))}
           </motion.div>
 
-          {/* Quick-link pills */}
+          {/* Popular shortcut pills */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.5 }}
-            className="mt-4 flex flex-wrap items-center justify-center gap-2"
+            className="mt-6 flex flex-col items-center gap-2"
           >
-            {quickPills.map((pill) => (
-              <Link
-                key={pill.label}
-                to={pill.href}
-                className="group inline-flex items-center gap-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
-              >
-                <pill.icon className="h-3.5 w-3.5" aria-hidden="true" />
-                {pill.label}
-              </Link>
-            ))}
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-primary-foreground/45">
+              Popular shortcuts
+            </span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {quickPills.map((pill) => (
+                <Link
+                  key={pill.label}
+                  to={pill.href}
+                  className="group inline-flex items-center gap-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
+                >
+                  <pill.icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  {pill.label}
+                </Link>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>

@@ -1,14 +1,39 @@
-import { User, Building2, Landmark, Heart, Globe, Accessibility } from "lucide-react";
+import { User, Building2, BarChart3, Heart, Globe, Accessibility } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCounty, type Audience, type SubPersona } from "@/contexts/CountyContext";
-import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 
-const audienceIds = [
-  { id: "resident" as Audience, icon: User, tKey: "resident" },
-  { id: "health-system" as Audience, icon: Building2, tKey: "health_system" },
-  { id: "policymaker" as Audience, icon: Landmark, tKey: "policymaker" },
+// Display labels and scroll targets for each audience button.
+// scrollTarget must match an id added to the relevant section in Index.tsx.
+const audienceIds: {
+  id: Audience;
+  icon: React.ElementType;
+  label: string;
+  desc: string;
+  scrollTarget: string;
+}[] = [
+  {
+    id: "resident",
+    icon: User,
+    label: "Residents",
+    desc: "Find programs, care, and services for you and your family",
+    scrollTarget: "#for-residents",
+  },
+  {
+    id: "health-system",
+    icon: Building2,
+    label: "Organizations",
+    desc: "Professional tools, data exports, and partnership resources",
+    scrollTarget: "#for-organizations",
+  },
+  {
+    id: "policymaker",
+    icon: BarChart3,
+    label: "Data & Research",
+    desc: "Equity metrics, statewide health data, and county comparisons",
+    scrollTarget: "#community-health-equity",
+  },
 ];
 
 const SUB_PERSONAS: { id: SubPersona; label: string; icon: typeof Heart }[] = [
@@ -17,16 +42,19 @@ const SUB_PERSONAS: { id: SubPersona; label: string; icon: typeof Heart }[] = [
   { id: "disabled", label: "Disability Services", icon: Accessibility },
 ];
 
+function scrollTo(selector: string) {
+  const el = document.querySelector(selector);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 export default function AudienceSelector() {
   const { audience, setAudience, subPersonas, toggleSubPersona } = useCounty();
-  const { t } = useTranslation();
-
   const isResident = audience === "resident";
 
   return (
-    <section className="py-4" aria-label="Personalize your experience">
+    <section className="py-5 border-b border-border/40" aria-label="Who is this for?">
       <div className="container">
-        <p className="text-xs text-muted-foreground text-center mb-2">{t("audience.personalizeFor")}</p>
+        <p className="text-xs text-muted-foreground text-center mb-3 font-medium">Who is this for?</p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {audienceIds.map((a) => {
             const active = audience === a.id;
@@ -39,12 +67,18 @@ export default function AudienceSelector() {
                   "gap-1.5 text-xs transition-all min-h-[44px]",
                   active ? "shadow-md" : "hover:border-primary/40"
                 )}
-                onClick={() => setAudience(active ? null : a.id)}
+                onClick={() => {
+                  setAudience(active ? null : a.id);
+                  if (!active) {
+                    // Small delay so section renders before scroll
+                    setTimeout(() => scrollTo(a.scrollTarget), 80);
+                  }
+                }}
                 aria-pressed={active}
-                title={t(`audience.${a.tKey}_desc`)}
+                title={a.desc}
               >
                 <a.icon className="h-3.5 w-3.5" aria-hidden="true" />
-                {t(`audience.${a.tKey}`)}
+                {a.label}
               </Button>
             );
           })}

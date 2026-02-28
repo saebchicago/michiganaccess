@@ -71,9 +71,12 @@ export default function RegionalGateway() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [hovered, setHovered] = useState<string | null>(null);
+  // On touch/mobile: first tap selects (shows info panel), second tap navigates
+  const [selected, setSelected] = useState<string | null>(null);
   const [geoOpen, setGeoOpen] = useState(false);
   const [geoStatus, setGeoStatus] = useState<"idle" | "loading">("idle");
-  const hoveredRegion = MICHIGAN_REGIONS.find((r) => r.id === hovered);
+  // Info panel shows for hovered region (desktop) OR touch-selected region (mobile)
+  const hoveredRegion = MICHIGAN_REGIONS.find((r) => r.id === (hovered ?? selected));
 
   const hasGeoCache = useMemo(() => !!localStorage.getItem("mi-geo-county"), []);
 
@@ -218,7 +221,7 @@ export default function RegionalGateway() {
                           const [line1, line2] = REGION_SHORT_NAME[region.id] ?? [region.name, ""];
                           const vitals = REGION_VITALS[region.id];
                           if (!path) return null;
-                          const isHovered = hovered === region.id;
+                          const isActive = hovered === region.id || selected === region.id;
 
                           return (
                             <g key={region.id}>
@@ -231,20 +234,36 @@ export default function RegionalGateway() {
                               <path
                                 d={path}
                                 fill={region.color}
-                                fillOpacity={isHovered ? 1 : 0.45}
+                                fillOpacity={isActive ? 1 : 0.45}
                                 stroke={region.color}
-                                strokeWidth={isHovered ? 2.5 : 1.5}
-                                strokeOpacity={isHovered ? 1 : 0.75}
-                                filter={isHovered ? "url(#region-glow)" : undefined}
+                                strokeWidth={isActive ? 2.5 : 1.5}
+                                strokeOpacity={isActive ? 1 : 0.75}
+                                filter={isActive ? "url(#region-glow)" : undefined}
                                 style={{
                                   transition: "fill-opacity 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease",
                                   cursor: "pointer",
                                 }}
                                 onMouseEnter={() => setHovered(region.id)}
                                 onMouseLeave={() => setHovered(null)}
-                                onClick={(e) => { e.stopPropagation(); navigate(`/region/${region.id}`); }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (isMobile) {
+                                    // First tap: select to preview; second tap on same: navigate
+                                    if (selected === region.id) {
+                                      navigate(`/region/${region.id}`);
+                                    } else {
+                                      setSelected(region.id);
+                                    }
+                                  } else {
+                                    navigate(`/region/${region.id}`);
+                                  }
+                                }}
                                 role="button"
-                                aria-label={`Go to ${region.name}`}
+                                aria-label={
+                                  isMobile && selected !== region.id
+                                    ? `Preview ${region.name}`
+                                    : `Go to ${region.name}`
+                                }
                               />
 
                               {/* Line 1 label — white with dark stroke for universal readability */}
@@ -443,6 +462,12 @@ export default function RegionalGateway() {
                       Explore {hoveredRegion.name}
                       <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                     </Button>
+                    {/* Mobile hint — only visible when region is touch-selected */}
+                    {isMobile && selected === hoveredRegion.id && (
+                      <p className="text-center text-[10px] text-muted-foreground mt-1.5">
+                        Tap the map region again to open →
+                      </p>
+                    )}
                   </div>
                 </motion.div>
               ) : (
