@@ -1,5 +1,5 @@
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
-import { useState, lazy, Suspense } from "react";
+import { useState, lazy, Suspense, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -72,15 +72,24 @@ function MobileAccordionToggle({
   );
 }
 
+export type PersonaView = "resident" | "professional";
+
 const Index = () => {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const [wizardOpen, setWizardOpen] = useState(false);
+  const [personaView, setPersonaView] = useState<PersonaView>("resident");
 
   // Mobile accordions — collapsed on mobile by default, open on desktop
   const [nearbyOpen, setNearbyOpen] = useState(!isMobile);
   const [mapOpen, setMapOpen] = useState(!isMobile);
   const [proOpen, setProOpen] = useState(!isMobile);
+
+  const isProfessional = personaView === "professional";
+
+  const handlePersonaChange = useCallback((view: PersonaView) => {
+    setPersonaView(view);
+  }, []);
 
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
@@ -112,8 +121,8 @@ const Index = () => {
       </div>
       <DiscoveryWizard open={wizardOpen} onOpenChange={setWizardOpen} />
 
-      {/* "Who is this for?" strip — buttons scroll to id-anchored sections below */}
-      <AudienceSelector />
+      {/* "Who is this for?" strip — also drives persona view */}
+      <AudienceSelector onPersonaChange={handlePersonaChange} />
 
       {/* ── anchor: #for-residents → GuidedPathways ── */}
       <div id="for-residents">
@@ -140,87 +149,88 @@ const Index = () => {
       <SocialProofStrip />
 
       {/* ═══════════════════════════════════════════════════════
-          COMMUNITY HEALTH & EQUITY BAND
-          anchor: #community-health-equity
-          Groups: equity insight cards + county heatmap + CTA
+          COMMUNITY HEALTH & EQUITY BAND — Professional only
       ═══════════════════════════════════════════════════════ */}
-      <LazySection minHeight="200px">
-        <section id="community-health-equity" className="py-14 bg-muted/20">
-          <div className="container">
+      {isProfessional && (
+        <LazySection minHeight="200px">
+          <section id="community-health-equity" className="py-14 bg-muted/20">
+            <div className="container">
 
-            {/* Band header */}
-            <div className="mb-8 text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-4">
-                <Heart className="h-3.5 w-3.5" aria-hidden="true" />
-                Community Data
-              </div>
-              <h2 className="text-2xl font-bold text-foreground md:text-3xl mb-2">
-                Community Health & Equity
-              </h2>
-              <p className="text-muted-foreground">
-                Michigan residents face unequal barriers to health. Understanding these disparities
-                helps residents, advocates, and policymakers drive meaningful change.
-              </p>
-            </div>
-
-            {/* Equity insight cards */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-8">
-              <EquityInsightCard
-                icon={Heart} title="Black Infant Mortality" stat="2.4x higher"
-                description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
-                color="coral" trend="up" ctaText="View equity data" ctaHref="/data-and-insights"
-              />
-              <EquityInsightCard
-                icon={Users} title="Rural Uninsured Rate" stat="14%"
-                description="Rural Michiganders are twice as likely to be uninsured as urban residents."
-                color="gold" trend="stable" ctaText="View equity data" ctaHref="/data-and-insights"
-              />
-              <EquityInsightCard
-                icon={AlertCircle} title="Primary Care Shortage" stat="23 counties"
-                description="Nearly a third of Michigan counties lack adequate primary care providers."
-                color="teal" trend="down" ctaText="View equity data" ctaHref="/data-and-insights"
-              />
-            </div>
-
-            {/* County heatmap — collapses on mobile */}
-            <MobileAccordionToggle
-              open={mapOpen}
-              openLabel="Hide county health map"
-              closedLabel="Advanced: Explore statewide health map"
-              onToggle={() => setMapOpen((v) => !v)}
-            />
-            {/* On desktop: always visible via open={true | !isMobile} */}
-            <Collapsible open={mapOpen || !isMobile} onOpenChange={setMapOpen}>
-              <CollapsibleContent>
-                <div className="pt-4 pb-2">
-                  <Suspense fallback={<SectionFallback />}>
-                    <div className="max-w-5xl mx-auto">
-                      <CountyChoropleth highlightCounty="Oakland" />
-                    </div>
-                  </Suspense>
+              {/* Band header */}
+              <div className="mb-8 text-center max-w-2xl mx-auto">
+                <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-4">
+                  <Heart className="h-3.5 w-3.5" aria-hidden="true" />
+                  Community Data
                 </div>
-              </CollapsibleContent>
-            </Collapsible>
+                <h2 className="text-2xl font-bold text-foreground md:text-3xl mb-2">
+                  Community Health & Equity
+                </h2>
+                <p className="text-muted-foreground">
+                  Michigan residents face unequal barriers to health. Understanding these disparities
+                  helps residents, advocates, and policymakers drive meaningful change.
+                </p>
+              </div>
 
-            {/* Primary CTA */}
-            <div className="mt-8 text-center">
-              <Link to="/data-and-insights">
-                <Button size="lg" className="gap-2">
-                  Open full health & equity dashboard <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Button>
-              </Link>
+              {/* Equity insight cards */}
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+                <EquityInsightCard
+                  icon={Heart} title="Black Infant Mortality" stat="2.4x higher"
+                  description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
+                  color="coral" trend="up" ctaText="View equity data" ctaHref="/data-and-insights"
+                />
+                <EquityInsightCard
+                  icon={Users} title="Rural Uninsured Rate" stat="14%"
+                  description="Rural Michiganders are twice as likely to be uninsured as urban residents."
+                  color="gold" trend="stable" ctaText="View equity data" ctaHref="/data-and-insights"
+                />
+                <EquityInsightCard
+                  icon={AlertCircle} title="Primary Care Shortage" stat="23 counties"
+                  description="Nearly a third of Michigan counties lack adequate primary care providers."
+                  color="teal" trend="down" ctaText="View equity data" ctaHref="/data-and-insights"
+                />
+              </div>
+
+              {/* County heatmap — collapses on mobile */}
+              <MobileAccordionToggle
+                open={mapOpen}
+                openLabel="Hide county health map"
+                closedLabel="Advanced: Explore statewide health map"
+                onToggle={() => setMapOpen((v) => !v)}
+              />
+              {/* On desktop: always visible via open={true | !isMobile} */}
+              <Collapsible open={mapOpen || !isMobile} onOpenChange={setMapOpen}>
+                <CollapsibleContent>
+                  <div className="pt-4 pb-2">
+                    <Suspense fallback={<SectionFallback />}>
+                      <div className="max-w-5xl mx-auto">
+                        <CountyChoropleth highlightCounty="Oakland" />
+                      </div>
+                    </Suspense>
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* Primary CTA */}
+              <div className="mt-8 text-center">
+                <Link to="/data-and-insights">
+                  <Button size="lg" className="gap-2">
+                    Open full health & equity dashboard <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </div>
-        </section>
-      </LazySection>
+          </section>
+        </LazySection>
+      )}
 
       {/* ═══ LAYER 3 — PERSONALIZED SNAPSHOT ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
         <LazySection>
           <Suspense fallback={<SectionFallback />}>
-            <HealthDataSnapshot />
+            {/* HealthDataSnapshot — professional only */}
+            {isProfessional && <HealthDataSnapshot />}
 
-            {/* NearbyResourceFinder — collapses on mobile with explanatory label */}
+            {/* NearbyResourceFinder — always visible */}
             <MobileAccordionToggle
               open={nearbyOpen}
               openLabel="Hide address search"

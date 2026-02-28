@@ -24,6 +24,11 @@ export interface CommunityResource {
   is_active: boolean | null;
   latitude: number | null;
   longitude: number | null;
+  // Phase 2 data segmentation — optional until backend adds columns
+  is_open_now?: boolean | null;
+  is_24_7?: boolean | null;
+  on_bus_line?: boolean | null;
+  no_id_required?: boolean | null;
 }
 
 export function useCommunityResources(resourceType?: string, county?: string | string[] | null) {
