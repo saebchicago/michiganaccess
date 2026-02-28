@@ -230,13 +230,14 @@ export default function RegionalGateway() {
                               {/* Region polygon */}
                               <path
                                 d={path}
-                                fill={isHovered ? region.color : `${region.color}66`}
+                                fill={region.color}
+                                fillOpacity={isHovered ? 1 : 0.45}
                                 stroke={region.color}
                                 strokeWidth={isHovered ? 2.5 : 1.5}
                                 strokeOpacity={isHovered ? 1 : 0.75}
                                 filter={isHovered ? "url(#region-glow)" : undefined}
                                 style={{
-                                  transition: "fill 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease",
+                                  transition: "fill-opacity 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease",
                                   cursor: "pointer",
                                 }}
                                 onMouseEnter={() => setHovered(region.id)}

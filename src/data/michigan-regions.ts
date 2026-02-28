@@ -10,6 +10,12 @@ export interface MichiganRegion {
   color: string;
 }
 
+// Colors use user-specified Michigan palette:
+//   Great Lakes blue  #01579B  (Southeast, Northern Lower)
+//   Forest green      #2E7D32  (West Michigan)
+//   Harvest orange    #F57C00  (East Central / Thumb)
+//   Teal              #26A69A  (South Central)
+//   Lake Superior     #0277BD  (Upper Peninsula — blue variant)
 export const MICHIGAN_REGIONS: MichiganRegion[] = [
   {
     id: "southeast",
@@ -18,7 +24,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Wayne", "Oakland", "Macomb", "Washtenaw", "Livingston", "Monroe", "St. Clair", "Lenawee", "Lapeer"],
     center: [42.45, -83.35],
     zoom: 9,
-    color: "hsl(215, 72%, 30%)",
+    color: "#01579B",
   },
   {
     id: "south-central",
@@ -27,7 +33,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Ingham", "Kalamazoo", "Calhoun", "Jackson", "Eaton", "Barry", "Branch", "Hillsdale", "Ionia", "Clinton", "Shiawassee", "Gratiot"],
     center: [42.55, -84.55],
     zoom: 9,
-    color: "hsl(174, 60%, 34%)",
+    color: "#26A69A",
   },
   {
     id: "west",
@@ -36,7 +42,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Kent", "Ottawa", "Muskegon", "Allegan", "Berrien", "Van Buren", "Cass", "St. Joseph", "Newaygo", "Oceana", "Mason", "Manistee", "Lake", "Osceola", "Mecosta", "Montcalm"],
     center: [43.1, -85.9],
     zoom: 8,
-    color: "hsl(122, 42%, 29%)",
+    color: "#2E7D32",
   },
   {
     id: "east-central",
@@ -45,7 +51,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Genesee", "Saginaw", "Bay", "Midland", "Tuscola", "Huron", "Sanilac", "Arenac", "Gladwin", "Isabella", "Clare", "Gratiot"],
     center: [43.4, -83.8],
     zoom: 9,
-    color: "hsl(32, 88%, 46%)",
+    color: "#F57C00",
   },
   {
     id: "northwest",
@@ -54,7 +60,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Grand Traverse", "Emmet", "Charlevoix", "Antrim", "Benzie", "Leelanau", "Kalkaska", "Wexford", "Missaukee", "Roscommon", "Otsego", "Crawford", "Ogemaw", "Iosco", "Alpena", "Montmorency", "Oscoda", "Presque Isle", "Cheboygan", "Alcona"],
     center: [44.8, -85.0],
     zoom: 8,
-    color: "hsl(205, 80%, 33%)",
+    color: "#0288D1",
   },
   {
     id: "upper-peninsula",
@@ -63,7 +69,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
     counties: ["Marquette", "Chippewa", "Delta", "Houghton", "Dickinson", "Menominee", "Baraga", "Gogebic", "Iron", "Keweenaw", "Luce", "Mackinac", "Ontonagon", "Schoolcraft", "Alger"],
     center: [46.3, -86.5],
     zoom: 7,
-    color: "hsl(200, 65%, 40%)",
+    color: "#0277BD",
   },
 ];
 
