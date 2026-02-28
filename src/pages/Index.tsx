@@ -49,6 +49,7 @@ const CommunityAlerts = lazy(() => import("@/components/home/CommunityAlerts"));
 const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
 const SuccessStories = lazy(() => import("@/components/home/SuccessStories"));
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
+const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
 
 const SectionFallback = () => (
   <div className="py-8 flex justify-center">
@@ -233,6 +234,13 @@ const Index = () => {
       </LazySection>
 
       <SocialProofStrip />
+
+      {/* ═══ CIVIC DATA HUB CALLOUT ═══ */}
+      <LazySection minHeight="60px">
+        <Suspense fallback={<SectionFallback />}>
+          <CivicDataCalloutCard />
+        </Suspense>
+      </LazySection>
 
       {/* ═══════════════════════════════════════════════════════
           COMMUNITY HEALTH & EQUITY BAND — Professional only
