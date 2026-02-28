@@ -203,7 +203,7 @@ const Index = () => {
             <div id="for-residents">
               <GuidedPathways />
             </div>
-            <AuthorityStrip />          <div className="flex justify-center py-4">           <Link to="/data-and-insights">             <Button variant="outline" size="sm" className="gap-2 rounded-full">               <BarChart3 className="h-4 w-4" aria-hidden="true" />               Explore data & insights             </Button>           </Link>         </div> <
+            <AuthorityStrip />
             <div className="flex justify-center py-4">
               <Link to="/data-and-insights">
                 <Button variant="outline" size="sm" className="gap-2 rounded-full">
