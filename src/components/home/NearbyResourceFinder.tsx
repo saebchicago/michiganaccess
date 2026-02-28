@@ -208,10 +208,10 @@ export default function NearbyResourceFinder() {
             Location-Based Discovery
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Find Services Near You
+            Find Services Near Your Address
           </h2>
           <p className="mt-2 text-sm text-muted-foreground max-w-lg mx-auto">
-            Enter a Michigan address to discover resources within your area based on our database. Results are not exhaustive of all available services. 
+            Enter a specific Michigan address to get distance-sorted results — this tool calculates actual proximity, unlike the keyword search above.
             <span className="font-medium text-primary"> 100% private — no data stored.</span>
           </p>
           <p className="text-[10px] text-muted-foreground max-w-md mx-auto mt-1">
