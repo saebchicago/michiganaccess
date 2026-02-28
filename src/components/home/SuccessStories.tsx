@@ -48,7 +48,7 @@ const SuccessStories = () => (
       <div className="grid gap-4 sm:grid-cols-3">
         {useCases.map((uc, i) => (
           <motion.div
-            key={i}
+            key={uc.title}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

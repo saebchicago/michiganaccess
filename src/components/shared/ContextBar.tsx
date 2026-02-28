@@ -260,7 +260,7 @@ export default function ContextBar() {
             {!eligibility.fplPercent && <EligibilityPopover />}
             {lastUpdated && (
               <>
-                <span className="text-border">·</span>
+                <span className="text-muted-foreground/40">·</span>
                 <div className="flex items-center gap-1 shrink-0">
                   <Clock className="h-2.5 w-2.5" aria-hidden="true" />
                   <span>Updated {lastUpdated}</span>
@@ -319,7 +319,7 @@ export default function ContextBar() {
         {eligibilityChip}
         {!eligibility.fplPercent && <EligibilityPopover />}
 
-        <span className="text-border">·</span>
+        <span className="text-muted-foreground/40">·</span>
 
         {/* Data freshness */}
         {lastUpdated && (
@@ -329,7 +329,7 @@ export default function ContextBar() {
           </div>
         )}
 
-        <span className="text-border">·</span>
+        <span className="text-muted-foreground/40">·</span>
 
         {/* What's this */}
         <Tooltip>
