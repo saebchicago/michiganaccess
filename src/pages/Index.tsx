@@ -1,7 +1,7 @@
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import { useState, lazy, Suspense, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle, ArrowRight } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle, ArrowRight, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import Layout from "@/components/layout/Layout";
@@ -18,6 +18,7 @@ import SocialProofStrip from "@/components/home/SocialProofStrip";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { AccessChat } from "@/components/AccessChat";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 
@@ -289,6 +290,44 @@ const Index = () => {
           </Suspense>
         </LazySection>
       </SectionErrorBoundary>
+
+      {/* ═══ PROFESSIONAL VIEW DISCOVERY CTA — Resident only ═══ */}
+      {!isProfessional && (
+        <section className="py-10 border-t border-border/30">
+          <div className="container max-w-2xl">
+            <Card className="border-primary/15 bg-gradient-to-br from-primary/5 to-accent/5 shadow-sm">
+              <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-6 text-center sm:text-left">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
+                  <BarChart3 className="h-6 w-6 text-primary" aria-hidden="true" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-foreground mb-1">
+                    Are you a health professional, researcher, or policymaker?
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    Access county heatmaps, equity dashboards, export tools, and statewide health data.
+                  </p>
+                </div>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="gap-1.5 whitespace-nowrap"
+                  onClick={() => {
+                    handlePersonaChange("professional");
+                    setTimeout(() => {
+                      const el = document.querySelector("#community-health-equity");
+                      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }, 150);
+                  }}
+                >
+                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                  Switch to Professional View
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+      )}
 
       <AccessChat />
     </Layout>
