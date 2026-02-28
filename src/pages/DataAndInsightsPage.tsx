@@ -239,6 +239,23 @@ export default function DataAndInsightsPage() {
               </Suspense>
             </div>
 
+            {/* CTA: Full Compare Tool */}
+            <div className="rounded-xl border border-primary/20 bg-primary/[0.04] p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="flex-1 space-y-1">
+                <p className="text-sm font-semibold text-foreground">Want the full comparison experience?</p>
+                <p className="text-xs text-muted-foreground">
+                  The Compare Counties tool adds Civic Insight scores, equity lens, community voice ratings, insurance breakdown, and PDF export — for up to 4 counties at once.
+                </p>
+              </div>
+              <a
+                href="/compare"
+                className="shrink-0 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                Open Compare Tool
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+
             {/* CSV Export */}
             <Suspense fallback={<SectionFallback />}>
               <CSVExportPanel />
