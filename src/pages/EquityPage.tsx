@@ -87,7 +87,7 @@ const EquityPage = () => {
               <h2 className="text-lg font-bold text-foreground mb-1 flex items-center gap-2"><Clock className="h-5 w-5 text-primary" /> Travel Time Burden — HPSA-Designated Counties</h2>
               <p className="text-xs text-muted-foreground mb-4">Average estimated drive time to nearest primary care facility in selected underserved counties. Source: HRSA Health Professional Shortage Area (HPSA) designations.</p>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm min-w-[500px]">
                   <thead><tr className="border-b"><th className="py-2 text-left text-xs text-muted-foreground font-medium">County</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">Avg. Drive Time</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">Nearest PCP Area</th><th className="py-2 text-center text-xs text-muted-foreground font-medium">HPSA Designated</th></tr></thead>
                   <tbody>
                     {travelBurden.map((t) => (

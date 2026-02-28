@@ -203,7 +203,7 @@ export default function SearchTrendsPage() {
               <Card>
                 <CardContent className="py-4">
                   <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
+                    <table className="w-full text-sm min-w-[500px]">
                       <thead>
                         <tr className="border-b border-border">
                           <th className="text-left py-2 font-medium text-muted-foreground">#</th>

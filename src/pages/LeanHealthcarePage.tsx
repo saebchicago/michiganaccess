@@ -113,7 +113,7 @@ const LeanHealthcarePage = () => {
                   <TrendingUp className="h-4 w-4 text-primary" /> Waste Elimination Summary
                 </h2>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                  <table className="w-full text-sm min-w-[500px]">
                     <thead>
                       <tr className="border-b">
                         <th className="py-2 text-left text-xs text-muted-foreground font-medium">Metric</th>
