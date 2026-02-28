@@ -76,7 +76,7 @@ function TrustPanel({ updated }: { updated: string }) {
               <span className="text-xs text-muted-foreground">Updated {updated}</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Built by citizens, not a government agency—aimed at enthusiastic, easy access to help and local civic
+              Built by citizens, not a government agency—aimed at enthusiastic, easy access to help and local civic intelligence. Expanding coverage via Michigan 2-1-1, library services, notary guidance, and open GIS layers., not a government agency—aimed at enthusiastic, easy access to help and local civic
               intelligence.
             </p>
           </div>
@@ -203,7 +203,7 @@ const Index = () => {
             <div id="for-residents">
               <GuidedPathways />
             </div>
-            <AuthorityStrip /> <AuthorityStrip />
+            <AuthorityStrip />          <div className="flex justify-center py-4">           <Link to="/data-and-insights">             <Button variant="outline" size="sm" className="gap-2 rounded-full">               <BarChart3 className="h-4 w-4" aria-hidden="true" />               Explore data & insights             </Button>           </Link>         </div> <
             <div className="flex justify-center py-4">
               <Link to="/data-and-insights">
                 <Button variant="outline" size="sm" className="gap-2 rounded-full">
