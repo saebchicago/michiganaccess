@@ -237,9 +237,6 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.5 }}
             className="mt-8 mx-auto max-w-xl relative"
-            role="combobox"
-            aria-expanded={showDropdown}
-            aria-haspopup="listbox"
           >
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" aria-hidden="true" />
@@ -252,7 +249,10 @@ const HeroSection = () => {
                 onKeyDown={handleKeyDown}
                 placeholder="Search by city, ZIP, county, service, or doctor name…"
                 className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
+                role="combobox"
                 aria-label="Search for services by location, doctor name, or NPI"
+                aria-expanded={showDropdown}
+                aria-haspopup="listbox"
                 aria-autocomplete="list"
                 aria-controls="hero-search-suggestions"
                 aria-activedescendant={activeIndex >= 0 ? `hero-suggestion-${activeIndex}` : undefined}

@@ -43,7 +43,7 @@ const Layout = ({ children }: LayoutProps) => (
       </motion.main>
     </ErrorBoundary>
     <PublicTrustBar />
-<Footer />
+    <Footer />
     <ScrollToTop />
     <Suspense fallback={null}>
       <PageFeedback />

@@ -15,7 +15,7 @@ const CrisisBar = () => {
     <div
       id="crisis-bar"
       className="sticky top-0 z-crisis-bar bg-michigan-coral/95 backdrop-blur-sm border-b-2 border-michigan-coral/30 shadow-sm"
-      role="banner"
+      role="region"
       aria-label="Crisis resources and safety options"
     >
       <div className="container flex flex-wrap items-center justify-between gap-2 md:gap-3 py-2.5 text-xs md:text-sm">
