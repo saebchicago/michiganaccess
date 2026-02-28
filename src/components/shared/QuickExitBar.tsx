@@ -15,7 +15,7 @@ export default function QuickExitBar() {
     // 2. Open weather.com in new tab
     window.open("https://www.weather.com", "_blank", "noopener,noreferrer");
     // 3. Replace current history entry so back button can't return
-    window.location.replace("https://www.google.com/search?q=Michigan+weather");
+    window.location.replace("https://www.weather.com");
   }, []);
 
   // Escape key handler (skip when typing in form fields)
