@@ -8,7 +8,7 @@
  *   • Civic Insight Score (0-100 gauge) per county
  *   • Specialists-to-population, insurance breakdown, medical debt rows
  */
-import { useState, useMemo, useCallback, useRef } from "react";
+import { useState, useMemo, useCallback, useRef, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Plus, X, BarChart3, MapPin, Download, Sparkles,
@@ -22,19 +22,27 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { useCensusACS, getCensusValue, formatDollars, formatCount } from "@/hooks/useCensusACS";
+import { useCensusACS, getCensusValue } from "@/hooks/useCensusACS";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
   ResponsiveContainer, Tooltip as RTooltip, Legend,
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, ReferenceLine,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, ReferenceLine, Cell,
 } from "recharts";
 import { toast } from "sonner";
+
+// ── Animation variants ────────────────────────────────────────────────────────
+const fadeUp = {
+  hidden: { opacity: 0, y: 18 },
+  visible: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, delay: i * 0.07, ease: "easeOut" },
+  }),
+};
 
 // ── Color palette ─────────────────────────────────────────────────────────────
 const CHART_COLORS = ["#01579B", "#2E7D32", "#F57C00", "#26A69A"];
@@ -422,6 +430,7 @@ export default function ComparePlacesPage() {
 
         {/* ── Civic Insight Score gauges ── */}
         {!allLoading && (
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-base flex items-center gap-2">
@@ -446,10 +455,12 @@ export default function ComparePlacesPage() {
               </div>
             </CardContent>
           </Card>
+          </motion.div>
         )}
 
         {/* ── Radar Chart ── */}
         {radarData.length > 0 && !allLoading && (
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Performance Radar</CardTitle>
@@ -478,10 +489,12 @@ export default function ComparePlacesPage() {
               </ResponsiveContainer>
             </CardContent>
           </Card>
+          </motion.div>
         )}
 
         {/* ── Income Bar Chart with MI benchmark ── */}
         {barData.some((d) => d.income > 0) && !allLoading && (
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Median Household Income vs. MI Average</CardTitle>
@@ -497,16 +510,18 @@ export default function ComparePlacesPage() {
                   <RTooltip formatter={(v: number) => [`$${v.toLocaleString()}`, "Median Income"]} />
                   <Bar dataKey="income" radius={[4, 4, 0, 0]}>
                     {barData.map((_, i) => (
-                      <rect key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
+                      <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
                     ))}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>
+          </motion.div>
         )}
 
         {/* ── Main comparison table ── */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
         <Card>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
@@ -539,8 +554,8 @@ export default function ComparePlacesPage() {
                 </thead>
                 <tbody>
                   {sections.map(({ section, metrics }) => (
-                    <>
-                      <tr key={`section-${section}`}>
+                    <Fragment key={section}>
+                      <tr>
                         <td colSpan={selected.length + 2} className="pt-4 pb-1">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                             {SECTION_LABELS[section]}
@@ -597,15 +612,17 @@ export default function ComparePlacesPage() {
                           </tr>
                         );
                       })}
-                    </>
+                    </Fragment>
                   ))}
                 </tbody>
               </table>
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* ── Insurance Breakdown ── */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={4}>
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Insurance Coverage Breakdown</CardTitle>
@@ -640,7 +657,6 @@ export default function ComparePlacesPage() {
                       {selected.map((county, i) => {
                         const ins = getInsurance(county);
                         const val = ins[key as keyof typeof ins];
-                        const isWorstUninsured = key === "uninsured" && equityLens && val === Math.max(...selected.map(c => getInsurance(c).uninsured));
                         return (
                           <td key={i} className="py-2.5 px-3 text-right">
                             <span className={[
@@ -659,6 +675,7 @@ export default function ComparePlacesPage() {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
 
         {/* ── Community Voice ── */}
         <AnimatePresence>
