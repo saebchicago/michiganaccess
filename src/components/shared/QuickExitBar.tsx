@@ -12,9 +12,7 @@ export default function QuickExitBar() {
   const triggerExit = useCallback(() => {
     // 1. Hide all visible content immediately
     document.body.style.visibility = "hidden";
-    // 2. Open weather.com in new tab
-    window.open("https://www.weather.com", "_blank", "noopener,noreferrer");
-    // 3. Replace current history entry so back button can't return
+    // 2. Replace current history entry so back button can't return
     window.location.replace("https://www.weather.com");
   }, []);
 
@@ -36,7 +34,7 @@ export default function QuickExitBar() {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-[9999] lg:bottom-auto lg:top-0 lg:relative print:hidden"
+      className="fixed bottom-0 left-0 right-0 z-[9999] sm:bottom-auto sm:top-0 sm:relative print:hidden"
       role="region"
       aria-label="Quick exit — leave this site immediately"
     >

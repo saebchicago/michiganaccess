@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import {
   Apple, Home, Bus, Brain, Phone, ExternalLink, MapPin, Clock,
   Globe, Heart, Shield, Users, Filter, Search, Map, List, ChevronDown, ChevronUp, Sparkles,
-  Zap, IdCard, Route
+  Zap, IdCard, Route, AlertTriangle
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { cn } from "@/lib/utils";
@@ -162,13 +162,23 @@ export default function CommunityResourcesPage() {
   const [searchParams] = useSearchParams();
   const urlCounty = searchParams.get("county");
   const urlCategory = searchParams.get("category");
+
+  const dynamicTitle = useMemo(() => {
+    const cat = urlCategory ? categories.find(c => c.key === urlCategory || c.aliases.includes(urlCategory)) : null;
+    const catLabel = cat?.label ?? null;
+    if (catLabel && urlCounty) return `${catLabel} in ${urlCounty} County`;
+    if (catLabel) return `${catLabel} Resources`;
+    if (urlCounty) return `Resources in ${urlCounty} County`;
+    return "Community Resources";
+  }, [urlCategory, urlCounty]);
+
   usePageMeta({
-    title: "Community Resources",
+    title: dynamicTitle,
     description: "Food, housing, transportation, and support services available to Michigan residents.",
     path: "/resources",
     jsonLd: {
       "@type": "WebPage",
-      "name": "Community Resources — Access Michigan",
+      "name": `${dynamicTitle} — Access Michigan`,
       "description": "Food, housing, transportation, and mental health support services across all 83 Michigan counties.",
       "url": "https://accessmi.org/resources",
       "provider": { "@type": "Organization", "name": "Access Michigan" },
@@ -480,9 +490,22 @@ export default function CommunityResourcesPage() {
         {isLoading ? (
           <ContentSkeleton variant="cards" count={6} />
         ) : filtered.length === 0 ? (
-          <EmptyState
-            onReset={() => { setSearch(""); setActiveTab("all"); setCounty("All Counties"); setShowAll(false); }}
-          />
+          <div className="space-y-4">
+            <Card className="border-destructive/30 bg-destructive/5">
+              <CardContent className="py-6 text-center space-y-3">
+                <AlertTriangle className="h-10 w-10 text-destructive mx-auto" />
+                <h3 className="text-lg font-semibold text-foreground">We couldn't find resources matching all these exact filters.</h3>
+                <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                  Try removing a filter, or call{" "}
+                  <a href="tel:211" className="font-bold text-primary underline hover:text-primary/80">2-1-1</a>{" "}
+                  right now to speak with a human who can help.
+                </p>
+                <Button variant="outline" size="sm" onClick={() => { setSearch(""); setActiveTab("all"); setCounty("All Counties"); setActiveSegments(new Set()); setShowAll(false); }}>
+                  Clear all filters
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         ) : (
           <div className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
