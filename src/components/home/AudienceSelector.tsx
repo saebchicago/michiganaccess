@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCounty, type Audience, type SubPersona } from "@/contexts/CountyContext";
 import { cn } from "@/lib/utils";
+import type { PersonaView } from "@/pages/Index";
 
 // Display labels and scroll targets for each audience button.
 // scrollTarget must match an id added to the relevant section in Index.tsx.
@@ -12,6 +13,7 @@ const audienceIds: {
   label: string;
   desc: string;
   scrollTarget: string;
+  personaView: PersonaView;
 }[] = [
   {
     id: "resident",
@@ -19,6 +21,7 @@ const audienceIds: {
     label: "Residents",
     desc: "Find programs, care, and services for you and your family",
     scrollTarget: "#for-residents",
+    personaView: "resident",
   },
   {
     id: "health-system",
@@ -26,6 +29,7 @@ const audienceIds: {
     label: "Organizations",
     desc: "Professional tools, data exports, and partnership resources",
     scrollTarget: "#for-organizations",
+    personaView: "professional",
   },
   {
     id: "policymaker",
@@ -33,6 +37,7 @@ const audienceIds: {
     label: "Data & Research",
     desc: "Equity metrics, statewide health data, and county comparisons",
     scrollTarget: "#community-health-equity",
+    personaView: "professional",
   },
 ];
 
@@ -47,7 +52,11 @@ function scrollTo(selector: string) {
   if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-export default function AudienceSelector() {
+interface AudienceSelectorProps {
+  onPersonaChange?: (view: PersonaView) => void;
+}
+
+export default function AudienceSelector({ onPersonaChange }: AudienceSelectorProps) {
   const { audience, setAudience, subPersonas, toggleSubPersona } = useCounty();
   const isResident = audience === "resident";
 
@@ -69,9 +78,12 @@ export default function AudienceSelector() {
                 )}
                 onClick={() => {
                   setAudience(active ? null : a.id);
+                  // Drive persona view on homepage
                   if (!active) {
-                    // Small delay so section renders before scroll
+                    onPersonaChange?.(a.personaView);
                     setTimeout(() => scrollTo(a.scrollTarget), 80);
+                  } else {
+                    onPersonaChange?.("resident");
                   }
                 }}
                 aria-pressed={active}

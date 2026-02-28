@@ -5,9 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
   Apple, Home, Bus, Brain, Phone, ExternalLink, MapPin, Clock,
-  Globe, Heart, Shield, Users, Filter, Search, Map, List, ChevronDown, ChevronUp, Sparkles
+  Globe, Heart, Shield, Users, Filter, Search, Map, List, ChevronDown, ChevronUp, Sparkles,
+  Zap, IdCard, Route
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -140,6 +142,20 @@ const PERSONA_PRIORITY: Record<string, string[]> = {
 
 const INITIAL_VISIBLE = 5;
 
+interface SegmentFilter {
+  key: string;
+  label: string;
+  icon: React.ElementType;
+  match: (r: CommunityResource) => boolean;
+}
+
+const SEGMENT_FILTERS: SegmentFilter[] = [
+  { key: "open_now", label: "Open Now", icon: Clock, match: (r) => r.is_open_now === true || (r.hours != null && /24/.test(r.hours)) },
+  { key: "24_7", label: "24/7 Available", icon: Zap, match: (r) => r.is_24_7 === true || (r.hours != null && /24.*7|24.hour|always/i.test(r.hours)) },
+  { key: "bus_line", label: "On Bus Line", icon: Route, match: (r) => r.on_bus_line === true },
+  { key: "no_id", label: "No ID Required", icon: IdCard, match: (r) => r.no_id_required === true || (r.eligibility_notes != null && /no.*(id|identification).*required/i.test(r.eligibility_notes)) },
+];
+
 export default function CommunityResourcesPage() {
   const { t } = useTranslation();
   const { county: globalCounty, audience } = useCounty();
@@ -173,6 +189,16 @@ export default function CommunityResourcesPage() {
   const [search, setSearch] = useState("");
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const [activeSegments, setActiveSegments] = useState<Set<string>>(new Set());
+
+  const toggleSegment = (key: string) => {
+    setActiveSegments(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next;
+    });
+    setShowAll(false);
+  };
 
   // Sync local county filter with global context (only if no URL override)
   useEffect(() => {
@@ -200,8 +226,17 @@ export default function CommunityResourcesPage() {
         r.services_offered?.some((s) => s.toLowerCase().includes(q))
       );
     }
+    // Segment filters
+    if (activeSegments.size > 0) {
+      result = result.filter(r =>
+        Array.from(activeSegments).every(key => {
+          const seg = SEGMENT_FILTERS.find(s => s.key === key);
+          return seg ? seg.match(r) : true;
+        })
+      );
+    }
     return result;
-  }, [resources, activeTab, county, search]);
+  }, [resources, activeTab, county, search, activeSegments]);
 
   const counts = useMemo(() => {
     const c: Record<string, number> = { all: resources.length };
@@ -400,6 +435,29 @@ export default function CommunityResourcesPage() {
             </Badge>
           </div>
         )}
+
+        {/* Segment filter pills */}
+        <div className="flex flex-wrap gap-2">
+          {SEGMENT_FILTERS.map(sf => {
+            const active = activeSegments.has(sf.key);
+            return (
+              <button
+                key={sf.key}
+                onClick={() => toggleSegment(sf.key)}
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium border transition-all",
+                  active
+                    ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                    : "bg-background text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+                )}
+                aria-pressed={active}
+              >
+                <sf.icon className="h-3.5 w-3.5" />
+                {sf.label}
+              </button>
+            );
+          })}
+        </div>
 
         {/* Filters */}
         <div className="flex items-center justify-between flex-wrap gap-3">
