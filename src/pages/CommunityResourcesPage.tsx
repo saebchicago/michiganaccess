@@ -150,10 +150,10 @@ interface SegmentFilter {
 }
 
 const SEGMENT_FILTERS: SegmentFilter[] = [
-  { key: "open_now", label: "Open Now", icon: Clock, match: (r) => r.is_open_now === true || (r.hours != null && /24/.test(r.hours)) },
-  { key: "24_7", label: "24/7 Available", icon: Zap, match: (r) => r.is_24_7 === true || (r.hours != null && /24.*7|24.hour|always/i.test(r.hours)) },
+  { key: "open_now", label: "Open Now", icon: Clock, match: (r) => r.is_open_now === true },
+  { key: "24_7", label: "24/7 Available", icon: Zap, match: (r) => r.is_24_7 === true },
   { key: "bus_line", label: "On Bus Line", icon: Route, match: (r) => r.on_bus_line === true },
-  { key: "no_id", label: "No ID Required", icon: IdCard, match: (r) => r.no_id_required === true || (r.eligibility_notes != null && /no.*(id|identification).*required/i.test(r.eligibility_notes)) },
+  { key: "no_id", label: "No ID Required", icon: IdCard, match: (r) => r.no_id_required === true },
 ];
 
 export default function CommunityResourcesPage() {

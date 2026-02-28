@@ -172,11 +172,15 @@ export type Database = {
           eligibility_notes: string | null
           hours: string | null
           id: string
+          is_24_7: boolean | null
           is_active: boolean | null
           is_free: boolean | null
+          is_open_now: boolean | null
           languages: string[] | null
           latitude: number | null
           longitude: number | null
+          no_id_required: boolean | null
+          on_bus_line: boolean | null
           organization: string | null
           phone: string | null
           resource_name: string
@@ -198,11 +202,15 @@ export type Database = {
           eligibility_notes?: string | null
           hours?: string | null
           id?: string
+          is_24_7?: boolean | null
           is_active?: boolean | null
           is_free?: boolean | null
+          is_open_now?: boolean | null
           languages?: string[] | null
           latitude?: number | null
           longitude?: number | null
+          no_id_required?: boolean | null
+          on_bus_line?: boolean | null
           organization?: string | null
           phone?: string | null
           resource_name: string
@@ -224,11 +232,15 @@ export type Database = {
           eligibility_notes?: string | null
           hours?: string | null
           id?: string
+          is_24_7?: boolean | null
           is_active?: boolean | null
           is_free?: boolean | null
+          is_open_now?: boolean | null
           languages?: string[] | null
           latitude?: number | null
           longitude?: number | null
+          no_id_required?: boolean | null
+          on_bus_line?: boolean | null
           organization?: string | null
           phone?: string | null
           resource_name?: string
