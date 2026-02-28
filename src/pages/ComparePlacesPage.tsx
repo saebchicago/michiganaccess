@@ -535,7 +535,7 @@ export default function ComparePlacesPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-sm min-w-[500px]">
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left py-2 pr-4 text-xs font-semibold text-muted-foreground w-[180px]">Metric</th>
@@ -630,7 +630,7 @@ export default function ComparePlacesPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-sm min-w-[500px]">
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left py-2 text-xs font-semibold text-muted-foreground w-[160px]">Coverage Type</th>

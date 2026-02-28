@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
@@ -180,7 +181,7 @@ const ChangelogPage = () => {
 
           <div className="mt-10 text-center">
             <p className="text-[10px] text-muted-foreground">
-              For partnership inquiries or feature requests, <a href="/contact" className="text-primary hover:underline">reach out</a>.
+              For partnership inquiries or feature requests, <Link to="/contact" className="text-primary hover:underline">reach out</Link>.
             </p>
           </div>
         </div>
