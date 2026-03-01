@@ -32,6 +32,7 @@ import DataConfidenceCard, { buildDataConfidence } from "@/components/shared/Dat
 import ResultHeader from "@/components/shared/ResultHeader";
 import JusticeSection from "@/components/county/JusticeSection";
 import { buildCountySnapshotMetrics } from "@/utils/snapshotMetrics";
+import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSection";
 
 // National benchmarks (Census ACS 2023, HRSA, USDA)
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
@@ -390,6 +391,9 @@ export default function CountyPage() {
             </div>
           </section>
         )}
+
+        {/* Civic Intelligence — 4 pillar cards + detail */}
+        <CivicIntelligenceSection countyName={county} />
 
         {/* Municipalities & Governance */}
         <MunicipalToolkit county={county} />

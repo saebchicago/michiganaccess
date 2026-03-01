@@ -27,6 +27,9 @@ const ENDPOINTS: Record<string, { url: string; transform?: string }> = {
     // Lansing CATA doesn't have a public ArcGIS FeatureServer; placeholder returns empty
     url: "https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/DDOT_Bus_Routes/FeatureServer/0/query?where=1%3D0&outFields=*&f=geojson&outSR=4326",
   },
+  "pfas-sites": {
+    url: "https://services1.arcgis.com/VdSAmGfE7jMMbR2h/arcgis/rest/services/PFAS_Sites_Public/FeatureServer/0/query?where=1%3D1&outFields=Site_Name,County,Site_Type,Investigation_Status,City&f=geojson&outSR=4326&resultRecordCount=500",
+  },
 };
 
 // Convert ESRI JSON (MapServer) to GeoJSON

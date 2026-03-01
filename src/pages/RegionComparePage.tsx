@@ -236,7 +236,7 @@ export default function RegionComparePage() {
               <Card>
                 <CardContent className="py-0">
                   <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
+                    <table className="w-full text-sm min-w-[500px]">
                       <thead>
                         <tr className="border-b">
                           <th className="py-3 text-left font-medium text-muted-foreground text-xs">Metric</th>
@@ -287,7 +287,7 @@ export default function RegionComparePage() {
                 <Card>
                   <CardContent className="py-0">
                     <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
+                      <table className="w-full text-sm min-w-[500px]">
                         <thead>
                           <tr className="border-b">
                             <th className="py-3 text-left font-medium text-muted-foreground text-xs">Metric</th>
@@ -348,7 +348,7 @@ export default function RegionComparePage() {
               <Card>
                 <CardContent className="py-0">
                   <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
+                    <table className="w-full text-sm min-w-[500px]">
                       <thead>
                         <tr className="border-b">
                           <th className="py-3 text-left font-medium text-muted-foreground text-xs">Resource Type</th>

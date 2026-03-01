@@ -1,7 +1,5 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { z } from "https://esm.sh/zod@3.23.8";
-import { Resend } from "npm:resend@4.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -17,7 +15,7 @@ const contactSchema = z.object({
   message: z.string().trim().min(1, "Message is required").max(5000, "Message too long"),
 });
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -59,8 +57,8 @@ serve(async (req) => {
     const resendKey = Deno.env.get("RESEND_API_KEY");
     if (resendKey) {
       try {
-        const resend = new Resend(resendKey);
-        await resend.emails.send({
+        const resendUrl = "https://api.resend.com/emails";
+        const emailBody = {
           from: "Access Michigan <onboarding@resend.dev>",
           to: RECIPIENT_EMAILS,
           subject: `Contact Form: ${subject}`,
@@ -74,8 +72,22 @@ serve(async (req) => {
             </table>
             <p style="margin-top:16px;font-size:12px;color:#888">Sent via Access Michigan contact form.</p>
           `,
+        };
+
+        const emailRes = await fetch(resendUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${resendKey}`,
+          },
+          body: JSON.stringify(emailBody),
         });
-        console.log("Contact email notification sent for:", email);
+
+        if (emailRes.ok) {
+          console.log("Contact email notification sent for:", email);
+        } else {
+          console.error("Resend API error:", await emailRes.text());
+        }
       } catch (emailErr) {
         console.error("Email send failed:", emailErr);
       }

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
@@ -139,9 +140,9 @@ export default function PressPage() {
               <Mail className="h-6 w-6 text-primary flex-shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-foreground">Press Inquiries</p>
-                <a href="/contact" className="text-sm text-primary hover:underline flex items-center gap-1">
+                <Link to="/contact" className="text-sm text-primary hover:underline flex items-center gap-1">
                   Contact Form <ExternalLink className="h-3 w-3" />
-                </a>
+                </Link>
               </div>
             </CardContent>
           </Card>

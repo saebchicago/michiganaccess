@@ -222,7 +222,7 @@ export default function DataExplorerPage() {
                       {/* Data Table */}
                       <Separator />
                       <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
+                        <table className="w-full text-sm min-w-[500px]">
                           <thead>
                             <tr className="border-b">
                               <th className="text-left py-2 text-xs font-semibold text-muted-foreground">Variable</th>

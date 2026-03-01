@@ -288,7 +288,7 @@ export default function RegionalGateway() {
                                   fontWeight="700"
                                   letterSpacing="0.4"
                                   className="pointer-events-none select-none"
-                                  style={{ opacity: isHovered ? 1 : 0.9, transition: "opacity 0.2s ease" }}
+style={{ opacity: hovered === region.id ? 1 : 0.9, transition: "opacity 0.2s ease" }}
                                 >
                                   {line1}
                                 </text>
@@ -308,7 +308,7 @@ export default function RegionalGateway() {
                                   fontWeight="700"
                                   letterSpacing="0.4"
                                   className="pointer-events-none select-none"
-                                  style={{ opacity: isHovered ? 1 : 0.9, transition: "opacity 0.2s ease" }}
+                                  style={{ opacity: hovered === region.id ? 1 : 0.9, transition: "opacity 0.2s ease" }}
                                 >
                                   {line2}
                                 </text>
