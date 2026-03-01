@@ -522,7 +522,7 @@ const HeroSection = () => {
             {[
               { label: "48322 food pantry", query: "48322 food pantry" },
               { label: "Oakland County mental health", query: "Oakland County mental health" },
-              { label: "West Bloomfield doctor", query: "West Bloomfield doctor" },
+              { label: "West Bloomfield doctor", query: "Appeal Insurance Denial" },
             ].map((ex) => (
               <button
                 key={ex.label}
