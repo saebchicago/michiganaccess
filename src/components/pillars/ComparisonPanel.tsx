@@ -7,8 +7,8 @@
  * that data is shown at county level when ZIP-specific data isn't available.
  */
 
-import { useState, useMemo } from "react";
-import { X, Plus, Search, GitCompareArrows, MapPin } from "lucide-react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
+import { X, Plus, Search, GitCompareArrows, MapPin, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -192,7 +192,16 @@ function PillarCardsForCounty({
   }
 }
 
-function ComparisonSummaryRow({ sel }: { sel: GeoSelection }) {
+interface RowData {
+  sel: GeoSelection;
+  population: number;
+  uninsured: string;
+  healthCount: number | null;
+  sudCount: number | null;
+  foodInsec: string;
+}
+
+function useRowData(sel: GeoSelection): RowData {
   const profile = getCountyProfile(sel.countyName);
   const { data: facilities } = useFacilities(undefined, sel.countyName);
   const healthCount = facilities?.filter((f) =>
@@ -202,49 +211,102 @@ function ComparisonSummaryRow({ sel }: { sel: GeoSelection }) {
     f.facility_type === "sud" || f.facility_type === "behavioral_health" ||
     (f.specialties ?? []).some((s: string) => /substance|addiction|behavioral/i.test(s))
   ).length ?? null;
-
   const uninsured = profile.healthHighlights.find((h) => h.label === "Uninsured rate")?.value ?? "—";
   const foodInsec = profile.healthHighlights.find((h) => h.label === "Food insecurity")?.value ?? "—";
+  return { sel, population: profile.population, uninsured, healthCount, sudCount, foodInsec };
+}
 
+function RowDataCollector({ sel, onData }: { sel: GeoSelection; onData: (d: RowData) => void }) {
+  const data = useRowData(sel);
+  React.useEffect(() => { onData(data); }, [data.population, data.healthCount, data.sudCount, data.uninsured, data.foodInsec]);
+  return null;
+}
+
+type SortKey = "label" | "population" | "uninsured" | "healthCount" | "sudCount" | "foodInsec";
+type SortDir = "asc" | "desc";
+
+function parseNumeric(v: string | number | null): number | null {
+  if (v === null || v === "—") return null;
+  if (typeof v === "number") return v;
+  const n = parseFloat(v.replace(/[^0-9.]/g, ""));
+  return isNaN(n) ? null : n;
+}
+
+function SortableHead({ label, sortKey, current, dir, onSort }: { label: string; sortKey: SortKey; current: SortKey; dir: SortDir; onSort: (k: SortKey) => void }) {
+  const active = current === sortKey;
   return (
-    <TableRow>
-      <TableCell className="font-medium text-xs whitespace-nowrap">
-        {sel.type === "zip" && <MapPin className="h-3 w-3 inline mr-1" />}
-        {sel.label}
-      </TableCell>
-      <TableCell className="text-xs">{profile.population > 0 ? profile.population.toLocaleString() : "—"}</TableCell>
-      <TableCell className="text-xs">{uninsured}</TableCell>
-      <TableCell className="text-xs">{healthCount !== null ? healthCount : "—"}</TableCell>
-      <TableCell className="text-xs">{sudCount !== null && sudCount > 0 ? sudCount : "—"}</TableCell>
-      <TableCell className="text-xs">{foodInsec}</TableCell>
-    </TableRow>
+    <TableHead className="text-xs cursor-pointer select-none hover:bg-muted/40 transition-colors" onClick={() => onSort(sortKey)}>
+      <span className="inline-flex items-center gap-1">
+        {label}
+        {active ? (dir === "asc" ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />) : <ArrowUpDown className="h-3 w-3 opacity-30" />}
+      </span>
+    </TableHead>
   );
 }
 
 function ComparisonSummaryTable({ selections }: { selections: GeoSelection[] }) {
+  const [rowMap, setRowMap] = React.useState<Record<string, RowData>>({});
+  const [sortKey, setSortKey] = React.useState<SortKey>("label");
+  const [sortDir, setSortDir] = React.useState<SortDir>("asc");
+
+  const handleData = React.useCallback((d: RowData) => {
+    setRowMap((prev) => ({ ...prev, [d.sel.id]: d }));
+  }, []);
+
+  const handleSort = React.useCallback((key: SortKey) => {
+    setSortDir((prev) => (sortKey === key ? (prev === "asc" ? "desc" : "asc") : "asc"));
+    setSortKey(key);
+  }, [sortKey]);
+
   if (selections.length < 2) return null;
+
+  const rows = selections.map((s) => rowMap[s.id]).filter(Boolean) as RowData[];
+  const sorted = [...rows].sort((a, b) => {
+    const mul = sortDir === "asc" ? 1 : -1;
+    if (sortKey === "label") return mul * a.sel.label.localeCompare(b.sel.label);
+    const aVal = parseNumeric(sortKey === "population" ? a.population : sortKey === "healthCount" ? a.healthCount : sortKey === "sudCount" ? a.sudCount : a[sortKey]);
+    const bVal = parseNumeric(sortKey === "population" ? b.population : sortKey === "healthCount" ? b.healthCount : sortKey === "sudCount" ? b.sudCount : b[sortKey]);
+    if (aVal === null && bVal === null) return 0;
+    if (aVal === null) return 1;
+    if (bVal === null) return -1;
+    return mul * (aVal - bVal);
+  });
+
   return (
-    <Card>
-      <CardContent className="p-0">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-xs">Geography</TableHead>
-              <TableHead className="text-xs">Population</TableHead>
-              <TableHead className="text-xs">Uninsured</TableHead>
-              <TableHead className="text-xs">Health Facilities</TableHead>
-              <TableHead className="text-xs">SUD/BH</TableHead>
-              <TableHead className="text-xs">Food Insecurity</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {selections.map((s) => (
-              <ComparisonSummaryRow key={s.id} sel={s} />
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+    <>
+      {selections.map((s) => <RowDataCollector key={s.id} sel={s} onData={handleData} />)}
+      <Card>
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <SortableHead label="Geography" sortKey="label" current={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortableHead label="Population" sortKey="population" current={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortableHead label="Uninsured" sortKey="uninsured" current={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortableHead label="Health Facilities" sortKey="healthCount" current={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortableHead label="SUD/BH" sortKey="sudCount" current={sortKey} dir={sortDir} onSort={handleSort} />
+                <SortableHead label="Food Insecurity" sortKey="foodInsec" current={sortKey} dir={sortDir} onSort={handleSort} />
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sorted.map((r) => (
+                <TableRow key={r.sel.id}>
+                  <TableCell className="font-medium text-xs whitespace-nowrap">
+                    {r.sel.type === "zip" && <MapPin className="h-3 w-3 inline mr-1" />}
+                    {r.sel.label}
+                  </TableCell>
+                  <TableCell className="text-xs">{r.population > 0 ? r.population.toLocaleString() : "—"}</TableCell>
+                  <TableCell className="text-xs">{r.uninsured}</TableCell>
+                  <TableCell className="text-xs">{r.healthCount !== null ? r.healthCount : "—"}</TableCell>
+                  <TableCell className="text-xs">{r.sudCount !== null && r.sudCount > 0 ? r.sudCount : "—"}</TableCell>
+                  <TableCell className="text-xs">{r.foodInsec}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </>
   );
 }
 
