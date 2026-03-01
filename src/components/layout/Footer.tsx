@@ -35,19 +35,14 @@ const Footer = () => {
     {
       title: t("nav.about"),
       links: [
-        { label: t("nav.about"), href: "/about" },
-        { label: t("nav.contact"), href: "/contact" },
-        { label: "Privacy Policy", href: "/privacy" },
-        { label: "Terms of Use", href: "/terms" },
-        { label: t("footer.methodology"), href: "/methodology" },
-        { label: t("footer.research"), href: "/research" },
-        { label: t("footer.impact"), href: "/impact" },
-        { label: t("footer.technical"), href: "/technical" },
-        { label: "Accessibility", href: "/accessibility" },
-        { label: "Press & Media", href: "/press" },
-        { label: "Site Map", href: "/sitemap" },
-        { label: "Support Us", href: "/support" },
-        { label: t("nav.installApp"), href: "/install" },
+        { label: t("nav.about"),           href: "/about" },
+        { label: t("nav.contact"),          href: "/contact" },
+        { label: t("footer.methodology"),   href: "/methodology" },
+        { label: t("footer.impact"),        href: "/impact" },
+        { label: "Privacy Policy",          href: "/privacy" },
+        { label: "Terms of Use",            href: "/terms" },
+        { label: "Accessibility",           href: "/accessibility" },
+        { label: "Site Map",                href: "/sitemap" },
       ],
     },
     {
@@ -183,16 +178,6 @@ const Footer = () => {
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
               Have a suggestion? <Link to="/contact" className="font-medium text-primary hover:underline">We'd love to hear from you.</Link>
-            </p>
-          </div>
-        </div>
-
-        {/* Privacy badge */}
-        <div className="mt-4 border-t border-border pt-4">
-          <div className="mx-auto max-w-xl rounded-lg border border-michigan-forest/20 bg-michigan-forest/[0.06] px-4 py-3 text-center mb-4">
-            <p className="flex items-center justify-center gap-1.5 text-xs text-foreground">
-              <Lock className="h-3.5 w-3.5 text-michigan-forest" />
-              <span className="font-semibold">Privacy First:</span> We collect no personal health data. All searches are localized, anonymized, and secure.
             </p>
           </div>
         </div>

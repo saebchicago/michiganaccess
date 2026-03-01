@@ -8,6 +8,17 @@ import { useOutageData, type OutageZone } from "@/hooks/useOutageData";
  * live DTE/Consumers Energy API calls with aggregated fallback.
  */
 
+/** Escape HTML special chars to prevent XSS from API-sourced strings in Leaflet popup innerHTML */
+function escHtml(s: string | undefined | null): string {
+  if (!s) return "";
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function getSeverityColor(severity: string): string {
   switch (severity) {
     case "critical": return "#7E0023";
@@ -66,26 +77,26 @@ export default function UtilityOutageLayer({ map, visible = true }: UtilityOutag
         <div style="font-family:system-ui,sans-serif;min-width:220px;">
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
             <span style="background:${utilityColor};color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">
-              ⚡ ${zone.utility} Energy
+              ⚡ ${escHtml(zone.utility)} Energy
             </span>
-            <span style="font-size:11px;color:#64748b;">${zone.county} County</span>
+            <span style="font-size:11px;color:#64748b;">${escHtml(zone.county)} County</span>
           </div>
           ${zone.severity !== "none" ? `
             <div style="background:${color};color:#fff;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:600;margin-bottom:6px;">
               ${zone.customersAffected.toLocaleString()} customers affected (${getOutagePercent(zone)})
             </div>
-            <div style="font-size:11px;color:#334155;margin-bottom:4px;"><strong>Cause:</strong> ${zone.cause}</div>
-            <div style="font-size:11px;color:#334155;margin-bottom:4px;"><strong>Est. Restore:</strong> ${zone.estimatedRestore}</div>
+            <div style="font-size:11px;color:#334155;margin-bottom:4px;"><strong>Cause:</strong> ${escHtml(zone.cause)}</div>
+            <div style="font-size:11px;color:#334155;margin-bottom:4px;"><strong>Est. Restore:</strong> ${escHtml(zone.estimatedRestore)}</div>
           ` : `
             <div style="background:#22C55E;color:#fff;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:600;margin-bottom:6px;">✓ No active outages</div>
           `}
           <div style="font-size:10px;color:#64748b;margin-top:4px;">${zone.customersServed.toLocaleString()} total customers served</div>
-          <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: ${zone.utility === "DTE" ? "DTE Energy Outage Center" : "Consumers Energy Outage Map"} · ${sourceLabel}</div>
+          <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: ${zone.utility === "DTE" ? "DTE Energy Outage Center" : "Consumers Energy Outage Map"} · ${escHtml(sourceLabel)}</div>
         </div>
       `);
 
       circle.bindTooltip(
-        `<div style="text-align:center"><strong>${zone.county}</strong> · ${zone.utility}<br/>${zone.severity !== "none"
+        `<div style="text-align:center"><strong>${escHtml(zone.county)}</strong> · ${escHtml(zone.utility)}<br/>${zone.severity !== "none"
           ? `<span style="color:${color};font-weight:600">${zone.customersAffected.toLocaleString()} out</span>`
           : '<span style="color:#22C55E">No outages</span>'}</div>`,
         { sticky: true }

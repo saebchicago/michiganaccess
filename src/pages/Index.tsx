@@ -402,25 +402,26 @@ const Index = () => {
                 />
               </div>
 
-              {/* County heatmap — collapses on mobile */}
-              <MobileAccordionToggle
-                open={mapOpen}
-                openLabel="Hide county health map"
-                closedLabel="Advanced: Explore statewide health map"
-                onToggle={() => setMapOpen((v) => !v)}
-              />
-              {/* On desktop: always visible via open={true | !isMobile} */}
-              <Collapsible open={mapOpen || !isMobile} onOpenChange={setMapOpen}>
-                <CollapsibleContent>
-                  <div className="pt-4 pb-2">
-                    <Suspense fallback={<SectionFallback />}>
-                      <div className="max-w-5xl mx-auto">
-                        <CountyChoropleth highlightCounty="Oakland" />
-                      </div>
-                    </Suspense>
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
+            {/* County heatmap — collapses on mobile */}
+            <MobileAccordionToggle
+              open={mapOpen}
+              openLabel="Hide county health map"
+              closedLabel="Advanced: Explore statewide health map"
+              onToggle={() => setMapOpen((v) => !v)}
+            />
+            {/* On desktop: always visible via open={true | !isMobile} */}
+            <Collapsible open={mapOpen || !isMobile} onOpenChange={setMapOpen}>
+              <CollapsibleContent>
+                <div className="pt-4 pb-2">
+                  <Suspense fallback={<SectionFallback />}>
+                    <div className="max-w-5xl mx-auto">
+                      <CountyChoropleth highlightCounty="Oakland" />
+                    </div>
+                  </Suspense>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+
 
               {/* Primary CTA */}
               <div className="mt-8 text-center">
@@ -446,7 +447,7 @@ const Index = () => {
             <MobileAccordionToggle
               open={nearbyOpen}
               openLabel="Hide address search"
-              closedLabel="Use address instead — find services closest to your front door"
+              closedLabel="Search by address to find closest services"
               onToggle={() => setNearbyOpen((v) => !v)}
             />
             <Collapsible open={nearbyOpen || !isMobile} onOpenChange={setNearbyOpen}>
@@ -489,8 +490,8 @@ const Index = () => {
             <div id="for-organizations">
               <MobileAccordionToggle
                 open={proOpen}
-                openLabel="Hide professional tools"
-                closedLabel="Advanced: Tools for organizations & health systems"
+                openLabel="Hide tools for organizations"
+                closedLabel="Tools for organizations & health systems"
                 onToggle={() => setProOpen((v) => !v)}
               />
               <Collapsible open={proOpen || !isMobile} onOpenChange={setProOpen}>
