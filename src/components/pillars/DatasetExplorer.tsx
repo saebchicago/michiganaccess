@@ -248,12 +248,14 @@ interface DatasetExplorerProps {
   geographyFilter?: GeographyLevel;
   /** County filter for data queries */
   countyFilter?: string;
+  /** Start in compare mode */
+  defaultMode?: "explore" | "compare";
 }
 
-export default function DatasetExplorer({ defaultPillar, geographyFilter, countyFilter }: DatasetExplorerProps) {
+export default function DatasetExplorer({ defaultPillar, geographyFilter, countyFilter, defaultMode }: DatasetExplorerProps) {
   const [activePillar, setActivePillar] = useState<Pillar>(defaultPillar ?? "health");
   const [selectedDatasetId, setSelectedDatasetId] = useState<string | null>(null);
-  const [mode, setMode] = useState<"explore" | "compare">("explore");
+  const [mode, setMode] = useState<"explore" | "compare">(defaultMode ?? "explore");
 
   const filteredDatasets = useMemo(() => {
     let ds = ALL_PILLAR_DATASETS.filter((d) => d.pillar === activePillar);

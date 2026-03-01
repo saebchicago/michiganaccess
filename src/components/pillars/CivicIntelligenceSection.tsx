@@ -7,7 +7,7 @@
  */
 
 import { Link } from "react-router-dom";
-import { Heart, Leaf, Bus, DollarSign, ArrowRight, BarChart3 } from "lucide-react";
+import { Heart, Leaf, Bus, DollarSign, ArrowRight, BarChart3, GitCompareArrows } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -61,13 +61,21 @@ export default function CivicIntelligenceSection({ countyName }: CivicIntelligen
   return (
     <section id="civic-intelligence" className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-primary" /> Civic Intelligence
         </h2>
-        <Link to="/datasets" className="text-sm font-medium text-primary hover:underline flex items-center gap-1">
-          All datasets <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            to={`/datasets?mode=compare&county=${encodeURIComponent(countyName)}`}
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+          >
+            <GitCompareArrows className="h-3.5 w-3.5" /> Compare with other counties
+          </Link>
+          <Link to="/datasets" className="text-sm font-medium text-primary hover:underline flex items-center gap-1">
+            All datasets <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
       </div>
 
       {/* Summary cards — one per pillar, clickable */}

@@ -19,6 +19,9 @@ const DatasetExplorerPage = () => {
   const [searchParams] = useSearchParams();
   const { county } = useCounty();
   const pillarParam = searchParams.get("pillar") as Pillar | null;
+  const modeParam = searchParams.get("mode");
+  const countyParam = searchParams.get("county");
+  const effectiveCounty = countyParam || county || undefined;
 
   usePageMeta({
     title: "Dataset Explorer | Michigan Civic Intelligence",
@@ -56,7 +59,8 @@ const DatasetExplorerPage = () => {
         <Suspense fallback={<SectionFallback />}>
           <DatasetExplorer
             defaultPillar={pillarParam ?? undefined}
-            countyFilter={county ?? undefined}
+            countyFilter={effectiveCounty}
+            defaultMode={modeParam === "compare" ? "compare" : undefined}
           />
         </Suspense>
       </div>
