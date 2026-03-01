@@ -1,8 +1,10 @@
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import { useState, lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
-import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle, ArrowRight } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle, ArrowRight, MapPin, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -138,6 +140,111 @@ const Index = () => {
       </LazySection>
 
       <SocialProofStrip />
+
+      {/* ═══ EXPLORE MICHIGAN — 3-card entry points ═══════════
+          Solves: first-time visitors need an immediate, scannable
+          answer to "what can I DO here?" before hitting detailed data.
+      ═══════════════════════════════════════════════════════ */}
+      <section className="py-12 bg-gradient-to-b from-background to-muted/10" aria-labelledby="explore-heading">
+        <div className="container max-w-5xl">
+          <div className="mb-7 text-center">
+            <h2 id="explore-heading" className="text-xl font-bold text-foreground md:text-2xl">
+              Explore &amp; Compare Michigan
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1.5">
+              Three tools to understand your community and compare counties side by side.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            {/* ── Card 1: Health Map ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4 }}
+            >
+              <Link
+                to="/health-map"
+                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Explore Your Region</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                    Interactive map of Michigan showing health resources, utility outages, and service gaps by county.
+                  </p>
+                </div>
+                <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
+                  Open map →
+                </span>
+              </Link>
+            </motion.div>
+
+            {/* ── Card 2: Compare Counties ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.08 }}
+            >
+              <Link
+                to="/compare"
+                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <div className="w-10 h-10 rounded-lg bg-michigan-forest/10 flex items-center justify-center shrink-0">
+                  <BarChart3 className="h-5 w-5 text-michigan-forest" aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Compare Counties</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                    Side-by-side Census data, community voice ratings, and equity scores for up to 4 Michigan counties.
+                  </p>
+                </div>
+                <span className="mt-auto text-xs font-semibold text-michigan-forest group-hover:underline" aria-hidden="true">
+                  Start comparing →
+                </span>
+              </Link>
+            </motion.div>
+
+            {/* ── Card 3: Civic Insight Score teaser ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.16 }}
+            >
+              <Link
+                to="/compare"
+                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <div className="w-10 h-10 rounded-lg bg-michigan-gold/10 flex items-center justify-center shrink-0">
+                  <Sparkles className="h-5 w-5 text-michigan-gold" aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Civic Insight Score</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                    A 0–100 composite index of income, poverty, education, and employment — spot opportunity gaps at a glance.
+                  </p>
+                </div>
+                {/* Static gauge preview — no network call */}
+                <div className="flex items-center gap-3 mt-1">
+                  <CivicInsightGauge score={65} color="#01579B" />
+                  <div className="text-[10px] text-muted-foreground leading-relaxed">
+                    <span className="font-semibold text-foreground block">Wayne County</span>
+                    example score
+                  </div>
+                </div>
+                <span className="text-xs font-semibold text-michigan-gold group-hover:underline" aria-hidden="true">
+                  See all county scores →
+                </span>
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
       {/* ═══════════════════════════════════════════════════════
           COMMUNITY HEALTH & EQUITY BAND
