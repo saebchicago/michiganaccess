@@ -22,7 +22,14 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(self), microphone=(), camera=()"
+    Permissions-Policy = "geolocation=(self), microphone=(self), camera=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Cross-Origin-Opener-Policy = "same-origin-allow-popups"
+    # CSP: allows self-hosted assets + Supabase (db + edge functions) + Nominatim
+    # (geocoding) + Google Maps directions links (navigated by user, not fetched).
+    # 'unsafe-inline' for styles is required by Tailwind/Framer Motion inline styles.
+    # No 'unsafe-inline' on scripts — all JS is bundled into external files by Vite.
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://nominatim.openstreetmap.org https://api.census.gov https://data.census.gov; img-src 'self' data: blob: https:; font-src 'self' data:; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';"
 
 # Long-lived cache for hashed static assets
 [[headers]]

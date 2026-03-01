@@ -122,6 +122,3 @@ export default function AudienceSelector() {
     </section>
   );
 }
-
-// Re-export types for backward compat
-export type { Audience, SubPersona };
