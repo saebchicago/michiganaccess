@@ -60,7 +60,7 @@ export default function UnderstandMyCommunity({ variant = "card" }: {variant?: "
       <MapPin className="h-8 w-8 text-primary mx-auto mb-3" />
       <h2 className="text-xl font-bold text-foreground mb-2">What's happening in your community?</h2>
       <p className="text-sm text-muted-foreground mb-5 max-w-md mx-auto">
-        Enter your ZIP code to see what matters most where you live — key data, resources, and actions in under 10 seconds.
+        Enter your ZIP or county to instantly see resources, health data, equity scores, and what help is available near you.
       </p>
       <form onSubmit={handleSubmit} className="flex items-center justify-center gap-2 max-w-xs mx-auto">
         <div className="relative flex-1">
