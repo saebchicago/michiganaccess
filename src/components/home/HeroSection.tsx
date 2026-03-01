@@ -16,12 +16,12 @@ declare global {
 }
 
 const quickPills = [
-  { icon: HeartPulse, label: "Find Care", href: "/find-care" },
-  { icon: User, label: "Find a Doctor", href: "/find-care?mode=name" },
+  { icon: HeartPulse, label: "Find Care", href: "/find-care", primary: true },
   { icon: Pill, label: "Financial Help", href: "/financial-help" },
   { icon: Apple, label: "Community Resources", href: "/resources" },
   { icon: MapPin, label: "Zoning Info", href: "/zoning" },
   { icon: Bus, label: "More Services", href: "/wellness" },
+  { icon: User, label: "Provider Search", href: "/find-care?mode=name", secondary: true },
 ];
 
 const MichiganOutline = () => (
@@ -450,13 +450,25 @@ const HeroSection = () => {
               Popular shortcuts
             </span>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {quickPills.map((pill) => (
+              {quickPills.filter((p) => !(p as any).secondary).map((pill) => (
                 <Link
                   key={pill.label}
                   to={pill.href}
-                  className="group inline-flex items-center gap-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
+                  className={`group inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105 ${(pill as any).primary ? "bg-white/25 ring-1 ring-white/30" : "bg-white/15 hover:bg-white/25"}`}
                 >
                   <pill.icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  {pill.label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-1">
+              {quickPills.filter((p) => (p as any).secondary).map((pill) => (
+                <Link
+                  key={pill.label}
+                  to={pill.href}
+                  className="group inline-flex items-center gap-1 rounded-full bg-white/8 hover:bg-white/15 border border-white/10 px-3 py-1 text-[11px] font-normal text-primary-foreground/60 transition-all hover:text-primary-foreground/80"
+                >
+                  <pill.icon className="h-3 w-3" aria-hidden="true" />
                   {pill.label}
                 </Link>
               ))}
