@@ -282,7 +282,7 @@ const HeroSection = () => {
             transition={{ delay: 0.25, duration: 0.5 }}
             className="mt-4 text-lg text-primary-foreground/80 md:text-xl">
 
-            Access housing, health, food, legal, and energy help across all 83 Michigan counties.
+            Free, instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
           </motion.p>
 
           {/* Privacy Statement */}
