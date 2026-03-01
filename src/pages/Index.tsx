@@ -1,7 +1,6 @@
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import { useState, lazy, Suspense, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { ChevronDown, ChevronUp, Sparkles, Heart, Users, AlertCircle, ArrowRight, MapPin, BarChart3 } from "lucide-react";
 import {
   ChevronDown,
   ChevronUp,
@@ -10,6 +9,7 @@ import {
   Users,
   AlertCircle,
   ArrowRight,
+  MapPin,
   BarChart3,
   ShieldCheck,
   Globe2,
@@ -80,8 +80,7 @@ function TrustPanel({ updated }: { updated: string }) {
               <span className="text-xs text-muted-foreground">Updated {updated}</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Built by citizens, not a government agency—aimed at enthusiastic, easy access to help and local civic intelligence. Expanding coverage via Michigan 2-1-1, library services, notary guidance, and open GIS layers., not a government agency—aimed at enthusiastic, easy access to help and local civic
-              intelligence.
+              Built by citizens, not a government agency—aimed at enthusiastic, easy access to help and local civic intelligence. Expanding coverage via Michigan 2-1-1, library services, notary guidance, and open GIS layers.
             </p>
           </div>
         </div>
