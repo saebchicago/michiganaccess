@@ -10,6 +10,7 @@
  */
 import { useState, useMemo, useCallback, useRef, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ConfettiBurst from "@/components/shared/ConfettiBurst";
 import {
   Plus, X, BarChart3, MapPin, Download, Sparkles,
   Users, Star, MessageSquare, ChevronRight, Eye, EyeOff,
@@ -276,6 +277,7 @@ export default function ComparePlacesPage() {
   const [addCounty, setAddCounty] = useState<string>("");
   const [equityLens, setEquityLens] = useState(false);
   const [showCommunityVoice, setShowCommunityVoice] = useState(true);
+  const [confettiBurst, setConfettiBurst] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
   const countyNames = Object.keys(MI_COUNTY_FIPS).sort();
@@ -298,12 +300,13 @@ export default function ComparePlacesPage() {
   };
 
   const handleRemove = (index: number) => {
-    if (selected.length > 1) setSelected(selected.filter((_, i) => i !== index));
+    setSelected(selected.filter((_, i) => i !== index));
   };
 
   const handlePrint = useCallback(() => {
+    setConfettiBurst(true);
     toast.success("Preparing PDF export…", { duration: 2000 });
-    setTimeout(() => window.print(), 300);
+    setTimeout(() => window.print(), 400);
   }, []);
 
   // Radar data
@@ -428,10 +431,54 @@ export default function ComparePlacesPage() {
           </div>
         </div>
 
+        {/* ── Empty / single-county state ── */}
+        {selected.length < 2 && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl border-2 border-dashed border-border/60 bg-white/60 dark:bg-card/60 backdrop-blur-sm p-10 flex flex-col items-center gap-6 text-center"
+          >
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+              <BarChart3 className="h-8 w-8 text-primary" aria-hidden="true" />
+            </div>
+            <div className="space-y-1.5 max-w-sm">
+              <h2 className="text-lg font-bold text-foreground">
+                {selected.length === 0 ? "Choose counties to compare" : "Add a second county to compare"}
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                {selected.length === 0
+                  ? "Side-by-side Census data, equity scores, community voice, and PDF export for up to 4 Michigan counties."
+                  : `${selected[0]} is selected. Add one more county to unlock all comparison charts.`}
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Popular comparisons</span>
+              <div className="flex flex-wrap justify-center gap-2">
+                {[
+                  { label: "Metro Detroit", counties: ["Wayne", "Oakland", "Macomb"] },
+                  { label: "Equity spotlight", counties: ["Wayne", "Genesee"] },
+                  { label: "West vs. Capital", counties: ["Kent", "Ingham"] },
+                  { label: "Ann Arbor vs. Detroit", counties: ["Washtenaw", "Wayne"] },
+                ].map(({ label, counties }) => (
+                  <button
+                    key={label}
+                    onClick={() => setSelected(counties)}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/[0.06] px-3.5 py-1.5 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
+                  >
+                    <MapPin className="h-3 w-3" aria-hidden="true" />
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
         {/* ── Civic Insight Score gauges ── */}
-        {!allLoading && (
+        {selected.length >= 2 && !allLoading && (
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
-          <Card>
+          <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
             <CardHeader className="pb-2">
               <CardTitle className="text-base flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-michigan-gold" aria-hidden="true" />
@@ -459,9 +506,9 @@ export default function ComparePlacesPage() {
         )}
 
         {/* ── Radar Chart ── */}
-        {radarData.length > 0 && !allLoading && (
+        {selected.length >= 2 && radarData.length > 0 && !allLoading && (
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
-          <Card>
+          <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
             <CardHeader>
               <CardTitle className="text-base">Performance Radar</CardTitle>
               <p className="text-xs text-muted-foreground">
@@ -493,9 +540,9 @@ export default function ComparePlacesPage() {
         )}
 
         {/* ── Income Bar Chart with MI benchmark ── */}
-        {barData.some((d) => d.income > 0) && !allLoading && (
+        {selected.length >= 2 && barData.some((d) => d.income > 0) && !allLoading && (
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
-          <Card>
+          <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
             <CardHeader>
               <CardTitle className="text-base">Median Household Income vs. MI Average</CardTitle>
             </CardHeader>
@@ -521,8 +568,8 @@ export default function ComparePlacesPage() {
         )}
 
         {/* ── Main comparison table ── */}
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
-        <Card>
+        {selected.length >= 2 && <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
+        <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base">Detailed Comparison</CardTitle>
@@ -619,11 +666,11 @@ export default function ComparePlacesPage() {
             </div>
           </CardContent>
         </Card>
-        </motion.div>
+        </motion.div>}
 
         {/* ── Insurance Breakdown ── */}
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={4}>
-        <Card>
+        {selected.length >= 2 && <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={4}>
+        <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Insurance Coverage Breakdown</CardTitle>
             <p className="text-xs text-muted-foreground">Estimated % of population by coverage type. Source: KFF state health facts, MDHHS administrative data.</p>
@@ -675,11 +722,11 @@ export default function ComparePlacesPage() {
             </div>
           </CardContent>
         </Card>
-        </motion.div>
+        </motion.div>}
 
         {/* ── Community Voice ── */}
         <AnimatePresence>
-          {showCommunityVoice && (
+          {selected.length >= 2 && showCommunityVoice && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
@@ -759,11 +806,13 @@ export default function ComparePlacesPage() {
         </AnimatePresence>
 
         {/* Attribution */}
-        <p className="text-[10px] text-muted-foreground text-center">
+        {selected.length >= 2 && <p className="text-[10px] text-muted-foreground text-center">
           Census data: U.S. Census Bureau, ACS 5-Year Estimates (2022). ★ = best among compared; ⚠ = needs attention (Equity Lens). MI Avg = state benchmark.
           Insurance breakdown: KFF state health facts + MDHHS estimates. Community Voice: anonymized resident submissions, AI-moderated.
-        </p>
+        </p>}
       </div>
+
+      <ConfettiBurst active={confettiBurst} onDone={() => setConfettiBurst(false)} />
     </Layout>
   );
 }
