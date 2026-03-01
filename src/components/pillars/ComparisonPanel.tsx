@@ -244,6 +244,31 @@ function SortableHead({ label, sortKey, current, dir, onSort }: { label: string;
   );
 }
 
+/** Whether lower is better for a metric (burden metrics) */
+const LOWER_IS_BETTER: Record<string, boolean> = {
+  uninsured: true,
+  foodInsec: true,
+};
+
+function getHighlightClass(
+  value: number | null,
+  allValues: (number | null)[],
+  key: string
+): string {
+  if (value === null) return "";
+  const valid = allValues.filter((v) => v !== null) as number[];
+  if (valid.length < 2) return "";
+  const min = Math.min(...valid);
+  const max = Math.max(...valid);
+  if (min === max) return "";
+  const lowerBetter = LOWER_IS_BETTER[key] ?? false;
+  if (value === (lowerBetter ? min : max))
+    return "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 font-semibold";
+  if (value === (lowerBetter ? max : min))
+    return "bg-rose-500/10 text-rose-700 dark:text-rose-400";
+  return "";
+}
+
 function ComparisonSummaryTable({ selections }: { selections: GeoSelection[] }) {
   const [rowMap, setRowMap] = React.useState<Record<string, RowData>>({});
   const [sortKey, setSortKey] = React.useState<SortKey>("label");
@@ -258,9 +283,27 @@ function ComparisonSummaryTable({ selections }: { selections: GeoSelection[] }) 
     setSortKey(key);
   }, [sortKey]);
 
+  const rows = selections.length >= 2
+    ? (selections.map((s) => rowMap[s.id]).filter(Boolean) as RowData[])
+    : [];
+
+  // Pre-compute column values for highlighting
+  const colValues = React.useMemo(() => {
+    if (rows.length < 2) return {} as Record<string, (number | null)[]>;
+    return {
+      population: rows.map((r) => (r.population > 0 ? r.population : null)),
+      uninsured: rows.map((r) => parseNumeric(r.uninsured)),
+      healthCount: rows.map((r) => r.healthCount),
+      sudCount: rows.map((r) => (r.sudCount !== null && r.sudCount > 0 ? r.sudCount : null)),
+      foodInsec: rows.map((r) => parseNumeric(r.foodInsec)),
+    };
+  }, [rows.length, ...rows.map(r => `${r.population}|${r.uninsured}|${r.healthCount}|${r.sudCount}|${r.foodInsec}`)]);
+
+  const hl = (rowIdx: number, key: string) =>
+    getHighlightClass(colValues[key]?.[rowIdx] ?? null, colValues[key] ?? [], key);
+
   if (selections.length < 2) return null;
 
-  const rows = selections.map((s) => rowMap[s.id]).filter(Boolean) as RowData[];
   const sorted = [...rows].sort((a, b) => {
     const mul = sortDir === "asc" ? 1 : -1;
     if (sortKey === "label") return mul * a.sel.label.localeCompare(b.sel.label);
@@ -271,6 +314,12 @@ function ComparisonSummaryTable({ selections }: { selections: GeoSelection[] }) 
     if (bVal === null) return -1;
     return mul * (aVal - bVal);
   });
+
+  // Map sorted rows back to their original index in `rows` for highlight lookup
+  const sortedWithIdx = sorted.map((r) => ({
+    ...r,
+    _origIdx: rows.indexOf(r),
+  }));
 
   return (
     <>
@@ -289,17 +338,17 @@ function ComparisonSummaryTable({ selections }: { selections: GeoSelection[] }) 
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sorted.map((r) => (
+              {sortedWithIdx.map((r) => (
                 <TableRow key={r.sel.id}>
                   <TableCell className="font-medium text-xs whitespace-nowrap">
                     {r.sel.type === "zip" && <MapPin className="h-3 w-3 inline mr-1" />}
                     {r.sel.label}
                   </TableCell>
-                  <TableCell className="text-xs">{r.population > 0 ? r.population.toLocaleString() : "—"}</TableCell>
-                  <TableCell className="text-xs">{r.uninsured}</TableCell>
-                  <TableCell className="text-xs">{r.healthCount !== null ? r.healthCount : "—"}</TableCell>
-                  <TableCell className="text-xs">{r.sudCount !== null && r.sudCount > 0 ? r.sudCount : "—"}</TableCell>
-                  <TableCell className="text-xs">{r.foodInsec}</TableCell>
+                  <TableCell className={`text-xs ${hl(r._origIdx, "population")}`}>{r.population > 0 ? r.population.toLocaleString() : "—"}</TableCell>
+                  <TableCell className={`text-xs ${hl(r._origIdx, "uninsured")}`}>{r.uninsured}</TableCell>
+                  <TableCell className={`text-xs ${hl(r._origIdx, "healthCount")}`}>{r.healthCount !== null ? r.healthCount : "—"}</TableCell>
+                  <TableCell className={`text-xs ${hl(r._origIdx, "sudCount")}`}>{r.sudCount !== null && r.sudCount > 0 ? r.sudCount : "—"}</TableCell>
+                  <TableCell className={`text-xs ${hl(r._origIdx, "foodInsec")}`}>{r.foodInsec}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
