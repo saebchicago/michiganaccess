@@ -23,10 +23,46 @@ export interface PillarDataResult {
   dataset: PillarDataset | null;
 }
 
+async function fetchFromCache(
+  config: PillarDataset,
+  filters?: Record<string, string>
+): Promise<Record<string, unknown>[] | null> {
+  // Only check cache for externally-ingested datasets
+  const cacheable = ["arcgis-proxy", "arcgis-direct", "socrata"];
+  if (!cacheable.includes(config.ingestionMethod)) return null;
+
+  const tableName = "ingestion_cache" as any;
+  let query = supabase
+    .from(tableName)
+    .select("data")
+    .eq("dataset_id", config.id)
+    .limit(1000);
+
+  const { data, error } = await query;
+  if (error || !data || data.length === 0) return null;
+
+  let rows = data.map((r: any) => r.data as Record<string, unknown>);
+
+  // Apply county filter client-side if present
+  if (filters?.county) {
+    const countyLower = filters.county.toLowerCase();
+    rows = rows.filter((row) => {
+      const c = String(row.County ?? row.county ?? row.COUNTY ?? "");
+      return c.toLowerCase().includes(countyLower);
+    });
+  }
+
+  return rows;
+}
+
 async function fetchPillarData(
   config: PillarDataset,
   filters?: Record<string, string>
 ): Promise<Record<string, unknown>[]> {
+  // Try cached ingestion data first for external sources
+  const cached = await fetchFromCache(config, filters);
+  if (cached !== null && cached.length > 0) return cached;
+
   switch (config.ingestionMethod) {
     case "supabase-table": {
       const tableName = config.ingestionTarget as any;
@@ -51,7 +87,6 @@ async function fetchPillarData(
       });
       if (!res.ok) throw new Error(`ArcGIS proxy: ${res.status}`);
       const json = await res.json();
-      // GeoJSON FeatureCollection → flat array of properties
       if (json.data?.features) {
         return json.data.features.map((f: any) => ({
           ...f.properties,
@@ -59,7 +94,6 @@ async function fetchPillarData(
           _lon: f.geometry?.coordinates?.[0],
         }));
       }
-      // Already flat array from arcgisClient
       if (Array.isArray(json.data)) return json.data;
       return [];
     }
@@ -80,8 +114,6 @@ async function fetchPillarData(
     }
 
     case "census-acs": {
-      // Census ACS is handled by useCensusACS hook; return empty here
-      // and let the insight cards use the dedicated hook
       return [];
     }
 
