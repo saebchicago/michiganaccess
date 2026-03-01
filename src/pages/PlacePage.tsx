@@ -37,6 +37,7 @@ import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import ContentSkeleton from "@/components/shared/ContentSkeleton";
 import DataFreshnessBadge from "@/components/shared/DataFreshnessBadge";
 import WatchlistStar from "@/components/shared/WatchlistStar";
+import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSection";
 
 /* ── Curated statewide programs ── */
 const TOP_PROGRAMS = [
@@ -282,6 +283,11 @@ export default function PlacePage() {
             ))}
           </div>
         </section>
+
+        <Separator />
+
+        {/* Civic Intelligence — 4 pillar cards + detail */}
+        <CivicIntelligenceSection countyName={countyName} />
 
         <Separator />
 

@@ -239,7 +239,7 @@ export default function PrivacyPage() {
         {/* 9 — Data Retention */}
         <Section icon={FileText} title="9. Data Retention" index={8}>
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm min-w-[500px]">
               <thead>
                 <tr className="border-b border-border">
                   <th className="py-3 pr-4 text-left font-semibold text-foreground">Data Type</th>

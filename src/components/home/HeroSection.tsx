@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle, Mic, MicOff, Lock, User, Hash } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,12 +16,12 @@ declare global {
 }
 
 const quickPills = [
-  { icon: HeartPulse, label: "Find Care", href: "/find-care" },
-  { icon: User, label: "Find a Doctor", href: "/find-care?mode=name" },
+  { icon: HeartPulse, label: "Find Care", href: "/find-care", primary: true },
   { icon: Pill, label: "Financial Help", href: "/financial-help" },
   { icon: Apple, label: "Community Resources", href: "/resources" },
   { icon: MapPin, label: "Zoning Info", href: "/zoning" },
   { icon: Bus, label: "More Services", href: "/wellness" },
+  { icon: User, label: "Provider Search", href: "/find-care?mode=name", secondary: true },
 ];
 
 const MichiganOutline = () => (
@@ -45,6 +46,37 @@ const categoryIcon = (cat: string) => {
     default: return <Search className="h-4 w-4 text-primary" />;
   }
 };
+
+const langLinks = [
+  { code: "es", label: "Español" },
+  { code: "ar", label: "العربية" },
+  { code: "bn", label: "বাংলা" },
+];
+
+function LanguageStrip() {
+  const { i18n } = useTranslation();
+  const switchLang = (code: string) => {
+    i18n.changeLanguage(code);
+    document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = code;
+  };
+  return (
+    <p className="mt-1.5 text-xs text-primary-foreground/50 text-center">
+      {langLinks.map((l, i) => (
+        <span key={l.code}>
+          {i > 0 && <span className="mx-1.5">·</span>}
+          <button
+            type="button"
+            onClick={() => switchLang(l.code)}
+            className="underline underline-offset-2 hover:text-primary-foreground/80 transition-colors"
+          >
+            {l.label}
+          </button>
+        </span>
+      ))}
+    </p>
+  );
+}
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -287,6 +319,9 @@ const HeroSection = () => {
               Search services, ZIP codes, cities, counties — or type a doctor name, specialty, or NPI to find care providers
             </p>
 
+            {/* Language quick-switch strip */}
+            <LanguageStrip />
+
             {/* Autocomplete Dropdown */}
             <AnimatePresence>
               {showDropdown && (
@@ -415,13 +450,25 @@ const HeroSection = () => {
               Popular shortcuts
             </span>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {quickPills.map((pill) => (
+              {quickPills.filter((p) => !(p as any).secondary).map((pill) => (
                 <Link
                   key={pill.label}
                   to={pill.href}
-                  className="group inline-flex items-center gap-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
+                  className={`group inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105 ${(pill as any).primary ? "bg-white/25 ring-1 ring-white/30" : "bg-white/15 hover:bg-white/25"}`}
                 >
                   <pill.icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  {pill.label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-2 mt-1">
+              {quickPills.filter((p) => (p as any).secondary).map((pill) => (
+                <Link
+                  key={pill.label}
+                  to={pill.href}
+                  className="group inline-flex items-center gap-1 rounded-full bg-white/8 hover:bg-white/15 border border-white/10 px-3 py-1 text-[11px] font-normal text-primary-foreground/60 transition-all hover:text-primary-foreground/80"
+                >
+                  <pill.icon className="h-3 w-3" aria-hidden="true" />
                   {pill.label}
                 </Link>
               ))}

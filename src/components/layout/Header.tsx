@@ -89,7 +89,7 @@ const Header = () => {
             <SiteSearch />
           </div>
           <CountySelector variant="header" />
-          <LanguageSwitcher />
+         
           <ThemeToggle />
           <Button
             size="sm"

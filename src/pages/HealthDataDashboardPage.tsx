@@ -245,7 +245,7 @@ export default function HealthDataDashboardPage() {
                 <p className="text-xs text-muted-foreground">Disparities in health outcomes highlight systemic inequities requiring targeted intervention</p>
               </CardHeader>
               <CardContent className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm min-w-[500px]">
                   <thead>
                     <tr className="border-b">
                       <th className="py-2 text-left text-xs text-muted-foreground">Metric</th>
@@ -311,7 +311,7 @@ export default function HealthDataDashboardPage() {
                     </ResponsiveContainer>
                   </div>
                   <div className="flex-1">
-                    <table className="w-full text-sm">
+                    <table className="w-full text-sm min-w-[320px]">
                       <thead>
                         <tr className="border-b">
                           <th className="py-1.5 text-left text-xs text-muted-foreground">Cause</th>
@@ -369,7 +369,7 @@ export default function HealthDataDashboardPage() {
                 </div>
 
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
+                  <table className="w-full text-sm min-w-[500px]">
                     <thead>
                       <tr className="border-b">
                         <th className="py-2 text-left text-xs text-muted-foreground">Indicator</th>

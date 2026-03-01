@@ -27,6 +27,7 @@ import LiveEnvironmentalCard from "@/components/environment/LiveEnvironmentalCar
 import UniversalPreScreener from "@/components/benefits/UniversalPreScreener";
 import ContactRepresentative from "@/components/advocacy/ContactRepresentative";
 import DownloadLocalInsights from "@/components/place/DownloadLocalInsights";
+import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSection";
 
 export default function ZipPlacePage() {
   const { zipcode } = useParams<{ zipcode: string }>();
@@ -131,6 +132,11 @@ export default function ZipPlacePage() {
             ))}
           </div>
         </section>
+
+        <Separator />
+
+        {/* Civic Intelligence — 4 pillar cards + detail */}
+        {place.parentCounty && <CivicIntelligenceSection countyName={place.parentCounty} />}
 
         <Separator />
 

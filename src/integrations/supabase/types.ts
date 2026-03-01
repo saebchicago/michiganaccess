@@ -172,11 +172,15 @@ export type Database = {
           eligibility_notes: string | null
           hours: string | null
           id: string
+          is_24_7: boolean | null
           is_active: boolean | null
           is_free: boolean | null
+          is_open_now: boolean | null
           languages: string[] | null
           latitude: number | null
           longitude: number | null
+          no_id_required: boolean | null
+          on_bus_line: boolean | null
           organization: string | null
           phone: string | null
           resource_name: string
@@ -198,11 +202,15 @@ export type Database = {
           eligibility_notes?: string | null
           hours?: string | null
           id?: string
+          is_24_7?: boolean | null
           is_active?: boolean | null
           is_free?: boolean | null
+          is_open_now?: boolean | null
           languages?: string[] | null
           latitude?: number | null
           longitude?: number | null
+          no_id_required?: boolean | null
+          on_bus_line?: boolean | null
           organization?: string | null
           phone?: string | null
           resource_name: string
@@ -224,11 +232,15 @@ export type Database = {
           eligibility_notes?: string | null
           hours?: string | null
           id?: string
+          is_24_7?: boolean | null
           is_active?: boolean | null
           is_free?: boolean | null
+          is_open_now?: boolean | null
           languages?: string[] | null
           latitude?: number | null
           longitude?: number | null
+          no_id_required?: boolean | null
+          on_bus_line?: boolean | null
           organization?: string | null
           phone?: string | null
           resource_name?: string
@@ -419,6 +431,63 @@ export type Database = {
           program_name?: string
           program_type?: string
           services_covered?: string[] | null
+        }
+        Relationships: []
+      }
+      ingestion_cache: {
+        Row: {
+          data: Json
+          dataset_id: string
+          id: string
+          ingested_at: string
+          source_id: string
+        }
+        Insert: {
+          data?: Json
+          dataset_id: string
+          id?: string
+          ingested_at?: string
+          source_id: string
+        }
+        Update: {
+          data?: Json
+          dataset_id?: string
+          id?: string
+          ingested_at?: string
+          source_id?: string
+        }
+        Relationships: []
+      }
+      ingestion_runs: {
+        Row: {
+          dataset_id: string
+          error_message: string | null
+          finished_at: string | null
+          id: string
+          records_fetched: number | null
+          records_upserted: number | null
+          started_at: string
+          status: string
+        }
+        Insert: {
+          dataset_id: string
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          records_fetched?: number | null
+          records_upserted?: number | null
+          started_at?: string
+          status?: string
+        }
+        Update: {
+          dataset_id?: string
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          records_fetched?: number | null
+          records_upserted?: number | null
+          started_at?: string
+          status?: string
         }
         Relationships: []
       }

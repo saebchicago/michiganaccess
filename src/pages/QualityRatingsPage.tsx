@@ -320,7 +320,7 @@ export default function QualityRatingsPage() {
                     <TabsContent value="table" className="mt-4">
                       <Card>
                         <CardContent className="py-4 overflow-x-auto">
-                          <table className="w-full text-sm">
+                          <table className="w-full text-sm min-w-[500px]">
                             <thead>
                               <tr className="border-b">
                                 <th className="py-2 text-left text-xs text-muted-foreground">Metric</th>

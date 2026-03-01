@@ -670,7 +670,7 @@ const EnvironmentPage = () => {
                     </CardHeader>
                     <CardContent>
                       <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
+                        <table className="w-full text-sm min-w-[500px]">
                           <thead>
                             <tr className="border-b border-border text-left">
                               <th className="pb-3 font-medium text-muted-foreground">Community</th>

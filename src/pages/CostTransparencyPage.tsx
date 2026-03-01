@@ -278,7 +278,7 @@ export default function CostTransparencyPage() {
             {/* Facility table */}
             <Card>
               <CardContent className="py-4 overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm min-w-[500px]">
                   <thead>
                     <tr className="border-b">
                       <th className="py-2 text-left text-xs text-muted-foreground">Facility</th>
@@ -318,7 +318,7 @@ export default function CostTransparencyPage() {
                 <p className="text-sm text-muted-foreground">Compare prices across discount programs for common medications</p>
               </CardHeader>
               <CardContent className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm min-w-[500px]">
                   <thead>
                     <tr className="border-b">
                       <th className="py-2 text-left text-xs text-muted-foreground">Medication</th>
