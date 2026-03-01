@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import {
   HeartPulse, Zap, Home, Apple, HelpCircle, ArrowRight, ArrowLeft,
   CheckCircle2, Sparkles, Users, DollarSign, MapPin, Share2, Save,
@@ -124,13 +125,21 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
     try {
       localStorage.setItem("mi-wizard-results", JSON.stringify({ situation, hhSize, income, county: selectedCounty, results: results.map((r) => r.name), savedAt: new Date().toISOString() }));
       setSaved(true);
-    } catch {}
+    } catch {
+      toast.error("Could not save results — your browser storage may be full.");
+    }
   };
 
-  const handleShare = () => {
-    const params = new URLSearchParams({ s: situation ?? "", h: String(hhSize), i: String(income), c: selectedCounty });
+  const handleShare = async () => {
+    // Only include non-sensitive fields (situation + county) in the share URL — no income or household size
+    const params = new URLSearchParams({ s: situation ?? "", c: selectedCounty });
     const url = `${window.location.origin}/?wizard=${params.toString()}`;
-    navigator.clipboard?.writeText(url);
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Link copied to clipboard!");
+    } catch {
+      toast.error("Could not copy link — please copy the URL from your browser's address bar.");
+    }
   };
 
   return (

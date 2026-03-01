@@ -41,7 +41,13 @@ export default function LazySection({
 
   return (
     <div ref={ref} style={{ minHeight: visible ? undefined : minHeight }}>
-      {visible ? children : null}
+      {visible ? children : (
+        <div
+          className="animate-pulse rounded-xl bg-muted/40 w-full"
+          style={{ height: minHeight }}
+          aria-hidden="true"
+        />
+      )}
     </div>
   );
 }

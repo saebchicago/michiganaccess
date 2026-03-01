@@ -16,9 +16,20 @@ interface Props {
   url?: string;
 }
 
+/** Ensure share URL is same-origin or a well-formed https URL — prevents open redirect / javascript: URIs */
+function getSafeUrl(url: string | undefined): string {
+  const candidate = url || window.location.href;
+  if (candidate.startsWith("/") || candidate.startsWith(window.location.origin)) return candidate;
+  try {
+    const parsed = new URL(candidate);
+    if (parsed.protocol === "https:") return candidate;
+  } catch {}
+  return window.location.href;
+}
+
 export default function ShareButton({ title, description, url }: Props) {
   const [copied, setCopied] = useState(false);
-  const shareUrl = url || window.location.href;
+  const shareUrl = getSafeUrl(url);
 
   const copyLink = useCallback(async () => {
     try {

@@ -13,8 +13,19 @@ interface ShareMenuProps {
   className?: string;
 }
 
+/** Ensure share URL is same-origin or https — prevents javascript: URIs and open redirects */
+function getSafeUrl(url: string | undefined): string {
+  const candidate = url || window.location.href;
+  if (candidate.startsWith("/") || candidate.startsWith(window.location.origin)) return candidate;
+  try {
+    const parsed = new URL(candidate);
+    if (parsed.protocol === "https:") return candidate;
+  } catch {}
+  return window.location.href;
+}
+
 export default function ShareMenu({ title, url, className }: ShareMenuProps) {
-  const shareUrl = url || window.location.href;
+  const shareUrl = getSafeUrl(url);
   const encoded = encodeURIComponent(shareUrl);
   const text = encodeURIComponent(title);
 
