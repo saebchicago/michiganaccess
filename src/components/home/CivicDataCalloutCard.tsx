@@ -21,7 +21,7 @@ export default function CivicDataCalloutCard() {
                 Explore Michigan Civic Intelligence
               </h3>
               <p className="text-xs text-muted-foreground">
-                Browse open datasets from ArcGIS and Socrata — county boundaries, transportation, environment, housing, and public safety.
+                Explore verified open datasets from ArcGIS, Socrata, and Michigan state agencies — covering transportation, environment, housing, health, and public safety.
               </p>
             </div>
             <Link to="/civic-data-hub">
@@ -33,6 +33,6 @@ export default function CivicDataCalloutCard() {
           </CardContent>
         </Card>
       </div>
-    </section>
-  );
+    </section>);
+
 }
