@@ -21,6 +21,7 @@ import {
 } from "@/data/pillarRegistry";
 import type { GeographyLevel } from "@/models/GeoDimension";
 import ComparisonPanel from "./ComparisonPanel";
+import { useIngestionStatus } from "@/hooks/useIngestionStatus";
 
 const PILLAR_ICONS: Record<Pillar, typeof Heart> = {
   health: Heart,
@@ -39,6 +40,9 @@ function DatasetListItem({
   onSelect: () => void;
 }) {
   const Icon = PILLAR_ICONS[ds.pillar];
+  const isCacheable = ["arcgis-proxy", "arcgis-direct", "socrata"].includes(ds.ingestionMethod);
+  const { lastSuccess, lastError } = useIngestionStatus(ds.id, isCacheable);
+
   return (
     <button
       onClick={onSelect}
@@ -64,6 +68,14 @@ function DatasetListItem({
           <div className="flex items-center gap-3 mt-1.5 text-[10px] text-muted-foreground">
             <span className="capitalize">{ds.geographyLevel}</span>
             <span className="flex items-center gap-0.5"><Clock className="h-2.5 w-2.5" />{ds.refreshCadence}</span>
+            {isCacheable && lastSuccess && (
+              <span className="text-green-600 dark:text-green-400">
+                Cached {lastSuccess.toLocaleDateString()}
+              </span>
+            )}
+            {isCacheable && lastError && (
+              <span className="text-destructive">Ingest error</span>
+            )}
           </div>
         </div>
       </div>

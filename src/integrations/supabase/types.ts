@@ -434,6 +434,63 @@ export type Database = {
         }
         Relationships: []
       }
+      ingestion_cache: {
+        Row: {
+          data: Json
+          dataset_id: string
+          id: string
+          ingested_at: string
+          source_id: string
+        }
+        Insert: {
+          data?: Json
+          dataset_id: string
+          id?: string
+          ingested_at?: string
+          source_id: string
+        }
+        Update: {
+          data?: Json
+          dataset_id?: string
+          id?: string
+          ingested_at?: string
+          source_id?: string
+        }
+        Relationships: []
+      }
+      ingestion_runs: {
+        Row: {
+          dataset_id: string
+          error_message: string | null
+          finished_at: string | null
+          id: string
+          records_fetched: number | null
+          records_upserted: number | null
+          started_at: string
+          status: string
+        }
+        Insert: {
+          dataset_id: string
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          records_fetched?: number | null
+          records_upserted?: number | null
+          started_at?: string
+          status?: string
+        }
+        Update: {
+          dataset_id?: string
+          error_message?: string | null
+          finished_at?: string | null
+          id?: string
+          records_fetched?: number | null
+          records_upserted?: number | null
+          started_at?: string
+          status?: string
+        }
+        Relationships: []
+      }
       municipalities: {
         Row: {
           council_agenda_url: string | null
