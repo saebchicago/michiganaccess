@@ -238,9 +238,9 @@ const Index = () => {
       <SocialProofStrip />
 
       {/* ═══ EXPLORE MICHIGAN — 3-card entry points ═══════════
-             Solves: first-time visitors need an immediate, scannable
-             answer to "what can I DO here?" before hitting detailed data.
-          ═══════════════════════════════════════════════════════ */}
+              Solves: first-time visitors need an immediate, scannable
+              answer to "what can I DO here?" before hitting detailed data.
+           ═══════════════════════════════════════════════════════ */}
       <section className="py-12 bg-gradient-to-b from-background to-muted/10" aria-labelledby="explore-heading">
         <div className="container max-w-5xl">
           <div className="mb-7 text-center">
@@ -270,7 +270,7 @@ const Index = () => {
                 <div>
                   <p className="font-semibold text-foreground">Explore Your Region</p>
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    Interactive map of Michigan showing health resources, utility outages, and service gaps by county.
+                    Bright, interactive Michigan map showing health resources, clinics, utility outages, food access, and service gaps — county by county.
                   </p>
                 </div>
                 <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
@@ -349,8 +349,8 @@ const Index = () => {
       </LazySection>
 
       {/* ═══════════════════════════════════════════════════════
-             COMMUNITY HEALTH & EQUITY BAND — Professional only
-          ═══════════════════════════════════════════════════════ */}
+              COMMUNITY HEALTH & EQUITY BAND — Professional only
+           ═══════════════════════════════════════════════════════ */}
       {isProfessional &&
       <LazySection minHeight="200px">
           <section id="community-health-equity" className="py-14 bg-muted/20">
