@@ -165,7 +165,7 @@ const Footer = () => {
             ))}
           </div>
           <p className="mt-2 text-center text-[10px] text-muted-foreground">
-            <Link to="/data-validation" className="hover:underline text-primary">View full data sources & methodology →</Link>
+            <Link to="/methodology" className="hover:underline text-primary">View full data sources & methodology →</Link>
           </p>
         </div>
 
