@@ -15,77 +15,77 @@ declare global {
   }
 }
 const quickPills = [
-  {
-    icon: HeartPulse,
-    label: "Find Care",
-    href: "/find-care",
-    primary: true,
-  },
-  {
-    icon: User,
-    label: "Find a Doctor",
-    href: "/find-care?mode=name",
-    secondary: true,
-  },
-  {
-    icon: Pill,
-    label: "Financial Help",
-    href: "/financial-help",
-  },
-  {
-    icon: Apple,
-    label: "Community Resources",
-    href: "/resources",
-  },
-  {
-    icon: Brain,
-    label: "Mental Health",
-    href: "/conditions?category=mental-health",
-  },
-  {
-    icon: Bus,
-    label: "Transportation",
-    href: "/transportation",
-  },
-  {
-    icon: MapPin,
-    label: "Zoning Info",
-    href: "/zoning",
-  },
-  {
-    icon: Bus,
-    label: "More Services",
-    href: "/wellness",
-  },
-];
-const MichiganOutline = () => (
-  <svg
-    viewBox="0 0 400 500"
-    className="absolute right-0 top-1/2 -translate-y-1/2 h-[120%] w-auto opacity-[0.04]"
-    aria-hidden="true"
-  >
+{
+  icon: HeartPulse,
+  label: "Find Care",
+  href: "/find-care",
+  primary: true
+},
+{
+  icon: User,
+  label: "Find a Doctor",
+  href: "/find-care?mode=name",
+  secondary: true
+},
+{
+  icon: Pill,
+  label: "Financial Help",
+  href: "/financial-help"
+},
+{
+  icon: Apple,
+  label: "Community Resources",
+  href: "/resources"
+},
+{
+  icon: Brain,
+  label: "Mental Health",
+  href: "/conditions?category=mental-health"
+},
+{
+  icon: Bus,
+  label: "Transportation",
+  href: "/transportation"
+},
+{
+  icon: MapPin,
+  label: "Zoning Info",
+  href: "/zoning"
+},
+{
+  icon: Bus,
+  label: "More Services",
+  href: "/wellness"
+}];
+
+const MichiganOutline = () =>
+<svg
+  viewBox="0 0 400 500"
+  className="absolute right-0 top-1/2 -translate-y-1/2 h-[120%] w-auto opacity-[0.04]"
+  aria-hidden="true">
+
     <path d="M200 180 L240 200 L270 250 L280 310 L260 370 L220 400 L180 410 L140 380 L120 330 L130 270 L150 220 Z" fill="currentColor" className="text-primary-foreground" />
     <path d="M100 140 L160 120 L220 130 L240 150 L200 170 L140 165 L100 155 Z" fill="currentColor" className="text-primary-foreground" />
-  </svg>
-);
+  </svg>;
+
 
 const categoryIcon = (cat: string) => {
   switch (cat) {
-    case "county": return <MapPin className="h-4 w-4 text-michigan-sky" />;
-    case "correction": return <AlertCircle className="h-4 w-4 text-warm-gold" />;
-    case "popular": return <TrendingUp className="h-4 w-4 text-muted-foreground" />;
-    case "zip": return <Hash className="h-4 w-4 text-michigan-teal" />;
-    case "city": return <MapPin className="h-4 w-4 text-forest-green" />;
-    case "provider": return <User className="h-4 w-4 text-michigan-blue" />;
-    default: return <Search className="h-4 w-4 text-primary" />;
+    case "county":return <MapPin className="h-4 w-4 text-michigan-sky" />;
+    case "correction":return <AlertCircle className="h-4 w-4 text-warm-gold" />;
+    case "popular":return <TrendingUp className="h-4 w-4 text-muted-foreground" />;
+    case "zip":return <Hash className="h-4 w-4 text-michigan-teal" />;
+    case "city":return <MapPin className="h-4 w-4 text-forest-green" />;
+    case "provider":return <User className="h-4 w-4 text-michigan-blue" />;
+    default:return <Search className="h-4 w-4 text-primary" />;
   }
 };
 
 const langLinks = [
-  { code: "es", label: "Español" },
-  { code: "ar", label: "العربية" },
-  { code: "bn", label: "বাংলা" },
-];
+{ code: "es", label: "Español" },
+{ code: "ar", label: "العربية" },
+{ code: "bn", label: "বাংলা" }];
+
 
 function LanguageStrip() {
   const { i18n } = useTranslation();
@@ -96,20 +96,20 @@ function LanguageStrip() {
   };
   return (
     <p className="mt-1.5 text-xs text-primary-foreground/50 text-center">
-      {langLinks.map((l, i) => (
-        <span key={l.code}>
+      {langLinks.map((l, i) =>
+      <span key={l.code}>
           {i > 0 && <span className="mx-1.5">·</span>}
           <button
-            type="button"
-            onClick={() => switchLang(l.code)}
-            className="underline underline-offset-2 hover:text-primary-foreground/80 transition-colors"
-          >
+          type="button"
+          onClick={() => switchLang(l.code)}
+          className="underline underline-offset-2 hover:text-primary-foreground/80 transition-colors">
+
             {l.label}
           </button>
         </span>
-      ))}
-    </p>
-  );
+      )}
+    </p>);
+
 }
 
 const HeroSection = () => {
@@ -189,7 +189,7 @@ const HeroSection = () => {
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node) &&
-          inputRef.current && !inputRef.current.contains(e.target as Node)) {
+      inputRef.current && !inputRef.current.contains(e.target as Node)) {
         setShowDropdown(false);
       }
     };
@@ -215,7 +215,7 @@ const HeroSection = () => {
       source: "hero",
       resultCount: suggestions.length,
       hadCorrection: !!correction,
-      correctedTo: correction ?? undefined,
+      correctedTo: correction ?? undefined
     });
 
     navigate(intent.resolvedHref);
@@ -234,7 +234,7 @@ const HeroSection = () => {
       setActiveIndex((i) => (i + 1) % suggestions.length);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setActiveIndex((i) => (i <= 0 ? suggestions.length - 1 : i - 1));
+      setActiveIndex((i) => i <= 0 ? suggestions.length - 1 : i - 1);
     } else if (e.key === "Enter" && activeIndex >= 0) {
       e.preventDefault();
       handleSuggestionClick(suggestions[activeIndex]);
@@ -257,11 +257,11 @@ const HeroSection = () => {
         className="absolute inset-0 opacity-[0.035] mix-blend-overlay"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E\")",
-          backgroundSize: "128px",
+          "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E\")",
+          backgroundSize: "128px"
         }}
-        aria-hidden="true"
-      />
+        aria-hidden="true" />
+
 
       <div className="container relative z-10 py-20 md:py-28 lg:py-36">
         <div className="mx-auto max-w-2xl text-center">
@@ -270,9 +270,9 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
-            className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl md:text-6xl leading-tight"
-          >
-            Find help near you.
+            className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl md:text-6xl leading-tight">
+
+            Michigan help, at your fingertips.
           </motion.h1>
 
           {/* Subheading */}
@@ -280,8 +280,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.5 }}
-            className="mt-4 text-lg text-primary-foreground/80 md:text-xl"
-          >
+            className="mt-4 text-lg text-primary-foreground/80 md:text-xl">
+
             Access housing, health, food, legal, and energy help across all 83 Michigan counties.
           </motion.p>
 
@@ -290,8 +290,8 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35, duration: 0.5 }}
-            className="mt-4 flex items-center justify-center gap-2 text-sm text-primary-foreground/90"
-          >
+            className="mt-4 flex items-center justify-center gap-2 text-sm text-primary-foreground/90">
+
             <Lock className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
             <span>No account, no tracking, no personal data stored.</span>
           </motion.div>
@@ -302,15 +302,15 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.5 }}
-            className="mt-8 mx-auto max-w-xl relative"
-          >
+            className="mt-8 mx-auto max-w-xl relative">
+
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" aria-hidden="true" />
               <input
                 ref={inputRef}
                 type="search"
                 value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setActiveIndex(-1); }}
+                onChange={(e) => {setSearchQuery(e.target.value);setActiveIndex(-1);}}
                 onFocus={() => setShowDropdown(true)}
                 onKeyDown={handleKeyDown}
                 placeholder="Search by city, ZIP, county, service, or doctor name…"
@@ -322,27 +322,27 @@ const HeroSection = () => {
                 aria-autocomplete="list"
                 aria-controls="hero-search-suggestions"
                 aria-activedescendant={activeIndex >= 0 ? `hero-suggestion-${activeIndex}` : undefined}
-                autoComplete="off"
-              />
+                autoComplete="off" />
+
               <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                {speechSupported && (
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="ghost"
-                    onClick={isListening ? stopListening : startListening}
-                    className={`rounded-full h-10 w-10 transition-colors ${isListening ? "text-destructive bg-destructive/10 animate-pulse" : "text-muted-foreground hover:text-foreground"}`}
-                    aria-label={isListening ? "Stop voice search" : "Start voice search"}
-                    title={isListening ? "Listening… tap to stop" : "Voice search"}
-                  >
+                {speechSupported &&
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  onClick={isListening ? stopListening : startListening}
+                  className={`rounded-full h-10 w-10 transition-colors ${isListening ? "text-destructive bg-destructive/10 animate-pulse" : "text-muted-foreground hover:text-foreground"}`}
+                  aria-label={isListening ? "Stop voice search" : "Start voice search"}
+                  title={isListening ? "Listening… tap to stop" : "Voice search"}>
+
                     {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                   </Button>
-                )}
+                }
                 <Button
                   type="submit"
                   size="lg"
-                  className="rounded-full bg-primary hover:bg-primary/90 px-6 font-semibold shadow-lg"
-                >
+                  className="rounded-full bg-primary hover:bg-primary/90 px-6 font-semibold shadow-lg">
+
                   Search
                 </Button>
               </div>
@@ -358,97 +358,97 @@ const HeroSection = () => {
 
             {/* Autocomplete Dropdown */}
             <AnimatePresence>
-              {showDropdown && (
-                <motion.div
-                  ref={dropdownRef}
-                  id="hero-search-suggestions"
-                  role="listbox"
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute left-0 right-0 top-full mt-2 rounded-xl bg-white dark:bg-card border border-border shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto"
-                >
+              {showDropdown &&
+              <motion.div
+                ref={dropdownRef}
+                id="hero-search-suggestions"
+                role="listbox"
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.15 }}
+                className="absolute left-0 right-0 top-full mt-2 rounded-xl bg-white dark:bg-card border border-border shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto">
+
                   {/* NPI detection chip */}
-                  {npiDetected && (
-                    <button
-                      type="button"
-                      onClick={() => { setShowDropdown(false); navigate(`/find-care?npi=${searchQuery.trim()}`); }}
-                      className="w-full px-4 py-2.5 text-sm text-left bg-primary/5 hover:bg-primary/10 transition-colors flex items-center gap-2 border-b border-border"
-                    >
+                  {npiDetected &&
+                <button
+                  type="button"
+                  onClick={() => {setShowDropdown(false);navigate(`/find-care?npi=${searchQuery.trim()}`);}}
+                  className="w-full px-4 py-2.5 text-sm text-left bg-primary/5 hover:bg-primary/10 transition-colors flex items-center gap-2 border-b border-border">
+
                       <Hash className="h-3.5 w-3.5 text-primary" />
                       <span className="text-foreground">Search NPI <strong className="font-mono">{searchQuery.trim()}</strong></span>
                       <span className="ml-auto text-xs text-primary font-medium">Find Care →</span>
                     </button>
-                  )}
+                }
 
-                  {correction && searchQuery.length >= 2 && (
-                    <button
-                      type="button"
-                      onClick={handleApplyCorrection}
-                      className="w-full px-4 py-2.5 text-sm text-left bg-warm-gold/10 hover:bg-warm-gold/20 transition-colors flex items-center gap-2 border-b border-border"
-                    >
+                  {correction && searchQuery.length >= 2 &&
+                <button
+                  type="button"
+                  onClick={handleApplyCorrection}
+                  className="w-full px-4 py-2.5 text-sm text-left bg-warm-gold/10 hover:bg-warm-gold/20 transition-colors flex items-center gap-2 border-b border-border">
+
                       <Sparkles className="h-3.5 w-3.5 text-warm-gold" />
                       <span className="text-muted-foreground">Did you mean</span>
                       <span className="font-semibold text-foreground">{correction}</span>
                       <span className="text-muted-foreground">?</span>
                     </button>
-                  )}
+                }
 
-                  {parsedIntent && searchQuery.length >= 3 && !npiDetected && (
-                    <button
-                      type="button"
-                      onClick={() => { setShowDropdown(false); navigate(parsedIntent.resolvedHref); }}
-                      className="w-full px-4 py-2.5 text-sm text-left bg-primary/5 hover:bg-primary/10 transition-colors flex items-center gap-2 border-b border-border"
-                    >
+                  {parsedIntent && searchQuery.length >= 3 && !npiDetected &&
+                <button
+                  type="button"
+                  onClick={() => {setShowDropdown(false);navigate(parsedIntent.resolvedHref);}}
+                  className="w-full px-4 py-2.5 text-sm text-left bg-primary/5 hover:bg-primary/10 transition-colors flex items-center gap-2 border-b border-border">
+
                       <Sparkles className="h-3.5 w-3.5 text-primary" />
                       <span className="text-muted-foreground">{parsedIntent.explanation}</span>
                       <span className="ml-auto text-xs text-primary font-medium">Go →</span>
                     </button>
-                  )}
+                }
 
-                  {searchQuery.length < 2 && suggestions.length > 0 && (
-                    <div className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  {searchQuery.length < 2 && suggestions.length > 0 &&
+                <div className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Popular Searches
                     </div>
-                  )}
-                  {searchQuery.length >= 2 && suggestions.length > 0 && suggestions[0].category !== "popular" && (
-                    <div className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                }
+                  {searchQuery.length >= 2 && suggestions.length > 0 && suggestions[0].category !== "popular" &&
+                <div className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Suggestions
                     </div>
-                  )}
-                  {searchQuery.length >= 2 && suggestions.length > 0 && suggestions[0].category === "popular" && (
-                    <div className="px-4 pt-3 pb-1.5 border-b border-border/40">
+                }
+                  {searchQuery.length >= 2 && suggestions.length > 0 && suggestions[0].category === "popular" &&
+                <div className="px-4 pt-3 pb-1.5 border-b border-border/40">
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Try a popular search</p>
                       <p className="text-[10px] text-muted-foreground mt-0.5">
                         No results for &ldquo;{searchQuery}&rdquo; — try a county name, ZIP code, or service type
                       </p>
                     </div>
-                  )}
+                }
 
-                  {suggestions.map((s, i) => (
-                    <button
-                      key={`${s.label}-${i}`}
-                      id={`hero-suggestion-${i}`}
-                      role="option"
-                      aria-selected={i === activeIndex}
-                      type="button"
-                      onClick={() => handleSuggestionClick(s)}
-                      className={`w-full px-4 py-2.5 text-sm text-left flex items-center gap-3 transition-colors ${
-                        i === activeIndex
-                          ? "bg-primary/10 dark:bg-primary/20"
-                          : "hover:bg-muted"
-                      }`}
-                    >
+                  {suggestions.map((s, i) =>
+                <button
+                  key={`${s.label}-${i}`}
+                  id={`hero-suggestion-${i}`}
+                  role="option"
+                  aria-selected={i === activeIndex}
+                  type="button"
+                  onClick={() => handleSuggestionClick(s)}
+                  className={`w-full px-4 py-2.5 text-sm text-left flex items-center gap-3 transition-colors ${
+                  i === activeIndex ?
+                  "bg-primary/10 dark:bg-primary/20" :
+                  "hover:bg-muted"}`
+                  }>
+
                       {categoryIcon(s.category)}
                       <span className="flex-1 truncate text-foreground">{s.label}</span>
-                      {s.category === "correction" && s.matchedTerm && (
-                        <span className="text-xs text-muted-foreground italic">corrected</span>
-                      )}
+                      {s.category === "correction" && s.matchedTerm &&
+                  <span className="text-xs text-muted-foreground italic">corrected</span>
+                  }
                     </button>
-                  ))}
+                )}
                 </motion.div>
-              )}
+              }
             </AnimatePresence>
           </motion.form>
 
@@ -457,23 +457,23 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.55, duration: 0.5 }}
-            className="mt-4 flex flex-wrap items-center justify-center gap-2"
-          >
+            className="mt-4 flex flex-wrap items-center justify-center gap-2">
+
             <span className="text-xs text-primary-foreground/60">Try:</span>
             {[
-              { label: "48322 food pantry", query: "48322 food pantry" },
-              { label: "Oakland County mental health", query: "Oakland County mental health" },
-              { label: "West Bloomfield doctor", query: "West Bloomfield doctor" },
-            ].map((ex) => (
-              <button
-                key={ex.label}
-                type="button"
-                onClick={() => { setSearchQuery(ex.query); updateSuggestions(ex.query); inputRef.current?.focus(); }}
-                className="rounded-full bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-1 text-[11px] text-primary-foreground/80 transition-all hover:scale-105"
-              >
+            { label: "48322 food pantry", query: "48322 food pantry" },
+            { label: "Oakland County mental health", query: "Oakland County mental health" },
+            { label: "West Bloomfield doctor", query: "West Bloomfield doctor" }].
+            map((ex) =>
+            <button
+              key={ex.label}
+              type="button"
+              onClick={() => {setSearchQuery(ex.query);updateSuggestions(ex.query);inputRef.current?.focus();}}
+              className="rounded-full bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-1 text-[11px] text-primary-foreground/80 transition-all hover:scale-105">
+
                 {ex.label}
               </button>
-            ))}
+            )}
           </motion.div>
 
           {/* Popular shortcut pills */}
@@ -481,34 +481,34 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.5 }}
-            className="mt-6 flex flex-col items-center gap-2"
-          >
+            className="mt-6 flex flex-col items-center gap-2">
+
             <span className="text-[10px] font-semibold uppercase tracking-widest text-primary-foreground/45">
               Popular shortcuts
             </span>
             <div className="flex flex-wrap items-center justify-center gap-2">
-              {quickPills.filter((p) => !(p as any).secondary).map((pill) => (
-                <Link
-                  key={pill.label}
-                  to={pill.href}
-                  className={`group inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105 ${(pill as any).primary ? "bg-white/25 ring-1 ring-white/30" : "bg-white/15 hover:bg-white/25"}`}
-                >
+              {quickPills.filter((p) => !(p as any).secondary).map((pill) =>
+              <Link
+                key={pill.label}
+                to={pill.href}
+                className={`group inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105 ${(pill as any).primary ? "bg-white/25 ring-1 ring-white/30" : "bg-white/15 hover:bg-white/25"}`}>
+
                   <pill.icon className="h-3.5 w-3.5" aria-hidden="true" />
                   {pill.label}
                 </Link>
-              ))}
+              )}
             </div>
             <div className="flex flex-wrap items-center justify-center gap-2 mt-1">
-              {quickPills.filter((p) => (p as any).secondary).map((pill) => (
-                <Link
-                  key={pill.label}
-                  to={pill.href}
-                  className="group inline-flex items-center gap-1 rounded-full bg-white/8 hover:bg-white/15 border border-white/10 px-3 py-1 text-[11px] font-normal text-primary-foreground/60 transition-all hover:text-primary-foreground/80"
-                >
+              {quickPills.filter((p) => (p as any).secondary).map((pill) =>
+              <Link
+                key={pill.label}
+                to={pill.href}
+                className="group inline-flex items-center gap-1 rounded-full bg-white/8 hover:bg-white/15 border border-white/10 px-3 py-1 text-[11px] font-normal text-primary-foreground/60 transition-all hover:text-primary-foreground/80">
+
                   <pill.icon className="h-3 w-3" aria-hidden="true" />
                   {pill.label}
                 </Link>
-              ))}
+              )}
             </div>
           </motion.div>
         </div>
@@ -518,8 +518,8 @@ const HeroSection = () => {
         <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-primary-foreground blur-3xl" />
         <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-primary-foreground blur-3xl" />
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default HeroSection;
