@@ -16,6 +16,7 @@ import {
   Lock } from
 "lucide-react";
 import { Link } from "react-router-dom";
+import { FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 
@@ -175,13 +176,43 @@ const Index = () => {
 
       {/* ═══ LAYER 2 — SEARCH & GUIDED PATHWAYS ═══ */}
       <HeroSection />
+
+      {/* ── "Where do you want to start?" immediately after search ── */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <LazySection minHeight="120px">
+          <Suspense fallback={<SectionFallback />}>
+            <CoreAccessGrid />
+          </Suspense>
+        </LazySection>
+      </SectionErrorBoundary>
+
+      {/* ── Generate My County Brief CTA ── */}
+      <div className="container py-4">
+        <Card className="border-primary/15 bg-primary/[0.03]">
+          <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
+              <FileText className="h-5 w-5 text-primary" aria-hidden="true" />
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <p className="text-sm font-semibold text-foreground">Generate My County Brief</p>
+              <p className="text-xs text-muted-foreground">Get a civic snapshot with headline metrics, insight score, and print-ready summary.</p>
+            </div>
+            <Link to="/brief">
+              <Button size="sm" className="gap-1.5 whitespace-nowrap">
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                Create Brief
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+
       <div className="container py-4 space-y-4">
         <TrustPanel updated="2026-02-23" />
         <DataProvenance
           source="Public datasets (State of Michigan + local agencies). Independently organized."
           updated="2026-02-23"
-          methodologyHref="/about" />
-
+          methodologyHref="/methodology" />
       </div>
 
       {/* Action center (Wizard + persona + guided pathways + authority strip) */}
@@ -456,7 +487,7 @@ const Index = () => {
               </CollapsibleContent>
             </Collapsible>
 
-            <CoreAccessGrid />
+            {/* CoreAccessGrid moved above — skip here */}
             <TransportationSafetyCallout />
           </Suspense>
         </LazySection>

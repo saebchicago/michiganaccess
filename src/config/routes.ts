@@ -101,6 +101,7 @@ const pages = {
   DataExplorerPage: lazy(() => import("@/pages/DataExplorerPage")),
   ComparePlacesPage: lazy(() => import("@/pages/ComparePlacesPage")),
   DatasetExplorerPage: lazy(() => import("@/pages/DatasetExplorerPage")),
+  BriefPage: lazy(() => import("@/pages/BriefPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -173,6 +174,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/admin/search-trends", component: pages.SearchTrendsPage, label: "Search Trends" },
   { path: "/terms", component: pages.TermsPage, label: "Terms of Use" },
   { path: "/zoning", component: pages.ZoningPage, label: "Zoning & Land Use" },
+  { path: "/brief", component: pages.BriefPage, label: "County Brief" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
