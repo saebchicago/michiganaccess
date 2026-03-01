@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { zipToCounty } from "@/data/michigan-county-seats";
 import { countyToSlug } from "@/utils/countyUtils";
 
-export default function UnderstandMyCommunity({ variant = "card" }: { variant?: "card" | "inline" }) {
+export default function UnderstandMyCommunity({ variant = "card" }: {variant?: "card" | "inline";}) {
   const [zip, setZip] = useState("");
   const navigate = useNavigate();
 
@@ -39,26 +39,26 @@ export default function UnderstandMyCommunity({ variant = "card" }: { variant?: 
           <input
             type="text"
             value={zip}
-            onChange={e => setZip(e.target.value)}
+            onChange={(e) => setZip(e.target.value)}
             placeholder="Enter ZIP code"
             className="w-full rounded-full border border-border bg-card pl-8 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             maxLength={5}
             inputMode="numeric"
             pattern="\d{5}"
-            aria-label="Enter ZIP code to understand your community"
-          />
+            aria-label="Enter ZIP code to understand your community" />
+
         </div>
         <Button type="submit" size="sm" className="rounded-full gap-1.5">
           Go <ArrowRight className="h-3 w-3" />
         </Button>
-      </form>
-    );
+      </form>);
+
   }
 
   return (
     <section className="rounded-xl border-2 border-primary/20 bg-gradient-to-br from-primary/8 via-background to-accent/5 p-6 md:p-8 text-center">
       <MapPin className="h-8 w-8 text-primary mx-auto mb-3" />
-      <h2 className="text-xl font-bold text-foreground mb-2">Understand My Community</h2>
+      <h2 className="text-xl font-bold text-foreground mb-2">What's happening in your community?</h2>
       <p className="text-sm text-muted-foreground mb-5 max-w-md mx-auto">
         Enter your ZIP code to see what matters most where you live — key data, resources, and actions in under 10 seconds.
       </p>
@@ -68,19 +68,19 @@ export default function UnderstandMyCommunity({ variant = "card" }: { variant?: 
           <input
             type="text"
             value={zip}
-            onChange={e => setZip(e.target.value)}
+            onChange={(e) => setZip(e.target.value)}
             placeholder="Enter ZIP code"
             className="w-full rounded-full border border-border bg-card pl-9 pr-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-primary"
             maxLength={5}
             inputMode="numeric"
             pattern="\d{5}"
-            aria-label="Enter ZIP code to understand your community"
-          />
+            aria-label="Enter ZIP code to understand your community" />
+
         </div>
         <Button type="submit" size="lg" className="rounded-full gap-1.5 px-6">
           Go <ArrowRight className="h-4 w-4" />
         </Button>
       </form>
-    </section>
-  );
+    </section>);
+
 }
