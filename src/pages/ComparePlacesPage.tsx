@@ -11,6 +11,7 @@
 import { useState, useMemo, useCallback, useRef, Fragment } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ConfettiBurst from "@/components/shared/ConfettiBurst";
+import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import {
   Plus, X, BarChart3, MapPin, Download, Sparkles,
   Users, Star, MessageSquare, ChevronRight, Eye, EyeOff,
@@ -89,46 +90,6 @@ const INSURANCE: Record<string, { medicare: number; medicaid: number; dual: numb
 
 function getInsurance(county: string) {
   return INSURANCE[county] ?? { medicare: 16, medicaid: 18, dual: 4, commercial: 54, uninsured: 8 };
-}
-
-// ── Civic Insight Score gauge ─────────────────────────────────────────────────
-function CivicInsightGauge({ score, color }: { score: number; color: string }) {
-  const r = 40;
-  const circumference = Math.PI * r;                      // semicircle
-  const filled = circumference * (score / 100);
-  const tier = score >= 75 ? "Strong" : score >= 50 ? "Moderate" : "Needs Attention";
-  const tierColor = score >= 75 ? "#2E7D32" : score >= 50 ? "#F57C00" : "#c62828";
-
-  return (
-    <div className="flex flex-col items-center gap-1">
-      <svg width="100" height="56" viewBox="0 0 100 56" aria-label={`Civic Insight Score: ${score} out of 100`}>
-        {/* Track */}
-        <path
-          d="M 10 50 A 40 40 0 0 1 90 50"
-          fill="none"
-          stroke="hsl(var(--border))"
-          strokeWidth="8"
-          strokeLinecap="round"
-        />
-        {/* Fill */}
-        <path
-          d="M 10 50 A 40 40 0 0 1 90 50"
-          fill="none"
-          stroke={color}
-          strokeWidth="8"
-          strokeLinecap="round"
-          strokeDasharray={`${filled} ${circumference}`}
-          style={{ transition: "stroke-dasharray 0.6s ease" }}
-        />
-        {/* Score text */}
-        <text x="50" y="46" textAnchor="middle" fontSize="16" fontWeight="800" fill="currentColor">
-          {score}
-        </text>
-      </svg>
-      <span className="text-[10px] font-semibold" style={{ color: tierColor }}>{tier}</span>
-      <span className="text-[9px] text-muted-foreground">Civic Insight Score</span>
-    </div>
-  );
 }
 
 function computeCivicScore(data: any): number {

@@ -216,6 +216,8 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Regions", href: "/regions" },
     ],
   },
+  // Top-level Compare link — first-class entry point (not buried in dropdown)
+  { label: "Compare", href: "/compare", badge: "New" },
   {
     label: "Data & Insights",
     children: [

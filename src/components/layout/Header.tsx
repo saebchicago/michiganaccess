@@ -64,14 +64,19 @@ const Header = () => {
               <Link
                 key={(link as NavLinkType).href}
                 to={(link as NavLinkType).href!}
-                className={`rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                   location.pathname === (link as NavLinkType).href
                     ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-foreground hover:text-primary"
                 }`}
                 aria-current={location.pathname === (link as NavLinkType).href ? "page" : undefined}
               >
                 {link.label}
+                {(link as NavLinkType).badge && (
+                  <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold text-primary leading-none">
+                    {(link as NavLinkType).badge}
+                  </span>
+                )}
               </Link>
             )
           )}
