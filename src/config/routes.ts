@@ -100,6 +100,7 @@ const pages = {
   DataAndInsightsPage: lazy(() => import("@/pages/DataAndInsightsPage")),
   DataExplorerPage: lazy(() => import("@/pages/DataExplorerPage")),
   ComparePlacesPage: lazy(() => import("@/pages/ComparePlacesPage")),
+  DatasetExplorerPage: lazy(() => import("@/pages/DatasetExplorerPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -124,6 +125,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/data-and-insights", component: pages.DataAndInsightsPage, label: "Data & Insights" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
   { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
+  { path: "/datasets", component: pages.DatasetExplorerPage, label: "Dataset Explorer" },
   { path: "/transportation", component: pages.TransportationPage, label: "Transportation" },
   { path: "/contact", component: pages.ContactPage, label: "Contact" },
   { path: "/environment", component: pages.EnvironmentPage, label: "Environment" },
@@ -220,6 +222,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Data & Insights Hub", href: "/data-and-insights", badge: "New" },
       { label: "Civic Data Hub", href: "/civic-data-hub", badge: "New" },
       { label: "Data Explorer", href: "/data-explorer", badge: "Census API" },
+      { label: "Dataset Explorer", href: "/datasets", badge: "4 Pillars" },
       { label: "Compare Counties", href: "/compare", badge: "New" },
       { label: "Health Data Dashboard", href: "/data", i18nKey: "nav.healthData" },
       { label: "Health Equity", href: "/equity" },
