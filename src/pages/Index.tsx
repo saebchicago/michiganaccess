@@ -13,8 +13,8 @@ import {
   BarChart3,
   ShieldCheck,
   Globe2,
-  Lock,
-} from "lucide-react";
+  Lock } from
+"lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
@@ -54,13 +54,13 @@ const SuccessStories = lazy(() => import("@/components/home/SuccessStories"));
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
 const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
 
-const SectionFallback = () => (
-  <div className="py-8 flex justify-center">
+const SectionFallback = () =>
+<div className="py-8 flex justify-center">
     <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-  </div>
-);
+  </div>;
 
-function TrustPanel({ updated }: { updated: string }) {
+
+function TrustPanel({ updated }: {updated: string;}) {
   return (
     <Card className="border-dashed">
       <CardContent className="py-4">
@@ -80,13 +80,13 @@ function TrustPanel({ updated }: { updated: string }) {
               <span className="text-xs text-muted-foreground">Updated {updated}</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Built by citizens, not a government agency—aimed at enthusiastic, easy access to help and local civic intelligence. Expanding coverage via Michigan 2-1-1, library services, notary guidance, and open GIS layers.
+              Built by Michigan residents, not a government agency. Independently organized to make civic resources effortless to find — no signup, no ads, no data selling, ever.
             </p>
           </div>
         </div>
       </CardContent>
-    </Card>
-  );
+    </Card>);
+
 }
 
 /** Shared mobile-only accordion toggle button */
@@ -94,28 +94,28 @@ function MobileAccordionToggle({
   open,
   openLabel,
   closedLabel,
-  onToggle,
-}: {
-  open: boolean;
-  openLabel: string;
-  closedLabel: string;
-  onToggle: () => void;
-}) {
+  onToggle
+
+
+
+
+
+}: {open: boolean;openLabel: string;closedLabel: string;onToggle: () => void;}) {
   return (
     <button
       type="button"
       onClick={onToggle}
       className="md:hidden w-full flex items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-muted-foreground bg-muted/40 hover:bg-muted/60 border-y border-border/50 transition-colors"
-      aria-expanded={open}
-    >
+      aria-expanded={open}>
+
       <span>{open ? openLabel : closedLabel}</span>
-      {open ? (
-        <ChevronUp className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-      ) : (
-        <ChevronDown className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-      )}
-    </button>
-  );
+      {open ?
+      <ChevronUp className="h-4 w-4 flex-shrink-0" aria-hidden="true" /> :
+
+      <ChevronDown className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+      }
+    </button>);
+
 }
 
 export type PersonaView = "resident" | "professional";
@@ -157,14 +157,14 @@ const Index = () => {
         setProOpen(!isMobile);
       }
     },
-    [isMobile],
+    [isMobile]
   );
 
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
     description:
-      "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
-    path: "/",
+    "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
+    path: "/"
   });
 
   return (
@@ -180,8 +180,8 @@ const Index = () => {
         <DataProvenance
           source="Public datasets (State of Michigan + local agencies). Independently organized."
           updated="2026-02-23"
-          methodologyHref="/about"
-        />
+          methodologyHref="/about" />
+
       </div>
 
       {/* Action center (Wizard + persona + guided pathways + authority strip) */}
@@ -190,8 +190,8 @@ const Index = () => {
           open={actionCenterOpen}
           openLabel="Hide tools & guided pathways"
           closedLabel="Open tools & guided pathways"
-          onToggle={() => setActionCenterOpen((v) => !v)}
-        />
+          onToggle={() => setActionCenterOpen((v) => !v)} />
+
         <Collapsible open={actionCenterOpen || !isMobile} onOpenChange={setActionCenterOpen}>
           <CollapsibleContent>
             <div className="py-4 flex justify-center">
@@ -238,9 +238,9 @@ const Index = () => {
       <SocialProofStrip />
 
       {/* ═══ EXPLORE MICHIGAN — 3-card entry points ═══════════
-          Solves: first-time visitors need an immediate, scannable
-          answer to "what can I DO here?" before hitting detailed data.
-      ═══════════════════════════════════════════════════════ */}
+           Solves: first-time visitors need an immediate, scannable
+           answer to "what can I DO here?" before hitting detailed data.
+        ═══════════════════════════════════════════════════════ */}
       <section className="py-12 bg-gradient-to-b from-background to-muted/10" aria-labelledby="explore-heading">
         <div className="container max-w-5xl">
           <div className="mb-7 text-center">
@@ -258,12 +258,12 @@ const Index = () => {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-            >
+              transition={{ duration: 0.4 }}>
+
               <Link
                 to="/health-map"
-                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
+                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+
                 <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                   <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
                 </div>
@@ -284,12 +284,12 @@ const Index = () => {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.08 }}
-            >
+              transition={{ duration: 0.4, delay: 0.08 }}>
+
               <Link
                 to="/compare"
-                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
+                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+
                 <div className="w-10 h-10 rounded-lg bg-michigan-forest/10 flex items-center justify-center shrink-0">
                   <BarChart3 className="h-5 w-5 text-michigan-forest" aria-hidden="true" />
                 </div>
@@ -310,12 +310,12 @@ const Index = () => {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.16 }}
-            >
+              transition={{ duration: 0.4, delay: 0.16 }}>
+
               <Link
                 to="/compare"
-                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              >
+                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+
                 <div className="w-10 h-10 rounded-lg bg-michigan-gold/10 flex items-center justify-center shrink-0">
                   <Sparkles className="h-5 w-5 text-michigan-gold" aria-hidden="true" />
                 </div>
@@ -349,10 +349,10 @@ const Index = () => {
       </LazySection>
 
       {/* ═══════════════════════════════════════════════════════
-          COMMUNITY HEALTH & EQUITY BAND — Professional only
-      ═══════════════════════════════════════════════════════ */}
-      {isProfessional && (
-        <LazySection minHeight="200px">
+           COMMUNITY HEALTH & EQUITY BAND — Professional only
+        ═══════════════════════════════════════════════════════ */}
+      {isProfessional &&
+      <LazySection minHeight="200px">
           <section id="community-health-equity" className="py-14 bg-muted/20">
             <div className="container">
               {/* Band header */}
@@ -371,35 +371,35 @@ const Index = () => {
               {/* Equity insight cards */}
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-8">
                 <EquityInsightCard
-                  icon={Heart}
-                  title="Black Infant Mortality"
-                  stat="2.4x higher"
-                  description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
-                  color="coral"
-                  trend="up"
-                  ctaText="View equity data"
-                  ctaHref="/data-and-insights"
-                />
+                icon={Heart}
+                title="Black Infant Mortality"
+                stat="2.4x higher"
+                description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
+                color="coral"
+                trend="up"
+                ctaText="View equity data"
+                ctaHref="/data-and-insights" />
+
                 <EquityInsightCard
-                  icon={Users}
-                  title="Rural Uninsured Rate"
-                  stat="14%"
-                  description="Rural Michiganders are twice as likely to be uninsured as urban residents."
-                  color="gold"
-                  trend="stable"
-                  ctaText="View equity data"
-                  ctaHref="/data-and-insights"
-                />
+                icon={Users}
+                title="Rural Uninsured Rate"
+                stat="14%"
+                description="Rural Michiganders are twice as likely to be uninsured as urban residents."
+                color="gold"
+                trend="stable"
+                ctaText="View equity data"
+                ctaHref="/data-and-insights" />
+
                 <EquityInsightCard
-                  icon={AlertCircle}
-                  title="Primary Care Shortage"
-                  stat="23 counties"
-                  description="Nearly a third of Michigan counties lack adequate primary care providers."
-                  color="teal"
-                  trend="down"
-                  ctaText="View equity data"
-                  ctaHref="/data-and-insights"
-                />
+                icon={AlertCircle}
+                title="Primary Care Shortage"
+                stat="23 counties"
+                description="Nearly a third of Michigan counties lack adequate primary care providers."
+                color="teal"
+                trend="down"
+                ctaText="View equity data"
+                ctaHref="/data-and-insights" />
+
               </div>
 
             {/* County heatmap — collapses on mobile */}
@@ -407,8 +407,8 @@ const Index = () => {
               open={mapOpen}
               openLabel="Hide county health map"
               closedLabel="Advanced: Explore statewide health map"
-              onToggle={() => setMapOpen((v) => !v)}
-            />
+              onToggle={() => setMapOpen((v) => !v)} />
+
             {/* On desktop: always visible via open={true | !isMobile} */}
             <Collapsible open={mapOpen || !isMobile} onOpenChange={setMapOpen}>
               <CollapsibleContent>
@@ -434,7 +434,7 @@ const Index = () => {
             </div>
           </section>
         </LazySection>
-      )}
+      }
 
       {/* ═══ LAYER 3 — PERSONALIZED SNAPSHOT ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
@@ -448,8 +448,8 @@ const Index = () => {
               open={nearbyOpen}
               openLabel="Hide address search"
               closedLabel="Search by address to find closest services"
-              onToggle={() => setNearbyOpen((v) => !v)}
-            />
+              onToggle={() => setNearbyOpen((v) => !v)} />
+
             <Collapsible open={nearbyOpen || !isMobile} onOpenChange={setNearbyOpen}>
               <CollapsibleContent>
                 <NearbyResourceFinder />
@@ -492,8 +492,8 @@ const Index = () => {
                 open={proOpen}
                 openLabel="Hide tools for organizations"
                 closedLabel="Tools for organizations & health systems"
-                onToggle={() => setProOpen((v) => !v)}
-              />
+                onToggle={() => setProOpen((v) => !v)} />
+
               <Collapsible open={proOpen || !isMobile} onOpenChange={setProOpen}>
                 <CollapsibleContent>
                   <ProfessionalGateway />
@@ -505,8 +505,8 @@ const Index = () => {
       </SectionErrorBoundary>
 
       {/* ═══ PROFESSIONAL VIEW DISCOVERY CTA — Resident only ═══ */}
-      {!isProfessional && (
-        <section className="py-10 border-t border-border/30">
+      {!isProfessional &&
+      <section className="py-10 border-t border-border/30">
           <div className="container max-w-2xl">
             <Card className="border-primary/15 bg-gradient-to-br from-primary/5 to-accent/5 shadow-sm">
               <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-6 text-center sm:text-left">
@@ -522,17 +522,17 @@ const Index = () => {
                   </p>
                 </div>
                 <Button
-                  variant="default"
-                  size="sm"
-                  className="gap-1.5 whitespace-nowrap"
-                  onClick={() => {
-                    handlePersonaChange("professional");
-                    setTimeout(() => {
-                      const el = document.querySelector("#community-health-equity");
-                      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }, 150);
-                  }}
-                >
+                variant="default"
+                size="sm"
+                className="gap-1.5 whitespace-nowrap"
+                onClick={() => {
+                  handlePersonaChange("professional");
+                  setTimeout(() => {
+                    const el = document.querySelector("#community-health-equity");
+                    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }, 150);
+                }}>
+
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                   Switch to Professional View
                 </Button>
@@ -540,11 +540,11 @@ const Index = () => {
             </Card>
           </div>
         </section>
-      )}
+      }
 
       <AccessChat />
-    </Layout>
-  );
+    </Layout>);
+
 };
 
 export default Index;
