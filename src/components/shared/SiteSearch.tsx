@@ -422,7 +422,7 @@ export default function SiteSearch() {
 
               {/* No DB results + no smart suggestions = empty fallback */}
               {query.length >= 2 && !loading && results.length === 0 && smartSuggestions[0]?.category === "popular" && (
-                <CommandGroup heading="No matches found — try these">
+                <CommandGroup heading={`No results for "${query}" — try a county, ZIP, or service name`}>
                   {smartSuggestions.map((s, i) => (
                     <CommandItem
                       key={`fallback-${i}`}

@@ -392,6 +392,14 @@ export default function ComparePlacesPage() {
           </div>
         </div>
 
+        {/* ── Onboarding hint — shown when 2+ counties selected (first-use guidance) ── */}
+        {selected.length >= 2 && (
+          <p className="text-[11px] text-muted-foreground print:hidden">
+            Comparing <span className="font-semibold text-foreground">{selected.join(", ")}</span>. Use the selector above to add up to 4 counties, or remove one by clicking ×.
+            <span className="ml-1.5 text-muted-foreground/60">MI Avg column shows the Michigan state benchmark; hover <span className="border-b border-dotted border-muted-foreground/50 cursor-help">—</span> for details.</span>
+          </p>
+        )}
+
         {/* ── Empty / single-county state ── */}
         {selected.length < 2 && (
           <motion.div
@@ -615,7 +623,15 @@ export default function ComparePlacesPage() {
                             })}
                             {/* MI Avg column */}
                             <td className="py-2.5 px-3 text-right text-xs text-muted-foreground hidden lg:table-cell">
-                              {mi !== undefined ? metric.format(mi) : "—"}
+                              {mi !== undefined ? metric.format(mi) : (
+                                <span
+                                  title="No Michigan state benchmark available for this metric"
+                                  aria-label="No state benchmark"
+                                  className="cursor-help border-b border-dotted border-muted-foreground/50"
+                                >
+                                  —
+                                </span>
+                              )}
                             </td>
                           </tr>
                         );

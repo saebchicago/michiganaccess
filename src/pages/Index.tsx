@@ -292,8 +292,8 @@ const Index = () => {
             {/* County heatmap — collapses on mobile */}
             <MobileAccordionToggle
               open={mapOpen}
-              openLabel="Hide county health map"
-              closedLabel="Advanced: Explore statewide health map"
+              openLabel="Hide health map"
+              closedLabel="Explore county health map"
               onToggle={() => setMapOpen((v) => !v)}
             />
             {/* On desktop: always visible via open={true | !isMobile} */}
@@ -331,7 +331,7 @@ const Index = () => {
             <MobileAccordionToggle
               open={nearbyOpen}
               openLabel="Hide address search"
-              closedLabel="Use address instead — find services closest to your front door"
+              closedLabel="Search by address to find closest services"
               onToggle={() => setNearbyOpen((v) => !v)}
             />
             <Collapsible open={nearbyOpen || !isMobile} onOpenChange={setNearbyOpen}>
@@ -373,8 +373,8 @@ const Index = () => {
             <div id="for-organizations">
               <MobileAccordionToggle
                 open={proOpen}
-                openLabel="Hide professional tools"
-                closedLabel="Advanced: Tools for organizations & health systems"
+                openLabel="Hide tools for organizations"
+                closedLabel="Tools for organizations & health systems"
                 onToggle={() => setProOpen((v) => !v)}
               />
               <Collapsible open={proOpen || !isMobile} onOpenChange={setProOpen}>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle, Mic, MicOff, Lock, User, Hash } from "lucide-react";
+import { Search, Apple, Bus, HeartPulse, Pill, MapPin, Sparkles, TrendingUp, AlertCircle, Mic, MicOff, Lock, User, Hash, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getSearchSuggestions, getPopularSuggestions, parseComboQuery, getMisspellingCorrection, type SearchSuggestion } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
@@ -15,12 +15,12 @@ declare global {
 }
 
 const quickPills = [
-  { icon: HeartPulse, label: "Find Care", href: "/find-care" },
-  { icon: User, label: "Find a Doctor", href: "/find-care?mode=name" },
-  { icon: Pill, label: "Financial Help", href: "/financial-help" },
-  { icon: Apple, label: "Community Resources", href: "/resources" },
-  { icon: MapPin, label: "Zoning Info", href: "/zoning" },
-  { icon: Bus, label: "More Services", href: "/wellness" },
+  { icon: HeartPulse, label: "Find Care",           href: "/find-care" },
+  { icon: User,       label: "Find a Doctor",        href: "/find-care?mode=name" },
+  { icon: Pill,       label: "Financial Help",        href: "/financial-help" },
+  { icon: Apple,      label: "Community Resources",   href: "/resources" },
+  { icon: Brain,      label: "Mental Health",         href: "/conditions?category=mental-health" },
+  { icon: Bus,        label: "Transportation",         href: "/transportation" },
 ];
 
 const MichiganOutline = () => (
@@ -349,8 +349,11 @@ const HeroSection = () => {
                     </div>
                   )}
                   {searchQuery.length >= 2 && suggestions.length > 0 && suggestions[0].category === "popular" && (
-                    <div className="px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      No matches found — try these popular searches
+                    <div className="px-4 pt-3 pb-1.5 border-b border-border/40">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Try a popular search</p>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">
+                        No results for &ldquo;{searchQuery}&rdquo; — try a county name, ZIP code, or service type
+                      </p>
                     </div>
                   )}
 
