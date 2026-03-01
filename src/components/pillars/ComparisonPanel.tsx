@@ -27,6 +27,16 @@ import HealthAccessCards from "./HealthAccessCards";
 import EnvironmentRiskCards from "./EnvironmentRiskCards";
 import MobilityAccessCards from "./MobilityAccessCards";
 import EconomicStressCards from "./EconomicStressCards";
+import { getCountyProfile } from "@/data/michigan-county-profiles";
+import { useFacilities } from "@/hooks/useFacilities";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const MAX_SELECTIONS = 4;
 
@@ -182,6 +192,62 @@ function PillarCardsForCounty({
   }
 }
 
+function ComparisonSummaryRow({ sel }: { sel: GeoSelection }) {
+  const profile = getCountyProfile(sel.countyName);
+  const { data: facilities } = useFacilities(undefined, sel.countyName);
+  const healthCount = facilities?.filter((f) =>
+    ["hospital", "clinic", "fqhc", "urgent_care"].includes(f.facility_type)
+  ).length ?? null;
+  const sudCount = facilities?.filter((f) =>
+    f.facility_type === "sud" || f.facility_type === "behavioral_health" ||
+    (f.specialties ?? []).some((s: string) => /substance|addiction|behavioral/i.test(s))
+  ).length ?? null;
+
+  const uninsured = profile.healthHighlights.find((h) => h.label === "Uninsured rate")?.value ?? "—";
+  const foodInsec = profile.healthHighlights.find((h) => h.label === "Food insecurity")?.value ?? "—";
+
+  return (
+    <TableRow>
+      <TableCell className="font-medium text-xs whitespace-nowrap">
+        {sel.type === "zip" && <MapPin className="h-3 w-3 inline mr-1" />}
+        {sel.label}
+      </TableCell>
+      <TableCell className="text-xs">{profile.population > 0 ? profile.population.toLocaleString() : "—"}</TableCell>
+      <TableCell className="text-xs">{uninsured}</TableCell>
+      <TableCell className="text-xs">{healthCount !== null ? healthCount : "—"}</TableCell>
+      <TableCell className="text-xs">{sudCount !== null && sudCount > 0 ? sudCount : "—"}</TableCell>
+      <TableCell className="text-xs">{foodInsec}</TableCell>
+    </TableRow>
+  );
+}
+
+function ComparisonSummaryTable({ selections }: { selections: GeoSelection[] }) {
+  if (selections.length < 2) return null;
+  return (
+    <Card>
+      <CardContent className="p-0">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-xs">Geography</TableHead>
+              <TableHead className="text-xs">Population</TableHead>
+              <TableHead className="text-xs">Uninsured</TableHead>
+              <TableHead className="text-xs">Health Facilities</TableHead>
+              <TableHead className="text-xs">SUD/BH</TableHead>
+              <TableHead className="text-xs">Food Insecurity</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {selections.map((s) => (
+              <ComparisonSummaryRow key={s.id} sel={s} />
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  );
+}
+
 interface ComparisonPanelProps {
   pillar: Pillar;
   initialCounty?: string;
@@ -250,6 +316,9 @@ export default function ComparisonPanel({
           <GeoPicker selected={selections} onAdd={addSelection} />
         )}
       </div>
+
+      {/* Summary table */}
+      <ComparisonSummaryTable selections={selections} />
 
       {/* Side-by-side grid */}
       <div
