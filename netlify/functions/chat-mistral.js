@@ -2,13 +2,26 @@
 // Secure Mistral proxy - API key stays server-side
 // Accepts messages[] + optional dataContext from frontend
 
-// CORS headers for all responses
-const CORS = {
-  'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-};
+// Allow production origin + localhost for development.
+// CORS is defence-in-depth; the real secret (API key) is server-side only.
+const ALLOWED_ORIGINS = new Set([
+  'https://accessmi.org',
+  'https://www.accessmi.org',
+  'http://localhost:5173',
+  'http://localhost:4173',
+]);
+
+function getCors(event) {
+  const origin = (event.headers || {}).origin || '';
+  const allowedOrigin = ALLOWED_ORIGINS.has(origin) ? origin : 'https://accessmi.org';
+  return {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Vary': 'Origin',
+  };
+}
 
 // Build a data-context block to inject into the system message
 function buildDataBlock(dataContext) {
@@ -23,17 +36,17 @@ function buildDataBlock(dataContext) {
 export async function handler(event) {
   // Handle preflight CORS
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 204, headers: CORS, body: '' };
+    return { statusCode: 204, headers: getCors(event), body: '' };
   }
 
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers: CORS, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return { statusCode: 405, headers: getCors(event), body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
   // Support both MISTRAL_API_KEY (server-side convention) and VITE_MISTRAL_API_KEY
   const apiKey = process.env.MISTRAL_API_KEY || process.env.VITE_MISTRAL_API_KEY;
   if (!apiKey) {
-    return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: 'MISTRAL_API_KEY not configured on server' }) };
+    return { statusCode: 500, headers: getCors(event), body: JSON.stringify({ error: 'MISTRAL_API_KEY not configured on server' }) };
   }
 
   try {
@@ -43,13 +56,13 @@ export async function handler(event) {
 
     // Input size guard: reject oversized payloads
     if (incomingMessages.length > 50) {
-      return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Too many messages in conversation' }) };
+      return { statusCode: 400, headers: getCors(event), body: JSON.stringify({ error: 'Too many messages in conversation' }) };
     }
 
     // Guard individual message length
     for (const msg of incomingMessages) {
       if (typeof msg.content === 'string' && msg.content.length > 8000) {
-        return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: 'Message content too long' }) };
+        return { statusCode: 400, headers: getCors(event), body: JSON.stringify({ error: 'Message content too long' }) };
       }
     }
 
@@ -92,7 +105,7 @@ export async function handler(event) {
       console.error('Mistral API error:', mistralRes.status, errText);
       return {
         statusCode: mistralRes.status === 429 ? 429 : 500,
-        headers: CORS,
+        headers: getCors(event),
         body: JSON.stringify({ error: mistralRes.status === 429 ? 'Rate limit exceeded' : 'AI service error' }),
       };
     }
@@ -101,14 +114,14 @@ export async function handler(event) {
     const reply = json.choices?.[0]?.message?.content || '';
     return {
       statusCode: 200,
-      headers: CORS,
+      headers: getCors(event),
       body: JSON.stringify({ reply }),
     };
   } catch (err) {
     console.error('chat-mistral error:', err);
     return {
       statusCode: 500,
-      headers: CORS,
+      headers: getCors(event),
       body: JSON.stringify({ error: 'AI service error', detail: err.message }),
     };
   }

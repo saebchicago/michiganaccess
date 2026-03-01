@@ -134,6 +134,3 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
     </section>
   );
 }
-
-// Re-export types for backward compat
-export type { Audience, SubPersona };

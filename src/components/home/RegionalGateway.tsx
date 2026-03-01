@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import { MapPin, Navigation, Loader2, ShieldCheck, X, HeartPulse, Zap, Bus, ArrowRight } from "lucide-react";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
 import MunicipalitySearch from "./MunicipalitySearch";
@@ -70,6 +70,7 @@ const REGION_SHORT_NAME: Record<string, [string, string]> = {
 export default function RegionalGateway() {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+  const sectionRef = useRef<HTMLElement>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   // On touch/mobile: first tap selects (shows info panel), second tap navigates
   const [selected, setSelected] = useState<string | null>(null);
@@ -120,8 +121,15 @@ export default function RegionalGateway() {
 
   return (
     <section
+      ref={sectionRef}
       className="relative py-16 md:py-20 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-teal-50/20 dark:from-background dark:via-primary/[0.05] dark:to-accent/[0.04]"
       aria-label="Explore Michigan by region"
+      onClick={(e) => {
+        // Clicking on the section background (not on the SVG paths) clears selection
+        if (sectionRef.current && e.target === sectionRef.current) {
+          setSelected(null);
+        }
+      }}
     >
       {/* Decorative blur rings */}
       <div
