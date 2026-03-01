@@ -238,9 +238,9 @@ const Index = () => {
       <SocialProofStrip />
 
       {/* ═══ EXPLORE MICHIGAN — 3-card entry points ═══════════
-           Solves: first-time visitors need an immediate, scannable
-           answer to "what can I DO here?" before hitting detailed data.
-        ═══════════════════════════════════════════════════════ */}
+            Solves: first-time visitors need an immediate, scannable
+            answer to "what can I DO here?" before hitting detailed data.
+         ═══════════════════════════════════════════════════════ */}
       <section className="py-12 bg-gradient-to-b from-background to-muted/10" aria-labelledby="explore-heading">
         <div className="container max-w-5xl">
           <div className="mb-7 text-center">
@@ -248,7 +248,7 @@ const Index = () => {
               Explore &amp; Compare Michigan
             </h2>
             <p className="text-sm text-muted-foreground mt-1.5">
-              Three tools to understand your community and compare counties side by side.
+              Explore every Michigan county, compare communities side-by-side, and see your Civic Insight Score.
             </p>
           </div>
 
@@ -349,8 +349,8 @@ const Index = () => {
       </LazySection>
 
       {/* ═══════════════════════════════════════════════════════
-           COMMUNITY HEALTH & EQUITY BAND — Professional only
-        ═══════════════════════════════════════════════════════ */}
+            COMMUNITY HEALTH & EQUITY BAND — Professional only
+         ═══════════════════════════════════════════════════════ */}
       {isProfessional &&
       <LazySection minHeight="200px">
           <section id="community-health-equity" className="py-14 bg-muted/20">
