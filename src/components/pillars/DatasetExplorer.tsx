@@ -7,7 +7,7 @@
  */
 
 import { useState, useMemo } from "react";
-import { Heart, Leaf, Bus, DollarSign, Database, AlertCircle, ExternalLink, Clock } from "lucide-react";
+import { Heart, Leaf, Bus, DollarSign, Database, AlertCircle, ExternalLink, Clock, GitCompareArrows, Table2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ import {
   type PillarDataset,
 } from "@/data/pillarRegistry";
 import type { GeographyLevel } from "@/models/GeoDimension";
+import ComparisonPanel from "./ComparisonPanel";
 
 const PILLAR_ICONS: Record<Pillar, typeof Heart> = {
   health: Heart,
@@ -240,6 +241,7 @@ interface DatasetExplorerProps {
 export default function DatasetExplorer({ defaultPillar, geographyFilter, countyFilter }: DatasetExplorerProps) {
   const [activePillar, setActivePillar] = useState<Pillar>(defaultPillar ?? "health");
   const [selectedDatasetId, setSelectedDatasetId] = useState<string | null>(null);
+  const [mode, setMode] = useState<"explore" | "compare">("explore");
 
   const filteredDatasets = useMemo(() => {
     let ds = ALL_PILLAR_DATASETS.filter((d) => d.pillar === activePillar);
@@ -253,17 +255,43 @@ export default function DatasetExplorer({ defaultPillar, geographyFilter, county
     <div className="space-y-6">
       {/* Pillar tabs */}
       <Tabs value={activePillar} onValueChange={(v) => { setActivePillar(v as Pillar); setSelectedDatasetId(null); }}>
-        <TabsList className="grid w-full grid-cols-4">
-          {(["health", "environment", "mobility", "economic"] as Pillar[]).map((p) => {
-            const Icon = PILLAR_ICONS[p];
-            return (
-              <TabsTrigger key={p} value={p} className="gap-1.5 text-xs">
-                <Icon className="h-3.5 w-3.5" aria-hidden="true" />
-                <span className="hidden sm:inline">{PILLAR_META[p].label}</span>
-              </TabsTrigger>
-            );
-          })}
-        </TabsList>
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <TabsList className="grid w-full max-w-lg grid-cols-4">
+            {(["health", "environment", "mobility", "economic"] as Pillar[]).map((p) => {
+              const Icon = PILLAR_ICONS[p];
+              return (
+                <TabsTrigger key={p} value={p} className="gap-1.5 text-xs">
+                  <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                  <span className="hidden sm:inline">{PILLAR_META[p].label}</span>
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
+
+          {/* Mode toggle */}
+          <div className="flex rounded-lg border border-border overflow-hidden">
+            <button
+              onClick={() => setMode("explore")}
+              className={`px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                mode === "explore"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-background text-muted-foreground hover:bg-muted/50"
+              }`}
+            >
+              <Table2 className="h-3.5 w-3.5" /> Explore
+            </button>
+            <button
+              onClick={() => setMode("compare")}
+              className={`px-3 py-1.5 text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                mode === "compare"
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-background text-muted-foreground hover:bg-muted/50"
+              }`}
+            >
+              <GitCompareArrows className="h-3.5 w-3.5" /> Compare
+            </button>
+          </div>
+        </div>
 
         {(["health", "environment", "mobility", "economic"] as Pillar[]).map((p) => (
           <TabsContent key={p} value={p} className="mt-4">
@@ -272,41 +300,45 @@ export default function DatasetExplorer({ defaultPillar, geographyFilter, county
         ))}
       </Tabs>
 
-      <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-        {/* Dataset list */}
-        <div className="space-y-2 max-h-[600px] overflow-y-auto">
-          {filteredDatasets.length === 0 && (
-            <p className="text-sm text-muted-foreground py-4 text-center">
-              No datasets registered for this combination.
-            </p>
-          )}
-          {filteredDatasets.map((ds) => (
-            <DatasetListItem
-              key={ds.id}
-              ds={ds}
-              selected={selectedDatasetId === ds.id}
-              onSelect={() => setSelectedDatasetId(ds.id)}
-            />
-          ))}
-        </div>
+      {mode === "compare" ? (
+        <ComparisonPanel pillar={activePillar} initialCounty={countyFilter} />
+      ) : (
+        <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
+          {/* Dataset list */}
+          <div className="space-y-2 max-h-[600px] overflow-y-auto">
+            {filteredDatasets.length === 0 && (
+              <p className="text-sm text-muted-foreground py-4 text-center">
+                No datasets registered for this combination.
+              </p>
+            )}
+            {filteredDatasets.map((ds) => (
+              <DatasetListItem
+                key={ds.id}
+                ds={ds}
+                selected={selectedDatasetId === ds.id}
+                onSelect={() => setSelectedDatasetId(ds.id)}
+              />
+            ))}
+          </div>
 
-        {/* Detail panel */}
-        <div>
-          {selectedDatasetId ? (
-            <DatasetDetail datasetId={selectedDatasetId} countyFilter={countyFilter} />
-          ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Database className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
-                <h3 className="font-semibold text-foreground mb-1">Select a Dataset</h3>
-                <p className="text-sm text-muted-foreground">
-                  Choose a dataset from the list to view real data, statistics, and source attribution.
-                </p>
-              </CardContent>
-            </Card>
-          )}
+          {/* Detail panel */}
+          <div>
+            {selectedDatasetId ? (
+              <DatasetDetail datasetId={selectedDatasetId} countyFilter={countyFilter} />
+            ) : (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <Database className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
+                  <h3 className="font-semibold text-foreground mb-1">Select a Dataset</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Choose a dataset from the list to view real data, statistics, and source attribution.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
