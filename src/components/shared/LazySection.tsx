@@ -25,6 +25,13 @@ export default function LazySection({
     const el = ref.current;
     if (!el) return;
 
+    // If the element is already in (or above) the viewport on mount, render immediately
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 200) {
+      setVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
