@@ -123,22 +123,26 @@ export default function BriefPage() {
                 <BarChart3 className="h-4 w-4 text-primary" />
                 Headline Metrics
               </h3>
-              <div className="grid gap-3 sm:grid-cols-3">
-                {profile.healthHighlights.map((m) => (
-                  <Card key={m.label}>
-                    <CardContent className="py-4 text-center">
-                      <p className="text-xs text-muted-foreground mb-1">{m.label}</p>
-                      <p className="text-2xl font-bold text-foreground">{m.value}</p>
-                      <div className="flex items-center justify-center gap-1 mt-1">
-                        {trendIcon(m.trend)}
-                        <span className="text-[10px] text-muted-foreground capitalize">
-                          {m.trend || "stable"}
-                        </span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              {profile.healthHighlights && profile.healthHighlights.length > 0 ? (
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {profile.healthHighlights.map((m) => (
+                    <Card key={m.label}>
+                      <CardContent className="py-4 text-center">
+                        <p className="text-xs text-muted-foreground mb-1">{m.label}</p>
+                        <p className="text-2xl font-bold text-foreground">{m.value}</p>
+                        <div className="flex items-center justify-center gap-1 mt-1">
+                          {trendIcon(m.trend)}
+                          <span className="text-[10px] text-muted-foreground capitalize">
+                            {m.trend || "stable"}
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground">Headline metrics are not yet available for this county.</p>
+              )}
             </div>
 
             {/* Data note */}
