@@ -18,7 +18,7 @@ const PWAInstallBanner = lazy(() => import("@/components/shared/PWAInstallBanner
 const MobileBottomNav = lazy(() => import("@/components/shared/MobileBottomNav"));
 const QuickExitBar = lazy(() => import("@/components/shared/QuickExitBar"));
 const FloatingFeedback = lazy(() => import("@/components/shared/FloatingFeedback"));
-
+const OnboardingTour = lazy(() => import("@/components/shared/OnboardingTour"));
 interface LayoutProps {
   children: ReactNode;
 }
@@ -53,6 +53,7 @@ const Layout = ({ children }: LayoutProps) => (
       <AIChatWidget />
       <QuickExitBar />
       <FloatingFeedback />
+      <OnboardingTour />
     </Suspense>
   </div>
 );

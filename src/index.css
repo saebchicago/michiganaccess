@@ -391,3 +391,10 @@ body.translated-rtl {
 .hero-search-input.placeholder-fading::placeholder {
   opacity: 0.3;
 }
+
+/* Hide scroll chevron on short mobile viewports */
+@media (max-height: 699px) {
+  .scroll-explore-chevron {
+    display: none !important;
+  }
+}

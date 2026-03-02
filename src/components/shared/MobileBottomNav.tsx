@@ -1,17 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, Heart, Users, Map, MoreHorizontal } from "lucide-react";
+import { Home, Heart, Users, Map, BarChart2, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 const items = [
   { icon: Home, label: "Home", href: "/" },
   { icon: Heart, label: "Find Care", href: "/find-care" },
-  { icon: Users, label: "Resources", href: "/resources" },
+  { icon: BarChart2, label: "Compare", href: "/compare" },
   { icon: Map, label: "Map", href: "/health-map" },
 ];
 
 const moreLinks = [
+  { label: "Resources", href: "/resources" },
   { label: "Financial Help", href: "/financial-help" },
   { label: "Transportation", href: "/transportation" },
   { label: "Energy & Environment", href: "/environment" },
@@ -38,20 +40,27 @@ export default function MobileBottomNav() {
             key={item.href}
             to={item.href}
             className={cn(
-              "flex flex-col items-center justify-center gap-0.5 px-2 py-1 text-[10px] min-w-[44px] min-h-[44px] transition-colors",
-              active ? "text-primary font-semibold" : "text-muted-foreground"
+              "relative flex flex-col items-center justify-center gap-0.5 px-2 py-1 text-[10px] min-w-[44px] min-h-[44px] transition-colors",
+              active ? "text-primary" : "text-muted-foreground"
             )}
           >
-            <item.icon className="h-5 w-5" />
-            <span>{item.label}</span>
+            <motion.div whileTap={{ scale: 0.92 }} transition={{ duration: 0.12 }}>
+              <item.icon className="h-5 w-5" />
+            </motion.div>
+            <span className={active ? "font-semibold" : "font-normal"}>{item.label}</span>
+            {active && (
+              <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-[2px] w-4 rounded-full bg-accent" />
+            )}
           </Link>
         );
       })}
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <button className="flex flex-col items-center justify-center gap-0.5 px-2 py-1 text-[10px] text-muted-foreground min-w-[44px] min-h-[44px]">
-            <MoreHorizontal className="h-5 w-5" />
-            <span>More</span>
+          <button className="relative flex flex-col items-center justify-center gap-0.5 px-2 py-1 text-[10px] text-muted-foreground min-w-[44px] min-h-[44px]">
+            <motion.div whileTap={{ scale: 0.92 }} transition={{ duration: 0.12 }}>
+              <MoreHorizontal className="h-5 w-5" />
+            </motion.div>
+            <span className="font-normal">More</span>
           </button>
         </SheetTrigger>
         <SheetContent side="bottom" className="z-[60] rounded-t-2xl pb-8">
