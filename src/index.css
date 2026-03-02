@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,7 +27,7 @@
     --muted-foreground: 220 10% 46%;
 
     /* Teal accent — structured, modern */
-    --accent: 186 50% 36%;
+    --accent: 192 91% 36%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 51%;
@@ -64,6 +65,9 @@
     --chart-3: 186 50% 36%;
     --chart-4: 38 75% 55%;
     --chart-5: 4 65% 58%;
+    --bottom-nav-h: 3.5rem;
+    --sab: env(safe-area-inset-bottom, 0px);
+    --safe-bottom: calc(var(--bottom-nav-h) + var(--sab));
   }
 
   .dark {
@@ -367,4 +371,3 @@ body.translated-rtl {
 [dir="rtl"] .text-right {
   text-align: left;
 }
-
