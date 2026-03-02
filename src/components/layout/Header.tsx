@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, Heart, ChevronDown, Download, Sparkles, Search } from "lucide-react";
+import { Menu, Heart, ChevronDown, Download, Sparkles, Search, BarChart2 } from "lucide-react";
 import BenefitsWizard from "@/components/home/BenefitsWizard";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -88,6 +88,16 @@ const Header = () => {
           <div className="lg:hidden">
             <SiteSearch />
           </div>
+          <Link
+            to="/compare"
+            className={`hidden lg:inline-flex items-center gap-1 rounded-md px-2.5 py-2 text-sm font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+              location.pathname === "/compare" ? "text-primary" : "text-foreground hover:text-primary"
+            }`}
+            aria-current={location.pathname === "/compare" ? "page" : undefined}
+          >
+            <BarChart2 className="h-3.5 w-3.5" />
+            Compare
+          </Link>
           <CountySelector variant="header" />
          
           <ThemeToggle />

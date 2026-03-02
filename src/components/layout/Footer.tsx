@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles, Timer } from "lucide-react";
+import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles, Timer, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
 import { useFooterStats, DATA_SOURCES, formatLoadTime } from "@/hooks/useFooterStats";
+import { replayTour } from "@/components/shared/OnboardingTour";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -182,9 +183,17 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Report Issue */}
-        <div className="mt-4 border-t border-border pt-4">
+        {/* Report Issue + Replay Tour */}
+        <div className="mt-4 border-t border-border pt-4 flex flex-col items-center gap-3">
           <ReportIssue variant="footer" />
+          <button
+            type="button"
+            onClick={replayTour}
+            className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground hover:text-primary transition-colors"
+          >
+            <RotateCcw className="h-3 w-3" />
+            Replay welcome tour
+          </button>
         </div>
 
         {/* Trust statement */}
