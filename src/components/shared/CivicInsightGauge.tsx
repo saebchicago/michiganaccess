@@ -6,7 +6,7 @@
  *   ≥50  → "Moderate"        (#F57C00 harvest orange)
  *   <50  → "Needs Attention" (#c62828 alert red)
  */
-export function CivicInsightGauge({ score, color }: { score: number; color: string }) {
+export function CivicInsightGauge({ score, color, showClassification = false }: { score: number; color: string; showClassification?: boolean }) {
   const r = 40;
   const circumference = Math.PI * r; // semicircle arc length
   const filled = circumference * (score / 100);
@@ -57,6 +57,11 @@ export function CivicInsightGauge({ score, color }: { score: number; color: stri
         {tier}
       </span>
       <span className="text-[9px] text-muted-foreground">Civic Insight Score</span>
+      {showClassification && (
+        <span className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] leading-tight font-medium text-michigan-teal bg-michigan-teal/8 border-michigan-teal/20 mt-0.5">
+          Model estimate
+        </span>
+      )}
     </div>
   );
 }

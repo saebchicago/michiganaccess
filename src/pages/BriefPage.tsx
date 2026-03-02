@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Printer, TrendingUp, TrendingDown, Minus, MapPin, BarChart3, FileText } from "lucide-react";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
+import { DataClassification } from "@/components/shared/DataClassification";
 
 /** Deterministic civic score based on profile data (no API call) */
 function computeCivicScore(county: string): number {
@@ -97,7 +98,7 @@ export default function BriefPage() {
             {/* Score card */}
             <Card>
               <CardContent className="py-6 flex flex-col sm:flex-row items-center gap-6">
-                <CivicInsightGauge score={score} color="hsl(var(--primary))" />
+                <CivicInsightGauge score={score} color="hsl(var(--primary))" showClassification />
                 <div className="flex-1 text-center sm:text-left">
                   <h2 className="text-xl font-bold text-foreground">{county} County</h2>
                   <p className="text-sm text-muted-foreground mt-1">
@@ -124,7 +125,9 @@ export default function BriefPage() {
                 Headline Metrics
               </h3>
               {profile.healthHighlights && profile.healthHighlights.length > 0 ? (
-                <div className="grid gap-3 sm:grid-cols-3">
+                <div className="space-y-3">
+                  <DataClassification type="verified" />
+                  <div className="grid gap-3 sm:grid-cols-3">
                   {profile.healthHighlights.map((m) => (
                     <Card key={m.label}>
                       <CardContent className="py-4 text-center">
@@ -140,8 +143,12 @@ export default function BriefPage() {
                     </Card>
                   ))}
                 </div>
+                </div>
               ) : (
-                <p className="text-sm text-muted-foreground">Headline metrics are not yet available for this county.</p>
+                <div className="space-y-2">
+                  <DataClassification type="pending" />
+                  <p className="text-sm text-muted-foreground">Headline metrics are not yet available for this county.</p>
+                </div>
               )}
             </div>
 

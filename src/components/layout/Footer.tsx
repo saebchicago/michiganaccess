@@ -189,6 +189,10 @@ const Footer = () => {
 
         {/* Trust statement */}
         <div className="border-t border-border pt-4 mt-4">
+          <p className="text-center text-[10px] text-muted-foreground mb-3">
+            Access Michigan organizes verified public datasets and clearly labels modeled or illustrative information.{" "}
+            <Link to="/methodology" className="text-primary hover:underline">Learn more →</Link>
+          </p>
           <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto mb-3">
             Access Michigan is an independent civic intelligence and navigation platform supporting Michigan residents, communities, and institutions.
             We are not affiliated with MDHHS, Michigan 2-1-1, or any government agency. We organize public data to help residents find services and communities understand their needs.
