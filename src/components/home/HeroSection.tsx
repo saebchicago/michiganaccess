@@ -158,6 +158,7 @@ const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [correction, setCorrection] = useState<string | null>(null);
   const [isListening, setIsListening] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
@@ -194,6 +195,29 @@ const HeroSection = () => {
   }, []);
 
   const [parsedIntent, setParsedIntent] = useState<ReturnType<typeof parseNaturalLanguage> | null>(null);
+
+  // Phase 2: Typewriter placeholder cycle
+  const placeholders = [
+    "Search by city, ZIP, county, service, or doctor",
+    "Try: food pantry near 48322...",
+    "Try: mental health Oakland County...",
+    "Try: emergency shelter Detroit...",
+    "Try: utility assistance Wayne County...",
+  ];
+  const [placeholderIdx, setPlaceholderIdx] = useState(0);
+  const [placeholderOpacity, setPlaceholderOpacity] = useState(1);
+
+  useEffect(() => {
+    if (isFocused) return;
+    const interval = setInterval(() => {
+      setPlaceholderOpacity(0);
+      setTimeout(() => {
+        setPlaceholderIdx((prev) => (prev + 1) % placeholders.length);
+        setPlaceholderOpacity(1);
+      }, 300);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isFocused, placeholders.length]);
 
   // NPI detection for 10-digit numbers
   const npiDetected = /^\d{10}$/.test(searchQuery.trim());
@@ -360,10 +384,11 @@ const HeroSection = () => {
                   setSearchQuery(e.target.value);
                   setActiveIndex(-1);
                 }}
-                onFocus={() => setShowDropdown(true)}
+                onFocus={() => { setShowDropdown(true); setIsFocused(true); setPlaceholderIdx(0); setPlaceholderOpacity(1); }}
+                onBlur={() => setIsFocused(false)}
                 onKeyDown={handleKeyDown}
-                placeholder="Search by city, ZIP, county, service, or doctor name…"
-                className="w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-michigan-gold focus:border-transparent transition-all"
+                placeholder={placeholders[placeholderIdx]}
+                className={`hero-search-input w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-1 focus:border-transparent focus:scale-[1.015] transition-all duration-200 ${placeholderOpacity === 0 ? 'placeholder-fading' : ''}`}
                 role="combobox"
                 aria-label="Search for services by location, doctor name, or NPI"
                 aria-expanded={showDropdown}

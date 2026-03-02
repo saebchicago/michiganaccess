@@ -64,7 +64,7 @@ const SectionFallback = () =>
 
 function TrustPanel({ updated }: {updated: string;}) {
   return (
-    <Card className="border-dashed">
+    <Card className="border-dashed bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
       <CardContent className="py-4">
         <div className="flex gap-4 items-start">
           <ShieldCheck className="h-6 w-6 mt-0.5 text-primary" aria-hidden="true" />
@@ -189,7 +189,7 @@ const Index = () => {
 
       {/* ── Generate My County Brief CTA ── */}
       <div className="container py-4">
-        <Card className="border-primary/15 bg-primary/[0.03]">
+        <Card className="border-primary/15 bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
           <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-4">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
               <FileText className="h-5 w-5 text-primary" aria-hidden="true" />
@@ -209,7 +209,9 @@ const Index = () => {
       </div>
 
       <div className="container py-4 space-y-4">
-        <TrustPanel updated="2026-02-23" />
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }}>
+          <TrustPanel updated="2026-02-23" />
+        </motion.div>
         <DataProvenance
           source="Public datasets (State of Michigan + local agencies). Independently organized."
           updated="2026-02-23"
@@ -541,7 +543,7 @@ const Index = () => {
       {!isProfessional &&
       <section className="py-10 border-t border-border/30">
           <div className="container max-w-2xl">
-            <Card className="border-primary/15 bg-gradient-to-br from-primary/5 to-accent/5 shadow-sm">
+            <Card className="border-primary/15 bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
               <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-6 text-center sm:text-left">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
                   <BarChart3 className="h-6 w-6 text-primary" aria-hidden="true" />

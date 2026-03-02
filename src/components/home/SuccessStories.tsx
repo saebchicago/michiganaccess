@@ -54,7 +54,7 @@ const SuccessStories = () => (
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
           >
-            <Card className="group relative h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-primary/20">
+            <Card className="group relative h-full bg-white/80 dark:bg-card/80 backdrop-blur-sm border-white/20 shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-blue-100/40 hover:-translate-y-1 hover:border-primary/20">
               <div className="absolute left-0 top-0 h-full w-1 bg-primary/0 transition-all duration-300 group-hover:bg-primary" />
               <CardContent className="py-6 space-y-3">
                 <div className={`inline-flex items-center justify-center rounded-lg p-2.5 ${uc.bg} transition-transform duration-300 group-hover:scale-110`}>
