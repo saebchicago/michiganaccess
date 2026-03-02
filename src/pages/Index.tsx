@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { FileText } from "lucide-react";
 import { motion } from "framer-motion";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
+import { DataClassification } from "@/components/shared/DataClassification";
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -364,6 +365,7 @@ const Index = () => {
                     example score
                   </div>
                 </div>
+                <DataClassification type="illustrative" />
                 <span className="text-xs font-semibold text-michigan-gold group-hover:underline" aria-hidden="true">
                   See all county scores →
                 </span>

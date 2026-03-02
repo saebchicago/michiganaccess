@@ -14,6 +14,7 @@ import {
   CheckCircle2, TrendingUp, Target, Lightbulb,
   AlertTriangle, DollarSign, FileText, Globe, Activity, Info, Rocket
 } from "lucide-react";
+import { DataClassification } from "@/components/shared/DataClassification";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -146,11 +147,14 @@ export default function ImpactPage() {
                     <cap.icon className="mx-auto mb-2 h-5 w-5 text-primary" />
                     <p className="text-2xl font-bold text-primary">{cap.value}</p>
                     <p className="text-xs font-semibold text-foreground mt-1">{cap.label}</p>
-                    <p className="text-[10px] text-muted-foreground mt-1">{cap.source}</p>
+              <p className="text-[10px] text-muted-foreground mt-1">{cap.source}</p>
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
+          </div>
+          <div className="mt-3 flex justify-center">
+            <DataClassification type="verified" />
           </div>
 
           <div className="rounded-lg border border-border bg-muted/50 p-4 flex items-start gap-3">
@@ -172,6 +176,9 @@ export default function ImpactPage() {
               <p className="text-xs text-muted-foreground">
                 The following case studies are <strong>illustrative scenarios</strong> that demonstrate how Access Michigan's data infrastructure could support health equity analysis. They use real public data sources but present <strong>projected methodologies, not measured outcomes</strong>. No endorsement by or partnership with named agencies is implied.
               </p>
+              <div className="mt-2">
+                <DataClassification type="illustrative" />
+              </div>
             </div>
           </div>
         </motion.div>

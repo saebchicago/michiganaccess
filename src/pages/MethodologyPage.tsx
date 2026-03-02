@@ -10,6 +10,7 @@ import {
   ArrowRight, BarChart3, Heart, CheckCircle2, Info, Layers,
   Monitor, Phone, Printer, FileText, Scale
 } from "lucide-react";
+import { DataClassification, DataClassificationLegend } from "@/components/shared/DataClassification";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -382,6 +383,51 @@ export default function MethodologyPage() {
                 <p className="mt-3 text-[11px] text-michigan-forest">✅ Safety-net clinic elevated with equity boost for vulnerable populations</p>
               </CardContent>
             </Card>
+          </div>
+        </section>
+
+        <Separator />
+
+        {/* How to Read Data */}
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Info className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">How to Read Data on Access Michigan</h2>
+              <p className="text-sm text-muted-foreground">Every metric is labeled so you always know what you're looking at</p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="rounded-lg border border-border p-4">
+              <div className="flex items-start gap-3">
+                <DataClassification type="verified" />
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">This data comes directly from an authoritative public source (CMS, CDC, HRSA, Census, MDHHS) and has been validated through our ingestion pipeline. It reflects real-world measurements.</p>
+            </div>
+
+            <div className="rounded-lg border border-border p-4">
+              <div className="flex items-start gap-3">
+                <DataClassification type="modeled" />
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">This value is computed from verified public datasets using a transparent formula. The Civic Insight Score, for example, combines uninsured rates, food insecurity, and county type into a single 0–100 index. The methodology is documented above.</p>
+            </div>
+
+            <div className="rounded-lg border border-border p-4">
+              <div className="flex items-start gap-3">
+                <DataClassification type="illustrative" />
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">This content demonstrates what the platform can do using realistic scenarios. It is not a measured outcome. Case studies, example scores, and projected analyses carry this label.</p>
+            </div>
+
+            <div className="rounded-lg border border-border p-4">
+              <div className="flex items-start gap-3">
+                <DataClassification type="pending" />
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">Data for this geography is not yet available. Access Michigan is expanding coverage — when a county or metric lacks sufficient source data, we show this label rather than displaying incomplete information.</p>
+            </div>
           </div>
         </section>
       </div>
