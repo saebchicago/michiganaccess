@@ -63,7 +63,7 @@ export default function StakeholderCTAs() {
             >
               <Link
                 to={c.href}
-                className="group block h-full rounded-xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:shadow-michigan hover:-translate-y-1"
+                className="group block h-full rounded-2xl border border-white/20 bg-white/80 dark:bg-card/80 backdrop-blur-sm p-6 shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-blue-100/40 hover:-translate-y-1"
               >
                 <div className={`inline-flex rounded-lg bg-gradient-to-br ${c.gradient} p-3 mb-4`}>
                   <c.icon className="h-6 w-6 text-white" />

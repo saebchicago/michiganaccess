@@ -383,3 +383,11 @@ body.translated-rtl {
 [dir="rtl"] .text-right {
   text-align: left;
 }
+
+/* Hero search placeholder fade transition */
+.hero-search-input::placeholder {
+  transition: opacity 300ms ease;
+}
+.hero-search-input.placeholder-fading::placeholder {
+  opacity: 0.3;
+}

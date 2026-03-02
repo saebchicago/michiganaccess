@@ -5,18 +5,59 @@
  *   ≥75  → "Strong"          (#2E7D32 forest green)
  *   ≥50  → "Moderate"        (#F57C00 harvest orange)
  *   <50  → "Needs Attention" (#c62828 alert red)
+ *
+ * Phase 3: Animates score from 0 → target on viewport entry.
  */
+import { useRef, useState, useEffect } from "react";
+
 export function CivicInsightGauge({ score, color, showClassification = false }: { score: number; color: string; showClassification?: boolean }) {
   const r = 40;
   const circumference = Math.PI * r; // semicircle arc length
-  const filled = circumference * (score / 100);
+
+  // Count-up animation
+  const ref = useRef<HTMLDivElement>(null);
+  const [displayScore, setDisplayScore] = useState(0);
+  const triggered = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !triggered.current) {
+          triggered.current = true;
+          if (prefersReducedMotion) {
+            setDisplayScore(score);
+            return;
+          }
+          const startTime = performance.now();
+          const duration = 1200;
+          const animate = (now: number) => {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            setDisplayScore(Math.round(score * eased));
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [score]);
+
+  const filled = circumference * (displayScore / 100);
   const tier =
     score >= 75 ? "Strong" : score >= 50 ? "Moderate" : "Needs Attention";
   const tierColor =
     score >= 75 ? "#2E7D32" : score >= 50 ? "#F57C00" : "#c62828";
 
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div ref={ref} className="flex flex-col items-center gap-1">
       <svg
         width="100"
         height="56"
@@ -39,7 +80,7 @@ export function CivicInsightGauge({ score, color, showClassification = false }: 
           strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={`${filled} ${circumference}`}
-          style={{ transition: "stroke-dasharray 0.6s ease" }}
+          style={{ transition: "stroke-dasharray 0.1s linear" }}
         />
         {/* Score text */}
         <text
@@ -50,7 +91,7 @@ export function CivicInsightGauge({ score, color, showClassification = false }: 
           fontWeight="800"
           fill="currentColor"
         >
-          {score}
+          {displayScore}
         </text>
       </svg>
       <span className="text-[10px] font-semibold" style={{ color: tierColor }}>

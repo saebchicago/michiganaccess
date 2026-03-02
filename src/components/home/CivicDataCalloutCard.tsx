@@ -11,7 +11,7 @@ export default function CivicDataCalloutCard() {
   return (
     <section className="py-6">
       <div className="container max-w-2xl">
-        <Card className="border-primary/15 bg-gradient-to-br from-primary/5 to-accent/5 shadow-sm">
+        <Card className="border-primary/15 bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
           <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-6 text-center sm:text-left">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 shrink-0">
               <Database className="h-6 w-6 text-primary" aria-hidden="true" />

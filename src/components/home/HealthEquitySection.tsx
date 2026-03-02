@@ -62,7 +62,7 @@ export default function HealthEquitySection() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
             >
-              <Card className="h-full">
+              <Card className="h-full bg-white/80 dark:bg-card/80 backdrop-blur-sm border-white/20 shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
                 <CardContent className="py-5 space-y-2">
                   <div className={`inline-flex h-9 w-9 items-center justify-center rounded-lg ${m.bg}`}>
                     <m.icon className={`h-4.5 w-4.5 ${m.color}`} />
