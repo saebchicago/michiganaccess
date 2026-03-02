@@ -38,7 +38,7 @@
     --input: 220 13% 91%;
     --ring: 215 65% 28%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     /* Extended civic palette */
     --michigan-blue: 215 65% 28%;
@@ -70,6 +70,10 @@
     --sab: env(safe-area-inset-bottom, 0px);
     --safe-bottom: calc(var(--bottom-nav-h) + var(--sab));
     --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
+    --shadow-sm: 0px 1px 4px 0px hsla(0, 0%, 0%, 0.15);
+    --shadow: 0px 1px 8px 0px hsla(0, 0%, 0%, 0.15);
+    --shadow-md: 0px 1px 12px 0px hsla(0, 0%, 0%, 0.15);
+    --shadow-lg: 0px 1px 20px 0px hsla(0, 0%, 0%, 0.15);
   }
 
   .dark {
@@ -125,6 +129,11 @@
     --chart-4: 38 70% 52%;
     --chart-5: 4 60% 55%;
     --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
+    --radius: 0.75rem;
+    --shadow-sm: 0px 1px 4px 0px hsla(0, 0%, 0%, 0.15);
+    --shadow: 0px 1px 8px 0px hsla(0, 0%, 0%, 0.15);
+    --shadow-md: 0px 1px 12px 0px hsla(0, 0%, 0%, 0.15);
+    --shadow-lg: 0px 1px 20px 0px hsla(0, 0%, 0%, 0.15);
   }
 
   /* High Contrast Mode */
