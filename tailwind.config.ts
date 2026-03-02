@@ -31,6 +31,7 @@ export default {
   				'sans-serif'
   			],
   			serif: [
+  				'Playfair Display',
   				'ui-serif',
   				'Georgia',
   				'Cambria',
@@ -176,7 +177,7 @@ export default {
   					transform: 'translateY(0)'
   				}
   			},
-  			'counter': {
+  			counter: {
   				'0%': {
   					opacity: '0',
   					transform: 'translateY(10px)'
@@ -196,10 +197,10 @@ export default {
   			'50': '50',
   			auto: 'auto',
   			'crisis-bar': '100',
-  			'header': '50',
-  			'drawer': '40',
-  			'dropdown': '35',
-  			'modal': '60'
+  			header: '50',
+  			drawer: '40',
+  			dropdown: '35',
+  			modal: '60'
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
@@ -209,7 +210,7 @@ export default {
   			'fade-in-right': 'fade-in-right 0.6s ease-out forwards',
   			'scale-in': 'scale-in 0.4s ease-out forwards',
   			'slide-up': 'slide-up 0.8s ease-out forwards',
-  			'counter': 'counter 0.5s ease-out forwards'
+  			counter: 'counter 0.5s ease-out forwards'
   		}
   	}
   },
