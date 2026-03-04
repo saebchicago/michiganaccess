@@ -240,6 +240,29 @@ const Index = () => {
             <div id="for-residents">
               <GuidedPathways />
             </div>
+
+            {/* ── For Researchers & Planners callout ── */}
+            <div className="container max-w-3xl py-6">
+              <Card className="border-primary/20 bg-primary/5">
+                <CardContent className="flex flex-col sm:flex-row items-start gap-4 py-5">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                    <BarChart3 className="h-5 w-5 text-primary" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-foreground">Need the data, not just the directory?</p>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                      Access Michigan organizes 7+ public data feeds into queryable ZIP and county-level snapshots — income, health outcomes, service gaps, equity scores, and more.
+                    </p>
+                  </div>
+                  <Link to="/data-and-insights" className="shrink-0">
+                    <Button size="sm" className="gap-1.5 whitespace-nowrap">
+                      Explore Data & Insights <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </div>
+
             <AuthorityStrip />
             <div className="flex justify-center py-4">
               <Link to="/data-and-insights">
@@ -279,10 +302,10 @@ const Index = () => {
         <div className="container max-w-5xl">
           <div className="mb-7 text-center">
             <h2 id="explore-heading" className="text-xl font-bold text-foreground md:text-2xl">
-              Explore &amp; Compare Michigan
+              Michigan's Civic Data Layer
             </h2>
            <p className="text-sm text-muted-foreground mt-1.5">
-              Explore every Michigan county, compare communities side-by-side, and see your Civic Insight Score.
+              Structured data across all 83 counties — compare, score, and export civic snapshots for any Michigan community.
             </p>
             <p className="text-xs text-muted-foreground mt-2 max-w-lg mx-auto">
               For health systems &amp; researchers: Build county briefs, export data, and explore equity gaps → <Link to="/for-health-systems" className="text-primary font-medium hover:underline">Learn more</Link>

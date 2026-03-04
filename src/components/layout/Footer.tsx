@@ -176,8 +176,8 @@ const Footer = () => {
           <div className="mx-auto max-w-xl rounded-lg border border-primary/20 bg-primary/[0.06] px-4 py-3 text-center">
             <p className="flex items-center justify-center gap-1.5 text-xs text-foreground">
               <Sparkles className="h-3.5 w-3.5 text-primary" />
-              <span className="font-semibold">Access Michigan</span> is an independent civic platform, continuously improving with community feedback.
-            </p>
+               <span className="font-semibold">Access Michigan</span> — founded as a citizen initiative by Michigan residents, continuously improving with community feedback.
+             </p>
             <p className="mt-1 text-xs text-muted-foreground">
               Have a suggestion? <Link to="/contact" className="font-medium text-primary hover:underline">We'd love to hear from you.</Link>
             </p>
