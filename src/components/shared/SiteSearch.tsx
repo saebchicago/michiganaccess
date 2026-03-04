@@ -62,7 +62,7 @@ interface SearchResult {
   label: string;
   sublabel?: string;
   href: string;
-  category: "county" | "facility" | "resource" | "page" | "suggestion";
+  category: "county" | "zip" | "facility" | "resource" | "page" | "suggestion";
 }
 
 const RECENT_KEY = "mi-access-recent-searches";
@@ -183,10 +183,21 @@ export default function SiteSearch() {
     ]);
 
     // Deduplicate county names and link to canonical place pages
+    // Detect ZIP code queries and add a direct ZIP result
+    const zipMatch = term.match(/\b(\d{5})\b/);
     const seenCounties = new Set<string>();
     const countyResults: SearchResult[] = [];
+
+    if (zipMatch) {
+      countyResults.push({
+        label: `ZIP ${zipMatch[1]}`,
+        sublabel: "View ZIP code community brief",
+        href: `/place/zip/${zipMatch[1]}`,
+        category: "zip" as any,
+      });
+    }
+
     for (const m of counties.data ?? []) {
-      // Add a canonical place-page result for each unique county
       if (!seenCounties.has(m.county)) {
         seenCounties.add(m.county);
         countyResults.push({
@@ -196,7 +207,6 @@ export default function SiteSearch() {
           category: "county",
         });
       }
-      // Also add the municipality result
       countyResults.push({
         label: m.name,
         sublabel: `${m.county} County · ${m.municipality_type}`,
@@ -266,6 +276,8 @@ export default function SiteSearch() {
     switch (cat) {
       case "county":
         return <MapPin className="h-4 w-4 text-primary" />;
+      case "zip":
+        return <MapPin className="h-4 w-4 text-accent" />;
       case "facility":
         return <Building2 className="h-4 w-4 text-primary" />;
       case "resource":
@@ -283,6 +295,8 @@ export default function SiteSearch() {
         return "Pages";
       case "county":
         return "Counties & Cities";
+      case "zip":
+        return "ZIP Codes";
       case "facility":
         return "Facilities";
       case "resource":
@@ -457,7 +471,15 @@ export default function SiteSearch() {
                     >
                       {iconFor(cat)}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">{item.label}</p>
+                        <div className="flex items-center gap-1.5">
+                          <p className="text-sm font-medium truncate">{item.label}</p>
+                          {cat === "zip" && (
+                            <span className="inline-flex items-center rounded bg-accent/15 px-1.5 py-0 text-[9px] font-bold uppercase tracking-wider text-accent">ZIP</span>
+                          )}
+                          {cat === "county" && (
+                            <span className="inline-flex items-center rounded bg-primary/10 px-1.5 py-0 text-[9px] font-bold uppercase tracking-wider text-primary">County</span>
+                          )}
+                        </div>
                         {item.sublabel && <p className="text-xs text-muted-foreground truncate">{item.sublabel}</p>}
                       </div>
                     </CommandItem>

@@ -78,6 +78,22 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
   higherIsBetter: boolean;
   soWhat: string;
 }) {
+  const noData = zipValue === null && countyValue === null;
+
+  if (noData) {
+    return (
+      <Card className="h-full border-dashed">
+        <CardContent className="py-4 space-y-2">
+          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{label}</p>
+          <p className="text-lg font-semibold text-muted-foreground">Data Not Available</p>
+          <p className="text-[11px] text-muted-foreground italic">
+            Census ZCTA-level data for this metric is not yet published for this ZIP code. County and state averages may still be available on the county profile page.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <Card className="h-full">
       <CardContent className="py-4 space-y-2">
@@ -89,7 +105,7 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
           )}
           <DeltaChip value={zipValue} benchmark={stateValue} higherIsBetter={higherIsBetter} label="MI Avg" />
         </div>
-        <div className="flex items-center gap-3 pt-1 border-t border-border/40 mt-2">
+        <div className="flex flex-col xs:flex-row items-start gap-3 pt-1 border-t border-border/40 mt-2">
           <div className="text-[10px] text-muted-foreground space-y-0.5">
             <p>County Avg: <span className="font-mono font-medium text-foreground">{format(countyValue)}</span></p>
             <p>MI State: <span className="font-mono font-medium text-foreground">{format(stateValue)}</span></p>
