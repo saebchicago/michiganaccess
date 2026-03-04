@@ -500,7 +500,7 @@ export default function ComparePlacesPage() {
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl border-2 border-dashed border-border/60 bg-white/60 dark:bg-card/60 backdrop-blur-sm p-10 flex flex-col items-center gap-6 text-center"
+            className="rounded-2xl border-2 border-dashed border-border bg-muted/30 backdrop-blur-sm p-10 flex flex-col items-center gap-6 text-center"
           >
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
               <BarChart3 className="h-8 w-8 text-primary" />

@@ -57,12 +57,12 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
 
   if (noData) {
     return (
-      <Card className="h-full border-dashed">
-        <CardContent className="py-4 space-y-2">
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider break-words">{label}</p>
-          <p className="text-lg font-semibold text-muted-foreground">Data Not Available</p>
-          <p className="text-[11px] text-muted-foreground italic">
-            Census ZCTA-level data for this metric is not yet published for this ZIP code. County and state averages may still be available on the county profile page.
+      <Card className="h-full border-2 border-dashed border-border bg-muted/30">
+        <CardContent className="py-6 space-y-2 text-center">
+          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{label}</p>
+          <p className="text-sm font-medium text-muted-foreground">ACS Data Unavailable for this ZIP</p>
+          <p className="text-[11px] text-muted-foreground/70 italic max-w-xs mx-auto leading-relaxed">
+            Census ZCTA-level data for this metric is not yet published. County and state averages may still be available on the county profile page.
           </p>
         </CardContent>
       </Card>
@@ -212,7 +212,7 @@ export default function ZipPlacePage() {
               zipValue={zipIncome}
               countyValue={countyIncome}
               stateValue={MI_STATE_BENCHMARKS.medianIncome}
-              format={(v) => v !== null ? `$${v.toLocaleString()}` : "Pending…"}
+              format={(v) => v !== null ? `$${v.toLocaleString()}` : "—"}
               higherIsBetter={true}
               soWhat="Higher income generally means more local spending power and tax base."
             />
@@ -221,7 +221,7 @@ export default function ZipPlacePage() {
               zipValue={zipPovRate}
               countyValue={countyPovRate}
               stateValue={MI_STATE_BENCHMARKS.povertyRate}
-              format={(v) => v !== null ? `${v}%` : "Pending…"}
+              format={(v) => v !== null ? `${v}%` : "—"}
               higherIsBetter={false}
               soWhat="Lower poverty rates indicate broader economic stability in this area."
             />
@@ -230,7 +230,7 @@ export default function ZipPlacePage() {
               zipValue={zipBachRate}
               countyValue={countyBachRate}
               stateValue={MI_STATE_BENCHMARKS.bachelorRate}
-              format={(v) => v !== null ? `${v}%` : "Pending…"}
+              format={(v) => v !== null ? `${v}%` : "—"}
               higherIsBetter={true}
               soWhat="Education attainment correlates with health outcomes and earning potential."
             />
