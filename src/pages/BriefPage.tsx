@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Printer, TrendingUp, TrendingDown, Minus, MapPin, BarChart3, FileText } from "lucide-react";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
+import CivicScoreBreakdown from "@/components/shared/CivicScoreBreakdown";
 import { DataClassification } from "@/components/shared/DataClassification";
 
 /** Deterministic civic score based on profile data (no API call) */
@@ -117,6 +118,9 @@ export default function BriefPage() {
                 </Button>
               </CardContent>
             </Card>
+
+            {/* Phase 1 + 3: Score breakdown + methodology */}
+            <CivicScoreBreakdown countyName={county} compositeScore={score} />
 
             {/* Headline metrics */}
             <div>
