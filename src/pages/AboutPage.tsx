@@ -188,6 +188,16 @@ export default function AboutPage() {
           >
             {t("aboutPage.subtitle")}
           </motion.p>
+
+          {/* Citizen initiative origin */}
+          <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="mx-auto max-w-2xl mt-8 text-left space-y-3">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Access Michigan is a citizen-led initiative built by Michigan residents with experience in healthcare operations, data, and civic technology. It began as a volunteer project to make public data easier to use for families, communities, and institutions across the state.
+            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Access Michigan is an independent civic platform — not affiliated with MDHHS, Michigan 2-1-1, or any government agency. We use public data to help residents find services and communities understand their needs, with no cookies, no tracking, and no personal data collected.
+            </p>
+          </motion.div>
         </div>
       </section>
 

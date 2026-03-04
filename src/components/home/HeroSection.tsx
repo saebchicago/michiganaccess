@@ -20,6 +20,9 @@ import {
   User,
   Hash,
   Brain,
+  Database,
+  RefreshCw,
+  Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -352,12 +355,22 @@ const HeroSection = () => {
             Michigan help, at your fingertips.
           </motion.h1>
 
+          {/* Data-forward sub-tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.22, duration: 0.5 }}
+            className="mt-3 text-sm text-primary-foreground/60 md:text-base"
+          >
+            The open data layer behind Michigan's health, housing, and civic resources — searchable by ZIP, county, or community.
+          </motion.p>
+
           {/* Subheading */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.5 }}
-            className="mt-4 text-lg text-primary-foreground/80 md:text-xl"
+            className="mt-3 text-lg text-primary-foreground/80 md:text-xl"
           >
             Free, instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
           </motion.p>
@@ -460,6 +473,27 @@ const HeroSection = () => {
 
             {/* Language quick-switch strip */}
             <LanguageStrip />
+
+            {/* Data credibility strip */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.55, duration: 0.4 }}
+              className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5"
+            >
+              {[
+                { icon: Database, text: "7 live data feeds" },
+                { icon: MapPin, text: "83 Michigan counties" },
+                { icon: Hash, text: "ZIP-to-county precision" },
+                { icon: RefreshCw, text: "Updated March 2026" },
+                { icon: Shield, text: "Open data, no tracking" },
+              ].map((item) => (
+                <span key={item.text} className="inline-flex items-center gap-1 text-[10px] text-primary-foreground/50">
+                  <item.icon className="h-3 w-3" aria-hidden="true" />
+                  {item.text}
+                </span>
+              ))}
+            </motion.div>
 
             {/* Autocomplete Dropdown */}
             <AnimatePresence>

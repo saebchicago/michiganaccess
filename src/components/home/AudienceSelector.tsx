@@ -1,4 +1,4 @@
-import { User, Building2, BarChart3, Heart, Globe, Accessibility } from "lucide-react";
+import { User, Building2, BarChart3, Heart, Globe, Accessibility, Database } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCounty, type Audience, type SubPersona } from "@/contexts/CountyContext";
@@ -14,6 +14,7 @@ const audienceIds: {
   desc: string;
   scrollTarget: string;
   personaView: PersonaView;
+  badge?: string;
 }[] = [
   {
     id: "resident",
@@ -33,13 +34,14 @@ const audienceIds: {
   },
   {
     id: "policymaker",
-    icon: BarChart3,
+    icon: Database,
     label: "Data & Research",
     desc: "Equity metrics, statewide health data, and county comparisons",
     scrollTarget: "#community-health-equity",
     personaView: "professional",
+    badge: "NEW",
   },
-];
+] as const;
 
 const SUB_PERSONAS: { id: SubPersona; label: string; icon: typeof Heart }[] = [
   { id: "caregiver", label: "Caregiver", icon: Heart },
@@ -91,6 +93,11 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
               >
                 <a.icon className="h-3.5 w-3.5" aria-hidden="true" />
                 {a.label}
+                {a.badge && (
+                  <span className="ml-1 rounded-full bg-michigan-gold/20 text-michigan-gold px-1.5 py-px text-[9px] font-bold uppercase leading-none">
+                    {a.badge}
+                  </span>
+                )}
               </Button>
             );
           })}
