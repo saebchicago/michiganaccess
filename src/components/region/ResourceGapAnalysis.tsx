@@ -92,8 +92,14 @@ export default function ResourceGapAnalysis({ region, regionResources, allResour
                     <span className="text-sm font-semibold text-foreground">{item.label}</span>
                   </div>
                   <Badge
-                    variant={item.isUnderserved ? "destructive" : item.isStrong ? "secondary" : "outline"}
-                    className={`text-[10px] ${item.isStrong ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
+                    variant="outline"
+                    className={`text-[10px] px-2 py-0.5 rounded-full border ${
+                      item.isStrong
+                        ? "border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30"
+                        : item.isUnderserved
+                        ? "border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30"
+                        : ""
+                    }`}
                   >
                     {item.gap > 0 ? "+" : ""}{item.gap}% vs avg
                   </Badge>
