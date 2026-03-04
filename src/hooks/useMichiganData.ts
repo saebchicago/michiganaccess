@@ -18,7 +18,7 @@ export function fetchMichiganData<T = Record<string, unknown>[]>(
   url.searchParams.set("$limit", String(limit));
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
-  return fetch(url.toString(), { headers: { Accept: "application/json" },signal })
+  return fetch(url.toString(), { headers: { Accept: "application/json" } })
     .then((res) => {
       if (!res.ok) throw new Error(`Michigan Open Data HTTP ${res.status}`);
       return res.json() as Promise<T>;
