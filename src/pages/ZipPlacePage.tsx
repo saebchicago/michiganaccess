@@ -1,13 +1,13 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   MapPin, Heart, Stethoscope, Building2, Phone,
-  Activity, Shield, Code, Copy, BarChart3,
+  Activity, Shield, Code, Copy, BarChart3, TrendingUp, TrendingDown, Minus,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -28,11 +28,126 @@ import UniversalPreScreener from "@/components/benefits/UniversalPreScreener";
 import ContactRepresentative from "@/components/advocacy/ContactRepresentative";
 import DownloadLocalInsights from "@/components/place/DownloadLocalInsights";
 import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSection";
+import { useCounty } from "@/contexts/CountyContext";
+import { useCensusACS, getCensusValue, formatDollars, formatPercent } from "@/hooks/useCensusACS";
+import { MI_COUNTY_FIPS } from "@/data/census-geographies";
+
+/** State-level ACS benchmarks (2022 estimates) */
+const MI_STATE_BENCHMARKS = {
+  medianIncome: 63202,
+  povertyRate: 13.0,
+  uninsuredRate: 6.3,
+  bachelorRate: 29.6,
+};
+
+/** Delta chip showing value vs benchmark */
+function DeltaChip({ value, benchmark, higherIsBetter, label }: {
+  value: number | null;
+  benchmark: number;
+  higherIsBetter: boolean;
+  label: string;
+}) {
+  if (value === null) return null;
+  const diff = value - benchmark;
+  const pctDiff = ((diff / benchmark) * 100).toFixed(1);
+  const isBetter = higherIsBetter ? diff > 0 : diff < 0;
+  const isNeutral = Math.abs(diff) < benchmark * 0.02;
+
+  const Icon = isNeutral ? Minus : isBetter ? TrendingUp : TrendingDown;
+  const color = isNeutral
+    ? "text-muted-foreground bg-muted"
+    : isBetter
+    ? "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30"
+    : "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30";
+
+  return (
+    <span className={`inline-flex items-center gap-1 text-[11px] font-medium px-1.5 py-0.5 rounded ${color}`}>
+      <Icon className="h-3 w-3" />
+      {diff > 0 ? "+" : ""}{pctDiff}% vs {label}
+    </span>
+  );
+}
+
+/** Mirror card: shows a metric with county and state baselines */
+function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, higherIsBetter, soWhat }: {
+  label: string;
+  zipValue: number | null;
+  countyValue: number | null;
+  stateValue: number;
+  format: (v: number | null) => string;
+  higherIsBetter: boolean;
+  soWhat: string;
+}) {
+  return (
+    <Card className="h-full">
+      <CardContent className="py-4 space-y-2">
+        <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{label}</p>
+        <p className="text-2xl font-bold text-foreground">{format(zipValue)}</p>
+        <div className="flex flex-wrap gap-1.5">
+          {countyValue !== null && (
+            <DeltaChip value={zipValue} benchmark={countyValue} higherIsBetter={higherIsBetter} label="County" />
+          )}
+          <DeltaChip value={zipValue} benchmark={stateValue} higherIsBetter={higherIsBetter} label="MI Avg" />
+        </div>
+        <div className="flex items-center gap-3 pt-1 border-t border-border/40 mt-2">
+          <div className="text-[10px] text-muted-foreground space-y-0.5">
+            <p>County Avg: <span className="font-mono font-medium text-foreground">{format(countyValue)}</span></p>
+            <p>MI State: <span className="font-mono font-medium text-foreground">{format(stateValue)}</span></p>
+          </div>
+        </div>
+        <p className="text-[11px] text-muted-foreground italic">{soWhat}</p>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function ZipPlacePage() {
   const { zipcode } = useParams<{ zipcode: string }>();
+  const { setZip } = useCounty();
 
   const place = useMemo(() => zipcode ? resolvePlace({ type: "zip", zipcode }) : null, [zipcode]);
+
+  // Auto-populate granular context when visiting a ZIP page
+  useEffect(() => {
+    if (zipcode) setZip(zipcode);
+  }, [zipcode, setZip]);
+
+  // Fetch county-level Census data for the "Mirror" overlay
+  const countyFips = place?.parentCounty ? MI_COUNTY_FIPS[place.parentCounty] || "" : "";
+  const { data: countyACS } = useCensusACS({
+    tables: ["B19013", "B17001", "B15003"],
+    geoType: "county",
+    geoFips: countyFips,
+    enabled: !!countyFips,
+  });
+
+  // Fetch ZCTA-level Census data for ZIP
+  const { data: zipACS } = useCensusACS({
+    tables: ["B19013", "B17001", "B15003"],
+    geoType: "zcta",
+    geoFips: zipcode || "",
+    enabled: !!zipcode,
+  });
+
+  // Extract values
+  const zipIncome = getCensusValue(zipACS, "B19013", "B19013_001E");
+  const countyIncome = getCensusValue(countyACS, "B19013", "B19013_001E");
+
+  const zipPovNum = getCensusValue(zipACS, "B17001", "B17001_002E");
+  const zipPovDen = getCensusValue(zipACS, "B17001", "B17001_001E");
+  const zipPovRate = zipPovNum && zipPovDen && zipPovDen > 0 ? +((zipPovNum / zipPovDen) * 100).toFixed(1) : null;
+
+  const countyPovNum = getCensusValue(countyACS, "B17001", "B17001_002E");
+  const countyPovDen = getCensusValue(countyACS, "B17001", "B17001_001E");
+  const countyPovRate = countyPovNum && countyPovDen && countyPovDen > 0 ? +((countyPovNum / countyPovDen) * 100).toFixed(1) : null;
+
+  const zipBachNum = getCensusValue(zipACS, "B15003", "B15003_022E");
+  const zipBachDen = getCensusValue(zipACS, "B15003", "B15003_001E");
+  const zipBachRate = zipBachNum && zipBachDen && zipBachDen > 0 ? +((zipBachNum / zipBachDen) * 100).toFixed(1) : null;
+
+  const countyBachNum = getCensusValue(countyACS, "B15003", "B15003_022E");
+  const countyBachDen = getCensusValue(countyACS, "B15003", "B15003_001E");
+  const countyBachRate = countyBachNum && countyBachDen && countyBachDen > 0 ? +((countyBachNum / countyBachDen) * 100).toFixed(1) : null;
 
   usePageMeta({
     title: place ? `ZIP ${place.slug} Community Brief — Access Michigan` : "ZIP Code Not Found",
@@ -64,7 +179,7 @@ export default function ZipPlacePage() {
               <Badge variant="outline" className="text-xs">{place.parentCounty} County</Badge>
               {place.city && <Badge variant="secondary" className="text-xs">{place.city}</Badge>}
               <Badge variant="outline" className="text-xs bg-michigan-gold/10 text-michigan-gold border-michigan-gold/30">
-                County Avg
+                County Avg Comparison
               </Badge>
             </div>
             <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl mb-3">
@@ -81,12 +196,58 @@ export default function ZipPlacePage() {
               <Link to={`/place/${countyToSlug(place.parentCounty!)}-county`}>
                 <Button variant="outline" className="gap-2"><Building2 className="h-4 w-4" /> County Profile</Button>
               </Link>
+              <Link to={`/compare?selections=zip:${zipcode},county:${place.parentCounty}`}>
+                <Button variant="outline" className="gap-2"><BarChart3 className="h-4 w-4" /> Compare vs County</Button>
+              </Link>
             </div>
           </motion.div>
         </div>
       </section>
 
       <div className="container py-10 space-y-10">
+        {/* ── ZIP vs County "Mirror" Overlay ── */}
+        <section id="zip-overlay">
+          <div className="flex items-center gap-2 mb-4">
+            <BarChart3 className="h-5 w-5 text-primary" />
+            <h2 className="text-xl font-bold text-foreground">ZIP {zipcode} vs {place.parentCounty} County</h2>
+            <Badge variant="outline" className="text-[10px] uppercase tracking-wider">Contextual Peers</Badge>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4">
+            Every metric is shown alongside <strong>{place.parentCounty} County</strong> and <strong>Michigan state</strong> averages so you can see how your ZIP compares.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <MirrorMetricCard
+              label="Median Household Income"
+              zipValue={zipIncome}
+              countyValue={countyIncome}
+              stateValue={MI_STATE_BENCHMARKS.medianIncome}
+              format={(v) => v !== null ? `$${v.toLocaleString()}` : "Pending…"}
+              higherIsBetter={true}
+              soWhat="Higher income generally means more local spending power and tax base."
+            />
+            <MirrorMetricCard
+              label="Poverty Rate"
+              zipValue={zipPovRate}
+              countyValue={countyPovRate}
+              stateValue={MI_STATE_BENCHMARKS.povertyRate}
+              format={(v) => v !== null ? `${v}%` : "Pending…"}
+              higherIsBetter={false}
+              soWhat="Lower poverty rates indicate broader economic stability in this area."
+            />
+            <MirrorMetricCard
+              label="Bachelor's Degree or Higher"
+              zipValue={zipBachRate}
+              countyValue={countyBachRate}
+              stateValue={MI_STATE_BENCHMARKS.bachelorRate}
+              format={(v) => v !== null ? `${v}%` : "Pending…"}
+              higherIsBetter={true}
+              soWhat="Education attainment correlates with health outcomes and earning potential."
+            />
+          </div>
+        </section>
+
+        <Separator />
+
         {/* Michigan Community Brief */}
         <MichiganCommunityBrief place={place} />
 
@@ -117,7 +278,7 @@ export default function ZipPlacePage() {
               { title: "Find a Doctor or Clinic", desc: `Search providers in ${place.parentCounty} County`, href: `/find-care?county=${place.parentCounty}&scope=facilities`, icon: Stethoscope },
               { title: "Community Resources", desc: "Food, housing, transport & more", href: `/resources?county=${place.parentCounty}`, icon: Heart },
               { title: "Financial Help", desc: "Medicaid, SNAP, LIHEAP & more", href: "/financial-help", icon: Activity },
-            ].map((prog, i) => (
+            ].map((prog) => (
               <Link key={prog.title} to={prog.href}>
                 <Card className="h-full hover:shadow-md hover:border-primary/20 transition-all cursor-pointer group">
                   <CardContent className="py-5 space-y-2">
@@ -180,7 +341,7 @@ export default function ZipPlacePage() {
         </div>
 
         <DataProvenance
-          source="County Health Rankings, Census ACS, MDHHS, DOE LEAD, FCC — county-level averages for ZIP context"
+          source="U.S. Census Bureau ACS 5-Year (ZCTA + County), County Health Rankings, MDHHS, DOE LEAD, FCC"
           updated="2025"
           methodologyHref="/data-validation"
         />

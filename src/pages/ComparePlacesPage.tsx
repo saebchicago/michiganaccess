@@ -8,14 +8,15 @@
  *   • Civic Insight Score (0-100 gauge) per county
  *   • Specialists-to-population, insurance breakdown, medical debt rows
  */
-import { useState, useMemo, useCallback, useRef, Fragment } from "react";
+import { useState, useMemo, useCallback, useRef, Fragment, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ConfettiBurst from "@/components/shared/ConfettiBurst";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import {
   Plus, X, BarChart3, MapPin, Download, Sparkles,
   Users, Star, MessageSquare, ChevronRight, Eye, EyeOff,
-  TrendingDown, TrendingUp, Minus as MInusDash, ShieldAlert,
+  TrendingDown, TrendingUp, Minus as MInusDash, ShieldAlert, Hash,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -26,9 +27,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useCensusACS, getCensusValue } from "@/hooks/useCensusACS";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
+import { zipToCounty } from "@/data/michigan-county-seats";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
   ResponsiveContainer, Tooltip as RTooltip, Legend,
@@ -207,14 +210,55 @@ const MI_BENCHMARKS: Record<string, number> = {
   bachelors: 29.6,
 };
 
+// ── Selection model (supports county or ZIP) ──────────────────────────────────
+interface CompareSelection {
+  id: string;
+  type: "county" | "zip";
+  label: string;
+  /** County name used for data fetching (resolved from ZIP if needed) */
+  countyName: string;
+  /** FIPS code for Census queries */
+  fips: string;
+  /** For ZIP selections, the ZCTA code */
+  zcta?: string;
+}
+
+function resolveSelection(input: string): CompareSelection | null {
+  // ZIP code
+  if (/^\d{5}$/.test(input)) {
+    const county = zipToCounty(input);
+    if (!county) return null;
+    return {
+      id: `zip-${input}`,
+      type: "zip",
+      label: `ZIP ${input}`,
+      countyName: county,
+      fips: MI_COUNTY_FIPS[county] || "",
+      zcta: input,
+    };
+  }
+  // County name
+  const fips = MI_COUNTY_FIPS[input];
+  if (!fips) return null;
+  return {
+    id: `county-${input}`,
+    type: "county",
+    label: `${input} County`,
+    countyName: input,
+    fips,
+  };
+}
+
 // ── Hooks ──────────────────────────────────────────────────────────────────────
-function useCountyData(countyName: string) {
-  const fips = MI_COUNTY_FIPS[countyName] || "";
+function useSelectionData(sel: CompareSelection | null) {
+  // For ZIP selections, fetch ZCTA-level data; for counties, fetch county-level
+  const geoType = sel?.type === "zip" ? "zcta" as const : "county" as const;
+  const geoFips = sel?.type === "zip" ? sel.zcta || "" : sel?.fips || "";
   return useCensusACS({
     tables: COMPARE_TABLES,
-    geoType: "county",
-    geoFips: fips,
-    enabled: !!fips,
+    geoType,
+    geoFips,
+    enabled: !!sel && !!geoFips,
   });
 }
 
@@ -228,36 +272,73 @@ const SECTION_LABELS: Record<CompareMetric["section"], string> = {
 
 // ── Main page ──────────────────────────────────────────────────────────────────
 export default function ComparePlacesPage() {
+  const [searchParams] = useSearchParams();
   usePageMeta({
-    title: "Compare Counties — Side-by-Side Census Data | Access Michigan",
-    description: "Compare up to 4 Michigan counties with live Census ACS data, community voice, equity lens, and PDF export.",
+    title: "Compare Places — Side-by-Side Census Data | Access Michigan",
+    description: "Compare up to 4 Michigan counties or ZIP codes with live Census ACS data, community voice, equity lens, and PDF export.",
     path: "/compare",
   });
 
-  const [selected, setSelected] = useState<string[]>(["Wayne", "Oakland"]);
-  const [addCounty, setAddCounty] = useState<string>("");
+  // Parse initial selections from URL (e.g., ?selections=zip:48201,county:Oakland)
+  const initialSelections = useMemo(() => {
+    const param = searchParams.get("selections");
+    if (!param) return [resolveSelection("Wayne")!, resolveSelection("Oakland")!].filter(Boolean);
+    return param.split(",").map((s) => {
+      const [type, value] = s.split(":");
+      if (type === "zip") return resolveSelection(value);
+      return resolveSelection(value);
+    }).filter(Boolean) as CompareSelection[];
+  }, []);
+
+  const [selected, setSelected] = useState<CompareSelection[]>(initialSelections);
+  const [addInput, setAddInput] = useState("");
   const [equityLens, setEquityLens] = useState(false);
   const [showCommunityVoice, setShowCommunityVoice] = useState(true);
   const [confettiBurst, setConfettiBurst] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
   const countyNames = Object.keys(MI_COUNTY_FIPS).sort();
-  const available = countyNames.filter((c) => !selected.includes(c));
+  const selectedIds = new Set(selected.map((s) => s.id));
 
   // Always call all 4 hooks (Rules of Hooks — no conditional calls)
-  const q0 = useCountyData(selected[0] || "");
-  const q1 = useCountyData(selected[1] || "");
-  const q2 = useCountyData(selected[2] || "");
-  const q3 = useCountyData(selected[3] || "");
+  const q0 = useSelectionData(selected[0] || null);
+  const q1 = useSelectionData(selected[1] || null);
+  const q2 = useSelectionData(selected[2] || null);
+  const q3 = useSelectionData(selected[3] || null);
   const queries = [q0, q1, q2, q3];
 
   const allLoading = queries.some((q, i) => i < selected.length && q.isLoading);
 
-  const handleAdd = (county: string) => {
-    if (county && selected.length < 4 && !selected.includes(county)) {
-      setSelected([...selected, county]);
-      setAddCounty("");
+  const handleAddCounty = (county: string) => {
+    if (!county || selected.length >= 4) return;
+    const sel = resolveSelection(county);
+    if (sel && !selectedIds.has(sel.id)) {
+      setSelected([...selected, sel]);
     }
+    setAddInput("");
+  };
+
+  const handleAddZip = () => {
+    const zip = addInput.trim();
+    if (!/^\d{5}$/.test(zip)) {
+      toast.error("Enter a valid 5-digit Michigan ZIP code");
+      return;
+    }
+    const sel = resolveSelection(zip);
+    if (!sel) {
+      toast.error("ZIP code not found in Michigan");
+      return;
+    }
+    if (selectedIds.has(sel.id)) {
+      toast.info("Already added");
+      return;
+    }
+    if (selected.length >= 4) {
+      toast.info("Maximum 4 selections");
+      return;
+    }
+    setSelected([...selected, sel]);
+    setAddInput("");
   };
 
   const handleRemove = (index: number) => {
@@ -291,7 +372,7 @@ export default function ComparePlacesPage() {
         if (val !== null) {
           let n = ((val - min) / range) * 100;
           if (!metric.higherIsBetter) n = 100 - n;
-          entry[selected[i]] = +n.toFixed(0);
+          entry[selected[i].id] = +n.toFixed(0);
         }
       }
       return entry;
@@ -301,8 +382,8 @@ export default function ComparePlacesPage() {
   // Bar chart data
   const barData = useMemo(() => {
     const inc = METRICS.find((m) => m.key === "income")!;
-    return selected.map((county, i) => ({
-      name: county,
+    return selected.map((sel, i) => ({
+      name: sel.label,
       income: queries[i]?.data ? inc.getValue(queries[i].data) || 0 : 0,
       miAvg: MI_BENCHMARKS.income,
     }));
@@ -316,7 +397,7 @@ export default function ComparePlacesPage() {
 
   return (
     <Layout>
-      <Breadcrumbs items={[{ label: "Data & Insights", href: "/data-and-insights" }, { label: "Compare Counties" }]} />
+      <Breadcrumbs items={[{ label: "Data & Insights", href: "/data-and-insights" }, { label: "Compare Places" }]} />
 
       {/* ── Hero ── */}
       <section className="bg-gradient-to-br from-primary/8 via-background to-accent/5 py-10 md:py-14 print:hidden">
@@ -324,11 +405,11 @@ export default function ComparePlacesPage() {
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex items-center gap-2 mb-3">
               <BarChart3 className="h-6 w-6 text-primary" aria-hidden="true" />
-              <Badge variant="outline" className="text-xs">Census ACS · Community Voice</Badge>
+              <Badge variant="outline" className="text-xs">Census ACS · Mixed Granularity</Badge>
             </div>
-            <h1 className="text-3xl font-bold text-foreground md:text-4xl mb-3">Compare Counties</h1>
+            <h1 className="text-3xl font-bold text-foreground md:text-4xl mb-3">Compare Places</h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Side-by-side demographics, economics, housing, community ratings, and equity indicators for up to 4 Michigan counties.
+              Side-by-side comparison of up to 4 Michigan counties <em>or</em> ZIP codes with live Census ACS data, equity lens, and PDF export.
             </p>
           </motion.div>
         </div>
@@ -339,35 +420,51 @@ export default function ComparePlacesPage() {
         {/* ── Controls ── */}
         <div className="flex flex-wrap gap-3 items-center justify-between print:hidden">
           <div className="flex flex-wrap gap-2 items-center">
-            {selected.map((county, i) => (
-              <Badge key={county} variant="secondary" className="text-sm gap-1.5 py-1.5 px-3">
+            {selected.map((sel, i) => (
+              <Badge key={sel.id} variant="secondary" className="text-sm gap-1.5 py-1.5 px-3">
                 <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }} aria-hidden="true" />
-                {county}
+                {sel.type === "zip" && <Hash className="h-3 w-3" />}
+                {sel.label}
                 {selected.length > 1 && (
-                  <button onClick={() => handleRemove(i)} className="ml-1 hover:text-destructive" aria-label={`Remove ${county}`}>
+                  <button onClick={() => handleRemove(i)} className="ml-1 hover:text-destructive" aria-label={`Remove ${sel.label}`}>
                     <X className="h-3 w-3" />
                   </button>
                 )}
               </Badge>
             ))}
             {selected.length < 4 && (
-              <Select value={addCounty} onValueChange={handleAdd}>
-                <SelectTrigger className="w-48 h-8 text-xs">
-                  <Plus className="h-3.5 w-3.5 mr-1" aria-hidden="true" />
-                  <SelectValue placeholder="Add county…" />
-                </SelectTrigger>
-                <SelectContent>
-                  {available.map((c) => (
-                    <SelectItem key={c} value={c}>{c} County</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="flex items-center gap-1.5">
+                <Select value="" onValueChange={handleAddCounty}>
+                  <SelectTrigger className="w-44 h-8 text-xs">
+                    <Plus className="h-3.5 w-3.5 mr-1" aria-hidden="true" />
+                    <SelectValue placeholder="Add county…" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {countyNames.filter((c) => !selectedIds.has(`county-${c}`)).map((c) => (
+                      <SelectItem key={c} value={c}>{c} County</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <span className="text-[10px] text-muted-foreground">or</span>
+                <div className="flex items-center gap-1">
+                  <Input
+                    value={addInput}
+                    onChange={(e) => setAddInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleAddZip()}
+                    placeholder="ZIP code"
+                    className="w-24 h-8 text-xs"
+                    maxLength={5}
+                  />
+                  <Button size="sm" variant="outline" className="h-8 text-xs px-2" onClick={handleAddZip}>
+                    <Hash className="h-3 w-3 mr-1" />Add
+                  </Button>
+                </div>
+              </div>
             )}
           </div>
 
           {/* Right-side controls */}
           <div className="flex items-center gap-3 flex-wrap">
-            {/* Equity lens toggle */}
             <div className="flex items-center gap-2">
               <Switch id="equity-lens" checked={equityLens} onCheckedChange={setEquityLens} />
               <Label htmlFor="equity-lens" className="text-xs cursor-pointer flex items-center gap-1">
@@ -375,32 +472,30 @@ export default function ComparePlacesPage() {
                 Equity Lens
               </Label>
             </div>
-            {/* Community Voice toggle */}
             <button
               onClick={() => setShowCommunityVoice(!showCommunityVoice)}
               className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
               aria-pressed={showCommunityVoice}
             >
-              {showCommunityVoice ? <Eye className="h-3.5 w-3.5" aria-hidden="true" /> : <EyeOff className="h-3.5 w-3.5" aria-hidden="true" />}
+              {showCommunityVoice ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
               Community Voice
             </button>
-            {/* PDF Export */}
             <Button size="sm" variant="outline" onClick={handlePrint} className="gap-1.5 text-xs print:hidden">
-              <Download className="h-3.5 w-3.5" aria-hidden="true" />
+              <Download className="h-3.5 w-3.5" />
               Export PDF
             </Button>
           </div>
         </div>
 
-        {/* ── Onboarding hint — shown when 2+ counties selected (first-use guidance) ── */}
+        {/* ── Onboarding hint ── */}
         {selected.length >= 2 && (
           <p className="text-[11px] text-muted-foreground print:hidden">
-            Comparing <span className="font-semibold text-foreground">{selected.join(", ")}</span>. Use the selector above to add up to 4 counties, or remove one by clicking ×.
-            <span className="ml-1.5 text-muted-foreground/60">MI Avg column shows the Michigan state benchmark; hover <span className="border-b border-dotted border-muted-foreground/50 cursor-help">—</span> for details.</span>
+            Comparing <span className="font-semibold text-foreground">{selected.map((s) => s.label).join(", ")}</span>. Mix counties and ZIP codes freely.
+            <span className="ml-1.5 text-muted-foreground/60">MI Avg column shows the Michigan state benchmark.</span>
           </p>
         )}
 
-        {/* ── Empty / single-county state ── */}
+        {/* ── Empty state ── */}
         {selected.length < 2 && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
@@ -408,16 +503,16 @@ export default function ComparePlacesPage() {
             className="rounded-2xl border-2 border-dashed border-border/60 bg-white/60 dark:bg-card/60 backdrop-blur-sm p-10 flex flex-col items-center gap-6 text-center"
           >
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-              <BarChart3 className="h-8 w-8 text-primary" aria-hidden="true" />
+              <BarChart3 className="h-8 w-8 text-primary" />
             </div>
             <div className="space-y-1.5 max-w-sm">
               <h2 className="text-lg font-bold text-foreground">
-                {selected.length === 0 ? "Choose counties to compare" : "Add a second county to compare"}
+                {selected.length === 0 ? "Choose places to compare" : "Add a second place"}
               </h2>
               <p className="text-sm text-muted-foreground">
                 {selected.length === 0
-                  ? "Side-by-side Census data, equity scores, community voice, and PDF export for up to 4 Michigan counties."
-                  : `${selected[0]} is selected. Add one more county to unlock all comparison charts.`}
+                  ? "Compare counties and ZIP codes side-by-side with Census data, equity scores, and PDF export."
+                  : `${selected[0].label} is selected. Add a county or ZIP to unlock comparison charts.`}
               </p>
             </div>
 
@@ -425,17 +520,17 @@ export default function ComparePlacesPage() {
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">Popular comparisons</span>
               <div className="flex flex-wrap justify-center gap-2">
                 {[
-                  { label: "Metro Detroit", counties: ["Wayne", "Oakland", "Macomb"] },
-                  { label: "Equity spotlight", counties: ["Wayne", "Genesee"] },
-                  { label: "West vs. Capital", counties: ["Kent", "Ingham"] },
-                  { label: "Ann Arbor vs. Detroit", counties: ["Washtenaw", "Wayne"] },
-                ].map(({ label, counties }) => (
+                  { label: "Metro Detroit", items: ["Wayne", "Oakland", "Macomb"] },
+                  { label: "ZIP vs County", items: ["48201", "Wayne"] },
+                  { label: "West vs. Capital", items: ["Kent", "Ingham"] },
+                  { label: "Ann Arbor vs. Detroit", items: ["Washtenaw", "Wayne"] },
+                ].map(({ label, items }) => (
                   <button
                     key={label}
-                    onClick={() => setSelected(counties)}
+                    onClick={() => setSelected(items.map((i) => resolveSelection(i)!).filter(Boolean))}
                     className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/[0.06] px-3.5 py-1.5 text-xs font-semibold text-primary hover:bg-primary/10 transition-colors"
                   >
-                    <MapPin className="h-3 w-3" aria-hidden="true" />
+                    <MapPin className="h-3 w-3" />
                     {label}
                   </button>
                 ))}
@@ -450,21 +545,24 @@ export default function ComparePlacesPage() {
           <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
             <CardHeader className="pb-2">
               <CardTitle className="text-base flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-michigan-gold" aria-hidden="true" />
+                <Sparkles className="h-4 w-4 text-michigan-gold" />
                 Civic Insight Score
               </CardTitle>
               <p className="text-xs text-muted-foreground">
-                Composite 0–100 score based on income, poverty, education, and employment. Higher = stronger civic health.
+                Composite 0–100 score based on income, poverty, education, and employment.
               </p>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-8 justify-center py-2">
-                {selected.map((county, i) => {
+                {selected.map((sel, i) => {
                   const score = computeCivicScore(queries[i]?.data);
                   return (
-                    <div key={county} className="flex flex-col items-center gap-1">
+                    <div key={sel.id} className="flex flex-col items-center gap-1">
                       <CivicInsightGauge score={score} color={CHART_COLORS[i % CHART_COLORS.length]} />
-                      <span className="text-xs font-semibold text-foreground mt-1">{county}</span>
+                      <span className="text-xs font-semibold text-foreground mt-1">{sel.label}</span>
+                      {sel.type === "zip" && (
+                        <span className="text-[9px] text-muted-foreground">{sel.countyName} Co.</span>
+                      )}
                     </div>
                   );
                 })}
@@ -493,8 +591,8 @@ export default function ComparePlacesPage() {
                   <Radar name="MI Average" dataKey="miAvg"
                     stroke="hsl(var(--muted-foreground))" fill="none"
                     strokeWidth={1.5} strokeDasharray="6 3" dot={false} />
-                  {selected.map((county, i) => (
-                    <Radar key={county} name={county} dataKey={county}
+                  {selected.map((sel, i) => (
+                    <Radar key={sel.id} name={sel.label} dataKey={sel.id}
                       stroke={CHART_COLORS[i % CHART_COLORS.length]}
                       fill={CHART_COLORS[i % CHART_COLORS.length]}
                       fillOpacity={0.12} strokeWidth={2} />
@@ -508,7 +606,7 @@ export default function ComparePlacesPage() {
           </motion.div>
         )}
 
-        {/* ── Income Bar Chart with MI benchmark ── */}
+        {/* ── Income Bar Chart ── */}
         {selected.length >= 2 && barData.some((d) => d.income > 0) && !allLoading && (
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
           <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
@@ -544,7 +642,7 @@ export default function ComparePlacesPage() {
               <CardTitle className="text-base">Detailed Comparison</CardTitle>
               {equityLens && (
                 <Badge variant="destructive" className="text-[10px] gap-1">
-                  <ShieldAlert className="h-3 w-3" aria-hidden="true" /> Equity Lens Active
+                  <ShieldAlert className="h-3 w-3" /> Equity Lens Active
                 </Badge>
               )}
             </div>
@@ -555,11 +653,12 @@ export default function ComparePlacesPage() {
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left py-2 pr-4 text-xs font-semibold text-muted-foreground w-[180px]">Metric</th>
-                    {selected.map((county, i) => (
-                      <th key={county} className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground">
+                    {selected.map((sel, i) => (
+                      <th key={sel.id} className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground">
                         <div className="flex items-center justify-end gap-1.5">
-                          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }} aria-hidden="true" />
-                          {county}
+                          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }} />
+                          {sel.type === "zip" && <Hash className="h-2.5 w-2.5" />}
+                          {sel.label}
                         </div>
                       </th>
                     ))}
@@ -596,7 +695,7 @@ export default function ComparePlacesPage() {
                             <td className="py-2.5 pr-4">
                               <span className="text-sm font-medium text-foreground">{metric.label}</span>
                               {equityLens && metric.equityFlagged && (
-                                <ShieldAlert className="inline ml-1 h-3 w-3 text-michigan-coral" aria-label="Equity-flagged metric" />
+                                <ShieldAlert className="inline ml-1 h-3 w-3 text-michigan-coral" />
                               )}
                             </td>
                             {values.map((val, i) => {
@@ -614,24 +713,15 @@ export default function ComparePlacesPage() {
                                       !isBest && !isWorst ? "text-foreground" : "",
                                     ].join(" ")}>
                                       {metric.format(val)}
-                                      {isBest && <span className="ml-1 text-[9px]" aria-label="Best among compared">★</span>}
-                                      {isWorst && equityLens && <span className="ml-1 text-[9px]" aria-label="Needs attention">⚠</span>}
+                                      {isBest && <span className="ml-1 text-[9px]">★</span>}
+                                      {isWorst && equityLens && <span className="ml-1 text-[9px]">⚠</span>}
                                     </span>
                                   )}
                                 </td>
                               );
                             })}
-                            {/* MI Avg column */}
                             <td className="py-2.5 px-3 text-right text-xs text-muted-foreground hidden lg:table-cell">
-                              {mi !== undefined ? metric.format(mi) : (
-                                <span
-                                  title="No Michigan state benchmark available for this metric"
-                                  aria-label="No state benchmark"
-                                  className="cursor-help border-b border-dotted border-muted-foreground/50"
-                                >
-                                  —
-                                </span>
-                              )}
+                              {mi !== undefined ? metric.format(mi) : "—"}
                             </td>
                           </tr>
                         );
@@ -650,7 +740,7 @@ export default function ComparePlacesPage() {
         <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Insurance Coverage Breakdown</CardTitle>
-            <p className="text-xs text-muted-foreground">Estimated % of population by coverage type. Source: KFF state health facts, MDHHS administrative data.</p>
+            <p className="text-xs text-muted-foreground">Estimated % of population by coverage type.</p>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -658,11 +748,11 @@ export default function ComparePlacesPage() {
                 <thead>
                   <tr className="border-b border-border">
                     <th className="text-left py-2 text-xs font-semibold text-muted-foreground w-[160px]">Coverage Type</th>
-                    {selected.map((county, i) => (
-                      <th key={county} className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground">
+                    {selected.map((sel, i) => (
+                      <th key={sel.id} className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground">
                         <div className="flex items-center justify-end gap-1.5">
-                          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }} aria-hidden="true" />
-                          {county}
+                          <div className="h-2 w-2 rounded-full" style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }} />
+                          {sel.label}
                         </div>
                       </th>
                     ))}
@@ -675,11 +765,11 @@ export default function ComparePlacesPage() {
                     { key: "medicaid",   label: "Medicaid",               good: null },
                     { key: "dual",       label: "Dual (Medicare + Medicaid)", good: null },
                     { key: "uninsured",  label: "Uninsured",              good: false },
-                  ].map(({ key, label, good }) => (
+                  ].map(({ key, label }) => (
                     <tr key={key} className="border-b border-border/40 hover:bg-muted/20 transition-colors">
                       <td className="py-2.5 text-sm font-medium text-foreground">{label}</td>
-                      {selected.map((county, i) => {
-                        const ins = getInsurance(county);
+                      {selected.map((sel, i) => {
+                        const ins = getInsurance(sel.countyName);
                         const val = ins[key as keyof typeof ins];
                         return (
                           <td key={i} className="py-2.5 px-3 text-right">
@@ -713,64 +803,53 @@ export default function ComparePlacesPage() {
               <Card className="border-michigan-gold/20 bg-michigan-gold/[0.04]">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-base flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4 text-michigan-gold" aria-hidden="true" />
+                    <MessageSquare className="h-4 w-4 text-michigan-gold" />
                     Community Voice
-                    <Badge variant="outline" className="text-[10px] ml-1">Anonymized · AI-moderated</Badge>
+                    <Badge variant="outline" className="text-[10px] ml-1">Anonymized</Badge>
                   </CardTitle>
-                  <p className="text-xs text-muted-foreground">
-                    Aggregated ratings and anonymized notes from Michigan residents. All submissions are AI-moderated for accuracy and civility.
-                  </p>
                 </CardHeader>
                 <CardContent>
-                  <div className={`grid gap-6 ${selected.length === 1 ? "grid-cols-1" : selected.length === 2 ? "sm:grid-cols-2" : selected.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"}`}>
-                    {selected.map((county, i) => {
-                      const voice = getCommunityVoice(county);
+                  <div className={`grid gap-6 ${selected.length <= 2 ? "sm:grid-cols-2" : selected.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"}`}>
+                    {selected.map((sel, i) => {
+                      const voice = getCommunityVoice(sel.countyName);
                       const fullStars = Math.floor(voice.score);
                       const hasHalf = voice.score - fullStars >= 0.5;
                       return (
-                        <div key={county} className="space-y-3">
+                        <div key={sel.id} className="space-y-3">
                           <div className="flex items-center gap-1.5">
-                            <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }} aria-hidden="true" />
-                            <span className="text-sm font-bold text-foreground">{county}</span>
+                            <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: CHART_COLORS[i % CHART_COLORS.length] }} />
+                            <span className="text-sm font-bold text-foreground">{sel.label}</span>
                           </div>
 
-                          {/* Star rating */}
                           <div className="flex items-center gap-1">
-                            <div className="flex" aria-label={`Community rating: ${voice.score} out of 5`}>
+                            <div className="flex" aria-label={`Rating: ${voice.score}/5`}>
                               {[1, 2, 3, 4, 5].map((s) => (
                                 <Star
                                   key={s}
                                   className={`h-4 w-4 ${s <= fullStars ? "fill-michigan-gold text-michigan-gold" : s === fullStars + 1 && hasHalf ? "text-michigan-gold" : "text-border"}`}
-                                  aria-hidden="true"
                                 />
                               ))}
                             </div>
                             <span className="text-xs font-bold text-foreground ml-1">{voice.score.toFixed(1)}</span>
-                            <span className="text-[10px] text-muted-foreground">/ 5</span>
                           </div>
 
-                          {/* Report count */}
                           <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
-                            <Users className="h-3 w-3" aria-hidden="true" />
-                            <span>{voice.reports} resident reports this quarter</span>
+                            <Users className="h-3 w-3" />
+                            <span>{voice.reports} reports</span>
                           </div>
 
-                          {/* Notes */}
                           <div className="space-y-1.5">
                             {voice.notes.map((note, ni) => (
-                              <p key={ni} className="text-xs text-foreground/80 border-l-2 border-border pl-2 leading-relaxed">
-                                "{note}"
-                              </p>
+                              <p key={ni} className="text-xs text-foreground/80 border-l-2 border-border pl-2">"{note}"</p>
                             ))}
                           </div>
 
-                          {/* CTA */}
                           <button
-                            onClick={() => toast.info("Community insights coming soon — your voice shapes this data!")}
-                            className="flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline transition-colors"
+                            onClick={() => toast.info("Community insights coming soon!")}
+                            className="flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline"
                           >
-                            <ChevronRight className="h-3 w-3" aria-hidden="true" />
-                            Add your local insight
+                            <ChevronRight className="h-3 w-3" />
+                            Add your insight
                           </button>
                         </div>
                       );
@@ -784,8 +863,7 @@ export default function ComparePlacesPage() {
 
         {/* Attribution */}
         {selected.length >= 2 && <p className="text-[10px] text-muted-foreground text-center">
-          Census data: U.S. Census Bureau, ACS 5-Year Estimates (2022). ★ = best among compared; ⚠ = needs attention (Equity Lens). MI Avg = state benchmark.
-          Insurance breakdown: KFF state health facts + MDHHS estimates. Community Voice: anonymized resident submissions, AI-moderated.
+          Census data: U.S. Census Bureau, ACS 5-Year Estimates (2022). ★ = best; ⚠ = needs attention (Equity Lens). ZIP data from ZCTA-level ACS tables.
         </p>}
       </div>
 
