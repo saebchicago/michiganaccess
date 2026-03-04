@@ -15,6 +15,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
 import DeltaChip from "@/components/shared/DeltaChip";
+import MoEBadge from "@/components/shared/MoEBadge";
 import LocalInsightEngine from "@/components/place/LocalInsightEngine";
 import DomainJumpNav from "@/components/place/DomainJumpNav";
 import ReportIssue from "@/components/shared/ReportIssue";
@@ -29,8 +30,9 @@ import UniversalPreScreener from "@/components/benefits/UniversalPreScreener";
 import ContactRepresentative from "@/components/advocacy/ContactRepresentative";
 import DownloadLocalInsights from "@/components/place/DownloadLocalInsights";
 import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSection";
+import ZipBriefTour from "@/components/shared/ZipBriefTour";
 import { useCounty } from "@/contexts/CountyContext";
-import { useCensusACS, getCensusValue, formatDollars, formatPercent } from "@/hooks/useCensusACS";
+import { useCensusACS, getCensusValue, getCensusMOE, formatDollars, formatPercent } from "@/hooks/useCensusACS";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 
 /** State-level ACS benchmarks (2022 estimates) */
@@ -44,7 +46,7 @@ const MI_STATE_BENCHMARKS = {
 /* DeltaChip is now imported from @/components/shared/DeltaChip */
 
 /** Mirror card: shows a metric with county and state baselines */
-function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, higherIsBetter, soWhat }: {
+function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, higherIsBetter, soWhat, estimate, moe }: {
   label: string;
   zipValue: number | null;
   countyValue: number | null;
@@ -52,6 +54,8 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
   format: (v: number | null) => string;
   higherIsBetter: boolean;
   soWhat: string;
+  estimate?: number | null;
+  moe?: number | null;
 }) {
   const noData = zipValue === null && countyValue === null;
 
@@ -72,7 +76,10 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
   return (
     <Card className="h-full">
       <CardContent className="py-4 space-y-2">
-        <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider break-words">{label}</p>
+        <div className="flex items-center gap-2 flex-wrap">
+          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider break-words">{label}</p>
+          <MoEBadge estimate={estimate ?? zipValue} moe={moe ?? null} />
+        </div>
         <p className="text-2xl font-bold text-foreground tabular-nums">{format(zipValue)}</p>
         <div className="flex flex-col sm:flex-row flex-wrap gap-1.5">
           {countyValue !== null && (
@@ -140,6 +147,11 @@ export default function ZipPlacePage() {
   const countyBachDen = getCensusValue(countyACS, "B15003", "B15003_001E");
   const countyBachRate = countyBachNum && countyBachDen && countyBachDen > 0 ? +((countyBachNum / countyBachDen) * 100).toFixed(1) : null;
 
+  // MoE values for quality badges
+  const zipIncomeMoE = getCensusMOE(zipACS, "B19013", "B19013_001E");
+  const zipPovMoE = getCensusMOE(zipACS, "B17001", "B17001_002E");
+  const zipBachMoE = getCensusMOE(zipACS, "B15003", "B15003_022E");
+
   usePageMeta({
     title: place ? `ZIP ${place.slug} Community Brief — Access Michigan` : "ZIP Code Not Found",
     description: place
@@ -159,6 +171,7 @@ export default function ZipPlacePage() {
 
   return (
     <Layout>
+      <ZipBriefTour />
       <Breadcrumbs items={buildPlaceBreadcrumbs(place)} />
       <DomainJumpNav />
 
@@ -215,6 +228,8 @@ export default function ZipPlacePage() {
               format={(v) => v !== null ? `$${v.toLocaleString()}` : "—"}
               higherIsBetter={true}
               soWhat="Higher income generally means more local spending power and tax base."
+              estimate={zipIncome}
+              moe={zipIncomeMoE}
             />
             <MirrorMetricCard
               label="Poverty Rate"
@@ -224,6 +239,8 @@ export default function ZipPlacePage() {
               format={(v) => v !== null ? `${v}%` : "—"}
               higherIsBetter={false}
               soWhat="Lower poverty rates indicate broader economic stability in this area."
+              estimate={zipPovNum}
+              moe={zipPovMoE}
             />
             <MirrorMetricCard
               label="Bachelor's Degree or Higher"
@@ -233,6 +250,8 @@ export default function ZipPlacePage() {
               format={(v) => v !== null ? `${v}%` : "—"}
               higherIsBetter={true}
               soWhat="Education attainment correlates with health outcomes and earning potential."
+              estimate={zipBachNum}
+              moe={zipBachMoE}
             />
           </div>
         </section>
