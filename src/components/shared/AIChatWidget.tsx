@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, forwardRef } from "react";
 import { Send, Bot, X, MessageSquare, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
@@ -15,7 +15,7 @@ const CHAT_URL = SUPABASE_URL
 // When using the Netlify fallback, responses are non-streaming JSON { reply: string }
 const USE_STREAMING = !!SUPABASE_URL;
 
-export default function AIChatWidget() {
+const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, ref) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -121,7 +121,7 @@ export default function AIChatWidget() {
   };
 
   return (
-    <>
+    <div ref={ref}>
       {/* FAB — safe-area-aware via .chat-fab in index.css */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -210,6 +210,8 @@ export default function AIChatWidget() {
           </form>
         </div>
       )}
-    </>
+    </div>
   );
-}
+});
+
+export default AIChatWidget;
