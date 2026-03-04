@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { countyToSlug } from "@/utils/countyUtils";
 import { getSearchSuggestions, getPopularSuggestions, getMisspellingCorrection, parseComboQuery, type SearchSuggestion } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
+import { useCounty } from "@/contexts/CountyContext";
 
 const SITE_SEARCH_COMMAND_EVENT = "mi-access:site-search";
 
@@ -92,6 +93,7 @@ export default function SiteSearch() {
   const [correction, setCorrection] = useState<string | null>(null);
   const [smartSuggestions, setSmartSuggestions] = useState<SearchSuggestion[]>([]);
   const navigate = useNavigate();
+  const { setZip } = useCounty();
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
@@ -237,6 +239,12 @@ export default function SiteSearch() {
         hadCorrection: !!correction,
         correctedTo: correction ?? undefined,
       });
+
+      // If ZIP code detected in query, populate granular context
+      const zipMatch = query.match(/\b(\d{5})\b/);
+      if (zipMatch) {
+        setZip(zipMatch[1]);
+      }
     }
 
     setOpen(false);

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCounty } from "@/contexts/CountyContext";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown as ChevronDownIcon } from "lucide-react";
@@ -153,6 +154,7 @@ function LanguageStrip() {
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const { setZip } = useCounty();
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -274,6 +276,12 @@ const HeroSection = () => {
     if (/^\d{10}$/.test(searchQuery.trim())) {
       navigate(`/find-care?npi=${searchQuery.trim()}`);
       return;
+    }
+
+    // If ZIP code detected, populate granular context
+    const zipMatch = searchQuery.trim().match(/\b(\d{5})\b/);
+    if (zipMatch) {
+      setZip(zipMatch[1]);
     }
 
     const intent = parseNaturalLanguage(searchQuery);
