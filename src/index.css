@@ -173,6 +173,29 @@
   .text-2xl, .text-3xl, .text-4xl, .text-5xl {
     font-variant-numeric: tabular-nums;
   }
+
+  /* ── Global interactive states ────────────────────────────────── */
+  /* Keyboard focus ring for all focusable elements */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background rounded-sm;
+  }
+
+  /* Subtle hover lift for clickable rows, cards, list items */
+  tr[onclick]:hover,
+  tr.cursor-pointer:hover,
+  li.cursor-pointer:hover,
+  [role="option"]:hover,
+  [role="listbox"] > *:hover,
+  [cmdk-item]:hover {
+    background-color: hsl(var(--muted) / 0.6);
+    transition: background-color 0.15s ease;
+  }
 }
 
 @layer utilities {
