@@ -649,10 +649,10 @@ export default function ComparePlacesPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm min-w-[500px]">
+              <table className="w-full text-sm min-w-[420px]">
                 <thead>
                   <tr className="border-b border-border">
-                    <th className="text-left py-2 pr-4 text-xs font-semibold text-muted-foreground w-[180px]">Metric</th>
+                    <th className="text-left py-2 pr-4 text-xs font-semibold text-muted-foreground w-[140px] sm:w-[180px] break-words whitespace-normal">Metric</th>
                     {selected.map((sel, i) => (
                       <th key={sel.id} className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground">
                         <div className="flex items-center justify-end gap-1.5">
@@ -692,7 +692,7 @@ export default function ComparePlacesPage() {
 
                         return (
                           <tr key={metric.key} className="border-b border-border/40 hover:bg-muted/20 transition-colors">
-                            <td className="py-2.5 pr-4">
+                            <td className="py-2.5 pr-4 break-words whitespace-normal">
                               <span className="text-sm font-medium text-foreground">{metric.label}</span>
                               {equityLens && metric.equityFlagged && (
                                 <ShieldAlert className="inline ml-1 h-3 w-3 text-michigan-coral" />
@@ -744,10 +744,10 @@ export default function ComparePlacesPage() {
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm min-w-[500px]">
+              <table className="w-full text-sm min-w-[420px]">
                 <thead>
                   <tr className="border-b border-border">
-                    <th className="text-left py-2 text-xs font-semibold text-muted-foreground w-[160px]">Coverage Type</th>
+                    <th className="text-left py-2 text-xs font-semibold text-muted-foreground w-[130px] sm:w-[160px] break-words whitespace-normal">Coverage Type</th>
                     {selected.map((sel, i) => (
                       <th key={sel.id} className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground">
                         <div className="flex items-center justify-end gap-1.5">

@@ -61,9 +61,9 @@ function DeltaChip({ value, benchmark, higherIsBetter, label }: {
     : "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30";
 
   return (
-    <span className={`inline-flex items-center gap-1 text-[11px] font-medium px-1.5 py-0.5 rounded ${color}`}>
-      <Icon className="h-3 w-3" />
-      {diff > 0 ? "+" : ""}{pctDiff}% vs {label}
+    <span className={`inline-flex items-center gap-1 text-[11px] font-medium px-1.5 py-0.5 rounded whitespace-normal ${color}`}>
+      <Icon className="h-3 w-3 shrink-0" />
+      <span className="tabular-nums">{diff > 0 ? "+" : ""}{pctDiff}%</span> vs {label}
     </span>
   );
 }
@@ -84,7 +84,7 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
     return (
       <Card className="h-full border-dashed">
         <CardContent className="py-4 space-y-2">
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{label}</p>
+          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider break-words">{label}</p>
           <p className="text-lg font-semibold text-muted-foreground">Data Not Available</p>
           <p className="text-[11px] text-muted-foreground italic">
             Census ZCTA-level data for this metric is not yet published for this ZIP code. County and state averages may still be available on the county profile page.
@@ -97,21 +97,21 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
   return (
     <Card className="h-full">
       <CardContent className="py-4 space-y-2">
-        <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{label}</p>
-        <p className="text-2xl font-bold text-foreground">{format(zipValue)}</p>
-        <div className="flex flex-wrap gap-1.5">
+        <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider break-words">{label}</p>
+        <p className="text-2xl font-bold text-foreground tabular-nums">{format(zipValue)}</p>
+        <div className="flex flex-col sm:flex-row flex-wrap gap-1.5">
           {countyValue !== null && (
             <DeltaChip value={zipValue} benchmark={countyValue} higherIsBetter={higherIsBetter} label="County" />
           )}
           <DeltaChip value={zipValue} benchmark={stateValue} higherIsBetter={higherIsBetter} label="MI Avg" />
         </div>
-        <div className="flex flex-col xs:flex-row items-start gap-3 pt-1 border-t border-border/40 mt-2">
-          <div className="text-[10px] text-muted-foreground space-y-0.5">
-            <p>County Avg: <span className="font-mono font-medium text-foreground">{format(countyValue)}</span></p>
-            <p>MI State: <span className="font-mono font-medium text-foreground">{format(stateValue)}</span></p>
+        <div className="flex flex-col gap-4 pt-1 border-t border-border/40 mt-2">
+          <div className="text-[11px] text-muted-foreground space-y-1">
+            <p className="break-words">County Avg: <span className="font-mono font-medium text-foreground tabular-nums">{format(countyValue)}</span></p>
+            <p className="break-words">MI State: <span className="font-mono font-medium text-foreground tabular-nums">{format(stateValue)}</span></p>
           </div>
         </div>
-        <p className="text-[11px] text-muted-foreground italic">{soWhat}</p>
+        <p className="text-[11px] text-muted-foreground italic break-words">{soWhat}</p>
       </CardContent>
     </Card>
   );
@@ -231,7 +231,7 @@ export default function ZipPlacePage() {
           <p className="text-sm text-muted-foreground mb-4">
             Every metric is shown alongside <strong>{place.parentCounty} County</strong> and <strong>Michigan state</strong> averages so you can see how your ZIP compares.
           </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             <MirrorMetricCard
               label="Median Household Income"
               zipValue={zipIncome}
