@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { MICHIGAN_REGIONS, type MichiganRegion } from "@/data/michigan-regions";
+import { zipToCounty } from "@/data/michigan-county-seats";
 
 export const MICHIGAN_COUNTIES = [
   "Alcona", "Alger", "Allegan", "Alpena", "Antrim", "Arenac", "Baraga", "Barry",
@@ -20,6 +21,18 @@ export type MichiganCounty = (typeof MICHIGAN_COUNTIES)[number];
 export type Audience = "resident" | "health-system" | "policymaker";
 
 export type SubPersona = "caregiver" | "immigrant" | "disabled";
+
+/** Granularity level for current location selection */
+export type GranularityLevel = "state" | "region" | "county" | "zip" | "tract";
+
+/** Granular location fields stored alongside county */
+export interface GranularLocation {
+  zip: string | null;
+  censusTract: string | null;
+  /** The resolved county for this ZIP/tract (may differ from manually selected county) */
+  resolvedCounty: MichiganCounty | null;
+  granularity: GranularityLevel;
+}
 
 export interface EligibilityProfile {
   householdSize: number | null;
@@ -46,6 +59,15 @@ interface CountyContextValue {
   eligibility: EligibilityProfile;
   setEligibility: (e: Partial<Pick<EligibilityProfile, "householdSize" | "annualIncome">>) => void;
   clearEligibility: () => void;
+  /** Granular location (ZIP / census tract) */
+  granularLocation: GranularLocation;
+  setZip: (zip: string | null) => void;
+  setCensusTract: (tract: string | null) => void;
+  clearGranularLocation: () => void;
+  /** Best available location label for display */
+  locationLabel: string;
+  /** Current granularity level */
+  granularity: GranularityLevel;
 }
 
 const CountyContext = createContext<CountyContextValue | undefined>(undefined);
@@ -55,6 +77,7 @@ const REGION_STORAGE_KEY = "michigan-access-region";
 const AUDIENCE_STORAGE_KEY = "mi-access-audience";
 const ELIGIBILITY_STORAGE_KEY = "mi-access-eligibility";
 const SUBPERSONA_STORAGE_KEY = "mi-access-subpersonas";
+const GRANULAR_STORAGE_KEY = "mi-access-granular";
 
 /** 2024 Federal Poverty Level base + per-person increment */
 const getFPLThreshold = (householdSize: number): number => {
@@ -112,6 +135,14 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     return [];
   });
 
+  const [granularLoc, setGranularLoc] = useState<Omit<GranularLocation, "granularity">>(() => {
+    try {
+      const stored = localStorage.getItem(GRANULAR_STORAGE_KEY);
+      if (stored) return JSON.parse(stored);
+    } catch {}
+    return { zip: null, censusTract: null, resolvedCounty: null };
+  });
+
   // Persist county
   useEffect(() => {
     try {
@@ -150,14 +181,28 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, [subPersonas]);
 
+  // Persist granular location
+  useEffect(() => {
+    try {
+      localStorage.setItem(GRANULAR_STORAGE_KEY, JSON.stringify(granularLoc));
+    } catch {}
+  }, [granularLoc]);
+
   const setCounty = (c: MichiganCounty | null) => {
     setCountyState(c);
-    if (c) setRegionState(null);
+    if (c) {
+      setRegionState(null);
+      // Clear granular if switching county
+      setGranularLoc({ zip: null, censusTract: null, resolvedCounty: null });
+    }
   };
 
   const setRegion = (r: MichiganRegion | null) => {
     setRegionState(r);
-    if (r) setCountyState(null);
+    if (r) {
+      setCountyState(null);
+      setGranularLoc({ zip: null, censusTract: null, resolvedCounty: null });
+    }
   };
 
   const setAudience = (a: Audience | null) => {
@@ -178,6 +223,25 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     setEligibilityInputs({ householdSize: null, annualIncome: null });
   };
 
+  const setZip = (zip: string | null) => {
+    if (zip) {
+      const resolved = zipToCounty(zip) as MichiganCounty | null;
+      setGranularLoc({ zip, censusTract: null, resolvedCounty: resolved });
+      // Auto-set county context if resolved
+      if (resolved) setCountyState(resolved);
+    } else {
+      setGranularLoc((prev) => ({ ...prev, zip: null, resolvedCounty: prev.censusTract ? prev.resolvedCounty : null }));
+    }
+  };
+
+  const setCensusTract = (tract: string | null) => {
+    setGranularLoc((prev) => ({ ...prev, censusTract: tract }));
+  };
+
+  const clearGranularLocation = () => {
+    setGranularLoc({ zip: null, censusTract: null, resolvedCounty: null });
+  };
+
   // Compute FPL percentage
   const fplPercent =
     eligibilityInputs.householdSize && eligibilityInputs.annualIncome
@@ -189,7 +253,34 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     fplPercent,
   };
 
+  // Determine granularity level
+  const granularity: GranularityLevel = granularLoc.censusTract
+    ? "tract"
+    : granularLoc.zip
+    ? "zip"
+    : county
+    ? "county"
+    : region
+    ? "region"
+    : "state";
+
+  const granularLocation: GranularLocation = {
+    ...granularLoc,
+    granularity,
+  };
+
   const countyLabel = county ? `${county} County` : "All Michigan";
+
+  // Best available location label
+  const locationLabel = granularLoc.censusTract
+    ? `Tract ${granularLoc.censusTract}`
+    : granularLoc.zip
+    ? `ZIP ${granularLoc.zip}${granularLoc.resolvedCounty ? ` · ${granularLoc.resolvedCounty} County` : ""}`
+    : county
+    ? `${county} County`
+    : region
+    ? region.name
+    : "All Michigan";
 
   const filterLabel = county
     ? `${county} County`
@@ -212,6 +303,8 @@ export function CountyProvider({ children }: { children: ReactNode }) {
         audience, setAudience,
         subPersonas, toggleSubPersona,
         eligibility, setEligibility, clearEligibility,
+        granularLocation, setZip, setCensusTract, clearGranularLocation,
+        locationLabel, granularity,
       }}
     >
       {children}
