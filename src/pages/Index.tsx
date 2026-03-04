@@ -208,7 +208,7 @@ const Index = () => {
         </Card>
       </div>
 
-      <div className="container py-4 space-y-4">
+      <div className="container py-4 section-spacing">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }}>
           <TrustPanel updated="2026-02-23" />
         </motion.div>
@@ -286,7 +286,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
+          <div className="grid gap-responsive sm:grid-cols-3">
             {/* ── Card 1: Health Map ── */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
@@ -404,7 +404,7 @@ const Index = () => {
               </div>
 
               {/* Equity insight cards */}
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-8">
+              <div className="grid gap-responsive sm:grid-cols-2 lg:grid-cols-3 mb-8">
                 <EquityInsightCard
                 icon={Heart}
                 title="Black Infant Mortality"

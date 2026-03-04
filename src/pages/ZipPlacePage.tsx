@@ -195,7 +195,7 @@ export default function ZipPlacePage() {
         </div>
       </section>
 
-      <div className="container py-10 space-y-10">
+      <div className="container py-6 sm:py-10 section-spacing">
         {/* ── ZIP vs County "Mirror" Overlay ── */}
         <section id="zip-overlay">
           <div className="flex items-center gap-2 mb-4">
@@ -206,7 +206,7 @@ export default function ZipPlacePage() {
           <p className="text-sm text-muted-foreground mb-4">
             Every metric is shown alongside <strong>{place.parentCounty} County</strong> and <strong>Michigan state</strong> averages so you can see how your ZIP compares.
           </p>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-responsive grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             <MirrorMetricCard
               label="Median Household Income"
               zipValue={zipIncome}
