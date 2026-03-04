@@ -60,7 +60,7 @@ export default function MobileBottomNav() {
             <motion.div whileTap={{ scale: 0.92 }} transition={{ duration: 0.12 }}>
               <MoreHorizontal className="h-5 w-5" />
             </motion.div>
-            <span className="font-normal">More</span>
+            <span className="font-normal">More Tools</span>
           </button>
         </SheetTrigger>
         <SheetContent side="bottom" className="z-[60] rounded-t-2xl pb-8">

@@ -281,8 +281,11 @@ const Index = () => {
             <h2 id="explore-heading" className="text-xl font-bold text-foreground md:text-2xl">
               Explore &amp; Compare Michigan
             </h2>
-            <p className="text-sm text-muted-foreground mt-1.5">
+           <p className="text-sm text-muted-foreground mt-1.5">
               Explore every Michigan county, compare communities side-by-side, and see your Civic Insight Score.
+            </p>
+            <p className="text-xs text-muted-foreground mt-2 max-w-lg mx-auto">
+              For health systems &amp; researchers: Build county briefs, export data, and explore equity gaps → <Link to="/for-health-systems" className="text-primary font-medium hover:underline">Learn more</Link>
             </p>
           </div>
 
@@ -361,9 +364,9 @@ const Index = () => {
                 </div>
                 {/* Static gauge preview — no network call */}
                 <div className="flex items-center gap-3 mt-1">
-                  <CivicInsightGauge score={67} color="#01579B" />
+                  <CivicInsightGauge score={67} color="#01579B" showClassification />
                   <div className="text-[10px] text-muted-foreground leading-relaxed">
-                    <span className="font-semibold text-foreground block">Illustrative — Wayne County</span>
+                    <span className="font-semibold text-foreground block">Illustrative example — Wayne County</span>
                     Modeled composite score
                   </div>
                 </div>
@@ -557,9 +560,9 @@ const Index = () => {
                   </p>
                 </div>
                 <Button
-                variant="default"
+                variant="secondary"
                 size="sm"
-                className="gap-1.5 whitespace-nowrap"
+                className="gap-1.5 whitespace-nowrap border border-primary/20"
                 onClick={() => {
                   handlePersonaChange("professional");
                   setTimeout(() => {
@@ -569,7 +572,7 @@ const Index = () => {
                 }}>
 
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  Switch to Professional View
+                  Professional View (dashboards &amp; exports)
                 </Button>
               </CardContent>
             </Card>

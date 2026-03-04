@@ -51,6 +51,7 @@ export default function ReportIssue({ variant = "inline" }: { variant?: "inline"
           onClick={() => setOpen(v => !v)}
           className="inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-medium"
           aria-expanded={open}
+          aria-label="Report an issue or suggest data"
         >
           <MessageSquare className="h-3 w-3" />
           Report an issue or suggest data

@@ -27,7 +27,7 @@ const audienceIds: {
     id: "health-system",
     icon: Building2,
     label: "Organizations",
-    desc: "Professional tools, data exports, and partnership resources",
+    desc: "Tools for navigation, planning, and equity dashboards",
     scrollTarget: "#for-organizations",
     personaView: "professional",
   },

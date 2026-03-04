@@ -193,24 +193,30 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSend} className="border-t border-border p-3 flex gap-2 bg-background rounded-b-xl">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about services…"
-              disabled={loading}
-              className="flex-1 border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
-              aria-label="Chat message"
-            />
-            <button
-              type="submit"
-              disabled={loading || !input.trim()}
-              className="bg-primary hover:bg-primary/90 disabled:opacity-40 text-primary-foreground p-2 rounded-lg transition-colors"
-              aria-label="Send message"
-            >
-              <Send className="w-4 h-4" />
-            </button>
+          <form onSubmit={handleSend} className="border-t border-border p-3 bg-background rounded-b-xl">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about services…"
+                disabled={loading}
+                className="flex-1 border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
+                aria-label="Chat message"
+              />
+              <button
+                type="submit"
+                disabled={loading || !input.trim()}
+                className="bg-primary hover:bg-primary/90 disabled:opacity-40 text-primary-foreground p-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Send message"
+              >
+                <Send className="w-4 h-4" />
+              </button>
+            </div>
+            <p className="mt-1.5 text-[9px] text-muted-foreground leading-relaxed">
+              This assistant explains Michigan services and public data. It cannot provide medical or legal advice.
+              <span className="ml-1" title="Uses public data only. No personal information is tracked or stored.">ℹ️ How this chat works</span>
+            </p>
           </form>
         </div>
       )}
