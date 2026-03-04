@@ -11,8 +11,6 @@ import {
 const languages = [
   { code: "en", label: "English" },
   { code: "es", label: "Español" },
-  { code: "ar", label: "العربية", dir: "rtl" },
-  { code: "bn", label: "বাংলা" },
 ];
 
 const LanguageSwitcher = () => {

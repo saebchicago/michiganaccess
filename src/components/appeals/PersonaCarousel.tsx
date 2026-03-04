@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
-import { ArrowRight, Heart, MapPin, Shield } from "lucide-react";
+import { ArrowRight, Heart, MapPin, Shield, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Persona {
@@ -65,12 +65,12 @@ const PERSONAS: Persona[] = [
 const PersonaCarousel = () => {
   return (
     <section className="space-y-6" aria-labelledby="personas-heading">
-      <div className="text-center">
+      <div className="text-center space-y-2">
         <h2 id="personas-heading" className="text-2xl font-bold text-foreground">
-          Real Michigan Stories
+          How the Appeals Process Works: Example Scenarios
         </h2>
         <p className="mt-2 text-muted-foreground max-w-xl mx-auto">
-          See how people like you have successfully fought insurance denials
+          The following are illustrative examples based on real Michigan appeal pathways, not verified individual cases.
         </p>
       </div>
 
@@ -84,10 +84,13 @@ const PersonaCarousel = () => {
                     <div className={`flex h-12 w-12 items-center justify-center rounded-full ${persona.color}`}>
                       {persona.icon}
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <h3 className="font-semibold text-foreground">{persona.title}</h3>
                       <p className="text-xs text-muted-foreground">{persona.location}</p>
                     </div>
+                    <Badge variant="outline" className="text-[9px] border-muted-foreground/30 text-muted-foreground shrink-0">
+                      <Info className="h-2.5 w-2.5 mr-0.5" /> Illustrative
+                    </Badge>
                   </div>
 
                   <div className="space-y-2">
