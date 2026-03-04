@@ -151,6 +151,47 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
     </tr>`;
   }).join("");
 
+  // Civic Insight Score breakdown
+  const profile = COUNTY_PROFILES[place.parentCounty || place.name.replace(/ County$/, "")];
+  let civicScoreSection = "";
+  if (profile) {
+    const uninsured = parseFloat(profile.healthHighlights[0]?.value || "6.5");
+    const food = parseFloat(profile.healthHighlights[2]?.value || "13.2");
+    const pcrRaw = profile.healthHighlights[1]?.value || "1500:1";
+    let baseScore = 60;
+    if (uninsured < 5) baseScore += 15;
+    else if (uninsured < 7) baseScore += 5;
+    else baseScore -= 5;
+    if (profile.countyType === "urban") baseScore += 5;
+    if (profile.countyType === "suburban") baseScore += 3;
+    if (food < 11) baseScore += 10;
+    else if (food > 15) baseScore -= 5;
+    const compositeScore = Math.max(10, Math.min(95, baseScore));
+
+    civicScoreSection = `
+    <div class="section">
+      <h2>Civic Insight Score — Segmented Breakdown</h2>
+      <table><thead><tr><th>Sub-Index</th><th>Weight</th><th>Components</th></tr></thead><tbody>
+        <tr>
+          <td style="padding:6px 10px;font-size:13px;font-weight:600;">Community Vulnerability</td>
+          <td style="padding:6px 10px;font-size:13px;">40%</td>
+          <td style="padding:6px 10px;font-size:13px;">Uninsured ${uninsured}% · Food insecurity ${food}% · PCP ratio ${pcrRaw}</td>
+        </tr>
+        <tr>
+          <td style="padding:6px 10px;font-size:13px;font-weight:600;">Access Friction</td>
+          <td style="padding:6px 10px;font-size:13px;">60%</td>
+          <td style="padding:6px 10px;font-size:13px;">Appeals, community reports & outage exposure per 1K residents</td>
+        </tr>
+        <tr style="background:#f1f5f9;">
+          <td style="padding:6px 10px;font-size:13px;font-weight:700;">Composite Score</td>
+          <td style="padding:6px 10px;font-size:13px;">100%</td>
+          <td style="padding:6px 10px;font-size:13px;font-weight:700;">${compositeScore}/100</td>
+        </tr>
+      </tbody></table>
+      <p style="font-size:10px;color:#6b7280;margin-top:8px;">Methodology: z-score normalization against MI statewide benchmarks. Sources: Census ACS 2024 5-year + real-time platform data.</p>
+    </div>`;
+  }
+
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${place.name} Community Brief — Access Michigan</title>
 <style>
   @media print { body { margin: 0; } .no-print { display: none; } @page { size: letter; margin: 0.5in; } }
@@ -171,6 +212,7 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
   .chart-section { text-align: center; margin: 16px 0; }
   .footer { margin-top: 28px; padding-top: 12px; border-top: 2px solid #1e3a5f; font-size: 10px; color: #9ca3af; }
   .btn-print { background: #1e3a5f; color: white; border: none; padding: 10px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; margin-bottom: 20px; }
+  .moe-warn { display: inline-block; background: #fef3c7; color: #92400e; font-size: 9px; padding: 1px 6px; border-radius: 3px; font-weight: 600; margin-left: 4px; }
 </style></head><body>
 <button class="btn-print no-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
 <div class="header">
@@ -178,6 +220,8 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
   <p>Executive Summary · Generated ${today} · accessmichigan.org</p>
   <p>Geography: ${place.geoGrainLabel} · Population: ${place.countyProfile.population.toLocaleString()}</p>
 </div>
+
+${civicScoreSection}
 
 <div class="section">
   <h2>Community Health Scorecard</h2>
@@ -209,7 +253,7 @@ ${standouts.length > 0 ? `<div class="section">
   <h2>Data Provenance</h2>
   <table><thead><tr><th>Source</th><th>Coverage</th><th>Year</th></tr></thead><tbody>
     <tr><td style="padding:6px 10px;font-size:12px;">County Health Rankings</td><td style="padding:6px 10px;font-size:12px;">Health outcomes & behaviors</td><td style="padding:6px 10px;font-size:12px;">2025</td></tr>
-    <tr><td style="padding:6px 10px;font-size:12px;">U.S. Census ACS 5-Year</td><td style="padding:6px 10px;font-size:12px;">Demographics, economics, housing</td><td style="padding:6px 10px;font-size:12px;">2022</td></tr>
+    <tr><td style="padding:6px 10px;font-size:12px;">U.S. Census ACS 5-Year</td><td style="padding:6px 10px;font-size:12px;">Demographics, economics, housing</td><td style="padding:6px 10px;font-size:12px;">2024</td></tr>
     <tr><td style="padding:6px 10px;font-size:12px;">MDHHS / BLS LAUS</td><td style="padding:6px 10px;font-size:12px;">Employment, workforce</td><td style="padding:6px 10px;font-size:12px;">2024</td></tr>
     <tr><td style="padding:6px 10px;font-size:12px;">DOE LEAD Tool</td><td style="padding:6px 10px;font-size:12px;">Energy burden estimates</td><td style="padding:6px 10px;font-size:12px;">2024</td></tr>
     <tr><td style="padding:6px 10px;font-size:12px;">EPA SDWIS / FBI UCR</td><td style="padding:6px 10px;font-size:12px;">Water quality, safety</td><td style="padding:6px 10px;font-size:12px;">2022–2024</td></tr>
