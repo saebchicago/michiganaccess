@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
 import { useFooterStats, DATA_SOURCES, formatLoadTime } from "@/hooks/useFooterStats";
 import { replayTour } from "@/components/shared/OnboardingTour";
-import { toast } from "@/hooks/use-toast";
+// toast import removed — no longer needed
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -100,13 +100,6 @@ const Footer = () => {
                     <Link
                       to={link.href}
                       className="text-sm text-foreground/70 transition-colors hover:text-primary"
-                      onClick={(e) => {
-                        const comingSoon = ["/costs", "/quality", "/environment"];
-                        if (comingSoon.includes(link.href)) {
-                          e.preventDefault();
-                          toast({ title: "Coming Soon", description: `${link.label} is under development and will be available shortly.` });
-                        }
-                      }}
                     >
                       {link.label}
                     </Link>
