@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import {
   Heart, Home, Zap, Droplets, Bus, Shield, GraduationCap, Apple,
   TrendingUp, TrendingDown, AlertTriangle, Info, ExternalLink, Minus,
-  Briefcase, HelpCircle, ChevronDown, ChevronUp,
+  Briefcase, HelpCircle, ChevronDown, ChevronUp, ArrowUp, ArrowDown,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -46,11 +46,23 @@ const fadeUp = {
 function DeltaChip({ value, stateAvg, direction }: { value: number; stateAvg: number; direction: string }) {
   const diff = value - stateAvg;
   if (Math.abs(diff) < 0.1 || stateAvg === 0) return <Minus className="h-3 w-3 text-muted-foreground" />;
-  const isBetter = direction === "lower-is-better" ? diff < 0 : diff > 0;
+  const higherIsBetter = direction !== "lower-is-better";
+  const isBetter = higherIsBetter ? diff > 0 : diff < 0;
+  const isNeutral = Math.abs(diff) < stateAvg * 0.02;
+
+  const pillClasses = isNeutral
+    ? "text-muted-foreground bg-muted"
+    : isBetter
+    ? "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30"
+    : "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30";
+
+  const Icon = isNeutral ? Minus : isBetter ? ArrowUp : ArrowDown;
+
   return (
-    <span className={`inline-flex items-center gap-0.5 text-[10px] font-semibold ${isBetter ? "text-michigan-forest" : "text-destructive"}`}>
-      {isBetter ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
-      {diff > 0 ? "+" : ""}{diff.toFixed(1)} vs state
+    <span className={`inline-flex items-center gap-1 text-[11px] font-medium leading-tight px-2 py-0.5 rounded-full whitespace-normal ${pillClasses}`}>
+      <Icon className="h-3 w-3 shrink-0" />
+      <span className="tabular-nums">{diff > 0 ? "+" : ""}{diff.toFixed(1)}</span>
+      <span className="opacity-75">vs state</span>
     </span>
   );
 }

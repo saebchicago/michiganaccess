@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, BarChart3 } from "lucide-react";
+import { Activity, TrendingUp, TrendingDown, Heart, Shield, Brain, ArrowRight, BarChart3, ArrowUp, ArrowDown } from "lucide-react";
 import { lazy, Suspense, useMemo } from "react";
 import { useCountUp } from "@/hooks/useCountUp";
 import CountySelector from "@/components/shared/CountySelector";
@@ -198,13 +198,13 @@ export default function HealthDataSnapshot() {
                         <div className="flex items-center gap-1.5 mt-1">
                           <Badge
                             variant="outline"
-                            className={`text-[10px] px-1.5 py-0 border ${
+                            className={`text-[10px] px-2 py-0.5 rounded-full border ${
                               kpi.delta.isBetter
-                                ? "border-emerald-500/40 text-emerald-400 bg-emerald-500/10"
-                                : "border-rose-500/40 text-rose-400 bg-rose-500/10"
+                                ? "border-green-200 dark:border-green-800 text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30"
+                                : "border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30"
                             }`}
                           >
-                            {kpi.delta.isBetter ? <TrendingUp className="h-2.5 w-2.5 mr-0.5" /> : <TrendingDown className="h-2.5 w-2.5 mr-0.5" />}
+                            {kpi.delta.isBetter ? <ArrowUp className="h-2.5 w-2.5 mr-0.5" /> : <ArrowDown className="h-2.5 w-2.5 mr-0.5" />}
                             {kpi.delta.formatted} vs. MI avg
                           </Badge>
                         </div>

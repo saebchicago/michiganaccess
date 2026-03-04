@@ -3,7 +3,7 @@ import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   MapPin, Heart, Stethoscope, Building2, Phone,
-  Activity, Shield, Code, Copy, BarChart3, TrendingUp, TrendingDown, Minus,
+  Activity, Shield, Code, Copy, BarChart3,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
+import DeltaChip from "@/components/shared/DeltaChip";
 import LocalInsightEngine from "@/components/place/LocalInsightEngine";
 import DomainJumpNav from "@/components/place/DomainJumpNav";
 import ReportIssue from "@/components/shared/ReportIssue";
@@ -40,33 +41,7 @@ const MI_STATE_BENCHMARKS = {
   bachelorRate: 29.6,
 };
 
-/** Delta chip showing value vs benchmark */
-function DeltaChip({ value, benchmark, higherIsBetter, label }: {
-  value: number | null;
-  benchmark: number;
-  higherIsBetter: boolean;
-  label: string;
-}) {
-  if (value === null) return null;
-  const diff = value - benchmark;
-  const pctDiff = ((diff / benchmark) * 100).toFixed(1);
-  const isBetter = higherIsBetter ? diff > 0 : diff < 0;
-  const isNeutral = Math.abs(diff) < benchmark * 0.02;
-
-  const Icon = isNeutral ? Minus : isBetter ? TrendingUp : TrendingDown;
-  const color = isNeutral
-    ? "text-muted-foreground bg-muted"
-    : isBetter
-    ? "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30"
-    : "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30";
-
-  return (
-    <span className={`inline-flex items-center gap-1 text-[11px] font-medium px-1.5 py-0.5 rounded whitespace-normal ${color}`}>
-      <Icon className="h-3 w-3 shrink-0" />
-      <span className="tabular-nums">{diff > 0 ? "+" : ""}{pctDiff}%</span> vs {label}
-    </span>
-  );
-}
+/* DeltaChip is now imported from @/components/shared/DeltaChip */
 
 /** Mirror card: shows a metric with county and state baselines */
 function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, higherIsBetter, soWhat }: {
