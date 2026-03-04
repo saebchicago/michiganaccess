@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
 import { useFooterStats, DATA_SOURCES, formatLoadTime } from "@/hooks/useFooterStats";
 import { replayTour } from "@/components/shared/OnboardingTour";
+import { toast } from "@/hooks/use-toast";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -99,6 +100,13 @@ const Footer = () => {
                     <Link
                       to={link.href}
                       className="text-sm text-foreground/70 transition-colors hover:text-primary"
+                      onClick={(e) => {
+                        const comingSoon = ["/costs", "/quality", "/environment"];
+                        if (comingSoon.includes(link.href)) {
+                          e.preventDefault();
+                          toast({ title: "Coming Soon", description: `${link.label} is under development and will be available shortly.` });
+                        }
+                      }}
                     >
                       {link.label}
                     </Link>
@@ -138,7 +146,7 @@ const Footer = () => {
             ))}
           </div>
           <p className="text-center text-[10px] text-muted-foreground mt-2">
-            Data refreshed {stats.lastRefresh}
+            Data refreshed March 2026
           </p>
         </div>
 
@@ -172,10 +180,10 @@ const Footer = () => {
 
         {/* Public Beta Badge */}
         <div className="mt-4 border-t border-border pt-4">
-          <div className="mx-auto max-w-xl rounded-lg border border-michigan-gold/20 bg-michigan-gold/[0.08] px-4 py-3 text-center">
+          <div className="mx-auto max-w-xl rounded-lg border border-primary/20 bg-primary/[0.06] px-4 py-3 text-center">
             <p className="flex items-center justify-center gap-1.5 text-xs text-foreground">
-              <Sparkles className="h-3.5 w-3.5 text-michigan-gold" />
-              <span className="font-semibold">Access Michigan is in Public Beta</span> — built by a Michigan resident, improving every week with community feedback.
+              <Sparkles className="h-3.5 w-3.5 text-primary" />
+              <span className="font-semibold">Access Michigan</span> is an independent civic platform, continuously improving with community feedback.
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
               Have a suggestion? <Link to="/contact" className="font-medium text-primary hover:underline">We'd love to hear from you.</Link>

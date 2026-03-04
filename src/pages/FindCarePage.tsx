@@ -516,22 +516,48 @@ export default function FindCarePage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
-            className="max-w-3xl mx-auto"
+            className="max-w-3xl mx-auto space-y-8"
           >
-            <p className="text-sm font-medium text-muted-foreground mb-4 text-center">Common needs:</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {QUICK_LINKS.map((ql) => (
-                <button
-                  key={ql.value}
-                  onClick={() => handleQuickLink(ql.value)}
-                  className="group flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center transition-all hover:border-primary/30 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${ql.color} transition-transform group-hover:scale-110`}>
-                    <ql.icon className="h-5 w-5" />
-                  </div>
-                  <span className="text-sm font-medium text-foreground">{ql.label}</span>
-                </button>
-              ))}
+            <div>
+              <p className="text-sm font-medium text-muted-foreground mb-4 text-center">Common needs:</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {QUICK_LINKS.map((ql) => (
+                  <button
+                    key={ql.value}
+                    onClick={() => handleQuickLink(ql.value)}
+                    className="group flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center transition-all hover:border-primary/30 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${ql.color} transition-transform group-hover:scale-110`}>
+                      <ql.icon className="h-5 w-5" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground">{ql.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Featured FQHCs */}
+            <div>
+              <h3 className="text-sm font-semibold text-foreground mb-3 text-center">Featured Michigan Community Health Centers</h3>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {[
+                  { name: "Cherry Health", city: "Grand Rapids", phone: "(616) 965-8200", desc: "Primary care, dental, behavioral health. Sliding-scale fees. No one turned away." },
+                  { name: "Covenant Community Care", city: "Detroit", phone: "(313) 554-1064", desc: "Medical, dental, vision, and pharmacy services. Medicaid & uninsured welcome." },
+                  { name: "Family Medical Center of Michigan", city: "Temperance", phone: "(734) 568-3600", desc: "Primary care and preventive services for all ages. Walk-ins accepted." },
+                ].map((fqhc) => (
+                  <Card key={fqhc.name} className="hover-lift">
+                    <CardContent className="pt-5 space-y-1.5">
+                      <div className="flex items-center gap-2">
+                        <Heart className="h-4 w-4 text-primary shrink-0" />
+                        <h4 className="text-sm font-semibold text-foreground">{fqhc.name}</h4>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{fqhc.city} · <a href={`tel:${fqhc.phone.replace(/\D/g, "")}`} className="text-primary hover:underline">{fqhc.phone}</a></p>
+                      <p className="text-xs text-muted-foreground">{fqhc.desc}</p>
+                      <Badge variant="outline" className="text-[9px] border-primary/30 text-primary">FQHC · Sliding Scale</Badge>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}

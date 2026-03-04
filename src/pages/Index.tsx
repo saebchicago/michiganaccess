@@ -361,10 +361,10 @@ const Index = () => {
                 </div>
                 {/* Static gauge preview — no network call */}
                 <div className="flex items-center gap-3 mt-1">
-                  <CivicInsightGauge score={65} color="#01579B" />
+                  <CivicInsightGauge score={67} color="#01579B" />
                   <div className="text-[10px] text-muted-foreground leading-relaxed">
-                    <span className="font-semibold text-foreground block">Wayne County</span>
-                    example score
+                    <span className="font-semibold text-foreground block">Illustrative — Wayne County</span>
+                    Modeled composite score
                   </div>
                 </div>
                 <DataClassification type="illustrative" />

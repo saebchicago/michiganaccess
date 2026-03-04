@@ -16,8 +16,8 @@ const metrics = [
   },
   {
     icon: FileCheck,
-    stat: "1,850+",
-    label: "Insurance appeals generated (+42%)",
+    stat: "1,850",
+    label: "Insurance appeals generated",
     detail: "$5.92M in denied charges recovered annually",
     color: "text-blue-600 dark:text-blue-400",
     bg: "bg-blue-500/10",
@@ -49,7 +49,7 @@ export default function HealthEquitySection() {
             Closing Michigan's Access Gaps Through Systems Engineering
           </h2>
           <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            Measurable impact across coverage, appeals, and care navigation — driven by equity-centered algorithms and population health infrastructure.
+            These figures represent projected impact at scale, modeled from Michigan population health data and comparable platform outcomes.
           </p>
         </motion.div>
 
@@ -69,6 +69,7 @@ export default function HealthEquitySection() {
                   </div>
                   <p className={`text-2xl font-bold ${m.color}`}>{m.stat}</p>
                   <p className="text-sm font-semibold text-foreground">{m.label}</p>
+                  <Badge variant="outline" className="text-[9px] w-fit border-muted-foreground/30 text-muted-foreground">Modeled Projection</Badge>
                   <p className="text-xs text-muted-foreground">{m.detail}</p>
                 </CardContent>
               </Card>
