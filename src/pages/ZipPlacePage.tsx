@@ -75,19 +75,19 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
 
   return (
     <Card className="h-full">
-      <CardContent className="py-4 space-y-2">
+      <CardContent className="py-4 space-y-3">
         <div className="flex items-center gap-2 flex-wrap">
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider break-words">{label}</p>
+          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider truncate max-w-[200px]">{label}</p>
           <MoEBadge estimate={estimate ?? zipValue} moe={moe ?? null} />
         </div>
         <p className="text-2xl font-bold text-foreground tabular-nums">{format(zipValue)}</p>
-        <div className="flex flex-col sm:flex-row flex-wrap gap-1.5">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-2">
           {countyValue !== null && (
             <DeltaChip value={zipValue} benchmark={countyValue} higherIsBetter={higherIsBetter} label="County" />
           )}
           <DeltaChip value={zipValue} benchmark={stateValue} higherIsBetter={higherIsBetter} label="MI Avg" />
         </div>
-        <div className="flex flex-col gap-4 pt-1 border-t border-border/40 mt-2">
+        <div className="flex flex-col gap-4 pt-2 border-t border-border/40">
           <div className="text-[11px] text-muted-foreground space-y-1">
             <p className="break-words">County Avg: <span className="font-mono font-medium text-foreground tabular-nums">{format(countyValue)}</span></p>
             <p className="break-words">MI State: <span className="font-mono font-medium text-foreground tabular-nums">{format(stateValue)}</span></p>
@@ -211,10 +211,12 @@ export default function ZipPlacePage() {
       <div className="container py-6 sm:py-10 section-spacing">
         {/* ── ZIP vs County "Mirror" Overlay ── */}
         <section id="zip-overlay">
-          <div className="flex items-center gap-2 mb-4">
-            <BarChart3 className="h-5 w-5 text-primary" />
-            <h2 className="text-xl font-bold text-foreground">ZIP {zipcode} vs {place.parentCounty} County</h2>
-            <Badge variant="outline" className="text-[10px] uppercase tracking-wider">Contextual Peers</Badge>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4">
+            <div className="flex items-center gap-2">
+              <BarChart3 className="h-5 w-5 text-primary shrink-0" />
+              <h2 className="text-lg sm:text-xl font-bold text-foreground truncate max-w-[280px] sm:max-w-none">ZIP {zipcode} vs {place.parentCounty} County</h2>
+            </div>
+            <Badge variant="outline" className="text-[10px] uppercase tracking-wider w-fit shrink-0">Contextual Peers</Badge>
           </div>
           <p className="text-sm text-muted-foreground mb-4">
             Every metric is shown alongside <strong>{place.parentCounty} County</strong> and <strong>Michigan state</strong> averages so you can see how your ZIP compares.
