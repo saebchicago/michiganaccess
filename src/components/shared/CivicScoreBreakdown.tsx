@@ -10,6 +10,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ChevronDown, Info, Download, Shield, Activity, BookOpen, AlertTriangle } from "lucide-react";
 import { COUNTY_PROFILES, type CountyProfile } from "@/data/michigan-county-profiles";
 import { useQuery } from "@tanstack/react-query";
@@ -290,19 +291,19 @@ export default function CivicScoreBreakdown({ countyName, compositeScore }: Civi
             </div>
 
             <div className="flex items-center gap-3 pt-1">
-              <a
-                href="/methodology"
+              <Link
+                to="/methodology"
                 className="inline-flex items-center gap-1 text-primary hover:underline text-[11px] font-medium"
               >
                 Full methodology page →
-              </a>
-              <a
-                href="/methodology"
+              </Link>
+              <Link
+                to="/data-validation"
                 className="inline-flex items-center gap-1 text-primary hover:underline text-[11px] font-medium"
               >
                 <Download className="h-3 w-3" />
                 Download Methodology PDF
-              </a>
+              </Link>
             </div>
 
             <div className="flex items-start gap-1.5 rounded-md bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 p-2 mt-1">
