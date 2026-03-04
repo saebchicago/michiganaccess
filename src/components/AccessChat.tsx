@@ -142,25 +142,30 @@ export function AccessChat() {
             </div>
 
             {/* Input */}
-            <form onSubmit={handleSend} className="flex gap-2 p-3 border-t border-border bg-background">
-              <Input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your question…"
-                disabled={loading}
-                className="flex-1"
-                aria-label="Chat message input"
-                maxLength={1000}
-              />
-              <Button
-                type="submit"
-                size="icon"
-                disabled={loading || !input.trim()}
-                className="bg-gradient-michigan hover:opacity-90 flex-shrink-0"
-                aria-label="Send message"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
+            <form onSubmit={handleSend} className="p-3 border-t border-border bg-background">
+              <div className="flex gap-2">
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type your question…"
+                  disabled={loading}
+                  className="flex-1"
+                  aria-label="Chat message input"
+                  maxLength={1000}
+                />
+                <Button
+                  type="submit"
+                  size="icon"
+                  disabled={loading || !input.trim()}
+                  className="bg-gradient-michigan hover:opacity-90 flex-shrink-0"
+                  aria-label="Send message"
+                >
+                  <Send className="h-4 w-4" />
+                </Button>
+              </div>
+              <p className="mt-1.5 text-[9px] text-muted-foreground">
+                This assistant explains Michigan services and public data. It cannot provide medical or legal advice.
+              </p>
             </form>
 
             {error && (

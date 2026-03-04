@@ -148,6 +148,7 @@ function LanguageStrip() {
           </button>
         </span>
       ))}
+      <span className="ml-2 text-primary-foreground/40">(Key pages available in these languages)</span>
     </p>
   );
 }
@@ -361,6 +362,26 @@ const HeroSection = () => {
             Free, instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
           </motion.p>
 
+          {/* Guiding CTA subtext */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="mt-2 text-sm text-primary-foreground/60"
+          >
+            Start by typing your ZIP code or selecting a shortcut below.
+          </motion.p>
+
+          {/* Organizer value prop */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.32, duration: 0.5 }}
+            className="mt-1 text-xs text-primary-foreground/45 italic"
+          >
+            We organize public data so you don't have to search five different sites.
+          </motion.p>
+
           {/* Privacy Statement */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -396,10 +417,10 @@ const HeroSection = () => {
                 onFocus={() => { setShowDropdown(true); setIsFocused(true); setPlaceholderIdx(0); setPlaceholderOpacity(1); }}
                 onBlur={() => setIsFocused(false)}
                 onKeyDown={handleKeyDown}
-                placeholder={placeholders[placeholderIdx]}
+                placeholder="Search housing, food, health, legal help, ZIP code, clinic…"
                 className={`hero-search-input w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-1 focus:border-transparent focus:scale-[1.015] transition-all duration-200 ${placeholderOpacity === 0 ? 'placeholder-fading' : ''}`}
                 role="combobox"
-                aria-label="Search for services by location, doctor name, or NPI"
+                aria-label="Search for services by need, location, clinic, or program"
                 aria-expanded={showDropdown}
                 aria-haspopup="listbox"
                 aria-autocomplete="list"
@@ -416,7 +437,7 @@ const HeroSection = () => {
                     variant="ghost"
                     onClick={isListening ? stopListening : startListening}
                     className={`rounded-full h-10 w-10 transition-colors ${isListening ? "text-destructive bg-destructive/10 animate-pulse" : "text-muted-foreground hover:text-foreground"}`}
-                    aria-label={isListening ? "Stop voice search" : "Start voice search"}
+                    aria-label={isListening ? "Stop voice search" : "Search by voice"}
                     title={isListening ? "Listening… tap to stop" : "Voice search"}
                   >
                     {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
@@ -432,10 +453,9 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Search helper text */}
-            <p className="mt-2 text-xs text-primary-foreground/60 text-center">
-              Search services, ZIP codes, cities, counties — or type a clinic name, community service, or health
-              facility
+            {/* Search reassurance */}
+            <p className="mt-2 text-[11px] text-primary-foreground/50 text-center">
+              We don't store your searches. Results are based on public data only.
             </p>
 
             {/* Language quick-switch strip */}

@@ -38,18 +38,21 @@ export default function QuickExitBar() {
       role="region"
       aria-label="Quick exit — leave this site immediately"
     >
-      <button
-        onClick={triggerExit}
-        className="flex w-full items-center justify-center gap-2 bg-destructive py-2 text-destructive-foreground text-xs font-bold tracking-wide uppercase hover:bg-destructive/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors min-h-[44px]"
-        aria-label="Quick exit — leave this site immediately (also press Escape)"
-        title="Leave this site immediately"
-      >
-        <LogOut className="h-4 w-4" aria-hidden="true" />
-        <span>Quick Exit</span>
-        <kbd className="ml-1 rounded border border-destructive-foreground/30 bg-destructive-foreground/10 px-1.5 py-0.5 font-mono text-[10px]">
-          ESC
-        </kbd>
-      </button>
+      <div className="flex w-full flex-col items-center bg-destructive py-1.5">
+        <button
+          onClick={triggerExit}
+          className="flex items-center justify-center gap-2 py-1 text-destructive-foreground text-xs font-bold tracking-wide uppercase hover:bg-destructive/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors min-h-[44px] w-full"
+          aria-label="Quick exit — leave this site immediately (also press Escape)"
+          title="Press ESC to quickly leave this page"
+        >
+          <LogOut className="h-4 w-4" aria-hidden="true" />
+          <span>Quick Exit</span>
+          <kbd className="ml-1 rounded border border-destructive-foreground/30 bg-destructive-foreground/10 px-1.5 py-0.5 font-mono text-[10px]">
+            ESC
+          </kbd>
+        </button>
+        <span className="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>
+      </div>
     </div>
   );
 }

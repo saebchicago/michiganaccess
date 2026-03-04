@@ -204,8 +204,8 @@ const Footer = () => {
             <Link to="/methodology" className="text-primary hover:underline">Learn more →</Link>
           </p>
           <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto mb-3">
-            Access Michigan is an independent civic intelligence and navigation platform supporting Michigan residents, communities, and institutions.
-            We are not affiliated with MDHHS, Michigan 2-1-1, or any government agency. We organize public data to help residents find services and communities understand their needs.
+            Independent civic project using data from MDHHS, Michigan 2-1-1, CMS, and other public sources. Not run by any government agency.
+            We organize public data to help residents find services and communities understand their needs.
             For live help, call <a href="tel:211" className="font-semibold text-foreground hover:underline">2-1-1</a>.
           </p>
           <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
