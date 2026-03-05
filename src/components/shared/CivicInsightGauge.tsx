@@ -100,7 +100,7 @@ export function CivicInsightGauge({ score, color, showClassification = false }: 
       <span className="text-[9px] text-muted-foreground">Civic Insight Score</span>
       {showClassification && (
         <span className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] leading-tight font-medium text-michigan-teal bg-michigan-teal/8 border-michigan-teal/20 mt-0.5">
-          Illustrative example · Modeled estimate
+          Modeled estimate
         </span>
       )}
       <a href="/methodology" className="text-[9px] text-primary hover:underline mt-0.5">
