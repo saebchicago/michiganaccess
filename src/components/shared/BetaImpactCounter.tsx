@@ -61,11 +61,12 @@ export default function BetaImpactCounter() {
   return (
     <section className="container py-6">
       <div className="rounded-xl border border-border bg-muted/30 p-4 sm:p-5">
-        <div className="flex items-center gap-2 mb-3">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-            Public Beta Impact — Real-Time
-          </p>
-          <TooltipProvider>
+        <div className="flex flex-col gap-1 mb-3">
+          <div className="flex items-center gap-2">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              How people are starting to use this (beta)
+            </p>
+            <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Info className="h-3 w-3 text-muted-foreground cursor-help" />
@@ -75,6 +76,10 @@ export default function BetaImpactCounter() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+          </div>
+          <p className="text-[9px] text-muted-foreground/60">
+            Early beta data — numbers will stay small while we test and improve.
+          </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {stats.map((s, i) => (

@@ -13,7 +13,9 @@ import {
   BarChart3,
   ShieldCheck,
   Globe2,
-  Lock } from
+  Lock,
+  Database,
+  Hash } from
 "lucide-react";
 import { Link } from "react-router-dom";
 import { FileText } from "lucide-react";
@@ -246,7 +248,7 @@ const Index = () => {
               <Card className="border-primary/20 bg-primary/5">
                 <CardContent className="flex flex-col sm:flex-row items-start gap-4 py-5">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
-                    <BarChart3 className="h-5 w-5 text-primary" aria-hidden="true" />
+                    <Database className="h-5 w-5 text-primary" aria-hidden="true" />
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-foreground">Need the data, not just the directory?</p>
@@ -288,7 +290,6 @@ const Index = () => {
       <LazySection minHeight="60px">
         <Suspense fallback={<SectionFallback />}>
           <WatchlistPanel />
-          <BetaImpactCounter />
         </Suspense>
       </LazySection>
 
@@ -312,7 +313,7 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid gap-responsive sm:grid-cols-3">
+          <div className="grid gap-responsive sm:grid-cols-2 lg:grid-cols-4">
             {/* ── Card 1: Health Map ── */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
@@ -387,21 +388,52 @@ const Index = () => {
                 </div>
                 {/* Static gauge preview — no network call */}
                 <div className="flex items-center gap-3 mt-1">
-                  <CivicInsightGauge score={67} color="#01579B" showClassification />
+                  <CivicInsightGauge score={67} color="#01579B" />
                   <div className="text-[10px] text-muted-foreground leading-relaxed">
-                    <span className="font-semibold text-foreground block">Illustrative example — Wayne County</span>
-                    Modeled composite score
+                    <span className="font-semibold text-foreground block">Wayne County</span>
+                    Modeled estimate · <Link to="/methodology" className="text-primary hover:underline">See methodology</Link>
                   </div>
                 </div>
-                <DataClassification type="illustrative" />
                 <span className="text-xs font-semibold text-michigan-gold group-hover:underline" aria-hidden="true">
                   See all county scores →
+                </span>
+              </Link>
+            </motion.div>
+
+            {/* ── Card 4: Compare ZIP Codes ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.24 }}>
+              <Link
+                to="/compare"
+                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <Hash className="h-5 w-5 text-primary" aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="font-semibold text-foreground">Compare ZIP Codes</p>
+                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                    Compare two ZIP codes, or a ZIP vs its county, side by side — income, poverty, education, and more.
+                  </p>
+                </div>
+                <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
+                  Compare ZIPs →
                 </span>
               </Link>
             </motion.div>
           </div>
         </div>
       </section>
+
+      {/* ═══ BETA IMPACT — moved here from above ═══ */}
+      <LazySection minHeight="60px">
+        <Suspense fallback={<SectionFallback />}>
+          <BetaImpactCounter />
+        </Suspense>
+      </LazySection>
+
       {/* ═══ CIVIC DATA HUB CALLOUT ═══ */}
       <LazySection minHeight="60px">
         <Suspense fallback={<SectionFallback />}>

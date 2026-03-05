@@ -49,12 +49,6 @@ const quickPills = [
     primary: true,
   },
   {
-    icon: User,
-    label: "Find a Doctor",
-    href: "/find-care?mode=name",
-    secondary: true,
-  },
-  {
     icon: Pill,
     label: "Financial Help",
     href: "/financial-help",
@@ -85,7 +79,7 @@ const quickPills = [
     href: "/wellness",
   },
   {
-    icon: TrendingUp,
+    icon: Database,
     label: "Explore Data & Insights",
     href: "/data-and-insights",
   },
@@ -682,7 +676,8 @@ const HeroSection = () => {
             <span className="text-[10px] font-medium text-primary-foreground/40">
               For health systems, journalists, planners, and community orgs
             </span>
-            <h3 className="text-sm font-semibold text-primary-foreground/90">
+            <h3 className="text-base font-bold text-primary-foreground/90 flex items-center gap-1.5">
+              <Database className="h-4 w-4" aria-hidden="true" />
               Explore Michigan's civic data layer
             </h3>
             <p className="text-[11px] text-primary-foreground/55 leading-relaxed">
