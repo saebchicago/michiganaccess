@@ -354,44 +354,24 @@ const HeroSection = () => {
             Michigan help, at your fingertips.
           </motion.h1>
 
-          {/* Data-forward sub-tagline */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.22, duration: 0.5 }}
-            className="mt-3 text-sm text-primary-foreground/60 md:text-base"
-          >
-            The open data layer behind Michigan's health, housing, and civic resources — searchable by ZIP, county, or community.
-          </motion.p>
-
           {/* Subheading */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.5 }}
+            transition={{ delay: 0.22, duration: 0.5 }}
             className="mt-3 text-lg text-primary-foreground/80 md:text-xl"
           >
-            Free, instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
+            Instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
           </motion.p>
 
-          {/* Guiding CTA subtext */}
+          {/* Trust & data sub-line */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ delay: 0.28, duration: 0.5 }}
             className="mt-2 text-sm text-primary-foreground/60"
           >
-            Start by typing your ZIP code or selecting a shortcut below.
-          </motion.p>
-
-          {/* Organizer value prop */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.32, duration: 0.5 }}
-            className="mt-1 text-xs text-primary-foreground/45 italic"
-          >
-            We organize public data so you don't have to search five different sites.
+            Built on verified public data — no account, no tracking, no personal data stored.
           </motion.p>
 
           {/* Privacy Statement */}

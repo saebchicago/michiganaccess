@@ -212,7 +212,7 @@ const Index = () => {
 
       <div className="container py-4 section-spacing">
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }}>
-          <TrustPanel updated="2026-02-23" />
+          <TrustPanel updated="March 2026" />
         </motion.div>
         <DataProvenance
           source="Public datasets (State of Michigan + local agencies). Independently organized."
@@ -331,8 +331,9 @@ const Index = () => {
                 <div>
                   <p className="font-semibold text-foreground">Explore Your Region</p>
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    Bright, interactive Michigan map showing health resources, clinics, utility outages, food access, and service gaps — county by county.
+                    Interactive Michigan map — health resources, clinics, utility outages, food access, and service gaps by county.
                   </p>
+                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">Use for CHNAs, grant mapping, and outreach planning.</p>
                 </div>
                 <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
                   Open map →
@@ -359,6 +360,7 @@ const Index = () => {
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     Pick any 2–4 Michigan counties and instantly compare income, health, access, equity gaps, and community scores side by side.
                   </p>
+                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">Use for grant applications and community planning.</p>
                 </div>
                 <span className="mt-auto text-xs font-semibold text-michigan-forest group-hover:underline" aria-hidden="true">
                   Start comparing →
@@ -383,8 +385,9 @@ const Index = () => {
                 <div>
                   <p className="font-semibold text-foreground">Civic Insight Score</p>
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    One score. Every Michigan county. A 0–100 snapshot of income, health outcomes, education, housing stability, and opportunity equity.
+                    One score per county (0–100) combining income, health outcomes, education, housing stability, and opportunity equity.
                   </p>
+                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">Use for benchmarking, equity analysis, and advocacy.</p>
                 </div>
                 {/* Static gauge preview — no network call */}
                 <div className="flex items-center gap-3 mt-1">
@@ -417,6 +420,7 @@ const Index = () => {
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     Compare two ZIP codes, or a ZIP vs its county, side by side — income, poverty, education, and more.
                   </p>
+                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">Use for hyper-local needs assessments and reporting.</p>
                 </div>
                 <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
                   Compare ZIPs →

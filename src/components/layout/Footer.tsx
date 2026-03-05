@@ -200,7 +200,7 @@ const Footer = () => {
         {/* Trust statement */}
         <div className="border-t border-border pt-4 mt-4">
           <p className="text-center text-[10px] text-muted-foreground mb-3">
-            Access Michigan organizes verified public datasets and clearly labels modeled or illustrative information.{" "}
+            Access Michigan organizes verified public datasets and clearly labels modeled estimates.{" "}
             <Link to="/methodology" className="text-primary hover:underline">Learn more →</Link>
           </p>
           <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto mb-3">
