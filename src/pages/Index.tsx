@@ -301,12 +301,12 @@ const Index = () => {
       <section className="py-12 bg-gradient-to-b from-background to-muted/10" aria-labelledby="explore-heading">
         <div className="container max-w-5xl">
           <div className="mb-7 text-center">
-            <h2 id="explore-heading" className="text-xl font-bold text-foreground md:text-2xl">
-              Michigan's Civic Data Layer
-            </h2>
-           <p className="text-sm text-muted-foreground mt-1.5">
-              Structured data across all 83 counties — compare, score, and export civic snapshots for any Michigan community.
-            </p>
+             <h2 id="explore-heading" className="text-xl font-bold text-foreground md:text-2xl">
+               Explore Michigan's Civic Data
+             </h2>
+            <p className="text-sm text-muted-foreground mt-1.5">
+               Explore every Michigan county, compare communities side-by-side, and see ZIP and county-level civic insight scores.
+             </p>
             <p className="text-xs text-muted-foreground mt-2 max-w-lg mx-auto">
               For health systems &amp; researchers: Build county briefs, export data, and explore equity gaps → <Link to="/for-health-systems" className="text-primary font-medium hover:underline">Learn more</Link>
             </p>

@@ -84,6 +84,11 @@ const quickPills = [
     label: "More Services",
     href: "/wellness",
   },
+  {
+    icon: TrendingUp,
+    label: "Explore Data & Insights",
+    href: "/data-and-insights",
+  },
 ];
 
 const MichiganOutline = () => (
@@ -664,6 +669,36 @@ const HeroSection = () => {
                     {pill.label}
                   </Link>
                 ))}
+            </div>
+          </motion.div>
+
+          {/* Data & Insights row */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+            className="mt-6 flex flex-col items-center gap-2 text-center max-w-md mx-auto"
+          >
+            <span className="text-[10px] font-medium text-primary-foreground/40">
+              For health systems, journalists, planners, and community orgs
+            </span>
+            <h3 className="text-sm font-semibold text-primary-foreground/90">
+              Explore Michigan's civic data layer
+            </h3>
+            <p className="text-[11px] text-primary-foreground/55 leading-relaxed">
+              ZIP and county-level health, housing, equity, and access metrics across all 83 counties.
+            </p>
+            <div className="flex gap-2 mt-1">
+              <Link to="/data-and-insights">
+                <Button size="sm" className="rounded-full text-xs h-7 px-3.5">
+                  Open Data &amp; Insights
+                </Button>
+              </Link>
+              <Link to="/compare">
+                <Button size="sm" variant="outline" className="rounded-full text-xs h-7 px-3.5 border-white/25 text-primary-foreground/80 hover:bg-white/15">
+                  Compare Counties
+                </Button>
+              </Link>
             </div>
           </motion.div>
 
