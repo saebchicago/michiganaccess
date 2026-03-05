@@ -63,8 +63,8 @@ export default function BetaImpactCounter() {
       <div className="rounded-xl border border-border bg-muted/30 p-4 sm:p-5">
         <div className="flex flex-col gap-1 mb-3">
           <div className="flex items-center gap-2">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-              How people are starting to use this (beta)
+           <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Platform activity
             </p>
             <TooltipProvider>
             <Tooltip>
@@ -78,7 +78,7 @@ export default function BetaImpactCounter() {
           </TooltipProvider>
           </div>
           <p className="text-[9px] text-muted-foreground/60">
-            Early beta data — numbers will stay small while we test and improve.
+            Aggregate counters from beta usage.
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">

@@ -374,6 +374,16 @@ const HeroSection = () => {
             Built on verified public data — no account, no tracking, no personal data stored.
           </motion.p>
 
+          {/* Who this is for */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.32, duration: 0.5 }}
+            className="mt-1.5 text-xs text-primary-foreground/45"
+          >
+            Built for Michigan residents, policymakers, health systems, funders, and journalists.
+          </motion.p>
+
           {/* Privacy Statement */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -651,10 +661,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.5 }}
-            className="mt-6 flex flex-col items-center gap-2 text-center max-w-md mx-auto"
+            className="mt-6 flex flex-col items-center gap-2 text-center max-w-lg mx-auto"
           >
-            <span className="text-[10px] font-medium text-primary-foreground/40">
-              For health systems, journalists, planners, and community orgs
+            <span className="text-[10px] font-medium text-primary-foreground/40 uppercase tracking-wider">
+              Civic Intelligence Layer
             </span>
             <h3 className="text-base font-bold text-primary-foreground/90 flex items-center gap-1.5">
               <Database className="h-4 w-4" aria-hidden="true" />
@@ -663,10 +673,13 @@ const HeroSection = () => {
             <p className="text-[11px] text-primary-foreground/55 leading-relaxed">
               ZIP and county-level health, housing, equity, and access metrics across all 83 counties.
             </p>
+            <p className="text-[10px] text-primary-foreground/40 italic">
+              Compare ZIPs and counties, export briefs, and see gaps in seconds.
+            </p>
             <div className="flex gap-2 mt-1">
               <Link to="/data-and-insights">
                 <Button size="sm" className="rounded-full text-xs h-7 px-3.5">
-                  Open Data &amp; Insights
+                  Explore Data &amp; Insights
                 </Button>
               </Link>
               <Link to="/compare">

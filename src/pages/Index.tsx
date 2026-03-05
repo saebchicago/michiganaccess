@@ -15,8 +15,15 @@ import {
   Globe2,
   Lock,
   Database,
-  Hash } from
-"lucide-react";
+  Hash,
+  Target,
+  FileText as FileTextIcon,
+  LineChart,
+  Megaphone,
+  Map as MapIcon,
+  GitCompareArrows,
+  FileDown,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { FileText } from "lucide-react";
 import { motion } from "framer-motion";
@@ -180,6 +187,83 @@ const Index = () => {
       {/* ═══ LAYER 2 — SEARCH & GUIDED PATHWAYS ═══ */}
       <HeroSection />
 
+      {/* ═══ FOR POLICYMAKERS & HEALTH SYSTEMS ═══ */}
+      <section className="py-10 bg-muted/20 border-y border-border/40" aria-labelledby="policy-heading">
+        <div className="container max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45 }}
+            className="text-center mb-8"
+          >
+            <h2 id="policy-heading" className="text-xl font-bold text-foreground sm:text-2xl">
+              For policymakers, health systems, and funders
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1.5 max-w-xl mx-auto">
+              Use Access Michigan as a civic intelligence layer for planning, funding, and accountability.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: Target,
+                title: "Target funding",
+                body: "Identify ZIPs with high need and low service availability.",
+              },
+              {
+                icon: FileTextIcon,
+                title: "Support CHNAs",
+                body: "Export county briefs with income, coverage, and access metrics for any county.",
+              },
+              {
+                icon: LineChart,
+                title: "Monitor equity",
+                body: "Track where improvements are — and aren't — happening across communities.",
+              },
+              {
+                icon: Megaphone,
+                title: "Ground stories",
+                body: "Give journalists and advocates consistent, sourced numbers.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+              >
+                <Card className="h-full border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
+                  <CardContent className="pt-5 pb-4">
+                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
+                      <item.icon className="h-4.5 w-4.5 text-primary" aria-hidden="true" />
+                    </div>
+                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.body}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <Link to="/data-and-insights">
+              <Button size="sm" className="gap-1.5">
+                <Database className="h-3.5 w-3.5" aria-hidden="true" />
+                Explore Data &amp; Insights
+              </Button>
+            </Link>
+            <Link to="/for-health-systems">
+              <Button size="sm" variant="outline" className="gap-1.5">
+                Health System Tools <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── "Where do you want to start?" immediately after search ── */}
       <SectionErrorBoundary title="Some content didn't load">
         <LazySection minHeight="120px">
@@ -333,10 +417,10 @@ const Index = () => {
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     Interactive Michigan map — health resources, clinics, utility outages, food access, and service gaps by county.
                   </p>
-                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">Use for CHNAs, grant mapping, and outreach planning.</p>
-                </div>
-                <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
-                  Open map →
+                   <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">For example, map health deserts across rural counties for a funding proposal.</p>
+                 </div>
+                 <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
+                   Open map →
                 </span>
               </Link>
             </motion.div>
@@ -360,7 +444,7 @@ const Index = () => {
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     Pick any 2–4 Michigan counties and instantly compare income, health, access, equity gaps, and community scores side by side.
                   </p>
-                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">Use for grant applications and community planning.</p>
+                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">For example, compare Wayne and Washtenaw on coverage, poverty, and access gaps.</p>
                 </div>
                 <span className="mt-auto text-xs font-semibold text-michigan-forest group-hover:underline" aria-hidden="true">
                   Start comparing →
@@ -387,7 +471,7 @@ const Index = () => {
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     One score per county (0–100) combining income, health outcomes, education, housing stability, and opportunity equity.
                   </p>
-                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">Use for benchmarking, equity analysis, and advocacy.</p>
+                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">For example, benchmark Wayne County against state averages for a board presentation.</p>
                 </div>
                 {/* Static gauge preview — no network call */}
                 <div className="flex items-center gap-3 mt-1">
@@ -420,7 +504,7 @@ const Index = () => {
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                     Compare two ZIP codes, or a ZIP vs its county, side by side — income, poverty, education, and more.
                   </p>
-                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">Use for hyper-local needs assessments and reporting.</p>
+                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">For example, see which ZIPs in Wayne County have the highest need and fewest services.</p>
                 </div>
                 <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
                   Compare ZIPs →
@@ -431,7 +515,114 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ═══ BETA IMPACT — moved here from above ═══ */}
+      {/* ═══ PRODUCT STRIP — feature snapshots ═══ */}
+      <section className="py-10 bg-muted/10" aria-label="Product features">
+        <div className="container max-w-5xl">
+          <div className="text-center mb-7">
+            <h2 className="text-xl font-bold text-foreground sm:text-2xl">See what you can do</h2>
+            <p className="text-sm text-muted-foreground mt-1">Institutional-grade civic intelligence, free and open.</p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-3">
+            {[
+              {
+                icon: MapIcon,
+                title: "See the map",
+                body: "Explore every county with a bright, interactive map of health, housing, and service access.",
+                cta: "Open health map",
+                href: "/health-map",
+                color: "text-primary",
+                bg: "bg-primary/10",
+              },
+              {
+                icon: GitCompareArrows,
+                title: "Compare communities",
+                body: "Compare ZIPs and counties side by side to see where gaps are largest.",
+                cta: "Start comparing",
+                href: "/compare",
+                color: "text-michigan-forest",
+                bg: "bg-michigan-forest/10",
+              },
+              {
+                icon: FileDown,
+                title: "Export briefs",
+                body: "Download one-page county snapshots for board decks, grants, and CHNAs.",
+                cta: "Generate a brief",
+                href: "/brief",
+                color: "text-michigan-blue",
+                bg: "bg-michigan-blue/10",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+              >
+                <Link
+                  to={item.href}
+                  className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-6 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                >
+                  <div className={`w-12 h-12 rounded-xl ${item.bg} flex items-center justify-center`}>
+                    <item.icon className={`h-6 w-6 ${item.color}`} aria-hidden="true" />
+                  </div>
+                  <p className="text-base font-bold text-foreground">{item.title}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.body}</p>
+                  <span className={`mt-auto text-xs font-semibold ${item.color} group-hover:underline`} aria-hidden="true">
+                    {item.cta} →
+                  </span>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ IMPACT & USE EXAMPLES ═══ */}
+      <section className="py-10" aria-label="Usage examples">
+        <div className="container max-w-5xl">
+          <div className="text-center mb-7">
+            <h2 className="text-xl font-bold text-foreground sm:text-2xl">How people are using Access Michigan already</h2>
+            <p className="text-sm text-muted-foreground mt-1">Early beta examples — numbers will stay small while we test and improve.</p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3 mb-6">
+            {[
+              {
+                title: "County health department",
+                body: "Quick brief for a board meeting on housing and emergency assistance gaps.",
+              },
+              {
+                title: "FQHC network",
+                body: "Identify ZIPs with low coverage and high vulnerability for outreach planning.",
+              },
+              {
+                title: "Local journalist",
+                body: "Use standardized metrics to frame a story on energy insecurity.",
+              },
+            ].map((ex, i) => (
+              <motion.div
+                key={ex.title}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+              >
+                <Card className="h-full border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg">
+                  <CardContent className="pt-5 pb-4">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{ex.title}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{ex.body}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+          <p className="text-[10px] text-muted-foreground text-center italic">
+            These are example use cases, not named customers.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══ BETA COUNTERS (deprioritized) ═══ */}
       <LazySection minHeight="60px">
         <Suspense fallback={<SectionFallback />}>
           <BetaImpactCounter />
