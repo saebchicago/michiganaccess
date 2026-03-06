@@ -61,10 +61,11 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
 
   if (noData) {
     return (
-      <Card className="h-full border-2 border-dashed border-border bg-muted/30">
-        <CardContent className="py-6 space-y-2 text-center">
-          <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{label}</p>
-          <p className="text-sm font-medium text-muted-foreground">ACS Data Unavailable for this ZIP</p>
+      <Card className="h-full border-2 border-dashed border-muted-foreground/30 bg-muted/20">
+        <CardContent className="flex flex-col items-center gap-2 py-8 text-center">
+          <span className="text-2xl" role="img" aria-hidden>📊</span>
+          <h3 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">{label}</h3>
+          <p className="text-sm font-semibold text-foreground">Data Pending</p>
           <p className="text-[11px] text-muted-foreground/70 italic max-w-xs mx-auto leading-relaxed">
             Census ZCTA-level data for this metric is not yet published. County and state averages may still be available on the county profile page.
           </p>

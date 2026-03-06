@@ -27,6 +27,7 @@ import { STATIC_RESOURCES } from "@/data/findhelp-resources";
 import { Link, useSearchParams } from "react-router-dom";
 import ResultHeader from "@/components/shared/ResultHeader";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import InsuranceNavigator from "@/components/findcare/InsuranceNavigator";
 
 /* ── Crisis banner ────────────────────────────── */
 function CrisisBanner() {
@@ -746,6 +747,14 @@ export default function FindCarePage() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* ── Insurance Navigator ── */}
+      <div className="container pb-6">
+        <Separator className="mb-6" />
+        <div className="max-w-2xl mx-auto">
+          <InsuranceNavigator />
+        </div>
       </div>
 
       {/* ── Disclaimer ── */}
