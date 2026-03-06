@@ -39,11 +39,14 @@ export default function BetaImpactCounter() {
       ]);
 
       const counts = [
-        { label: "Feedback Submitted", raw: (feedback.count || 0) + 83, icon: Users },
-        { label: "Community Reports", raw: (reports.count || 0) + 47, icon: FileText },
-        { label: "Appeal Letters Generated", raw: (appeals.count || 0) + 142, icon: TrendingUp },
-        { label: "Resources Rated", raw: (ratings.count || 0) + 219, icon: BarChart3 },
+        { label: "Feedback Submitted", raw: feedback.count || 0, icon: Users },
+        { label: "Community Reports", raw: reports.count || 0, icon: FileText },
+        { label: "Appeal Letters Generated", raw: appeals.count || 0, icon: TrendingUp },
+        { label: "Resources Rated", raw: ratings.count || 0, icon: BarChart3 },
       ];
+
+      // Don't render if no real activity yet
+      if (counts.every(c => c.raw === 0)) return;
 
       setStats(
         counts.map((c) => ({
