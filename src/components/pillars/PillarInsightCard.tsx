@@ -59,8 +59,8 @@ function TrendIndicator({ current, compare }: { current: number; compare: number
 
 function DataUnavailable({ reason }: { reason: string }) {
   return (
-    <div className="flex items-center gap-2 py-4" role="status">
-      <AlertCircle className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+    <div className="flex flex-col items-center gap-2 py-6 rounded-xl border-2 border-dashed border-muted-foreground/30 bg-muted/20 text-center" role="status">
+      <span className="text-xl" role="img" aria-hidden>📊</span>
       <span className="text-sm text-muted-foreground">{reason}</span>
     </div>
   );
