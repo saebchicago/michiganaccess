@@ -50,3 +50,6 @@ verify_jwt = false
 
 [functions.census-acs-proxy]
 verify_jwt = false
+
+[functions.gemini-explainer]
+verify_jwt = false

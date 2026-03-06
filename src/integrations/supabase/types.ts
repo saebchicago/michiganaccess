@@ -434,6 +434,33 @@ export type Database = {
         }
         Relationships: []
       }
+      generated_content: {
+        Row: {
+          audience: string
+          created_at: string
+          geo: string
+          id: string
+          text: string
+          topic: string
+        }
+        Insert: {
+          audience?: string
+          created_at?: string
+          geo?: string
+          id?: string
+          text: string
+          topic: string
+        }
+        Update: {
+          audience?: string
+          created_at?: string
+          geo?: string
+          id?: string
+          text?: string
+          topic?: string
+        }
+        Relationships: []
+      }
       ingestion_cache: {
         Row: {
           data: Json
