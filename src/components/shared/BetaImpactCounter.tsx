@@ -61,25 +61,20 @@ export default function BetaImpactCounter() {
   return (
     <section className="container py-6">
       <div className="rounded-xl border border-border bg-muted/30 p-4 sm:p-5">
-        <div className="flex flex-col gap-1 mb-3">
-          <div className="flex items-center gap-2">
-           <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-              Platform activity
-            </p>
-            <TooltipProvider>
+        <div className="flex items-center gap-2 mb-3">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Platform activity
+          </p>
+          <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Info className="h-3 w-3 text-muted-foreground cursor-help" />
               </TooltipTrigger>
               <TooltipContent className="max-w-[220px] text-xs">
-                Rates are normalized per 1,000 residents using {county ? `${county} County` : "Michigan statewide"} population ({population.toLocaleString()}).
+                Aggregate counters from early beta usage across the platform.
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          </div>
-          <p className="text-[9px] text-muted-foreground/60">
-            Aggregate counters from beta usage.
-          </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {stats.map((s, i) => (
@@ -92,10 +87,7 @@ export default function BetaImpactCounter() {
             >
               <s.icon className="h-4 w-4 text-primary mx-auto mb-1" />
               <p className="text-lg font-bold text-foreground tabular-nums">
-                {s.per1K.toFixed(1)}
-              </p>
-              <p className="text-[9px] text-muted-foreground/60 tabular-nums">
-                per 1K · {s.rawCount.toLocaleString()} total
+                {s.rawCount.toLocaleString()}
               </p>
               <p className="text-[10px] text-muted-foreground">{s.label}</p>
             </motion.div>
