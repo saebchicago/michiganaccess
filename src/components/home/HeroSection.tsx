@@ -364,15 +364,16 @@ const HeroSection = () => {
             Instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
           </motion.p>
 
-          {/* Trust & data sub-line */}
-          <motion.p
+          {/* Trust & data sub-line with lock icon */}
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.28, duration: 0.5 }}
-            className="mt-2 text-sm text-primary-foreground/60"
+            className="mt-3 flex items-center justify-center gap-2 text-sm text-primary-foreground/70"
           >
-            Built on verified public data — no account, no tracking, no personal data stored.
-          </motion.p>
+            <Lock className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+            <span>Built on verified public data — no account, no tracking, no personal data stored.</span>
+          </motion.div>
 
           {/* Who this is for */}
           <motion.p
@@ -383,17 +384,6 @@ const HeroSection = () => {
           >
             Built for Michigan residents, policymakers, health systems, funders, and journalists.
           </motion.p>
-
-          {/* Privacy Statement */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35, duration: 0.5 }}
-            className="mt-4 flex items-center justify-center gap-2 text-sm text-primary-foreground/90"
-          >
-            <Lock className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-            <span>No account, no tracking, no personal data stored.</span>
-          </motion.div>
 
           {/* Smart Search Bar */}
           <motion.form
