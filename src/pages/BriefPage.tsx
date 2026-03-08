@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useCounty, MICHIGAN_COUNTIES, type MichiganCounty } from "@/contexts/CountyContext";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
+import { getCountyCrossDomain, MI_STATE_AVERAGES } from "@/data/cross-domain-indicators";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
