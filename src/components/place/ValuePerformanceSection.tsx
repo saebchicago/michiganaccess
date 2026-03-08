@@ -184,7 +184,9 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "transportation",
-      title: "Transportation & Mobility",
+      title: "Transportation — Access & Safety",
+      subtitle: "Transit coverage, crash burden, and connectivity.",
+      funderNote: "Use for transit grants, Safe Routes to School, MDOT planning.",
       icon: Bus,
       color: "text-indigo-600 dark:text-indigo-400",
       bgColor: "bg-indigo-500/10",
