@@ -106,6 +106,24 @@ const EnvironmentPage = () => {
   const { t } = useTranslation();
   usePageMeta({ title: "Environment & Sustainability", description: "Air quality, water safety, clean energy, recycling, and environmental justice data for Michigan.", path: "/environment" });
   const [activeTab, setActiveTab] = useState("air-water");
+  const location = useLocation();
+
+  // Sync tab from URL hash (e.g., /environment#energy, /environment#water)
+  useEffect(() => {
+    const hash = location.hash.replace("#", "");
+    const tabMap: Record<string, string> = {
+      utilities: "energy", energy: "energy", outages: "energy",
+      water: "air-water", "drinking-water": "air-water", lead: "air-water",
+      air: "air-water",
+      recycling: "recycling",
+      lakes: "great-lakes", "great-lakes": "great-lakes",
+      justice: "justice", ej: "justice",
+      programs: "programs",
+    };
+    if (hash && tabMap[hash]) {
+      setActiveTab(tabMap[hash]);
+    }
+  }, [location.hash]);
 
   // Fetch live CDC PLACES data for Michigan counties (no measure filter — get diverse health metrics)
   const { data: cdcData, isLoading: cdcLoading, isError: cdcError } = useCDCData(
