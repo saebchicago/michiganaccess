@@ -39,7 +39,7 @@ const sectors = [
     icon: Droplets,
     title: "Water",
     description: "Drinking water quality, violations, lead service line info, and local contacts.",
-    href: "/environment",
+    href: "/environment#water",
     color: "text-sky-600 dark:text-sky-400",
     bg: "bg-sky-500/10",
   },
