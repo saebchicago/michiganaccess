@@ -194,6 +194,28 @@ export default function BriefPage() {
               </CardContent>
             </Card>
 
+            {/* ═══ CROSS-SECTOR TENSIONS ═══ */}
+            {tensions.length > 0 && (
+              <Card className="border-destructive/20 bg-destructive/5 dark:bg-destructive/10">
+                <CardContent className="py-5">
+                  <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
+                    <AlertTriangle className="h-4 w-4 text-destructive" />
+                    Cross-Sector Tensions
+                  </h3>
+                  <ul className="space-y-2">
+                    {tensions.map((t) => (
+                      <li key={t.tag} className="text-sm text-foreground/90 leading-relaxed">
+                        {t.text}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-[10px] text-muted-foreground mt-2">
+                    Rule-based flags from existing indicators — prompts for attention, not causal analyses. <a href="/methodology" className="text-primary hover:underline">See methodology</a>.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+
             {/* ═══ WHAT'S MOST URGENT ═══ */}
             <Card className="border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/20">
               <CardContent className="py-5">
