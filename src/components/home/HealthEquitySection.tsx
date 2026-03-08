@@ -1,36 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { TrendingDown, FileCheck, Users, ArrowRight } from "lucide-react";
+import { Heart, ArrowRight, Shield, CheckCircle2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
-const metrics = [
-  {
-    icon: TrendingDown,
-    stat: "5.6% → 4.2%",
-    label: "Uninsured rate reduction (SE MI)",
-    detail: "Equity-adjusted navigation reduces coverage gaps",
-    color: "text-emerald-600 dark:text-emerald-400",
-    bg: "bg-emerald-500/10",
-  },
-  {
-    icon: FileCheck,
-    stat: "1,850",
-    label: "Insurance appeals generated",
-    detail: "$5.92M in denied charges recovered annually",
-    color: "text-blue-600 dark:text-blue-400",
-    bg: "bg-blue-500/10",
-  },
-  {
-    icon: Users,
-    stat: "2,340/mo",
-    label: "Connected to sliding-scale care",
-    detail: "Dignified access without stigmatizing language",
-    color: "text-violet-600 dark:text-violet-400",
-    bg: "bg-violet-500/10",
-  },
-];
 
 export default function HealthEquitySection() {
   return (
@@ -46,38 +19,35 @@ export default function HealthEquitySection() {
             Health Equity in Action
           </Badge>
           <h2 className="text-2xl font-bold text-foreground lg:text-3xl mb-2">
-            Closing Michigan's Access Gaps Through Systems Engineering
+            Closing Michigan's Access Gaps Through Better Information
           </h2>
-          <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-            These figures represent projected impact at scale, modeled from Michigan population health data and comparable platform outcomes.
-          </p>
         </motion.div>
 
-        <div className="grid gap-4 sm:grid-cols-3 mb-8">
-          {metrics.map((m, i) => (
-            <motion.div
-              key={m.label}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-            >
-              <Card className="h-full bg-white/80 dark:bg-card/80 backdrop-blur-sm border-white/20 shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
-                <CardContent className="py-5 space-y-2">
-                  <div className={`inline-flex h-9 w-9 items-center justify-center rounded-lg ${m.bg}`}>
-                    <m.icon className={`h-4.5 w-4.5 ${m.color}`} />
-                  </div>
-                  <p className={`text-2xl font-bold ${m.color}`}>{m.stat}</p>
-                  <p className="text-sm font-semibold text-foreground">{m.label}</p>
-                  <Badge variant="outline" className="text-[9px] w-fit border-muted-foreground/30 text-muted-foreground">Modeled Projection</Badge>
-                  <p className="text-xs text-muted-foreground">{m.detail}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+        {/* Qualitative mission — no numeric projections */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <Card className="mb-8 border-primary/15 bg-primary/[0.03]">
+            <CardContent className="py-6 space-y-4">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Access Michigan exists to make it easier for people and organizations to see where systems are working—and where they're failing—at the ZIP and county level.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Our goals are simple but ambitious: help more residents understand and use their benefits, reduce preventable harm from outages and housing instability, and give communities better leverage in conversations with hospitals, plans, utilities, and government.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                As partners use this tool in CHNAs, community benefit plans, value-based care programs, and regulatory work, we will publish measured impact (not guesses) and explain exactly how we calculated it.
+              </p>
+              <p className="text-xs text-muted-foreground italic">
+                If your organization is using Access Michigan in your work and you're open to sharing results, we'd love to <Link to="/contact" className="text-primary hover:underline">document that impact together</Link>.
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        {/* Before / After comparison */}
+        {/* Before / After comparison — illustrative but factual about our algorithm */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
