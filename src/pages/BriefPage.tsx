@@ -45,8 +45,10 @@ const trendIcon = (t?: "up" | "down" | "stable") => {
 function buildUrgentSummary(county: string, profile: typeof COUNTY_PROFILES[string]): string[] {
   const lines: string[] = [];
   const hh = profile.healthHighlights;
-  const uninsured = parseFloat(getVal(hh, "uninsured"));
-  const food = parseFloat(getVal(hh, "food"));
+  const uninsuredRaw = getVal(hh, "uninsured");
+  const foodRaw = getVal(hh, "food");
+  const uninsured = parseFloat(uninsuredRaw);
+  const food = parseFloat(foodRaw);
 
   if (uninsured > 8) lines.push(`Health: ${county} County's uninsured rate (${uninsured}%) is above the state average of 6.2%, signaling gaps in coverage access.`);
   else lines.push(`Health: ${county} County has a manageable uninsured rate (${uninsured}%), but primary care access varies by community.`);
