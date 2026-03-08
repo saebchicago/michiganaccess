@@ -244,7 +244,7 @@ export default function CompareZipsPage() {
   }, [summary]);
 
   const copilotContext = hasComparison
-    ? `Comparing ZIP codes: ${activeZips.join(", ")} (counties: ${counties.join(", ")}). Data coverage: ${summary!.dataCoverage}.`
+    ? `Context: compare_zips. Comparing ZIP codes: ${activeZips.join(", ")} (counties: ${counties.join(", ")}). Data coverage: ${summary!.dataCoverage}. Metrics: ${summary!.metricDefinitions.map(d => d.label).join(", ")}. Instructions: Provide a short summary of the biggest differences between these ZIPs, a "for residents" block, a "for CHNA / planning" block, and 2 cautions about over-interpreting ZIP-level data.`
     : "ZIP comparison page — no active comparison yet.";
 
   return (
