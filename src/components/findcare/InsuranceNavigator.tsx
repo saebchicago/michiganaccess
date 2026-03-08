@@ -109,6 +109,43 @@ function SlidingFeeCalc() {
   );
 }
 
+/* ── ZIP-aware area hints ──────────────────────── */
+function AreaHints() {
+  const { county } = useCounty();
+  if (!county) return null;
+
+  const profile = getCountyProfile(county);
+  const cd = getCountyCrossDomain(county);
+  const uninsuredRaw = profile.healthHighlights.find(h => h.label.toLowerCase().includes("uninsured"))?.value;
+  // Count FQHC mentions from profile data — rough proxy
+  const fqhcNote = profile.countyType === "urban"
+    ? "multiple federally-qualified or sliding-scale clinics"
+    : profile.countyType === "suburban"
+    ? "some community health center options"
+    : "limited but available community health centers";
+
+  return (
+    <div className="rounded-lg border border-primary/20 bg-primary/5 px-3 py-2.5 space-y-1">
+      <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+        <MapPin className="h-3 w-3 text-primary" /> In your area — {county} County
+      </p>
+      {uninsuredRaw && (
+        <p className="text-[11px] text-muted-foreground">
+          About <strong className="text-foreground">{uninsuredRaw}</strong> of residents here are uninsured.
+        </p>
+      )}
+      <p className="text-[11px] text-muted-foreground">
+        This area has {fqhcNote} that serve residents regardless of insurance status.
+      </p>
+      {cd.povertyRate !== null && cd.povertyRate > 15 && (
+        <p className="text-[11px] text-muted-foreground flex items-center gap-1">
+          <Info className="h-3 w-3" /> Poverty rate ({cd.povertyRate}%) is above state average — Medicaid eligibility may be especially relevant here.
+        </p>
+      )}
+    </div>
+  );
+}
+
 /* ── Main component ────────────────────────────── */
 export default function InsuranceNavigator() {
   const [step, setStep] = useState(1);

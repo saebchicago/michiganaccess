@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import InsuranceNavigator from "@/components/findcare/InsuranceNavigator";
+import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
 /* ── Jargon tooltip helper ─────────────────────── */
 function JargonTip({ term, tip }: { term: string; tip: string }) {
