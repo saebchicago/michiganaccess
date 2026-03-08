@@ -26,24 +26,6 @@ import {
   BarChart3,
   Home,
 } from "lucide-react";
-  Apple,
-  Bus,
-  HeartPulse,
-  Pill,
-  MapPin,
-  Sparkles,
-  TrendingUp,
-  AlertCircle,
-  Mic,
-  MicOff,
-  Lock,
-  User,
-  Hash,
-  Brain,
-  Database,
-  RefreshCw,
-  Shield,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   getSearchSuggestions,
