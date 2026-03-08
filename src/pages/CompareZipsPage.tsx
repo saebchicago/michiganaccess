@@ -51,6 +51,7 @@ const fadeUp = {
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 const isValidMIZip = (z: string) => /^4[89]\d{3}$/.test(z);
+const isAnyUSZip = (z: string) => /^\d{5}$/.test(z);
 
 function coverageBadgeVariant(level: string): "default" | "secondary" | "outline" {
   if (level === "high") return "default";
@@ -141,10 +142,18 @@ function ZipComparisonTable({ summary }: { summary: ZipComparisonSummary }) {
                           </td>
                           {zips.map((z) => {
                             const display = valueMap.get(`${metric.id}::${z}`);
+                            const county = zipToCounty(z);
                             return (
                               <td key={z} className="text-center px-3 py-3 tabular-nums text-xs text-foreground">
                                 {display ? (
-                                  <span>{display}</span>
+                                  <div className="flex flex-col items-center gap-0.5">
+                                    <span>{display}</span>
+                                    {county && (
+                                      <span className="text-[9px] text-muted-foreground/60 font-normal leading-tight">
+                                        County-level data for {county} Co.
+                                      </span>
+                                    )}
+                                  </div>
                                 ) : (
                                   <span className="text-muted-foreground italic text-[11px]">data not available</span>
                                 )}
@@ -197,6 +206,11 @@ export default function CompareZipsPage() {
   );
 
   const handleCompare = useCallback(() => {
+    const nonMI = inputs.filter(z => isAnyUSZip(z) && !isValidMIZip(z));
+    if (nonMI.length > 0) {
+      toast.error(`Access Michigan covers Michigan ZIP codes only. ${nonMI.join(", ")} ${nonMI.length === 1 ? "is" : "are"} outside Michigan.`);
+      return;
+    }
     const valid = inputs.filter(isValidMIZip);
     if (valid.length < 2) {
       toast.error("Enter at least 2 valid Michigan ZIP codes (starting with 48 or 49).");

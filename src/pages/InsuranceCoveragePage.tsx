@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import {
   ShieldCheck, Heart, Building2, Briefcase, HelpCircle, ExternalLink,
   ChevronRight, ArrowRight, Phone, FileText, AlertTriangle, Scale,
-  Users, DollarSign, Stethoscope, Clock, BookOpen,
+  Users, DollarSign, Stethoscope, Clock, BookOpen, Shield, Info,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -101,10 +101,11 @@ const PROGRAMS = [
     icon: Briefcase,
     color: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300",
     who: "Employees offered coverage through their employer, or individuals purchasing directly from an insurer.",
-    covers: "Varies by plan. Michigan's largest insurer is Blue Cross Blue Shield of Michigan / Blue Care Network.",
-    howToApply: "Enroll through your employer during open enrollment, or buy directly from the insurer.",
+    covers: "Varies by plan. Michigan's largest insurer is Blue Cross Blue Shield of Michigan / Blue Care Network. Plans must cover Essential Health Benefits under ACA.",
+    howToApply: "Enroll through your employer during open enrollment, or buy directly from the insurer. BCBSM offers a Patient Access portal for members to view coverage details, EOBs, and claims history.",
     links: [
       { label: "BCBSM Member Resources", href: "https://www.bcbsm.com/", external: true },
+      { label: "BCBSM Patient Access Portal", href: "https://www.bcbsm.com/member/", external: true },
       { label: "Understand Your EOB", href: "/health/insurance-appeals", external: false },
     ],
     updated: "March 2026",
@@ -437,16 +438,32 @@ export default function InsuranceCoveragePage() {
                   </Button>
                 </div>
 
-                <div className="rounded-md border border-border bg-muted/30 px-4 py-3">
+                <div className="rounded-md border border-border bg-muted/30 px-4 py-3 space-y-2">
                   <p className="text-[11px] text-muted-foreground flex items-center gap-1.5">
                     <ShieldCheck className="h-3.5 w-3.5" />
                     For guidance only — this is an independent civic resource, not affiliated with any insurer or government agency. Final eligibility is determined by the program administrator.
+                  </p>
+                  <p className="text-[11px] text-muted-foreground flex items-center gap-1.5">
+                    <Shield className="h-3.5 w-3.5" />
+                    We do not see individual claims, member data, or eligibility records. We explain coverage structure and connect you to official resources — we do not make eligibility determinations.
                   </p>
                 </div>
               </TabsContent>
             );
           })}
         </Tabs>
+
+        {/* Future FHIR integration note */}
+        <Card className="mt-8 border-border/50 bg-muted/20">
+          <CardContent className="p-4">
+            <p className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
+              <Info className="h-4 w-4 shrink-0 mt-0.5 text-primary/60" />
+              <span>
+                <strong>Looking ahead:</strong> In the future, we may let you securely connect your own health plan (for example, through Patient Access APIs) so you can see your personal coverage and claims alongside our community data. That will be opt-in, heavily protected, and never shared. For now, all data here is population-level and public.
+              </span>
+            </p>
+          </CardContent>
+        </Card>
 
         {/* Copilot */}
         <div className="flex justify-center mt-8">
