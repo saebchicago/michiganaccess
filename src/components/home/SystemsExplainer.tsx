@@ -16,8 +16,9 @@ const stakeholders = [
   { label: "For Policymakers", desc: "Identify gaps with real usage data", href: "/impact" },
 ];
 
-const SystemsExplainer = () => (
-  <section className="border-y border-border bg-muted/30 py-14 md:py-20" aria-labelledby="systems-heading">
+const SystemsExplainer = forwardRef<HTMLElement>(function SystemsExplainer(_props, ref) {
+  return (
+  <section ref={ref} className="border-y border-border bg-muted/30 py-14 md:py-20" aria-labelledby="systems-heading">
     <div className="container">
       <motion.div
         initial={{ opacity: 0, y: 12 }}
