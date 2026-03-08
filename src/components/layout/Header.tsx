@@ -100,7 +100,7 @@ const Header = () => {
             Compare
           </Link>
           <CountySelector variant="header" />
-         
+          <MySettingsDrawer />
           <ThemeToggle />
           <Button
             size="sm"

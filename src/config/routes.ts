@@ -201,7 +201,8 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     label: "Services",
     children: [
       { label: "Find Help", href: "/find-care" },
-      { label: "Insurance & Coverage", href: "/insurance-coverage", badge: "New" },
+      { label: "Housing Options", href: "/housing-options", badge: "New" },
+      { label: "Insurance & Coverage", href: "/insurance-coverage" },
       { label: "Community Resources", href: "/resources", i18nKey: "nav.communityResources" },
       { label: "Financial Help", href: "/financial-help", i18nKey: "nav.financialHelp" },
       { label: "Energy & Utilities", href: "/environment" },
