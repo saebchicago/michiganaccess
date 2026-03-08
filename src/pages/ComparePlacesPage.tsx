@@ -508,7 +508,7 @@ export default function ComparePlacesPage() {
               </ul>
             </CardContent>
           </Card>
-        )
+        )}
 
         {/* ── Onboarding hint ── */}
         {selected.length >= 2 && (
