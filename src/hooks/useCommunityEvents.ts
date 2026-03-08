@@ -43,7 +43,7 @@ export function useCommunityEvents(filters?: {
     queryFn: async () => {
       let query = (supabase as any)
         .from("community_events")
-        .select("*")
+        .select("id, title, description, event_type, event_date, start_time, end_time, location_name, address, city, county, state, zip, organizer, is_free, registration_required, registration_url, website, tags, is_active, created_at, updated_at")
         .eq("is_active", true)
         .gte("event_date", new Date().toISOString().split("T")[0]);
 
