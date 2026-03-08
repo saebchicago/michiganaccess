@@ -16,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { useFinancialPrograms } from "@/hooks/useFinancialPrograms";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import DataTimestamp from "@/components/shared/DataTimestamp";
+import AskCopilotButton from "@/components/shared/AskCopilotButton";
 import ContentSkeleton from "@/components/shared/ContentSkeleton";
 import EmptyState from "@/components/shared/EmptyState";
 
