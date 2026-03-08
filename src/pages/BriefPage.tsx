@@ -119,6 +119,7 @@ export default function BriefPage() {
   const { t } = useTranslation();
   const { county, setCounty } = useCounty();
   const printRef = useRef<HTMLDivElement>(null);
+  const { profile: personalProfile } = usePersonalProfile();
 
   usePageMeta({
     title: county ? `${county} County Brief — Access Michigan` : "County Brief — Access Michigan",
@@ -132,6 +133,21 @@ export default function BriefPage() {
   const score = county ? computeCivicScore(county) : null;
   const urgentLines = county && profile ? buildUrgentSummary(county, profile) : [];
   const tensions = county && profile ? getCrossSectorTensions(county, profile) : [];
+
+  // Profile-based emphasis: highlight transport tensions for no-car users, housing for at-risk
+  const profileEmphasis: string[] = [];
+  if (personalProfile.mobility === "no_car" || personalProfile.mobility === "limited") {
+    const hasTransportTension = tensions.some((t) => t.tag === "high_crash_plus_low_transit");
+    if (hasTransportTension) {
+      profileEmphasis.push("Based on your profile, transportation access may be especially relevant to you in this area.");
+    }
+  }
+  if (personalProfile.housingStatus === "at_risk" || personalProfile.housingStatus === "homeless") {
+    const hasHousingTension = tensions.some((t) => t.tag === "high_medicaid_plus_rent_burden");
+    if (hasHousingTension) {
+      profileEmphasis.push("Based on your profile, housing cost burden and coverage gaps may directly affect you here.");
+    }
+  }
 
   const copilotContext = county && profile
     ? `County Brief for ${county} County, Michigan. Population: ${profile.population}. Type: ${profile.countyType}. Cities: ${profile.majorCities.join(", ")}. Uninsured: ${getVal(profile.healthHighlights, "uninsured")}. Food insecurity: ${getVal(profile.healthHighlights, "food")}. Civic Score: ${score}/100.`
