@@ -212,7 +212,9 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "environment",
-      title: "Environmental Health",
+      title: "Environment — Justice & Exposure",
+      subtitle: "Air quality, contamination risk, and environmental justice.",
+      funderNote: "Use for EJ screening, Superfund proximity analysis, CHNA environmental factors.",
       icon: TreePine,
       color: "text-emerald-700 dark:text-emerald-400",
       bgColor: "bg-emerald-500/10",
