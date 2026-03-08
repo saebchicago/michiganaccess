@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Leaf, Droplets, Wind, Recycle, Zap, Globe, Fish, AlertTriangle, TrendingUp, MapPin, ExternalLink, Shield, Loader2 } from "lucide-react";
@@ -105,6 +106,24 @@ const EnvironmentPage = () => {
   const { t } = useTranslation();
   usePageMeta({ title: "Environment & Sustainability", description: "Air quality, water safety, clean energy, recycling, and environmental justice data for Michigan.", path: "/environment" });
   const [activeTab, setActiveTab] = useState("air-water");
+  const location = useLocation();
+
+  // Sync tab from URL hash (e.g., /environment#energy, /environment#water)
+  useEffect(() => {
+    const hash = location.hash.replace("#", "");
+    const tabMap: Record<string, string> = {
+      utilities: "energy", energy: "energy", outages: "energy",
+      water: "air-water", "drinking-water": "air-water", lead: "air-water",
+      air: "air-water",
+      recycling: "recycling",
+      lakes: "great-lakes", "great-lakes": "great-lakes",
+      justice: "justice", ej: "justice",
+      programs: "programs",
+    };
+    if (hash && tabMap[hash]) {
+      setActiveTab(tabMap[hash]);
+    }
+  }, [location.hash]);
 
   // Fetch live CDC PLACES data for Michigan counties (no measure filter — get diverse health metrics)
   const { data: cdcData, isLoading: cdcLoading, isError: cdcError } = useCDCData(

@@ -9,12 +9,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Printer, TrendingUp, TrendingDown, Minus, MapPin, BarChart3, FileText } from "lucide-react";
+import { Printer, TrendingUp, TrendingDown, Minus, MapPin, BarChart3, FileText, Activity, Zap, Droplets, TreePine, AlertTriangle } from "lucide-react";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import CivicScoreBreakdown from "@/components/shared/CivicScoreBreakdown";
 import { DataClassification } from "@/components/shared/DataClassification";
+import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
-/** Deterministic civic score based on profile data (no API call) */
 function computeCivicScore(county: string): number {
   const profile = COUNTY_PROFILES[county];
   if (!profile) return 50;
@@ -31,11 +31,32 @@ function computeCivicScore(county: string): number {
   return Math.max(10, Math.min(95, score));
 }
 
+function getVal(hh: { label: string; value: string }[] | undefined, search: string): string {
+  if (!hh) return "—";
+  return hh.find((h) => h.label.toLowerCase().includes(search.toLowerCase()))?.value || "—";
+}
+
 const trendIcon = (t?: "up" | "down" | "stable") => {
   if (t === "up") return <TrendingUp className="h-3.5 w-3.5 text-destructive" />;
   if (t === "down") return <TrendingDown className="h-3.5 w-3.5 text-michigan-forest" />;
   return <Minus className="h-3.5 w-3.5 text-muted-foreground" />;
 };
+
+function buildUrgentSummary(county: string, profile: typeof COUNTY_PROFILES[string]): string[] {
+  const lines: string[] = [];
+  const hh = profile.healthHighlights;
+  const uninsured = parseFloat(getVal(hh, "uninsured"));
+  const food = parseFloat(getVal(hh, "food"));
+
+  if (uninsured > 8) lines.push(`Health: ${county} County's uninsured rate (${uninsured}%) is above the state average of 6.2%, signaling gaps in coverage access.`);
+  else lines.push(`Health: ${county} County has a manageable uninsured rate (${uninsured}%), but primary care access varies by community.`);
+
+  if (food > 14) lines.push(`Housing & Food: Food insecurity at ${food}% exceeds the state average (13.5%), compounding chronic health conditions.`);
+  else lines.push(`Housing & Food: Food insecurity (${food}%) is near or below state norms, though pockets of need persist.`);
+
+  lines.push(`Utilities & Environment: Energy burden and outage data are key equity indicators — check the Value & Performance section on the county page for details.`);
+  return lines;
+}
 
 export default function BriefPage() {
   const { t } = useTranslation();
@@ -52,10 +73,11 @@ export default function BriefPage() {
 
   const profile = county ? COUNTY_PROFILES[county] : null;
   const score = county ? computeCivicScore(county) : null;
+  const urgentLines = county && profile ? buildUrgentSummary(county, profile) : [];
 
-  const handlePrint = () => {
-    window.print();
-  };
+  const copilotContext = county && profile
+    ? `County Brief for ${county} County, Michigan. Population: ${profile.population}. Type: ${profile.countyType}. Cities: ${profile.majorCities.join(", ")}. Uninsured: ${getVal(profile.healthHighlights, "uninsured")}. Food insecurity: ${getVal(profile.healthHighlights, "food")}. Civic Score: ${score}/100.`
+    : "";
 
   return (
     <Layout>
@@ -79,10 +101,7 @@ export default function BriefPage() {
             <MapPin className="h-4 w-4 text-primary" />
             Select a county:
           </label>
-          <Select
-            value={county ?? ""}
-            onValueChange={(v) => setCounty(v as MichiganCounty)}
-          >
+          <Select value={county ?? ""} onValueChange={(v) => setCounty(v as MichiganCounty)}>
             <SelectTrigger className="w-full sm:w-64">
               <SelectValue placeholder="Choose a county…" />
             </SelectTrigger>
@@ -112,41 +131,87 @@ export default function BriefPage() {
                     Major cities: {profile.majorCities.join(", ")}
                   </p>
                 </div>
-                <Button variant="outline" size="sm" className="gap-1.5 print:hidden" onClick={handlePrint}>
-                  <Printer className="h-3.5 w-3.5" />
-                  Print
+                <Button variant="outline" size="sm" className="gap-1.5 print:hidden" onClick={() => window.print()}>
+                  <Printer className="h-3.5 w-3.5" /> Print / PDF
                 </Button>
               </CardContent>
             </Card>
 
-            {/* Phase 1 + 3: Score breakdown + methodology */}
+            {/* ═══ WHAT'S MOST URGENT ═══ */}
+            <Card className="border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/20">
+              <CardContent className="py-5">
+                <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
+                  <AlertTriangle className="h-4 w-4 text-amber-600" />
+                  What's Most Urgent in {county} County
+                </h3>
+                <ol className="space-y-2">
+                  {urgentLines.map((line, i) => (
+                    <li key={i} className="text-sm text-foreground/90 leading-relaxed pl-5 relative">
+                      <span className="absolute left-0 top-0 text-xs font-bold text-amber-600">{i + 1}.</span>
+                      {line}
+                    </li>
+                  ))}
+                </ol>
+              </CardContent>
+            </Card>
+
+            {/* ═══ FOR VBC & SYSTEMS ═══ */}
+            <Card className="border-primary/20">
+              <CardContent className="py-5">
+                <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
+                  <Activity className="h-4 w-4 text-primary" />
+                  For Value-Based Care & Health Systems
+                </h3>
+                <ul className="space-y-1.5 text-sm text-muted-foreground">
+                  <li className="flex gap-2">• <span>Social risk factors: food insecurity at <strong className="text-foreground">{getVal(profile.healthHighlights, "food")}</strong>, uninsured at <strong className="text-foreground">{getVal(profile.healthHighlights, "uninsured")}</strong></span></li>
+                  <li className="flex gap-2">• <span>Primary care access ratio: <strong className="text-foreground">{getVal(profile.healthHighlights, "primary care") || "See county page"}</strong> — critical for VBC program design</span></li>
+                  <li className="flex gap-2">• <span>ED reliance proxy: preventable hospital stays data available on county page's Value & Performance section</span></li>
+                  <li className="flex gap-2">• <span>Use for CHNAs, community benefit reporting, and VBC network adequacy assessments</span></li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* ═══ FOR UTILITIES & INFRASTRUCTURE ═══ */}
+            <Card className="border-amber-500/20">
+              <CardContent className="py-5">
+                <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
+                  <Zap className="h-4 w-4 text-amber-600" />
+                  For Utilities & Infrastructure
+                </h3>
+                <ul className="space-y-1.5 text-sm text-muted-foreground">
+                  <li className="flex gap-2">• <span>Outage data (SAIDI/SAIFI) and energy burden metrics available on the county Value & Performance page</span></li>
+                  <li className="flex gap-2">• <span>Energy assistance uptake and weatherization eligibility: see <a href="/financial-help" className="text-primary hover:underline">Financial Help</a></span></li>
+                  <li className="flex gap-2">• <span>Environmental indicators: air quality, drinking water violations, EJ Screen index on <a href="/environment" className="text-primary hover:underline">Environment page</a></span></li>
+                  <li className="flex gap-2">• <span>Transportation gaps and crash burden: see <a href="/transportation" className="text-primary hover:underline">Transportation page</a></span></li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Score breakdown */}
             <CivicScoreBreakdown countyName={county} compositeScore={score} />
 
             {/* Headline metrics */}
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-1.5">
-                <BarChart3 className="h-4 w-4 text-primary" />
-                Headline Metrics
+                <BarChart3 className="h-4 w-4 text-primary" /> Headline Metrics
               </h3>
               {profile.healthHighlights && profile.healthHighlights.length > 0 ? (
                 <div className="space-y-3">
                   <DataClassification type="verified" />
                   <div className="grid gap-3 sm:grid-cols-3">
-                  {profile.healthHighlights.map((m) => (
-                    <Card key={m.label}>
-                      <CardContent className="py-4 text-center">
-                        <p className="text-xs text-muted-foreground mb-1">{m.label}</p>
-                        <p className="text-2xl font-bold text-foreground">{m.value}</p>
-                        <div className="flex items-center justify-center gap-1 mt-1">
-                          {trendIcon(m.trend)}
-                          <span className="text-[10px] text-muted-foreground capitalize">
-                            {m.trend || "stable"}
-                          </span>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                    {profile.healthHighlights.map((m) => (
+                      <Card key={m.label}>
+                        <CardContent className="py-4 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">{m.label}</p>
+                          <p className="text-2xl font-bold text-foreground">{m.value}</p>
+                          <div className="flex items-center justify-center gap-1 mt-1">
+                            {trendIcon(m.trend)}
+                            <span className="text-[10px] text-muted-foreground capitalize">{m.trend || "stable"}</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-2">
@@ -154,6 +219,11 @@ export default function BriefPage() {
                   <p className="text-sm text-muted-foreground">Headline metrics are not yet available for this county.</p>
                 </div>
               )}
+            </div>
+
+            {/* Ask Copilot */}
+            <div className="print:hidden">
+              <AskCopilotButton context={copilotContext} label={`Ask Copilot about ${county} County`} />
             </div>
 
             {/* Data note */}

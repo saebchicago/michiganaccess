@@ -1,11 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles, Timer, RotateCcw } from "lucide-react";
+import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles, Timer, RotateCcw, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
 import { useFooterStats, DATA_SOURCES, formatLoadTime } from "@/hooks/useFooterStats";
 import { replayTour } from "@/components/shared/OnboardingTour";
+import { useIsMobile } from "@/hooks/use-mobile";
 // toast import removed — no longer needed
+
+function FooterSection({ title, links, collapsible }: { title: string; links: { label: string; href: string }[]; collapsible?: boolean }) {
+  const isMobile = useIsMobile();
+  const [open, setOpen] = useState(!collapsible || !isMobile);
+  const shouldCollapse = collapsible && isMobile;
+
+  return (
+    <nav aria-label={title}>
+      {shouldCollapse ? (
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="flex w-full items-center justify-between mb-3"
+        >
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</h4>
+          <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
+        </button>
+      ) : (
+        <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</h4>
+      )}
+      {(!shouldCollapse || open) && (
+        <ul className="space-y-2">
+          {links.map((link) => (
+            <li key={link.href + link.label}>
+              <Link to={link.href} className="text-sm text-foreground/70 transition-colors hover:text-primary">
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </nav>
+  );
+}
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -90,23 +125,9 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Link sections */}
+          {/* Link sections — collapsible on mobile for Services & About */}
           {footerSections.map((section) => (
-            <nav key={section.title} aria-label={section.title}>
-              <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{section.title}</h4>
-              <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <Link
-                      to={link.href}
-                      className="text-sm text-foreground/70 transition-colors hover:text-primary"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <FooterSection key={section.title} title={section.title} links={section.links} collapsible={section.title === "Services" || section.title.includes("About")} />
           ))}
         </div>
 

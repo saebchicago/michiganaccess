@@ -33,6 +33,8 @@ interface VPMetric {
 interface VPDomain {
   id: string;
   title: string;
+  subtitle?: string;
+  funderNote?: string;
   icon: typeof Activity;
   color: string;
   bgColor: string;
@@ -71,7 +73,9 @@ function buildDomains(place: Place): VPDomain[] {
   return [
     {
       id: "health-vbc",
-      title: "Health & Value-Based Care",
+      title: "Health — Value-Based Care",
+      subtitle: "Avoidable use, access equity, and social risk.",
+      funderNote: "Use for CHNAs, community benefit, VBC program design.",
       icon: Activity,
       color: "text-primary",
       bgColor: "bg-primary/10",
@@ -116,7 +120,9 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "energy-pbr",
-      title: "Energy & Utility Performance",
+      title: "Energy — Performance-Based Regulation",
+      subtitle: "Reliability, outage equity, and energy burden.",
+      funderNote: "Use for PBR rate cases, equity filings, utility performance reviews.",
       icon: Zap,
       color: "text-amber-600 dark:text-amber-400",
       bgColor: "bg-amber-500/10",
@@ -152,7 +158,9 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "water",
-      title: "Water Quality & Access",
+      title: "Water — Safe, Affordable, Reliable",
+      subtitle: "Drinking water quality, lead risk, and affordability.",
+      funderNote: "Use for infrastructure grants, lead remediation priorities.",
       icon: Droplets,
       color: "text-sky-600 dark:text-sky-400",
       bgColor: "bg-sky-500/10",
@@ -178,7 +186,9 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "transportation",
-      title: "Transportation & Mobility",
+      title: "Transportation — Access & Safety",
+      subtitle: "Transit coverage, crash burden, and connectivity.",
+      funderNote: "Use for transit grants, Safe Routes to School, MDOT planning.",
       icon: Bus,
       color: "text-indigo-600 dark:text-indigo-400",
       bgColor: "bg-indigo-500/10",
@@ -204,7 +214,9 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "environment",
-      title: "Environmental Health",
+      title: "Environment — Justice & Exposure",
+      subtitle: "Air quality, contamination risk, and environmental justice.",
+      funderNote: "Use for EJ screening, Superfund proximity analysis, CHNA environmental factors.",
       icon: TreePine,
       color: "text-emerald-700 dark:text-emerald-400",
       bgColor: "bg-emerald-500/10",
@@ -283,7 +295,7 @@ export default function ValuePerformanceSection({ place }: { place: Place }) {
             Value &amp; Performance
           </h2>
           <p className="text-sm text-muted-foreground mt-0.5">
-            How well do systems serve people in {place.name}?
+            How well systems are working here — across health, utilities, water, transportation, and environment.
           </p>
         </div>
         <NerdModeToggle />
@@ -300,11 +312,21 @@ export default function ValuePerformanceSection({ place }: { place: Place }) {
           >
             <Card>
               <CardContent className="py-5">
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className={`w-8 h-8 rounded-lg ${domain.bgColor} flex items-center justify-center`}>
-                    <domain.icon className={`h-4 w-4 ${domain.color}`} aria-hidden="true" />
+                <div className="mb-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className={`w-8 h-8 rounded-lg ${domain.bgColor} flex items-center justify-center`}>
+                      <domain.icon className={`h-4 w-4 ${domain.color}`} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-foreground">{domain.title}</h3>
+                      {domain.subtitle && <p className="text-[11px] text-muted-foreground">{domain.subtitle}</p>}
+                    </div>
                   </div>
-                  <h3 className="text-sm font-bold text-foreground">{domain.title}</h3>
+                  {domain.funderNote && (
+                    <p className="mt-2 text-[10px] text-primary/80 italic pl-10">
+                      For funders / systems: {domain.funderNote}
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

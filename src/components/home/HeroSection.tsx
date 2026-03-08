@@ -354,35 +354,15 @@ const HeroSection = () => {
             Michigan help, at your fingertips.
           </motion.h1>
 
-          {/* Subheading */}
+          {/* Subheading — condensed */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.22, duration: 0.5 }}
-            className="mt-3 text-lg text-primary-foreground/80 md:text-xl"
-          >
-            Instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
-          </motion.p>
-
-          {/* Trust & data sub-line with lock icon */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.28, duration: 0.5 }}
-            className="mt-3 flex items-center justify-center gap-2 text-sm text-primary-foreground/70"
+            className="mt-3 text-base text-primary-foreground/80 md:text-lg flex items-center justify-center gap-2"
           >
             <Lock className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
-            <span>Built on verified public data — no account, no tracking, no personal data stored.</span>
-          </motion.div>
-
-          {/* Who this is for */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.32, duration: 0.5 }}
-            className="mt-1.5 text-xs text-primary-foreground/45"
-          >
-            Built for Michigan residents, policymakers, health systems, funders, and journalists.
+            Housing · Health · Food · Legal · Energy — 83 counties, verified public data, no tracking.
           </motion.p>
 
           {/* Smart Search Bar */}
