@@ -51,6 +51,7 @@ const fadeUp = {
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 const isValidMIZip = (z: string) => /^4[89]\d{3}$/.test(z);
+const isAnyUSZip = (z: string) => /^\d{5}$/.test(z);
 
 function coverageBadgeVariant(level: string): "default" | "secondary" | "outline" {
   if (level === "high") return "default";
