@@ -129,6 +129,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/data-and-insights", component: pages.DataAndInsightsPage, label: "Data & Insights" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
   { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
+  { path: "/compare-zips", component: pages.CompareZipsPage, label: "Compare ZIP Codes" },
   { path: "/datasets", component: pages.DatasetExplorerPage, label: "Dataset Explorer" },
   { path: "/transportation", component: pages.TransportationPage, label: "Transportation" },
   { path: "/contact", component: pages.ContactPage, label: "Contact" },
