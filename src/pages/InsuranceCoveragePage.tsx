@@ -118,6 +118,42 @@ const QUICK_PATHS = [
   { question: "My claim was denied", answer: "You have the right to appeal. Access Michigan can generate a free appeal letter.", tab: "appeals" },
 ];
 
+const EXPLAINER_CARDS = [
+  {
+    title: "How Michigan Medicaid Works",
+    icon: ShieldCheck,
+    iconColor: "text-emerald-600",
+    paragraphs: [
+      "Michigan's Medicaid program (the Healthy Michigan Plan) provides free or low-cost health coverage for adults aged 19–64 with income at or below 133% of the Federal Poverty Level.",
+      "It covers doctor visits, hospital stays, prescriptions, mental health, dental, and vision. Most enrollees pay little or nothing out of pocket.",
+      "You apply through MI Bridges (online), by phone (844-799-9876), or in person at a local DHHS office. Processing typically takes 30–45 days.",
+    ],
+    updated: "Updated March 2026. Always confirm details with MDHHS, your plan, or an official source.",
+  },
+  {
+    title: "Medicare vs. Medicare Advantage",
+    icon: Heart,
+    iconColor: "text-sky-600",
+    paragraphs: [
+      "Original Medicare (Parts A & B) is federal insurance for people 65+ or with certain disabilities. Part A covers hospital stays; Part B covers outpatient care and doctor visits.",
+      "Medicare Advantage (Part C) bundles A, B, and often D (prescriptions) through a private plan like BCBS or Priority Health. It may include extras like dental and vision but limits your provider network.",
+      "Choosing between them depends on your health needs, preferred doctors, and whether you want predictable costs (Advantage) or maximum provider flexibility (Original).",
+    ],
+    updated: "Updated March 2026. Always confirm details with Medicare.gov or a SHINE counselor.",
+  },
+  {
+    title: "What FQHCs Do for Michigan",
+    icon: Building2,
+    iconColor: "text-amber-600",
+    paragraphs: [
+      "Federally Qualified Health Centers (FQHCs) serve everyone regardless of insurance status or ability to pay. Fees are based on a sliding scale tied to your household income.",
+      "Services typically include primary care, dental, behavioral health, pharmacy, labs, and prenatal care. Some centers also offer vision, substance use treatment, and transportation assistance.",
+      "Michigan has over 40 FQHC organizations with 300+ service sites. You can walk in or call — no referral needed. Bring proof of income for a fee reduction.",
+    ],
+    updated: "Updated March 2026. Always confirm details with HRSA or your local health center.",
+  },
+];
+
 export default function InsuranceCoveragePage() {
   const [activeTab, setActiveTab] = useState("overview");
 
