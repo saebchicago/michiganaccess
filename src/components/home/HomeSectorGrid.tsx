@@ -31,7 +31,7 @@ const sectors = [
     icon: Zap,
     title: "Utilities & Energy",
     description: "Outage alerts, energy assistance, billing help, and reliability data.",
-    href: "/environment",
+    href: "/environment#energy",
     color: "text-amber-600 dark:text-amber-400",
     bg: "bg-amber-500/10",
   },
