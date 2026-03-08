@@ -283,7 +283,7 @@ export default function ValuePerformanceSection({ place }: { place: Place }) {
             Value &amp; Performance
           </h2>
           <p className="text-sm text-muted-foreground mt-0.5">
-            How well do systems serve people in {place.name}?
+            How well systems are working here — across health, utilities, water, transportation, and environment.
           </p>
         </div>
         <NerdModeToggle />
