@@ -70,6 +70,50 @@ function buildUrgentSummary(county: string, profile: typeof COUNTY_PROFILES[stri
   return lines;
 }
 
+/**
+ * Cross-sector tension detection — rule-based flags from existing indicators.
+ * These are prompts for attention, not full causal analyses.
+ * See /methodology for details on thresholds and logic.
+ */
+type TensionTag = "outages_plus_medical_vulnerability" | "high_medicaid_plus_rent_burden" | "high_crash_plus_low_transit";
+
+interface TensionLine {
+  tag: TensionTag;
+  text: string;
+}
+
+function getCrossSectorTensions(county: string, profile: typeof COUNTY_PROFILES[string]): TensionLine[] {
+  const tensions: TensionLine[] = [];
+  const cd = getCountyCrossDomain(county);
+  const uninsured = parseFloat(getVal(profile.healthHighlights, "uninsured") || "0");
+
+  // Tension: high uninsured + high rent burden → medical vulnerability + housing stress
+  if (uninsured > 7 && cd.rentBurden !== null && cd.rentBurden > MI_STATE_AVERAGES.rentBurden!) {
+    tensions.push({
+      tag: "high_medicaid_plus_rent_burden",
+      text: `A key issue here is that high housing cost burden (${cd.rentBurden}% rent-burdened) overlaps with an elevated uninsured rate (${uninsured}%), meaning residents may struggle to afford both housing and healthcare.`,
+    });
+  }
+
+  // Tension: low vehicle access + high commute → transit dependency + long commutes
+  if (cd.vehicleAccess !== null && cd.vehicleAccess < MI_STATE_AVERAGES.vehicleAccess! && cd.commuteTime !== null && cd.commuteTime > MI_STATE_AVERAGES.commuteTime!) {
+    tensions.push({
+      tag: "high_crash_plus_low_transit",
+      text: `Lower vehicle access (${cd.vehicleAccess}% of households) combined with longer commute times (${cd.commuteTime} min) suggests transportation gaps that may limit access to jobs, healthcare, and services.`,
+    });
+  }
+
+  // Tension: high poverty + low water compliance
+  if (cd.povertyRate !== null && cd.povertyRate > 18 && cd.drinkingWaterCompliance !== null && cd.drinkingWaterCompliance < 90) {
+    tensions.push({
+      tag: "outages_plus_medical_vulnerability",
+      text: `High poverty (${cd.povertyRate}%) paired with drinking water compliance concerns (${cd.drinkingWaterCompliance}%) means vulnerable residents may face compounding environmental and economic stress.`,
+    });
+  }
+
+  return tensions.slice(0, 2); // max 2 tension lines
+}
+
 export default function BriefPage() {
   const { t } = useTranslation();
   const { county, setCounty } = useCounty();

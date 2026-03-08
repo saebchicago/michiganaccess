@@ -778,6 +778,14 @@ const EnvironmentPage = () => {
             </p>
           )}
         </div>
+
+        {/* Copilot */}
+        <div className="flex justify-center mt-8">
+          <AskCopilotButton
+            context="Context: environment. This is the Michigan Environment & Sustainability page covering air quality, water safety, energy, recycling, Great Lakes, and environmental justice. Instructions: Identify 3 key environmental/water issues for the user's area, 2 actions for residents, and 2 ideas for planners."
+            label="Ask Copilot about environment data"
+          />
+        </div>
       </section>
     </Layout>
   );
