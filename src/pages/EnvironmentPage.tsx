@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Leaf, Droplets, Wind, Recycle, Zap, Globe, Fish, AlertTriangle, TrendingUp, MapPin, ExternalLink, Shield, Loader2 } from "lucide-react";
