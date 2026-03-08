@@ -438,10 +438,14 @@ export default function InsuranceCoveragePage() {
                   </Button>
                 </div>
 
-                <div className="rounded-md border border-border bg-muted/30 px-4 py-3">
+                <div className="rounded-md border border-border bg-muted/30 px-4 py-3 space-y-2">
                   <p className="text-[11px] text-muted-foreground flex items-center gap-1.5">
                     <ShieldCheck className="h-3.5 w-3.5" />
                     For guidance only — this is an independent civic resource, not affiliated with any insurer or government agency. Final eligibility is determined by the program administrator.
+                  </p>
+                  <p className="text-[11px] text-muted-foreground flex items-center gap-1.5">
+                    <Shield className="h-3.5 w-3.5" />
+                    We do not see individual claims, member data, or eligibility records. We explain coverage structure and connect you to official resources — we do not make eligibility determinations.
                   </p>
                 </div>
               </TabsContent>
