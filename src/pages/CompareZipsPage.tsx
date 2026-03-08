@@ -295,23 +295,23 @@ export default function CompareZipsPage() {
         <div className="container max-w-5xl py-8 space-y-8 print:py-4">
           {/* ═══ FAIRNESS DISCLAIMER ═══ */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-            <Card className="border-amber-200/60 bg-amber-50/30 dark:border-amber-900/40 dark:bg-amber-950/20">
+            <Card className="border-warning/30 bg-warning/5 dark:border-warning/20 dark:bg-warning/5">
               <CardContent className="p-5">
                 <h2 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
-                  <AlertTriangle className="h-4 w-4 text-amber-600" aria-hidden="true" />
+                  <AlertTriangle className="h-4 w-4 text-warning" aria-hidden="true" />
                   How to use these comparisons
                 </h2>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2">
-                    <span className="text-amber-600 mt-0.5">•</span>
+                    <span className="text-warning mt-0.5">•</span>
                     ZIP codes are about systems, not the worth of people or neighborhoods.
                   </li>
                   <li className="flex gap-2">
-                    <span className="text-amber-600 mt-0.5">•</span>
+                    <span className="text-warning mt-0.5">•</span>
                     Use these comparisons to understand where services, infrastructure, and investment are stronger or weaker — not to shame communities.
                   </li>
                   <li className="flex gap-2">
-                    <span className="text-amber-600 mt-0.5">•</span>
+                    <span className="text-warning mt-0.5">•</span>
                     Many patterns come from long histories of policy and investment, not individual choices.
                   </li>
                 </ul>
