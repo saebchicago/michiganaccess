@@ -1,14 +1,18 @@
 /**
  * InsuranceNavigator — 3-step wizard to help users identify their likely
  * insurance pathway: Medicare, Medicaid, FQHC sliding-fee, or Private/BCBS.
+ * Now includes ZIP-aware area hints on the results step.
  */
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronRight, ArrowLeft, RotateCcw, ShieldCheck, ExternalLink,
   CalendarCheck, Calculator, FileUp, BookOpen, HelpCircle, Users,
-  DollarSign, Briefcase, Heart, Building2,
+  DollarSign, Briefcase, Heart, Building2, MapPin, Info,
 } from "lucide-react";
+import { useCounty } from "@/contexts/CountyContext";
+import { getCountyProfile } from "@/data/michigan-county-profiles";
+import { getCountyCrossDomain } from "@/data/cross-domain-indicators";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -95,6 +99,43 @@ function SlidingFeeCalc() {
         <p className="text-xs text-muted-foreground">{desc}</p>
         {annual > 0 && <p className="text-[10px] text-muted-foreground">{pct.toFixed(0)}% of FPL (${fpl.toLocaleString()}/yr for {hhSize})</p>}
       </div>
+    </div>
+  );
+}
+
+/* ── ZIP-aware area hints ──────────────────────── */
+function AreaHints() {
+  const { county } = useCounty();
+  if (!county) return null;
+
+  const profile = getCountyProfile(county);
+  const cd = getCountyCrossDomain(county);
+  const uninsuredRaw = profile.healthHighlights.find(h => h.label.toLowerCase().includes("uninsured"))?.value;
+  // Count FQHC mentions from profile data — rough proxy
+  const fqhcNote = profile.countyType === "urban"
+    ? "multiple federally-qualified or sliding-scale clinics"
+    : profile.countyType === "suburban"
+    ? "some community health center options"
+    : "limited but available community health centers";
+
+  return (
+    <div className="rounded-lg border border-primary/20 bg-primary/5 px-3 py-2.5 space-y-1">
+      <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+        <MapPin className="h-3 w-3 text-primary" /> In your area — {county} County
+      </p>
+      {uninsuredRaw && (
+        <p className="text-[11px] text-muted-foreground">
+          About <strong className="text-foreground">{uninsuredRaw}</strong> of residents here are uninsured.
+        </p>
+      )}
+      <p className="text-[11px] text-muted-foreground">
+        This area has {fqhcNote} that serve residents regardless of insurance status.
+      </p>
+      {cd.povertyRate !== null && cd.povertyRate > 15 && (
+        <p className="text-[11px] text-muted-foreground flex items-center gap-1">
+          <Info className="h-3 w-3" /> Poverty rate ({cd.povertyRate}%) is above state average — Medicaid eligibility may be especially relevant here.
+        </p>
+      )}
     </div>
   );
 }
@@ -325,6 +366,9 @@ export default function InsuranceNavigator() {
                   </>}
                 />
               )}
+
+              {/* ── ZIP-Aware Area Hints ── */}
+              <AreaHints />
 
               <div className="rounded-md border border-border bg-muted/30 px-3 py-2">
                 <p className="text-[10px] text-muted-foreground flex items-center gap-1">

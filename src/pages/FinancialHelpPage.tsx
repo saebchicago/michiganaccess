@@ -16,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { useFinancialPrograms } from "@/hooks/useFinancialPrograms";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import DataTimestamp from "@/components/shared/DataTimestamp";
+import AskCopilotButton from "@/components/shared/AskCopilotButton";
 import ContentSkeleton from "@/components/shared/ContentSkeleton";
 import EmptyState from "@/components/shared/EmptyState";
 
@@ -313,6 +314,14 @@ export default function FinancialHelpPage() {
             </CardContent>
           </Card>
         </motion.section>
+
+        {/* Copilot */}
+        <div className="flex justify-center">
+          <AskCopilotButton
+            context="Context: financial_help. This is the Financial Help page for Michigan residents. Instructions: Identify 3 categories of help (cash/benefits, utilities, housing) and which are most commonly used. Provide concrete next steps and program names."
+            label="Ask Copilot about financial help"
+          />
+        </div>
       </div>
     </Layout>
   );

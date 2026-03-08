@@ -244,7 +244,7 @@ export default function CompareZipsPage() {
   }, [summary]);
 
   const copilotContext = hasComparison
-    ? `Comparing ZIP codes: ${activeZips.join(", ")} (counties: ${counties.join(", ")}). Data coverage: ${summary!.dataCoverage}.`
+    ? `Context: compare_zips. Comparing ZIP codes: ${activeZips.join(", ")} (counties: ${counties.join(", ")}). Data coverage: ${summary!.dataCoverage}. Metrics: ${summary!.metricDefinitions.map(d => d.label).join(", ")}. Instructions: Provide a short summary of the biggest differences between these ZIPs, a "for residents" block, a "for CHNA / planning" block, and 2 cautions about over-interpreting ZIP-level data.`
     : "ZIP comparison page — no active comparison yet.";
 
   return (
@@ -308,13 +308,6 @@ export default function CompareZipsPage() {
 
       {hasComparison && summary && (
         <div className="container max-w-5xl py-8 space-y-8 print:py-4">
-
-          {/* ═══ EXAMPLE DATA BANNER ═══ */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-            <div className="rounded-lg border border-info/30 bg-info/5 px-4 py-3 text-center text-xs text-info font-medium">
-              Example data — not real yet. Values shown are placeholders to demonstrate the comparison layout. Real data feeds will replace these.
-            </div>
-          </motion.div>
 
           {/* ═══ FAIRNESS DISCLAIMER ═══ */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
@@ -471,7 +464,7 @@ export default function CompareZipsPage() {
                   </Button>
                 </div>
                 <p className="text-[11px] text-muted-foreground mt-3">
-                  CSV and JSON exports will be wired once live data feeds are connected. Markdown and citation copy work now with placeholder data.
+                  CSV and JSON exports coming soon. Markdown and citation copy work now with county-level data.
                 </p>
               </CardContent>
             </Card>
