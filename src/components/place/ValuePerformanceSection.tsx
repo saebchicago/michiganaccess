@@ -33,6 +33,8 @@ interface VPMetric {
 interface VPDomain {
   id: string;
   title: string;
+  subtitle?: string;
+  funderNote?: string;
   icon: typeof Activity;
   color: string;
   bgColor: string;
