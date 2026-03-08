@@ -1,8 +1,18 @@
 /**
  * InsuranceNavigator — 3-step wizard to help users identify their likely
  * insurance pathway: Medicare, Medicaid, FQHC sliding-fee, or Private/BCBS.
+ * Now includes ZIP-aware area hints on the results step.
  */
 import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ChevronRight, ArrowLeft, RotateCcw, ShieldCheck, ExternalLink,
+  CalendarCheck, Calculator, FileUp, BookOpen, HelpCircle, Users,
+  DollarSign, Briefcase, Heart, Building2, MapPin, Info,
+} from "lucide-react";
+import { useCounty } from "@/contexts/CountyContext";
+import { getCountyProfile } from "@/data/michigan-county-profiles";
+import { getCountyCrossDomain } from "@/data/cross-domain-indicators";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronRight, ArrowLeft, RotateCcw, ShieldCheck, ExternalLink,
