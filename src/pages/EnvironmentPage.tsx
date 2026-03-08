@@ -17,6 +17,7 @@ import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
 import CivicDataCallout from "@/components/shared/CivicDataCallout";
 import { useCDCData, transformPlacesToAQI } from "@/hooks/useCDCData";
 import EnergyAssistanceFinder from "@/components/energy/EnergyAssistanceFinder";
+import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
