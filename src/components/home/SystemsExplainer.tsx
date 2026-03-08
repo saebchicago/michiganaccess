@@ -81,6 +81,7 @@ const SystemsExplainer = forwardRef<HTMLElement>(function SystemsExplainer(_prop
       </motion.div>
     </div>
   </section>
-);
+  );
+});
 
 export default SystemsExplainer;
