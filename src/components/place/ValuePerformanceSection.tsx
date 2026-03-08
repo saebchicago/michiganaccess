@@ -71,7 +71,9 @@ function buildDomains(place: Place): VPDomain[] {
   return [
     {
       id: "health-vbc",
-      title: "Health & Value-Based Care",
+      title: "Health — Value-Based Care",
+      subtitle: "Avoidable use, access equity, and social risk.",
+      funderNote: "Use for CHNAs, community benefit, VBC program design.",
       icon: Activity,
       color: "text-primary",
       bgColor: "bg-primary/10",
