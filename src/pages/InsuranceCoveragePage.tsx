@@ -210,6 +210,35 @@ export default function InsuranceCoveragePage() {
 
             <Separator />
 
+            {/* Insurance Explainer Cards */}
+            <div>
+              <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-primary" /> Understanding Your Options
+              </h2>
+              <div className="grid gap-4 md:grid-cols-3">
+                {EXPLAINER_CARDS.map((card, i) => (
+                  <motion.div key={card.title} variants={fadeUp} custom={i} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                    <Card className="h-full">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-sm flex items-center gap-2">
+                          <card.icon className={`h-4 w-4 ${card.iconColor}`} />
+                          {card.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        {card.paragraphs.map((p, pi) => (
+                          <p key={pi} className="text-xs text-muted-foreground leading-relaxed">{p}</p>
+                        ))}
+                        <p className="text-[10px] text-muted-foreground/60 italic">{card.updated}</p>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <Separator />
+
             {/* All programs summary */}
             <div>
               <h2 className="text-lg font-bold mb-4">All Coverage Programs</h2>
