@@ -431,6 +431,100 @@ export default function MethodologyPage() {
           </div>
         </section>
 
+        {/* Limitations & Known Gaps */}
+        <section id="limitations">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10">
+              <Info className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Limitations & Known Gaps</h2>
+              <p className="text-sm text-muted-foreground">What we don't have yet, and what to watch for</p>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {[
+              "ZIP-level data: Most health and socioeconomic metrics are available only at the county level. When shown for ZIPs, they represent county-level values applied to that ZIP's county.",
+              "Data lag: CMS and CDC datasets are typically 6–12 months behind current conditions. Census ACS data reflects 5-year rolling estimates.",
+              "Coverage gaps: Not all facilities and providers in Michigan are listed. Coverage is expanding continuously as new data sources are integrated.",
+              "Modeled indices: Composite scores (e.g., Civic Insight Score) combine verified data using documented formulas, but the resulting index is a model, not a direct measurement.",
+              "Utility stress: Disconnection, arrears, and assistance participation levels are currently illustrative placeholders pending integration of MPSC quarterly data.",
+              "No individual claims data: All data is population-level. We do not access or display individual health records, claims, or member information.",
+            ].map((item, i) => (
+              <div key={i} className="flex gap-3 rounded-lg border border-border p-3">
+                <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600 dark:text-amber-400" />
+                <p className="text-sm text-muted-foreground">{item}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <Separator />
+
+        {/* How we keep this honest */}
+        <section>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
+              <Shield className="h-5 w-5 text-michigan-forest" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">How we keep this honest</h2>
+              <p className="text-sm text-muted-foreground">Our commitments to data integrity</p>
+            </div>
+          </div>
+          <div className="rounded-xl border border-michigan-forest/20 bg-michigan-forest/[0.03] p-6 space-y-3">
+            {[
+              "No ads, no tracking, no pay-to-play listings.",
+              "If we don't have data for a ZIP or topic, we say so instead of guessing.",
+              "Every number is either from a named public dataset or a clearly labeled modeled index, with methods in one place.",
+              "When we find mistakes or better methods, we fix them and update this page.",
+            ].map((bullet) => (
+              <div key={bullet} className="flex items-start gap-2 text-sm text-muted-foreground">
+                <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-michigan-forest" />
+                {bullet}
+              </div>
+            ))}
+            <p className="text-xs text-muted-foreground italic pt-1">
+              We invite researchers, journalists, and community partners to audit our methods and tell us what they see.
+            </p>
+          </div>
+        </section>
+
+        <Separator />
+
+        {/* Trust & Data Fixes Log */}
+        <section id="trust-log">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <FileText className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">Trust & Data Fixes</h2>
+              <p className="text-sm text-muted-foreground">Concrete corrections we've made to improve accuracy</p>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {[
+              { fix: "Removed fabricated impact projections from About page; all impact copy now describes goals qualitatively until measured outcomes are available.", date: "March 2026" },
+              { fix: "Replaced aspirational performance claims ('Sub-3-second loads on 3G', 'automated weekly pulls') with accurate present-tense descriptions.", date: "March 2026" },
+              { fix: "Moved community events contact info into a safe public view to protect organizer privacy.", date: "February 2026" },
+              { fix: "Restricted direct reads on ingestion logs and internal tables; added RLS policies to all public-facing tables.", date: "February 2026" },
+              { fix: "Labeled all composite scores (Civic Insight Score, access gap index) as 'Modeled estimate' with methodology links.", date: "February 2026" },
+              { fix: "Removed fabricated impact offsets from beta counters; all impact numbers now come from real data.", date: "February 2026" },
+            ].map((entry, i) => (
+              <div key={i} className="flex gap-3 rounded-lg border border-border p-3">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-michigan-forest" />
+                <div>
+                  <p className="text-sm text-muted-foreground">{entry.fix}</p>
+                  <p className="text-[10px] text-muted-foreground mt-1">{entry.date}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <Separator />
+
         {/* Future Integration Note */}
         <section className="space-y-4">
           <h2 className="text-xl font-semibold flex items-center gap-2">
