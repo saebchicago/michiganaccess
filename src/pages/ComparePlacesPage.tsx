@@ -38,6 +38,8 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ReferenceLine, Cell,
 } from "recharts";
 import { toast } from "sonner";
+import ViewModeToggle, { type ViewMode } from "@/components/shared/ViewModeToggle";
+import PartnerCTABar from "@/components/brief/PartnerCTABar";
 
 // ── Animation variants ────────────────────────────────────────────────────────
 const fadeUp = {
