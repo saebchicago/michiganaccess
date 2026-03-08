@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import {
   BarChart3, MapPin, Download, AlertTriangle, Info, FileText,
   Heart, Home, Zap, Droplets, Bus, Activity, Copy, ArrowRight,
-  Shield, ExternalLink, MessageSquare,
+  Shield, ExternalLink, MessageSquare, FileCode,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -19,145 +19,28 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { useCensusACS, getCensusValue } from "@/hooks/useCensusACS";
 import { zipToCounty } from "@/data/michigan-county-seats";
+import {
+  getZipComparisonSummary,
+  METRIC_GROUPS,
+  type ZipComparisonSummary,
+  type MetricDefinition,
+  type MetricGroupId,
+} from "@/data/zip-comparison-types";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 import { toast } from "sonner";
 
-// ── Types ────────────────────────────────────────────────────────────────────
-interface MetricDef {
-  key: string;
-  label: string;
-  subtext: string;
-  tooltip: string;
-  source: string;
-  asOf: string;
-  higherIsBetter?: boolean;
-  format?: "percent" | "dollar" | "number" | "ratio";
-  censusTable?: string;
-  censusField?: string;
-}
+// ── Icon lookup ──────────────────────────────────────────────────────────────
+const GROUP_ICONS: Record<MetricGroupId, React.ReactNode> = {
+  health_coverage: <Heart className="h-4 w-4" />,
+  income_housing: <Home className="h-4 w-4" />,
+  utilities_energy: <Zap className="h-4 w-4" />,
+  water_environment: <Droplets className="h-4 w-4" />,
+  transport_safety: <Bus className="h-4 w-4" />,
+  value_performance: <Activity className="h-4 w-4" />,
+};
 
-interface MetricSection {
-  id: string;
-  title: string;
-  icon: React.ReactNode;
-  metrics: MetricDef[];
-}
-
-// ── Metric definitions ───────────────────────────────────────────────────────
-const SECTIONS: MetricSection[] = [
-  {
-    id: "health",
-    title: "Health & Coverage",
-    icon: <Heart className="h-4 w-4" />,
-    metrics: [
-      {
-        key: "uninsured", label: "Uninsured rate", subtext: "Share of residents without health insurance.",
-        tooltip: "Estimated from ACS 5-year data (Table B27001). Reflects civilian noninstitutionalized population.",
-        source: "Census ACS", asOf: "2023", format: "percent",
-        censusTable: "B27001", censusField: "B27001_005E",
-      },
-      {
-        key: "median_income", label: "Median household income", subtext: "Middle-point household earnings.",
-        tooltip: "ACS 5-year estimate (Table B19013). Inflation-adjusted to survey year dollars.",
-        source: "Census ACS", asOf: "2023", format: "dollar",
-        censusTable: "B19013", censusField: "B19013_001E",
-      },
-      {
-        key: "poverty", label: "Poverty rate", subtext: "Share of residents below the federal poverty level.",
-        tooltip: "ACS 5-year estimate (Table B17001). Federal poverty thresholds vary by household size.",
-        source: "Census ACS", asOf: "2023", format: "percent",
-        censusTable: "B17001", censusField: "B17001_002E",
-      },
-    ],
-  },
-  {
-    id: "housing",
-    title: "Income & Housing Stability",
-    icon: <Home className="h-4 w-4" />,
-    metrics: [
-      {
-        key: "median_rent", label: "Median gross rent", subtext: "Typical monthly rent including utilities.",
-        tooltip: "ACS 5-year estimate (Table B25064). Includes contract rent plus utility costs.",
-        source: "Census ACS", asOf: "2023", format: "dollar",
-        censusTable: "B25064", censusField: "B25064_001E",
-      },
-      {
-        key: "owner_occupied", label: "Homeownership rate", subtext: "Share of occupied units that are owner-occupied.",
-        tooltip: "ACS 5-year estimate (Table B25003). Higher rates may indicate greater housing stability.",
-        source: "Census ACS", asOf: "2023", format: "percent", higherIsBetter: true,
-        censusTable: "B25003", censusField: "B25003_002E",
-      },
-    ],
-  },
-  {
-    id: "energy",
-    title: "Utilities & Energy",
-    icon: <Zap className="h-4 w-4" />,
-    metrics: [
-      {
-        key: "energy_burden", label: "Energy burden (proxy)", subtext: "Estimated share of income spent on energy.",
-        tooltip: "Modeled from DOE LEAD tool and HUD data. Approximate for ZIP-level geographies.",
-        source: "DOE / HUD", asOf: "2023", format: "percent",
-      },
-      {
-        key: "outage_burden", label: "Recent outage burden", subtext: "Average customer outage events in major storms over 3–5 years.",
-        tooltip: "Based on MPSC and outage datasets where available. Counts may be approximate for some ZIPs; see methodology.",
-        source: "MPSC", asOf: "2024",
-      },
-    ],
-  },
-  {
-    id: "water",
-    title: "Water & Environment",
-    icon: <Droplets className="h-4 w-4" />,
-    metrics: [
-      {
-        key: "water_violations", label: "Drinking water violations", subtext: "SDWA violations in service area (past 3 years).",
-        tooltip: "From EPA SDWIS database, mapped to ZIP by water system service areas. Some ZIPs span multiple systems.",
-        source: "EPA SDWIS", asOf: "2024",
-      },
-      {
-        key: "air_quality", label: "Air quality (AQI proxy)", subtext: "Typical air quality index for the area.",
-        tooltip: "Based on nearest AirNow monitoring station. May not reflect hyper-local conditions.",
-        source: "EPA AirNow", asOf: "2024",
-      },
-    ],
-  },
-  {
-    id: "transportation",
-    title: "Transportation & Safety",
-    icon: <Bus className="h-4 w-4" />,
-    metrics: [
-      {
-        key: "commute_time", label: "Average commute time", subtext: "Mean travel time to work in minutes.",
-        tooltip: "ACS 5-year estimate. Includes all modes of transportation.",
-        source: "Census ACS", asOf: "2023", format: "number",
-        censusTable: "B08303", censusField: "B08303_001E",
-      },
-      {
-        key: "no_vehicle", label: "Households without a vehicle", subtext: "Share of households with zero vehicles available.",
-        tooltip: "ACS 5-year estimate. Higher rates may indicate transit dependency.",
-        source: "Census ACS", asOf: "2023", format: "percent",
-      },
-    ],
-  },
-];
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-const isValidMIZip = (z: string) => /^4[89]\d{3}$/.test(z);
-
-function formatValue(val: number | null | undefined, format?: string): string {
-  if (val == null || isNaN(val)) return "—";
-  switch (format) {
-    case "percent": return `${val.toFixed(1)}%`;
-    case "dollar": return `$${val.toLocaleString()}`;
-    case "ratio": return val.toFixed(2);
-    default: return val.toLocaleString();
-  }
-}
-
+// ── Animation ────────────────────────────────────────────────────────────────
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: (i: number = 0) => ({
@@ -165,6 +48,122 @@ const fadeUp = {
     transition: { duration: 0.35, delay: i * 0.06, ease: "easeOut" as const },
   }),
 };
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+const isValidMIZip = (z: string) => /^4[89]\d{3}$/.test(z);
+
+function coverageBadgeVariant(level: string): "default" | "secondary" | "outline" {
+  if (level === "high") return "default";
+  if (level === "medium") return "secondary";
+  return "outline";
+}
+
+// ── ZipComparisonTable (sub-component) ───────────────────────────────────────
+function ZipComparisonTable({ summary }: { summary: ZipComparisonSummary }) {
+  const { zips, metricDefinitions, values } = summary;
+
+  const grouped = useMemo(() => {
+    const map = new Map<MetricGroupId, MetricDefinition[]>();
+    for (const g of METRIC_GROUPS) map.set(g.id, []);
+    for (const d of metricDefinitions) map.get(d.groupId)?.push(d);
+    return map;
+  }, [metricDefinitions]);
+
+  const valueMap = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const v of values) {
+      const key = `${v.metricId}::${v.zip}`;
+      m.set(key, v.value != null ? (v.displayValue ?? String(v.value)) : "");
+    }
+    return m;
+  }, [values]);
+
+  return (
+    <>
+      {METRIC_GROUPS.map((group, gi) => {
+        const defs = grouped.get(group.id);
+        if (!defs || defs.length === 0) return null;
+        return (
+          <motion.div
+            key={group.id}
+            initial="hidden" whileInView="visible" viewport={{ once: true }}
+            variants={fadeUp} custom={gi}
+          >
+            <Card>
+              <CardContent className="p-0">
+                <div className="flex items-center gap-2 px-5 pt-4 pb-3 border-b border-border/40">
+                  <span className="text-primary">{GROUP_ICONS[group.id]}</span>
+                  <h3 className="font-semibold text-foreground text-sm">{group.title}</h3>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-border/30 bg-muted/20">
+                        <th className="text-left px-4 py-2.5 font-medium text-muted-foreground w-1/3">Metric</th>
+                        {zips.map((z) => (
+                          <th key={z} className="text-center px-3 py-2.5 font-medium text-foreground tabular-nums">
+                            <div className="flex flex-col items-center gap-0.5">
+                              <span>{z}</span>
+                              <span className="text-[10px] text-muted-foreground font-normal">
+                                {zipToCounty(z) || "Unknown"} Co.
+                              </span>
+                            </div>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {defs.map((metric) => (
+                        <tr key={metric.id} className="border-b border-border/20 hover:bg-muted/10 transition-colors">
+                          <td className="px-4 py-3">
+                            <div className="font-medium text-foreground text-xs flex items-center gap-1">
+                              {metric.label}
+                              {metric.tooltip && (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <button className="text-muted-foreground/50 hover:text-primary" aria-label={`Definition: ${metric.label}`}>
+                                      <Info className="h-3 w-3" />
+                                    </button>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="right" className="max-w-xs text-xs">
+                                    <p className="font-semibold mb-1">How we define this</p>
+                                    <p>{metric.tooltip}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              )}
+                            </div>
+                            {metric.subtext && (
+                              <p className="text-[11px] text-muted-foreground mt-0.5">{metric.subtext}</p>
+                            )}
+                            <p className="text-[10px] text-muted-foreground/60 mt-0.5">
+                              Source: {metric.sourceShort}{metric.asOfYear ? ` · As of: ${metric.asOfYear}` : ""}
+                            </p>
+                          </td>
+                          {zips.map((z) => {
+                            const display = valueMap.get(`${metric.id}::${z}`);
+                            return (
+                              <td key={z} className="text-center px-3 py-3 tabular-nums text-xs text-foreground">
+                                {display ? (
+                                  <span>{display}</span>
+                                ) : (
+                                  <span className="text-muted-foreground italic text-[11px]">data not available</span>
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        );
+      })}
+    </>
+  );
+}
 
 // ── Page Component ───────────────────────────────────────────────────────────
 export default function CompareZipsPage() {
@@ -186,7 +185,12 @@ export default function CompareZipsPage() {
     path: "/compare-zips",
   });
 
-  // Census data for active ZIPs (county-level fallback)
+  // Build mock comparison summary for active ZIPs
+  const summary: ZipComparisonSummary | null = useMemo(
+    () => (activeZips.length >= 2 ? getZipComparisonSummary(activeZips) : null),
+    [activeZips]
+  );
+
   const counties = useMemo(() =>
     activeZips.map(z => zipToCounty(z) || "Unknown"),
     [activeZips]
@@ -210,27 +214,38 @@ export default function CompareZipsPage() {
     setInputs(next);
   };
 
-  // Data coverage assessment
-  const dataCoverage = useMemo(() => {
-    if (activeZips.length === 0) return "—";
-    const knownCounties = counties.filter(c => c !== "Unknown").length;
-    if (knownCounties === activeZips.length) return "High";
-    if (knownCounties >= activeZips.length * 0.5) return "Medium";
-    return "Limited";
-  }, [activeZips, counties]);
+  const hasComparison = summary !== null;
 
-  const copilotContext = activeZips.length >= 2
-    ? `Comparing ZIP codes: ${activeZips.join(", ")} (counties: ${counties.join(", ")}). Data coverage: ${dataCoverage}.`
-    : "ZIP comparison page — no active comparison yet.";
-
-  // Copy helpers
+  // ── Export stubs ──
+  const handleCSV = useCallback(() => {
+    toast.info("CSV export will be wired to real data soon.");
+  }, []);
+  const handleJSON = useCallback(() => {
+    toast.info("JSON export will be wired to real data soon.");
+  }, []);
   const copyKeyStats = useCallback(() => {
-    if (activeZips.length < 2) return;
-    const text = `Comparing Michigan ZIPs: ${activeZips.join(" vs ")} (mapped to ${counties.join(", ")} counties). Data sources: MDHHS, CMS, HUD, Census ACS. See full comparison at accessmi.org/compare-zips`;
-    navigator.clipboard.writeText(text).then(() => toast.success("Copied key stats to clipboard"));
-  }, [activeZips, counties]);
+    if (!summary) return;
+    const text = `Comparing Michigan ZIPs: ${summary.zips.join(" vs ")} (mapped to ${counties.join(", ")} counties). Data sources: ${summary.globalSources.join(", ")}. See full comparison at accessmi.org/compare-zips`;
+    navigator.clipboard.writeText(text).then(() => toast.success("Copied key stats with citations."));
+  }, [summary, counties]);
+  const copyMarkdown = useCallback(() => {
+    if (!summary) return;
+    const lines: string[] = [];
+    lines.push(`| Metric | ${summary.zips.join(" | ")} |`);
+    lines.push(`|--------|${summary.zips.map(() => "--------").join("|")}|`);
+    for (const def of summary.metricDefinitions) {
+      const vals = summary.zips.map((z) => {
+        const mv = summary.values.find((v) => v.metricId === def.id && v.zip === z);
+        return mv?.value != null ? (mv.displayValue ?? String(mv.value)) : "n/a";
+      });
+      lines.push(`| ${def.label} | ${vals.join(" | ")} |`);
+    }
+    navigator.clipboard.writeText(lines.join("\n")).then(() => toast.success("Copied table as Markdown."));
+  }, [summary]);
 
-  const hasComparison = activeZips.length >= 2;
+  const copilotContext = hasComparison
+    ? `Comparing ZIP codes: ${activeZips.join(", ")} (counties: ${counties.join(", ")}). Data coverage: ${summary!.dataCoverage}.`
+    : "ZIP comparison page — no active comparison yet.";
 
   return (
     <Layout>
@@ -291,8 +306,16 @@ export default function CompareZipsPage() {
         </div>
       </section>
 
-      {hasComparison && (
+      {hasComparison && summary && (
         <div className="container max-w-5xl py-8 space-y-8 print:py-4">
+
+          {/* ═══ EXAMPLE DATA BANNER ═══ */}
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+            <div className="rounded-lg border border-info/30 bg-info/5 px-4 py-3 text-center text-xs text-info font-medium">
+              Example data — not real yet. Values shown are placeholders to demonstrate the comparison layout. Real data feeds will replace these.
+            </div>
+          </motion.div>
+
           {/* ═══ FAIRNESS DISCLAIMER ═══ */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
             <Card className="border-warning/30 bg-warning/5 dark:border-warning/20 dark:bg-warning/5">
@@ -303,15 +326,15 @@ export default function CompareZipsPage() {
                 </h2>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2">
-                    <span className="text-warning mt-0.5">•</span>
+                    <span className="text-warning mt-0.5 shrink-0">•</span>
                     ZIP codes are about systems, not the worth of people or neighborhoods.
                   </li>
                   <li className="flex gap-2">
-                    <span className="text-warning mt-0.5">•</span>
+                    <span className="text-warning mt-0.5 shrink-0">•</span>
                     Use these comparisons to understand where services, infrastructure, and investment are stronger or weaker — not to shame communities.
                   </li>
                   <li className="flex gap-2">
-                    <span className="text-warning mt-0.5">•</span>
+                    <span className="text-warning mt-0.5 shrink-0">•</span>
                     Many patterns come from long histories of policy and investment, not individual choices.
                   </li>
                 </ul>
@@ -330,14 +353,16 @@ export default function CompareZipsPage() {
                   </h3>
                   <span className="text-muted-foreground">
                     Coverage:{" "}
-                    <Badge variant={dataCoverage === "High" ? "default" : dataCoverage === "Medium" ? "secondary" : "outline"} className="text-xs ml-1">
-                      {dataCoverage}
+                    <Badge variant={coverageBadgeVariant(summary.dataCoverage)} className="text-xs ml-1 capitalize">
+                      {summary.dataCoverage}
                     </Badge>
                   </span>
-                  <span className="text-muted-foreground">Last major update: March 2026</span>
-                  <span className="text-muted-foreground">Sources: MDHHS, CMS, HUD, EGLE, MPSC, NHTSA, Census</span>
+                  <span className="text-muted-foreground">
+                    Last major update: {new Date(summary.lastUpdated).toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+                  </span>
+                  <span className="text-muted-foreground">Sources: {summary.globalSources.join(", ")}</span>
                   <Link to="/methodology" className="text-primary hover:underline flex items-center gap-0.5">
-                    See full data & methods <ExternalLink className="h-3 w-3" />
+                    See full data &amp; methods <ExternalLink className="h-3 w-3" />
                   </Link>
                 </div>
                 <p className="text-xs text-muted-foreground/70 mt-2">
@@ -348,78 +373,9 @@ export default function CompareZipsPage() {
           </motion.div>
 
           {/* ═══ COMPARISON TABLE ═══ */}
-          {SECTIONS.map((section, si) => (
-            <motion.div
-              key={section.id}
-              initial="hidden" whileInView="visible" viewport={{ once: true }}
-              variants={fadeUp} custom={si}
-            >
-              <Card>
-                <CardContent className="p-0">
-                  <div className="flex items-center gap-2 px-5 pt-4 pb-3 border-b border-border/40">
-                    <span className="text-primary">{section.icon}</span>
-                    <h3 className="font-semibold text-foreground text-sm">{section.title}</h3>
-                  </div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b border-border/30 bg-muted/20">
-                          <th className="text-left px-4 py-2.5 font-medium text-muted-foreground w-1/3">Metric</th>
-                          {activeZips.map((z) => (
-                            <th key={z} className="text-center px-3 py-2.5 font-medium text-foreground tabular-nums">
-                              <div className="flex flex-col items-center gap-0.5">
-                                <span>{z}</span>
-                                <span className="text-[10px] text-muted-foreground font-normal">
-                                  {zipToCounty(z) || "Unknown"} Co.
-                                </span>
-                              </div>
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {section.metrics.map((metric) => (
-                          <tr key={metric.key} className="border-b border-border/20 hover:bg-muted/10 transition-colors">
-                            <td className="px-4 py-3">
-                              <div className="flex items-start gap-1.5">
-                                <div>
-                                  <div className="font-medium text-foreground text-xs flex items-center gap-1">
-                                    {metric.label}
-                                    <Tooltip>
-                                      <TooltipTrigger asChild>
-                                        <button className="text-muted-foreground/50 hover:text-primary">
-                                          <Info className="h-3 w-3" />
-                                        </button>
-                                      </TooltipTrigger>
-                                      <TooltipContent side="right" className="max-w-xs text-xs">
-                                        <p className="font-semibold mb-1">How we define this</p>
-                                        <p>{metric.tooltip}</p>
-                                      </TooltipContent>
-                                    </Tooltip>
-                                  </div>
-                                  <p className="text-[11px] text-muted-foreground mt-0.5">{metric.subtext}</p>
-                                  <p className="text-[10px] text-muted-foreground/60 mt-0.5">
-                                    Source: {metric.source} · As of: {metric.asOf}
-                                  </p>
-                                </div>
-                              </div>
-                            </td>
-                            {activeZips.map((z) => (
-                              <td key={z} className="text-center px-3 py-3 tabular-nums text-xs text-foreground">
-                                <span className="text-muted-foreground italic text-[11px]">Data pending</span>
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+          <ZipComparisonTable summary={summary} />
 
-          {/* ═══ INTERPRETATION SCAFFOLDING ═══ */}
+          {/* ═══ INTERPRETATION PANELS ═══ */}
           <div className="grid gap-6 md:grid-cols-3">
             {/* For Residents */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
@@ -431,7 +387,7 @@ export default function CompareZipsPage() {
                   </h3>
                   <ul className="space-y-2.5 text-xs text-muted-foreground">
                     <li>
-                      Differences between ZIPs often reflect where resources and services have been invested — not the quality of the people who live there.
+                      These ZIP codes have different levels of nearby primary care and housing cost burden. Differences often reflect where resources have been invested — not the quality of the people who live there.
                     </li>
                     <li>
                       If your ZIP shows gaps in coverage or access, help may be available through local programs and navigators.
@@ -457,10 +413,10 @@ export default function CompareZipsPage() {
                   </h3>
                   <ul className="space-y-2.5 text-xs text-muted-foreground">
                     <li>
-                      Larger gaps between ZIPs may signal priorities for your next CHNA or community benefit plan.
+                      Use these metrics to identify where to deepen qualitative work and community engagement for your next CHNA or community benefit plan.
                     </li>
                     <li>
-                      Use these numbers to validate lived experience and qualitative findings, not replace them — especially where data coverage is "Medium" or "Limited."
+                      Use these numbers to validate lived experience, not replace it — especially where data coverage is "Medium" or "Limited."
                     </li>
                     <li>
                       For deeper analysis, export data and combine with your internal claims, EHR, and survey data.
@@ -479,10 +435,12 @@ export default function CompareZipsPage() {
                     For journalists and data nerds
                   </h3>
                   <ul className="space-y-2.5 text-xs text-muted-foreground">
-                    <li>Use the export below for your own charts and analyses.</li>
-                    <li>Always mention the data vintage and source in your stories.</li>
+                    <li>Download the data to build your own charts and analyses.</li>
+                    <li>Always mention the data year and sources in your stories or reports.</li>
                     <li>
-                      If you see something that looks off, tell us — we routinely fix errors and publish changes.
+                      If something looks off, you can{" "}
+                      <Link to="/contact" className="text-primary hover:underline">contact us</Link>
+                      {" "}— we regularly fix issues and publish changes.
                     </li>
                   </ul>
                 </CardContent>
@@ -496,21 +454,24 @@ export default function CompareZipsPage() {
               <CardContent className="p-5">
                 <h3 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-4">
                   <Download className="h-4 w-4 text-primary" />
-                  Export & share
+                  Export &amp; share
                 </h3>
                 <div className="flex flex-wrap gap-2">
-                  <Button size="sm" variant="outline" className="gap-1.5 text-xs" disabled>
+                  <Button size="sm" variant="outline" className="gap-1.5 text-xs" onClick={handleCSV}>
                     <Download className="h-3.5 w-3.5" /> Download CSV
                   </Button>
-                  <Button size="sm" variant="outline" className="gap-1.5 text-xs" disabled>
+                  <Button size="sm" variant="outline" className="gap-1.5 text-xs" onClick={handleJSON}>
                     <Download className="h-3.5 w-3.5" /> Download JSON
                   </Button>
                   <Button size="sm" variant="outline" className="gap-1.5 text-xs" onClick={copyKeyStats}>
-                    <Copy className="h-3.5 w-3.5" /> Copy key stats with citations
+                    <Copy className="h-3.5 w-3.5" /> Copy 3 key stats with citations
+                  </Button>
+                  <Button size="sm" variant="outline" className="gap-1.5 text-xs" onClick={copyMarkdown}>
+                    <FileCode className="h-3.5 w-3.5" /> Copy table as Markdown
                   </Button>
                 </div>
                 <p className="text-[11px] text-muted-foreground mt-3">
-                  CSV and JSON exports will be available once live data feeds are connected for ZIP-level metrics.
+                  CSV and JSON exports will be wired once live data feeds are connected. Markdown and citation copy work now with placeholder data.
                 </p>
               </CardContent>
             </Card>
@@ -552,7 +513,7 @@ export default function CompareZipsPage() {
         </div>
       )}
 
-      {/* Empty state */}
+      {/* ── Empty state ── */}
       {!hasComparison && (
         <div className="container max-w-2xl py-16 text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={2}>
