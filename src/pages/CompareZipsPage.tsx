@@ -31,6 +31,7 @@ import AskCopilotButton from "@/components/shared/AskCopilotButton";
 import ViewModeToggle, { type ViewMode } from "@/components/shared/ViewModeToggle";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
 import { toast } from "sonner";
+import PageFeedback from "@/components/shared/PageFeedback";
 
 // ── Icon lookup ──────────────────────────────────────────────────────────────
 const GROUP_ICONS: Record<MetricGroupId, React.ReactNode> = {

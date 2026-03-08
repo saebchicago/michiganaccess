@@ -4,6 +4,7 @@
  * No PHI. External links labeled clearly.
  */
 import { useState } from "react";
+import PageFeedback from "@/components/shared/PageFeedback";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useTranslation } from "react-i18next";
