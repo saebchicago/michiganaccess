@@ -53,3 +53,6 @@ verify_jwt = false
 
 [functions.gemini-explainer]
 verify_jwt = false
+
+[functions.civic-copilot]
+verify_jwt = false

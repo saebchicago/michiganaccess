@@ -8,11 +8,10 @@ interface Message {
 }
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-// Prefer Supabase edge function (streaming) when configured; fall back to Netlify function
+// Use Lovable AI civic copilot (streaming) when Supabase configured; Netlify fallback otherwise
 const CHAT_URL = SUPABASE_URL
-  ? `${SUPABASE_URL}/functions/v1/michigan-chat`
+  ? `${SUPABASE_URL}/functions/v1/civic-copilot`
   : "/.netlify/functions/chat-mistral";
-// When using the Netlify fallback, responses are non-streaming JSON { reply: string }
 const USE_STREAMING = !!SUPABASE_URL;
 
 const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, ref) {
