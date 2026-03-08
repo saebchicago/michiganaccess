@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import {
   BarChart3, MapPin, Download, AlertTriangle, Info, FileText,
   Heart, Home, Zap, Droplets, Bus, Activity, Copy, ArrowRight,
-  Shield, ExternalLink, MessageSquare, FileCode,
+  Shield, ExternalLink, MessageSquare, FileCode, Printer,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -31,6 +31,7 @@ import AskCopilotButton from "@/components/shared/AskCopilotButton";
 import ViewModeToggle, { type ViewMode } from "@/components/shared/ViewModeToggle";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
 import { toast } from "sonner";
+import PageFeedback from "@/components/shared/PageFeedback";
 
 // ── Icon lookup ──────────────────────────────────────────────────────────────
 const GROUP_ICONS: Record<MetricGroupId, React.ReactNode> = {
@@ -179,12 +180,16 @@ function ZipComparisonTable({ summary }: { summary: ZipComparisonSummary }) {
 // ── Page Component ───────────────────────────────────────────────────────────
 export default function CompareZipsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialZips = [
-    searchParams.get("z1") || "",
-    searchParams.get("z2") || "",
-    searchParams.get("z3") || "",
-    searchParams.get("z4") || "",
-  ];
+  // Support both ?z1=&z2= and ?zips=48201,48301,49686 formats
+  const commaZips = (searchParams.get("zips") || "").split(",").filter(Boolean);
+  const initialZips = commaZips.length >= 2
+    ? [...commaZips, "", "", ""].slice(0, 4)
+    : [
+        searchParams.get("z1") || "",
+        searchParams.get("z2") || "",
+        searchParams.get("z3") || "",
+        searchParams.get("z4") || "",
+      ];
   const [viewMode, setViewMode] = useState<ViewMode>("standard");
   const [inputs, setInputs] = useState(initialZips);
   const [activeZips, setActiveZips] = useState<string[]>(
@@ -547,6 +552,14 @@ export default function CompareZipsPage() {
               </CardContent>
             </Card>
           </motion.div>
+
+          {/* Print + Feedback */}
+          <div className="flex items-center justify-end print:hidden">
+            <Button variant="outline" size="sm" onClick={() => window.print()} className="gap-1.5">
+              <Printer className="h-4 w-4" /> Print / Save as PDF
+            </Button>
+          </div>
+          <PageFeedback />
         </div>
       )}
 

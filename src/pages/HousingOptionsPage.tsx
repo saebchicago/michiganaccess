@@ -3,7 +3,9 @@
  * Uses existing community_resources + static findhelp links.
  * No PHI. External links labeled clearly.
  */
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import PageFeedback from "@/components/shared/PageFeedback";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useTranslation } from "react-i18next";
@@ -68,6 +70,7 @@ function ExtLink({ href, children }: { href: string; children: React.ReactNode }
 
 export default function HousingOptionsPage() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   usePageMeta({
     title: "Find Housing Options — Access Michigan",
     description: "Step-by-step help finding emergency shelter, affordable rentals, and subsidized housing in Michigan.",
@@ -77,8 +80,12 @@ export default function HousingOptionsPage() {
   const { county, setCounty, setZip, granularLocation } = useCounty();
   const { profile } = usePersonalProfile();
 
+  // Support ?zip=48201 from "Try it now" links
+  const paramZip = searchParams.get("zip") || "";
+  const defaultZip = paramZip || profile.primaryZip || granularLocation.zip || "";
+
   const [step, setStep] = useState(1);
-  const [zipInput, setZipInput] = useState(profile.primaryZip ?? granularLocation.zip ?? "");
+  const [zipInput, setZipInput] = useState(defaultZip);
   const [selectedCounty, setSelectedCounty] = useState<MichiganCounty | null>(county);
   const [situation, setSituation] = useState<Situation | null>(
     profile.housingStatus === "homeless" ? "emergency" : profile.housingStatus === "at_risk" ? "at_risk" : null
@@ -330,6 +337,14 @@ export default function HousingOptionsPage() {
               />
 
               <Button variant="ghost" size="sm" onClick={() => setStep(1)} className="gap-1"><ArrowLeft className="h-3.5 w-3.5" /> Start over</Button>
+
+              {/* Print */}
+              <div className="flex items-center justify-end print:hidden">
+                <Button variant="outline" size="sm" onClick={() => window.print()} className="gap-1.5">
+                  <FileText className="h-4 w-4" /> Print / Save as PDF
+                </Button>
+              </div>
+              <PageFeedback />
             </motion.div>
           )}
         </AnimatePresence>

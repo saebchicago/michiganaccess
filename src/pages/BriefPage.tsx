@@ -1,4 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import PageFeedback from "@/components/shared/PageFeedback";
+import { useSearchParams } from "react-router-dom";
 import { usePersonalProfile } from "@/hooks/usePersonalProfile";
 import { useTranslation } from "react-i18next";
 import { useCounty, MICHIGAN_COUNTIES, type MichiganCounty } from "@/contexts/CountyContext";
@@ -98,9 +100,18 @@ function getCrossSectorTensions(county: string, profile: typeof COUNTY_PROFILES[
 export default function BriefPage() {
   const { t } = useTranslation();
   const { county, setCounty } = useCounty();
+  const [searchParams] = useSearchParams();
   const printRef = useRef<HTMLDivElement>(null);
   const { profile: personalProfile } = usePersonalProfile();
   const [viewMode, setViewMode] = useState<ViewMode>("standard");
+
+  // Support ?county=Wayne from "Try it now" links
+  useEffect(() => {
+    const paramCounty = searchParams.get("county");
+    if (paramCounty && MICHIGAN_COUNTIES.includes(paramCounty as MichiganCounty) && paramCounty !== county) {
+      setCounty(paramCounty as MichiganCounty);
+    }
+  }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   usePageMeta({
     title: county ? `${county} County Brief — Access Michigan` : "County Brief — Access Michigan",
@@ -341,6 +352,14 @@ export default function BriefPage() {
                 <a href="/methodology" className="text-primary hover:underline ml-0.5">Full methodology →</a>
               </p>
             </div>
+
+            {/* Print + Feedback */}
+            <div className="flex items-center justify-end print:hidden">
+              <Button variant="outline" size="sm" onClick={() => window.print()} className="gap-1.5">
+                <Printer className="h-4 w-4" /> Print / Save as PDF
+              </Button>
+            </div>
+            <PageFeedback />
           </div>
         )}
 

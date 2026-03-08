@@ -23,6 +23,8 @@ import {
   Database,
   RefreshCw,
   Shield,
+  BarChart3,
+  Home,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -626,26 +628,48 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
+          {/* "Try it now" strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.75, duration: 0.5 }}
+            className="mt-6 flex flex-col items-center gap-2"
+          >
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-primary-foreground/50">
+              See what Access Michigan can do in under 30 seconds
+            </span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <Link
+                to="/brief?county=Wayne"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/20 hover:bg-white/30 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
+              >
+                <MapPin className="h-3.5 w-3.5" /> See a sample county brief →
+              </Link>
+              <Link
+                to="/compare-zips?zips=48201,48301,49686"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/20 hover:bg-white/30 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
+              >
+                <BarChart3 className="h-3.5 w-3.5" /> See ZIP comparisons →
+              </Link>
+              <Link
+                to="/housing-options?zip=48201"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/20 hover:bg-white/30 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
+              >
+                <Home className="h-3.5 w-3.5" /> Explore housing options →
+              </Link>
+            </div>
+          </motion.div>
+
           {/* Data & Insights row */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-            className="mt-6 flex flex-col items-center gap-2 text-center max-w-lg mx-auto"
+            transition={{ delay: 0.85, duration: 0.5 }}
+            className="mt-5 flex flex-col items-center gap-2 text-center max-w-lg mx-auto"
           >
             <span className="text-[10px] font-medium text-primary-foreground/40 uppercase tracking-wider">
               Civic Intelligence Layer
             </span>
-            <h3 className="text-base font-bold text-primary-foreground/90 flex items-center gap-1.5">
-              <Database className="h-4 w-4" aria-hidden="true" />
-              Explore Michigan's civic data layer
-            </h3>
-            <p className="text-[11px] text-primary-foreground/55 leading-relaxed">
-              ZIP and county-level health, housing, equity, and access metrics across all 83 counties.
-            </p>
-            <p className="text-[10px] text-primary-foreground/40 italic">
-              Compare ZIPs and counties, export briefs, and see gaps in seconds.
-            </p>
             <div className="flex gap-2 mt-1">
               <Link to="/data-and-insights">
                 <Button size="sm" className="rounded-full text-xs h-7 px-3.5">

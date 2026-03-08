@@ -25,6 +25,7 @@ import {
   ArrowRight,
   Info,
   Sparkles,
+  MapPin,
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -189,16 +190,31 @@ export default function AboutPage() {
             {t("aboutPage.subtitle")}
           </motion.p>
 
-          {/* Citizen initiative origin */}
-          {/* Why this exists */}
+          {/* Why this exists + See it in action */}
           <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="mx-auto max-w-2xl mt-8 text-left space-y-3">
             <p className="text-sm font-semibold text-foreground">Why this exists</p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Access Michigan started as a citizen project by a healthcare operations and data leader frustrated by how hard it was to get a clear, consistent view of need across Michigan. It is built as a public good: no accounts, no tracking, and methods you can inspect.
+              Access Michigan started as a citizen project by a healthcare data leader. It organizes public data so residents can find help and organizations can see where systems work—and where they fail.
             </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Independent civic platform — not affiliated with MDHHS, Michigan 2-1-1, or any government agency. No cookies, no tracking, no selling user data. Open methodology and fully inspectable sources.
+              Independent civic platform — not affiliated with any government agency. No cookies, no tracking, no selling user data.
             </p>
+          </motion.div>
+
+          {/* See it in action */}
+          <motion.div variants={fadeUp} custom={4} initial="hidden" animate="visible" className="mx-auto max-w-2xl mt-6">
+            <p className="text-xs font-semibold text-foreground mb-2">See it in action:</p>
+            <div className="flex flex-wrap gap-2">
+              <Link to="/brief?county=Oakland" className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs text-primary hover:bg-muted transition-colors">
+                <MapPin className="h-3 w-3" /> Oakland County brief
+              </Link>
+              <Link to="/compare-zips?zips=48201,48301,49686" className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs text-primary hover:bg-muted transition-colors">
+                <BarChart3 className="h-3 w-3" /> Compare ZIPs 48201 vs 48301 vs 49686
+              </Link>
+              <Link to="/housing-options?zip=48201" className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs text-primary hover:bg-muted transition-colors">
+                <Heart className="h-3 w-3" /> Housing options for a Detroit ZIP
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>

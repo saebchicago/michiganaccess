@@ -1,6 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Zap, ExternalLink, Building2 } from "lucide-react";
+import { Zap, ExternalLink, Building2, Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   getCountyUtilityStressSummary,
   stressLevelColor,
@@ -27,6 +33,18 @@ export default function UtilityStressSection({ county }: { county: string }) {
         <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
           <Zap className="h-4 w-4 text-amber-600" />
           Utility Customer Stress
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button type="button" className="text-muted-foreground hover:text-foreground" aria-label="About utility stress data">
+                  <Info className="h-3.5 w-3.5" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-[260px] text-xs">
+                Summarizes recent disconnection, arrears, and assistance patterns using Michigan Public Service Commission data. See MPSC for full details.
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </h3>
 
         {isExample && (

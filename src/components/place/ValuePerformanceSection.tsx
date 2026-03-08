@@ -10,10 +10,17 @@ import {
   Minus,
   Download,
   ExternalLink,
+  Info,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useNerdMode } from "@/contexts/NerdModeContext";
 import NerdModeToggle from "@/components/shared/NerdModeToggle";
 import type { Place } from "@/models/Place";
@@ -291,8 +298,20 @@ export default function ValuePerformanceSection({ place }: { place: Place }) {
     <section id="value-performance" className="space-y-6" aria-labelledby="vp-heading">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 id="vp-heading" className="text-xl font-bold text-foreground">
+          <h2 id="vp-heading" className="text-xl font-bold text-foreground flex items-center gap-1.5">
             Value &amp; Performance
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button type="button" className="text-muted-foreground hover:text-foreground" aria-label="About Value & Performance">
+                    <Info className="h-4 w-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-[280px] text-xs">
+                  A cross-sector snapshot of how health care, housing, utilities, transportation, and environment are working for this place.
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </h2>
           <p className="text-sm text-muted-foreground mt-0.5">
             How well systems are working here — across health, utilities, water, transportation, and environment.
