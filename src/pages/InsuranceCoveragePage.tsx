@@ -447,6 +447,14 @@ export default function InsuranceCoveragePage() {
             );
           })}
         </Tabs>
+
+        {/* Copilot */}
+        <div className="flex justify-center mt-8">
+          <AskCopilotButton
+            context="Context: insurance. This is the Michigan Insurance & Coverage Guide page. The user may need help understanding Medicaid, Medicare, Marketplace, FQHCs, or private insurance. Instructions: Identify likely program type(s) and provide 3–5 concrete next steps with official links. Include explicit disclaimers that this is general information, not legal or financial advice."
+            label="Ask Copilot about insurance options"
+          />
+        </div>
       </div>
     </Layout>
   );
