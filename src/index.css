@@ -5,74 +5,84 @@
 
 @layer base {
   :root {
-    /* Michigan Access — Civic Infrastructure Design System */
-    --background: 220 16% 98%;
-    --foreground: 220 25% 12%;
+    /* ── Access Michigan Civic Design System ──────────────────── */
+    /* Primary: #3f51b5 → hsl(231 44% 48%) */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 13%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 12%;
+    --card-foreground: 0 0% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 12%;
+    --popover-foreground: 0 0% 13%;
 
-    /* Civic Blue — authoritative, calm */
-    --primary: 215 65% 28%;
+    --primary: 231 44% 48%;
     --primary-foreground: 0 0% 100%;
 
-    /* Light neutral */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 215 65% 28%;
+    /* Secondary: #ffca28 → hsl(45 100% 58%) */
+    --secondary: 45 100% 58%;
+    --secondary-foreground: 0 0% 13%;
 
     --muted: 220 14% 95%;
-    --muted-foreground: 220 12% 38%;
+    --muted-foreground: 0 0% 33%;
 
-    /* Teal accent — structured, modern */
-    --accent: 192 91% 36%;
+    /* Accent / tertiary: #558b2f → hsl(93 51% 36%) */
+    --accent: 93 51% 36%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%;
+    /* Error: #c62828 → hsl(0 66% 47%) */
+    --destructive: 0 66% 47%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 215 65% 28%;
+    /* Warning: #ff9800 → hsl(36 100% 50%) */
+    --warning: 36 100% 50%;
+    --warning-foreground: 0 0% 13%;
 
-    --radius: 0.75rem;
+    /* Info: #5c6bc0 → hsl(232 36% 56%) */
+    --info: 232 36% 56%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 231 44% 48%;
+
+    --radius: 0.5rem;
 
     /* Extended civic palette */
-    --michigan-blue: 215 65% 28%;
-    --forest-green: 152 28% 32%;
+    --michigan-blue: 231 44% 48%;
+    --forest-green: 93 51% 36%;
     --teal: 186 50% 36%;
     --sky-blue: 210 60% 55%;
-    --warm-gold: 38 75% 55%;
+    --warm-gold: 45 100% 58%;
     --coral: 4 65% 58%;
-    --navy: 215 70% 18%;
+    --navy: 231 50% 22%;
     --slate: 220 12% 40%;
 
     /* Sidebar */
     --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 10% 26%;
-    --sidebar-primary: 215 65% 28%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 231 44% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 186 50% 36%;
+    --sidebar-accent: 93 51% 36%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 215 65% 28%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 231 44% 48%;
 
     /* Chart colors */
-    --chart-1: 215 65% 28%;
-    --chart-2: 152 28% 32%;
+    --chart-1: 231 44% 48%;
+    --chart-2: 93 51% 36%;
     --chart-3: 186 50% 36%;
-    --chart-4: 38 75% 55%;
-    --chart-5: 4 65% 58%;
+    --chart-4: 45 100% 58%;
+    --chart-5: 0 66% 47%;
+
     --bottom-nav-h: 3.5rem;
     --sab: env(safe-area-inset-bottom, 0px);
     --safe-bottom: calc(var(--bottom-nav-h) + var(--sab));
-    --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, Times New Roman, Times, serif;
-    --shadow-sm: 0px 1px 4px 0px hsla(0, 0%, 0%, 0.15);
-    --shadow: 0px 1px 8px 0px hsla(0, 0%, 0%, 0.15);
-    --shadow-md: 0px 1px 12px 0px hsla(0, 0%, 0%, 0.15);
-    --shadow-lg: 0px 1px 20px 0px hsla(0, 0%, 0%, 0.15);
+    --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
   }
 
   .dark {
