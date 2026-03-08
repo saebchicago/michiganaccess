@@ -12,8 +12,8 @@ export default function EventCalendarPreview() {
     queryKey: ["partner-events-preview"],
     queryFn: async () => {
       const today = new Date().toISOString().slice(0, 10);
-      const { data } = await supabase
-        .from("community_events_public" as any)
+      const { data } = await (supabase as any)
+        .from("community_events_public")
         .select("id, title, event_date, city, county, event_type, is_free")
         .gte("event_date", today)
         .eq("is_active", true)
