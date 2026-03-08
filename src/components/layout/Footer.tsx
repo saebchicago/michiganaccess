@@ -91,23 +91,9 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Link sections */}
+          {/* Link sections — collapsible on mobile for Services & About */}
           {footerSections.map((section) => (
-            <nav key={section.title} aria-label={section.title}>
-              <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{section.title}</h4>
-              <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <Link
-                      to={link.href}
-                      className="text-sm text-foreground/70 transition-colors hover:text-primary"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+            <FooterSection key={section.title} title={section.title} links={section.links} collapsible={section.title === "Services" || section.title.includes("About")} />
           ))}
         </div>
 
