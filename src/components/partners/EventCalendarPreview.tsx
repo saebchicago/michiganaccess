@@ -13,7 +13,7 @@ export default function EventCalendarPreview() {
     queryFn: async () => {
       const today = new Date().toISOString().slice(0, 10);
       const { data } = await supabase
-        .from("community_events")
+        .from("community_events_public" as any)
         .select("id, title, event_date, city, county, event_type, is_free")
         .gte("event_date", today)
         .eq("is_active", true)
