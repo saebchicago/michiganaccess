@@ -28,6 +28,8 @@ import {
   type MetricGroupId,
 } from "@/data/zip-comparison-types";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
+import ViewModeToggle, { type ViewMode } from "@/components/shared/ViewModeToggle";
+import PartnerCTABar from "@/components/brief/PartnerCTABar";
 import { toast } from "sonner";
 
 // ── Icon lookup ──────────────────────────────────────────────────────────────
