@@ -13,12 +13,6 @@ import {
 import { useCounty } from "@/contexts/CountyContext";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
 import { getCountyCrossDomain } from "@/data/cross-domain-indicators";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ChevronRight, ArrowLeft, RotateCcw, ShieldCheck, ExternalLink,
-  CalendarCheck, Calculator, FileUp, BookOpen, HelpCircle, Users,
-  DollarSign, Briefcase, Heart, Building2,
-} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
