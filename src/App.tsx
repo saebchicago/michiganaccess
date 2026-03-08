@@ -36,6 +36,7 @@ const PageLoader = () => (
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <CountyProvider>
+      <NerdModeProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
