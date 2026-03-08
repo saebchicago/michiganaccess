@@ -310,14 +310,17 @@ export default function CompareZipsPage() {
                 />
               ))}
             </div>
-            <div className="flex flex-col items-center gap-2">
-              <Button onClick={handleCompare} className="gap-1.5">
-                <BarChart3 className="h-4 w-4" /> Compare ZIP codes
-              </Button>
-              <Link to="/compare" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-                Or compare counties instead →
-              </Link>
-            </div>
+              <div className="flex flex-col items-center gap-2">
+                <Button onClick={handleCompare} className="gap-1.5">
+                  <BarChart3 className="h-4 w-4" /> Compare ZIP codes
+                </Button>
+                <div className="flex items-center gap-3">
+                  <Link to="/compare" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                    Or compare counties instead →
+                  </Link>
+                  <ViewModeToggle value={viewMode} onChange={setViewMode} />
+                </div>
+              </div>
           </motion.div>
         </div>
       </section>
