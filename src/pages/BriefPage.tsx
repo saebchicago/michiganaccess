@@ -130,6 +130,7 @@ export default function BriefPage() {
   const profile = county ? COUNTY_PROFILES[county] : null;
   const score = county ? computeCivicScore(county) : null;
   const urgentLines = county && profile ? buildUrgentSummary(county, profile) : [];
+  const tensions = county && profile ? getCrossSectorTensions(county, profile) : [];
 
   const copilotContext = county && profile
     ? `County Brief for ${county} County, Michigan. Population: ${profile.population}. Type: ${profile.countyType}. Cities: ${profile.majorCities.join(", ")}. Uninsured: ${getVal(profile.healthHighlights, "uninsured")}. Food insecurity: ${getVal(profile.healthHighlights, "food")}. Civic Score: ${score}/100.`
