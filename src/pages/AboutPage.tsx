@@ -561,6 +561,39 @@ export default function AboutPage() {
           </Card>
         </motion.div>
 
+        {/* How we keep this honest */}
+        <section id="trust-methods">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+            <Card className="border-michigan-forest/20 bg-michigan-forest/[0.03]">
+              <CardContent className="pt-6 space-y-4">
+                <div className="flex items-center gap-2">
+                  <Shield className="h-5 w-5 text-michigan-forest" />
+                  <h2 className="text-lg font-bold text-foreground">How we keep this honest</h2>
+                </div>
+                <ul className="space-y-2.5">
+                  {[
+                    "No ads, no tracking, no pay-to-play listings.",
+                    "If we don't have data for a ZIP or topic, we say so instead of guessing.",
+                    "Every number is either from a named public dataset or a clearly labeled modeled index, with methods in one place.",
+                    "When we find mistakes or better methods, we fix them and update this page.",
+                  ].map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-michigan-forest" />
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-muted-foreground italic">
+                  We invite researchers, journalists, and community partners to audit our methods and tell us what they see.
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  <Link to="/methodology#trust-log" className="text-primary hover:underline">See change log & data updates →</Link>
+                </p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </section>
+
         {/* Collaborate */}
         <motion.div
           initial="hidden"
