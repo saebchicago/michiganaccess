@@ -3,8 +3,9 @@
  * Uses existing community_resources + static findhelp links.
  * No PHI. External links labeled clearly.
  */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PageFeedback from "@/components/shared/PageFeedback";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useTranslation } from "react-i18next";
