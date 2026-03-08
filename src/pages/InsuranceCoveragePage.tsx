@@ -101,10 +101,11 @@ const PROGRAMS = [
     icon: Briefcase,
     color: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300",
     who: "Employees offered coverage through their employer, or individuals purchasing directly from an insurer.",
-    covers: "Varies by plan. Michigan's largest insurer is Blue Cross Blue Shield of Michigan / Blue Care Network.",
-    howToApply: "Enroll through your employer during open enrollment, or buy directly from the insurer.",
+    covers: "Varies by plan. Michigan's largest insurer is Blue Cross Blue Shield of Michigan / Blue Care Network. Plans must cover Essential Health Benefits under ACA.",
+    howToApply: "Enroll through your employer during open enrollment, or buy directly from the insurer. BCBSM offers a Patient Access portal for members to view coverage details, EOBs, and claims history.",
     links: [
       { label: "BCBSM Member Resources", href: "https://www.bcbsm.com/", external: true },
+      { label: "BCBSM Patient Access Portal", href: "https://www.bcbsm.com/member/", external: true },
       { label: "Understand Your EOB", href: "/health/insurance-appeals", external: false },
     ],
     updated: "March 2026",
