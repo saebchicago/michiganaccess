@@ -45,15 +45,26 @@ const trendIcon = (t?: "up" | "down" | "stable") => {
 function buildUrgentSummary(county: string, profile: typeof COUNTY_PROFILES[string]): string[] {
   const lines: string[] = [];
   const hh = profile.healthHighlights;
-  const uninsured = parseFloat(getVal(hh, "uninsured"));
-  const food = parseFloat(getVal(hh, "food"));
+  const uninsuredRaw = getVal(hh, "uninsured");
+  const foodRaw = getVal(hh, "food");
+  const uninsured = parseFloat(uninsuredRaw);
+  const food = parseFloat(foodRaw);
 
-  if (uninsured > 8) lines.push(`Health: ${county} County's uninsured rate (${uninsured}%) is above the state average of 6.2%, signaling gaps in coverage access.`);
-  else lines.push(`Health: ${county} County has a manageable uninsured rate (${uninsured}%), but primary care access varies by community.`);
+  if (isNaN(uninsured)) {
+    lines.push(`Health: Uninsured rate data is pending for ${county} County. Check back soon or visit the county page for details.`);
+  } else if (uninsured > 8) {
+    lines.push(`Health: ${county} County's uninsured rate (${uninsured}%) is above the state average of 6.2%, signaling gaps in coverage access.`);
+  } else {
+    lines.push(`Health: ${county} County has a manageable uninsured rate (${uninsured}%), but primary care access varies by community.`);
+  }
 
-  if (food > 14) lines.push(`Housing & Food: Food insecurity at ${food}% exceeds the state average (13.5%), compounding chronic health conditions.`);
-  else lines.push(`Housing & Food: Food insecurity (${food}%) is near or below state norms, though pockets of need persist.`);
-
+  if (isNaN(food)) {
+    lines.push(`Housing & Food: Food insecurity data is pending for ${county} County.`);
+  } else if (food > 14) {
+    lines.push(`Housing & Food: Food insecurity at ${food}% exceeds the state average (13.5%), compounding chronic health conditions.`);
+  } else {
+    lines.push(`Housing & Food: Food insecurity (${food}%) is near or below state norms, though pockets of need persist.`);
+  }
   lines.push(`Utilities & Environment: Energy burden and outage data are key equity indicators — check the Value & Performance section on the county page for details.`);
   return lines;
 }

@@ -20,6 +20,7 @@ export default function AskCopilotButton({ context, label = "Ask Copilot about t
     setLoading(true);
     setAnswer("");
 
+    const safeContext = context.slice(0, 2000);
     try {
       const resp = await fetch(CHAT_URL, {
         method: "POST",
@@ -31,7 +32,7 @@ export default function AskCopilotButton({ context, label = "Ask Copilot about t
           messages: [
             {
               role: "user",
-              content: `Based on this page context, give me a helpful summary and key takeaways:\n\n${context}`,
+              content: `Based on this page context, give me a helpful summary and key takeaways:\n\n${safeContext}`,
             },
           ],
         }),
