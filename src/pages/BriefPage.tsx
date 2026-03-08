@@ -341,6 +341,14 @@ export default function BriefPage() {
                 <a href="/methodology" className="text-primary hover:underline ml-0.5">Full methodology →</a>
               </p>
             </div>
+
+            {/* Print + Feedback */}
+            <div className="flex items-center justify-end print:hidden">
+              <Button variant="outline" size="sm" onClick={() => window.print()} className="gap-1.5">
+                <Printer className="h-4 w-4" /> Print / Save as PDF
+              </Button>
+            </div>
+            <PageFeedback />
           </div>
         )}
 
