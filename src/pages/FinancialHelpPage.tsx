@@ -95,6 +95,11 @@ export default function FinancialHelpPage() {
     <Layout>
       <div className="container pt-6">
         <Breadcrumbs items={[{ label: "Financial Help" }]} />
+        <div className="mt-2 mb-4">
+          <Link to="/housing-options" className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-medium">
+            <Home className="h-3.5 w-3.5" /> Looking for housing help? Try our Housing Options guide →
+          </Link>
+        </div>
       </div>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-coral/5 to-background py-12 lg:py-20">

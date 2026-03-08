@@ -233,6 +233,18 @@ export default function BriefPage() {
               </Card>
             )}
 
+            {/* Profile-based emphasis */}
+            {profileEmphasis.length > 0 && (
+              <Card className="border-primary/20 bg-primary/5">
+                <CardContent className="py-4">
+                  <p className="text-xs font-medium text-primary mb-1">Based on your My Settings profile:</p>
+                  {profileEmphasis.map((line, i) => (
+                    <p key={i} className="text-sm text-foreground/80 leading-relaxed">{line}</p>
+                  ))}
+                </CardContent>
+              </Card>
+            )}
+
             {/* ═══ WHAT'S MOST URGENT ═══ */}
             <Card className="border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/20">
               <CardContent className="py-5">
