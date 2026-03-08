@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, Heart, ChevronDown, Download, Sparkles, Search, BarChart2 } from "lucide-react";
+import MySettingsDrawer from "@/components/shared/MySettingsDrawer";
 import BenefitsWizard from "@/components/home/BenefitsWizard";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -99,7 +100,7 @@ const Header = () => {
             Compare
           </Link>
           <CountySelector variant="header" />
-         
+          <MySettingsDrawer />
           <ThemeToggle />
           <Button
             size="sm"

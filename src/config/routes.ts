@@ -104,6 +104,7 @@ const pages = {
   DatasetExplorerPage: lazy(() => import("@/pages/DatasetExplorerPage")),
   BriefPage: lazy(() => import("@/pages/BriefPage")),
   CompareZipsPage: lazy(() => import("@/pages/CompareZipsPage")),
+  HousingOptionsPage: lazy(() => import("@/pages/HousingOptionsPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -179,6 +180,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/terms", component: pages.TermsPage, label: "Terms of Use" },
   { path: "/zoning", component: pages.ZoningPage, label: "Zoning & Land Use" },
   { path: "/brief", component: pages.BriefPage, label: "County Brief" },
+  { path: "/housing-options", component: pages.HousingOptionsPage, label: "Housing Options" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
@@ -199,7 +201,8 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     label: "Services",
     children: [
       { label: "Find Help", href: "/find-care" },
-      { label: "Insurance & Coverage", href: "/insurance-coverage", badge: "New" },
+      { label: "Housing Options", href: "/housing-options", badge: "New" },
+      { label: "Insurance & Coverage", href: "/insurance-coverage" },
       { label: "Community Resources", href: "/resources", i18nKey: "nav.communityResources" },
       { label: "Financial Help", href: "/financial-help", i18nKey: "nav.financialHelp" },
       { label: "Energy & Utilities", href: "/environment" },

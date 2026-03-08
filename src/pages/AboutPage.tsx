@@ -543,6 +543,24 @@ export default function AboutPage() {
           </motion.div>
         </section>
 
+        {/* Personalization notice */}
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+          <Card className="border-border">
+            <CardContent className="pt-6 space-y-3">
+              <div className="flex items-center gap-2">
+                <Info className="h-5 w-5 text-primary" />
+                <h2 className="text-lg font-bold text-foreground">Optional Personalization</h2>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Access Michigan offers an optional "My Settings" feature (the gear icon in the header) where you can set your ZIP code, coverage type, and other preferences. This information is stored only in your browser's local storage on your device — it is never sent to our servers. You can clear it at any time from the same panel.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                In the future, we may offer an optional, paid <strong>Access Michigan Pro</strong> lane where you can securely sign in, save your profile, and connect your health plan's Patient Access API. That will always be opt-in, separate from the free tools, and designed with strict privacy and security safeguards. No timeline has been set for this feature.
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
+
         {/* Collaborate */}
         <motion.div
           initial="hidden"
