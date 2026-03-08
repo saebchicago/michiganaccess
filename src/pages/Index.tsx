@@ -1,270 +1,65 @@
-import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
-import { useState, lazy, Suspense, useCallback, useEffect } from "react";
+import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  ChevronDown,
-  ChevronUp,
-  Sparkles,
-  Heart,
-  Users,
-  AlertCircle,
-  ArrowRight,
-  MapPin,
-  BarChart3,
-  ShieldCheck,
-  Globe2,
-  Lock,
-  Database,
-  Hash,
-  Target,
-  FileText as FileTextIcon,
-  LineChart,
-  Megaphone,
-  Map as MapIcon,
-  GitCompareArrows,
-  FileDown,
-} from "lucide-react";
 import { Link } from "react-router-dom";
-import { FileText } from "lucide-react";
 import { motion } from "framer-motion";
-import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
-import { DataClassification } from "@/components/shared/DataClassification";
+import { Shield, Lock, Globe2, ArrowRight, Database } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
-import GuidedPathways from "@/components/home/GuidedPathways";
-import { EquityInsightCard } from "@/components/shared/EquityInsightCard";
-import { ProfessionalGateway } from "@/components/home/ProfessionalGateway";
-import AuthorityStrip from "@/components/home/AuthorityStrip";
-import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
-import AudienceSelector from "@/components/home/AudienceSelector";
-import DiscoveryWizard from "@/components/home/DiscoveryWizard";
+import HomePrimaryPaths from "@/components/home/HomePrimaryPaths";
+import HomeSectorGrid from "@/components/home/HomeSectorGrid";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
-import SocialProofStrip from "@/components/home/SocialProofStrip";
+import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AccessChat } from "@/components/AccessChat";
-import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
-
+import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import LazySection from "@/components/shared/LazySection";
 import DataProvenance from "@/components/shared/DataProvenance";
 
-// ── Below-fold: lazy-loaded components ──
-const UnderstandMyCommunity = lazy(() => import("@/components/place/UnderstandMyCommunity"));
-const WatchlistPanel = lazy(() => import("@/components/shared/WatchlistPanel"));
-const BetaImpactCounter = lazy(() => import("@/components/shared/BetaImpactCounter"));
-const HealthDataSnapshot = lazy(() => import("@/components/home/HealthDataSnapshot"));
+// ── Below-fold: lazy-loaded ──
+const FounderSupportSection = lazy(() => import("@/components/shared/FounderSupportSection"));
 const NearbyResourceFinder = lazy(() => import("@/components/home/NearbyResourceFinder"));
 const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
-const TransportationSafetyCallout = lazy(() => import("@/components/home/TransportationSafetyCallout"));
-const CommunityAlerts = lazy(() => import("@/components/home/CommunityAlerts"));
 const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
-const SuccessStories = lazy(() => import("@/components/home/SuccessStories"));
-const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
-const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
+const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer"));
+const PublicTrustBar = lazy(() => import("@/components/shared/PublicTrustBar"));
 
-const SectionFallback = () =>
-<div className="py-8 flex justify-center">
+const SectionFallback = () => (
+  <div className="py-8 flex justify-center">
     <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-  </div>;
-
-
-function TrustPanel({ updated }: {updated: string;}) {
-  return (
-    <Card className="border-dashed bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
-      <CardContent className="py-4">
-        <div className="flex gap-4 items-start">
-          <ShieldCheck className="h-6 w-6 mt-0.5 text-primary" aria-hidden="true" />
-          <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-              <span className="font-semibold text-sm">Independent civic utility</span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                <Globe2 className="h-3.5 w-3.5" aria-hidden="true" />
-                Open data
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                <Lock className="h-3.5 w-3.5" aria-hidden="true" />
-                Privacy-first
-              </span>
-              <span className="text-xs text-muted-foreground">Updated {updated}</span>
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Built by Michigan residents, not a government agency. Independently organized to make civic resources effortless to find — no signup, no ads, no data selling, ever.
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>);
-
-}
-
-/** Shared mobile-only accordion toggle button */
-function MobileAccordionToggle({
-  open,
-  openLabel,
-  closedLabel,
-  onToggle
-
-
-
-
-
-}: {open: boolean;openLabel: string;closedLabel: string;onToggle: () => void;}) {
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      className="md:hidden w-full flex items-center justify-between gap-2 px-4 py-3 text-sm font-semibold text-muted-foreground bg-muted/40 hover:bg-muted/60 border-y border-border/50 transition-colors"
-      aria-expanded={open}>
-
-      <span>{open ? openLabel : closedLabel}</span>
-      {open ?
-      <ChevronUp className="h-4 w-4 flex-shrink-0" aria-hidden="true" /> :
-
-      <ChevronDown className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-      }
-    </button>);
-
-}
+  </div>
+);
 
 export type PersonaView = "resident" | "professional";
 
 const Index = () => {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
-  const [wizardOpen, setWizardOpen] = useState(false);
-  const [personaView, setPersonaView] = useState<PersonaView>("resident");
-
-  // Mobile accordions — collapsed on mobile by default, open on desktop
-  const [actionCenterOpen, setActionCenterOpen] = useState(!isMobile);
-  const [nearbyOpen, setNearbyOpen] = useState(!isMobile);
-  const [mapOpen, setMapOpen] = useState(!isMobile);
-  const [proOpen, setProOpen] = useState(!isMobile);
-
-  useEffect(() => {
-    setActionCenterOpen(!isMobile);
-    setNearbyOpen(!isMobile);
-    setMapOpen(!isMobile);
-    setProOpen(!isMobile);
-  }, [isMobile]);
-
-  const isProfessional = personaView === "professional";
-
-  const handlePersonaChange = useCallback(
-    (view: PersonaView) => {
-      setPersonaView(view);
-
-      if (view === "professional") {
-        // make the professional experience “ready to go”
-        setActionCenterOpen(true);
-        setMapOpen(true);
-        setProOpen(true);
-      } else {
-        // resident experience is lighter (especially on mobile)
-        setActionCenterOpen(!isMobile);
-        setMapOpen(!isMobile);
-        setProOpen(!isMobile);
-      }
-    },
-    [isMobile]
-  );
 
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
     description:
-    "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
-    path: "/"
+      "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
+    path: "/",
   });
 
   return (
     <Layout>
-      {/* ═══ LAYER 1 — IMMEDIATE HELP ═══ */}
+      {/* ═══ ALERTS ═══ */}
       <OutageAlertBanner />
       <CountyWelcomeBanner />
 
-      {/* ═══ LAYER 2 — SEARCH & GUIDED PATHWAYS ═══ */}
+      {/* ═══ HERO — mission + search ═══ */}
       <HeroSection />
 
-      {/* ═══ FOR POLICYMAKERS & HEALTH SYSTEMS ═══ */}
-      <section className="py-10 bg-muted/20 border-y border-border/40" aria-labelledby="policy-heading">
-        <div className="container max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45 }}
-            className="text-center mb-8"
-          >
-            <h2 id="policy-heading" className="text-xl font-bold text-foreground sm:text-2xl">
-              For policymakers, health systems, and funders
-            </h2>
-            <p className="text-sm text-muted-foreground mt-1.5 max-w-xl mx-auto">
-              Use Access Michigan as a civic intelligence layer for planning, funding, and accountability.
-            </p>
-          </motion.div>
+      {/* ═══ 3 PRIMARY PATHS ═══ */}
+      <HomePrimaryPaths />
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                icon: Target,
-                title: "Target funding",
-                body: "Identify ZIPs with high need and low service availability.",
-              },
-              {
-                icon: FileTextIcon,
-                title: "Support CHNAs",
-                body: "Export county briefs with income, coverage, and access metrics for any county.",
-              },
-              {
-                icon: LineChart,
-                title: "Monitor equity",
-                body: "Track where improvements are — and aren't — happening across communities.",
-              },
-              {
-                icon: Megaphone,
-                title: "Ground stories",
-                body: "Give journalists and advocates consistent, sourced numbers.",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
-              >
-                <Card className="h-full border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
-                  <CardContent className="pt-5 pb-4">
-                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center mb-3">
-                      <item.icon className="h-4.5 w-4.5 text-primary" aria-hidden="true" />
-                    </div>
-                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{item.body}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+      {/* ═══ 6 SECTOR CARDS ═══ */}
+      <HomeSectorGrid />
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-            <Link to="/data-and-insights">
-              <Button size="sm" className="gap-1.5">
-                <Database className="h-3.5 w-3.5" aria-hidden="true" />
-                Explore Data &amp; Insights
-              </Button>
-            </Link>
-            <Link to="/for-health-systems">
-              <Button size="sm" variant="outline" className="gap-1.5">
-                Health System Tools <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── "Where do you want to start?" immediately after search ── */}
+      {/* ═══ "WHERE DO YOU WANT TO START?" ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
         <LazySection minHeight="120px">
           <Suspense fallback={<SectionFallback />}>
@@ -273,566 +68,88 @@ const Index = () => {
         </LazySection>
       </SectionErrorBoundary>
 
-      {/* ── Generate My County Brief CTA ── */}
-      <div className="container py-4">
-        <Card className="border-primary/15 bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
-          <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
-              <FileText className="h-5 w-5 text-primary" aria-hidden="true" />
+      {/* ═══ FOR POLICY & DATA NERDS ═══ */}
+      <section className="py-10 bg-muted/20 border-y border-border/40" aria-labelledby="nerd-heading">
+        <div className="container max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary mb-3">
+              <Database className="h-3.5 w-3.5" aria-hidden="true" />
+              Civic Data Layer
             </div>
-            <div className="flex-1 text-center sm:text-left">
-              <p className="text-sm font-semibold text-foreground">Generate My County Brief</p>
-              <p className="text-xs text-muted-foreground">Get a civic snapshot with headline metrics, insight score, and print-ready summary.</p>
-            </div>
-            <Link to="/brief">
-              <Button size="sm" className="gap-1.5 whitespace-nowrap">
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                Create Brief
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="container py-4 section-spacing">
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.45 }}>
-          <TrustPanel updated="March 2026" />
-        </motion.div>
-        <DataProvenance
-          source="Public datasets (State of Michigan + local agencies). Independently organized."
-          updated="2026-02-23"
-          methodologyHref="/methodology" />
-      </div>
-
-      {/* Action center (Wizard + persona + guided pathways + authority strip) */}
-      <div className="container py-0">
-        <MobileAccordionToggle
-          open={actionCenterOpen}
-          openLabel="Hide tools & guided pathways"
-          closedLabel="Open tools & guided pathways"
-          onToggle={() => setActionCenterOpen((v) => !v)} />
-
-        <Collapsible open={actionCenterOpen || !isMobile} onOpenChange={setActionCenterOpen}>
-          <CollapsibleContent>
-            <div className="py-4 flex justify-center">
-              <Button onClick={() => setWizardOpen(true)} size="lg" className="gap-2 rounded-full shadow-lg">
-                <Sparkles className="h-4 w-4" aria-hidden="true" /> {t("wizard.cta")}
-              </Button>
-            </div>
-            <DiscoveryWizard open={wizardOpen} onOpenChange={setWizardOpen} />
-            {/* "Who is this for?" strip — also drives persona view */}
-            <AudienceSelector onPersonaChange={handlePersonaChange} />
-            {/* ── anchor: #for-residents → GuidedPathways ── */}
-            <div id="for-residents">
-              <GuidedPathways />
-            </div>
-
-            {/* ── For Researchers & Planners callout ── */}
-            <div className="container max-w-3xl py-6">
-              <Card className="border-primary/20 bg-primary/5">
-                <CardContent className="flex flex-col sm:flex-row items-start gap-4 py-5">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
-                    <Database className="h-5 w-5 text-primary" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-foreground">Need the data, not just the directory?</p>
-                    <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                      Access Michigan organizes 7+ public data feeds into queryable ZIP and county-level snapshots — income, health outcomes, service gaps, equity scores, and more.
-                    </p>
-                  </div>
-                  <Link to="/data-and-insights" className="shrink-0">
-                    <Button size="sm" className="gap-1.5 whitespace-nowrap">
-                      Explore Data & Insights <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            </div>
-
-            <AuthorityStrip />
-            <div className="flex justify-center py-4">
-              <Link to="/data-and-insights">
-                <Button variant="outline" size="sm" className="gap-2 rounded-full">
-                  <BarChart3 className="h-4 w-4" aria-hidden="true" />
-                  Explore data & insights
-                </Button>
-              </Link>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
-
-      {/* ═══ UNDERSTAND MY COMMUNITY CTA ═══ */}
-      <LazySection minHeight="80px">
-        <Suspense fallback={<SectionFallback />}>
-          <section className="py-10 container max-w-2xl">
-            <UnderstandMyCommunity />
-          </section>
-        </Suspense>
-      </LazySection>
-
-      <LazySection minHeight="60px">
-        <Suspense fallback={<SectionFallback />}>
-          <WatchlistPanel />
-        </Suspense>
-      </LazySection>
-
-      <SocialProofStrip />
-
-      {/* ═══ EXPLORE MICHIGAN — 3-card entry points ═══════════
-               Solves: first-time visitors need an immediate, scannable
-               answer to "what can I DO here?" before hitting detailed data.
-            ═══════════════════════════════════════════════════════ */}
-      <section className="py-12 bg-gradient-to-b from-background to-muted/10" aria-labelledby="explore-heading">
-        <div className="container max-w-5xl">
-          <div className="mb-7 text-center">
-             <h2 id="explore-heading" className="text-xl font-bold text-foreground md:text-2xl">
-               Explore Michigan's Civic Data
-             </h2>
-            <p className="text-sm text-muted-foreground mt-1.5">
-               Explore every Michigan county, compare communities side-by-side, and see ZIP and county-level civic insight scores.
-             </p>
-            <p className="text-xs text-muted-foreground mt-2 max-w-lg mx-auto">
-              For health systems &amp; researchers: Build county briefs, export data, and explore equity gaps → <Link to="/for-health-systems" className="text-primary font-medium hover:underline">Learn more</Link>
+            <h2 id="nerd-heading" className="text-xl font-bold text-foreground sm:text-2xl">
+              For policymakers, health systems, and journalists
+            </h2>
+            <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
+              Compare counties, export briefs, explore live Census data, and download CSVs — all built on
+              verified public sources.
             </p>
-          </div>
-
-          <div className="grid gap-responsive sm:grid-cols-2 lg:grid-cols-4">
-            {/* ── Card 1: Health Map ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}>
-
-              <Link
-                to="/health-map"
-                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <MapPin className="h-5 w-5 text-primary" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Explore Your Region</p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    Interactive Michigan map — health resources, clinics, utility outages, food access, and service gaps by county.
-                  </p>
-                   <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">For example, map health deserts across rural counties for a funding proposal.</p>
-                 </div>
-                 <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
-                   Open map →
-                </span>
-              </Link>
-            </motion.div>
-
-            {/* ── Card 2: Compare Counties ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.08 }}>
-
-              <Link
-                to="/compare"
-                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-
-                <div className="w-10 h-10 rounded-lg bg-michigan-forest/10 flex items-center justify-center shrink-0">
-                  <BarChart3 className="h-5 w-5 text-michigan-forest" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Compare Counties</p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    Pick any 2–4 Michigan counties and instantly compare income, health, access, equity gaps, and community scores side by side.
-                  </p>
-                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">For example, compare Wayne and Washtenaw on coverage, poverty, and access gaps.</p>
-                </div>
-                <span className="mt-auto text-xs font-semibold text-michigan-forest group-hover:underline" aria-hidden="true">
-                  Start comparing →
-                </span>
-              </Link>
-            </motion.div>
-
-            {/* ── Card 3: Civic Insight Score teaser ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.16 }}>
-
-              <Link
-                to="/compare"
-                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-
-                <div className="w-10 h-10 rounded-lg bg-michigan-gold/10 flex items-center justify-center shrink-0">
-                  <Sparkles className="h-5 w-5 text-michigan-gold" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Civic Insight Score</p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    One score per county (0–100) combining income, health outcomes, education, housing stability, and opportunity equity.
-                  </p>
-                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">For example, benchmark Wayne County against state averages for a board presentation.</p>
-                </div>
-                {/* Static gauge preview — no network call */}
-                <div className="flex items-center gap-3 mt-1">
-                  <CivicInsightGauge score={67} color="#01579B" />
-                  <div className="text-[10px] text-muted-foreground leading-relaxed">
-                    <span className="font-semibold text-foreground block">Wayne County</span>
-                    Modeled estimate · <Link to="/methodology" className="text-primary hover:underline">See methodology</Link>
-                  </div>
-                </div>
-                <span className="text-xs font-semibold text-michigan-gold group-hover:underline" aria-hidden="true">
-                  See all county scores →
-                </span>
-              </Link>
-            </motion.div>
-
-            {/* ── Card 4: Compare ZIP Codes ── */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.24 }}>
-              <Link
-                to="/compare"
-                className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-5 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Hash className="h-5 w-5 text-primary" aria-hidden="true" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Compare ZIP Codes</p>
-                  <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                    Compare two ZIP codes, or a ZIP vs its county, side by side — income, poverty, education, and more.
-                  </p>
-                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 italic">For example, see which ZIPs in Wayne County have the highest need and fewest services.</p>
-                </div>
-                <span className="mt-auto text-xs font-semibold text-primary group-hover:underline" aria-hidden="true">
-                  Compare ZIPs →
-                </span>
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ PRODUCT STRIP — feature snapshots ═══ */}
-      <section className="py-10 bg-muted/10" aria-label="Product features">
-        <div className="container max-w-5xl">
-          <div className="text-center mb-7">
-            <h2 className="text-xl font-bold text-foreground sm:text-2xl">See what you can do</h2>
-            <p className="text-sm text-muted-foreground mt-1">Institutional-grade civic intelligence, free and open.</p>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {[
-              {
-                icon: MapIcon,
-                title: "See the map",
-                body: "Explore every county with a bright, interactive map of health, housing, and service access.",
-                cta: "Open health map",
-                href: "/health-map",
-                color: "text-primary",
-                bg: "bg-primary/10",
-              },
-              {
-                icon: GitCompareArrows,
-                title: "Compare communities",
-                body: "Compare ZIPs and counties side by side to see where gaps are largest.",
-                cta: "Start comparing",
-                href: "/compare",
-                color: "text-michigan-forest",
-                bg: "bg-michigan-forest/10",
-              },
-              {
-                icon: FileDown,
-                title: "Export briefs",
-                body: "Download one-page county snapshots for board decks, grants, and CHNAs.",
-                cta: "Generate a brief",
-                href: "/brief",
-                color: "text-michigan-blue",
-                bg: "bg-michigan-blue/10",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
-              >
-                <Link
-                  to={item.href}
-                  className="group flex flex-col h-full rounded-xl border border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 p-6 gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  <div className={`w-12 h-12 rounded-xl ${item.bg} flex items-center justify-center`}>
-                    <item.icon className={`h-6 w-6 ${item.color}`} aria-hidden="true" />
-                  </div>
-                  <p className="text-base font-bold text-foreground">{item.title}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{item.body}</p>
-                  <span className={`mt-auto text-xs font-semibold ${item.color} group-hover:underline`} aria-hidden="true">
-                    {item.cta} →
-                  </span>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ IMPACT & USE EXAMPLES ═══ */}
-      <section className="py-10" aria-label="Usage examples">
-        <div className="container max-w-5xl">
-          <div className="text-center mb-7">
-            <h2 className="text-xl font-bold text-foreground sm:text-2xl">How people are using Access Michigan already</h2>
-            <p className="text-sm text-muted-foreground mt-1">Early beta examples — numbers will stay small while we test and improve.</p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3 mb-6">
-            {[
-              {
-                title: "County health department",
-                body: "Quick brief for a board meeting on housing and emergency assistance gaps.",
-              },
-              {
-                title: "FQHC network",
-                body: "Identify ZIPs with low coverage and high vulnerability for outreach planning.",
-              },
-              {
-                title: "Local journalist",
-                body: "Use standardized metrics to frame a story on energy insecurity.",
-              },
-            ].map((ex, i) => (
-              <motion.div
-                key={ex.title}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
-              >
-                <Card className="h-full border-border/60 bg-white/80 dark:bg-card/90 backdrop-blur-sm shadow-lg">
-                  <CardContent className="pt-5 pb-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">{ex.title}</p>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{ex.body}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-          <p className="text-[10px] text-muted-foreground text-center italic">
-            These are example use cases, not named customers.
-          </p>
-        </div>
-      </section>
-
-      {/* ═══ BETA COUNTERS (deprioritized) ═══ */}
-      <LazySection minHeight="60px">
-        <Suspense fallback={<SectionFallback />}>
-          <BetaImpactCounter />
-        </Suspense>
-      </LazySection>
-
-      {/* ═══ CIVIC DATA HUB CALLOUT ═══ */}
-      <LazySection minHeight="60px">
-        <Suspense fallback={<SectionFallback />}>
-          <CivicDataCalloutCard />
-        </Suspense>
-      </LazySection>
-
-      {/* ═══════════════════════════════════════════════════════
-               COMMUNITY HEALTH & EQUITY BAND — Professional only
-            ═══════════════════════════════════════════════════════ */}
-      {isProfessional &&
-      <LazySection minHeight="200px">
-          <section id="community-health-equity" className="py-14 bg-muted/20">
-            <div className="container">
-              {/* Band header */}
-              <div className="mb-8 text-center max-w-2xl mx-auto">
-                <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-4">
-                  <Heart className="h-3.5 w-3.5" aria-hidden="true" />
-                  Community Data
-                </div>
-                <h2 className="text-2xl font-bold text-foreground md:text-3xl mb-2">Community Health & Equity</h2>
-                <p className="text-muted-foreground">
-                  Michigan residents face unequal barriers to health. Understanding these disparities helps residents,
-                  advocates, and policymakers drive meaningful change.
-                </p>
-              </div>
-
-              {/* Equity insight cards */}
-              <div className="grid gap-responsive sm:grid-cols-2 lg:grid-cols-3 mb-8">
-                <EquityInsightCard
-                icon={Heart}
-                title="Black Infant Mortality"
-                stat="2.4x higher"
-                description="Black infants in Michigan face 2.4 times higher mortality rates than white infants."
-                color="coral"
-                trend="up"
-                ctaText="View equity data"
-                ctaHref="/data-and-insights" />
-
-                <EquityInsightCard
-                icon={Users}
-                title="Rural Uninsured Rate"
-                stat="14%"
-                description="Rural Michiganders are twice as likely to be uninsured as urban residents."
-                color="gold"
-                trend="stable"
-                ctaText="View equity data"
-                ctaHref="/data-and-insights" />
-
-                <EquityInsightCard
-                icon={AlertCircle}
-                title="Primary Care Shortage"
-                stat="23 counties"
-                description="Nearly a third of Michigan counties lack adequate primary care providers."
-                color="teal"
-                trend="down"
-                ctaText="View equity data"
-                ctaHref="/data-and-insights" />
-
-              </div>
-
-            {/* County heatmap — collapses on mobile */}
-            <MobileAccordionToggle
-              open={mapOpen}
-              openLabel="Hide county health map"
-              closedLabel="Advanced: Explore statewide health map"
-              onToggle={() => setMapOpen((v) => !v)} />
-
-            {/* On desktop: always visible via open={true | !isMobile} */}
-            <Collapsible open={mapOpen || !isMobile} onOpenChange={setMapOpen}>
-              <CollapsibleContent>
-                <div className="pt-4 pb-2">
-                  <Suspense fallback={<SectionFallback />}>
-                    <div className="max-w-5xl mx-auto">
-                      <CountyChoropleth highlightCounty="Oakland" />
-                    </div>
-                  </Suspense>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-
-
-              {/* Primary CTA */}
-              <div className="mt-8 text-center">
-                <Link to="/data-and-insights">
-                  <Button size="lg" className="gap-2">
-                    Open full health & equity dashboard <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </section>
-        </LazySection>
-      }
-
-      {/* ═══ LAYER 3 — PERSONALIZED SNAPSHOT ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <LazySection>
-          <Suspense fallback={<SectionFallback />}>
-            {/* HealthDataSnapshot — professional only */}
-            {isProfessional && <HealthDataSnapshot />}
-
-            {/* NearbyResourceFinder — always visible */}
-            <MobileAccordionToggle
-              open={nearbyOpen}
-              openLabel="Hide address search"
-              closedLabel="Search by address to find closest services"
-              onToggle={() => setNearbyOpen((v) => !v)} />
-
-            <Collapsible open={nearbyOpen || !isMobile} onOpenChange={setNearbyOpen}>
-              <CollapsibleContent>
-                <NearbyResourceFinder />
-              </CollapsibleContent>
-            </Collapsible>
-
-            {/* CoreAccessGrid moved above — skip here */}
-            <TransportationSafetyCallout />
-          </Suspense>
-        </LazySection>
-      </SectionErrorBoundary>
-
-      {/* ═══ LAYER 4 — EXPLORATION (compact) ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <LazySection>
-          <Suspense fallback={<SectionFallback />}>
-            {/* Browse all resources CTA */}
-            <section className="py-10">
-              <div className="container text-center">
-                <h2 className="text-xl font-bold text-foreground mb-3">Explore Community Resources</h2>
-                <p className="text-muted-foreground max-w-lg mx-auto mb-6">
-                  Browse 700+ verified programs across housing, food, health, transportation, energy, education, legal,
-                  and more.
-                </p>
-                <Link to="/resources">
-                  <Button size="lg" className="gap-2">
-                    Browse All Programs <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Button>
-                </Link>
-              </div>
-            </section>
-
-            <CommunityAlerts />
-            <RegionalGateway />
-            <SuccessStories />
-
-            {/* ── anchor: #for-organizations → ProfessionalGateway ── */}
-            <div id="for-organizations">
-              <MobileAccordionToggle
-                open={proOpen}
-                openLabel="Hide tools for organizations"
-                closedLabel="Tools for organizations & health systems"
-                onToggle={() => setProOpen((v) => !v)} />
-
-              <Collapsible open={proOpen || !isMobile} onOpenChange={setProOpen}>
-                <CollapsibleContent>
-                  <ProfessionalGateway />
-                </CollapsibleContent>
-              </Collapsible>
-            </div>
-          </Suspense>
-        </LazySection>
-      </SectionErrorBoundary>
-
-      {/* ═══ PROFESSIONAL VIEW DISCOVERY CTA — Resident only ═══ */}
-      {!isProfessional &&
-      <section className="py-10 border-t border-border/30">
-          <div className="container max-w-2xl">
-            <Card className="border-primary/15 bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl hover:shadow-2xl hover:shadow-blue-100/40 transition-shadow duration-300">
-              <CardContent className="flex flex-col sm:flex-row items-center gap-4 py-6 text-center sm:text-left">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 flex-shrink-0">
-                  <BarChart3 className="h-6 w-6 text-primary" aria-hidden="true" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-semibold text-foreground mb-1">
-                    Are you a health professional, researcher, or policymaker?
-                  </h3>
-                  <p className="text-xs text-muted-foreground">
-                    Access county heatmaps, equity dashboards, export tools, and statewide health data.
-                  </p>
-                </div>
-                <Button
-                variant="secondary"
-                size="sm"
-                className="gap-1.5 whitespace-nowrap border border-primary/20"
-                onClick={() => {
-                  handlePersonaChange("professional");
-                  setTimeout(() => {
-                    const el = document.querySelector("#community-health-equity");
-                    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }, 150);
-                }}>
-
-                  <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  Professional View (dashboards &amp; exports)
+            <div className="mt-5 flex flex-wrap justify-center gap-3">
+              <Link to="/data-and-insights">
+                <Button size="sm" className="gap-1.5">
+                  <Database className="h-3.5 w-3.5" /> Data & Insights
                 </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-      }
+              </Link>
+              <Link to="/compare">
+                <Button size="sm" variant="outline" className="gap-1.5">
+                  Compare Counties
+                </Button>
+              </Link>
+              <Link to="/brief">
+                <Button size="sm" variant="outline" className="gap-1.5">
+                  Generate Brief
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ═══ WHAT IS ACCESS MICHIGAN? ═══ */}
+      <Suspense fallback={<SectionFallback />}>
+        <SystemsExplainer />
+      </Suspense>
+
+      {/* ═══ NEARBY RESOURCES ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <LazySection minHeight="100px">
+          <Suspense fallback={<SectionFallback />}>
+            <NearbyResourceFinder />
+          </Suspense>
+        </LazySection>
+      </SectionErrorBoundary>
+
+      {/* ═══ REGIONAL GATEWAY ═══ */}
+      <Suspense fallback={<SectionFallback />}>
+        <RegionalGateway />
+      </Suspense>
+
+      {/* ═══ TRUST BAR ═══ */}
+      <Suspense fallback={<SectionFallback />}>
+        <PublicTrustBar />
+      </Suspense>
+
+      {/* ═══ PROVENANCE ═══ */}
+      <div className="container py-4">
+        <DataProvenance
+          source="Public datasets (State of Michigan + federal agencies). Independently organized."
+          updated="2026-03-08"
+          methodologyHref="/methodology"
+        />
+      </div>
+
+      {/* ═══ FOUNDER & SUPPORT ═══ */}
+      <Suspense fallback={<SectionFallback />}>
+        <FounderSupportSection />
+      </Suspense>
 
       <AccessChat />
-    </Layout>);
-
+    </Layout>
+  );
 };
 
 export default Index;
