@@ -142,10 +142,18 @@ function ZipComparisonTable({ summary }: { summary: ZipComparisonSummary }) {
                           </td>
                           {zips.map((z) => {
                             const display = valueMap.get(`${metric.id}::${z}`);
+                            const county = zipToCounty(z);
                             return (
                               <td key={z} className="text-center px-3 py-3 tabular-nums text-xs text-foreground">
                                 {display ? (
-                                  <span>{display}</span>
+                                  <div className="flex flex-col items-center gap-0.5">
+                                    <span>{display}</span>
+                                    {county && (
+                                      <span className="text-[9px] text-muted-foreground/60 font-normal leading-tight">
+                                        County-level data for {county} Co.
+                                      </span>
+                                    )}
+                                  </div>
                                 ) : (
                                   <span className="text-muted-foreground italic text-[11px]">data not available</span>
                                 )}
