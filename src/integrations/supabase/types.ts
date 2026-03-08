@@ -905,7 +905,81 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      community_events_public: {
+        Row: {
+          address: string | null
+          city: string | null
+          county: string | null
+          created_at: string | null
+          description: string | null
+          end_time: string | null
+          event_date: string | null
+          event_type: string | null
+          id: string | null
+          is_active: boolean | null
+          is_free: boolean | null
+          location_name: string | null
+          organizer: string | null
+          registration_required: boolean | null
+          registration_url: string | null
+          start_time: string | null
+          state: string | null
+          tags: string[] | null
+          title: string | null
+          updated_at: string | null
+          website: string | null
+          zip: string | null
+        }
+        Insert: {
+          address?: string | null
+          city?: string | null
+          county?: string | null
+          created_at?: string | null
+          description?: string | null
+          end_time?: string | null
+          event_date?: string | null
+          event_type?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_free?: boolean | null
+          location_name?: string | null
+          organizer?: string | null
+          registration_required?: boolean | null
+          registration_url?: string | null
+          start_time?: string | null
+          state?: string | null
+          tags?: string[] | null
+          title?: string | null
+          updated_at?: string | null
+          website?: string | null
+          zip?: string | null
+        }
+        Update: {
+          address?: string | null
+          city?: string | null
+          county?: string | null
+          created_at?: string | null
+          description?: string | null
+          end_time?: string | null
+          event_date?: string | null
+          event_type?: string | null
+          id?: string | null
+          is_active?: boolean | null
+          is_free?: boolean | null
+          location_name?: string | null
+          organizer?: string | null
+          registration_required?: boolean | null
+          registration_url?: string | null
+          start_time?: string | null
+          state?: string | null
+          tags?: string[] | null
+          title?: string | null
+          updated_at?: string | null
+          website?: string | null
+          zip?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
