@@ -156,7 +156,9 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "water",
-      title: "Water Quality & Access",
+      title: "Water — Safe, Affordable, Reliable",
+      subtitle: "Drinking water quality, lead risk, and affordability.",
+      funderNote: "Use for infrastructure grants, lead remediation priorities.",
       icon: Droplets,
       color: "text-sky-600 dark:text-sky-400",
       bgColor: "bg-sky-500/10",
