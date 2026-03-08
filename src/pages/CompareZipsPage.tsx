@@ -516,6 +516,9 @@ export default function CompareZipsPage() {
             <AskCopilotButton context={copilotContext} label="Ask Copilot about this comparison" />
           </div>
 
+          {/* ═══ PARTNER CTA ═══ */}
+          <PartnerCTABar context="compare" />
+
           {/* ═══ MICRO CTA ═══ */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
             <Card className="border-primary/20 bg-primary/3">
