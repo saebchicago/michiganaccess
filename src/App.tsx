@@ -56,6 +56,7 @@ const App = () => (
           </Suspense>
         </BrowserRouter>
       </TooltipProvider>
+      </NerdModeProvider>
     </CountyProvider>
   </QueryClientProvider>
 );

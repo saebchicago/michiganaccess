@@ -58,9 +58,15 @@ function DeltaIndicator({
 
 /* ── Build domain data for a place ─────────────────────────── */
 
+function getHighlight(highlights: { label: string; value: string }[] | undefined, search: string): string {
+  if (!highlights) return "Data pending";
+  const found = highlights.find((h) => h.label.toLowerCase().includes(search.toLowerCase()));
+  return found?.value || "Data pending";
+}
+
 function buildDomains(place: Place): VPDomain[] {
   const profile = place.countyProfile;
-  const healthHighlights = profile?.healthHighlights;
+  const hh = profile?.healthHighlights;
 
   return [
     {
@@ -72,7 +78,7 @@ function buildDomains(place: Place): VPDomain[] {
       metrics: [
         {
           label: "Uninsured Rate",
-          value: healthHighlights?.uninsuredRate || "Data pending",
+          value: getHighlight(hh, "uninsured"),
           stateAvg: "6.2%",
           direction: "lower-is-better",
           soWhat: "Lower means more people can access preventive care without financial hardship.",
@@ -81,7 +87,7 @@ function buildDomains(place: Place): VPDomain[] {
         },
         {
           label: "Primary Care Ratio",
-          value: healthHighlights?.primaryCareRatio || "Data pending",
+          value: getHighlight(hh, "primary care"),
           stateAvg: "1,280:1",
           direction: "lower-is-better",
           soWhat: "Fewer patients per provider means shorter waits and more access.",
@@ -90,7 +96,7 @@ function buildDomains(place: Place): VPDomain[] {
         },
         {
           label: "Preventable Hospital Stays",
-          value: healthHighlights?.preventableHospitalStays || "Data pending",
+          value: "Data pending",
           stateAvg: "4,710 per 100K",
           direction: "lower-is-better",
           soWhat: "High rates signal gaps in outpatient care that drive costly ER visits.",
@@ -99,7 +105,7 @@ function buildDomains(place: Place): VPDomain[] {
         },
         {
           label: "Food Insecurity",
-          value: healthHighlights?.foodInsecurity || "Data pending",
+          value: getHighlight(hh, "food"),
           stateAvg: "13.5%",
           direction: "lower-is-better",
           soWhat: "Food insecurity compounds chronic conditions like diabetes and hypertension.",
