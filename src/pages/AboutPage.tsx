@@ -471,9 +471,9 @@ export default function AboutPage() {
           <div className="grid gap-4 sm:grid-cols-2">
             {[
               { title: "Modern Stack", desc: "React 18, TypeScript, Tailwind CSS, Framer Motion. Production-grade architecture with code splitting, lazy loading, and optimized bundling." },
-              { title: "Real-Time Data Pipeline", desc: "Database-backed with structured APIs. Designed for automated weekly data pulls from CMS, HRSA, CDC, and state health department feeds." },
+              { title: "Data Pipeline", desc: "Database-backed with structured APIs. Designed for automated data updates from CMS, HRSA, CDC, and state feeds; refresh cadence varies by source." },
               { title: "Michigan-Wide, Expandable", desc: "Currently covers all 83 Michigan counties. Architecture supports expansion to additional states with minimal modification." },
-              { title: "Accessible & Performant", desc: "WCAG 2.1 AA compliant. Mobile-first responsive design. Lazy-loaded maps and images. Sub-3-second page loads on 3G." },
+              { title: "Accessible & Performant", desc: "WCAG 2.1 AA compliant. Mobile-first responsive design. Lazy-loaded maps and images. Optimized for performance; actual load times vary by device and connection." },
             ].map((item, i) => (
               <motion.div key={item.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
                 <Card className="h-full">
