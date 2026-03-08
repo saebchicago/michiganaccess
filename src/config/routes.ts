@@ -37,6 +37,7 @@ export interface SitemapSection {
 const pages = {
   PrivacyPage: lazy(() => import("@/pages/PrivacyPage")),
   InsuranceComparisonPage: lazy(() => import("@/pages/InsuranceComparisonPage")),
+  InsuranceCoveragePage: lazy(() => import("@/pages/InsuranceCoveragePage")),
   HealthMapPage: lazy(() => import("@/pages/HealthMapPage")),
   AboutPage: lazy(() => import("@/pages/AboutPage")),
   FindCarePage: lazy(() => import("@/pages/FindCarePage")),
