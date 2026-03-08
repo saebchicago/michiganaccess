@@ -430,6 +430,26 @@ export default function MethodologyPage() {
             </div>
           </div>
         </section>
+
+        {/* Future Integration Note */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
+            <Eye className="h-5 w-5 text-primary" /> Future Data Integration Plans
+          </h2>
+          <Card>
+            <CardContent className="p-5 space-y-3">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                All data on Access Michigan is currently population-level and sourced from public agencies. We do not access individual claims, member records, or protected health information (PHI).
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <strong>Looking ahead:</strong> In the future, we may let users securely connect their own health plan — for example, through Patient Access APIs (FHIR-based) — so they can see personal coverage and claims alongside community data. This will be opt-in, heavily protected with encryption and consent management, and never shared with third parties or used for marketing.
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                This feature is not yet implemented. When it is, we will document its privacy architecture, data handling practices, and user consent flows on this page.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
       </div>
     </Layout>
   );

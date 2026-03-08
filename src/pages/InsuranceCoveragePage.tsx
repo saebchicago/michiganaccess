@@ -453,6 +453,18 @@ export default function InsuranceCoveragePage() {
           })}
         </Tabs>
 
+        {/* Future FHIR integration note */}
+        <Card className="mt-8 border-border/50 bg-muted/20">
+          <CardContent className="p-4">
+            <p className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
+              <Info className="h-4 w-4 shrink-0 mt-0.5 text-primary/60" />
+              <span>
+                <strong>Looking ahead:</strong> In the future, we may let you securely connect your own health plan (for example, through Patient Access APIs) so you can see your personal coverage and claims alongside our community data. That will be opt-in, heavily protected, and never shared. For now, all data here is population-level and public.
+              </span>
+            </p>
+          </CardContent>
+        </Card>
+
         {/* Copilot */}
         <div className="flex justify-center mt-8">
           <AskCopilotButton
