@@ -309,13 +309,6 @@ export default function CompareZipsPage() {
       {hasComparison && summary && (
         <div className="container max-w-5xl py-8 space-y-8 print:py-4">
 
-          {/* ═══ EXAMPLE DATA BANNER ═══ */}
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-            <div className="rounded-lg border border-info/30 bg-info/5 px-4 py-3 text-center text-xs text-info font-medium">
-              Example data — not real yet. Values shown are placeholders to demonstrate the comparison layout. Real data feeds will replace these.
-            </div>
-          </motion.div>
-
           {/* ═══ FAIRNESS DISCLAIMER ═══ */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
             <Card className="border-warning/30 bg-warning/5 dark:border-warning/20 dark:bg-warning/5">
