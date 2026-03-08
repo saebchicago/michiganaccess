@@ -287,6 +287,11 @@ export default function PlacePage() {
 
         <Separator />
 
+        {/* Value & Performance — VBC/PBR metrics */}
+        <ValuePerformanceSection place={place} />
+
+        <Separator />
+
         {/* Civic Intelligence — 4 pillar cards + detail */}
         <CivicIntelligenceSection countyName={countyName} />
 
