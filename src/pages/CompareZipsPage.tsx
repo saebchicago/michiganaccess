@@ -28,6 +28,8 @@ import {
   type MetricGroupId,
 } from "@/data/zip-comparison-types";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
+import ViewModeToggle, { type ViewMode } from "@/components/shared/ViewModeToggle";
+import PartnerCTABar from "@/components/brief/PartnerCTABar";
 import { toast } from "sonner";
 
 // ── Icon lookup ──────────────────────────────────────────────────────────────
@@ -183,6 +185,7 @@ export default function CompareZipsPage() {
     searchParams.get("z3") || "",
     searchParams.get("z4") || "",
   ];
+  const [viewMode, setViewMode] = useState<ViewMode>("standard");
   const [inputs, setInputs] = useState(initialZips);
   const [activeZips, setActiveZips] = useState<string[]>(
     initialZips.filter(isValidMIZip)
@@ -308,14 +311,17 @@ export default function CompareZipsPage() {
                 />
               ))}
             </div>
-            <div className="flex flex-col items-center gap-2">
-              <Button onClick={handleCompare} className="gap-1.5">
-                <BarChart3 className="h-4 w-4" /> Compare ZIP codes
-              </Button>
-              <Link to="/compare" className="text-xs text-muted-foreground hover:text-primary transition-colors">
-                Or compare counties instead →
-              </Link>
-            </div>
+              <div className="flex flex-col items-center gap-2">
+                <Button onClick={handleCompare} className="gap-1.5">
+                  <BarChart3 className="h-4 w-4" /> Compare ZIP codes
+                </Button>
+                <div className="flex items-center gap-3">
+                  <Link to="/compare" className="text-xs text-muted-foreground hover:text-primary transition-colors">
+                    Or compare counties instead →
+                  </Link>
+                  <ViewModeToggle value={viewMode} onChange={setViewMode} />
+                </div>
+              </div>
           </motion.div>
         </div>
       </section>
@@ -378,6 +384,27 @@ export default function CompareZipsPage() {
               </CardContent>
             </Card>
           </motion.div>
+
+          {/* ═══ CHNA SUMMARY (when CHNA view active) ═══ */}
+          {viewMode === "chna" && (
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              <Card className="border-primary/20 bg-primary/5">
+                <CardContent className="p-5 space-y-3">
+                  <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-primary" />
+                    CHNA / Planning Summary
+                  </h3>
+                  <p className="text-xs text-muted-foreground">
+                    For CHNA and planning teams, the biggest differences between these ZIP codes are likely in: <strong className="text-foreground">Care & Coverage</strong>, <strong className="text-foreground">Housing & Economic Stability</strong>, and <strong className="text-foreground">Utilities & Infrastructure</strong>.
+                  </p>
+                  <ul className="text-xs text-muted-foreground space-y-1">
+                    <li>• Use these comparisons to identify priority geographies and populations for your next CHNA implementation plan.</li>
+                    <li>• Pair this data with community engagement and lived experience; do not rely on numbers alone.</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
 
           {/* ═══ COMPARISON TABLE ═══ */}
           <ZipComparisonTable summary={summary} />
@@ -488,6 +515,9 @@ export default function CompareZipsPage() {
           <div className="flex justify-center">
             <AskCopilotButton context={copilotContext} label="Ask Copilot about this comparison" />
           </div>
+
+          {/* ═══ PARTNER CTA ═══ */}
+          <PartnerCTABar context="compare" />
 
           {/* ═══ MICRO CTA ═══ */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>

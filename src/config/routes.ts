@@ -105,6 +105,8 @@ const pages = {
   BriefPage: lazy(() => import("@/pages/BriefPage")),
   CompareZipsPage: lazy(() => import("@/pages/CompareZipsPage")),
   HousingOptionsPage: lazy(() => import("@/pages/HousingOptionsPage")),
+  HealthPlansMedicaidPage: lazy(() => import("@/pages/HealthPlansMedicaidPage")),
+  UtilitiesRegulatorsPage: lazy(() => import("@/pages/UtilitiesRegulatorsPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -156,6 +158,9 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/partners", component: pages.PartnersPage, label: "Partners" },
   { path: "/partnerships/health-systems", component: pages.HealthSystemsPage, label: "Health Systems" },
   { path: "/partnerships/health-systems/one-pager", component: pages.PartnershipOnePager, label: "One-Pager" },
+  { path: "/partners/health-systems", component: pages.HealthSystemsPage, label: "Partners: Health Systems" },
+  { path: "/partners/health-plans-medicaid", component: pages.HealthPlansMedicaidPage, label: "Partners: Health Plans" },
+  { path: "/partners/utilities-regulators", component: pages.UtilitiesRegulatorsPage, label: "Partners: Utilities" },
   { path: "/complex-care", component: pages.ComplexCarePage, label: "Complex Care" },
   { path: "/life-navigator", component: pages.LifeNavigatorPage, label: "Life Navigator" },
   { path: "/place/city/:cityName", component: pages.CityPlacePage, label: "City Place" },
