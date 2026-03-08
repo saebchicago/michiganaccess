@@ -105,6 +105,8 @@ const pages = {
   BriefPage: lazy(() => import("@/pages/BriefPage")),
   CompareZipsPage: lazy(() => import("@/pages/CompareZipsPage")),
   HousingOptionsPage: lazy(() => import("@/pages/HousingOptionsPage")),
+  HealthPlansMedicaidPage: lazy(() => import("@/pages/HealthPlansMedicaidPage")),
+  UtilitiesRegulatorsPage: lazy(() => import("@/pages/UtilitiesRegulatorsPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
