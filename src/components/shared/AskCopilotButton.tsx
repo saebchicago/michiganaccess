@@ -20,6 +20,7 @@ export default function AskCopilotButton({ context, label = "Ask Copilot about t
     setLoading(true);
     setAnswer("");
 
+    const safeContext = context.slice(0, 2000);
     try {
       const resp = await fetch(CHAT_URL, {
         method: "POST",
@@ -27,8 +28,6 @@ export default function AskCopilotButton({ context, label = "Ask Copilot about t
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
-        // Truncate context to prevent oversized payloads
-        const safeContext = context.slice(0, 2000);
         body: JSON.stringify({
           messages: [
             {
