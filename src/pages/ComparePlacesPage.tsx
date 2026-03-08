@@ -296,6 +296,7 @@ export default function ComparePlacesPage() {
   const [addInput, setAddInput] = useState("");
   const [equityLens, setEquityLens] = useState(false);
   const [showCommunityVoice, setShowCommunityVoice] = useState(true);
+  const [viewMode, setViewMode] = useState<ViewMode>("standard");
   const [confettiBurst, setConfettiBurst] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
 
