@@ -104,6 +104,7 @@ const pages = {
   DatasetExplorerPage: lazy(() => import("@/pages/DatasetExplorerPage")),
   BriefPage: lazy(() => import("@/pages/BriefPage")),
   CompareZipsPage: lazy(() => import("@/pages/CompareZipsPage")),
+  HousingOptionsPage: lazy(() => import("@/pages/HousingOptionsPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
