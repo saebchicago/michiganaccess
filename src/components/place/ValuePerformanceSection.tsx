@@ -118,7 +118,9 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "energy-pbr",
-      title: "Energy & Utility Performance",
+      title: "Energy — Performance-Based Regulation",
+      subtitle: "Reliability, outage equity, and energy burden.",
+      funderNote: "Use for PBR rate cases, equity filings, utility performance reviews.",
       icon: Zap,
       color: "text-amber-600 dark:text-amber-400",
       bgColor: "bg-amber-500/10",
