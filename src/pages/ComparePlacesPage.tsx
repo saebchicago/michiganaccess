@@ -884,6 +884,9 @@ export default function ComparePlacesPage() {
           )}
         </AnimatePresence>
 
+        {/* Partner CTA */}
+        {selected.length >= 2 && <PartnerCTABar context="compare" />}
+
         {/* Attribution */}
         {selected.length >= 2 && <p className="text-[10px] text-muted-foreground text-center">
           Census data: U.S. Census Bureau, ACS 5-Year Estimates (2022). ★ = best; ⚠ = needs attention (Equity Lens). ZIP data from ZCTA-level ACS tables.
