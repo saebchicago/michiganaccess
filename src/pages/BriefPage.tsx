@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { usePersonalProfile } from "@/hooks/usePersonalProfile";
 import { useTranslation } from "react-i18next";
 import { useCounty, MICHIGAN_COUNTIES, type MichiganCounty } from "@/contexts/CountyContext";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
