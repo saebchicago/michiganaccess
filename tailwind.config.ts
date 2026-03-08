@@ -16,13 +16,11 @@ export default {
   		fontFamily: {
   			sans: [
   				'Inter',
-  				'ui-sans-serif',
   				'system-ui',
+  				'-apple-system',
+  				'BlinkMacSystemFont',
+  				'Segoe UI',
   				'sans-serif',
-  				'Apple Color Emoji',
-  				'Segoe UI Emoji',
-  				'Segoe UI Symbol',
-  				'Noto Color Emoji'
   			],
   			display: [
   				'Inter',
@@ -31,8 +29,6 @@ export default {
   				'sans-serif'
   			],
   			serif: [
-  				'Playfair Display',
-  				'ui-serif',
   				'Georgia',
   				'Cambria',
   				'Times New Roman',
@@ -75,6 +71,14 @@ export default {
   			accent: {
   				DEFAULT: 'hsl(var(--accent))',
   				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			warning: {
+  				DEFAULT: 'hsl(var(--warning))',
+  				foreground: 'hsl(var(--warning-foreground))'
+  			},
+  			info: {
+  				DEFAULT: 'hsl(var(--info))',
+  				foreground: 'hsl(var(--info-foreground))'
   			},
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',
