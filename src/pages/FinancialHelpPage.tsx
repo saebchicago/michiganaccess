@@ -1,10 +1,11 @@
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
   Heart, DollarSign, Shield, Phone, ExternalLink, ChevronDown, ChevronUp,
-  Users, Baby, Stethoscope, Pill, CheckCircle2, HelpCircle, ArrowRight, Calculator
+  Users, Baby, Stethoscope, Pill, CheckCircle2, HelpCircle, ArrowRight, Calculator, Home
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
