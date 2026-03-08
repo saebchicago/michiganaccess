@@ -156,17 +156,17 @@
     --foreground: 0 0% 0%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
-    --primary: 215 80% 22%;
+    --primary: 231 60% 35%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 95%;
+    --secondary: 45 100% 42%;
     --secondary-foreground: 0 0% 0%;
     --muted: 0 0% 90%;
     --muted-foreground: 0 0% 20%;
-    --accent: 186 60% 28%;
+    --accent: 93 60% 28%;
     --accent-foreground: 0 0% 100%;
     --border: 0 0% 30%;
     --input: 0 0% 30%;
-    --ring: 215 80% 22%;
+    --ring: 231 60% 35%;
   }
 }
 
