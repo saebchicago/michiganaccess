@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import {
   BarChart3, MapPin, Download, AlertTriangle, Info, FileText,
   Heart, Home, Zap, Droplets, Bus, Activity, Copy, ArrowRight,
-  Shield, ExternalLink, MessageSquare, FileCode,
+  Shield, ExternalLink, MessageSquare, FileCode, Printer,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
