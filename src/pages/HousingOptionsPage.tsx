@@ -70,6 +70,7 @@ function ExtLink({ href, children }: { href: string; children: React.ReactNode }
 
 export default function HousingOptionsPage() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   usePageMeta({
     title: "Find Housing Options — Access Michigan",
     description: "Step-by-step help finding emergency shelter, affordable rentals, and subsidized housing in Michigan.",
@@ -79,8 +80,12 @@ export default function HousingOptionsPage() {
   const { county, setCounty, setZip, granularLocation } = useCounty();
   const { profile } = usePersonalProfile();
 
+  // Support ?zip=48201 from "Try it now" links
+  const paramZip = searchParams.get("zip") || "";
+  const defaultZip = paramZip || profile.primaryZip || granularLocation.zip || "";
+
   const [step, setStep] = useState(1);
-  const [zipInput, setZipInput] = useState(profile.primaryZip ?? granularLocation.zip ?? "");
+  const [zipInput, setZipInput] = useState(defaultZip);
   const [selectedCounty, setSelectedCounty] = useState<MichiganCounty | null>(county);
   const [situation, setSituation] = useState<Situation | null>(
     profile.housingStatus === "homeless" ? "emergency" : profile.housingStatus === "at_risk" ? "at_risk" : null

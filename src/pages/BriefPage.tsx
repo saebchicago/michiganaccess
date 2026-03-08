@@ -100,9 +100,18 @@ function getCrossSectorTensions(county: string, profile: typeof COUNTY_PROFILES[
 export default function BriefPage() {
   const { t } = useTranslation();
   const { county, setCounty } = useCounty();
+  const [searchParams] = useSearchParams();
   const printRef = useRef<HTMLDivElement>(null);
   const { profile: personalProfile } = usePersonalProfile();
   const [viewMode, setViewMode] = useState<ViewMode>("standard");
+
+  // Support ?county=Wayne from "Try it now" links
+  useEffect(() => {
+    const paramCounty = searchParams.get("county");
+    if (paramCounty && MICHIGAN_COUNTIES.includes(paramCounty as MichiganCounty) && paramCounty !== county) {
+      setCounty(paramCounty as MichiganCounty);
+    }
+  }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
   usePageMeta({
     title: county ? `${county} County Brief — Access Michigan` : "County Brief — Access Michigan",
