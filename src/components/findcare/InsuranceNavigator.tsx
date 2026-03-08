@@ -336,6 +336,9 @@ export default function InsuranceNavigator() {
                 />
               )}
 
+              {/* ── ZIP-Aware Area Hints ── */}
+              <AreaHints />
+
               <div className="rounded-md border border-border bg-muted/30 px-3 py-2">
                 <p className="text-[10px] text-muted-foreground flex items-center gap-1">
                   <ShieldCheck className="h-3 w-3" />
