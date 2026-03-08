@@ -111,6 +111,7 @@ const pages = {
 export const APP_ROUTES: RouteEntry[] = [
   { path: "/privacy", component: pages.PrivacyPage, label: "Privacy Policy" },
   { path: "/insurance-comparison", component: pages.InsuranceComparisonPage, label: "Compare Insurance" },
+  { path: "/insurance-coverage", component: pages.InsuranceCoveragePage, label: "Insurance & Coverage Guide" },
   { path: "/find-care", component: pages.FindCarePage, label: "Find Care" },
   { path: "/health-map", component: pages.HealthMapPage, label: "Health Map" },
   { path: "/financial-help", component: pages.FinancialHelpPage, label: "Financial Help" },
