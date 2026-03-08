@@ -485,7 +485,8 @@ export default function MethodologyPage() {
               </div>
             ))}
             <p className="text-xs text-muted-foreground italic pt-1">
-              We invite researchers, journalists, and community partners to audit our methods and tell us what they see.
+              We invite researchers, journalists, and community partners to audit our methods and tell us what they see.{" "}
+              <a href="/contact?subject=Methods%20audit" className="text-primary hover:underline font-medium">Contact us here →</a>
             </p>
           </div>
         </section>
