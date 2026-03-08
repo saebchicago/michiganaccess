@@ -10,10 +10,17 @@ import {
   Minus,
   Download,
   ExternalLink,
+  Info,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useNerdMode } from "@/contexts/NerdModeContext";
 import NerdModeToggle from "@/components/shared/NerdModeToggle";
 import type { Place } from "@/models/Place";
