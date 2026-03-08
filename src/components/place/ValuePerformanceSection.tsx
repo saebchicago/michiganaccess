@@ -312,11 +312,21 @@ export default function ValuePerformanceSection({ place }: { place: Place }) {
           >
             <Card>
               <CardContent className="py-5">
-                <div className="flex items-center gap-2.5 mb-4">
-                  <div className={`w-8 h-8 rounded-lg ${domain.bgColor} flex items-center justify-center`}>
-                    <domain.icon className={`h-4 w-4 ${domain.color}`} aria-hidden="true" />
+                <div className="mb-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className={`w-8 h-8 rounded-lg ${domain.bgColor} flex items-center justify-center`}>
+                      <domain.icon className={`h-4 w-4 ${domain.color}`} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-foreground">{domain.title}</h3>
+                      {domain.subtitle && <p className="text-[11px] text-muted-foreground">{domain.subtitle}</p>}
+                    </div>
                   </div>
-                  <h3 className="text-sm font-bold text-foreground">{domain.title}</h3>
+                  {domain.funderNote && (
+                    <p className="mt-2 text-[10px] text-primary/80 italic pl-10">
+                      For funders / systems: {domain.funderNote}
+                    </p>
+                  )}
                 </div>
 
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
