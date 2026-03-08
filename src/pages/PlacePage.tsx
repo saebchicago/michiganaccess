@@ -173,10 +173,22 @@ export default function PlacePage() {
       <PlaceHero place={place} countyName={countyName} profile={profile} />
 
       <div className="container py-10 space-y-10">
+        {/* Crisis callout — always visible at top of services area */}
+        <CalloutBanner
+          variant="error"
+          title="Need immediate help?"
+          persistent
+        >
+          <p>
+            If you or someone you know is in crisis, call{" "}
+            <a href="tel:988" className="font-bold text-destructive hover:underline">988</a>,{" "}
+            <a href="tel:211" className="font-bold text-destructive hover:underline">2-1-1</a>, or text HOME to{" "}
+            <a href="sms:741741?body=HOME" className="font-bold text-destructive hover:underline">741741</a>.
+          </p>
+        </CalloutBanner>
+
         {/* 0. Michigan Community Brief */}
         <MichiganCommunityBrief place={place} />
-
-        <Separator />
 
         {/* 1. Community Summary — "3 Things to Know" */}
         <CommunitySummary place={place} />
