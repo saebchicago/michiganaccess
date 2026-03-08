@@ -185,6 +185,7 @@ export default function CompareZipsPage() {
     searchParams.get("z3") || "",
     searchParams.get("z4") || "",
   ];
+  const [viewMode, setViewMode] = useState<ViewMode>("standard");
   const [inputs, setInputs] = useState(initialZips);
   const [activeZips, setActiveZips] = useState<string[]>(
     initialZips.filter(isValidMIZip)
