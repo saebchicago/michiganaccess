@@ -180,6 +180,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/terms", component: pages.TermsPage, label: "Terms of Use" },
   { path: "/zoning", component: pages.ZoningPage, label: "Zoning & Land Use" },
   { path: "/brief", component: pages.BriefPage, label: "County Brief" },
+  { path: "/housing-options", component: pages.HousingOptionsPage, label: "Housing Options" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
