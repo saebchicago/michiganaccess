@@ -38,6 +38,7 @@ import ContentSkeleton from "@/components/shared/ContentSkeleton";
 import DataFreshnessBadge from "@/components/shared/DataFreshnessBadge";
 import WatchlistStar from "@/components/shared/WatchlistStar";
 import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSection";
+import ValuePerformanceSection from "@/components/place/ValuePerformanceSection";
 
 /* ── Curated statewide programs ── */
 const TOP_PROGRAMS = [
@@ -283,6 +284,11 @@ export default function PlacePage() {
             ))}
           </div>
         </section>
+
+        <Separator />
+
+        {/* Value & Performance — VBC/PBR metrics */}
+        <ValuePerformanceSection place={place} />
 
         <Separator />
 
