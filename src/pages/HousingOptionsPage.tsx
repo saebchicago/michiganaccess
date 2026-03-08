@@ -330,6 +330,14 @@ export default function HousingOptionsPage() {
               />
 
               <Button variant="ghost" size="sm" onClick={() => setStep(1)} className="gap-1"><ArrowLeft className="h-3.5 w-3.5" /> Start over</Button>
+
+              {/* Print */}
+              <div className="flex items-center justify-end print:hidden">
+                <Button variant="outline" size="sm" onClick={() => window.print()} className="gap-1.5">
+                  <FileText className="h-4 w-4" /> Print / Save as PDF
+                </Button>
+              </div>
+              <PageFeedback />
             </motion.div>
           )}
         </AnimatePresence>
