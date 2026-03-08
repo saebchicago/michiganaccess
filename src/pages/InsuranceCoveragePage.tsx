@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import {
   ShieldCheck, Heart, Building2, Briefcase, HelpCircle, ExternalLink,
   ChevronRight, ArrowRight, Phone, FileText, AlertTriangle, Scale,
-  Users, DollarSign, Stethoscope, Clock,
+  Users, DollarSign, Stethoscope, Clock, BookOpen,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
