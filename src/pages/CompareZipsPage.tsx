@@ -198,6 +198,11 @@ export default function CompareZipsPage() {
   );
 
   const handleCompare = useCallback(() => {
+    const nonMI = inputs.filter(z => isAnyUSZip(z) && !isValidMIZip(z));
+    if (nonMI.length > 0) {
+      toast.error(`Access Michigan covers Michigan ZIP codes only. ${nonMI.join(", ")} ${nonMI.length === 1 ? "is" : "are"} outside Michigan.`);
+      return;
+    }
     const valid = inputs.filter(isValidMIZip);
     if (valid.length < 2) {
       toast.error("Enter at least 2 valid Michigan ZIP codes (starting with 48 or 49).");
