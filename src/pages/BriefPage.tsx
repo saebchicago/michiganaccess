@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { usePersonalProfile } from "@/hooks/usePersonalProfile";
 import { useTranslation } from "react-i18next";
 import { useCounty, MICHIGAN_COUNTIES, type MichiganCounty } from "@/contexts/CountyContext";
@@ -16,6 +16,11 @@ import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import CivicScoreBreakdown from "@/components/shared/CivicScoreBreakdown";
 import { DataClassification } from "@/components/shared/DataClassification";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
+import ViewModeToggle, { type ViewMode } from "@/components/shared/ViewModeToggle";
+import CHNAViewSection from "@/components/brief/CHNAViewSection";
+import UtilityStressSection from "@/components/brief/UtilityStressSection";
+import GetToCarePanel from "@/components/brief/GetToCarePanel";
+import PartnerCTABar from "@/components/brief/PartnerCTABar";
 
 function computeCivicScore(county: string): number {
   const profile = COUNTY_PROFILES[county];
@@ -71,48 +76,23 @@ function buildUrgentSummary(county: string, profile: typeof COUNTY_PROFILES[stri
   return lines;
 }
 
-/**
- * Cross-sector tension detection — rule-based flags from existing indicators.
- * These are prompts for attention, not full causal analyses.
- * See /methodology for details on thresholds and logic.
- */
 type TensionTag = "outages_plus_medical_vulnerability" | "high_medicaid_plus_rent_burden" | "high_crash_plus_low_transit";
-
-interface TensionLine {
-  tag: TensionTag;
-  text: string;
-}
+interface TensionLine { tag: TensionTag; text: string; }
 
 function getCrossSectorTensions(county: string, profile: typeof COUNTY_PROFILES[string]): TensionLine[] {
   const tensions: TensionLine[] = [];
   const cd = getCountyCrossDomain(county);
   const uninsured = parseFloat(getVal(profile.healthHighlights, "uninsured") || "0");
-
-  // Tension: high uninsured + high rent burden → medical vulnerability + housing stress
   if (uninsured > 7 && cd.rentBurden !== null && cd.rentBurden > MI_STATE_AVERAGES.rentBurden!) {
-    tensions.push({
-      tag: "high_medicaid_plus_rent_burden",
-      text: `A key issue here is that high housing cost burden (${cd.rentBurden}% rent-burdened) overlaps with an elevated uninsured rate (${uninsured}%), meaning residents may struggle to afford both housing and healthcare.`,
-    });
+    tensions.push({ tag: "high_medicaid_plus_rent_burden", text: `A key issue here is that high housing cost burden (${cd.rentBurden}% rent-burdened) overlaps with an elevated uninsured rate (${uninsured}%), meaning residents may struggle to afford both housing and healthcare.` });
   }
-
-  // Tension: low vehicle access + high commute → transit dependency + long commutes
   if (cd.vehicleAccess !== null && cd.vehicleAccess < MI_STATE_AVERAGES.vehicleAccess! && cd.commuteTime !== null && cd.commuteTime > MI_STATE_AVERAGES.commuteTime!) {
-    tensions.push({
-      tag: "high_crash_plus_low_transit",
-      text: `Lower vehicle access (${cd.vehicleAccess}% of households) combined with longer commute times (${cd.commuteTime} min) suggests transportation gaps that may limit access to jobs, healthcare, and services.`,
-    });
+    tensions.push({ tag: "high_crash_plus_low_transit", text: `Lower vehicle access (${cd.vehicleAccess}% of households) combined with longer commute times (${cd.commuteTime} min) suggests transportation gaps that may limit access to jobs, healthcare, and services.` });
   }
-
-  // Tension: high poverty + low water compliance
   if (cd.povertyRate !== null && cd.povertyRate > 18 && cd.drinkingWaterCompliance !== null && cd.drinkingWaterCompliance < 90) {
-    tensions.push({
-      tag: "outages_plus_medical_vulnerability",
-      text: `High poverty (${cd.povertyRate}%) paired with drinking water compliance concerns (${cd.drinkingWaterCompliance}%) means vulnerable residents may face compounding environmental and economic stress.`,
-    });
+    tensions.push({ tag: "outages_plus_medical_vulnerability", text: `High poverty (${cd.povertyRate}%) paired with drinking water compliance concerns (${cd.drinkingWaterCompliance}%) means vulnerable residents may face compounding environmental and economic stress.` });
   }
-
-  return tensions.slice(0, 2); // max 2 tension lines
+  return tensions.slice(0, 2);
 }
 
 export default function BriefPage() {
@@ -120,6 +100,7 @@ export default function BriefPage() {
   const { county, setCounty } = useCounty();
   const printRef = useRef<HTMLDivElement>(null);
   const { profile: personalProfile } = usePersonalProfile();
+  const [viewMode, setViewMode] = useState<ViewMode>("standard");
 
   usePageMeta({
     title: county ? `${county} County Brief — Access Michigan` : "County Brief — Access Michigan",
@@ -134,17 +115,14 @@ export default function BriefPage() {
   const urgentLines = county && profile ? buildUrgentSummary(county, profile) : [];
   const tensions = county && profile ? getCrossSectorTensions(county, profile) : [];
 
-  // Profile-based emphasis: highlight transport tensions for no-car users, housing for at-risk
   const profileEmphasis: string[] = [];
   if (personalProfile.mobility === "no_car" || personalProfile.mobility === "limited") {
-    const hasTransportTension = tensions.some((t) => t.tag === "high_crash_plus_low_transit");
-    if (hasTransportTension) {
+    if (tensions.some((t) => t.tag === "high_crash_plus_low_transit")) {
       profileEmphasis.push("Based on your profile, transportation access may be especially relevant to you in this area.");
     }
   }
   if (personalProfile.housingStatus === "at_risk" || personalProfile.housingStatus === "homeless") {
-    const hasHousingTension = tensions.some((t) => t.tag === "high_medicaid_plus_rent_burden");
-    if (hasHousingTension) {
+    if (tensions.some((t) => t.tag === "high_medicaid_plus_rent_burden")) {
       profileEmphasis.push("Based on your profile, housing cost burden and coverage gaps may directly affect you here.");
     }
   }
@@ -169,22 +147,25 @@ export default function BriefPage() {
       </section>
 
       <div className="container max-w-3xl py-10 space-y-8 print:py-4">
-        {/* County picker */}
-        <div className="flex flex-col sm:flex-row items-center gap-3">
-          <label className="text-sm font-medium text-foreground flex items-center gap-1.5">
-            <MapPin className="h-4 w-4 text-primary" />
-            Select a county:
-          </label>
-          <Select value={county ?? ""} onValueChange={(v) => setCounty(v as MichiganCounty)}>
-            <SelectTrigger className="w-full sm:w-64">
-              <SelectValue placeholder="Choose a county…" />
-            </SelectTrigger>
-            <SelectContent>
-              {MICHIGAN_COUNTIES.map((c) => (
-                <SelectItem key={c} value={c}>{c}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        {/* County picker + view mode toggle */}
+        <div className="flex flex-col sm:flex-row items-center gap-3 justify-between">
+          <div className="flex items-center gap-3">
+            <label className="text-sm font-medium text-foreground flex items-center gap-1.5">
+              <MapPin className="h-4 w-4 text-primary" />
+              Select a county:
+            </label>
+            <Select value={county ?? ""} onValueChange={(v) => setCounty(v as MichiganCounty)}>
+              <SelectTrigger className="w-full sm:w-64">
+                <SelectValue placeholder="Choose a county…" />
+              </SelectTrigger>
+              <SelectContent>
+                {MICHIGAN_COUNTIES.map((c) => (
+                  <SelectItem key={c} value={c}>{c}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <ViewModeToggle value={viewMode} onChange={setViewMode} />
         </div>
 
         {county && profile && score !== null && (
@@ -211,89 +192,103 @@ export default function BriefPage() {
               </CardContent>
             </Card>
 
-            {/* ═══ CROSS-SECTOR TENSIONS ═══ */}
-            {tensions.length > 0 && (
-              <Card className="border-destructive/20 bg-destructive/5 dark:bg-destructive/10">
-                <CardContent className="py-5">
-                  <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
-                    <AlertTriangle className="h-4 w-4 text-destructive" />
-                    Cross-Sector Tensions
-                  </h3>
-                  <ul className="space-y-2">
-                    {tensions.map((t) => (
-                      <li key={t.tag} className="text-sm text-foreground/90 leading-relaxed">
-                        {t.text}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-[10px] text-muted-foreground mt-2">
-                    Rule-based flags from existing indicators — prompts for attention, not causal analyses. <a href="/methodology" className="text-primary hover:underline">See methodology</a>.
-                  </p>
-                </CardContent>
-              </Card>
+            {/* CHNA / VBC View */}
+            {viewMode === "chna" && <CHNAViewSection county={county} />}
+
+            {/* Standard view sections */}
+            {viewMode === "standard" && (
+              <>
+                {/* Cross-sector tensions */}
+                {tensions.length > 0 && (
+                  <Card className="border-destructive/20 bg-destructive/5 dark:bg-destructive/10">
+                    <CardContent className="py-5">
+                      <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
+                        <AlertTriangle className="h-4 w-4 text-destructive" />
+                        Cross-Sector Tensions
+                      </h3>
+                      <ul className="space-y-2">
+                        {tensions.map((t) => (
+                          <li key={t.tag} className="text-sm text-foreground/90 leading-relaxed">
+                            {t.text}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="text-[10px] text-muted-foreground mt-2">
+                        Rule-based flags from existing indicators — prompts for attention, not causal analyses. <a href="/methodology" className="text-primary hover:underline">See methodology</a>.
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Profile-based emphasis */}
+                {profileEmphasis.length > 0 && (
+                  <Card className="border-primary/20 bg-primary/5">
+                    <CardContent className="py-4">
+                      <p className="text-xs font-medium text-primary mb-1">Based on your My Settings profile:</p>
+                      {profileEmphasis.map((line, i) => (
+                        <p key={i} className="text-sm text-foreground/80 leading-relaxed">{line}</p>
+                      ))}
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* What's Most Urgent */}
+                <Card className="border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/20">
+                  <CardContent className="py-5">
+                    <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
+                      <AlertTriangle className="h-4 w-4 text-amber-600" />
+                      What's Most Urgent in {county} County
+                    </h3>
+                    <ol className="space-y-2">
+                      {urgentLines.map((line, i) => (
+                        <li key={i} className="text-sm text-foreground/90 leading-relaxed pl-5 relative">
+                          <span className="absolute left-0 top-0 text-xs font-bold text-amber-600">{i + 1}.</span>
+                          {line}
+                        </li>
+                      ))}
+                    </ol>
+                  </CardContent>
+                </Card>
+
+                {/* VBC & Systems */}
+                <Card className="border-primary/20">
+                  <CardContent className="py-5">
+                    <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
+                      <Activity className="h-4 w-4 text-primary" />
+                      For Value-Based Care & Health Systems
+                    </h3>
+                    <ul className="space-y-1.5 text-sm text-muted-foreground">
+                      <li className="flex gap-2">• <span>Social risk factors: food insecurity at <strong className="text-foreground">{getVal(profile.healthHighlights, "food")}</strong>, uninsured at <strong className="text-foreground">{getVal(profile.healthHighlights, "uninsured")}</strong></span></li>
+                      <li className="flex gap-2">• <span>Primary care access ratio: <strong className="text-foreground">{getVal(profile.healthHighlights, "primary care") || "See county page"}</strong> — critical for VBC program design</span></li>
+                      <li className="flex gap-2">• <span>ED reliance proxy: preventable hospital stays data available on county page's Value & Performance section</span></li>
+                      <li className="flex gap-2">• <span>Use for CHNAs, community benefit reporting, and VBC network adequacy assessments</span></li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* Utilities & Infrastructure */}
+                <Card className="border-amber-500/20">
+                  <CardContent className="py-5">
+                    <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
+                      <Zap className="h-4 w-4 text-amber-600" />
+                      For Utilities & Infrastructure
+                    </h3>
+                    <ul className="space-y-1.5 text-sm text-muted-foreground">
+                      <li className="flex gap-2">• <span>Outage data (SAIDI/SAIFI) and energy burden metrics available on the county Value & Performance page</span></li>
+                      <li className="flex gap-2">• <span>Energy assistance uptake and weatherization eligibility: see <a href="/financial-help" className="text-primary hover:underline">Financial Help</a></span></li>
+                      <li className="flex gap-2">• <span>Environmental indicators: air quality, drinking water violations, EJ Screen index on <a href="/environment" className="text-primary hover:underline">Environment page</a></span></li>
+                      <li className="flex gap-2">• <span>Transportation gaps and crash burden: see <a href="/transportation" className="text-primary hover:underline">Transportation page</a></span></li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </>
             )}
 
-            {/* Profile-based emphasis */}
-            {profileEmphasis.length > 0 && (
-              <Card className="border-primary/20 bg-primary/5">
-                <CardContent className="py-4">
-                  <p className="text-xs font-medium text-primary mb-1">Based on your My Settings profile:</p>
-                  {profileEmphasis.map((line, i) => (
-                    <p key={i} className="text-sm text-foreground/80 leading-relaxed">{line}</p>
-                  ))}
-                </CardContent>
-              </Card>
-            )}
+            {/* Utility Customer Stress — shown in both views */}
+            <UtilityStressSection county={county} />
 
-            {/* ═══ WHAT'S MOST URGENT ═══ */}
-            <Card className="border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/20">
-              <CardContent className="py-5">
-                <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
-                  <AlertTriangle className="h-4 w-4 text-amber-600" />
-                  What's Most Urgent in {county} County
-                </h3>
-                <ol className="space-y-2">
-                  {urgentLines.map((line, i) => (
-                    <li key={i} className="text-sm text-foreground/90 leading-relaxed pl-5 relative">
-                      <span className="absolute left-0 top-0 text-xs font-bold text-amber-600">{i + 1}.</span>
-                      {line}
-                    </li>
-                  ))}
-                </ol>
-              </CardContent>
-            </Card>
-
-            {/* ═══ FOR VBC & SYSTEMS ═══ */}
-            <Card className="border-primary/20">
-              <CardContent className="py-5">
-                <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
-                  <Activity className="h-4 w-4 text-primary" />
-                  For Value-Based Care & Health Systems
-                </h3>
-                <ul className="space-y-1.5 text-sm text-muted-foreground">
-                  <li className="flex gap-2">• <span>Social risk factors: food insecurity at <strong className="text-foreground">{getVal(profile.healthHighlights, "food")}</strong>, uninsured at <strong className="text-foreground">{getVal(profile.healthHighlights, "uninsured")}</strong></span></li>
-                  <li className="flex gap-2">• <span>Primary care access ratio: <strong className="text-foreground">{getVal(profile.healthHighlights, "primary care") || "See county page"}</strong> — critical for VBC program design</span></li>
-                  <li className="flex gap-2">• <span>ED reliance proxy: preventable hospital stays data available on county page's Value & Performance section</span></li>
-                  <li className="flex gap-2">• <span>Use for CHNAs, community benefit reporting, and VBC network adequacy assessments</span></li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            {/* ═══ FOR UTILITIES & INFRASTRUCTURE ═══ */}
-            <Card className="border-amber-500/20">
-              <CardContent className="py-5">
-                <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5 mb-3">
-                  <Zap className="h-4 w-4 text-amber-600" />
-                  For Utilities & Infrastructure
-                </h3>
-                <ul className="space-y-1.5 text-sm text-muted-foreground">
-                  <li className="flex gap-2">• <span>Outage data (SAIDI/SAIFI) and energy burden metrics available on the county Value & Performance page</span></li>
-                  <li className="flex gap-2">• <span>Energy assistance uptake and weatherization eligibility: see <a href="/financial-help" className="text-primary hover:underline">Financial Help</a></span></li>
-                  <li className="flex gap-2">• <span>Environmental indicators: air quality, drinking water violations, EJ Screen index on <a href="/environment" className="text-primary hover:underline">Environment page</a></span></li>
-                  <li className="flex gap-2">• <span>Transportation gaps and crash burden: see <a href="/transportation" className="text-primary hover:underline">Transportation page</a></span></li>
-                </ul>
-              </CardContent>
-            </Card>
+            {/* Get to Care panel */}
+            <GetToCarePanel county={county} zip={personalProfile.primaryZip} coverageType={personalProfile.coverageType} />
 
             {/* Score breakdown */}
             <CivicScoreBreakdown countyName={county} compositeScore={score} />
@@ -328,6 +323,9 @@ export default function BriefPage() {
                 </div>
               )}
             </div>
+
+            {/* Partner CTA */}
+            <PartnerCTABar context="brief" />
 
             {/* Ask Copilot */}
             <div className="print:hidden">
