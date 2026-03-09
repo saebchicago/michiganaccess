@@ -13,6 +13,7 @@ import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
 import SchoolSafetyCallout from "@/components/shared/SchoolSafetyCallout";
 import VisitPrepChecklist from "@/components/shared/VisitPrepChecklist";
 import CareTeamReminders from "@/components/shared/CareTeamReminders";
+import CivicDataCallout from "@/components/shared/CivicDataCallout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -819,6 +820,9 @@ export default function TransportationPage() {
             </p>
           </CardContent>
         </Card>
+
+        {/* Civic Data callout */}
+        <CivicDataCallout />
       </div>
     </Layout>
   );

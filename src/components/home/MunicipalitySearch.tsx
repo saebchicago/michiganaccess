@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Building2, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ interface MunicipalityResult {
   population: number | null;
 }
 
-export default function MunicipalitySearch() {
+const MunicipalitySearch = forwardRef<HTMLDivElement>(function MunicipalitySearch(_props, ref) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<MunicipalityResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -61,7 +61,11 @@ export default function MunicipalitySearch() {
   };
 
   return (
-    <div ref={wrapperRef} className="relative w-full max-w-md mx-auto">
+    <div ref={(node) => {
+      (wrapperRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+    }} className="relative w-full max-w-md mx-auto">
       <div className="relative">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
@@ -110,4 +114,6 @@ export default function MunicipalitySearch() {
       )}
     </div>
   );
-}
+});
+
+export default MunicipalitySearch;

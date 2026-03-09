@@ -28,6 +28,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import ResultHeader from "@/components/shared/ResultHeader";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import InsuranceNavigator from "@/components/findcare/InsuranceNavigator";
+import CivicDataCallout from "@/components/shared/CivicDataCallout";
 
 /* ── Crisis banner ────────────────────────────── */
 function CrisisBanner() {
@@ -755,6 +756,11 @@ export default function FindCarePage() {
         <div className="max-w-2xl mx-auto">
           <InsuranceNavigator />
         </div>
+      </div>
+
+      {/* ── Civic Data callout ── */}
+      <div className="container pb-6">
+        <CivicDataCallout />
       </div>
 
       {/* ── Disclaimer ── */}

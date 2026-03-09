@@ -24,7 +24,7 @@ const NearbyResourceFinder = lazy(() => import("@/components/home/NearbyResource
 const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
 const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
 const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer"));
-const PublicTrustBar = lazy(() => import("@/components/shared/PublicTrustBar"));
+
 const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
 
 const SectionFallback = () => (
@@ -134,10 +134,7 @@ const Index = () => {
         <RegionalGateway />
       </Suspense>
 
-      {/* ═══ TRUST BAR ═══ */}
-      <Suspense fallback={<SectionFallback />}>
-        <PublicTrustBar />
-      </Suspense>
+      {/* Trust bar is rendered by Layout — no duplicate needed here */}
 
       {/* ═══ PROVENANCE ═══ */}
       <div className="container py-4">
