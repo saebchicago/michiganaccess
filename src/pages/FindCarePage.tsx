@@ -757,6 +757,11 @@ export default function FindCarePage() {
         </div>
       </div>
 
+      {/* ── Civic Data callout ── */}
+      <div className="container pb-6">
+        <CivicDataCallout />
+      </div>
+
       {/* ── Disclaimer ── */}
       {hasSearched && (
         <div className="container pb-10">

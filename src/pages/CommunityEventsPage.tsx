@@ -301,6 +301,10 @@ export default function CommunityEventsPage() {
         )}
       </section>
 
+      <section className="container mx-auto max-w-3xl px-4 pb-6">
+        <CivicDataCallout />
+      </section>
+
       <section className="container mx-auto max-w-3xl px-4 pb-12">
         <Separator className="mb-8" />
         <CommunityEventSubmissionForm />

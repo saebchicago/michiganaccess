@@ -134,10 +134,7 @@ const Index = () => {
         <RegionalGateway />
       </Suspense>
 
-      {/* ═══ TRUST BAR ═══ */}
-      <Suspense fallback={<SectionFallback />}>
-        <PublicTrustBar />
-      </Suspense>
+      {/* Trust bar is rendered by Layout — no duplicate needed here */}
 
       {/* ═══ PROVENANCE ═══ */}
       <div className="container py-4">

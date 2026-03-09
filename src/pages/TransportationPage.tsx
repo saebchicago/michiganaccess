@@ -819,6 +819,9 @@ export default function TransportationPage() {
             </p>
           </CardContent>
         </Card>
+
+        {/* Civic Data callout */}
+        <CivicDataCallout />
       </div>
     </Layout>
   );
