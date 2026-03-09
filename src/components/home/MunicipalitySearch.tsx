@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, forwardRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Building2, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ interface MunicipalityResult {
   population: number | null;
 }
 
-export default function MunicipalitySearch() {
+const MunicipalitySearch = forwardRef<HTMLDivElement>(function MunicipalitySearch(_props, ref) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<MunicipalityResult[]>([]);
   const [loading, setLoading] = useState(false);
