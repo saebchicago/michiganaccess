@@ -114,4 +114,6 @@ const MunicipalitySearch = forwardRef<HTMLDivElement>(function MunicipalitySearc
       )}
     </div>
   );
-}
+});
+
+export default MunicipalitySearch;
