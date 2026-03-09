@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import PageFeedback from "@/components/shared/PageFeedback";
+import CivicDataCallout from "@/components/shared/CivicDataCallout";
 import { useSearchParams } from "react-router-dom";
 import { usePersonalProfile } from "@/hooks/usePersonalProfile";
 import { useTranslation } from "react-i18next";
@@ -341,6 +342,11 @@ export default function BriefPage() {
             {/* Ask Copilot */}
             <div className="print:hidden">
               <AskCopilotButton context={copilotContext} label={`Ask Copilot about ${county} County`} />
+            </div>
+
+            {/* Civic data callout */}
+            <div className="print:hidden">
+              <CivicDataCallout />
             </div>
 
             {/* Data note */}

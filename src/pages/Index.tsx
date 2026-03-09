@@ -25,6 +25,7 @@ const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
 const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
 const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer"));
 const PublicTrustBar = lazy(() => import("@/components/shared/PublicTrustBar"));
+const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
 
 const SectionFallback = () => (
   <div className="py-8 flex justify-center">
@@ -108,6 +109,11 @@ const Index = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* ═══ CIVIC DATA CALLOUT ═══ */}
+      <Suspense fallback={<SectionFallback />}>
+        <CivicDataCalloutCard />
+      </Suspense>
 
       {/* ═══ WHAT IS ACCESS MICHIGAN? ═══ */}
       <Suspense fallback={<SectionFallback />}>

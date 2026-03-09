@@ -390,6 +390,25 @@ export default function DataAndInsightsPage() {
 
         <Separator className="my-10" />
 
+        {/* ── Civic Data Hub CTA ── */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          className="rounded-xl border border-primary/20 bg-primary/5 p-8 text-center space-y-4"
+        >
+          <Database className="h-8 w-8 text-primary mx-auto" />
+          <h2 className="text-xl font-bold text-foreground">Explore Michigan's Open Civic Data</h2>
+          <p className="text-muted-foreground max-w-lg mx-auto text-sm">
+            Browse verified datasets from ArcGIS, Socrata, and state agencies — covering transportation, environment, housing, health, and public safety.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link to="/civic-data-hub">
+              <Button className="gap-1.5"><Database className="h-4 w-4" /> Civic Data Hub</Button>
+            </Link>
+            <Link to="/civic-data">
+              <Button variant="outline" className="gap-1.5">Open Government Hub</Button>
+            </Link>
+          </div>
+        </motion.div>
+
         {/* ── Bottom CTA ── */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="rounded-xl bg-michigan-navy/5 border border-michigan-navy/20 p-8 text-center space-y-4"

@@ -7,6 +7,7 @@ import {
   Droplets,
   Bus,
   TreePine,
+  Database,
   ArrowRight,
 } from "lucide-react";
 
@@ -58,6 +59,14 @@ const sectors = [
     href: "/environment",
     color: "text-emerald-700 dark:text-emerald-400",
     bg: "bg-emerald-500/10",
+  },
+  {
+    icon: Database,
+    title: "Civic Data & Open Gov",
+    description: "Explore verified open datasets, FOIA tools, budget transparency, and election info.",
+    href: "/civic-data-hub",
+    color: "text-primary",
+    bg: "bg-primary/10",
   },
 ];
 
