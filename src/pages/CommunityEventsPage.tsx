@@ -34,6 +34,7 @@ import { useCounty } from "@/contexts/CountyContext";
 import ShareMenu from "@/components/shared/ShareMenu";
 import CommunityEventSubmissionForm from "@/components/community/CommunityEventSubmissionForm";
 import { Separator } from "@/components/ui/separator";
+import CivicDataCallout from "@/components/shared/CivicDataCallout";
 
 const typeIcons: Record<string, typeof Heart> = {
   health_fair: Heart,
