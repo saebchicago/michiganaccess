@@ -30,6 +30,7 @@ import {
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 import ViewModeToggle, { type ViewMode } from "@/components/shared/ViewModeToggle";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
+import CivicDataCallout from "@/components/shared/CivicDataCallout";
 import { toast } from "sonner";
 import PageFeedback from "@/components/shared/PageFeedback";
 
