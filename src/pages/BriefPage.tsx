@@ -344,6 +344,11 @@ export default function BriefPage() {
               <AskCopilotButton context={copilotContext} label={`Ask Copilot about ${county} County`} />
             </div>
 
+            {/* Civic data callout */}
+            <div className="print:hidden">
+              <CivicDataCallout />
+            </div>
+
             {/* Data note */}
             <div className="rounded-lg border border-border bg-muted/50 p-4 print:border-border">
               <p className="text-xs text-muted-foreground flex items-start gap-1.5">

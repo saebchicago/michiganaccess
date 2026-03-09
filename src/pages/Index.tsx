@@ -110,6 +110,11 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ═══ CIVIC DATA CALLOUT ═══ */}
+      <Suspense fallback={<SectionFallback />}>
+        <CivicDataCalloutCard />
+      </Suspense>
+
       {/* ═══ WHAT IS ACCESS MICHIGAN? ═══ */}
       <Suspense fallback={<SectionFallback />}>
         <SystemsExplainer />

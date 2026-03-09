@@ -554,6 +554,11 @@ export default function CompareZipsPage() {
             </Card>
           </motion.div>
 
+          {/* Civic data callout */}
+          <div className="print:hidden">
+            <CivicDataCallout />
+          </div>
+
           {/* Print + Feedback */}
           <div className="flex items-center justify-end print:hidden">
             <Button variant="outline" size="sm" onClick={() => window.print()} className="gap-1.5">
