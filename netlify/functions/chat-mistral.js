@@ -130,7 +130,7 @@ export async function handler(event) {
   } catch (err) {
     console.error('chat-mistral error:', err);
     return {
-      statusCode: 500,
+            body: JSON.stringify({ error: 'AI service error' }),
       headers: getCors(event),
       body: JSON.stringify({ error: 'AI service error', detail: err.message }),
     };
