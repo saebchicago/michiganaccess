@@ -3,12 +3,24 @@
 // Fetches from Michigan Open Data (Socrata), CDC, HRSA, EGLE, and other public APIs
 // Called by aiService.ts -> fetchMichiganData(county, sector)
 
-const CORS = {
-  'Content-Type': 'application/json',
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-};
+const ALLOWED_ORIGINS = new Set([
+    'https://accessmi.org',
+    'https://www.accessmi.org',
+    'http://localhost:5173',
+    'http://localhost:4173',
+  ]);
+
+function getCors(event) {
+    const origin = (event.headers || {}).origin || '';
+    const allowedOrigin = ALLOWED_ORIGINS.has(origin) ? origin : 'https://accessmi.org';
+    return {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': allowedOrigin,
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET, OPTIONS',
+          'Vary': 'Origin',
+    };
+}
 
 // --- Michigan Open Data (Socrata) base ---
 const SOCRATA_BASE = 'https://data.michigan.gov/resource';
@@ -173,7 +185,7 @@ const VALID_MICHIGAN_COUNTIES = new Set([
 // --- Route handler ---
 export async function handler(event) {
   if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 204, headers: CORS, body: '' };
+          return { statusCode: 204, headers: getCors(event), body: '' };
   }
 
   const params = event.queryStringParameters || {};
@@ -260,15 +272,15 @@ export async function handler(event) {
 
     return {
       statusCode: 200,
-      headers: CORS,
+            headers: getCors(event),
       body: JSON.stringify(clean),
     };
   } catch (err) {
     console.error('michigan-data error:', err);
     return {
       statusCode: 500,
-      headers: CORS,
-      body: JSON.stringify({ error: 'Data fetch error', detail: err.message }),
+            headers: getCors(event),
+            body: JSON.stringify({ error: 'Data fetch error' }),
     };
   }
 }
