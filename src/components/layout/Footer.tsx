@@ -141,21 +141,22 @@ const Footer = () => {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {[
-              { icon: MapPin, value: `${stats.countyCount}/${stats.countyCount}`, label: "Counties" },
-              { icon: Shield, value: "✓", label: "Verified" },
-              { icon: Database, value: String(stats.dataFeeds), label: "Data Feeds" },
+              { icon: MapPin, value: `${stats.countyCount}/${stats.countyCount}`, label: "Counties", colorClass: "text-foreground" },
+              { icon: Shield, value: "✓", label: "Verified", colorClass: "text-foreground" },
+              { icon: Database, value: String(stats.dataFeeds), label: "Data Feeds", colorClass: "text-foreground" },
               {
                 icon: Timer,
-                value: stats.loadMs !== null ? formatLoadTime(stats.loadMs) : "…",
+                value: stats.loadMs !== null ? `~${formatLoadTime(stats.loadMs)}` : "…",
                 label: "Load Time",
+                colorClass: loadTimeColor(stats.loadMs),
               },
-              { icon: FileText, value: stats.resourceCount, label: "Resources" },
+              { icon: FileText, value: stats.resourceCount, label: "Resources", colorClass: "text-foreground" },
             ].map((m) => (
               <div key={m.label} className="flex items-center gap-1.5">
-                <m.icon className="h-3 w-3 text-primary" />
-                <span className="text-xs font-bold text-foreground">{m.value}</span>
+                <m.icon className="h-3 w-3 text-primary" aria-hidden="true" />
+                <span className={`text-xs font-bold ${m.colorClass}`}>{m.value}</span>
                 <span className="text-[10px] text-muted-foreground">{m.label}</span>
-                <CheckCircle2 className="h-2.5 w-2.5 text-michigan-forest" />
+                <CheckCircle2 className="h-2.5 w-2.5 text-michigan-forest" aria-hidden="true" />
               </div>
             ))}
           </div>

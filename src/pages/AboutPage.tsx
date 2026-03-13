@@ -196,6 +196,13 @@ export default function AboutPage() {
             <p className="text-sm text-muted-foreground leading-relaxed">
               Access Michigan started as a citizen project by a healthcare data leader. It organizes public data so residents can find help and organizations can see where systems work—and where they fail.
             </p>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Access Michigan operates as an independent civic infrastructure
+              project. Data is refreshed monthly from verified public sources.
+              There are no sponsors, no advertisers, and no government agency
+              relationships that influence what appears. This platform is built
+              to last — not dependent on any single employer, contract, or grant.
+            </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
               Independent civic platform — not affiliated with any government agency. No cookies, no tracking, no selling user data.
             </p>
