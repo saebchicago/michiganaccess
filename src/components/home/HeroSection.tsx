@@ -35,8 +35,8 @@ import { parseNaturalLanguage } from "@/utils/naturalLanguageParser";
 
 declare global {
   interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
   }
 }
 
