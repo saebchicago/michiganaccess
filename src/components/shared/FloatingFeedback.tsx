@@ -7,6 +7,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
+/**
+ * FloatingFeedback — moved to footer-inline on mobile to avoid z-index conflicts
+ * with chat FAB, bottom nav, and quick exit bar. On desktop it stays as a small
+ * floating button in the bottom-left.
+ */
 export default function FloatingFeedback() {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
@@ -22,7 +27,7 @@ export default function FloatingFeedback() {
     if (!comment.trim()) return;
     setSending(true);
     try {
-      await (supabase as any).from("page_feedback").insert({
+      await (supabase as unknown as { from: (t: string) => { insert: (d: Record<string, unknown>) => Promise<unknown> } }).from("page_feedback").insert({
         page_path: pathname,
         is_helpful: false,
         comment: `[Data Issue] ${comment}`,
@@ -40,7 +45,7 @@ export default function FloatingFeedback() {
 
   return (
     <>
-      {/* Floating trigger */}
+      {/* Desktop-only floating trigger — hidden on mobile to avoid conflicts */}
       <AnimatePresence>
         {!open && (
           <motion.button
@@ -48,27 +53,27 @@ export default function FloatingFeedback() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={() => setOpen(true)}
-            className="fixed bottom-28 left-4 lg:bottom-6 lg:left-6 z-40 flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-xs font-medium text-muted-foreground shadow-lg hover:text-foreground hover:shadow-xl transition-all hover:scale-105 active:scale-95"
+            className="hidden lg:flex fixed bottom-6 left-6 z-30 items-center gap-1.5 rounded-full border border-border bg-card px-3 py-2 text-xs font-medium text-muted-foreground shadow-lg hover:text-foreground hover:shadow-xl transition-all hover:scale-105 active:scale-95"
             aria-label="Report a data issue"
           >
-            <AlertCircle className="h-3.5 w-3.5 text-michigan-coral" />
+            <AlertCircle className="h-3.5 w-3.5 text-michigan-coral" aria-hidden="true" />
             Saw a mistake?
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Expanded form */}
+      {/* Expanded form — desktop only floating, mobile triggers from footer */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-28 left-4 lg:bottom-6 lg:left-6 z-40 w-72 rounded-xl border border-border bg-card p-4 shadow-2xl"
+            className="fixed bottom-6 left-6 z-40 w-72 rounded-xl border border-border bg-card p-4 shadow-2xl hidden lg:block"
           >
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs font-bold text-foreground">Help us fix it</p>
-              <button onClick={() => setOpen(false)} className="p-0.5 hover:bg-muted rounded" aria-label="Close">
+              <button onClick={() => setOpen(false)} className="p-0.5 hover:bg-muted rounded" aria-label="Close feedback form">
                 <X className="h-3.5 w-3.5 text-muted-foreground" />
               </button>
             </div>

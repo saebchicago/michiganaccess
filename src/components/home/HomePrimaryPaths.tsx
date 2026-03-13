@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Heart, MapPin, BarChart3, ArrowRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 
 const paths = [
   {
@@ -22,7 +21,7 @@ const paths = [
   },
   {
     icon: BarChart3,
-    title: "For policy & data nerds",
+    title: "For research & policy",
     description: "Compare counties, export briefs, download CSVs, and explore raw datasets.",
     href: "/data-and-insights",
     color: "text-accent",

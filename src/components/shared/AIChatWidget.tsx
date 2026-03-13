@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, forwardRef } from "react";
-import { Send, Bot, X, MessageSquare, Loader2 } from "lucide-react";
+import { Send, Bot, X, MessageSquare, Loader2, Phone, MessageCircle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { useCounty } from "@/contexts/CountyContext";
 
 interface Message {
   role: "user" | "assistant";
@@ -8,11 +9,34 @@ interface Message {
 }
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-// Use Lovable AI civic copilot (streaming) when Supabase configured; Netlify fallback otherwise
 const CHAT_URL = SUPABASE_URL
   ? `${SUPABASE_URL}/functions/v1/civic-copilot`
   : "/.netlify/functions/chat-mistral";
 const USE_STREAMING = !!SUPABASE_URL;
+
+/** Crisis signal detection — confidence-based, not exact match */
+const CRISIS_SIGNALS = [
+  "suicide", "kill myself", "end my life", "hurt myself", "self harm",
+  "crisis", "homeless tonight", "eviction today", "can't afford food",
+  "domestic violence", "abuse", "overdose", "emergency",
+  "no where to go", "nowhere to go", "danger", "unsafe at home",
+  "want to die", "need help now", "someone is hurting me",
+];
+
+function detectCrisis(text: string): boolean {
+  const lower = text.toLowerCase();
+  return CRISIS_SIGNALS.some((signal) => lower.includes(signal));
+}
+
+const CRISIS_BANNER = `**If you need immediate help right now:**
+
+📞 Call **988** (Mental Health Crisis Line)
+💬 Text **HOME** to **741741** (Crisis Text Line)
+📞 Call **2-1-1** (Community Resources)
+
+---
+
+`;
 
 const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, ref) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -20,15 +44,28 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { county } = useCounty();
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const starterChips = [
+    "What food pantries are near me?",
+    "How do I appeal a Medicaid denial?",
+    `What's the air quality in ${county || "my area"}?`,
+  ];
+
+  const handleChipClick = (chip: string) => {
+    setInput(chip);
+  };
+
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = input.trim();
     if (!trimmed || loading) return;
+
+    const isCrisis = detectCrisis(trimmed);
 
     const userMsg: Message = { role: "user", content: trimmed };
     const newMessages = [...messages, userMsg];
@@ -58,18 +95,23 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
       }
 
       if (!USE_STREAMING) {
-        // Netlify fallback: non-streaming JSON response { reply: string }
         const data = await resp.json();
         const reply = data.reply || "I couldn't get a response. Please try again.";
-        setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-        assistantContent = reply;
+        const finalContent = isCrisis ? CRISIS_BANNER + reply : reply;
+        setMessages((prev) => [...prev, { role: "assistant", content: finalContent }]);
+        assistantContent = finalContent;
       } else {
-        // Supabase edge function: SSE streaming
         if (!resp.body) throw new Error("No response stream");
 
         const reader = resp.body.getReader();
         const decoder = new TextDecoder();
         let buffer = "";
+        const crisisPrefix = isCrisis ? CRISIS_BANNER : "";
+        assistantContent = crisisPrefix;
+
+        if (crisisPrefix) {
+          setMessages((prev) => [...prev, { role: "assistant", content: crisisPrefix }]);
+        }
 
         while (true) {
           const { done, value } = await reader.read();
@@ -104,15 +146,15 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
           }
         }
 
-        if (!assistantContent) {
-          setMessages((prev) => [...prev, { role: "assistant", content: "I couldn't get a response. Please try again." }]);
+        if (!assistantContent || assistantContent === crisisPrefix) {
+          setMessages((prev) => [...prev, { role: "assistant", content: (crisisPrefix || "") + "I couldn't get a response. Please try again." }]);
         }
       }
-    } catch (err: any) {
-      console.error("Chat error:", err);
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Please try again.";
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: `Sorry, I'm having trouble right now. ${err.message || "Please try again."}` },
+        { role: "assistant", content: `Sorry, I'm having trouble right now. ${errorMessage}` },
       ]);
     } finally {
       setLoading(false);
@@ -121,16 +163,16 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
 
   return (
     <div ref={ref}>
-      {/* FAB — safe-area-aware via .chat-fab in index.css */}
+      {/* FAB */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="chat-fab w-14 h-14 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full shadow-lg flex items-center justify-center transition-all"
-        aria-label={isOpen ? "Close chat" : "Open chat assistant"}
+        aria-label={isOpen ? "Close chat assistant" : "Open chat assistant"}
       >
         {isOpen ? <X className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
       </button>
 
-      {/* Chat Window — safe-area-aware via .chat-window in index.css */}
+      {/* Chat Window */}
       {isOpen && (
         <div className="chat-window w-[calc(100vw-2rem)] max-w-sm bg-background border border-border rounded-xl shadow-2xl flex flex-col h-[min(500px,70vh)]">
           {/* Header */}
@@ -139,27 +181,34 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
               <h3 className="font-semibold text-sm">Access Michigan Assistant</h3>
               <p className="text-xs opacity-80">Ask about Michigan services</p>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-primary-foreground/20 p-1.5 rounded-lg transition-colors" aria-label="Close">
+            <button onClick={() => setIsOpen(false)} className="hover:bg-primary-foreground/20 p-1.5 rounded-lg transition-colors" aria-label="Close chat">
               <X className="w-4 h-4" />
             </button>
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-muted/30">
-            {/* Persistent safety disclaimer */}
+            {/* Safety disclaimer */}
             <div className="rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-[11px] text-muted-foreground leading-relaxed">
-              <strong className="text-foreground">⚠ AI Assistant.</strong> Do not enter personal health information (name, DOB, diagnosis). General questions only. For emergencies, call <a href="tel:911" className="font-semibold underline">911</a> or <a href="tel:988" className="font-semibold underline">988</a>.
+              <strong className="text-foreground">⚠ AI Assistant.</strong> Do not enter personal health information. For emergencies, call <a href="tel:911" className="font-semibold underline">911</a> or <a href="tel:988" className="font-semibold underline">988</a>.
             </div>
 
             {messages.length === 0 ? (
               <div className="h-full flex flex-col justify-center items-center text-center text-muted-foreground px-4">
-                <Bot className="h-8 w-8 mb-3 opacity-40" />
-                <p className="text-sm mb-2 font-medium">How can I help?</p>
-                <ul className="text-xs space-y-1 opacity-70">
-                  <li>Find healthcare services</li>
-                  <li>Financial assistance programs</li>
-                  <li>Housing & community resources</li>
-                  <li>Insurance appeal guidance</li>
-                </ul>
+                <Bot className="h-8 w-8 mb-3 opacity-40" aria-hidden="true" />
+                <p className="text-sm mb-3 font-medium">How can I help?</p>
+                {/* Starter chips */}
+                <div className="flex flex-col gap-1.5 w-full max-w-[240px]">
+                  {starterChips.map((chip) => (
+                    <button
+                      key={chip}
+                      type="button"
+                      onClick={() => handleChipClick(chip)}
+                      className="text-left rounded-lg border border-border bg-card px-3 py-2 text-xs text-foreground hover:bg-muted transition-colors"
+                    >
+                      {chip}
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : (
               <>
@@ -182,7 +231,7 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
                 ))}
                 {loading && !messages.some(m => m.role === "assistant" && m === messages[messages.length - 1]) && (
                   <div className="flex items-center gap-2 text-muted-foreground">
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                     <span className="text-xs">Thinking…</span>
                   </div>
                 )}
@@ -201,7 +250,7 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
                 placeholder="Ask about services…"
                 disabled={loading}
                 className="flex-1 border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
-                aria-label="Chat message"
+                aria-label="Type a question about Michigan services"
               />
               <button
                 type="submit"
@@ -214,7 +263,6 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
             </div>
             <p className="mt-1.5 text-[9px] text-muted-foreground leading-relaxed">
               This assistant explains Michigan services and public data. It cannot provide medical or legal advice.
-              <span className="ml-1" title="Uses public data only. No personal information is tracked or stored.">ℹ️ How this chat works</span>
             </p>
           </form>
         </div>

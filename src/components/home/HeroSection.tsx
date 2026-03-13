@@ -6,25 +6,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown as ChevronDownIcon } from "lucide-react";
 import {
   Search,
-  Apple,
-  Bus,
   HeartPulse,
-  Pill,
   MapPin,
   Sparkles,
   TrendingUp,
   AlertCircle,
   Mic,
   MicOff,
-  Lock,
-  User,
   Hash,
-  Brain,
   Database,
-  RefreshCw,
   Shield,
   BarChart3,
-  Home,
+  FileText,
+  UserX,
+  Eye,
+  CalendarCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,53 +35,10 @@ import { parseNaturalLanguage } from "@/utils/naturalLanguageParser";
 
 declare global {
   interface Window {
-    SpeechRecognition: any;
-    webkitSpeechRecognition: any;
+    SpeechRecognition: typeof SpeechRecognition;
+    webkitSpeechRecognition: typeof SpeechRecognition;
   }
 }
-const quickPills = [
-  {
-    icon: HeartPulse,
-    label: "Find Care",
-    href: "/find-care",
-    primary: true,
-  },
-  {
-    icon: Pill,
-    label: "Financial Help",
-    href: "/financial-help",
-  },
-  {
-    icon: Apple,
-    label: "Community Resources",
-    href: "/resources",
-  },
-  {
-    icon: Brain,
-    label: "Mental Health",
-    href: "/conditions?category=mental-health",
-  },
-  {
-    icon: Bus,
-    label: "Transportation",
-    href: "/transportation",
-  },
-  {
-    icon: MapPin,
-    label: "Zoning Info",
-    href: "/zoning",
-  },
-  {
-    icon: Bus,
-    label: "More Services",
-    href: "/wellness",
-  },
-  {
-    icon: Database,
-    label: "Explore Data & Insights",
-    href: "/data-and-insights",
-  },
-];
 
 const MichiganOutline = () => (
   <svg
@@ -119,7 +72,7 @@ const categoryIcon = (cat: string) => {
     case "city":
       return <MapPin className="h-4 w-4 text-forest-green" />;
     case "provider":
-      return <User className="h-4 w-4 text-michigan-blue" />;
+      return <MapPin className="h-4 w-4 text-michigan-blue" />;
     default:
       return <Search className="h-4 w-4 text-primary" />;
   }
@@ -157,6 +110,49 @@ function LanguageStrip() {
   );
 }
 
+/** "First time here?" dismissable prompt */
+function FirstTimePrompt() {
+  const [dismissed, setDismissed] = useState(() =>
+    typeof window !== "undefined" && localStorage.getItem("accessmi-first-time-dismissed") === "1"
+  );
+  if (dismissed) return null;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1, duration: 0.4 }}
+      className="mt-4 mx-auto max-w-md"
+    >
+      <div className="rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm px-4 py-3 text-center">
+        <p className="text-xs font-semibold text-primary-foreground mb-1">First time here?</p>
+        <p className="text-[11px] text-primary-foreground/70 leading-relaxed mb-2">
+          Tell us what you need — we'll show you where to start. No account required.
+        </p>
+        <div className="flex items-center justify-center gap-2">
+          <Link
+            to="/find-care"
+            className="rounded-full bg-white/20 hover:bg-white/30 border border-white/20 px-3 py-1.5 text-[11px] font-medium text-primary-foreground transition-colors"
+          >
+            I need help now
+          </Link>
+          <Link
+            to="/brief"
+            className="rounded-full bg-white/20 hover:bg-white/30 border border-white/20 px-3 py-1.5 text-[11px] font-medium text-primary-foreground transition-colors"
+          >
+            Explore my community
+          </Link>
+          <button
+            onClick={() => { setDismissed(true); localStorage.setItem("accessmi-first-time-dismissed", "1"); }}
+            className="text-[10px] text-primary-foreground/50 hover:text-primary-foreground/80 transition-colors ml-1"
+          >
+            Dismiss
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 const HeroSection = () => {
   const navigate = useNavigate();
   const { setZip } = useCounty();
@@ -170,15 +166,15 @@ const HeroSection = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
-  const recognitionRef = useRef<any>(null);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   const speechSupported =
     typeof window !== "undefined" && ("SpeechRecognition" in window || "webkitSpeechRecognition" in window);
 
   const startListening = useCallback(() => {
     if (!speechSupported) return;
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
+    const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognitionCtor();
     recognition.lang = "en-US";
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
@@ -204,13 +200,12 @@ const HeroSection = () => {
 
   const [parsedIntent, setParsedIntent] = useState<ReturnType<typeof parseNaturalLanguage> | null>(null);
 
-  // Phase 2: Typewriter placeholder cycle
   const placeholders = [
     "Search by city, ZIP, county, service, or doctor",
     "Try: food pantry near 48322...",
     "Try: mental health Oakland County...",
     "Try: emergency shelter Detroit...",
-    "Try: utility assistance Wayne County...",
+    "Try: utility assistance...",
   ];
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const [placeholderOpacity, setPlaceholderOpacity] = useState(1);
@@ -227,7 +222,6 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, [isFocused, placeholders.length]);
 
-  // NPI detection for 10-digit numbers
   const npiDetected = /^\d{10}$/.test(searchQuery.trim());
 
   const updateSuggestions = useCallback((q: string) => {
@@ -277,13 +271,11 @@ const HeroSection = () => {
     if (!searchQuery.trim()) return;
     setShowDropdown(false);
 
-    // If 10-digit number, navigate to NPI lookup
     if (/^\d{10}$/.test(searchQuery.trim())) {
       navigate(`/find-care?npi=${searchQuery.trim()}`);
       return;
     }
 
-    // If ZIP code detected, populate granular context
     const zipMatch = searchQuery.trim().match(/\b(\d{5})\b/);
     if (zipMatch) {
       setZip(zipMatch[1]);
@@ -344,35 +336,104 @@ const HeroSection = () => {
         aria-hidden="true"
       />
 
-      <div className="container relative z-10 py-20 md:py-28 lg:py-36">
+      <div className="container relative z-10 py-16 md:py-24 lg:py-32">
         <div className="mx-auto max-w-2xl text-center">
-          {/* Main Headline */}
+          {/* Eyebrow */}
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.4 }}
+            className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/60 mb-3"
+          >
+            Verified public data across all 83 Michigan counties
+          </motion.p>
+
+          {/* H1 */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
-            className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl md:text-6xl leading-tight"
+            className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl leading-tight"
           >
-            Michigan help, at your fingertips.
+            Find help fast. See community need clearly.
           </motion.h1>
 
-          {/* Subheading — condensed */}
+          {/* Subhead */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.22, duration: 0.5 }}
-            className="mt-3 text-base text-primary-foreground/80 md:text-lg flex items-center justify-center gap-2"
+            className="mt-3 text-sm text-primary-foreground/75 md:text-base max-w-xl mx-auto leading-relaxed"
           >
-            <Lock className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
-            Housing · Health · Food · Legal · Energy — 83 counties, verified public data, no tracking.
+            Access Michigan helps residents find health, housing, food, legal, transportation, and energy support using verified public data — with no account, no tracking, and no pay-to-play results.
           </motion.p>
+
+          {/* Primary + Secondary CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.32, duration: 0.4 }}
+            className="mt-6 flex flex-wrap items-center justify-center gap-3"
+          >
+            <Link to="/find-care">
+              <Button size="lg" className="rounded-full bg-white text-primary hover:bg-white/90 font-semibold shadow-lg gap-1.5">
+                <HeartPulse className="h-4 w-4" /> Find local help
+              </Button>
+            </Link>
+            <Link to="/brief">
+              <Button size="lg" variant="outline" className="rounded-full border-white/30 text-primary-foreground hover:bg-white/15 font-semibold gap-1.5">
+                <BarChart3 className="h-4 w-4" /> Explore county data
+              </Button>
+            </Link>
+          </motion.div>
+
+          {/* Sample brief preview card */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.38, duration: 0.4 }}
+            className="mt-4"
+          >
+            <Link
+              to="/brief?county=Oakland"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm px-4 py-2.5 hover:bg-white/15 transition-colors group"
+            >
+              <FileText className="h-4 w-4 text-primary-foreground/60" />
+              <span className="text-xs text-primary-foreground/80 group-hover:text-primary-foreground transition-colors">
+                See a sample county brief →
+              </span>
+              <span className="text-[10px] text-primary-foreground/40 border-l border-white/15 pl-2 ml-1">
+                Oakland County
+              </span>
+            </Link>
+          </motion.div>
+
+          {/* Trust chips row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.45, duration: 0.4 }}
+            className="mt-5 flex flex-wrap items-center justify-center gap-2"
+          >
+            {[
+              { icon: UserX, text: "No account" },
+              { icon: Eye, text: "No tracking" },
+              { icon: MapPin, text: "83 counties" },
+              { icon: CalendarCheck, text: "Updated March 2026" },
+            ].map((chip) => (
+              <span key={chip.text} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/8 px-2.5 py-1 text-[10px] font-medium text-primary-foreground/70">
+                <chip.icon className="h-3 w-3" aria-hidden="true" />
+                {chip.text}
+              </span>
+            ))}
+          </motion.div>
 
           {/* Smart Search Bar */}
           <motion.form
             onSubmit={handleSearch}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45, duration: 0.5 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
             className="mt-8 mx-auto max-w-xl relative"
           >
             <div className="relative">
@@ -391,10 +452,10 @@ const HeroSection = () => {
                 onFocus={() => { setShowDropdown(true); setIsFocused(true); setPlaceholderIdx(0); setPlaceholderOpacity(1); }}
                 onBlur={() => setIsFocused(false)}
                 onKeyDown={handleKeyDown}
-                placeholder="Search housing, food, health, legal help, ZIP code, clinic…"
-                className={`hero-search-input w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/50 focus:ring-offset-1 focus:border-transparent focus:scale-[1.015] transition-all duration-200 ${placeholderOpacity === 0 ? 'placeholder-fading' : ''}`}
+                placeholder={placeholders[placeholderIdx]}
+                className={`hero-search-input w-full rounded-full border-2 border-white/20 bg-white/95 dark:bg-background/95 py-4 pl-12 pr-40 text-base text-foreground placeholder:text-muted-foreground shadow-2xl focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-1 focus:border-transparent focus:scale-[1.015] transition-all duration-200 ${placeholderOpacity === 0 ? 'placeholder-fading' : ''}`}
                 role="combobox"
-                aria-label="Search for services by need, location, clinic, or program"
+                aria-label="Search for services by need, ZIP code, county, clinic, or program"
                 aria-expanded={showDropdown}
                 aria-haspopup="listbox"
                 aria-autocomplete="list"
@@ -411,7 +472,7 @@ const HeroSection = () => {
                     variant="ghost"
                     onClick={isListening ? stopListening : startListening}
                     className={`rounded-full h-10 w-10 transition-colors ${isListening ? "text-destructive bg-destructive/10 animate-pulse" : "text-muted-foreground hover:text-foreground"}`}
-                    aria-label={isListening ? "Stop voice search" : "Search by voice"}
+                    aria-label={isListening ? "Listening… tap to stop" : "Search by voice"}
                     title={isListening ? "Listening… tap to stop" : "Voice search"}
                   >
                     {isListening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
@@ -435,27 +496,6 @@ const HeroSection = () => {
             {/* Language quick-switch strip */}
             <LanguageStrip />
 
-            {/* Data credibility strip */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.55, duration: 0.4 }}
-              className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5"
-            >
-              {[
-                { icon: Database, text: "7 live data feeds" },
-                { icon: MapPin, text: "83 Michigan counties" },
-                { icon: Hash, text: "ZIP-to-county precision" },
-                { icon: RefreshCw, text: "Updated March 2026" },
-                { icon: Shield, text: "Open data, no tracking" },
-              ].map((item) => (
-                <span key={item.text} className="inline-flex items-center gap-1 text-[10px] text-primary-foreground/50">
-                  <item.icon className="h-3 w-3" aria-hidden="true" />
-                  {item.text}
-                </span>
-              ))}
-            </motion.div>
-
             {/* Autocomplete Dropdown */}
             <AnimatePresence>
               {showDropdown && (
@@ -469,7 +509,6 @@ const HeroSection = () => {
                   transition={{ duration: 0.15 }}
                   className="absolute left-0 right-0 top-full mt-2 rounded-xl bg-white dark:bg-card border border-border shadow-2xl z-50 overflow-hidden max-h-80 overflow-y-auto"
                 >
-                  {/* NPI detection chip */}
                   {npiDetected && (
                     <button
                       type="button"
@@ -560,141 +599,20 @@ const HeroSection = () => {
             </AnimatePresence>
           </motion.form>
 
-          {/* Example search pills */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.55, duration: 0.5 }}
-            className="mt-4 flex flex-wrap items-center justify-center gap-2"
-          >
-            <span className="text-xs text-primary-foreground/60">Try:</span>
-            {[
-              { label: "48322 food pantry", query: "48322 food pantry" },
-              { label: "Oakland County mental health", query: "Oakland County mental health" },
-              { label: "Appeal Insurance Denial", query: "Appeal Insurance Denial" },
-            ].map((ex) => (
-              <button
-                key={ex.label}
-                type="button"
-                onClick={() => {
-                  setSearchQuery(ex.query);
-                  updateSuggestions(ex.query);
-                  inputRef.current?.focus();
-                }}
-                className="rounded-full bg-white/10 hover:bg-white/20 border border-white/15 px-3 py-1 text-[11px] text-primary-foreground/80 transition-all hover:scale-105"
-              >
-                {ex.label}
-              </button>
-            ))}
-          </motion.div>
-
-          {/* Popular shortcut pills */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65, duration: 0.5 }}
-            className="mt-6 flex flex-col items-center gap-2"
-          >
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-primary-foreground/45">
-              Popular shortcuts
-            </span>
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {quickPills
-                .filter((p) => !(p as any).secondary)
-                .map((pill) => (
-                  <Link
-                    key={pill.label}
-                    to={pill.href}
-                    className={`group inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105 ${(pill as any).primary ? "bg-white/25 ring-1 ring-white/30" : "bg-white/15 hover:bg-white/25"}`}
-                  >
-                    <pill.icon className="h-3.5 w-3.5" aria-hidden="true" />
-                    {pill.label}
-                  </Link>
-                ))}
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-2 mt-1">
-              {quickPills
-                .filter((p) => (p as any).secondary)
-                .map((pill) => (
-                  <Link
-                    key={pill.label}
-                    to={pill.href}
-                    className="group inline-flex items-center gap-1 rounded-full bg-white/8 hover:bg-white/15 border border-white/10 px-3 py-1 text-[11px] font-normal text-primary-foreground/60 transition-all hover:text-primary-foreground/80"
-                  >
-                    <pill.icon className="h-3 w-3" aria-hidden="true" />
-                    {pill.label}
-                  </Link>
-                ))}
-            </div>
-          </motion.div>
-
-          {/* "Try it now" strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.75, duration: 0.5 }}
-            className="mt-6 flex flex-col items-center gap-2"
-          >
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-primary-foreground/50">
-              See what Access Michigan can do in under 30 seconds
-            </span>
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <Link
-                to="/brief?county=Wayne"
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/20 hover:bg-white/30 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
-              >
-                <MapPin className="h-3.5 w-3.5" /> See a sample county brief →
-              </Link>
-              <Link
-                to="/compare-zips?zips=48201,48301,49686"
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/20 hover:bg-white/30 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
-              >
-                <BarChart3 className="h-3.5 w-3.5" /> See ZIP comparisons →
-              </Link>
-              <Link
-                to="/housing-options?zip=48201"
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/20 hover:bg-white/30 border border-white/20 px-3.5 py-1.5 text-xs font-medium text-primary-foreground/90 transition-all hover:scale-105"
-              >
-                <Home className="h-3.5 w-3.5" /> Explore housing options →
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* Data & Insights row */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.85, duration: 0.5 }}
-            className="mt-5 flex flex-col items-center gap-2 text-center max-w-lg mx-auto"
-          >
-            <span className="text-[10px] font-medium text-primary-foreground/40 uppercase tracking-wider">
-              Civic Intelligence Layer
-            </span>
-            <div className="flex gap-2 mt-1">
-              <Link to="/data-and-insights">
-                <Button size="sm" className="rounded-full text-xs h-7 px-3.5">
-                  Explore Data &amp; Insights
-                </Button>
-              </Link>
-              <Link to="/compare">
-                <Button size="sm" variant="outline" className="rounded-full text-xs h-7 px-3.5 border-white/25 text-primary-foreground/80 hover:bg-white/15">
-                  Compare Counties
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
+          {/* First-time user guide */}
+          <FirstTimePrompt />
 
           {/* Scroll-to-explore chevron */}
           <motion.button
             type="button"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
+            transition={{ delay: 1.2, duration: 0.5 }}
             onClick={() => {
-              const next = document.querySelector('[aria-labelledby="core-access-heading"]');
+              const next = document.getElementById("trust-panel") || document.getElementById("paths-heading");
               next?.scrollIntoView({ behavior: "smooth", block: "start" });
             }}
-            className="scroll-explore-chevron mt-6 mx-auto flex flex-col items-center gap-0.5 text-primary-foreground/50 hover:text-primary-foreground/80 transition-colors"
+            className="scroll-explore-chevron mt-8 mx-auto flex flex-col items-center gap-0.5 text-primary-foreground/50 hover:text-primary-foreground/80 transition-colors"
             aria-label="Scroll to explore"
           >
             <span className="text-[10px] font-medium tracking-wider uppercase">Scroll to explore</span>

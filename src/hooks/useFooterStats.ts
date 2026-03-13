@@ -1,16 +1,8 @@
 /**
  * useFooterStats — dynamic civic platform metrics for the Footer status bar.
- *
- * Sources:
- *  - dataFeeds:    derived from the canonical DATA_SOURCES list (auto-syncs with footer)
- *  - loadMs:       actual page load time via PerformanceNavigationTiming API
- *  - resourceCount: resource directory total, fetched from Supabase with "700+" fallback
- *  - countyCount:  always 83 (Michigan's county count is a constitutional fact)
- *  - lastRefresh:  today's date — represents the platform's live data posture
  */
 import { useState, useEffect } from "react";
 
-// Single source of truth — matches the data sources listed in the Footer
 export const DATA_SOURCES = [
   "MDHHS",
   "Michigan 2-1-1",
@@ -31,16 +23,23 @@ export interface FooterStats {
 
 const MICHIGAN_COUNTY_COUNT = 83;
 
-function formatLoadTime(ms: number): string {
+export function formatLoadTime(ms: number): string {
   if (ms < 1000) return `${ms}ms`;
   return `${(ms / 1000).toFixed(1)}s`;
+}
+
+/** Returns a CSS class for load time color-coding */
+export function loadTimeColor(ms: number | null): string {
+  if (ms === null) return "text-muted-foreground";
+  if (ms < 500) return "text-michigan-forest";
+  if (ms <= 1500) return "text-amber-600 dark:text-amber-400";
+  return "text-destructive";
 }
 
 export function useFooterStats(): FooterStats {
   const [loadMs, setLoadMs] = useState<number | null>(null);
   const [resourceCount, setResourceCount] = useState<string>("700+");
 
-  // Measure actual page load time using Navigation Timing Level 2
   useEffect(() => {
     const measure = () => {
       const entries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
@@ -57,7 +56,6 @@ export function useFooterStats(): FooterStats {
     }
   }, []);
 
-  // Try to fetch live resource count from Supabase; fall back gracefully
   useEffect(() => {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const supabaseKey =
@@ -66,11 +64,11 @@ export function useFooterStats(): FooterStats {
     if (!supabaseUrl || !supabaseKey) return;
 
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4000); // 4s timeout
+    const timer = setTimeout(() => controller.abort(), 4000);
 
     fetch(`${supabaseUrl}/rest/v1/resources?select=count`, {
       headers: {
-        apikey: supabaseKey,
+        apikey: supabaseKey as string,
         Authorization: `Bearer ${supabaseKey}`,
         Prefer: "count=exact",
         "Range-Unit": "items",
@@ -91,7 +89,7 @@ export function useFooterStats(): FooterStats {
         }
       })
       .catch(() => {
-        // Silently fall back to static "700+" — expected when table doesn't exist or is private
+        // Silently fall back to static "700+"
       })
       .finally(() => clearTimeout(timer));
 
@@ -113,5 +111,3 @@ export function useFooterStats(): FooterStats {
     }),
   };
 }
-
-export { formatLoadTime };
