@@ -2,17 +2,17 @@ import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, Lock, Globe2, ArrowRight, Database } from "lucide-react";
+import { Database } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
+import TrustPanel from "@/components/home/TrustPanel";
 import HomePrimaryPaths from "@/components/home/HomePrimaryPaths";
 import HomeSectorGrid from "@/components/home/HomeSectorGrid";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { AccessChat } from "@/components/AccessChat";
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import LazySection from "@/components/shared/LazySection";
@@ -24,7 +24,6 @@ const NearbyResourceFinder = lazy(() => import("@/components/home/NearbyResource
 const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
 const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
 const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer"));
-
 const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
 
 const SectionFallback = () => (
@@ -54,6 +53,9 @@ const Index = () => {
       {/* ═══ HERO — mission + search ═══ */}
       <HeroSection />
 
+      {/* ═══ TRUST PANEL ═══ */}
+      <TrustPanel />
+
       {/* ═══ 3 PRIMARY PATHS ═══ */}
       <HomePrimaryPaths />
 
@@ -69,7 +71,7 @@ const Index = () => {
         </LazySection>
       </SectionErrorBoundary>
 
-      {/* ═══ FOR POLICY & DATA NERDS ═══ */}
+      {/* ═══ FOR RESEARCH & POLICY ═══ */}
       <section className="py-10 bg-muted/20 border-y border-border/40" aria-labelledby="nerd-heading">
         <div className="container max-w-4xl text-center">
           <motion.div
@@ -83,11 +85,15 @@ const Index = () => {
               Civic Data Layer
             </div>
             <h2 id="nerd-heading" className="text-xl font-bold text-foreground sm:text-2xl">
-              For policymakers, health systems, and journalists
+              For research & policy
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
               Compare counties, export briefs, explore live Census data, and download CSVs — all built on
               verified public sources.
+            </p>
+            <p className="text-xs text-muted-foreground/70 mt-2 max-w-lg mx-auto">
+              Insights are aggregate and privacy-preserving — no user accounts,
+              no personal data, no referral-level tracking.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3">
               <Link to="/data-and-insights">
@@ -133,8 +139,6 @@ const Index = () => {
       <Suspense fallback={<SectionFallback />}>
         <RegionalGateway />
       </Suspense>
-
-      {/* Trust bar is rendered by Layout — no duplicate needed here */}
 
       {/* ═══ PROVENANCE ═══ */}
       <div className="container py-4">

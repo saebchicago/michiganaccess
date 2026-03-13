@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles, Timer, RotateCcw, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
-import { useFooterStats, DATA_SOURCES, formatLoadTime } from "@/hooks/useFooterStats";
+import { useFooterStats, DATA_SOURCES, formatLoadTime, loadTimeColor } from "@/hooks/useFooterStats";
 import { replayTour } from "@/components/shared/OnboardingTour";
 import { useIsMobile } from "@/hooks/use-mobile";
 // toast import removed — no longer needed
@@ -141,21 +141,22 @@ const Footer = () => {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {[
-              { icon: MapPin, value: `${stats.countyCount}/${stats.countyCount}`, label: "Counties" },
-              { icon: Shield, value: "✓", label: "Verified" },
-              { icon: Database, value: String(stats.dataFeeds), label: "Data Feeds" },
+              { icon: MapPin, value: `${stats.countyCount}/${stats.countyCount}`, label: "Counties", colorClass: "text-foreground" },
+              { icon: Shield, value: "✓", label: "Verified", colorClass: "text-foreground" },
+              { icon: Database, value: String(stats.dataFeeds), label: "Data Feeds", colorClass: "text-foreground" },
               {
                 icon: Timer,
-                value: stats.loadMs !== null ? formatLoadTime(stats.loadMs) : "…",
+                value: stats.loadMs !== null ? `~${formatLoadTime(stats.loadMs)}` : "…",
                 label: "Load Time",
+                colorClass: loadTimeColor(stats.loadMs),
               },
-              { icon: FileText, value: stats.resourceCount, label: "Resources" },
+              { icon: FileText, value: stats.resourceCount, label: "Resources", colorClass: "text-foreground" },
             ].map((m) => (
               <div key={m.label} className="flex items-center gap-1.5">
-                <m.icon className="h-3 w-3 text-primary" />
-                <span className="text-xs font-bold text-foreground">{m.value}</span>
+                <m.icon className="h-3 w-3 text-primary" aria-hidden="true" />
+                <span className={`text-xs font-bold ${m.colorClass}`}>{m.value}</span>
                 <span className="text-[10px] text-muted-foreground">{m.label}</span>
-                <CheckCircle2 className="h-2.5 w-2.5 text-michigan-forest" />
+                <CheckCircle2 className="h-2.5 w-2.5 text-michigan-forest" aria-hidden="true" />
               </div>
             ))}
           </div>
