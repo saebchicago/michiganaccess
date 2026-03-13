@@ -166,7 +166,7 @@ const HeroSection = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<any>(null);
 
   const speechSupported =
     typeof window !== "undefined" && ("SpeechRecognition" in window || "webkitSpeechRecognition" in window);
