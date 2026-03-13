@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles, Timer, RotateCcw, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
-import { useFooterStats, DATA_SOURCES, formatLoadTime } from "@/hooks/useFooterStats";
+import { useFooterStats, DATA_SOURCES, formatLoadTime, loadTimeColor } from "@/hooks/useFooterStats";
 import { replayTour } from "@/components/shared/OnboardingTour";
 import { useIsMobile } from "@/hooks/use-mobile";
 // toast import removed — no longer needed
