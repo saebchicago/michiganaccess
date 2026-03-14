@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Users, MapPin, Building2, Shield, MapPinOff, Link as LinkIcon, Mail } from 'lucide-react';
 import Layout from '../components/layout/Layout';
 
 export default function Officials() {
-  const [zip, setZip] = useState('');
-    const [submitted, setSubmitted] = useState(false);
-      const handleZipSubmit = () => { if (zip.length === 5 && /^\d+$/.test(zip)) { setSubmitted(true); } };
 
         return (
             <Layout title="Your Representatives" description="Find your elected officials at every level of government in Michigan">
