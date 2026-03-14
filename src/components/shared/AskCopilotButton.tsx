@@ -10,7 +10,7 @@ interface Props {
   label?: string;
 }
 
-export default function AskCopilotButton({ context, label = "Ask Copilot about this page" }: Props) {
+export default function AskCopilotButton({ context, label = "Ask Access Michigan about this page" }: Props) {
   const [open, setOpen] = useState(false);
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
