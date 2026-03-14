@@ -306,6 +306,9 @@ export default function BriefPage() {
             {/* Score breakdown */}
             <CivicScoreBreakdown countyName={county} compositeScore={score} />
 
+            {/* Key Indicator Cluster — CSS mini-bars */}
+            <MetricCluster county={county} />
+
             {/* Headline metrics */}
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-1.5">
