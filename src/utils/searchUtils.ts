@@ -76,7 +76,6 @@ const CITY_SUGGESTIONS: { city: string; county: string }[] = MICHIGAN_CITIES.map
 }));
 
 const POPULAR_SEARCHES = [
-  { label: "Find a Doctor", href: "/find-care" },
   { label: "Food Assistance", href: "/resources" },
   { label: "Medicaid / Insurance Help", href: "/financial-help" },
   { label: "Utility Outages", href: "/outages" },
