@@ -522,7 +522,7 @@ export default function CompareZipsPage() {
             </Card>
           </motion.div>
 
-          {/* ═══ COPILOT ═══ */}
+          {/* ═══ ASK ACCESS MICHIGAN ═══ */}
           <div className="flex justify-center">
             <AskCopilotButton context={copilotContext} label="Ask Access Michigan about this comparison" />
           </div>
