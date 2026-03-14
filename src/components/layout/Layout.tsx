@@ -21,6 +21,8 @@ const FloatingFeedback = lazy(() => import("@/components/shared/FloatingFeedback
 const OnboardingTour = lazy(() => import("@/components/shared/OnboardingTour"));
 interface LayoutProps {
   children: ReactNode;
+  title?: string;
+  description?: string;
 }
 
 const Layout = ({ children }: LayoutProps) => (
