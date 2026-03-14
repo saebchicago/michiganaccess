@@ -1,6 +1,7 @@
 /**
  * CHNA / VBC view overlay for Brief page.
- * Re-organizes existing indicators into CHNA framework sections.
+ * Re-organizes existing indicators into CHNA framework sections
+ * with priority heat visual and planner notes.
  */
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +9,8 @@ import { Heart, Home, Zap, Bus, Users, Activity, ExternalLink } from "lucide-rea
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { getCountyCrossDomain, MI_STATE_AVERAGES } from "@/data/cross-domain-indicators";
 import { Link } from "react-router-dom";
+import SDOHPriorityHeat from "./SDOHPriorityHeat";
+import CHNAPlannerNotes from "./CHNAPlannerNotes";
 
 function getVal(hh: { label: string; value: string }[] | undefined, search: string): string {
   if (!hh) return "—";
@@ -77,44 +80,61 @@ export default function CHNAViewSection({ county }: { county: string }) {
 
   return (
     <div className="space-y-4">
-      {/* VBC Bridge Box */}
-      <Card className="border-primary/30 bg-primary/5">
-        <CardContent className="py-4 space-y-2">
-          <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
-            <Activity className="h-4 w-4 text-primary" />
-            Bridge to Value-Based Care
-          </h3>
-          <ul className="text-xs text-muted-foreground space-y-1.5">
-            <li>• CHNA findings on housing stability and utility reliability can inform VBC strategies to reduce avoidable ED use and support HCBS.</li>
-            <li>• Medicaid/VBP programs should consider local food insecurity and transportation gaps when designing care management interventions.</li>
-            <li>• Pair quantitative indicators with community engagement and lived experience for a complete CHNA picture.</li>
-          </ul>
-          <p className="text-[9px] text-muted-foreground/60 mt-1">
-            Contextual guidance — not program-specific advice. See{" "}
-            <Link to="/methodology" className="text-primary hover:underline">methodology</Link> for details.
-          </p>
-        </CardContent>
-      </Card>
+      {/* Priority Heat Visual */}
+      <SDOHPriorityHeat county={county} />
 
-      {/* CHNA framework sections */}
-      {sections.map((s) => (
-        <Card key={s.title} className="border-border/60">
-          <CardContent className="py-4 space-y-2">
-            <h4 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
-              <s.icon className="h-4 w-4 text-primary" />
-              {s.title}
-            </h4>
-            <ul className="space-y-1">
-              {s.bullets.map((b, i) => (
-                <li key={i} className="text-xs text-muted-foreground flex items-start gap-1.5">
-                  <span className="mt-1.5 h-1 w-1 rounded-full bg-primary/40 shrink-0" />
-                  {b}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      ))}
+      <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
+        <div className="space-y-4">
+          {/* VBC Bridge Box */}
+          <Card className="border-primary/30 bg-primary/5">
+            <CardContent className="py-4 space-y-2">
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
+                <Activity className="h-4 w-4 text-primary" />
+                Bridge to Value-Based Care
+              </h3>
+              <ul className="text-xs text-muted-foreground space-y-1.5">
+                <li>• CHNA findings on housing stability and utility reliability can inform VBC strategies to reduce avoidable ED use and support HCBS.</li>
+                <li>• Medicaid/VBP programs should consider local food insecurity and transportation gaps when designing care management interventions.</li>
+                <li>• Pair quantitative indicators with community engagement and lived experience for a complete CHNA picture.</li>
+              </ul>
+              <p className="text-[9px] text-muted-foreground/60 mt-1">
+                Contextual guidance — not program-specific advice. See{" "}
+                <Link to="/methodology" className="text-primary hover:underline">methodology</Link> for details.
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* CHNA framework sections */}
+          {sections.map((s) => (
+            <Card key={s.title} className="border-border/60">
+              <CardContent className="py-4 space-y-2">
+                <h4 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
+                  <s.icon className="h-4 w-4 text-primary" />
+                  {s.title}
+                </h4>
+                <ul className="space-y-1">
+                  {s.bullets.map((b, i) => (
+                    <li key={i} className="text-xs text-muted-foreground flex items-start gap-1.5">
+                      <span className="mt-1.5 h-1 w-1 rounded-full bg-primary/40 shrink-0" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Right-hand Planner Notes */}
+        <div className="hidden lg:block">
+          <CHNAPlannerNotes county={county} />
+        </div>
+      </div>
+
+      {/* Planner Notes below on mobile */}
+      <div className="lg:hidden">
+        <CHNAPlannerNotes county={county} />
+      </div>
     </div>
   );
 }
