@@ -10,7 +10,7 @@ interface Props {
   label?: string;
 }
 
-export default function AskCopilotButton({ context, label = "Ask Copilot about this page" }: Props) {
+export default function AskCopilotButton({ context, label = "Ask Access Michigan about this page" }: Props) {
   const [open, setOpen] = useState(false);
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
@@ -93,7 +93,7 @@ export default function AskCopilotButton({ context, label = "Ask Copilot about t
     <div className="rounded-lg border border-border bg-card p-4 space-y-3">
       <div className="flex items-center justify-between">
         <span className="text-xs font-semibold text-primary flex items-center gap-1.5">
-          <MessageSquare className="h-3.5 w-3.5" /> Civic Copilot
+          <MessageSquare className="h-3.5 w-3.5" /> Ask Access Michigan
         </span>
         <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setOpen(false)}>
           <X className="h-3.5 w-3.5" />

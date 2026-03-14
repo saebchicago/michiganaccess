@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Printer, TrendingUp, TrendingDown, Minus, MapPin, BarChart3, FileText, Activity, Zap, Droplets, TreePine, AlertTriangle } from "lucide-react";
+import MetricCluster from "@/components/brief/MetricCluster";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import CivicScoreBreakdown from "@/components/shared/CivicScoreBreakdown";
 import { DataClassification } from "@/components/shared/DataClassification";
@@ -182,6 +183,11 @@ export default function BriefPage() {
 
         {county && profile && score !== null && (
           <div ref={printRef} className="space-y-6">
+            {/* Print-only header */}
+            <div className="hidden print-header print:block text-center border-b border-border pb-3 mb-4">
+              <p className="text-lg font-bold">Access Michigan — {county} County Brief</p>
+              <p className="text-xs text-muted-foreground">Generated {new Date().toLocaleDateString()} · Data as of March 2026 · accessmi.org/brief</p>
+            </div>
             {/* Score card */}
             <Card>
               <CardContent className="py-6 flex flex-col sm:flex-row items-center gap-6">
@@ -305,6 +311,9 @@ export default function BriefPage() {
             {/* Score breakdown */}
             <CivicScoreBreakdown countyName={county} compositeScore={score} />
 
+            {/* Key Indicator Cluster — CSS mini-bars */}
+            <MetricCluster county={county} />
+
             {/* Headline metrics */}
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-1.5">
@@ -341,7 +350,7 @@ export default function BriefPage() {
 
             {/* Ask Copilot */}
             <div className="print:hidden">
-              <AskCopilotButton context={copilotContext} label={`Ask Copilot about ${county} County`} />
+              <AskCopilotButton context={copilotContext} label={`Ask Access Michigan about ${county} County`} />
             </div>
 
             {/* Civic data callout */}

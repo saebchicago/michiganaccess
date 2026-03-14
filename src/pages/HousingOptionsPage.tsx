@@ -333,7 +333,7 @@ export default function HousingOptionsPage() {
               {/* Copilot */}
               <AskCopilotButton
                 context={`housing | ZIP: ${zipInput || "unknown"} | county: ${effectiveCounty || "unknown"} | situation: ${situation} | income: ${income} | Ask Copilot about housing resources, programs, and next steps for this area. Structure response with: 1) immediate actions, 2) programs they may qualify for, 3) official links. Always note that Access Michigan does not determine eligibility.`}
-                label="Ask Copilot about housing in my area"
+                label="Ask Access Michigan about housing in my area"
               />
 
               <Button variant="ghost" size="sm" onClick={() => setStep(1)} className="gap-1"><ArrowLeft className="h-3.5 w-3.5" /> Start over</Button>

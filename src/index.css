@@ -354,6 +354,11 @@
   .shadow-sm, .shadow-md, .shadow-lg, .shadow-michigan { box-shadow: none !important; }
   a[href]::after { content: " (" attr(href) ")"; font-size: 8px; color: #666; }
   img { max-width: 100% !important; }
+  /* Print header with date */
+  .print-header { display: block !important; }
+  /* Print legend styling */
+  .print-legend { display: block !important; border: 1px solid #ccc; padding: 0.5rem; margin-top: 0.5rem; font-size: 9px; }
+
 }
 
 /* ── Google Translate safety-net ─────────────────────────────────────────── */

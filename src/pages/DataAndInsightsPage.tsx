@@ -390,6 +390,32 @@ export default function DataAndInsightsPage() {
 
         <Separator className="my-10" />
 
+        {/* ── Export Downloads ── */}
+        <section className="space-y-4">
+          <h2 className="text-xl font-bold text-foreground">Export & Download</h2>
+          <p className="text-sm text-muted-foreground">Direct links to official CSV and data downloads from authoritative sources. Files open in a new tab — no processing by Access Michigan.</p>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { name: "SVI 2022 — County & Tract Scores", desc: "CDC/ATSDR Social Vulnerability Index for Michigan, all census tracts and counties.", url: "https://www.atsdr.cdc.gov/placeandhealth/svi/data_documentation_download.html" },
+              { name: "United For ALICE — Michigan County Table", desc: "ALICE threshold data, household survival budget, and county-level reports.", url: "https://www.unitedforalice.org/county-reports/Michigan" },
+              { name: "County Health Rankings — Michigan", desc: "Health outcomes, behaviors, clinical care, and social factors for all 83 counties.", url: "https://www.countyhealthrankings.org/explore-health-rankings/michigan/data-and-resources" },
+              { name: "MDHHS Open Data Portal", desc: "Michigan Department of Health and Human Services datasets and reports.", url: "https://www.michigan.gov/mdhhs/keep-mi-healthy/data-and-reports" },
+              { name: "CMS Provider Data Downloads", desc: "Hospital compare, physician compare, and Medicare utilization data.", url: "https://data.cms.gov/provider-data/" },
+              { name: "Census ACS Data", desc: "American Community Survey 5-year estimates — demographics, housing, economic data.", url: "https://data.census.gov/" },
+            ].map((item) => (
+              <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer" className="block rounded-lg border border-border p-4 hover:bg-muted/50 hover:border-primary/20 transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                <div className="flex items-start justify-between gap-2">
+                  <h3 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">{item.name}</h3>
+                  <Download className="h-4 w-4 text-muted-foreground group-hover:text-primary shrink-0 mt-0.5" />
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <Separator className="my-10" />
+
         {/* ── Civic Data Hub CTA ── */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="rounded-xl border border-primary/20 bg-primary/5 p-8 text-center space-y-4"
