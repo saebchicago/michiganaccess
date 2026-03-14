@@ -334,6 +334,11 @@ export default function CompareZipsPage() {
 
       {hasComparison && summary && (
         <div className="container max-w-5xl py-8 space-y-8 print:py-4">
+          {/* Print-only header */}
+          <div className="hidden print-header print:block text-center border-b border-border pb-3 mb-4">
+            <p className="text-lg font-bold">Access Michigan — ZIP Comparison: {activeZips.join(" vs ")}</p>
+            <p className="text-xs text-muted-foreground">Generated {new Date().toLocaleDateString()} · Data as of March 2026 · accessmi.org/compare-zips</p>
+          </div>
 
           {/* ═══ FAIRNESS DISCLAIMER ═══ */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
