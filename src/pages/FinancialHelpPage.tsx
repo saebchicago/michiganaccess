@@ -325,7 +325,7 @@ export default function FinancialHelpPage() {
         <div className="flex justify-center">
           <AskCopilotButton
             context="Context: financial_help. This is the Financial Help page for Michigan residents. Instructions: Identify 3 categories of help (cash/benefits, utilities, housing) and which are most commonly used. Provide concrete next steps and program names."
-            label="Ask Copilot about financial help"
+            label="Ask Access Michigan about financial help"
           />
         </div>
       </div>

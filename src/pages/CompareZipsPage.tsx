@@ -519,7 +519,7 @@ export default function CompareZipsPage() {
 
           {/* ═══ COPILOT ═══ */}
           <div className="flex justify-center">
-            <AskCopilotButton context={copilotContext} label="Ask Copilot about this comparison" />
+            <AskCopilotButton context={copilotContext} label="Ask Access Michigan about this comparison" />
           </div>
 
           {/* ═══ PARTNER CTA ═══ */}
