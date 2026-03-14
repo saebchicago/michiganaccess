@@ -43,7 +43,6 @@ const CATEGORY_RECS: Record<string, { label: string; path: string; why: string }
     { label: "Get Financial Help", path: "/financial-help", why: "Find coverage options" },
   ],
   health: [
-    { label: "Find a 46 Near You", path: "/find-care", why: "Top-rated providers" },
     { label: "Insurance Appeals", path: "/health/insurance-appeals", why: "Fight a denial" },
     { label: "Explore Health Data", path: "/data", why: "Community health metrics" },
   ],

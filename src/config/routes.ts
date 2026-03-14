@@ -1,4 +1,4 @@
-Page_Downimport { lazy, type ComponentType, type LazyExoticComponent } from "react";
+import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 
 // ── Route Definition Types ──────────────────────────────────────────────────
 
@@ -107,20 +107,19 @@ const pages = {
   HousingOptionsPage: lazy(() => import("@/pages/HousingOptionsPage")),
   HealthPlansMedicaidPage: lazy(() => import("@/pages/HealthPlansMedicaidPage")),
   UtilitiesRegulatorsPage: lazy(() => import("@/pages/UtilitiesRegulatorsPage")),
-    ElectionsPage: lazy(() => import("@/pages/Elections")),
-      OfficialsPage: lazy(() => import("@/pages/Officials")),
-        ProviderDataPage: lazy(() => import("@/pages/ProviderData")),
-          DisabilityAccessPage: lazy(() => import("@/pages/DisabilityAccess")),
-            PublicSafetyPage: lazy(() => import("@/pages/PublicSafety")),
-              SocialServicesPage: lazy(() => import("@/pages/SocialServices")),
-                TransparencyPage: lazy(() => import("@/pages/TransparencyPage")),
+  ElectionsPage: lazy(() => import("@/pages/Elections")),
+  OfficialsPage: lazy(() => import("@/pages/Officials")),
+  ProviderDataPage: lazy(() => import("@/pages/ProviderData")),
+  DisabilityAccessPage: lazy(() => import("@/pages/DisabilityAccess")),
+  PublicSafetyPage: lazy(() => import("@/pages/PublicSafety")),
+  SocialServicesPage: lazy(() => import("@/pages/SocialServices")),
+  TransparencyPage: lazy(() => import("@/pages/TransparencyPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
 // Order matters: explicit routes MUST come before the /:slug catch-all.
 
-PopularShortcuts126
-: RouteEntry[] = [
+export const APP_ROUTES: RouteEntry[] = [
   { path: "/privacy", component: pages.PrivacyPage, label: "Privacy Policy" },
   { path: "/insurance-comparison", component: pages.InsuranceComparisonPage, label: "Compare Insurance" },
   { path: "/insurance-coverage", component: pages.InsuranceCoveragePage, label: "Insurance & Coverage Guide" },
@@ -194,19 +193,18 @@ PopularShortcuts126
   { path: "/zoning", component: pages.ZoningPage, label: "Zoning & Land Use" },
   { path: "/brief", component: pages.BriefPage, label: "County Brief" },
   { path: "/housing-options", component: pages.HousingOptionsPage, label: "Housing Options" },
-    { path: "/elections", component: pages.ElectionsPage, label: "Elections & Civic Access" },
-      { path: "/officials", component: pages.OfficialsPage, label: "Your Representatives" },
-        { path: "/provider-data", component: pages.ProviderDataPage, label: "Provider Data" },
-          { path: "/disability-access", component: pages.DisabilityAccessPage, label: "Disability & Accessibility" },
-            { path: "/public-safety", component: pages.PublicSafetyPage, label: "Public Safety & Policing" },
-              { path: "/social-services", component: pages.SocialServicesPage, label: "Social Services & Benefits" },
-                { path: "/transparency", component: pages.TransparencyPage, label: "Transparency & Public Records" },
+  { path: "/elections", component: pages.ElectionsPage, label: "Elections & Civic Access" },
+  { path: "/officials", component: pages.OfficialsPage, label: "Your Representatives" },
+  { path: "/provider-data", component: pages.ProviderDataPage, label: "Provider Data" },
+  { path: "/disability-access", component: pages.DisabilityAccessPage, label: "Disability & Accessibility" },
+  { path: "/public-safety", component: pages.PublicSafetyPage, label: "Public Safety & Policing" },
+  { path: "/social-services", component: pages.SocialServicesPage, label: "Social Services & Benefits" },
+  { path: "/transparency", component: pages.TransparencyPage, label: "Transparency & Public Records" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
 
 // ── Reserved Slugs (derived from route table) ───────────────────────────────
-// Auto-generated from APP_ROUTES so CountyRedirect stays in sync.
 
 export const RESERVED_SLUGS: Set<string> = new Set(
   APP_ROUTES
@@ -257,24 +255,21 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Contact", href: "/contact" },
     ],
   },
-    ,
-      {
-          label: "Civic Access",
-              children: [
-                    { label: "Elections & Civic Access", href: "/elections" },
-                          { label: "Your Representatives", href: "/officials" },
-                                { label: "Transparency & Records", href: "/transparency" },
-                                      { label: "Public Safety", href: "/public-safety" },
-                                          ],
-                                            },
-                                              {
-                                                  label: "Benefits & Services",
-                                                      children: [
-                                                            { label: "Social Services & Benefits", href: "/social-services" },
-                                                                  { label: "Disability & Accessibility", href: "/disability-access" },
-                                                                        { label: "Provider Data", href: "/provider-data" },
-                                                                            ],
-                                                                              },
+  {
+    label: "Civic Access",
+    children: [
+      { label: "Elections & Civic Access", href: "/elections" },
+      { label: "Your Representatives", href: "/officials" },
+      { label: "Transparency & Records", href: "/transparency" },
+      { label: "Public Safety", href: "/public-safety" },
+    ],
+  },
+  {
+    label: "Benefits & Services",
+    children: [
+      { label: "Social Services & Benefits", href: "/social-services" },
+    ],
+  },
 ];
 
 // ── Sitemap Sections ────────────────────────────────────────────────────────
