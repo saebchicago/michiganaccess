@@ -53,7 +53,7 @@ export default function GetToCarePanel({ county, zip, coverageType }: { county?:
 
         <AskCopilotButton
           context={`transportation | ZIP: ${zip || "unknown"} | county: ${county || "unknown"} | coverage: ${coverageType || "unknown"} | Help this person find transportation to medical appointments. Cover Medicaid NEMT, local transit, and ride programs.`}
-          label="Ask Copilot about getting to care"
+          label="Ask Access Michigan about getting to care"
         />
       </CardContent>
     </Card>
