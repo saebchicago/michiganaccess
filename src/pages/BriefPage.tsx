@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Printer, TrendingUp, TrendingDown, Minus, MapPin, BarChart3, FileText, Activity, Zap, Droplets, TreePine, AlertTriangle } from "lucide-react";
+import MetricCluster from "@/components/brief/MetricCluster";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import CivicScoreBreakdown from "@/components/shared/CivicScoreBreakdown";
 import { DataClassification } from "@/components/shared/DataClassification";
