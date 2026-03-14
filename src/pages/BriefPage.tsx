@@ -183,6 +183,11 @@ export default function BriefPage() {
 
         {county && profile && score !== null && (
           <div ref={printRef} className="space-y-6">
+            {/* Print-only header */}
+            <div className="hidden print-header print:block text-center border-b border-border pb-3 mb-4">
+              <p className="text-lg font-bold">Access Michigan — {county} County Brief</p>
+              <p className="text-xs text-muted-foreground">Generated {new Date().toLocaleDateString()} · Data as of March 2026 · accessmi.org/brief</p>
+            </div>
             {/* Score card */}
             <Card>
               <CardContent className="py-6 flex flex-col sm:flex-row items-center gap-6">
