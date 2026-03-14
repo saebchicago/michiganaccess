@@ -345,7 +345,7 @@ export default function BriefPage() {
 
             {/* Ask Copilot */}
             <div className="print:hidden">
-              <AskCopilotButton context={copilotContext} label={`Ask Copilot about ${county} County`} />
+              <AskCopilotButton context={copilotContext} label={`Ask Access Michigan about ${county} County`} />
             </div>
 
             {/* Civic data callout */}
