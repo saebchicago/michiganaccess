@@ -162,11 +162,12 @@ Deno.serve(async (req) => {
       JSON.stringify({ data, cached: false, fetched_at: new Date().toISOString() }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("ArcGIS proxy error:", error);
     const empty = { type: "FeatureCollection", features: [] };
+    const msg = error instanceof Error ? error.message : "Failed to fetch data";
     return new Response(
-      JSON.stringify({ data: empty, cached: false, error: error.message || "Failed to fetch data", fetched_at: new Date().toISOString() }),
+      JSON.stringify({ data: empty, cached: false, error: msg, fetched_at: new Date().toISOString() }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

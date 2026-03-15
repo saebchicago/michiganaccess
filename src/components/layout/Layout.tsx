@@ -54,7 +54,7 @@ const Layout = ({ children }: LayoutProps) => (
       <MobileBottomNav />
       <AIChatWidget />
       <QuickExitBar />
-      <FloatingFeedback />
+      
       <OnboardingTour />
     </Suspense>
   </div>
