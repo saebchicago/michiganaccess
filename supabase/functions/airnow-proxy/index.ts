@@ -59,7 +59,7 @@ Deno.serve(async (req) => {
     // Using OpenAQ v3 latest measurements endpoint
     const params = new URLSearchParams({
       coordinates: "44.3,-85.6", // Michigan center
-      radius: 400000, // 400km covers all of Michigan
+      radius: "400000", // 400km covers all of Michigan
       limit: "200",
       order_by: "datetime",
       sort_order: "desc",
@@ -230,10 +230,11 @@ Deno.serve(async (req) => {
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("AirNow proxy error:", error);
+    const msg = error instanceof Error ? error.message : "Failed to fetch AQI data";
     return new Response(
-      JSON.stringify({ error: error.message || "Failed to fetch AQI data", stations: [], count: 0 }),
+      JSON.stringify({ error: msg, stations: [], count: 0 }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

@@ -268,8 +268,8 @@ Deno.serve(async (req) => {
         }
         
         if (vehicles.length > 0) break;
-      } catch (err) {
-        feedError = `${tryUrl}: ${err.message}`;
+      } catch (err: unknown) {
+        feedError = `${tryUrl}: ${err instanceof Error ? err.message : "unknown error"}`;
         continue;
       }
     }
@@ -286,10 +286,11 @@ Deno.serve(async (req) => {
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("GTFS-RT proxy error:", error);
+    const msg = error instanceof Error ? error.message : "Failed to fetch GTFS-RT data";
     return new Response(
-      JSON.stringify({ error: error.message || "Failed to fetch GTFS-RT data", vehicles: [], count: 0 }),
+      JSON.stringify({ error: msg, vehicles: [], count: 0 }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

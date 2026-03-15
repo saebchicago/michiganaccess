@@ -201,11 +201,11 @@ const HeroSection = () => {
   const [parsedIntent, setParsedIntent] = useState<ReturnType<typeof parseNaturalLanguage> | null>(null);
 
   const placeholders = [
-    "Search by city, ZIP, county, service, or doctor",
     "Try: food pantry near 48322...",
     "Try: mental health Oakland County...",
     "Try: emergency shelter Detroit...",
     "Try: utility assistance...",
+    "Try: appeal insurance denial...",
   ];
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const [placeholderOpacity, setPlaceholderOpacity] = useState(1);
@@ -355,7 +355,7 @@ const HeroSection = () => {
             transition={{ delay: 0.15, duration: 0.5 }}
             className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl leading-tight"
           >
-            Find help fast. See community need clearly.
+            Michigan help, at your fingertips.
           </motion.h1>
 
           {/* Subhead */}
@@ -365,7 +365,7 @@ const HeroSection = () => {
             transition={{ delay: 0.22, duration: 0.5 }}
             className="mt-3 text-sm text-primary-foreground/75 md:text-base max-w-xl mx-auto leading-relaxed"
           >
-            Access Michigan helps residents find health, housing, food, legal, transportation, and energy support using verified public data — with no account, no tracking, and no pay-to-play results.
+            Free, instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
           </motion.p>
 
           {/* Primary + Secondary CTAs */}
@@ -488,9 +488,9 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Search reassurance */}
+            {/* Search subtitle */}
             <p className="mt-2 text-[11px] text-primary-foreground/50 text-center">
-              We don't store your searches. Results are based on public data only.
+              Search services, ZIP codes, cities, or counties across all 83 Michigan counties.
             </p>
 
             {/* Language quick-switch strip */}

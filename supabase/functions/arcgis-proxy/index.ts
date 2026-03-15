@@ -33,7 +33,7 @@ const ENDPOINTS: Record<string, { url: string; transform?: string }> = {
 };
 
 // Convert ESRI JSON (MapServer) to GeoJSON
-function esriJsonToGeoJSON(data: any): GeoJSON.FeatureCollection {
+function esriJsonToGeoJSON(data: any) {
   const features = (data.features || []).map((f: any) => ({
     type: "Feature" as const,
     geometry: {
@@ -46,7 +46,7 @@ function esriJsonToGeoJSON(data: any): GeoJSON.FeatureCollection {
 }
 
 // Convert NREL AFDC JSON to GeoJSON
-function nrelAfdcToGeoJSON(data: any): GeoJSON.FeatureCollection {
+function nrelAfdcToGeoJSON(data: any) {
   const stations = data.fuel_stations || [];
   const features = stations.map((s: any) => ({
     type: "Feature" as const,
@@ -162,11 +162,12 @@ Deno.serve(async (req) => {
       JSON.stringify({ data, cached: false, fetched_at: new Date().toISOString() }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("ArcGIS proxy error:", error);
     const empty = { type: "FeatureCollection", features: [] };
+    const msg = error instanceof Error ? error.message : "Failed to fetch data";
     return new Response(
-      JSON.stringify({ data: empty, cached: false, error: error.message || "Failed to fetch data", fetched_at: new Date().toISOString() }),
+      JSON.stringify({ data: empty, cached: false, error: msg, fetched_at: new Date().toISOString() }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }

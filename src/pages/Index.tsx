@@ -11,6 +11,7 @@ import HomePrimaryPaths from "@/components/home/HomePrimaryPaths";
 import HomeSectorGrid from "@/components/home/HomeSectorGrid";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
+import LocationNudgeBanner from "@/components/home/LocationNudgeBanner";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
 import { AccessChat } from "@/components/AccessChat";
@@ -25,10 +26,24 @@ const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
 const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
 const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer"));
 const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
+const CommunityAlerts = lazy(() => import("@/components/home/CommunityAlerts"));
 
 const SectionFallback = () => (
   <div className="py-8 flex justify-center">
     <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+  </div>
+);
+
+const SectionSkeleton = ({ height = "200px" }: { height?: string }) => (
+  <div className="py-8" style={{ minHeight: height }}>
+    <div className="container max-w-4xl space-y-3">
+      <div className="h-6 w-48 rounded bg-muted animate-pulse" />
+      <div className="h-4 w-72 rounded bg-muted/60 animate-pulse" />
+      <div className="grid gap-3 sm:grid-cols-2 mt-4">
+        <div className="h-24 rounded-xl bg-muted/40 animate-pulse" />
+        <div className="h-24 rounded-xl bg-muted/40 animate-pulse" />
+      </div>
+    </div>
   </div>
 );
 
@@ -53,6 +68,9 @@ const Index = () => {
       {/* ═══ HERO — mission + search ═══ */}
       <HeroSection />
 
+      {/* ═══ LOCATION NUDGE (no-ZIP users) ═══ */}
+      <LocationNudgeBanner />
+
       {/* ═══ TRUST PANEL ═══ */}
       <TrustPanel />
 
@@ -65,8 +83,26 @@ const Index = () => {
       {/* ═══ "WHERE DO YOU WANT TO START?" ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
         <LazySection minHeight="120px">
-          <Suspense fallback={<SectionFallback />}>
+          <Suspense fallback={<SectionSkeleton height="200px" />}>
             <CoreAccessGrid />
+          </Suspense>
+        </LazySection>
+      </SectionErrorBoundary>
+
+      {/* ═══ NEARBY RESOURCES (after intent is established) ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <LazySection minHeight="100px">
+          <Suspense fallback={<SectionSkeleton height="120px" />}>
+            <NearbyResourceFinder />
+          </Suspense>
+        </LazySection>
+      </SectionErrorBoundary>
+
+      {/* ═══ COMMUNITY ALERTS ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <LazySection minHeight="200px">
+          <Suspense fallback={<SectionSkeleton height="200px" />}>
+            <CommunityAlerts />
           </Suspense>
         </LazySection>
       </SectionErrorBoundary>
@@ -117,26 +153,17 @@ const Index = () => {
       </section>
 
       {/* ═══ CIVIC DATA CALLOUT ═══ */}
-      <Suspense fallback={<SectionFallback />}>
+      <Suspense fallback={<SectionSkeleton />}>
         <CivicDataCalloutCard />
       </Suspense>
 
       {/* ═══ WHAT IS ACCESS MICHIGAN? ═══ */}
-      <Suspense fallback={<SectionFallback />}>
+      <Suspense fallback={<SectionSkeleton />}>
         <SystemsExplainer />
       </Suspense>
 
-      {/* ═══ NEARBY RESOURCES ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <LazySection minHeight="100px">
-          <Suspense fallback={<SectionFallback />}>
-            <NearbyResourceFinder />
-          </Suspense>
-        </LazySection>
-      </SectionErrorBoundary>
-
       {/* ═══ REGIONAL GATEWAY ═══ */}
-      <Suspense fallback={<SectionFallback />}>
+      <Suspense fallback={<SectionSkeleton />}>
         <RegionalGateway />
       </Suspense>
 
@@ -150,7 +177,7 @@ const Index = () => {
       </div>
 
       {/* ═══ FOUNDER & SUPPORT ═══ */}
-      <Suspense fallback={<SectionFallback />}>
+      <Suspense fallback={<SectionSkeleton height="120px" />}>
         <FounderSupportSection />
       </Suspense>
 
