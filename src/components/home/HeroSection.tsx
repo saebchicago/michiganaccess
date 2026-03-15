@@ -201,11 +201,11 @@ const HeroSection = () => {
   const [parsedIntent, setParsedIntent] = useState<ReturnType<typeof parseNaturalLanguage> | null>(null);
 
   const placeholders = [
-    "Search by city, ZIP, county, service, or doctor",
     "Try: food pantry near 48322...",
     "Try: mental health Oakland County...",
     "Try: emergency shelter Detroit...",
     "Try: utility assistance...",
+    "Try: appeal insurance denial...",
   ];
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const [placeholderOpacity, setPlaceholderOpacity] = useState(1);
