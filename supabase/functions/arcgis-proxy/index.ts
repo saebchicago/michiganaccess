@@ -46,7 +46,7 @@ function esriJsonToGeoJSON(data: any) {
 }
 
 // Convert NREL AFDC JSON to GeoJSON
-function nrelAfdcToGeoJSON(data: any): GeoJSON.FeatureCollection {
+function nrelAfdcToGeoJSON(data: any) {
   const stations = data.fuel_stations || [];
   const features = stations.map((s: any) => ({
     type: "Feature" as const,
