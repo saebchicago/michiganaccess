@@ -355,7 +355,7 @@ const HeroSection = () => {
             transition={{ delay: 0.15, duration: 0.5 }}
             className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl md:text-5xl leading-tight"
           >
-            Find help fast. See community need clearly.
+            Michigan help, at your fingertips.
           </motion.h1>
 
           {/* Subhead */}
