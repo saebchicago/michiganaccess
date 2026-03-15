@@ -268,8 +268,8 @@ Deno.serve(async (req) => {
         }
         
         if (vehicles.length > 0) break;
-      } catch (err) {
-        feedError = `${tryUrl}: ${err.message}`;
+      } catch (err: unknown) {
+        feedError = `${tryUrl}: ${err instanceof Error ? err.message : "unknown error"}`;
         continue;
       }
     }
