@@ -216,7 +216,7 @@ export const RESERVED_SLUGS: Set<string> = new Set(
 
 export const NAV_GROUPS: (NavGroup | NavLink)[] = [
   {
-    label: "Services",
+    label: "Find Help",
     children: [
       { label: "Find Help", href: "/find-care" },
       { label: "Housing Options", href: "/housing-options", badge: "New" },
@@ -225,6 +225,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Financial Help", href: "/financial-help", i18nKey: "nav.financialHelp" },
       { label: "Energy & Utilities", href: "/environment" },
       { label: "Transportation", href: "/transportation", i18nKey: "nav.transportation" },
+      { label: "Community Alerts", href: "/#community-alerts" },
       { label: "Health Map", href: "/health-map", i18nKey: "nav.healthMap" },
       { label: "Quality Ratings", href: "/quality" },
       { label: "Insurance Appeals", href: "/health/insurance-appeals" },

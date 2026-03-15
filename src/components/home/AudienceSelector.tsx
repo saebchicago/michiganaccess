@@ -63,9 +63,9 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
   const isResident = audience === "resident";
 
   return (
-    <section className="py-5 border-b border-border/40" aria-label="Who is this for?">
+    <section className="py-5 border-b border-border/40" aria-label="Showing resources for">
       <div className="container">
-        <p className="text-xs text-muted-foreground text-center mb-3 font-medium">Who is this for?</p>
+        <p className="text-xs text-muted-foreground text-center mb-3 font-medium">Showing resources for:</p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {audienceIds.map((a) => {
             const active = audience === a.id;

@@ -279,9 +279,15 @@ export default function ContextBar() {
     );
   }
 
+  const hasNoLocation = !county && !region;
+
   // Desktop: full bar
   return (
-    <div className="sticky top-16 z-40 border-b border-border/50 bg-background/95 backdrop-blur-md">
+    <div className={`sticky top-16 z-40 border-b backdrop-blur-md transition-colors ${
+      hasNoLocation
+        ? "border-amber-200 dark:border-amber-800/40 bg-amber-50/90 dark:bg-amber-950/30"
+        : "border-border/50 bg-background/95"
+    }`}>
       <div aria-live="polite" className="sr-only">
         Now showing {announcement} data and services.
       </div>
@@ -289,8 +295,17 @@ export default function ContextBar() {
       <div className="container flex items-center gap-3 h-8 text-[11px] text-muted-foreground overflow-x-auto">
         {/* Location */}
         <div className="flex items-center gap-1 shrink-0">
-          <MapPin className="h-3 w-3" aria-hidden="true" />
-          <span className="font-medium text-foreground">{filterLabel}</span>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="flex items-center gap-1">
+                <MapPin className={`h-3 w-3 ${hasNoLocation ? "text-amber-600 dark:text-amber-400" : ""}`} aria-hidden="true" />
+                <span className={`font-medium ${hasNoLocation ? "text-amber-800 dark:text-amber-300" : "text-foreground"}`}>{filterLabel}</span>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" className="text-xs max-w-xs">
+              Set your ZIP to see resources, alerts, and data for your exact area.
+            </TooltipContent>
+          </Tooltip>
           {(county || region) && (
             <button
               onClick={handleClear}
@@ -299,14 +314,14 @@ export default function ContextBar() {
               Change <ArrowRight className="h-2.5 w-2.5" />
             </button>
           )}
-          {!county && !region && (
+          {hasNoLocation && (
             <Link
               to="/#"
               onClick={(e) => {
                 e.preventDefault();
                 document.querySelector<HTMLButtonElement>('[aria-label="Select county"]')?.click();
               }}
-              className="text-primary hover:underline ml-1 inline-flex items-center gap-0.5"
+              className="text-amber-700 dark:text-amber-400 hover:underline ml-1 inline-flex items-center gap-0.5 font-semibold"
             >
               Set location <ArrowRight className="h-2.5 w-2.5" />
             </Link>
