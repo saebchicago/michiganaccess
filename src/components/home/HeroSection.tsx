@@ -365,7 +365,7 @@ const HeroSection = () => {
             transition={{ delay: 0.22, duration: 0.5 }}
             className="mt-3 text-sm text-primary-foreground/75 md:text-base max-w-xl mx-auto leading-relaxed"
           >
-            Access Michigan helps residents find health, housing, food, legal, transportation, and energy support using verified public data — with no account, no tracking, and no pay-to-play results.
+            Free, instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
           </motion.p>
 
           {/* Primary + Secondary CTAs */}
