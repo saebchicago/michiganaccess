@@ -33,7 +33,7 @@ const ENDPOINTS: Record<string, { url: string; transform?: string }> = {
 };
 
 // Convert ESRI JSON (MapServer) to GeoJSON
-function esriJsonToGeoJSON(data: any): GeoJSON.FeatureCollection {
+function esriJsonToGeoJSON(data: any) {
   const features = (data.features || []).map((f: any) => ({
     type: "Feature" as const,
     geometry: {
