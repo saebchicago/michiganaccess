@@ -488,9 +488,9 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Search reassurance */}
+            {/* Search subtitle */}
             <p className="mt-2 text-[11px] text-primary-foreground/50 text-center">
-              We don't store your searches. Results are based on public data only.
+              Search services, ZIP codes, cities, or counties across all 83 Michigan counties.
             </p>
 
             {/* Language quick-switch strip */}
