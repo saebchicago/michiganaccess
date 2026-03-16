@@ -13,7 +13,6 @@ import PublicTrustBar from "@/components/shared/PublicTrustBar";
 // Deferred: non-critical widgets that don't affect initial render
 const AIChatWidget = lazy(() => import("@/components/shared/AIChatWidget"));
 const PrintButton = lazy(() => import("@/components/shared/PrintButton"));
-const PageFeedback = lazy(() => import("@/components/shared/PageFeedback"));
 const PWAInstallBanner = lazy(() => import("@/components/shared/PWAInstallBanner"));
 const MobileBottomNav = lazy(() => import("@/components/shared/MobileBottomNav"));
 const QuickExitBar = lazy(() => import("@/components/shared/QuickExitBar"));
@@ -48,7 +47,6 @@ const Layout = ({ children }: LayoutProps) => (
     <Footer />
     <ScrollToTop />
     <Suspense fallback={null}>
-      <PageFeedback />
       <PrintButton />
       <PWAInstallBanner />
       <MobileBottomNav />
