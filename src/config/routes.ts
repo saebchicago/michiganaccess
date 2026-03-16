@@ -163,7 +163,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/embed", component: pages.EmbedWidget, label: "Embed" },
   { path: "/methodology", component: pages.MethodologyPage, label: "Methodology" },
   { path: "/research", component: pages.ResearchPage, label: "Research" },
-  { path: "/impact", component: pages.ImpactPage, label: "Impact" },
+  { path: "/impact", component: pages.ImpactDashboardPage, label: "Platform Impact" },
   { path: "/technical", component: pages.TechnicalPage, label: "Technical" },
   { path: "/accessibility", component: pages.AccessibilityPage, label: "Accessibility" },
   { path: "/install", component: pages.InstallPage, label: "Install" },
