@@ -321,9 +321,11 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
     iconName: "Map",
     links: [
       { label: "Interactive Health Map", href: "/health-map" },
+      { label: "CHNA Explorer", href: "/chna-explorer", badge: "Interactive" },
       { label: "Health Data Dashboard", href: "/data" },
       { label: "Civic Data Hub", href: "/civic-data" },
-      { label: "Equity & Social Vulnerability", href: "/equity" },
+      { label: "Equity Scorecard", href: "/equity", badge: "Updated" },
+      { label: "Energy Burden", href: "/energy-burden" },
       { label: "Environment & Air Quality", href: "/environment" },
     ],
   },
