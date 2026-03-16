@@ -7,14 +7,16 @@ import CountySelector from "@/components/shared/CountySelector";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
   AreaChart, Area,
 } from "recharts";
 import { useCounty } from "@/contexts/CountyContext";
-import { getCountyProfile } from "@/data/michigan-county-profiles";
 import SnapshotCard from "@/components/shared/SnapshotCard";
 import { buildStateSnapshotMetrics, buildCountySnapshotMetrics } from "@/utils/snapshotMetrics";
+import InsightNarrative from "@/components/home/InsightNarrative";
+import { COUNTY_INTELLIGENCE_KPIS, MICHIGAN_AVERAGES } from "@/data/michigan-intelligence";
 
 // Heavy map components — lazy loaded
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
@@ -27,7 +29,7 @@ function AnimatedKPIValue({ value }: { value: string }) {
   const suffix = value.replace(/[0-9.,]/g, "").trim();
   const prefix = value.startsWith("$") ? "$" : "";
   const cleanSuffix = suffix.replace(/^\$/, "");
-  const { value: animated, ref } = useCountUp(isNaN(num) ? 0 : num, 1200);
+  const { value: animated, ref } = useCountUp<HTMLSpanElement>(isNaN(num) ? 0 : num, 1200);
 
   if (isNaN(num)) return <p className="text-xl font-bold text-white">{value}</p>;
 
@@ -37,7 +39,7 @@ function AnimatedKPIValue({ value }: { value: string }) {
 
   return (
     <p className="text-xl font-bold text-white">
-      <span ref={ref as any}>{prefix}{display}{cleanSuffix}</span>
+      <span ref={ref}>{prefix}{display}{cleanSuffix}</span>
     </p>
   );
 }
@@ -64,37 +66,11 @@ const accessTrends = [
   { yr: "'25", insured: 96.0, telehealth: 48 },
 ];
 
-// Michigan statewide averages for delta comparison
-const MI_AVERAGES = {
-  insuranceRate: 96.0,
-  lifeExpectancy: 77.4,
-  mentalHealthAccess: 48,
-  erVisitRate: 410,
-};
-
 const CHART_COLORS = {
   mi: "hsl(190, 100%, 50%)",
   us: "hsl(220, 20%, 55%)",
   insured: "hsl(150, 100%, 50%)",
   telehealth: "hsl(190, 100%, 50%)",
-};
-
-// County-level KPI data derived from County Health Rankings dataset
-const COUNTY_KPIS: Record<string, { insuranceRate: number; lifeExpectancy: number; mentalHealthAccess: number; erVisitRate: number }> = {
-  Wayne: { insuranceRate: 92.8, lifeExpectancy: 74.8, mentalHealthAccess: 42, erVisitRate: 520 },
-  Oakland: { insuranceRate: 95.2, lifeExpectancy: 79.6, mentalHealthAccess: 55, erVisitRate: 340 },
-  Macomb: { insuranceRate: 94.4, lifeExpectancy: 77.2, mentalHealthAccess: 46, erVisitRate: 390 },
-  Kent: { insuranceRate: 93.2, lifeExpectancy: 78.5, mentalHealthAccess: 51, erVisitRate: 370 },
-  Genesee: { insuranceRate: 92.1, lifeExpectancy: 74.2, mentalHealthAccess: 39, erVisitRate: 540 },
-  Washtenaw: { insuranceRate: 96.1, lifeExpectancy: 81.2, mentalHealthAccess: 62, erVisitRate: 290 },
-  Ingham: { insuranceRate: 93.5, lifeExpectancy: 77.8, mentalHealthAccess: 53, erVisitRate: 380 },
-  Kalamazoo: { insuranceRate: 93.9, lifeExpectancy: 78.1, mentalHealthAccess: 52, erVisitRate: 360 },
-  Saginaw: { insuranceRate: 92.6, lifeExpectancy: 75.5, mentalHealthAccess: 40, erVisitRate: 490 },
-  Ottawa: { insuranceRate: 94.9, lifeExpectancy: 80.3, mentalHealthAccess: 50, erVisitRate: 310 },
-  "Grand Traverse": { insuranceRate: 91.8, lifeExpectancy: 79.1, mentalHealthAccess: 54, erVisitRate: 350 },
-  Marquette: { insuranceRate: 93.6, lifeExpectancy: 78.9, mentalHealthAccess: 48, erVisitRate: 360 },
-  Berrien: { insuranceRate: 92.7, lifeExpectancy: 76.0, mentalHealthAccess: 41, erVisitRate: 450 },
-  Livingston: { insuranceRate: 95.8, lifeExpectancy: 80.1, mentalHealthAccess: 52, erVisitRate: 320 },
 };
 
 function getDelta(countyVal: number, stateVal: number, higherIsBetter: boolean) {
@@ -108,14 +84,14 @@ export default function HealthDataSnapshot() {
   const { county } = useCounty();
 
   const kpis = useMemo(() => {
-    const countyData = county ? COUNTY_KPIS[county] : null;
+    const countyData = county ? COUNTY_INTELLIGENCE_KPIS[county] : null;
 
     return [
       {
         icon: Shield,
         label: "Insurance Rate",
         value: countyData ? `${countyData.insuranceRate}%` : "96.0%",
-        delta: countyData ? getDelta(countyData.insuranceRate, MI_AVERAGES.insuranceRate, true) : null,
+        delta: countyData ? getDelta(countyData.insuranceRate, MICHIGAN_AVERAGES.insuranceRate, true) : null,
         stateDelta: "+2.8%",
         up: true,
         hasData: !county || !!countyData,
@@ -124,7 +100,7 @@ export default function HealthDataSnapshot() {
         icon: Heart,
         label: "Life Expectancy",
         value: countyData ? `${countyData.lifeExpectancy} yrs` : "77.4 yrs",
-        delta: countyData ? getDelta(countyData.lifeExpectancy, MI_AVERAGES.lifeExpectancy, true) : null,
+        delta: countyData ? getDelta(countyData.lifeExpectancy, MICHIGAN_AVERAGES.lifeExpectancy, true) : null,
         stateDelta: "−0.3",
         up: false,
         hasData: !county || !!countyData,
@@ -133,7 +109,7 @@ export default function HealthDataSnapshot() {
         icon: Brain,
         label: "Mental Health Access",
         value: countyData ? `${countyData.mentalHealthAccess}%` : "48%",
-        delta: countyData ? getDelta(countyData.mentalHealthAccess, MI_AVERAGES.mentalHealthAccess, true) : null,
+        delta: countyData ? getDelta(countyData.mentalHealthAccess, MICHIGAN_AVERAGES.mentalHealthAccess, true) : null,
         stateDelta: "+36% telehealth",
         up: true,
         hasData: !county || !!countyData,
@@ -142,7 +118,7 @@ export default function HealthDataSnapshot() {
         icon: Activity,
         label: "ER Visit Rate",
         value: countyData ? `${countyData.erVisitRate}/100k` : "410/100k",
-        delta: countyData ? getDelta(countyData.erVisitRate, MI_AVERAGES.erVisitRate, false) : null,
+        delta: countyData ? getDelta(countyData.erVisitRate, MICHIGAN_AVERAGES.erVisitRate, false) : null,
         stateDelta: "−11% since 2020",
         up: true,
         hasData: !county || !!countyData,
@@ -186,10 +162,22 @@ export default function HealthDataSnapshot() {
             <motion.div key={kpi.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
               <Card className="h-full bg-slate-800/60 border-slate-700/50">
                 <CardContent className="py-4">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <kpi.icon className="h-4 w-4 text-cyan-400" />
-                    <span className="text-[11px] text-slate-400 font-medium">{kpi.label}</span>
-                  </div>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <kpi.icon className="h-4 w-4 text-cyan-400" />
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span className="cursor-help text-[11px] text-slate-400 font-medium underline decoration-dotted underline-offset-4">
+                            {kpi.label}
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs text-xs">
+                          {kpi.label === "Insurance Rate" && "Share of residents with health insurance coverage. Source: ACS and County Health Rankings."}
+                          {kpi.label === "Life Expectancy" && "Average expected lifespan based on current mortality patterns. Source: MDHHS Vital Records and CDC."}
+                          {kpi.label === "Mental Health Access" && "Access index summarizing available mental health care and telehealth reach. Source: CMS and state data."}
+                          {kpi.label === "ER Visit Rate" && "Emergency department visits per 100,000 residents, used as a strain indicator. Source: MDHHS hospital utilization data."}
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
                   {kpi.hasData ? (
                     <>
                       <AnimatedKPIValue value={kpi.value} />
@@ -247,7 +235,7 @@ export default function HealthDataSnapshot() {
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} angle={-20} textAnchor="end" height={45} />
                     <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${v}%`} />
-                    <Tooltip
+                    <RechartsTooltip
                       formatter={(v: number, name: string) => [`${v}%`, name === "mi" ? "Michigan" : "National"]}
                       contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid hsl(var(--border))" }}
                     />
@@ -280,7 +268,7 @@ export default function HealthDataSnapshot() {
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                     <XAxis dataKey="yr" tick={{ fontSize: 11 }} />
                     <YAxis tick={{ fontSize: 10 }} />
-                    <Tooltip
+                    <RechartsTooltip
                       formatter={(v: number, name: string) => [`${v}%`, name === "insured" ? "Insured" : "Telehealth"]}
                       contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid hsl(var(--border))" }}
                     />
@@ -299,6 +287,21 @@ export default function HealthDataSnapshot() {
               </CardContent>
             </Card>
           </motion.div>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-2 mb-8">
+          <InsightNarrative
+            title="Chronic disease now outpaces the national baseline"
+            summary="Michigan’s diabetes and obesity rates now exceed national benchmarks, which helps explain why life expectancy remains under pressure even as access improves in parts of the state."
+            explanation="This chart compares statewide chronic disease prevalence with national estimates from CDC survey data. It is designed to give readers context before they open raw tables or county dashboards."
+            source="CDC BRFSS"
+          />
+          <InsightNarrative
+            title="Coverage and telehealth are moving in the right direction"
+            summary="Insurance coverage and telehealth adoption continue to improve, showing that access gains are real even while some outcomes remain fragile."
+            explanation="The trend chart focuses on recent years to show changes in coverage and telehealth use. Together they act as a quick proxy for whether people can reach care in more flexible ways than before."
+            source="CMS · MDHHS"
+          />
         </div>
 
         {/* Mobile: county dropdown instead of charts */}
