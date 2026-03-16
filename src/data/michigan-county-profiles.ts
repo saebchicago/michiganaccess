@@ -1,5 +1,7 @@
 // Population data: US Census 2023 estimates; cities: largest municipalities per county
 // Health data: County Health Rankings & Roadmaps 2024, USDA Food Environment Atlas
+import { MI_COUNTY_FIPS } from "@/data/census-geographies";
+
 export interface CountyProfile {
   population: number;
   majorCities: string[];
@@ -115,3 +117,26 @@ export const DEFAULT_PROFILE: CountyProfile = {
 export function getCountyProfile(county: string): CountyProfile {
   return COUNTY_PROFILES[county] || DEFAULT_PROFILE;
 }
+
+/** Structured county record used by data-integrity tests and analytics. */
+export interface MichiganCountyProfileEntry {
+  name: string;
+  fips: string;
+  health: { diabetes_prevalence: number | null };
+}
+
+/** Array of all 83 Michigan counties with FIPS codes and basic health stub. */
+export const MICHIGAN_COUNTY_PROFILES: MichiganCountyProfileEntry[] = Object.keys(
+  COUNTY_PROFILES,
+).map((name) => ({
+  name,
+  fips: `26${MI_COUNTY_FIPS[name] ?? "000"}`,
+  health: { diabetes_prevalence: null },
+}));
+
+/** Michigan statewide averages for reference comparisons. */
+export const MI_AVERAGE: MichiganCountyProfileEntry = {
+  name: "Michigan",
+  fips: "26",
+  health: { diabetes_prevalence: 10.7 },
+};
