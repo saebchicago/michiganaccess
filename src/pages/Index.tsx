@@ -1,7 +1,7 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Database } from "lucide-react";
+import { Database, X } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -50,6 +50,34 @@ const SectionSkeleton = ({ height = "200px" }: { height?: string }) => (
 );
 
 export type PersonaView = "resident" | "professional";
+
+function ExecutiveLandingStrip() {
+  const [dismissed, setDismissed] = useState(() => {
+    try { return localStorage.getItem("exec-strip-dismissed") === "1"; } catch { return false; }
+  });
+  if (dismissed) return null;
+  const dismiss = () => {
+    try { localStorage.setItem("exec-strip-dismissed", "1"); } catch { /* ignore */ }
+    setDismissed(true);
+  };
+  return (
+    <div className="border-t border-border/40 bg-muted/30 py-2 px-4">
+      <div className="container max-w-5xl flex items-center justify-between gap-3 text-xs text-muted-foreground">
+        <span>
+          <Link to="/for-health-systems" className="text-primary hover:underline font-medium">For health systems &amp; partners →</Link>
+          {" "}BD scenario modeler, market intelligence, and SDOH ROI tools.
+        </span>
+        <button
+          aria-label="Dismiss"
+          onClick={dismiss}
+          className="shrink-0 rounded p-1 hover:bg-muted transition-colors"
+        >
+          <X className="h-3 w-3" />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 const Index = () => {
   usePageMeta({
@@ -189,6 +217,9 @@ const Index = () => {
       <Suspense fallback={<SectionSkeleton height="120px" />}>
         <FounderSupportSection />
       </Suspense>
+
+      {/* ═══ EXECUTIVE LANDING STRIP ═══ */}
+      <ExecutiveLandingStrip />
 
       <AccessChat />
     </Layout>

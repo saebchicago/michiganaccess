@@ -3,15 +3,12 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import { CountyProvider } from "./contexts/CountyContext";
 import { NerdModeProvider } from "./contexts/NerdModeContext";
 import { APP_ROUTES } from "./config/routes";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-
-// ← ADD THIS LINE — outside the component, next to the other imports
-const BDFinancialModelPage = lazy(() => import("./pages/BDFinancialModelPage"));
 
 const queryClient = new QueryClient();
 
@@ -54,8 +51,6 @@ const App = () => (
                     element={<route.component />}
                   />
                 ))}
-                {/* ← ADD THIS ROUTE — before the * catch-all */}
-                <Route path="/bd-financial-model" element={<BDFinancialModelPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
