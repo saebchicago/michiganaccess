@@ -73,6 +73,13 @@ const CHART_COLORS = {
   telehealth: "hsl(190, 100%, 50%)",
 };
 
+const KPI_DESCRIPTIONS: Record<string, string> = {
+  "Insurance Rate": "Share of residents with health insurance coverage. Source: ACS and County Health Rankings.",
+  "Life Expectancy": "Average expected lifespan based on current mortality patterns. Source: MDHHS Vital Records and CDC.",
+  "Mental Health Access": "Access index summarizing available mental health care and telehealth reach. Source: CMS and state data.",
+  "ER Visit Rate": "Emergency department visits per 100,000 residents, used as a strain indicator. Source: MDHHS hospital utilization data.",
+};
+
 function getDelta(countyVal: number, stateVal: number, higherIsBetter: boolean) {
   const diff = countyVal - stateVal;
   const formatted = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
@@ -171,10 +178,7 @@ export default function HealthDataSnapshot() {
                           </span>
                         </TooltipTrigger>
                         <TooltipContent className="max-w-xs text-xs">
-                          {kpi.label === "Insurance Rate" && "Share of residents with health insurance coverage. Source: ACS and County Health Rankings."}
-                          {kpi.label === "Life Expectancy" && "Average expected lifespan based on current mortality patterns. Source: MDHHS Vital Records and CDC."}
-                          {kpi.label === "Mental Health Access" && "Access index summarizing available mental health care and telehealth reach. Source: CMS and state data."}
-                          {kpi.label === "ER Visit Rate" && "Emergency department visits per 100,000 residents, used as a strain indicator. Source: MDHHS hospital utilization data."}
+                          {KPI_DESCRIPTIONS[kpi.label]}
                         </TooltipContent>
                       </Tooltip>
                     </div>
