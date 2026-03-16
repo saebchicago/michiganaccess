@@ -121,6 +121,7 @@ const pages = {
   QualityComparisonPage: lazy(() => import("@/pages/QualityComparisonPage")),
   EnergyBurdenPage: lazy(() => import("@/pages/EnergyBurdenPage")),
   ImpactDashboardPage: lazy(() => import("@/pages/ImpactDashboardPage")),
+  DomainDashboardPage: lazy(() => import("@/pages/DomainDashboard")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -144,6 +145,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/learn", component: pages.LearnPage, label: "Learn" },
   { path: "/data", component: pages.HealthDataDashboardPage, label: "Health Data" },
   { path: "/data-and-insights", component: pages.DataAndInsightsPage, label: "Data & Insights" },
+  { path: "/domain-dashboard", component: pages.DomainDashboardPage, label: "Domain Dashboard" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
   { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
   { path: "/compare-zips", component: pages.CompareZipsPage, label: "Compare ZIP Codes" },
@@ -151,6 +153,12 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/transportation", component: pages.TransportationPage, label: "Transportation" },
   { path: "/contact", component: pages.ContactPage, label: "Contact" },
   { path: "/environment", component: pages.EnvironmentPage, label: "Environment" },
+  { path: "/health", component: pages.DomainDashboardPage, label: "Health Intelligence" },
+  { path: "/housing", component: pages.DomainDashboardPage, label: "Housing Intelligence" },
+  { path: "/food-security", component: pages.DomainDashboardPage, label: "Food Security Intelligence" },
+  { path: "/energy", component: pages.DomainDashboardPage, label: "Energy Intelligence" },
+  { path: "/legal-aid", component: pages.DomainDashboardPage, label: "Legal Aid Intelligence" },
+  { path: "/benefits", component: pages.DomainDashboardPage, label: "Benefits Intelligence" },
   { path: "/civic-data", component: pages.CivicDataPage, label: "Civic Data" },
   { path: "/civic-data-hub", component: pages.CivicDataHubPage, label: "Civic Data Hub" },
   { path: "/libraries", component: pages.LibrariesPage, label: "Libraries" },
@@ -247,6 +255,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     label: "Data & Insights",
     children: [
       { label: "Data & Insights Hub", href: "/data-and-insights" },
+      { label: "Domain Dashboard", href: "/domain-dashboard", badge: "New" },
       { label: "Data Explorer", href: "/data-explorer", badge: "Census API" },
       { label: "CHNA Explorer", href: "/chna-explorer", badge: "Interactive" },
       { label: "Compare Counties", href: "/compare", badge: "New" },
