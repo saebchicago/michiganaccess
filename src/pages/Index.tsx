@@ -9,6 +9,8 @@ import TrustPanel from "@/components/home/TrustPanel";
 import HomePrimaryPaths from "@/components/home/HomePrimaryPaths";
 import HomeSectorGrid from "@/components/home/HomeSectorGrid";
 import CivicIntelligenceHub from "@/components/home/CivicIntelligenceHub";
+import InsightSignalsSection from "@/components/home/InsightSignalsSection";
+import ExploreQuestionsPanel from "@/components/home/ExploreQuestionsPanel";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import LocationNudgeBanner from "@/components/home/LocationNudgeBanner";
@@ -66,10 +68,16 @@ const Index = () => {
       {/* ═══ HERO — mission + search ═══ */}
       <HeroSection />
 
+      {/* ═══ MICHIGAN HEALTH INTELLIGENCE (above fold, intelligence-first) ═══ */}
+      <InsightSignalsSection />
+
+      {/* ═══ EXPLORE MICHIGAN HEALTH (question cards) ═══ */}
+      <ExploreQuestionsPanel />
+
       {/* ═══ LOCATION NUDGE (no-ZIP users) ═══ */}
       <LocationNudgeBanner />
 
-      {/* ═══ INTELLIGENCE-FIRST EXPERIENCE ═══ */}
+      {/* ═══ INTELLIGENCE HUB (deeper exploration, county selector, decision tools) ═══ */}
       <CivicIntelligenceHub />
 
       {/* ═══ TRUST PANEL ═══ */}
