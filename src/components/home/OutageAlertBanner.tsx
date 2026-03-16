@@ -58,7 +58,7 @@ export default function OutageAlertBanner() {
                 : "bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-700 dark:text-amber-300"
             }`}
           >
-            Outage Tracker{meta.source !== "live" && <span className="text-[9px] opacity-60 ml-0.5">(beta)</span>}
+            Outage Tracker
             <ArrowRight className="h-3 w-3" />
           </Link>
           <Link

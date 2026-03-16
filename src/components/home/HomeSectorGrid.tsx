@@ -75,7 +75,7 @@ export default function HomeSectorGrid() {
     <section className="py-10 bg-muted/20 border-y border-border/40" aria-labelledby="sectors-heading">
       <div className="container max-w-5xl">
         <div className="text-center mb-7">
-          <h2 id="sectors-heading" className="text-xl font-bold text-foreground sm:text-2xl">
+          <h2 id="sectors-heading" className="text-2xl font-bold text-foreground">
             Explore by sector
           </h2>
           <p className="text-sm text-muted-foreground mt-1">
@@ -93,7 +93,7 @@ export default function HomeSectorGrid() {
             >
               <Link
                 to={s.href}
-                className="group flex items-start gap-3 rounded-lg border border-border bg-card p-4 hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
+                className="group flex items-start gap-3 rounded-lg border border-border bg-card p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer"
               >
                 <div className={`w-9 h-9 rounded-lg ${s.bg} flex items-center justify-center shrink-0 mt-0.5`}>
                   <s.icon className={`h-4 w-4 ${s.color}`} aria-hidden="true" />

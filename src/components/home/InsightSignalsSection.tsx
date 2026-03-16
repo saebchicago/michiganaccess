@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowDownRight, ArrowUpRight, Sparkles } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Minus, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -8,8 +8,9 @@ interface SignalCard {
   title: string;
   value: string;
   trend: string;
-  direction: "up" | "down";
-  tone: "worsening" | "improving";
+  direction: "up" | "down" | "stable";
+  tone: "worsening" | "improving" | "stable";
+  trendLabel: string;
   source: string;
 }
 
@@ -20,6 +21,7 @@ const HOMEPAGE_SIGNALS: SignalCard[] = [
     trend: "Rising faster than national average",
     direction: "up",
     tone: "worsening",
+    trendLabel: "Rising",
     source: "CDC BRFSS · County Health Rankings",
   },
   {
@@ -28,6 +30,7 @@ const HOMEPAGE_SIGNALS: SignalCard[] = [
     trend: "Declining slightly since 2019",
     direction: "down",
     tone: "worsening",
+    trendLabel: "Rising",
     source: "MDHHS Vital Records · CDC WONDER",
   },
   {
@@ -36,6 +39,7 @@ const HOMEPAGE_SIGNALS: SignalCard[] = [
     trend: "Improving statewide",
     direction: "up",
     tone: "improving",
+    trendLabel: "Improving",
     source: "CMS Provider Data · HRSA",
   },
   {
@@ -44,24 +48,30 @@ const HOMEPAGE_SIGNALS: SignalCard[] = [
     trend: "Coverage improving",
     direction: "down",
     tone: "improving",
+    trendLabel: "Improving",
     source: "Census ACS · MDHHS",
   },
 ];
 
 const toneClasses: Record<SignalCard["tone"], { badge: string; icon: string }> = {
   worsening: {
-    badge: "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/30 dark:text-rose-300",
-    icon: "text-rose-300",
+    badge: "border-red-200 bg-red-50 text-red-700",
+    icon: "text-red-300",
   },
   improving: {
-    badge: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/30 dark:text-emerald-300",
-    icon: "text-emerald-300",
+    badge: "border-green-200 bg-green-50 text-green-700",
+    icon: "text-green-300",
+  },
+  stable: {
+    badge: "border-amber-200 bg-amber-50 text-amber-700",
+    icon: "text-amber-300",
   },
 };
 
-function SignalIcon({ direction, tone }: { direction: "up" | "down"; tone: SignalCard["tone"] }) {
+function SignalIcon({ direction, tone }: { direction: SignalCard["direction"]; tone: SignalCard["tone"] }) {
   const colorClass = toneClasses[tone].icon;
   if (direction === "up") return <ArrowUpRight className={`h-4 w-4 ${colorClass}`} aria-hidden="true" />;
+  if (direction === "stable") return <Minus className={`h-4 w-4 ${colorClass}`} aria-hidden="true" />;
   return <ArrowDownRight className={`h-4 w-4 ${colorClass}`} aria-hidden="true" />;
 }
 
@@ -69,7 +79,7 @@ export default function InsightSignalsSection() {
   return (
     <section
       id="instant-insight"
-      className="py-14 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-900 text-white"
+      className="pt-0 pb-14 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-900 text-white"
       aria-labelledby="instant-insight-title"
     >
       <div className="container max-w-6xl space-y-8">
@@ -84,14 +94,12 @@ export default function InsightSignalsSection() {
           <div className="space-y-3">
             <h2
               id="instant-insight-title"
-              className="text-3xl font-bold tracking-tight sm:text-4xl"
+              className="text-2xl font-bold"
             >
-              Michigan Health Intelligence
+              Michigan Civic Intelligence
             </h2>
-            <p className="text-base leading-7 text-slate-300 sm:text-lg">
-              Start with signals, not spreadsheets. Access Michigan opens with the
-              clearest statewide changes first, then lets you drill down into the
-              counties, disparities, and decisions behind them.
+            <p className="text-base leading-relaxed text-slate-300">
+              Key signals across health, housing, energy &amp; safety
             </p>
           </div>
         </div>
@@ -108,23 +116,27 @@ export default function InsightSignalsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, ease: "easeOut", delay: index * 0.05 }}
-              whileHover={{ y: -4, boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }}
+              className="transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer"
             >
               <Card className="h-full border-white/10 bg-white/5 text-white shadow-[0_24px_64px_-32px_rgba(6,182,212,0.65)] backdrop-blur-sm">
                 <CardContent className="flex h-full flex-col gap-4 p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-sm font-semibold text-white">{signal.title}</p>
-                      <p className="mt-2 text-2xl font-bold text-white">{signal.value}</p>
-                      <p className="mt-1 text-sm leading-6 text-slate-300">{signal.trend}</p>
+                      <p className="mt-2 text-3xl font-bold tabular-nums text-white">{signal.value}</p>
+                      <p className="mt-1 text-sm leading-relaxed text-slate-300">{signal.trend}</p>
                     </div>
-                    <div className="rounded-full bg-white/10 p-2">
+                    <div
+                      className="rounded-full bg-white/10 p-2"
+                      data-testid="trend-indicator"
+                      aria-label={signal.trendLabel}
+                    >
                       <SignalIcon direction={signal.direction} tone={signal.tone} />
                     </div>
                   </div>
                   <div className="mt-auto flex items-center justify-between gap-2">
-                    <Badge className={toneClasses[signal.tone].badge}>
-                      {signal.tone === "improving" ? "Improving" : "Rising Risk"}
+                    <Badge className={toneClasses[signal.tone].badge} data-testid="trend-indicator">
+                      {signal.trendLabel}
                     </Badge>
                     <Tooltip>
                       <TooltipTrigger asChild>

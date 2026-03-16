@@ -180,7 +180,7 @@ export default function CivicIntelligenceHub() {
               <Badge variant="outline" className="text-[10px] uppercase tracking-[0.2em]">
                 Exploration
               </Badge>
-              <h2 id="exploration-title" className="text-3xl font-bold tracking-tight text-foreground">
+              <h2 id="exploration-title" className="text-2xl font-bold text-foreground">
                 Ask the question first, then open the right visualization
               </h2>
               <p className="text-base leading-7 text-muted-foreground">
@@ -245,7 +245,7 @@ export default function CivicIntelligenceHub() {
                           <p className="text-lg font-semibold text-foreground">{item.county} County</p>
                           <p className="text-sm text-muted-foreground">{item.note}</p>
                         </div>
-                        <p className="text-2xl font-bold text-foreground">{item.value}</p>
+                        <p className="text-3xl font-bold tabular-nums text-foreground">{item.value}</p>
                         {renderSignalBadge("Rising Risk")}
                       </CardContent>
                     </Card>
@@ -367,7 +367,7 @@ export default function CivicIntelligenceHub() {
               <Badge variant="outline" className="text-[10px] uppercase tracking-[0.2em]">
                 Local Intelligence
               </Badge>
-              <h2 id="local-intelligence-title" className="text-3xl font-bold tracking-tight text-foreground">
+              <h2 id="local-intelligence-title" className="text-2xl font-bold text-foreground">
                 Select your county and localize the entire intelligence layer
               </h2>
               <p className="text-base leading-7 text-muted-foreground">
@@ -385,7 +385,7 @@ export default function CivicIntelligenceHub() {
               <div className="flex flex-col gap-2 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                   <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">{county ? countyLabel : "Michigan default county view"}</p>
-                  <h3 className="text-2xl font-bold text-foreground">{selectedCounty} County Health Intelligence</h3>
+                  <h3 className="text-lg font-semibold text-foreground">{selectedCounty} County Health Intelligence</h3>
                   <p className="text-sm text-muted-foreground">
                     Population {selectedCountyIntelligence.population.toLocaleString()} · {selectedCountyIntelligence.majorCities.slice(0, 3).join(", ")}
                   </p>
@@ -417,7 +417,7 @@ export default function CivicIntelligenceHub() {
                         </Tooltip>
                         {renderSignalBadge(metric.signal)}
                       </div>
-                      <p className="text-2xl font-bold text-foreground">{metric.value}</p>
+                      <p className="text-3xl font-bold tabular-nums text-foreground">{metric.value}</p>
                       <p className="text-xs text-muted-foreground">{metric.description}</p>
                     </CardContent>
                   </Card>
@@ -478,7 +478,7 @@ export default function CivicIntelligenceHub() {
             <Badge variant="outline" className="text-[10px] uppercase tracking-[0.2em]">
               Decision Tools
             </Badge>
-            <h2 id="decision-tools-title" className="text-3xl font-bold tracking-tight text-foreground">
+            <h2 id="decision-tools-title" className="text-2xl font-bold text-foreground">
               Move from insight to comparison, watchlists, and action
             </h2>
             <p className="text-base leading-7 text-muted-foreground">
@@ -606,7 +606,7 @@ export default function CivicIntelligenceHub() {
             <Badge variant="outline" className="border-white/20 text-slate-200">
               Research Access
             </Badge>
-            <h2 id="research-access-title" className="text-3xl font-bold tracking-tight">
+            <h2 id="research-access-title" className="text-2xl font-bold">
               Keep research depth one toggle away
             </h2>
             <p className="text-base leading-7 text-slate-300">

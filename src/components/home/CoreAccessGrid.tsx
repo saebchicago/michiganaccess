@@ -57,7 +57,7 @@ const CoreAccessGrid = () => {
     <section className="py-16 md:py-24" aria-labelledby="core-access-heading">
       <div className="container">
         <div className="mx-auto max-w-2xl text-center mb-12">
-          <h2 id="core-access-heading" className="text-2xl font-bold text-foreground sm:text-3xl">
+          <h2 id="core-access-heading" className="text-2xl font-bold text-foreground">
             {t("access.sectionTitle")}
           </h2>
           <p className="mt-3 text-muted-foreground">
@@ -74,7 +74,7 @@ const CoreAccessGrid = () => {
         >
           {tiles.map((tile) => (
             <motion.div key={tile.href + tile.title} variants={item}>
-              <Card className="group relative h-full border-white/20 bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-2xl hover:shadow-blue-100/40 hover:-translate-y-1">
+              <Card className="group relative h-full border-white/20 bg-white/80 dark:bg-card/80 backdrop-blur-sm shadow-xl rounded-2xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer hover:border-primary/30 hover:shadow-blue-100/40">
                 <div className="absolute left-0 top-0 h-full w-1 bg-primary/0 transition-all duration-300 group-hover:bg-primary group-hover:shadow-[2px_0_8px_-2px_hsl(var(--primary)/0.3)]" />
                 <CardContent className="flex flex-col p-8">
                   <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-xl ${tile.iconBg} transition-transform duration-300 group-hover:scale-110`}>
