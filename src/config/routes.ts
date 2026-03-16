@@ -212,7 +212,6 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/market-intelligence", component: pages.MarketIntelligencePage, label: "Market Intelligence" },
   { path: "/quality/compare", component: pages.QualityComparisonPage, label: "Quality Comparison" },
   { path: "/energy-burden", component: pages.EnergyBurdenPage, label: "Energy Burden" },
-  { path: "/impact", component: pages.ImpactDashboardPage, label: "Platform Impact" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
