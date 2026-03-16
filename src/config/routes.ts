@@ -207,6 +207,12 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/public-safety", component: pages.PublicSafetyPage, label: "Public Safety & Policing" },
   { path: "/social-services", component: pages.SocialServicesPage, label: "Social Services & Benefits" },
   { path: "/transparency", component: pages.TransparencyPage, label: "Transparency & Public Records" },
+  { path: "/chna-explorer", component: pages.CHNAExplorerPage, label: "CHNA Explorer" },
+  { path: "/detection-gap", component: pages.DetectionGapPage, label: "Detection Gap" },
+  { path: "/market-intelligence", component: pages.MarketIntelligencePage, label: "Market Intelligence" },
+  { path: "/quality/compare", component: pages.QualityComparisonPage, label: "Quality Comparison" },
+  { path: "/energy-burden", component: pages.EnergyBurdenPage, label: "Energy Burden" },
+  { path: "/impact", component: pages.ImpactDashboardPage, label: "Platform Impact" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
