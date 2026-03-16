@@ -2,6 +2,10 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+const STAGGER_DELAY_STEP = 0.03;
+const MAX_STAGGER_DELAY = 0.18;
+const COUNTER_ANIMATION_DURATION_MS = 1000;
+
 interface AnimationWrapperProps {
   children: ReactNode;
   className?: string;
@@ -24,7 +28,7 @@ interface ChartAnimationProps {
 
 export function SignalCardAnimation({ children, className, index = 0 }: AnimationWrapperProps) {
   const reducedMotion = useReducedMotion();
-  const delay = Math.min(index * 0.03, 0.18);
+  const delay = Math.min(index * STAGGER_DELAY_STEP, MAX_STAGGER_DELAY);
 
   return (
     <motion.div
@@ -71,10 +75,9 @@ export function CounterAnimation({
 
     let frame = 0;
     const start = performance.now();
-    const duration = 1200;
 
     const tick = (now: number) => {
-      const elapsed = Math.min((now - start) / duration, 1);
+      const elapsed = Math.min((now - start) / COUNTER_ANIMATION_DURATION_MS, 1);
       const eased = 1 - (1 - elapsed) ** 3;
       setValue(target * eased);
       if (elapsed < 1) {

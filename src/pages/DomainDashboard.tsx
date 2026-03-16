@@ -20,21 +20,66 @@ import {
 import { getCountyIntelligenceRecord } from "@/data/michigan-counties-intelligence";
 
 const DOMAIN_ROUTE_SLUGS = new Set<IntelligenceDomainSlug>(INTELLIGENCE_DOMAINS.map((domain) => domain.slug));
+const CHART_BASELINE_Y = 54;
+const CHART_HEIGHT_RANGE = 36;
+const MAX_VISIBLE_METRICS = 8;
+const CHART_START_X = 10;
+const CHART_X_STEP = 35;
+const CHART_FALLBACK_PATH = `M${CHART_START_X} ${CHART_BASELINE_Y} L${CHART_START_X + CHART_X_STEP * 4} ${CHART_BASELINE_Y}`;
+
+const PERCENT_METRICS = new Set([
+  "diabetes_prevalence",
+  "uninsured_rate",
+  "mental_health_access",
+  "obesity_rate",
+  "renter_burden_rate",
+  "substandard_housing_pct",
+  "housing_cost_growth",
+  "vacancy_rate",
+  "food_insecurity_rate",
+  "snap_participation",
+  "food_desert_pct",
+  "wic_participation",
+  "school_meal_access",
+  "child_food_insecurity_rate",
+  "energy_burden_rate",
+  "denial_rate",
+  "medicaid_churn_rate",
+  "childcare_subsidy_uptake",
+  "vehicle_availability_rate",
+  "tree_canopy_pct",
+  "drinking_water_compliance",
+  "disability_rate",
+  "employment_rate_disabled",
+  "accessible_housing_pct",
+]);
+
+const CURRENCY_METRICS = new Set([
+  "median_home_price",
+  "snap_benefit_avg",
+  "average_monthly_bill",
+]);
+
+const MINUTES_METRICS = new Set([
+  "benefits_processing_time",
+  "average_commute_minutes",
+  "emergency_response_time",
+]);
 
 function formatMetricValue(metric: string, value: number | null) {
   if (value === null) {
     return "Data pending";
   }
 
-  if (metric.includes("rate") || metric.includes("pct") || metric.includes("index") || metric.includes("score")) {
-    return `${value.toLocaleString()}${value <= 100 ? "%" : ""}`;
+  if (PERCENT_METRICS.has(metric)) {
+    return `${value.toLocaleString()}%`;
   }
 
-  if (metric.includes("price") || metric.includes("avg") || metric.includes("bill")) {
+  if (CURRENCY_METRICS.has(metric)) {
     return `$${value.toLocaleString()}`;
   }
 
-  if (metric.includes("time") || metric.includes("minutes")) {
+  if (MINUTES_METRICS.has(metric)) {
     return `${value.toLocaleString()} min`;
   }
 
@@ -64,27 +109,38 @@ function buildCsv(domain: IntelligenceDomain, countyName: string, metrics: Recor
   return `county,domain\n${countyName},${domain.slug}\n\nmetric,value\n${rows.join("\n")}`;
 }
 
-function inferDomainFromPath(pathname: string) {
+function inferDomainFromPath(pathname: string): IntelligenceDomainSlug {
   const firstSegment = pathname.split("/").filter(Boolean)[0];
   if (firstSegment && DOMAIN_ROUTE_SLUGS.has(firstSegment as IntelligenceDomainSlug)) {
-    return firstSegment;
+    return firstSegment as IntelligenceDomainSlug;
   }
 
   return "health";
 }
 
+function buildChartPath(domain: IntelligenceDomain, metrics: Record<string, number | null>) {
+  const chartValues = domain.metrics
+    .slice(0, 5)
+    .map((metric, index) => ({ index, value: metrics[metric] }))
+    .filter((point): point is { index: number; value: number } => point.value !== null);
+
+  if (chartValues.length === 0) {
+    return CHART_FALLBACK_PATH;
+  }
+
+  const max = Math.max(...chartValues.map((point) => point.value), 1);
+
+  return chartValues
+    .map(({ index, value }, pointIndex) => {
+      const x = CHART_START_X + index * CHART_X_STEP;
+      const y = CHART_BASELINE_Y - (value / max) * CHART_HEIGHT_RANGE;
+      return `${pointIndex === 0 ? "M" : "L"}${x} ${y.toFixed(1)}`;
+    })
+    .join(" ");
+}
+
 function DomainVisualization({ domain, metrics }: { domain: IntelligenceDomain; metrics: Record<string, number | null> }) {
-  const chartPoints = useMemo(() => {
-    const values = domain.metrics.slice(0, 5).map((metric) => metrics[metric] ?? 0);
-    const max = Math.max(...values, 1);
-    return values
-      .map((value, index) => {
-        const x = 10 + index * 35;
-        const y = 54 - (value / max) * 36;
-        return `${index === 0 ? "M" : "L"}${x} ${Number.isFinite(y) ? y.toFixed(1) : 54}`;
-      })
-      .join(" ");
-  }, [domain.metrics, metrics]);
+  const chartPoints = useMemo(() => buildChartPath(domain, metrics), [domain, metrics]);
 
   return (
     <Card className="civic-card border-border/60 bg-card/95">
@@ -223,7 +279,7 @@ export default function DomainDashboard() {
 
         {metrics ? (
           <ResponsiveGrid className="items-stretch">
-            {domain.metrics.slice(0, 8).map((metric, index) => {
+            {domain.metrics.slice(0, MAX_VISIBLE_METRICS).map((metric, index) => {
               const value = metrics[metric] ?? null;
               const tone = getSignalTone(metric, value);
               const toneClass =

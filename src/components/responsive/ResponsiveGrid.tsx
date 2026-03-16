@@ -1,5 +1,5 @@
 import { useState, type CSSProperties, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Home, Menu, Search, MapPinned } from "lucide-react";
 import CountySelector from "@/components/shared/CountySelector";
 import { Button } from "@/components/ui/button";
@@ -92,14 +92,23 @@ export function StickyCountyHeader({ title, subtitle, secondaryLinks }: StickyCo
 
 export function MobileCivicNav({ menuLinks }: MobileCivicNavProps) {
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-border/60 bg-background/95 backdrop-blur md:hidden print:hidden" aria-label="Dashboard mobile navigation">
-      <Link to="/" className="flex min-h-11 flex-col items-center justify-center gap-1 px-2 py-2 text-[11px] font-medium text-foreground">
+      <Link
+        to="/"
+        aria-current={pathname === "/" ? "page" : undefined}
+        className="flex min-h-11 flex-col items-center justify-center gap-1 px-2 py-2 text-[11px] font-medium text-foreground"
+      >
         <Home className="h-4 w-4" />
         Home
       </Link>
-      <Link to="/data-explorer" className="flex min-h-11 flex-col items-center justify-center gap-1 px-2 py-2 text-[11px] font-medium text-foreground">
+      <Link
+        to="/data-explorer"
+        aria-current={pathname === "/data-explorer" ? "page" : undefined}
+        className="flex min-h-11 flex-col items-center justify-center gap-1 px-2 py-2 text-[11px] font-medium text-foreground"
+      >
         <Search className="h-4 w-4" />
         Search
       </Link>
@@ -123,6 +132,7 @@ export function MobileCivicNav({ menuLinks }: MobileCivicNavProps) {
               <Link
                 key={link.href}
                 to={link.href}
+                aria-current={pathname === link.href ? "page" : undefined}
                 onClick={() => setOpen(false)}
                 className="rounded-lg border border-border px-4 py-3 text-sm font-medium transition-colors hover:bg-muted min-h-11"
               >
