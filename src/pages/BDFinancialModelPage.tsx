@@ -143,7 +143,7 @@ function hasSavedDiff<T extends Record<string, unknown>>(key: string, defaults: 
     const raw = localStorage.getItem(key);
     if (!raw) return false;
     const parsed = JSON.parse(raw) as Record<string, unknown>;
-    return Object.keys(defaults).some(k => parsed[k] !== undefined && parsed[k] !== defaults[k]);
+    return Object.keys(defaults).some(k => parsed[k] !== undefined && parsed[k] !== (defaults as Record<string, unknown>)[k]);
   } catch { return false; }
 }
 
@@ -618,6 +618,8 @@ function MarketOpportunityTab() {
             <button
               key={c.name}
               onClick={() => handleCountyClick(c)}
+              aria-label={`View ${c.name} County analysis — opportunity score ${c.opp}/100, SVI ${c.svi.toFixed(2)}`}
+              aria-pressed={isSelected}
               className={`w-full flex items-center gap-3 py-2 px-2 rounded border-b border-border/40 text-left transition-all hover:bg-muted/30 ${
                 isSelected ? "ring-1 ring-michigan-teal bg-michigan-teal/5" : ""
               }`}
@@ -1030,44 +1032,47 @@ export default function BDFinancialModelPage() {
 
   // ── Initialise service-line state: URL params → localStorage → defaults ───
   const [sl, setSl] = useState<ServiceLineState>(() => {
-    if (searchParams.get("vol")) {
-      return {
-        vol:        Number(searchParams.get("vol")   ?? SL_DEFAULTS.vol),
-        rpe:        Number(searchParams.get("rpe")   ?? SL_DEFAULTS.rpe),
-        grw:        Number(searchParams.get("grw")   ?? SL_DEFAULTS.grw),
-        commercial: Number(searchParams.get("comm")  ?? SL_DEFAULTS.commercial),
-        medicare:   Number(searchParams.get("medc")  ?? SL_DEFAULTS.medicare),
-        medicaid:   Number(searchParams.get("mcaid") ?? SL_DEFAULTS.medicaid),
-        selfPay:    Number(searchParams.get("sp")    ?? SL_DEFAULTS.selfPay),
-        stup:       Number(searchParams.get("stup")  ?? SL_DEFAULTS.stup),
-        opc:        Number(searchParams.get("opc")   ?? SL_DEFAULTS.opc),
-        mktv:       Number(searchParams.get("mktv")  ?? SL_DEFAULTS.mktv),
-      };
-    }
-    return readStorage<ServiceLineState>(SL_KEY, SL_DEFAULTS);
+    const stored = readStorage<ServiceLineState>(SL_KEY, SL_DEFAULTS);
+    // Merge URL params on top of stored/default values (URL params take precedence)
+    const hasAnyUrlParam = ["vol","rpe","grw","comm","medc","mcaid","sp","stup","opc","mktv"].some(k => searchParams.get(k) !== null);
+    if (!hasAnyUrlParam) return stored;
+    return {
+      vol:        searchParams.get("vol")   !== null ? Number(searchParams.get("vol"))   : stored.vol,
+      rpe:        searchParams.get("rpe")   !== null ? Number(searchParams.get("rpe"))   : stored.rpe,
+      grw:        searchParams.get("grw")   !== null ? Number(searchParams.get("grw"))   : stored.grw,
+      commercial: searchParams.get("comm")  !== null ? Number(searchParams.get("comm"))  : stored.commercial,
+      medicare:   searchParams.get("medc")  !== null ? Number(searchParams.get("medc"))  : stored.medicare,
+      medicaid:   searchParams.get("mcaid") !== null ? Number(searchParams.get("mcaid")) : stored.medicaid,
+      selfPay:    searchParams.get("sp")    !== null ? Number(searchParams.get("sp"))    : stored.selfPay,
+      stup:       searchParams.get("stup")  !== null ? Number(searchParams.get("stup"))  : stored.stup,
+      opc:        searchParams.get("opc")   !== null ? Number(searchParams.get("opc"))   : stored.opc,
+      mktv:       searchParams.get("mktv")  !== null ? Number(searchParams.get("mktv"))  : stored.mktv,
+    };
   });
 
   // ── Initialise SDOH state: URL params → localStorage → defaults ───────────
   const [sdoh, setSdoh] = useState<SdohState>(() => {
-    if (searchParams.get("pop")) {
-      return {
-        pop: Number(searchParams.get("pop") ?? SDOH_DEFAULTS.pop),
-        scr: Number(searchParams.get("scr") ?? SDOH_DEFAULTS.scr),
-        pos: Number(searchParams.get("pos") ?? SDOH_DEFAULTS.pos),
-        nav: Number(searchParams.get("nav") ?? SDOH_DEFAULTS.nav),
-        cst: Number(searchParams.get("cst") ?? SDOH_DEFAULTS.cst),
-        rr:  Number(searchParams.get("rr")  ?? SDOH_DEFAULTS.rr),
-      };
-    }
-    return readStorage<SdohState>(SDOH_KEY, SDOH_DEFAULTS);
+    const stored = readStorage<SdohState>(SDOH_KEY, SDOH_DEFAULTS);
+    const hasAnyUrlParam = ["pop","scr","pos","nav","cst","rr"].some(k => searchParams.get(k) !== null);
+    if (!hasAnyUrlParam) return stored;
+    return {
+      pop: searchParams.get("pop") !== null ? Number(searchParams.get("pop")) : stored.pop,
+      scr: searchParams.get("scr") !== null ? Number(searchParams.get("scr")) : stored.scr,
+      pos: searchParams.get("pos") !== null ? Number(searchParams.get("pos")) : stored.pos,
+      nav: searchParams.get("nav") !== null ? Number(searchParams.get("nav")) : stored.nav,
+      cst: searchParams.get("cst") !== null ? Number(searchParams.get("cst")) : stored.cst,
+      rr:  searchParams.get("rr")  !== null ? Number(searchParams.get("rr"))  : stored.rr,
+    };
   });
 
   // ── Resume banner — visible when localStorage differs from defaults ────────
   const [showBanner, setShowBanner] = useState<boolean>(() => {
-    if (searchParams.get("vol") || searchParams.get("pop")) return false;
+    // Don't show if URL params are present (user came from a shared link)
+    const hasUrlParams = ["vol","rpe","pop","scr"].some(k => searchParams.get(k) !== null);
+    if (hasUrlParams) return false;
     return (
-      hasSavedDiff(SL_KEY,   SL_DEFAULTS) ||
-      hasSavedDiff(SDOH_KEY, SDOH_DEFAULTS)
+      hasSavedDiff(SL_KEY,   SL_DEFAULTS as Record<string, unknown>) ||
+      hasSavedDiff(SDOH_KEY, SDOH_DEFAULTS as Record<string, unknown>)
     );
   });
 
