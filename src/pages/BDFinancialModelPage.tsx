@@ -7,7 +7,7 @@ import {
 } from "recharts";
 import {
   BarChart3, Map, GitBranch, Heart, Calculator,
-  Info, Share2, Copy, Printer, Building2, X,
+  Info, Share2, Copy, Printer, Building2, X, CheckCircle2,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -124,6 +124,13 @@ const SDOH_PRESETS: { label: string; values: SdohState }[] = [
   { label: "Michigan Medicine MSHIELD",     values: { pop: 12000,  scr: 65, pos: 17, nav: 34, cst: 14500, rr: 16 } },
   { label: "Corewell West Michigan",        values: { pop: 95000,  scr: 58, pos: 14, nav: 28, cst: 13200, rr: 14 } },
 ];
+
+// ─── VBC-framed health system presets ─────────────────────────────────────────
+const PRESETS = {
+  hfhs:     { pop: 180000, scr: 72, pos: 17, nav: 34, cst: 14500, rr: 16 },
+  mshield:  { pop: 95000,  scr: 68, pos: 17, nav: 34, cst: 14500, rr: 16 },
+  corewell: { pop: 140000, scr: 65, pos: 15, nav: 30, cst: 13800, rr: 14 },
+};
 
 // ─── localStorage helpers ─────────────────────────────────────────────────────
 function readStorage<T>(key: string, defaults: T): T {
@@ -732,8 +739,13 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
   return (
     <div className="space-y-6">
       <p className="text-sm text-muted-foreground max-w-2xl">
-        Model the downstream financial impact of SDOH interventions on readmissions, ED utilization, and value-based care contracts.
-        Default parameters anchored to <strong className="text-foreground">Michigan Medicine MSHIELD</strong> (17.1% unmet need rate) and <strong className="text-foreground">Trinity Health</strong> outcomes (16% readmission reduction).
+        Model the downstream financial impact of SDOH interventions
+        on readmissions, ED utilization, and value-based care contract
+        performance. In VBC arrangements — MSSP ACOs, BCBSM Blueprint,
+        Medicare Advantage risk — SDOH navigation directly drives shared
+        savings, Stars scores, and total cost of care reduction.
+        Anchored to Michigan Medicine MSHIELD (17.1% unmet need; 34%
+        navigation uptake) and Trinity Health (16% readmission reduction).
       </p>
 
       {/* ── Preset buttons ────────────────────────────────────────────────── */}
@@ -754,6 +766,24 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
         </div>
       </div>
 
+      {/* VBC impact strip */}
+      {result.roi3 >= 2 && (
+        <div className="rounded-lg bg-michigan-teal/10 border border-michigan-teal/20 px-5 py-3 flex flex-wrap items-center gap-4 mb-4">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4 text-michigan-teal shrink-0" />
+            <span className="text-sm font-medium text-foreground">
+              VBC contract positive
+            </span>
+          </div>
+          <span className="text-xs text-muted-foreground">
+            {result.roi3.toFixed(1)}× 3-year ROI exceeds typical shared savings threshold for MSSP ACO and BCBSM Blueprint arrangements
+          </span>
+          <span className="ml-auto text-xs font-medium text-michigan-teal">
+            Qualifies for shared savings ✓
+          </span>
+        </div>
+      )}
+
       {/* KPIs */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <KPI label="Avoided readmissions" value={fmtM(result.readmitSave)} sub="annual savings"       good={result.readmitSave > 0} />
@@ -764,6 +794,29 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div>
+          <div className="mb-6">
+            <p className="text-xs text-muted-foreground mb-2">
+              Load a health system baseline:
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {([
+                ["hfhs",     "Henry Ford Health"],
+                ["mshield",  "Michigan Medicine MSHIELD"],
+                ["corewell", "Corewell Health"],
+              ] as const).map(([key, label]) => (
+                <button
+                  key={key}
+                  onClick={() => {
+                    const p = PRESETS[key];
+                    onSdoh({ pop: p.pop, scr: p.scr, pos: p.pos, nav: p.nav, cst: p.cst, rr: p.rr });
+                  }}
+                  className="text-xs px-3 py-1.5 rounded-md border border-michigan-teal text-michigan-teal hover:bg-michigan-teal/10 transition-colors font-medium"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">Program parameters</p>
           <SliderRow label="Attributed population (patients/yr)" value={sdoh.pop} display={sdoh.pop.toLocaleString()} min={1000}  max={100000} step={1000} onChange={v => onSdoh({ pop: v })} />
           <SliderRow label="SDOH screening rate"                  value={sdoh.scr} display={`${sdoh.scr}%`}            min={10}    max={95}     step={5}    onChange={v => onSdoh({ scr: v })} />
@@ -793,6 +846,20 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
             <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-[#1D9E75] inline-block" />Readmission savings</span>
             <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-[#378ADD] inline-block" />ED diversion</span>
             <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-[#9FE1CB] border border-[#0F6E56] inline-block" />VBC bonus</span>
+          </div>
+
+          {/* Sensitivity labels based on SDOH literature (general guidelines, not calculated) */}
+          <div className="mt-4 grid grid-cols-3 gap-2">
+            {[
+              { label: "Screening rate",    impact: "highest lever",  color: "text-michigan-teal" },
+              { label: "Navigation rate",   impact: "2nd highest",    color: "text-michigan-teal" },
+              { label: "Readmit reduction", impact: "outcome driver", color: "text-muted-foreground" },
+            ].map(item => (
+              <div key={item.label} className="rounded-md bg-muted/30 p-2 text-center">
+                <p className="text-xs text-muted-foreground">{item.label}</p>
+                <p className={`text-xs font-semibold mt-0.5 ${item.color}`}>{item.impact}</p>
+              </div>
+            ))}
           </div>
 
           <div className="mt-4 rounded-lg border-l-2 border-michigan-teal bg-muted/40 px-4 py-3">

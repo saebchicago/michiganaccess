@@ -58,6 +58,7 @@ const STATIC_PAGES = [
   { label: "Contact", href: "/contact", category: "page" },
   { label: "BD Financial Model", href: "/bd-financial-model", category: "page" },
   { label: "Market Intelligence", href: "/market-intelligence", category: "page" },
+  { label: "Portfolio", href: "/portfolio", category: "page" },
 ];
 
 interface SearchResult {
