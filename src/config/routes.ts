@@ -114,6 +114,13 @@ const pages = {
   PublicSafetyPage: lazy(() => import("@/pages/PublicSafety")),
   SocialServicesPage: lazy(() => import("@/pages/SocialServices")),
   TransparencyPage: lazy(() => import("@/pages/TransparencyPage")),
+  CHNAExplorerPage: lazy(() => import("@/pages/CHNAExplorerPage")),
+  DetectionGapPage: lazy(() => import("@/pages/DetectionGapPage")),
+  EquityScorecardPage: lazy(() => import("@/pages/EquityScorecardPage")),
+  MarketIntelligencePage: lazy(() => import("@/pages/MarketIntelligencePage")),
+  QualityComparisonPage: lazy(() => import("@/pages/QualityComparisonPage")),
+  EnergyBurdenPage: lazy(() => import("@/pages/EnergyBurdenPage")),
+  ImpactDashboardPage: lazy(() => import("@/pages/ImpactDashboardPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
