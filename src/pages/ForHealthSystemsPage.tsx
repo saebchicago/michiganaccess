@@ -28,6 +28,17 @@ const valueProps = [
     title: "Referral Leakage Analysis",
     items: ["Network utilization pattern mapping", "PCP shortage identification by ZIP code", "Service line growth opportunity sizing", "Out-of-network exit prevention strategies"],
   },
+  {
+    icon: Calculator,
+    title: "BD Scenario Modeler",
+    items: [
+      "Service line NPV with payer mix modeling",
+      "Build vs. partner vs. acquire comparison",
+      "Market opportunity scoring — all 83 counties",
+      "SDOH financial impact with VBC attribution",
+    ],
+    cta: { label: "Open Modeler", href: "/bd-financial-model" },
+  },
 ];
 
 function SystemImpactCalculator() {
@@ -116,20 +127,25 @@ const ForHealthSystemsPage = () => {
             </div>
           </motion.div>
 
-          <div className="grid gap-4 md:grid-cols-3 mb-12">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-12">
             {valueProps.map((vp, i) => (
               <motion.div key={vp.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
-                <Card className="h-full">
-                  <CardContent className="py-5 space-y-3">
+                <Card className="h-full flex flex-col">
+                  <CardContent className="py-5 space-y-3 flex-1 flex flex-col">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10"><vp.icon className="h-5 w-5 text-primary" /></div>
                     <h3 className="font-bold text-foreground">{vp.title}</h3>
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-1.5 flex-1">
                       {vp.items.map((item) => (
                         <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground">
                           <ArrowRight className="h-3 w-3 mt-0.5 shrink-0 text-primary" />{item}
                         </li>
                       ))}
                     </ul>
+                    {"cta" in vp && vp.cta && (
+                      <Button asChild size="sm" className="w-full mt-2">
+                        <Link to={vp.cta.href}>{vp.cta.label}</Link>
+                      </Button>
+                    )}
                   </CardContent>
                 </Card>
               </motion.div>
@@ -140,6 +156,8 @@ const ForHealthSystemsPage = () => {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button asChild><Link to="/partnerships/health-systems" className="gap-2">View Integration Guide <ArrowRight className="h-4 w-4" /></Link></Button>
+            <Button asChild variant="outline"><Link to="/bd-financial-model" className="gap-2">BD Financial Model <ArrowRight className="h-4 w-4" /></Link></Button>
+            <Button asChild variant="outline"><Link to="/market-intelligence" className="gap-2">Market Intelligence <ArrowRight className="h-4 w-4" /></Link></Button>
             <Button asChild variant="outline"><Link to="/lean-healthcare" className="gap-2">Lean Healthcare Engineering <ArrowRight className="h-4 w-4" /></Link></Button>
             <ShareButton title="Access Michigan for Health Systems" description="Ambulatory optimization, community benefit ROI, and referral leakage analysis." />
           </div>

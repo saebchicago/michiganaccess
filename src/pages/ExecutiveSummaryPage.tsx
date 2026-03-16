@@ -82,6 +82,9 @@ const ExecutiveSummaryPage = () => {
             <h1 className="text-3xl font-bold text-foreground lg:text-4xl mb-3">Access Michigan: Civic Health Infrastructure</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               A statewide population health navigation platform aggregating public data across all 83 Michigan counties to support health equity, community navigation, and institutional planning.
+              The platform includes a live business development financial modeler at{" "}
+              <Link to="/bd-financial-model" className="text-primary hover:underline">accessmi.org/bd-financial-model</Link>{" "}
+              — service line NPV, partnership scenario comparisons, and SDOH ROI modeling built on Michigan public health data.
             </p>
           </motion.div>
 
