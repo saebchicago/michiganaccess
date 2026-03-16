@@ -310,6 +310,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Health Conditions Pathways", href: "/conditions" },
       { label: "Clinical Trials", href: "/clinical-trials" },
       { label: "Quality Ratings", href: "/quality" },
+      { label: "Quality Comparison", href: "/quality/compare", badge: "Interactive" },
       { label: "Cost Transparency", href: "/costs" },
       { label: "Prevention & Wellness", href: "/wellness" },
       { label: "Health News", href: "/news" },
