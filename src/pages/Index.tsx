@@ -1,5 +1,4 @@
 import { lazy, Suspense } from "react";
-import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Database } from "lucide-react";
@@ -9,6 +8,7 @@ import HeroSection from "@/components/home/HeroSection";
 import TrustPanel from "@/components/home/TrustPanel";
 import HomePrimaryPaths from "@/components/home/HomePrimaryPaths";
 import HomeSectorGrid from "@/components/home/HomeSectorGrid";
+import CivicIntelligenceHub from "@/components/home/CivicIntelligenceHub";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import LocationNudgeBanner from "@/components/home/LocationNudgeBanner";
@@ -50,8 +50,6 @@ const SectionSkeleton = ({ height = "200px" }: { height?: string }) => (
 export type PersonaView = "resident" | "professional";
 
 const Index = () => {
-  const { t } = useTranslation();
-
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
     description:
@@ -70,6 +68,9 @@ const Index = () => {
 
       {/* ═══ LOCATION NUDGE (no-ZIP users) ═══ */}
       <LocationNudgeBanner />
+
+      {/* ═══ INTELLIGENCE-FIRST EXPERIENCE ═══ */}
+      <CivicIntelligenceHub />
 
       {/* ═══ TRUST PANEL ═══ */}
       <TrustPanel />
