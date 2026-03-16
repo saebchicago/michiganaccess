@@ -184,7 +184,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/regions", component: pages.RegionsPage, label: "Regions" },
   { path: "/regions/compare", component: pages.RegionComparePage, label: "Region Compare" },
   { path: "/region/:regionId", component: pages.RegionPage, label: "Region" },
-  { path: "/equity", component: pages.EquityPage, label: "Equity" },
+  { path: "/equity", component: pages.EquityScorecardPage, label: "Health Equity Scorecard" },
   { path: "/lean-healthcare", component: pages.LeanHealthcarePage, label: "Lean Healthcare" },
   { path: "/for-health-systems", component: pages.ForHealthSystemsPage, label: "For Health Systems" },
   { path: "/executive-summary", component: pages.ExecutiveSummaryPage, label: "Executive Summary" },
