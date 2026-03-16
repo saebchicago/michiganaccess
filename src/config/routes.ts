@@ -123,6 +123,7 @@ const pages = {
   ImpactDashboardPage: lazy(() => import("@/pages/ImpactDashboardPage")),
   DomainDashboardPage: lazy(() => import("@/pages/DomainDashboard")),
   BDFinancialModelPage: lazy(() => import("@/pages/BDFinancialModelPage")),
+  PortfolioPage: lazy(() => import("@/pages/PortfolioPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -220,6 +221,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/detection-gap", component: pages.DetectionGapPage, label: "Detection Gap" },
   { path: "/market-intelligence", component: pages.MarketIntelligencePage, label: "Market Intelligence" },
   { path: "/bd-financial-model", component: pages.BDFinancialModelPage, label: "BD Financial Model" },
+  { path: "/portfolio", component: pages.PortfolioPage, label: "Portfolio" },
   { path: "/quality/compare", component: pages.QualityComparisonPage, label: "Quality Comparison" },
   { path: "/energy-burden", component: pages.EnergyBurdenPage, label: "Energy Burden" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
