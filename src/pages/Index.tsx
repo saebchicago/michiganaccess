@@ -129,7 +129,7 @@ const Index = () => {
               <Database className="h-3.5 w-3.5" aria-hidden="true" />
               Civic Data Layer
             </div>
-            <h2 id="nerd-heading" className="text-xl font-bold text-foreground sm:text-2xl">
+            <h2 id="nerd-heading" className="text-2xl font-bold text-foreground">
               For research & policy
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
