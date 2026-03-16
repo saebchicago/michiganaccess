@@ -352,12 +352,14 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
     links: [
       { label: "Partnership Overview", href: "/partnerships" },
       { label: "For Health Systems", href: "/for-health-systems" },
+      { label: "Detection Gap", href: "/detection-gap", badge: "New" },
+      { label: "Market Intelligence", href: "/market-intelligence", badge: "New" },
       { label: "Health System Integration", href: "/partnerships/health-systems" },
       { label: "One-Pager", href: "/partnerships/health-systems/one-pager" },
       { label: "Executive Summary", href: "/executive-summary" },
       { label: "Case Studies", href: "/case-studies" },
       { label: "Lean Healthcare", href: "/lean-healthcare" },
-      { label: "Partner Impact", href: "/impact" },
+      { label: "Platform Impact", href: "/impact" },
     ],
   },
   {
