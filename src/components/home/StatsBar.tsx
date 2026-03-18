@@ -19,10 +19,10 @@ const StatsBar = () => {
   const stats = [
     { icon: Building2, value: 88, suffix: "", label: "Healthcare Facilities" },
     { icon: MapPin, value: 83, suffix: "", label: t("stats.counties") },
-    { icon: Heart, value: 700, suffix: "+", label: "Community Resources" },
+    { icon: Heart, value: 15000, suffix: "+", label: "Community Resources" },
     { icon: Users, value: 170, suffix: "+", label: "Municipalities Tracked" },
-    { icon: FileText, value: 11, suffix: "", label: "Financial Aid Programs" },
-    { icon: Zap, value: 7, suffix: "", label: "Live Data Feeds" },
+    { icon: FileText, value: 183, suffix: "M+", label: "Energy Assistance" },
+    { icon: Zap, value: 12, suffix: "", label: "Live Data Feeds" },
   ];
 
   return (

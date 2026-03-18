@@ -34,10 +34,12 @@ const ASSETS = [
 const FACTS = [
   { label: "Counties Covered", value: "83 / 83" },
   { label: "Resources Indexed", value: "15,000+" },
-  { label: "Data Sources", value: "CMS, HRSA, CDC, MDHHS" },
+  { label: "Data Sources", value: "CMS, HRSA, CDC, MDHHS, DOE, USGS, AirNow" },
   { label: "Languages", value: "English, Spanish, Arabic, Bengali" },
   { label: "Cost to Users", value: "Free — No login required" },
   { label: "Personal Data Collected", value: "None" },
+  { label: "MI Hospital Community Benefit", value: "$4.5B+ (all systems combined)" },
+  { label: "Energy Programs Tracked", value: "LIHEAP, MEAP, MiHER, WAP, MI Saves" },
 ];
 
 const COVERAGE = [
