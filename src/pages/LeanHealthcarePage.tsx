@@ -43,8 +43,8 @@ const leanItems = [
     question: "How does SDOH tracking enable community benefit attribution?",
     metrics: { before: "Untracked", after: "Full SDOH", improvement: "Measured", label: "SDOH Integration" },
     roi: "Projected: SDOH referral tracking enables IRS Schedule H reporting and VBC contract optimization",
-    detail: "Social determinants affect up to 50% of county-level variation in health outcomes, while clinical care accounts for only 20% (ASPE/HHS, 2022; Healthy People 2030, ODPHP). Unified access to housing, SNAP enrollment, utility assistance, and employment services alongside clinical care targets reduced readmissions and chronic disease progression.",
-    footnote: "SDOH impact sourced from ASPE/HHS 'Addressing Social Determinants of Health' (2022) and Healthy People 2030 (ODPHP). ROI figures are projected platform targets, not achieved outcomes.",
+    detail: "Social determinants affect up to 50% of county-level variation in health outcomes, while clinical care accounts for only 20% (ASPE/HHS, 2022; Healthy People 2030, ODPHP). Trinity Health's FY2025 data confirms this: 27.4% of 1M+ outpatients screened reported at least one unmet social need, and their CHW-driven SDOH intervention achieved a 16% decrease in preventable hospitalizations among dually-enrolled patients. Unified access to housing, SNAP enrollment, utility assistance, and employment services alongside clinical care targets reduced readmissions and chronic disease progression.",
+    footnote: "SDOH impact sourced from ASPE/HHS 'Addressing Social Determinants of Health' (2022) and Healthy People 2030 (ODPHP). Trinity Health verified data: 27.4% unmet need rate from 1M+ screened, 16% hospitalization reduction (FY2025, published Jan 2026). ROI figures are projected platform targets, not achieved outcomes.",
   },
 ];
 
@@ -65,6 +65,68 @@ const sources = [
   { label: "CDC — Social Determinants of Health at CDC", url: "https://www.cdc.gov/about/priorities/social-determinants-of-health.html" },
   { label: "CMS Hospital Compare Refresh Schedule", url: "https://ecqi.healthit.gov/" },
   { label: "HRSA UDS Reporting", url: "https://bphc.hrsa.gov/data-reporting/uds-training-and-technical-assistance" },
+  { label: "Trinity Health — Community Impact Report (FY2025, Jan 2026)", url: "https://company.findhelp.com/blog/2025/09/10/trinity-health-preventable-hospitalizations/" },
+  { label: "Henry Ford Health — ACO Shared Savings (CMS)", url: "https://www.cms.gov/priorities/innovation/innovation-models/aco" },
+  { label: "MVC PY 2026-2027 Technical Document", url: "https://michiganvalue.org/wp-content/uploads/2024/10/MVC-P4P-Technical-Document-PY26-27-FINAL-10.26.24-compressed-compressed.pdf" },
+  { label: "MiCHWA — CHW Medicaid Registry", url: "https://michwa.org/mi-medicaid-chw-credential-registry/" },
+  { label: "MDHHS SDOH Advisory Council Report (March 2025)", url: "https://www.michigan.gov/mdhhs/-/media/Project/Websites/mdhhs/Inside-MDHHS/Policy-and-Planning/Social-Determinants-of-Health-Strategy/SDOH-AC-Recs-Report-FINAL-032025.pdf" },
+];
+
+/* ── verified health system VBC outcomes ────────────────────────────── */
+
+const verifiedOutcomes = [
+  {
+    system: "Trinity Health (FY2025)",
+    highlights: [
+      "$2.9 billion community impact; $1.4 billion IRS-defined community benefit",
+      "$310 million in care costs covering ~450,000 patients",
+      "$44 million in community investing loans since 2018 → $1.18 billion local investment",
+      "162 CHWs addressed 16,300+ social needs",
+      "1 million+ outpatients screened for SDOH; 27.4% reported at least one unmet need",
+      "16% decrease in preventable hospitalizations (July 2021–July 2024, dually-enrolled patients)",
+      "45% reduction in health disparities",
+    ],
+    source: "Trinity Health Community Impact Report, published January 2026",
+  },
+  {
+    system: "Henry Ford Health (FY2024)",
+    highlights: [
+      "Revenue: $5.284 billion",
+      "Financial assistance: Over $85 million to ~240,000 patients",
+      "ACO shared savings: PY2024 $19.97M; PY2023 $12.66M; PY2022 $10.51M",
+      "Absorbed eight former Ascension Michigan hospitals (October 2024)",
+      "$3 billion hospital expansion approved by Detroit City Council (February 2024)",
+    ],
+    source: "Henry Ford Health financial reports & CMS ACO data",
+  },
+  {
+    system: "CHW Medicaid Reimbursement (Statewide)",
+    highlights: [
+      "Effective January 1, 2024 (CMS-approved October 2023)",
+      "Ratio: 1 CHW per 5,000 Medicaid managed care members (required in MCO contracts)",
+      "126-hour training requirement; MiCHWA manages registry",
+      "ROI: >$2 return per $1 invested",
+    ],
+    source: "MDHHS Medicaid policy; MiCHWA registry",
+  },
+  {
+    system: "Michigan Value Collaborative (PY 2026-2027)",
+    highlights: [
+      "10-point scoring: episode spending (3pts), value metrics (4pts), health equity (1pt, NEW), engagement (2pts)",
+      "Covers BCBSM PPO, BCN, Medicare FFS, and now Michigan Medicaid (~84% of insured)",
+      "Key measures: sepsis 14-day follow-up rate, cardiac rehab participation rate, health equity",
+    ],
+    source: "MVC P4P Technical Document PY26-27",
+  },
+  {
+    system: "MDHHS SDOH Hubs (7 Confirmed)",
+    highlights: [
+      "Cohort 1: Detroit Health Dept, District Health Dept #10, Greater Flint Health Coalition/United Way, Wayne County Health Dept",
+      "Cohort 2: United Way of Bay County, Muskegon County Health Dept, Heart of West Michigan United Way (Kent County)",
+      "Launched January–May 2024; Advisory Council Report published March 2025",
+    ],
+    source: "MDHHS SDOH Strategy Advisory Council",
+  },
 ];
 
 /* ── component ────────────────────────────────────────────────────────── */
@@ -193,6 +255,33 @@ const LeanHealthcarePage = () => {
                   </Card>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Verified Health System Outcomes */}
+            <div className="mb-10">
+              <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                <HeartPulse className="h-5 w-5 text-primary" /> Verified Health System VBC Outcomes
+              </h2>
+              <div className="space-y-4">
+                {verifiedOutcomes.map((outcome) => (
+                  <Card key={outcome.system}>
+                    <CardContent className="py-5">
+                      <h3 className="text-sm font-bold text-foreground mb-2">{outcome.system}</h3>
+                      <ul className="space-y-1.5 mb-3">
+                        {outcome.highlights.map((h, i) => (
+                          <li key={i} className="text-xs text-muted-foreground flex items-start gap-2">
+                            <span className="text-primary mt-0.5">•</span>
+                            {h}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="text-[10px] text-muted-foreground">
+                        <strong>Source:</strong> {outcome.source}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
 
             {/* Full source list */}

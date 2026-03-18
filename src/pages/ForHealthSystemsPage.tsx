@@ -152,6 +152,61 @@ const ForHealthSystemsPage = () => {
             ))}
           </div>
 
+          {/* Verified Michigan Health System Financials */}
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+            <h2 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <Building2 className="h-5 w-5 text-primary" /> Michigan Health System Landscape
+            </h2>
+            <p className="text-sm text-muted-foreground mb-4">Verified financial and community impact data from Michigan's major health systems.</p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Card>
+                <CardContent className="py-5">
+                  <h3 className="font-bold text-foreground mb-2">Henry Ford Health</h3>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground">
+                    <li>• Revenue: <strong className="text-foreground">$5.284 billion</strong> (FY2024)</li>
+                    <li>• Financial assistance: <strong className="text-foreground">$85M+</strong> to ~240,000 patients</li>
+                    <li>• ACO shared savings: PY2024 <strong className="text-foreground">$19.97M</strong>; PY2023 $12.66M; PY2022 $10.51M</li>
+                    <li>• $3B hospital expansion approved (Feb 2024)</li>
+                    <li>• Absorbed 8 former Ascension Michigan hospitals (Oct 2024)</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="py-5">
+                  <h3 className="font-bold text-foreground mb-2">Trinity Health (Michigan)</h3>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground">
+                    <li>• Community impact: <strong className="text-foreground">$2.9 billion</strong> (FY2025)</li>
+                    <li>• 162 CHWs addressed 16,300+ social needs</li>
+                    <li>• 1M+ screened for SDOH; 27.4% reported unmet need</li>
+                    <li>• <strong className="text-foreground">16% decrease</strong> in preventable hospitalizations</li>
+                    <li>• 45% reduction in health disparities</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="py-5">
+                  <h3 className="font-bold text-foreground mb-2">Corewell Health</h3>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground">
+                    <li>• Revenue: <strong className="text-foreground">$10.4 billion</strong></li>
+                    <li>• 22 hospitals across Michigan</li>
+                    <li>• Largest health system in Michigan</li>
+                  </ul>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="py-5">
+                  <h3 className="font-bold text-foreground mb-2">All MI Hospitals (MHA)</h3>
+                  <ul className="space-y-1.5 text-xs text-muted-foreground">
+                    <li>• Combined community benefit: <strong className="text-foreground">$4.5+ billion</strong></li>
+                    <li>• CHW Medicaid reimbursement effective Jan 2024</li>
+                    <li>• 7 MDHHS SDOH Hubs launched statewide</li>
+                    <li>• MVC covers ~84% of insured Michiganders</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </motion.div>
+
           <SystemImpactCalculator />
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
