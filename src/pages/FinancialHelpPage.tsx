@@ -120,6 +120,37 @@ export default function FinancialHelpPage() {
       </section>
 
       <div className="container max-w-5xl py-10 space-y-10">
+        {/* Featured Energy Assistance Programs */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+          <div className="flex items-center gap-3 mb-4">
+            <DollarSign className="h-5 w-5 text-michigan-gold" />
+            <h2 className="text-xl font-bold text-foreground">Energy Assistance Highlights</h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Card className="border-michigan-gold/20">
+              <CardContent className="p-5">
+                <h3 className="font-semibold text-foreground mb-1">LIHEAP</h3>
+                <p className="text-sm text-muted-foreground mb-2"><strong>$183M</strong> allocated (FY2025). <strong>434K+</strong> households served for heating. Benefits up to $2,205.</p>
+                <Badge variant="outline" className="text-xs">110% FPG (heating) · 150% FPG (crisis)</Badge>
+              </CardContent>
+            </Card>
+            <Card className="border-michigan-gold/20">
+              <CardContent className="p-5">
+                <h3 className="font-semibold text-foreground mb-1">MEAP</h3>
+                <p className="text-sm text-muted-foreground mb-2"><strong>$54.5M</strong> budget (2025). Up to $2,205 for heating bills. New eligibility: 60% SMI (~$61,861/family of 4).</p>
+                <Badge variant="outline" className="text-xs">Apply via MI Bridges</Badge>
+              </CardContent>
+            </Card>
+            <Card className="border-michigan-gold/20">
+              <CardContent className="p-5">
+                <h3 className="font-semibold text-foreground mb-1">MiHER Rebates</h3>
+                <p className="text-sm text-muted-foreground mb-2">HOMES up to $20,000 + HEAR up to $14,000. Combined max <strong>$34,000/household</strong>. $211M IRA funding.</p>
+                <Badge variant="outline" className="text-xs">Launched April 2025</Badge>
+              </CardContent>
+            </Card>
+          </div>
+        </motion.section>
+
         {/* Eligibility Screener */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
           <Card className="border-primary/20 bg-primary/5">
