@@ -13,6 +13,7 @@ const HEALTH_OVERLAYS = [
 ];
 
 const TRANSPORT_OVERLAYS = [
+  { id: "semcog-sidewalks", label: "Sidewalks & Crosswalks (SEMCOG)", icon: Footprints, defaultOn: false, color: "text-michigan-teal", badge: "GATIS" },
   { id: "mdot-workzones", label: "MDOT Work Zones", icon: Construction, defaultOn: false, color: "text-michigan-coral" },
   { id: "ddot-routes", label: "DDOT Bus Routes", icon: Bus, defaultOn: false, color: "text-michigan-coral" },
   { id: "cata-routes", label: "CATA Bus Routes", icon: Train, defaultOn: false, color: "text-michigan-teal" },
