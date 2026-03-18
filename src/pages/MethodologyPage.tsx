@@ -23,9 +23,9 @@ const flowSteps = [
     titleKey: "publicDataSources",
     color: "bg-primary/10 text-primary",
     items: [
-      "Federal: CMS, CDC PLACES, HRSA, Census",
-      "State: MI DHHS, Budget Office",
-      "Local: Counties, transit authorities",
+      "Federal: CMS, CDC PLACES, HRSA, Census, DOE, USGS, AirNow",
+      "State: MI DHHS, MPSC, EGLE, Budget Office",
+      "Local: Counties, transit authorities, MI 211",
     ],
   },
   {
@@ -259,6 +259,54 @@ export default function MethodologyPage() {
                 desc: "U.S. Energy Information Administration state-level energy price, consumption, and expenditure data. Used for Michigan vs. U.S. residential electricity price and per-capita consumption time-series charts.",
                 frequency: "Annual release (Oct)",
                 url: "https://www.eia.gov/state/seds/",
+              },
+              {
+                source: "DOE LEAD Tool (Energy Burden)",
+                desc: "County-level energy burden (% of income spent on energy). Complements ACEEE data with direct DOE methodology for identifying high-burden communities.",
+                frequency: "Biennial (2022 latest)",
+                url: "https://data.openei.org/submissions/6219",
+              },
+              {
+                source: "AirNow API (Real-time Air Quality)",
+                desc: "Michigan ZIP-level Air Quality Index from 40+ monitoring stations. Hourly observations for ozone, PM2.5, and PM10 with health guidance.",
+                frequency: "Hourly",
+                url: "https://docs.airnowapi.org/webservices",
+              },
+              {
+                source: "USGS Water Data (Great Lakes + Inland)",
+                desc: "Real-time stream and lake data from 9,375 sites in Michigan. Flow, temperature, and water quality via the new OGC API.",
+                frequency: "15-minute intervals",
+                url: "https://api.waterdata.usgs.gov/ogcapi/v0/",
+              },
+              {
+                source: "GLOS/Seagull (Great Lakes Buoy Data)",
+                desc: "Great Lakes Observing System real-time buoy data: water temperature, waves, chlorophyll, turbidity. 3,154+ datasets via ERDDAP API.",
+                frequency: "Real-time",
+                url: "https://seagull-erddap.glos.org/erddap/",
+              },
+              {
+                source: "Michigan 211 HSDS API",
+                desc: "40,000+ service records statewide covering social services, food, housing, and utilities. HSDS-format data continuously maintained by United Way.",
+                frequency: "Continuously maintained",
+                url: "https://mi211.org",
+              },
+              {
+                source: "Open States API v3 (Michigan Legislature)",
+                desc: "Bill tracking, legislator lookup, vote records, and committee assignments for the Michigan Legislature.",
+                frequency: "Session-based updates",
+                url: "https://v3.openstates.org/",
+              },
+              {
+                source: "MODA Dashboard (Opioid Data)",
+                desc: "Fatal and non-fatal overdoses by county and ZIP code. Michigan's comprehensive opioid surveillance dashboard.",
+                frequency: "Monthly refresh",
+                url: "https://www.michigan.gov/opioids/category-data",
+              },
+              {
+                source: "MI-SUDDR (Substance Use Data Repository)",
+                desc: "ED visits, hospitalizations, and treatment admissions by county for substance use disorders across Michigan.",
+                frequency: "Quarterly refresh",
+                url: "https://mi-suddr.com/data/",
               },
             ].map((src, i) => (
               <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
