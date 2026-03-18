@@ -385,8 +385,8 @@ const EnvironmentPage = () => {
 
                 <motion.div variants={fadeUp} className="grid gap-6 md:grid-cols-3">
                   {[
-                    { title: "MI Healthy Climate Plan", desc: "Governor's plan to achieve economy-wide carbon neutrality by 2050 through clean energy, EVs, and building efficiency.", link: "https://www.michigan.gov/egle/about/organization/climate-and-energy/mi-healthy-climate-plan" },
-                    { title: "Clean Energy Incentives", desc: "Federal IRA tax credits, state rebates for solar panels, heat pumps, and EV chargers available to Michigan residents.", link: "https://www.michigan.gov/egle" },
+                    { title: "MI Healthy Climate Plan", desc: "100% carbon neutrality by 2050. 52% GHG reduction from 2005 levels by 2030. 100% clean energy standard by 2040. Currently ~15% below 2005 baseline. $27.8 billion in IRA-funded investment, 26,000+ jobs.", link: "https://www.michigan.gov/egle/about/organization/climate-and-energy/mi-healthy-climate-plan" },
+                    { title: "25D Clean Energy Tax Credit", desc: "30% federal tax credit through 2032 for solar, wind, geothermal, and battery storage. Stackable with MiHER rebates and utility incentives. (Note: 25C credit expired Dec 31, 2025.)", link: "https://www.michigan.gov/egle" },
                     { title: "Community Solar Programs", desc: "Subscribe to shared solar farms without installing panels on your roof. Multiple programs available across Michigan utilities.", link: "https://www.michigan.gov/mpsc" },
                   ].map((item) => (
                     <Card key={item.title} className="group hover:border-michigan-gold/30 transition-colors">
@@ -412,20 +412,60 @@ const EnvironmentPage = () => {
             {/* Programs & Rebates — Sustainability & Energy */}
             <TabsContent value="programs">
               <motion.div initial="hidden" animate="show" variants={stagger} className="space-y-8">
+                {/* LIHEAP */}
+                <motion.div variants={fadeUp}>
+                  <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-michigan-coral" /> Energy Bill Assistance
+                  </h2>
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    <Card className="hover:border-michigan-coral/30 transition-colors">
+                      <CardContent className="p-6">
+                        <h3 className="font-semibold text-foreground mb-2">LIHEAP (Heating Assistance)</h3>
+                        <p className="text-sm text-muted-foreground mb-3">FY2025 federal allocation: <strong>$183,334,313</strong> (including $5.85M IIJA). In FY2024, served <strong>434,124</strong> households (heating) and <strong>129,420</strong> (crisis). Benefits range $1–$2,205 (heating); up to $800 (crisis).</p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          <Badge variant="outline" className="text-xs">110% FPG (heating)</Badge>
+                          <Badge variant="outline" className="text-xs">150% FPG (crisis)</Badge>
+                        </div>
+                        <Button variant="outline" size="sm" className="w-full" asChild>
+                          <a href="https://newmibridges.michigan.gov" target="_blank" rel="noopener">
+                            Apply via MI Bridges <ExternalLink className="ml-2 h-3 w-3" />
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                    <Card className="hover:border-michigan-coral/30 transition-colors">
+                      <CardContent className="p-6">
+                        <h3 className="font-semibold text-foreground mb-2">MEAP (Michigan Energy Assistance)</h3>
+                        <p className="text-sm text-muted-foreground mb-3">2025 budget: ~<strong>$54.5 million</strong>. Served <strong>56,018</strong> households before October expansion. PA 168–170 of 2024 removes cap and raises factor to $1.25/meter (increasing to $2.00 max). Projected to reach <strong>$100 million by 2028</strong>.</p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          <Badge variant="outline" className="text-xs">New: 60% SMI (~$61,861/family of 4)</Badge>
+                          <Badge variant="outline" className="text-xs">Oct 2025 expansion</Badge>
+                        </div>
+                        <Button variant="outline" size="sm" className="w-full" asChild>
+                          <a href="https://www.michigan.gov/mpsc/consumer/energy-assistance" target="_blank" rel="noopener">
+                            Learn More <ExternalLink className="ml-2 h-3 w-3" />
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </motion.div>
+
                 {/* Residential Rebates */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <Zap className="h-5 w-5 text-michigan-gold" /> Residential Rebates
+                    <Zap className="h-5 w-5 text-michigan-gold" /> Residential Rebates — MiHER ($211M from IRA)
                   </h2>
+                  <p className="text-sm text-muted-foreground mb-4">Michigan Home Energy Rebate program launched statewide April 23, 2025. Total funding: <strong>$211 million</strong> (HOMES: $105.7M, HEAR: $105.3M). Target: up to <strong>15,000 households</strong>. HOMES + HEAR combined max: up to <strong>$34,000/household</strong>. Call center: 855-510-7080.</p>
                   <div className="grid gap-6 sm:grid-cols-2">
                     <Card className="hover:border-michigan-gold/30 transition-colors">
                       <CardContent className="p-6">
                         <h3 className="font-semibold text-foreground mb-2">HOMES Rebate (MiHER)</h3>
-                        <p className="text-sm text-muted-foreground mb-3">Up to $8,000 for whole-home energy efficiency upgrades including insulation, air sealing, and HVAC improvements.</p>
+                        <p className="text-sm text-muted-foreground mb-3">Up to <strong>$20,000/household</strong> for whole-home energy efficiency upgrades including insulation, air sealing, and HVAC improvements. 100% covered for households at 0–80% AMI.</p>
                         <Badge variant="outline" className="mr-2 text-xs">Income-based</Badge>
                         <Badge variant="outline" className="text-xs">Federal IRA</Badge>
                         <Button variant="outline" size="sm" className="mt-4 w-full" asChild>
-                          <a href="https://www.michigan.gov/egle/about/organization/climate-and-energy/miher" target="_blank" rel="noopener">
+                          <a href="https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate" target="_blank" rel="noopener">
                             Apply Now <ExternalLink className="ml-2 h-3 w-3" />
                           </a>
                         </Button>
@@ -434,17 +474,33 @@ const EnvironmentPage = () => {
                     <Card className="hover:border-michigan-gold/30 transition-colors">
                       <CardContent className="p-6">
                         <h3 className="font-semibold text-foreground mb-2">HEAR Rebate (MiHER)</h3>
-                        <p className="text-sm text-muted-foreground mb-3">Point-of-sale rebates up to $14,000 for heat pumps, electric stoves, insulation, and electrical panel upgrades.</p>
+                        <p className="text-sm text-muted-foreground mb-3">Point-of-sale rebates: heat pump HVAC up to <strong>$8,000</strong>; water heater $1,750; electric stove $840; dryer $840; panel upgrade $4,000; insulation $1,600. Combined up to <strong>$14,000+</strong>.</p>
                         <Badge variant="outline" className="mr-2 text-xs">Low/Moderate Income</Badge>
                         <Badge variant="outline" className="text-xs">Electrification</Badge>
                         <Button variant="outline" size="sm" className="mt-4 w-full" asChild>
-                          <a href="https://www.michigan.gov/egle/about/organization/climate-and-energy/miher" target="_blank" rel="noopener">
+                          <a href="https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate" target="_blank" rel="noopener">
                             Learn More <ExternalLink className="ml-2 h-3 w-3" />
                           </a>
                         </Button>
                       </CardContent>
                     </Card>
                   </div>
+                </motion.div>
+
+                {/* IRA Tax Credits */}
+                <motion.div variants={fadeUp}>
+                  <Card className="border-michigan-coral/30 bg-michigan-coral/5">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-3">
+                        <AlertTriangle className="h-6 w-6 shrink-0 text-michigan-coral mt-0.5" />
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-2">IRA Tax Credit Update</h3>
+                          <p className="text-sm text-muted-foreground"><strong>25C (Energy Efficient Home Improvement Credit): EXPIRED</strong> — Terminated December 31, 2025 by the "One Big Beautiful Bill" (signed July 4, 2025).</p>
+                          <p className="text-sm text-muted-foreground mt-2"><strong>25D (Residential Clean Energy Credit): STILL ACTIVE</strong> — 30% through 2032 for solar, wind, geothermal, and battery storage. MiHER rebates are stackable with 25D and utility rebates.</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </motion.div>
 
                 {/* Clean Financing */}
@@ -455,7 +511,7 @@ const EnvironmentPage = () => {
                   <Card className="hover:border-michigan-teal/30 transition-colors">
                     <CardContent className="p-6">
                       <h3 className="font-semibold text-foreground mb-2">Michigan Saves — Low-Interest Green Loans</h3>
-                      <p className="text-sm text-muted-foreground mb-3">Affordable financing for solar panels, HVAC systems, insulation, windows, and EV chargers. No home equity required. Rates as low as 4.99% APR through participating lenders statewide.</p>
+                      <p className="text-sm text-muted-foreground mb-3">In 2024: <strong>7,304 residential projects</strong> and <strong>$96.6 million</strong> financed ($108.1M total investment). Average savings: <strong>$347/year</strong>. Cumulative: 50,000+ customers, <strong>$500+ million</strong> financed, 207 GWh saved. Plus a $97M grant from EPA Greenhouse Gas Reduction Fund. Loan terms: $1,000–$75,000, from 6.49% APR, up to 15 years.</p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         <Badge variant="outline" className="text-xs">Solar</Badge>
                         <Badge variant="outline" className="text-xs">HVAC</Badge>
@@ -463,7 +519,7 @@ const EnvironmentPage = () => {
                         <Badge variant="outline" className="text-xs">EV Chargers</Badge>
                       </div>
                       <Button variant="outline" size="sm" asChild>
-                        <a href="https://michigansaves.org/" target="_blank" rel="noopener">
+                        <a href="https://michigansaves.org/home-energy-improvements/" target="_blank" rel="noopener">
                           Explore Loans <ExternalLink className="ml-2 h-3 w-3" />
                         </a>
                       </Button>
@@ -479,8 +535,8 @@ const EnvironmentPage = () => {
                   <div className="grid gap-6 sm:grid-cols-2">
                     <Card className="hover:border-michigan-forest/30 transition-colors">
                       <CardContent className="p-6">
-                        <h3 className="font-semibold text-foreground mb-2">DTE Energy Rebates</h3>
-                        <p className="text-sm text-muted-foreground mb-3">Rebates for smart thermostats, insulation, and efficient appliances. Income-qualified customers may receive free home upgrades.</p>
+                        <h3 className="font-semibold text-foreground mb-2">DTE Energy Efficiency</h3>
+                        <p className="text-sm text-muted-foreground mb-3">Low-income funding: <strong>$63M</strong> (2024), <strong>$73M</strong> (2025). EV Charging Forward: $12.5M (2024), $5.1M (2025). All MI utilities combined: <strong>$551+ million</strong> on energy waste reduction (2023). Every $1 returns ~$2.40–$3.18.</p>
                         <Button variant="outline" size="sm" asChild>
                           <a href="https://www.dteenergy.com/us/en/residential/save-money-energy.html" target="_blank" rel="noopener">
                             DTE Programs <ExternalLink className="ml-2 h-3 w-3" />
@@ -490,11 +546,11 @@ const EnvironmentPage = () => {
                     </Card>
                     <Card className="hover:border-michigan-forest/30 transition-colors">
                       <CardContent className="p-6">
-                        <h3 className="font-semibold text-foreground mb-2">Consumers Energy Solar Gardens</h3>
-                        <p className="text-sm text-muted-foreground mb-3">Subscribe to community solar without rooftop panels. Receive bill credits for your share of locally generated clean energy.</p>
+                        <h3 className="font-semibold text-foreground mb-2">Consumers Energy Efficiency</h3>
+                        <p className="text-sm text-muted-foreground mb-3">2024–2025 plan: nearly <strong>$600 million</strong> (MPSC-approved Feb 2024). Income-qualified electric: <strong>$85.3M</strong> (29% increase). Income-qualified gas: <strong>$113.1M</strong> (56% increase). Cumulative savings since 2009: over <strong>$5.5 billion</strong>. Nearly 200,000 low-income customers served.</p>
                         <Button variant="outline" size="sm" asChild>
-                          <a href="https://www.consumersenergy.com/residential/renewable-energy/solar-gardens" target="_blank" rel="noopener">
-                            Solar Gardens <ExternalLink className="ml-2 h-3 w-3" />
+                          <a href="https://www.consumersenergy.com/residential/save-money-and-energy" target="_blank" rel="noopener">
+                            Consumers Programs <ExternalLink className="ml-2 h-3 w-3" />
                           </a>
                         </Button>
                       </CardContent>
