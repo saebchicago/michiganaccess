@@ -511,8 +511,60 @@ export default function HealthDataDashboardPage() {
           </TabsContent>
         </Tabs>
 
+        {/* Opioid & Substance Use Data */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Pill className="h-5 w-5 text-michigan-coral" />
+                Opioid & Substance Use Surveillance
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                Michigan tracks fatal and non-fatal overdoses, ED visits, and treatment admissions through multiple surveillance systems.
+              </p>
+              <div className="grid gap-4 sm:grid-cols-3">
+                <Card className="border-michigan-coral/20">
+                  <CardContent className="p-4 text-center">
+                    <h4 className="font-semibold text-sm text-foreground mb-1">MODA Dashboard</h4>
+                    <p className="text-xs text-muted-foreground mb-3">Fatal/non-fatal overdoses by county and ZIP code</p>
+                    <Button variant="outline" size="sm" className="w-full" asChild>
+                      <a href="https://www.michigan.gov/opioids/category-data" target="_blank" rel="noopener noreferrer">
+                        View Dashboard <Activity className="ml-1 h-3 w-3" />
+                      </a>
+                    </Button>
+                  </CardContent>
+                </Card>
+                <Card className="border-michigan-coral/20">
+                  <CardContent className="p-4 text-center">
+                    <h4 className="font-semibold text-sm text-foreground mb-1">MI-SUDDR</h4>
+                    <p className="text-xs text-muted-foreground mb-3">ED visits, hospitalizations, and treatment admissions by county</p>
+                    <Button variant="outline" size="sm" className="w-full" asChild>
+                      <a href="https://mi-suddr.com/data/" target="_blank" rel="noopener noreferrer">
+                        Explore Data <Activity className="ml-1 h-3 w-3" />
+                      </a>
+                    </Button>
+                  </CardContent>
+                </Card>
+                <Card className="border-michigan-coral/20">
+                  <CardContent className="p-4 text-center">
+                    <h4 className="font-semibold text-sm text-foreground mb-1">Wastewater Surveillance</h4>
+                    <p className="text-xs text-muted-foreground mb-3">Community-level substance and pathogen detection</p>
+                    <Button variant="outline" size="sm" className="w-full" asChild>
+                      <a href="https://www.michigan.gov/coronavirus/stats/wastewater-surveillance/dashboard" target="_blank" rel="noopener noreferrer">
+                        View Dashboard <Activity className="ml-1 h-3 w-3" />
+                      </a>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.section>
+
         <DataProvenance
-          source="CDC WONDER, BRFSS, CMS Hospital Compare, MDHHS, HRSA, EIA SEDS, DTE"
+          source="CDC WONDER, BRFSS, CMS Hospital Compare, MDHHS, HRSA, EIA SEDS, DTE, MODA, MI-SUDDR"
           updated="2023–2025 reporting periods"
         />
       </div>

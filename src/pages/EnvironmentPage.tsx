@@ -295,9 +295,58 @@ const EnvironmentPage = () => {
                   </CardContent>
                 </Card>
               </motion.div>
-            </TabsContent>
 
-            {/* Clean Energy */}
+              {/* Real-Time Monitoring Resources */}
+              <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mt-8 grid gap-6 md:grid-cols-2">
+                <Card className="hover:border-michigan-sky/30 transition-colors">
+                  <CardContent className="p-6">
+                    <Wind className="mb-3 h-8 w-8 text-michigan-sky" />
+                    <h3 className="mb-2 font-semibold text-foreground">Check Your Local Air Quality</h3>
+                    <p className="mb-4 text-sm text-muted-foreground">
+                      Michigan has 40+ air monitoring stations. Check real-time AQI by ZIP code through MiAir or AirNow.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://www.michigan.gov/MiAir" target="_blank" rel="noopener">
+                          MiAir <ExternalLink className="ml-1 h-3 w-3" />
+                        </a>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://www.airnowapi.org/aq/observation/zipCode/current/" target="_blank" rel="noopener">
+                          AirNow API <ExternalLink className="ml-1 h-3 w-3" />
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="hover:border-michigan-teal/30 transition-colors">
+                  <CardContent className="p-6">
+                    <Droplets className="mb-3 h-8 w-8 text-michigan-teal" />
+                    <h3 className="mb-2 font-semibold text-foreground">Great Lakes & Water Monitoring</h3>
+                    <p className="mb-4 text-sm text-muted-foreground">
+                      Real-time buoy data, stream flow, and water quality from GLOS/Seagull, USGS, and EGLE monitoring networks.
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://seagull.glos.org/" target="_blank" rel="noopener">
+                          GLOS Seagull <ExternalLink className="ml-1 h-3 w-3" />
+                        </a>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://waterdata.usgs.gov/state/michigan/" target="_blank" rel="noopener">
+                          USGS Water <ExternalLink className="ml-1 h-3 w-3" />
+                        </a>
+                      </Button>
+                      <Button variant="outline" size="sm" asChild>
+                        <a href="https://www.michigan.gov/egle/public/learn/water-quality" target="_blank" rel="noopener">
+                          EGLE Water <ExternalLink className="ml-1 h-3 w-3" />
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </TabsContent>
             <TabsContent value="energy">
               <motion.div initial="hidden" animate="show" variants={stagger} className="space-y-8">
                 <motion.div variants={fadeUp}>

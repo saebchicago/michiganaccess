@@ -493,6 +493,42 @@ const CivicDataPage = () => {
         </div>
       </section>
 
+      {/* Broadband & Digital Access */}
+      <section className="py-12 bg-muted/30">
+        <div className="container max-w-5xl">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp}>
+            <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+              <Globe className="h-5 w-5 text-primary" /> Broadband & Digital Access
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-foreground mb-2">Michigan Broadband Map</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    95.3% of Michigan has 25/3 Mbps access, but 32.5% don't subscribe. BEAD program: $1.5+ billion for 200,000+ unserved locations. ROBIN Grant: $250M from Coronavirus Capital Projects Fund.
+                  </p>
+                  <Button variant="outline" size="sm" asChild>
+                    <a href="https://michiganbroadbandmap.com/" target="_blank" rel="noopener">
+                      Broadband Map <ExternalLink className="ml-1 h-3 w-3" />
+                    </a>
+                  </Button>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-foreground mb-2">Regulatory & Legislative Tools</h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground mb-3">
+                    <li>• <a href="https://mi-psc.my.site.com/s/" target="_blank" rel="noopener" className="text-primary hover:underline">MPSC E-Dockets</a> — Utility rate cases & orders</li>
+                    <li>• <a href="https://www.legislature.mi.gov/Bills" target="_blank" rel="noopener" className="text-primary hover:underline">MI Legislature Bill Search</a></li>
+                    <li>• <a href="https://openstates.org/mi/" target="_blank" rel="noopener" className="text-primary hover:underline">Open States Michigan</a> — Votes & sponsors</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* FOIA Request Builder */}
       <section className="py-12">
         <div className="container max-w-3xl">
