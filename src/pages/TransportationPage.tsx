@@ -764,6 +764,64 @@ function ActiveTransportationTab() {
           </motion.div>
         ))}
       </div>
+
+      {/* NC-BPAID Partnership & Advocacy */}
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={6}>
+        <Card className="border-michigan-blue/20 bg-gradient-to-br from-michigan-blue/5 to-background">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base flex items-center gap-2">
+              <Users className="h-4 w-4 text-michigan-blue" />
+              Access Michigan × NC-BPAID: Advocating for Michigan-Wide Pedestrian Data
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">
+              Partnering with the National Committee on Bicycle, Pedestrian, and Active Infrastructure Data
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              NC-BPAID is open to anyone — government, nonprofit, or private citizen. Three subgroups meet regularly: <strong>Data Practices</strong>, <strong>Outreach</strong>, and <strong>Specification Development</strong>.
+            </p>
+
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-foreground">Access Michigan is joining as a civic data partner to advocate for:</p>
+              <ul className="space-y-1.5">
+                {[
+                  "MDOT adopting GATIS for statewide data collection",
+                  "SEMCOG expanding sidewalk coverage beyond 7 counties",
+                  "Michigan municipalities publishing pedestrian infrastructure data to open ArcGIS portals",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground">
+                    <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <p className="text-xs text-muted-foreground italic">
+              The GATIS Playbook vote is scheduled for spring 2026 — Access Michigan will participate.
+            </p>
+
+            <div className="flex gap-2 flex-wrap">
+              <a href="https://forms.office.com/g/c6gsQbB2VH" target="_blank" rel="noopener noreferrer">
+                <Button size="sm" variant="outline" className="h-7 text-xs">
+                  <ExternalLink className="mr-1 h-3 w-3" />Contact NC-BPAID
+                </Button>
+              </a>
+              <a href="https://forms.office.com/g/34975BEAkF" target="_blank" rel="noopener noreferrer">
+                <Button size="sm" variant="outline" className="h-7 text-xs">
+                  <ExternalLink className="mr-1 h-3 w-3" />Join Mailing List
+                </Button>
+              </a>
+              <a href="https://github.com/dotbts/BPA" target="_blank" rel="noopener noreferrer">
+                <Button size="sm" variant="outline" className="h-7 text-xs">
+                  <ExternalLink className="mr-1 h-3 w-3" />GATIS on GitHub
+                </Button>
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }
