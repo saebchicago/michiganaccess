@@ -63,6 +63,7 @@ const Footer = () => {
         { label: t("nav.healthConditions"), href: "/conditions" },
         { label: "Insurance Appeals", href: "/health/insurance-appeals" },
         { label: t("nav.environment"), href: "/environment" },
+        { label: "Data Centers", href: "/data-centers" },
         { label: t("nav.civicData"), href: "/civic-data" },
         { label: t("nav.qualityRatings"), href: "/quality" },
         { label: t("nav.costTransparency"), href: "/costs" },

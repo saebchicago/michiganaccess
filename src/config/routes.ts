@@ -124,6 +124,7 @@ const pages = {
   DomainDashboardPage: lazy(() => import("@/pages/DomainDashboard")),
   BDFinancialModelPage: lazy(() => import("@/pages/BDFinancialModelPage")),
   PortfolioPage: lazy(() => import("@/pages/PortfolioPage")),
+  DataCenterPage: lazy(() => import("@/pages/DataCenterPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -224,6 +225,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/portfolio", component: pages.PortfolioPage, label: "Portfolio" },
   { path: "/quality/compare", component: pages.QualityComparisonPage, label: "Quality Comparison" },
   { path: "/energy-burden", component: pages.EnergyBurdenPage, label: "Energy Burden" },
+  { path: "/data-centers", component: pages.DataCenterPage, label: "Data Centers" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
@@ -268,6 +270,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Health Data Dashboard", href: "/data" },
       { label: "Health Equity", href: "/equity", badge: "Updated" },
       { label: "Energy Burden", href: "/energy-burden" },
+      { label: "Data Centers", href: "/data-centers", badge: "New" },
     ],
   },
   { label: "Methodology", href: "/methodology" },
@@ -339,6 +342,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Equity Scorecard", href: "/equity", badge: "Updated" },
       { label: "Energy Burden", href: "/energy-burden" },
       { label: "Environment & Air Quality", href: "/environment" },
+      { label: "Data Centers", href: "/data-centers", badge: "New" },
     ],
   },
   {
