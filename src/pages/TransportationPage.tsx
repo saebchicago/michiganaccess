@@ -5,7 +5,8 @@ import {
   Bus, GraduationCap, ShieldCheck, Accessibility, Search,
   ExternalLink, MapPin, Users, AlertTriangle, CheckCircle2,
   Camera, Eye, BookOpen, Phone, Train, Car, BarChart3, TrendingUp,
-  ChevronDown, ChevronUp, Lock, Scale, Zap, ClipboardList
+  ChevronDown, ChevronUp, Lock, Scale, Zap, ClipboardList,
+  Footprints, Bike, Construction, Layers, Info, ArrowRight
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -501,6 +502,273 @@ function StopArmCameraExplainer() {
 }
 
 /* ------------------------------------------------------------------ */
+/*  ACTIVE TRANSPORTATION (GATIS)                                      */
+/* ------------------------------------------------------------------ */
+
+const michiganDataLandscape = [
+  { region: "SE Michigan (7 counties)", data: "Sidewalks, crosswalks, bike lanes, trails", source: "SEMCOG FeatureServer", tier: "~Tier 1-2", coverage: "Good (AI-digitized)" },
+  { region: "Grand Rapids (Kent County)", data: "Bike lanes, some sidewalks", source: "City of GR Open Data", tier: "~Tier 1", coverage: "Partial" },
+  { region: "Ann Arbor (Washtenaw)", data: "Sidewalks, bike infrastructure", source: "City + SEMCOG", tier: "~Tier 1-2", coverage: "Good" },
+  { region: "Lansing (Ingham County)", data: "Limited", source: "City data", tier: "~Tier 1", coverage: "Sparse" },
+  { region: "Upper Peninsula (15 counties)", data: "None", source: "—", tier: "No data", coverage: "Zero coverage" },
+  { region: "Rural Michigan (50+ counties)", data: "None", source: "—", tier: "No data", coverage: "Zero coverage" },
+];
+
+const gatisTiers = [
+  { tier: 1, label: "Minimal", description: "Feature ID, type, geometry only — \"We know it exists\"", color: "bg-red-400" },
+  { tier: 2, label: "Basic", description: "Adds width, surface material, directionality — \"We know what it's like\"", color: "bg-orange-400" },
+  { tier: 3, label: "Detailed", description: "Adds ADA compliance, incline, GTFS linkage — \"We know if it's accessible\"", color: "bg-yellow-400" },
+  { tier: 4, label: "Comprehensive", description: "Adds traffic volume, maintenance schedule, lifecycle stage — \"We can plan with it\"", color: "bg-green-400" },
+];
+
+function ActiveTransportationTab() {
+  return (
+    <div className="space-y-8">
+      {/* Section Header */}
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+        <div className="rounded-xl border border-michigan-teal/20 bg-gradient-to-br from-michigan-teal/5 to-background p-6">
+          <div className="flex flex-wrap items-center gap-3 mb-3">
+            <h2 className="text-xl font-bold text-foreground">Pedestrian, Bike & Accessibility Infrastructure</h2>
+            <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">
+              NEW — Federally Backed Open Standard
+            </Badge>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Powered by GATIS — the national open standard for active transportation data from the Bureau of Transportation Statistics (v1.0, February 2026).
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Key Stats Cards */}
+      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+        {[
+          {
+            title: "Zero Statewide Sidewalk Data",
+            description: "Michigan has no unified statewide sidewalk inventory. SEMCOG covers 7 SE Michigan counties. The other 76 counties have no publicly available pedestrian infrastructure data. This is the gap GATIS was designed to fill.",
+            icon: AlertTriangle,
+            color: "text-michigan-coral",
+            bgColor: "bg-michigan-coral/10",
+          },
+          {
+            title: "SEMCOG Coverage: 7 Counties",
+            description: "Wayne, Oakland, Macomb, Washtenaw, Livingston, Monroe, and St. Clair counties have sidewalk and crosswalk data via SEMCOG's ArcGIS FeatureServer, created from AI-digitized aerial imagery (2019), updated quarterly.",
+            icon: MapPin,
+            color: "text-michigan-blue",
+            bgColor: "bg-michigan-blue/10",
+          },
+          {
+            title: "GATIS v1.0 — Ratified Feb 2026",
+            description: "The federal Bureau of Transportation Statistics released the first national standard for pedestrian, bike, and accessibility infrastructure data. Public domain, open source. Access Michigan is among the first civic platforms to integrate it.",
+            icon: CheckCircle2,
+            color: "text-michigan-forest",
+            bgColor: "bg-michigan-forest/10",
+          },
+          {
+            title: "Why This Matters",
+            description: "For seniors, people with disabilities, and NEMT users, knowing whether a sidewalk exists and whether a curb ramp is ADA-compliant is more critical than knowing a bus route exists. 40% of Michigan's pedestrian fatalities occur in areas with no sidewalk coverage.",
+            icon: Accessibility,
+            color: "text-michigan-teal",
+            bgColor: "bg-michigan-teal/10",
+          },
+        ].map((stat, i) => (
+          <motion.div key={stat.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+            <Card className="h-full">
+              <CardContent className="py-4 space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${stat.bgColor} flex-shrink-0`}>
+                    <stat.icon className={`h-4 w-4 ${stat.color}`} />
+                  </div>
+                  <h3 className="font-semibold text-sm text-foreground">{stat.title}</h3>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{stat.description}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* What GATIS Covers */}
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base flex items-center gap-2">
+              <Layers className="h-4 w-4 text-michigan-teal" />
+              What GATIS Covers
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">Four standardized feature categories for active transportation infrastructure</p>
+          </CardHeader>
+          <CardContent>
+            <Accordion type="single" collapsible className="space-y-2">
+              <AccordionItem value="edges" className="border rounded-lg px-4">
+                <AccordionTrigger className="text-sm font-semibold">
+                  <span className="flex items-center gap-2"><Footprints className="h-4 w-4 text-michigan-teal" />Edges (Linear Features)</span>
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                  Sidewalks, crossings, bikeways, multi-use paths, ramps, steps, traffic islands — with attributes like width, surface material, incline, and cross-slope.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="nodes" className="border rounded-lg px-4">
+                <AccordionTrigger className="text-sm font-semibold">
+                  <span className="flex items-center gap-2"><Construction className="h-4 w-4 text-michigan-coral" />Nodes (Connection Points)</span>
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                  Curb ramps, intersection transitions — with ADA compliance date, detectable warnings, and surface condition.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="points" className="border rounded-lg px-4">
+                <AccordionTrigger className="text-sm font-semibold">
+                  <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-michigan-blue" />Points (Discrete Features)</span>
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                  Transit stops (linked to GTFS), bike parking, push buttons, traffic calming devices, and signs.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="zones" className="border rounded-lg px-4">
+                <AccordionTrigger className="text-sm font-semibold">
+                  <span className="flex items-center gap-2"><Layers className="h-4 w-4 text-michigan-forest" />Zones (Area Features)</span>
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                  Pedestrian zones, bike share station areas.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* GATIS Data Maturity Tiers */}
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base flex items-center gap-2">
+              <BarChart3 className="h-4 w-4 text-michigan-blue" />
+              GATIS Data Maturity Tiers
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">How complete is the data? SEMCOG's Michigan data is approximately Tier 1-2 (presence/geometry, no condition data).</p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {gatisTiers.map((t, i) => (
+              <div key={t.tier} className="flex items-start gap-3">
+                <div className="flex flex-col items-center gap-1">
+                  <div className={`h-8 w-8 rounded-full ${t.color} flex items-center justify-center text-white font-bold text-sm`}>
+                    {t.tier}
+                  </div>
+                  {i < gatisTiers.length - 1 && <div className="w-0.5 h-4 bg-border" />}
+                </div>
+                <div className="pt-1">
+                  <p className="text-sm font-semibold text-foreground">Tier {t.tier}: {t.label}</p>
+                  <p className="text-xs text-muted-foreground">{t.description}</p>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Michigan Data Landscape */}
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={4}>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-michigan-blue" />
+              Michigan's Active Transportation Data Landscape
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">The 76-county data gap is itself a finding — visualizing what's missing is as powerful as showing what exists.</p>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2 pr-3 font-semibold text-foreground">Region</th>
+                    <th className="text-left py-2 pr-3 font-semibold text-foreground">Data Available</th>
+                    <th className="text-left py-2 pr-3 font-semibold text-foreground hidden sm:table-cell">Source</th>
+                    <th className="text-left py-2 pr-3 font-semibold text-foreground">GATIS Tier</th>
+                    <th className="text-left py-2 font-semibold text-foreground hidden md:table-cell">Coverage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {michiganDataLandscape.map((row) => (
+                    <tr key={row.region} className="border-b border-border/50">
+                      <td className="py-2 pr-3 font-medium text-foreground">{row.region}</td>
+                      <td className="py-2 pr-3 text-muted-foreground">{row.data}</td>
+                      <td className="py-2 pr-3 text-muted-foreground hidden sm:table-cell">{row.source}</td>
+                      <td className="py-2 pr-3">
+                        <Badge variant={row.tier === "No data" ? "destructive" : "outline"} className="text-[10px]">
+                          {row.tier}
+                        </Badge>
+                      </td>
+                      <td className="py-2 text-muted-foreground hidden md:table-cell">{row.coverage}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Call to Action Cards */}
+      <div className="grid gap-3 sm:grid-cols-2">
+        {[
+          {
+            title: "Explore SEMCOG Sidewalk Data",
+            description: "Interactive maps of sidewalks, crosswalks, and bike infrastructure for 7 SE Michigan counties.",
+            link: "https://bicycle-and-pedestrian-mobility-maps-semcog.hub.arcgis.com/",
+            icon: MapPin,
+            color: "text-michigan-blue",
+          },
+          {
+            title: "View the GATIS Specification",
+            description: "The full open-standard specification from the Bureau of Transportation Statistics.",
+            link: "https://dotbts.github.io/BPA/",
+            icon: BookOpen,
+            color: "text-michigan-forest",
+          },
+          {
+            title: "Join NC-BPAID",
+            description: "Help advocate for Michigan-wide pedestrian infrastructure data collection and standardization.",
+            link: "https://forms.office.com/g/34975BEAkF",
+            icon: Users,
+            color: "text-michigan-teal",
+          },
+          {
+            title: "Report Missing Infrastructure",
+            description: "Community reporting for sidewalk gaps, missing curb ramps, and accessibility barriers. (Coming soon)",
+            link: "#",
+            icon: Info,
+            color: "text-michigan-coral",
+          },
+        ].map((cta, i) => (
+          <motion.div key={cta.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+            <Card className="hover-lift h-full">
+              <CardContent className="py-4 space-y-2">
+                <div className="flex items-center gap-2">
+                  <cta.icon className={`h-4 w-4 ${cta.color}`} />
+                  <h3 className="font-semibold text-sm text-foreground">{cta.title}</h3>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{cta.description}</p>
+                {cta.link !== "#" ? (
+                  <a href={cta.link} target="_blank" rel="noopener noreferrer">
+                    <Button size="sm" variant="outline" className="h-7 text-xs mt-1">
+                      <ExternalLink className="mr-1 h-3 w-3" />Learn More
+                    </Button>
+                  </a>
+                ) : (
+                  <Button size="sm" variant="outline" className="h-7 text-xs mt-1" disabled>
+                    Coming Soon
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  PAGE                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -583,6 +851,7 @@ export default function TransportationPage() {
         <Tabs defaultValue="resources" className="space-y-6">
           <TabsList className="w-full justify-start flex-wrap h-auto gap-1 p-1">
             <TabsTrigger value="resources">Resources</TabsTrigger>
+            <TabsTrigger value="active-transport">Walking, Biking & Accessibility</TabsTrigger>
             <TabsTrigger value="data">Data & Trends</TabsTrigger>
             <TabsTrigger value="stoparm">AI Stop-Arm Cameras</TabsTrigger>
           </TabsList>
@@ -771,6 +1040,11 @@ export default function TransportationPage() {
                 </motion.div>
               </>
             )}
+          </TabsContent>
+
+          {/* ACTIVE TRANSPORTATION TAB */}
+          <TabsContent value="active-transport">
+            <ActiveTransportationTab />
           </TabsContent>
 
           {/* DATA & TRENDS TAB */}
