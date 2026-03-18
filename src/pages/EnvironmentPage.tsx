@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { Leaf, Droplets, Wind, Recycle, Zap, Globe, Fish, AlertTriangle, TrendingUp, MapPin, ExternalLink, Shield, Loader2 } from "lucide-react";
+import { Leaf, Droplets, Wind, Recycle, Zap, Globe, Fish, AlertTriangle, TrendingUp, MapPin, ExternalLink, Shield, Loader2, Footprints, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -862,6 +862,26 @@ const EnvironmentPage = () => {
           <HealthSafetyCallout />
           <CivicDataCallout />
           <TransportationCallout />
+          <Card className="border-michigan-forest/20 bg-michigan-forest/5">
+            <CardContent className="py-4">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10 flex-shrink-0">
+                  <Footprints className="h-5 w-5 text-michigan-forest" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-foreground">Walkable Infrastructure Reduces Emissions</h3>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Walkable infrastructure reduces car trips and carbon emissions. See Michigan's pedestrian, bike, and accessibility infrastructure data powered by the federal GATIS standard.
+                  </p>
+                  <Link to="/transportation">
+                    <Button size="sm" variant="outline" className="mt-2 h-7 text-xs">
+                      <ArrowRight className="mr-1 h-3 w-3" />Active Transportation Data
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
