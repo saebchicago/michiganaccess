@@ -88,6 +88,8 @@
     "findCareDesc": "Search doctors, hospitals, urgent care by location and specialty",
     "transportation": "Transportation & Safety",
     "transportationDesc": "Public transit, school bus safety, automated enforcement, accessible rides for seniors",
+    "activeTransportation": "Walking, Biking & Accessibility",
+    "activeTransportationDesc": "Pedestrian, bike, and accessibility infrastructure data powered by the federal GATIS standard",
     "environment": "Energy & Environment",
     "environmentDesc": "DTE programs, utility assistance, air quality, water safety, Great Lakes conservation, clean energy",
     "civicData": "Civic Data",

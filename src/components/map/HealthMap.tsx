@@ -12,6 +12,7 @@ import CountyBoundaryLayer from "./CountyBoundaryLayer";
 import EnergyBurdenChoropleth from "./EnergyBurdenChoropleth";
 import UtilityOutageLayer from "./UtilityOutageLayer";
 import VehiclePositionLayer from "./VehiclePositionLayer";
+import SemcogSidewalkLayer from "./SemcogSidewalkLayer";
 import { useArcGISData, type ArcGISLayer } from "@/hooks/useArcGISData";
 import { matchesSystem } from "./NetworkFilter";
 import { useGTFSRealtime } from "@/hooks/useGTFSRealtime";
@@ -152,6 +153,7 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
   const showAQI = activeOverlays.includes("aqi-stations");
   const showBusPatrol = activeOverlays.includes("buspatrol-safety");
   const showPedestrian = activeOverlays.includes("pedestrian-risk");
+  const showSemcogSidewalks = activeOverlays.includes("semcog-sidewalks");
   const showEnergyBurden = activeOverlays.includes("energy-burden");
   const showUtilityOutages = activeOverlays.includes("utility-outages");
 
@@ -486,6 +488,10 @@ export default function HealthMap({ facilities, activeLayers, activeOverlays = [
         map={mapInstanceRef.current}
         vehicles={allLiveVehicles}
         visible={showDDOTLive || showTheRideLive}
+      />
+      <SemcogSidewalkLayer
+        map={mapInstanceRef.current}
+        visible={showSemcogSidewalks}
       />
       {(showDDOTLive || showTheRideLive) && allLiveVehicles.length > 0 && (
         <div className="absolute bottom-2 left-2 z-[1000] rounded bg-card/90 border border-border px-2 py-1 text-[10px] text-muted-foreground shadow">

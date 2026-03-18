@@ -250,6 +250,107 @@ export default function ImpactPage() {
         <Separator />
       </div>
 
+      {/* Health × Infrastructure Cross-Analysis */}
+      <div className="container max-w-5xl py-12 space-y-8">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
+              <Activity className="h-5 w-5 text-michigan-teal" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">When Sidewalks Are a Health Issue</h2>
+              <p className="text-sm text-muted-foreground">Active Transportation & Chronic Disease — powered by GATIS</p>
+            </div>
+          </div>
+          <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">
+            Cross-Sector Analysis
+          </Badge>
+        </motion.div>
+
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={1}>
+          <Card className="border-michigan-teal/20 bg-michigan-teal/[0.03]">
+            <CardContent className="pt-6 space-y-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-3">
+                  <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-michigan-coral" />
+                    The Connection
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Counties with less walkable infrastructure correlate with higher diabetes, obesity, and cardiovascular disease rates — this is well-established in epidemiological literature (CDC, AHRQ).
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Michigan's pedestrian fatality rate is above the national average. MDOT crash data shows disproportionate fatalities in areas without sidewalk coverage.
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
+                    <Target className="h-4 w-4 text-michigan-teal" />
+                    What Access Michigan Can Now Overlay
+                  </h4>
+                  <ul className="space-y-1.5">
+                    {[
+                      "CDC PLACES chronic disease prevalence data",
+                      "SEMCOG sidewalk & crosswalk coverage (7 SE counties)",
+                      "HRSA HPSA shortage designations",
+                      "SVI social vulnerability scores",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground">
+                        <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-muted-foreground italic">
+                    These layers together reveal WHERE infrastructure investment could have the greatest health impact.
+                  </p>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div className="space-y-3">
+                <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
+                  <Lightbulb className="h-4 w-4 text-michigan-gold" />
+                  The "Last 100 Feet" Problem
+                </h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  For seniors and people with disabilities, the "last 100 feet" to a bus stop or clinic entrance is often the most dangerous part of their journey — and it's completely unmapped outside of SEMCOG's 7-county footprint. A bus route is meaningless if there's no sidewalk to reach the stop.
+                </p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-lg border border-michigan-teal/20 bg-background p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-teal mb-1">Wayne County (Has Sidewalk Data)</p>
+                    <ul className="text-[11px] text-muted-foreground space-y-1">
+                      <li>SEMCOG sidewalk geometry available</li>
+                      <li>Crosswalk locations mapped</li>
+                      <li>Can overlay health + infrastructure</li>
+                      <li>Can identify specific gaps</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-lg border border-michigan-coral/20 bg-background p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-coral mb-1">Rural County (Zero Data)</p>
+                    <ul className="text-[11px] text-muted-foreground space-y-1">
+                      <li>No sidewalk inventory exists</li>
+                      <li>No crosswalk or curb ramp data</li>
+                      <li>Cannot assess pedestrian safety</li>
+                      <li>Higher pedestrian fatality risk</li>
+                    </ul>
+                  </div>
+                </div>
+                <p className="text-[10px] text-muted-foreground italic">
+                  The 76-county data gap is itself a finding. GATIS provides the standard — now Michigan needs the data collection to match.
+                </p>
+              </div>
+
+              <div className="flex items-start gap-2 text-xs text-muted-foreground pt-2">
+                <DataClassification type="modeled" />
+                <span>Analysis based on published research linking walkability to health outcomes (CDC, AHRQ) and Michigan-specific SEMCOG/MDOT data.</span>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+
       {/* Platform Comparison */}
       <ComparisonTable />
 

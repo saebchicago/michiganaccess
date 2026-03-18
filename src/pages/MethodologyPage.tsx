@@ -23,7 +23,7 @@ const flowSteps = [
     titleKey: "publicDataSources",
     color: "bg-primary/10 text-primary",
     items: [
-      "Federal: CMS, CDC PLACES, HRSA, Census, DOE, USGS, AirNow",
+      "Federal: CMS, CDC PLACES, HRSA, Census, DOE, USGS, AirNow, BTS (GATIS)",
       "State: MI DHHS, MPSC, EGLE, Budget Office",
       "Local: Counties, transit authorities, MI 211",
     ],
@@ -307,6 +307,12 @@ export default function MethodologyPage() {
                 desc: "ED visits, hospitalizations, and treatment admissions by county for substance use disorders across Michigan.",
                 frequency: "Quarterly refresh",
                 url: "https://mi-suddr.com/data/",
+              },
+              {
+                source: "GATIS (General Active Transportation Infrastructure Specification)",
+                desc: "Bureau of Transportation Statistics open standard (v1.0, Feb 2026) for sidewalk, bike lane, curb ramp, and transit stop geospatial data. Michigan data via SEMCOG FeatureServer covering 7 SE counties (Wayne, Oakland, Macomb, Washtenaw, Livingston, Monroe, St. Clair). CC0 Public Domain.",
+                frequency: "Spec: annual; SEMCOG: quarterly",
+                url: "https://dotbts.github.io/BPA/",
               },
             ].map((src, i) => (
               <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
