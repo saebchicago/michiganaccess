@@ -90,7 +90,7 @@ const caseStudies = [
       { title: "Strategic Whitespace", desc: "Identify counties with high need and low existing program coverage", icon: Lightbulb },
     ],
     potentialApplications: [
-      "Health Systems: Data-driven expansion planning using publicly available indicators",
+      "Health Systems: Expansion planning using HRSA, CDC, and CMS public indicators",
       "Grant Writers: Align HRSA, SAMHSA funding applications with documented community gaps",
       "Community Organizations: Approach counties with solutions matched to documented needs",
       "Policymakers: Identify cross-jurisdiction challenges from aggregated public data",

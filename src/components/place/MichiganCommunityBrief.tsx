@@ -323,7 +323,7 @@ export default function MichiganCommunityBrief({ place }: { place: Place }) {
         <p className="text-xs text-muted-foreground">
           {sparse
             ? "Some indicators in this area have limited sample sizes. Insights blend available data with contextual community trends."
-            : "A data-driven civic snapshot — every insight below is derived from public indicators shown on this page."}
+            : "Every insight below comes from public indicators shown on this page — CDC, Census, HRSA, and state sources."}
         </p>
       </motion.div>
 

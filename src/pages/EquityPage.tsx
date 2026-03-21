@@ -22,7 +22,7 @@ const travelBurden = [
 ];
 
 const EquityPage = () => {
-  usePageMeta({ title: "Health Equity Framework — Access Michigan", description: "Equity-centered design methodology closing access gaps across all 83 Michigan counties.", path: "/equity" });
+  usePageMeta({ title: "Health Equity Framework — Access Michigan", description: "CDC SVI-weighted search ranking and safety-net prioritization across all 83 Michigan counties.", path: "/equity" });
 
   return (
     <Layout>

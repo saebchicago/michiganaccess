@@ -27,7 +27,7 @@ const PlaceholderPage = ({ title, description }: PlaceholderPageProps) => (
 );
 
 export const Conditions = () => (
-  <PlaceholderPage title="Health Conditions" description="Evidence-based health information, treatment options, and care pathways for major conditions." />
+  <PlaceholderPage title="Health Conditions" description="Condition guides with Michigan-specific prevalence data, treatment options, and local provider search." />
 );
 
 export const Resources = () => (

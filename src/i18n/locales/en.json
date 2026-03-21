@@ -260,7 +260,7 @@
   "environment": {
     "badge": "Environment & Sustainability",
     "title": "Michigan's Environmental Health",
-    "subtitle": "Air quality, water safety, clean energy progress, recycling programs, and environmental justice — data-driven insights for Michigan's natural resources.",
+    "subtitle": "Air quality, water safety, clean energy progress, recycling programs, and environmental justice across Michigan — sourced from EPA, EGLE, EIA, and USGS.",
     "airWater": "Air & Water",
     "cleanEnergy": "Clean Energy",
     "recycling": "Recycling",
@@ -393,14 +393,14 @@
   "aboutPage": {
     "badge": "About Access Michigan",
     "title": "Helping Michigan Families Navigate Health, Safety & Transportation",
-    "subtitle": "An independent, data-driven civic resource built to improve health, safety, and transportation access for all Michigan residents — regardless of income, insurance status, or background.",
+    "subtitle": "An independent civic resource organizing public health, safety, and transportation data for all Michigan residents — regardless of income, insurance status, or background.",
     "missionTitle": "Our Mission",
     "missionDesc": "Access Michigan exists to help Michigan residents navigate healthcare, energy, transportation, safety, and public services — finding quality resources, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy information, regardless of income, insurance status, or background.",
     "independentTitle": "Independent & Objective",
     "independentDesc": "No advertising, no paid placements. Rankings based on publicly available, third-party quality data.",
     "residentFirstTitle": "Resident-First",
     "residentFirstDesc": "Every design decision optimizes for the person seeking care — not for health systems or insurers.",
-    "dataDrivenTitle": "Data-Driven & Transparent",
+    "dataDrivenTitle": "Transparent & Verifiable",
     "dataDrivenDesc": "All data sources cited. Methodology published. Rankings explainable and reproducible.",
     "rankingTitle": "How We Rank Healthcare Providers",
     "rankingSubtitle": "Transparent methodology — no hidden criteria",
@@ -433,7 +433,7 @@
     "qualityAssurance": "Quality Assurance Layer",
     "userCentered": "User-Centered Presentation",
     "communityOutcomes": "Community Outcomes",
-    "equityTitle": "Equity-Centered Design Principles",
+    "equityTitle": "SVI-Weighted Design Principles",
     "equitySubtitle": "Every decision filtered through health equity",
     "rankingTitle": "Quality Ranking Methodology",
     "rankingSubtitle": "Transparent, reproducible composite scoring",
@@ -463,7 +463,7 @@
   },
   "impactPage": {
     "badge": "Case Studies",
-    "title": "Community Impact Through Data-Driven Design",
+    "title": "Community Impact Through Public Data",
     "subtitle": "Methodology-focused case studies demonstrating how integrated public data informs strategic planning and reduces health disparities. Methods replicable for health systems, government agencies, and community organizations.",
     "challenge": "Challenge",
     "stakeholders": "Opportunities for Stakeholders",
@@ -475,7 +475,7 @@
     "marketIntelTitle": "Public Data as Market Intelligence",
     "marketIntelSubtitle": "Strategic Analysis for Market Development",
     "ambulatoryTitle": "Ambulatory Operations Metrics",
-    "ambulatorySubtitle": "Data-driven efficiency gains for ambulatory center management",
+    "ambulatorySubtitle": "Efficiency gains for ambulatory center management using public benchmarks",
     "ambulatoryNote": "Metrics derived from operations research modeling using public HPSA, transit, and utilization data. Projections based on peer-reviewed ambulatory optimization literature."
   },
   "technicalPage": {

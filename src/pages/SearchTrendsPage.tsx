@@ -96,7 +96,7 @@ export default function SearchTrendsPage() {
             </div>
             <h1 className="text-3xl font-bold text-foreground md:text-4xl">Search Trends</h1>
             <p className="mt-2 text-muted-foreground max-w-xl">
-              Anonymized search data showing what Michigan residents are looking for — enabling data-driven resource prioritization. No personal information is collected.
+              What Michigan residents are searching for, aggregated and anonymized. Helps us decide what to build next. No personal information is collected.
             </p>
           </motion.div>
         </div>

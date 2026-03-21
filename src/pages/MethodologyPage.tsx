@@ -57,7 +57,7 @@ const flowSteps = [
     items: [
       "Reduced barriers to care",
       "Informed civic participation",
-      "Data-driven resource allocation",
+      "Better resource allocation from public data",
     ],
   },
 ];
