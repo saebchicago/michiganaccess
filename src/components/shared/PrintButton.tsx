@@ -5,7 +5,7 @@ const PrintButton = () => (
   <Button
     variant="ghost"
     size="sm"
-    className="print:hidden fixed bottom-20 right-4 z-40 rounded-full shadow-lg bg-card border border-border hover:bg-secondary"
+    className="print:hidden fixed bottom-32 right-4 z-40 rounded-full shadow-lg bg-card border border-border hover:bg-secondary lg:bottom-16"
     onClick={() => window.print()}
     aria-label="Print or save as PDF"
   >
