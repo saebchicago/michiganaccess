@@ -72,7 +72,7 @@
   "getHelp": "Get Help Now",
   "prototype": {
     "title": "Live Platform:",
-    "description": "Integrating real-time public data from CMS, HRSA, CDC, MDHHS, and 25+ sources across all 83 Michigan counties.",
+    "description": "35+ public data sources. Updated continuously from CMS, CDC, HRSA, NWS, USGS, FDA, and FEMA.",
     "viewMethodology": "View our data methodology",
     "and": "and",
     "viewTechnical": "technical architecture"
@@ -85,19 +85,19 @@
   },
   "quickActions": {
     "findCare": "Find Care Now",
-    "findCareDesc": "Search doctors, hospitals, urgent care by location and specialty",
+    "findCareDesc": "Search by ZIP code, specialty, or insurance type. Results include CMS quality ratings.",
     "transportation": "Transportation & Safety",
-    "transportationDesc": "Public transit, school bus safety, automated enforcement, accessible rides for seniors",
+    "transportationDesc": "Bus routes, paratransit, NEMT options, and the state's first pedestrian infrastructure data.",
     "activeTransportation": "Walking, Biking & Accessibility",
-    "activeTransportationDesc": "Pedestrian, bike, and accessibility infrastructure data powered by the federal GATIS standard",
+    "activeTransportationDesc": "Sidewalk and bike lane coverage powered by the federal GATIS standard. 76 counties have zero data — we mapped that gap.",
     "environment": "Energy & Environment",
-    "environmentDesc": "DTE programs, utility assistance, air quality, water safety, Great Lakes conservation, clean energy",
+    "environmentDesc": "Live air quality by ZIP, PFAS contamination maps, river levels, and energy costs.",
     "civicData": "Civic Data",
-    "civicDataDesc": "State budget, FOIA requests, voter info, elected officials, public meetings",
+    "civicDataDesc": "FOIA request builder, data center filings, broadband coverage, and hazard risk by county.",
     "financialHelp": "Financial Help",
-    "financialHelpDesc": "Free and reduced-cost care, insurance enrollment, prescription assistance",
+    "financialHelpDesc": "Energy assistance ($183M available), Medicaid, SNAP, and rebates up to $34K per household.",
     "communityResources": "Community Resources",
-    "communityResourcesDesc": "Food, housing, transportation, support groups, social services",
+    "communityResourcesDesc": "211-sourced food banks, shelters, legal aid, and support groups — searchable by county.",
     "explore": "Explore →"
   },
   "stats": {
@@ -107,17 +107,17 @@
     "financialLocations": "Financial Assistance Locations",
     "communityResources": "Community Resources",
     "energyPrograms": "$183M+ in Energy Assistance",
-    "updatedWeekly": "Updated weekly with latest health data"
+    "updatedWeekly": "15 live API feeds. Data refreshes hourly to annually depending on source."
   },
   "howItHelps": {
-    "title": "How This Platform Helps You",
-    "subtitle": "Free. No login. No tracking. Real data from CMS, HRSA, and CDC for all 83 counties.",
-    "findQualityCare": "Compare 2,400+ Providers by Quality Score",
-    "findQualityCareDesc": "CMS star ratings, Leapfrog safety grades, and patient experience scores — side by side, with no paid placements.",
-    "navigateSystems": "Cut Through Insurance & Medicaid Complexity",
-    "navigateSystemsDesc": "Sliding-scale clinics, Healthy Michigan Plan enrollment, prescription assistance, and financial aid in one search.",
-    "stayInformed": "Track Your County's Health Trends",
-    "stayInformedDesc": "CDC PLACES data, county-level chronic disease rates, and social determinant indicators updated from public sources."
+    "title": "What You Can Do Here",
+    "subtitle": "Free. No login. No tracking. 35+ public data sources across all 83 counties.",
+    "findQualityCare": "Search 2,400+ Providers by Quality Score",
+    "findQualityCareDesc": "CMS star ratings, patient safety grades, and Medicaid acceptance — for hospitals, clinics, and individual doctors. Not advertising. Not sponsored listings.",
+    "navigateSystems": "Check What You Qualify For",
+    "navigateSystemsDesc": "LIHEAP, SNAP, Medicaid, MiHER energy rebates, childcare assistance — answer three questions and see your options.",
+    "stayInformed": "See How Your County Compares",
+    "stayInformedDesc": "Diabetes rates, energy burden, air quality, opioid data, pedestrian infrastructure — county by county, updated from CDC, CMS, and USGS."
   },
   "featuredTopics": {
      "title": "Featured Topics",
