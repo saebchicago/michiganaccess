@@ -18,6 +18,7 @@ import CivicDataCallout from "@/components/shared/CivicDataCallout";
 import { useCDCData, transformPlacesToAQI } from "@/hooks/useCDCData";
 import EnergyAssistanceFinder from "@/components/energy/EnergyAssistanceFinder";
 import AirQualityChecker from "@/components/environment/AirQualityChecker";
+import EnergyPriceTracker from "@/components/environment/EnergyPriceTracker";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
 const fadeUp = {
@@ -458,6 +459,9 @@ const EnvironmentPage = () => {
 
             <TabsContent value="energy">
               <motion.div initial="hidden" animate="show" variants={stagger} className="space-y-8">
+                <motion.div variants={fadeUp}>
+                  <EnergyPriceTracker />
+                </motion.div>
                 <motion.div variants={fadeUp}>
                   <Card>
                     <CardHeader>
