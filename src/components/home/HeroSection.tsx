@@ -355,7 +355,7 @@ const HeroSection = () => {
             transition={{ delay: 0.15, duration: 0.5 }}
             className="text-3xl font-bold tracking-tight text-primary-foreground md:text-5xl leading-tight"
           >
-            Michigan help, at your fingertips.
+            Michigan's public data, organized for action.
           </motion.h1>
 
           {/* Subhead */}
@@ -365,7 +365,7 @@ const HeroSection = () => {
             transition={{ delay: 0.22, duration: 0.5 }}
             className="mt-3 text-sm text-primary-foreground/75 md:text-base max-w-xl mx-auto leading-relaxed"
           >
-            Free, instant access to housing, health, food, legal, and energy resources across all 83 Michigan counties.
+            83 counties · 35+ live data sources · Healthcare, housing, energy, food & transit.
           </motion.p>
 
           {/* Primary + Secondary CTAs */}
@@ -377,12 +377,12 @@ const HeroSection = () => {
           >
             <Link to="/find-care">
               <Button size="lg" className="rounded-full bg-white text-primary hover:bg-white/90 font-semibold shadow-lg gap-1.5">
-                <HeartPulse className="h-4 w-4" /> Find local help
+                <HeartPulse className="h-4 w-4" /> Find Help
               </Button>
             </Link>
             <Link to="/brief">
               <Button size="lg" variant="outline" className="rounded-full border-2 border-white text-white bg-white/10 hover:bg-white/25 backdrop-blur-sm font-semibold gap-1.5">
-                <BarChart3 className="h-4 w-4" /> Explore county data
+                <BarChart3 className="h-4 w-4" /> Explore Data
               </Button>
             </Link>
           </motion.div>
