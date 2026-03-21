@@ -14,6 +14,7 @@ const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropl
 const EnergyBurdenMap = lazy(() => import("@/components/dashboard/EnergyBurdenMap"));
 const DrugPriceLookup = lazy(() => import("@/components/learn/DrugPriceLookup"));
 import TractHealthExplorer from "@/components/health/TractHealthExplorer";
+import DrugRecallAlerts from "@/components/health/DrugRecallAlerts";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -515,6 +516,11 @@ export default function HealthDataDashboardPage() {
         {/* Neighborhood-Level Health Data */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
           <TractHealthExplorer />
+        </motion.section>
+
+        {/* Drug Safety Alerts */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
+          <DrugRecallAlerts />
         </motion.section>
 
         {/* Opioid & Substance Use Data */}
