@@ -21,6 +21,7 @@ import AirQualityChecker from "@/components/environment/AirQualityChecker";
 import EnergyPriceTracker from "@/components/environment/EnergyPriceTracker";
 import WaterMonitorWidget from "@/components/environment/WaterMonitorWidget";
 import EnergyHealthScatter from "@/components/environment/EnergyHealthScatter";
+import WeatherAlerts from "@/components/environment/WeatherAlerts";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
 const fadeUp = {
@@ -180,6 +181,13 @@ const EnvironmentPage = () => {
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* Weather Alerts */}
+      <section className="py-4">
+        <div className="container">
+          <WeatherAlerts />
         </div>
       </section>
 
