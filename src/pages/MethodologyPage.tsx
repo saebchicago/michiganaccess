@@ -11,6 +11,7 @@ import {
   Monitor, Phone, Printer, FileText, Scale
 } from "lucide-react";
 import { DataClassification, DataClassificationLegend } from "@/components/shared/DataClassification";
+import DataFreshnessDashboard from "@/components/shared/DataFreshnessDashboard";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -367,6 +368,13 @@ export default function MethodologyPage() {
               <span className="font-semibold text-foreground">Caveats:</span> Some county-level data may be suppressed for small populations (&lt;20 events) to protect privacy. Energy burden estimates are modeled from census tract-level data and may not reflect individual household circumstances. MDHHS disparity indices use age-adjusted rates; year-over-year comparisons should account for methodology changes. All data has inherent lag (typically 1–2 years from collection to publication).
             </p>
           </div>
+        </section>
+
+        <Separator />
+
+        {/* Data Freshness Dashboard */}
+        <section>
+          <DataFreshnessDashboard />
         </section>
 
         <Separator />
