@@ -238,9 +238,9 @@
   .bg-gradient-hero {
     background-image: linear-gradient(
       160deg,
-      hsl(var(--navy) / 0.95),
-      hsl(var(--michigan-blue) / 0.90),
-      hsl(var(--teal) / 0.85)
+      hsl(209 86% 18%),
+      hsl(var(--michigan-blue)),
+      hsl(var(--teal) / 0.92)
     );
   }
 
