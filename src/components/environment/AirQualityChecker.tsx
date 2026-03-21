@@ -98,6 +98,7 @@ export default function AirQualityChecker() {
           </Button>
         </form>
 
+        <div aria-live="polite" aria-atomic="true">
         {isLoading && (
           <div className="flex items-center gap-2 py-6 justify-center">
             <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -139,6 +140,7 @@ export default function AirQualityChecker() {
           </div>
         )}
 
+        </div>
         <p className="text-[10px] text-muted-foreground flex items-center gap-1">
           Data from{" "}
           <a

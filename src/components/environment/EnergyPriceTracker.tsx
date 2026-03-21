@@ -93,6 +93,7 @@ export default function EnergyPriceTracker() {
         )}
 
         {/* Chart */}
+        <div role="img" aria-label="Line chart showing Michigan vs national residential electricity prices over the last 12 months">
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 20%, 90%)" />
@@ -129,6 +130,7 @@ export default function EnergyPriceTracker() {
             />
           </LineChart>
         </ResponsiveContainer>
+        </div>
 
         <p className="text-[10px] text-muted-foreground flex items-center gap-1">
           Source:{" "}

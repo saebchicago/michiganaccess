@@ -107,6 +107,7 @@ export default function PhysicianCompare() {
           </Button>
         </form>
 
+        <div aria-live="polite" aria-atomic="true">
         {isLoading && (
           <div className="flex items-center justify-center gap-2 py-8">
             <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
@@ -130,6 +131,7 @@ export default function PhysicianCompare() {
           </p>
         )}
 
+        </div>
         <p className="text-[10px] text-muted-foreground flex items-center gap-1">
           Source:{" "}
           <a
