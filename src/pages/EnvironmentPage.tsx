@@ -20,6 +20,7 @@ import EnergyAssistanceFinder from "@/components/energy/EnergyAssistanceFinder";
 import AirQualityChecker from "@/components/environment/AirQualityChecker";
 import EnergyPriceTracker from "@/components/environment/EnergyPriceTracker";
 import WaterMonitorWidget from "@/components/environment/WaterMonitorWidget";
+import EnergyHealthScatter from "@/components/environment/EnergyHealthScatter";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
 const fadeUp = {
@@ -572,6 +573,10 @@ const EnvironmentPage = () => {
                 {/* Energy Assistance Program Finder */}
                 <motion.div variants={fadeUp}>
                   <EnergyAssistanceFinder />
+                </motion.div>
+
+                <motion.div variants={fadeUp}>
+                  <EnergyHealthScatter />
                 </motion.div>
               </motion.div>
             </TabsContent>
