@@ -10,6 +10,7 @@ import CountyDetailPanel from "@/components/atlas/CountyDetailPanel";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 
 const MichiganHeatGrid = lazy(() => import("@/components/atlas/MichiganHeatGrid"));
+const CompoundDeficitRanking = lazy(() => import("@/components/data/CompoundDeficitRanking"));
 
 function getCountyData(county: string) {
   const p = COUNTY_PROFILES[county];
@@ -108,6 +109,13 @@ export default function HealthEquityAtlasPage() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* Compound Index Rankings */}
+      <div className="container max-w-5xl py-8">
+        <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading rankings...</div>}>
+          <CompoundDeficitRanking />
+        </Suspense>
       </div>
     </Layout>
   );
