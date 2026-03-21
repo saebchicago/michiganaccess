@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { BarChart3, Droplets, Heart, ArrowRight, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { Badge } from "@/components/ui/badge";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 
@@ -151,9 +152,9 @@ export default function MichiganAtAGlance() {
         {/* Stat cards */}
         <div className="grid gap-4 sm:grid-cols-3 mb-8">
           {[
-            { icon: Heart, stat: "2,400+", label: "Healthcare providers tracked", sub: "CMS, HRSA, Leapfrog quality data", color: "text-michigan-coral" },
-            { icon: Droplets, stat: "200+", label: "PFAS sites monitored", sub: "MPART interactive map, 8 ppt standard", color: "text-michigan-teal" },
-            { icon: Users, stat: "15,000+", label: "Community resources indexed", sub: "Food, housing, legal, utilities, health", color: "text-primary" },
+            { icon: Heart, value: 2400, suffix: "+", label: "Healthcare providers tracked", sub: "CMS, HRSA, Leapfrog quality data", color: "text-michigan-coral" },
+            { icon: Droplets, value: 200, suffix: "+", label: "PFAS sites monitored", sub: "MPART interactive map, 8 ppt standard", color: "text-michigan-teal" },
+            { icon: Users, value: 15000, suffix: "+", label: "Community resources indexed", sub: "Food, housing, legal, utilities, health", color: "text-primary" },
           ].map((item) => (
             <motion.div
               key={item.label}
@@ -167,7 +168,7 @@ export default function MichiganAtAGlance() {
                     <item.icon className={`h-5 w-5 ${item.color}`} />
                   </div>
                   <div>
-                    <p className={`text-2xl font-bold ${item.color}`}>{item.stat}</p>
+                    <AnimatedCounter value={item.value} suffix={item.suffix} className={`text-2xl font-bold ${item.color}`} />
                     <p className="text-sm font-medium text-foreground">{item.label}</p>
                     <p className="text-[10px] text-muted-foreground mt-0.5">{item.sub}</p>
                   </div>

@@ -3,6 +3,7 @@ import { Wifi, ExternalLink, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
 // Verified data anchors
@@ -49,15 +50,15 @@ export default function BroadbandDashboard() {
         <CardContent className="space-y-4">
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-2xl font-bold text-primary">${(BEAD_ALLOCATION / 1e9).toFixed(2)}B</p>
+              <AnimatedCounter value={1.56} decimals={2} prefix="$" suffix="B" className="text-2xl font-bold text-primary" />
               <p className="text-xs text-muted-foreground">BEAD Allocation (4th highest nationally)</p>
             </div>
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-2xl font-bold text-michigan-coral">{(UNSERVED_HOUSEHOLDS / 1000).toFixed(0)}K</p>
+              <AnimatedCounter value={492} suffix="K" className="text-2xl font-bold text-michigan-coral" />
               <p className="text-xs text-muted-foreground">Unserved/underserved households</p>
             </div>
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-2xl font-bold text-michigan-gold">{(BARRIER_HOUSEHOLDS / 1000).toFixed(0)}K</p>
+              <AnimatedCounter value={730} suffix="K" className="text-2xl font-bold text-michigan-gold" />
               <p className="text-xs text-muted-foreground">Facing digital divide barriers</p>
             </div>
           </div>
