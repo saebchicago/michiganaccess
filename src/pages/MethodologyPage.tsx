@@ -314,6 +314,30 @@ export default function MethodologyPage() {
                 frequency: "Spec: annual; SEMCOG: quarterly",
                 url: "https://dotbts.github.io/BPA/",
               },
+              {
+                source: "SEMCOG Sidewalks & Crosswalks FeatureServer",
+                desc: "AI-digitized sidewalk and crosswalk inventory for 7 SE Michigan counties. Attributes include presence, geometry, and surface type. Created from 2019 aerial imagery.",
+                frequency: "Quarterly refresh",
+                url: "https://gis.semcog.org/server/rest/services/Hosted/Sidewalks_and_Crosswalks/FeatureServer",
+              },
+              {
+                source: "Michigan Broadband Map (MIHI)",
+                desc: "Statewide broadband coverage by provider, speed tier, and technology. 95.3% have 25/3 Mbps access but 32.5% remain unsubscribed. BEAD: $1.5B+ allocation. ROBIN: $250M state match.",
+                frequency: "Semiannual",
+                url: "https://michiganbroadbandmap.com/",
+              },
+              {
+                source: "MPART PFAS GIS (Michigan PFAS Action Response Team)",
+                desc: "Interactive map and ArcGIS data layer for 200+ identified PFAS contamination sites across Michigan. Includes site investigation status, contaminant levels, and affected water sources.",
+                frequency: "Updated as investigations progress",
+                url: "https://www.michigan.gov/egle/maps-data/mpart-pfas-gis",
+              },
+              {
+                source: "MiLeadSafe (Lead Service Line Replacement Tracker)",
+                desc: "Statewide dashboard tracking lead service line inventories and replacement progress by water system. Supports the federal Lead & Copper Rule Revisions (LCRR).",
+                frequency: "Updated as replacements occur",
+                url: "https://www.michigan.gov/egle/about/featured/mi-lead-safe",
+              },
             ].map((src, i) => (
               <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
                 <Card className="hover-lift">
