@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense } from "react";
 import { CountyProvider } from "./contexts/CountyContext";
 import { NerdModeProvider } from "./contexts/NerdModeContext";
@@ -51,6 +51,15 @@ const App = () => (
                     element={<route.component />}
                   />
                 ))}
+                {/* Semantic aliases — redirect common URL guesses */}
+                <Route path="/health-equity" element={<Navigate to="/equity" replace />} />
+                <Route path="/broadband" element={<Navigate to="/civic-data" replace />} />
+                <Route path="/chna" element={<Navigate to="/chna-explorer" replace />} />
+                <Route path="/map" element={<Navigate to="/health-map" replace />} />
+                <Route path="/check-benefits" element={<Navigate to="/financial-help" replace />} />
+                <Route path="/data-hub" element={<Navigate to="/data-and-insights" replace />} />
+                <Route path="/health-data" element={<Navigate to="/data" replace />} />
+                <Route path="/representatives" element={<Navigate to="/civic-data" replace />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
