@@ -34,7 +34,7 @@ export default function PrototypeBanner() {
         <div className="container flex items-center gap-3 py-2.5">
           <BarChart3 className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
           <p className="flex-1 text-xs text-foreground leading-relaxed">
-            <span className="font-semibold">📊 {t("prototype.title")}</span>{" "}
+            <span className="font-semibold">{t("prototype.title")}</span>{" "}
             {t("prototype.description")}{" "}
             <Link to="/methodology" className="font-medium text-primary underline underline-offset-2 hover:text-primary/80">
               {t("prototype.viewMethodology")}
@@ -49,7 +49,7 @@ export default function PrototypeBanner() {
             variant="ghost"
             className="h-6 w-6 shrink-0"
             onClick={dismiss}
-            aria-label="Dismiss prototype banner"
+            aria-label="Dismiss banner"
           >
             <X className="h-3 w-3" />
           </Button>

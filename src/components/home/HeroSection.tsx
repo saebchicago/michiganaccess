@@ -353,7 +353,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
-            className="text-4xl font-bold tracking-tight text-primary-foreground md:text-5xl leading-tight"
+            className="text-3xl font-bold tracking-tight text-primary-foreground md:text-5xl leading-tight"
           >
             Michigan help, at your fingertips.
           </motion.h1>

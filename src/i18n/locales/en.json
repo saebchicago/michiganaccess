@@ -71,8 +71,8 @@
   },
   "getHelp": "Get Help Now",
   "prototype": {
-    "title": "Public Beta:",
-    "description": "Built by a Michigan resident, improving every week with community feedback and open data integration.",
+    "title": "Live Platform:",
+    "description": "Integrating real-time public data from CMS, HRSA, CDC, MDHHS, and 25+ sources across all 83 Michigan counties.",
     "viewMethodology": "View our data methodology",
     "and": "and",
     "viewTechnical": "technical architecture"
@@ -111,13 +111,13 @@
   },
   "howItHelps": {
     "title": "How This Platform Helps You",
-    "subtitle": "Built for Michigan families, by someone who cares",
-    "findQualityCare": "Find Quality Care",
-    "findQualityCareDesc": "Compare healthcare options using independent quality ratings, patient safety scores, and service availability.",
-    "navigateSystems": "Navigate Complex Systems",
-    "navigateSystemsDesc": "Understand insurance options, find financial assistance, access social services.",
-    "stayInformed": "Stay Informed",
-    "stayInformedDesc": "Track Michigan health trends, learn about conditions, discover prevention strategies."
+    "subtitle": "Free. No login. No tracking. Real data from CMS, HRSA, and CDC for all 83 counties.",
+    "findQualityCare": "Compare 2,400+ Providers by Quality Score",
+    "findQualityCareDesc": "CMS star ratings, Leapfrog safety grades, and patient experience scores — side by side, with no paid placements.",
+    "navigateSystems": "Cut Through Insurance & Medicaid Complexity",
+    "navigateSystemsDesc": "Sliding-scale clinics, Healthy Michigan Plan enrollment, prescription assistance, and financial aid in one search.",
+    "stayInformed": "Track Your County's Health Trends",
+    "stayInformedDesc": "CDC PLACES data, county-level chronic disease rates, and social determinant indicators updated from public sources."
   },
   "featuredTopics": {
      "title": "Featured Topics",
@@ -149,7 +149,7 @@
     "about": "About",
     "disclaimer": "This platform is an independent, non-commercial civic resource. It does not collect personal data, use cookies for tracking, display advertising, or sell information.",
     "noAds": "No advertising · No data selling · Built to serve Michigan residents",
-    "prototype": "Public Beta",
+    "prototype": "Open Civic Infrastructure",
     "ethicalNote": "This project is built with an ethical, non-commercial ethos — prioritizing public benefit over profit.",
     "ethicalTitle": "Ethical & Non-Commercial Platform",
     "dataSources": "Data Sources",
@@ -420,8 +420,8 @@
     "technologyTitle": "Technology & Scalability",
     "technologySubtitle": "Built for growth and sustainability",
     "limitationsTitle": "Limitations & Disclaimers",
-     "portfolioTitle": "Public Beta",
-    "portfolioDesc": "Access Michigan is a working public beta — a community-oriented civic resource built to help Michigan residents navigate health, safety, energy, transportation, and public services. It is continuously improving with community feedback and open data integration."
+     "portfolioTitle": "Open Civic Infrastructure",
+    "portfolioDesc": "Built as open civic infrastructure — designed to be replicable by other states. Access Michigan integrates 25+ public data sources to help residents navigate health, safety, energy, transportation, and public services."
   },
   "methodologyPage": {
     "badge": "Data Methodology",
