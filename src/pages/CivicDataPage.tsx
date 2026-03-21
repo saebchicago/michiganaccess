@@ -15,6 +15,7 @@ import EnvironmentCallout from "@/components/shared/EnvironmentCallout";
 import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
 import FOIARequestBuilder from "@/components/civic/FOIARequestBuilder";
 import HazardRiskDashboard from "@/components/civic/HazardRiskDashboard";
+import EconomicVitalityDashboard from "@/components/civic/EconomicVitalityDashboard";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -528,6 +529,13 @@ const CivicDataPage = () => {
               </Card>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Economic Vitality */}
+      <section className="py-12">
+        <div className="container max-w-5xl">
+          <EconomicVitalityDashboard />
         </div>
       </section>
 
