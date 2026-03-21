@@ -16,6 +16,7 @@ const DrugPriceLookup = lazy(() => import("@/components/learn/DrugPriceLookup"))
 import TractHealthExplorer from "@/components/health/TractHealthExplorer";
 import DrugRecallAlerts from "@/components/health/DrugRecallAlerts";
 import FoodAccessMap from "@/components/health/FoodAccessMap";
+import MichiganTrends from "@/components/dashboard/MichiganTrends";
 import ChildcareEducationHub from "@/components/family/ChildcareEducationHub";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -514,6 +515,11 @@ export default function HealthDataDashboardPage() {
             </Suspense>
           </TabsContent>
         </Tabs>
+
+        {/* Michigan Over Time */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
+          <MichiganTrends />
+        </motion.section>
 
         {/* Neighborhood-Level Health Data */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
