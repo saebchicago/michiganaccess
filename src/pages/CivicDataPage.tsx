@@ -17,6 +17,7 @@ import FOIARequestBuilder from "@/components/civic/FOIARequestBuilder";
 import HazardRiskDashboard from "@/components/civic/HazardRiskDashboard";
 import EconomicVitalityDashboard from "@/components/civic/EconomicVitalityDashboard";
 import ALICEDashboard from "@/components/civic/ALICEDashboard";
+import BroadbandDashboard from "@/components/broadband/BroadbandDashboard";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -537,6 +538,13 @@ const CivicDataPage = () => {
       <section className="py-12">
         <div className="container max-w-5xl">
           <ALICEDashboard />
+        </div>
+      </section>
+
+      {/* Broadband & Digital Divide */}
+      <section className="py-12">
+        <div className="container max-w-5xl">
+          <BroadbandDashboard />
         </div>
       </section>
 
