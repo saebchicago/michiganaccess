@@ -313,6 +313,12 @@ const DataCenterPage = () => {
             <Button variant="outline" asChild>
               <Link to="/civic-data">Civic Data Hub <ExternalLink className="ml-2 h-3 w-3" /></Link>
             </Button>
+            <Button variant="outline" asChild>
+              <Link to="/detection-gap">Detection Gap Funnel <ExternalLink className="ml-2 h-3 w-3" /></Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/health-equity-atlas">Health Equity Atlas <ExternalLink className="ml-2 h-3 w-3" /></Link>
+            </Button>
           </div>
         </motion.section>
 
