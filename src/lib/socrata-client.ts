@@ -29,16 +29,16 @@ export async function fetchSocrata<T = Record<string, unknown>>(
     });
   }
 
-  const res = await fetch(url.toString(), {
-    headers: { Accept: "application/json" },
-  });
+  try {
+    const res = await fetch(url.toString(), {
+      headers: { Accept: "application/json" },
+    });
 
-  if (!res.ok) {
-    console.warn(`Socrata ${datasetId}: ${res.status} ${res.statusText}`);
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
     return [];
   }
-
-  return res.json();
 }
 
 /**
