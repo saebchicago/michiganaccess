@@ -151,6 +151,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/domain-dashboard", component: pages.DomainDashboardPage, label: "Domain Dashboard" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
   { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
+  { path: "/county-compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
   { path: "/compare-zips", component: pages.CompareZipsPage, label: "Compare ZIP Codes" },
   { path: "/datasets", component: pages.DatasetExplorerPage, label: "Dataset Explorer" },
   { path: "/transportation", component: pages.TransportationPage, label: "Transportation" },
