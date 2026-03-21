@@ -15,7 +15,7 @@ const fade = { hidden: { opacity: 0, y: 20 }, visible: (i: number) => ({ opacity
 
 const STATS = [
   { icon: MapPin, value: 83, label: "Counties Covered", suffix: "" },
-  { icon: FileText, value: 15000, label: "Resources Indexed", suffix: "+" },
+  { icon: FileText, value: 15000, label: "Total Records (facilities + resources + programs)", suffix: "+" },
   { icon: Activity, value: 35, label: "Data Sources", suffix: "+" },
   { icon: Globe, value: 4, label: "Languages", suffix: "" },
   { icon: Shield, value: 0, label: "Personal Data Collected", suffix: "" },
