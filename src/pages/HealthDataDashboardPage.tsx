@@ -13,6 +13,7 @@ const CSVExportPanel = lazy(() => import("@/components/dashboard/CSVExportPanel"
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
 const EnergyBurdenMap = lazy(() => import("@/components/dashboard/EnergyBurdenMap"));
 const DrugPriceLookup = lazy(() => import("@/components/learn/DrugPriceLookup"));
+import TractHealthExplorer from "@/components/health/TractHealthExplorer";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -510,6 +511,11 @@ export default function HealthDataDashboardPage() {
             </Suspense>
           </TabsContent>
         </Tabs>
+
+        {/* Neighborhood-Level Health Data */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
+          <TractHealthExplorer />
+        </motion.section>
 
         {/* Opioid & Substance Use Data */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
