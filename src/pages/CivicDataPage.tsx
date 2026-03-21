@@ -14,6 +14,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import EnvironmentCallout from "@/components/shared/EnvironmentCallout";
 import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
 import FOIARequestBuilder from "@/components/civic/FOIARequestBuilder";
+import HazardRiskDashboard from "@/components/civic/HazardRiskDashboard";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -527,6 +528,13 @@ const CivicDataPage = () => {
               </Card>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Natural Hazard Risk */}
+      <section className="py-12">
+        <div className="container max-w-5xl">
+          <HazardRiskDashboard />
         </div>
       </section>
 
