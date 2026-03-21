@@ -114,7 +114,7 @@ const EnvironmentPage = () => {
     const hash = location.hash.replace("#", "");
     const tabMap: Record<string, string> = {
       utilities: "energy", energy: "energy", outages: "energy",
-      water: "air-water", "drinking-water": "air-water", lead: "air-water",
+      water: "water-safety", "drinking-water": "water-safety", lead: "water-safety", pfas: "water-safety", "water-safety": "water-safety",
       air: "air-water",
       recycling: "recycling",
       lakes: "great-lakes", "great-lakes": "great-lakes",
@@ -183,8 +183,9 @@ const EnvironmentPage = () => {
       <section className="py-12 md:py-16">
         <div className="container">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-             <TabsList className="mb-8 grid w-full grid-cols-3 md:grid-cols-6 gap-1">
+             <TabsList className="mb-8 grid w-full grid-cols-4 md:grid-cols-7 gap-1">
               <TabsTrigger value="air-water" className="text-xs sm:text-sm">{t('environment.airWater')}</TabsTrigger>
+              <TabsTrigger value="water-safety" className="text-xs sm:text-sm">Water Safety</TabsTrigger>
               <TabsTrigger value="energy" className="text-xs sm:text-sm">{t('environment.cleanEnergy')}</TabsTrigger>
               <TabsTrigger value="programs" className="text-xs sm:text-sm">Programs & Rebates</TabsTrigger>
               <TabsTrigger value="recycling" className="text-xs sm:text-sm">{t('environment.recycling')}</TabsTrigger>
@@ -347,6 +348,110 @@ const EnvironmentPage = () => {
                 </Card>
               </motion.div>
             </TabsContent>
+
+            {/* Water Safety & Contamination */}
+            <TabsContent value="water-safety">
+              <motion.div initial="hidden" animate="show" variants={stagger} className="space-y-8">
+                <motion.div variants={fadeUp} className="rounded-xl border border-michigan-teal/20 bg-michigan-teal/5 p-6">
+                  <div className="flex items-start gap-4">
+                    <Droplets className="h-8 w-8 shrink-0 text-michigan-teal" />
+                    <div>
+                      <h2 className="text-xl font-bold text-foreground">Water Safety & Contamination</h2>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Michigan's water safety journey — from Flint to PFAS to lead line replacement — makes water quality data more essential here than almost anywhere in America.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                <div className="grid gap-6 md:grid-cols-3">
+                  {/* PFAS */}
+                  <motion.div variants={fadeUp}>
+                    <Card className="h-full">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-base">
+                          <AlertTriangle className="h-4 w-4 text-michigan-coral" /> PFAS Contamination
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <p className="text-sm text-muted-foreground">Michigan has identified <strong>200+</strong> PFAS sites — more than any other state. MPART (established 2017) coordinates response.</p>
+                        <ul className="space-y-2 text-xs text-muted-foreground">
+                          <li>• Drinking water standard: 8 parts per trillion (strictest in US)</li>
+                          <li>• "Forever chemicals" from firefighting foam & industrial waste</li>
+                          <li>• Well testing available for private well owners</li>
+                        </ul>
+                        <div className="flex flex-col gap-2 pt-2">
+                          <a href="https://www.michigan.gov/egle/maps-data/mpart-pfas-gis" target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                            <MapPin className="h-3 w-3" /> MPART PFAS Interactive Map
+                          </a>
+                          <a href="https://gis-egle.hub.arcgis.com/datasets/egle::michigan-pfas-sites-and-areas-of-interest/about" target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                            <ExternalLink className="h-3 w-3" /> ArcGIS PFAS Data Layer
+                          </a>
+                          <a href="https://www.michigan.gov/pfasresponse" target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                            <ExternalLink className="h-3 w-3" /> Test Your Well
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+
+                  {/* Lead */}
+                  <motion.div variants={fadeUp}>
+                    <Card className="h-full">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-base">
+                          <Shield className="h-4 w-4 text-michigan-gold" /> Lead Service Lines
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <p className="text-sm text-muted-foreground"><strong>Flint:</strong> 98% of lead lines replaced, ~500 remaining. Spring 2026 work scheduled to complete the project.</p>
+                        <ul className="space-y-2 text-xs text-muted-foreground">
+                          <li>• Federal Lead & Copper Rule Revisions (LCRR) effective Oct 2024</li>
+                          <li>• All Michigan water systems must inventory lead lines</li>
+                          <li>• MiLeadSafe tracks replacement progress statewide</li>
+                        </ul>
+                        <div className="flex flex-col gap-2 pt-2">
+                          <a href="https://www.michigan.gov/egle/about/featured/mi-lead-safe" target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                            <ExternalLink className="h-3 w-3" /> MiLeadSafe Dashboard
+                          </a>
+                          <a href="https://www.safewaterengineering.com/hottopics/milslrtracker" target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                            <ExternalLink className="h-3 w-3" /> Planet Detroit LSLR Tracker
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+
+                  {/* Drinking Water */}
+                  <motion.div variants={fadeUp}>
+                    <Card className="h-full">
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-base">
+                          <Droplets className="h-4 w-4 text-michigan-sky" /> Drinking Water
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <p className="text-sm text-muted-foreground">EGLE oversees Michigan's public water systems and provides well water resources for the 1.1M+ households on private wells.</p>
+                        <ul className="space-y-2 text-xs text-muted-foreground">
+                          <li>• 1,400+ public water systems monitored</li>
+                          <li>• Violations decreased 50% since 2019</li>
+                          <li>• Water Well Viewer: look up well logs by address</li>
+                        </ul>
+                        <div className="flex flex-col gap-2 pt-2">
+                          <a href="https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health" target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                            <ExternalLink className="h-3 w-3" /> EGLE Drinking Water Division
+                          </a>
+                          <a href="https://www.michigan.gov/egle/maps-data/water-well-viewer" target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                            <MapPin className="h-3 w-3" /> Water Well Viewer
+                          </a>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </TabsContent>
+
             <TabsContent value="energy">
               <motion.div initial="hidden" animate="show" variants={stagger} className="space-y-8">
                 <motion.div variants={fadeUp}>
