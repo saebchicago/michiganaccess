@@ -339,6 +339,36 @@ export default function MethodologyPage() {
                 frequency: "Updated as replacements occur",
                 url: "https://www.michigan.gov/egle/about/featured/mi-lead-safe",
               },
+              {
+                source: "NWS Weather API (Alerts & Forecast)",
+                desc: "Real-time severe weather alerts and 7-day forecasts for Michigan. Covers all NWS offices serving the state (Detroit, Grand Rapids, Gaylord, Marquette).",
+                frequency: "Continuous (alerts) / Hourly (forecast)",
+                url: "https://api.weather.gov/",
+              },
+              {
+                source: "CDC PLACES Tract-Level",
+                desc: "Census tract-level disease prevalence estimates for diabetes, asthma, obesity, depression, blood pressure, COPD, and stroke. Reveals within-county neighborhood disparities.",
+                frequency: "Annual",
+                url: "https://data.cdc.gov/resource/cwsq-ngmh.json",
+              },
+              {
+                source: "CMS Physician Compare",
+                desc: "Medicare-participating provider data including medical school, graduation year, hospital affiliations, group practice, and Medicare assignment status.",
+                frequency: "Quarterly",
+                url: "https://data.cms.gov/provider-data/dataset/mj5m-pzi6",
+              },
+              {
+                source: "FDA openFDA (Drug Recalls)",
+                desc: "Drug recall enforcement actions by classification (Class I = most serious). Tracks active recalls, recalling firms, and reasons.",
+                frequency: "Updated as recalls occur",
+                url: "https://api.fda.gov/drug/enforcement.json",
+              },
+              {
+                source: "FEMA National Risk Index",
+                desc: "County-level natural hazard risk ratings, expected annual loss, social vulnerability, and community resilience scores for all 83 Michigan counties.",
+                frequency: "Annual",
+                url: "https://hazards.fema.gov/nri/",
+              },
             ].map((src, i) => (
               <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
                 <Card className="hover-lift">

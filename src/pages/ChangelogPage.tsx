@@ -45,6 +45,12 @@ const entries: ChangelogEntry[] = [
       "Michigan at a Glance data snapshot on homepage with mini county heatmap and metric toggles",
       "Energy burden × health outcomes scatter plot showing correlation across 20 counties",
       "Data Freshness Dashboard on Methodology page — transparency for all 15 tracked data sources",
+      "Live NWS severe weather alerts for Michigan — real-time from National Weather Service",
+      "Census tract health explorer — neighborhood-level disparity analysis within counties (CDC PLACES)",
+      "CMS Physician Compare — medical school, affiliations, Medicare participation search",
+      "NWS 7-day forecast widget for 8 Michigan cities",
+      "FDA Class I drug recall alerts from openFDA",
+      "FEMA hazard risk dashboard for 20 Michigan counties with expected annual loss data",
     ],
   },
   {
