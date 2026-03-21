@@ -34,12 +34,12 @@ const ASSETS = [
 const FACTS = [
   { label: "Counties Covered", value: "83 / 83" },
   { label: "Resources Indexed", value: "15,000+" },
-  { label: "Data Sources", value: "35+ (CMS, HRSA, CDC, NWS, FDA, FEMA, Census, USDA, MDHHS, DOE, USGS)" },
+  { label: "Live API Integrations", value: "18" },
+  { label: "Data Sources", value: "35+" },
   { label: "Languages", value: "English, Spanish, Arabic, Bengali" },
   { label: "Cost to Users", value: "Free — No login required" },
   { label: "Personal Data Collected", value: "None" },
-  { label: "MI Hospital Community Benefit", value: "$4.5B+ (all systems combined)" },
-  { label: "Energy Programs Tracked", value: "LIHEAP, MEAP, MiHER, WAP, MI Saves" },
+  { label: "Live Feeds", value: "AirNow, USGS, NWS, NPPES, FDA" },
 ];
 
 const COVERAGE = [
@@ -124,11 +124,7 @@ export default function PressPage() {
           <Card>
             <CardContent className="py-4">
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Access Michigan is an independent, non-commercial civic technology platform that organizes 
-                health, housing, food, and family services across all 83 Michigan counties into one structured, 
-                accessible interface. The platform integrates real-time data from CMS, HRSA, CDC, and MDHHS 
-                to provide equity-weighted search results, quality ratings, and community resource navigation — 
-                all without collecting personal data or requiring user accounts.
+                Access Michigan pulls data from 35+ public sources — CMS hospital ratings, CDC disease prevalence, NWS weather alerts, USGS river monitoring, FDA drug recalls, and more — and organizes it by county so Michigan residents can find healthcare, energy assistance, and community services without creating an account or giving up personal data. It's free, it's independent, and it doesn't take money from health systems.
               </p>
             </CardContent>
           </Card>

@@ -83,7 +83,7 @@ const priorityStyles = {
 export default function PreventionWellnessPage() {
   usePageMeta({
     title: "Prevention & Wellness",
-    description: "Age-specific screening recommendations, vaccine schedules, and evidence-based wellness guidance for Michigan residents.",
+    description: "Age-specific screening recommendations, vaccine schedules, and wellness guidance based on USPSTF, CDC, and ACS guidelines for Michigan residents.",
     path: "/wellness",
     jsonLd: {
       "@type": "MedicalWebPage",
@@ -110,7 +110,7 @@ export default function PreventionWellnessPage() {
             Stay Ahead of Disease
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Age-specific screening recommendations, vaccine schedules, and evidence-based wellness guidance — all based on USPSTF, CDC, and ACS guidelines.
+            Age-specific screening recommendations, vaccine schedules, and wellness guidance based on USPSTF, CDC, and ACS guidelines — all based on USPSTF, CDC, and ACS guidelines.
           </motion.p>
         </div>
       </section>

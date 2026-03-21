@@ -294,7 +294,7 @@
   "civic": {
     "badge": "Civic Data & Open Government",
     "title": "Michigan Open Government Hub",
-    "subtitle": "Budget transparency, FOIA tracking, voter engagement, elected officials, and public meeting schedules — empowering informed civic participation.",
+    "subtitle": "Budget transparency, FOIA tracking, voter info, elected officials, and public meeting schedules — all in one place.",
     "budget": "Budget",
     "foiaTracker": "FOIA Tracker",
     "elections": "Elections",
@@ -404,7 +404,7 @@
     "dataDrivenDesc": "All data sources cited. Methodology published. Rankings explainable and reproducible.",
     "rankingTitle": "How We Rank Healthcare Providers",
     "rankingSubtitle": "Transparent methodology — no hidden criteria",
-    "rankingDesc": "When you search for care, our platform ranks results using a weighted composite score based on four objective dimensions. The highest-quality, most accessible, most comprehensive providers naturally rank first — not because they paid us, but because they objectively perform better on metrics that matter to patients.",
+    "rankingDesc": "Search results are ranked by a composite score across four dimensions: distance, CMS quality rating, service breadth, and digital access. The best-performing providers rank first — not because they paid us, but because they score higher on public metrics.",
     "distanceFactor": "Distance from You",
     "qualityFactor": "Quality & Safety Scores",
     "digitalFactor": "Digital Access",
@@ -426,7 +426,7 @@
   "methodologyPage": {
     "badge": "Data Methodology",
     "title": "How We Transform Public Data Into Community Impact",
-    "subtitle": "A replicable framework for integrating fragmented datasets into accessible, equity-centered civic infrastructure.",
+    "subtitle": "A replicable framework for integrating fragmented public datasets into accessible, SVI-weighted civic infrastructure.",
     "frameworkTitle": "Data Integration Framework",
     "frameworkSubtitle": "From raw public data to actionable community resource",
     "publicDataSources": "Public Data Sources",

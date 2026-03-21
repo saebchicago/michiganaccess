@@ -45,7 +45,7 @@ const CASE_STUDIES = [
   {
     title: "Illustrative: Rural Hospital Network — Access Gap Mapping",
     challenge: "A multi-hospital rural network knows patients travel long distances for care but lacks data to quantify access gaps or advocate for mobile health investments.",
-    solution: "Access Michigan's geo-mapped provider shortage data, transit overlay, and community resource density could support evidence-based planning for mobile clinic deployment and grant applications.",
+    solution: "Access Michigan's geo-mapped HRSA shortage data, transit overlay, and resource density data could support planning for mobile clinic deployment and grant applications.",
     outcomes: [
       "Potential: Build data-supported grant applications using HRSA shortage data",
       "Potential: Document primary care desert footprint across service area",

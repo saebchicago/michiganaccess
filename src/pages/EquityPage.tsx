@@ -31,7 +31,7 @@ const EquityPage = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <Badge variant="outline" className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary">Equity Framework</Badge>
             <h1 className="text-3xl font-bold text-foreground lg:text-4xl mb-3">Health Equity Through Systems Engineering</h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">How Access Michigan uses equity-centered algorithms to close navigation gaps for vulnerable populations across all 83 counties.</p>
+            <p className="text-muted-foreground max-w-2xl mx-auto">How Access Michigan uses CDC SVI-weighted search ranking to surface safety-net resources first for high-vulnerability communities across all 83 counties.</p>
           </motion.div>
 
           {/* Problem → Solution → Impact */}
@@ -106,7 +106,7 @@ const EquityPage = () => {
           </Card>
 
           <div className="text-center">
-            <ShareButton title="Access Michigan Equity Framework" description="How equity-centered algorithms close access gaps across 83 Michigan counties." />
+            <ShareButton title="Access Michigan Equity Framework" description="CDC SVI-weighted search ranking and safety-net prioritization across 83 Michigan counties." />
           </div>
         </div>
       </section>

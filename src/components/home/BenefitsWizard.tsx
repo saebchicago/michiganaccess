@@ -10,14 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 
 /*
- * "Check My Benefits" Smart Eligibility Wizard
- *
- * This 3-step wizard reduces cognitive load by narrowing Michigan's 50+
- * assistance programs to a short, personalized list based on zip code,
- * household size, and income. Internal analysis suggests this approach
- * increases resident conversion to program enrollment by ~40% by
- * replacing overwhelming directories with a guided, dignity-centered
- * value proposition — meeting residents where they are.
+ * Benefits eligibility checker.
+ * Three questions (zip, household size, income) → filtered list of programs.
+ * Data: LIHEAP, SNAP, Medicaid, MiHER, MEAP, childcare, WIC, MI Saves.
  */
 
 interface Program {
