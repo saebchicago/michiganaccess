@@ -28,6 +28,7 @@ const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
 const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
 const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer"));
 const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
+const MichiganAtAGlance = lazy(() => import("@/components/home/MichiganAtAGlance"));
 const CommunityAlerts = lazy(() => import("@/components/home/CommunityAlerts"));
 
 const SectionFallback = () => (
@@ -110,6 +111,15 @@ const Index = () => {
 
       {/* ═══ TRUST PANEL ═══ */}
       <TrustPanel />
+
+      {/* ═══ MICHIGAN AT A GLANCE ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <LazySection minHeight="200px">
+          <Suspense fallback={<SectionSkeleton height="300px" />}>
+            <MichiganAtAGlance />
+          </Suspense>
+        </LazySection>
+      </SectionErrorBoundary>
 
       {/* ═══ 3 PRIMARY PATHS ═══ */}
       <HomePrimaryPaths />
