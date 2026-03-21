@@ -19,37 +19,32 @@ export default function AnimatedCounter({
   className = "",
 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [display, setDisplay] = useState(() =>
-    decimals > 0 ? value.toFixed(decimals) : value.toLocaleString()
-  );
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const [current, setCurrent] = useState(0);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || hasAnimated.current) return;
+    hasAnimated.current = true;
 
-    const start = 0;
-    const end = value;
     const startTime = performance.now();
     const durationMs = duration * 1000;
 
     const tick = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / durationMs, 1);
-      // ease-out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
-      const current = start + (end - start) * eased;
-
-      if (decimals > 0) {
-        setDisplay(current.toFixed(decimals));
-      } else {
-        setDisplay(Math.round(current).toLocaleString());
-      }
-
+      setCurrent(eased * value);
       if (progress < 1) requestAnimationFrame(tick);
+      else setCurrent(value);
     };
 
     requestAnimationFrame(tick);
-  }, [isInView, value, duration, decimals]);
+  }, [isInView, value, duration]);
+
+  const display = decimals > 0
+    ? current.toFixed(decimals)
+    : Math.round(current).toLocaleString();
 
   return (
     <span ref={ref} className={className} aria-label={`${prefix}${value.toLocaleString()}${suffix}`}>
