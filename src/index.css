@@ -271,8 +271,11 @@
 
   /* Nav accent line */
   .nav-accent {
-    background: linear-gradient(90deg, hsl(var(--michigan-blue)), hsl(var(--michigan-teal)), hsl(var(--michigan-forest)));
+    background: linear-gradient(90deg, #0A4C95, #00A3A1, #2D5F3F);
     height: 2px;
+    position: sticky;
+    top: 64px;
+    z-index: 49;
   }
 
   /* Resource card accent border slide-in */
