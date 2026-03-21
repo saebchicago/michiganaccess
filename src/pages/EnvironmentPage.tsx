@@ -17,6 +17,7 @@ import HealthSafetyCallout from "@/components/shared/HealthSafetyCallout";
 import CivicDataCallout from "@/components/shared/CivicDataCallout";
 import { useCDCData, transformPlacesToAQI } from "@/hooks/useCDCData";
 import EnergyAssistanceFinder from "@/components/energy/EnergyAssistanceFinder";
+import AirQualityChecker from "@/components/environment/AirQualityChecker";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
 const fadeUp = {
@@ -195,6 +196,9 @@ const EnvironmentPage = () => {
 
             {/* Air & Water Quality */}
             <TabsContent value="air-water">
+              <motion.div initial="hidden" animate="show" variants={fadeUp} className="mb-8">
+                <AirQualityChecker />
+              </motion.div>
               <motion.div initial="hidden" animate="show" variants={stagger} className="grid gap-8 lg:grid-cols-2">
                 {/* AQI Chart — CDC PLACES live data */}
                 <motion.div variants={fadeUp}>
