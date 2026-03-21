@@ -181,12 +181,7 @@ const Index = () => {
               For research & policy
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Compare counties, export briefs, explore live Census data, and download CSVs — all built on
-              verified public sources.
-            </p>
-            <p className="text-xs text-muted-foreground/70 mt-2 max-w-lg mx-auto">
-              Insights are aggregate and privacy-preserving — no user accounts,
-              no personal data, no referral-level tracking.
+              Compare counties, export briefs, download CSVs. No accounts. No tracking.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3">
               <Link to="/data-and-insights">

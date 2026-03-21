@@ -57,7 +57,7 @@
   },
   "systems": {
     "title": "What Is Access Michigan?",
-    "description": "Access Michigan is an independent, non-commercial resource that organizes public service information from across state agencies into a single, structured interface. It does not replace government services — it makes them easier to find, understand, and act on."
+    "description": "Independent. Non-commercial. Organizes public data from 35+ sources so Michigan residents can find services without navigating 12 different agency websites."
   },
   "crisis": {
     "title": "Need Immediate Help?",
@@ -124,13 +124,13 @@
     "subtitle": "Stay informed about what matters most to Michigan families",
     "seasonalHealth": "Seasonal Health",
     "fluTitle": "Flu Season: Where to Get Vaccinated",
-    "fluDesc": "Find vaccination sites near you. Walk-in and appointment options available across all 83 counties.",
+    "fluDesc": "Find vaccination sites near you. Walk-in and appointment options across all 83 counties.",
     "heartHealth": "Heart Health",
     "heartTitle": "Heart Disease: Prevention & Treatment",
-    "heartDesc": "Michigan's #1 cause of death. Learn about prevention strategies and find top-rated cardiac care.",
+    "heartDesc": "Michigan's #1 cause of death. Prevention resources and top-rated cardiac care.",
     "mentalHealth": "Mental Health",
     "mentalTitle": "New Crisis Services Available",
-    "mentalDesc": "988 Suicide & Crisis Lifeline now active. New community mental health centers opening statewide.",
+    "mentalDesc": "988 Lifeline active. New community mental health centers opening statewide.",
     "communityWin": "Community Win",
     "maternalTitle": "Maternal Mortality Rates Improving",
     "maternalDesc": "Michigan sees 12% improvement in maternal outcomes. New programs expanding access to prenatal care."
@@ -147,11 +147,11 @@
     "envCivic": "Environment & Civic",
     "learnConnect": "Learn & Connect",
     "about": "About",
-    "disclaimer": "This platform is an independent, non-commercial civic resource. It does not collect personal data, use cookies for tracking, display advertising, or sell information.",
-    "noAds": "No advertising · No data selling · Built to serve Michigan residents",
+    "disclaimer": "Independent. No cookies. No ads. No personal data collected.",
+    "noAds": "No advertising · No data selling",
     "prototype": "Open Civic Infrastructure",
-    "ethicalNote": "This project is built with an ethical, non-commercial ethos — prioritizing public benefit over profit.",
-    "ethicalTitle": "Ethical & Non-Commercial Platform",
+    "ethicalNote": "Non-commercial. Public benefit over profit.",
+    "ethicalTitle": "Non-Commercial Platform",
     "dataSources": "Data Sources",
     "dataSourceNote": "Some metrics may reflect a 3–12 month lag from source agencies.",
     "methodology": "Methodology",
