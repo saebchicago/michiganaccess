@@ -369,6 +369,24 @@ export default function MethodologyPage() {
                 frequency: "Annual",
                 url: "https://hazards.fema.gov/nri/",
               },
+              {
+                source: "Census Bureau ACS API (Economic Data)",
+                desc: "County-level median income, poverty rate, unemployment, median home value, and median rent for all 83 Michigan counties via the American Community Survey 5-year estimates.",
+                frequency: "Annual (Sep)",
+                url: "https://api.census.gov/data/2023/acs/acs5",
+              },
+              {
+                source: "USDA Food Access Research Atlas",
+                desc: "Census tract food desert classifications (low income + low access at 1/10 miles). County-level aggregation of food desert tracts and affected population.",
+                frequency: "Annual",
+                url: "https://www.ers.usda.gov/data-products/food-access-research-atlas/",
+              },
+              {
+                source: "United for ALICE (Asset Limited, Income Constrained, Employed)",
+                desc: "County-level ALICE Threshold data — households above poverty but below cost of living. Survival Budget breakdowns by household type.",
+                frequency: "Annual",
+                url: "https://unitedforalice.org/state-overview/michigan",
+              },
             ].map((src, i) => (
               <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
                 <Card className="hover-lift">
