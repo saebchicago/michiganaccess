@@ -39,7 +39,7 @@ const CountyWelcomeBanner = () => {
               {stats.map((s) => (
                 <span key={s.label} className="flex items-center gap-1 text-xs text-muted-foreground">
                   <s.icon className="h-3 w-3" />
-                  <strong className="text-foreground">{s.value}</strong> {s.label}
+                  <strong className="text-foreground">{s.value || "—"}</strong> {s.label}
                 </span>
               ))}
             </div>
