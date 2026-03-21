@@ -471,24 +471,20 @@ export default function MethodologyPage() {
                 frequency: "Calculated from component data sources",
                 url: "/health-equity-atlas",
               },
-            ].map((src, i) => (
-              <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
-                <Card className="hover-lift">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <h4 className="text-sm font-bold text-foreground mb-1">
-                          <a href={src.url} target="_blank" rel="noopener noreferrer" className="hover:text-primary hover:underline">{src.source}</a>
-                        </h4>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{src.desc}</p>
-                      </div>
-                      <span className="shrink-0 rounded-full bg-michigan-teal/10 px-2.5 py-0.5 text-[10px] font-semibold text-michigan-teal">
-                        {src.frequency}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+            ].map((src) => (
+              <details key={src.source} className="group rounded-lg border border-border">
+                <summary className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer hover:bg-muted/50 transition-colors list-none">
+                  <span className="text-sm font-medium text-foreground">{src.source}</span>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="rounded-full bg-michigan-teal/10 px-2 py-0.5 text-[9px] font-semibold text-michigan-teal">{src.frequency}</span>
+                    <svg className="h-3.5 w-3.5 text-muted-foreground transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  </div>
+                </summary>
+                <div className="px-4 pb-3 border-t border-border/50">
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-2">{src.desc}</p>
+                  <a href={src.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary hover:underline mt-1 inline-block">{src.url}</a>
+                </div>
+              </details>
             ))}
           </div>
 
