@@ -121,6 +121,13 @@ export default function SiteSearch() {
         e.preventDefault();
         commandSiteSearch("toggle");
       }
+      // "/" shortcut (like GitHub) — only when not typing in a field
+      if (e.key === "/" && !e.metaKey && !e.ctrlKey) {
+        const tag = (e.target as HTMLElement)?.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+        e.preventDefault();
+        commandSiteSearch("open");
+      }
     };
 
     document.addEventListener("keydown", handler);
