@@ -387,6 +387,42 @@ export default function MethodologyPage() {
                 frequency: "Annual",
                 url: "https://unitedforalice.org/state-overview/michigan",
               },
+              {
+                source: "EGLE Part 201 Contaminated Sites",
+                desc: "Every location in Michigan where environmental contamination has been identified. Includes state-funded and private party cleanup sites regulated by EGLE.",
+                frequency: "Updated as sites are identified or remediated",
+                url: "https://gis-michigan.opendata.arcgis.com/datasets/egle::part-201-environmental-contamination-sites/about",
+              },
+              {
+                source: "EGLE Brownfields",
+                desc: "Sites where EGLE has provided redevelopment incentives — grants, loans, tax increment financing, or free environmental assessments.",
+                frequency: "Updated as incentives are awarded",
+                url: "https://gis-egle.hub.arcgis.com/maps/egle::brownfields",
+              },
+              {
+                source: "MDOT GIS Open Data",
+                desc: "Traffic counts, road classifications, crash data, and bridge conditions for all state-maintained roads.",
+                frequency: "Annual (traffic counts), continuous (crash data)",
+                url: "https://www.michigan.gov/mdot/business/gis-open-data",
+              },
+              {
+                source: "Michigan GIS Open Data Portal",
+                desc: "State-level geospatial datasets — boundaries, demographics, geology, infrastructure. Downloadable as shapefile, KML, CSV, or via ArcGIS REST API.",
+                frequency: "Varies by dataset",
+                url: "https://gis-michigan.opendata.arcgis.com/",
+              },
+              {
+                source: "Michigan DNR Open Data",
+                desc: "State parks, trails, boat launches, campgrounds, game areas, and forest boundaries.",
+                frequency: "Varies by dataset",
+                url: "https://gis-midnr.opendata.arcgis.com/",
+              },
+              {
+                source: "NREL AFDC (EV Charging Stations)",
+                desc: "Alternative fuel station locations including EV chargers, filtered for Michigan. Part of the DOE Alternative Fuels Station Locator.",
+                frequency: "Continuously updated",
+                url: "https://developer.nrel.gov/docs/transportation/alt-fuel-stations-v1/",
+              },
             ].map((src, i) => (
               <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
                 <Card className="hover-lift">
