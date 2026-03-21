@@ -39,7 +39,7 @@ export default function DrugRecallAlerts() {
           ) : (
             <CheckCircle2 className="h-5 w-5 text-michigan-forest" />
           )}
-          {hasRecalls ? `${data!.length} Active Class I Drug Recall${data!.length > 1 ? "s" : ""}` : "No Active Class I Drug Recalls"}
+          {hasRecalls ? `${data!.length} Active Class I Drug Recall${data!.length > 1 ? "s" : ""}` : "No active Class I drug recalls. Class I = risk of death or serious injury."}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">

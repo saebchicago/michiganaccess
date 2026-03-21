@@ -16,7 +16,7 @@ export default function HazardRiskDashboard() {
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
             <AlertTriangle className="h-5 w-5 text-michigan-coral" />
-            Michigan Natural Hazard Risk by County
+            Which Michigan Counties Face the Most Risk?
           </CardTitle>
           <CardDescription>
             FEMA National Risk Index — expected annual loss, social vulnerability, and top hazards

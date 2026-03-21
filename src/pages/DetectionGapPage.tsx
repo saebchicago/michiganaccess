@@ -111,7 +111,7 @@ export default function DetectionGapPage() {
             <Breadcrumbs items={[{ label: "Partners", href: "/partners" }, { label: "Detection Gap" }]} />
             <div className="flex items-center gap-2 mb-4 mt-4">
               <div className="w-10 h-1 bg-primary rounded-full" />
-              <Badge variant="outline" className="uppercase tracking-wider text-xs border-primary/30 text-primary">Interactive Research</Badge>
+              <Badge variant="outline" className="uppercase tracking-wider text-xs border-primary/30 text-primary">Research Insight</Badge>
             </div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
               The Detection<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-destructive to-[hsl(var(--michigan-gold))]">Gap</span>

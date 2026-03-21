@@ -66,7 +66,7 @@ export default function EnergyHealthScatter() {
         <div>
           <h2 className="text-xl font-bold text-foreground">When Energy Bills Become a Health Crisis</h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Michigan counties with high energy burden consistently show elevated chronic disease rates. The connection is structural, not coincidental.
+            Counties where households spend more on energy tend to have higher diabetes rates. Correlation isn't causation, but the pattern is consistent across 20 Michigan counties.
           </p>
         </div>
       </div>

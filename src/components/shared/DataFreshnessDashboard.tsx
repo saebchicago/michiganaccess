@@ -63,7 +63,7 @@ export default function DataFreshnessDashboard() {
         </div>
         <div>
           <h2 className="text-2xl font-bold text-foreground">Data Freshness</h2>
-          <p className="text-sm text-muted-foreground">How current is every data source on this platform</p>
+          <p className="text-sm text-muted-foreground">When each source was last updated and whether the data is still current</p>
         </div>
       </div>
 

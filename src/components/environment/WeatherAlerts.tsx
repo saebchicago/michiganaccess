@@ -90,7 +90,7 @@ export default function WeatherAlerts() {
             <span className="text-sm font-semibold text-foreground">
               {hasAlerts
                 ? `${alerts!.length} Active Weather Alert${alerts!.length > 1 ? "s" : ""} for Michigan`
-                : "No Active Weather Alerts for Michigan"}
+                : "No active NWS alerts for Michigan right now"}
             </span>
           </div>
           <a
