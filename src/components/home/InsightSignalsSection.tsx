@@ -30,7 +30,7 @@ const HOMEPAGE_SIGNALS: SignalCard[] = [
     trend: "Declining slightly since 2019",
     direction: "down",
     tone: "worsening",
-    trendLabel: "Rising",
+    trendLabel: "Declining",
     source: "MDHHS Vital Records · CDC WONDER",
   },
   {

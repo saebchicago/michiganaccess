@@ -16,21 +16,7 @@ export default function QuickExitBar() {
     window.location.replace("https://www.weather.com");
   }, []);
 
-  // Escape key handler (skip when typing in form fields)
-  useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !e.ctrlKey && !e.altKey && !e.metaKey) {
-        const tag = (e.target as HTMLElement)?.tagName;
-        if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-        // Don't trigger if a Radix popover, dialog, sheet, or dropdown is open
-        if (document.querySelector('[data-radix-popper-content-wrapper], [role="dialog"], [data-state="open"]')) return;
-        e.preventDefault();
-        triggerExit();
-      }
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [triggerExit]);
+  // Quick Exit is button-only — Escape key closes modals/dropdowns, not Quick Exit
 
   return (
     <div

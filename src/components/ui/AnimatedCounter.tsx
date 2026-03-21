@@ -20,7 +20,9 @@ export default function AnimatedCounter({
 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [display, setDisplay] = useState("0");
+  const [display, setDisplay] = useState(() =>
+    decimals > 0 ? value.toFixed(decimals) : value.toLocaleString()
+  );
 
   useEffect(() => {
     if (!isInView) return;

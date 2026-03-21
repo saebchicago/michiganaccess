@@ -381,7 +381,7 @@ const HeroSection = () => {
               </Button>
             </Link>
             <Link to="/brief">
-              <Button size="lg" variant="outline" className="rounded-full border-white/30 text-primary-foreground hover:bg-white/15 font-semibold gap-1.5">
+              <Button size="lg" variant="outline" className="rounded-full border-2 border-white text-white bg-white/10 hover:bg-white/25 backdrop-blur-sm font-semibold gap-1.5">
                 <BarChart3 className="h-4 w-4" /> Explore county data
               </Button>
             </Link>

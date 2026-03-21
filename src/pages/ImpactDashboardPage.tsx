@@ -16,7 +16,7 @@ const fade = { hidden: { opacity: 0, y: 20 }, visible: (i: number) => ({ opacity
 const STATS = [
   { icon: MapPin, value: 83, label: "Counties Covered", suffix: "" },
   { icon: FileText, value: 15000, label: "Resources Indexed", suffix: "+" },
-  { icon: Activity, value: 8, label: "Data Sources", suffix: "" },
+  { icon: Activity, value: 35, label: "Data Sources", suffix: "+" },
   { icon: Globe, value: 4, label: "Languages", suffix: "" },
   { icon: Shield, value: 0, label: "Personal Data Collected", suffix: "" },
   { icon: DollarSign, value: 0, label: "Cost to Users", suffix: "" },
@@ -43,10 +43,10 @@ const SOURCES = [
 ];
 
 function AnimatedStat({ value, suffix, label, icon: Icon }: { value: number; suffix: string; label: string; icon: typeof MapPin }) {
-  const count = useCountUp(value, 2000);
+  const { value: count, ref } = useCountUp<HTMLDivElement>(value, 2000);
   return (
     <Card className="text-center hover:shadow-md transition-shadow">
-      <CardContent className="pt-6 pb-4">
+      <CardContent className="pt-6 pb-4" ref={ref}>
         <Icon className="mx-auto mb-2 h-5 w-5 text-primary" />
         <p className="text-3xl font-bold text-primary">{value === 0 ? "$0" : count.toLocaleString()}{suffix}</p>
         <p className="text-xs font-semibold text-foreground mt-1">{label}</p>

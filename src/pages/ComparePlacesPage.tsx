@@ -618,7 +618,7 @@ export default function ComparePlacesPage() {
                     <Radar key={sel.id} name={sel.label} dataKey={sel.id}
                       stroke={CHART_COLORS[i % CHART_COLORS.length]}
                       fill={CHART_COLORS[i % CHART_COLORS.length]}
-                      fillOpacity={0.12} strokeWidth={2} />
+                      fillOpacity={0.25} strokeWidth={2.5} />
                   ))}
                   <Legend />
                   <RTooltip />
