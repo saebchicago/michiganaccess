@@ -41,6 +41,10 @@ const entries: ChangelogEntry[] = [
       "Live EIA energy price tracker — Michigan vs. national electricity rates with 12-month trend chart",
       "Live USGS water monitoring — real-time streamflow and gage height for 15 Michigan river sites",
       "NPPES provider search already integrated on Find Care page with NPI, name, and specialty search",
+      "Interactive Detection Gap Funnel with live screening volume slider — see the dollar cost of unconnected patients",
+      "Michigan at a Glance data snapshot on homepage with mini county heatmap and metric toggles",
+      "Energy burden × health outcomes scatter plot showing correlation across 20 counties",
+      "Data Freshness Dashboard on Methodology page — transparency for all 15 tracked data sources",
     ],
   },
   {
