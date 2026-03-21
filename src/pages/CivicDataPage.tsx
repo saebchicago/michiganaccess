@@ -521,6 +521,7 @@ const CivicDataPage = () => {
                     <li>• <a href="https://mi-psc.my.site.com/s/" target="_blank" rel="noopener" className="text-primary hover:underline">MPSC E-Dockets</a> — Utility rate cases & orders</li>
                     <li>• <a href="https://www.legislature.mi.gov/Bills" target="_blank" rel="noopener" className="text-primary hover:underline">MI Legislature Bill Search</a></li>
                     <li>• <a href="https://openstates.org/mi/" target="_blank" rel="noopener" className="text-primary hover:underline">Open States Michigan</a> — Votes & sponsors</li>
+                    <li>• <Link to="/data-centers" className="text-primary hover:underline">Data Center Pipeline</Link> — $11.3B+ in projects, energy demand, tax incentives</li>
                   </ul>
                 </CardContent>
               </Card>
