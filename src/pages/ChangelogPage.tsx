@@ -24,6 +24,21 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Data Supremacy Release — v2.0",
+    icon: Zap,
+    tag: "feature",
+    items: [
+      "Health Equity Atlas at /health-equity-atlas: 83-county heat grid with 8 toggleable layers and per-county detail panel",
+      "Compound Access Deficit Index: food + broadband + transit + healthcare + SVI + EJ + energy, ranked for all 83 counties",
+      "Maternal & Infant Health page: county IMR, racial disparity charts, verified anchors (MMR 19.1/100K, IMR 6.1/1K)",
+      "Broadband dashboard: $1.559B BEAD allocation, 492K unserved households, 15-county ranking chart",
+      "7 new Supabase tables: food_access_tracts, snap_retailers, broadband_access, transit_stops, maternal_infant_health, ej_screen, compound_access_index",
+      "Data ingestion scripts for USDA, FCC, GTFS, March of Dimes, EPA EJScreen, compound index calculation",
+      "HSDS v3.x alignment: import validator/mapper, export Edge Function for 211/CIE interoperability",
+      "data.michigan.gov Socrata API client (SoQL query builder, no auth required)",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Water Safety, Data Integrity & Platform Maturity",
     icon: Database,
     tag: "feature",

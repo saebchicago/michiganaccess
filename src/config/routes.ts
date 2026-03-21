@@ -350,6 +350,9 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Energy Burden", href: "/energy-burden" },
       { label: "Environment & Air Quality", href: "/environment" },
       { label: "Data Centers", href: "/data-centers", badge: "New" },
+      { label: "Health Equity Atlas", href: "/health-equity-atlas", badge: "New" },
+      { label: "Maternal & Infant Health", href: "/maternal-health", badge: "New" },
+      { label: "Replicate This Platform", href: "/replicate" },
     ],
   },
   {

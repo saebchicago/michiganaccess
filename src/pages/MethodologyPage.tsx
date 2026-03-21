@@ -423,6 +423,54 @@ export default function MethodologyPage() {
                 frequency: "Continuously updated",
                 url: "https://developer.nrel.gov/docs/transportation/alt-fuel-stations-v1/",
               },
+              {
+                source: "USDA SNAP Retailer Locator",
+                desc: "Authorized SNAP retailers in Michigan — grocery stores, convenience stores, farmers markets. Geocoded with store type classification.",
+                frequency: "Continuously updated",
+                url: "https://usda-fns.hub.arcgis.com/datasets/USDA-FNS::snap-store-locations/",
+              },
+              {
+                source: "FCC Broadband Data Collection",
+                desc: "Location-level broadband availability aggregated to census tract. Served/underserved/unserved classification, provider counts, fiber availability.",
+                frequency: "Semiannual",
+                url: "https://broadbandmap.fcc.gov/data-download/",
+              },
+              {
+                source: "GTFS Static Feeds (DDOT, SMART, AAATA)",
+                desc: "Transit stop locations, routes, and schedules from Michigan's major transit agencies. Parsed from General Transit Feed Specification files.",
+                frequency: "Quarterly updates",
+                url: "https://www.smartbus.org/About/Developer-Center",
+              },
+              {
+                source: "March of Dimes PeriStats",
+                desc: "County-level maternal and infant health indicators — preterm birth, low birth weight, prenatal care access, teen birth rate.",
+                frequency: "Annual",
+                url: "https://www.marchofdimes.org/peristats/",
+              },
+              {
+                source: "MDHHS Vital Records (Maternal/Infant Mortality)",
+                desc: "County-level infant mortality rates with racial breakdowns. Data suppressed where <20 events to protect privacy.",
+                frequency: "Annual",
+                url: "https://www.michigan.gov/mdhhs/keep-mi-healthy/chronicdiseaseandinjury/vitalrecords",
+              },
+              {
+                source: "EPA EJScreen v2.3 (Archived 2024)",
+                desc: "Block-group-level environmental justice indicators: PM2.5, ozone, diesel PM, lead paint, Superfund proximity, demographic indices.",
+                frequency: "Archived (Zenodo doi:10.5281/zenodo.14767363)",
+                url: "https://www.epa.gov/ejscreen",
+              },
+              {
+                source: "data.michigan.gov (Socrata SODA API)",
+                desc: "State open data portal with 500+ datasets. SoQL-queryable JSON endpoints, no authentication required for public data.",
+                frequency: "Varies by dataset",
+                url: "https://data.michigan.gov/",
+              },
+              {
+                source: "Access Michigan Compound Access Deficit Index",
+                desc: "Weighted composite: food (15%) + broadband (15%) + transit (15%) + healthcare (20%) + SVI (15%) + EJ (10%) + energy (10%). Tiers: Critical ≥75, High ≥50, Moderate ≥25, Low <25.",
+                frequency: "Calculated from component data sources",
+                url: "/health-equity-atlas",
+              },
             ].map((src, i) => (
               <motion.div key={src.source} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
                 <Card className="hover-lift">
