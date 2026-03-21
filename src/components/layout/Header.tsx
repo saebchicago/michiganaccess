@@ -44,7 +44,7 @@ const Header = () => {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
-      className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md"
+      className="sticky top-0 z-50 bg-background/95 backdrop-blur-md"
       role="banner"
     >
       <div className="container flex h-16 items-center justify-between">
@@ -188,6 +188,7 @@ const Header = () => {
         </div>
       </div>
     </motion.header>
+    <div className="nav-accent" aria-hidden="true" />
     <BenefitsWizard open={wizardOpen} onOpenChange={setWizardOpen} />
     </>
   );
