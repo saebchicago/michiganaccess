@@ -37,6 +37,10 @@ const entries: ChangelogEntry[] = [
       "Weatherization Assistance details expanded with $21M/yr DOE + $183M BIL funding",
       "Press Kit updated to reflect 25+ data sources",
       "Fixed mobile heading overflow (text-4xl → text-3xl on hero)",
+      "Live AirNow air quality checker — enter any Michigan ZIP code for real-time AQI",
+      "Live EIA energy price tracker — Michigan vs. national electricity rates with 12-month trend chart",
+      "Live USGS water monitoring — real-time streamflow and gage height for 15 Michigan river sites",
+      "NPPES provider search already integrated on Find Care page with NPI, name, and specialty search",
     ],
   },
   {
