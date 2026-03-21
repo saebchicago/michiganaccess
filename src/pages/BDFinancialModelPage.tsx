@@ -121,14 +121,14 @@ const SDOH_KEY = "bd-model-sdoh";
 // ─── SDOH preset configurations ───────────────────────────────────────────────
 const SDOH_PRESETS: { label: string; values: SdohState }[] = [
   { label: "Henry Ford Health (Detroit)",   values: { pop: 180000, scr: 72, pos: 17, nav: 34, cst: 14500, rr: 16 } },
-  { label: "Michigan Medicine MSHIELD",     values: { pop: 12000,  scr: 65, pos: 17, nav: 34, cst: 14500, rr: 16 } },
+  { label: "Trinity Health (Statewide)",    values: { pop: 120000, scr: 70, pos: 27, nav: 35, cst: 14500, rr: 16 } },
   { label: "Corewell West Michigan",        values: { pop: 95000,  scr: 58, pos: 14, nav: 28, cst: 13200, rr: 14 } },
 ];
 
 // ─── VBC-framed health system presets ─────────────────────────────────────────
 const PRESETS = {
   hfhs:     { pop: 180000, scr: 72, pos: 17, nav: 34, cst: 14500, rr: 16 },
-  mshield:  { pop: 95000,  scr: 68, pos: 17, nav: 34, cst: 14500, rr: 16 },
+  trinity:  { pop: 120000, scr: 70, pos: 27, nav: 35, cst: 14500, rr: 16 },
   corewell: { pop: 140000, scr: 65, pos: 15, nav: 30, cst: 13800, rr: 14 },
 };
 
@@ -744,8 +744,8 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
         performance. In VBC arrangements — MSSP ACOs, BCBSM Blueprint,
         Medicare Advantage risk — SDOH navigation directly drives shared
         savings, Stars scores, and total cost of care reduction.
-        Anchored to Michigan Medicine MSHIELD (17.1% unmet need; 34%
-        navigation uptake) and Trinity Health (16% readmission reduction).
+        Anchored to Trinity Health (27.4% unmet need from 1M+ screened;
+        16% readmission reduction, FY2025) and Henry Ford Health ACO data.
       </p>
 
       {/* ── Preset buttons ────────────────────────────────────────────────── */}
@@ -801,7 +801,7 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
             <div className="flex flex-wrap gap-2">
               {([
                 ["hfhs",     "Henry Ford Health"],
-                ["mshield",  "Michigan Medicine MSHIELD"],
+                ["trinity",  "Trinity Health"],
                 ["corewell", "Corewell Health"],
               ] as const).map(([key, label]) => (
                 <button
@@ -1253,8 +1253,8 @@ export default function BDFinancialModelPage() {
             Financial projections are illustrative scenario models for strategic planning purposes. Market opportunity scores
             derived from <strong className="text-foreground">CDC Social Vulnerability Index 2022</strong>, <strong className="text-foreground">HRSA Health Professional Shortage Area</strong> data,
             and <strong className="text-foreground">County Health Rankings 2025</strong>. SDOH impact parameters anchored to published outcomes
-            from <strong className="text-foreground">Michigan Medicine MSHIELD</strong> (17.1% unmet social need rate; 34% navigation uptake) and
-            <strong className="text-foreground"> Trinity Health</strong> (16% readmission reduction from SDOH navigation). Not actuarial projections.
+            from <strong className="text-foreground">Trinity Health</strong> (27.4% unmet social need rate from 1M+ screened; 16% readmission reduction, FY2025) and
+            <strong className="text-foreground">Henry Ford Health</strong> ACO shared savings data (PY2024 $19.97M). Not actuarial projections.
             AI-generated narratives are for strategic planning illustration only.
           </p>
         </motion.div>
