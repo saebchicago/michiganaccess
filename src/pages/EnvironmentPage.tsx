@@ -22,6 +22,7 @@ import EnergyPriceTracker from "@/components/environment/EnergyPriceTracker";
 import WaterMonitorWidget from "@/components/environment/WaterMonitorWidget";
 import EnergyHealthScatter from "@/components/environment/EnergyHealthScatter";
 import WeatherAlerts from "@/components/environment/WeatherAlerts";
+import MichiganForecast from "@/components/environment/MichiganForecast";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
 const fadeUp = {
@@ -207,8 +208,9 @@ const EnvironmentPage = () => {
 
             {/* Air & Water Quality */}
             <TabsContent value="air-water">
-              <motion.div initial="hidden" animate="show" variants={fadeUp} className="mb-8">
+              <motion.div initial="hidden" animate="show" variants={fadeUp} className="mb-8 grid gap-6 lg:grid-cols-2">
                 <AirQualityChecker />
+                <MichiganForecast />
               </motion.div>
               <motion.div initial="hidden" animate="show" variants={stagger} className="grid gap-8 lg:grid-cols-2">
                 {/* AQI Chart — CDC PLACES live data */}
