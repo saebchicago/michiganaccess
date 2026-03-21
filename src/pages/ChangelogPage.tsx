@@ -24,6 +24,22 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Water Safety, Data Integrity & Platform Maturity",
+    icon: Database,
+    tag: "feature",
+    items: [
+      "Water Safety tab on Environment page: PFAS tracker (MPART interactive map), lead service line dashboard (MiLeadSafe), drinking water resources (Water Well Viewer)",
+      "Replaced unverified MSHIELD data (17.1%/34%) with Trinity Health verified outcomes (27.4% unmet need, 16% hospitalization reduction from 1M+ screened)",
+      "Added 4 new data sources to Methodology: SEMCOG Sidewalks FeatureServer, Michigan Broadband Map, MPART PFAS GIS, MiLeadSafe tracker",
+      "Rebranded 'Public Beta' to 'Live Platform' / 'Open Civic Infrastructure' across all pages and i18n files",
+      "Updated howItHelps copy with specific metrics (2,400+ providers, CMS/Leapfrog/CDC data citations)",
+      "Data Center cross-link added to Civic Data Hub regulatory tools",
+      "Weatherization Assistance details expanded with $21M/yr DOE + $183M BIL funding",
+      "Press Kit updated to reflect 25+ data sources",
+      "Fixed mobile heading overflow (text-4xl → text-3xl on hero)",
+    ],
+  },
+  {
     month: "February", year: "2026", title: "Hyper-Local Insight Engine & Trust UX",
     icon: Shield,
     tag: "feature",

@@ -987,6 +987,26 @@ const EnvironmentPage = () => {
               </div>
             </CardContent>
           </Card>
+          <Card className="border-primary/20 bg-primary/5">
+            <CardContent className="py-4">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
+                  <Zap className="h-5 w-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-foreground">Data Centers & Michigan's Energy Future</h3>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    $11.3B+ in data center projects could nearly double Michigan's electricity demand. Track the Stargate project, energy pipeline, and community impact.
+                  </p>
+                  <Link to="/data-centers">
+                    <Button size="sm" variant="outline" className="mt-2 h-7 text-xs">
+                      <ArrowRight className="mr-1 h-3 w-3" />Data Center Insights
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
