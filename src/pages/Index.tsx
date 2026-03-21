@@ -111,9 +111,6 @@ const Index = () => {
       {/* ═══ LOCATION NUDGE (no-ZIP users) ═══ */}
       <LocationNudgeBanner />
 
-      {/* ═══ INTELLIGENCE HUB (deeper exploration, county selector, decision tools) ═══ */}
-      <CivicIntelligenceHub />
-
       {/* ═══ TRUST PANEL ═══ */}
       <TrustPanel />
 
@@ -141,29 +138,11 @@ const Index = () => {
       {/* ═══ 6 SECTOR CARDS ═══ */}
       <HomeSectorGrid />
 
-      {/* ═══ "WHERE DO YOU WANT TO START?" ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <LazySection minHeight="120px">
-          <Suspense fallback={<SectionSkeleton height="200px" />}>
-            <CoreAccessGrid />
-          </Suspense>
-        </LazySection>
-      </SectionErrorBoundary>
-
-      {/* ═══ NEARBY RESOURCES (after intent is established) ═══ */}
+      {/* ═══ NEARBY RESOURCES ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
         <LazySection minHeight="100px">
           <Suspense fallback={<SectionSkeleton height="120px" />}>
             <NearbyResourceFinder />
-          </Suspense>
-        </LazySection>
-      </SectionErrorBoundary>
-
-      {/* ═══ COMMUNITY ALERTS ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <LazySection minHeight="200px">
-          <Suspense fallback={<SectionSkeleton height="200px" />}>
-            <CommunityAlerts />
           </Suspense>
         </LazySection>
       </SectionErrorBoundary>
@@ -208,21 +187,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ═══ CIVIC DATA CALLOUT ═══ */}
-      <Suspense fallback={<SectionSkeleton />}>
-        <CivicDataCalloutCard />
-      </Suspense>
-
-      {/* ═══ WHAT IS ACCESS MICHIGAN? ═══ */}
-      <Suspense fallback={<SectionSkeleton />}>
-        <SystemsExplainer />
-      </Suspense>
-
-      {/* ═══ REGIONAL GATEWAY ═══ */}
-      <Suspense fallback={<SectionSkeleton />}>
-        <RegionalGateway />
-      </Suspense>
-
       {/* ═══ PROVENANCE ═══ */}
       <div className="container py-4">
         <DataProvenance
@@ -231,11 +195,6 @@ const Index = () => {
           methodologyHref="/methodology"
         />
       </div>
-
-      {/* ═══ FOUNDER & SUPPORT ═══ */}
-      <Suspense fallback={<SectionSkeleton height="120px" />}>
-        <FounderSupportSection />
-      </Suspense>
 
       {/* ═══ EXECUTIVE LANDING STRIP ═══ */}
       <ExecutiveLandingStrip />
