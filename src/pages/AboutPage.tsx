@@ -26,6 +26,7 @@ import {
   Info,
   Sparkles,
   MapPin,
+  AlertTriangle,
 } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -190,22 +191,19 @@ export default function AboutPage() {
             {t("aboutPage.subtitle")}
           </motion.p>
 
-          {/* Why this exists + See it in action */}
-          <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="mx-auto max-w-2xl mt-8 text-left space-y-3">
-            <p className="text-sm font-semibold text-foreground">Why this exists</p>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Access Michigan started as a citizen project by a healthcare data leader. It organizes public data so residents can find help and organizations can see where systems work—and where they fail.
-            </p>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Access Michigan operates as an independent civic infrastructure
-              project. Data is refreshed monthly from verified public sources.
-              There are no sponsors, no advertisers, and no government agency
-              relationships that influence what appears. This platform is built
-              to last — not dependent on any single employer, contract, or grant.
-            </p>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Independent civic platform — not affiliated with any government agency. No cookies, no tracking, no selling user data.
-            </p>
+          {/* Problem → Solution → Mission */}
+          <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="mx-auto max-w-3xl mt-8 grid gap-4 sm:grid-cols-3">
+            {[
+              { icon: AlertTriangle, label: "PROBLEM", desc: "Michigan's public data is scattered across 12+ agency websites" },
+              { icon: Database, label: "SOLUTION", desc: "One platform. 35+ sources. Structured for action." },
+              { icon: Target, label: "MISSION", desc: "Make civic intelligence accessible to every Michigander" },
+            ].map((item, i) => (
+              <motion.div key={item.label} variants={fadeUp} custom={i + 3} className="rounded-xl border border-border p-5 text-center">
+                <item.icon className="h-6 w-6 text-primary mx-auto mb-2" />
+                <p className="text-xs font-bold uppercase tracking-wider text-primary mb-1">{item.label}</p>
+                <p className="text-xs text-muted-foreground">{item.desc}</p>
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* See it in action */}
