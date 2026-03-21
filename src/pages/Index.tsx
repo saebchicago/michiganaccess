@@ -30,6 +30,7 @@ const SystemsExplainer = lazy(() => import("@/components/home/SystemsExplainer")
 const CivicDataCalloutCard = lazy(() => import("@/components/home/CivicDataCalloutCard"));
 const MichiganAtAGlance = lazy(() => import("@/components/home/MichiganAtAGlance"));
 const CommunityAlerts = lazy(() => import("@/components/home/CommunityAlerts"));
+const ImpactStories = lazy(() => import("@/components/shared/ImpactStories"));
 
 const SectionFallback = () => (
   <div className="py-8 flex justify-center">
@@ -117,6 +118,15 @@ const Index = () => {
         <LazySection minHeight="200px">
           <Suspense fallback={<SectionSkeleton height="300px" />}>
             <MichiganAtAGlance />
+          </Suspense>
+        </LazySection>
+      </SectionErrorBoundary>
+
+      {/* ═══ IMPACT STORIES ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <LazySection minHeight="200px">
+          <Suspense fallback={<SectionSkeleton height="300px" />}>
+            <ImpactStories />
           </Suspense>
         </LazySection>
       </SectionErrorBoundary>
