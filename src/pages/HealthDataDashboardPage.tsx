@@ -15,6 +15,8 @@ const EnergyBurdenMap = lazy(() => import("@/components/dashboard/EnergyBurdenMa
 const DrugPriceLookup = lazy(() => import("@/components/learn/DrugPriceLookup"));
 import TractHealthExplorer from "@/components/health/TractHealthExplorer";
 import DrugRecallAlerts from "@/components/health/DrugRecallAlerts";
+import FoodAccessMap from "@/components/health/FoodAccessMap";
+import ChildcareEducationHub from "@/components/family/ChildcareEducationHub";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -516,6 +518,16 @@ export default function HealthDataDashboardPage() {
         {/* Neighborhood-Level Health Data */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
           <TractHealthExplorer />
+        </motion.section>
+
+        {/* Food Access */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
+          <FoodAccessMap />
+        </motion.section>
+
+        {/* Childcare & Education */}
+        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0} className="mt-8">
+          <ChildcareEducationHub />
         </motion.section>
 
         {/* Drug Safety Alerts */}
