@@ -9,7 +9,9 @@ export type AtlasLayer =
   | "ej_index"
   | "energy_burden"
   | "uninsured"
-  | "poverty";
+  | "poverty"
+  | "alice"
+  | "pharmacy";
 
 interface Props {
   active: AtlasLayer;
@@ -25,6 +27,8 @@ const LAYERS: { key: AtlasLayer; label: string; source: string }[] = [
   { key: "energy_burden", label: "Energy Burden %", source: "ACEEE/DOE" },
   { key: "uninsured", label: "Uninsured Rate", source: "ACS" },
   { key: "poverty", label: "Poverty Rate", source: "ACS" },
+  { key: "alice", label: "ALICE Rate (Below Threshold)", source: "United For ALICE" },
+  { key: "pharmacy", label: "Pharmacy Access Risk", source: "NCPDP 2024" },
 ];
 
 export default function LayerSelector({ active, onChange }: Props) {

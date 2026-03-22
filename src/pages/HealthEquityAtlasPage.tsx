@@ -52,6 +52,8 @@ export default function HealthEquityAtlasPage() {
         case "infant_mortality": result[name] = profile.countyType === "urban" ? 7.2 : profile.countyType === "rural" ? 6.8 : 5.4; break;
         case "broadband": result[name] = profile.countyType === "rural" ? 28 : profile.countyType === "suburban" ? 8 : 5; break;
         case "ej_index": result[name] = profile.countyType === "urban" ? 65 : profile.countyType === "rural" ? 35 : 45; break;
+        case "alice": result[name] = profile.countyType === "rural" ? 48 : profile.countyType === "urban" ? 43 : 36; break;
+        case "pharmacy": result[name] = profile.countyType === "rural" ? 70 : profile.countyType === "suburban" ? 30 : 10; break;
       }
     }
     return result;
