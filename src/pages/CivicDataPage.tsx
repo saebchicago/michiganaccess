@@ -20,6 +20,7 @@ import EconomicVitalityDashboard from "@/components/civic/EconomicVitalityDashbo
 import ALICEDashboard from "@/components/civic/ALICEDashboard";
 import BroadbandDashboard from "@/components/broadband/BroadbandDashboard";
 import EconomicPulse from "@/components/economic/EconomicPulse";
+import LegislativeTracker from "@/components/civic/LegislativeTracker";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -540,6 +541,13 @@ const CivicDataPage = () => {
       <section className="py-8">
         <div className="container max-w-5xl">
           <EconomicPulse />
+        </div>
+      </section>
+
+      {/* Legislative Tracker */}
+      <section className="py-8">
+        <div className="container max-w-5xl">
+          <LegislativeTracker />
         </div>
       </section>
 
