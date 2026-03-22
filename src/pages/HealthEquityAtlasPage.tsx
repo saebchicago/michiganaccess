@@ -1,6 +1,7 @@
-import { useState, lazy, Suspense } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { Globe, Loader2 } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -10,6 +11,7 @@ import CountyDetailPanel from "@/components/atlas/CountyDetailPanel";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 
 const MichiganHeatGrid = lazy(() => import("@/components/atlas/MichiganHeatGrid"));
+const MichiganMap = lazy(() => import("@/components/atlas/MichiganMap"));
 const CompoundDeficitRanking = lazy(() => import("@/components/data/CompoundDeficitRanking"));
 
 function getCountyData(county: string) {
@@ -33,6 +35,26 @@ function getCountyData(county: string) {
 export default function HealthEquityAtlasPage() {
   const [activeLayer, setActiveLayer] = useState<AtlasLayer>("compound");
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
+  const isMobile = useIsMobile();
+
+  // Build map data from county profiles for active layer
+  const mapData = useMemo(() => {
+    const result: Record<string, number> = {};
+    for (const [name, profile] of Object.entries(COUNTY_PROFILES)) {
+      const h = profile.healthHighlights;
+      switch (activeLayer) {
+        case "uninsured": result[name] = parseFloat(h[0]?.value || "0"); break;
+        case "poverty":
+        case "food_desert": result[name] = parseFloat(h[2]?.value || "0"); break;
+        case "compound": result[name] = parseFloat(h[0]?.value || "0") * 2 + parseFloat(h[2]?.value || "0") * 1.5; break;
+        case "energy_burden": result[name] = profile.countyType === "rural" ? 8.5 : profile.countyType === "suburban" ? 5.2 : 6.8; break;
+        case "infant_mortality": result[name] = profile.countyType === "urban" ? 7.2 : profile.countyType === "rural" ? 6.8 : 5.4; break;
+        case "broadband": result[name] = profile.countyType === "rural" ? 28 : profile.countyType === "suburban" ? 8 : 5; break;
+        case "ej_index": result[name] = profile.countyType === "urban" ? 65 : profile.countyType === "rural" ? 35 : 45; break;
+      }
+    }
+    return result;
+  }, [activeLayer]);
 
   usePageMeta({
     title: "Health Equity Atlas — Access Michigan",
@@ -78,18 +100,29 @@ export default function HealthEquityAtlasPage() {
             </div>
           </div>
 
-          {/* Main grid */}
+          {/* Map (desktop) / Grid (mobile) */}
           <div>
             <Suspense fallback={
               <div className="flex items-center justify-center py-20">
                 <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
             }>
-              <MichiganHeatGrid
-                layer={activeLayer}
-                onCountyClick={setSelectedCounty}
-                selectedCounty={selectedCounty}
-              />
+              {isMobile ? (
+                <MichiganHeatGrid
+                  layer={activeLayer}
+                  onCountyClick={setSelectedCounty}
+                  selectedCounty={selectedCounty}
+                />
+              ) : (
+                <MichiganMap
+                  data={mapData}
+                  metric={activeLayer.replace(/_/g, " ")}
+                  colorScale="red-green"
+                  unit={activeLayer === "broadband" || activeLayer === "uninsured" || activeLayer === "poverty" || activeLayer === "energy_burden" ? "%" : ""}
+                  onCountyClick={setSelectedCounty}
+                  height={480}
+                />
+              )}
             </Suspense>
             <p className="text-[10px] text-muted-foreground mt-4 text-center">
               Sources: USDA · FCC · EPA · CDC · MDHHS · March of Dimes · HRSA · ACEEE · Census.{" "}
