@@ -11,6 +11,7 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 } from "recharts";
 import { fetchZCTAData, MI_STATE_AVERAGES, US_AVERAGES, MEASURE_GROUPS, POPULAR_MEASURES, type PlacesMeasure } from "@/lib/places-client";
+import NeighborhoodHealthScore from "@/components/tools/NeighborhoodHealthScore";
 import { toast } from "sonner";
 
 type ViewMode = "bar" | "radar" | "table";
@@ -153,6 +154,9 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
       <AnimatePresence>
         {zipData && zipData.length > 0 && (
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+            {/* Health Score */}
+            <NeighborhoodHealthScore zipCode={activeZip} data={zipData} />
+
             {/* Header */}
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div>
