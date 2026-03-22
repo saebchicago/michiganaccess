@@ -17,7 +17,8 @@ interface Props {
   className?: string;
 }
 
-const TOPO_URL = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
+// Bundled locally for reliability — CDN was failing in some environments
+const TOPO_URL = "/data/us-counties-10m.json";
 
 export default function MichiganMap({
   data,
