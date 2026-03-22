@@ -80,7 +80,7 @@ export function useLazyLoad<T>(
       } catch (err) {
         if ((err as Error).name === "AbortError") return;
         setError(err instanceof Error ? err.message : "Failed to load data");
-        console.error("[useLazyLoad] loader error:", err);
+        console.warn("[useLazyLoad]:", err);
       } finally {
         if (!controller.signal.aborted) setIsLoading(false);
       }

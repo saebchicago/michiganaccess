@@ -62,7 +62,7 @@ export function useMichiganData<T = Record<string, unknown>[]>(
       setData(result);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch Michigan data");
-      console.error("useMichiganData error:", err);
+      console.warn("useMichiganData:", err);
     } finally {
       setIsLoading(false);
     }
