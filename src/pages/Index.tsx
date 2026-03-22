@@ -17,6 +17,7 @@ import LocationNudgeBanner from "@/components/home/LocationNudgeBanner";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import DataPulse from "@/components/home/DataPulse";
 import MichiganPulse from "@/components/home/MichiganPulse";
+import CapabilityStrip from "@/components/home/CapabilityStrip";
 import QuickCompare from "@/components/home/QuickCompare";
 const LifeEventNavigator = lazy(() => import("@/components/tools/LifeEventNavigator"));
 const DataStoriesSection = lazy(() => import("@/components/stories/DataStoriesSection"));
@@ -103,6 +104,9 @@ const Index = () => {
 
       {/* ═══ HERO — mission + search ═══ */}
       <HeroSection />
+
+      {/* ═══ CAPABILITY STRIP ═══ */}
+      <CapabilityStrip />
 
       {/* ═══ MICHIGAN PULSE — live intelligence signals ═══ */}
       <MichiganPulse />
