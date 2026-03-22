@@ -101,8 +101,10 @@ export default function SupportPage() {
                   </Button>
                 )}
                 {t.action === "donate" && (
-                  <Button variant="default" className="gap-2" disabled>
-                    <Heart className="h-4 w-4" /> {t.cta}
+                  <Button variant="default" className="gap-2" asChild>
+                    <a href="https://buymeacoffee.com/michigans" target="_blank" rel="noopener noreferrer">
+                      <Heart className="h-4 w-4" /> Buy Me a Coffee
+                    </a>
                   </Button>
                 )}
               </CardContent>

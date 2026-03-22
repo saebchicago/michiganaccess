@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Heart, Phone, Lock, CheckCircle2, MapPin, Database, Activity, FileText, Shield, Building2, HandHeart, Landmark, Sparkles, Timer, RotateCcw, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
@@ -42,9 +42,13 @@ function FooterSection({ title, links, collapsible }: { title: string; links: { 
   );
 }
 
+const HELP_ROUTES = ["/find-care", "/financial-help", "/resources", "/housing", "/conditions"];
+
 const Footer = () => {
   const { t } = useTranslation();
   const stats = useFooterStats();
+  const { pathname } = useLocation();
+  const isHelpPage = HELP_ROUTES.some((r) => pathname.startsWith(r));
 
   const footerSections = [
     {
@@ -204,6 +208,16 @@ const Footer = () => {
             <p className="mt-1 text-xs text-muted-foreground">
               Have a suggestion? <Link to="/contact" className="font-medium text-primary hover:underline">We'd love to hear from you.</Link>
             </p>
+            {!isHelpPage && (
+              <a
+                href="https://buymeacoffee.com/michigans"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-[10px] text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+              >
+                ☕ Support this project
+              </a>
+            )}
           </div>
         </div>
 
