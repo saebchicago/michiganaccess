@@ -19,14 +19,16 @@ export default function AnimatedCounter({
   className = "",
 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-40px" });
-  const [current, setCurrent] = useState(0);
+  const isInView = useInView(ref, { once: true, margin: "0px" });
+  const [current, setCurrent] = useState(value); // Start at target (never show 0)
   const hasAnimated = useRef(false);
 
   useEffect(() => {
     if (!isInView || hasAnimated.current) return;
     hasAnimated.current = true;
 
+    // Reset to 0 then animate up — only triggers when actually in viewport
+    setCurrent(0);
     const startTime = performance.now();
     const durationMs = duration * 1000;
 
