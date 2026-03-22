@@ -108,16 +108,14 @@ const Index = () => {
       {/* ═══ DATA PULSE — platform scale stats ═══ */}
       <DataPulse />
 
-      {/* ═══ MICHIGAN HEALTH INTELLIGENCE (above fold, intelligence-first) ═══ */}
-      <InsightSignalsSection />
+      {/* ═══ LIFE EVENT NAVIGATOR — primary engagement hook ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <Suspense fallback={<SectionSkeleton height="200px" />}>
+          <LifeEventNavigator />
+        </Suspense>
+      </SectionErrorBoundary>
 
-      {/* ═══ EXPLORE MICHIGAN HEALTH (question cards) ═══ */}
-      <ExploreQuestionsPanel />
-
-      {/* ═══ LOCATION NUDGE (no-ZIP users) ═══ */}
-      <LocationNudgeBanner />
-
-      {/* ═══ TRUST PANEL ═══ */}
+      {/* ═══ TRUST + QUICK INTELLIGENCE ═══ */}
       <TrustPanel />
 
       {/* ═══ MICHIGAN AT A GLANCE ═══ */}
@@ -129,81 +127,21 @@ const Index = () => {
         </LazySection>
       </SectionErrorBoundary>
 
-      {/* ═══ IMPACT STORIES ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <LazySection minHeight="200px">
-          <Suspense fallback={<SectionSkeleton height="300px" />}>
-            <ImpactStories />
-          </Suspense>
-        </LazySection>
-      </SectionErrorBoundary>
-
-      {/* ═══ LIFE EVENT NAVIGATOR ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <Suspense fallback={<SectionSkeleton height="200px" />}>
-          <LifeEventNavigator />
-        </Suspense>
-      </SectionErrorBoundary>
-
-      {/* ═══ 3 PRIMARY PATHS ═══ */}
-      <HomePrimaryPaths />
-
-      {/* ═══ 6 SECTOR CARDS ═══ */}
-      <HomeSectorGrid />
-
-      {/* ═══ NEARBY RESOURCES ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <LazySection minHeight="100px">
-          <Suspense fallback={<SectionSkeleton height="120px" />}>
-            <NearbyResourceFinder />
-          </Suspense>
-        </LazySection>
-      </SectionErrorBoundary>
-
-      {/* ═══ FOR RESEARCH & POLICY ═══ */}
-      <section className="py-10 bg-muted/20 border-y border-border/40" aria-labelledby="nerd-heading">
-        <div className="container max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-          >
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary mb-3">
-              <Database className="h-3.5 w-3.5" aria-hidden="true" />
-              Civic Data Layer
+      {/* ═══ RESEARCH & COMPARE ═══ */}
+      <section className="py-8 bg-muted/20 border-y border-border/40">
+        <div className="container max-w-5xl">
+          <div className="grid gap-6 lg:grid-cols-2 items-start">
+            <div className="text-center lg:text-left">
+              <h2 className="text-xl font-bold text-foreground mb-2">For research & policy</h2>
+              <p className="text-sm text-muted-foreground mb-4">Compare counties, export briefs, explore the equity atlas.</p>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+                <Link to="/health-equity-atlas"><Button size="sm" className="gap-1.5"><Database className="h-3.5 w-3.5" /> Equity Atlas</Button></Link>
+                <Link to="/compare"><Button size="sm" variant="outline">Compare Counties</Button></Link>
+                <Link to="/data-sources"><Button size="sm" variant="outline">60+ Data Sources</Button></Link>
+              </div>
             </div>
-            <h2 id="nerd-heading" className="text-2xl font-bold text-foreground">
-              For research & policy
-            </h2>
-            <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Compare counties, export briefs, download CSVs. No accounts. No tracking.
-            </p>
-            <div className="mt-5 flex flex-wrap justify-center gap-3">
-              <Link to="/data-and-insights">
-                <Button size="sm" className="gap-1.5">
-                  <Database className="h-3.5 w-3.5" /> Data & Insights
-                </Button>
-              </Link>
-              <Link to="/compare">
-                <Button size="sm" variant="outline" className="gap-1.5">
-                  Compare Counties
-                </Button>
-              </Link>
-              <Link to="/brief">
-                <Button size="sm" variant="outline" className="gap-1.5">
-                  Generate Brief
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══ QUICK COMPARE ═══ */}
-      <section className="py-10">
-        <div className="container max-w-md">
-          <QuickCompare />
+            <QuickCompare />
+          </div>
         </div>
       </section>
 
