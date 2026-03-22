@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import CostOfLivingSnapshot from "@/components/tools/CostOfLivingSnapshot";
+import EligibilityScreener from "@/components/tools/EligibilityScreener";
 import { useTranslation } from "react-i18next";
 import {
   Heart, DollarSign, Shield, Phone, ExternalLink, ChevronDown, ChevronUp,
@@ -360,6 +361,11 @@ export default function FinancialHelpPage() {
             label="Ask Access Michigan about financial help"
           />
         </div>
+      </div>
+
+      {/* Eligibility Screener */}
+      <div className="container max-w-3xl py-8">
+        <EligibilityScreener />
       </div>
 
       {/* Cost of Living */}
