@@ -2,52 +2,39 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { TrendingUp, TrendingDown, AlertTriangle, ArrowRight, Activity } from "lucide-react";
+import { SIGNALS_2026_03, type Signal } from "@/data/monthly-signals";
 
-const SIGNALS = [
-  {
-    icon: TrendingUp,
-    text: "Diabetes rising fastest in Northern MI counties",
-    href: "/data",
-    color: "text-michigan-coral",
-  },
-  {
-    icon: TrendingDown,
-    text: "Opioid deaths down 7.5% statewide since 2022 peak",
-    href: "/data",
-    color: "text-michigan-forest",
-  },
-  {
-    icon: AlertTriangle,
-    text: "Wayne County energy burden at 8.1% — above 6% DOE threshold",
-    href: "/environment#energy",
-    color: "text-michigan-gold",
-  },
-  {
-    icon: ArrowRight,
-    text: "Life expectancy stabilizing after post-2021 decline",
-    href: "/maternal-health",
-    color: "text-michigan-teal",
-  },
-  {
-    icon: AlertTriangle,
-    text: "76 of 83 counties have zero pedestrian infrastructure data",
-    href: "/transportation#active-transport",
-    color: "text-michigan-coral",
-  },
-];
+const DIRECTION_CONFIG: Record<Signal["direction"], { icon: typeof TrendingUp; color: string }> = {
+  up: { icon: TrendingUp, color: "text-michigan-coral" },
+  down: { icon: TrendingDown, color: "text-michigan-forest" },
+  alert: { icon: AlertTriangle, color: "text-michigan-gold" },
+  stable: { icon: ArrowRight, color: "text-michigan-teal" },
+};
+
+const CATEGORY_BORDER: Record<Signal["category"], string> = {
+  health: "border-l-michigan-teal",
+  economic: "border-l-michigan-gold",
+  environment: "border-l-michigan-forest",
+  civic: "border-l-primary",
+  safety: "border-l-michigan-coral",
+};
 
 export default function MichiganPulse() {
   const [idx, setIdx] = useState(0);
+  const signals = SIGNALS_2026_03;
 
   useEffect(() => {
-    const timer = setInterval(() => setIdx((prev) => (prev + 1) % SIGNALS.length), 4000);
+    const timer = setInterval(() => setIdx((prev) => (prev + 1) % signals.length), 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [signals.length]);
 
-  const signal = SIGNALS[idx];
+  const signal = signals[idx];
+  const config = DIRECTION_CONFIG[signal.direction];
+  const Icon = config.icon;
+  const borderClass = CATEGORY_BORDER[signal.category];
 
   return (
-    <div className="border-y border-border/30 bg-background py-2.5">
+    <div className={`border-y border-border/30 bg-background py-2.5`}>
       <div className="container">
         <div className="flex items-center gap-3 h-7">
           <div className="flex items-center gap-1.5 shrink-0">
@@ -69,13 +56,13 @@ export default function MichiganPulse() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.25 }}
-              className="flex-1 min-w-0"
+              className={`flex-1 min-w-0 border-l-2 pl-2 ${borderClass}`}
             >
               <Link
                 to={signal.href}
                 className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors group"
               >
-                <signal.icon className={`h-3.5 w-3.5 shrink-0 ${signal.color}`} />
+                <Icon className={`h-3.5 w-3.5 shrink-0 ${config.color}`} />
                 <span className="truncate">{signal.text}</span>
                 <ArrowRight className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
               </Link>
@@ -83,7 +70,7 @@ export default function MichiganPulse() {
           </AnimatePresence>
 
           <div className="flex items-center gap-1 shrink-0">
-            {SIGNALS.map((_, i) => (
+            {signals.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setIdx(i)}
