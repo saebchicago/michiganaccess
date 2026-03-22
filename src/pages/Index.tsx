@@ -18,6 +18,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import DataPulse from "@/components/home/DataPulse";
 import MichiganPulse from "@/components/home/MichiganPulse";
 import QuickCompare from "@/components/home/QuickCompare";
+const LifeEventNavigator = lazy(() => import("@/components/tools/LifeEventNavigator"));
 import { Button } from "@/components/ui/button";
 import { AccessChat } from "@/components/AccessChat";
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
@@ -135,6 +136,13 @@ const Index = () => {
             <ImpactStories />
           </Suspense>
         </LazySection>
+      </SectionErrorBoundary>
+
+      {/* ═══ LIFE EVENT NAVIGATOR ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <Suspense fallback={<SectionSkeleton height="200px" />}>
+          <LifeEventNavigator />
+        </Suspense>
       </SectionErrorBoundary>
 
       {/* ═══ 3 PRIMARY PATHS ═══ */}
