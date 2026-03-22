@@ -24,6 +24,7 @@ const POPULAR_ZIPS = [
 export default function ZipIntelligencePage() {
   const [params] = useSearchParams();
   const initialZip = params.get("zip") || "";
+  const isEmbed = params.get("embed") === "true";
   const initialMeasures = useMemo(() => {
     const m = params.get("measures");
     return m ? m.split(",").map((s) => s.replace(/_/g, " ")) : undefined;
@@ -34,6 +35,17 @@ export default function ZipIntelligencePage() {
     description: "Type your ZIP code. See 40 health, equity, and social measures. Build custom charts. Compare to Michigan and national averages.",
     path: "/zip-intelligence",
   });
+
+  if (isEmbed) {
+    return (
+      <div className="p-4 max-w-4xl mx-auto">
+        <ZipIntelligenceBuilder initialZip={initialZip} initialMeasures={initialMeasures} />
+        <p className="text-[9px] text-muted-foreground text-center mt-4">
+          Powered by <a href="https://accessmi.org" target="_blank" rel="noopener" className="text-primary hover:underline">Access Michigan</a> · CDC PLACES 2024
+        </p>
+      </div>
+    );
+  }
 
   return (
     <Layout>
