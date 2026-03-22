@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Rss, Calendar, Sparkles, Database, Shield, Map, Users, BarChart3, Zap } from "lucide-react";
+import { Rss, Calendar, Sparkles, Database, Shield, Map, Users, BarChart3, Zap, Rocket } from "lucide-react";
 
 interface ChangelogEntry {
   month: string;
@@ -23,6 +23,25 @@ const TAG_STYLES: Record<string, string> = {
 };
 
 const entries: ChangelogEntry[] = [
+  {
+    month: "March", year: "2026", title: "Intelligence Platform Release — v3.0",
+    icon: Rocket,
+    tag: "feature",
+    items: [
+      "Hero repositioned: 'Michigan's public data, organized for action'",
+      "Michigan Pulse: rotating intelligence signals on homepage (diabetes trends, opioid decline, energy burden)",
+      "CHNA Brief PDF: one-click county intelligence exports for health systems",
+      "Quick Compare: instant county-vs-county widget on homepage",
+      "Buy Me a Coffee: community sustainability model at /support (hidden on help pages)",
+      "Embeddable widget URLs corrected to accessmi.org",
+      "8 semantic URL redirects (/health-equity, /broadband, /chna, /map, etc.)",
+      "About page: visual overhaul — 3-icon Problem/Solution/Mission row",
+      "Methodology: collapsible accordion for 35+ data sources",
+      "True CountUp rolling animations on all stat displays",
+      "Card hover lift (-translate-y-0.5) + gradient nav accent line",
+      "Cmd+K and '/' keyboard search shortcuts",
+    ],
+  },
   {
     month: "March", year: "2026", title: "Data Supremacy Release — v2.0",
     icon: Zap,

@@ -203,7 +203,7 @@ const Index = () => {
       <div className="container py-4">
         <DataProvenance
           source="Public datasets (State of Michigan + federal agencies). Independently organized."
-          updated="2026-03-08"
+          updated="2026-03-21"
           methodologyHref="/methodology"
         />
       </div>
