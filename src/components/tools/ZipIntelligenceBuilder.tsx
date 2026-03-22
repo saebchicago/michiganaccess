@@ -13,6 +13,7 @@ import {
 import { fetchZCTAData, MI_STATE_AVERAGES, US_AVERAGES, MEASURE_GROUPS, POPULAR_MEASURES, type PlacesMeasure } from "@/lib/places-client";
 import NeighborhoodHealthScore from "@/components/tools/NeighborhoodHealthScore";
 import CommunityReportCard from "@/components/tools/CommunityReportCard";
+import NearMeFinder from "@/components/tools/NearMeFinder";
 import { toast } from "sonner";
 
 import { TrendingUp as TrendIcon } from "lucide-react";
@@ -376,6 +377,9 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
                 ))}
               </div>
             )}
+
+            {/* Near Me */}
+            <NearMeFinder zipCode={activeZip} zipData={(() => { const m: Record<string, number> = {}; zipData!.forEach((d) => { m[d.short_question_text] = d.data_value; }); return m; })()} />
 
             {/* Source */}
             <p className="text-[9px] text-muted-foreground text-center">
