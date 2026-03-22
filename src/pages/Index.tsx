@@ -18,6 +18,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import DataPulse from "@/components/home/DataPulse";
 import MichiganPulse from "@/components/home/MichiganPulse";
 import CapabilityStrip from "@/components/home/CapabilityStrip";
+import LiveDemoPreview from "@/components/home/LiveDemoPreview";
 import QuickCompare from "@/components/home/QuickCompare";
 const LifeEventNavigator = lazy(() => import("@/components/tools/LifeEventNavigator"));
 const DataStoriesSection = lazy(() => import("@/components/stories/DataStoriesSection"));
@@ -110,6 +111,9 @@ const Index = () => {
 
       {/* ═══ MICHIGAN PULSE — live intelligence signals ═══ */}
       <MichiganPulse />
+
+      {/* ═══ LIVE DEMO PREVIEW ═══ */}
+      <LiveDemoPreview />
 
       {/* ═══ LIFE EVENT NAVIGATOR — primary engagement hook ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
