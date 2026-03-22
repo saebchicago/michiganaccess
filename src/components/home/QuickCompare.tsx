@@ -74,6 +74,21 @@ export default function QuickCompare() {
           </Select>
         </div>
 
+        {/* Popular comparisons */}
+        {!ready && (
+          <div className="flex flex-wrap gap-1.5">
+            {[["Wayne", "Oakland"], ["Kent", "Ottawa"], ["Ingham", "Washtenaw"]].map(([a, b]) => (
+              <button
+                key={`${a}-${b}`}
+                onClick={() => { setCountyA(a); setCountyB(b); }}
+                className="text-[10px] rounded-full border border-border px-2 py-0.5 text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
+              >
+                {a} vs {b}
+              </button>
+            ))}
+          </div>
+        )}
+
         <AnimatePresence>
           {ready && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="space-y-3 overflow-hidden">
