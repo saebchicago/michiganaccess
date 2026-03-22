@@ -365,25 +365,89 @@ const HeroSection = () => {
             transition={{ delay: 0.22, duration: 0.5 }}
             className="mt-3 text-sm text-primary-foreground/75 md:text-base max-w-xl mx-auto leading-relaxed"
           >
-            83 counties · 35+ live data sources · Healthcare, housing, energy, food & transit.
+            83 counties · 60+ data sources · Free forever.
           </motion.p>
 
-          {/* Primary + Secondary CTAs */}
+          {/* ZIP Input — Primary CTA */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.32, duration: 0.4 }}
-            className="mt-6 flex flex-wrap items-center justify-center gap-3"
+            className="mt-6 max-w-md mx-auto space-y-3"
           >
-            <Link to="/find-care">
-              <Button size="lg" className="rounded-full bg-white text-primary hover:bg-white/90 font-semibold shadow-lg gap-1.5">
-                <HeartPulse className="h-4 w-4" /> Find Help
+            <div className="flex gap-2">
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={5}
+                placeholder="Enter your ZIP code"
+                className="flex-1 h-12 rounded-full bg-white/10 border-2 border-white/30 text-white text-center text-lg font-mono placeholder:text-white/40 focus:outline-none focus:border-white/60 focus:bg-white/15 transition-colors"
+                id="hero-zip"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    const v = (e.target as HTMLInputElement).value;
+                    if (v.length === 5) navigate(`/zip-intelligence?zip=${v}`);
+                  }
+                }}
+              />
+              <Button
+                size="lg"
+                className="h-12 px-5 rounded-full bg-white text-primary font-semibold hover:bg-white/90 shadow-lg"
+                onClick={() => {
+                  const v = (document.getElementById("hero-zip") as HTMLInputElement)?.value;
+                  if (v?.length === 5) navigate(`/zip-intelligence?zip=${v}`);
+                }}
+              >
+                See Your Neighborhood →
               </Button>
+            </div>
+            <p className="text-white/50 text-[11px]">
+              Get a health score, build charts, check eligibility — powered by CDC, Census & 60+ sources
+            </p>
+          </motion.div>
+
+          {/* Preview thumbnails — what you'll get */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="flex justify-center gap-6 mt-5"
+          >
+            <div className="text-center opacity-60">
+              <div className="w-12 h-12 rounded-full border-[3px] border-white/30 flex items-center justify-center mx-auto">
+                <span className="text-white text-[10px] font-bold">72</span>
+              </div>
+              <span className="text-[9px] text-white/40 mt-1 block">Health Score</span>
+            </div>
+            <div className="text-center opacity-60">
+              <div className="w-12 h-12 rounded-lg border border-white/20 flex items-end justify-center gap-0.5 p-1.5 mx-auto">
+                <div className="w-1.5 bg-white/40 rounded-t" style={{ height: "60%" }} />
+                <div className="w-1.5 bg-teal-400/40 rounded-t" style={{ height: "45%" }} />
+                <div className="w-1.5 bg-white/20 rounded-t" style={{ height: "35%" }} />
+              </div>
+              <span className="text-[9px] text-white/40 mt-1 block">Custom Charts</span>
+            </div>
+            <div className="text-center opacity-60">
+              <div className="w-12 h-12 rounded-lg border border-white/20 flex items-center justify-center mx-auto">
+                <span className="text-white/50 text-[9px] font-medium">6 programs</span>
+              </div>
+              <span className="text-[9px] text-white/40 mt-1 block">Eligibility</span>
+            </div>
+          </motion.div>
+
+          {/* Secondary CTAs */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
+            className="mt-4 flex items-center justify-center gap-3"
+          >
+            <Link to="/find-care" className="text-[11px] text-white/50 hover:text-white/80 transition-colors underline underline-offset-2">
+              Find help near you
             </Link>
-            <Link to="/brief">
-              <Button size="lg" variant="outline" className="rounded-full border-2 border-white text-white bg-white/10 hover:bg-white/25 backdrop-blur-sm font-semibold gap-1.5">
-                <BarChart3 className="h-4 w-4" /> Explore Data
-              </Button>
+            <span className="text-white/20">·</span>
+            <Link to="/health-equity-atlas" className="text-[11px] text-white/50 hover:text-white/80 transition-colors underline underline-offset-2">
+              Explore the equity atlas
             </Link>
           </motion.div>
 
