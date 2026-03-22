@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
 import LanguageAccessCard from "@/components/equity/LanguageAccessCard";
+import PharmacyDesertCard from "@/components/equity/PharmacyDesertCard";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -219,9 +220,10 @@ export default function EquityScorecardPage() {
           </p>
         </div>
       </div>
-      {/* Language Access */}
-      <div className="container max-w-5xl py-8">
+      {/* Language Access + Pharmacy Deserts */}
+      <div className="container max-w-5xl py-8 space-y-8">
         <LanguageAccessCard />
+        <PharmacyDesertCard />
       </div>
 
       <PrintButton />
