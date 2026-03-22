@@ -13,6 +13,7 @@ import PublicTrustBar from "@/components/shared/PublicTrustBar";
 // Deferred: non-critical widgets that don't affect initial render
 const AIChatWidget = lazy(() => import("@/components/shared/AIChatWidget"));
 const WeatherAlertBanner = lazy(() => import("@/components/alerts/WeatherAlertBanner"));
+const OfflineAccessBanner = lazy(() => import("@/components/shared/OfflineAccessBanner"));
 const PrintButton = lazy(() => import("@/components/shared/PrintButton"));
 const PWAInstallBanner = lazy(() => import("@/components/shared/PWAInstallBanner"));
 const MobileBottomNav = lazy(() => import("@/components/shared/MobileBottomNav"));
@@ -31,6 +32,7 @@ const Layout = ({ children }: LayoutProps) => (
     <CrisisBar />
     <Header />
     <Suspense fallback={null}><WeatherAlertBanner /></Suspense>
+    <Suspense fallback={null}><OfflineAccessBanner /></Suspense>
     <ContextBar />
     <RouteAnnouncer />
     <ErrorBoundary>
