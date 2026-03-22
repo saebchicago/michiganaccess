@@ -17,6 +17,7 @@ import LocationNudgeBanner from "@/components/home/LocationNudgeBanner";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import DataPulse from "@/components/home/DataPulse";
 import MichiganPulse from "@/components/home/MichiganPulse";
+import QuickCompare from "@/components/home/QuickCompare";
 import { Button } from "@/components/ui/button";
 import { AccessChat } from "@/components/AccessChat";
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
@@ -188,6 +189,13 @@ const Index = () => {
               </Link>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ═══ QUICK COMPARE ═══ */}
+      <section className="py-10">
+        <div className="container max-w-md">
+          <QuickCompare />
         </div>
       </section>
 
