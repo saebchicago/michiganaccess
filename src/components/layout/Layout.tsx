@@ -20,6 +20,7 @@ const MobileBottomNav = lazy(() => import("@/components/shared/MobileBottomNav")
 const QuickExitBar = lazy(() => import("@/components/shared/QuickExitBar"));
 
 const OnboardingTour = lazy(() => import("@/components/shared/OnboardingTour"));
+const GuidedTour = lazy(() => import("@/components/shared/GuidedTour"));
 interface LayoutProps {
   children: ReactNode;
   title?: string;
@@ -58,6 +59,7 @@ const Layout = ({ children }: LayoutProps) => (
       <QuickExitBar />
       
       <OnboardingTour />
+      <GuidedTour />
     </Suspense>
   </div>
 );
