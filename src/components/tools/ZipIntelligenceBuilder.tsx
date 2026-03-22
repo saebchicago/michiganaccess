@@ -14,7 +14,11 @@ import { fetchZCTAData, MI_STATE_AVERAGES, US_AVERAGES, MEASURE_GROUPS, POPULAR_
 import NeighborhoodHealthScore from "@/components/tools/NeighborhoodHealthScore";
 import { toast } from "sonner";
 
-type ViewMode = "bar" | "radar" | "table";
+import { TrendingUp as TrendIcon } from "lucide-react";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
+import { fetchZCTAHistorical } from "@/lib/places-historical";
+
+type ViewMode = "bar" | "radar" | "table" | "trend";
 
 function generateInsights(data: PlacesMeasure[], zip: string): { text: string; type: "warning" | "good" | "info" }[] {
   const insights: { text: string; type: "warning" | "good" | "info" }[] = [];
@@ -59,6 +63,14 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
     queryFn: () => fetchZCTAData(activeZip2),
     staleTime: 30 * 60 * 1000,
     enabled: activeZip2.length === 5,
+  });
+
+  // Trend data (2023 vs 2024)
+  const { data: trendData } = useReactQuery({
+    queryKey: ["places-trend", activeZip],
+    queryFn: () => fetchZCTAHistorical(activeZip),
+    staleTime: 60 * 60 * 1000,
+    enabled: activeZip.length === 5 && view === "trend",
   });
 
   const handleSearch = (e: React.FormEvent) => {
@@ -225,7 +237,7 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
                     <div className="flex gap-1">
-                      {([["bar", BarChart3], ["radar", RadarIcon], ["table", Table]] as [ViewMode, typeof BarChart3][]).map(([v, Icon]) => (
+                      {([["bar", BarChart3], ["radar", RadarIcon], ["table", Table], ["trend", TrendIcon]] as [ViewMode, typeof BarChart3][]).map(([v, Icon]) => (
                         <Button key={v} variant={view === v ? "default" : "ghost"} size="sm" className="h-7 text-xs gap-1" onClick={() => setView(v)}>
                           <Icon className="h-3 w-3" /> {v.charAt(0).toUpperCase() + v.slice(1)}
                         </Button>
@@ -303,6 +315,42 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
                           })}
                         </tbody>
                       </table>
+                    </div>
+                  )}
+                  {view === "trend" && (
+                    <div className="space-y-2">
+                      {!trendData || Object.keys(trendData.year2023).length === 0 ? (
+                        <p className="text-sm text-muted-foreground text-center py-8">Loading trend data or no historical data available for this ZIP.</p>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-sm min-w-[400px]">
+                            <thead><tr className="border-b border-border text-left">
+                              <th className="pb-2 text-xs font-medium text-muted-foreground">Measure</th>
+                              <th className="pb-2 text-xs font-medium text-right">2023</th>
+                              <th className="pb-2 text-xs font-medium text-right">2024</th>
+                              <th className="pb-2 text-xs font-medium text-right">Change</th>
+                            </tr></thead>
+                            <tbody>
+                              {filteredData.map((d) => {
+                                const prev = trendData.year2023[d.short_question_text];
+                                const curr = d.data_value;
+                                const change = prev != null ? curr - prev : null;
+                                return (
+                                  <tr key={d.short_question_text} className="border-b border-border/50">
+                                    <td className="py-2 text-xs text-foreground">{d.short_question_text}</td>
+                                    <td className="py-2 text-xs text-right text-muted-foreground">{prev != null ? `${prev.toFixed(1)}%` : "—"}</td>
+                                    <td className="py-2 text-xs text-right font-semibold">{curr.toFixed(1)}%</td>
+                                    <td className={`py-2 text-xs text-right font-semibold ${change != null && change > 0.5 ? "text-michigan-coral" : change != null && change < -0.5 ? "text-michigan-forest" : "text-muted-foreground"}`}>
+                                      {change != null ? `${change > 0 ? "+" : ""}${change.toFixed(1)}` : "—"}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                          <p className="text-[9px] text-muted-foreground mt-2">Comparing CDC PLACES 2024 vs 2023 releases. Source: CDC, RWJF, CDC Foundation.</p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </CardContent>
