@@ -20,6 +20,7 @@ import MichiganPulse from "@/components/home/MichiganPulse";
 import QuickCompare from "@/components/home/QuickCompare";
 const LifeEventNavigator = lazy(() => import("@/components/tools/LifeEventNavigator"));
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { AccessChat } from "@/components/AccessChat";
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import LazySection from "@/components/shared/LazySection";
@@ -114,6 +115,22 @@ const Index = () => {
           <LifeEventNavigator />
         </Suspense>
       </SectionErrorBoundary>
+
+      {/* ═══ ZIP INTELLIGENCE TEASER ═══ */}
+      <section className="py-8 bg-gradient-to-r from-primary/5 to-michigan-teal/5 border-y border-border/30">
+        <div className="container max-w-2xl text-center space-y-3">
+          <h2 className="text-lg font-bold text-foreground">Know Your Neighborhood</h2>
+          <p className="text-xs text-muted-foreground">40 health measures for any Michigan ZIP code. Build charts. Compare.</p>
+          <div className="flex items-center justify-center gap-2 max-w-xs mx-auto">
+            <Input placeholder="Enter ZIP code" maxLength={5} className="text-center font-mono text-sm" id="hero-zip-input"
+              onKeyDown={(e) => { if (e.key === "Enter") { const v = (e.target as HTMLInputElement).value; if (v.length === 5) window.location.href = `/zip-intelligence?zip=${v}`; } }} />
+            <Button size="sm" onClick={() => { const v = (document.getElementById("hero-zip-input") as HTMLInputElement)?.value; if (v?.length === 5) window.location.href = `/zip-intelligence?zip=${v}`; }}>
+              Explore
+            </Button>
+          </div>
+          <p className="text-[9px] text-muted-foreground">Powered by CDC PLACES · Free, no account needed</p>
+        </div>
+      </section>
 
       {/* ═══ TRUST + QUICK INTELLIGENCE ═══ */}
       <TrustPanel />
