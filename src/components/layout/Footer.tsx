@@ -59,6 +59,7 @@ const Footer = () => {
         { label: t("nav.communityResources"), href: "/resources" },
         { label: t("nav.transportation"), href: "/transportation" },
         { label: t("nav.healthMap"), href: "/health-map" },
+        { label: "Reentry Resources", href: "/reentry" },
       ],
     },
     {
@@ -85,6 +86,7 @@ const Footer = () => {
         { label: "Terms of Use",            href: "/terms" },
         { label: "Accessibility",           href: "/accessibility" },
         { label: "Site Map",                href: "/sitemap" },
+        { label: "Data Sources (60+)",     href: "/data-sources" },
       ],
     },
     {
