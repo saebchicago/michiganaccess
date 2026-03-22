@@ -22,6 +22,7 @@ import EnergyPriceTracker from "@/components/environment/EnergyPriceTracker";
 import WaterMonitorWidget from "@/components/environment/WaterMonitorWidget";
 import EnergyHealthScatter from "@/components/environment/EnergyHealthScatter";
 import WeatherAlerts from "@/components/environment/WeatherAlerts";
+import FDARecallFeed from "@/components/alerts/FDARecallFeed";
 import MichiganForecast from "@/components/environment/MichiganForecast";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
@@ -185,10 +186,11 @@ const EnvironmentPage = () => {
         </div>
       </section>
 
-      {/* Weather Alerts */}
+      {/* Weather + Food Safety Alerts */}
       <section className="py-4">
-        <div className="container">
+        <div className="container space-y-4">
           <WeatherAlerts />
+          <FDARecallFeed />
         </div>
       </section>
 
