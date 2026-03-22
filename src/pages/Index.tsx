@@ -19,6 +19,7 @@ import DataPulse from "@/components/home/DataPulse";
 import MichiganPulse from "@/components/home/MichiganPulse";
 import QuickCompare from "@/components/home/QuickCompare";
 const LifeEventNavigator = lazy(() => import("@/components/tools/LifeEventNavigator"));
+const DataStoriesSection = lazy(() => import("@/components/stories/DataStoriesSection"));
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AccessChat } from "@/components/AccessChat";
@@ -113,6 +114,13 @@ const Index = () => {
       <SectionErrorBoundary title="Some content didn't load">
         <Suspense fallback={<SectionSkeleton height="200px" />}>
           <LifeEventNavigator />
+        </Suspense>
+      </SectionErrorBoundary>
+
+      {/* ═══ DATA STORIES ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <Suspense fallback={<SectionSkeleton height="200px" />}>
+          <DataStoriesSection />
         </Suspense>
       </SectionErrorBoundary>
 
