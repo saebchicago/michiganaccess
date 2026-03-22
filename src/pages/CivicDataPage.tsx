@@ -19,6 +19,7 @@ import HazardRiskDashboard from "@/components/civic/HazardRiskDashboard";
 import EconomicVitalityDashboard from "@/components/civic/EconomicVitalityDashboard";
 import ALICEDashboard from "@/components/civic/ALICEDashboard";
 import BroadbandDashboard from "@/components/broadband/BroadbandDashboard";
+import EconomicPulse from "@/components/economic/EconomicPulse";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -532,6 +533,13 @@ const CivicDataPage = () => {
               </Card>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Economic Pulse */}
+      <section className="py-8">
+        <div className="container max-w-5xl">
+          <EconomicPulse />
         </div>
       </section>
 
