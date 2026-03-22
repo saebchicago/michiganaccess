@@ -24,6 +24,21 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Equity Bridge Sprint — v3.3",
+    icon: Users,
+    tag: "feature",
+    items: [
+      "ALICE population layer: 41% of Michigan households below the survival threshold, with racial/age/household breakdowns",
+      "Returning Citizens navigator at /reentry: housing, ID, healthcare, employment, legal help — 7th Life Event card added",
+      "Language Access: 298K Spanish + 172K Arabic speakers mapped by county hotspot",
+      "Pharmacy desert risk: 15 high-risk counties, -7.4% chain decline tracked",
+      "Eligibility pre-screener: 3 questions → 10 Michigan assistance programs, zero data stored",
+      "12 Michigan tribal health facilities listed with sovereignty language",
+      "Offline access banner on help pages: 'Call 211' for those without broadband",
+      "4 new intelligence signals: ALICE threshold, pharmacy decline, language data, MDOC recidivism low",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Intelligence Platform Release — v3.0",
     icon: Rocket,
     tag: "feature",
