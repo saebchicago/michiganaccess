@@ -31,7 +31,7 @@ export default function ZipIntelligencePage() {
   }, [params]);
 
   usePageMeta({
-    title: "ZIP Code Intelligence — Access Michigan",
+    title: "Know Your Neighborhood | 40 Health Measures for Any Michigan ZIP | Access Michigan",
     description: "Type your ZIP code. See 40 health, equity, and social measures. Build custom charts. Compare to Michigan and national averages.",
     path: "/zip-intelligence",
   });
