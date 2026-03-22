@@ -98,6 +98,7 @@ function downloadCSV() {
 
 export default function EquityScorecardPage() {
   const [sortBy, setSortBy] = useState("gap");
+  const [activeTab, setActiveTab] = useState("health");
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
 
   usePageMeta({
@@ -228,18 +229,73 @@ export default function EquityScorecardPage() {
           </p>
         </div>
       </div>
-      {/* Language Access + Pharmacy Deserts */}
-      <div className="container max-w-5xl py-8 space-y-8">
-        <LanguageAccessCard />
-        <PharmacyDesertCard />
-        <ChildcareDesertCard />
-        <EducationEquityCard />
-        <HousingCrisisCard />
-        <DentalDesertCard />
-        <BankingDesertCard />
-        <BroadbandRealityCard />
-        <VeteranResourceCard />
-        <TribalHealthSection />
+      {/* Equity Dashboard — Tabbed Sections */}
+      <div className="container max-w-5xl py-8">
+        {/* Stat strip */}
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-6 text-center">
+          {[
+            { stat: "41%", label: "below ALICE", color: "text-michigan-coral" },
+            { stat: "59/83", label: "dental HPSAs", color: "text-michigan-gold" },
+            { stat: "102", label: "PFAS water bodies", color: "text-michigan-coral" },
+            { stat: "31K", label: "homeless 2024", color: "text-michigan-coral" },
+            { stat: "298K", label: "Spanish speakers", color: "text-primary" },
+          ].map((s) => (
+            <div key={s.label} className="px-3">
+              <span className={`text-lg font-bold ${s.color}`}>{s.stat}</span>
+              <p className="text-[9px] text-muted-foreground">{s.label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Tab navigation */}
+        <div className="flex flex-wrap gap-1.5 mb-6 justify-center">
+          {[
+            { id: "health", label: "Health Access" },
+            { id: "economic", label: "Economic" },
+            { id: "environment", label: "Environment" },
+            { id: "community", label: "Community" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                activeTab === tab.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-6">
+          {activeTab === "health" && (
+            <>
+              <PharmacyDesertCard />
+              <DentalDesertCard />
+              <TribalHealthSection />
+              <VeteranResourceCard />
+              <LanguageAccessCard />
+            </>
+          )}
+          {activeTab === "economic" && (
+            <>
+              <BankingDesertCard />
+              <BroadbandRealityCard />
+              <ChildcareDesertCard />
+            </>
+          )}
+          {activeTab === "environment" && (
+            <p className="text-sm text-muted-foreground text-center py-8">
+              See the <a href="/environment#water-safety" className="text-primary hover:underline">Environment page</a> for PFAS, lead, and water safety data.
+            </p>
+          )}
+          {activeTab === "community" && (
+            <>
+              <EducationEquityCard />
+              <HousingCrisisCard />
+            </>
+          )}
+        </div>
       </div>
 
       <PrintButton />
