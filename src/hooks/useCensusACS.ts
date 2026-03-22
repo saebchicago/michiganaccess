@@ -42,21 +42,26 @@ export function useCensusACS(options: UseCensusACSOptions) {
         year: String(year),
       });
 
-      const res = await fetch(
-        `${SUPABASE_URL}/functions/v1/census-acs-proxy?${params}`,
-        {
-          headers: {
-            apikey: SUPABASE_KEY,
-            "Content-Type": "application/json",
-          },
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/functions/v1/census-acs-proxy?${params}`,
+          {
+            headers: {
+              apikey: SUPABASE_KEY,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (!res.ok) {
+          console.warn(`Census API returned ${res.status}`);
+          return { year, dataset: "acs5", geoType, geoFips, tables: {}, source: "unavailable" } as CensusACSResponse;
         }
-      );
 
-      if (!res.ok) {
-        throw new Error(`Census API error: ${res.status}`);
+        return res.json();
+      } catch {
+        return { year, dataset: "acs5", geoType, geoFips, tables: {}, source: "unavailable" } as CensusACSResponse;
       }
-
-      return res.json();
     },
     enabled: enabled && tables.length > 0 && !!geoFips,
     staleTime: 24 * 60 * 60 * 1000, // 24 hours
