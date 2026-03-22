@@ -5,6 +5,7 @@ import {
   Users, Shield, FlaskConical, Beaker, CheckCircle2, ArrowRight
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import LiveTrialSearch from "@/components/health/LiveTrialSearch";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -155,6 +156,9 @@ export default function ClinicalTrialsPage() {
       </section>
 
       <div className="container max-w-5xl py-10 space-y-8">
+        {/* Live Trial Search */}
+        <LiveTrialSearch />
+
         {/* Stats */}
         <div className="grid gap-4 sm:grid-cols-3">
           {[
