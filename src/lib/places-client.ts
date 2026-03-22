@@ -19,41 +19,44 @@ export interface PlacesMeasure {
   high_confidence_limit: number;
 }
 
+// IMPORTANT: These names must EXACTLY match the API's short_question_text values
 export const MEASURE_GROUPS: Record<string, string[]> = {
   "Health Outcomes": [
-    "Current Asthma", "High Blood Pressure", "Cancer (except skin)",
-    "Kidney Disease", "COPD", "Coronary Heart Disease",
+    "Current Asthma", "High Blood Pressure", "Cancer (non-skin) or Melanoma",
+    "COPD", "Coronary Heart Disease", "Arthritis",
     "Diabetes", "Obesity", "Stroke", "Depression",
     "High Cholesterol", "All Teeth Lost",
   ],
   "Prevention": [
     "Annual Checkup", "Dental Visit", "Cholesterol Screening",
-    "Mammography", "Cervical Cancer Screening",
-    "Colorectal Cancer Screening",
+    "Mammography", "Colorectal Cancer Screening",
+    "High Blood Pressure Medication",
   ],
   "Risk Behaviors": [
-    "Binge Drinking", "Current Smoking", "No Leisure-Time Physical Activity",
-    "Sleeping Less Than 7 Hours",
+    "Binge Drinking", "Current Cigarette Smoking", "Physical Inactivity",
+    "Short Sleep Duration",
   ],
   "Disabilities": [
     "Any Disability", "Hearing Disability", "Vision Disability",
     "Cognitive Disability", "Mobility Disability",
+    "Self-care Disability", "Independent Living Disability",
   ],
   "Health Status": [
-    "Fair or Poor Self-Rated Health Status",
-    "Frequent Mental Health Not Good Days",
-    "Frequent Physical Health Not Good Days",
+    "General Health",
+    "Frequent Mental Distress",
+    "Frequent Physical Distress",
   ],
   "Social Needs": [
-    "Lack of Health Insurance",
-    "Could Not See Doctor Due to Cost",
+    "Health Insurance", "Food Stamps", "Food Insecurity",
+    "Housing Insecurity", "Utility Services Threat",
+    "Transportation Barriers",
   ],
 };
 
 export const POPULAR_MEASURES = [
   "Diabetes", "Obesity", "Current Asthma", "Depression",
-  "Lack of Health Insurance", "No Leisure-Time Physical Activity",
-  "Current Smoking", "Fair or Poor Self-Rated Health Status",
+  "Health Insurance", "Physical Inactivity",
+  "Current Cigarette Smoking", "General Health",
 ];
 
 export async function fetchZCTAData(zcta: string): Promise<PlacesMeasure[]> {
@@ -77,28 +80,31 @@ export async function fetchZCTAData(zcta: string): Promise<PlacesMeasure[]> {
   }
 }
 
+// Keys must match API short_question_text exactly
 export const MI_STATE_AVERAGES: Record<string, number> = {
   "Current Asthma": 11.2, "High Blood Pressure": 33.4, "Diabetes": 12.1,
-  "Obesity": 36.4, "Current Smoking": 18.7, "Depression": 23.8,
-  "No Leisure-Time Physical Activity": 27.6, "Binge Drinking": 18.2,
-  "Fair or Poor Self-Rated Health Status": 20.1, "Lack of Health Insurance": 6.8,
+  "Obesity": 36.4, "Current Cigarette Smoking": 18.7, "Depression": 23.8,
+  "Physical Inactivity": 27.6, "Binge Drinking": 18.2,
+  "General Health": 20.1, "Health Insurance": 6.8,
   "Annual Checkup": 76.3, "Dental Visit": 62.1, "Any Disability": 30.3,
-  "Frequent Mental Health Not Good Days": 17.2, "Cancer (except skin)": 6.8,
+  "Frequent Mental Distress": 17.2, "Cancer (non-skin) or Melanoma": 6.8,
   "COPD": 8.4, "Coronary Heart Disease": 6.2, "Stroke": 3.8,
-  "Kidney Disease": 3.2, "Sleeping Less Than 7 Hours": 37.8,
-  "High Cholesterol": 31.2, "Obesity": 36.4, "All Teeth Lost": 14.2,
-  "Could Not See Doctor Due to Cost": 11.8,
+  "Short Sleep Duration": 37.8, "Arthritis": 26.5,
+  "High Cholesterol": 31.2, "All Teeth Lost": 14.2,
+  "Food Stamps": 22.0, "Food Insecurity": 12.5,
+  "Housing Insecurity": 15.0, "Utility Services Threat": 8.5,
 };
 
 export const US_AVERAGES: Record<string, number> = {
   "Current Asthma": 10.3, "High Blood Pressure": 32.5, "Diabetes": 11.4,
-  "Obesity": 33.0, "Current Smoking": 15.3, "Depression": 21.4,
-  "No Leisure-Time Physical Activity": 26.1, "Binge Drinking": 17.4,
-  "Fair or Poor Self-Rated Health Status": 18.4, "Lack of Health Insurance": 10.3,
+  "Obesity": 33.0, "Current Cigarette Smoking": 15.3, "Depression": 21.4,
+  "Physical Inactivity": 26.1, "Binge Drinking": 17.4,
+  "General Health": 18.4, "Health Insurance": 10.3,
   "Annual Checkup": 77.4, "Dental Visit": 65.0, "Any Disability": 28.7,
-  "Frequent Mental Health Not Good Days": 15.6, "Cancer (except skin)": 6.3,
+  "Frequent Mental Distress": 15.6, "Cancer (non-skin) or Melanoma": 6.3,
   "COPD": 6.6, "Coronary Heart Disease": 5.7, "Stroke": 3.4,
-  "Kidney Disease": 3.0, "Sleeping Less Than 7 Hours": 35.6,
+  "Short Sleep Duration": 35.6, "Arthritis": 24.8,
   "High Cholesterol": 29.8, "All Teeth Lost": 12.1,
-  "Could Not See Doctor Due to Cost": 10.4,
+  "Food Stamps": 19.5, "Food Insecurity": 11.0,
+  "Housing Insecurity": 13.5, "Utility Services Threat": 7.2,
 };

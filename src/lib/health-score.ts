@@ -3,18 +3,19 @@
  * Higher = healthier community. THIS IS AN ILLUSTRATIVE COMPOSITE.
  */
 
+// Measure names must match CDC PLACES API short_question_text exactly
 const SCORE_MEASURES: { measure: string; stateAvg: number; weight: number; lowerIsBetter: boolean }[] = [
   { measure: "Diabetes", stateAvg: 12.1, weight: 1.2, lowerIsBetter: true },
   { measure: "Obesity", stateAvg: 36.4, weight: 1.0, lowerIsBetter: true },
   { measure: "Current Asthma", stateAvg: 11.2, weight: 0.8, lowerIsBetter: true },
   { measure: "Depression", stateAvg: 23.8, weight: 1.0, lowerIsBetter: true },
-  { measure: "Current Smoking", stateAvg: 18.7, weight: 1.0, lowerIsBetter: true },
-  { measure: "No Leisure-Time Physical Activity", stateAvg: 27.6, weight: 0.8, lowerIsBetter: true },
-  { measure: "Lack of Health Insurance", stateAvg: 6.8, weight: 1.2, lowerIsBetter: true },
-  { measure: "Fair or Poor Self-Rated Health Status", stateAvg: 20.1, weight: 1.0, lowerIsBetter: true },
+  { measure: "Current Cigarette Smoking", stateAvg: 18.7, weight: 1.0, lowerIsBetter: true },
+  { measure: "Physical Inactivity", stateAvg: 27.6, weight: 0.8, lowerIsBetter: true },
+  { measure: "Health Insurance", stateAvg: 6.8, weight: 1.2, lowerIsBetter: true },
+  { measure: "General Health", stateAvg: 20.1, weight: 1.0, lowerIsBetter: true },
   { measure: "Annual Checkup", stateAvg: 76.3, weight: 0.8, lowerIsBetter: false },
   { measure: "Dental Visit", stateAvg: 62.1, weight: 0.6, lowerIsBetter: false },
-  { measure: "Frequent Mental Health Not Good Days", stateAvg: 17.2, weight: 1.0, lowerIsBetter: true },
+  { measure: "Frequent Mental Distress", stateAvg: 17.2, weight: 1.0, lowerIsBetter: true },
   { measure: "Any Disability", stateAvg: 30.3, weight: 0.6, lowerIsBetter: true },
 ];
 
