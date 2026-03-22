@@ -24,6 +24,18 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Interactive Engagement — v4.3",
+    icon: Sparkles,
+    tag: "feature",
+    items: [
+      "Neighborhood Health Score: animated 0-100 gauge with letter grade for any Michigan ZIP",
+      "Time trend analysis: 2023 vs 2024 CDC PLACES data comparison",
+      "Community Report Card PDF: one-click printable health profile",
+      "'What's Near Me' resource finder with data-driven highlighting",
+      "5 interactive data stories: ALICE, PFAS, reentry, childcare, dental deserts",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Data Universe Expansion — v4.0",
     icon: Database,
     tag: "feature",
