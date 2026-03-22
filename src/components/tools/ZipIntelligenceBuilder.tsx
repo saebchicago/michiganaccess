@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { fetchZCTAData, MI_STATE_AVERAGES, US_AVERAGES, MEASURE_GROUPS, POPULAR_MEASURES, type PlacesMeasure } from "@/lib/places-client";
 import NeighborhoodHealthScore from "@/components/tools/NeighborhoodHealthScore";
+import CommunityReportCard from "@/components/tools/CommunityReportCard";
 import { toast } from "sonner";
 
 import { TrendingUp as TrendIcon } from "lucide-react";
@@ -245,6 +246,7 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
                     </div>
                     <div className="flex gap-1">
                       <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" onClick={handleCSV}><Download className="h-3 w-3" /> CSV</Button>
+                      <CommunityReportCard zipCode={activeZip} data={zipData!} />
                       <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" onClick={handleShare}><Share2 className="h-3 w-3" /> Share</Button>
                     </div>
                   </div>
