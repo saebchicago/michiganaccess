@@ -17,4 +17,8 @@ export const SIGNALS_2026_03: Signal[] = [
   { id: "s6", date: "2026-03", text: "MiHER energy rebates: $211M available, up to $34K/household", category: "economic", direction: "up", source: "EGLE", href: "/environment#programs" },
   { id: "s7", date: "2026-03", text: "76 of 83 counties have zero pedestrian infrastructure data", category: "safety", direction: "alert", source: "SEMCOG / GATIS", href: "/transportation#active-transport" },
   { id: "s8", date: "2026-03", text: "Opioid deaths down 7.5% from 2022 peak — first decline in 4 years", category: "health", direction: "down", source: "MDHHS / CDC WONDER", href: "/data" },
+  { id: "s9", date: "2026-03", text: "41% of MI households below ALICE Threshold — 100K+ increase since 2019", category: "economic", direction: "alert", source: "United For ALICE 2023", href: "/equity" },
+  { id: "s10", date: "2026-03", text: "Michigan has 2,247 pharmacies — chains declined 7.4% in 5 years", category: "health", direction: "down", source: "NCPDP 2024", href: "/equity" },
+  { id: "s11", date: "2026-03", text: "298K Spanish + 172K Arabic households — Michigan's 2nd language is Arabic", category: "civic", direction: "stable", source: "Census ACS 2024", href: "/equity" },
+  { id: "s12", date: "2026-03", text: "MDOC recidivism at historic low; prison population lowest since 1991", category: "civic", direction: "down", source: "MDOC 2025", href: "/reentry" },
 ];
