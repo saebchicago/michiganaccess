@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } from "recharts";
 import Layout from "@/components/layout/Layout";
+import DisparityBars from "@/components/equity/DisparityBars";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
@@ -128,6 +129,23 @@ export default function MaternalHealthPage() {
             <p className="text-[10px] text-muted-foreground mt-2">
               Source: MDHHS Vital Records, 2019-2023 aggregated. Suppressed where &lt;20 events. Macomb and Ottawa Black IMR suppressed.
             </p>
+          </CardContent>
+        </Card>
+
+        {/* Statewide Disparity Bars */}
+        <Card>
+          <CardContent className="p-6">
+            <DisparityBars
+              title="Michigan Infant Mortality by Race/Ethnicity"
+              unit="/1K"
+              groups={[
+                { label: "Black", value: 14.1, color: "#DC2626" },
+                { label: "Hispanic", value: 5.8, color: "#F59E0B" },
+                { label: "White", value: 4.5, color: "#3B82F6" },
+                { label: "Asian", value: 3.6, color: "#10B981" },
+              ]}
+              source="MDHHS Vital Records 2019-2023"
+            />
           </CardContent>
         </Card>
 
