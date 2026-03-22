@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import LayerSelector, { type AtlasLayer } from "@/components/atlas/LayerSelector";
 import CountyDetailPanel from "@/components/atlas/CountyDetailPanel";
+import MapLegend from "@/components/atlas/MapLegend";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 
 const MichiganHeatGrid = lazy(() => import("@/components/atlas/MichiganHeatGrid"));
@@ -90,9 +91,10 @@ export default function HealthEquityAtlasPage() {
       <div className="container max-w-6xl py-8">
         <div className="grid gap-6 lg:grid-cols-[260px_1fr_280px]">
           {/* Layer selector (left sidebar) */}
-          <div className="lg:sticky lg:top-20 lg:self-start">
+          <div className="lg:sticky lg:top-20 lg:self-start space-y-4">
             <LayerSelector active={activeLayer} onChange={setActiveLayer} />
-            <div className="mt-4 flex items-center gap-2 text-[10px] text-muted-foreground">
+            <MapLegend data={mapData} metric={activeLayer.replace(/_/g, " ")} unit={activeLayer === "broadband" || activeLayer === "uninsured" || activeLayer === "poverty" || activeLayer === "energy_burden" ? "%" : ""} colorScale="red-green" />
+            <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
               <span className="h-3 w-3 rounded-sm bg-green-600" /> Low
               <span className="h-3 w-3 rounded-sm bg-yellow-400" /> Moderate
               <span className="h-3 w-3 rounded-sm bg-orange-500" /> High
