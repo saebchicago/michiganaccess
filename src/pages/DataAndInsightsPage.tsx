@@ -94,7 +94,7 @@ export default function DataAndInsightsPage() {
       "@type": "DataCatalog",
       "name": "Access Michigan Data & Insights",
       "description": "Health equity dashboards and open data for Michigan",
-      "url": "https://michiganaccess.lovable.app/data-and-insights",
+      "url": "https://accessmi.org/data-and-insights",
       "provider": { "@type": "Organization", "name": "Access Michigan" },
     },
   });
@@ -111,7 +111,7 @@ export default function DataAndInsightsPage() {
         document.getElementById("county-compare")?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 100);
     } else if (action === "embed") {
-      const code = `<iframe src="https://michiganaccess.lovable.app/embed" width="100%" height="500" frameborder="0" title="Michigan Uninsured Rate Map"></iframe>`;
+      const code = `<iframe src="https://accessmi.org/embed" width="100%" height="200" style="border:none;border-radius:12px;" title="Access Michigan"></iframe>`;
       navigator.clipboard.writeText(code).then(() => toast.success("Embed code copied to clipboard"));
     }
   };
@@ -370,7 +370,7 @@ export default function DataAndInsightsPage() {
                 <CardContent className="space-y-3 text-sm text-muted-foreground">
                   <p>When using data from Access Michigan, please cite both the original source and Access Michigan:</p>
                   <div className="bg-muted rounded-md p-3 font-mono text-xs">
-                    "Access Michigan (2026). [Dataset Name]. Data originally sourced from [CMS/HRSA/CDC/MDHHS]. Retrieved from https://michiganaccess.lovable.app/data-and-insights"
+                    "Access Michigan (2026). [Dataset Name]. Data originally sourced from [CMS/HRSA/CDC/MDHHS]. Retrieved from https://accessmi.org/data-and-insights"
                   </div>
                   <p>
                     Access Michigan is an independent civic project. We are not affiliated with MDHHS, Michigan 2-1-1, or any government agency.

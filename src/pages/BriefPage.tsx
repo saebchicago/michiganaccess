@@ -14,7 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Printer, TrendingUp, TrendingDown, Minus, MapPin, BarChart3, FileText, Activity, Zap, Droplets, TreePine, AlertTriangle } from "lucide-react";
+import { Printer, FileDown, TrendingUp, TrendingDown, Minus, MapPin, BarChart3, FileText, Activity, Zap, Droplets, TreePine, AlertTriangle } from "lucide-react";
 import MetricCluster from "@/components/brief/MetricCluster";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import CivicScoreBreakdown from "@/components/shared/CivicScoreBreakdown";
@@ -204,9 +204,25 @@ export default function BriefPage() {
                     Major cities: {profile.majorCities.join(", ")}
                   </p>
                 </div>
-                <Button variant="outline" size="sm" className="gap-1.5 print:hidden" onClick={() => window.print()}>
-                  <Printer className="h-3.5 w-3.5" /> Print / PDF
-                </Button>
+                <div className="flex gap-2 print:hidden">
+                  <Button size="sm" className="gap-1.5" onClick={() => {
+                    const profile = county ? COUNTY_PROFILES[county] : null;
+                    const h = profile?.healthHighlights || [];
+                    const pop = profile?.population?.toLocaleString() || "—";
+                    const uninsured = h[0]?.value || "—";
+                    const food = h[2]?.value || "—";
+                    const w = window.open("", "_blank");
+                    if (!w) return;
+                    w.document.write(`<html><head><title>${county} County — CHNA Intelligence Brief</title><style>body{font-family:system-ui,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#1a1a1a}h1{font-size:24px;color:#0A4C95;border-bottom:2px solid #00A3A1;padding-bottom:8px}h2{font-size:16px;color:#0A4C95;margin-top:24px}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}.stat-card{border:1px solid #e5e7eb;border-radius:8px;padding:12px;text-align:center}.stat-value{font-size:28px;font-weight:700;color:#0A4C95}.stat-label{font-size:11px;color:#6b7280}.narrative{background:#f9fafb;border-left:3px solid #00A3A1;padding:12px 16px;margin:16px 0;font-size:13px;line-height:1.6}.footer{margin-top:40px;padding-top:16px;border-top:1px solid #e5e7eb;font-size:10px;color:#9ca3af}@media print{body{padding:20px}}</style></head><body><h1>${county} County — CHNA Intelligence Brief</h1><p style="font-size:12px;color:#6b7280">Generated ${new Date().toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})} · Source: Access Michigan (accessmi.org)</p><div class="narrative"><strong>Executive Summary:</strong> ${county} County (pop. ${pop}) has an uninsured rate of ${uninsured} and food insecurity at ${food}. Data sourced from 35+ verified public agencies.</div><h2>Key Health Indicators</h2><div class="stat-grid"><div class="stat-card"><div class="stat-value">${uninsured}</div><div class="stat-label">Uninsured Rate</div></div><div class="stat-card"><div class="stat-value">${h[1]?.value||"—"}</div><div class="stat-label">PCP Ratio</div></div><div class="stat-card"><div class="stat-value">${food}</div><div class="stat-label">Food Insecurity</div></div></div><h2>Data Sources</h2><p style="font-size:10px;color:#6b7280">CDC PLACES · CMS Hospital Compare · HRSA HPSA · County Health Rankings · Census ACS · MDHHS · March of Dimes · ACEEE LEAD · EPA EJScreen · FCC BDC</p><div class="footer"><p>Access Michigan · accessmi.org · Independent civic intelligence platform</p><p>Auto-generated from verified public data. Composite scores are modeled estimates — see accessmi.org/methodology.</p></div></body></html>`);
+                    w.document.close();
+                    w.print();
+                  }}>
+                    <FileDown className="h-3.5 w-3.5" /> CHNA Brief (PDF)
+                  </Button>
+                  <Button variant="outline" size="sm" className="gap-1.5" onClick={() => window.print()}>
+                    <Printer className="h-3.5 w-3.5" /> Print
+                  </Button>
+                </div>
               </CardContent>
             </Card>
 
