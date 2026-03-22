@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Baby, Briefcase, Cake, Home, Stethoscope, Globe, ArrowRight, X } from "lucide-react";
+import { Baby, Briefcase, Cake, Home, Stethoscope, Globe, KeyRound, ArrowRight, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -85,6 +85,15 @@ const EVENTS: LifeEvent[] = [
       { name: "Language access services", type: "language", href: "/find-care" },
       { name: "Emergency Medicaid", type: "insurance", href: "/financial-help" },
       { name: "Cultural community organizations", type: "community", href: "/resources" },
+    ],
+  },
+  {
+    id: "returning", icon: KeyRound, label: "Coming home from incarceration",
+    resources: [
+      { name: "Healthy Michigan Plan (Medicaid)", type: "insurance", href: "/reentry" },
+      { name: "Michigan Works! job centers", type: "employment", href: "/reentry" },
+      { name: "Get your state ID", type: "documents", href: "/reentry" },
+      { name: "Expungement: Michigan Clean Slate", type: "legal", href: "/reentry" },
     ],
   },
 ];
