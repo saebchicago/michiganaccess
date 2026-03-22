@@ -21,4 +21,9 @@ export const SIGNALS_2026_03: Signal[] = [
   { id: "s10", date: "2026-03", text: "Michigan has 2,247 pharmacies — chains declined 7.4% in 5 years", category: "health", direction: "down", source: "NCPDP 2024", href: "/equity" },
   { id: "s11", date: "2026-03", text: "298K Spanish + 172K Arabic households — Michigan's 2nd language is Arabic", category: "civic", direction: "stable", source: "Census ACS 2024", href: "/equity" },
   { id: "s12", date: "2026-03", text: "MDOC recidivism at historic low; prison population lowest since 1991", category: "civic", direction: "down", source: "MDOC 2025", href: "/reentry" },
+  { id: "s13", date: "2026-03", text: "102 'Do Not Eat' water bodies for PFAS — nation's most aggressive monitoring", category: "environment", direction: "alert", source: "EGLE MPART / MDHHS", href: "/environment#water-safety" },
+  { id: "s14", date: "2026-03", text: "27.9% chronic absenteeism statewide — 38.6% for economically disadvantaged", category: "civic", direction: "alert", source: "MDE 2024-25", href: "/data-and-insights" },
+  { id: "s15", date: "2026-03", text: "59 of 83 counties designated dental health professional shortage areas", category: "health", direction: "alert", source: "MDHHS / HRSA", href: "/equity" },
+  { id: "s16", date: "2026-03", text: "31,211 experienced homelessness in 2024; Black households 3.6× more likely", category: "safety", direction: "alert", source: "HUD PIT 2024", href: "/equity" },
+  { id: "s17", date: "2026-03", text: "~19.2% of eligible MI taxpayers don't claim EITC — millions left unclaimed", category: "economic", direction: "alert", source: "IRS", href: "/financial-help" },
 ];

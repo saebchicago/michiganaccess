@@ -4,6 +4,13 @@ import Layout from "@/components/layout/Layout";
 import LanguageAccessCard from "@/components/equity/LanguageAccessCard";
 import PharmacyDesertCard from "@/components/equity/PharmacyDesertCard";
 import TribalHealthSection from "@/components/equity/TribalHealthSection";
+import ChildcareDesertCard from "@/components/equity/ChildcareDesertCard";
+import EducationEquityCard from "@/components/equity/EducationEquityCard";
+import HousingCrisisCard from "@/components/equity/HousingCrisisCard";
+import DentalDesertCard from "@/components/equity/DentalDesertCard";
+import BankingDesertCard from "@/components/equity/BankingDesertCard";
+import BroadbandRealityCard from "@/components/equity/BroadbandRealityCard";
+import VeteranResourceCard from "@/components/equity/VeteranResourceCard";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -225,6 +232,13 @@ export default function EquityScorecardPage() {
       <div className="container max-w-5xl py-8 space-y-8">
         <LanguageAccessCard />
         <PharmacyDesertCard />
+        <ChildcareDesertCard />
+        <EducationEquityCard />
+        <HousingCrisisCard />
+        <DentalDesertCard />
+        <BankingDesertCard />
+        <BroadbandRealityCard />
+        <VeteranResourceCard />
         <TribalHealthSection />
       </div>
 

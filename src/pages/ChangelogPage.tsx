@@ -24,6 +24,24 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Data Universe Expansion — v4.0",
+    icon: Database,
+    tag: "feature",
+    items: [
+      "60+ verified data sources page at /data-sources — every organization credited",
+      "PFAS contamination card: 250+ sites, 102 'Do Not Eat' water bodies, only US PFAS deer advisory",
+      "Childcare desert tracker: ~125,000 children lacking formal slots",
+      "Education equity: 27.9% chronic absenteeism, 84% graduation rate (record), 196 school-based health centers",
+      "Housing crisis dashboard: 31,211 homeless in 2024, 127,895+ affordable units short",
+      "Dental health deserts: 59 of 83 counties have dental HPSAs",
+      "Banking desert identification using Federal Reserve tract-level data",
+      "Broadband reality check: 492K infrastructure gap + 730K adoption barriers",
+      "Veteran resources: 582,000+ MI veterans, VA + state agency links",
+      "Lead service line tracking with MiLeadSafe and Planet Detroit links",
+      "5 new monthly intelligence signals (PFAS, absenteeism, dental, housing, EITC)",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Equity Bridge Sprint — v3.3",
     icon: Users,
     tag: "feature",
