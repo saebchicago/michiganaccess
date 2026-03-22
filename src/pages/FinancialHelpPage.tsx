@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
+import CostOfLivingSnapshot from "@/components/tools/CostOfLivingSnapshot";
 import { useTranslation } from "react-i18next";
 import {
   Heart, DollarSign, Shield, Phone, ExternalLink, ChevronDown, ChevronUp,
@@ -359,6 +360,11 @@ export default function FinancialHelpPage() {
             label="Ask Access Michigan about financial help"
           />
         </div>
+      </div>
+
+      {/* Cost of Living */}
+      <div className="container max-w-3xl py-8">
+        <CostOfLivingSnapshot />
       </div>
     </Layout>
   );
