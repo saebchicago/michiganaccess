@@ -42,6 +42,7 @@ export default function TribalHealthSection() {
               Find IHS Facilities <ExternalLink className="ml-1 h-3 w-3" />
             </a>
           </Button>
+          <p className="text-[9px] text-muted-foreground mt-2">Source: Michigan EADC, Indian Health Service</p>
         </CardContent>
       </Card>
     </motion.div>
