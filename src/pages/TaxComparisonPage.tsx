@@ -9,9 +9,16 @@ import ShouldIMoveCalculator from "@/components/tools/ShouldIMoveCalculator";
 
 export default function TaxComparisonPage() {
   usePageMeta({
-    title: "Michigan Tax Comparison Calculator | Compare Total Tax Burden by City | Access Michigan",
+    title: "Michigan Tax Comparison Calculator | City Income Tax, Property Tax, Auto Insurance | accessmi.org",
     description: "Compare federal, state, city income tax, property tax, and auto insurance between any two Michigan cities. See how much you'd keep.",
     path: "/tax-comparison",
+    jsonLd: {
+      "@type": "WebApplication",
+      "name": "Michigan Tax Comparison Calculator",
+      "url": "https://accessmi.org/tax-comparison",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+    },
   });
 
   return (

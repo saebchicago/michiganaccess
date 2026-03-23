@@ -8,10 +8,17 @@ import CityRanker from "@/components/tools/CityRanker";
 
 export default function FindYourCityPage() {
   usePageMeta({
-    title: "Find Your City — Pick Your Priorities | Access Michigan",
+    title: "Find Your Ideal Michigan City | Compare by Cost, Health, Schools, Safety | accessmi.org",
     description:
       "Rank 25 Michigan cities by what matters to you: affordability, health, schools, safety, and environment. Real data, real-time results.",
     path: "/find-your-city",
+    jsonLd: {
+      "@type": "WebApplication",
+      "name": "Find Your Michigan City",
+      "url": "https://accessmi.org/find-your-city",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "All",
+    },
   });
 
   return (

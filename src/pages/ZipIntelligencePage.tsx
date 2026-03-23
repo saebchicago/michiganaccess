@@ -31,9 +31,16 @@ export default function ZipIntelligencePage() {
   }, [params]);
 
   usePageMeta({
-    title: "Know Your Neighborhood | 40 Health Measures for Any Michigan ZIP | Access Michigan",
+    title: "Health Score for Any Michigan ZIP Code | 40 CDC Measures | accessmi.org",
     description: "Type your ZIP code. See 40 health, equity, and social measures. Build custom charts. Compare to Michigan and national averages.",
     path: "/zip-intelligence",
+    jsonLd: {
+      "@type": "WebApplication",
+      "name": "Michigan ZIP Intelligence",
+      "url": "https://accessmi.org/zip-intelligence",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "All",
+    },
   });
 
   if (isEmbed) {

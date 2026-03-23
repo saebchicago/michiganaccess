@@ -46,7 +46,7 @@ const incomeMultipliers: Record<IncomeUnit, number> = { annual: 1, monthly: 12, 
 export default function FinancialHelpPage() {
   const { t } = useTranslation();
   usePageMeta({
-    title: "Financial Help",
+    title: "Michigan Benefits Eligibility Checker | SNAP, Medicaid, LIHEAP | accessmi.org",
     description: "Find free and reduced-cost care, insurance options, and prescription savings for Michigan residents.",
     path: "/financial-help",
     jsonLd: {

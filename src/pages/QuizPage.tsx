@@ -8,7 +8,7 @@ import MichiganQuiz from "@/components/tools/MichiganQuiz";
 
 export default function QuizPage() {
   usePageMeta({
-    title: "How Well Do You Know Michigan? | Data Quiz | Access Michigan",
+    title: "How Well Do You Know Michigan? | Data Quiz | accessmi.org",
     description: "Test your knowledge of Michigan health, taxes, housing, and equity data with 10 questions backed by verified public sources.",
     path: "/quiz",
   });

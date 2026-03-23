@@ -102,8 +102,8 @@ export default function EquityScorecardPage() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
 
   usePageMeta({
-    title: "Health Equity Scorecard — Access Michigan",
-    description: "Interactive dashboard showing racial and ethnic health disparities across key health indicators in Michigan.",
+    title: "Michigan Equity Dashboard | ALICE, PFAS, Pharmacy Deserts | accessmi.org",
+    description: "Interactive dashboard showing racial and ethnic health disparities, ALICE rates, PFAS contamination, pharmacy deserts, and more across Michigan.",
     path: "/equity",
   });
 

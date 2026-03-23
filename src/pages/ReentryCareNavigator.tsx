@@ -75,7 +75,7 @@ const SECTIONS = [
 
 export default function ReentryCareNavigator() {
   usePageMeta({
-    title: "Coming Home to Michigan — Reentry Resources",
+    title: "Coming Home to Michigan | Reentry Resources for Housing, Healthcare, Employment | accessmi.org",
     description: "Housing, healthcare, ID, employment, and legal help for returning citizens and their families across 83 Michigan counties.",
     path: "/reentry",
   });
