@@ -46,6 +46,16 @@ export const CITY_INCOME_TAX: Record<string, { resident: number; nonResident: nu
   "Hamtramck": { resident: 0.01, nonResident: 0.005 },
   "Port Huron": { resident: 0.01, nonResident: 0.005 },
   "Walker": { resident: 0.01, nonResident: 0.005 },
+  "Albion": { resident: 0.01, nonResident: 0.005 },
+  "Big Rapids": { resident: 0.01, nonResident: 0.005 },
+  "Benton Harbor": { resident: 0.01, nonResident: 0.005 },
+  "Grayling": { resident: 0.01, nonResident: 0.005 },
+  "Hudson": { resident: 0.01, nonResident: 0.005 },
+  "Ionia": { resident: 0.01, nonResident: 0.005 },
+  "Lapeer": { resident: 0.01, nonResident: 0.005 },
+  "Muskegon Heights": { resident: 0.01, nonResident: 0.005 },
+  "Portland": { resident: 0.01, nonResident: 0.005 },
+  "Springfield": { resident: 0.01, nonResident: 0.005 },
 };
 
 export const PROPERTY_TAX_RATES: Record<string, { millageRate: number; medianHomeValue: number; county: string }> = {
@@ -74,6 +84,20 @@ export const PROPERTY_TAX_RATES: Record<string, { millageRate: number; medianHom
   "Pontiac": { millageRate: 58.4, medianHomeValue: 95000, county: "Oakland" },
   "Holland": { millageRate: 40.1, medianHomeValue: 245000, county: "Ottawa" },
   "Bay City": { millageRate: 48.9, medianHomeValue: 95000, county: "Bay" },
+  "Albion": { millageRate: 52.6, medianHomeValue: 65000, county: "Calhoun" },
+  "Big Rapids": { millageRate: 40.8, medianHomeValue: 130000, county: "Mecosta" },
+  "Benton Harbor": { millageRate: 60.3, medianHomeValue: 55000, county: "Berrien" },
+  "Grayling": { millageRate: 34.5, medianHomeValue: 120000, county: "Crawford" },
+  "Hudson": { millageRate: 42.1, medianHomeValue: 95000, county: "Lenawee" },
+  "Ionia": { millageRate: 44.7, medianHomeValue: 120000, county: "Ionia" },
+  "Lapeer": { millageRate: 41.3, medianHomeValue: 155000, county: "Lapeer" },
+  "Muskegon Heights": { millageRate: 56.8, medianHomeValue: 55000, county: "Muskegon" },
+  "Portland": { millageRate: 39.2, medianHomeValue: 145000, county: "Ionia" },
+  "Springfield": { millageRate: 43.5, medianHomeValue: 110000, county: "Calhoun" },
+  "Highland Park": { millageRate: 70.2, medianHomeValue: 35000, county: "Wayne" },
+  "Hamtramck": { millageRate: 64.5, medianHomeValue: 65000, county: "Wayne" },
+  "Port Huron": { millageRate: 46.2, medianHomeValue: 105000, county: "St. Clair" },
+  "Walker": { millageRate: 36.8, medianHomeValue: 215000, county: "Kent" },
 };
 
 export const AUTO_INSURANCE_MONTHLY: Record<string, number> = {
@@ -84,6 +108,9 @@ export const AUTO_INSURANCE_MONTHLY: Record<string, number> = {
   "Sterling Heights": 270, "Wyoming": 240, "Holland": 210, "Muskegon": 310,
   "Battle Creek": 290, "Jackson": 285, "Bay City": 240, "Midland": 215,
   "Traverse City": 195, "Marquette": 190, "Ypsilanti": 350,
+  "Albion": 275, "Big Rapids": 220, "Benton Harbor": 345, "Grayling": 200,
+  "Hudson": 210, "Ionia": 225, "Lapeer": 230, "Muskegon Heights": 340,
+  "Portland": 215, "Springfield": 260, "Port Huron": 265, "Walker": 235,
 };
 
 export const CITIES = Object.keys(PROPERTY_TAX_RATES).sort();

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Database, X } from "lucide-react";
+import { Database, DollarSign, X } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -128,6 +128,19 @@ const Index = () => {
           <DataStoriesSection />
         </Suspense>
       </SectionErrorBoundary>
+
+      {/* ═══ TAX TEASER ═══ */}
+      <section className="py-4 border-b border-border/30">
+        <div className="container max-w-5xl">
+          <Link to="/tax-comparison" className="flex items-center gap-3 rounded-xl border border-michigan-gold/20 bg-michigan-gold/5 px-4 py-3 hover:bg-michigan-gold/10 transition-colors group">
+            <DollarSign className="h-5 w-5 text-michigan-gold shrink-0" />
+            <p className="text-sm text-foreground">
+              Living in <strong>Detroit vs Troy</strong> on an $80K salary? You'd keep <strong className="text-michigan-forest">$1,302 more</strong> per year.{" "}
+              <span className="text-primary font-medium group-hover:underline">Compare your cities &rarr;</span>
+            </p>
+          </Link>
+        </div>
+      </section>
 
       {/* ═══ RESEARCH & COMPARE ═══ */}
       <section className="py-8 bg-muted/20 border-y border-border/40">
