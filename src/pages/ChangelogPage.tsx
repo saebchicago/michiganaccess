@@ -24,6 +24,18 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Interactive Powerhouse — v5.0",
+    icon: Zap,
+    tag: "feature",
+    items: [
+      "Michigan Tax Comparison Calculator: federal + state + city + property + sales + FICA for 25 cities",
+      "'Should I Move?' composite decision tool: taxes + health + housing + auto insurance",
+      "ZIP Quick Stats: instant demographics for 20 major ZIPs before CDC data loads",
+      "Shareable comparison cards for social media / texting",
+      "Capability strip updated with Tax Calculator and Should I Move tools",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Interactive Engagement — v4.3",
     icon: Sparkles,
     tag: "feature",
