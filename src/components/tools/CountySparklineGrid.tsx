@@ -142,7 +142,7 @@ export default function CountySparklineGrid() {
               <Link
                 key={county}
                 to={`/county/${slug}`}
-                className="group flex flex-col items-center rounded-md border border-border p-1.5 hover:border-primary/40 hover:bg-muted/40 transition-colors"
+                className="group flex flex-col items-center rounded-md border border-border p-1.5 min-h-[44px] min-w-[44px] hover:border-primary/40 hover:bg-muted/40 transition-colors"
                 title={`${county}: ${value !== null ? value + def.unit : "N/A"}`}
               >
                 <span className="text-[9px] font-medium text-foreground truncate w-full text-center leading-tight">

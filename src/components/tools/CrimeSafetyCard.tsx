@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { ShieldCheck } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShieldCheck, ChevronDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { COUNTY_CRIME, MI_AVG_VIOLENT, MI_AVG_PROPERTY } from "@/data/crime-data";
 
@@ -44,6 +45,8 @@ function RateBar({ label, value, stateAvg }: { label: string; value: number; sta
 }
 
 export default function CrimeSafetyCard({ county }: CrimeSafetyCardProps) {
+  const [expanded, setExpanded] = useState(false);
+
   const data = COUNTY_CRIME.find(
     (c) => c.county.toLowerCase() === county.toLowerCase()
   );
@@ -58,6 +61,10 @@ export default function CrimeSafetyCard({ county }: CrimeSafetyCardProps) {
     );
   }
 
+  const violentBelow = data.violentPer100K <= MI_AVG_VIOLENT;
+  const propertyBelow = data.propertyPer100K <= MI_AVG_PROPERTY;
+  const overallSafe = violentBelow && propertyBelow;
+
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
       <Card>
@@ -68,20 +75,52 @@ export default function CrimeSafetyCard({ county }: CrimeSafetyCardProps) {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <RateBar label="Violent Crime" value={data.violentPer100K} stateAvg={MI_AVG_VIOLENT} />
-          <RateBar label="Property Crime" value={data.propertyPer100K} stateAvg={MI_AVG_PROPERTY} />
+          {/* Level 1: Key KPI visible without scroll */}
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="w-full flex items-center justify-between min-h-[44px] rounded-lg border border-border p-3 hover:bg-muted/40 transition-colors"
+            aria-expanded={expanded}
+          >
+            <div className="flex items-center gap-3">
+              <span className={`text-2xl font-bold ${overallSafe ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
+                {overallSafe ? "Below Avg" : "Above Avg"}
+              </span>
+              <span className="text-xs text-muted-foreground">vs MI state average</span>
+            </div>
+            <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${expanded ? "rotate-180" : ""}`} />
+          </button>
 
-          <p className="text-[9px] text-muted-foreground pt-1">
-            Based on 2022 FBI/MICR data.{" "}
-            <a
-              href="https://michigan.gov/msp"
-              target="_blank"
-              rel="noopener"
-              className="text-primary hover:underline"
-            >
-              michigan.gov/msp
-            </a>
-          </p>
+          {!expanded && (
+            <p className="text-[10px] text-muted-foreground text-center">Tap for details</p>
+          )}
+
+          {/* Level 2: Expanded comparison bars */}
+          <AnimatePresence>
+            {expanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="overflow-hidden space-y-4"
+              >
+                <RateBar label="Violent Crime" value={data.violentPer100K} stateAvg={MI_AVG_VIOLENT} />
+                <RateBar label="Property Crime" value={data.propertyPer100K} stateAvg={MI_AVG_PROPERTY} />
+
+                <p className="text-[9px] text-muted-foreground pt-1">
+                  Based on 2022 FBI/MICR data.{" "}
+                  <a
+                    href="https://michigan.gov/msp"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-primary hover:underline"
+                  >
+                    michigan.gov/msp
+                  </a>
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </CardContent>
       </Card>
     </motion.div>

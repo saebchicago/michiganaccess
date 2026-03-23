@@ -312,7 +312,7 @@ export default function SubstanceAbuseInsights() {
               <p className="text-xs text-muted-foreground">Distribution of treatment admissions by primary substance.</p>
             </CardHeader>
             <CardContent className="flex flex-col md:flex-row items-center gap-6">
-              <ResponsiveContainer width={200} height={200}>
+              <ResponsiveContainer width="100%" height={200}>
                 <PieChart>
                   <Pie data={TREATMENT_PIE} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={({ name, value }) => `${name} ${value}%`}>
                     {TREATMENT_PIE.map((entry, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}

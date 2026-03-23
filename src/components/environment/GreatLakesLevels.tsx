@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
-import { Waves, ExternalLink, Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Waves, ExternalLink, Loader2, ChevronDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -34,6 +35,7 @@ async function fetchLakeLevel(stationId: string): Promise<number | null> {
 }
 
 export default function GreatLakesLevels() {
+  const [expanded, setExpanded] = useState(false);
   const { data, isLoading } = useQuery({
     queryKey: ["great-lakes-levels"],
     queryFn: async () => {
@@ -63,27 +65,70 @@ export default function GreatLakesLevels() {
               <span className="text-xs text-muted-foreground">Fetching NOAA data...</span>
             </div>
           )}
+
+          {/* Level 1: Key KPI — Michigan-Huron level prominently */}
           {data && (
-            <div className="grid gap-3 sm:grid-cols-3">
-              {data.map((lake) => {
-                const diff = lake.currentFt != null ? lake.currentFt - lake.avgFt : null;
-                return (
-                  <div key={lake.name} className="rounded-lg border border-border p-3 text-center">
-                    <p className="text-xs font-semibold text-foreground">{lake.name}</p>
-                    <p className="text-lg font-bold text-primary">
-                      {lake.currentFt != null ? `${lake.currentFt.toFixed(1)} ft` : "—"}
+            <>
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="w-full flex items-center justify-between min-h-[44px] rounded-lg border border-border p-3 hover:bg-muted/40 transition-colors"
+                aria-expanded={expanded}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="text-left">
+                    <p className="text-[10px] text-muted-foreground">Michigan-Huron</p>
+                    <p className="text-2xl font-bold text-primary">
+                      {data[0]?.currentFt != null ? `${data[0].currentFt.toFixed(1)} ft` : "—"}
                     </p>
-                    {diff != null && (
-                      <Badge variant="outline" className={`text-[8px] ${diff > 0.5 ? "text-michigan-teal" : diff < -0.5 ? "text-michigan-coral" : "text-muted-foreground"}`}>
-                        {diff > 0 ? "+" : ""}{diff.toFixed(1)} ft vs avg
-                      </Badge>
+                    {data[0]?.currentFt != null && (
+                      <span className={`text-[10px] ${(data[0].currentFt - data[0].avgFt) > 0.5 ? "text-michigan-teal" : (data[0].currentFt - data[0].avgFt) < -0.5 ? "text-michigan-coral" : "text-muted-foreground"}`}>
+                        {(data[0].currentFt - data[0].avgFt) > 0 ? "+" : ""}{(data[0].currentFt - data[0].avgFt).toFixed(1)} ft vs avg
+                      </span>
                     )}
-                    <p className="text-[9px] text-muted-foreground mt-0.5">Avg: {lake.avgFt} ft IGLD</p>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+                <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${expanded ? "rotate-180" : ""}`} />
+              </button>
+
+              {!expanded && (
+                <p className="text-[10px] text-muted-foreground text-center">Tap to see all lakes</p>
+              )}
+
+              {/* Level 2: Full lake grid */}
+              <AnimatePresence>
+                {expanded && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="grid gap-3 sm:grid-cols-3">
+                      {data.map((lake) => {
+                        const diff = lake.currentFt != null ? lake.currentFt - lake.avgFt : null;
+                        return (
+                          <div key={lake.name} className="rounded-lg border border-border p-3 text-center">
+                            <p className="text-xs font-semibold text-foreground">{lake.name}</p>
+                            <p className="text-lg font-bold text-primary">
+                              {lake.currentFt != null ? `${lake.currentFt.toFixed(1)} ft` : "—"}
+                            </p>
+                            {diff != null && (
+                              <Badge variant="outline" className={`text-[8px] ${diff > 0.5 ? "text-michigan-teal" : diff < -0.5 ? "text-michigan-coral" : "text-muted-foreground"}`}>
+                                {diff > 0 ? "+" : ""}{diff.toFixed(1)} ft vs avg
+                              </Badge>
+                            )}
+                            <p className="text-[9px] text-muted-foreground mt-0.5">Avg: {lake.avgFt} ft IGLD</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </>
           )}
+
           <div className="flex items-center justify-between">
             <p className="text-[9px] text-muted-foreground">Source: NOAA CO-OPS, Great Lakes Dashboard</p>
             <a href="https://tidesandcurrents.noaa.gov/great_lakes/landing.html" target="_blank" rel="noopener" className="text-[9px] text-primary hover:underline flex items-center gap-0.5">

@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { GraduationCap, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap, TrendingUp, TrendingDown, Minus, ChevronDown } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -68,24 +69,49 @@ function ComparisonBar({ label, value, stateAvg, inverse }: { label: string; val
 }
 
 function DistrictRow({ d }: { d: SchoolDistrict }) {
+  const [expanded, setExpanded] = useState(false);
   const grade = getGrade(d.gradRate);
   const trend = getTrend(d);
 
   return (
-    <div className="rounded-lg border border-border p-3 space-y-3">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="rounded-lg border border-border p-3 space-y-2">
+      {/* Level 1: Key KPI — grade + trend visible without interaction */}
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full flex items-center justify-between min-h-[44px]"
+        aria-expanded={expanded}
+      >
+        <div className="text-left">
           <p className="text-sm font-semibold text-foreground">{d.district}</p>
           <p className="text-[10px] text-muted-foreground">{d.county} County</p>
         </div>
         <div className="flex items-center gap-2">
           <TrendArrow trend={trend} />
           <span className={`text-2xl font-bold ${grade.color}`}>{grade.letter}</span>
+          <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${expanded ? "rotate-180" : ""}`} />
         </div>
-      </div>
-      <ComparisonBar label="Graduation Rate" value={d.gradRate} stateAvg={MI_AVG_GRAD_RATE} />
-      <ComparisonBar label="Chronic Absenteeism" value={d.absenteeism} stateAvg={MI_AVG_ABSENTEEISM} inverse />
-      <p className="text-[9px] text-muted-foreground">Per-pupil spending: ${d.perPupil.toLocaleString()}</p>
+      </button>
+
+      {!expanded && (
+        <p className="text-[10px] text-muted-foreground text-center">Tap for details</p>
+      )}
+
+      {/* Level 2: Expanded comparison bars */}
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden space-y-3"
+          >
+            <ComparisonBar label="Graduation Rate" value={d.gradRate} stateAvg={MI_AVG_GRAD_RATE} />
+            <ComparisonBar label="Chronic Absenteeism" value={d.absenteeism} stateAvg={MI_AVG_ABSENTEEISM} inverse />
+            <p className="text-[9px] text-muted-foreground">Per-pupil spending: ${d.perPupil.toLocaleString()}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
