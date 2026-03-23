@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import TaxComparisonCalculator from "@/components/tools/TaxComparisonCalculator";
+import ShouldIMoveCalculator from "@/components/tools/ShouldIMoveCalculator";
 
 export default function TaxComparisonPage() {
   usePageMeta({
@@ -31,8 +32,9 @@ export default function TaxComparisonPage() {
           </motion.div>
         </div>
       </section>
-      <div className="container max-w-4xl py-8">
+      <div className="container max-w-4xl py-8 space-y-8">
         <TaxComparisonCalculator />
+        <ShouldIMoveCalculator />
       </div>
     </Layout>
   );
