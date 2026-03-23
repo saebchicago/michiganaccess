@@ -14,6 +14,7 @@ import { fetchZCTAData, MI_STATE_AVERAGES, US_AVERAGES, MEASURE_GROUPS, POPULAR_
 import NeighborhoodHealthScore from "@/components/tools/NeighborhoodHealthScore";
 import CommunityReportCard from "@/components/tools/CommunityReportCard";
 import NearMeFinder from "@/components/tools/NearMeFinder";
+import ZipQuickStats from "@/components/tools/ZipQuickStats";
 import { toast } from "sonner";
 
 import { TrendingUp as TrendIcon } from "lucide-react";
@@ -158,6 +159,7 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Explore"}
             </Button>
           </form>
+          {activeZip && <ZipQuickStats zip={activeZip} />}
           {isFetched && zipData && zipData.length === 0 && activeZip && (
             <p className="text-sm text-michigan-coral mt-2">No data found for ZIP {activeZip}. Try a different Michigan ZIP code.</p>
           )}
