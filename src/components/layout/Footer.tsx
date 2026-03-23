@@ -74,6 +74,7 @@ const Footer = () => {
         { label: t("nav.costTransparency"), href: "/costs" },
         { label: t("nav.healthData"), href: "/data" },
         { label: "ZIP Intelligence", href: "/zip-intelligence" },
+        { label: "Tax Comparison", href: "/tax-comparison" },
         { label: "Health Equity Atlas", href: "/health-equity-atlas" },
       ],
     },

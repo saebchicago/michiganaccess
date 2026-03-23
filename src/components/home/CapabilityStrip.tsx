@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MapPin, BarChart3, CheckCircle2, GitCompare, Map, FileText } from "lucide-react";
+import { MapPin, BarChart3, CheckCircle2, DollarSign, Map, Home } from "lucide-react";
 
 const CAPABILITIES = [
   { icon: MapPin, label: "Health Score", detail: "0-100 grade for any ZIP", href: "/zip-intelligence", color: "text-green-400" },
   { icon: BarChart3, label: "Custom Charts", detail: "40 CDC measures, your ZIP", href: "/zip-intelligence", color: "text-blue-400" },
   { icon: CheckCircle2, label: "Am I Eligible?", detail: "10 programs, 3 questions", href: "/financial-help#screener", color: "text-amber-400" },
-  { icon: GitCompare, label: "Compare ZIPs", detail: "Side-by-side any 2 ZIPs", href: "/zip-intelligence", color: "text-purple-400" },
+  { icon: DollarSign, label: "Tax Calculator", detail: "Compare total taxes in 2 cities", href: "/tax-comparison", color: "text-yellow-400" },
   { icon: Map, label: "Equity Atlas", detail: "10 layers, 83 counties", href: "/health-equity-atlas", color: "text-teal-400" },
-  { icon: FileText, label: "Report Card", detail: "One-click printable PDF", href: "/zip-intelligence", color: "text-rose-400" },
+  { icon: Home, label: "Should I Move?", detail: "Taxes + health + housing", href: "/tax-comparison", color: "text-rose-400" },
 ];
 
 export default function CapabilityStrip() {
