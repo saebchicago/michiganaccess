@@ -23,6 +23,7 @@ import WaterMonitorWidget from "@/components/environment/WaterMonitorWidget";
 import EnergyHealthScatter from "@/components/environment/EnergyHealthScatter";
 import WeatherAlerts from "@/components/environment/WeatherAlerts";
 import FDARecallFeed from "@/components/alerts/FDARecallFeed";
+import GreatLakesLevels from "@/components/environment/GreatLakesLevels";
 import MichiganForecast from "@/components/environment/MichiganForecast";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
@@ -191,6 +192,7 @@ const EnvironmentPage = () => {
         <div className="container space-y-4">
           <WeatherAlerts />
           <FDARecallFeed />
+          <GreatLakesLevels />
         </div>
       </section>
 
