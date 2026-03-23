@@ -557,7 +557,7 @@ function ActiveTransportationTab() {
             bgColor: "bg-michigan-blue/10",
           },
           {
-            title: "GATIS v1.0 — Ratified Feb 2026",
+            title: "GATIS v1.0 — Ratified March 2026",
             description: "The federal Bureau of Transportation Statistics released the first national standard for pedestrian, bike, and accessibility infrastructure data. Public domain, open source. Access Michigan is among the first civic platforms to integrate it.",
             icon: CheckCircle2,
             color: "text-michigan-forest",

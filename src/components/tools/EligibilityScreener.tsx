@@ -62,6 +62,10 @@ export default function EligibilityScreener() {
           <Users className="h-5 w-5 text-primary" /> Quick Eligibility Check
         </CardTitle>
         <CardDescription>See what programs you might qualify for. No data stored.</CardDescription>
+        <p className="text-[10px] text-muted-foreground mt-1">
+          This is a screening tool only — not an eligibility determination. Visit{" "}
+          <a href="https://newmibridges.michigan.gov" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">michigan.gov/mibridges</a> to apply.
+        </p>
       </CardHeader>
       <CardContent>
         <AnimatePresence mode="wait">

@@ -312,6 +312,17 @@ export default function ComparePlacesPage() {
 
   const allLoading = queries.some((q, i) => i < selected.length && q.isLoading);
 
+  // Timeout fallback: if data is still loading after 5 seconds, show unavailable message
+  const [loadingTimedOut, setLoadingTimedOut] = useState(false);
+  useEffect(() => {
+    if (!allLoading) {
+      setLoadingTimedOut(false);
+      return;
+    }
+    const timer = setTimeout(() => setLoadingTimedOut(true), 5000);
+    return () => clearTimeout(timer);
+  }, [allLoading]);
+
   const handleAddCounty = (county: string) => {
     if (!county || selected.length >= 4) return;
     const sel = resolveSelection(county);
@@ -726,8 +737,10 @@ export default function ComparePlacesPage() {
                               const isWorst = val !== null && val === worst && validValues.length > 1 && equityLens;
                               return (
                                 <td key={i} className="py-2.5 px-3 text-right">
-                                  {queries[i]?.isLoading ? (
+                                  {queries[i]?.isLoading && !loadingTimedOut ? (
                                     <Skeleton className="h-5 w-16 ml-auto" />
+                                  ) : queries[i]?.isLoading && loadingTimedOut ? (
+                                    <span className="text-xs text-muted-foreground italic">Data temporarily unavailable</span>
                                   ) : (
                                     <span className={[
                                       "font-mono text-sm",

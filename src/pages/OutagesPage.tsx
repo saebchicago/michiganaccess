@@ -319,7 +319,7 @@ export default function OutagesPage() {
           <TabsContent value="trends" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm">6-Month Outage Trend (Sept 2025 – Feb 2026)</CardTitle>
+                <CardTitle className="text-sm">6-Month Outage Trend (Sept 2025 – March 2026)</CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={300}>

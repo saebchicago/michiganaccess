@@ -311,7 +311,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "GATIS (General Active Transportation Infrastructure Specification)",
-                desc: "Bureau of Transportation Statistics open standard (v1.0, Feb 2026) for sidewalk, bike lane, curb ramp, and transit stop geospatial data. Michigan data via SEMCOG FeatureServer covering 7 SE counties (Wayne, Oakland, Macomb, Washtenaw, Livingston, Monroe, St. Clair). CC0 Public Domain.",
+                desc: "Bureau of Transportation Statistics open standard (v1.0, March 2026) for sidewalk, bike lane, curb ramp, and transit stop geospatial data. Michigan data via SEMCOG FeatureServer covering 7 SE counties (Wayne, Oakland, Macomb, Washtenaw, Livingston, Monroe, St. Clair). CC0 Public Domain.",
                 frequency: "Spec: annual; SEMCOG: quarterly",
                 url: "https://dotbts.github.io/BPA/",
               },
