@@ -54,7 +54,10 @@ export default function HealthEquitySection() {
           viewport={{ once: true }}
           className="rounded-xl border border-border bg-card p-6 mb-6"
         >
-          <h3 className="text-sm font-semibold text-foreground mb-4">Safety-Net Clinic Visibility: Before → After Platform</h3>
+          <div className="flex items-center gap-2 mb-4">
+            <h3 className="text-sm font-semibold text-foreground">Safety-Net Clinic Visibility: Before → After Platform</h3>
+            <Badge variant="outline" className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold">Illustrative</Badge>
+          </div>
           <div className="grid sm:grid-cols-2 gap-6">
             <div className="space-y-2">
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Before (Traditional Search)</p>
@@ -77,6 +80,9 @@ export default function HealthEquitySection() {
               ))}
             </div>
           </div>
+          <p className="text-[10px] text-muted-foreground mt-3 italic">
+            Illustrative example of the platform's SVI-weighted ranking algorithm. Modeled from CDC/ATSDR Social Vulnerability Index methodology. Not a measured platform outcome.
+          </p>
         </motion.div>
 
         <div className="text-center">

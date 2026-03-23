@@ -13,6 +13,39 @@ import CountySelector from "@/components/shared/CountySelector";
 import SiteSearch, { commandSiteSearch } from "@/components/shared/SiteSearch";
 import { useCounty } from "@/contexts/CountyContext";
 import { NAV_GROUPS, isNavGroup, type NavGroup, type NavLink as NavLinkType } from "@/config/routes";
+import { useLens, type Lens } from "@/hooks/useLens";
+import { cn } from "@/lib/utils";
+
+const LENS_OPTIONS: { value: Lens; label: string }[] = [
+  { value: "standard", label: "Standard" },
+  { value: "equity", label: "Equity" },
+  { value: "economic", label: "Economic" },
+  { value: "family", label: "Family" },
+];
+
+function LensSwitcher({ className }: { className?: string }) {
+  const { activeLens, setLens } = useLens();
+  return (
+    <div className={cn("flex items-center gap-0.5 rounded-full bg-muted/60 p-0.5", className)} role="radiogroup" aria-label="Data lens">
+      {LENS_OPTIONS.map((opt) => (
+        <button
+          key={opt.value}
+          role="radio"
+          aria-checked={activeLens === opt.value}
+          onClick={() => setLens(opt.value)}
+          className={cn(
+            "rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+            activeLens === opt.value
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:text-foreground"
+          )}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 const Header = () => {
   const { t } = useTranslation();
@@ -55,6 +88,9 @@ const Header = () => {
           </div>
           <span className="text-sm font-bold text-foreground">Access Michigan</span>
         </Link>
+
+        {/* Lens Switcher — desktop */}
+        <LensSwitcher className="hidden lg:flex" />
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main navigation">
@@ -162,6 +198,12 @@ const Header = () => {
                   )
                 )}
                 <div className="mt-4 border-t border-border pt-4 px-3 space-y-3">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                      Data Lens
+                    </p>
+                    <LensSwitcher />
+                  </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                       {t("county.selectCounty")}
