@@ -42,6 +42,10 @@ export default function MichiganPulse() {
             <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground hidden sm:inline">
               Michigan Pulse
             </span>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
             <motion.span
               animate={{ scale: [1, 1.3, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
