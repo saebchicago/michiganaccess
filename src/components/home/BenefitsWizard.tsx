@@ -36,7 +36,7 @@ const allPrograms: Program[] = [
   { name: "Michigan Saves Green Loans", description: "Low-interest financing for solar, HVAC, and insulation. $96.6M financed in 2024. 50,000+ customers served.", eligibility: "All income levels", link: "/environment", category: "energy" },
   { name: "MSHDA Housing Assistance", description: "Rental assistance, homebuyer programs, and foreclosure prevention.", eligibility: "Income ≤ 200% FPL", link: "/resources", category: "housing" },
   { name: "GSRP (Great Start Readiness)", description: "Free preschool for 4-year-olds to prepare for kindergarten.", eligibility: "Income ≤ 250% FPL", link: "/resources", category: "family" },
-  { name: "Insurance Appeal Support", description: "Free AI-powered tools to fight health insurance denials.", eligibility: "All Michigan residents", link: "/health/insurance-appeals", category: "health" },
+  { name: "Insurance Appeal Support", description: "Free tools to fight health insurance denials.", eligibility: "All Michigan residents", link: "/health/insurance-appeals", category: "health" },
   { name: "MIHI Broadband Subsidy", description: "Affordable high-speed internet through federal ACP program.", eligibility: "Income ≤ 200% FPL", link: "/environment", category: "energy" },
 ];
 

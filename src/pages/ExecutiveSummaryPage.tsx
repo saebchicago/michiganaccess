@@ -33,7 +33,7 @@ const quadrants = [
       { text: "Equity-centered navigation with Social Vulnerability Index (SVI) integration", source: "CDC/ATSDR SVI" },
       { text: "83-county unified resource directory with 700+ verified services", source: "Platform database" },
       { text: "Real-time data aggregation from 15+ public sources (CMS, HRSA, CDC, MDHHS)", source: "Data validation page" },
-      { text: "AI-powered insurance appeal generator with Michigan-specific legal references", source: "MCL 500.2213" },
+      { text: "Insurance appeal builder with Michigan-specific legal references", source: "MCL 500.2213" },
     ],
   },
   {

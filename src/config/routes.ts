@@ -327,7 +327,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
     links: [
       { label: "Get Financial Help", href: "/financial-help" },
       { label: "Community Resources", href: "/resources" },
-      { label: "Insurance Appeals", href: "/health/insurance-appeals", badge: "AI-Powered" },
+      { label: "Insurance Appeals", href: "/health/insurance-appeals", badge: "Tool" },
       { label: "Complex Care Navigation", href: "/complex-care" },
       { label: "Life Navigator Assessment", href: "/life-navigator" },
       { label: "Support Groups", href: "/support" },

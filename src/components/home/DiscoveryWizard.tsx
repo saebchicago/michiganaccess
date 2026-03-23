@@ -31,7 +31,7 @@ interface Program {
 const PROGRAMS: Program[] = [
   { name: "Healthy Michigan Plan (Medicaid)", description: "Free or low-cost health coverage for adults 19–64.", eligibility: "138", link: "/find-care", category: "health", situations: ["healthcare", "bills"], urgency: 5 },
   { name: "MIChild", description: "Health coverage for uninsured children under 19.", eligibility: "212", link: "/find-care", category: "health", situations: ["healthcare"], urgency: 5 },
-  { name: "Insurance Appeal Support", description: "Free AI-powered tools to fight health insurance denials.", eligibility: "all", link: "/health/insurance-appeals", category: "health", situations: ["healthcare", "bills"], urgency: 4 },
+  { name: "Insurance Appeal Support", description: "Free tools to fight health insurance denials.", eligibility: "all", link: "/health/insurance-appeals", category: "health", situations: ["healthcare", "bills"], urgency: 4 },
   { name: "SNAP (Bridge Card)", description: "Monthly food assistance on a Bridge Card for groceries.", eligibility: "130", link: "/financial-help", category: "food", situations: ["food", "bills"], urgency: 5 },
   { name: "WIC", description: "Nutrition for pregnant women, new mothers, and children under 5.", eligibility: "185", link: "/financial-help", category: "food", situations: ["food"], urgency: 4 },
   { name: "LIHEAP (Heating Assistance)", description: "Help paying home heating bills during cold months.", eligibility: "150", link: "/financial-help", category: "energy", situations: ["energy", "bills"], urgency: 5 },

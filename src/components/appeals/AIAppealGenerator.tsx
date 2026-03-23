@@ -140,7 +140,7 @@ const AIAppealGenerator = () => {
     <section className="space-y-6" aria-labelledby="ai-generator-heading">
       <div className="text-center">
         <h2 id="ai-generator-heading" className="text-2xl font-bold text-foreground">
-          AI Appeal Letter Generator
+          Insurance Appeal Letter Builder
         </h2>
         <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
           Describe your denial and we'll generate a professional appeal letter tailored to your Michigan carrier. No personal health information is stored.

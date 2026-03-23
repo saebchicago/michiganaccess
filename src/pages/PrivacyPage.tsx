@@ -111,7 +111,7 @@ export default function PrivacyPage() {
         <Separator />
 
         {/* 4 — AI Features */}
-        <Section icon={Eye} title="4. AI-Powered Features" index={3}>
+        <Section icon={Eye} title="4. Automated Features" index={3}>
           <p>
             Access Michigan includes AI-powered tools such as the chat assistant and insurance appeal letter generator. Important privacy details about these features:
           </p>

@@ -39,7 +39,7 @@ const studies = [
     challenge: "Nationally, an estimated 50–80% of insurance denials go uncontested. In Michigan, the average time to prepare a manual appeal is estimated at 4–8 hours, creating a significant barrier for working families and vulnerable populations.",
     challengeSource: "Kaiser Family Foundation (2023); ASPE/HHS denial rate reports",
     approach: [
-      "AI-assisted appeal letter generation using denial code mapping and Michigan insurance regulations (MCL 500.2213)",
+      "Template-assisted appeal letter generation using denial code mapping and Michigan insurance regulations (MCL 500.2213)",
       "Automated extraction of carrier-specific submission requirements and deadlines",
       "Template library covering 24 common denial categories with clinical justification frameworks",
       "Step-by-step guided workflow designed to reduce preparation time significantly",

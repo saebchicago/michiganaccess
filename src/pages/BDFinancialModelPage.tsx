@@ -411,7 +411,7 @@ function ServiceLineTab({ sl, onSl }: ServiceLineTabProps) {
             <span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-[#1D9E75] inline-block" />Cumulative cash flow</span>
           </div>
 
-          {/* AI-powered insight card */}
+          {/* Market insight card */}
           <div className={`mt-4 rounded-lg border-l-2 px-4 py-3 transition-colors ${aiLoading ? "border-muted bg-muted/20" : "border-michigan-teal bg-muted/40"}`}>
             <p className="text-xs text-muted-foreground leading-relaxed">
               <span className="font-semibold text-foreground">
@@ -647,7 +647,7 @@ function MarketOpportunityTab() {
       <div className="rounded-lg border border-border bg-muted/20 p-4 min-h-[80px]">
         {!selected && (
           <p className="text-xs text-muted-foreground italic text-center py-3">
-            ↑ Click any county above to get an AI-powered market opportunity analysis.
+            ↑ Click any county above to get an market opportunity analysis.
           </p>
         )}
         {selected && (

@@ -38,7 +38,7 @@ const PERSONAS: Persona[] = [
     title: "Rural Senior on Medicare",
     location: "Traverse City, Grand Traverse County",
     situation: "Dorothy's Medicare Advantage plan denied physical therapy for her hip replacement recovery.",
-    solution: "Generated an AI appeal letter citing CMS coverage criteria → peer-to-peer review → PT approved for 12 weeks.",
+    solution: "Built an appeal letter using CMS coverage criteria → peer-to-peer review → PT approved for 12 weeks.",
     successStory: "\"My doctor said the PT was critical. The appeal letter helped me explain why in terms the insurance company understood.\"",
     links: [
       { label: "Medicare appeal guide", href: "#ai-generator" },

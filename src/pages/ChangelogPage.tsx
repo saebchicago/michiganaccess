@@ -173,7 +173,7 @@ const entries: ChangelogEntry[] = [
     icon: Sparkles,
     tag: "feature",
     items: [
-      "AI-powered insurance appeal letter generator",
+      "Insurance appeal letter builder with Michigan regulation templates",
       "Medicaid specialist workflow with step-by-step guidance",
       "Doctor's appeal toolkit with clinical documentation helpers",
       "Complex care navigation page for multi-system patients",
