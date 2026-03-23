@@ -14,6 +14,7 @@ import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 const MichiganHeatGrid = lazy(() => import("@/components/atlas/MichiganHeatGrid"));
 const MichiganMap = lazy(() => import("@/components/atlas/MichiganMap"));
 const CompoundDeficitRanking = lazy(() => import("@/components/data/CompoundDeficitRanking"));
+const CountySparklineGrid = lazy(() => import("@/components/tools/CountySparklineGrid"));
 
 function getCountyData(county: string) {
   const p = COUNTY_PROFILES[county];
@@ -146,6 +147,13 @@ export default function HealthEquityAtlasPage() {
             )}
           </div>
         </div>
+      </div>
+
+      {/* 83-County Sparkline Grid */}
+      <div className="container max-w-6xl py-8">
+        <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading county grid...</div>}>
+          <CountySparklineGrid />
+        </Suspense>
       </div>
 
       {/* Compound Index Rankings */}

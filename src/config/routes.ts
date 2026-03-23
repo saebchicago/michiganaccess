@@ -134,6 +134,7 @@ const pages = {
   BDFinancialModelPage: lazy(() => import("@/pages/BDFinancialModelPage")),
   PortfolioPage: lazy(() => import("@/pages/PortfolioPage")),
   DataCenterPage: lazy(() => import("@/pages/DataCenterPage")),
+  FindYourCityPage: lazy(() => import("@/pages/FindYourCityPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -245,6 +246,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/quality/compare", component: pages.QualityComparisonPage, label: "Quality Comparison" },
   { path: "/energy-burden", component: pages.EnergyBurdenPage, label: "Energy Burden" },
   { path: "/data-centers", component: pages.DataCenterPage, label: "Data Centers" },
+  { path: "/find-your-city", component: pages.FindYourCityPage, label: "Find Your City" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
@@ -290,6 +292,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Health Equity", href: "/equity", badge: "Updated" },
       { label: "Energy Burden", href: "/energy-burden" },
       { label: "Data Centers", href: "/data-centers", badge: "New" },
+      { label: "Find Your City", href: "/find-your-city", badge: "Interactive" },
     ],
   },
   { label: "Methodology", href: "/methodology" },
@@ -363,6 +366,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Environment & Air Quality", href: "/environment" },
       { label: "Data Centers", href: "/data-centers", badge: "New" },
       { label: "Health Equity Atlas", href: "/health-equity-atlas", badge: "New" },
+      { label: "Find Your City", href: "/find-your-city", badge: "Interactive" },
       { label: "Maternal & Infant Health", href: "/maternal-health", badge: "New" },
       { label: "Replicate This Platform", href: "/replicate" },
     ],
