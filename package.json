@@ -13,7 +13,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:a11y": "playwright test --project=chromium src/test/e2e/accessibility.spec.ts"
+    "test:a11y": "playwright test --project=chromium src/test/e2e/accessibility.spec.ts",
+    "smoke-test": "bash scripts/smoke-test.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

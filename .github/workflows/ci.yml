@@ -1,0 +1,110 @@
+name: CI — Build + Smoke Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: API Health Checks
+        run: |
+          echo "═══ API HEALTH CHECKS ═══"
+          PASS=0
+          FAIL=0
+
+          check_api() {
+            local name="$1"
+            local url="$2"
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$url")
+            if [ "$STATUS" = "200" ]; then
+              echo "  ✅ $name (HTTP $STATUS)"
+              PASS=$((PASS + 1))
+            else
+              echo "  ⚠️ $name (HTTP $STATUS)"
+              FAIL=$((FAIL + 1))
+            fi
+          }
+
+          check_api "CDC PLACES" "https://data.cdc.gov/resource/qnzd-25i4.json?\$limit=1"
+          check_api "NWS Weather" "https://api.weather.gov/alerts/active?area=MI"
+          check_api "FDA openFDA" "https://api.fda.gov/food/enforcement.json?limit=1"
+          check_api "ClinicalTrials.gov" "https://clinicaltrials.gov/api/v2/studies?pageSize=1"
+
+          echo ""
+          echo "Results: $PASS passed, $FAIL warnings"
+
+      - name: CDC PLACES Data Verification
+        run: |
+          RESPONSE=$(curl -s "https://data.cdc.gov/resource/qnzd-25i4.json?locationid=48126&\$limit=3")
+          COUNT=$(echo "$RESPONSE" | python3 -c "import sys,json; print(len(json.load(sys.stdin)))" 2>/dev/null || echo "0")
+          if [ "$COUNT" -gt "0" ]; then
+            echo "✅ CDC PLACES returns $COUNT records for ZIP 48126"
+          else
+            echo "❌ CDC PLACES returns NO DATA — ZIP Intelligence is broken"
+            exit 1
+          fi
+
+      - name: TopoJSON Check
+        run: |
+          if [ -f "public/data/us-counties-10m.json" ]; then
+            echo "✅ TopoJSON bundled locally ($(wc -c < public/data/us-counties-10m.json) bytes)"
+          else
+            echo "❌ TopoJSON not bundled — D3 map may not render"
+            exit 1
+          fi
+
+      - name: Data Integrity
+        run: |
+          ALICE=$(grep -o 'value: 41' src/data/data-stories.ts | head -1)
+          if [ -n "$ALICE" ]; then
+            echo "✅ ALICE value: 41"
+          else
+            echo "❌ ALICE value missing or wrong"
+            exit 1
+          fi
+
+      - name: Route Registry
+        run: |
+          for route in zip-intelligence health-equity-atlas compare equity financial-help reentry data-sources tax-comparison; do
+            if grep -q "\"/$route\"" src/config/routes.ts 2>/dev/null; then
+              echo "  ✅ /$route"
+            else
+              echo "  ❌ /$route NOT IN ROUTES"
+              exit 1
+            fi
+          done
+
+      - name: Credibility Check
+        run: |
+          echo "═══ CREDIBILITY CHECKS ═══"
+          FOUND=$(grep -ri "ChatGPT\|made.up.by.AI\|AI-generated" src/ --include="*.ts" --include="*.tsx" -l || true)
+          if [ -n "$FOUND" ]; then
+            echo "❌ Unauthorized AI references found in:"
+            echo "$FOUND"
+            exit 1
+          else
+            echo "✅ No unauthorized AI references found"
+          fi
