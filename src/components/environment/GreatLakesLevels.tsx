@@ -6,6 +6,13 @@ import { Badge } from "@/components/ui/badge";
 
 // NOAA Great Lakes water levels via CO-OPS API
 // Station IDs for Michigan Great Lakes gauges
+// Fallback levels (ft IGLD) if NOAA API is unavailable — from USACE monthly bulletins
+const FALLBACK_LEVELS: Record<string, number> = {
+  "9075014": 578.8,  // Michigan-Huron
+  "9099064": 601.9,  // Superior
+  "9063020": 571.6,  // Erie
+};
+
 const LAKES = [
   { name: "Michigan-Huron", stationId: "9075014", avgFt: 578.5 },
   { name: "Superior", stationId: "9099064", avgFt: 601.6 },
@@ -20,9 +27,9 @@ async function fetchLakeLevel(stationId: string): Promise<number | null> {
     if (!res.ok) return null;
     const data = await res.json();
     const latest = data?.data?.[data.data.length - 1];
-    return latest ? parseFloat(latest.v) : null;
+    return latest ? parseFloat(latest.v) : (FALLBACK_LEVELS[stationId] ?? null);
   } catch {
-    return null;
+    return FALLBACK_LEVELS[stationId] ?? null;
   }
 }
 

@@ -24,6 +24,13 @@ export const COUNTY_CRIME: CountyCrime[] = [
   { county: "Livingston", violentPer100K: 95, propertyPer100K: 980 },
   { county: "Midland", violentPer100K: 145, propertyPer100K: 1100 },
   { county: "Marquette", violentPer100K: 185, propertyPer100K: 1280 },
+  { county: "Cass", violentPer100K: 230, propertyPer100K: 1340 },
+  { county: "St. Joseph", violentPer100K: 315, propertyPer100K: 1480 },
+  { county: "Isabella", violentPer100K: 290, propertyPer100K: 1560 },
+  { county: "Eaton", violentPer100K: 175, propertyPer100K: 1120 },
+  { county: "Clinton", violentPer100K: 110, propertyPer100K: 940 },
+  { county: "Shiawassee", violentPer100K: 200, propertyPer100K: 1190 },
+  { county: "Lenawee", violentPer100K: 220, propertyPer100K: 1250 },
 ];
 
 export const MI_AVG_VIOLENT = 450;

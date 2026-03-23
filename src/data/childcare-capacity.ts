@@ -24,6 +24,15 @@ export const CHILDCARE_DATA: ChildcareCounty[] = [
   { county: "Monroe", licensedSlots: 1400, childrenUnder5: 3800, gapPercent: 63 },
   { county: "Lake", licensedSlots: 45, childrenUnder5: 280, gapPercent: 84 },
   { county: "Oscoda", licensedSlots: 30, childrenUnder5: 180, gapPercent: 83 },
+  { county: "Eaton", licensedSlots: 1650, childrenUnder5: 3400, gapPercent: 51 },
+  { county: "Clinton", licensedSlots: 1100, childrenUnder5: 2200, gapPercent: 50 },
+  { county: "Livingston", licensedSlots: 2800, childrenUnder5: 5600, gapPercent: 50 },
+  { county: "St. Clair", licensedSlots: 1900, childrenUnder5: 4800, gapPercent: 60 },
+  { county: "Calhoun", licensedSlots: 1600, childrenUnder5: 4100, gapPercent: 61 },
+  { county: "Jackson", licensedSlots: 1800, childrenUnder5: 4600, gapPercent: 61 },
+  { county: "Midland", licensedSlots: 1300, childrenUnder5: 2600, gapPercent: 50 },
+  { county: "Bay", licensedSlots: 1200, childrenUnder5: 2900, gapPercent: 59 },
+  { county: "Marquette", licensedSlots: 850, childrenUnder5: 1800, gapPercent: 53 },
 ];
 
 export const MI_TOTAL_SLOTS = 185000;
