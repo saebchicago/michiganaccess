@@ -373,16 +373,17 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.32, duration: 0.4 }}
-            className="mt-6 max-w-md mx-auto space-y-3"
+            className="mt-8 max-w-lg mx-auto space-y-4"
           >
-            <div className="flex gap-2">
+            <div className="flex gap-3 justify-center">
               <input
                 type="text"
                 inputMode="numeric"
                 maxLength={5}
                 placeholder="Enter your ZIP code"
-                className="flex-1 h-12 rounded-full bg-white/10 border-2 border-white/30 text-white text-center text-lg font-mono placeholder:text-white/40 focus:outline-none focus:border-white/60 focus:bg-white/15 transition-colors"
+                className="w-48 md:w-56 h-14 md:h-16 rounded-full bg-white/10 border-2 border-white/40 text-white text-center text-xl md:text-2xl font-mono placeholder:text-white/40 focus:outline-none focus:border-white/70 focus:bg-white/15 focus:scale-[1.02] transition-all shadow-lg"
                 id="hero-zip"
+                aria-label="Enter your 5-digit Michigan ZIP code"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     const v = (e.target as HTMLInputElement).value;
@@ -392,7 +393,7 @@ const HeroSection = () => {
               />
               <Button
                 size="lg"
-                className="h-12 px-5 rounded-full bg-white text-primary font-semibold hover:bg-white/90 shadow-lg"
+                className="h-14 md:h-16 px-6 md:px-8 rounded-full bg-white text-primary text-base md:text-lg font-bold hover:bg-white/90 shadow-xl hover:shadow-2xl hover:scale-[1.02] transition-all"
                 onClick={() => {
                   const v = (document.getElementById("hero-zip") as HTMLInputElement)?.value;
                   if (v?.length === 5) navigate(`/zip-intelligence?zip=${v}`);
@@ -401,8 +402,8 @@ const HeroSection = () => {
                 See Your Neighborhood →
               </Button>
             </div>
-            <p className="text-white/50 text-[11px]">
-              Get a health score, build charts, check eligibility — powered by CDC, Census & 60+ sources
+            <p className="text-white/60 text-xs font-medium tracking-wide">
+              60+ verified data sources · 83 counties · Zero tracking · Independent
             </p>
           </motion.div>
 
@@ -440,56 +441,20 @@ const HeroSection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.4 }}
-            className="mt-4 flex items-center justify-center gap-3"
-          >
-            <Link to="/find-care" className="text-[11px] text-white/50 hover:text-white/80 transition-colors underline underline-offset-2">
-              Find help near you
-            </Link>
-            <span className="text-white/20">·</span>
-            <Link to="/health-equity-atlas" className="text-[11px] text-white/50 hover:text-white/80 transition-colors underline underline-offset-2">
-              Explore the equity atlas
-            </Link>
-          </motion.div>
-
-          {/* Sample brief preview card */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.38, duration: 0.4 }}
-            className="mt-4"
+            className="mt-5 flex items-center justify-center gap-4"
           >
             <Link
-              to="/brief?county=Oakland"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 backdrop-blur-sm px-4 py-2.5 hover:bg-white/15 transition-colors group"
+              to="/find-care"
+              className="rounded-full border border-white/25 bg-white/10 hover:bg-white/20 px-4 py-2 text-xs font-medium text-primary-foreground transition-colors"
             >
-              <FileText className="h-4 w-4 text-primary-foreground/60" />
-              <span className="text-xs text-primary-foreground/80 group-hover:text-primary-foreground transition-colors">
-                See a sample county brief →
-              </span>
-              <span className="text-[10px] text-primary-foreground/40 border-l border-white/15 pl-2 ml-1">
-                Oakland County
-              </span>
+              Find Help
             </Link>
-          </motion.div>
-
-          {/* Trust chips row */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.45, duration: 0.4 }}
-            className="mt-5 flex flex-wrap items-center justify-center gap-2"
-          >
-            {[
-              { icon: UserX, text: "No account" },
-              { icon: Eye, text: "No tracking" },
-              { icon: MapPin, text: "83 counties" },
-              { icon: CalendarCheck, text: "Updated March 2026" },
-            ].map((chip) => (
-              <span key={chip.text} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/8 px-2.5 py-1 text-[10px] font-medium text-primary-foreground/70">
-                <chip.icon className="h-3 w-3" aria-hidden="true" />
-                {chip.text}
-              </span>
-            ))}
+            <Link
+              to="/health-equity-atlas"
+              className="rounded-full border border-white/25 bg-white/10 hover:bg-white/20 px-4 py-2 text-xs font-medium text-primary-foreground transition-colors"
+            >
+              Explore Data
+            </Link>
           </motion.div>
 
           {/* Smart Search Bar */}

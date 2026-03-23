@@ -68,7 +68,7 @@ export default function LiveDemoPreview() {
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => setIdx((prev) => (prev + 1) % MOMENTS.length), 5000);
+    const timer = setInterval(() => setIdx((prev) => (prev + 1) % MOMENTS.length), 4000);
     return () => clearInterval(timer);
   }, []);
 
@@ -92,8 +92,8 @@ export default function LiveDemoPreview() {
               <motion.div key={idx} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
                 <p className="text-sm font-semibold text-foreground mb-2">{moment.title}</p>
                 {moment.body}
-                <Link to={moment.href} className="mt-3 flex items-center gap-1 text-xs text-primary hover:underline">
-                  {moment.cta} <ArrowRight className="h-3 w-3" />
+                <Link to={moment.href} className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline">
+                  Try it yourself → <ArrowRight className="h-3 w-3" />
                 </Link>
               </motion.div>
             </AnimatePresence>
