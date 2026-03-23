@@ -24,15 +24,26 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
-    month: "March", year: "2026", title: "Interactive Powerhouse — v5.0",
-    icon: Zap,
+    month: "March", year: "2026", title: "Max Impact Release — v5.0",
+    icon: Rocket,
     tag: "feature",
     items: [
-      "Michigan Tax Comparison Calculator: federal + state + city + property + sales + FICA for 25 cities",
-      "'Should I Move?' composite decision tool: taxes + health + housing + auto insurance",
-      "ZIP Quick Stats: instant demographics for 20 major ZIPs before CDC data loads",
-      "Shareable comparison cards for social media / texting",
-      "Capability strip updated with Tax Calculator and Should I Move tools",
+      "P0 bug fixes: ZIP Intelligence historical data, county comparison timeout fallback, date consistency",
+      "Tax Comparison Calculator: federal + state + all 24 city income taxes + property + auto insurance + HOA",
+      "'Pick Your Priorities' city ranker with 5 weighted sliders at /find-your-city",
+      "Michigan Data Quiz: 10 questions with shareable scores",
+      "83-county sparkline grid for pattern discovery",
+      "Global lens system: Standard, Equity, Economic, Family views",
+      "Crime safety index (27 counties from FBI/MICR 2022)",
+      "Great Lakes water level monitoring (NOAA CO-OPS with fallback)",
+      "Childcare access layer (25 counties from LARA licensed capacity)",
+      "School district scorecard (50 districts from MI School Data)",
+      "ZIP Quick Stats: instant demographics for 30 Michigan ZIPs",
+      "'Should I Move?' composite comparison tool",
+      "Mobile-first progressive disclosure architecture",
+      "Automated QA: GitHub Actions CI, health monitoring, smoke tests",
+      "SEO: descriptive meta tags, JSON-LD structured data, sitemap completeness",
+      "Credibility: projection labels with benchmark sources",
     ],
   },
   {
