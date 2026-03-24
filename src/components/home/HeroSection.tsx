@@ -365,7 +365,7 @@ const HeroSection = () => {
             transition={{ delay: 0.22, duration: 0.5 }}
             className="mt-3 text-sm text-primary-foreground/75 md:text-base max-w-xl mx-auto leading-relaxed"
           >
-            83 counties · 60+ data sources · Free forever.
+            ZIP-level health, economic & housing data across all 83 counties. Free, forever.
           </motion.p>
 
           {/* ZIP Input — Primary CTA */}

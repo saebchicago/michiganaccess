@@ -391,6 +391,8 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Disaster History (FEMA)", href: "/disaster-history", badge: "Live API" },
       { label: "SBA Lending Insights", href: "/sba-insights", badge: "New" },
       { label: "Maternal & Infant Health", href: "/maternal-health", badge: "New" },
+      { label: "ZIP Finder", href: "/zip-finder", badge: "New" },
+      { label: "Service Area Builder", href: "/service-area", badge: "New" },
       { label: "Replicate This Platform", href: "/replicate" },
     ],
   },

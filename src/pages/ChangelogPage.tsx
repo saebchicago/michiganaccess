@@ -24,6 +24,22 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "PolicyMap-Level Intelligence — v9.0",
+    icon: Rocket,
+    tag: "feature",
+    items: [
+      "HUD Small Area Fair Market Rents (SAFMR): ZIP-level voucher benchmark rents",
+      "CMS Hospital Service Area File: where residents actually go for hospital care",
+      "EPA EJSCREEN environmental justice metrics aggregated to ZIP level",
+      "HRSA GeoCare Navigator: FQHC penetration and unserved population by ZIP",
+      "ZIP Finder: find ZIPs matching multiple health, economic, and environmental criteria",
+      "Service Area Builder: aggregate data for custom county/ZIP combinations",
+      "ZIP-to-ZIP comparison mode with radar chart overlay",
+      "6 data-driven Impact Stories with verified statistics",
+      "ZIP Score interpretation bands with actionable guidance",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Intelligence & Engagement — v8.0",
     icon: Sparkles,
     tag: "feature",
