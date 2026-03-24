@@ -128,7 +128,7 @@ const Header = () => {
           <Link
             to="/compare"
             className={`hidden lg:inline-flex items-center gap-1 rounded-md px-2.5 py-2 text-sm font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-              location.pathname === "/compare" ? "text-primary" : "text-foreground hover:text-primary"
+              location.pathname === "/compare" ? "text-primary font-bold" : "text-foreground hover:text-primary"
             }`}
             aria-current={location.pathname === "/compare" ? "page" : undefined}
           >
