@@ -135,6 +135,7 @@ const pages = {
   PortfolioPage: lazy(() => import("@/pages/PortfolioPage")),
   DataCenterPage: lazy(() => import("@/pages/DataCenterPage")),
   FindYourCityPage: lazy(() => import("@/pages/FindYourCityPage")),
+  DisasterHistoryPage: lazy(() => import("@/pages/DisasterHistoryPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -247,6 +248,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/energy-burden", component: pages.EnergyBurdenPage, label: "Energy Burden" },
   { path: "/data-centers", component: pages.DataCenterPage, label: "Data Centers" },
   { path: "/find-your-city", component: pages.FindYourCityPage, label: "Find Your City" },
+  { path: "/disaster-history", component: pages.DisasterHistoryPage, label: "Disaster History" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
@@ -293,6 +295,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Energy Burden", href: "/energy-burden" },
       { label: "Data Centers", href: "/data-centers", badge: "New" },
       { label: "Find Your City", href: "/find-your-city", badge: "Interactive" },
+      { label: "Disaster History", href: "/disaster-history", badge: "Live API" },
     ],
   },
   { label: "Methodology", href: "/methodology" },
@@ -369,6 +372,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Find Your City", href: "/find-your-city", badge: "Interactive" },
       { label: "Compare ZIP Codes", href: "/compare-zips", badge: "Tool" },
       { label: "Tax Comparison Calculator", href: "/tax-comparison", badge: "Calculator" },
+      { label: "Disaster History (FEMA)", href: "/disaster-history", badge: "Live API" },
       { label: "Maternal & Infant Health", href: "/maternal-health", badge: "New" },
       { label: "Replicate This Platform", href: "/replicate" },
     ],
