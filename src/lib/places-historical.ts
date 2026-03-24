@@ -20,7 +20,7 @@ export async function fetchZCTAHistorical(zcta: string): Promise<{
 
 async function fetchFromDataset(datasetId: string, zcta: string): Promise<any[]> {
   try {
-    const res = await fetch(`https://data.cdc.gov/resource/${datasetId}.json?$where=locationid='${zcta}'&$limit=50`);
+    const res = await fetch(`https://data.cdc.gov/resource/${datasetId}.json?locationid=${encodeURIComponent(zcta)}&$limit=1000`);
     if (!res.ok) return [];
     return res.json();
   } catch {

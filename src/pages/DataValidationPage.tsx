@@ -166,7 +166,7 @@ export default function DataValidationPage() {
 
         <div className="text-center text-[10px] text-muted-foreground space-y-1">
           <p>Questions about our data? <Link to="/contact" className="text-primary hover:underline">Contact us</Link> · <Link to="/methodology" className="text-primary hover:underline">View methodology</Link></p>
-          <p>Last reviewed: February 2026</p>
+          <p>Last reviewed: March 2026</p>
         </div>
       </div>
     </Layout>
