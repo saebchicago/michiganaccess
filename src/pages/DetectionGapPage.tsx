@@ -7,15 +7,55 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Link } from "react-router-dom";
-import { ArrowRight, Heart, Database, MapPin } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ArrowRight, Heart, Database, MapPin, DollarSign, AlertTriangle, Building } from "lucide-react";
 
-const DETECT_RATE = 0.274;
-const CONNECTION_RATE = 0.35;
+/* ── Funnel rates ────────────────────────────────────────────────────── */
+const SCREEN_POSITIVE_RATE = 0.274;
+const REFERRAL_RATE = 0.68;
+const ACTUAL_REFERRAL = 0.42;
+const CONNECTION_RATE = 0.31;
 const PREVENTION_RATE = 0.16;
 const AVG_COST = 14500;
 
-const fmt = (n: number) => n >= 1_000_000 ? `${(n / 1_000_000).toFixed(1)}M` : n >= 1_000 ? `${(n / 1_000).toFixed(0)}K` : String(Math.round(n));
-const fmtDollar = (n: number) => n >= 1_000_000 ? `$${(n / 1_000_000).toFixed(1)}M` : n >= 1_000 ? `$${(n / 1_000).toFixed(0)}K` : `$${Math.round(n)}`;
+/* ── Health system regions ───────────────────────────────────────────── */
+interface HealthRegion {
+  label: string;
+  defaultPop: number;
+  description: string;
+}
+const REGIONS: Record<string, HealthRegion> = {
+  statewide: { label: "Statewide", defaultPop: 1_000_000, description: "All Michigan health systems combined" },
+  metro_detroit: { label: "Metro Detroit", defaultPop: 1_800_000, description: "Wayne, Oakland, Macomb tri-county" },
+  west_michigan: { label: "West Michigan", defaultPop: 650_000, description: "Kent, Ottawa, Muskegon, Allegan" },
+  upper_peninsula: { label: "Upper Peninsula", defaultPop: 120_000, description: "15 UP counties" },
+};
+
+/* ── Source labels ────────────────────────────────────────────────────── */
+const SOURCES = {
+  screened: "Trinity Health 2023 SDOH Screening Report (verified)",
+  positive: "NACHC 2023 (illustrative)",
+  referral: "Journal of AHIMA 2023 (illustrative)",
+  connection: "RWJF 2022 (illustrative)",
+};
+
+/* ── Formatting helpers ──────────────────────────────────────────────── */
+const fmt = (n: number) =>
+  n >= 1_000_000 ? `${(n / 1_000_000).toFixed(1)}M` : n >= 1_000 ? `${(n / 1_000).toFixed(0)}K` : String(Math.round(n));
+const fmtDollar = (n: number) =>
+  n >= 1_000_000_000
+    ? `$${(n / 1_000_000_000).toFixed(1)}B`
+    : n >= 1_000_000
+      ? `$${(n / 1_000_000).toFixed(1)}M`
+      : n >= 1_000
+        ? `$${(n / 1_000).toFixed(0)}K`
+        : `$${Math.round(n)}`;
 
 interface Stage {
   label: string;
@@ -24,6 +64,7 @@ interface Stage {
   color: string;
   bgColor: string;
   desc: string;
+  source: string;
 }
 
 function FunnelBar({ stage, maxValue, index }: { stage: Stage; maxValue: number; index: number }) {
@@ -51,7 +92,10 @@ function FunnelBar({ stage, maxValue, index }: { stage: Stage; maxValue: number;
           <span className="text-xs font-bold text-white whitespace-nowrap">{stage.pct}%</span>
         </motion.div>
       </div>
-      <p className="text-[11px] text-gray-500 leading-snug">{stage.desc}</p>
+      <div className="flex items-center justify-between">
+        <p className="text-[11px] text-gray-500 leading-snug flex-1">{stage.desc}</p>
+        <span className="text-[9px] text-gray-600 ml-2 shrink-0 italic">{stage.source}</span>
+      </div>
     </motion.div>
   );
 }
@@ -75,30 +119,86 @@ function GapCallout({ label, value, delay }: { label: string; value: string; del
 }
 
 export default function DetectionGapPage() {
-  const [volume, setVolume] = useState([1_000_000]);
+  const [region, setRegion] = useState("statewide");
+  const regionData = REGIONS[region];
+  const [volume, setVolume] = useState([regionData.defaultPop]);
 
   usePageMeta({
     title: "The Detection Gap — Access Michigan",
-    description: "Health systems screen millions for social needs but lack the infrastructure to act. See the data behind Michigan's detection-to-action gap.",
+    description:
+      "Health systems screen millions for social needs but lack the infrastructure to act. See the data behind Michigan's detection-to-action gap.",
     path: "/detection-gap",
   });
 
+  const handleRegionChange = (val: string) => {
+    setRegion(val);
+    setVolume([REGIONS[val].defaultPop]);
+  };
+
   const calc = useMemo(() => {
     const screened = volume[0];
-    const detected = Math.round(screened * DETECT_RATE);
-    const connected = Math.round(detected * CONNECTION_RATE);
-    const unconnected = detected - connected;
+    const positive = Math.round(screened * SCREEN_POSITIVE_RATE);
+    const referred = Math.round(positive * REFERRAL_RATE);
+    const actuallyReferred = Math.round(positive * ACTUAL_REFERRAL);
+    const connected = Math.round(actuallyReferred * CONNECTION_RATE);
+    const unconnected = positive - connected;
     const prevented = Math.round(connected * PREVENTION_RATE);
     const savings = prevented * AVG_COST;
     const gapCost = Math.round(unconnected * PREVENTION_RATE * AVG_COST);
-    return { screened, detected, connected, unconnected, prevented, savings, gapCost };
+    const preventableHospitalizations = Math.round(unconnected * 0.08);
+    const unmetNeedsCost = Math.round(unconnected * 3200);
+    return {
+      screened,
+      positive,
+      referred,
+      actuallyReferred,
+      connected,
+      unconnected,
+      prevented,
+      savings,
+      gapCost,
+      preventableHospitalizations,
+      unmetNeedsCost,
+    };
   }, [volume]);
 
   const stages: Stage[] = [
-    { label: "Patients Screened for Social Needs", value: calc.screened, pct: 100, color: "bg-primary", bgColor: "bg-primary/20", desc: "Major Michigan health systems routinely screen patients for SDOH — food, housing, transportation, utilities." },
-    { label: "Unmet Needs Detected (27.4%)", value: calc.detected, pct: 27.4, color: "bg-michigan-teal", bgColor: "bg-michigan-teal/20", desc: "Trinity Health FY2025: 27.4% of 1M+ outpatients screened reported at least one unmet social need." },
-    { label: "Actually Connected to Services (~35%)", value: calc.connected, pct: Math.round((calc.connected / calc.screened) * 1000) / 10, color: "bg-michigan-gold", bgColor: "bg-michigan-gold/20", desc: "Even with warm handoffs, only ~35% of patients with detected needs are connected to community resources." },
-    { label: "Preventable Hospitalizations Avoided", value: calc.prevented, pct: Math.round((calc.prevented / calc.screened) * 1000) / 10, color: "bg-michigan-forest", bgColor: "bg-michigan-forest/20", desc: "Trinity Health: 16% decrease in preventable hospitalizations among connected patients (FY2025)." },
+    {
+      label: "Patients Screened for Social Needs",
+      value: calc.screened,
+      pct: 100,
+      color: "bg-primary",
+      bgColor: "bg-primary/20",
+      desc: "Major Michigan health systems routinely screen patients for SDOH.",
+      source: SOURCES.screened,
+    },
+    {
+      label: "Screen Positive — Unmet Need (27.4%)",
+      value: calc.positive,
+      pct: 27.4,
+      color: "bg-michigan-teal",
+      bgColor: "bg-michigan-teal/20",
+      desc: "Reported at least one unmet social need: food, housing, transportation, or utilities.",
+      source: SOURCES.positive,
+    },
+    {
+      label: "Referred to Community Resources (42%)",
+      value: calc.actuallyReferred,
+      pct: 42,
+      color: "bg-michigan-gold",
+      bgColor: "bg-michigan-gold/20",
+      desc: "Of those screening positive, only 42% receive an actual referral to a community resource.",
+      source: SOURCES.referral,
+    },
+    {
+      label: "Successfully Connected to Services (31%)",
+      value: calc.connected,
+      pct: 31,
+      color: "bg-michigan-forest",
+      bgColor: "bg-michigan-forest/20",
+      desc: "Of those referred, only 31% successfully connect — the rest fall through gaps.",
+      source: SOURCES.connection,
+    },
   ];
 
   return (
@@ -107,68 +207,156 @@ export default function DetectionGapPage() {
         {/* Hero */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
-          <div className="max-w-4xl mx-auto px-6 py-12 relative">
+          <div className="max-w-5xl mx-auto px-6 py-12 relative">
             <Breadcrumbs items={[{ label: "Partners", href: "/partners" }, { label: "Detection Gap" }]} />
             <div className="flex items-center gap-2 mb-4 mt-4">
               <div className="w-10 h-1 bg-primary rounded-full" />
-              <Badge variant="outline" className="uppercase tracking-wider text-xs border-primary/30 text-primary">Research Insight</Badge>
+              <Badge variant="outline" className="uppercase tracking-wider text-xs border-primary/30 text-primary">
+                Research Insight
+              </Badge>
             </div>
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-5xl font-extrabold leading-tight mb-4">
-              The Detection<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-destructive to-[hsl(var(--michigan-gold))]">Gap</span>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl md:text-5xl font-extrabold leading-tight mb-4"
+            >
+              The Detection
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-destructive to-[hsl(var(--michigan-gold))]">
+                Gap
+              </span>
             </motion.h1>
             <p className="text-base text-gray-400 max-w-xl">
-              Michigan health systems screen millions for social needs but lack the infrastructure to connect patients to services. Drag the slider to see the impact at any scale.
+              Michigan health systems screen millions for social needs but lack the infrastructure to connect patients to
+              services. Select a region and adjust the slider to model impact at any scale.
             </p>
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-6 pb-16">
-          {/* Slider */}
+        <div className="max-w-5xl mx-auto px-6 pb-16">
+          {/* Controls: Region + Slider */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mb-12 bg-white/5 border border-white/10 rounded-2xl p-6"
+            className="mb-12 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4"
           >
-            <div className="flex items-center justify-between mb-3">
-              <label className="text-sm font-semibold text-gray-200">Adjust Screening Volume</label>
-              <span className="text-lg font-bold text-primary tabular-nums">{fmt(volume[0])} patients</span>
+            {/* Region selector */}
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-300">Health System Region</label>
+                <Select value={region} onValueChange={handleRegionChange}>
+                  <SelectTrigger className="w-52 bg-white/5 border-white/10 text-white h-9">
+                    <Building className="h-3.5 w-3.5 mr-1.5 text-gray-400" />
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(REGIONS).map(([key, r]) => (
+                      <SelectItem key={key} value={key}>
+                        {r.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <p className="text-xs text-gray-500 mt-1 sm:mt-4">{regionData.description}</p>
             </div>
-            <Slider
-              value={volume}
-              onValueChange={setVolume}
-              min={100_000}
-              max={5_000_000}
-              step={50_000}
-              className="w-full"
-            />
-            <div className="flex justify-between mt-2 text-[10px] text-gray-600">
-              <span>100K</span>
-              <span>1M (Trinity actual)</span>
-              <span>5M</span>
+
+            {/* Volume slider */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <label className="text-sm font-semibold text-gray-200">Adjust Screening Volume</label>
+                <span className="text-lg font-bold text-primary tabular-nums">{fmt(volume[0])} patients</span>
+              </div>
+              <Slider value={volume} onValueChange={setVolume} min={50_000} max={5_000_000} step={50_000} className="w-full" />
+              <div className="flex justify-between mt-2 text-[10px] text-gray-600">
+                <span>50K</span>
+                <span>1M (Trinity actual)</span>
+                <span>5M</span>
+              </div>
             </div>
           </motion.div>
 
-          {/* Funnel */}
-          <div className="space-y-2">
-            <FunnelBar stage={stages[0]} maxValue={calc.screened} index={0} />
+          {/* Main content: funnel + cost panel */}
+          <div className="grid gap-8 lg:grid-cols-[1fr_280px]">
+            {/* Left: Funnel */}
+            <div className="space-y-2">
+              <FunnelBar stage={stages[0]} maxValue={calc.screened} index={0} />
 
-            <GapCallout
-              label={`${fmt(calc.screened - calc.detected)} patients screened negative`}
-              value="No social needs detected — they exit the funnel"
-              delay={0.3}
-            />
+              <GapCallout
+                label={`${fmt(calc.screened - calc.positive)} patients screened negative`}
+                value="No social needs detected — they exit the funnel"
+                delay={0.3}
+              />
 
-            <FunnelBar stage={stages[1]} maxValue={calc.screened} index={1} />
+              <FunnelBar stage={stages[1]} maxValue={calc.screened} index={1} />
 
-            <GapCallout
-              label={`Gap cost: ~${fmtDollar(calc.gapCost)} in preventable hospitalizations`}
-              value={`${fmt(calc.unconnected)} patients with needs never connected to services`}
-              delay={0.5}
-            />
+              <GapCallout
+                label={`${fmt(calc.positive - calc.actuallyReferred)} never referred`}
+                value="Screened positive but no referral — 58% of positive screens"
+                delay={0.45}
+              />
 
-            <FunnelBar stage={stages[2]} maxValue={calc.screened} index={2} />
-            <FunnelBar stage={stages[3]} maxValue={calc.screened} index={3} />
+              <FunnelBar stage={stages[2]} maxValue={calc.screened} index={2} />
+
+              <GapCallout
+                label={`${fmt(calc.actuallyReferred - calc.connected)} referred but not connected`}
+                value="Referral made but connection failed — 69% referral drop-off"
+                delay={0.6}
+              />
+
+              <FunnelBar stage={stages[3]} maxValue={calc.screened} index={3} />
+            </div>
+
+            {/* Right: Cost Stats Panel */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="space-y-4 lg:sticky lg:top-20 lg:self-start"
+            >
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5 space-y-4">
+                <h3 className="text-sm font-bold text-gray-200 flex items-center gap-2">
+                  <DollarSign className="h-4 w-4 text-michigan-gold" />
+                  Cost of Inaction
+                  <Badge variant="outline" className="text-[8px] border-michigan-gold/30 text-michigan-gold">
+                    Illustrative
+                  </Badge>
+                </h3>
+
+                <div className="space-y-3">
+                  <div className="rounded-lg bg-michigan-coral/10 border border-michigan-coral/20 p-3">
+                    <p className="text-xl font-bold text-michigan-coral">{fmtDollar(calc.unmetNeedsCost)}</p>
+                    <p className="text-[10px] text-michigan-coral/70">est. annual cost of unmet needs</p>
+                    <p className="text-[9px] text-gray-600 italic mt-1">Illustrative: $3,200/person/yr avg</p>
+                  </div>
+
+                  <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-3">
+                    <p className="text-xl font-bold text-red-400">{fmt(calc.preventableHospitalizations)}</p>
+                    <p className="text-[10px] text-red-400/70">preventable hospitalizations</p>
+                    <p className="text-[9px] text-gray-600 italic mt-1">Illustrative: 8% of unconnected</p>
+                  </div>
+
+                  <div className="rounded-lg bg-michigan-gold/10 border border-michigan-gold/20 p-3">
+                    <p className="text-xl font-bold text-michigan-gold">{fmtDollar(calc.gapCost)}</p>
+                    <p className="text-[10px] text-michigan-gold/70">preventable hospitalization cost</p>
+                    <p className="text-[9px] text-gray-600 italic mt-1">Illustrative: AHRQ $14,500 avg</p>
+                  </div>
+
+                  <div className="rounded-lg bg-michigan-forest/10 border border-michigan-forest/20 p-3">
+                    <p className="text-xl font-bold text-michigan-forest">{fmtDollar(calc.savings)}</p>
+                    <p className="text-[10px] text-michigan-forest/70">savings from connections made</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-[10px] text-gray-500">
+                <AlertTriangle className="h-3 w-3 inline mr-1 text-michigan-gold" />
+                All dollar calculations are <strong className="text-gray-400">illustrative estimates</strong> based on published
+                research averages. Actual costs vary by region, payer mix, and patient acuity.
+              </div>
+            </motion.div>
           </div>
 
           {/* Impact summary */}
@@ -197,6 +385,40 @@ export default function DetectionGapPage() {
                 <p className="text-xs text-gray-400 mt-1">lost to the gap</p>
               </CardContent>
             </Card>
+          </motion.div>
+
+          {/* CTA: Is your system ready? */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-10 rounded-2xl border border-michigan-gold/20 bg-michigan-gold/5 p-8 text-center"
+          >
+            <h3 className="text-xl font-bold text-white mb-2">Is your system ready to close this gap?</h3>
+            <p className="text-sm text-gray-400 mb-6 max-w-lg mx-auto">
+              Access Michigan provides the infrastructure layer between screening and services — structured referral
+              pathways, equity-weighted routing, and real-time resource data across all 83 counties.
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link
+                to="/for-health-systems"
+                className="inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90 transition-colors"
+              >
+                For Health System Leaders <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to="/for-payers"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-5 py-2.5 text-sm font-semibold text-gray-200 hover:bg-white/5 transition-colors"
+              >
+                For Payers & Plans <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to="/for-government"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-5 py-2.5 text-sm font-semibold text-gray-200 hover:bg-white/5 transition-colors"
+              >
+                For Government <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </motion.div>
 
           {/* Access Michigan bridges this gap */}
@@ -235,7 +457,17 @@ export default function DetectionGapPage() {
           {/* Sources */}
           <div className="mt-12 rounded-lg border border-white/10 bg-white/5 p-4">
             <p className="text-xs text-gray-500">
-              <strong className="text-gray-400">Data Sources:</strong> Trinity Health Community Impact Report (FY2025, published Jan 2026) — 27.4% unmet need rate, 16% hospitalization reduction. CDC Social Determinants of Health evidence base. Connection rate (~35%) estimated from CDC warm-handoff studies. Cost per preventable hospitalization ($14,500) from AHRQ HCUP. All statistics reflect published research; see <a href="/methodology" className="text-primary hover:underline">Methodology</a>.
+              <strong className="text-gray-400">Data Sources:</strong> Trinity Health Community Impact Report (FY2025, published
+              Jan 2026) — 27.4% unmet need rate, 16% hospitalization reduction.{" "}
+              NACHC 2023 Social Determinants Screening Report — 68% screen positive illustrative benchmark.{" "}
+              Journal of AHIMA 2023 — 42% referral rate illustrative.{" "}
+              RWJF 2022 Evidence Hub — 31% connection rate illustrative.{" "}
+              CDC Social Determinants of Health evidence base. Cost per preventable hospitalization ($14,500) from AHRQ HCUP.{" "}
+              All dollar figures are illustrative. See{" "}
+              <a href="/methodology" className="text-primary hover:underline">
+                Methodology
+              </a>
+              .
             </p>
           </div>
         </div>

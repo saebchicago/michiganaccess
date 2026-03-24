@@ -15,6 +15,9 @@ const MichiganHeatGrid = lazy(() => import("@/components/atlas/MichiganHeatGrid"
 const MichiganMap = lazy(() => import("@/components/atlas/MichiganMap"));
 const CompoundDeficitRanking = lazy(() => import("@/components/data/CompoundDeficitRanking"));
 const CountySparklineGrid = lazy(() => import("@/components/tools/CountySparklineGrid"));
+const SDOHIndexBuilder = lazy(() => import("@/components/tools/SDOHIndexBuilder"));
+const PolicySimulator = lazy(() => import("@/components/tools/PolicySimulator"));
+const CountyLeaderboard = lazy(() => import("@/components/tools/CountyLeaderboard"));
 
 function getCountyData(county: string) {
   const p = COUNTY_PROFILES[county];
@@ -160,6 +163,27 @@ export default function HealthEquityAtlasPage() {
       <div className="container max-w-5xl py-8">
         <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading rankings...</div>}>
           <CompoundDeficitRanking />
+        </Suspense>
+      </div>
+
+      {/* 83-County Leaderboard */}
+      <div className="container max-w-5xl py-8">
+        <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading leaderboard...</div>}>
+          <CountyLeaderboard />
+        </Suspense>
+      </div>
+
+      {/* SDOH Vulnerability Index Builder */}
+      <div className="container max-w-5xl py-8">
+        <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading SDOH index builder...</div>}>
+          <SDOHIndexBuilder />
+        </Suspense>
+      </div>
+
+      {/* Policy Impact Simulator */}
+      <div className="container max-w-5xl py-8">
+        <Suspense fallback={<div className="py-12 text-center text-sm text-muted-foreground">Loading policy simulator...</div>}>
+          <PolicySimulator />
         </Suspense>
       </div>
     </Layout>
