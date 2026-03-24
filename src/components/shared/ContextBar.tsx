@@ -146,20 +146,29 @@ export default function ContextBar() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase
-        .from("facilities")
-        .select("updated_at")
-        .order("updated_at", { ascending: false })
-        .limit(1)
-        .single();
-      const row = data as { updated_at?: string } | null;
-      if (row?.updated_at) {
-        setLastUpdated(
-          new Date(row.updated_at).toLocaleDateString("en-US", {
-            month: "short",
-            year: "numeric",
-          })
-        );
+      try {
+        const { data } = await supabase
+          .from("facilities")
+          .select("updated_at")
+          .order("updated_at", { ascending: false })
+          .limit(1)
+          .single();
+        const row = data as { updated_at?: string } | null;
+        if (row?.updated_at) {
+          const dbDate = new Date(row.updated_at);
+          // Use the DB date only if it's from the current month or later;
+          // otherwise fall back to the current month to avoid stale display.
+          const now = new Date();
+          const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+          const display = dbDate >= currentMonth ? dbDate : now;
+          setLastUpdated(
+            display.toLocaleDateString("en-US", { month: "short", year: "numeric" })
+          );
+        } else {
+          setLastUpdated(new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" }));
+        }
+      } catch {
+        setLastUpdated(new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" }));
       }
     })();
   }, []);
