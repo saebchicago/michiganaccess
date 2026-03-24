@@ -24,6 +24,22 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Intelligence & Engagement — v8.0",
+    icon: Sparkles,
+    tag: "feature",
+    items: [
+      "ZIP Code Scorecard: composite health, economic, and environment scores for any Michigan ZIP",
+      "Enhanced Detection Gap Funnel: health system selector, verified source labels, cost stats",
+      "SDOH Vulnerability Index Builder: custom-weighted county ranking with 6 dimensions",
+      "Policy Impact Simulator: model effects of expanding 5 Michigan safety net programs",
+      "83-County Leaderboard: sortable, filterable county rankings across 5 metrics",
+      "Insight of the Week: rotating verified data stories on homepage",
+      "Your Community dashboard: personalized ZIP-based insights on homepage",
+      "Share system: copy link and LinkedIn sharing for visualizations",
+      "Navigation and mobile polish: skip-to-content, footer updates, error states",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Deep Federal Data — v7.0",
     icon: Database,
     tag: "data",

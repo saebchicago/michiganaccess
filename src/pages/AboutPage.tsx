@@ -27,7 +27,10 @@ import {
   Sparkles,
   MapPin,
   AlertTriangle,
+  Activity,
 } from "lucide-react";
+
+import { PLATFORM_HEALTH } from "@/data/platformHealth";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -636,6 +639,60 @@ export default function AboutPage() {
             </Link>
           </p>
         </motion.div>
+
+        {/* Platform Transparency */}
+        <section id="platform-transparency">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
+                <Activity className="h-5 w-5 text-michigan-forest" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">Platform Transparency</h2>
+                <p className="text-sm text-muted-foreground">Real-time health indicators for this platform. Last audit: {PLATFORM_HEALTH.lastAudit}</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {([
+              ["Data Freshness", PLATFORM_HEALTH.dataFreshness],
+              ["Uptime", PLATFORM_HEALTH.uptime],
+              ["Open Source", PLATFORM_HEALTH.openSource],
+              ["Funding Model", PLATFORM_HEALTH.funding],
+              ["Advertiser Conflicts", PLATFORM_HEALTH.conflicts],
+              ["Data Sold", PLATFORM_HEALTH.dataSold],
+              ["Errors Reported", PLATFORM_HEALTH.errorsReported],
+            ] as [string, { status: string; label: string }][]).map(([name, metric], i) => (
+              <motion.div
+                key={name}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i}
+                className="flex items-center gap-3 rounded-lg border border-border p-3"
+              >
+                <span
+                  className={`h-3 w-3 rounded-full shrink-0 ${
+                    metric.status === "green"
+                      ? "bg-green-500"
+                      : metric.status === "amber"
+                      ? "bg-amber-500"
+                      : "bg-red-500"
+                  }`}
+                  aria-label={`Status: ${metric.status}`}
+                />
+                <div>
+                  <p className="text-xs font-semibold text-foreground">{name}</p>
+                  <p className="text-xs text-muted-foreground">{metric.label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <Separator />
 
         {/* Quick links (trust layer) */}
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">

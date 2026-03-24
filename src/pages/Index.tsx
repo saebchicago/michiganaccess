@@ -28,6 +28,8 @@ import { AccessChat } from "@/components/AccessChat";
 import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
 import LazySection from "@/components/shared/LazySection";
 import DataProvenance from "@/components/shared/DataProvenance";
+import YourCommunity from "@/components/home/YourCommunity";
+const InsightOfWeek = lazy(() => import("@/components/home/InsightOfWeek"));
 
 // ── Below-fold: lazy-loaded ──
 const FounderSupportSection = lazy(() => import("@/components/shared/FounderSupportSection"));
@@ -109,6 +111,9 @@ const Index = () => {
       {/* ═══ CAPABILITY STRIP ═══ */}
       <CapabilityStrip />
 
+      {/* ═══ YOUR COMMUNITY ═══ */}
+      <YourCommunity />
+
       {/* ═══ MICHIGAN PULSE — live intelligence signals ═══ */}
       <MichiganPulse />
 
@@ -119,6 +124,13 @@ const Index = () => {
       <SectionErrorBoundary title="Some content didn't load">
         <Suspense fallback={<SectionSkeleton height="200px" />}>
           <LifeEventNavigator />
+        </Suspense>
+      </SectionErrorBoundary>
+
+      {/* ═══ INSIGHT OF THE WEEK ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <Suspense fallback={<SectionSkeleton height="160px" />}>
+          <InsightOfWeek />
         </Suspense>
       </SectionErrorBoundary>
 
