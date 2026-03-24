@@ -10,7 +10,15 @@ import { APP_ROUTES } from "./config/routes";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+      staleTime: 5 * 60 * 1000, // 5 min default
+    },
+  },
+});
 
 const PageLoader = () => (
   <div className="min-h-screen bg-background">
@@ -60,6 +68,8 @@ const App = () => (
                 <Route path="/data-hub" element={<Navigate to="/data-and-insights" replace />} />
                 <Route path="/health-data" element={<Navigate to="/data" replace />} />
                 <Route path="/representatives" element={<Navigate to="/civic-data" replace />} />
+                {/* Duplicate route consolidation */}
+                <Route path="/county-compare" element={<Navigate to="/compare" replace />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>

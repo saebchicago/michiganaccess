@@ -45,7 +45,7 @@ export default defineConfig(({ mode }) => ({
           },
           // External APIs: always network, never cache stale responses
           {
-            urlPattern: /^https:\/\/(data\.cdc\.gov|api\.weather\.gov|api\.fda\.gov|clinicaltrials\.gov|api\.tidesandcurrents\.noaa\.gov|api\.mistral\.ai)\/.*/i,
+            urlPattern: /^https:\/\/(data\.cdc\.gov|api\.weather\.gov|api\.fda\.gov|clinicaltrials\.gov|api\.tidesandcurrents\.noaa\.gov)\/.*/i,
             handler: "NetworkFirst",
             options: {
               cacheName: "external-api-cache",
