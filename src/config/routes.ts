@@ -137,6 +137,7 @@ const pages = {
   FindYourCityPage: lazy(() => import("@/pages/FindYourCityPage")),
   DisasterHistoryPage: lazy(() => import("@/pages/DisasterHistoryPage")),
   SBAInsightsPage: lazy(() => import("@/pages/SBAInsightsPage")),
+  ZipScorecardPage: lazy(() => import("@/pages/ZipScorecardPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -251,6 +252,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/find-your-city", component: pages.FindYourCityPage, label: "Find Your City" },
   { path: "/disaster-history", component: pages.DisasterHistoryPage, label: "Disaster History" },
   { path: "/sba-insights", component: pages.SBAInsightsPage, label: "SBA Insights" },
+  { path: "/zip/:zipcode", component: pages.ZipScorecardPage, label: "ZIP Scorecard" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
@@ -374,6 +376,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Health Equity Atlas", href: "/health-equity-atlas", badge: "New" },
       { label: "Find Your City", href: "/find-your-city", badge: "Interactive" },
       { label: "Compare ZIP Codes", href: "/compare-zips", badge: "Tool" },
+      { label: "ZIP Scorecard", href: "/zip/48201", badge: "New" },
       { label: "Tax Comparison Calculator", href: "/tax-comparison", badge: "Calculator" },
       { label: "Disaster History (FEMA)", href: "/disaster-history", badge: "Live API" },
       { label: "SBA Lending Insights", href: "/sba-insights", badge: "New" },
