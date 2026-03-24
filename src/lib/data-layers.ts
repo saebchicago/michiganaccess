@@ -9,8 +9,17 @@ import type {
   CompoundAccessIndex,
 } from "@/types/data-layers";
 
+// These tables exist in the database but are not yet reflected in the
+// auto-generated Supabase types. We cast through `unknown` so the runtime
+// queries work while keeping the rest of the code fully typed.
+const sb = supabase as unknown as {
+  from(table: string): {
+    select(columns: string): any;
+  };
+};
+
 export async function getFoodDesertsByCounty(county: string): Promise<FoodAccessTract[]> {
-  const { data, error } = await supabase
+  const { data, error } = await sb
     .from("food_access_tracts")
     .select("*")
     .ilike("county", county)
@@ -20,7 +29,7 @@ export async function getFoodDesertsByCounty(county: string): Promise<FoodAccess
 }
 
 export async function getSnapRetailers(county?: string, limit = 200): Promise<SnapRetailer[]> {
-  let query = supabase.from("snap_retailers").select("*").limit(limit);
+  let query = sb.from("snap_retailers").select("*").limit(limit);
   if (county) query = query.ilike("county", county);
   const { data, error } = await query;
   if (error) { console.warn("getSnapRetailers:", error.message); return []; }
@@ -28,7 +37,7 @@ export async function getSnapRetailers(county?: string, limit = 200): Promise<Sn
 }
 
 export async function getBroadbandByCounty(county: string): Promise<BroadbandAccess[]> {
-  const { data, error } = await supabase
+  const { data, error } = await sb
     .from("broadband_access")
     .select("*")
     .ilike("county", county);
@@ -37,7 +46,7 @@ export async function getBroadbandByCounty(county: string): Promise<BroadbandAcc
 }
 
 export async function getTransitStops(agency?: string, limit = 500): Promise<TransitStop[]> {
-  let query = supabase.from("transit_stops").select("*").limit(limit);
+  let query = sb.from("transit_stops").select("*").limit(limit);
   if (agency) query = query.eq("agency", agency);
   const { data, error } = await query;
   if (error) { console.warn("getTransitStops:", error.message); return []; }
@@ -45,7 +54,7 @@ export async function getTransitStops(agency?: string, limit = 500): Promise<Tra
 }
 
 export async function getMaternalHealth(county?: string): Promise<MaternalInfantHealth[]> {
-  let query = supabase.from("maternal_infant_health").select("*");
+  let query = sb.from("maternal_infant_health").select("*");
   if (county) query = query.ilike("county", county);
   const { data, error } = await query.order("county");
   if (error) { console.warn("getMaternalHealth:", error.message); return []; }
@@ -53,7 +62,7 @@ export async function getMaternalHealth(county?: string): Promise<MaternalInfant
 }
 
 export async function getEjScreenByTract(tractId: string): Promise<EjScreen[]> {
-  const { data, error } = await supabase
+  const { data, error } = await sb
     .from("ej_screen")
     .select("*")
     .eq("census_tract_id", tractId);
@@ -62,7 +71,7 @@ export async function getEjScreenByTract(tractId: string): Promise<EjScreen[]> {
 }
 
 export async function getCompoundIndex(county?: string): Promise<CompoundAccessIndex[]> {
-  let query = supabase.from("compound_access_index").select("*");
+  let query = sb.from("compound_access_index").select("*");
   if (county) query = query.ilike("county", county);
   const { data, error } = await query.order("compound_deficit_index", { ascending: false });
   if (error) { console.warn("getCompoundIndex:", error.message); return []; }
@@ -70,7 +79,7 @@ export async function getCompoundIndex(county?: string): Promise<CompoundAccessI
 }
 
 export async function getCompoundIndexByTier(tier: string): Promise<CompoundAccessIndex[]> {
-  const { data, error } = await supabase
+  const { data, error } = await sb
     .from("compound_access_index")
     .select("*")
     .eq("deficit_tier", tier)

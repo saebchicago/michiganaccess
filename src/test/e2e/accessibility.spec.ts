@@ -12,13 +12,9 @@ for (const path of PAGES_TO_TEST) {
       page,
       undefined,
       {
-        runOnly: {
-          type: 'tag',
-          values: ['wcag2a', 'wcag2aa', 'wcag21aa'],
-        },
         detailedReport: true,
         detailedReportOptions: { html: true },
-      },
+      } as any,
       false,
     );
   });
