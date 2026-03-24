@@ -24,6 +24,20 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Deep Federal Data — v7.0",
+    icon: Database,
+    tag: "data",
+    items: [
+      "IRS Income by ZIP: average AGI, EITC claims, charitable giving for 30 ZIPs",
+      "EPA Toxic Release Inventory: 15 Michigan facilities mapped with chemical data",
+      "USDA Rurality Classification: Urban/Suburban/Small Town/Rural tags for 35 ZIPs",
+      "HUD Fair Market Rents: rental affordability benchmarks for 15 ZIPs",
+      "FEMA Flood Insurance Gap: claims vs policies for 12 flood-prone counties",
+      "Underserved ZIP Identifier: multi-dimensional need assessment (health, economic, environment, provider, digital)",
+      "Lens integration: IRS/HUD data visible in Economic lens, TRI/underserved in Equity lens",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Federal Data Expansion — v6.0",
     icon: Shield,
     tag: "data",
