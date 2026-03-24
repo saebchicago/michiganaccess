@@ -93,7 +93,7 @@ export default function HomeSectorGrid() {
             >
               <Link
                 to={s.href}
-                className="group flex items-start gap-3 rounded-lg border border-border bg-card p-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer"
+                className="group flex items-start gap-3 rounded-lg border border-border bg-card p-4 card-hover cursor-pointer"
               >
                 <div className={`w-9 h-9 rounded-lg ${s.bg} flex items-center justify-center shrink-0 mt-0.5`}>
                   <s.icon className={`h-4 w-4 ${s.color}`} aria-hidden="true" />

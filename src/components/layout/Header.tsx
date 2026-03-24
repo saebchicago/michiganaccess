@@ -16,6 +16,19 @@ import { NAV_GROUPS, isNavGroup, type NavGroup, type NavLink as NavLinkType } fr
 import { useLens, type Lens } from "@/hooks/useLens";
 import { cn } from "@/lib/utils";
 
+/** Check if current path matches a nav href — supports exact match and prefix match for nested routes */
+function isRouteActive(currentPath: string, href: string): boolean {
+  if (currentPath === href) return true;
+  // For routes like /zip/:code, match the prefix /zip
+  if (href.startsWith("/zip/") && currentPath.startsWith("/zip/")) return true;
+  return false;
+}
+
+/** Check if any child in a nav group matches the current path */
+function isGroupActive(currentPath: string, items: NavLinkType[]): boolean {
+  return items.some((c) => isRouteActive(currentPath, c.href));
+}
+
 const LENS_OPTIONS: { value: Lens; label: string }[] = [
   { value: "standard", label: "Standard" },
   { value: "equity", label: "Equity" },
@@ -102,11 +115,11 @@ const Header = () => {
                 key={(link as NavLinkType).href}
                 to={(link as NavLinkType).href!}
                 className={`relative inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-                  location.pathname === (link as NavLinkType).href
+                  isRouteActive(location.pathname, (link as NavLinkType).href)
                     ? "text-primary font-bold after:absolute after:bottom-0 after:left-3 after:right-3 after:h-[2px] after:rounded-full after:bg-primary"
                     : "text-foreground hover:text-primary"
                 }`}
-                aria-current={location.pathname === (link as NavLinkType).href ? "page" : undefined}
+                aria-current={isRouteActive(location.pathname, (link as NavLinkType).href) ? "page" : undefined}
               >
                 {link.label}
                 {(link as NavLinkType).badge && (

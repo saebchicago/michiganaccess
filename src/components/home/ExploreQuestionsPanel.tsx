@@ -91,7 +91,7 @@ export default function ExploreQuestionsPanel() {
               role="button"
               aria-label={item.question}
             >
-              <Card className="h-full border-border/60 bg-card/80 transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer hover:border-primary/40 hover:bg-primary/5">
+              <Card className="h-full border-border/60 bg-card/80 card-hover cursor-pointer hover:border-primary/40 hover:bg-primary/5">
                 <CardContent className="flex h-full flex-col gap-3 p-5">
                   <p className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{item.question}</p>
                   <p className="text-base leading-relaxed text-foreground flex-1">

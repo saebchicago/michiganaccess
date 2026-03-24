@@ -45,7 +45,7 @@ export default function HomePrimaryPaths() {
             >
               <Link
                 to={p.href}
-                className="group flex flex-col h-full rounded-xl border border-border bg-card shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer p-5 gap-3"
+                className="group flex flex-col h-full rounded-xl border border-border bg-card shadow-sm card-hover cursor-pointer p-5 gap-3"
               >
                 <div className={`w-10 h-10 rounded-lg ${p.bg} flex items-center justify-center`}>
                   <p.icon className={`h-5 w-5 ${p.color}`} aria-hidden="true" />

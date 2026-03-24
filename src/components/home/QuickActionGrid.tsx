@@ -29,7 +29,7 @@ export default function QuickActionGrid() {
             <motion.div key={a.label} initial="hidden" whileInView="show" viewport={{ once: true }} variants={item} custom={i}>
               <Link
                 to={a.href}
-                className="group flex flex-col items-center gap-2 rounded-xl border border-border/50 bg-card p-4 text-center transition-all hover:border-primary/30 hover:shadow-michigan hover:-translate-y-0.5"
+                className="group flex flex-col items-center gap-2 rounded-xl border border-border/50 bg-card p-4 text-center card-hover hover:border-primary/30 hover:shadow-michigan"
               >
                 <div className={`flex h-11 w-11 items-center justify-center rounded-xl ${a.color} transition-transform group-hover:scale-110`}>
                   <a.icon className="h-5 w-5" />
