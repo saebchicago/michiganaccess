@@ -28,6 +28,11 @@ const SOURCES: Record<string, Source[]> = {
     { name: "HUD PIT Count", org: "HUD", url: "https://www.hudexchange.info/", powers: "Homelessness data", frequency: "Annual" },
     { name: "FEMA OpenFEMA API", org: "FEMA", url: "https://www.fema.gov/about/openfema/api", powers: "70 years of Michigan disaster declarations", frequency: "Daily" },
     { name: "SBA FOIA Data", org: "SBA", url: "https://data.sba.gov/", powers: "Small business lending, disaster loan approvals", frequency: "Quarterly" },
+    { name: "IRS Statistics of Income", org: "IRS", url: "https://www.irs.gov/statistics/soi-tax-stats", powers: "ZIP-level income, EITC claims, charitable giving", frequency: "Annual (Tax Year 2021)" },
+    { name: "EPA Toxic Release Inventory", org: "EPA", url: "https://enviro.epa.gov/triexplorer", powers: "Facility-level toxic chemical releases", frequency: "Annual (2022 reporting year)" },
+    { name: "USDA Rural-Urban Commuting Area Codes", org: "USDA", url: "https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes", powers: "ZIP-level urban/rural classification", frequency: "Decennial" },
+    { name: "HUD Fair Market Rents", org: "HUD", url: "https://www.huduser.gov/portal/datasets/fmr.html", powers: "Rental affordability benchmarks by ZIP", frequency: "Annual (FY2025)" },
+    { name: "FEMA National Flood Insurance Program", org: "FEMA", url: "https://www.fema.gov/openfema", powers: "Flood claims and policy data by county", frequency: "Monthly" },
   ],
   "Michigan State Agencies": [
     { name: "MDHHS Health Data", org: "MDHHS", url: "https://www.michigan.gov/mdhhs", powers: "Vital records, Medicaid, SDOH", frequency: "Varies" },

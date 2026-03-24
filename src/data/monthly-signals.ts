@@ -26,4 +26,6 @@ export const SIGNALS_2026_03: Signal[] = [
   { id: "s15", date: "2026-03", text: "59 of 83 counties designated dental health professional shortage areas", category: "health", direction: "alert", source: "MDHHS / HRSA", href: "/equity" },
   { id: "s16", date: "2026-03", text: "31,211 experienced homelessness in 2024; Black households 3.6× more likely", category: "safety", direction: "alert", source: "HUD PIT 2024", href: "/equity" },
   { id: "s17", date: "2026-03", text: "~19.2% of eligible MI taxpayers don't claim EITC — millions left unclaimed", category: "economic", direction: "alert", source: "IRS", href: "/financial-help" },
+  { id: "s18", date: "2026-03", text: "44.9% of filers in Detroit's east side claim EITC — highest in the state", category: "economic", direction: "alert", source: "IRS SOI 2021", href: "/financial-help" },
+  { id: "s19", date: "2026-03", text: "Wayne County: 8,500 flood claims since 1978, only 4,200 active policies", category: "environment", direction: "alert", source: "FEMA NFIP", href: "/environment" },
 ];
