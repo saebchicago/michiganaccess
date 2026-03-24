@@ -12,6 +12,7 @@ import {
   type FEMADisaster,
 } from "@/lib/fema-client";
 import { SBA_DISASTER_LOAN_DATA, MIDLAND_DAM_STATS } from "@/data/sba-disaster-loans";
+import DisasterAccelerationChart from "./DisasterAccelerationChart";
 
 const INCIDENT_COLORS: Record<string, string> = {
   Flood: "#3B82F6",
@@ -157,6 +158,9 @@ export default function DisasterHistoryDashboard() {
           </Card>
         ))}
       </div>
+
+      {/* Disaster Acceleration */}
+      <DisasterAccelerationChart disasters={disasters} />
 
       {/* Decade bar chart */}
       <Card>
