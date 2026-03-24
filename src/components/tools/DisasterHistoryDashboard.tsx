@@ -11,6 +11,7 @@ import {
   getUniqueDisasters,
   type FEMADisaster,
 } from "@/lib/fema-client";
+import { SBA_DISASTER_LOAN_DATA, MIDLAND_DAM_STATS } from "@/data/sba-disaster-loans";
 
 const INCIDENT_COLORS: Record<string, string> = {
   Flood: "#3B82F6",
@@ -227,12 +228,81 @@ export default function DisasterHistoryDashboard() {
         </CardContent>
       </Card>
 
+      {/* SBA Disaster Relief Section */}
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base">Where Disaster Relief $ Actually Went</CardTitle>
+          <p className="text-xs text-muted-foreground">
+            SBA disaster loan approvals vs. verified loss by county. The gap represents unmet need.
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={SBA_DISASTER_LOAN_DATA.map(d => ({
+                  county: d.county,
+                  approved: d.totalApprovedAmount / 1e6,
+                  verifiedLoss: d.totalVerifiedLoss / 1e6,
+                }))}
+                layout="vertical"
+                margin={{ left: 80 }}
+              >
+                <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                <XAxis type="number" tick={{ fontSize: 11 }} tickFormatter={v => `$${v}M`} />
+                <YAxis type="category" dataKey="county" tick={{ fontSize: 11 }} width={75} />
+                <Tooltip formatter={(v: number) => [`$${v.toFixed(0)}M`]} />
+                <Bar dataKey="verifiedLoss" fill="#94A3B8" name="Verified Loss" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="approved" fill="#3B82F6" name="Approved Amount" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex items-center gap-4 mt-2 text-[10px] text-muted-foreground">
+            <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded bg-slate-400" /> Verified Loss</span>
+            <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded bg-blue-500" /> Approved Amount</span>
+            <span className="flex items-center gap-1">Gap = Unmet Need</span>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Midland Dam Failure highlight */}
+      <Card className="border-amber-400/50 bg-amber-50/30 dark:bg-amber-950/10">
+        <CardHeader className="pb-2">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-amber-500" />
+            <CardTitle className="text-base">Spotlight: {MIDLAND_DAM_STATS.event}</CardTitle>
+          </div>
+          <p className="text-xs text-muted-foreground">{MIDLAND_DAM_STATS.date} &middot; FEMA {MIDLAND_DAM_STATS.femaDeclaration}</p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div>
+              <p className="text-muted-foreground text-xs">Evacuees</p>
+              <p className="font-bold">{MIDLAND_DAM_STATS.evacuees.toLocaleString()}+</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground text-xs">Verified Loss</p>
+              <p className="font-bold">${(MIDLAND_DAM_STATS.totalVerifiedLoss / 1e6).toFixed(0)}M</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground text-xs">Total Approved</p>
+              <p className="font-bold">${(MIDLAND_DAM_STATS.totalApproved / 1e6).toFixed(0)}M</p>
+            </div>
+            <div>
+              <p className="text-muted-foreground text-xs">Unmet Need</p>
+              <p className="font-bold text-amber-600 dark:text-amber-400">${(MIDLAND_DAM_STATS.unmetNeed / 1e6).toFixed(0)}M</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Source */}
       <div className="rounded-lg border border-border bg-muted/50 p-4 flex items-start gap-2">
         <Info className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
         <p className="text-xs text-muted-foreground">
           <strong>Source:</strong> FEMA OpenFEMA API &middot; Disaster Declarations Summaries v2 &middot; Data from 1953-present.
           Free public API, no key required. Data updates daily.
+          SBA disaster loan data modeled from SBA FOIA reports (data.sba.gov). Illustrative estimates.
         </p>
       </div>
     </div>
