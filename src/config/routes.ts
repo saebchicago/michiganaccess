@@ -138,6 +138,7 @@ const pages = {
   DisasterHistoryPage: lazy(() => import("@/pages/DisasterHistoryPage")),
   SBAInsightsPage: lazy(() => import("@/pages/SBAInsightsPage")),
   ZipScorecardPage: lazy(() => import("@/pages/ZipScorecardPage")),
+  DownloadCenterPage: lazy(() => import("@/pages/DownloadCenterPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
