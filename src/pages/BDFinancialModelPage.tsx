@@ -1138,8 +1138,8 @@ export default function BDFinancialModelPage() {
     const hasUrlParams = ["vol","rpe","pop","scr"].some(k => searchParams.get(k) !== null);
     if (hasUrlParams) return false;
     return (
-      hasSavedDiff(SL_KEY,   SL_DEFAULTS as Record<string, unknown>) ||
-      hasSavedDiff(SDOH_KEY, SDOH_DEFAULTS as Record<string, unknown>)
+      hasSavedDiff(SL_KEY,   SL_DEFAULTS as unknown as Record<string, unknown>) ||
+      hasSavedDiff(SDOH_KEY, SDOH_DEFAULTS as unknown as Record<string, unknown>)
     );
   });
 
