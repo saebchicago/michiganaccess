@@ -16,6 +16,19 @@ import { NAV_GROUPS, isNavGroup, type NavGroup, type NavLink as NavLinkType } fr
 import { useLens, type Lens } from "@/hooks/useLens";
 import { cn } from "@/lib/utils";
 
+/** Check if current path matches a nav href — supports exact match and prefix match for nested routes */
+function isRouteActive(currentPath: string, href: string): boolean {
+  if (currentPath === href) return true;
+  // For routes like /zip/:code, match the prefix /zip
+  if (href.startsWith("/zip/") && currentPath.startsWith("/zip/")) return true;
+  return false;
+}
+
+/** Check if any child in a nav group matches the current path */
+function isGroupActive(currentPath: string, items: NavLinkType[]): boolean {
+  return items.some((c) => isRouteActive(currentPath, c.href));
+}
+
 const LENS_OPTIONS: { value: Lens; label: string }[] = [
   { value: "standard", label: "Standard" },
   { value: "equity", label: "Equity" },
@@ -102,11 +115,11 @@ const Header = () => {
                 key={(link as NavLinkType).href}
                 to={(link as NavLinkType).href!}
                 className={`relative inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-                  location.pathname === (link as NavLinkType).href
+                  isRouteActive(location.pathname, (link as NavLinkType).href)
                     ? "text-primary font-bold after:absolute after:bottom-0 after:left-3 after:right-3 after:h-[2px] after:rounded-full after:bg-primary"
                     : "text-foreground hover:text-primary"
                 }`}
-                aria-current={location.pathname === (link as NavLinkType).href ? "page" : undefined}
+                aria-current={isRouteActive(location.pathname, (link as NavLinkType).href) ? "page" : undefined}
               >
                 {link.label}
                 {(link as NavLinkType).badge && (
@@ -373,7 +386,7 @@ function DropdownNav({ label, items, currentPath }: { label: string; items: NavL
         onClick={toggle}
         onKeyDown={handleTriggerKeyDown}
         className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-          items.some((c) => currentPath === c.href) ? "text-primary font-semibold" : "text-muted-foreground"
+          isGroupActive(currentPath, items) ? "text-primary font-semibold after:absolute after:bottom-0 after:left-3 after:right-3 after:h-[2px] after:rounded-full after:bg-primary relative" : "text-muted-foreground"
         }`}
         aria-expanded={open}
         aria-haspopup="true"
@@ -404,7 +417,7 @@ function DropdownNav({ label, items, currentPath }: { label: string; items: NavL
                 role="menuitem"
                 tabIndex={open ? 0 : -1}
                 className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
-                  currentPath === child.href
+                  isRouteActive(currentPath, child.href)
                     ? "font-medium text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
