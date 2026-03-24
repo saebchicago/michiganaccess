@@ -73,9 +73,7 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
     let assistantContent = "";
 
     try {
-      const supabaseKey = USE_STREAMING
-        ? (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || "")
-        : "";
+      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY || "";
       const recentMessages = newMessages.slice(-20);
       const resp = await fetch(CHAT_URL, {
         method: "POST",
@@ -91,61 +89,53 @@ const AIChatWidget = forwardRef<HTMLDivElement>(function AIChatWidget(_props, re
         throw new Error(err.error || `Error ${resp.status}`);
       }
 
-      if (!USE_STREAMING) {
-        const data = await resp.json();
-        const reply = data.reply || "I couldn't get a response. Please try again.";
-        const finalContent = isCrisis ? CRISIS_BANNER + reply : reply;
-        setMessages((prev) => [...prev, { role: "assistant", content: finalContent }]);
-        assistantContent = finalContent;
-      } else {
-        if (!resp.body) throw new Error("No response stream");
+      if (!resp.body) throw new Error("No response stream");
 
-        const reader = resp.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
-        const crisisPrefix = isCrisis ? CRISIS_BANNER : "";
-        assistantContent = crisisPrefix;
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      const crisisPrefix = isCrisis ? CRISIS_BANNER : "";
+      assistantContent = crisisPrefix;
 
-        if (crisisPrefix) {
-          setMessages((prev) => [...prev, { role: "assistant", content: crisisPrefix }]);
-        }
+      if (crisisPrefix) {
+        setMessages((prev) => [...prev, { role: "assistant", content: crisisPrefix }]);
+      }
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
 
-          let newlineIdx: number;
-          while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
-            let line = buffer.slice(0, newlineIdx);
-            buffer = buffer.slice(newlineIdx + 1);
-            if (line.endsWith("\r")) line = line.slice(0, -1);
-            if (!line.startsWith("data: ")) continue;
-            const jsonStr = line.slice(6).trim();
-            if (jsonStr === "[DONE]") break;
-            try {
-              const parsed = JSON.parse(jsonStr);
-              const delta = parsed.choices?.[0]?.delta?.content;
-              if (delta) {
-                assistantContent += delta;
-                setMessages((prev) => {
-                  const last = prev[prev.length - 1];
-                  if (last?.role === "assistant") {
-                    return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantContent } : m);
-                  }
-                  return [...prev, { role: "assistant", content: assistantContent }];
-                });
-              }
-            } catch {
-              buffer = line + "\n" + buffer;
-              break;
+        let newlineIdx: number;
+        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+          let line = buffer.slice(0, newlineIdx);
+          buffer = buffer.slice(newlineIdx + 1);
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (!line.startsWith("data: ")) continue;
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") break;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const delta = parsed.choices?.[0]?.delta?.content;
+            if (delta) {
+              assistantContent += delta;
+              setMessages((prev) => {
+                const last = prev[prev.length - 1];
+                if (last?.role === "assistant") {
+                  return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: assistantContent } : m);
+                }
+                return [...prev, { role: "assistant", content: assistantContent }];
+              });
             }
+          } catch {
+            buffer = line + "\n" + buffer;
+            break;
           }
         }
+      }
 
-        if (!assistantContent || assistantContent === crisisPrefix) {
-          setMessages((prev) => [...prev, { role: "assistant", content: (crisisPrefix || "") + "I couldn't get a response. Please try again." }]);
-        }
+      if (!assistantContent || assistantContent === crisisPrefix) {
+        setMessages((prev) => [...prev, { role: "assistant", content: (crisisPrefix || "") + "I couldn't get a response. Please try again." }]);
       }
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Please try again.";
