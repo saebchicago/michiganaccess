@@ -153,6 +153,47 @@ function FirstTimePrompt() {
   );
 }
 
+const ROTATING_STATS = [
+  { text: "ZIP 48201 in Detroit scores 28/100 for healthcare access", href: "/zip/48201" },
+  { text: "76 of 83 Michigan counties have zero pedestrian data", href: "/transportation" },
+  { text: "625,852 Michigan residents called 211 last year", href: "/resources" },
+  { text: "Only 27.4% of patients are screened for social needs", href: "/detection-gap" },
+];
+
+function RotatingStats() {
+  const [statIndex, setStatIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStatIndex((prev) => (prev + 1) % ROTATING_STATS.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="mt-4 mb-1 h-6 relative flex items-center justify-center">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={statIndex}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.3 }}
+          className="absolute"
+        >
+          <Link
+            to={ROTATING_STATS[statIndex].href}
+            className="text-xs text-primary-foreground/60 hover:text-primary-foreground/90 transition-colors"
+          >
+            {ROTATING_STATS[statIndex].text}{" "}
+            <span className="underline underline-offset-2 font-medium">See why &rarr;</span>
+          </Link>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 const HeroSection = () => {
   const navigate = useNavigate();
   const { setZip } = useCounty();
@@ -367,6 +408,9 @@ const HeroSection = () => {
           >
             ZIP-level health, economic & housing data across all 83 counties. Free, forever.
           </motion.p>
+
+          {/* Rotating Stats */}
+          <RotatingStats />
 
           {/* ZIP Input — Primary CTA */}
           <motion.div

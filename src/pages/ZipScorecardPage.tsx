@@ -27,6 +27,8 @@ import { MI_IRS_STATE_AVERAGES } from "@/data/irs-zip-income";
 import { MI_FMR_AVERAGE_2BR, HUD_FMR_SOURCE } from "@/data/hud-fmr";
 import { RURALITY_ICONS } from "@/data/rurality";
 import { getScoreBand } from "@/data/zipScoreBands";
+import { MICHIGAN_SAFMR } from "@/data/hudSafmr";
+import { MICHIGAN_EJSCREEN } from "@/data/ejscreen";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
@@ -647,7 +649,13 @@ export default function ZipScorecardPage() {
                   <EconCard label="FMR Range (Studio–4BR)" value={`$${primary.fmrData.fmr0br}–$${primary.fmrData.fmr4br}`} source={HUD_FMR_SOURCE} />
                 </>
               )}
-              {!primary.quickStats && !primary.irsData && !primary.fmrData && (
+              {MICHIGAN_SAFMR[zip] && (
+                <>
+                  <EconCard label="SAFMR (2BR)" value={MICHIGAN_SAFMR[zip].safmr_2br} format="$" benchmark={`ZIP-level rent limit (FY${MICHIGAN_SAFMR[zip].fy})`} source="HUD Small Area FMR" />
+                  <EconCard label="SAFMR Range (Studio–4BR)" value={`$${MICHIGAN_SAFMR[zip].safmr_0br}–$${MICHIGAN_SAFMR[zip].safmr_4br}`} source="HUD Small Area FMR" />
+                </>
+              )}
+              {!primary.quickStats && !primary.irsData && !primary.fmrData && !MICHIGAN_SAFMR[zip] && (
                 <Card className="sm:col-span-2 lg:col-span-3">
                   <CardContent className="py-8 text-center">
                     <Info className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
@@ -684,6 +692,47 @@ export default function ZipScorecardPage() {
                   </CardContent>
                 </Card>
               )}
+
+              {/* EJSCREEN Environmental Justice */}
+              {MICHIGAN_EJSCREEN[zip] && (() => {
+                const ej = MICHIGAN_EJSCREEN[zip];
+                return (
+                  <Card className="sm:col-span-2 lg:col-span-3">
+                    <CardContent className="py-4">
+                      <h3 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
+                        <Leaf className="h-4 w-4 text-michigan-forest" /> EPA EJSCREEN Environmental Justice
+                      </h3>
+                      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="flex justify-between py-1.5 border-b border-border/40">
+                          <span className="text-xs text-muted-foreground">EJ Index</span>
+                          <span className="text-xs font-mono font-semibold">{ej.ej_index}/100</span>
+                        </div>
+                        <div className="flex justify-between py-1.5 border-b border-border/40">
+                          <span className="text-xs text-muted-foreground">PM2.5 Percentile</span>
+                          <span className="text-xs font-mono font-semibold">{ej.pm25_percentile}th</span>
+                        </div>
+                        <div className="flex justify-between py-1.5 border-b border-border/40">
+                          <span className="text-xs text-muted-foreground">Ozone Percentile</span>
+                          <span className="text-xs font-mono font-semibold">{ej.ozone_percentile}th</span>
+                        </div>
+                        <div className="flex justify-between py-1.5 border-b border-border/40">
+                          <span className="text-xs text-muted-foreground">Traffic Proximity</span>
+                          <span className="text-xs font-mono font-semibold">{ej.traffic_percentile}th</span>
+                        </div>
+                        <div className="flex justify-between py-1.5 border-b border-border/40">
+                          <span className="text-xs text-muted-foreground">% Low Income</span>
+                          <span className="text-xs font-mono font-semibold">{ej.pct_low_income}%</span>
+                        </div>
+                        <div className="flex justify-between py-1.5 border-b border-border/40">
+                          <span className="text-xs text-muted-foreground">% Minority</span>
+                          <span className="text-xs font-mono font-semibold">{ej.pct_minority}%</span>
+                        </div>
+                      </div>
+                      <p className="text-[9px] text-muted-foreground mt-2">Source: EPA EJSCREEN v2.3 ({ej.data_year}). Higher percentiles = greater environmental burden.</p>
+                    </CardContent>
+                  </Card>
+                );
+              })()}
 
               {/* Quick links */}
               {[
