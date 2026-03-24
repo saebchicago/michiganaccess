@@ -139,6 +139,8 @@ const pages = {
   SBAInsightsPage: lazy(() => import("@/pages/SBAInsightsPage")),
   ZipScorecardPage: lazy(() => import("@/pages/ZipScorecardPage")),
   DownloadCenterPage: lazy(() => import("@/pages/DownloadCenterPage")),
+  ZipFinderPage: lazy(() => import("@/pages/ZipFinderPage")),
+  ServiceAreaPage: lazy(() => import("@/pages/ServiceAreaPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -253,6 +255,8 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/find-your-city", component: pages.FindYourCityPage, label: "Find Your City" },
   { path: "/disaster-history", component: pages.DisasterHistoryPage, label: "Disaster History" },
   { path: "/sba-insights", component: pages.SBAInsightsPage, label: "SBA Insights" },
+  { path: "/zip-finder", component: pages.ZipFinderPage, label: "ZIP Finder" },
+  { path: "/service-area", component: pages.ServiceAreaPage, label: "Service Area Builder" },
   { path: "/zip/:zipcode", component: pages.ZipScorecardPage, label: "ZIP Scorecard" },
   { path: "/downloads", component: pages.DownloadCenterPage, label: "Download Center" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
@@ -305,6 +309,8 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "SBA Lending Insights", href: "/sba-insights", badge: "New" },
       { label: "ZIP Scorecard", href: "/zip/48201", badge: "New" },
       { label: "Detection Gap", href: "/detection-gap", badge: "Research" },
+      { label: "ZIP Finder", href: "/zip-finder", badge: "New" },
+      { label: "Service Area Builder", href: "/service-area", badge: "New" },
     ],
   },
   { label: "Methodology", href: "/methodology" },

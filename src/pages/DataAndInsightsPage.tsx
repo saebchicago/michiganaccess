@@ -21,6 +21,7 @@ import { toast } from "sonner";
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
 const CSVExportPanel = lazy(() => import("@/components/dashboard/CSVExportPanel"));
 const CountyCompare = lazy(() => import("@/components/dashboard/CountyCompare"));
+const ImpactStories = lazy(() => import("@/components/data/ImpactStories"));
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -141,6 +142,15 @@ export default function DataAndInsightsPage() {
       </section>
 
       <div className="container py-10">
+        {/* ── Impact Stories ── */}
+        <section className="mb-10">
+          <Suspense fallback={<SectionFallback />}>
+            <ImpactStories />
+          </Suspense>
+        </section>
+
+        <Separator className="mb-10" />
+
         {/* ── Power-User Quick Actions ── */}
         <section className="mb-10">
           <h2 className="text-lg font-bold text-foreground mb-4">Quick Actions</h2>
