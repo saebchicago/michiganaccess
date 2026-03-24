@@ -263,12 +263,32 @@ export default function ZipScorecardPage() {
       </section>
 
       <div className="container py-8 space-y-8">
-        {/* ── Loading / Error States ── */}
+        {/* ── Loading / Error / Not Found States ── */}
         {loading && (
           <div className="flex items-center justify-center py-16 gap-3 text-muted-foreground">
             <Loader2 className="h-5 w-5 animate-spin" />
             <span>Loading CDC PLACES data for ZIP {zip}...</span>
           </div>
+        )}
+
+        {!loading && !county && !quickStats && !irsData && cdcData.length === 0 && (
+          <Card className="border-michigan-gold/30 bg-michigan-gold/5">
+            <CardContent className="py-8 text-center space-y-3">
+              <AlertCircle className="h-8 w-8 text-michigan-gold mx-auto" />
+              <h2 className="text-lg font-bold text-foreground">ZIP Code Not Found</h2>
+              <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                We don't have data for ZIP code <strong>{zip}</strong>. It may not be a Michigan ZIP code, or it may be a PO Box / special-purpose code.
+              </p>
+              <div className="flex flex-wrap justify-center gap-3 pt-2">
+                <Link to="/zip-intelligence">
+                  <Button variant="outline" size="sm">Try Another ZIP</Button>
+                </Link>
+                <Link to="/find-care">
+                  <Button size="sm">Find Care Near You</Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {error && (

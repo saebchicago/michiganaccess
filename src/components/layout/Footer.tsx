@@ -76,6 +76,8 @@ const Footer = () => {
         { label: "ZIP Intelligence", href: "/zip-intelligence" },
         { label: "Tax Comparison", href: "/tax-comparison" },
         { label: "Health Equity Atlas", href: "/health-equity-atlas" },
+        { label: "ZIP Scorecard", href: "/zip/48201" },
+        { label: "Detection Gap", href: "/detection-gap" },
       ],
     },
     {

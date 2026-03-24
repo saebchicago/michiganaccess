@@ -301,6 +301,8 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Find Your City", href: "/find-your-city", badge: "Interactive" },
       { label: "Disaster History", href: "/disaster-history", badge: "Live API" },
       { label: "SBA Lending Insights", href: "/sba-insights", badge: "New" },
+      { label: "ZIP Scorecard", href: "/zip/48201", badge: "New" },
+      { label: "Detection Gap", href: "/detection-gap", badge: "Research" },
     ],
   },
   { label: "Methodology", href: "/methodology" },
