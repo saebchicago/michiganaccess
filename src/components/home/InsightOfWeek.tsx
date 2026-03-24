@@ -47,6 +47,17 @@ export default function InsightOfWeek() {
               <p className="text-xs text-muted-foreground mb-4">
                 Source: {insight.source}
               </p>
+              {insight.dataPoints && insight.dataPoints.length > 0 && (
+                <div className="flex flex-wrap gap-3 mb-4">
+                  {insight.dataPoints.map((dp) => (
+                    <div key={dp.label} className="flex-1 min-w-[100px] rounded-lg bg-muted/50 px-3 py-2 text-center">
+                      <p className="text-xs font-bold text-foreground tabular-nums">{dp.value}</p>
+                      <p className="text-[10px] font-medium text-muted-foreground">{dp.label}</p>
+                      <p className="text-[9px] text-muted-foreground/70">{dp.context}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
               <div className="flex items-center justify-between flex-wrap gap-3">
                 <Link
                   to={insight.href}

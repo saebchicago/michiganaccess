@@ -1,16 +1,22 @@
-import { useMemo } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useMemo, useState, useCallback } from "react";
+import { useParams, Link, Navigate, useSearchParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   MapPin, Heart, DollarSign, Leaf, Activity,
   TrendingDown, TrendingUp, BarChart3, Info,
-  Loader2, AlertCircle, Building2, Stethoscope, ShieldAlert, Hospital,
+  Loader2, AlertCircle, Building2, Stethoscope,
+  GitCompareArrows, Share2, X, Check,
 } from "lucide-react";
+import {
+  Radar, RadarChart, PolarGrid, PolarAngleAxis,
+  PolarRadiusAxis, ResponsiveContainer, Legend,
+} from "recharts";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -20,10 +26,7 @@ import { MI_STATE_AVERAGES, MEASURE_GROUPS } from "@/lib/places-client";
 import { MI_IRS_STATE_AVERAGES } from "@/data/irs-zip-income";
 import { MI_FMR_AVERAGE_2BR, HUD_FMR_SOURCE } from "@/data/hud-fmr";
 import { RURALITY_ICONS } from "@/data/rurality";
-import { MICHIGAN_SAFMR, MI_SAFMR_AVERAGE_2BR, HUD_SAFMR_SOURCE } from "@/data/hudSafmr";
-import { ZIP_TOP_HOSPITALS, CMS_HSAF_SOURCE } from "@/data/cmsHsaf";
-import { MICHIGAN_EJSCREEN, EPA_EJSCREEN_SOURCE } from "@/data/ejscreen";
-import { MICHIGAN_GEOCARE, HRSA_GEOCARE_SOURCE } from "@/data/geocare";
+import { getScoreBand } from "@/data/zipScoreBands";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
@@ -178,19 +181,10 @@ function scoreGrade(s: number) {
   return s >= 80 ? "A" : s >= 65 ? "B" : s >= 50 ? "C" : s >= 35 ? "D" : "F";
 }
 
-// ── Page Component ───────────────────────────────────────────────────────
+// ── Helper: build comparison metrics for a ZIP ──────────────────────────
 
-export default function ZipScorecardPage() {
-  const { zipcode } = useParams<{ zipcode: string }>();
-  const zip = zipcode ?? "";
-
+function useZipMetrics(zip: string) {
   const { cdcData, quickStats, irsData, fmrData, rurality, city, county, loading, error } = useZipData(zip);
-
-  // New data layers
-  const safmrData = MICHIGAN_SAFMR[zip] ?? null;
-  const hospitalData = ZIP_TOP_HOSPITALS[zip] ?? null;
-  const ejData = MICHIGAN_EJSCREEN[zip] ?? null;
-  const geocareData = MICHIGAN_GEOCARE[zip] ?? null;
 
   const cdcDataMap = useMemo(() => {
     const m: Record<string, number> = {};
@@ -207,16 +201,111 @@ export default function ZipScorecardPage() {
     return Math.round(healthResult.score * 0.45 + econScore * 0.35 + envScore * 0.2);
   }, [healthResult.score, econScore, envScore, cdcData.length, irsData, quickStats]);
 
-  const compositeColor = scoreColor(compositeScore);
-  const compositeGrade = scoreGrade(compositeScore);
+  return {
+    cdcData, cdcDataMap, quickStats, irsData, fmrData, rurality, city, county, loading, error,
+    healthResult, econScore, envScore, compositeScore,
+  };
+}
 
-  const headerSubtext = [city, county ? `${county} County` : ""].filter(Boolean).join(", ");
+// MI average metrics for comparison table
+const MI_AVG_METRICS = {
+  compositeScore: 50,
+  uninsuredRate: 5.2,
+  diabetes: 11.5,
+  obesity: 36.2,
+  avgAGI: MI_IRS_STATE_AVERAGES.avgAGI,
+  eitcRate: MI_IRS_STATE_AVERAGES.eitcPct,
+  avgRent: MI_FMR_AVERAGE_2BR,
+};
+
+// ── Page Component ───────────────────────────────────────────────────────
+
+export default function ZipScorecardPage() {
+  const { zipcode } = useParams<{ zipcode: string }>();
+  const zip = zipcode ?? "";
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const compareZip = searchParams.get("compare") ?? "";
+  const [showCompare, setShowCompare] = useState(!!compareZip);
+  const [compareInput, setCompareInput] = useState(compareZip);
+  const [copied, setCopied] = useState(false);
+
+  // Primary ZIP data
+  const primary = useZipMetrics(zip);
+
+  // Comparison ZIP data (only fetched when compare is active)
+  const compZip = compareZip.length === 5 ? compareZip : "";
+  const comp = useZipMetrics(compZip);
+
+  const compositeColor = scoreColor(primary.compositeScore);
+  const compositeGrade = scoreGrade(primary.compositeScore);
+  const scoreBand = getScoreBand(primary.compositeScore);
+
+  const headerSubtext = [primary.city, primary.county ? `${primary.county} County` : ""].filter(Boolean).join(", ");
 
   usePageMeta({
-    title: `ZIP ${zip} Scorecard`,
-    description: `Health, economic, and environment scorecard for ZIP code ${zip}${city ? ` (${city})` : ""}, Michigan. CDC PLACES, IRS, and HUD data.`,
+    title: `ZIP ${zip} Scorecard${compareZip ? ` vs ${compareZip}` : ""}`,
+    description: `Health, economic, and environment scorecard for ZIP code ${zip}${primary.city ? ` (${primary.city})` : ""}, Michigan. CDC PLACES, IRS, and HUD data.`,
     path: `/zip/${zip}`,
   });
+
+  const handleCompare = useCallback(() => {
+    if (compareInput.length === 5 && /^\d{5}$/.test(compareInput) && compareInput !== zip) {
+      navigate(`/zip/${zip}?compare=${compareInput}`, { replace: true });
+    }
+  }, [compareInput, zip, navigate]);
+
+  const handleClearCompare = useCallback(() => {
+    setShowCompare(false);
+    setCompareInput("");
+    navigate(`/zip/${zip}`, { replace: true });
+  }, [zip, navigate]);
+
+  const handleShareComparison = useCallback(() => {
+    const url = `${window.location.origin}/zip/${zip}${compareZip ? `?compare=${compareZip}` : ""}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [zip, compareZip]);
+
+  // Build comparison table data
+  const comparisonRows = useMemo(() => {
+    if (!compareZip) return [];
+
+    const getUninsured = (cdcMap: Record<string, number>) => cdcMap["No Health Insurance"] ?? null;
+    const getDiabetes = (cdcMap: Record<string, number>) => cdcMap["Diagnosed Diabetes"] ?? null;
+    const getObesity = (cdcMap: Record<string, number>) => cdcMap["Obesity"] ?? null;
+
+    return [
+      { label: "Composite Score", zip1: primary.compositeScore, zip2: comp.compositeScore, mi: MI_AVG_METRICS.compositeScore, unit: "/100" },
+      { label: "Uninsured Rate", zip1: getUninsured(primary.cdcDataMap), zip2: getUninsured(comp.cdcDataMap), mi: MI_AVG_METRICS.uninsuredRate, unit: "%" },
+      { label: "Diabetes", zip1: getDiabetes(primary.cdcDataMap), zip2: getDiabetes(comp.cdcDataMap), mi: MI_AVG_METRICS.diabetes, unit: "%" },
+      { label: "Obesity", zip1: getObesity(primary.cdcDataMap), zip2: getObesity(comp.cdcDataMap), mi: MI_AVG_METRICS.obesity, unit: "%" },
+      { label: "Avg AGI", zip1: primary.irsData?.avgAGI ?? null, zip2: comp.irsData?.avgAGI ?? null, mi: MI_AVG_METRICS.avgAGI, unit: "$" },
+      { label: "EITC Rate", zip1: primary.irsData?.eitcPct ?? null, zip2: comp.irsData?.eitcPct ?? null, mi: MI_AVG_METRICS.eitcRate, unit: "%" },
+      { label: "Avg Rent (2BR)", zip1: primary.fmrData?.fmr2br ?? null, zip2: comp.fmrData?.fmr2br ?? null, mi: MI_AVG_METRICS.avgRent, unit: "$" },
+    ];
+  }, [compareZip, primary, comp]);
+
+  // Radar chart data
+  const radarData = useMemo(() => {
+    if (!compareZip) return [];
+    return [
+      { metric: "Health", zip1: primary.healthResult.score, zip2: comp.healthResult.score, mi: 50 },
+      { metric: "Economic", zip1: primary.econScore, zip2: comp.econScore, mi: 50 },
+      { metric: "Environment", zip1: primary.envScore, zip2: comp.envScore, mi: 50 },
+      { metric: "Composite", zip1: primary.compositeScore, zip2: comp.compositeScore, mi: 50 },
+    ];
+  }, [compareZip, primary, comp]);
+
+  const fmtVal = (v: number | null, unit: string) => {
+    if (v == null) return "N/A";
+    if (unit === "$") return `$${v.toLocaleString()}`;
+    if (unit === "/100") return `${v}`;
+    return `${v.toFixed(1)}%`;
+  };
 
   if (!zipcode || !/^\d{5}$/.test(zip)) {
     return <Navigate to="/zip-intelligence" replace />;
@@ -236,10 +325,10 @@ export default function ZipScorecardPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
             <div className="flex items-center gap-2 mb-3 flex-wrap">
               <MapPin className="h-5 w-5 text-primary" />
-              {county && <Badge variant="outline" className="text-xs">{county} County</Badge>}
-              {rurality && (
+              {primary.county && <Badge variant="outline" className="text-xs">{primary.county} County</Badge>}
+              {primary.rurality && (
                 <Badge variant="secondary" className="text-xs">
-                  {RURALITY_ICONS[rurality.class]} {rurality.class}
+                  {RURALITY_ICONS[primary.rurality.class]} {primary.rurality.class}
                 </Badge>
               )}
             </div>
@@ -250,10 +339,10 @@ export default function ZipScorecardPage() {
               <p className="text-lg text-muted-foreground mb-5">{headerSubtext}, Michigan</p>
             )}
             <div className="flex flex-wrap gap-3">
-              {county && (
-                <Link to={`/county/${countyToSlug(county)}`}>
+              {primary.county && (
+                <Link to={`/county/${countyToSlug(primary.county)}`}>
                   <Button variant="outline" size="sm" className="gap-2">
-                    <Building2 className="h-4 w-4" /> {county} County
+                    <Building2 className="h-4 w-4" /> {primary.county} County
                   </Button>
                 </Link>
               )}
@@ -267,21 +356,64 @@ export default function ZipScorecardPage() {
                   <Stethoscope className="h-4 w-4" /> Find Care
                 </Button>
               </Link>
+              <Button
+                variant={showCompare ? "secondary" : "outline"}
+                size="sm"
+                className="gap-2"
+                onClick={() => setShowCompare(!showCompare)}
+              >
+                <GitCompareArrows className="h-4 w-4" /> Compare
+              </Button>
             </div>
           </motion.div>
         </div>
       </section>
 
       <div className="container py-8 space-y-8">
+        {/* ── Compare Input ── */}
+        {showCompare && (
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }}>
+            <Card className="border-primary/20">
+              <CardContent className="py-4">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <label className="text-sm font-medium text-foreground">Compare with:</label>
+                  <Input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={5}
+                    placeholder="Enter ZIP code"
+                    value={compareInput}
+                    onChange={(e) => setCompareInput(e.target.value.replace(/\D/g, "").slice(0, 5))}
+                    onKeyDown={(e) => { if (e.key === "Enter") handleCompare(); }}
+                    className="w-32 font-mono"
+                  />
+                  <Button size="sm" onClick={handleCompare} disabled={compareInput.length !== 5 || compareInput === zip}>
+                    Compare
+                  </Button>
+                  {compareZip && (
+                    <Button size="sm" variant="ghost" onClick={handleShareComparison} className="gap-1.5">
+                      {copied ? <Check className="h-3.5 w-3.5" /> : <Share2 className="h-3.5 w-3.5" />}
+                      {copied ? "Copied!" : "Share comparison"}
+                    </Button>
+                  )}
+                  <Button size="icon" variant="ghost" onClick={handleClearCompare} className="h-8 w-8">
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
         {/* ── Loading / Error / Not Found States ── */}
-        {loading && (
+        {primary.loading && (
           <div className="flex items-center justify-center py-16 gap-3 text-muted-foreground">
             <Loader2 className="h-5 w-5 animate-spin" />
             <span>Loading CDC PLACES data for ZIP {zip}...</span>
           </div>
         )}
 
-        {!loading && !county && !quickStats && !irsData && cdcData.length === 0 && (
+        {!primary.loading && !primary.county && !primary.quickStats && !primary.irsData && primary.cdcData.length === 0 && (
           <Card className="border-michigan-gold/30 bg-michigan-gold/5">
             <CardContent className="py-8 text-center space-y-3">
               <AlertCircle className="h-8 w-8 text-michigan-gold mx-auto" />
@@ -301,7 +433,7 @@ export default function ZipScorecardPage() {
           </Card>
         )}
 
-        {error && (
+        {primary.error && (
           <Card className="border-destructive/30">
             <CardContent className="py-6 flex items-center gap-3">
               <AlertCircle className="h-5 w-5 text-destructive" />
@@ -311,14 +443,14 @@ export default function ZipScorecardPage() {
         )}
 
         {/* ── Composite + 3 Score Cards ── */}
-        {!loading && (
+        {!primary.loading && (
           <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <div className="grid gap-6 md:grid-cols-4 items-start">
               {/* Composite */}
               <Card className="border-primary/20 md:row-span-1">
                 <CardContent className="py-6 flex flex-col items-center">
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">Composite Score</p>
-                  <CompositeGauge score={compositeScore} color={compositeColor} grade={compositeGrade} />
+                  <CompositeGauge score={primary.compositeScore} color={compositeColor} grade={compositeGrade} />
                 </CardContent>
               </Card>
 
@@ -327,27 +459,107 @@ export default function ZipScorecardPage() {
                 <Card>
                   <CardContent className="py-5 flex flex-col items-center gap-1">
                     <Heart className="h-4 w-4 text-michigan-coral mb-1" />
-                    <ScoreGauge score={healthResult.score} color={healthResult.color} label="Health Score" />
+                    <ScoreGauge score={primary.healthResult.score} color={primary.healthResult.color} label="Health Score" />
                     <p className="text-[9px] text-muted-foreground mt-1">CDC PLACES 2024</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardContent className="py-5 flex flex-col items-center gap-1">
                     <DollarSign className="h-4 w-4 text-michigan-gold mb-1" />
-                    <ScoreGauge score={econScore} color={scoreColor(econScore)} label="Economic Score" />
+                    <ScoreGauge score={primary.econScore} color={scoreColor(primary.econScore)} label="Economic Score" />
                     <p className="text-[9px] text-muted-foreground mt-1">IRS SOI + Census ACS</p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardContent className="py-5 flex flex-col items-center gap-1">
                     <Leaf className="h-4 w-4 text-michigan-forest mb-1" />
-                    <ScoreGauge score={envScore} color={scoreColor(envScore)} label="Environment Score" />
+                    <ScoreGauge score={primary.envScore} color={scoreColor(primary.envScore)} label="Environment Score" />
                     <p className="text-[9px] text-muted-foreground mt-1">CDC + EPA indicators</p>
                   </CardContent>
                 </Card>
               </div>
             </div>
           </motion.section>
+        )}
+
+        {/* ── Score Band Interpretation ── */}
+        {!primary.loading && primary.compositeScore > 0 && (
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <Card className="border-border/60">
+              <CardContent className="py-5 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className={`inline-block w-3 h-3 rounded-full ${scoreBand.color}`} />
+                  <h3 className="text-sm font-bold text-foreground">{scoreBand.label}</h3>
+                  <span className="text-xs text-muted-foreground">({scoreBand.min}&#8211;{scoreBand.max})</span>
+                </div>
+                <p className="text-xs text-muted-foreground leading-relaxed">{scoreBand.description}</p>
+                <p className="text-xs text-primary font-medium">{scoreBand.callToAction}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        {/* ── Comparison Section ── */}
+        {compareZip && !comp.loading && (
+          <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="space-y-6">
+            <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+              <GitCompareArrows className="h-5 w-5 text-primary" />
+              {zip} vs {compareZip} Comparison
+            </h2>
+
+            {/* Comparison Table */}
+            <Card>
+              <CardContent className="py-4 overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th className="text-left py-2 text-xs font-semibold text-muted-foreground">Metric</th>
+                      <th className="text-right py-2 text-xs font-semibold text-primary">{zip}</th>
+                      <th className="text-right py-2 text-xs font-semibold text-michigan-teal">{compareZip}</th>
+                      <th className="text-right py-2 text-xs font-semibold text-muted-foreground">MI Avg</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {comparisonRows.map((row) => (
+                      <tr key={row.label} className="border-b border-border/40 last:border-0">
+                        <td className="py-2 text-foreground">{row.label}</td>
+                        <td className="py-2 text-right font-mono font-semibold tabular-nums text-primary">{fmtVal(row.zip1, row.unit)}</td>
+                        <td className="py-2 text-right font-mono font-semibold tabular-nums text-michigan-teal">{fmtVal(row.zip2, row.unit)}</td>
+                        <td className="py-2 text-right font-mono text-muted-foreground tabular-nums">{fmtVal(row.mi, row.unit)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </CardContent>
+            </Card>
+
+            {/* Radar Chart */}
+            {radarData.length > 0 && (
+              <Card>
+                <CardContent className="py-4">
+                  <h3 className="text-sm font-bold text-foreground mb-3">Score Overlay</h3>
+                  <ResponsiveContainer width="100%" height={320}>
+                    <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                      <PolarGrid stroke="hsl(214, 20%, 85%)" />
+                      <PolarAngleAxis dataKey="metric" tick={{ fontSize: 12 }} />
+                      <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 10 }} />
+                      <Radar name={zip} dataKey="zip1" stroke="hsl(221, 83%, 53%)" fill="hsl(221, 83%, 53%)" fillOpacity={0.2} />
+                      <Radar name={compareZip} dataKey="zip2" stroke="hsl(172, 66%, 40%)" fill="hsl(172, 66%, 40%)" fillOpacity={0.2} />
+                      <Radar name="MI Avg" dataKey="mi" stroke="hsl(0, 0%, 60%)" fill="transparent" strokeDasharray="4 4" />
+                      <Legend wrapperStyle={{ fontSize: 12 }} />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            )}
+          </motion.section>
+        )}
+
+        {comp.loading && compareZip && (
+          <div className="flex items-center justify-center py-8 gap-3 text-muted-foreground">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            <span>Loading comparison data for ZIP {compareZip}...</span>
+          </div>
         )}
 
         <Separator />
@@ -368,7 +580,7 @@ export default function ZipScorecardPage() {
 
           {/* ── Health Outcomes Tab ── */}
           <TabsContent value="health" className="space-y-4">
-            {cdcData.length === 0 && !loading ? (
+            {primary.cdcData.length === 0 && !primary.loading ? (
               <Card>
                 <CardContent className="py-8 text-center">
                   <Info className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
@@ -379,7 +591,7 @@ export default function ZipScorecardPage() {
               </Card>
             ) : (
               Object.entries(MEASURE_GROUPS).slice(0, 3).map(([group, measures]) => {
-                const available = measures.filter((m) => cdcDataMap[m] != null);
+                const available = measures.filter((m) => primary.cdcDataMap[m] != null);
                 if (available.length === 0) return null;
                 return (
                   <Card key={group}>
@@ -389,7 +601,7 @@ export default function ZipScorecardPage() {
                         <MetricRow
                           key={m}
                           label={m}
-                          value={cdcDataMap[m]}
+                          value={primary.cdcDataMap[m]}
                           stateAvg={MI_STATE_AVERAGES[m] ?? 0}
                           unit="%"
                           lowerIsBetter={m !== "Annual Checkup" && m !== "Dental Visit" && m !== "Cholesterol Screening" && m !== "Mammography" && m !== "Colorectal Cancer Screening" && m !== "High Blood Pressure Medication"}
@@ -400,82 +612,7 @@ export default function ZipScorecardPage() {
                 );
               })
             )}
-            {/* Hospital Utilization Card */}
-            {hospitalData && (
-              <Card>
-                <CardContent className="py-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Hospital className="h-4 w-4 text-primary" />
-                    <h3 className="text-sm font-bold text-foreground">Top Hospitals (Medicare Discharges)</h3>
-                  </div>
-                  <div className="space-y-2">
-                    {hospitalData.map((h) => (
-                      <div key={h.rank} className="flex items-center gap-3">
-                        <Badge variant="outline" className="text-[10px] shrink-0 w-5 h-5 flex items-center justify-center p-0">{h.rank}</Badge>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-semibold text-foreground truncate">{h.hospital_name}</p>
-                          <p className="text-[10px] text-muted-foreground">{h.hospital_city}</p>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <p className="text-xs font-mono font-semibold">{(h.share_of_zip_discharges * 100).toFixed(0)}%</p>
-                          <p className="text-[10px] text-muted-foreground">{h.discharge_count} discharges</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[9px] text-muted-foreground mt-2">{CMS_HSAF_SOURCE}</p>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* FQHC Penetration Card */}
-            {geocareData && !geocareData.is_suppressed && (
-              <Card>
-                <CardContent className="py-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Stethoscope className="h-4 w-4 text-michigan-teal" />
-                    <h3 className="text-sm font-bold text-foreground">FQHC Penetration</h3>
-                  </div>
-                  <div className="flex items-center gap-4 mb-2">
-                    <div className="flex-1">
-                      <div className="h-6 bg-muted/50 rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full rounded-full bg-michigan-teal/70"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${Math.min(geocareData.hcp_penetration_rate * 100, 100)}%` }}
-                          transition={{ duration: 1, ease: "easeOut" }}
-                        />
-                      </div>
-                    </div>
-                    <span className="text-lg font-bold tabular-nums">{(geocareData.hcp_penetration_rate * 100).toFixed(0)}%</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <p className="text-xs font-semibold">{geocareData.low_income_population.toLocaleString()}</p>
-                      <p className="text-[10px] text-muted-foreground">Low-Income Pop</p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold">{geocareData.hcp_patients.toLocaleString()}</p>
-                      <p className="text-[10px] text-muted-foreground">HCP Patients</p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-destructive">{geocareData.unserved_low_income.toLocaleString()}</p>
-                      <p className="text-[10px] text-muted-foreground">Unserved</p>
-                    </div>
-                  </div>
-                  <p className="text-[9px] text-muted-foreground mt-2">{HRSA_GEOCARE_SOURCE}</p>
-                </CardContent>
-              </Card>
-            )}
-            {geocareData?.is_suppressed && (
-              <Card>
-                <CardContent className="py-4 text-center">
-                  <p className="text-xs text-muted-foreground">FQHC data suppressed for this ZIP (small population). {HRSA_GEOCARE_SOURCE}</p>
-                </CardContent>
-              </Card>
-            )}
-
-            {cdcData.length > 0 && (
+            {primary.cdcData.length > 0 && (
               <p className="text-[10px] text-muted-foreground">
                 Source: CDC PLACES 2024 (BRFSS model-based estimates). These are modeled estimates, not clinical data.
               </p>
@@ -485,65 +622,32 @@ export default function ZipScorecardPage() {
           {/* ── Economic Stress Tab ── */}
           <TabsContent value="economic" className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {quickStats && (
+              {primary.quickStats && (
                 <>
-                  <EconCard label="Population" value={quickStats.population.toLocaleString()} source="Census ACS 2022" />
-                  <EconCard label="Median Household Income" value={quickStats.medianIncome} format="$" benchmark={`MI avg: $63,202`} source="Census ACS 2022" />
-                  <EconCard label="Median Rent" value={quickStats.medianRent} format="$" source="Census ACS 2022" />
-                  <EconCard label="Property Tax (est.)" value={quickStats.propTaxEst} format="$" source="MI Treasury" />
-                  {quickStats.cityTax !== "0%" && (
-                    <EconCard label="City Income Tax" value={quickStats.cityTax} source="MI Treasury" />
+                  <EconCard label="Population" value={primary.quickStats.population.toLocaleString()} source="Census ACS 2022" />
+                  <EconCard label="Median Household Income" value={primary.quickStats.medianIncome} format="$" benchmark={`MI avg: $63,202`} source="Census ACS 2022" />
+                  <EconCard label="Median Rent" value={primary.quickStats.medianRent} format="$" source="Census ACS 2022" />
+                  <EconCard label="Property Tax (est.)" value={primary.quickStats.propTaxEst} format="$" source="MI Treasury" />
+                  {primary.quickStats.cityTax !== "0%" && (
+                    <EconCard label="City Income Tax" value={primary.quickStats.cityTax} source="MI Treasury" />
                   )}
-                  <EconCard label="Graduation Rate" value={`${quickStats.gradRate}%`} benchmark="MI avg: ~82%" source="MI School Data" />
+                  <EconCard label="Graduation Rate" value={`${primary.quickStats.gradRate}%`} benchmark="MI avg: ~82%" source="MI School Data" />
                 </>
               )}
-              {irsData && (
+              {primary.irsData && (
                 <>
-                  <EconCard label="Avg Adjusted Gross Income" value={irsData.avgAGI} format="$" benchmark={`MI avg: $${MI_IRS_STATE_AVERAGES.avgAGI.toLocaleString()}`} source="IRS SOI 2021" />
-                  <EconCard label="EITC Participation" value={`${irsData.eitcPct}%`} benchmark={`MI avg: ${MI_IRS_STATE_AVERAGES.eitcPct}%`} source="IRS SOI 2021" />
-                  <EconCard label="Self-Employed" value={`${irsData.selfEmployedPct}%`} benchmark={`MI avg: ${MI_IRS_STATE_AVERAGES.selfEmployedPct}%`} source="IRS SOI 2021" />
+                  <EconCard label="Avg Adjusted Gross Income" value={primary.irsData.avgAGI} format="$" benchmark={`MI avg: $${MI_IRS_STATE_AVERAGES.avgAGI.toLocaleString()}`} source="IRS SOI 2021" />
+                  <EconCard label="EITC Participation" value={`${primary.irsData.eitcPct}%`} benchmark={`MI avg: ${MI_IRS_STATE_AVERAGES.eitcPct}%`} source="IRS SOI 2021" />
+                  <EconCard label="Self-Employed" value={`${primary.irsData.selfEmployedPct}%`} benchmark={`MI avg: ${MI_IRS_STATE_AVERAGES.selfEmployedPct}%`} source="IRS SOI 2021" />
                 </>
               )}
-              {fmrData && (
+              {primary.fmrData && (
                 <>
-                  <EconCard label="Fair Market Rent (2BR)" value={fmrData.fmr2br} format="$" benchmark={`MI avg: $${MI_FMR_AVERAGE_2BR}`} source={HUD_FMR_SOURCE} />
-                  <EconCard label="FMR Range (Studio–4BR)" value={`$${fmrData.fmr0br}–$${fmrData.fmr4br}`} source={HUD_FMR_SOURCE} />
+                  <EconCard label="Fair Market Rent (2BR)" value={primary.fmrData.fmr2br} format="$" benchmark={`MI avg: $${MI_FMR_AVERAGE_2BR}`} source={HUD_FMR_SOURCE} />
+                  <EconCard label="FMR Range (Studio–4BR)" value={`$${primary.fmrData.fmr0br}–$${primary.fmrData.fmr4br}`} source={HUD_FMR_SOURCE} />
                 </>
               )}
-              {safmrData && (
-                <Card className="sm:col-span-2 lg:col-span-3">
-                  <CardContent className="py-4">
-                    <h3 className="text-sm font-bold text-foreground mb-3">Small Area Fair Market Rents (SAFMR)</h3>
-                    <div className="space-y-2">
-                      {(["0br", "1br", "2br", "3br", "4br"] as const).map((br) => {
-                        const key = `safmr_${br}` as keyof typeof safmrData;
-                        const val = safmrData[key] as number;
-                        const maxVal = safmrData.safmr_4br;
-                        const pct = maxVal > 0 ? (val / maxVal) * 100 : 0;
-                        const label = br === "0br" ? "Studio" : br.replace("br", " BR");
-                        return (
-                          <div key={br} className="flex items-center gap-3">
-                            <span className="text-xs text-muted-foreground w-12 shrink-0">{label}</span>
-                            <div className="flex-1 h-5 bg-muted/50 rounded-full overflow-hidden">
-                              <motion.div
-                                className="h-full rounded-full bg-primary/70"
-                                initial={{ width: 0 }}
-                                animate={{ width: `${pct}%` }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                              />
-                            </div>
-                            <span className="text-xs font-mono font-semibold w-14 text-right">${val}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <p className="text-[10px] text-muted-foreground mt-2 flex items-center gap-1">
-                      MI avg 2BR: ${MI_SAFMR_AVERAGE_2BR} | {safmrData.is_modeled ? "Model-based" : "Survey-based"} | {HUD_SAFMR_SOURCE}
-                    </p>
-                  </CardContent>
-                </Card>
-              )}
-              {!quickStats && !irsData && !fmrData && !safmrData && (
+              {!primary.quickStats && !primary.irsData && !primary.fmrData && (
                 <Card className="sm:col-span-2 lg:col-span-3">
                   <CardContent className="py-8 text-center">
                     <Info className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
@@ -560,61 +664,17 @@ export default function ZipScorecardPage() {
 
           {/* ── Resources Tab ── */}
           <TabsContent value="resources" className="space-y-4">
-            {/* EJSCREEN Environmental Justice Index */}
-            {ejData && (
-              <Card>
-                <CardContent className="py-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <ShieldAlert className="h-4 w-4 text-michigan-forest" />
-                    <h3 className="text-sm font-bold text-foreground">Environmental Justice Index</h3>
-                    <Badge variant={ejData.ej_index >= 70 ? "destructive" : ejData.ej_index >= 45 ? "default" : "secondary"} className="text-[10px] ml-auto">
-                      EJ Index: {ejData.ej_index}
-                    </Badge>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {([
-                      ["PM2.5", ejData.pm25_percentile],
-                      ["Ozone", ejData.ozone_percentile],
-                      ["Traffic", ejData.traffic_percentile],
-                      ["Wastewater", ejData.wastewater_percentile],
-                      ["RMP Facilities", ejData.rmp_percentile],
-                    ] as const).map(([label, val]) => (
-                      <div key={label}>
-                        <p className="text-[10px] text-muted-foreground mb-1">{label}</p>
-                        <div className="h-3 bg-muted/50 rounded-full overflow-hidden">
-                          <motion.div
-                            className={`h-full rounded-full ${val >= 70 ? "bg-red-500" : val >= 45 ? "bg-yellow-500" : "bg-green-500"}`}
-                            initial={{ width: 0 }}
-                            animate={{ width: `${val}%` }}
-                            transition={{ duration: 0.8 }}
-                          />
-                        </div>
-                        <p className="text-[10px] font-mono text-right mt-0.5">{val}th pctl</p>
-                      </div>
-                    ))}
-                    <div>
-                      <p className="text-[10px] text-muted-foreground mb-1">Demographics</p>
-                      <p className="text-[10px]">{ejData.pct_low_income}% low-income</p>
-                      <p className="text-[10px]">{ejData.pct_minority}% minority</p>
-                      <p className="text-[10px]">{ejData.pct_less_hs}% &lt; HS</p>
-                    </div>
-                  </div>
-                  <p className="text-[9px] text-muted-foreground mt-2">{EPA_EJSCREEN_SOURCE}</p>
-                </CardContent>
-              </Card>
-            )}
-
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {/* Social Needs from CDC */}
-              {(MEASURE_GROUPS["Social Needs"] ?? []).filter((m) => cdcDataMap[m] != null).length > 0 && (
+              {(MEASURE_GROUPS["Social Needs"] ?? []).filter((m) => primary.cdcDataMap[m] != null).length > 0 && (
                 <Card className="sm:col-span-2 lg:col-span-3">
                   <CardContent className="py-4">
                     <h3 className="text-sm font-bold text-foreground mb-2">Social Needs (CDC PLACES)</h3>
-                    {MEASURE_GROUPS["Social Needs"].filter((m) => cdcDataMap[m] != null).map((m) => (
+                    {MEASURE_GROUPS["Social Needs"].filter((m) => primary.cdcDataMap[m] != null).map((m) => (
                       <MetricRow
                         key={m}
                         label={m}
-                        value={cdcDataMap[m]}
+                        value={primary.cdcDataMap[m]}
                         stateAvg={MI_STATE_AVERAGES[m] ?? 0}
                         unit="%"
                         lowerIsBetter={m !== "Health Insurance"}
@@ -628,7 +688,7 @@ export default function ZipScorecardPage() {
               {/* Quick links */}
               {[
                 { title: "Find a Doctor or Clinic", desc: `Search providers near ${zip}`, href: `/find-care?zip=${zip}`, icon: Stethoscope },
-                { title: "Community Resources", desc: county ? `Food, housing, transport in ${county} County` : "Food, housing, transport & more", href: county ? `/resources?county=${county}` : "/resources", icon: Heart },
+                { title: "Community Resources", desc: primary.county ? `Food, housing, transport in ${primary.county} County` : "Food, housing, transport & more", href: primary.county ? `/resources?county=${primary.county}` : "/resources", icon: Heart },
                 { title: "Financial Assistance", desc: "Medicaid, SNAP, LIHEAP & more", href: "/financial-help", icon: DollarSign },
               ].map((r) => (
                 <Link key={r.title} to={r.href}>
@@ -651,7 +711,7 @@ export default function ZipScorecardPage() {
 
         {/* ── Source Attributions ── */}
         <DataProvenance
-          source="CDC PLACES 2024, IRS SOI 2021, HUD FMR/SAFMR FY2024-25, Census ACS 2022, USDA RUCA, CMS HSAF, EPA EJSCREEN v2.3, HRSA GeoCare 2023"
+          source="CDC PLACES 2024 (BRFSS), IRS Statistics of Income 2021, HUD FMR FY2025, Census ACS 2022, USDA RUCA"
           updated="2025"
           methodologyHref="/methodology"
         />
