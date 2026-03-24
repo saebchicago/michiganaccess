@@ -15,6 +15,8 @@ import NeighborhoodHealthScore from "@/components/tools/NeighborhoodHealthScore"
 import CommunityReportCard from "@/components/tools/CommunityReportCard";
 import NearMeFinder from "@/components/tools/NearMeFinder";
 import ZipQuickStats from "@/components/tools/ZipQuickStats";
+import IRSIncomeCard from "@/components/tools/IRSIncomeCard";
+import { IRS_ZIP_DATA } from "@/data/irs-zip-income";
 import { toast } from "sonner";
 
 import { TrendingUp as TrendIcon } from "lucide-react";
@@ -382,6 +384,9 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
 
             {/* Near Me */}
             <NearMeFinder zipCode={activeZip} zipData={(() => { const m: Record<string, number> = {}; zipData!.forEach((d) => { m[d.short_question_text] = d.data_value; }); return m; })()} />
+
+            {/* IRS Income Data */}
+            {IRS_ZIP_DATA[activeZip] && <IRSIncomeCard zip={activeZip} />}
 
             {/* Source */}
             <p className="text-[9px] text-muted-foreground text-center">
