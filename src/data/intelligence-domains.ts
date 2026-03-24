@@ -209,7 +209,7 @@ export const INTELLIGENCE_DOMAINS = [
 
 export const INTELLIGENCE_DOMAIN_MAP: Record<IntelligenceDomainSlug, IntelligenceDomain> = Object.fromEntries(
   INTELLIGENCE_DOMAINS.map((domain) => [domain.slug, domain]),
-) as Record<IntelligenceDomainSlug, IntelligenceDomain>;
+) as unknown as Record<IntelligenceDomainSlug, IntelligenceDomain>;
 
 export function getIntelligenceDomain(slug: string | undefined): IntelligenceDomain {
   if (slug && slug in INTELLIGENCE_DOMAIN_MAP) {

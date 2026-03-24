@@ -55,7 +55,7 @@ export default function SemcogSidewalkLayer({ map, visible = false }: SemcogSide
 
     const bounds = map.getBounds();
     // Only load if within SEMCOG's coverage area
-    const semcogBounds = L.latLngBounds(SEMCOG_BOUNDS);
+    const semcogBounds = L.latLngBounds(SEMCOG_BOUNDS as L.LatLngBoundsLiteral);
     if (!bounds.intersects(semcogBounds)) return;
 
     const requestId = ++abortRef.current;
