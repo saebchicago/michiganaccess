@@ -20,15 +20,37 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "offline.html"],
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,webp,woff,woff2}"],
+        globPatterns: ["**/*.{js,css,ico,png,svg,jpg,webp,woff,woff2}"],
+        // Do NOT precache index.html — let NavigationRoute handle it
+        // with NetworkFirst so CSP headers are always fresh from Netlify.
+        navigateFallback: undefined,
         navigateFallbackDenylist: [/^\/~oauth/],
         runtimeCaching: [
+          // HTML pages: always fetch from network first so Netlify CSP headers are current
+          {
+            urlPattern: ({ request }) => request.mode === "navigate",
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "pages-cache",
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 },
+            },
+          },
           {
             urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
             handler: "NetworkFirst",
             options: {
               cacheName: "supabase-api-cache",
               expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 },
+            },
+          },
+          // External APIs: always network, never cache stale responses
+          {
+            urlPattern: /^https:\/\/(data\.cdc\.gov|api\.weather\.gov|api\.fda\.gov|clinicaltrials\.gov|api\.tidesandcurrents\.noaa\.gov|api\.mistral\.ai)\/.*/i,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "external-api-cache",
+              networkTimeoutSeconds: 10,
+              expiration: { maxEntries: 30, maxAgeSeconds: 5 * 60 },
             },
           },
         ],

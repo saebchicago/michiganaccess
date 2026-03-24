@@ -61,7 +61,8 @@ export const POPULAR_MEASURES = [
 
 export async function fetchZCTAData(zcta: string): Promise<PlacesMeasure[]> {
   try {
-    const res = await fetch(`${PLACES_BASE}?locationid=${encodeURIComponent(zcta)}&$limit=1000`);
+    const url = `${PLACES_BASE}?locationid=${encodeURIComponent(zcta)}&$limit=1000`;
+    const res = await fetch(url, { mode: "cors" });
     if (!res.ok) return [];
     const data = await res.json();
     return data.map((d: any) => ({
