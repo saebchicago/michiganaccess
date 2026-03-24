@@ -78,6 +78,7 @@ const Footer = () => {
         { label: "Health Equity Atlas", href: "/health-equity-atlas" },
         { label: "ZIP Scorecard", href: "/zip/48201" },
         { label: "Detection Gap", href: "/detection-gap" },
+        { label: "Downloads", href: "/downloads" },
       ],
     },
     {
