@@ -24,6 +24,20 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "March", year: "2026", title: "Federal Data Expansion — v6.0",
+    icon: Shield,
+    tag: "data",
+    items: [
+      "FEMA Disaster History: 70 years of Michigan disaster declarations (live OpenFEMA API)",
+      "SBA Economic Intelligence: Small business lending data for 25 counties",
+      "SBA Disaster Loans: Where disaster relief dollars actually went",
+      "Community Resilience Score: 0-100 composite (disaster + economic + health + safety net + digital)",
+      "Federal Dollar Tracker: Combined SBA + FEMA investment by county",
+      "Disaster Acceleration Chart: Visualizing the increase in declarations over decades",
+      "New Data Stories and data source entries for FEMA and SBA data",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "Max Impact Release — v5.0",
     icon: Rocket,
     tag: "feature",
