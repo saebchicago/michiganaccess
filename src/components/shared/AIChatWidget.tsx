@@ -9,10 +9,7 @@ interface Message {
 }
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const CHAT_URL = SUPABASE_URL
-  ? `${SUPABASE_URL}/functions/v1/civic-copilot`
-  : "/.netlify/functions/chat-mistral";
-const USE_STREAMING = !!SUPABASE_URL;
+const CHAT_URL = `${SUPABASE_URL}/functions/v1/civic-copilot`;
 
 /** Crisis signal detection — confidence-based, not exact match */
 const CRISIS_SIGNALS = [
