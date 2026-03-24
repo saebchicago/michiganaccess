@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MapPin, BarChart3, CheckCircle2, DollarSign, Map, Home, GitCompareArrows, HelpCircle } from "lucide-react";
+import { MapPin, BarChart3, CheckCircle2, DollarSign, Map, Home, GitCompareArrows, HelpCircle, CloudLightning } from "lucide-react";
 
 const CAPABILITIES = [
   { icon: MapPin, label: "Health Score", detail: "0-100 grade for any ZIP", href: "/zip-intelligence", color: "text-green-400" },
@@ -11,6 +11,7 @@ const CAPABILITIES = [
   { icon: Home, label: "Should I Move?", detail: "Taxes + health + housing", href: "/tax-comparison", color: "text-rose-400" },
   { icon: GitCompareArrows, label: "Compare ZIPs", detail: "Side-by-side ZIP analysis", href: "/compare-zips", color: "text-indigo-400" },
   { icon: HelpCircle, label: "Michigan Quiz", detail: "Test your Michigan knowledge", href: "/quiz", color: "text-purple-400" },
+  { icon: CloudLightning, label: "Disaster History", detail: "70 years of FEMA data", href: "/disaster-history", color: "text-red-400" },
 ];
 
 export default function CapabilityStrip() {

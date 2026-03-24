@@ -26,6 +26,8 @@ const SOURCES: Record<string, Source[]> = {
     { name: "FRED / BLS", org: "Federal Reserve", url: "https://fred.stlouisfed.org/", powers: "Unemployment, CPI", frequency: "Monthly" },
     { name: "FCC BDC", org: "FCC", url: "https://broadbandmap.fcc.gov/", powers: "Broadband availability", frequency: "Semiannual" },
     { name: "HUD PIT Count", org: "HUD", url: "https://www.hudexchange.info/", powers: "Homelessness data", frequency: "Annual" },
+    { name: "FEMA OpenFEMA API", org: "FEMA", url: "https://www.fema.gov/about/openfema/api", powers: "70 years of Michigan disaster declarations", frequency: "Daily" },
+    { name: "SBA FOIA Data", org: "SBA", url: "https://data.sba.gov/", powers: "Small business lending, disaster loan approvals", frequency: "Quarterly" },
   ],
   "Michigan State Agencies": [
     { name: "MDHHS Health Data", org: "MDHHS", url: "https://www.michigan.gov/mdhhs", powers: "Vital records, Medicaid, SDOH", frequency: "Varies" },

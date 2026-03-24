@@ -51,6 +51,16 @@ export const DATA_STORIES: DataStory[] = [
     color: "#0A4C95",
   },
   {
+    id: "disaster-acceleration",
+    title: "Michigan's Rising Disaster Risk",
+    hook: "Federal disaster declarations have doubled in two decades.",
+    narrative: "Michigan has seen a dramatic increase in federal disaster declarations since the 2000s. Flooding, severe storms, and the 2020 Midland Dam failure highlight accelerating climate and infrastructure risks.",
+    stat: { value: 70, label: "years of FEMA disaster data", suffix: "+" },
+    source: "FEMA OpenFEMA API",
+    href: "/disaster-history",
+    color: "#EF4444",
+  },
+  {
     id: "dental-desert",
     title: "The Smile Gap",
     hook: "59 of 83 counties can't find a dentist.",
