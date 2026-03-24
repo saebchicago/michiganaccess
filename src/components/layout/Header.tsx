@@ -386,7 +386,7 @@ function DropdownNav({ label, items, currentPath }: { label: string; items: NavL
         onClick={toggle}
         onKeyDown={handleTriggerKeyDown}
         className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
-          items.some((c) => currentPath === c.href) ? "text-primary font-semibold" : "text-muted-foreground"
+          isGroupActive(currentPath, items) ? "text-primary font-semibold after:absolute after:bottom-0 after:left-3 after:right-3 after:h-[2px] after:rounded-full after:bg-primary relative" : "text-muted-foreground"
         }`}
         aria-expanded={open}
         aria-haspopup="true"
@@ -417,7 +417,7 @@ function DropdownNav({ label, items, currentPath }: { label: string; items: NavL
                 role="menuitem"
                 tabIndex={open ? 0 : -1}
                 className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
-                  currentPath === child.href
+                  isRouteActive(currentPath, child.href)
                     ? "font-medium text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
