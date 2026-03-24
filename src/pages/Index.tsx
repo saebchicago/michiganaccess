@@ -174,6 +174,20 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ═══ NEWSLETTER SIGNUP ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <Suspense fallback={<SectionSkeleton height="120px" />}>
+          <NewsletterSignup />
+        </Suspense>
+      </SectionErrorBoundary>
+
+      {/* ═══ TRANSPARENCY PANEL ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <Suspense fallback={<SectionSkeleton height="140px" />}>
+          <TransparencyPanel />
+        </Suspense>
+      </SectionErrorBoundary>
+
       {/* ═══ PROVENANCE ═══ */}
       <div className="container py-4">
         <DataProvenance
