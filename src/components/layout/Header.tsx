@@ -101,9 +101,9 @@ const Header = () => {
               <Link
                 key={(link as NavLinkType).href}
                 to={(link as NavLinkType).href!}
-                className={`inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                className={`relative inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                   location.pathname === (link as NavLinkType).href
-                    ? "text-primary"
+                    ? "text-primary font-bold after:absolute after:bottom-0 after:left-3 after:right-3 after:h-[2px] after:rounded-full after:bg-primary"
                     : "text-foreground hover:text-primary"
                 }`}
                 aria-current={location.pathname === (link as NavLinkType).href ? "page" : undefined}
