@@ -45,7 +45,7 @@ export default defineConfig(({ mode }) => ({
           },
           // External APIs: always network, never cache stale responses
           {
-            urlPattern: /^https:\/\/(data\.cdc\.gov|api\.weather\.gov|api\.fda\.gov|clinicaltrials\.gov|api\.tidesandcurrents\.noaa\.gov|api\.mistral\.ai)\/.*/i,
+            urlPattern: /^https:\/\/(data\.cdc\.gov|api\.weather\.gov|api\.fda\.gov|clinicaltrials\.gov|api\.tidesandcurrents\.noaa\.gov)\/.*/i,
             handler: "NetworkFirst",
             options: {
               cacheName: "external-api-cache",
@@ -87,6 +87,28 @@ export default defineConfig(({ mode }) => ({
       },
     }),
   ].filter(Boolean),
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-query': ['@tanstack/react-query'],
+          'vendor-ui': ['framer-motion', 'recharts', 'cmdk'],
+          'vendor-radix': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-popover',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-tooltip',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-select',
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-scroll-area',
+          ],
+          'vendor-map': ['leaflet', 'd3'],
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
