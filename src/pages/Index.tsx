@@ -30,6 +30,8 @@ import LazySection from "@/components/shared/LazySection";
 import DataProvenance from "@/components/shared/DataProvenance";
 import YourCommunity from "@/components/home/YourCommunity";
 const InsightOfWeek = lazy(() => import("@/components/home/InsightOfWeek"));
+const NewsletterSignup = lazy(() => import("@/components/home/NewsletterSignup"));
+const TransparencyPanel = lazy(() => import("@/components/home/TransparencyPanel"));
 
 // ── Below-fold: lazy-loaded ──
 const FounderSupportSection = lazy(() => import("@/components/shared/FounderSupportSection"));

@@ -254,6 +254,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/disaster-history", component: pages.DisasterHistoryPage, label: "Disaster History" },
   { path: "/sba-insights", component: pages.SBAInsightsPage, label: "SBA Insights" },
   { path: "/zip/:zipcode", component: pages.ZipScorecardPage, label: "ZIP Scorecard" },
+  { path: "/downloads", component: pages.DownloadCenterPage, label: "Download Center" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
