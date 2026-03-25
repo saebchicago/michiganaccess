@@ -7,12 +7,12 @@ import { computeResilienceScore } from "@/lib/resilience-score";
 import { getResilienceInput } from "@/data/county-resilience";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
-const GRADE_COLORS: Record<string, string> = {
-  A: "#22c55e",
-  B: "#3b82f6",
-  C: "#eab308",
-  D: "#f97316",
-  F: "#ef4444",
+const TIER_COLORS: Record<string, string> = {
+  "Tier 1 — Strong": "#22c55e",
+  "Tier 2 — Moderate": "#3b82f6",
+  "Tier 3 — Limited": "#eab308",
+  "Tier 4 — Priority": "#f97316",
+  "Tier 5 — Critical": "#ef4444",
 };
 
 const DIM_LABELS: Record<string, string> = {
@@ -90,7 +90,7 @@ export default function ResilienceScoreCard({ county }: Props) {
     );
   }
 
-  const gradeColor = GRADE_COLORS[result.grade] || "#6b7280";
+  const gradeColor = TIER_COLORS[result.grade] || "#6b7280";
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -108,8 +108,8 @@ export default function ResilienceScoreCard({ county }: Props) {
           <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
             <ScoreGauge score={result.score} color={gradeColor} />
             <Badge
-              style={{ backgroundColor: gradeColor, color: result.grade === "C" ? "#000" : "#fff" }}
-              className="text-2xl px-5 py-2 font-bold"
+              style={{ backgroundColor: gradeColor, color: result.grade.includes("Limited") ? "#000" : "#fff" }}
+              className="text-sm px-4 py-2 font-semibold"
             >
               {result.grade}
             </Badge>

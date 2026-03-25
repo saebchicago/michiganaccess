@@ -56,9 +56,14 @@ export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
 
           <ScoreGauge score={result.score} color={result.color} />
 
-          <Badge style={{ backgroundColor: result.color, color: result.score >= 50 ? "#000" : "#fff" }} className="text-lg px-4 py-1">
-            Grade: {result.grade}
-          </Badge>
+          <div className="text-center space-y-1">
+            <span className={`text-sm font-semibold ${result.tier?.color ?? "text-muted-foreground"}`}>
+              {result.tier?.badge ?? result.grade}
+            </span>
+            <p className="text-xs text-muted-foreground max-w-xs mx-auto">
+              {result.tier?.opportunity}
+            </p>
+          </div>
 
           <div className="grid grid-cols-2 gap-4 text-left">
             {result.strengths.length > 0 && (

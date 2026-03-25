@@ -15,7 +15,7 @@ const MOMENTS = [
             <span className="text-lg font-bold text-foreground">58</span>
           </div>
           <div>
-            <Badge className="bg-amber-500 text-white text-[9px]">Grade: C</Badge>
+            <Badge className="bg-amber-500 text-white text-[9px]">Tier 3 — Limited Access</Badge>
             <p className="text-[10px] text-muted-foreground mt-0.5">Concerns: Diabetes (14.2%), Obesity (38.1%)</p>
             <p className="text-[10px] text-michigan-forest">Strength: Smoking below state avg</p>
           </div>

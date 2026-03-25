@@ -11,52 +11,52 @@ export const ZIP_SCORE_BANDS: ZipScoreBand[] = [
   {
     min: 0,
     max: 20,
-    label: "Critical Need",
+    label: "Tier 5 — Critical Access Area",
     color: "bg-red-600",
     description:
-      "This ZIP code shows severe deficits across health, economic, and environmental indicators. Residents face compounding barriers to wellbeing.",
+      "This ZIP faces critical gaps across health, economic, and access dimensions.",
     callToAction:
-      "Connect with local FQHCs, apply for Medicaid and SNAP, and contact 211 for immediate assistance.",
+      "Highest-priority area for state and federal health equity investment.",
   },
   {
     min: 21,
     max: 40,
-    label: "High Need",
+    label: "Tier 4 — Priority Access Area",
     color: "bg-orange-500",
     description:
-      "Multiple indicators fall well below state averages. Economic stress and limited healthcare access compound health risks.",
+      "This ZIP is in the bottom 40% for healthcare access in Michigan.",
     callToAction:
-      "Explore financial help programs, check insurance options, and review community resources in your county.",
+      "High-opportunity area for health investment and FQHC expansion.",
   },
   {
     min: 41,
     max: 60,
-    label: "Moderate Need",
+    label: "Tier 3 — Limited Access",
     color: "bg-yellow-500",
     description:
-      "Some indicators are below average while others are near or at state norms. Targeted investment could shift outcomes.",
+      "This ZIP faces notable gaps in healthcare access.",
     callToAction:
-      "Use the Data Explorer to identify which specific domains need attention in this ZIP code.",
+      "Priority area for ambulatory network expansion.",
   },
   {
     min: 61,
     max: 80,
-    label: "Good Access",
+    label: "Tier 2 — Moderate Access",
     color: "bg-lime-500",
     description:
-      "Most indicators meet or exceed state averages. Residents generally have adequate access to health, economic, and environmental resources.",
+      "This ZIP is near the Michigan average for healthcare access.",
     callToAction:
-      "Compare this ZIP to neighboring areas and explore volunteer or advocacy opportunities.",
+      "Targeted investments could move this community to Tier 1.",
   },
   {
     min: 81,
     max: 100,
-    label: "Strong Access",
+    label: "Tier 1 — Strong Access",
     color: "bg-green-600",
     description:
-      "This ZIP code performs well above state averages across nearly all dimensions. Strong infrastructure supports resident wellbeing.",
+      "This ZIP ranks among Michigan's strongest for healthcare access.",
     callToAction:
-      "Consider how resources here could support adjacent high-need ZIPs through regional collaboration.",
+      "Model community for replication strategies.",
   },
 ];
 

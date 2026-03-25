@@ -55,7 +55,7 @@ h2{font-size:15px;color:#0A4C95;margin-top:20px}
 .meta{font-size:11px;color:#6b7280;margin-bottom:16px}
 .score-box{text-align:center;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin:16px 0}
 .score-num{font-size:48px;font-weight:700;color:${score.color}}
-.grade{display:inline-block;padding:4px 16px;border-radius:8px;font-size:20px;font-weight:700;color:#fff;background:${score.color}}
+.grade{display:inline-block;padding:4px 16px;border-radius:8px;font-size:16px;font-weight:700;color:#fff;background:${score.color}}
 .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
 .stat{border:1px solid #e5e7eb;border-radius:8px;padding:10px;text-align:center}
 .stat-val{font-size:24px;font-weight:700;color:#0A4C95}
@@ -70,7 +70,8 @@ h2{font-size:15px;color:#0A4C95;margin-top:20px}
 <p class="meta">ZIP Code ${zipCode} · Population: ~${pop.toLocaleString()} · Generated ${date} · Source: Access Michigan (accessmi.org)</p>
 <div class="score-box">
 <div class="score-num">${score.score}</div>
-<div>/100 — <span class="grade">${score.grade}</span></div>
+<div>/100 — <span class="grade">${score.tier?.badge ?? score.grade}</span></div>
+<p style="font-size:11px;color:#6b7280;margin-top:4px">${score.tier?.opportunity ?? ""}</p>
 <p style="font-size:10px;color:#6b7280;margin-top:8px">Neighborhood Health Score (illustrative composite)</p>
 </div>
 <h2>Key Health Indicators</h2>

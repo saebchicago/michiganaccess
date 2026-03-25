@@ -21,7 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useZipData } from "@/hooks/useZipData";
-import { computeHealthScore } from "@/lib/health-score";
+import { computeHealthScore, getAccessTier } from "@/lib/health-score";
 import { MI_STATE_AVERAGES, MEASURE_GROUPS } from "@/lib/places-client";
 import { MI_IRS_STATE_AVERAGES } from "@/data/irs-zip-income";
 import { MI_FMR_AVERAGE_2BR, HUD_FMR_SOURCE } from "@/data/hud-fmr";
@@ -64,9 +64,10 @@ function ScoreGauge({ score, color, label }: { score: number; color: string; lab
 
 // ── Composite Score (larger gauge) ───────────────────────────────────────
 
-function CompositeGauge({ score, color, grade }: { score: number; color: string; grade: string }) {
+function CompositeGauge({ score, color }: { score: number; color: string }) {
   const circumference = 2 * Math.PI * 54;
   const dashOffset = circumference - (score / 100) * circumference;
+  const tier = getAccessTier(score);
 
   return (
     <div className="flex flex-col items-center gap-3">
@@ -86,9 +87,14 @@ function CompositeGauge({ score, color, grade }: { score: number; color: string;
           <span className="text-[10px] text-muted-foreground">/100</span>
         </div>
       </div>
-      <Badge style={{ backgroundColor: color, color: score >= 50 ? "#000" : "#fff" }} className="text-sm px-3 py-0.5">
-        Grade: {grade}
-      </Badge>
+      <div className="text-center mt-2 space-y-1">
+        <span className={`text-sm font-semibold ${tier.color}`}>
+          {tier.badge}
+        </span>
+        <p className="text-xs text-muted-foreground max-w-xs mx-auto">
+          {tier.opportunity}
+        </p>
+      </div>
       <p className="text-[10px] text-muted-foreground max-w-xs text-center">
         Composite of health outcomes, economic indicators, and environment factors.
       </p>
@@ -180,7 +186,7 @@ function scoreColor(s: number) {
 }
 
 function scoreGrade(s: number) {
-  return s >= 80 ? "A" : s >= 65 ? "B" : s >= 50 ? "C" : s >= 35 ? "D" : "F";
+  return getAccessTier(s);
 }
 
 // ── Helper: build comparison metrics for a ZIP ──────────────────────────
@@ -252,7 +258,7 @@ export default function ZipScorecardPage() {
   const comp = useZipMetrics(compZip);
 
   const compositeColor = scoreColor(primary.compositeScore);
-  const compositeGrade = scoreGrade(primary.compositeScore);
+  const compositeTier = scoreGrade(primary.compositeScore);
   const scoreBand = getScoreBand(primary.compositeScore);
 
   const headerSubtext = [primary.city, primary.county ? `${primary.county} County` : ""].filter(Boolean).join(", ");
@@ -463,7 +469,7 @@ export default function ZipScorecardPage() {
               <Card className="border-primary/20 md:row-span-1">
                 <CardContent className="py-6 flex flex-col items-center">
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">Composite Score</p>
-                  <CompositeGauge score={primary.compositeScore} color={compositeColor} grade={compositeGrade} />
+                  <CompositeGauge score={primary.compositeScore} color={compositeColor} />
                 </CardContent>
               </Card>
 

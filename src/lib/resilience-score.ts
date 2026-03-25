@@ -36,7 +36,7 @@ export function computeResilienceScore(input: ResilienceInput): ResilienceResult
   const digital = Math.max(0, Math.min(100, input.broadbandPct));
 
   const score = Math.round(disaster * 0.25 + economic * 0.25 + health * 0.20 + safetyNet * 0.15 + digital * 0.15);
-  const grade = score >= 80 ? "A" : score >= 70 ? "B" : score >= 55 ? "C" : score >= 40 ? "D" : "F";
+  const grade = score >= 80 ? "Tier 1 — Strong" : score >= 70 ? "Tier 2 — Moderate" : score >= 55 ? "Tier 3 — Limited" : score >= 40 ? "Tier 4 — Priority" : "Tier 5 — Critical";
 
   const dims = { disaster, economic, health, safetyNet, digital };
   const LABELS: Record<string, string> = {
