@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { CountyProvider } from "./contexts/CountyContext";
 import { NerdModeProvider } from "./contexts/NerdModeContext";
 import { APP_ROUTES } from "./config/routes";
+import ErrorBoundary from "./components/shared/ErrorBoundary";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -49,30 +50,36 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                {APP_ROUTES.map((route) => (
-                  <Route
-                    key={route.path}
-                    path={route.path}
-                    element={<route.component />}
-                  />
-                ))}
-                {/* Semantic aliases — redirect common URL guesses */}
-                <Route path="/health-equity" element={<Navigate to="/equity" replace />} />
-                <Route path="/broadband" element={<Navigate to="/civic-data" replace />} />
-                <Route path="/chna" element={<Navigate to="/chna-explorer" replace />} />
-                <Route path="/map" element={<Navigate to="/health-map" replace />} />
-                <Route path="/check-benefits" element={<Navigate to="/financial-help" replace />} />
-                <Route path="/data-hub" element={<Navigate to="/data-and-insights" replace />} />
-                <Route path="/health-data" element={<Navigate to="/data" replace />} />
-                <Route path="/representatives" element={<Navigate to="/civic-data" replace />} />
-                {/* Duplicate route consolidation */}
-                <Route path="/county-compare" element={<Navigate to="/compare" replace />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  {APP_ROUTES.map((route) => (
+                    <Route
+                      key={route.path}
+                      path={route.path}
+                      element={
+                        <ErrorBoundary>
+                          <route.component />
+                        </ErrorBoundary>
+                      }
+                    />
+                  ))}
+                  {/* Semantic aliases — redirect common URL guesses */}
+                  <Route path="/health-equity" element={<Navigate to="/equity" replace />} />
+                  <Route path="/broadband" element={<Navigate to="/civic-data" replace />} />
+                  <Route path="/chna" element={<Navigate to="/chna-explorer" replace />} />
+                  <Route path="/map" element={<Navigate to="/health-map" replace />} />
+                  <Route path="/check-benefits" element={<Navigate to="/financial-help" replace />} />
+                  <Route path="/data-hub" element={<Navigate to="/data-and-insights" replace />} />
+                  <Route path="/health-data" element={<Navigate to="/data" replace />} />
+                  <Route path="/representatives" element={<Navigate to="/civic-data" replace />} />
+                  {/* Duplicate route consolidation */}
+                  <Route path="/county-compare" element={<Navigate to="/compare" replace />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
           </BrowserRouter>
         </TooltipProvider>
       </NerdModeProvider>
