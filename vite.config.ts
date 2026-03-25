@@ -20,6 +20,8 @@ export default defineConfig(({ mode }) => ({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "offline.html"],
       workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
         globPatterns: ["**/*.{js,css,ico,png,svg,jpg,webp,woff,woff2}"],
         // Do NOT precache index.html — let NavigationRoute handle it
         // with NetworkFirst so CSP headers are always fresh from Netlify.
