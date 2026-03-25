@@ -194,13 +194,24 @@ function useZipMetrics(zip: string) {
     return m;
   }, [cdcData]);
 
-  const healthResult = useMemo(() => computeHealthScore(cdcDataMap), [cdcDataMap]);
-  const econScore = useMemo(() => computeEconomicScore(irsData, quickStats), [irsData, quickStats]);
-  const envScore = useMemo(() => computeEnvironmentScore(cdcDataMap), [cdcDataMap]);
+  const healthResult = useMemo(() => {
+    try { return computeHealthScore(cdcDataMap); }
+    catch { return { score: 0, grade: 'N/A', color: '#888', strengths: [], concerns: [] }; }
+  }, [cdcDataMap]);
+  const econScore = useMemo(() => {
+    try { return computeEconomicScore(irsData, quickStats); }
+    catch { return 0; }
+  }, [irsData, quickStats]);
+  const envScore = useMemo(() => {
+    try { return computeEnvironmentScore(cdcDataMap); }
+    catch { return 0; }
+  }, [cdcDataMap]);
 
   const compositeScore = useMemo(() => {
-    if (cdcData.length === 0 && !irsData && !quickStats) return 0;
-    return Math.round(healthResult.score * 0.45 + econScore * 0.35 + envScore * 0.2);
+    try {
+      if (cdcData.length === 0 && !irsData && !quickStats) return 0;
+      return Math.round((healthResult.score ?? 0) * 0.45 + (econScore ?? 0) * 0.35 + (envScore ?? 0) * 0.2);
+    } catch { return 0; }
   }, [healthResult.score, econScore, envScore, cdcData.length, irsData, quickStats]);
 
   return {
