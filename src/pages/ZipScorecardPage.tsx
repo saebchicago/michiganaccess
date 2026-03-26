@@ -5,7 +5,7 @@ import {
   MapPin, Heart, DollarSign, Leaf, Activity,
   TrendingDown, TrendingUp, BarChart3, Info,
   Loader2, AlertCircle, Building2, Stethoscope,
-  GitCompareArrows, Share2, X, Check,
+  GitCompareArrows, Share2, X, Check, Landmark,
 } from "lucide-react";
 import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis,
@@ -29,6 +29,7 @@ import { RURALITY_ICONS } from "@/data/rurality";
 import { getScoreBand } from "@/data/zipScoreBands";
 import { MICHIGAN_SAFMR } from "@/data/hudSafmr";
 import { MICHIGAN_EJSCREEN } from "@/data/ejscreen";
+import { MICHIGAN_FEDERAL_SPENDING, getFederalDependencyScore } from "@/data/federalSpending";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
@@ -672,6 +673,45 @@ export default function ZipScorecardPage() {
                   <EconCard label="SAFMR Range (Studio–4BR)" value={`$${MICHIGAN_SAFMR[zip].safmr_0br}–$${MICHIGAN_SAFMR[zip].safmr_4br}`} source="HUD Small Area FMR" />
                 </>
               )}
+              {/* Federal Funding Context */}
+              {(() => {
+                const federalData = MICHIGAN_FEDERAL_SPENDING.find(r => r.county === primary.county);
+                const dependencyScore = primary.county ? getFederalDependencyScore(primary.county) : null;
+                if (!federalData) return null;
+                return (
+                  <Card className="sm:col-span-2 lg:col-span-3">
+                    <CardContent className="py-4">
+                      <h3 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
+                        <Landmark className="h-4 w-4 text-primary" /> Federal Funding Context
+                      </h3>
+                      <p className="text-xs text-muted-foreground mb-3">
+                        Source: USASpending.gov FY2024
+                      </p>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div>
+                          <p className="text-2xl font-bold text-foreground tabular-nums">
+                            ${federalData.total_awards_millions.toLocaleString()}M
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Total federal awards to {federalData.county} County (FY2024)
+                          </p>
+                        </div>
+                        {dependencyScore != null && (
+                          <div>
+                            <p className="text-2xl font-bold text-foreground tabular-nums">
+                              {dependencyScore}%
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Federal dependency score
+                              <span className="text-muted-foreground/60 ml-1">(Illustrative composite)</span>
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })()}
               {!primary.quickStats && !primary.irsData && !primary.fmrData && !MICHIGAN_SAFMR[zip] && (
                 <Card className="sm:col-span-2 lg:col-span-3">
                   <CardContent className="py-8 text-center">
