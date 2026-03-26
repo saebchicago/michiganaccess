@@ -73,6 +73,7 @@ const pages = {
   DataSourcesPage: lazy(() => import("@/pages/DataSourcesPage")),
   ReentryCareNavigator: lazy(() => import("@/pages/ReentryCareNavigator")),
   ReplicationPage: lazy(() => import("@/pages/ReplicationPage")),
+  OurIntelPage: lazy(() => import("@/pages/OurIntelPage")),
   MethodologyPage: lazy(() => import("@/pages/MethodologyPage")),
   ResearchPage: lazy(() => import("@/pages/ResearchPage")),
   ImpactPage: lazy(() => import("@/pages/ImpactPage")),
@@ -213,6 +214,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/data-sources", component: pages.DataSourcesPage, label: "Data Sources" },
   { path: "/reentry", component: pages.ReentryCareNavigator, label: "Reentry Resources" },
   { path: "/replicate", component: pages.ReplicationPage, label: "Replicate" },
+  { path: "/about/ourintel", component: pages.OurIntelPage, label: "ourintel.org — National Vision" },
   { path: "/methodology", component: pages.MethodologyPage, label: "Methodology" },
   { path: "/research", component: pages.ResearchPage, label: "Research" },
   { path: "/impact", component: pages.ImpactDashboardPage, label: "Platform Impact" },
@@ -452,6 +454,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Energy Deep Dive", href: "/environment/energy", badge: "New" },
       { label: "Deep Map (GIS)", href: "/map/layers", badge: "New" },
       { label: "Replicate This Platform", href: "/replicate" },
+      { label: "ourintel.org Vision", href: "/about/ourintel", badge: "New" },
     ],
   },
   {

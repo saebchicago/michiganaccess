@@ -117,6 +117,8 @@ const Footer = () => {
         { label: "Site Map",                href: "/sitemap" },
         { label: "Data Sources (60+)",     href: "/data-sources" },
         { label: "System Status",          href: "/status" },
+        { label: "Replicate for Your State", href: "/replicate" },
+        { label: "ourintel.org", href: "/about/ourintel" },
       ],
     },
     {
