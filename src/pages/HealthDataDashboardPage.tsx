@@ -156,6 +156,7 @@ export default function HealthDataDashboardPage() {
               <TabsTrigger value="disparities" className="text-xs sm:text-sm whitespace-nowrap">Disparity Gaps</TabsTrigger>
               <TabsTrigger value="research" className="text-xs sm:text-sm whitespace-nowrap">Research Tools</TabsTrigger>
               <TabsTrigger value="public-investment" className="text-xs sm:text-sm whitespace-nowrap">Public Investment</TabsTrigger>
+              <TabsTrigger value="infrastructure" className="text-xs sm:text-sm whitespace-nowrap">Infrastructure</TabsTrigger>
             </TabsList>
           </div>
 
@@ -550,6 +551,53 @@ export default function HealthDataDashboardPage() {
                 <Button asChild>
                   <Link to="/public-investment">
                     Explore Full Dashboard <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="infrastructure" className="mt-6 space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base flex items-center gap-2">
+                  Michigan Broadband Access
+                </CardTitle>
+                <p className="text-xs text-muted-foreground">
+                  Michigan's digital divide: UP and rural counties lag urban areas by 50+ percentage points in gigabit coverage. Michigan received $1.56B in BEAD federal broadband funding (NTIA 2023). Source: FCC National Broadband Map 2024
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {[
+                    { county: "Keweenaw", unserved: 61.6, fill: "#ef4444" },
+                    { county: "Luce", unserved: 58.8, fill: "#ef4444" },
+                    { county: "Ontonagon", unserved: 54.2, fill: "#ef4444" },
+                    { county: "Saginaw", unserved: 11.6, fill: "#f59e0b" },
+                    { county: "Genesee", unserved: 8.8, fill: "#f59e0b" },
+                    { county: "Ingham", unserved: 6.6, fill: "#f59e0b" },
+                    { county: "Kent", unserved: 3.2, fill: "#22c55e" },
+                    { county: "Wayne", unserved: 2.8, fill: "#22c55e" },
+                    { county: "Oakland", unserved: 1.9, fill: "#22c55e" },
+                  ].map(r => (
+                    <div key={r.county} className="flex items-center gap-3">
+                      <span className="w-24 text-sm text-foreground">{r.county}</span>
+                      <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: `${Math.min(r.unserved * 1.6, 100)}%`, backgroundColor: r.fill }} />
+                      </div>
+                      <span className="w-12 text-right text-sm font-bold tabular-nums" style={{ color: r.fill }}>{r.unserved}%</span>
+                    </div>
+                  ))}
+                  <p className="text-[9px] text-muted-foreground/60 mt-2">% of locations without 25/3 Mbps broadband. Source: FCC BDC 2024</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-primary/20 bg-primary/[0.03]">
+              <CardContent className="py-4 text-center">
+                <p className="text-sm text-muted-foreground mb-2">See broadband, food access, PFAS, and disaster risk on one map</p>
+                <Button asChild>
+                  <Link to="/map/layers">
+                    Open Deep Map <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                   </Link>
                 </Button>
               </CardContent>
