@@ -31,6 +31,8 @@ import { MICHIGAN_SAFMR } from "@/data/hudSafmr";
 import { MICHIGAN_EJSCREEN } from "@/data/ejscreen";
 import { MICHIGAN_FEDERAL_SPENDING, getFederalDependencyScore } from "@/data/federalSpending";
 import { getEvictionData } from "@/hooks/useEvictionData";
+import { MICHIGAN_BOARDS } from "@/data/civicBoards";
+import { MICHIGAN_RACE_DATA } from "@/data/uncontestedRaces";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
@@ -645,6 +647,56 @@ export default function ZipScorecardPage() {
                       </p>
                     </div>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })()}
+
+        {/* ── Civic Power Snapshot ── */}
+        {(() => {
+          const regionData = MICHIGAN_RACE_DATA.find(r => r.counties.includes(primary.county ?? ""));
+          const healthBoardCount = MICHIGAN_BOARDS.filter(b => b.category === "health").length;
+          if (!primary.county) return null;
+          return (
+            <Card className="border-primary/10 bg-gradient-to-r from-primary/[0.02] to-transparent">
+              <CardContent className="py-4">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Civic Power Snapshot
+                  </p>
+                  <Link to="/civic-power" className="text-[10px] text-primary hover:underline">
+                    Full Civic Power Map →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  <div>
+                    <p className={`text-xl font-bold tabular-nums ${regionData ? "text-red-600" : "text-foreground"}`}>
+                      {regionData ? `${regionData.uncontestedPct.toFixed(1)}%` : "79.7%"}
+                    </p>
+                    <p className="text-[10px] font-medium text-foreground">Races Uncontested</p>
+                    <p className="text-[9px] text-muted-foreground">
+                      {regionData?.region ?? "Michigan"} · Ballotpedia 2024
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-foreground tabular-nums">{healthBoardCount}</p>
+                    <p className="text-[10px] font-medium text-foreground">Health Board Types</p>
+                    <p className="text-[9px] text-muted-foreground">You can apply for in {primary.county}</p>
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-foreground tabular-nums">~$75</p>
+                    <p className="text-[10px] font-medium text-foreground">Per Diem (CMH Boards)</p>
+                    <p className="text-[9px] text-muted-foreground">Mandated by Michigan statute</p>
+                  </div>
+                  <div className="flex items-center">
+                    <Link
+                      to="/civic-power/boards"
+                      className="w-full rounded-lg bg-primary text-primary-foreground text-[10px] font-semibold px-3 py-2 text-center hover:bg-primary/90 transition-colors"
+                    >
+                      Find Board Seats →
+                    </Link>
+                  </div>
                 </div>
               </CardContent>
             </Card>
