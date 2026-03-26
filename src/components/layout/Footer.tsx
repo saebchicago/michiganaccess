@@ -83,6 +83,16 @@ const Footer = () => {
       ],
     },
     {
+      title: "Planet Michigan",
+      links: [
+        { label: "Environment", href: "/environment" },
+        { label: "Water Safety & PFAS", href: "/environment/water" },
+        { label: "Disaster Risk", href: "/environment/disaster" },
+        { label: "Energy Burden", href: "/environment/energy" },
+        { label: "Air Quality", href: "/environment/air" },
+      ],
+    },
+    {
       title: "Civic Power",
       links: [
         { label: "Civic Power Map", href: "/civic-power" },
@@ -135,7 +145,7 @@ const Footer = () => {
       </div>
 
       <div className="container py-12">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
