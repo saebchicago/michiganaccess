@@ -5,7 +5,7 @@ import {
   MapPin, Heart, DollarSign, Leaf, Activity,
   TrendingDown, TrendingUp, BarChart3, Info,
   Loader2, AlertCircle, Building2, Stethoscope,
-  GitCompareArrows, Share2, X, Check, Landmark,
+  GitCompareArrows, Share2, X, Check, Landmark, Layers,
 } from "lucide-react";
 import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis,
@@ -34,6 +34,8 @@ import { getEvictionData } from "@/hooks/useEvictionData";
 import { MICHIGAN_BOARDS } from "@/data/civicBoards";
 import { MICHIGAN_RACE_DATA } from "@/data/uncontestedRaces";
 import { MICHIGAN_FEMA_NRI, MICHIGAN_PFAS_BY_COUNTY, MICHIGAN_ENERGY_BURDEN } from "@/data/environmentalData";
+import { getBroadbandByCounty } from "@/hooks/useBroadbandData";
+import { getFoodAccessByCounty } from "@/hooks/useFoodAccess";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
@@ -809,7 +811,7 @@ export default function ZipScorecardPage() {
 
         {/* ── Tabbed Detail Sections ── */}
         <Tabs defaultValue="health" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="health" className="gap-1.5 text-xs sm:text-sm">
               <Heart className="h-3.5 w-3.5" /> Health
             </TabsTrigger>
@@ -818,6 +820,9 @@ export default function ZipScorecardPage() {
             </TabsTrigger>
             <TabsTrigger value="resources" className="gap-1.5 text-xs sm:text-sm">
               <Activity className="h-3.5 w-3.5" /> Resources
+            </TabsTrigger>
+            <TabsTrigger value="access" className="gap-1.5 text-xs sm:text-sm">
+              <MapPin className="h-3.5 w-3.5" /> Access
             </TabsTrigger>
           </TabsList>
 
@@ -1033,6 +1038,58 @@ export default function ZipScorecardPage() {
                 </Link>
               ))}
             </div>
+          </TabsContent>
+
+          {/* ── Access & Infrastructure Tab ── */}
+          <TabsContent value="access" className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Broadband */}
+              {(() => {
+                const bb = getBroadbandByCounty(primary.county ?? "");
+                if (!bb) return null;
+                return (
+                  <>
+                    <EconCard label="Broadband (25/3 Mbps)" value={`${bb.pct_25_3_covered}%`} benchmark="MI avg: ~94%" source="FCC Broadband Map 2024" />
+                    <EconCard label="Gigabit Coverage" value={`${bb.pct_gigabit_covered}%`} source="FCC Broadband Map 2024" />
+                    <EconCard label="Unserved Locations" value={bb.unserved_locations.toLocaleString()} benchmark="< 25/3 Mbps" source="FCC Broadband Map 2024" />
+                  </>
+                );
+              })()}
+
+              {/* Food Access */}
+              {(() => {
+                const fa = getFoodAccessByCounty(primary.county ?? "");
+                if (!fa) return null;
+                return (
+                  <>
+                    <EconCard label="Food Access" value={fa.classification} source="USDA FARA 2019" />
+                    <EconCard label="Low-Access Tracts" value={`${fa.lowAccessPct.toFixed(1)}%`} benchmark={`${fa.lowAccessTracts} of ${fa.totalTracts} tracts`} source="USDA FARA 2019" />
+                    <EconCard label="No Vehicle + Low Access" value={fa.noVehicleLowAccessPop.toLocaleString()} benchmark="Most vulnerable population" source="USDA FARA 2019" />
+                  </>
+                );
+              })()}
+
+              {!getBroadbandByCounty(primary.county ?? "") && !getFoodAccessByCounty(primary.county ?? "") && (
+                <Card className="sm:col-span-2 lg:col-span-3">
+                  <CardContent className="py-8 text-center">
+                    <Info className="h-8 w-8 text-muted-foreground mx-auto mb-3" />
+                    <p className="text-sm text-muted-foreground">
+                      No infrastructure data seeded for {primary.county ?? "this"} county yet.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+
+            {/* Deep Map CTA */}
+            <Card className="bg-primary/[0.03] border-primary/20">
+              <CardContent className="py-4 text-center">
+                <p className="text-sm text-muted-foreground mb-2">See all data layers on one map</p>
+                <Link to={`/map/layers?zip=${zip}`} className="inline-flex items-center gap-1.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold px-4 py-2 hover:bg-primary/90 transition-colors">
+                  <Layers className="h-4 w-4" /> Explore on Deep Map
+                </Link>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
 
