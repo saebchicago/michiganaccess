@@ -1,10 +1,14 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import {
   DollarSign, Landmark, AlertTriangle, Building2,
-  ArrowRight, Info, TrendingUp,
+  ArrowRight, Info, TrendingUp, BarChart3,
 } from "lucide-react";
+
+const MoneyFlowSankey = lazy(() => import("@/components/investment/MoneyFlowSankey"));
+const FiscalCliffCalculator = lazy(() => import("@/components/investment/FiscalCliffCalculator"));
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, ScatterChart, Scatter, Cell,
@@ -560,22 +564,44 @@ const PublicInvestmentPage = () => {
                 <Building2 className="h-3.5 w-3.5" />
                 Municipal Bonds
               </TabsTrigger>
-              <TabsTrigger value="fiscal-risk" className="text-xs sm:text-sm whitespace-nowrap gap-1.5">
+              <TabsTrigger value="fiscal-cliff" className="text-xs sm:text-sm whitespace-nowrap gap-1.5">
                 <AlertTriangle className="h-3.5 w-3.5" />
-                Fiscal Risk
+                Fiscal Cliff
+              </TabsTrigger>
+              <TabsTrigger value="vulnerability" className="text-xs sm:text-sm whitespace-nowrap gap-1.5">
+                <BarChart3 className="h-3.5 w-3.5" />
+                Vulnerability
               </TabsTrigger>
             </TabsList>
           </div>
 
           <TabsContent value="federal" className="mt-6">
-            <FederalFundingTab />
+            <div className="space-y-8">
+              {/* Sankey diagram */}
+              <Card>
+                <CardContent className="pt-6">
+                  <Suspense fallback={<div className="h-[480px] flex items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
+                    <MoneyFlowSankey />
+                  </Suspense>
+                </CardContent>
+              </Card>
+
+              {/* Summary bar charts */}
+              <FederalFundingTab />
+            </div>
           </TabsContent>
 
           <TabsContent value="bonds" className="mt-6">
             <MunicipalBondsTab />
           </TabsContent>
 
-          <TabsContent value="fiscal-risk" className="mt-6">
+          <TabsContent value="fiscal-cliff" className="mt-6">
+            <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
+              <FiscalCliffCalculator />
+            </Suspense>
+          </TabsContent>
+
+          <TabsContent value="vulnerability" className="mt-6">
             <FiscalVulnerabilityTab />
           </TabsContent>
         </Tabs>
