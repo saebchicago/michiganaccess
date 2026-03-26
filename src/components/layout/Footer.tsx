@@ -83,6 +83,15 @@ const Footer = () => {
       ],
     },
     {
+      title: "Civic Power",
+      links: [
+        { label: "Civic Power Map", href: "/civic-power" },
+        { label: "Where to Serve", href: "/civic-power/boards" },
+        { label: "Races That Need You", href: "/civic-power/races" },
+        { label: "Federal Presence", href: "/civic-power/federal" },
+      ],
+    },
+    {
       title: t("nav.about"),
       links: [
         { label: t("nav.about"),           href: "/about" },

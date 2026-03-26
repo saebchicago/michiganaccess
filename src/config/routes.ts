@@ -142,6 +142,10 @@ const pages = {
   ZipFinderPage: lazy(() => import("@/pages/ZipFinderPage")),
   ServiceAreaPage: lazy(() => import("@/pages/ServiceAreaPage")),
   PublicInvestmentPage: lazy(() => import("@/pages/PublicInvestmentPage")),
+  CivicPowerPage: lazy(() => import("@/pages/CivicPowerPage")),
+  CivicBoardsPage: lazy(() => import("@/pages/CivicBoardsPage")),
+  CivicRacesPage: lazy(() => import("@/pages/CivicRacesPage")),
+  CivicFederalPage: lazy(() => import("@/pages/CivicFederalPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -259,6 +263,10 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/zip-finder", component: pages.ZipFinderPage, label: "ZIP Finder" },
   { path: "/service-area", component: pages.ServiceAreaPage, label: "Service Area Builder" },
   { path: "/public-investment", component: pages.PublicInvestmentPage, label: "Public Investment Intelligence" },
+  { path: "/civic-power", component: pages.CivicPowerPage, label: "Civic Power Map" },
+  { path: "/civic-power/boards", component: pages.CivicBoardsPage, label: "Where to Serve" },
+  { path: "/civic-power/races", component: pages.CivicRacesPage, label: "Races That Need Candidates" },
+  { path: "/civic-power/federal", component: pages.CivicFederalPage, label: "Federal Presence" },
   { path: "/zip/:zipcode", component: pages.ZipScorecardPage, label: "ZIP Scorecard" },
   { path: "/downloads", component: pages.DownloadCenterPage, label: "Download Center" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
@@ -330,8 +338,12 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     ],
   },
   {
-    label: "Civic Access",
+    label: "Civic Power",
     children: [
+      { label: "Civic Power Map", href: "/civic-power", badge: "New" },
+      { label: "Where to Serve", href: "/civic-power/boards" },
+      { label: "Races That Need Candidates", href: "/civic-power/races" },
+      { label: "Federal Presence", href: "/civic-power/federal" },
       { label: "Elections & Civic Access", href: "/elections" },
       { label: "Your Representatives", href: "/officials" },
       { label: "Transparency & Records", href: "/transparency" },
@@ -398,6 +410,18 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Service Area Builder", href: "/service-area", badge: "New" },
       { label: "Public Investment", href: "/public-investment", badge: "New" },
       { label: "Replicate This Platform", href: "/replicate" },
+    ],
+  },
+  {
+    title: "Civic & Democracy",
+    iconName: "Landmark",
+    links: [
+      { label: "Civic Power Map", href: "/civic-power", badge: "New" },
+      { label: "Where to Serve", href: "/civic-power/boards", badge: "New" },
+      { label: "Races That Need Candidates", href: "/civic-power/races", badge: "New" },
+      { label: "Federal Presence", href: "/civic-power/federal", badge: "New" },
+      { label: "Elections & Civic Access", href: "/elections" },
+      { label: "Your Representatives", href: "/officials" },
     ],
   },
   {
