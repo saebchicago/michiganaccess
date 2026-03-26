@@ -99,6 +99,9 @@ const Footer = () => {
         { label: "Where to Serve", href: "/civic-power/boards" },
         { label: "Races That Need You", href: "/civic-power/races" },
         { label: "Federal Presence", href: "/civic-power/federal" },
+        { label: "Transparency Hub", href: "/transparency" },
+        { label: "Follow the Money", href: "/transparency/money" },
+        { label: "All Parties", href: "/transparency/parties" },
       ],
     },
     {
