@@ -33,6 +33,7 @@ import { MICHIGAN_FEDERAL_SPENDING, getFederalDependencyScore } from "@/data/fed
 import { getEvictionData } from "@/hooks/useEvictionData";
 import { MICHIGAN_BOARDS } from "@/data/civicBoards";
 import { MICHIGAN_RACE_DATA } from "@/data/uncontestedRaces";
+import { MICHIGAN_FEMA_NRI, MICHIGAN_PFAS_BY_COUNTY, MICHIGAN_ENERGY_BURDEN } from "@/data/environmentalData";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
@@ -695,6 +696,65 @@ export default function ZipScorecardPage() {
                       className="w-full rounded-lg bg-primary text-primary-foreground text-[10px] font-semibold px-3 py-2 text-center hover:bg-primary/90 transition-colors"
                     >
                       Find Board Seats →
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })()}
+
+        {/* ── Planet Score ── */}
+        {(() => {
+          const c = primary.county ?? "";
+          const nri = MICHIGAN_FEMA_NRI.find(n => n.county === c);
+          const pfas = MICHIGAN_PFAS_BY_COUNTY[c] ?? 0;
+          const energy = MICHIGAN_ENERGY_BURDEN.find(e => e.county === c);
+          if (!c || (!nri && !pfas && !energy)) return null;
+
+          const waterStatus = pfas > 5 ? "Amber" : pfas > 0 ? "Watch" : "Clear";
+          const disasterStatus = nri ? (nri.compositeRisk > 30 ? "Elevated" : nri.compositeRisk > 20 ? "Moderate" : "Low") : "—";
+          const energyStatus = energy ? (energy.lowIncomeBurdenPct > 10 ? "High" : energy.lowIncomeBurdenPct > 7 ? "Moderate" : "Low") : "—";
+
+          return (
+            <Card className="border-michigan-teal/10 bg-gradient-to-r from-michigan-teal/[0.03] to-transparent">
+              <CardContent className="py-4">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Planet Score
+                  </p>
+                  <Link to="/environment" className="text-[10px] text-primary hover:underline">
+                    Full Environment Report →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  <div>
+                    <p className={`text-lg font-bold tabular-nums ${waterStatus === "Amber" ? "text-amber-600" : waterStatus === "Watch" ? "text-yellow-600" : "text-green-600"}`}>
+                      {pfas} PFAS site{pfas !== 1 ? "s" : ""}
+                    </p>
+                    <p className="text-[10px] font-medium text-foreground">Water Safety</p>
+                    <p className="text-[9px] text-muted-foreground">EGLE MPART 2026</p>
+                  </div>
+                  <div>
+                    <p className={`text-lg font-bold tabular-nums ${disasterStatus === "Elevated" ? "text-red-600" : disasterStatus === "Moderate" ? "text-amber-600" : "text-green-600"}`}>
+                      {nri ? nri.compositeRisk.toFixed(1) : "—"}
+                    </p>
+                    <p className="text-[10px] font-medium text-foreground">Disaster Risk</p>
+                    <p className="text-[9px] text-muted-foreground">FEMA NRI 2023</p>
+                  </div>
+                  <div>
+                    <p className={`text-lg font-bold tabular-nums ${energyStatus === "High" ? "text-red-600" : energyStatus === "Moderate" ? "text-amber-600" : "text-green-600"}`}>
+                      {energy ? `${energy.lowIncomeBurdenPct}%` : "—"}
+                    </p>
+                    <p className="text-[10px] font-medium text-foreground">Energy Burden (Low-Income)</p>
+                    <p className="text-[9px] text-muted-foreground">ACEEE LEAD 2023</p>
+                  </div>
+                  <div className="flex items-center">
+                    <Link
+                      to="/environment/water"
+                      className="w-full rounded-lg bg-michigan-teal text-white text-[10px] font-semibold px-3 py-2 text-center hover:bg-michigan-teal/90 transition-colors"
+                    >
+                      Check Water Safety →
                     </Link>
                   </div>
                 </div>
