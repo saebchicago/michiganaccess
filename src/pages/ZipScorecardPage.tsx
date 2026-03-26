@@ -5,7 +5,7 @@ import {
   MapPin, Heart, DollarSign, Leaf, Activity,
   TrendingDown, TrendingUp, BarChart3, Info,
   Loader2, AlertCircle, Building2, Stethoscope,
-  GitCompareArrows, Share2, X, Check, Landmark, Layers,
+  GitCompareArrows, Share2, X, Check, Landmark, Layers, Users,
 } from "lucide-react";
 import {
   Radar, RadarChart, PolarGrid, PolarAngleAxis,
@@ -38,6 +38,10 @@ import { getBroadbandByCounty } from "@/hooks/useBroadbandData";
 import { getFoodAccessByCounty } from "@/hooks/useFoodAccess";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
+import { useZIPDemographics } from "@/hooks/useCensusDemographics";
+import { lazy, Suspense } from "react";
+const ZIPNarratives = lazy(() => import("@/components/zip/ZIPNarratives"));
+const CHNAExport = lazy(() => import("@/components/zip/CHNAExport"));
 import DataProvenance from "@/components/shared/DataProvenance";
 
 // ── Score Gauge (reused pattern from NeighborhoodHealthScore) ────────────
@@ -263,6 +267,8 @@ export default function ZipScorecardPage() {
   // Comparison ZIP data (only fetched when compare is active)
   const compZip = compareZip.length === 5 ? compareZip : "";
   const comp = useZipMetrics(compZip);
+
+  const { data: demographics } = useZIPDemographics(zip || null);
 
   const compositeColor = scoreColor(primary.compositeScore);
   const compositeTier = scoreGrade(primary.compositeScore);
@@ -811,7 +817,7 @@ export default function ZipScorecardPage() {
 
         {/* ── Tabbed Detail Sections ── */}
         <Tabs defaultValue="health" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="health" className="gap-1.5 text-xs sm:text-sm">
               <Heart className="h-3.5 w-3.5" /> Health
             </TabsTrigger>
@@ -820,6 +826,9 @@ export default function ZipScorecardPage() {
             </TabsTrigger>
             <TabsTrigger value="resources" className="gap-1.5 text-xs sm:text-sm">
               <Activity className="h-3.5 w-3.5" /> Resources
+            </TabsTrigger>
+            <TabsTrigger value="demographics" className="gap-1.5 text-xs sm:text-sm">
+              <Users className="h-3.5 w-3.5" /> People
             </TabsTrigger>
             <TabsTrigger value="access" className="gap-1.5 text-xs sm:text-sm">
               <MapPin className="h-3.5 w-3.5" /> Access
@@ -1038,6 +1047,94 @@ export default function ZipScorecardPage() {
                 </Link>
               ))}
             </div>
+          </TabsContent>
+
+          {/* ── Demographics Tab ── */}
+          <TabsContent value="demographics" className="space-y-4">
+            {demographics ? (
+              <div className="space-y-4">
+                <Card>
+                  <CardContent className="py-4">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">Population</p>
+                    <p className="text-2xl font-bold text-foreground tabular-nums">{demographics.totalPop.toLocaleString()}</p>
+                    <p className="text-[9px] text-muted-foreground">{demographics.source}</p>
+                  </CardContent>
+                </Card>
+
+                {/* Race/Ethnicity */}
+                <Card>
+                  <CardContent className="py-4">
+                    <p className="text-sm font-bold text-foreground mb-3">Race & Ethnicity</p>
+                    <div className="h-6 rounded-full overflow-hidden flex mb-3">
+                      <div className="h-full bg-[#4f86c6]" style={{ width: `${demographics.white_alone_pct}%` }} title={`White ${demographics.white_alone_pct.toFixed(1)}%`} />
+                      <div className="h-full bg-[#f59e0b]" style={{ width: `${demographics.black_alone_pct}%` }} title={`Black ${demographics.black_alone_pct.toFixed(1)}%`} />
+                      <div className="h-full bg-[#10b981]" style={{ width: `${demographics.hispanic_pct}%` }} title={`Hispanic ${demographics.hispanic_pct.toFixed(1)}%`} />
+                      <div className="h-full bg-[#8b5cf6]" style={{ width: `${demographics.asian_alone_pct}%` }} title={`Asian ${demographics.asian_alone_pct.toFixed(1)}%`} />
+                      <div className="h-full bg-[#94a3b8]" style={{ width: `${demographics.multiracial_pct}%` }} title={`Other ${demographics.multiracial_pct.toFixed(1)}%`} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 text-xs">
+                      <span><span className="inline-block h-2 w-2 rounded-full bg-[#4f86c6] mr-1" />White {demographics.white_alone_pct.toFixed(1)}% <span className="text-muted-foreground">(MI: {demographics.miStateWhitePct}%)</span></span>
+                      <span><span className="inline-block h-2 w-2 rounded-full bg-[#f59e0b] mr-1" />Black {demographics.black_alone_pct.toFixed(1)}% <span className="text-muted-foreground">(MI: {demographics.miStateBlackPct}%)</span></span>
+                      <span><span className="inline-block h-2 w-2 rounded-full bg-[#10b981] mr-1" />Hispanic {demographics.hispanic_pct.toFixed(1)}% <span className="text-muted-foreground">(MI: {demographics.miStateHispanicPct}%)</span></span>
+                      <span><span className="inline-block h-2 w-2 rounded-full bg-[#8b5cf6] mr-1" />Asian {demographics.asian_alone_pct.toFixed(1)}%</span>
+                      <span><span className="inline-block h-2 w-2 rounded-full bg-[#94a3b8] mr-1" />Other {demographics.multiracial_pct.toFixed(1)}%</span>
+                    </div>
+                    <p className="text-[9px] text-muted-foreground mt-2">{demographics.source}</p>
+                  </CardContent>
+                </Card>
+
+                {/* Language & Disability */}
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Card>
+                    <CardContent className="py-4">
+                      <p className="text-sm font-bold text-foreground mb-2">Language Access</p>
+                      <EconCard label="Limited English Proficiency" value={`${demographics.lep_pct.toFixed(1)}%`} benchmark={`MI avg: ${demographics.miStateLEPPct}%`} source={demographics.source} />
+                      {demographics.spanish_speakers_pct > 1 && <p className="text-xs text-muted-foreground mt-1">Spanish speakers: {demographics.spanish_speakers_pct.toFixed(1)}%</p>}
+                      {demographics.arabic_speakers_pct > 1 && <p className="text-xs text-muted-foreground mt-1">Arabic speakers: {demographics.arabic_speakers_pct.toFixed(1)}%</p>}
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="py-4">
+                      <p className="text-sm font-bold text-foreground mb-2">Disability & Housing</p>
+                      <EconCard label="Disability Rate" value={`${demographics.disability_pct.toFixed(1)}%`} benchmark={`MI avg: ${demographics.miStateDisabilityPct}%`} source={demographics.source} />
+                      <p className="text-xs text-muted-foreground mt-2">Renter: {demographics.renter_pct.toFixed(1)}% · Owner: {demographics.owner_pct.toFixed(1)}%</p>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Equity framing */}
+                <Card className="border-amber-200/50 dark:border-amber-900/30 bg-amber-50/30 dark:bg-amber-950/10">
+                  <CardContent className="py-4">
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      ZIP code demographics shape health outcomes — not because of race, but because of systems. Structural factors like housing, employment, and access create the patterns visible here.
+                    </p>
+                    <p className="text-[9px] text-muted-foreground/60 mt-1">Framing: CDC Health Equity / RWJF research</p>
+                  </CardContent>
+                </Card>
+
+                {/* Narrative + CHNA */}
+                <Suspense fallback={null}>
+                  <ZIPNarratives zip={zip} county={primary.county ?? ""} equityScore={primary.compositeScore} equityTier={compositeTier.tier}
+                    topHealthConcern={primary.healthResult.concerns[0] ?? "Multiple factors"} medianIncome={demographics.medianHouseholdIncome}
+                    renterPct={demographics.renter_pct} lepPct={demographics.lep_pct} disabilityPct={demographics.disability_pct} />
+                </Suspense>
+
+                <div className="flex justify-end">
+                  <Suspense fallback={null}>
+                    <CHNAExport zip={zip} county={primary.county ?? ""} equityScore={primary.compositeScore} equityTier={compositeTier.tier}
+                      topConcerns={[...primary.healthResult.concerns, ...(primary.healthResult.strengths.length === 0 ? ["Access barriers"] : [])]} />
+                  </Suspense>
+                </div>
+              </div>
+            ) : (
+              <Card>
+                <CardContent className="py-8 text-center">
+                  <Loader2 className="h-6 w-6 animate-spin mx-auto mb-3 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">Loading Census demographics for ZIP {zip}...</p>
+                  <p className="text-[9px] text-muted-foreground/60 mt-1">Source: Census ACS 5-Year Estimates 2022</p>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
 
           {/* ── Access & Infrastructure Tab ── */}
