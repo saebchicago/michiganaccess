@@ -141,6 +141,7 @@ const pages = {
   DownloadCenterPage: lazy(() => import("@/pages/DownloadCenterPage")),
   ZipFinderPage: lazy(() => import("@/pages/ZipFinderPage")),
   ServiceAreaPage: lazy(() => import("@/pages/ServiceAreaPage")),
+  PublicInvestmentPage: lazy(() => import("@/pages/PublicInvestmentPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -257,6 +258,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/sba-insights", component: pages.SBAInsightsPage, label: "SBA Insights" },
   { path: "/zip-finder", component: pages.ZipFinderPage, label: "ZIP Finder" },
   { path: "/service-area", component: pages.ServiceAreaPage, label: "Service Area Builder" },
+  { path: "/public-investment", component: pages.PublicInvestmentPage, label: "Public Investment Intelligence" },
   { path: "/zip/:zipcode", component: pages.ZipScorecardPage, label: "ZIP Scorecard" },
   { path: "/downloads", component: pages.DownloadCenterPage, label: "Download Center" },
   // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
@@ -311,6 +313,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Detection Gap", href: "/detection-gap", badge: "Research" },
       { label: "ZIP Finder", href: "/zip-finder", badge: "New" },
       { label: "Service Area Builder", href: "/service-area", badge: "New" },
+      { label: "Public Investment", href: "/public-investment", badge: "New" },
     ],
   },
   { label: "Methodology", href: "/methodology" },
@@ -393,6 +396,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Maternal & Infant Health", href: "/maternal-health", badge: "New" },
       { label: "ZIP Finder", href: "/zip-finder", badge: "New" },
       { label: "Service Area Builder", href: "/service-area", badge: "New" },
+      { label: "Public Investment", href: "/public-investment", badge: "New" },
       { label: "Replicate This Platform", href: "/replicate" },
     ],
   },

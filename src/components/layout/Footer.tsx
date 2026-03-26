@@ -79,6 +79,7 @@ const Footer = () => {
         { label: "ZIP Scorecard", href: "/zip/48201" },
         { label: "Detection Gap", href: "/detection-gap" },
         { label: "Downloads", href: "/downloads" },
+        { label: "Public Investment", href: "/public-investment" },
       ],
     },
     {
