@@ -119,6 +119,7 @@ const Footer = () => {
         { label: "System Status",          href: "/status" },
         { label: "Replicate for Your State", href: "/replicate" },
         { label: "ourintel.org", href: "/about/ourintel" },
+        { label: "Michigan Tribal Nations", href: "/tribal-nations" },
       ],
     },
     {

@@ -74,6 +74,7 @@ const pages = {
   ReentryCareNavigator: lazy(() => import("@/pages/ReentryCareNavigator")),
   ReplicationPage: lazy(() => import("@/pages/ReplicationPage")),
   OurIntelPage: lazy(() => import("@/pages/OurIntelPage")),
+  TribalNationsPage: lazy(() => import("@/pages/TribalNationsPage")),
   MethodologyPage: lazy(() => import("@/pages/MethodologyPage")),
   ResearchPage: lazy(() => import("@/pages/ResearchPage")),
   ImpactPage: lazy(() => import("@/pages/ImpactPage")),
@@ -215,6 +216,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/reentry", component: pages.ReentryCareNavigator, label: "Reentry Resources" },
   { path: "/replicate", component: pages.ReplicationPage, label: "Replicate" },
   { path: "/about/ourintel", component: pages.OurIntelPage, label: "ourintel.org — National Vision" },
+  { path: "/tribal-nations", component: pages.TribalNationsPage, label: "Michigan Tribal Nations" },
   { path: "/methodology", component: pages.MethodologyPage, label: "Methodology" },
   { path: "/research", component: pages.ResearchPage, label: "Research" },
   { path: "/impact", component: pages.ImpactDashboardPage, label: "Platform Impact" },
@@ -320,6 +322,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Health Map", href: "/health-map", i18nKey: "nav.healthMap" },
       { label: "Quality Ratings", href: "/quality" },
       { label: "Insurance Appeals", href: "/health/insurance-appeals" },
+      { label: "Michigan Tribal Nations", href: "/tribal-nations", badge: "New" },
     ],
   },
   {
