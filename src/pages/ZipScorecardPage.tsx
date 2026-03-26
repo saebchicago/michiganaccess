@@ -30,6 +30,7 @@ import { getScoreBand } from "@/data/zipScoreBands";
 import { MICHIGAN_SAFMR } from "@/data/hudSafmr";
 import { MICHIGAN_EJSCREEN } from "@/data/ejscreen";
 import { MICHIGAN_FEDERAL_SPENDING, getFederalDependencyScore } from "@/data/federalSpending";
+import { getEvictionData } from "@/hooks/useEvictionData";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
@@ -581,6 +582,74 @@ export default function ZipScorecardPage() {
             <span>Loading comparison data for ZIP {compareZip}...</span>
           </div>
         )}
+
+        {/* ── Signals from the Ground ── */}
+        {(() => {
+          const eviction = getEvictionData(primary.county ?? "");
+          const depScore = getFederalDependencyScore(primary.county ?? "");
+          const signals = [
+            {
+              label: "Eviction Filing Rate",
+              value: eviction ? `${eviction.eviction_filing_rate}%` : "—",
+              context: eviction ? `${eviction.evictions.toLocaleString()} filings/yr` : "Data unavailable",
+              source: "Eviction Lab, Princeton 2023",
+              severity: eviction && eviction.eviction_filing_rate > 8 ? "high" as const : "moderate" as const,
+              icon: "\u{1F3E0}",
+            },
+            {
+              label: "Federal Dependency",
+              value: depScore ? `${depScore}%` : "—",
+              context: "Of county public revenue from federal sources",
+              source: "USASpending.gov FY2024 — Illustrative composite",
+              severity: (depScore ?? 0) > 40 ? "high" as const : "moderate" as const,
+              icon: "\u{1F4B5}",
+            },
+            {
+              label: "211 Calls/1k Residents",
+              value: "7.5",
+              context: "Michigan average — county data pending",
+              source: "Michigan 211 Annual Report 2024",
+              severity: "moderate" as const,
+              icon: "\u{1F4DE}",
+            },
+          ];
+
+          const hasData = eviction || depScore;
+          if (!hasData) return null;
+
+          return (
+            <Card className="border-primary/10 bg-gradient-to-r from-primary/[0.03] to-transparent">
+              <CardContent className="py-4">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+                  Signals from the Ground
+                </p>
+                <div className="grid grid-cols-3 gap-3">
+                  {signals.map(sig => (
+                    <div key={sig.label} className="space-y-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-base">{sig.icon}</span>
+                        <span className={`text-lg font-bold tabular-nums ${
+                          sig.severity === "high" ? "text-orange-600" : "text-foreground"
+                        }`}>
+                          {sig.value}
+                        </span>
+                      </div>
+                      <p className="text-[10px] font-medium text-foreground leading-tight">
+                        {sig.label}
+                      </p>
+                      <p className="text-[9px] text-muted-foreground leading-tight">
+                        {sig.context}
+                      </p>
+                      <p className="text-[8px] text-muted-foreground/50 leading-tight">
+                        {sig.source}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })()}
 
         <Separator />
 
