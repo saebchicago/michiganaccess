@@ -26,6 +26,8 @@ import {
   MICHIGAN_FEDERAL_SPENDING,
   getFederalDependencyScore,
 } from "@/data/federalSpending";
+import SuggestResource from "@/components/community/SuggestResource";
+import HelpfulVote from "@/components/community/HelpfulVote";
 import {
   MICHIGAN_BONDS,
 } from "@/data/municipalBonds";
@@ -625,6 +627,10 @@ const PublicInvestmentPage = () => {
             </div>
           </CardContent>
         </Card>
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <SuggestResource pageUrl="/public-investment" />
+          <HelpfulVote pagePath="/public-investment" />
+        </div>
       </section>
     </Layout>
   );

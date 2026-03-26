@@ -43,6 +43,8 @@ import { lazy, Suspense } from "react";
 const ZIPNarratives = lazy(() => import("@/components/zip/ZIPNarratives"));
 const CHNAExport = lazy(() => import("@/components/zip/CHNAExport"));
 import DataProvenance from "@/components/shared/DataProvenance";
+import SuggestResource from "@/components/community/SuggestResource";
+import HelpfulVote from "@/components/community/HelpfulVote";
 
 // ── Score Gauge (reused pattern from NeighborhoodHealthScore) ────────────
 
@@ -1191,6 +1193,12 @@ export default function ZipScorecardPage() {
         </Tabs>
 
         <Separator />
+
+        {/* ── Participatory Hooks ── */}
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <SuggestResource zip={zip} county={primary.county ?? undefined} />
+          <HelpfulVote pagePath={`/zip/${zip}`} zip={zip} />
+        </div>
 
         {/* ── Source Attributions ── */}
         <DataProvenance

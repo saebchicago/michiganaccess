@@ -15,6 +15,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import SuggestResource from "@/components/community/SuggestResource";
+import HelpfulVote from "@/components/community/HelpfulVote";
 import { MICHIGAN_CIVIC_STATS } from "@/data/civicBoards";
 import { MICHIGAN_RACE_DATA, STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
 
@@ -266,6 +268,13 @@ const CivicPowerPage = () => {
               <p className="text-[9px] text-muted-foreground/60 mt-2">Source: CLOSUP / WWU Electoral Competitiveness Study</p>
             </CardContent>
           </Card>
+        </div>
+      </section>
+
+      <section className="container pb-8">
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <SuggestResource pageUrl="/civic-power" />
+          <HelpfulVote pagePath="/civic-power" />
         </div>
       </section>
     </Layout>
