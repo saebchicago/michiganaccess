@@ -90,12 +90,12 @@ export default function BoardCard({ board }: { board: GoverningBoard }) {
             {board.timeCommitment}
           </span>
           <span className="text-[10px] text-primary font-medium inline-flex items-center gap-1">
-            {board.applicationUrl.startsWith("http") ? (
-              <a href={board.applicationUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                Apply <ExternalLink className="h-3 w-3" />
+            {board.applicationUrl?.startsWith("http") ? (
+              <a href={board.applicationUrl} target="_blank" rel="noopener noreferrer" className="hover:underline" aria-label={`Apply for ${board.name}, opens in new window`}>
+                Apply <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
             ) : (
-              <span>{board.applicationUrl}</span>
+              <span>{board.applicationUrl ?? "Contact your county"}</span>
             )}
           </span>
         </div>

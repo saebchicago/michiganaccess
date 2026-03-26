@@ -194,12 +194,14 @@ const CivicRacesPage = () => {
               <button
                 onClick={() => setOpenAccordion(openAccordion === i ? null : i)}
                 className="w-full px-4 py-3 flex items-center justify-between text-left"
+                aria-expanded={openAccordion === i}
+                aria-controls={`how-to-run-${i}`}
               >
                 <span className="text-sm font-semibold text-foreground">{item.title}</span>
-                {openAccordion === i ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                {openAccordion === i ? <ChevronUp className="h-4 w-4 text-muted-foreground" aria-hidden="true" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" aria-hidden="true" />}
               </button>
               {openAccordion === i && (
-                <CardContent className="pt-0 pb-4">
+                <CardContent className="pt-0 pb-4" id={`how-to-run-${i}`}>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-2">{item.content}</p>
                   <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
                     Michigan Voter Information Center <ExternalLink className="h-3 w-3" />

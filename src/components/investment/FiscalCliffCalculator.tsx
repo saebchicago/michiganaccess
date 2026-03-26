@@ -134,6 +134,7 @@ export default function FiscalCliffCalculator() {
             max={50}
             step={5}
             className="w-full"
+            aria-label="Federal funding reduction percentage"
           />
           <div className="flex justify-between text-[10px] text-muted-foreground">
             <span>5% (modest)</span>

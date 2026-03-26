@@ -2,6 +2,8 @@
 // Source: Ballotpedia Analysis of Uncontested Elections 2024
 // Michigan SOS 2024 Election Results
 // Regional analysis for SE Michigan, West Michigan, UP
+// Note: 5 regions shown cover ~13,830 of 15,139 statewide races.
+// Remaining ~1,300 are in SW Michigan, Thumb, and other areas.
 
 export interface RegionalRaceData {
   region: string;

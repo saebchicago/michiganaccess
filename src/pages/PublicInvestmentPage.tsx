@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import {
   DollarSign, Landmark, AlertTriangle, Building2,
-  ArrowRight, Info, TrendingUp, BarChart3,
+  Info, BarChart3,
 } from "lucide-react";
 
 const MoneyFlowSankey = lazy(() => import("@/components/investment/MoneyFlowSankey"));
@@ -25,12 +25,9 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   MICHIGAN_FEDERAL_SPENDING,
   getFederalDependencyScore,
-  type CountyFederalSpending,
 } from "@/data/federalSpending";
 import {
   MICHIGAN_BONDS,
-  getBondsByCounty,
-  type MunicipalBond,
 } from "@/data/municipalBonds";
 
 const fadeUp = {

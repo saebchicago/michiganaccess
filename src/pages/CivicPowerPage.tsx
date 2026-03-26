@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Landmark, Users, Vote, Building2, ArrowRight, AlertTriangle,
-  BookOpen, Shield, TrendingDown, ExternalLink,
+  BookOpen, Shield, TrendingDown,
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,

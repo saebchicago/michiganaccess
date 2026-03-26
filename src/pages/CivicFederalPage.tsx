@@ -96,8 +96,9 @@ const CivicFederalPage = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[10px] text-primary hover:underline inline-flex items-center gap-1"
+                    aria-label={`${agency.acronym} public contact, opens in new window`}
                   >
-                    Public Contact <ExternalLink className="h-3 w-3" />
+                    Public Contact <ExternalLink className="h-3 w-3" aria-hidden="true" />
                   </a>
                 </CardContent>
               </Card>
@@ -144,8 +145,9 @@ const CivicFederalPage = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-xs text-primary hover:underline mt-2 inline-flex items-center gap-1"
+                      aria-label={`Apply to ${faca.name}, opens in new window`}
                     >
-                      Apply / Nominate <ExternalLink className="h-3 w-3" />
+                      Apply / Nominate <ExternalLink className="h-3 w-3" aria-hidden="true" />
                     </a>
                   )}
                 </div>
