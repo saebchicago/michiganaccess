@@ -203,8 +203,8 @@ const CivicRacesPage = () => {
               {openAccordion === i && (
                 <CardContent className="pt-0 pb-4" id={`how-to-run-${i}`}>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-2">{item.content}</p>
-                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline inline-flex items-center gap-1">
-                    Michigan Voter Information Center <ExternalLink className="h-3 w-3" />
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline inline-flex items-center gap-1" aria-label="Michigan Voter Information Center, opens in new window">
+                    Michigan Voter Information Center <ExternalLink className="h-3 w-3" aria-hidden="true" />
                   </a>
                 </CardContent>
               )}
@@ -223,7 +223,7 @@ const CivicRacesPage = () => {
             { title: "MML New Officials Workshop", desc: "Training for newly elected local officials", url: "https://mml.org" },
             { title: "Michigan SOS Candidate Info", desc: "Official filing and petition resources", url: "https://mvic.sos.state.mi.us" },
           ].map(r => (
-            <a key={r.title} href={r.url} target="_blank" rel="noopener noreferrer" className="group">
+            <a key={r.title} href={r.url} target="_blank" rel="noopener noreferrer" className="group" aria-label={`${r.title}, opens in new window`}>
               <Card className="h-full hover:shadow-md hover:border-primary/30 transition-all">
                 <CardContent className="py-4">
                   <h3 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{r.title}</h3>

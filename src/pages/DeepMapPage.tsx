@@ -190,7 +190,7 @@ export default function DeepMapPage() {
             {MAP_LAYERS.map(layer => (
               <Card key={layer.id} className={`transition-all ${activeLayers[layer.id] ? "border-primary/40 bg-primary/[0.03]" : ""}`}>
                 <CardContent className="py-3">
-                  <button onClick={() => toggleLayer(layer.id)} className="w-full flex items-center gap-2 text-left">
+                  <button onClick={() => toggleLayer(layer.id)} className="w-full flex items-center gap-2 text-left" aria-pressed={!!activeLayers[layer.id]} aria-label={`Toggle ${layer.label} layer`}>
                     <span className="text-base">{layer.icon}</span>
                     <div className="flex-1">
                       <p className={`text-sm font-medium ${activeLayers[layer.id] ? "text-foreground" : "text-muted-foreground"}`}>{layer.label}</p>

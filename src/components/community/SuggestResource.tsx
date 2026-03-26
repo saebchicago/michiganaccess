@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
 import { MessageSquarePlus, Check, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -39,6 +39,16 @@ export default function SuggestResource({ zip, county, pageUrl }: SuggestResourc
       setLoading(false);
     }
   };
+
+  // Close on Escape key
+  const handleEscape = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape" && open) setOpen(false);
+  }, [open]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [handleEscape]);
 
   return (
     <div className="relative">
