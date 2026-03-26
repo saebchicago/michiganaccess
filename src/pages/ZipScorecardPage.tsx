@@ -763,6 +763,48 @@ export default function ZipScorecardPage() {
           );
         })()}
 
+        {/* ── Transparency Snapshot ── */}
+        {(() => {
+          const federalData = MICHIGAN_FEDERAL_SPENDING.find(r => r.county === (primary.county ?? ""));
+          if (!federalData) return null;
+          return (
+            <Card className="border-amber-200/20 dark:border-amber-900/20 bg-amber-50/30 dark:bg-amber-950/10">
+              <CardContent className="py-4">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Transparency Snapshot
+                  </p>
+                  <Link to="/transparency" className="text-[10px] text-primary hover:underline">
+                    Full Transparency Dashboard →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <div>
+                    <p className="text-xl font-bold text-amber-600 tabular-nums">
+                      ${federalData.total_awards_millions.toLocaleString()}M
+                    </p>
+                    <p className="text-[10px] font-medium text-foreground">Federal Contracts</p>
+                    <p className="text-[9px] text-muted-foreground">{federalData.county} County FY2024</p>
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-foreground tabular-nums">148</p>
+                    <p className="text-[10px] font-medium text-foreground">State Legislators</p>
+                    <p className="text-[9px] text-muted-foreground">Michigan Legislature</p>
+                  </div>
+                  <div className="flex items-center">
+                    <Link
+                      to="/transparency/contractors"
+                      className="w-full rounded-lg bg-amber-600 text-white text-[10px] font-semibold px-3 py-2 text-center hover:bg-amber-600/90 transition-colors"
+                    >
+                      See Contractors →
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })()}
+
         <Separator />
 
         {/* ── Tabbed Detail Sections ── */}
