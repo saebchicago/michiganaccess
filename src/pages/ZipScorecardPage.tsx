@@ -42,6 +42,8 @@ import { useZIPDemographics } from "@/hooks/useCensusDemographics";
 import { lazy, Suspense } from "react";
 const ZIPNarratives = lazy(() => import("@/components/zip/ZIPNarratives"));
 const CHNAExport = lazy(() => import("@/components/zip/CHNAExport"));
+import HistoricalContextCard from "@/components/zip/HistoricalContextCard";
+import RxKidsCallout from "@/components/health/RxKidsCallout";
 import DataProvenance from "@/components/shared/DataProvenance";
 import SuggestResource from "@/components/community/SuggestResource";
 import HelpfulVote from "@/components/community/HelpfulVote";
@@ -595,6 +597,12 @@ export default function ZipScorecardPage() {
             <span>Loading comparison data for ZIP {compareZip}...</span>
           </div>
         )}
+
+        {/* ── Historical Context (Detroit HOLC) ── */}
+        <HistoricalContextCard zip={zip} />
+
+        {/* ── Rx Kids (Genesee/Wayne) ── */}
+        {primary.county && <RxKidsCallout county={primary.county} />}
 
         {/* ── Signals from the Ground ── */}
         {(() => {
