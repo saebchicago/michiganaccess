@@ -158,6 +158,34 @@ const Index = () => {
       {/* ═══ CAPABILITY STRIP ═══ */}
       <CapabilityStrip />
 
+      {/* ═══ ROLE-BASED JOURNEYS ═══ */}
+      <section className="container py-10">
+        <motion.h2 initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          className="text-xl font-bold text-foreground text-center mb-6">
+          Where do you want to start?
+        </motion.h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { icon: "\u{1F464}", label: "I'm a Michigan Resident", desc: "Health resources, water safety, who represents you", href: "/zip/48201", color: "bg-teal-50 dark:bg-teal-950/20 border-teal-200 dark:border-teal-900/40", cta: "Check My ZIP" },
+            { icon: "\u{1F3E5}", label: "I Work in Healthcare", desc: "Market intelligence, SDOH gaps, CHNA export", href: "/detection-gap", color: "bg-primary/5 border-primary/20", cta: "Explore Service Area" },
+            { icon: "\u{1F4CB}", label: "I'm a Policymaker", desc: "Federal investment, fiscal risk, civic participation", href: "/public-investment", color: "bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/40", cta: "Public Investment" },
+            { icon: "\u{1F52C}", label: "I'm a Researcher", desc: "Full data export, methodology, transparency layer", href: "/downloads", color: "bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-900/40", cta: "Access Data" },
+          ].map((role, i) => (
+            <motion.div key={role.label} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: i * 0.08 }}>
+              <Link to={role.href} className="block group">
+                <div className={`rounded-xl border p-5 h-full transition-all hover:shadow-md ${role.color}`}>
+                  <span className="text-2xl">{role.icon}</span>
+                  <h3 className="text-sm font-bold text-foreground mt-2 group-hover:text-primary transition-colors">{role.label}</h3>
+                  <p className="text-xs text-muted-foreground mt-1 mb-3">{role.desc}</p>
+                  <span className="text-xs text-primary font-medium inline-flex items-center gap-1 group-hover:underline">{role.cta} <ArrowRight className="h-3 w-3" /></span>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* ═══ YOUR COMMUNITY ═══ */}
       <YourCommunity />
 
