@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Copy, Globe, Server, Database, Clock, ArrowRight, ExternalLink, CheckCircle2 } from "lucide-react";
+import { Copy, Globe, Server, Database, Clock, ArrowRight, ExternalLink, CheckCircle2, Send } from "lucide-react";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -160,7 +162,66 @@ export default function ReplicationPage() {
             </Button>
           </div>
         </section>
+
+        {/* Collaboration Form */}
+        <CollaborationForm />
+
+        {/* ourintel.org link */}
+        <section className="rounded-2xl bg-slate-900 p-8 text-center">
+          <p className="text-2xl font-bold text-white mb-2">ourintel.org</p>
+          <p className="text-sm text-slate-300 mb-4">The national framework for civic intelligence infrastructure. Michigan is the proof of concept. Everything else is the mission.</p>
+          <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10">
+            <Link to="/about/ourintel">Learn about the national vision <ArrowRight className="ml-1.5 h-3.5 w-3.5" /></Link>
+          </Button>
+        </section>
       </div>
     </Layout>
+  );
+}
+
+function CollaborationForm() {
+  const [form, setForm] = useState({ name: "", email: "", state: "", organization: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!form.email.trim() || !form.state.trim()) return;
+    setLoading(true);
+    try {
+      if (supabaseConfigured) {
+        await supabase.from("collaborator_interest").insert({
+          email: form.email.trim(), name: form.name.trim() || null,
+          state: form.state.trim(), organization: form.organization.trim() || null,
+          message: form.message.trim() || null, source: "replicate-page",
+        });
+      }
+      setSubmitted(true);
+    } finally { setLoading(false); }
+  };
+
+  if (submitted) {
+    return (
+      <section className="rounded-2xl bg-teal-50 dark:bg-teal-950/20 border border-teal-200 dark:border-teal-900/40 p-8 text-center">
+        <p className="text-teal-700 dark:text-teal-400 font-semibold mb-1">We'll be in touch.</p>
+        <p className="text-teal-600 dark:text-teal-400 text-sm">When {form.state} is ready to build, you'll be the first to know.</p>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2"><Send className="h-5 w-5 text-primary" /> Build for Your State</h2>
+      <p className="text-sm text-muted-foreground mb-4">Tell us about your state and what you'd build. We're looking for developers, policy researchers, and civic technologists.</p>
+      <div className="grid gap-3 max-w-lg">
+        <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Your name" className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
+        <input value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} placeholder="Email address" type="email" className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
+        <input value={form.state} onChange={e => setForm(f => ({ ...f, state: e.target.value }))} placeholder="Which state would you build for?" className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
+        <input value={form.organization} onChange={e => setForm(f => ({ ...f, organization: e.target.value }))} placeholder="Organization (optional)" className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40" />
+        <textarea value={form.message} onChange={e => setForm(f => ({ ...f, message: e.target.value }))} placeholder="Tell us in one sentence what you'd build (optional)" className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40 resize-none h-20" />
+        <Button onClick={handleSubmit} disabled={loading || !form.email.trim() || !form.state.trim()} className="w-full">
+          {loading ? "Submitting..." : `I want to build ${form.state || "[STATE]"} Access`}
+        </Button>
+      </div>
+    </section>
   );
 }
