@@ -1,9 +1,10 @@
 import { useState, useMemo, lazy, Suspense } from "react";
+import { Link } from "react-router-dom";
 import DataProvenance from "@/components/shared/DataProvenance";
 import { motion } from "framer-motion";
 import {
   BarChart3, TrendingUp, TrendingDown, Activity, Heart, Brain, Users,
-  MapPin, Shield, Baby, Stethoscope, Download, Zap, Pill
+  MapPin, Shield, Baby, Stethoscope, Download, Zap, Pill, Landmark, ArrowRight,
 } from "lucide-react";
 
 // Lazy-load heavy dashboard sub-components
@@ -154,6 +155,7 @@ export default function HealthDataDashboardPage() {
               <TabsTrigger value="energy" className="text-xs sm:text-sm whitespace-nowrap">Energy Burden</TabsTrigger>
               <TabsTrigger value="disparities" className="text-xs sm:text-sm whitespace-nowrap">Disparity Gaps</TabsTrigger>
               <TabsTrigger value="research" className="text-xs sm:text-sm whitespace-nowrap">Research Tools</TabsTrigger>
+              <TabsTrigger value="public-investment" className="text-xs sm:text-sm whitespace-nowrap">Public Investment</TabsTrigger>
             </TabsList>
           </div>
 
@@ -513,6 +515,45 @@ export default function HealthDataDashboardPage() {
               <ExternalEmbeds />
               <CSVExportPanel />
             </Suspense>
+          </TabsContent>
+
+          <TabsContent value="public-investment" className="mt-6 space-y-6">
+            <Card className="border-primary/20 bg-primary/[0.03]">
+              <CardHeader>
+                <CardTitle className="text-base flex items-center gap-2">
+                  <Landmark className="h-4 w-4 text-primary" />
+                  Public Investment Intelligence
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <div className="rounded-lg border border-border p-4 text-center">
+                    <p className="text-2xl font-bold text-foreground tabular-nums">~$14.2B</p>
+                    <p className="text-xs text-muted-foreground">Total Federal Spending (FY2024)</p>
+                    <p className="text-[9px] text-muted-foreground/60">Source: USASpending.gov FY2024</p>
+                  </div>
+                  <div className="rounded-lg border border-border p-4 text-center">
+                    <p className="text-2xl font-bold text-foreground tabular-nums">~$3.9B</p>
+                    <p className="text-xs text-muted-foreground">Municipal Bond Issuances</p>
+                    <p className="text-[9px] text-muted-foreground/60">Source: MSRB EMMA FY2022–2024</p>
+                  </div>
+                  <div className="rounded-lg border border-border p-4 text-center">
+                    <p className="text-2xl font-bold text-red-500 tabular-nums">3 Counties</p>
+                    <p className="text-xs text-muted-foreground">"Critical" Fiscal Vulnerability</p>
+                    <p className="text-[9px] text-muted-foreground/60">Wayne, Genesee, Saginaw</p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Track how federal and municipal capital flows through Michigan's counties.
+                  Identify fiscal vulnerability where high equity need meets high federal dependency.
+                </p>
+                <Button asChild>
+                  <Link to="/public-investment">
+                    Explore Full Dashboard <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
 
