@@ -200,7 +200,7 @@ const EnvironmentPage = () => {
       <section className="py-12 md:py-16">
         <div className="container">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-             <TabsList className="mb-8 grid w-full grid-cols-4 md:grid-cols-7 gap-1">
+             <TabsList className="mb-8 inline-flex w-max min-w-full sm:w-auto sm:min-w-0 gap-1">
               <TabsTrigger value="air-water" className="text-xs sm:text-sm">{t('environment.airWater')}</TabsTrigger>
               <TabsTrigger value="water-safety" className="text-xs sm:text-sm">Water Safety</TabsTrigger>
               <TabsTrigger value="energy" className="text-xs sm:text-sm">{t('environment.cleanEnergy')}</TabsTrigger>
@@ -208,6 +208,7 @@ const EnvironmentPage = () => {
               <TabsTrigger value="recycling" className="text-xs sm:text-sm">{t('environment.recycling')}</TabsTrigger>
               <TabsTrigger value="great-lakes" className="text-xs sm:text-sm">{t('environment.greatLakes')}</TabsTrigger>
               <TabsTrigger value="justice" className="text-xs sm:text-sm">{t('environment.envJustice')}</TabsTrigger>
+              <TabsTrigger value="food-access" className="text-xs sm:text-sm whitespace-nowrap">Food Access</TabsTrigger>
             </TabsList>
 
             {/* Air & Water Quality */}
@@ -984,6 +985,55 @@ const EnvironmentPage = () => {
                           Report Concern <ExternalLink className="ml-2 h-3 w-3" />
                         </a>
                       </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </motion.div>
+            </TabsContent>
+
+            <TabsContent value="food-access">
+              <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }} className="space-y-6">
+                <motion.div variants={fadeUp}>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base">Michigan Food Access</CardTitle>
+                      <CardDescription>200+ census tracts classified as food deserts. 23.5% of Michigan residents live in low-access areas. Source: USDA Food Access Research Atlas 2019</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        {[
+                          { county: "Saginaw", pct: 50.0, pop: 18000, fill: "#ef4444" },
+                          { county: "Genesee", pct: 39.7, pop: 28000, fill: "#ef4444" },
+                          { county: "Wayne", pct: 34.6, pop: 98000, fill: "#ef4444" },
+                          { county: "Ingham", pct: 26.1, pop: 9800, fill: "#f59e0b" },
+                          { county: "Kent", pct: 17.6, pop: 12000, fill: "#f59e0b" },
+                          { county: "Washtenaw", pct: 8.5, pop: 2400, fill: "#22c55e" },
+                          { county: "Oakland", pct: 8.1, pop: 4800, fill: "#22c55e" },
+                        ].map(r => (
+                          <div key={r.county} className="flex items-center gap-3">
+                            <span className="w-24 text-sm text-foreground">{r.county}</span>
+                            <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden">
+                              <div className="h-full rounded-full" style={{ width: `${r.pct * 2}%`, backgroundColor: r.fill }} />
+                            </div>
+                            <span className="w-12 text-right text-sm font-bold tabular-nums" style={{ color: r.fill }}>{r.pct}%</span>
+                            <span className="w-20 text-right text-[10px] text-muted-foreground">{r.pop.toLocaleString()} no car</span>
+                          </div>
+                        ))}
+                        <p className="text-[9px] text-muted-foreground/60 mt-2">% of census tracts classified as low-access. "No car" = no vehicle + low food access population. Source: USDA FARA 2019</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+                <motion.div variants={fadeUp}>
+                  <Card className="border-red-200/50 dark:border-red-900/30 bg-red-50/30 dark:bg-red-950/10">
+                    <CardContent className="py-5">
+                      <h3 className="text-sm font-bold text-foreground mb-1">Most Vulnerable: Wayne County</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">98,000 residents with no vehicle AND low food access — the highest concentration in Michigan. Food deserts in Detroit, Flint, and Saginaw overlap with transit deserts, creating compounding access barriers.</p>
+                      <p className="text-[9px] text-muted-foreground/60 mt-2">Source: USDA Food Access Research Atlas 2019</p>
+                      <div className="flex gap-3 mt-2">
+                        <Link to="/transportation" className="text-xs text-primary hover:underline">See transit data →</Link>
+                        <Link to="/map/layers" className="text-xs text-primary hover:underline">View on Deep Map →</Link>
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
