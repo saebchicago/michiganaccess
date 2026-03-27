@@ -76,6 +76,7 @@ const pages = {
   OurIntelPage: lazy(() => import("@/pages/OurIntelPage")),
   TribalNationsPage: lazy(() => import("@/pages/TribalNationsPage")),
   BehavioralHealthPage: lazy(() => import("@/pages/BehavioralHealthPage")),
+  StoryPage: lazy(() => import("@/pages/StoryPage")),
   MethodologyPage: lazy(() => import("@/pages/MethodologyPage")),
   ResearchPage: lazy(() => import("@/pages/ResearchPage")),
   ImpactPage: lazy(() => import("@/pages/ImpactPage")),
@@ -219,6 +220,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/about/ourintel", component: pages.OurIntelPage, label: "ourintel.org — National Vision" },
   { path: "/tribal-nations", component: pages.TribalNationsPage, label: "Michigan Tribal Nations" },
   { path: "/behavioral-health", component: pages.BehavioralHealthPage, label: "Behavioral Health Crisis" },
+  { path: "/story", component: pages.StoryPage, label: "The State of Michigan Health" },
   { path: "/methodology", component: pages.MethodologyPage, label: "Methodology" },
   { path: "/research", component: pages.ResearchPage, label: "Research" },
   { path: "/impact", component: pages.ImpactDashboardPage, label: "Platform Impact" },
@@ -359,6 +361,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     i18nKey: "nav.about",
     children: [
       { label: "About Access Michigan", href: "/about" },
+      { label: "Our Story", href: "/story", badge: "New" },
       { label: "Support This Project", href: "/about#support" },
       { label: "Executive Summary", href: "/executive-summary" },
       { label: "For Health Systems", href: "/for-health-systems" },
