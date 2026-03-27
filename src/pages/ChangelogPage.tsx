@@ -191,7 +191,7 @@ const entries: ChangelogEntry[] = [
     tag: "feature",
     items: [
       "Water Safety tab: PFAS interactive map (200+ sites), Flint lead line tracker (98% replaced), Water Well Viewer for private wells",
-      "Replaced unverified MSHIELD data with Trinity Health's published numbers — 27.4% screening rate from 1M+ outpatients, 16% hospitalization drop",
+      "Replaced unverified MSHIELD data with Trinity Health's published numbers — 27.4% screening rate from 1M+ outpatients. ~16% hospitalization reduction is system-reported, not independently verified.",
       "Energy numbers updated across the board: LIHEAP $183M, MiHER $211M, Michigan Saves $96.6M. 25C expired Dec 31 2025; 25D still good through 2032.",
       "6 new live API widgets: AirNow (ZIP-level AQI), EIA (MI vs national electricity prices), USGS (river monitoring), NWS (weather alerts + 7-day forecast), FDA (Class I drug recalls), Census ACS (county economic data)",
       "Detection Gap funnel rebuilt — drag a slider from 100K to 5M screenings and watch the dollar cost of unconnected patients recalculate live",

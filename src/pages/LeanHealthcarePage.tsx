@@ -43,8 +43,8 @@ const leanItems = [
     question: "How does SDOH tracking enable community benefit attribution?",
     metrics: { before: "Untracked", after: "Full SDOH", improvement: "Measured", label: "SDOH Integration" },
     roi: "Projected: SDOH referral tracking enables IRS Schedule H reporting and VBC contract optimization",
-    detail: "Social determinants affect up to 50% of county-level variation in health outcomes, while clinical care accounts for only 20% (ASPE/HHS, 2022; Healthy People 2030, ODPHP). Trinity Health's FY2025 data confirms this: 27.4% of 1M+ outpatients screened reported at least one unmet social need, and their CHW-driven SDOH intervention achieved a 16% decrease in preventable hospitalizations among dually-enrolled patients. Unified access to housing, SNAP enrollment, utility assistance, and employment services alongside clinical care targets reduced readmissions and chronic disease progression.",
-    footnote: "SDOH impact sourced from ASPE/HHS 'Addressing Social Determinants of Health' (2022) and Healthy People 2030 (ODPHP). Trinity Health verified data: 27.4% unmet need rate from 1M+ screened, 16% hospitalization reduction (FY2025, published Jan 2026). ROI figures are projected platform targets, not achieved outcomes.",
+    detail: "Social determinants affect up to 50% of county-level variation in health outcomes, while clinical care accounts for only 20% (ASPE/HHS, 2022; Healthy People 2030, ODPHP). Trinity Health screened 1M+ outpatients and found 27.4% reported at least one unmet social need. Their CHW-driven SDOH intervention was system-reported to achieve a ~16% reduction in preventable hospitalizations among dually-enrolled patients (not independently verified). Unified access to housing, SNAP enrollment, utility assistance, and employment services alongside clinical care targets reduced readmissions and chronic disease progression.",
+    footnote: "SDOH impact sourced from ASPE/HHS 'Addressing Social Determinants of Health' (2022) and Healthy People 2030 (ODPHP). Trinity Health data: 27.4% unmet need rate from 1M+ screened. ~16% hospitalization reduction is system-reported (Trinity Health/FindHelp case study 2025, not independently verified or peer-reviewed). ROI figures are projected platform targets, not achieved outcomes.",
   },
 ];
 
@@ -83,10 +83,10 @@ const verifiedOutcomes = [
       "$44 million in community investing loans since 2018 → $1.18 billion local investment",
       "162 CHWs addressed 16,300+ social needs",
       "1 million+ outpatients screened for SDOH; 27.4% reported at least one unmet need",
-      "16% decrease in preventable hospitalizations (July 2021–July 2024, dually-enrolled patients)",
-      "45% reduction in health disparities",
+      "System-reported ~16% decrease in preventable hospitalizations (July 2021–July 2024, dually-enrolled patients; not independently verified)",
+      "45% reduction in health disparities (system-reported)",
     ],
-    source: "Trinity Health Community Impact Report, published January 2026",
+    source: "Trinity Health Community Impact Report (Jan 2026) / FindHelp case study. Not independently verified or peer-reviewed.",
   },
   {
     system: "Henry Ford Health (FY2024)",

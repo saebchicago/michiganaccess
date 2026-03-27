@@ -1253,7 +1253,7 @@ export default function BDFinancialModelPage() {
             Financial projections are illustrative scenario models for strategic planning purposes. Market opportunity scores
             derived from <strong className="text-foreground">CDC Social Vulnerability Index 2022</strong>, <strong className="text-foreground">HRSA Health Professional Shortage Area</strong> data,
             and <strong className="text-foreground">County Health Rankings 2025</strong>. SDOH impact parameters anchored to published outcomes
-            from <strong className="text-foreground">Trinity Health</strong> (27.4% unmet social need rate from 1M+ screened; 16% readmission reduction, FY2025) and
+            from <strong className="text-foreground">Trinity Health</strong> (27.4% unmet social need rate from 1M+ screened; system-reported ~16% hospitalization reduction, FY2025 — not independently verified) and
             <strong className="text-foreground">Henry Ford Health</strong> ACO shared savings data (PY2024 $19.97M). Not actuarial projections.
             AI-generated narratives are for strategic planning illustration only.
           </p>

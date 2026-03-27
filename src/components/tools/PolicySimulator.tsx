@@ -29,11 +29,11 @@ const SCENARIOS: PolicyScenario[] = [
   {
     id: "medicaid-hrsn",
     label: "Medicaid HRSN Benefits",
-    description: "CMS 1115 waiver enabling Medicaid coverage of housing, nutrition, and transportation services for enrollees with identified social needs.",
+    description: "Michigan uses a multi-authority approach (SPA for CHW, 1915(b) ILOS for nutrition, MCO contracts for SDOH, CIE framework) to cover housing, nutrition, and transportation services for enrollees with identified social needs. Healthy Michigan Plan 1115 renewed with HRSN authority Jan 2025.",
     currentCoverage: 12,
     maxTarget: 80,
     costPerPerson: 2400,
-    sourceNote: "CMS 1115 waiver pilots (OR, MA, NC). Cost estimate illustrative based on published per-member-per-year figures.",
+    sourceNote: "Michigan multi-authority HRSN approach. Comparison: NC ($85/PMPM savings, JAMA), MA (23% hospitalization reduction, Health Affairs), OR ($1.1B spending authority). First MI monitoring report due March 30, 2026.",
     regionalSplit: [
       { label: "Southeast MI", pct: 42 },
       { label: "West MI", pct: 22 },
