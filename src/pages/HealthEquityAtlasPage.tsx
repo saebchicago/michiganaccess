@@ -10,6 +10,11 @@ import LayerSelector, { type AtlasLayer } from "@/components/atlas/LayerSelector
 import CountyDetailPanel from "@/components/atlas/CountyDetailPanel";
 import MapLegend from "@/components/atlas/MapLegend";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
+import { getALICEByCounty } from "@/data/aliceData";
+import { MICHIGAN_FEMA_NRI } from "@/data/environmentalData";
+import { MICHIGAN_ENERGY_BURDEN } from "@/data/environmentalData";
+import { MICHIGAN_FOOD_ACCESS } from "@/hooks/useFoodAccess";
+import { MICHIGAN_BROADBAND_SEED } from "@/hooks/useBroadbandData";
 
 const MichiganHeatGrid = lazy(() => import("@/components/atlas/MichiganHeatGrid"));
 const MichiganMap = lazy(() => import("@/components/atlas/MichiganMap"));
@@ -43,6 +48,40 @@ export default function HealthEquityAtlasPage() {
   const isMobile = useIsMobile();
 
   // Build map data from county profiles for active layer
+  // Build verified data lookups for real county-level data
+  const aliceLookup = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const name of Object.keys(COUNTY_PROFILES)) {
+      const a = getALICEByCounty(name);
+      if (a) m[name] = a.combinedHardshipPct;
+    }
+    return m;
+  }, []);
+
+  const energyLookup = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const e of MICHIGAN_ENERGY_BURDEN) m[e.county] = e.lowIncomeBurdenPct;
+    return m;
+  }, []);
+
+  const foodLookup = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const f of MICHIGAN_FOOD_ACCESS) m[f.county] = f.lowAccessPct;
+    return m;
+  }, []);
+
+  const broadbandLookup = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const b of MICHIGAN_BROADBAND_SEED) m[b.county] = 100 - b.pct_25_3_covered; // unserved %
+    return m;
+  }, []);
+
+  const nriLookup = useMemo(() => {
+    const m: Record<string, number> = {};
+    for (const n of MICHIGAN_FEMA_NRI) m[n.county] = n.compositeRisk;
+    return m;
+  }, []);
+
   const mapData = useMemo(() => {
     const result: Record<string, number> = {};
     for (const [name, profile] of Object.entries(COUNTY_PROFILES)) {
@@ -50,18 +89,33 @@ export default function HealthEquityAtlasPage() {
       switch (activeLayer) {
         case "uninsured": result[name] = parseFloat(h[0]?.value || "0"); break;
         case "poverty":
-        case "food_desert": result[name] = parseFloat(h[2]?.value || "0"); break;
+        case "food_desert":
+          // Use verified USDA data if available, fallback to profile
+          result[name] = foodLookup[name] ?? parseFloat(h[2]?.value || "0");
+          break;
         case "compound": result[name] = parseFloat(h[0]?.value || "0") * 2 + parseFloat(h[2]?.value || "0") * 1.5; break;
-        case "energy_burden": result[name] = profile.countyType === "rural" ? 8.5 : profile.countyType === "suburban" ? 5.2 : 6.8; break;
+        case "energy_burden":
+          // Use verified ACEEE LEAD data if available
+          result[name] = energyLookup[name] ?? (profile.countyType === "rural" ? 8.5 : profile.countyType === "suburban" ? 5.2 : 6.8);
+          break;
         case "infant_mortality": result[name] = profile.countyType === "urban" ? 7.2 : profile.countyType === "rural" ? 6.8 : 5.4; break;
-        case "broadband": result[name] = profile.countyType === "rural" ? 28 : profile.countyType === "suburban" ? 8 : 5; break;
-        case "ej_index": result[name] = profile.countyType === "urban" ? 65 : profile.countyType === "rural" ? 35 : 45; break;
-        case "alice": result[name] = profile.countyType === "rural" ? 48 : profile.countyType === "urban" ? 43 : 36; break;
+        case "broadband":
+          // Use verified FCC data if available
+          result[name] = broadbandLookup[name] ?? (profile.countyType === "rural" ? 28 : profile.countyType === "suburban" ? 8 : 5);
+          break;
+        case "ej_index":
+          // Use FEMA NRI risk score as proxy if available
+          result[name] = nriLookup[name] ?? (profile.countyType === "urban" ? 65 : profile.countyType === "rural" ? 35 : 45);
+          break;
+        case "alice":
+          // Use verified United Way ALICE data if available
+          result[name] = aliceLookup[name] ?? (profile.countyType === "rural" ? 48 : profile.countyType === "urban" ? 43 : 36);
+          break;
         case "pharmacy": result[name] = profile.countyType === "rural" ? 70 : profile.countyType === "suburban" ? 30 : 10; break;
       }
     }
     return result;
-  }, [activeLayer]);
+  }, [activeLayer, aliceLookup, energyLookup, foodLookup, broadbandLookup, nriLookup]);
 
   usePageMeta({
     title: "Michigan Health Equity Atlas | 10 Data Layers, 83 Counties | accessmi.org",
@@ -158,6 +212,33 @@ export default function HealthEquityAtlasPage() {
           <CountySparklineGrid />
         </Suspense>
       </div>
+
+      {/* Key Findings — verified data anchors */}
+      <section className="container max-w-5xl py-8">
+        <h2 className="text-lg font-bold text-foreground mb-4">Key Findings</h2>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-lg border border-amber-200/50 dark:border-amber-900/30 bg-amber-50/30 dark:bg-amber-950/10 p-4">
+            <p className="text-2xl font-bold text-amber-700 dark:text-amber-400 tabular-nums">41%</p>
+            <p className="text-xs text-muted-foreground">of MI households below ALICE threshold</p>
+            <p className="text-[9px] text-muted-foreground/60 mt-1">United Way ALICE 2025</p>
+          </div>
+          <div className="rounded-lg border border-red-200/50 dark:border-red-900/30 bg-red-50/30 dark:bg-red-950/10 p-4">
+            <p className="text-2xl font-bold text-red-600 tabular-nums">18</p>
+            <p className="text-xs text-muted-foreground">counties are maternity care deserts</p>
+            <p className="text-[9px] text-muted-foreground/60 mt-1">March of Dimes 2024</p>
+          </div>
+          <div className="rounded-lg border border-purple-200/50 dark:border-purple-900/30 bg-purple-50/30 dark:bg-purple-950/10 p-4">
+            <p className="text-2xl font-bold text-purple-600 tabular-nums">13</p>
+            <p className="text-xs text-muted-foreground">UP counties with zero psych beds</p>
+            <p className="text-[9px] text-muted-foreground/60 mt-1">TAC / MDHHS CON 2024</p>
+          </div>
+          <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
+            <p className="text-2xl font-bold text-primary tabular-nums">61.6%</p>
+            <p className="text-xs text-muted-foreground">Keweenaw locations lack broadband</p>
+            <p className="text-[9px] text-muted-foreground/60 mt-1">FCC BDC 2024</p>
+          </div>
+        </div>
+      </section>
 
       {/* Compound Index Rankings */}
       <div className="container max-w-5xl py-8">
