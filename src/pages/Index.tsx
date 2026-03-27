@@ -1,7 +1,9 @@
 import { lazy, Suspense, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Database, DollarSign, X, Sparkles, ArrowRight } from "lucide-react";
+import { Database, DollarSign, X, Sparkles, ArrowRight, Heart } from "lucide-react";
+import { AnimatePresence } from "framer-motion";
+const FrontDoorTriage = lazy(() => import("@/components/home/FrontDoorTriage"));
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -136,6 +138,8 @@ function ExecutiveLandingStrip() {
 }
 
 const Index = () => {
+  const [triageOpen, setTriageOpen] = useState(false);
+
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
     description:
@@ -145,12 +149,33 @@ const Index = () => {
 
   return (
     <Layout>
+      {/* ═══ FRONT DOOR TRIAGE ═══ */}
+      <AnimatePresence>
+        {triageOpen && (
+          <Suspense fallback={null}>
+            <FrontDoorTriage onClose={() => setTriageOpen(false)} />
+          </Suspense>
+        )}
+      </AnimatePresence>
+
       {/* ═══ ALERTS ═══ */}
       <OutageAlertBanner />
       <CountyWelcomeBanner />
 
       {/* ═══ HERO — mission + search ═══ */}
       <HeroSection />
+
+      {/* ═══ GET HELP NOW — front door triage trigger ═══ */}
+      <section className="container -mt-6 mb-4 relative z-10">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+          className="mx-auto max-w-md">
+          <button onClick={() => setTriageOpen(true)}
+            className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-michigan-teal text-white py-3.5 px-6 text-sm font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all">
+            <Heart className="h-4.5 w-4.5" fill="currentColor" />
+            Get Help Now — Find Resources in Your County
+          </button>
+        </motion.div>
+      </section>
 
       {/* ═══ WHAT'S NEW BANNER ═══ */}
       <WhatsNewBanner />
