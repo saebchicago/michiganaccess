@@ -325,6 +325,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Quality Ratings", href: "/quality" },
       { label: "Insurance Appeals", href: "/health/insurance-appeals" },
       { label: "Michigan Tribal Nations", href: "/tribal-nations", badge: "New" },
+      { label: "Behavioral Health", href: "/behavioral-health", badge: "New" },
     ],
   },
   {
