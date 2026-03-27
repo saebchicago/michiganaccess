@@ -178,8 +178,8 @@ const ForHealthSystemsPage = () => {
                     <li>• Community impact: <strong className="text-foreground">$2.9 billion</strong> (FY2025)</li>
                     <li>• 162 CHWs addressed 16,300+ social needs</li>
                     <li>• 1M+ screened for SDOH; 27.4% reported unmet need</li>
-                    <li>• <strong className="text-foreground">16% decrease</strong> in preventable hospitalizations</li>
-                    <li>• 45% reduction in health disparities</li>
+                    <li>• System-reported <strong className="text-foreground">~16% decrease</strong> in preventable hospitalizations (not independently verified)</li>
+                    <li>• 45% reduction in health disparities (system-reported)</li>
                   </ul>
                 </CardContent>
               </Card>
