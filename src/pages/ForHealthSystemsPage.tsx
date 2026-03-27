@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import Layout from "@/components/layout/Layout";
+const DetectionGapFunnel = lazy(() => import("@/components/shared/DetectionGapFunnel"));
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
@@ -217,6 +218,17 @@ const ForHealthSystemsPage = () => {
             <ShareButton title="Access Michigan for Health Systems" description="Ambulatory optimization, community benefit ROI, and referral leakage analysis." />
           </div>
         </div>
+      </section>
+
+      {/* Detection Gap Funnel — full version */}
+      <section className="container pb-12">
+        <Card>
+          <CardContent className="py-6">
+            <Suspense fallback={<div className="h-48 animate-pulse bg-muted rounded-xl" />}>
+              <DetectionGapFunnel variant="full" />
+            </Suspense>
+          </CardContent>
+        </Card>
       </section>
     </Layout>
   );

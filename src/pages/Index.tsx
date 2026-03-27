@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Database, DollarSign, X, Sparkles, ArrowRight, Heart } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 const FrontDoorTriage = lazy(() => import("@/components/home/FrontDoorTriage"));
+const DetectionGapFunnel = lazy(() => import("@/components/shared/DetectionGapFunnel"));
 
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
@@ -209,6 +210,13 @@ const Index = () => {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      {/* ═══ DETECTION GAP — compact funnel ═══ */}
+      <section className="container py-10">
+        <Suspense fallback={<div className="h-48 animate-pulse bg-muted rounded-xl" />}>
+          <DetectionGapFunnel variant="compact" />
+        </Suspense>
       </section>
 
       {/* ═══ YOUR COMMUNITY ═══ */}
