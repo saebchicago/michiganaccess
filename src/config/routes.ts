@@ -467,6 +467,10 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Deep Map (GIS)", href: "/map/layers", badge: "New" },
       { label: "Replicate This Platform", href: "/replicate" },
       { label: "ourintel.org Vision", href: "/about/ourintel", badge: "New" },
+      { label: "Our Story", href: "/story", badge: "New" },
+      { label: "Michigan Tribal Nations", href: "/tribal-nations", badge: "New" },
+      { label: "Behavioral Health Dashboard", href: "/behavioral-health", badge: "New" },
+      { label: "Decision Science", href: "/decision-science", badge: "New" },
     ],
   },
   {

@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import {
-  Heart, MapPin, Globe, Bus, Briefcase, BookOpen, Map
+  Heart, MapPin, Globe, Bus, Briefcase, BookOpen, Map, Landmark,
 } from "lucide-react";
 import { SITEMAP_SECTIONS, type SitemapSection } from "@/config/routes";
 
 const ICON_MAP: Record<string, React.ElementType> = {
-  Heart, Globe, Map, MapPin, Bus, Briefcase, BookOpen,
+  Heart, Globe, Map, MapPin, Bus, Briefcase, BookOpen, Landmark,
 };
 
 export default function SitemapPage() {
