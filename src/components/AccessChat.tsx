@@ -5,6 +5,39 @@ import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
+
+const MI_COUNTIES = ["Alcona","Alger","Allegan","Alpena","Antrim","Arenac","Baraga","Barry","Bay","Benzie","Berrien","Branch","Calhoun","Cass","Charlevoix","Cheboygan","Chippewa","Clare","Clinton","Crawford","Delta","Dickinson","Eaton","Emmet","Genesee","Gladwin","Gogebic","Grand Traverse","Gratiot","Hillsdale","Houghton","Huron","Ingham","Ionia","Iosco","Iron","Isabella","Jackson","Kalamazoo","Kalkaska","Kent","Keweenaw","Lake","Lapeer","Leelanau","Lenawee","Livingston","Luce","Mackinac","Macomb","Manistee","Marquette","Mason","Mecosta","Menominee","Midland","Missaukee","Monroe","Montcalm","Montmorency","Muskegon","Newaygo","Oakland","Oceana","Ogemaw","Ontonagon","Osceola","Oscoda","Otsego","Ottawa","Presque Isle","Roscommon","Saginaw","Sanilac","Schoolcraft","Shiawassee","St. Clair","St. Joseph","Tuscola","Van Buren","Washtenaw","Wayne","Wexford"];
+
+function detectCounty(text: string): string | null {
+  const lower = text.toLowerCase();
+  for (const county of MI_COUNTIES) {
+    if (lower.includes(county.toLowerCase())) return county;
+  }
+  return null;
+}
+
+async function fetchContextForCounty(county: string): Promise<string> {
+  if (!supabaseConfigured) return "";
+  try {
+    const { data: facilities } = await supabase
+      .from("facilities")
+      .select("name, type, city, phone")
+      .ilike("county", county)
+      .limit(10);
+    const { data: resources } = await supabase
+      .from("community_resources")
+      .select("name, category, city, phone")
+      .ilike("county", county)
+      .limit(10);
+    const parts: string[] = [];
+    if (facilities?.length) parts.push("FACILITIES:\n" + facilities.map(f => `- ${f.name} (${f.type}) in ${f.city}${f.phone ? `, ${f.phone}` : ""}`).join("\n"));
+    if (resources?.length) parts.push("COMMUNITY RESOURCES:\n" + resources.map(r => `- ${r.name} (${r.category}) in ${r.city}${r.phone ? `, ${r.phone}` : ""}`).join("\n"));
+    return parts.join("\n\n");
+  } catch {
+    return "";
+  }
+}
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -39,6 +72,16 @@ export function AccessChat() {
     const historySlice = nextMessages.slice(-20);
 
     try {
+      // RAG: detect county in user message, fetch Supabase context
+      const detectedCounty = detectCounty(trimmed);
+      let dataContext: { county: string; data: Record<string, unknown> } | undefined;
+      if (detectedCounty) {
+        const contextStr = await fetchContextForCounty(detectedCounty);
+        if (contextStr) {
+          dataContext = { county: detectedCounty, data: { resources: contextStr } };
+        }
+      }
+
       const res = await fetch("/.netlify/functions/chat-mistral", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -47,10 +90,14 @@ export function AccessChat() {
             {
               role: "system",
               content:
-                "You are an assistant for accessmi.org helping Michigan residents understand services, benefits, and MI-Access assessments. Be clear, concise, and avoid making up facts.",
+                "You are an assistant for Access Michigan (accessmi.org), a civic platform for all 83 Michigan counties. " +
+                "Only reference resources and programs from the CONTEXT provided. " +
+                "If you don't have specific information, say: 'I don't have that specific data — please call Michigan 211 by dialing 2-1-1 for personalized help.' " +
+                "Never invent facility names, addresses, or phone numbers. Be clear, concise, and helpful.",
             },
             ...historySlice,
           ],
+          ...(dataContext ? { dataContext } : {}),
         }),
       });
 
