@@ -79,7 +79,7 @@ export default function ContactPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
             <Card>
               <CardContent className="pt-6">
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5" data-netlify="true" name="contact">
                   <div>
                     <Label htmlFor="contact-name">Name</Label>
                     <Input id="contact-name" placeholder="Your name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required maxLength={100} className="mt-1.5" />
