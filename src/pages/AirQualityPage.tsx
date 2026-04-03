@@ -25,7 +25,7 @@ const COUNTIES = ["Wayne", "Oakland", "Macomb", "Kent", "Genesee", "Washtenaw", 
 export default function AirQualityPage() {
   usePageMeta({
     title: "Michigan Air Quality by County | Access Michigan",
-    description: "Current and historical air quality data for Michigan counties. Source: EPA AirNow.",
+    description: "County-level air quality data for Michigan. Source: EPA AirNow.",
     path: "/environment/air",
   });
 

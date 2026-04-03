@@ -33,6 +33,8 @@ import ResultHeader from "@/components/shared/ResultHeader";
 import JusticeSection from "@/components/county/JusticeSection";
 import { buildCountySnapshotMetrics } from "@/utils/snapshotMetrics";
 import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSection";
+import MichiganEnvBurdenMap from "@/components/MichiganEnvBurdenMap";
+import { FIPS_TO_COUNTY } from "@/data/michigan-topojson";
 
 // National benchmarks (Census ACS 2023, HRSA, USDA)
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
@@ -83,8 +85,8 @@ export default function CountyPage() {
   const { setCounty } = useCounty();
 
   usePageMeta({
-    title: county ? `${county} County, MI | Access Michigan` : "County Not Found",
-    description: county ? `County-level health, environmental, and social data for ${county}, Michigan. Source: CDC PLACES, EPA EJScreen, County Health Rankings.` : "County not found.",
+    title: county ? `${county}, MI | Access Michigan — Civic Intelligence` : "County Not Found",
+    description: county ? `County-level health, environmental, and social data for ${county}. Source: CDC PLACES, EPA EJScreen, County Health Rankings.` : "County not found.",
     path: `/county/${slug}`,
     jsonLd: county ? {
       "@type": "GovernmentService",
@@ -151,6 +153,7 @@ export default function CountyPage() {
   });
 
   const snapshotMetrics = buildCountySnapshotMetrics(county);
+  const countyFips = Object.entries(FIPS_TO_COUNTY).find(([, name]) => name === county)?.[0];
 
   return (
     <Layout>
@@ -394,6 +397,19 @@ export default function CountyPage() {
 
         {/* Civic Intelligence — 4 pillar cards + detail */}
         <CivicIntelligenceSection countyName={county} />
+
+        {/* Environmental Burden Map */}
+        {countyFips && (
+          <section className="py-10 border-t border-border">
+            <div className="container">
+              <div className="mb-4">
+                <h2 className="text-xl font-bold text-foreground">Environmental Burden — {county} County</h2>
+                <p className="text-sm text-muted-foreground mt-1">EJScreen-based burden indicators. Click any county to compare.</p>
+              </div>
+              <MichiganEnvBurdenMap initialCounty={countyFips} />
+            </div>
+          </section>
+        )}
 
         {/* Municipalities & Governance */}
         <MunicipalToolkit county={county} />
