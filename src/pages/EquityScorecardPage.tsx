@@ -102,8 +102,8 @@ export default function EquityScorecardPage() {
   const [selectedMetric, setSelectedMetric] = useState<string | null>(null);
 
   usePageMeta({
-    title: "Michigan Equity Dashboard | ALICE, PFAS, Pharmacy Deserts | accessmi.org",
-    description: "Interactive dashboard showing racial and ethnic health disparities, ALICE rates, PFAS contamination, pharmacy deserts, and more across Michigan.",
+    title: "Michigan Health Equity Data | Access Michigan",
+    description: "Health equity indicators across Michigan's 83 counties including social determinants, chronic disease burden, and access gaps.",
     path: "/equity",
   });
 

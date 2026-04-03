@@ -60,7 +60,7 @@ export function usePageMeta({ title, description, path, ogImage, jsonLd }: PageM
     }
 
     return () => {
-      document.title = `${SITE_NAME} — Statewide Services Gateway`;
+      document.title = `${SITE_NAME} — Michigan, County by County`;
       const pageScript = document.querySelector('script[data-page-jsonld]');
       if (pageScript) pageScript.remove();
     };

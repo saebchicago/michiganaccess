@@ -113,7 +113,7 @@ const getQuickStats = (t: (key: string) => string) => [
 
 const EnvironmentPage = () => {
   const { t } = useTranslation();
-  usePageMeta({ title: "Environment & Sustainability", description: "Air quality, water safety, clean energy, recycling, and environmental justice data for Michigan.", path: "/environment" });
+  usePageMeta({ title: "Michigan Environmental Health Data | Access Michigan", description: "Air quality, environmental burden, and pollution data across all 83 Michigan counties. Source: EPA EJScreen and AirNow.", path: "/environment" });
   const [activeTab, setActiveTab] = useState("air-water");
   const location = useLocation();
 

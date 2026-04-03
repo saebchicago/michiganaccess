@@ -83,8 +83,8 @@ export default function CountyPage() {
   const { setCounty } = useCounty();
 
   usePageMeta({
-    title: county ? `${county} County` : "County Not Found",
-    description: county ? `Health resources, facilities, and community programs in ${county} County, Michigan.` : "County not found.",
+    title: county ? `${county} County, MI | Access Michigan` : "County Not Found",
+    description: county ? `County-level health, environmental, and social data for ${county}, Michigan. Source: CDC PLACES, EPA EJScreen, County Health Rankings.` : "County not found.",
     path: `/county/${slug}`,
     jsonLd: county ? {
       "@type": "GovernmentService",
