@@ -25,7 +25,7 @@ import WeatherAlerts from "@/components/environment/WeatherAlerts";
 import FDARecallFeed from "@/components/alerts/FDARecallFeed";
 import GreatLakesLevels from "@/components/environment/GreatLakesLevels";
 import MichiganForecast from "@/components/environment/MichiganForecast";
-import AskCopilotButton from "@/components/shared/AskCopilotButton";
+import MichiganEnvBurdenMap from "@/components/MichiganEnvBurdenMap";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -113,7 +113,7 @@ const getQuickStats = (t: (key: string) => string) => [
 
 const EnvironmentPage = () => {
   const { t } = useTranslation();
-  usePageMeta({ title: "Michigan Environmental Health Data | Access Michigan", description: "Air quality, environmental burden, and pollution data across all 83 Michigan counties. Source: EPA EJScreen and AirNow.", path: "/environment" });
+  usePageMeta({ title: "Michigan Environmental Health | Access Michigan", description: "Air quality, environmental burden, and pollution indicators across Michigan's 83 counties.", path: "/environment" });
   const [activeTab, setActiveTab] = useState("air-water");
   const location = useLocation();
 
@@ -193,6 +193,17 @@ const EnvironmentPage = () => {
           <WeatherAlerts />
           <FDARecallFeed />
           <GreatLakesLevels />
+        </div>
+      </section>
+
+      {/* Environmental Burden Choropleth */}
+      <section className="py-10 border-b border-border">
+        <div className="container">
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-foreground">Michigan Environmental Burden by County</h2>
+            <p className="text-sm text-muted-foreground mt-1">EJScreen-based burden scores across all 83 counties. Click any county to explore indicators.</p>
+          </div>
+          <MichiganEnvBurdenMap />
         </div>
       </section>
 

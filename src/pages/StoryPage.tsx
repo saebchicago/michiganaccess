@@ -42,8 +42,8 @@ export default function StoryPage() {
   const [triageOpen, setTriageOpen] = useState(false);
 
   usePageMeta({
-    title: "About Access Michigan",
-    description: "Access Michigan is an independent citizen initiative. No government affiliation. No ads. No personal data collection.",
+    title: "About Access Michigan | Independent Michigan Civic Intelligence",
+    description: "An independent citizen initiative. Built by and for fellow citizens.",
     path: "/story",
   });
 

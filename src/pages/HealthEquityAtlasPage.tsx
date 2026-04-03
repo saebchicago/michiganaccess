@@ -118,8 +118,8 @@ export default function HealthEquityAtlasPage() {
   }, [activeLayer, aliceLookup, energyLookup, foodLookup, broadbandLookup, nriLookup]);
 
   usePageMeta({
-    title: "Michigan Health Equity Atlas | 10 Data Layers, 83 Counties | accessmi.org",
-    description: "Interactive county-level atlas with 10 toggleable data layers: compound access deficit, food deserts, broadband, infant mortality, EJ index, energy burden, uninsured, poverty, ALICE, and pharmacy deserts.",
+    title: "Michigan Health Equity | Access Michigan",
+    description: "Health equity indicators across Michigan's 83 counties.",
     path: "/health-equity-atlas",
   });
 
