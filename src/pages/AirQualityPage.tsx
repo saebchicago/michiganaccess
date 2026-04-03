@@ -24,8 +24,8 @@ const COUNTIES = ["Wayne", "Oakland", "Macomb", "Kent", "Genesee", "Washtenaw", 
 
 export default function AirQualityPage() {
   usePageMeta({
-    title: "Air Quality & Toxic Environment — Access Michigan",
-    description: "Live AQI data, EPA ECHO facility violations, toxic release tracking across Michigan counties.",
+    title: "Michigan Air Quality by County | Access Michigan",
+    description: "Current and historical air quality data for Michigan counties. Source: EPA AirNow.",
     path: "/environment/air",
   });
 

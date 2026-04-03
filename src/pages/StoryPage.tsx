@@ -42,8 +42,8 @@ export default function StoryPage() {
   const [triageOpen, setTriageOpen] = useState(false);
 
   usePageMeta({
-    title: "The State of Michigan Health — Access Michigan",
-    description: "One page. One story. Every number sourced. Michigan's health landscape in 90 seconds of scrolling.",
+    title: "About Access Michigan",
+    description: "Access Michigan is an independent citizen initiative. No government affiliation. No ads. No personal data collection.",
     path: "/story",
   });
 

@@ -61,7 +61,7 @@ export default defineConfig(({ mode }) => ({
         ],
       },
       manifest: {
-        name: "Michigan Access — Statewide Services Gateway",
+        name: "Michigan Access — Michigan, County by County",
         short_name: "MI Access",
         description: "One structured gateway to health, housing, food, and family services across Michigan.",
         theme_color: "#1e3a5f",
