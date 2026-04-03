@@ -136,8 +136,6 @@ export default function MichiganEnvBurdenMap({ initialCounty = "26163" }: Props)
     <div
       className="grid gap-4"
       style={{ gridTemplateColumns: "1fr" }}
-      // On desktop (≥680px) switch to two-column layout via inline style
-      ref={undefined}
     >
       <style>{`
         @media (min-width: 680px) {
@@ -192,7 +190,7 @@ export default function MichiganEnvBurdenMap({ initialCounty = "26163" }: Props)
             {/* Metric Cards */}
             <div className="grid grid-cols-2 gap-2 mb-4">
               <MetricCard label="EJ Burden Pct." value={data?.ej ?? ejScore} unit="th" color="#0A4C95" />
-              <MetricCard label="AQI Index" value={data?.aqi ?? "—"} unit="" color="#00A3A1" />
+      <MetricCard label="AQI" value={data?.aqi ?? "—"} unit="" color="#00A3A1" />
               <MetricCard label="Resp. Hazard" value={data?.resp ?? "—"} unit="th" color="#2D5F3F" />
               <MetricCard label="Poverty Rate" value={data ? `${data.pov}%` : "—"} unit="" color="#0A4C95" />
             </div>
