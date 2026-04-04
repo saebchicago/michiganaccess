@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ChevronDown, Info, Download, Shield, Activity, BookOpen, AlertTriangle } from "lucide-react";
 import { COUNTY_PROFILES, type CountyProfile } from "@/data/michigan-county-profiles";
+import { MI_STATE_BENCHMARKS } from "@/data/state-benchmarks";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -30,8 +31,8 @@ import { Badge } from "@/components/ui/badge";
 
 /* ── State-level benchmarks for z-score normalization ── */
 const MI_BENCHMARKS = {
-  uninsuredRate: { mean: 6.5, sd: 1.4 },
-  foodInsecurity: { mean: 13.2, sd: 2.8 },
+  uninsuredRate: { mean: MI_STATE_BENCHMARKS.uninsuredRate, sd: 1.4 },
+  foodInsecurity: { mean: MI_STATE_BENCHMARKS.foodInsecurityRate, sd: 2.8 },
   // primaryCareRatio higher = worse → inverted
   primaryCareRatio: { mean: 1500, sd: 600 },
 };
@@ -62,7 +63,7 @@ interface SubIndex {
 
 function computeVulnerabilityIndex(profile: CountyProfile): SubIndex {
   const uninsured = parseFloat(profile.healthHighlights[0]?.value || "6.5");
-  const food = parseFloat(profile.healthHighlights[2]?.value || "13.2");
+  const food = parseFloat(profile.healthHighlights[2]?.value || String(MI_STATE_BENCHMARKS.foodInsecurityRate));
   const pcrRaw = profile.healthHighlights[1]?.value || "1500:1";
   const pcr = parseInt(pcrRaw.replace(/[^0-9]/g, ""), 10) || 1500;
 

@@ -46,6 +46,7 @@ import HistoricalContextCard from "@/components/zip/HistoricalContextCard";
 import RxKidsCallout from "@/components/health/RxKidsCallout";
 import DataProvenance from "@/components/shared/DataProvenance";
 import SuggestResource from "@/components/community/SuggestResource";
+import { ZipDataGrainBanner } from "@/components/shared/ZipDataGrainBanner";
 import HelpfulVote from "@/components/community/HelpfulVote";
 
 // ── Score Gauge (reused pattern from NeighborhoodHealthScore) ────────────
@@ -354,6 +355,17 @@ export default function ZipScorecardPage() {
         { label: "ZIP Intelligence", href: "/zip-intelligence" },
         { label: `ZIP ${zip}` },
       ]} />
+
+      {/* Data grain disclosure banner */}
+      {primary.county && (
+        <div className="container pt-4">
+          <ZipDataGrainBanner
+            zipCode={zip}
+            countyName={primary.county}
+            hasZipLevelHealth={true}
+          />
+        </div>
+      )}
 
       {/* ── Hero Header ── */}
       <section className="bg-gradient-to-br from-primary/8 via-background to-accent/5 py-10 md:py-14">

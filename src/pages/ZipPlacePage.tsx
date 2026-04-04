@@ -34,6 +34,7 @@ import ZipBriefTour from "@/components/shared/ZipBriefTour";
 import { useCounty } from "@/contexts/CountyContext";
 import { useCensusACS, getCensusValue, getCensusMOE, formatDollars, formatPercent } from "@/hooks/useCensusACS";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
+import { ZipDataGrainBanner } from "@/components/shared/ZipDataGrainBanner";
 
 /** State-level ACS benchmarks (2022 estimates) */
 const MI_STATE_BENCHMARKS = {
@@ -175,6 +176,15 @@ export default function ZipPlacePage() {
       <ZipBriefTour />
       <Breadcrumbs items={buildPlaceBreadcrumbs(place)} />
       <DomainJumpNav />
+
+      {/* Data grain disclosure banner */}
+      <div className="container pt-4">
+        <ZipDataGrainBanner
+          zipCode={place.slug}
+          countyName={place.parentCounty || ""}
+          hasZipLevelHealth={true}
+        />
+      </div>
 
       <section className="bg-gradient-to-br from-primary/8 via-background to-accent/5 py-12 md:py-16">
         <div className="container">

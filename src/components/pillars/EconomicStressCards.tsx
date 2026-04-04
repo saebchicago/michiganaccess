@@ -15,6 +15,7 @@ import PillarInsightCard from "./PillarInsightCard";
 import { usePillarData } from "@/hooks/usePillarData";
 import { resolveGeoDimension } from "@/models/GeoDimension";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
+import { MI_STATE_BENCHMARKS } from "@/data/state-benchmarks";
 
 interface EconomicStressCardsProps {
   countyName: string;
@@ -66,7 +67,7 @@ export default function EconomicStressCards({ countyName }: EconomicStressCardsP
         pattern="comparison"
         geography={geo}
         value={foodInsecurity}
-        compareValue="13.8%"
+        compareValue={`${MI_STATE_BENCHMARKS.foodInsecurityRate}%`}
         compareLabel="State average"
         icon={DollarSign}
         source="USDA Food Environment Atlas 2024"

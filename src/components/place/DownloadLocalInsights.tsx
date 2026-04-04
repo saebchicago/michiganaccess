@@ -14,6 +14,7 @@ import type { Place, PlaceIndicator } from "@/models/Place";
 import { buildFullIndicators, buildStandouts } from "@/models/Place";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
+import { MI_STATE_BENCHMARKS } from "@/data/state-benchmarks";
 
 interface Props {
   place: Place;
@@ -156,7 +157,7 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
   let civicScoreSection = "";
   if (profile) {
     const uninsured = parseFloat(profile.healthHighlights[0]?.value || "6.5");
-    const food = parseFloat(profile.healthHighlights[2]?.value || "13.2");
+    const food = parseFloat(profile.healthHighlights[2]?.value || String(MI_STATE_BENCHMARKS.foodInsecurityRate));
     const pcrRaw = profile.healthHighlights[1]?.value || "1500:1";
     let baseScore = 60;
     if (uninsured < 5) baseScore += 15;
