@@ -87,7 +87,7 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
     return primary.facilities.filter((f) => f.facility_type === facilityTypeFilter);
   }, [primary?.facilities, facilityTypeFilter]);
 
-  const filteredCount = filteredFacilities?.length ?? primary?.totalFacilities ?? null;
+  const filteredCount = filteredFacilities?.length ?? null;
 
   return (
     <div className="space-y-4">
@@ -175,7 +175,7 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
         icon={Stethoscope}
         source="County Health Rankings 2024"
         status={primary?.pcpRatio ? "live" : "empty"}
-        description="Population-to-primary care physician ratio. Lower is better — a smaller number means better provider access (more doctors per patient)."
+        description="Population-to-primary care physician ratio. Lower ratios indicate better provider access (more doctors per patient)."
       />
 
       {/* SUD/Behavioral Health */}

@@ -72,6 +72,10 @@ INSERT INTO public.facilities (name, facility_type, address, city, county, state
 VALUES ('Corewell Health William Beaumont University Hospital', 'hospital', '3601 W 13 Mile Rd', 'Royal Oak', 'Oakland', 'MI', '48073', 42.5045, -83.1571, '(248) 898-5000', NULL, 0, 'Corewell Health')
 ON CONFLICT DO NOTHING;
 
+-- Note: Trinity Health Oakland Hospital and McLaren Oakland are listed at the same address
+-- (50 N Perry St, Pontiac) because McLaren Oakland operates at the former Pontiac Osteopathic
+-- Hospital campus. Trinity Health Oakland (St. Joseph Mercy Oakland) has since relocated;
+-- both are included as distinct licensed entities per state records.
 INSERT INTO public.facilities (name, facility_type, address, city, county, state, zip, latitude, longitude, phone, website, quality_score, system_affiliation)
 VALUES ('Trinity Health Oakland Hospital', 'hospital', '50 N Perry St', 'Pontiac', 'Oakland', 'MI', '48342', 42.6420, -83.2891, '(248) 338-5000', NULL, 0, 'Trinity Health')
 ON CONFLICT DO NOTHING;
