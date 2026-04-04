@@ -178,6 +178,13 @@ const Index = () => {
         </motion.div>
       </section>
 
+      {/* ═══ LIFE EVENT NAVIGATOR — primary engagement hook (shown early for discoverability) ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <Suspense fallback={<SectionSkeleton height="200px" />}>
+          <LifeEventNavigator />
+        </Suspense>
+      </SectionErrorBoundary>
+
       {/* ═══ WHAT'S NEW BANNER ═══ */}
       <WhatsNewBanner />
 
@@ -219,21 +226,13 @@ const Index = () => {
         </Suspense>
       </section>
 
-      {/* ═══ YOUR COMMUNITY ═══ */}
-      <YourCommunity />
+      {/* ═══ YOUR COMMUNITY — moved to hero ZIP search above ═══ */}
 
       {/* ═══ MICHIGAN PULSE — live intelligence signals ═══ */}
       <MichiganPulse />
 
       {/* ═══ LIVE DEMO PREVIEW ═══ */}
       <LiveDemoPreview />
-
-      {/* ═══ LIFE EVENT NAVIGATOR — primary engagement hook ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <Suspense fallback={<SectionSkeleton height="200px" />}>
-          <LifeEventNavigator />
-        </Suspense>
-      </SectionErrorBoundary>
 
       {/* ═══ INSIGHT OF THE WEEK ═══ */}
       <SectionErrorBoundary title="Some content didn't load">

@@ -357,7 +357,7 @@ export function buildFullIndicators(place: Place): PlaceIndicator[] {
     id: "energy-burden", domain: "energy", label: "Energy Burden",
     value: `~${energyBurden}%`, numericValue: energyBurden, unit: "% of income",
     stateAvg: 3.5, direction: "lower-is-better",
-    implication: energyBurden > 4 ? "Higher energy costs relative to income; LIHEAP may help." : "Energy costs are near or below state average.",
+    implication: energyBurden > 4 ? "Higher energy costs relative to income; LIHEAP may help." : energyBurden > 3.5 ? "Energy costs are slightly above the state average of 3.5%." : "Energy costs are at or below the state average.",
     source: "DOE LEAD Tool (Estimated)", sourceUrl: "https://www.energy.gov/scep/slsc/lead-tool", updated: "2024",
     grain: `Estimated from ${p.countyType} classification`,
   });

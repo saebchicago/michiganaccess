@@ -11,12 +11,15 @@
  * No mock data — shows "data not available" when missing.
  */
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Heart, Building2, Stethoscope, MapPin, Activity, Users } from "lucide-react";
 import PillarInsightCard from "./PillarInsightCard";
 import { useFacilities, type Facility } from "@/hooks/useFacilities";
 import { resolveGeoDimension, ratePer, percentileRank } from "@/models/GeoDimension";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
+import { FacilityCountDisclosure } from "@/components/shared/FacilityCountDisclosure";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MI_STATE_BENCHMARKS } from "@/data/state-benchmarks";
 
 interface HealthAccessCardsProps {
   countyName: string;
@@ -57,9 +60,19 @@ function useCountyFacilityDensity(countyName: string | undefined) {
   }, [facilities, geo, profile]);
 }
 
+const FACILITY_TYPE_OPTIONS = [
+  { value: "all", label: "All Types" },
+  { value: "hospital", label: "Hospital" },
+  { value: "fqhc", label: "Community Health Center (FQHC)" },
+  { value: "urgent_care", label: "Urgent Care" },
+  { value: "behavioral_health", label: "Behavioral Health" },
+  { value: "specialty", label: "Specialty" },
+] as const;
+
 export default function HealthAccessCards({ countyName, compareCounty }: HealthAccessCardsProps) {
   const primary = useCountyFacilityDensity(countyName);
   const compare = useCountyFacilityDensity(compareCounty);
+  const [facilityTypeFilter, setFacilityTypeFilter] = useState<string>("all");
 
   const geo = resolveGeoDimension({ countyName });
 
@@ -68,7 +81,38 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
     return Object.entries(COUNTY_PROFILES).map(([, p]) => p.population);
   }, []);
 
+  const filteredFacilities = useMemo(() => {
+    if (!primary?.facilities) return null;
+    if (facilityTypeFilter === "all") return primary.facilities;
+    return primary.facilities.filter((f) => f.facility_type === facilityTypeFilter);
+  }, [primary?.facilities, facilityTypeFilter]);
+
+  const filteredCount = filteredFacilities?.length ?? primary?.totalFacilities ?? null;
+
   return (
+    <div className="space-y-4">
+      {/* Facility type filter */}
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-muted-foreground whitespace-nowrap">Filter by type:</span>
+        <Select value={facilityTypeFilter} onValueChange={setFacilityTypeFilter}>
+          <SelectTrigger className="h-8 w-52 text-xs">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {FACILITY_TYPE_OPTIONS.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value} className="text-xs">
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {facilityTypeFilter !== "all" && filteredCount !== null && (
+          <span className="text-xs text-muted-foreground">
+            {filteredCount} {filteredCount === 1 ? "facility" : "facilities"} shown
+          </span>
+        )}
+      </div>
+
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {/* Care Availability */}
       <PillarInsightCard
@@ -131,7 +175,7 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
         icon={Stethoscope}
         source="County Health Rankings 2024"
         status={primary?.pcpRatio ? "live" : "empty"}
-        description="Population-to-primary care physician ratio. Lower is better."
+        description="Population-to-primary care physician ratio. Lower is better — a smaller number means better provider access (more doctors per patient)."
       />
 
       {/* SUD/Behavioral Health */}
@@ -159,7 +203,7 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
         pattern="comparison"
         geography={geo}
         value={primary?.foodInsecurity ?? null}
-        compareValue="13.8%"
+        compareValue={`${MI_STATE_BENCHMARKS.foodInsecurityRate}%`}
         compareLabel="State average"
         icon={MapPin}
         source="USDA Food Environment Atlas / County Health Rankings 2024"
@@ -187,6 +231,10 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
           }
         />
       )}
+    </div>
+
+      {/* Disclosure about data completeness */}
+      <FacilityCountDisclosure county={countyName} />
     </div>
   );
 }
