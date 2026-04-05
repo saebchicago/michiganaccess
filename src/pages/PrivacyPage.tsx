@@ -132,7 +132,7 @@ export default function PrivacyPage() {
           </p>
           <div className="mt-3 space-y-3">
             {[
-              { name: "Leaflet / OpenStreetMap", purpose: "Interactive maps", note: "Map tiles loaded from OSM servers; see openstreetmap.org/privacy" },
+              { name: "Leaflet / CARTO basemaps", purpose: "Interactive maps", note: "Map tiles served via CARTO CDN, using OpenStreetMap data. See carto.com/legal and openstreetmap.org/privacy" },
               { name: "Federal & State Data APIs", purpose: "CMS, HRSA, CDC, EPA, NWS data", note: "Requests routed through our secure proxy functions; your IP is not forwarded" },
               { name: "AI Model Providers", purpose: "Chat and appeal generation", note: "Prompts processed under provider terms; no personal data included in requests by design" },
               { name: "Hosting Platform", purpose: "Serving the website", note: "Standard operational logs retained per hosting provider policy (≤30 days)" },
