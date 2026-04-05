@@ -26,6 +26,7 @@ import FDARecallFeed from "@/components/alerts/FDARecallFeed";
 import GreatLakesLevels from "@/components/environment/GreatLakesLevels";
 import MichiganForecast from "@/components/environment/MichiganForecast";
 import MichiganEnvBurdenMap from "@/components/MichiganEnvBurdenMap";
+import AskCopilotButton from "@/components/shared/AskCopilotButton";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
