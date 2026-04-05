@@ -37,7 +37,7 @@ export default function QuickExitBar() {
             ESC
           </kbd>
         </button>
-        <span className="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>
+        <span className="text-[10px] text-destructive-foreground/90 pb-0.5">Press ESC to quickly leave this page</span>
       </div>
     </div>
   );

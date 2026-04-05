@@ -494,6 +494,15 @@ body.translated-rtl {
   }
 }
 
+/* ── A11y: raise muted foreground opacity on tiny labels ────── */
+/* `text-muted-foreground/60` and `/70` at text-[9px] fall below the
+   WCAG AA 4.5:1 threshold on light backgrounds. Force full opacity so
+   the base --muted-foreground (33% lightness) handles contrast. */
+.text-muted-foreground\/60,
+.text-muted-foreground\/70 {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
 /* ── A11y: distinguish links inside prose text ──────────────── */
 /* Links inside paragraphs must be distinguishable without relying on color
    alone (WCAG 1.4.1 / link-in-text-block). Force underline on any anchor

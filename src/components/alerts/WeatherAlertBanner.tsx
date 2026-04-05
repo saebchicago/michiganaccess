@@ -27,7 +27,7 @@ export default function WeatherAlertBanner() {
         <CloudLightning className="h-4 w-4 shrink-0" aria-hidden="true" />
         <button onClick={() => setExpanded(!expanded)} className="flex-1 text-left text-xs font-medium truncate">
           {primary.event} — {primary.areaDesc?.split(";")[0]}
-          {top.length > 1 && <span className="ml-1 opacity-70">+{top.length - 1} more</span>}
+          {top.length > 1 && <span className="ml-1 font-semibold">+{top.length - 1} more</span>}
         </button>
         <button onClick={() => setExpanded(!expanded)} className="shrink-0 p-0.5" aria-label="Toggle alerts">
           <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expanded ? "rotate-180" : ""}`} />

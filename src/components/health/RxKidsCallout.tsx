@@ -20,21 +20,21 @@ export default function RxKidsCallout({ county }: RxKidsCalloutProps) {
             {isActive && <span className="text-[9px] bg-teal-600 text-white px-1.5 py-0.5 rounded font-semibold">ACTIVE IN {county.toUpperCase()}</span>}
             {isExpanding && !isActive && <span className="text-[9px] bg-teal-200 dark:bg-teal-800 text-teal-700 dark:text-teal-300 px-1.5 py-0.5 rounded font-semibold">EXPANDING TO {county.toUpperCase()}</span>}
           </div>
-          <p className="text-xs text-teal-600 dark:text-teal-400 mb-2">
+          <p className="text-xs text-teal-800 dark:text-teal-300 mb-2">
             {RX_KIDS_SUMMARY.programName} is the nation's first citywide maternal and infant cash prescription program — {RX_KIDS_SUMMARY.strings.toLowerCase()}. Launched in Flint in January 2024.
           </p>
           <div className="grid grid-cols-3 gap-2 mb-2">
             <div className="text-center bg-white/60 dark:bg-black/20 rounded-lg p-2">
               <p className="text-sm font-bold text-teal-700 dark:text-teal-400">{RX_KIDS_SUMMARY.enrollmentRate}%</p>
-              <p className="text-[9px] text-teal-600 dark:text-teal-400">of Flint babies enrolled</p>
+              <p className="text-[9px] text-teal-800 dark:text-teal-300">of Flint babies enrolled</p>
             </div>
             <div className="text-center bg-white/60 dark:bg-black/20 rounded-lg p-2">
               <p className="text-sm font-bold text-teal-700 dark:text-teal-400">14pp</p>
-              <p className="text-[9px] text-teal-600 dark:text-teal-400">PPD reduction</p>
+              <p className="text-[9px] text-teal-800 dark:text-teal-300">PPD reduction</p>
             </div>
             <div className="text-center bg-white/60 dark:bg-black/20 rounded-lg p-2">
               <p className="text-sm font-bold text-teal-700 dark:text-teal-400">4.2pp</p>
-              <p className="text-[9px] text-teal-600 dark:text-teal-400">Eviction risk drop</p>
+              <p className="text-[9px] text-teal-800 dark:text-teal-300">Eviction risk drop</p>
             </div>
           </div>
           <p className="text-[9px] text-teal-500/70">Source: Rx Kids Research Brief 2024\u20132025 \u00B7 rxkids.org \u00B7 U-M Poverty Solutions</p>

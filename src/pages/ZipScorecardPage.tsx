@@ -131,7 +131,7 @@ function MetricRow({ label, value, stateAvg, unit, lowerIsBetter }: {
       <span className="text-sm text-foreground truncate max-w-[180px] sm:max-w-none">{label}</span>
       <div className="flex items-center gap-3">
         <span className="text-sm font-mono font-semibold tabular-nums">{value.toFixed(1)}{unit}</span>
-        <span className={`text-[10px] font-medium flex items-center gap-0.5 ${better ? "text-green-600" : "text-red-500"}`}>
+        <span className={`text-[10px] font-semibold flex items-center gap-0.5 ${better ? "text-green-700" : "text-red-700"}`}>
           {better ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
           {Math.abs(diff).toFixed(1)}pp vs MI
         </span>

@@ -23,7 +23,7 @@ const FUNNEL_WITH_AM = [
   { stage: "Health Improvement Documented", value: null, pct: null, source: "Future measurement framework" },
 ];
 
-const STAGE_COLORS = ["#0A4C95", "#0E6B8A", "#00A3A1", "#2D5F3F", "#ef4444", "#6b7280"];
+const STAGE_COLORS = ["#0A4C95", "#0E6B8A", "#00796F", "#2D5F3F", "#b91c1c", "#4b5563"];
 
 interface DetectionGapFunnelProps {
   variant?: "full" | "compact";
@@ -98,7 +98,7 @@ export default function DetectionGapFunnel({ variant = "full" }: DetectionGapFun
               </div>
               {dropoff && Number(dropoff) > 20 && (
                 <div className="ml-28 sm:ml-36 pl-3 mt-0.5">
-                  <span className="text-[9px] text-red-500 font-medium">{"\u2193"} {dropoff}% drop-off</span>
+                  <span className="text-[10px] text-red-700 font-semibold">{"\u2193"} {dropoff}% drop-off</span>
                 </div>
               )}
               {/* Tooltip on hover */}

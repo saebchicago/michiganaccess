@@ -88,7 +88,7 @@ export function getAccessTier(score: number): AccessTier {
     tier: 4,
     label: "Priority Access Area",
     badge: "Tier 4 — Priority Access Area",
-    color: "text-orange-600",
+    color: "text-orange-700",
     context: "This ZIP is in the bottom 40% for healthcare access in Michigan.",
     opportunity: "High-opportunity area for health investment and FQHC expansion.",
   };
@@ -96,7 +96,7 @@ export function getAccessTier(score: number): AccessTier {
     tier: 5,
     label: "Critical Access Area",
     badge: "Tier 5 — Critical Access Area",
-    color: "text-red-600",
+    color: "text-red-700",
     context: "This ZIP faces critical gaps across health, economic, and access dimensions.",
     opportunity: "Highest-priority area for state and federal health equity investment.",
   };
