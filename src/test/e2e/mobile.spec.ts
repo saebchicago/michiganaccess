@@ -32,9 +32,14 @@ for (const vp of VIEWPORTS) {
       await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('networkidle').catch(() => {});
 
-      // Look for a button that opens mobile nav (button with menu icon, or aria-label containing "menu")
+      // Use accessible name — the site's mobile nav trigger exposes "Menu"
+      // via an sr-only span inside a Button. Scope to the header and filter
+      // to visible to avoid matching hidden nav triggers on desktop-only
+      // branches.
       const menuButton = page
-        .locator('button[aria-label*="menu" i], button[aria-label*="nav" i], button:has(svg.lucide-menu)')
+        .locator('header')
+        .getByRole('button', { name: /menu/i })
+        .filter({ visible: true })
         .first();
 
       if ((await menuButton.count()) === 0) {
@@ -42,9 +47,12 @@ for (const vp of VIEWPORTS) {
         return;
       }
 
-      await menuButton.click();
-      // Sheet or dialog should become visible
-      const drawer = page.locator('[role="dialog"], [data-state="open"]').first();
+      // Header is fixed at top of viewport; Playwright's actionability
+      // viewport check gets confused by backdrop-filter on the sticky bar.
+      // Dispatch a click via JS directly on the resolved element.
+      await menuButton.dispatchEvent('click');
+      // Radix Sheet portal mounts a dialog with role="dialog"
+      const drawer = page.getByRole('dialog').first();
       await expect(drawer).toBeVisible({ timeout: 3000 });
     });
 
