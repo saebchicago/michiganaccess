@@ -645,6 +645,38 @@ export default function MethodologyPage() {
           </div>
         </section>
 
+        {/* SDOH Funnel methodology */}
+        <section id="sdoh-funnel">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Info className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">SDOH Detection Gap Funnel</h2>
+              <p className="text-sm text-muted-foreground">How the 1.77M → 7,105 funnel is constructed</p>
+            </div>
+          </div>
+          <div className="space-y-3 text-sm text-muted-foreground">
+            <p>
+              The Detection Gap funnel is a <strong className="text-foreground">modeled estimate</strong>, not measured Michigan outcomes. It applies published national benchmark rates to Michigan's Medicaid MCO enrollment to illustrate where the SDOH screening and referral pipeline loses people between eligibility and documented benefit.
+            </p>
+            <ul className="list-disc pl-5 space-y-1.5">
+              <li><strong className="text-foreground">Starting pool:</strong> 1,772,000 Michigan Medicaid MCO beneficiaries (HMA March 2025 enrollment report).</li>
+              <li><strong className="text-foreground">Screening rate:</strong> 27.0% applied as reference, anchored on Trinity Health's published 27.4% rate across 1M+ outpatients (FY2025).</li>
+              <li><strong className="text-foreground">Positive-screen rate:</strong> ~27% national average (NACHC 2023 SDOH Screening Report).</li>
+              <li><strong className="text-foreground">Referral-to-services rate:</strong> ~50% national average (CMS Accountable Health Communities Model, final evaluation).</li>
+              <li><strong className="text-foreground">Referral completion rate:</strong> ~11% national average (Health Affairs 2023 meta-analysis of closed-loop referral studies).</li>
+              <li><strong className="text-foreground">Health improvement documented:</strong> Not quantified — no publicly available Michigan-specific data.</li>
+            </ul>
+            <p>
+              The "With Access Michigan" projection is an <strong className="text-foreground">illustrative platform target</strong>, not an achieved outcome. Projected screening, referral, and completion rates assume unified intake, closed-loop tracking, and CIE integration — none of which are retrospectively measured.
+            </p>
+            <p className="text-xs text-muted-foreground/70">
+              What this funnel is not: a count of Michigan residents whose needs were actually met, a peer-reviewed study, or a claim that the national benchmarks apply uniformly to every Michigan MCO. Use it to size the gap, not to audit a specific program.
+            </p>
+          </div>
+        </section>
+
         {/* Limitations & Known Gaps */}
         <section id="limitations">
           <div className="flex items-center gap-3 mb-6">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 
 // Source: HMA March 2025 (MCO enrollment), Trinity Health reference rate,
@@ -38,8 +39,15 @@ export default function DetectionGapFunnel({ variant = "full" }: DetectionGapFun
       {variant === "full" && (
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
-            <h3 className="text-sm font-bold text-foreground">The Detection Gap</h3>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="text-sm font-bold text-foreground">The Detection Gap</h3>
+              <Badge variant="outline" className="text-[9px] font-normal uppercase tracking-wider text-muted-foreground border-border">Modeled Estimate</Badge>
+            </div>
             <p className="text-xs text-muted-foreground">From 1.77M beneficiaries to documented outcomes — where the system loses people</p>
+            <p className="text-[10px] text-muted-foreground/80 mt-1">
+              Method: Michigan MCO enrollment (1.77M) × national benchmark rates (NACHC, AHC Model). Not measured MI outcomes.{" "}
+              <Link to="/methodology#sdoh-funnel" className="underline hover:text-foreground">Methodology →</Link>
+            </p>
           </div>
           <div className="flex gap-1">
             <button onClick={() => setMode("current")}
