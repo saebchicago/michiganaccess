@@ -32,7 +32,7 @@ const CrisisBar = () => {
         {/* Quick Exit Button Right Side */}
         <button
           onClick={handleQuickExit}
-          className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/20 hover:bg-white/30 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+          className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-black/25 hover:bg-black/40 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/70"
           aria-label="Quick exit — close this page"
           title="Quick exit — close this page"
         >

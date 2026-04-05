@@ -824,7 +824,7 @@ export default function ZipScorecardPage() {
                   <div className="flex items-center">
                     <Link
                       to="/transparency/contractors"
-                      className="w-full rounded-lg bg-amber-600 text-white text-[10px] font-semibold px-3 py-2 text-center hover:bg-amber-600/90 transition-colors"
+                      className="w-full rounded-lg bg-amber-800 text-white text-[11px] font-semibold px-3 py-2 text-center hover:bg-amber-700 transition-colors"
                     >
                       See Contractors →
                     </Link>
