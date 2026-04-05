@@ -254,8 +254,8 @@ const Index = () => {
           <Link to="/tax-comparison" className="flex items-center gap-3 rounded-xl border border-michigan-gold/20 bg-michigan-gold/5 px-4 py-3 hover:bg-michigan-gold/10 transition-colors group">
             <DollarSign className="h-5 w-5 text-michigan-gold shrink-0" />
             <p className="text-sm text-foreground">
-              Living in <strong>Detroit vs Troy</strong> on an $80K salary? You'd keep <strong className="text-michigan-forest">$1,302 more</strong> per year.{" "}
-              <span className="text-primary font-medium group-hover:underline">Compare your cities &rarr;</span>
+              Living in <strong>Troy vs Detroit</strong> on an $80K salary? You'd keep roughly <strong className="text-michigan-forest">$2,523 more</strong> per year based on current Michigan tax schedules.{" "}
+              <span className="text-primary font-medium group-hover:underline">See full calculator &rarr;</span>
             </p>
           </Link>
         </div>
