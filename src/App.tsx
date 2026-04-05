@@ -74,6 +74,15 @@ const App = () => (
                   <Route path="/data-hub" element={<Navigate to="/data-and-insights" replace />} />
                   <Route path="/health-data" element={<Navigate to="/data" replace />} />
                   <Route path="/representatives" element={<Navigate to="/civic-data" replace />} />
+                  {/* Life-event scenario aliases — partner-shareable URLs */}
+                  <Route path="/life-events" element={<Navigate to="/life-navigator" replace />} />
+                  <Route path="/life-event/new-baby" element={<Navigate to="/life-navigator?scenario=baby" replace />} />
+                  <Route path="/life-event/job-loss" element={<Navigate to="/life-navigator?scenario=lost-job" replace />} />
+                  <Route path="/life-event/turning-65" element={<Navigate to="/life-navigator?scenario=turning-65" replace />} />
+                  <Route path="/life-event/eviction" element={<Navigate to="/life-navigator?scenario=housing" replace />} />
+                  <Route path="/life-event/new-diagnosis" element={<Navigate to="/life-navigator?scenario=diagnosis" replace />} />
+                  <Route path="/life-event/new-to-michigan" element={<Navigate to="/life-navigator?scenario=new-to-mi" replace />} />
+                  <Route path="/life-event/reentry" element={<Navigate to="/reentry" replace />} />
                   {/* Duplicate route consolidation */}
                   <Route path="/county-compare" element={<Navigate to="/compare" replace />} />
                   <Route path="*" element={<NotFound />} />
