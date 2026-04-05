@@ -100,7 +100,7 @@ export default function DisasterAccelerationChart({ disasters }: Props) {
             <CardTitle className="text-base">Disaster Acceleration: 1970s vs 2020s</CardTitle>
           </div>
           <p className="text-xs text-muted-foreground">
-            Unique federal disaster declarations per decade. The trend is accelerating.
+            Unique federal disaster declarations per decade. The 2020s count runs through 2025 — the decade is incomplete.
           </p>
         </CardHeader>
         <CardContent>
@@ -119,9 +119,9 @@ export default function DisasterAccelerationChart({ disasters }: Props) {
             </div>
             {/* 2020s */}
             <div className="text-center space-y-2">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">2020s</p>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">2020s (through 2025)</p>
               <p className="text-4xl font-bold text-red-600 dark:text-red-400">{count2020s}</p>
-              <p className="text-[10px] text-muted-foreground">disaster declarations</p>
+              <p className="text-[10px] text-muted-foreground">disaster declarations · decade incomplete</p>
               <div className="mx-auto h-3 rounded-full bg-muted overflow-hidden max-w-48">
                 <div
                   className="h-full rounded-full bg-red-500 transition-all duration-700"
