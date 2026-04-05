@@ -271,7 +271,7 @@ const Index = () => {
               <div className="flex flex-wrap justify-center lg:justify-start gap-2">
                 <Link to="/health-equity-atlas"><Button size="sm" className="gap-1.5"><Database className="h-3.5 w-3.5" /> Equity Atlas</Button></Link>
                 <Link to="/compare"><Button size="sm" variant="outline">Compare Counties</Button></Link>
-                <Link to="/data-sources"><Button size="sm" variant="outline">60+ Data Sources</Button></Link>
+                <Link to="/data-sources"><Button size="sm" variant="outline">40+ Data Sources</Button></Link>
               </div>
             </div>
             <QuickCompare />

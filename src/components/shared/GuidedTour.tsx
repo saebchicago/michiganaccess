@@ -4,7 +4,7 @@ import { X, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const STEPS = [
-  { title: "Intelligence Signals", desc: "Real-time insights from 60+ data sources — updated hourly to annually." },
+  { title: "Intelligence Signals", desc: "Real-time insights from 40+ data sources — updated hourly to annually." },
   { title: "Life Event Navigator", desc: "Pick a life situation and see every program you may qualify for." },
   { title: "Eligibility Screener", desc: "3 questions → 10 assistance programs. Zero data stored." },
   { title: "County Comparison", desc: "Compare any two Michigan counties side-by-side on key metrics." },

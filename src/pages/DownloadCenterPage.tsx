@@ -32,7 +32,7 @@ const DOWNLOADS: { section: string; items: DownloadItem[] }[] = [
     section: "Data Exports",
     items: [
       { title: "CSV Data Export", description: "Download raw data tables for your own analysis from the Health Data Dashboard.", icon: Database, action: "link", href: "/data" },
-      { title: "60+ Data Sources Directory", description: "Complete catalog of every federal and state dataset we aggregate.", icon: ExternalLink, action: "link", href: "/data-sources" },
+      { title: "40+ Data Sources Directory", description: "Complete catalog of every federal and state dataset we aggregate.", icon: ExternalLink, action: "link", href: "/data-sources" },
     ],
   },
 ];

@@ -57,7 +57,7 @@
   },
   "systems": {
     "title": "What Is Access Michigan?",
-    "description": "Independent. Non-commercial. Organizes public data from 35+ sources so Michigan residents can find services without navigating 12 different agency websites."
+    "description": "Independent. Non-commercial. Organizes public data from 40+ sources so Michigan residents can find services without navigating 12 different agency websites."
   },
   "crisis": {
     "title": "Need Immediate Help?",
@@ -72,7 +72,7 @@
   "getHelp": "Get Help Now",
   "prototype": {
     "title": "Live Platform:",
-    "description": "35+ public data sources. Updated continuously from CMS, CDC, HRSA, NWS, USGS, FDA, and FEMA.",
+    "description": "40+ public data sources. Updated continuously from CMS, CDC, HRSA, NWS, USGS, FDA, and FEMA.",
     "viewMethodology": "View our data methodology",
     "and": "and",
     "viewTechnical": "technical architecture"
@@ -111,7 +111,7 @@
   },
   "howItHelps": {
     "title": "What You Can Do Here",
-    "subtitle": "Free. No login. No tracking. 35+ public data sources across all 83 counties.",
+    "subtitle": "Free. No login required. 40+ public data sources across all 83 counties.",
     "findQualityCare": "Search 2,400+ Providers by Quality Score",
     "findQualityCareDesc": "CMS star ratings, patient safety grades, and Medicaid acceptance — for hospitals, clinics, and individual doctors. Not advertising. Not sponsored listings.",
     "navigateSystems": "Check What You Qualify For",
@@ -421,7 +421,7 @@
     "technologySubtitle": "Built for growth and sustainability",
     "limitationsTitle": "Limitations & Disclaimers",
      "portfolioTitle": "Open Civic Infrastructure",
-    "portfolioDesc": "Designed to be replicated. 35+ public data sources. Any state can build this."
+    "portfolioDesc": "Designed to be replicated. 40+ public data sources. Any state can build this."
   },
   "methodologyPage": {
     "badge": "Data Methodology",

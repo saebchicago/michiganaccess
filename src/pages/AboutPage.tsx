@@ -198,7 +198,7 @@ export default function AboutPage() {
           <motion.div variants={fadeUp} custom={3} initial="hidden" animate="visible" className="mx-auto max-w-3xl mt-8 grid gap-4 sm:grid-cols-3">
             {[
               { icon: AlertTriangle, label: "PROBLEM", desc: "Michigan's public data is scattered across 12+ agency websites" },
-              { icon: Database, label: "SOLUTION", desc: "One platform. 35+ sources. Structured for action." },
+              { icon: Database, label: "SOLUTION", desc: "One platform. 40+ sources. Structured for action." },
               { icon: Target, label: "MISSION", desc: "Make civic intelligence accessible to every Michigander" },
             ].map((item, i) => (
               <motion.div key={item.label} variants={fadeUp} custom={i + 3} className="rounded-xl border border-border p-5 text-center">

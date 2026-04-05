@@ -447,7 +447,7 @@ const HeroSection = () => {
               </Button>
             </div>
             <p className="text-white/60 text-xs font-medium tracking-wide">
-              60+ verified data sources · 83 counties · Zero tracking · Independent
+              40+ verified data sources · 83 counties · Independent
             </p>
           </motion.div>
 
