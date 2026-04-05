@@ -61,7 +61,7 @@ const SOURCES: Record<string, Source[]> = {
 export default function DataSourcesPage() {
   usePageMeta({
     title: "Data Sources — Access Michigan",
-    description: "60+ verified public data sources powering Michigan's civic intelligence platform. Every organization credited.",
+    description: "40+ verified public source organizations powering Michigan's civic intelligence platform. Every organization credited.",
     path: "/data-sources",
   });
 

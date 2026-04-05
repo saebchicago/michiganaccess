@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ShieldCheck, Database, Clock, ExternalLink } from "lucide-react";
 
 const STATS = [
-  { icon: Database, label: "Data Sources", value: "60+", detail: "Federal & state datasets" },
+  { icon: Database, label: "Datasets", value: "60+", detail: "Across 40+ source organizations" },
   { icon: ShieldCheck, label: "Counties Covered", value: "83", detail: "Every Michigan county" },
   { icon: Clock, label: "Last Updated", value: "Mar 2026", detail: "Rolling refresh cycle" },
 ];
