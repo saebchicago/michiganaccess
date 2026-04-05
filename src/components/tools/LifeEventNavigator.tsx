@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Baby, Briefcase, Cake, Home, Stethoscope, Globe, KeyRound, ArrowRight, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -99,8 +99,25 @@ const EVENTS: LifeEvent[] = [
 ];
 
 export default function LifeEventNavigator() {
-  const [active, setActive] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialScenario = searchParams.get("scenario");
+  const [active, setActive] = useState<string | null>(
+    initialScenario && EVENTS.some((e) => e.id === initialScenario) ? initialScenario : null
+  );
   const selected = EVENTS.find((e) => e.id === active);
+
+  useEffect(() => {
+    const next = new URLSearchParams(searchParams);
+    if (active) {
+      next.set("scenario", active);
+    } else {
+      next.delete("scenario");
+    }
+    if (next.toString() !== searchParams.toString()) {
+      setSearchParams(next, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
 
   return (
     <section className="py-12">

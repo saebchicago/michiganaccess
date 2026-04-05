@@ -1,10 +1,11 @@
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
-import { Compass, Activity, BarChart3 } from "lucide-react";
+import { Compass, BarChart3, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MilestoneStepper from "@/components/civic/MilestoneStepper";
 import RegionalMetricCard from "@/components/civic/RegionalMetricCard";
+import LifeEventNavigator from "@/components/tools/LifeEventNavigator";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 export default function LifeNavigatorPage() {
@@ -46,8 +47,11 @@ export default function LifeNavigatorPage() {
       </section>
 
       <div className="container max-w-5xl py-8 space-y-8">
-        <Tabs defaultValue="milestones">
+        <Tabs defaultValue="scenarios">
           <TabsList className="flex-wrap h-auto gap-1">
+            <TabsTrigger value="scenarios">
+              <Sparkles className="mr-1.5 h-4 w-4" />What's Happening
+            </TabsTrigger>
             <TabsTrigger value="milestones">
               <Compass className="mr-1.5 h-4 w-4" />Life Milestones
             </TabsTrigger>
@@ -55,6 +59,10 @@ export default function LifeNavigatorPage() {
               <BarChart3 className="mr-1.5 h-4 w-4" />Quality Benchmarks
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="scenarios" className="mt-6">
+            <LifeEventNavigator />
+          </TabsContent>
 
           <TabsContent value="milestones" className="mt-6">
             <MilestoneStepper />
