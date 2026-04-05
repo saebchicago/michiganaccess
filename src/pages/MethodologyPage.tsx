@@ -580,9 +580,9 @@ export default function MethodologyPage() {
                   <li className="flex gap-2"><span className="font-bold text-foreground">1.</span> Large Health System — 2.1 mi</li>
                   <li className="flex gap-2"><span className="font-bold text-foreground">2.</span> Specialty Practice — 3.4 mi</li>
                   <li className="flex gap-2"><span className="font-bold text-foreground">3.</span> Private Clinic — 4.0 mi</li>
-                  <li className="flex gap-2 opacity-50"><span className="font-bold text-foreground">7.</span> FQHC (Safety-Net) — 5.8 mi</li>
+                  <li className="flex gap-2 text-muted-foreground"><span className="font-bold">7.</span> FQHC (Safety-Net) — 5.8 mi</li>
                 </ol>
-                <p className="mt-3 text-[11px] text-destructive/80">⚠ Safety-net clinic buried at position 7 despite being most relevant for uninsured</p>
+                <p className="mt-3 text-xs font-medium text-destructive">⚠ Safety-net clinic buried at position 7 despite being most relevant for uninsured</p>
               </CardContent>
             </Card>
             <Card className="border-michigan-forest/20">

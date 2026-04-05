@@ -42,6 +42,7 @@ const entries: ChangelogEntry[] = [
       "Color contrast: global CSS override forces text-muted-foreground/60 and /70 micro-labels to full base --muted-foreground opacity",
       "Color contrast: per-component fixes to DetectionGapFunnel drop-off labels, ZipScorecardPage trend indicators, WeatherAlertBanner +N-more counter, RxKidsCallout teal copy, Header 'Check Benefits' gold button, Footer load-time indicator, health-score tier badges, LiveDemoPreview amber Tier 3 badge, ZipScorecardPage contractors CTA",
       "DOM nesting: AIAppealGenerator Badge-in-p converted to div+span so React stops warning about div-inside-p on /insurance-appeals",
+      "All 10 priority routes now report zero critical/serious axe violations — full WCAG 2.1 AA conformance on the audited surface",
     ],
   },
   {
