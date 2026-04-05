@@ -24,11 +24,32 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "April", year: "2026", title: "WCAG 2.1 AA Cleanup — v9.2",
+    icon: Shield,
+    tag: "improvement",
+    items: [
+      "axe-core full cleanup on 10 priority routes: 201 nodes → ~9 nodes (96% reduction). 6 of 10 priority routes now report zero critical/serious violations",
+      "button-name: SelectTrigger now sets a default aria-label so Radix Select instances with placeholder-only state satisfy axe across homepage, /compare, /tax-comparison, /health-equity-atlas",
+      "button-name: LiveDemoPreview pagination dots, PhysicianCompare search submit, MapSearchControl search+clear buttons all get proper accessible names",
+      "aria-prohibited-attr: step indicator divs become role='progressbar', rating-star divs become role='img', status dots on /about become role='img'",
+      "link-name: /about external-source icon links get aria-label describing the destination",
+      "label: TaxComparisonCalculator salary and dependents inputs get aria-label",
+      "aria-input-field-name: ui/slider.tsx forwards aria-label onto SliderPrimitive.Thumb so the role='slider' span has an accessible name (clears /health-equity-atlas weight sliders)",
+      "aria-progressbar-name: ui/progress.tsx Progress root gets a default aria-label",
+      "select-name: CountySparklineGrid native select gets aria-label",
+      "Color contrast: palette tokens darkened so accent text and bg-accent white text pass WCAG AA (--coral 58%→45%L, --forest-green 36%→25%L, --teal 36%→28%L, --sky-blue 55%→38%L, --warm-gold 58%→26%L, --slate 40%→35%L)",
+      "Color contrast: CrisisBar Quick Exit button overlay flipped from bg-white/20 to bg-black/25 so axe sees the pure darkened coral, not a white-blended lighter shade",
+      "Color contrast: global CSS override forces text-muted-foreground/60 and /70 micro-labels to full base --muted-foreground opacity",
+      "Color contrast: per-component fixes to DetectionGapFunnel drop-off labels, ZipScorecardPage trend indicators, WeatherAlertBanner +N-more counter, RxKidsCallout teal copy, Header 'Check Benefits' gold button, Footer load-time indicator, health-score tier badges, LiveDemoPreview amber Tier 3 badge, ZipScorecardPage contractors CTA",
+      "DOM nesting: AIAppealGenerator Badge-in-p converted to div+span so React stops warning about div-inside-p on /insurance-appeals",
+    ],
+  },
+  {
     month: "April", year: "2026", title: "Credibility, E2E Hardening & A11y — v9.1",
     icon: Shield,
     tag: "improvement",
     items: [
-      "Fixed /environment runtime crash (missing AskCopilotButton import surfaced by ErrorBoundary as 'Something went wrong')",
+      "Fixed /environment runtime crash caused by a missing AskCopilotButton import that tripped the route-level ErrorBoundary",
       "Migrated Leaflet map tiles from OSM volunteer servers (returning 403s under Referer policy) to CARTO Voyager CDN — HealthMap, EmbeddedMap, and NarcanLocator now render tiles behind their pins",
       "EPA PFAS standard corrected across the Michigan Pulse card: 70 ppt health advisory → 4.0 ppt April 2024 final MCL for PFOA and PFOS; Michigan's 8 ppt standard reframed as predating the federal rule rather than 'strictest in US'",
       "Dataset count reconciled to '40+' everywhere (was a mix of 35+/60+), matching the dynamic counter on /data-sources",
