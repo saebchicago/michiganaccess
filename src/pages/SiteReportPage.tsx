@@ -65,6 +65,7 @@ export default function SiteReportPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-3">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto" />
+          <h1 className="text-base font-semibold text-foreground">Access Michigan — Full Site Report</h1>
           <p className="text-sm text-muted-foreground">Loading all site data for report…</p>
         </div>
       </div>
