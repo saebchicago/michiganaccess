@@ -66,8 +66,8 @@ export default function ALICEDashboard() {
           {/* Headline */}
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-3xl font-bold text-michigan-coral">43%</p>
-              <p className="text-xs text-muted-foreground">of MI households below ALICE Threshold</p>
+              <p className="text-3xl font-bold text-michigan-coral">41%</p>
+              <p className="text-xs text-muted-foreground">of MI households below ALICE Threshold (14% poverty + 27% ALICE) · United For ALICE 2025 report, 2023 data</p>
             </div>
             <div className="rounded-lg border border-border bg-background p-3 text-center">
               <p className="text-3xl font-bold text-foreground">1.8M+</p>
