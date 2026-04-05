@@ -220,11 +220,11 @@ export default function DisasterHistoryDashboard() {
                   <IncidentIcon type={d.incidentType} />
                   <span className="text-sm font-semibold">{d.declarationTitle}</span>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  {new Date(d.declarationDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-                  {" · "}
-                  <Badge variant="outline" className="text-[10px] ml-1">{d.incidentType}</Badge>
-                </p>
+                <div className="text-xs text-muted-foreground flex items-center flex-wrap gap-1">
+                  <span>{new Date(d.declarationDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</span>
+                  <span>·</span>
+                  <Badge variant="outline" className="text-[10px]">{d.incidentType}</Badge>
+                </div>
                 <p className="text-xs text-muted-foreground">{d.designatedArea}</p>
               </div>
             ))}
