@@ -458,7 +458,7 @@ export default function DetectionGapPage() {
           <div className="mt-12 rounded-lg border border-white/10 bg-white/5 p-4">
             <p className="text-xs text-gray-500">
               <strong className="text-gray-400">Data Sources:</strong> Trinity Health Community Impact Report (FY2025, published
-              Jan 2026) — 27.4% unmet need rate, 16% hospitalization reduction.{" "}
+              Jan 2026) — 27.4% unmet need rate; ~16% hospitalization reduction is system-reported and not independently verified or peer-reviewed.{" "}
               NACHC 2023 Social Determinants Screening Report — 68% screen positive illustrative benchmark.{" "}
               Journal of AHIMA 2023 — 42% referral rate illustrative.{" "}
               RWJF 2022 Evidence Hub — 31% connection rate illustrative.{" "}

@@ -745,7 +745,8 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
         Medicare Advantage risk — SDOH navigation directly drives shared
         savings, Stars scores, and total cost of care reduction.
         Anchored to Trinity Health (27.4% unmet need from 1M+ screened;
-        16% readmission reduction, FY2025) and Henry Ford Health ACO data.
+        system-reported ~16% readmission reduction, FY2025 — not independently verified)
+        and Henry Ford Health ACO data.
       </p>
 
       {/* ── Preset buttons ────────────────────────────────────────────────── */}
