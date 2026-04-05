@@ -14,10 +14,10 @@ const DetectionGapFunnel = lazy(() => import("@/components/shared/DetectionGapFu
 const FrontDoorTriage = lazy(() => import("@/components/home/FrontDoorTriage"));
 
 const fadeIn = {
-  initial: { opacity: 0, y: 40 },
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.6 },
+  viewport: { once: true, margin: "-20px" },
+  transition: { duration: 0.5 },
 };
 
 const stagger = (i: number) => ({
@@ -85,7 +85,7 @@ export default function StoryPage() {
       </section>
 
       {/* ═══ SECTION 2: The Detection Gap ═══ */}
-      <section className="min-h-screen flex items-center bg-background px-4 py-20">
+      <section className="bg-background px-4 py-20">
         <div className="container max-w-3xl">
           <motion.div {...fadeIn}>
             <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed mb-8">
@@ -107,7 +107,7 @@ export default function StoryPage() {
       </section>
 
       {/* ═══ SECTION 3: The Behavioral Health Desert ═══ */}
-      <section className="min-h-[80vh] flex items-center bg-muted/30 px-4 py-20">
+      <section className="bg-muted/30 px-4 py-20">
         <div className="container max-w-4xl">
           <motion.h2 {...fadeIn} className="text-3xl lg:text-4xl font-bold text-foreground mb-10 text-center">
             The Behavioral Health Desert
@@ -146,7 +146,7 @@ export default function StoryPage() {
       </section>
 
       {/* ═══ SECTION 4: The Rural Hospital Crisis ═══ */}
-      <section className="min-h-[80vh] flex items-center bg-background px-4 py-20">
+      <section className="bg-background px-4 py-20">
         <div className="container max-w-3xl">
           <motion.h2 {...fadeIn} className="text-3xl lg:text-4xl font-bold text-foreground mb-10 text-center">
             The Rural Hospital Crisis
@@ -188,7 +188,7 @@ export default function StoryPage() {
       </section>
 
       {/* ═══ SECTION 5: The Trust Deficit ═══ */}
-      <section className="min-h-[70vh] flex items-center bg-amber-50/50 dark:bg-amber-950/10 px-4 py-20">
+      <section className="bg-amber-50/50 dark:bg-amber-950/10 px-4 py-20">
         <div className="container max-w-4xl">
           <motion.div {...fadeIn} className="text-center mb-10">
             {/* Source: CLOSUP/MPPS */}
@@ -225,7 +225,7 @@ export default function StoryPage() {
       </section>
 
       {/* ═══ SECTION 6: What Access Michigan Does ═══ */}
-      <section className="min-h-[60vh] flex items-center bg-gradient-to-br from-[#0A4C95] to-[#00A3A1] text-white px-4 py-20">
+      <section className="bg-gradient-to-br from-[#0A4C95] to-[#00A3A1] text-white px-4 py-20">
         <div className="container max-w-4xl text-center">
           <motion.h2 {...fadeIn} className="text-3xl lg:text-4xl font-bold mb-10">What Access Michigan Does</motion.h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
