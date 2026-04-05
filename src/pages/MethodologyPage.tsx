@@ -476,7 +476,7 @@ export default function MethodologyPage() {
                 <summary className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer hover:bg-muted/50 transition-colors list-none">
                   <span className="text-sm font-medium text-foreground">{src.source}</span>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="rounded-full bg-michigan-teal/10 px-2 py-0.5 text-[9px] font-semibold text-michigan-teal">{src.frequency}</span>
+                    <span className="rounded-full bg-michigan-teal/15 px-2 py-0.5 text-[10px] font-semibold text-foreground">{src.frequency}</span>
                     <svg className="h-3.5 w-3.5 text-muted-foreground transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                   </div>
                 </summary>

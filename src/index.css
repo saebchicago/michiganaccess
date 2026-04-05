@@ -483,3 +483,12 @@ body.translated-rtl {
     @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md;
   }
 }
+
+/* ── A11y: distinguish links inside prose text ──────────────── */
+/* Links inside paragraphs must be distinguishable without relying on color
+   alone (WCAG 1.4.1 / link-in-text-block). Force underline on any anchor
+   inside a <p> unless the link opts out via the `no-underline` utility. */
+p a:not(.no-underline):not([class*="no-underline"]) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

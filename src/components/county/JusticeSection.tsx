@@ -132,7 +132,7 @@ export default function JusticeSection({ county }: Props) {
                     <p className="text-xs text-muted-foreground">{court.address}</p>
                   )}
                   {court.virtualHearings && (
-                    <Badge variant="outline" className="text-[9px] border-michigan-teal/30 text-michigan-teal">
+                    <Badge variant="outline" className="text-[10px] border-michigan-teal/40 text-foreground">
                       Virtual hearings available
                     </Badge>
                   )}
