@@ -19,7 +19,7 @@ export const SIGNALS_2026_03: Signal[] = [
   { id: "s8", date: "2026-03", text: "Opioid deaths down 7.5% from 2022 peak — first decline in 4 years", category: "health", direction: "down", source: "MDHHS / CDC WONDER", href: "/data" },
   { id: "s9", date: "2026-03", text: "41% of MI households below ALICE Threshold — 100K+ increase since 2019", category: "economic", direction: "alert", source: "United For ALICE 2023", href: "/equity" },
   { id: "s10", date: "2026-03", text: "Michigan has 2,247 pharmacies — chains declined 7.4% in 5 years", category: "health", direction: "down", source: "NCPDP 2024", href: "/equity" },
-  { id: "s11", date: "2026-03", text: "298K Spanish + 172K Arabic households — Michigan's 2nd language is Arabic", category: "civic", direction: "stable", source: "Census ACS 2024", href: "/equity" },
+  { id: "s11", date: "2026-03", text: "Spanish is Michigan's 2nd language statewide (298K); Southeast Michigan hosts 172K Arabic speakers — among the largest US concentrations", category: "civic", direction: "stable", source: "Census ACS 2024", href: "/equity" },
   { id: "s12", date: "2026-03", text: "MDOC recidivism at historic low; prison population lowest since 1991", category: "civic", direction: "down", source: "MDOC 2025", href: "/reentry" },
   { id: "s13", date: "2026-03", text: "102 'Do Not Eat' water bodies for PFAS — nation's most aggressive monitoring", category: "environment", direction: "alert", source: "EGLE MPART / MDHHS", href: "/environment#water-safety" },
   { id: "s14", date: "2026-03", text: "27.9% chronic absenteeism statewide — 38.6% for economically disadvantaged", category: "civic", direction: "alert", source: "MDE 2024-25", href: "/data-and-insights" },

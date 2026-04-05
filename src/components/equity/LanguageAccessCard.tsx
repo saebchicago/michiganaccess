@@ -19,7 +19,7 @@ export default function LanguageAccessCard() {
             <Globe className="h-5 w-5 text-primary" /> Language Access in Michigan
           </CardTitle>
           <CardDescription>
-            298K Spanish + 172K Arabic speakers. Michigan's 2nd most-spoken language is Arabic.
+            Spanish is Michigan's second most-spoken language statewide (298K speakers per Census ACS). Southeast Michigan is also home to 172K Arabic speakers — one of the largest Arabic-speaking populations in the US.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
