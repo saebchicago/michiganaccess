@@ -241,10 +241,10 @@ const AIAppealGenerator = () => {
               )}
             </Button>
 
-            <p className="text-xs text-muted-foreground text-center">
+            <div className="text-xs text-muted-foreground text-center">
               <Badge variant="outline" className="text-xs">Privacy First</Badge>{" "}
-              No personal health information is stored or transmitted. Analysis happens in real-time and is not saved.
-            </p>
+              <span>No personal health information is stored or transmitted. Analysis happens in real-time and is not saved.</span>
+            </div>
           </CardContent>
         </Card>
 
