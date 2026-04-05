@@ -674,6 +674,7 @@ export default function AboutPage() {
                 className="flex items-center gap-3 rounded-lg border border-border p-3"
               >
                 <span
+                  role="img"
                   className={`h-3 w-3 rounded-full shrink-0 ${
                     metric.status === "green"
                       ? "bg-green-500"

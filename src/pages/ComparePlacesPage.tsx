@@ -858,7 +858,7 @@ export default function ComparePlacesPage() {
                           </div>
 
                           <div className="flex items-center gap-1">
-                            <div className="flex" aria-label={`Rating: ${voice.score}/5`}>
+                            <div role="img" className="flex" aria-label={`Rating: ${voice.score} out of 5`}>
                               {[1, 2, 3, 4, 5].map((s) => (
                                 <Star
                                   key={s}

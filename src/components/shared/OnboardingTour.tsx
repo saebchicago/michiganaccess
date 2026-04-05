@@ -202,7 +202,14 @@ export default function OnboardingTour() {
               <p className="text-xs text-muted-foreground leading-relaxed">{current.body}</p>
               <div className="flex items-center justify-between">
                 {/* Step dots */}
-                <div className="flex gap-1.5" aria-label={`Step ${step + 1} of ${STEPS.length}`}>
+                <div
+                  role="progressbar"
+                  aria-valuemin={1}
+                  aria-valuemax={STEPS.length}
+                  aria-valuenow={step + 1}
+                  aria-label={`Step ${step + 1} of ${STEPS.length}`}
+                  className="flex gap-1.5"
+                >
                   {STEPS.map((_, i) => (
                     <div
                       key={i}
