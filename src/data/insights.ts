@@ -37,12 +37,12 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
   },
   {
     week: 2,
-    text: "Michigan has the strictest PFAS drinking water standard in the nation at 8 parts per trillion.",
-    source: "EGLE MPART",
+    text: "Michigan set an 8 ppt PFOA drinking water standard in 2020; the EPA finalized a 4.0 ppt federal MCL for PFOA and PFOS in April 2024.",
+    source: "EGLE MPART · EPA National Primary Drinking Water Regulations (April 2024)",
     href: "/environment",
     dataPoints: [
-      { label: "MI standard", value: "8 ppt", context: "strictest in US" },
-      { label: "EPA standard", value: "70 ppt", context: "federal advisory" },
+      { label: "MI PFOA standard", value: "8 ppt", context: "set Aug 2020" },
+      { label: "EPA PFOA/PFOS MCL", value: "4.0 ppt", context: "April 2024 final rule" },
       { label: "Known sites", value: "250+", context: "PFAS contamination" },
     ],
   },
