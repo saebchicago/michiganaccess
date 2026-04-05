@@ -13,9 +13,14 @@ const SelectValue = SelectPrimitive.Value;
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+>(({ className, children, "aria-label": ariaLabel, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
+    // A11y: provide a default accessible name so SelectTriggers rendered
+    // with only a placeholder (no value selected yet) still satisfy axe's
+    // button-name rule. Callers should override with a descriptive label
+    // via the aria-label prop.
+    aria-label={ariaLabel ?? "Select an option"}
     className={cn(
       "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
       className,

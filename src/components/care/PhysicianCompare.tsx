@@ -102,7 +102,7 @@ export default function PhysicianCompare() {
             className="max-w-[160px]"
             aria-label="City filter"
           />
-          <Button type="submit" size="sm" disabled={lastName.length < 2 || isLoading}>
+          <Button type="submit" size="sm" aria-label="Search physicians" disabled={lastName.length < 2 || isLoading}>
             {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
           </Button>
         </form>

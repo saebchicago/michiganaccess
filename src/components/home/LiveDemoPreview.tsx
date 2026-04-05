@@ -84,7 +84,13 @@ export default function LiveDemoPreview() {
               <span className="text-[9px] font-bold uppercase tracking-wider text-muted-foreground">Live Preview</span>
               <div className="flex gap-1 ml-auto">
                 {MOMENTS.map((_, i) => (
-                  <button key={i} onClick={() => setIdx(i)} className={`h-1 rounded-full transition-all ${i === idx ? "w-4 bg-primary" : "w-1 bg-muted-foreground/30"}`} />
+                  <button
+                    key={i}
+                    onClick={() => setIdx(i)}
+                    aria-label={`Show preview ${i + 1} of ${MOMENTS.length}`}
+                    aria-current={i === idx ? "true" : undefined}
+                    className={`h-1 rounded-full transition-all ${i === idx ? "w-4 bg-primary" : "w-1 bg-muted-foreground/30"}`}
+                  />
                 ))}
               </div>
             </div>

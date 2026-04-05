@@ -54,12 +54,17 @@ export default function MapSearchControl({ onLocationSelect }: MapSearchControlP
             className="h-8 pl-8 text-xs"
           />
           {query && (
-            <button onClick={() => { setQuery(""); setResults([]); }} className="absolute right-2 top-1/2 -translate-y-1/2">
+            <button
+              type="button"
+              onClick={() => { setQuery(""); setResults([]); }}
+              aria-label="Clear address search"
+              className="absolute right-2 top-1/2 -translate-y-1/2"
+            >
               <X className="h-3 w-3 text-muted-foreground" />
             </button>
           )}
         </div>
-        <Button size="sm" variant="secondary" onClick={handleSearch} disabled={loading} className="h-8 px-2">
+        <Button size="sm" variant="secondary" onClick={handleSearch} disabled={loading} aria-label="Search address" className="h-8 px-2">
           {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Search className="h-3.5 w-3.5" />}
         </Button>
       </div>
