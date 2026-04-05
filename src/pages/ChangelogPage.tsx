@@ -24,6 +24,28 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
+    month: "April", year: "2026", title: "Credibility, E2E Hardening & A11y — v9.1",
+    icon: Shield,
+    tag: "improvement",
+    items: [
+      "Fixed /environment runtime crash (missing AskCopilotButton import surfaced by ErrorBoundary as 'Something went wrong')",
+      "Migrated Leaflet map tiles from OSM volunteer servers (returning 403s under Referer policy) to CARTO Voyager CDN — HealthMap, EmbeddedMap, and NarcanLocator now render tiles behind their pins",
+      "EPA PFAS standard corrected across the Michigan Pulse card: 70 ppt health advisory → 4.0 ppt April 2024 final MCL for PFOA and PFOS; Michigan's 8 ppt standard reframed as predating the federal rule rather than 'strictest in US'",
+      "Dataset count reconciled to '40+' everywhere (was a mix of 35+/60+), matching the dynamic counter on /data-sources",
+      "Homepage Detroit/Troy tax teaser synced with live calculator ($1,302 → $2,523)",
+      "Arabic language stat reframed as Southeast Michigan regional (Spanish is statewide #2 per ACS)",
+      "ALICE headline corrected to 41% (was 43%) to match United For ALICE 2025 report and data-stories.ts",
+      "Trinity Health ~16% preventable-hospitalization stat flagged as system-reported / not independently verified on every surface it appears",
+      "Disaster Acceleration card now labels 2020s as 'through 2025, decade incomplete' and drops the 'accelerating' claim",
+      "SDOH Detection Gap Funnel shows a 'Modeled Estimate' badge with a one-line methodology note linking to /methodology#sdoh-funnel",
+      "Life-event scenarios are now deep-linkable: /life-event/new-baby, /life-event/job-loss, /life-event/turning-65, /life-event/eviction, /life-event/new-diagnosis, /life-event/new-to-michigan, /life-event/reentry, plus /life-events alias. LifeEventNavigator reads ?scenario= from the URL and a new 'What's Happening' tab hosts it inside /life-navigator",
+      "E2E route smoke test covering 128 routes (126 passing) with failure log at FAILED_ROUTES.md",
+      "axe-core a11y audit covering 10 priority routes (report at A11Y_VIOLATIONS.md); root-cause CSS fix eliminates the universal link-in-text-block violation on every page",
+      "Mobile overflow killed across the board via overflow-x: clip on html/body — iPhone SE and iPhone 14 viewports render every priority route without horizontal scroll",
+      "Performance baseline captured in PERF_BASELINE.md with follow-up recommendations for vendor-ui splitting",
+    ],
+  },
+  {
     month: "March", year: "2026", title: "PolicyMap-Level Intelligence — v9.0",
     icon: Rocket,
     tag: "feature",
