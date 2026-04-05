@@ -113,6 +113,7 @@ export default function CountySparklineGrid() {
             <select
               value={metric}
               onChange={(e) => setMetric(e.target.value as MetricKey)}
+              aria-label="Select county metric"
               className="appearance-none rounded-md border border-border bg-background px-3 py-1.5 pr-8 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
             >
               {(Object.entries(METRICS) as [MetricKey, MetricDef][]).map(([key, m]) => (

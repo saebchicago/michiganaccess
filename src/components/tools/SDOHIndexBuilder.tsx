@@ -196,6 +196,7 @@ export default function SDOHIndexBuilder() {
               <Slider
                 value={[weights[i]]}
                 onValueChange={(v) => handleWeightChange(i, v)}
+                aria-label={`${dim.label} weight`}
                 min={0}
                 max={50}
                 step={1}

@@ -451,8 +451,14 @@ export default function AboutPage() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <h3 className="text-sm font-semibold text-foreground">{source.name}</h3>
-                        <a href={source.url} target="_blank" rel="noopener" className="text-primary hover:underline">
-                          <ExternalLink className="h-3.5 w-3.5" />
+                        <a
+                          href={source.url}
+                          target="_blank"
+                          rel="noopener"
+                          aria-label={`Open ${source.name} in a new tab`}
+                          className="text-primary hover:underline"
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                         </a>
                       </div>
                       <p className="mt-1 text-xs text-muted-foreground">{source.description}</p>

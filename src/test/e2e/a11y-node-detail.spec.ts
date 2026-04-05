@@ -26,13 +26,7 @@ const PRIORITY_ROUTES = [
 ];
 
 const TARGET_RULES = new Set([
-  'button-name',
-  'link-name',
-  'aria-prohibited-attr',
-  'aria-input-field-name',
-  'aria-progressbar-name',
-  'select-name',
-  'label',
+  'color-contrast',
 ]);
 
 type NodeRow = {

@@ -117,7 +117,7 @@ export default function TaxComparisonCalculator() {
           <div className="grid gap-3 sm:grid-cols-3">
             <div>
               <label className="text-xs text-muted-foreground mb-1 block">Annual Salary</label>
-              <Input type="number" value={salaryInput} onChange={(e) => setSalaryInput(parseInt(e.target.value) || 0)} className="font-mono" />
+              <Input type="number" aria-label="Annual salary" value={salaryInput} onChange={(e) => setSalaryInput(parseInt(e.target.value) || 0)} className="font-mono" />
             </div>
             <div>
               <label className="text-xs text-muted-foreground mb-1 block">Filing Status</label>
@@ -129,7 +129,7 @@ export default function TaxComparisonCalculator() {
             </div>
             <div>
               <label className="text-xs text-muted-foreground mb-1 block">Dependents</label>
-              <Input type="number" min={0} max={10} value={deps} onChange={(e) => setDeps(parseInt(e.target.value) || 0)} />
+              <Input type="number" aria-label="Number of dependents" min={0} max={10} value={deps} onChange={(e) => setDeps(parseInt(e.target.value) || 0)} />
             </div>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">

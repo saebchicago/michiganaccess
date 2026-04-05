@@ -1,163 +1,481 @@
 # A11y Node Detail (diagnostic)
 
-Generated 2026-04-05T16:18:34.519Z
-Captured 46 individual nodes across 10 routes
+Generated 2026-04-05T16:26:01.807Z
+Captured 158 individual nodes across 10 routes
 
-## button-name (14 nodes)
+## color-contrast (158 nodes)
 
-- **/** `.bg-primary.h-1.w-4`
-  - html: `<button class="h-1 rounded-full transition-all w-4 bg-primary"></button>`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/** `.ml-auto.gap-1.flex > .w-1.h-1.bg-muted-foreground\/30:nth-child(2)`
-  - html: `<button class="h-1 rounded-full transition-all w-1 bg-muted-foreground/30"></button>`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/** `.ml-auto.gap-1.flex > .w-1.h-1.bg-muted-foreground\/30:nth-child(3)`
-  - html: `<button class="h-1 rounded-full transition-all w-1 bg-muted-foreground/30"></button>`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/** `button[aria-controls="radix-:ro:"]`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:ro:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" data-placeholder="" class="flex h-10 w-full ite...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/** `button[aria-controls="radix-:rp:"]`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:rp:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" data-placeholder="" class="flex h-10 w-full ite...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/find-care** `button[type="submit"]`
-  - html: `<button class="inline-flex items-ce..." type="submit" disabled="">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/compare** `.\[\&\>span\]\:line-clamp-1`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:r2k:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" data-placeholder="" class="flex items-center ju...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/health-map** `.gap-1.flex > .bg-secondary.text-secondary-foreground.hover\:bg-secondary\/80`
-  - html: `<button class="inline-flex items-ce...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/tax-comparison** `button[aria-controls="radix-:r3d:"]`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:r3d:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" class="flex h-10 w-full ite...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/tax-comparison** `button[aria-controls="radix-:r3e:"]`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:r3e:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" class="flex h-10 w-full ite...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/tax-comparison** `button[aria-controls="radix-:r3f:"]`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:r3f:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" class="flex h-10 w-full ite...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/tax-comparison** `button[aria-controls="radix-:r3g:"]`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:r3g:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" class="flex h-10 w-full ite...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/health-equity-atlas** `.w-44`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:r3c:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" class="flex items-center ju...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-- **/health-equity-atlas** `button[aria-controls="radix-:r3d:"]`
-  - html: `<button type="button" role="combobox" aria-controls="radix-:r3d:" aria-expanded="false" aria-autocomplete="none" dir="ltr" data-state="closed" class="flex h-10 w-full ite...">`
-  - why: Fix any of the following:   Element does not have inner text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references
-
-## aria-prohibited-attr (11 nodes)
-
-- **/** `div[aria-label="Step 1 of 4"]`
-  - html: `<div class="flex gap-1.5" aria-label="Step 1 of 4">`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a div with no valid role attribute.
-- **/compare** `div[aria-label="Rating: 3.2/5"]`
-  - html: `<div class="flex" aria-label="Rating: 3.2/5">`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a div with no valid role attribute.
-- **/compare** `div[aria-label="Rating: 4.1/5"]`
-  - html: `<div class="flex" aria-label="Rating: 4.1/5">`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a div with no valid role attribute.
-- **/health-map** `div[aria-label="Step 1 of 4"]`
-  - html: `<div class="flex gap-1.5" aria-label="Step 1 of 4">`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a div with no valid role attribute.
-- **/about** `.p-3.rounded-lg.gap-3:nth-child(1) > .bg-green-500.shrink-0[aria-label="Status: green"]`
-  - html: `<span class="h-3 w-3 rounded-full shrink-0 bg-green-500" aria-label="Status: green"></span>`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a span with no valid role attribute.
-- **/about** `.p-3.rounded-lg.gap-3:nth-child(2) > .bg-green-500.shrink-0[aria-label="Status: green"]`
-  - html: `<span class="h-3 w-3 rounded-full shrink-0 bg-green-500" aria-label="Status: green"></span>`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a span with no valid role attribute.
-- **/about** `.p-3.rounded-lg.gap-3:nth-child(3) > .bg-green-500.shrink-0[aria-label="Status: green"]`
-  - html: `<span class="h-3 w-3 rounded-full shrink-0 bg-green-500" aria-label="Status: green"></span>`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a span with no valid role attribute.
-- **/about** `.bg-amber-500`
-  - html: `<span class="h-3 w-3 rounded-full shrink-0 bg-amber-500" aria-label="Status: amber"></span>`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a span with no valid role attribute.
-- **/about** `.p-3.rounded-lg.gap-3:nth-child(5) > .bg-green-500.shrink-0[aria-label="Status: green"]`
-  - html: `<span class="h-3 w-3 rounded-full shrink-0 bg-green-500" aria-label="Status: green"></span>`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a span with no valid role attribute.
-- **/about** `.p-3.rounded-lg.gap-3:nth-child(6) > .bg-green-500.shrink-0[aria-label="Status: green"]`
-  - html: `<span class="h-3 w-3 rounded-full shrink-0 bg-green-500" aria-label="Status: green"></span>`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a span with no valid role attribute.
-- **/about** `.p-3.rounded-lg.gap-3:nth-child(7) > .bg-green-500.shrink-0[aria-label="Status: green"]`
-  - html: `<span class="h-3 w-3 rounded-full shrink-0 bg-green-500" aria-label="Status: green"></span>`
-  - why: Fix all of the following:   aria-label attribute cannot be used on a span with no valid role attribute.
-
-## link-name (10 nodes)
-
-- **/about** `div:nth-child(1) > .hover\:bg-muted\/50.rounded-lg.p-4 > .gap-4.justify-between.items-start > .flex-1 > .gap-2.items-center.flex > .hover\:underline[rel="noopener"][target="_blank"]`
-  - html: `<a href="https://data.cms.gov/provider-data/" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `div:nth-child(2) > .hover\:bg-muted\/50.rounded-lg.p-4 > .gap-4.justify-between.items-start > .flex-1 > .gap-2.items-center.flex > .hover\:underline[rel="noopener"][target="_blank"]`
-  - html: `<a href="https://www.hospitalsafetygrade.org/" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `div:nth-child(3) > .hover\:bg-muted\/50.rounded-lg.p-4 > .gap-4.justify-between.items-start > .flex-1 > .gap-2.items-center.flex > .hover\:underline[rel="noopener"][target="_blank"]`
-  - html: `<a href="https://www.nursingworld.org/organizational-programs/magnet/" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `div:nth-child(4) > .hover\:bg-muted\/50.rounded-lg.p-4 > .gap-4.justify-between.items-start > .flex-1 > .gap-2.items-center.flex > .hover\:underline[rel="noopener"][target="_blank"]`
-  - html: `<a href="https://www.bcbs.com/blue-distinction-specialty-care" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `a[href$="data.hrsa.gov/"]`
-  - html: `<a href="https://data.hrsa.gov/" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `a[href$="places/"]`
-  - html: `<a href="https://www.cdc.gov/places/" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `a[href$="mdhhs"]`
-  - html: `<a href="https://www.michigan.gov/mdhhs" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `div:nth-child(8) > .hover\:bg-muted\/50.rounded-lg.p-4 > .gap-4.justify-between.items-start > .flex-1 > .gap-2.items-center.flex > .hover\:underline[rel="noopener"][target="_blank"]`
-  - html: `<a href="https://www.countyhealthrankings.org/explore-health-rankings/michigan" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `a[href$="data.census.gov/"]`
-  - html: `<a href="https://data.census.gov/" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-- **/about** `a[href$="clinicaltrials.gov/"]`
-  - html: `<a href="https://clinicaltrials.gov/" target="_blank" rel="noopener" class="text-primary hover:underline">`
-  - why: Fix all of the following:   Element is in tab order and does not have accessible text  Fix any of the following:   Element does not have text that is visible to screen readers   aria-label attribute does not exist or is empty   aria-labelle
-
-## aria-input-field-name (7 nodes)
-
-- **/health-equity-atlas** `.p-3.bg-muted\/50.space-y-1\.5:nth-child(1) > .touch-none.select-none[dir="ltr"] > span:nth-child(2) > .block[aria-valuemin="0"][aria-valuemax="50"]`
-  - html: `<span role="slider" aria-valuemin="0" aria-valuemax="50" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0" class="block h-5 w-5 rounde..." data-radix-collectio...="" aria-valuenow="17" style="">`
-  - why: Fix any of the following:   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty   Element has no title attribute
-- **/health-equity-atlas** `.p-3.bg-muted\/50.space-y-1\.5:nth-child(2) > .touch-none.select-none[dir="ltr"] > span:nth-child(2) > .block[aria-valuemin="0"][aria-valuemax="50"]`
-  - html: `<span role="slider" aria-valuemin="0" aria-valuemax="50" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0" class="block h-5 w-5 rounde..." data-radix-collectio...="" aria-valuenow="17" style="">`
-  - why: Fix any of the following:   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty   Element has no title attribute
-- **/health-equity-atlas** `.p-3.bg-muted\/50.space-y-1\.5:nth-child(3) > .touch-none.select-none[dir="ltr"] > span:nth-child(2) > .block[aria-valuemin="0"][aria-valuemax="50"]`
-  - html: `<span role="slider" aria-valuemin="0" aria-valuemax="50" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0" class="block h-5 w-5 rounde..." data-radix-collectio...="" aria-valuenow="17" style="">`
-  - why: Fix any of the following:   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty   Element has no title attribute
-- **/health-equity-atlas** `.p-3.bg-muted\/50.space-y-1\.5:nth-child(4) > .touch-none.select-none[dir="ltr"] > span:nth-child(2) > .block[aria-valuemin="0"][aria-valuemax="50"]`
-  - html: `<span role="slider" aria-valuemin="0" aria-valuemax="50" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0" class="block h-5 w-5 rounde..." data-radix-collectio...="" aria-valuenow="17" style="">`
-  - why: Fix any of the following:   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty   Element has no title attribute
-- **/health-equity-atlas** `.p-3.bg-muted\/50.space-y-1\.5:nth-child(5) > .touch-none.select-none[dir="ltr"] > span:nth-child(2) > .block[aria-valuemin="0"][aria-valuemax="50"]`
-  - html: `<span role="slider" aria-valuemin="0" aria-valuemax="50" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0" class="block h-5 w-5 rounde..." data-radix-collectio...="" aria-valuenow="16" style="">`
-  - why: Fix any of the following:   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty   Element has no title attribute
-- **/health-equity-atlas** `.p-3.bg-muted\/50.space-y-1\.5:nth-child(6) > .touch-none.select-none[dir="ltr"] > span:nth-child(2) > .block[aria-valuemin="0"][aria-valuemax="50"]`
-  - html: `<span role="slider" aria-valuemin="0" aria-valuemax="50" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0" class="block h-5 w-5 rounde..." data-radix-collectio...="" aria-valuenow="16" style="">`
-  - why: Fix any of the following:   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty   Element has no title attribute
-- **/health-equity-atlas** `span[aria-valuemin="12"]`
-  - html: `<span role="slider" aria-valuemin="12" aria-valuemax="80" aria-orientation="horizontal" data-orientation="horizontal" tabindex="0" class="block h-5 w-5 rounde..." data-radix-collectio...="" aria-valuenow="32" style="">`
-  - why: Fix any of the following:   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty   Element has no title attribute
-
-## label (2 nodes)
-
-- **/tax-comparison** `input[value="80000"]`
-  - html: `<input type="number" class="flex h-10 w-full rou..." value="80000">`
-  - why: Fix any of the following:   Element does not have an implicit (wrapped) <label>   Element does not have an explicit <label>   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements th
-- **/tax-comparison** `input[min="0"]`
-  - html: `<input type="number" class="flex h-10 w-full rou..." min="0" max="10" value="0">`
-  - why: Fix any of the following:   Element does not have an implicit (wrapped) <label>   Element does not have an explicit <label>   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements th
-
-## aria-progressbar-name (1 nodes)
-
-- **/find-care** `.bg-secondary`
-  - html: `<div aria-valuemax="100" aria-valuemin="0" role="progressbar" data-state="indeterminate" data-max="100" class="relative w-full overflow-hidden rounded-full bg-secondary h-1.5">`
-  - why: Fix any of the following:   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty   Element has no title attribute
-
-## select-name (1 nodes)
-
-- **/health-equity-atlas** `select`
-  - html: `<select class="appearance-none rounded-md border border-border bg-background px-3 py-1.5 pr-8 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30">`
-  - why: Fix any of the following:   Element does not have an implicit (wrapped) <label>   Element does not have an explicit <label>   aria-label attribute does not exist or is empty   aria-labelledby attribute does not exist, references elements th
+- **/** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.md\:gap-2 > .sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.sm\:inline.hidden:nth-child(4) > strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.group.relative:nth-child(2) > .ml-28.sm\:ml-36.pl-3 > .text-red-500.text-\[9px\].font-medium`
+  - html: `<span class="text-[9px] text-red-500 font-medium">↓ 73% drop-off</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.6 (foreground color: #ef4444, background color: #fafafa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.group.relative:nth-child(3) > .gap-3.flex.items-center > .flex-1 > .bg-muted.h-8.overflow-hidden > .px-2.rounded.h-full > .text-white.whitespace-nowrap.text-\[10px\]`
+  - html: `<span class="text-[10px] font-bold text-white whitespace-nowrap">129,178</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.1 (foreground color: #ffffff, background color: #00a3a1, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/** `.group.relative:nth-child(3) > .ml-28.sm\:ml-36.pl-3 > .text-red-500.text-\[9px\].font-medium`
+  - html: `<span class="text-[9px] text-red-500 font-medium">↓ 73% drop-off</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.6 (foreground color: #ef4444, background color: #fafafa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.group.relative:nth-child(4) > .ml-28.sm\:ml-36.pl-3 > .text-red-500.text-\[9px\].font-medium`
+  - html: `<span class="text-[9px] text-red-500 font-medium">↓ 50% drop-off</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.6 (foreground color: #ef4444, background color: #fafafa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.group.relative:nth-child(5) > .gap-3.flex.items-center > .flex-1 > .bg-muted.h-8.overflow-hidden > .px-2.rounded.h-full > .text-white.whitespace-nowrap.text-\[10px\]`
+  - html: `<span class="text-[10px] font-bold text-white whitespace-nowrap">7,105</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ffffff, background color: #ef4444, font size: 7.5pt (10px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/** `.group.relative:nth-child(5) > .ml-28.sm\:ml-36.pl-3 > .text-red-500.text-\[9px\].font-medium`
+  - html: `<span class="text-[9px] text-red-500 font-medium">↓ 89% drop-off</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.6 (foreground color: #ef4444, background color: #fafafa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.text-muted-foreground\/60.text-\[9px\]`
+  - html: `<p class="text-[9px] text-muted-foreground/60">Sources: HMA March 2025 (MCO enrollment), Trinity Health FY2025 (screening reference), NACHC (positive rate), AHC Model (referral rate), Health Affairs 2023 (resolution rate).</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #969696, background color: #fafafa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.border-transparent`
+  - html: `<div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-amber-500 text-white text-[`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.14 (foreground color: #ffffff, background color: #f59e0b, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.text-michigan-forest.text-\[10px\]`
+  - html: `<p class="text-[10px] text-michigan-forest">Strength: Smoking below state avg</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.08 (foreground color: #578b2d, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.min-w-\[100px\].bg-muted\/50.flex-1:nth-child(1) > .text-muted-foreground\/70.text-\[9px\]`
+  - html: `<p class="text-[9px] text-muted-foreground/70">set Aug 2020</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.46 (foreground color: #858686, background color: #f8f9fa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.min-w-\[100px\].bg-muted\/50.flex-1:nth-child(2) > .text-muted-foreground\/70.text-\[9px\]`
+  - html: `<p class="text-[9px] text-muted-foreground/70">April 2024 final rule</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.46 (foreground color: #858686, background color: #f8f9fa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.min-w-\[100px\].bg-muted\/50.flex-1:nth-child(3) > .text-muted-foreground\/70.text-\[9px\]`
+  - html: `<p class="text-[9px] text-muted-foreground/70">PFAS contamination</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.46 (foreground color: #858686, background color: #f8f9fa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `strong:nth-child(2)`
+  - html: `<strong class="text-michigan-forest">$2,523 more</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.84 (foreground color: #578b2d, background color: #faf8f0, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/** `.text-muted-foreground\/60.text-\[10px\]`
+  - html: `<p class="text-[10px] text-muted-foreground/60">No tracking. Unsubscribe anytime. We never share your email.</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.88 (foreground color: #989898, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/find-care** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/find-care** `.sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/find-care** `.sm\:inline.hidden:nth-child(4) > strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/find-care** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/find-care** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/find-care** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/find-care** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/find-care** `.text-michigan-forest.font-bold.text-xs`
+  - html: `<span class="text-xs font-bold text-michigan-forest">~367ms</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.84 (foreground color: #578b2d, background color: #f7f8f8, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/find-care** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.md\:gap-2 > .sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.sm\:inline.hidden:nth-child(4) > strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.text-orange-600.font-semibold.text-sm`
+  - html: `<span class="text-sm font-semibold text-orange-600">Tier 4 — Priority Access Area</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.55 (foreground color: #ea580c, background color: #ffffff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.text-muted-foreground\/60`
+  - html: `<p class="text-[9px] text-muted-foreground/60 mt-2">Source: University of Richmond Mapping Inequality · MSU Extension Redlining in Michigan</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.77 (foreground color: #989393, background color: #fef2f2, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-teal-200`
+  - html: `<span class="text-[9px] bg-teal-200 dark:bg-teal-800 text-teal-700 dark:text-teal-300 px-1.5 py-0.5 rounded font-semibold">EXPANDING TO WAYNE</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.34 (foreground color: #0f766e, background color: #99f6e4, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.text-teal-600.mb-2.dark\:text-teal-400`
+  - html: `<p class="text-xs text-teal-600 dark:text-teal-400 mb-2">Rx Kids is the nation's first citywide maternal and infant cash prescription program — no strings attached — unconditional cash. Launched in Flint in January 2024.</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.59 (foreground color: #0d9488, background color: #f0fdfa, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.p-2.bg-white\/60.dark\:bg-black\/20:nth-child(1) > .text-teal-600.dark\:text-teal-400.text-\[9px\]`
+  - html: `<p class="text-[9px] text-teal-600 dark:text-teal-400">of Flint babies enrolled</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.67 (foreground color: #0d9488, background color: #f9fefd, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.p-2.bg-white\/60.dark\:bg-black\/20:nth-child(2) > .text-teal-600.dark\:text-teal-400.text-\[9px\]`
+  - html: `<p class="text-[9px] text-teal-600 dark:text-teal-400">PPD reduction</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.67 (foreground color: #0d9488, background color: #f9fefd, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.p-2.bg-white\/60.dark\:bg-black\/20:nth-child(3) > .text-teal-600.dark\:text-teal-400.text-\[9px\]`
+  - html: `<p class="text-[9px] text-teal-600 dark:text-teal-400">Eviction risk drop</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.67 (foreground color: #0d9488, background color: #f9fefd, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.text-teal-500\/70`
+  - html: `<p class="text-[9px] text-teal-500/70">Source: Rx Kids Research Brief 2024\u20132025 \u00B7 rxkids.org \u00B7 U-M Poverty Solutions</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 1.85 (foreground color: #56cdbf, background color: #f0fdfa, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-amber-600`
+  - html: `<a class="w-full rounded-lg bg-amber-600 text-white text-[10px] font-semibold px-3 py-2 text-center hover:bg-amber-600/90 transition-colors" href="/transparency/contractors">See Contractors →</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.18 (foreground color: #ffffff, background color: #d97706, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(2) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(1) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(3) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(1) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(4) > .gap-3.flex.items-center > .text-green-600.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-green-600">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.29 (foreground color: #16a34a, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(1) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(5) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(6) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(1) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(7) > .gap-3.flex.items-center > .text-green-600.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-green-600">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.29 (foreground color: #16a34a, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(8) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(9) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(10) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(11) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(12) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(13) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(2) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(2) > .gap-3.flex.items-center > .text-green-600.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-green-600">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.29 (foreground color: #16a34a, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(2) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(3) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(2) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(4) > .gap-3.flex.items-center > .text-green-600.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-green-600">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.29 (foreground color: #16a34a, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(5) > .gap-3.flex.items-center > .text-green-600.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-green-600">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.29 (foreground color: #16a34a, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(6) > .gap-3.flex.items-center > .text-green-600.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-green-600">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.29 (foreground color: #16a34a, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(2) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(7) > .gap-3.flex.items-center > .text-green-600.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-green-600">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.29 (foreground color: #16a34a, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(3) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(2) > .gap-3.flex.items-center > .text-green-600.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-green-600">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.29 (foreground color: #16a34a, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(3) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(3) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.border-border\/40.last\:border-0.border-b:nth-child(4) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.bg-card.text-card-foreground.hover\:shadow-lg:nth-child(3) > .py-4.sm\:p-6.sm\:pt-0 > .border-border\/40.last\:border-0.border-b:nth-child(5) > .gap-3.flex.items-center > .text-red-500.gap-0\.5.font-medium`
+  - html: `<span class="text-[10px] font-medium flex items-center gap-0.5 text-red-500">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.76 (foreground color: #ef4444, background color: #ffffff, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.text-michigan-forest.font-bold.text-xs`
+  - html: `<span class="text-xs font-bold text-michigan-forest">~342ms</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.84 (foreground color: #578b2d, background color: #f7f8f8, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/zip/48201** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/compare** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/compare** `.sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/compare** `strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/compare** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/compare** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/compare** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/compare** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/compare** `.ml-1\.5`
+  - html: `<span class="ml-1.5 text-muted-foreground/60">MI Avg column shows the Michigan state benchmark.</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #969696, background color: #fafafa, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/compare** `.text-michigan-forest.font-bold.text-xs`
+  - html: `<span class="text-xs font-bold text-michigan-forest">~348ms</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.84 (foreground color: #578b2d, background color: #f7f8f8, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/compare** `.bg-destructive > .text-\[9px\]`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-map** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-map** `.sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-map** `strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/health-map** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-map** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-map** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-map** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-map** `.text-michigan-forest.font-bold.text-xs`
+  - html: `<span class="text-xs font-bold text-michigan-forest">~331ms</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.84 (foreground color: #578b2d, background color: #f7f8f8, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/health-map** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.sm\:inline.hidden:nth-child(4) > strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.border-border\/50.border-b:nth-child(4) > .text-right:nth-child(4) > .text-michigan-forest.font-semibold`
+  - html: `<span class="text-michigan-forest font-semibold">-$1,920</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.08 (foreground color: #578b2d, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.border-border\/50.border-b:nth-child(5) > .text-right:nth-child(4) > .text-michigan-coral`
+  - html: `<span class="text-michigan-coral">+$4,443</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.82 (foreground color: #da584e, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `tr:nth-child(7) > .text-right:nth-child(4) > .text-michigan-coral`
+  - html: `<span class="text-michigan-coral">+$2,523</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.82 (foreground color: #da584e, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `tr:nth-child(8) > .text-right:nth-child(4) > .text-michigan-forest.font-semibold`
+  - html: `<span class="text-michigan-forest font-semibold">-$4,068</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.08 (foreground color: #578b2d, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `tr:nth-child(9) > .text-right:nth-child(4) > .text-michigan-coral`
+  - html: `<span class="text-michigan-coral">+$2,523</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.82 (foreground color: #da584e, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.font-bold.text-michigan-forest`
+  - html: `<span class="text-xs font-bold text-michigan-forest">~355ms</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.84 (foreground color: #578b2d, background color: #f7f8f8, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/tax-comparison** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.sm\:inline.hidden:nth-child(4) > strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.border-amber-200\/50 > .text-muted-foreground\/60`
+  - html: `<p class="text-[9px] text-muted-foreground/60 mt-1">United Way ALICE 2025</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #979695, background color: #fcfaf6, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.border-red-200\/50 > .text-muted-foreground\/60`
+  - html: `<p class="text-[9px] text-muted-foreground/60 mt-1">March of Dimes 2024</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.79 (foreground color: #979696, background color: #fbf8f8, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.border-purple-200\/50 > .text-muted-foreground\/60`
+  - html: `<p class="text-[9px] text-muted-foreground/60 mt-1">TAC / MDHHS CON 2024</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.81 (foreground color: #969697, background color: #faf9fc, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.bg-primary\/\[0\.03\] > .text-muted-foreground\/60`
+  - html: `<p class="text-[9px] text-muted-foreground/60 mt-1">FCC BDC 2024</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.78 (foreground color: #949496, background color: #f5f5f8, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/health-equity-atlas** `.text-michigan-gold`
+  - html: `<p class="text-2xl font-bold text-michigan-gold">+20pp</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 1.47 (foreground color: #ffc929, background color: #fffaea, font size: 18.0pt (24px), font weight: bold). Expected contrast ratio of 3:1
+- **/health-equity-atlas** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/data-sources** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/data-sources** `.sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/data-sources** `strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/data-sources** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/data-sources** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/data-sources** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/data-sources** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/data-sources** `.text-amber-600.dark\:text-amber-400.font-bold`
+  - html: `<span class="text-xs font-bold text-amber-600 dark:text-amber-400">~1.0s</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.99 (foreground color: #d97706, background color: #f7f8f8, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/data-sources** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.sm\:inline.hidden:nth-child(4) > strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/methodology** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.font-mono.leading-relaxed > .text-michigan-forest.font-bold`
+  - html: `<span class="text-michigan-forest font-bold">30%</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.65 (foreground color: #578b2d, background color: #f1f2f6, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/methodology** `.font-mono.leading-relaxed > .text-michigan-teal.font-bold`
+  - html: `<span class="text-michigan-teal font-bold">15%</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.06 (foreground color: #2e818a, background color: #f1f2f6, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/methodology** `.text-michigan-sky`
+  - html: `<span class="text-michigan-sky font-bold">15%</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.16 (foreground color: #478cd1, background color: #f1f2f6, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/methodology** `ol > .opacity-50`
+  - html: `<li class="flex gap-2 opacity-50"><span class="font-bold text-foreground">7.</span> FQHC (Safety-Net) — 5.8 mi</li>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.32 (foreground color: #aaaaaa, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.opacity-50 > .font-bold.text-foreground`
+  - html: `<span class="font-bold text-foreground">7.</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.19 (foreground color: #909090, background color: #ffffff, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/methodology** `.text-destructive\/80`
+  - html: `<p class="mt-3 text-[11px] text-destructive/80">⚠ Safety-net clinic buried at position 7 despite being most relevant for uninsured</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.08 (foreground color: #d25454, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.border-michigan-forest\/20.bg-card.text-card-foreground > .sm\:p-6.sm\:pt-0.pt-6 > h4`
+  - html: `<h4 class="mb-3 text-sm font-bold text-michigan-forest">Equity-Adjusted Ranking</h4>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.08 (foreground color: #578b2d, background color: #ffffff, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/methodology** `ol > li:nth-child(1) > .text-michigan-forest`
+  - html: `<span class="text-michigan-forest">· Quality: A</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.08 (foreground color: #578b2d, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `li:nth-child(2) > .text-michigan-forest.font-semibold`
+  - html: `<span class="font-semibold text-michigan-forest">FQHC — 5.8 mi · "No one turned away"</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.08 (foreground color: #578b2d, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.mt-3.text-\[11px\].text-michigan-forest`
+  - html: `<p class="mt-3 text-[11px] text-michigan-forest">✅ Safety-net clinic elevated with equity boost for vulnerable populations</p>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.08 (foreground color: #578b2d, background color: #ffffff, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.bg-michigan-forest\/8`
+  - html: `<span class="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] leading-tight font-medium text-michigan-forest bg-michigan-forest/8 border-michigan-forest/20 ">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.91 (foreground color: #578b2d, background color: #fafafa, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.bg-michigan-teal\/8`
+  - html: `<span class="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] leading-tight font-medium text-michigan-teal bg-michigan-teal/8 border-michigan-teal/20 ">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 4.35 (foreground color: #2e818a, background color: #fafafa, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.text-michigan-gold`
+  - html: `<span class="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] leading-tight font-medium text-michigan-gold bg-michigan-gold/8 border-michigan-gold/20 ">`
+  - why: Fix any of the following:   Element has insufficient color contrast of 1.47 (foreground color: #ffc929, background color: #fafafa, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.text-muted-foreground\/70`
+  - html: `<p class="text-xs text-muted-foreground/70">What this funnel is not: a count of Michigan residents whose needs were actually met, a peer-reviewed study, or a claim that the national benchmarks apply uniformly to every Michigan MCO. Use it t`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.48 (foreground color: #868686, background color: #fafafa, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/methodology** `.text-amber-600.dark\:text-amber-400.font-bold`
+  - html: `<span class="text-xs font-bold text-amber-600 dark:text-amber-400">~645ms</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.99 (foreground color: #d97706, background color: #f7f8f8, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/methodology** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/about** `.md\:gap-2 > .hover\:underline.font-semibold[href$="tel:988"]`
+  - html: `<a href="tel:988" class="font-semibold hover:underline">988</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/about** `.sm\:inline.hidden:nth-child(4)`
+  - html: `<span class="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a></span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/about** `.sm\:inline.hidden:nth-child(4) > strong`
+  - html: `<strong>HOME</strong>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/about** `.sm\:inline.hidden:nth-child(4) > .hover\:underline.font-semibold[href$="sms:741741&body=HOME"]`
+  - html: `<a href="sms:741741&amp;body=HOME" class="font-semibold hover:underline">741741</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/about** `.sm\:inline.hidden:nth-child(6) > .hover\:underline.font-semibold[href$="tel:211"]`
+  - html: `<a href="tel:211" class="font-semibold hover:underline">211</a>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 3.58 (foreground color: #ffffff, background color: #dc6057, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/about** `.sm\:inline.hidden.font-semibold`
+  - html: `<span class="hidden sm:inline font-semibold">Quick Exit</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.75 (foreground color: #ffffff, background color: #e38078, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/about** `.opacity-70`
+  - html: `<span class="ml-1 opacity-70">+2 more</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.98 (foreground color: #f5bebe, background color: #dc2626, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1
+- **/about** `.text-amber-600.dark\:text-amber-400.font-bold`
+  - html: `<span class="text-xs font-bold text-amber-600 dark:text-amber-400">~755ms</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.99 (foreground color: #d97706, background color: #f7f8f8, font size: 9.0pt (12px), font weight: bold). Expected contrast ratio of 4.5:1
+- **/about** `.text-destructive-foreground\/60`
+  - html: `<span class="text-[9px] text-destructive-foreground/60 pb-0.5">Press ESC to quickly leave this page</span>`
+  - why: Fix any of the following:   Element has insufficient color contrast of 2.83 (foreground color: #e9a9a9, background color: #c72929, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1
