@@ -154,7 +154,7 @@ const Header = () => {
           <Button
             size="sm"
             onClick={() => setWizardOpen(true)}
-            className="hidden sm:flex bg-michigan-gold text-foreground hover:bg-michigan-gold/90 rounded-full px-3 gap-1.5 text-xs font-semibold shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            className="hidden sm:flex bg-michigan-gold text-white hover:bg-michigan-gold/90 rounded-full px-3 gap-1.5 text-xs font-semibold shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <Sparkles className="h-3.5 w-3.5" />
             Check Benefits

@@ -11,7 +11,7 @@ const SUGGESTIONS = ["Cancer", "Diabetes", "Heart Disease", "Mental Health", "Al
 
 const STATUS_COLORS: Record<string, string> = {
   RECRUITING: "bg-michigan-forest text-white",
-  "ACTIVE_NOT_RECRUITING": "bg-michigan-gold text-black",
+  "ACTIVE_NOT_RECRUITING": "bg-michigan-gold text-white",
   COMPLETED: "bg-muted text-muted-foreground",
 };
 
