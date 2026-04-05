@@ -36,19 +36,19 @@ export default function DetectionGapFunnel({ variant = "full" }: DetectionGapFun
 
   return (
     <div className="space-y-4">
-      {variant === "full" && (
-        <div className="flex items-center justify-between flex-wrap gap-3">
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-sm font-bold text-foreground">The Detection Gap</h3>
-              <Badge variant="outline" className="text-[9px] font-normal uppercase tracking-wider text-muted-foreground border-border">Modeled Estimate</Badge>
-            </div>
-            <p className="text-xs text-muted-foreground">From 1.77M beneficiaries to documented outcomes — where the system loses people</p>
-            <p className="text-[10px] text-muted-foreground/80 mt-1">
-              Method: Michigan MCO enrollment (1.77M) × national benchmark rates (NACHC, AHC Model). Not measured MI outcomes.{" "}
-              <Link to="/methodology#sdoh-funnel" className="underline hover:text-foreground">Methodology →</Link>
-            </p>
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="text-sm font-bold text-foreground">The Detection Gap</h3>
+            <Badge variant="outline" className="text-[9px] font-normal uppercase tracking-wider text-muted-foreground border-border">Modeled Estimate</Badge>
           </div>
+          <p className="text-xs text-muted-foreground">From 1.77M beneficiaries to documented outcomes — where the system loses people</p>
+          <p className="text-[10px] text-muted-foreground mt-1">
+            Method: Michigan MCO enrollment (1.77M) × national benchmark rates (NACHC, AHC Model). Not measured MI outcomes.{" "}
+            <Link to="/methodology#sdoh-funnel" className="underline hover:text-foreground">Methodology →</Link>
+          </p>
+        </div>
+        {variant === "full" && (
           <div className="flex gap-1">
             <button onClick={() => setMode("current")}
               className={`text-[10px] px-3 py-1 rounded-full border transition-all ${mode === "current" ? "bg-primary text-primary-foreground border-primary" : "border-border text-muted-foreground"}`}>
@@ -59,8 +59,8 @@ export default function DetectionGapFunnel({ variant = "full" }: DetectionGapFun
               With Access Michigan
             </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="space-y-2">
         {data.map((stage, i) => {
