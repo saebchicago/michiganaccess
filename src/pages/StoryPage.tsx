@@ -59,11 +59,11 @@ export default function StoryPage() {
       </AnimatePresence>
 
       {/* ═══ SECTION 1: Michigan by the Numbers ═══ */}
-      <section className="min-h-screen flex items-center justify-center bg-[#0A4C95] text-white px-4 relative">
+      <section className="min-h-screen flex items-center justify-center bg-michigan-blue text-white px-4 relative">
         <div className="max-w-3xl text-center">
           <motion.h1 {...fadeIn} className="text-4xl lg:text-6xl font-bold leading-tight mb-8">
             10 million residents. 83 counties.<br />
-            <span className="text-[#00A3A1]">Who falls through the gaps?</span>
+            <span className="text-michigan-teal">Who falls through the gaps?</span>
           </motion.h1>
           <motion.div {...fadeIn} transition={{ duration: 0.6, delay: 0.3 }} className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-12">
             {/* Source: Feeding America 2024 */}
@@ -135,7 +135,7 @@ export default function StoryPage() {
           <motion.div {...fadeIn} transition={{ delay: 0.6 }} className="mt-8 text-center">
             {/* Source: SAMHSA/MDHHS 988 Performance */}
             <p className="text-base text-foreground">
-              But Michigan answers 988 crisis calls in <strong className="text-[#00A3A1]">13 seconds</strong> — best among high-volume states.
+              But Michigan answers 988 crisis calls in <strong className="text-michigan-teal">13 seconds</strong> — best among high-volume states.
             </p>
             <p className="text-xs text-muted-foreground mt-1">261,000 calls answered since July 2022. Source: SAMHSA/MDHHS</p>
             <Link to="/behavioral-health" className="text-sm text-primary hover:underline mt-3 inline-flex items-center gap-1">
@@ -171,7 +171,9 @@ export default function StoryPage() {
                   <p className="text-[10px] text-muted-foreground">
                     Source:{" "}
                     {item.url ? (
-                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">{item.source}</a>
+                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-0.5 underline hover:text-foreground">
+                        {item.source}<ExternalLink className="h-2.5 w-2.5 ml-0.5 opacity-70" />
+                      </a>
                     ) : item.source}
                   </p>
                 </div>
@@ -202,8 +204,8 @@ export default function StoryPage() {
             </p>
             <p className="text-xs text-muted-foreground mt-2">
               Source:{" "}
-              <a href="https://closup.umich.edu/sites/closup/files/2025-11/MPPS-Spring-2025-Trust-and-Democracy.pdf" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
-                CLOSUP Michigan Public Policy Survey, Spring 2025
+              <a href="https://closup.umich.edu/sites/closup/files/2025-11/MPPS-Spring-2025-Trust-and-Democracy.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-0.5 underline hover:text-foreground">
+                CLOSUP Michigan Public Policy Survey, Spring 2025<ExternalLink className="h-2.5 w-2.5 ml-0.5 opacity-70" />
               </a>{" "}(1,328 local jurisdictions, 72% response rate)
             </p>
           </motion.div>
@@ -235,7 +237,7 @@ export default function StoryPage() {
       </section>
 
       {/* ═══ SECTION 6: What Access Michigan Does ═══ */}
-      <section className="bg-gradient-to-br from-[#0A4C95] to-[#00A3A1] text-white px-4 py-20">
+      <section className="bg-gradient-to-br from-michigan-blue to-michigan-teal text-white px-4 py-20">
         <div className="container max-w-4xl text-center">
           <motion.h2 {...fadeIn} className="text-3xl lg:text-4xl font-bold mb-10">What Access Michigan Does</motion.h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
@@ -254,8 +256,9 @@ export default function StoryPage() {
             ))}
           </div>
           <motion.div {...fadeIn} transition={{ delay: 0.4 }}>
-            <button onClick={() => setTriageOpen(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-white text-[#0A4C95] py-3 px-8 text-sm font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all">
+            <button type="button" onClick={() => setTriageOpen(true)}
+              aria-label="Open help finder — get connected to Michigan resources"
+              className="inline-flex items-center gap-2 rounded-xl bg-white text-michigan-blue py-3 px-8 text-sm font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all">
               <Heart className="h-4 w-4" fill="currentColor" /> Get Help Now
             </button>
           </motion.div>
