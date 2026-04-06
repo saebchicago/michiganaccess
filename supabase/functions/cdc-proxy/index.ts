@@ -39,7 +39,7 @@ serve(async (req) => {
     }
 
     // Sanitize measure: allow only alphanumeric, spaces, hyphens, underscores
-    const safeMeasure = measure.replace(/[^a-zA-Z0-9_\s\-]/g, "").slice(0, 100);
+    const safeMeasure = measure.replace(/[^a-zA-Z0-9_\s-]/g, "").slice(0, 100);
 
     // Build SODA query — state is hardcoded to Michigan only
     const baseWhere = "stateabbr='MI'";
