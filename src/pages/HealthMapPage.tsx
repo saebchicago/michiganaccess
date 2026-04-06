@@ -41,8 +41,8 @@ export default function HealthMapPage() {
     );
   }, []);
 
-  const handleSearchLocation = useCallback((lat: number, lon: number, name: string) => {
-    console.log("Navigate to:", lat, lon, name);
+  const handleSearchLocation = useCallback((_lat: number, _lon: number, _name: string) => {
+    // TODO: implement map fly-to on location search
   }, []);
 
   return (
