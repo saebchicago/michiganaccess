@@ -38,7 +38,7 @@ function getCached<T>(key: string): T | null {
 }
 
 function setCache(key: string, data: unknown) {
-  try { localStorage.setItem(key, JSON.stringify({ data, ts: Date.now() })); } catch {}
+  try { localStorage.setItem(key, JSON.stringify({ data, ts: Date.now() })); } catch { /* localStorage unavailable */ }
 }
 
 const severityColor: Record<string, string> = {

@@ -23,7 +23,7 @@ export function recordPageVisit(path: string, label: string, category: string) {
     const filtered = history.filter((h) => h.path !== path);
     filtered.unshift({ path, label, category });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered.slice(0, 20)));
-  } catch {}
+  } catch { /* localStorage unavailable */ }
 }
 
 function getBrowsingHistory(): RecentView[] {

@@ -202,7 +202,7 @@ function parseOneBusAwayJSON(data: any, agency: string, color: string): VehicleP
         });
       }
     }
-  } catch {}
+  } catch { /* GTFS-RT binary parse failed — return partial vehicle list */ }
   return vehicles;
 }
 

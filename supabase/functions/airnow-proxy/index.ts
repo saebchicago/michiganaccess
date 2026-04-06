@@ -185,7 +185,7 @@ Deno.serve(async (req) => {
             }
           }
         }
-      } catch {}
+      } catch { /* AirNow bulk file unavailable — fall through to per-station API */ }
 
       const existingIds = new Set(stations.map((s) => s.name));
       for (const ks of knownStations) {
