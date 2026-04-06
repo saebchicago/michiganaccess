@@ -170,7 +170,7 @@ export default function CountyCompare() {
           </div>
 
           <p className="text-[10px] text-muted-foreground">
-            Green highlights indicate the better value. Source: County Health Rankings 2024, Census ACS 2023.
+            Green highlights indicate the better value. Source: County Health Rankings & Roadmaps, 2025 edition, Census ACS 2023.
           </p>
 
           {/* Links to place pages */}

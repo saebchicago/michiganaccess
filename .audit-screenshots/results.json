@@ -1,0 +1,507 @@
+[
+  {
+    "route": "/",
+    "url": "http://localhost:8080/",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/story",
+    "url": "http://localhost:8080/story",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/for-health-systems",
+    "url": "http://localhost:8080/for-health-systems",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/partnerships/health-systems",
+    "url": "http://localhost:8080/partnerships/health-systems",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/partners/health-systems",
+    "url": "http://localhost:8080/partners/health-systems",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/domain-dashboard",
+    "url": "http://localhost:8080/domain-dashboard",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/health",
+    "url": "http://localhost:8080/health",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/detection-gap",
+    "url": "http://localhost:8080/detection-gap",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/chna-explorer",
+    "url": "http://localhost:8080/chna-explorer",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/equity",
+    "url": "http://localhost:8080/equity",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/find-care",
+    "url": "http://localhost:8080/find-care",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/financial-help",
+    "url": "http://localhost:8080/financial-help",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/data-and-insights",
+    "url": "http://localhost:8080/data-and-insights",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/about",
+    "url": "http://localhost:8080/about",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/partners",
+    "url": "http://localhost:8080/partners",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/county/wayne",
+    "url": "http://localhost:8080/county/wayne",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Access to fetch at 'https://data.detroitmi.gov/resource/ti6p-wcg4.json?%24limit=200&%24offset=0' from origin 'http://localhost:8080' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Access to fetch at 'https://data.detroitmi.gov/resource/ti6p-wcg4.json?%24limit=200&%24offset=0' from origin 'http://localhost:8080' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "[socrataClient] fetch failed: TypeError: Failed to fetch\n    at querySocrata (http://localhost:8080/src/data/socrataClient.ts:33:31)\n    at fetchPillarData (http://localhost:8080/src/hooks/usePillarData.ts:86:38)",
+      "[socrataClient] fetch failed: TypeError: Failed to fetch\n    at querySocrata (http://localhost:8080/src/data/socrataClient.ts:33:31)\n    at fetchPillarData (http://localhost:8080/src/hooks/usePillarData.ts:86:38)"
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/zip/48214",
+    "url": "http://localhost:8080/zip/48214",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": [
+      {
+        "url": "https://api.census.gov/data/2022/acs/acs5?get=B01003_001E,B02001_002E,B02001_003E,B02001_005E,B03003_003E,B16001_001E,B16001_004E,B16001_024E,B18101_001E,B18101_004E,B19013_001E,B25003_001E,B25003_002E,B25003_003E&for=zip%20code%20tabulation%20area:48214&in=state:26",
+        "status": 400
+      }
+    ]
+  },
+  {
+    "route": "/place/detroit-mi",
+    "url": "http://localhost:8080/place/detroit-mi",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/environment",
+    "url": "http://localhost:8080/environment",
+    "crashed": true,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: the server responded with a status of 404 ()",
+      "NAVIGATION_ERROR: page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:8080/environment\", waiting until \"networkidle\"\u001b[22m\n"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.",
+      "AirNow API key not configured, using fallback"
+    ],
+    "failedRequests": [
+      {
+        "url": "https://api.fda.gov/food/enforcement.json?search=state:%22Michigan%22&limit=8&sort=report_date:desc",
+        "status": 404
+      }
+    ]
+  },
+  {
+    "route": "/transportation",
+    "url": "http://localhost:8080/transportation",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/civic-data",
+    "url": "http://localhost:8080/civic-data",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Access to fetch at 'https://fred.stlouisfed.org/graph/fredgraph.csv?id=MIUR&cosd=2023-01-01' from origin 'http://localhost:8080' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App",
+      "Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 2626 \n    at tbody\n    at table\n    at div\n    at div\n    at _c8 (http://localhost:8080/src/components/ui/card.tsx:67:61)\n    at div\n    at _c (http://localhost:8080/src/components/ui/card.tsx:23:53)\n    at div\n    at EconomicVitalityDashboard (http://localhost:8080/src/components/civic/EconomicVitalityDashboard.tsx:31:33)\n    at div\n    at section\n    at main\n    at MotionDOMComponent (http://localhost:8080/node_modules/.vite/deps/framer-motion.js?v=97801bfc:8718:40)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at div\n    at Layout (http://localhost:8080/src/components/layout/Layout.tsx:51:19)\n    at CivicDataPage (http://localhost:8080/src/pages/CivicDataPage.tsx:289:19)\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at RenderedRoute (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4088:5)\n    at Routes (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4558:5)\n    at Suspense\n    at ErrorBoundary (http://localhost:8080/src/components/shared/ErrorBoundary.tsx:87:9)\n    at Router (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:4501:15)\n    at BrowserRouter (http://localhost:8080/node_modules/.vite/deps/react-router-dom.js?v=97801bfc:5247:5)\n    at Provider (http://localhost:8080/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=97801bfc:38:15)\n    at TooltipProvider (http://localhost:8080/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=97801bfc:62:5)\n    at NerdModeProvider (http://localhost:8080/src/contexts/NerdModeContext.tsx:29:36)\n    at CountyProvider (http://localhost:8080/src/contexts/CountyContext.tsx:122:34)\n    at QueryClientProvider (http://localhost:8080/node_modules/.vite/deps/@tanstack_react-query.js?v=97801bfc:2934:3)\n    at App"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/life-navigator",
+    "url": "http://localhost:8080/life-navigator",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/health-map",
+    "url": "http://localhost:8080/health-map",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/resources",
+    "url": "http://localhost:8080/resources",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/quality",
+    "url": "http://localhost:8080/quality",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/status",
+    "url": "http://localhost:8080/status",
+    "crashed": true,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED",
+      "NAVIGATION_ERROR: page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:8080/status\", waiting until \"networkidle\"\u001b[22m\n"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/sitemap",
+    "url": "http://localhost:8080/sitemap",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/contact",
+    "url": "http://localhost:8080/contact",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/terms",
+    "url": "http://localhost:8080/terms",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  },
+  {
+    "route": "/privacy",
+    "url": "http://localhost:8080/privacy",
+    "crashed": false,
+    "consoleErrors": [
+      "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    ],
+    "consoleWarnings": [
+      "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — Supabase features will be unavailable. Set them in .env.local or Netlify env vars.",
+      "⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.",
+      "⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath."
+    ],
+    "failedRequests": []
+  }
+]

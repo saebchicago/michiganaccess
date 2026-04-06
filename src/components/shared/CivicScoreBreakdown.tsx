@@ -62,7 +62,7 @@ interface SubIndex {
 }
 
 function computeVulnerabilityIndex(profile: CountyProfile): SubIndex {
-  const uninsured = parseFloat(profile.healthHighlights[0]?.value || "6.5");
+  const uninsured = parseFloat(profile.healthHighlights[0]?.value || "5");
   const food = parseFloat(profile.healthHighlights[2]?.value || String(MI_STATE_BENCHMARKS.foodInsecurityRate));
   const pcrRaw = profile.healthHighlights[1]?.value || "1500:1";
   const pcr = parseInt(pcrRaw.replace(/[^0-9]/g, ""), 10) || 1500;

@@ -17,10 +17,12 @@ import { useCommunityResources } from "@/hooks/useCommunityResources";
 import { toast } from "@/hooks/use-toast";
 import RegionRadarChart from "@/components/region/RegionRadarChart";
 
+// State benchmarks: County Health Rankings & Roadmaps 2025 edition
+// https://www.countyhealthrankings.org/health-data/michigan
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
-  "Uninsured rate": { state: "6.5%", us: "8.0%" },
-  "Food insecurity": { state: "13.2%", us: "13.5%" },
-  "Primary care ratio": { state: "1,280:1", us: "1,310:1" },
+  "Uninsured rate": { state: "5%", us: "8.0%" },
+  "Food insecurity": { state: "13.3%", us: "13.5%" },
+  "Primary care ratio": { state: "1,240:1", us: "1,310:1" },
 };
 
 const RESOURCE_TYPES = ["food", "housing", "transportation", "mental_health", "health", "legal", "education"];
@@ -73,9 +75,9 @@ function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<type
   rows.push(["Resources", ...compareData.map(d => d.stats.resourceCount.toString())]);
 
   const benchmarks: Record<string, { state: string; us: string }> = {
-    "Uninsured rate": { state: "6.5%", us: "8.0%" },
-    "Food insecurity": { state: "13.2%", us: "13.5%" },
-    "Primary care ratio": { state: "1,280:1", us: "1,310:1" },
+    "Uninsured rate": { state: "5%", us: "8.0%" },
+    "Food insecurity": { state: "13.3%", us: "13.5%" },
+    "Primary care ratio": { state: "1,240:1", us: "1,310:1" },
   };
   allMetricLabels.forEach(label => {
     const bench = benchmarks[label];
@@ -401,9 +403,9 @@ export default function RegionComparePage() {
                   return {
                     regionName: region.name,
                     color: region.color,
-                    uninsuredRate: ur?.numericAvg ?? 6.5,
-                    foodInsecurity: fi?.numericAvg ?? 13.2,
-                    primaryCareRatio: pcr?.numericAvg ?? 1280,
+                    uninsuredRate: ur?.numericAvg ?? 5,
+                    foodInsecurity: fi?.numericAvg ?? 13.3,
+                    primaryCareRatio: pcr?.numericAvg ?? 1240,
                     facilitiesPer100k: stats.totalPop > 0 ? (stats.facilityCount / stats.totalPop) * 100000 : 0,
                     resourcesPer100k: stats.totalPop > 0 ? (stats.resourceCount / stats.totalPop) * 100000 : 0,
                   };

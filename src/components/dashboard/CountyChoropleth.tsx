@@ -312,7 +312,7 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
         )}
 
         <p className="text-[10px] text-muted-foreground mt-4">
-          Source: County Health Rankings 2024, CDC BRFSS, USDA Food Environment Atlas. Click any county to view its full profile.
+          Source: County Health Rankings & Roadmaps, 2025 edition, CDC BRFSS, USDA Food Environment Atlas. Click any county to view its full profile.
         </p>
       </CardContent>
     </Card>

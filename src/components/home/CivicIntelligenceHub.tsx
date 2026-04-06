@@ -428,7 +428,7 @@ export default function CivicIntelligenceHub() {
                 title={`Why ${selectedCounty} stands out`}
                 summary={`${selectedCounty} County combines ${selectedCountyIntelligence.primaryCareRatio} primary care capacity with ${selectedCountyIntelligence.foodInsecurity} food insecurity and ${selectedCountyIntelligence.erVisitRate} emergency visits per 100k residents, making it easier to compare local strain with statewide averages.`}
                 explanation="County cards use the public county profile dataset already in Access Michigan, then add statewide comparison signals so people can interpret whether a county is improving, steady, or under pressure."
-                source="County Health Rankings 2024 · Census ACS 2023"
+                source="County Health Rankings & Roadmaps, 2025 edition · Census ACS 2023"
               />
             </CardContent>
           </Card>

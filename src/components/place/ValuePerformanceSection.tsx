@@ -99,11 +99,11 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Primary Care Ratio",
           value: getHighlight(hh, "primary care"),
-          stateAvg: "1,280:1",
+          stateAvg: "1,240:1",
           direction: "lower-is-better",
           soWhat: "Fewer patients per provider means shorter waits and more access.",
-          source: "County Health Rankings",
-          sourceYear: "2024",
+          source: "County Health Rankings & Roadmaps",
+          sourceYear: "2025",
         },
         {
           label: "Preventable Hospital Stays",

@@ -44,11 +44,13 @@ export interface PlaceIndicator {
   grain: string;
 }
 
-// ── State Averages (curated from CHR, ACS, USDA, BLS, FBI UCR) ──
+// ── State Averages (curated from CHR 2025, ACS, USDA, BLS, FBI UCR) ──
+// CHR 2025: https://www.countyhealthrankings.org/health-data/michigan
+// Feeding America 2024: https://map.feedingamerica.org/county/2022/overall/michigan
 export const STATE_AVERAGES: Record<string, { value: number; label: string; unit: string }> = {
-  uninsured: { value: 6.5, label: "Uninsured Rate", unit: "%" },
-  pcRatio: { value: 1290, label: "Primary Care Ratio", unit: ":1" },
-  foodInsecurity: { value: 13.0, label: "Food Insecurity", unit: "%" },
+  uninsured: { value: 5, label: "Uninsured Rate", unit: "%" },
+  pcRatio: { value: 1240, label: "Primary Care Ratio", unit: ":1" },
+  foodInsecurity: { value: 13.3, label: "Food Insecurity", unit: "%" },
   energyBurden: { value: 3.5, label: "Energy Burden", unit: "%" },
   violentCrime: { value: 450, label: "Violent Crime Rate", unit: "per 100k" },
   graduationRate: { value: 82, label: "HS Graduation Rate", unit: "%" },
@@ -283,30 +285,30 @@ export function buildFullIndicators(place: Place): PlaceIndicator[] {
   const indicators: PlaceIndicator[] = [];
 
   // ── Health Domain ──
-  const uninsured = parseRate(hh[0]?.value || "6.5%");
+  const uninsured = parseRate(hh[0]?.value || "5%");
   indicators.push({
     id: "uninsured", domain: "health", label: "Uninsured Rate",
-    value: hh[0]?.value || "~6.5%", numericValue: uninsured, unit: "%",
-    stateAvg: 6.5, direction: "lower-is-better",
+    value: hh[0]?.value || "~5%", numericValue: uninsured, unit: "%",
+    stateAvg: 5, direction: "lower-is-better",
     implication: uninsured > 8 ? "Suggests limited insurance access; residents may delay care." : uninsured < 5 ? "Strong insurance coverage; most residents have access to care." : "Near state average for insurance coverage.",
     source: "County Health Rankings", sourceUrl: "https://www.countyhealthrankings.org/", updated: "2025", grain,
   });
 
-  const pcRatio = parseRatio(hh[1]?.value || "1,290:1");
+  const pcRatio = parseRatio(hh[1]?.value || "1,240:1");
   indicators.push({
     id: "pc-ratio", domain: "health", label: "Primary Care Ratio",
-    value: hh[1]?.value || "1,290:1", numericValue: pcRatio, unit: ":1",
-    stateAvg: 1290, direction: "lower-is-better",
+    value: hh[1]?.value || "1,240:1", numericValue: pcRatio, unit: ":1",
+    stateAvg: 1240, direction: "lower-is-better",
     implication: pcRatio > 3000 ? "Significant provider shortage; may indicate long wait times." : pcRatio < 1000 ? "Strong primary care access relative to population." : "Moderate primary care access.",
     source: "HRSA Area Health Resources", sourceUrl: "https://data.hrsa.gov/", updated: "2025", grain,
   });
 
   // ── Food Domain ──
-  const food = parseRate(hh[2]?.value || "13%");
+  const food = parseRate(hh[2]?.value || "13.3%");
   indicators.push({
     id: "food-insecurity", domain: "food", label: "Food Insecurity",
-    value: hh[2]?.value || "~13%", numericValue: food, unit: "%",
-    stateAvg: 13.0, direction: "lower-is-better",
+    value: hh[2]?.value || "~13.3%", numericValue: food, unit: "%",
+    stateAvg: 13.3, direction: "lower-is-better",
     implication: food > 16 ? "Higher food insecurity; residents may benefit from SNAP or food bank services." : food < 10 ? "Lower food insecurity than state average." : "Near state average for food access.",
     source: "USDA Food Environment Atlas", sourceUrl: "https://www.ers.usda.gov/data-products/food-environment-atlas/", updated: "2024", grain,
   });

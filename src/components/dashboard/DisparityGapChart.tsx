@@ -48,7 +48,7 @@ export default function DisparityGapChart() {
           </p>
           <p className="text-[10px] text-muted-foreground mt-1">
             <strong>How to read:</strong> For rate-based metrics, the gap is shown as a ratio (e.g., 2.6× means the highest group's rate is 2.6 times the lowest).
-            For life expectancy, the gap is shown in years. Data sourced from MDHHS Health Equity reports, CDC WONDER, and County Health Rankings 2024.
+            For life expectancy, the gap is shown in years. Data sourced from MDHHS Health Equity reports, CDC WONDER, and County Health Rankings & Roadmaps, 2025 edition.
           </p>
         </CardHeader>
         <CardContent>

@@ -36,11 +36,12 @@ import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSect
 import MichiganEnvBurdenMap from "@/components/MichiganEnvBurdenMap";
 import { FIPS_TO_COUNTY } from "@/data/michigan-topojson";
 
-// National benchmarks (Census ACS 2023, HRSA, USDA)
+// State benchmarks: County Health Rankings & Roadmaps 2025 edition
+// https://www.countyhealthrankings.org/health-data/michigan
 const BENCHMARKS: Record<string, { state: string; us: string }> = {
-  "Uninsured rate":    { state: "6.5%", us: "8.0%" },
-  "Food insecurity":   { state: "13.2%", us: "13.5%" },
-  "Primary care ratio": { state: "1,280:1", us: "1,310:1" },
+  "Uninsured rate":    { state: "5%", us: "8.0%" },
+  "Food insecurity":   { state: "13.3%", us: "13.5%" },
+  "Primary care ratio": { state: "1,240:1", us: "1,310:1" },
 };
 
 const StatSkeleton = () => (

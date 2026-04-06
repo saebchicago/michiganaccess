@@ -272,7 +272,7 @@ export default function CountyLeaderboard() {
         </div>
 
         <p className="text-[10px] text-muted-foreground text-center">
-          Data: County Health Rankings 2024, ACS 2022, BLS 2024. Life expectancy from IHME/CHR estimates.
+          Data: County Health Rankings & Roadmaps, 2025 edition, ACS 2022, BLS 2024. Life expectancy from IHME/CHR estimates.
         </p>
       </CardContent>
     </Card>

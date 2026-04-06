@@ -225,7 +225,7 @@ export default function EquityScorecardPage() {
         <div className="rounded-lg border border-border bg-muted/50 p-4 flex items-start gap-2">
           <Info className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
           <p className="text-xs text-muted-foreground">
-            <strong>Sources:</strong> MDHHS Health Equity Data, CDC WONDER, County Health Rankings 2024, CDC BRFSS. Reference year: 2023–2024. Disparity ratio = highest group value / lowest group value. See <a href="/methodology" className="text-primary hover:underline">Methodology</a>.
+            <strong>Sources:</strong> MDHHS Health Equity Data, CDC WONDER, County Health Rankings & Roadmaps, 2025 edition, CDC BRFSS. Reference year: 2023–2024. Disparity ratio = highest group value / lowest group value. See <a href="/methodology" className="text-primary hover:underline">Methodology</a>.
           </p>
         </div>
       </div>

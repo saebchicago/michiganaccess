@@ -156,7 +156,7 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
   const profile = COUNTY_PROFILES[place.parentCounty || place.name.replace(/ County$/, "")];
   let civicScoreSection = "";
   if (profile) {
-    const uninsured = parseFloat(profile.healthHighlights[0]?.value || "6.5");
+    const uninsured = parseFloat(profile.healthHighlights[0]?.value || "5");
     const food = parseFloat(profile.healthHighlights[2]?.value || String(MI_STATE_BENCHMARKS.foodInsecurityRate));
     const pcrRaw = profile.healthHighlights[1]?.value || "1500:1";
     let baseScore = 60;

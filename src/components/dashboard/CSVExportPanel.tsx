@@ -54,7 +54,7 @@ const EXPORTS = [
       const headers = ["County", "Life Expectancy", "Insured Rate %", "PCP per 100k", "Obesity Rate %", "Infant Mortality /1k", "Diabetes Rate %", "Health Rank /83"];
       const rows = COUNTY_DATA.map((c) => [c.county, c.lifeExpectancy, c.insuredRate, c.pcpPer100k, c.obesityRate, c.infantMortality, c.diabetesRate, c.healthRank]);
       const meta = [
-        "Source: County Health Rankings 2024, MDHHS Vital Records, CDC BRFSS",
+        "Source: County Health Rankings & Roadmaps, 2025 edition, MDHHS Vital Records, CDC BRFSS",
         "Reference Year: 2023-2024",
         "Documentation: https://accessmi.org/methodology",
         `Generated: ${new Date().toISOString()}`,
@@ -72,7 +72,7 @@ const EXPORTS = [
         return [d.metric, d.white, d.black, d.hispanic, d.asian, (Math.max(...vals) - Math.min(...vals)).toFixed(1)];
       });
       const meta = [
-        "Source: MDHHS Health Equity Data, CDC WONDER, County Health Rankings 2024",
+        "Source: MDHHS Health Equity Data, CDC WONDER, County Health Rankings & Roadmaps, 2025 edition",
         "Reference Year: 2023-2024",
         "Note: Disparity gap = difference between highest and lowest group value",
         "Documentation: https://accessmi.org/methodology",

@@ -16,7 +16,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
   {
     week: 0,
     text: "Rural Michigan counties have 7x fewer PCPs per capita than urban counties — yet rural residents travel 3x further for specialty care.",
-    source: "HRSA HPSA data + County Health Rankings 2024",
+    source: "HRSA HPSA data + County Health Rankings & Roadmaps, 2025 edition",
     href: "/health-equity-atlas",
     dataPoints: [
       { label: "Rural PCP ratio", value: "1:3,200", context: "vs 1:460 urban" },

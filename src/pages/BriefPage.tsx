@@ -378,7 +378,7 @@ export default function BriefPage() {
             <div className="rounded-lg border border-border bg-muted/50 p-4 print:border-border">
               <p className="text-xs text-muted-foreground flex items-start gap-1.5">
                 <FileText className="h-3.5 w-3.5 mt-0.5 shrink-0" />
-                Data drawn from County Health Rankings 2024, U.S. Census 2023, and USDA Food Environment Atlas.
+                Data drawn from County Health Rankings & Roadmaps, 2025 edition, U.S. Census 2023, and USDA Food Environment Atlas.
                 This brief is for informational purposes only.
                 <a href="/methodology" className="text-primary hover:underline ml-0.5">Full methodology →</a>
               </p>

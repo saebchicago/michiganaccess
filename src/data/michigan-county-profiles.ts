@@ -1,5 +1,6 @@
 // Population data: US Census 2023 estimates; cities: largest municipalities per county
-// Health data: County Health Rankings & Roadmaps 2024, USDA Food Environment Atlas
+// Health data: County Health Rankings & Roadmaps 2025 edition, USDA Food Environment Atlas
+// https://www.countyhealthrankings.org/health-data/michigan
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 
 export interface CountyProfile {
@@ -17,8 +18,8 @@ const h = (uninsured: string, pcratio: string, food: string, ut?: "up"|"down"|"s
 
 export const COUNTY_PROFILES: Record<string, CountyProfile> = {
   // ── Metro / Urban ──
-  Wayne:           { population: 1793561, majorCities: ["Detroit", "Dearborn", "Livonia", "Westland"], countyType: "urban", healthHighlights: h("7.2%","1,090:1","17.4%","down") },
-  Oakland:         { population: 1274395, majorCities: ["Troy", "Southfield", "Farmington Hills", "Royal Oak", "West Bloomfield Twp"], countyType: "suburban", healthHighlights: h("4.8%","810:1","10.2%","down","down") },
+  Wayne:           { population: 1793561, majorCities: ["Detroit", "Dearborn", "Livonia", "Westland"], countyType: "urban", healthHighlights: h("6%","1,360:1","17.4%","down") },
+  Oakland:         { population: 1274395, majorCities: ["Troy", "Southfield", "Farmington Hills", "Royal Oak", "West Bloomfield Twp"], countyType: "suburban", healthHighlights: h("4%","700:1","10.2%","down","down") },
   Macomb:          { population: 881217, majorCities: ["Warren", "Sterling Heights", "Clinton Twp", "Shelby Twp"], countyType: "suburban", healthHighlights: h("5.6%","1,320:1","12.1%") },
   Kent:            { population: 664564, majorCities: ["Grand Rapids", "Wyoming", "Kentwood", "Walker"], countyType: "urban", healthHighlights: h("6.8%","960:1","13.5%","down","down") },
   Genesee:         { population: 406211, majorCities: ["Flint", "Burton", "Davison", "Grand Blanc"], countyType: "urban", healthHighlights: h("7.9%","1,480:1","19.1%") },

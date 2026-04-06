@@ -68,7 +68,7 @@ const DEFINITIONS: MetricDefinition[] = [
     id: "uninsured_rate", groupId: "health_coverage",
     label: "Uninsured rate",
     subtext: "Share of residents without health insurance.",
-    tooltip: "From County Health Rankings 2024, allocated to ZIP via county mapping. Reflects civilian noninstitutionalized population.",
+    tooltip: "From County Health Rankings & Roadmaps, 2025 edition, allocated to ZIP via county mapping. Reflects civilian noninstitutionalized population.",
     unit: "%", asOfYear: 2024, sourceShort: "County Health Rankings",
   },
   {
@@ -82,7 +82,7 @@ const DEFINITIONS: MetricDefinition[] = [
     id: "food_insecurity", groupId: "health_coverage",
     label: "Food insecurity rate",
     subtext: "Share of residents who are food insecure.",
-    tooltip: "From USDA Food Environment Atlas and County Health Rankings 2024, mapped to ZIP via county.",
+    tooltip: "From USDA Food Environment Atlas and County Health Rankings & Roadmaps, 2025 edition, mapped to ZIP via county.",
     unit: "%", asOfYear: 2024, sourceShort: "USDA, CHR",
   },
 

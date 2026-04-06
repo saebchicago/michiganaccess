@@ -156,10 +156,10 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
         pattern="comparison"
         geography={geo}
         value={primary?.uninsuredRate ?? null}
-        compareValue="6.5%"
+        compareValue="5%"
         compareLabel="State average"
         icon={Users}
-        source="County Health Rankings 2024"
+        source="County Health Rankings & Roadmaps, 2025 edition"
         status={primary?.uninsuredRate ? "live" : "empty"}
         description="Percentage of residents without health insurance coverage."
       />
@@ -170,10 +170,10 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
         pattern="comparison"
         geography={geo}
         value={primary?.pcpRatio ?? null}
-        compareValue="1,280:1"
+        compareValue="1,240:1"
         compareLabel="State average"
         icon={Stethoscope}
-        source="County Health Rankings 2024"
+        source="County Health Rankings & Roadmaps, 2025 edition"
         status={primary?.pcpRatio ? "live" : "empty"}
         description="Population-to-primary care physician ratio. Lower ratios indicate better provider access (more doctors per patient)."
       />
@@ -206,7 +206,7 @@ export default function HealthAccessCards({ countyName, compareCounty }: HealthA
         compareValue={`${MI_STATE_BENCHMARKS.foodInsecurityRate}%`}
         compareLabel="State average"
         icon={MapPin}
-        source="USDA Food Environment Atlas / County Health Rankings 2024"
+        source="USDA Food Environment Atlas / County Health Rankings & Roadmaps, 2025 edition"
         status={primary?.foodInsecurity ? "live" : "empty"}
         description="Percentage of population experiencing food insecurity."
       />
