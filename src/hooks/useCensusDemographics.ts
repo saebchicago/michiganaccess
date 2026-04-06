@@ -36,7 +36,7 @@ export async function fetchZIPDemographics(zip: string): Promise<ZIPDemographics
       "B25003_001E", "B25003_002E", "B25003_003E",
     ].join(",");
 
-    const url = `https://api.census.gov/data/2022/acs/acs5?get=${vars}&for=zip%20code%20tabulation%20area:${zip}&in=state:26`;
+    const url = `https://api.census.gov/data/2022/acs/acs5?get=${vars}&for=zip%20code%20tabulation%20area:${zip}`;
     const res = await fetch(url);
     if (!res.ok) return null;
     const data = await res.json();
