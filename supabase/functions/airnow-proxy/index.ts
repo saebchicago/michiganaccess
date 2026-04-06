@@ -169,7 +169,7 @@ Deno.serve(async (req) => {
       ];
 
       // Try to get current AQI from AirNow public reporting area file
-      let bulkAqi: Record<string, number> = {};
+      const bulkAqi: Record<string, number> = {};
       try {
         const bulkResp = await fetch("https://files.airnowtech.org/airnow/today/reportingarea.dat", {
           headers: { "User-Agent": "MichiganAccess/1.0" },

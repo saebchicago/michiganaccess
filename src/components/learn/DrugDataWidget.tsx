@@ -78,7 +78,7 @@ export default function DrugDataWidget() {
     setSearched(true);
 
     try {
-      let searchTerms: string[] = [];
+      const searchTerms: string[] = [];
       if (query.trim()) {
         const q = encodeURIComponent(query.trim());
         searchTerms.push(`(openfda.brand_name:"${q}"+openfda.generic_name:"${q}")`);

@@ -135,7 +135,7 @@ const CivicDataHubPage = () => {
   });
 
   const filtered = useMemo(() => {
-    let items = DATA_CATALOG.filter(
+    const items = DATA_CATALOG.filter(
       (d) =>
         d.name.toLowerCase().includes(search.toLowerCase()) ||
         d.domain.toLowerCase().includes(search.toLowerCase()) ||
