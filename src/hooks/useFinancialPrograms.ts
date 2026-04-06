@@ -16,5 +16,6 @@ export function useFinancialPrograms(programType?: string) {
       if (error) throw error;
       return data as FinancialProgram[];
     },
+    staleTime: 60 * 60 * 1000, // 1h
   });
 }

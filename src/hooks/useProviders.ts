@@ -16,5 +16,6 @@ export function useProviders(facilityId?: string) {
       if (error) throw error;
       return data as Provider[];
     },
+    staleTime: 60 * 60 * 1000, // 1h
   });
 }

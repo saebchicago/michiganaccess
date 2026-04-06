@@ -50,5 +50,6 @@ export function useCommunityResources(resourceType?: string, county?: string | s
       if (error) throw error;
       return data as CommunityResource[];
     },
+    staleTime: 60 * 60 * 1000, // 1h
   });
 }

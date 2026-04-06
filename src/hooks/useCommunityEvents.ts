@@ -64,5 +64,6 @@ export function useCommunityEvents(filters?: {
       if (error) throw error;
       return data as CommunityEvent[];
     },
+    staleTime: 10 * 60 * 1000, // 10 min — events are more dynamic
   });
 }

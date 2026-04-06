@@ -16,5 +16,6 @@ export function useQualityMetrics(facilityIds?: string[]) {
       if (error) throw error;
       return data as QualityMetric[];
     },
+    staleTime: 30 * 60 * 1000, // 30 min
   });
 }
