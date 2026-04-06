@@ -191,11 +191,16 @@ export default function StoryPage() {
       <section className="bg-amber-50/50 dark:bg-amber-950/10 px-4 py-20">
         <div className="container max-w-4xl">
           <motion.div {...fadeIn} className="text-center mb-10">
-            {/* Source: CLOSUP/MPPS */}
+            {/* Source: CLOSUP MPPS Spring 2025 – measures LOCAL LEADERS' trust in residents, not citizens' trust in government */}
             <p className="text-2xl lg:text-3xl font-bold text-foreground leading-tight">
-              "Trust in Michigan's local government dropped from <span className="text-amber-600">65%</span> to <span className="text-red-600">40%</span> between 2020 and 2025."
+              Local leaders' trust in Michigan residents fell from <span className="text-amber-600">65%</span> to below <span className="text-red-600">40%</span> between 2020 and 2025.
             </p>
-            <p className="text-xs text-muted-foreground mt-2">Source: CLOSUP Michigan Public Policy Survey</p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Source:{" "}
+              <a href="https://closup.umich.edu/sites/closup/files/2025-11/MPPS-Spring-2025-Trust-and-Democracy.pdf" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">
+                CLOSUP Michigan Public Policy Survey, Spring 2025
+              </a>{" "}(1,328 local jurisdictions, 72% response rate)
+            </p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <motion.div {...stagger(0)}>

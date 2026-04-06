@@ -346,7 +346,8 @@ export const MICHIGAN_CIVIC_STATS = {
   womenLocalCaosPct2025: 22,
   engagementSatisfaction2012: 58,
   engagementSatisfaction2025: 38,
-  localTrustFall: "65%\u2192 40%",
+  // CLOSUP MPPS Spring 2025: measures LOCAL LEADERS' trust in RESIDENTS (not citizens' trust in government)
+  localTrustFall: "65%\u2192 <40% (leaders\u2019 trust in residents)",
   sources: [
     "Ballotpedia Analysis of Uncontested Elections 2024",
     "BallotReady 2023 Candidate Report",
