@@ -145,16 +145,166 @@
 
 ## Routes & Runtime (Phase 2)
 
-_To be populated._
+### Route sweep methodology
+- 126 lazy-loaded routes declared in `src/config/routes.ts` + static routes in `src/App.tsx`
+- All component files verified to exist on disk ✅
+- TypeScript validated all lazy imports (0 type errors) ✅
+- Playwright sweep run against 30 key routes at localhost:8080
+
+### R-001
+- **Severity:** P2 medium
+- **Category:** runtime
+- **File:** `src/pages/EnvironmentPage` (loaded in `/environment`)
+- **Description:** `/environment` timed out (15 s) during Playwright's `networkidle` wait. Root cause: FDA food enforcement API (`api.fda.gov/food/enforcement.json`) returned 404, combined with many other external API calls, prevents the page from ever reaching network idle in audit conditions. The component (`FDARecallFeed.tsx`) has proper graceful fallback (`return []` on `!res.ok`), but the 15 s timeout suggests the page has too many simultaneous external requests for low-bandwidth / slow-network users.
+- **Proposed fix:** Add `retry: false` to the FDARecallFeed query and reduce `networkTimeoutSeconds`. The FDA endpoint returning 404 should be investigated separately.
+- **Risk:** needs review
+
+---
+
+### R-002
+- **Severity:** P1 high
+- **Category:** runtime / data
+- **File:** `src/hooks/useCensusDemographics.ts:39`
+- **Description:** Census ACS API call for ZIP-level demographics includes `&in=state:26` which is an invalid parameter for ZIP Code Tabulation Area geography. The Census API returns HTTP 400 for this query, causing the hook to return `null` on every ZIP page load. Confirmed: removing `&in=state:26` returns correct data. Affects all `/zip/:zipcode` pages.
+- **Proposed fix:** Remove `&in=state:26` from the URL on line 39.
+- **Risk:** safe (the fix is a URL parameter removal; the hook already handles `null` gracefully)
+
+---
+
+### R-003
+- **Severity:** P2 medium
+- **Category:** runtime
+- **File:** `src/pages/StatusPage2` (loaded in `/status`)
+- **Description:** `/status` timed out during Playwright's `networkidle` wait. The page likely pings many external health-check endpoints simultaneously, preventing network idle. No component crash observed — only timeout.
+- **Proposed fix:** Use `waitUntil: 'domcontentloaded'` for the status page or lazy-load the health checks. Not a user-visible bug in production.
+- **Risk:** needs review
+
+---
+
+### R-004
+- **Severity:** P2 medium
+- **Category:** runtime / data
+- **File:** `src/components/alerts/FDARecallFeed.tsx:26`
+- **Description:** FDA food enforcement endpoint (`api.fda.gov/food/enforcement.json?search=state:"Michigan"...`) returns HTTP 404. The component handles this correctly (returns empty array), but the recall feed will always show empty in production until this URL is corrected.
+- **Proposed fix:** Verify the correct FDA food enforcement endpoint URL in FDA OpenAPI docs. May need to update query parameters.
+- **Risk:** needs review (data accuracy — human review preferred)
+
+---
+
+### R-005
+- **Severity:** P3 low
+- **Category:** runtime
+- **File:** `src/config/routes.ts`
+- **Description:** Two lazy imports defined in the `pages` object are not referenced in the `APP_ROUTES` table: `ImpactPage` (`@/pages/ImpactPage`) and `EquityPage` (`@/pages/EquityPage`). These modules are loaded into the module graph at startup but never rendered. `ImpactPage` has been superseded by `ImpactDashboardPage`; `EquityPage` superseded by `EquityScorecardPage`.
+- **Proposed fix:** Remove the two orphaned lazy imports from `routes.ts`. The underlying page files can be kept for reference.
+- **Risk:** safe
+
+---
+
+### R-006
+- **Severity:** P3 low
+- **Category:** runtime
+- **File:** `src/pages/HealthMapPage.tsx:45`
+- **Description:** `console.log("Navigate to:", lat, lon, name)` left in production code.
+- **Proposed fix:** Remove the statement.
+- **Risk:** safe
+
+---
+
+### Routes summary
+
+| Check | Result |
+|-------|--------|
+| Component files exist | ✅ 126/126 |
+| TypeScript validates imports | ✅ 0 errors |
+| Routes with crash (P0) | 0 |
+| Routes with P1 runtime error | 1 (R-002 — Census ZIP API 400) |
+| Routes with timeout (P2) | 2 (R-001, R-003) |
+| Orphaned lazy imports | 2 (R-005) |
 
 ---
 
 ## Links & Assets (Phase 3)
 
-_To be populated._
+### L-001
+- **Severity:** P3 low
+- **Category:** links
+- **File:** `src/config/routes.ts` (nav groups)
+- **Description:** All ~95 internal nav href values verified against the route table — no dead internal links found. All routes resolve to a registered component or a valid redirect. ✅
+
+---
+
+### L-002
+- **Severity:** P3 low
+- **Category:** assets / a11y
+- **File:** `src` (all `.tsx` files)
+- **Description:** Zero `<img>` tags found in source without `alt` attributes. All informational images use proper alt text. ✅
+
+---
+
+### L-003
+- **Severity:** P2 medium
+- **Category:** assets / external
+- **File:** `src/components/alerts/FDARecallFeed.tsx:26`
+- **Description:** External FDA recall feed URL returns 404 (see R-004). Cross-referenced in links audit.
+- **Proposed fix:** See R-004.
+- **Risk:** needs review
+
+---
+
+### L-004
+- **Severity:** P3 low
+- **Category:** assets
+- **File:** `public/`
+- **Description:** All referenced public assets verified: `favicon.ico`, `favicon.png`, `og-image.png`, `placeholder.svg`, `pwa-192x192.png`, `pwa-512x512.png`, `robots.txt`, `sitemap.xml`, `offline.html` all present. ✅
 
 ---
 
 ## Performance (Phase 4)
 
-_To be populated._
+### P-001
+- **Severity:** P2 medium
+- **Category:** performance / build
+- **File:** `dist/assets/`
+- **Description:** Several chunks exceed Vite's 500 kB pre-gzip threshold. None exceed 500 kB **gzipped** (largest: `index-DhR9Zyo7.js` at 202 kB gz, `vendor-ui-9K3zxFv6.js` at 163 kB gz). The primary `index` bundle at 675 kB (unminified) suggests the main app shell includes too much eagerly-loaded code.
+- **Proposed fix:** Audit what lives in `index` chunk; move any non-critical initialization to lazy imports.
+- **Risk:** needs review
+
+---
+
+### P-002
+- **Severity:** P2 medium
+- **Category:** performance / bundle
+- **File:** `package.json`
+- **Description:** `html2canvas` (1.4.1) is listed as a production dependency (201 kB uncompressed chunk in build output) but is not directly imported anywhere in `src/`. It appears to be a transitive requirement of `jspdf` for the `.html()` API. Since jsPDF uses dynamic imports in the codebase, html2canvas should only load lazily — but it's still added to the precache manifest (7.5 MB total precache).
+- **Proposed fix:** Verify whether html2canvas is needed. If not, remove from `package.json`; if needed by jsPDF's `.html()` method, ensure it's dynamically imported.
+- **Risk:** needs review
+
+---
+
+### P-003
+- **Severity:** P3 low
+- **Category:** performance / bundle
+- **File:** `package.json`
+- **Description:** `@mistralai/mistralai` is listed as a production dependency but is not directly imported in `src/` — all AI calls go through `src/Services/aiService.ts` which calls a Netlify function. The SDK is therefore bundled unnecessarily if Vite resolves it.
+- **Proposed fix:** Move `@mistralai/mistralai` to devDependencies or confirm it's only used in Netlify functions (where it doesn't affect the frontend bundle).
+- **Risk:** needs review
+
+---
+
+### P-004
+- **Severity:** P3 low
+- **Category:** performance / build
+- **File:** `src/components/shared/OnboardingTour.tsx`
+- **Description:** See B-001. Mixed static/dynamic import prevents code-splitting of OnboardingTour from the main bundle. The component is 2.72 kB gzipped, so impact is minor.
+- **Risk:** safe
+
+---
+
+### P-005
+- **Severity:** P2 medium
+- **Category:** performance / build
+- **File:** `package.json`
+- **Description:** PWA precache total is 7,507 kB across 344 entries. This is very large for a first-visit precache. Users on slow connections will have a poor first-install experience. jsPDF (390 kB unminified) and html2canvas (201 kB) are both precached.
+- **Proposed fix:** Scope workbox `globPatterns` more tightly; exclude heavy PDF/print assets from precache.
+- **Risk:** needs review
