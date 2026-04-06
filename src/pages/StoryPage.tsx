@@ -153,14 +153,14 @@ export default function StoryPage() {
           </motion.h2>
           <div className="space-y-6">
             {[
-              /* Source: Flex Monitoring Team */
-              { text: "35 Critical Access Hospitals serve rural Michigan", source: "Flex Monitoring Team" },
+              /* Source: Flex Monitoring Team CAH State Reports */
+              { text: "35 Critical Access Hospitals serve rural Michigan", source: "Flex Monitoring Team", url: "https://flexmonitoring.org/michigan/" },
               /* Source: CHQPR Dec 2025 */
-              { text: "13 are at risk of closure. 5 face immediate threat.", source: "CHQPR December 2025" },
+              { text: "13 are at risk of closure. 5 face immediate threat.", source: "CHQPR December 2025", url: "https://chqpr.org" },
               /* Source: Bridge Michigan / MHA */
               { text: "17+ OB units have closed since 2008", source: "Bridge Michigan / MHA" },
-              /* Source: March of Dimes 2024 */
-              { text: "18 counties are now maternity care deserts", source: "March of Dimes 2024" },
+              /* Source: March of Dimes 2024 Maternity Care Deserts Report */
+              { text: "18 counties are now maternity care deserts", source: "March of Dimes 2024", url: "https://www.marchofdimes.org/sites/default/files/2024-10/2024_Maternity_Care_Report.pdf" },
             ].map((item, i) => (
               <motion.div key={i} {...stagger(i)} className="flex items-start gap-4">
                 <div className="h-8 w-8 rounded-full bg-red-100 dark:bg-red-950/30 flex items-center justify-center shrink-0 mt-0.5">
@@ -168,7 +168,12 @@ export default function StoryPage() {
                 </div>
                 <div>
                   <p className="text-lg font-semibold text-foreground">{item.text}</p>
-                  <p className="text-[10px] text-muted-foreground">Source: {item.source}</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    Source:{" "}
+                    {item.url ? (
+                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">{item.source}</a>
+                    ) : item.source}
+                  </p>
                 </div>
               </motion.div>
             ))}

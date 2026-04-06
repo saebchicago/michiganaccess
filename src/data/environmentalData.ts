@@ -149,7 +149,9 @@ export const MICHIGAN_DISASTER_HISTORY = {
 };
 
 // ── MICHIGAN PFAS STANDARDS ──
-// Source: EGLE, Aug 3 2020; EPA MCL 2024
+// Source: EGLE groundwater standards Aug 3, 2020; EPA MCL finalized April 10, 2024 (4 ppt PFOA/PFOS drinking water)
+// Note: EPA announced review of PFNA, PFHxS MCLs in May 2025 — under reconsideration as of 2026; PFOA/PFOS 4 ppt MCLs remain in effect
+// Michigan 8/16 ppt values are the 2020 GROUNDWATER cleanup standards, which predate the 2024 federal DRINKING WATER MCLs
 
 export const PFAS_STANDARDS = [
   { contaminant: "PFOA", michigan: "8 ppt", federal: "4 ppt", michiganDate: "Aug 3, 2020", federalDate: "April 2024 MCL", source: "EGLE / EPA" },

@@ -225,7 +225,7 @@ export default function HealthEquityAtlasPage() {
           <div className="rounded-lg border border-red-200/50 dark:border-red-900/30 bg-red-50/30 dark:bg-red-950/10 p-4">
             <p className="text-2xl font-bold text-red-600 tabular-nums">18</p>
             <p className="text-xs text-muted-foreground">counties are maternity care deserts</p>
-            <p className="text-[9px] text-muted-foreground/60 mt-1">March of Dimes 2024</p>
+            <p className="text-[9px] text-muted-foreground/60 mt-1"><a href="https://www.marchofdimes.org/sites/default/files/2024-10/2024_Maternity_Care_Report.pdf" target="_blank" rel="noopener noreferrer" className="underline hover:text-muted-foreground">March of Dimes 2024</a></p>
           </div>
           <div className="rounded-lg border border-purple-200/50 dark:border-purple-900/30 bg-purple-50/30 dark:bg-purple-950/10 p-4">
             <p className="text-2xl font-bold text-purple-600 tabular-nums">13</p>

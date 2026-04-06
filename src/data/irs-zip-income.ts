@@ -1,7 +1,8 @@
 /**
  * IRS Statistics of Income, Tax Year 2021.
- * Source: irs.gov/statistics/soi-tax-stats
+ * Source: irs.gov/statistics/soi-tax-stats-zip-code-data
  * ZIP-level income, EITC, charitable giving, and self-employment data for Michigan.
+ * Note: IRS SOI TY2022 ZIP data was released October 2024 — update this file when migrating to TY2022.
  */
 
 export interface IRSZipIncome {
