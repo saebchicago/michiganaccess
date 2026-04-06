@@ -74,9 +74,9 @@ const datasets = [
 ];
 
 const equityInsights = [
-  { icon: Heart, title: "Black Infant Mortality", stat: "2.4x higher", description: "Black infants in Michigan face 2.4 times higher mortality rates than white infants.", color: "coral" as const, trend: "up" as const },
-  { icon: Users, title: "Rural Uninsured Rate", stat: "14%", description: "Rural Michiganders are twice as likely to be uninsured as urban residents.", color: "gold" as const, trend: "stable" as const },
-  { icon: AlertCircle, title: "Primary Care Shortage", stat: "23 counties", description: "Nearly a third of Michigan counties lack adequate primary care providers.", color: "teal" as const, trend: "down" as const },
+  { icon: Heart, title: "Black Infant Mortality", stat: "2.4x higher", description: "Black infants in Michigan face 2.4 times higher mortality rates than white infants.", source: "MDHHS / CDC WONDER, 2022", color: "coral" as const, trend: "up" as const },
+  { icon: Users, title: "Rural Uninsured Rate", stat: "14%", description: "Rural Michiganders are twice as likely to be uninsured as urban residents.", source: "Census ACS 2023", color: "gold" as const, trend: "stable" as const },
+  { icon: AlertCircle, title: "Primary Care Shortage", stat: "23 counties", description: "Nearly a third of Michigan counties lack adequate primary care providers.", source: "HRSA HPSA, 2024", color: "teal" as const, trend: "down" as const },
 ];
 
 const powerUserActions = [

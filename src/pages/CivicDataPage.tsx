@@ -80,10 +80,10 @@ const publicMeetings = [
 ];
 
 const getQuickStats = (t: (key: string) => string) => [
-  { icon: Landmark, label: t('civic.stateDepts'), value: "19", color: "text-primary" },
-  { icon: FileText, label: t('civic.foiaRequests'), value: "19,500", color: "text-michigan-teal" },
-  { icon: Vote, label: t('civic.voterTurnout'), value: "68.9%", color: "text-michigan-forest" },
-  { icon: DollarSign, label: t('civic.fyBudget'), value: "$60B", color: "text-michigan-gold" },
+  { icon: Landmark, label: t('civic.stateDepts'), value: "19", color: "text-primary", source: "Michigan.gov" },
+  { icon: FileText, label: t('civic.foiaRequests'), value: "19,500", color: "text-michigan-teal", source: "MI Transparency Portal" },
+  { icon: Vote, label: t('civic.voterTurnout'), value: "68.9%", color: "text-michigan-forest", source: "MI Sec. of State, Nov 2024" },
+  { icon: DollarSign, label: t('civic.fyBudget'), value: "$60B", color: "text-michigan-gold", source: "MI FY2025-26 Exec. Budget" },
 ];
 
 const CivicDataPage = () => {
@@ -123,6 +123,7 @@ const CivicDataPage = () => {
                 <div>
                   <p className="text-xl font-bold text-foreground">{stat.value}</p>
                   <p className="text-xs text-muted-foreground">{stat.label}</p>
+                  <p className="text-[9px] text-muted-foreground/50">{stat.source}</p>
                 </div>
               </motion.div>
             ))}

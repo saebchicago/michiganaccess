@@ -9,6 +9,7 @@ export interface EquityInsightCardProps {
   title: string;
   stat: string;
   description: string;
+  source?: string;
   ctaText?: string;
   ctaHref?: string;
   color: "teal" | "gold" | "coral" | "sky" | "forest";
@@ -65,6 +66,7 @@ export const EquityInsightCard = forwardRef<HTMLDivElement, EquityInsightCardPro
   title,
   stat,
   description,
+  source,
   ctaText = "Learn more",
   ctaHref = "/data-and-insights",
   color,
@@ -95,6 +97,7 @@ export const EquityInsightCard = forwardRef<HTMLDivElement, EquityInsightCardPro
           </div>
         </div>
         <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
+        {source && <p className="text-[9px] text-muted-foreground/60">Source: {source}</p>}
         {ctaHref && (
           <div className="pt-2">
             <span className={`inline-flex items-center gap-1.5 text-xs font-medium ${colors.icon} group-hover:underline transition-colors`}>
