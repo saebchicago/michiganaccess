@@ -188,8 +188,8 @@ const ForHealthSystemsPage = () => {
                 <CardContent className="py-5">
                   <h3 className="font-bold text-foreground mb-2">Corewell Health</h3>
                   <ul className="space-y-1.5 text-xs text-muted-foreground">
-                    <li>• Revenue: <strong className="text-foreground">$10.4 billion</strong></li>
-                    <li>• 22 hospitals across Michigan</li>
+                    <li>• Revenue: <strong className="text-foreground">$10.4 billion</strong> <span className="text-[9px] opacity-60">(Corewell Health FY2023 Annual Report)</span></li>
+                    <li>• 22 hospitals across Michigan <span className="text-[9px] opacity-60">(corewellhealth.org, 2024)</span></li>
                     <li>• Largest health system in Michigan</li>
                   </ul>
                 </CardContent>
@@ -198,7 +198,7 @@ const ForHealthSystemsPage = () => {
                 <CardContent className="py-5">
                   <h3 className="font-bold text-foreground mb-2">All MI Hospitals (MHA)</h3>
                   <ul className="space-y-1.5 text-xs text-muted-foreground">
-                    <li>• Combined community benefit: <strong className="text-foreground">$4.5+ billion</strong></li>
+                    <li>• Combined community benefit: <strong className="text-foreground">$4.5+ billion</strong> <span className="text-[9px] opacity-60">(MHA Community Benefit Report, system-reported)</span></li>
                     <li>• CHW Medicaid reimbursement effective Jan 2024</li>
                     <li>• 7 MDHHS SDOH Hubs launched statewide</li>
                     <li>• MVC covers ~84% of insured Michiganders</li>

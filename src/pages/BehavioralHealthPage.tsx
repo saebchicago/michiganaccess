@@ -139,7 +139,7 @@ export default function BehavioralHealthPage() {
             <div className="text-center">
               <p className="text-3xl font-bold text-amber-600 tabular-nums">155+</p>
               <p className="text-xs text-muted-foreground">patients boarding in ERs daily</p>
-              <p className="text-[9px] text-muted-foreground/60">MHA / MDHHS</p>
+              <p className="text-[9px] text-muted-foreground/60">MHA survey est. / MDHHS</p>
             </div>
             {/* Source: MDHHS 988 */}
             <div className="text-center">

@@ -119,7 +119,7 @@ export default function StoryPage() {
               /* Source: MDHHS */
               { num: "13 of 15", label: "Upper Peninsula counties with zero inpatient psych beds", source: "MDHHS CON 2024" },
               /* Source: MHA */
-              { num: "155+", label: "Patients boarding in Michigan ERs on any given day", source: "Michigan Hospital Association" },
+              { num: "155+", label: "Patients boarding in Michigan ERs on any given day", source: "Michigan Hospital Association (survey est.)" },
               /* Source: MHA / MDHHS */
               { num: "17", label: "Children waiting in ERs for behavioral health placement, daily", source: "MHA / MDHHS" },
             ].map((s, i) => (
