@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { FileText, Copy, Mail, ExternalLink, CheckCircle2, Building2, Landmark, Globe, ChevronRight, Shield, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -252,6 +253,13 @@ export default function FOIARequestBuilder() {
                 </Button>
               )}
             </div>
+            <p className="text-xs text-muted-foreground mt-2">
+              Did something about the FOIA tool not work as expected?{" "}
+              <Link to="/feedback?initial_category=suggestion" className="text-primary hover:underline">
+                Let us know at /feedback
+              </Link>
+              .
+            </p>
           </motion.div>
         )}
 

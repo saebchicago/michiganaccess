@@ -4,6 +4,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { Send, CheckCircle2, Mail, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -77,6 +78,13 @@ export default function ContactPage() {
           </motion.div>
         ) : (
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+            <p className="mb-4 rounded-md border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+              Spotted a data error or broken link?{" "}
+              <Link to="/feedback" className="font-medium text-primary hover:underline">
+                File a detailed report at /feedback
+              </Link>{" "}
+              instead.
+            </p>
             <Card>
               <CardContent className="pt-6">
                 <form onSubmit={handleSubmit} className="space-y-5" data-netlify="true" name="contact">
