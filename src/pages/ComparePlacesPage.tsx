@@ -431,6 +431,12 @@ export default function ComparePlacesPage() {
 
       <div ref={printRef} className="container max-w-6xl py-8 space-y-8">
 
+        {/* ── Data disclaimer ── */}
+        <div className="rounded-lg border border-amber-300/40 bg-amber-50/60 dark:bg-amber-950/20 px-4 py-3 text-sm text-muted-foreground print:hidden">
+          <strong className="text-foreground">Note:</strong> Community voice and insurance breakdown figures are illustrative pending live integration. Census ACS economic metrics are sourced directly from the US Census Bureau API. Source datasets are listed at{" "}
+          <a href="/data-sources" className="text-primary hover:underline">/data-sources</a>.
+        </div>
+
         {/* ── Controls ── */}
         <div className="flex flex-wrap gap-3 items-center justify-between print:hidden">
           <div className="flex flex-wrap gap-2 items-center">

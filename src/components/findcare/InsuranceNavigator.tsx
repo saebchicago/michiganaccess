@@ -7,7 +7,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronRight, ArrowLeft, RotateCcw, ShieldCheck, ExternalLink,
-  CalendarCheck, Calculator, FileUp, BookOpen, HelpCircle, Users,
+  CalendarCheck, Calculator, BookOpen, HelpCircle, Users,
   DollarSign, Briefcase, Heart, Building2, MapPin, Info,
 } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
@@ -351,11 +351,6 @@ export default function InsuranceNavigator() {
                   body={<>
                     <p className="text-xs text-muted-foreground">Employer-sponsored or marketplace plans (e.g., BCBS of Michigan). Coverage details vary by plan.</p>
                     <div className="flex flex-wrap gap-2 mt-3">
-                      <div className="flex-1 min-w-[180px] rounded-lg border-2 border-dashed border-border bg-muted/30 p-4 text-center space-y-1">
-                        <FileUp className="h-5 w-5 mx-auto text-muted-foreground/50" />
-                        <p className="text-xs font-medium text-muted-foreground">Upload EOB for Review</p>
-                        <p className="text-[10px] text-muted-foreground/60">📊 Coming soon</p>
-                      </div>
                       <Button size="sm" variant="outline" asChild className="gap-1.5 self-start">
                         <a href="/health/insurance-appeals">
                           <BookOpen className="h-3 w-3" /> Simple Guide to Appeals

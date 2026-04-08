@@ -9,6 +9,13 @@
 [functions]
   node_bundler = "esbuild"
 
+# Retired page — redirect to the live tool
+[[redirects]]
+  from = "/insurance-comparison"
+  to = "/health/insurance-appeals"
+  status = 301
+  force = true
+
 # SPA fallback: all routes serve index.html for client-side routing
 [[redirects]]
   from = "/*"

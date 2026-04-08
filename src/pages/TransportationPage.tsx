@@ -732,13 +732,6 @@ function ActiveTransportationTab() {
             icon: Users,
             color: "text-michigan-teal",
           },
-          {
-            title: "Report Missing Infrastructure",
-            description: "Community reporting for sidewalk gaps, missing curb ramps, and accessibility barriers. (Coming soon)",
-            link: "#",
-            icon: Info,
-            color: "text-michigan-coral",
-          },
         ].map((cta, i) => (
           <motion.div key={cta.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
             <Card className="hover-lift h-full">
