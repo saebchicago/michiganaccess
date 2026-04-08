@@ -8,7 +8,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { getALICEByCounty, MICHIGAN_ALICE_STATEWIDE } from "@/data/aliceData";
 
 const MICHIGAN_COUNTIES = [
   "Alcona","Alger","Allegan","Alpena","Antrim","Arenac","Baraga","Barry","Bay","Benzie",
@@ -46,20 +45,6 @@ export default function FrontDoorTriage({ onClose }: FrontDoorTriageProps) {
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
 
-  const estimateBenefits = useCallback(() => {
-    const alice = getALICEByCounty(county) ?? MICHIGAN_ALICE_STATEWIDE;
-    const householdSize = adults + children;
-    let monthly = 0;
-    // SNAP estimate: ~$234/person/month for eligible households (Source: USDA FY2025 max allotments)
-    if (need === "food" || need === "money") monthly += householdSize * 234;
-    // LIHEAP: ~$500/season average (Source: LIHEAP Clearinghouse)
-    if (need === "energy" || need === "money") monthly += Math.round(500 / 6);
-    // Medicaid: value ~$600/person/month (Source: CMS per capita cost)
-    if (!insured && (need === "healthcare" || need === "money")) monthly += householdSize * 600;
-    // Tax credits: ~$200/month for EITC-eligible (illustrative)
-    if (need === "money" && alice.combinedHardshipPct > 30) monthly += 200;
-    return monthly;
-  }, [county, need, insured, adults, children]);
 
   const handleFinish = () => {
     const selectedNeed = NEEDS.find(n => n.key === need);
@@ -171,14 +156,12 @@ export default function FrontDoorTriage({ onClose }: FrontDoorTriageProps) {
                 </div>
               </div>
 
-              {/* Benefit estimate */}
+              {/* Benefit prompt */}
               {(county || zip) && need && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                   className="mt-6 rounded-xl border border-primary/20 bg-primary/[0.03] p-4">
-                  <p className="text-xs text-muted-foreground mb-1">Based on {county || `ZIP ${zip}`}, you may qualify for up to:</p>
-                  <p className="text-3xl font-bold text-primary tabular-nums">${estimateBenefits().toLocaleString()}/mo</p>
-                  <p className="text-xs text-muted-foreground mt-1">in unclaimed benefits you're not currently receiving</p>
-                  <p className="text-[9px] text-muted-foreground/60 mt-1">Illustrative estimate based on USDA SNAP allotments, LIHEAP averages, CMS Medicaid per capita. Actual eligibility varies.</p>
+                  <p className="text-sm font-medium text-foreground">Find financial help that fits your situation.</p>
+                  <p className="text-xs text-muted-foreground mt-1">Based on {county || `ZIP ${zip}`} — see programs you may qualify for below.</p>
                 </motion.div>
               )}
 

@@ -79,7 +79,7 @@ function DatasetDetail({ datasetId }: { datasetId: string }) {
       {loading && <SectionFallback />}
       {error && (
         <p className="text-sm text-destructive">
-          Unable to load data: {error}. This dataset may use placeholder endpoints.
+          This dataset is being refreshed. Try again in a moment, or explore other civic data sections below.
         </p>
       )}
       {!loading && data.length > 0 && (

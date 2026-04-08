@@ -1,13 +1,12 @@
 import { useState, useCallback, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { MapPin, Layers, Info, Search } from "lucide-react";
+import { MapPin, Layers, Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
 import MapLayerControls, { LAYERS } from "@/components/map/MapLayerControls";
 import MapLegend from "@/components/map/MapLegend";
 import SectorOverlayControls from "@/components/map/SectorOverlayControls";
-import MapSearchControl from "@/components/map/MapSearchControl";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCounty } from "@/contexts/CountyContext";
 import { Button } from "@/components/ui/button";
@@ -41,10 +40,6 @@ export default function HealthMapPage() {
     );
   }, []);
 
-  const handleSearchLocation = useCallback((_lat: number, _lon: number, _name: string) => {
-    // TODO: implement map fly-to on location search
-  }, []);
-
   return (
     <Layout>
       <div className="relative flex h-[calc(100vh-4rem)] flex-col lg:flex-row">
@@ -64,7 +59,6 @@ export default function HealthMapPage() {
             {county && <span className="block mt-1 font-medium text-primary">Filtered: {county} County</span>}
           </p>
 
-          <MapSearchControl onLocationSelect={handleSearchLocation} />
           <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
           <SectorOverlayControls activeOverlays={activeOverlays} onToggleOverlay={toggleOverlay} />
           <NetworkFilter selectedSystem={selectedSystem} onSelect={setSelectedSystem} />
@@ -95,7 +89,6 @@ export default function HealthMapPage() {
             <SheetContent side="left" className="w-80 overflow-y-auto">
               <SheetTitle>{t('healthMap.mapLayers')}</SheetTitle>
               <div className="mt-4 flex flex-col gap-4">
-                <MapSearchControl onLocationSelect={handleSearchLocation} />
                 <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
                 <SectorOverlayControls activeOverlays={activeOverlays} onToggleOverlay={toggleOverlay} />
                 <NetworkFilter selectedSystem={selectedSystem} onSelect={setSelectedSystem} />

@@ -449,7 +449,7 @@ const EnvironmentPage = () => {
                             <ExternalLink className="h-3 w-3" /> MiLeadSafe Dashboard
                           </a>
                           <a href="https://www.safewaterengineering.com/hottopics/milslrtracker" target="_blank" rel="noopener" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
-                            <ExternalLink className="h-3 w-3" /> Planet Detroit LSLR Tracker
+                            <ExternalLink className="h-3 w-3" /> Lead Service Line Tracker (MiLeadSafe)
                           </a>
                         </div>
                       </CardContent>
