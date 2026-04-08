@@ -14,9 +14,7 @@ import { Slider } from "@/components/ui/slider";
 
 const AUDIENCE_LABELS: Record<string, string> = {
   resident: "Resident",
-  provider: "Provider",
   "health-system": "Health System",
-  policymaker: "Policymaker",
 };
 
 const SUB_PERSONA_LABELS: Record<string, string> = {

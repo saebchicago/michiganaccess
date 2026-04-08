@@ -32,7 +32,7 @@ const TIMELINE = [
 
 const PERSONAS = [
   { icon: Users, title: "Uninsured Resident", desc: "Finds free clinics, sliding-scale providers, and Medicaid enrollment help across their county — no account required.", color: "text-primary" },
-  { icon: Heart, title: "Community Health Worker", desc: "Quickly locates food pantries, housing assistance, and transportation for clients using ZIP-level search.", color: "text-destructive" },
+  { icon: Heart, title: "Caregiver or Family Member", desc: "Quickly locates food pantries, housing assistance, and transportation for loved ones using ZIP-level search.", color: "text-destructive" },
   { icon: Briefcase, title: "Hospital CHNA Team", desc: "Explores county-level health indicators, SVI scores, and facility gaps for community health needs assessments.", color: "text-[hsl(var(--michigan-teal))]" },
   { icon: ClipboardList, title: "Grant Writer", desc: "Downloads equity data, energy burden metrics, and regional comparisons for HRSA and SAMHSA applications.", color: "text-[hsl(var(--michigan-gold))]" },
 ];

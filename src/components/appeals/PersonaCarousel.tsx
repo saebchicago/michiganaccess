@@ -37,28 +37,14 @@ const PERSONAS: Persona[] = [
     icon: <MapPin className="h-6 w-6" />,
     title: "Rural Senior on Medicare",
     location: "Traverse City, Grand Traverse County",
-    situation: "Dorothy's Medicare Advantage plan denied physical therapy for her hip replacement recovery.",
+    situation: "Dorothy's Medicare Advantage plan denied physical therapy for her hip replacement recovery. Employer plans can also use the free DIFS external review process to independently overturn denials.",
     solution: "Built an appeal letter using CMS coverage criteria → peer-to-peer review → PT approved for 12 weeks.",
     successStory: "\"My doctor said the PT was critical. The appeal letter helped me explain why in terms the insurance company understood.\"",
     links: [
       { label: "Medicare appeal guide", href: "#ai-generator" },
-      { label: "Transportation help", href: "/transportation" },
+      { label: "DIFS external review", href: "#flowchart" },
     ],
     color: "bg-accent/10 text-accent",
-  },
-  {
-    id: "james",
-    icon: <Shield className="h-6 w-6" />,
-    title: "Employer Plan Worker",
-    location: "Grand Rapids, Kent County",
-    situation: "James's employer-sponsored HAP plan denied an MRI, calling it 'not medically necessary.'",
-    solution: "Filed DIFS external review with supporting documentation → independent reviewer overturned denial in 30 days.",
-    successStory: "\"I saved $3,200. The external review process was free and the reviewer actually looked at my medical records.\"",
-    links: [
-      { label: "DIFS external review", href: "#flowchart" },
-      { label: "Quality ratings", href: "/quality" },
-    ],
-    color: "bg-primary/10 text-primary",
   },
 ];
 

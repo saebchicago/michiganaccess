@@ -137,7 +137,6 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
 const PERSONA_PRIORITY: Record<string, string[]> = {
   resident: ["food", "housing", "mental_health", "transportation", "info_referral"],
   "health-system": ["mental_health", "info_referral", "veterans_seniors", "education"],
-  policymaker: ["environment", "info_referral", "disaster_prep", "education"],
 };
 
 const INITIAL_VISIBLE = 5;
@@ -365,7 +364,7 @@ export default function CommunityResourcesPage() {
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-primary" />
               <p className="text-sm font-semibold text-foreground">
-                Recommended for {audience === "policymaker" ? "Policymakers" : audience === "health-system" ? "Health Systems" : "You"}
+                Recommended for {audience === "health-system" ? "Health Systems" : "You"}
               </p>
             </div>
             <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">

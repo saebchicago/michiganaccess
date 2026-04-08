@@ -21,13 +21,16 @@ const personas = [
     name: "Maria, 34",
     role: "Uninsured Essential Worker",
     location: "Detroit",
-    context: "Two part-time service jobs, no benefits, gestational diabetes diagnosis.",
-    barriers: ["Limited transportation", "Childcare constraints", "Fear of medical debt", "Doesn't know Medicaid eligibility"],
+    context: "Two part-time service jobs, no benefits, gestational diabetes diagnosis. Immigrant community ties mean she also helps neighbors navigate care.",
+    barriers: ["Limited transportation", "Childcare constraints", "Fear of medical debt", "Doesn't know Medicaid eligibility", "Language barriers for Spanish-speaking neighbors", "Cultural mistrust from families unfamiliar with U.S. insurance systems"],
     quote: "I need to know which places won't turn me away before I waste a trip.",
     implications: [
       'FQHC "No one turned away" + hours + bus routes shown upfront',
       "Financial eligibility screener <5 clicks from homepage",
       "Mobile-first (smartphone is only internet access)",
+      "Multilingual toggle (English/Spanish/Arabic — expandable)",
+      "Cultural competency indicators on provider listings",
+      "Trust signals: community partnership acknowledgments",
     ],
     color: "border-michigan-coral/30 bg-michigan-coral/5",
     accent: "text-michigan-coral",
@@ -47,21 +50,6 @@ const personas = [
     color: "border-michigan-sky/30 bg-michigan-sky/5",
     accent: "text-michigan-sky",
   },
-  {
-    name: "Amina, 41",
-    role: "Refugee Community Health Worker",
-    location: "Grand Rapids",
-    context: "Helps Somali families navigate care, encounters language barriers and institutional distrust.",
-    barriers: ["Translation gaps", "Cultural mistrust from trauma", "Unfamiliar insurance systems"],
-    quote: "Families need to see themselves represented before they'll trust the information.",
-    implications: [
-      "Multilingual toggle (English/Spanish/Arabic — expandable)",
-      "Cultural competency indicators on provider listings",
-      "Trust signals: community partnership acknowledgments",
-    ],
-    color: "border-michigan-teal/30 bg-michigan-teal/5",
-    accent: "text-michigan-teal",
-  },
 ];
 
 const journeys = [
@@ -77,7 +65,7 @@ const journeys = [
       { emoji: "✅", label: "Take Action", desc: "Calls clinic, confirms $20 fee, books appointment" },
       { emoji: "📈", label: "Ongoing Support", desc: "Returns for diabetes education classes" },
     ],
-    insight: 'Trust signals crucial at step 5 — users verify site legitimacy before acting. Financial clarity needed upfront: not "affordable" but "$20–50 sliding scale based on income."',
+    insight: 'Trust signals crucial at step 5 — users verify site legitimacy before acting. Financial clarity needed upfront: not "affordable" but "$20–50 sliding scale based on income." Language/cultural indicators must be first-class features; trust is built through representation for immigrant and refugee community members.',
     color: "border-michigan-coral/20",
   },
   {
@@ -94,21 +82,6 @@ const journeys = [
     ],
     insight: "Information architecture must reveal optimization opportunities. Print/download features critical. Phone-first actions (not web forms).",
     color: "border-michigan-sky/20",
-  },
-  {
-    title: "Community Health Worker Crisis Navigation",
-    persona: "Amina",
-    steps: [
-      { emoji: "😰", label: "Family Crisis", desc: "Child's asthma attack, doesn't know where to go" },
-      { emoji: "🏥", label: "CHW Quick Search", desc: "Needs pediatric urgent care with interpreters" },
-      { emoji: "💚", label: "Language Indicator", desc: "Finds clinic with Somali interpretation" },
-      { emoji: "✅", label: "Cultural Validation", desc: '"Refugee Health Program" listed' },
-      { emoji: "📍", label: "Navigation Support", desc: "Uses map to guide family via rideshare" },
-      { emoji: "📚", label: "Follow-Up Resources", desc: "Asthma management, Medicaid application" },
-      { emoji: "👥", label: "Trust Built", desc: "Family seeks care proactively, refers others" },
-    ],
-    insight: "Language/cultural indicators must be first-class features. Real-time mobile usability in high-stress situations. Trust built through representation.",
-    color: "border-michigan-teal/20",
   },
 ];
 

@@ -544,12 +544,8 @@
     "personalizeFor": "Personalize content for:",
     "resident": "Resident",
     "resident_desc": "Find care, resources & benefits",
-    "provider": "Provider",
-    "provider_desc": "Referral tools & gap data",
     "health_system": "Health System",
-    "health_system_desc": "Market intelligence & ROI",
-    "policymaker": "Policymaker",
-    "policymaker_desc": "Equity metrics & impact data"
+    "health_system_desc": "Market intelligence & ROI"
   },
   "county": {
     "selectCounty": "Select your county",

@@ -18,7 +18,7 @@ export const MICHIGAN_COUNTIES = [
 
 export type MichiganCounty = (typeof MICHIGAN_COUNTIES)[number];
 
-export type Audience = "resident" | "health-system" | "policymaker";
+export type Audience = "resident" | "health-system";
 
 export type SubPersona = "caregiver" | "immigrant" | "disabled";
 
@@ -110,7 +110,10 @@ export function CountyProvider({ children }: { children: ReactNode }) {
 
   const [audience, setAudienceState] = useState<Audience | null>(() => {
     try {
-      return localStorage.getItem(AUDIENCE_STORAGE_KEY) as Audience | null;
+      const stored = localStorage.getItem(AUDIENCE_STORAGE_KEY);
+      // Migrate: "policymaker" was a third persona; coerce to null
+      if (stored === "policymaker") return null;
+      return stored as Audience | null;
     } catch {
       return null;
     }

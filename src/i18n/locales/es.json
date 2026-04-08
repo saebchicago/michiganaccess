@@ -543,12 +543,8 @@
     "personalizeFor": "Personalizar contenido para:",
     "resident": "Residente",
     "resident_desc": "Encuentra atención, recursos y beneficios",
-    "provider": "Proveedor",
-    "provider_desc": "Herramientas de derivación y datos de brecha",
     "health_system": "Sistema de salud",
-    "health_system_desc": "Inteligencia de mercado y ROI",
-    "policymaker": "Responsable de políticas",
-    "policymaker_desc": "Métricas de equidad y datos de impacto"
+    "health_system_desc": "Inteligencia de mercado y ROI"
   },
   "county": {
     "selectCounty": "Seleccione su condado",
