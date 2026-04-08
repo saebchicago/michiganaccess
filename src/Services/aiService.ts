@@ -254,12 +254,11 @@ export async function explainHealthData(
 // NEW: Pulls live data for a county across all sectors and generates a narrative
 export async function generateCountyInsightStory(
   county: string,
-  audience: "resident" | "policymaker" | "health-system" = "resident"
+  audience: "resident" | "health-system" = "resident"
 ): Promise<string> {
   const systemPrompt = `You are the Michigan Access Civic Data Engine. Given county-level data across sectors (health, environment, housing, energy, education, transit, safety, equity), generate a clear, data-driven insight story.
 
 For RESIDENT audience: explain what the numbers mean day-to-day, flag top 2-3 risks, and suggest 3-5 concrete programs to explore.
-For POLICYMAKER audience: identify 3-5 equity hotspots with overlapping burdens, suggest policy levers and cross-sector partnerships.
 For HEALTH-SYSTEM audience: highlight where clinical and social needs converge, suggest SDOH screening priorities and community referral pathways.
 
 Always: name specific Michigan programs (not generic US ones), use plain language, and close with one equity takeaway sentence a journalist could quote.`;

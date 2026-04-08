@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2 } from "lucide-react";
 
-type NarrativeRole = "resident" | "strategist" | "policymaker";
+type NarrativeRole = "resident" | "strategist";
 
 interface ZIPNarrativesProps {
   zip: string;
@@ -21,14 +21,13 @@ export default function ZIPNarratives({
   medianIncome, renterPct, lepPct, disabilityPct,
 }: ZIPNarrativesProps) {
   const [activeRole, setActiveRole] = useState<NarrativeRole>("resident");
-  const [narratives, setNarratives] = useState<Record<NarrativeRole, string>>({ resident: "", strategist: "", policymaker: "" });
+  const [narratives, setNarratives] = useState<Record<NarrativeRole, string>>({ resident: "", strategist: "" });
   const [loading, setLoading] = useState(false);
   const [generated, setGenerated] = useState(false);
 
   const PROMPTS: Record<NarrativeRole, string> = {
     resident: `Write a 2-paragraph plain-language summary for a resident of ZIP code ${zip} in ${county} County, Michigan. Population data: Equity score ${equityScore}/100 (Tier ${equityTier}). Top health concern: ${topHealthConcern}. Median income: $${medianIncome.toLocaleString()}. Write in second person. Focus on available resources. Empathetic, action-oriented. Under 120 words. Do not mention race. Label data with source year.`,
     strategist: `Write a 2-paragraph professional summary for a hospital system strategist reviewing ZIP ${zip} in ${county} County, Michigan. Equity score ${equityScore}/100 (Tier ${equityTier}). Top concern: ${topHealthConcern}. Renter rate: ${renterPct.toFixed(1)}%. LEP: ${lepPct.toFixed(1)}%. Focus on market opportunity, care gap analysis, community benefit strategy. Professional tone. Under 130 words.`,
-    policymaker: `Write a 2-paragraph policy brief for a policymaker reviewing ZIP ${zip} in ${county} County, Michigan. Equity score ${equityScore}/100 (Tier ${equityTier}). Top concern: ${topHealthConcern}. Disability rate: ${disabilityPct.toFixed(1)}%. Focus on policy levers, program eligibility, investment gaps. Under 130 words. Label statistics with source.`,
   };
 
   const generateNarratives = async () => {
@@ -36,8 +35,8 @@ export default function ZIPNarratives({
     if (!apiKey) return;
     setLoading(true);
     try {
-      const results: Record<NarrativeRole, string> = { resident: "", strategist: "", policymaker: "" };
-      for (const role of ["resident", "strategist", "policymaker"] as NarrativeRole[]) {
+      const results: Record<NarrativeRole, string> = { resident: "", strategist: "" };
+      for (const role of ["resident", "strategist"] as NarrativeRole[]) {
         try {
           const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
             method: "POST",
@@ -75,7 +74,6 @@ export default function ZIPNarratives({
             {([
               { key: "resident" as const, label: "For Residents", icon: "\u{1F464}" },
               { key: "strategist" as const, label: "For Health Systems", icon: "\u{1F3E5}" },
-              { key: "policymaker" as const, label: "For Policymakers", icon: "\u{1F4CB}" },
             ]).map(({ key, label, icon }) => (
               <button key={key} onClick={() => setActiveRole(key)}
                 className={`flex-1 text-[10px] py-1.5 px-2 rounded-lg border transition-all ${activeRole === key ? "bg-primary text-primary-foreground border-primary" : "bg-background border-border text-muted-foreground hover:bg-muted"}`}>
@@ -97,7 +95,7 @@ export default function ZIPNarratives({
       )}
 
       {!generated && !loading && (
-        <p className="text-[9px] text-muted-foreground">Click "Generate Narrative" to create AI-powered community summaries for three audiences.</p>
+        <p className="text-[9px] text-muted-foreground">Click "Generate Narrative" to create AI-powered community summaries for residents and health systems.</p>
       )}
     </div>
   );

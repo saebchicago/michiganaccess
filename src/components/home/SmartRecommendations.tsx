@@ -66,9 +66,7 @@ const CATEGORY_RECS: Record<string, { label: string; path: string; why: string }
 // Persona-based default category when no history
 const AUDIENCE_DEFAULT_CAT: Record<string, string> = {
   resident: "find-care",
-  provider: "health",
   "health-system": "health",
-  policymaker: "civic",
 };
 
 export default function SmartRecommendations() {
@@ -124,7 +122,7 @@ export default function SmartRecommendations() {
               <span className="font-medium text-foreground">{recommendations.lastVisited.label}</span>,
               others in your region also explored:</>
             ) : audience ? (
-              <>Suggested for <span className="font-medium text-foreground">{audience === "health-system" ? "health systems" : `${audience}s`}</span>:</>
+              <>Suggested for <span className="font-medium text-foreground">{audience === "health-system" ? "health systems" : "residents"}</span>:</>
             ) : (
               <>Popular resources in your area:</>
             )}

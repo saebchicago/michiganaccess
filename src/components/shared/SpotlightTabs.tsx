@@ -280,7 +280,6 @@ function CategoryGrid({ label, icon: Icon, programs, county }: { label: string; 
 // Persona → preferred categories mapping
 const PERSONA_CATEGORIES: Record<string, string[]> = {
   "health-system": ["Community", "Energy", "Education", "Transportation", "Veterans & Seniors"],
-  policymaker: ["Legal & Civic", "Environment", "Energy", "Disaster Prep"],
 };
 
 const SpotlightTabs = () => {
@@ -425,7 +424,7 @@ const SpotlightTabs = () => {
             {/* Category grids — persona-prioritized */}
             {audience && audience !== "resident" && (
               <p className="text-xs text-muted-foreground text-center mb-2">
-                Showing categories most relevant to <span className="font-medium text-foreground capitalize">{audience === "health-system" ? "health systems" : `${audience}s`}</span> first
+                Showing categories most relevant to <span className="font-medium text-foreground">health systems</span> first
               </p>
             )}
             <div className="space-y-10">

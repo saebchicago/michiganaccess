@@ -1,4 +1,4 @@
-import { User, Building2, BarChart3, Heart, Globe, Accessibility, Database } from "lucide-react";
+import { User, Building2, Heart, Globe, Accessibility } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useCounty, type Audience, type SubPersona } from "@/contexts/CountyContext";
@@ -31,15 +31,6 @@ const audienceIds: {
     desc: "Tools for navigation, planning, and equity dashboards",
     scrollTarget: "#for-organizations",
     personaView: "professional",
-  },
-  {
-    id: "policymaker",
-    icon: Database,
-    label: "Data & Research",
-    desc: "Equity metrics, statewide health data, and county comparisons",
-    scrollTarget: "#community-health-equity",
-    personaView: "professional",
-    badge: "NEW",
   },
 ] as const;
 
