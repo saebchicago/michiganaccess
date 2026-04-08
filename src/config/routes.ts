@@ -159,6 +159,7 @@ const pages = {
   CivicBoardsPage: lazy(() => import("@/pages/CivicBoardsPage")),
   CivicRacesPage: lazy(() => import("@/pages/CivicRacesPage")),
   CivicFederalPage: lazy(() => import("@/pages/CivicFederalPage")),
+  FeedbackPage: lazy(() => import("@/pages/FeedbackPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -190,6 +191,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/datasets", component: pages.DatasetExplorerPage, label: "Dataset Explorer" },
   { path: "/transportation", component: pages.TransportationPage, label: "Transportation" },
   { path: "/contact", component: pages.ContactPage, label: "Contact" },
+  { path: "/feedback", component: pages.FeedbackPage, label: "Help us improve" },
   { path: "/environment", component: pages.EnvironmentPage, label: "Environment" },
   { path: "/health", component: pages.DomainDashboardPage, label: "Health Intelligence" },
   { path: "/housing", component: pages.DomainDashboardPage, label: "Housing Intelligence" },
