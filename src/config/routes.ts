@@ -373,7 +373,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     ],
   },
   {
-    label: "Planet Michigan",
+    label: "Environment",
     children: [
       { label: "Environment Overview", href: "/environment" },
       { label: "Water Safety & PFAS", href: "/environment/water", badge: "New" },

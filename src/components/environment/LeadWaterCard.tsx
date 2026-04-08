@@ -20,7 +20,7 @@ export default function LeadWaterCard() {
               <a href="https://www.michigan.gov/egle/about/featured/mi-lead-safe" target="_blank" rel="noopener">MiLeadSafe Dashboard <ExternalLink className="ml-1 h-3 w-3" /></a>
             </Button>
             <Button variant="outline" size="sm" className="text-xs" asChild>
-              <a href="https://www.safewaterengineering.com/hottopics/milslrtracker" target="_blank" rel="noopener">Planet Detroit Tracker <ExternalLink className="ml-1 h-3 w-3" /></a>
+              <a href="https://www.safewaterengineering.com/hottopics/milslrtracker" target="_blank" rel="noopener">Lead Service Line Tracker (MiLeadSafe) <ExternalLink className="ml-1 h-3 w-3" /></a>
             </Button>
           </div>
           <p className="text-[10px] text-muted-foreground">Source: EGLE Lead & Copper Rule, MiLeadSafe, MiTracking</p>

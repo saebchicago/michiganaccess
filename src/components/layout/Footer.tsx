@@ -83,7 +83,7 @@ const Footer = () => {
       ],
     },
     {
-      title: "Planet Michigan",
+      title: "Environment",
       links: [
         { label: "Environment", href: "/environment" },
         { label: "Water Safety & PFAS", href: "/environment/water" },

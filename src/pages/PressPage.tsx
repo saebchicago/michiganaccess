@@ -42,11 +42,6 @@ const FACTS = [
   { label: "Live Feeds", value: "AirNow, USGS, NWS, NPPES, FDA" },
 ];
 
-const COVERAGE = [
-  { outlet: "Michigan Health & Hospital Association", type: "Industry" },
-  { outlet: "Bridge Michigan", type: "News" },
-  { outlet: "Michigan Municipal League", type: "Civic" },
-];
 
 export default function PressPage() {
   usePageMeta({
@@ -149,17 +144,7 @@ export default function PressPage() {
         {/* Coverage */}
         <section>
           <h2 className="text-lg font-bold text-foreground mb-3">Coverage & Mentions</h2>
-          <div className="space-y-2">
-            {COVERAGE.map((c) => (
-              <div key={c.outlet} className="flex items-center justify-between py-2 border-b border-border last:border-0">
-                <span className="text-sm text-foreground">{c.outlet}</span>
-                <Badge variant="secondary" className="text-[10px]">{c.type}</Badge>
-              </div>
-            ))}
-          </div>
-          <p className="text-[10px] text-muted-foreground mt-2">
-            Coverage list is illustrative. Platform is in active outreach phase.
-          </p>
+          <p className="text-sm text-muted-foreground">Press inquiries welcome — outreach in progress.</p>
         </section>
       </div>
     </Layout>
