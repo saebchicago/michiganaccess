@@ -10,6 +10,11 @@ const CHANGE_LOG = [
     description:
       "Initial methodology published. Proportional county allocation from MLPP/CBO state estimate. GAO-19-56 uncertainty band ±40%.",
   },
+  {
+    date: "2026-04-09",
+    description:
+      "Source corrections: removed KFF citation (original URL 404, no equivalent live article found); updated USDA FNS E&T URL to fns.usda.gov/snap-et; removed ACS B22002 citation (not a model input — county allocation denominator is USDA FNS FY2022 data from Feature 1); updated technical step 3 to name the correct denominator source.",
+  },
 ];
 
 export default function SnapCoverageAtRiskMethodology() {
@@ -81,23 +86,6 @@ export default function SnapCoverageAtRiskMethodology() {
             </div>
 
             <div className="border-l-2 border-border pl-4">
-              <p className="font-medium">KFF: SNAP Provisions in the One Big Beautiful Bill</p>
-              <p className="text-muted-foreground">
-                KFF (Kaiser Family Foundation), 2025.{" "}
-                <a
-                  href="https://www.kff.org/medicaid/issue-brief/snap-provisions-in-the-one-big-beautiful-bill/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-primary"
-                >
-                  kff.org — SNAP provisions analysis
-                </a>{" "}
-                — Independent analysis of P.L. 119-21 provisions, including expanded work
-                requirements and administrative cost shifts. Accessed April 2026.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-border pl-4">
               <p className="font-medium">CBPP: SNAP Fact Sheet — Michigan</p>
               <p className="text-muted-foreground">
                 Center on Budget and Policy Priorities, 2025.{" "}
@@ -155,42 +143,20 @@ export default function SnapCoverageAtRiskMethodology() {
             </div>
 
             <div className="border-l-2 border-border pl-4">
-              <p className="font-medium">USDA FNS: Employment and Training (E&T) Program Data</p>
+              <p className="font-medium">USDA FNS: SNAP Employment and Training</p>
               <p className="text-muted-foreground">
                 U.S. Department of Agriculture Food and Nutrition Service.{" "}
                 <a
-                  href="https://www.fns.usda.gov/snap/employment-training-program-data"
+                  href="https://www.fns.usda.gov/snap-et"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  fns.usda.gov/snap/employment-training-program-data
+                  fns.usda.gov/snap-et
                 </a>{" "}
-                — Michigan E&T capacity data, including slots funded and participation rates.
-                Used to contextualize the gap between work requirement imposition and actual
-                E&T slot availability. Accessed April 2026.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-border pl-4">
-              <p className="font-medium">
-                Census ACS 5-year 2022: B22002 — Receipt of Food Stamps/SNAP by Presence of
-                Children Under 18 Years by Household Type
-              </p>
-              <p className="text-muted-foreground">
-                U.S. Census Bureau, American Community Survey.{" "}
-                <a
-                  href="https://data.census.gov/table/ACSDT5Y2022.B22002"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-primary"
-                >
-                  data.census.gov — B22002
-                </a>{" "}
-                — County-level SNAP household counts by household type; used as the
-                denominator for county enrollment share calculations. Note: B22002 measures
-                households that received SNAP in the past 12 months (ACS survey period) —
-                a different metric than FNS average monthly participants. Accessed April 2026.
+                — SNAP E&T program overview, including state plan requirements and
+                participation data. Used to contextualize the gap between work requirement
+                imposition and actual E&T slot availability. Accessed April 2026.
               </p>
             </div>
 
@@ -256,12 +222,14 @@ export default function SnapCoverageAtRiskMethodology() {
                 <code className="bg-muted px-1 rounded text-xs">
                   county_enrollment / sum(all_county_enrollments) × 74,000
                 </code>
-                . This uses straight enrollment share as a proxy for adult ABAWD share at the
-                county level. The simplification is documented here: the FNS county-level data
-                (FY2022) does not break enrollment down by ABAWD eligibility category. A more
-                precise allocation would require county-level ACS PUMS microdata on SNAP
-                participation by age, household type, and employment status. That data is not
-                publicly available at county level in published tables.
+                . The enrollment figures are USDA FNS FY2022 county-level annual average
+                monthly participants, as surfaced in the Feature 1 fallback data
+                (snapMichiganFallback.ts). This uses straight enrollment share as a proxy for
+                adult ABAWD share at the county level. The simplification is documented here:
+                the FNS county-level data (FY2022) does not break enrollment down by ABAWD
+                eligibility category. A more precise allocation would require county-level ACS
+                PUMS microdata on SNAP participation by age, household type, and employment
+                status. That data is not publicly available at county level in published tables.
               </li>
               <li>
                 <strong className="text-foreground">Uncertainty band</strong> — GAO-19-56 examined

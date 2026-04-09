@@ -72,12 +72,12 @@ describe("SnapCoverageAtRiskMethodology", () => {
     expect(gaoLinks.length).toBeGreaterThan(0);
   });
 
-  it("renders KFF source link", () => {
+  it("renders USDA FNS E&T source link", () => {
     renderPage();
-    const kffLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.includes("kff.org")
+    const fnsLinks = screen.getAllByRole("link").filter(
+      (el) => el.getAttribute("href")?.includes("fns.usda.gov/snap-et")
     );
-    expect(kffLinks.length).toBeGreaterThan(0);
+    expect(fnsLinks.length).toBeGreaterThan(0);
   });
 
   it("renders Projection methodology section", () => {
@@ -101,10 +101,11 @@ describe("SnapCoverageAtRiskMethodology", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders Change log section with initial 2026-04-09 entry", () => {
+  it("renders Change log section with 2026-04-09 entries", () => {
     renderPage();
     expect(screen.getByRole("heading", { name: /Change log/i })).toBeInTheDocument();
-    expect(screen.getByText("2026-04-09")).toBeInTheDocument();
+    const dateCells = screen.getAllByText("2026-04-09");
+    expect(dateCells.length).toBeGreaterThanOrEqual(1);
   });
 
   it("renders back link to /data/snap-coverage-at-risk", () => {
