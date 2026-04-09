@@ -15,6 +15,7 @@
   <url><loc>https://accessmi.org/wellness</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://accessmi.org/news</loc><changefreq>daily</changefreq><priority>0.7</priority></url>
   <url><loc>https://accessmi.org/health-map</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://accessmi.org/closure-watch</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://accessmi.org/data</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://accessmi.org/civic-data</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
   <url><loc>https://accessmi.org/equity</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
