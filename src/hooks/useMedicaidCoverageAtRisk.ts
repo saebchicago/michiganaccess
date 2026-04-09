@@ -15,6 +15,9 @@ export function useMedicaidCoverageAtRisk() {
       // fresher Urban Institute / ACS data. Interface remains MedicaidCoverageRangeEntry[].
       return MEDICAID_COVERAGE_AT_RISK_FALLBACK;
     },
+    // initialData ensures first paint has complete data — avoids isLoading:true on first
+    // render which can cause a repaint race with Layout's Framer Motion opacity animation.
+    initialData: MEDICAID_COVERAGE_AT_RISK_FALLBACK,
     staleTime: 24 * 60 * 60 * 1000, // 24 hours — projection re-runs are infrequent
     retry: 1,
   });

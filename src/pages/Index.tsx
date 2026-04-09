@@ -261,6 +261,36 @@ const Index = () => {
         </div>
       </section>
 
+      {/* ═══ COVERAGE AT RISK ═══ */}
+      <section className="py-5 border-b border-border/40">
+        <div className="container max-w-5xl">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">P.L. 119-21 Impact Projections</p>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            <Link to="/data/medicaid-coverage-at-risk" className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group">
+              <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+              <div>
+                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Medicaid Coverage at Risk</span>
+                <p className="text-xs text-muted-foreground">County-level exposure estimates under P.L. 119-21 work requirement provisions</p>
+              </div>
+            </Link>
+            <Link to="/data/snap-coverage-at-risk" className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group">
+              <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+              <div>
+                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">SNAP Coverage at Risk</span>
+                <p className="text-xs text-muted-foreground">County-level exposure estimates under P.L. 119-21 ABAWD provisions</p>
+              </div>
+            </Link>
+            <Link to="/closure-watch" className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group">
+              <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+              <div>
+                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Closure Watch</span>
+                <p className="text-xs text-muted-foreground">Michigan hospital and clinic closure tracking and early warning signals</p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ RESEARCH & COMPARE ═══ */}
       <section className="py-8 bg-muted/20 border-y border-border/40">
         <div className="container max-w-5xl">

@@ -344,6 +344,22 @@ export default function SnapCoverageAtRiskPage() {
           </div>
         </section>
 
+        {/* ── Related analyses ── */}
+        <section className="rounded-lg border border-border bg-muted/20 px-5 py-4 space-y-2">
+          <h2 className="text-sm font-semibold text-foreground">Related coverage-at-risk analyses</h2>
+          <ul className="space-y-1 text-sm text-muted-foreground">
+            <li>
+              <Link to="/data/medicaid-coverage-at-risk" className="text-primary hover:underline font-medium">
+                Medicaid Coverage at Risk
+              </Link>
+              {" "}— county-level exposure to P.L. 119-21 work requirement provisions{" "}
+              <Link to="/methodology/medicaid-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
+                (methodology)
+              </Link>
+            </li>
+          </ul>
+        </section>
+
         {/* ── Methodology link ── */}
         <div className="pt-2 border-t border-border flex items-center justify-between gap-4">
           <Link

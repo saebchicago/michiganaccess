@@ -235,6 +235,39 @@ export default function DataAndInsightsPage() {
               </Link>
             </div>
 
+            {/* ── Policy Impact Projections ── */}
+            <div>
+              <h3 className="text-base font-semibold text-foreground mb-3">Policy Impact Projections</h3>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Link to="/data/medicaid-coverage-at-risk">
+                  <Card className="hover:shadow-md hover:border-primary/20 transition-all cursor-pointer group h-full">
+                    <CardContent className="py-5 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <AlertCircle className="h-5 w-5 text-amber-600" />
+                        <Badge variant="outline" className="text-[10px]">V2</Badge>
+                      </div>
+                      <h4 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">Medicaid Coverage at Risk</h4>
+                      <p className="text-xs text-muted-foreground">County-level exposure estimates for Michigan adults under P.L. 119-21 work requirement provisions. Urban Institute March 2026.</p>
+                      <span className="text-xs text-primary font-medium flex items-center gap-1">View projections <ChevronRight className="h-3 w-3" /></span>
+                    </CardContent>
+                  </Card>
+                </Link>
+                <Link to="/data/snap-coverage-at-risk">
+                  <Card className="hover:shadow-md hover:border-primary/20 transition-all cursor-pointer group h-full">
+                    <CardContent className="py-5 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <AlertCircle className="h-5 w-5 text-amber-600" />
+                        <Badge variant="outline" className="text-[10px]">V3</Badge>
+                      </div>
+                      <h4 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">SNAP Coverage at Risk</h4>
+                      <p className="text-xs text-muted-foreground">County-level exposure estimates for Michigan SNAP participants under P.L. 119-21 ABAWD provisions. MLPP/CBO April 2026.</p>
+                      <span className="text-xs text-primary font-medium flex items-center gap-1">View projections <ChevronRight className="h-3 w-3" /></span>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
+            </div>
+
             {/* County Choropleth */}
             <Suspense fallback={<SectionFallback />}>
               <div className="max-w-4xl mx-auto">

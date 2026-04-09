@@ -118,12 +118,12 @@ export default function MedicaidCoverageAtRiskMethodology() {
               <p className="text-muted-foreground">
                 Congressional Budget Office, July 2025 (pub. 61570).{" "}
                 <a
-                  href="https://www.cbo.gov/system/files/2025-07/61570-Medicaid.pdf"
+                  href="https://www.cbo.gov/publication/61570"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  cbo.gov — pub. 61570 Medicaid scoring
+                  cbo.gov — pub. 61570 publication landing page
                 </a>{" "}
                 — National baseline: 7.5 million coverage loss by 2034; $326 billion federal
                 savings from work requirements specifically; $63 billion / 700,000 coverage loss
@@ -134,7 +134,8 @@ export default function MedicaidCoverageAtRiskMethodology() {
 
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                GAO-20-149: Medicaid — Key Considerations for Work Requirement Policies
+                GAO-20-149: Medicaid — Actions Needed to Address Weaknesses in Oversight of
+                Costs to Administer Work Requirements
               </p>
               <p className="text-muted-foreground">
                 U.S. Government Accountability Office, 2020.{" "}
@@ -146,10 +147,11 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 >
                   gao.gov/products/gao-20-149
                 </a>{" "}
-                — Canonical 25% Medicaid coverage loss benchmark from Arkansas work requirement
-                implementation. Urban Institute's methodology is grounded in the same Arkansas
-                evidence base. Cited here as a methodology reference, not as an independent
-                uncertainty band input. Accessed April 2026.
+                — GAO-20-149 documents the administrative costs Arkansas and other states incurred
+                to implement Medicaid work requirements. Cited here for context on implementation
+                burden, not as a source for coverage loss estimates. Coverage loss figures
+                (approximately 18,000 Arkansas disenrollees) come from Sommers et al. NEJM 2019
+                (source 5 below). Accessed April 2026.
               </p>
             </div>
 
@@ -308,8 +310,17 @@ export default function MedicaidCoverageAtRiskMethodology() {
               The work-requirements-only scope does not model separate coverage loss from
               redetermination changes ($63B / 700,000 nationally per CBO pub. 61570) or provider
               tax restrictions. Those provisions would increase projected coverage loss beyond
-              this range. MDHHS (August 2025) cites &gt;500,000 Michiganders at risk across all
-              P.L. 119-21 Medicaid provisions combined.
+              this range.{" "}
+              <a
+                href="https://www.michigan.gov/mdhhs/-/media/Project/Websites/mdhhs/Assistance-Programs/Medicaid/MDHHS-Presentation---SNAPMA---HR1.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-primary"
+              >
+                MDHHS (August 2025)
+              </a>{" "}
+              estimates &gt;500,000 Michiganders at risk across all P.L. 119-21 Medicaid
+              provisions combined.
             </li>
             <li>
               For small counties (Keweenaw, Luce, Ontonagon, Schoolcraft), ACS margins of error

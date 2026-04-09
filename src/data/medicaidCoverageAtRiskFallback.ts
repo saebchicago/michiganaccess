@@ -18,6 +18,7 @@
 //   Michigan range: 171,000–355,000 by 2028 (work requirement provisions only)
 //   https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work
 // Secondary reference: CBO pub. 61570 (July 2025) — national baseline
+//   https://www.cbo.gov/publication/61570
 //   7.5M coverage loss by 2034; $326B federal savings from work requirements
 // Re-compute when: Urban Institute, CBPP, or MLPP publish updated Michigan-specific
 //                  P.L. 119-21 analyses. Check quarterly (per V2_DESIGN.md Feature 3 note).

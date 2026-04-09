@@ -151,13 +151,18 @@ const Header = () => {
                           key={child.href}
                           to={child.href}
                           onClick={() => setMobileOpen(false)}
-                          className={`block rounded-md px-3 py-2.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+                          className={`flex items-center justify-between gap-2 rounded-md px-3 py-2.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                             location.pathname === child.href
                               ? "bg-primary/10 font-medium text-primary"
                               : "text-muted-foreground hover:bg-muted hover:text-foreground"
                           }`}
                         >
-                          {child.label}
+                          <span>{child.label}</span>
+                          {child.badge && (
+                            <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold text-primary leading-none shrink-0">
+                              {child.badge}
+                            </span>
+                          )}
                         </Link>
                       ))}
                     </div>
@@ -376,13 +381,18 @@ function DropdownNav({ label, items, currentPath }: { label: string; items: NavL
                 onKeyDown={(e) => handleItemKeyDown(e, index)}
                 role="menuitem"
                 tabIndex={open ? 0 : -1}
-                className={`block rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
+                className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
                   isRouteActive(currentPath, child.href)
                     ? "font-medium text-primary"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                {child.label}
+                <span>{child.label}</span>
+                {child.badge && (
+                  <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold text-primary leading-none shrink-0">
+                    {child.badge}
+                  </span>
+                )}
               </Link>
             ))}
           </motion.div>

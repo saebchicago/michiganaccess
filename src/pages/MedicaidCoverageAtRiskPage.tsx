@@ -33,11 +33,13 @@ function StatCard({
   icon,
   value,
   label,
+  scope,
   provenance,
 }: {
   icon: React.ReactNode;
   value: string | number;
   label: string;
+  scope?: string;
   provenance: React.ReactNode;
 }) {
   return (
@@ -48,6 +50,9 @@ function StatCard({
           <div className="flex-1 min-w-0">
             <p className="text-2xl font-bold text-foreground tabular-nums">{value}</p>
             <p className="text-xs text-muted-foreground leading-tight">{label}</p>
+            {scope && (
+              <p className="text-xs text-muted-foreground mt-0.5 leading-tight">{scope}</p>
+            )}
             <div className="mt-1">{provenance}</div>
           </div>
         </div>
@@ -162,7 +167,7 @@ export default function MedicaidCoverageAtRiskPage() {
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
             <div className="space-y-2">
-              <h2 className="text-lg font-semibold text-amber-900 dark:text-amber-300">
+              <h2 className="text-xl font-semibold text-amber-900 dark:text-amber-300">
                 Exposure is not disenrollment
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -189,6 +194,7 @@ export default function MedicaidCoverageAtRiskPage() {
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "171,000–355,000"}
               label="Michigan adults in categories affected by P.L. 119-21 work requirement provisions (Urban Institute projection, 2028 horizon)"
+              scope="Work requirement provisions only"
               provenance={
                 <DataProvenance
                   sourceName="Urban Institute — P.L. 119-21 Medicaid work requirements"
@@ -205,6 +211,7 @@ export default function MedicaidCoverageAtRiskPage() {
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "$31.6 billion"}
               label="Michigan federal Medicaid spending reduction over 10 years under P.L. 119-21 (KFF, December 2025)"
+              scope="All P.L. 119-21 Medicaid provisions"
               provenance={
                 <DataProvenance
                   sourceName="KFF — Allocating CBO's Federal Medicaid Spending Reductions"
@@ -221,11 +228,12 @@ export default function MedicaidCoverageAtRiskPage() {
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "83"}
               label="Michigan counties — complete statewide coverage (all 83)"
+              scope="Statewide coverage"
               provenance={
                 <DataProvenance
-                  sourceName="Michigan county count (fixed)"
-                  sourceUrl="https://data.census.gov/table/ACSDT5Y2023.C27007"
-                  asOfDate="ACS 2023 5-year"
+                  sourceName="U.S. Census Bureau county list"
+                  sourceUrl="https://www.census.gov/library/reference/code-lists/ansi.html"
+                  asOfDate="2026"
                   cadence="Static — 83 Michigan counties"
                   dataKind="measured"
                   compact
@@ -348,6 +356,22 @@ export default function MedicaidCoverageAtRiskPage() {
               </tfoot>
             </table>
           </div>
+        </section>
+
+        {/* ── Related analyses ── */}
+        <section className="rounded-lg border border-border bg-muted/20 px-5 py-4 space-y-2">
+          <h2 className="text-sm font-semibold text-foreground">Related coverage-at-risk analyses</h2>
+          <ul className="space-y-1 text-sm text-muted-foreground">
+            <li>
+              <Link to="/data/snap-coverage-at-risk" className="text-primary hover:underline font-medium">
+                SNAP Coverage at Risk
+              </Link>
+              {" "}— county-level exposure to P.L. 119-21 ABAWD provisions{" "}
+              <Link to="/methodology/snap-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
+                (methodology)
+              </Link>
+            </li>
+          </ul>
         </section>
 
         {/* ── Methodology link ── */}
