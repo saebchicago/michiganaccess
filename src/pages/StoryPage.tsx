@@ -290,7 +290,7 @@ export default function StoryPage() {
             ))}
           </div>
           <motion.p {...fadeIn} className="text-center text-sm text-muted-foreground mt-8">
-            accessmi.org — Free. Open. For every Michigander.
+            accessmi.org — Independent Michigan civic intelligence. Built by and for fellow Michiganders.
           </motion.p>
         </div>
       </section>
