@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpDown, AlertTriangle, Users } from "lucide-react";
+import { ArrowUpDown, AlertTriangle, Users, Download } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,7 @@ import { ProvenanceDisclaimer } from "@/components/shared/ProvenanceDisclaimer";
 import { DataProvenance } from "@/components/shared/DataProvenance";
 import { useSnapCoverageAtRisk } from "@/hooks/useSnapCoverageAtRisk";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { exportSnapCoverageAtRiskCsv } from "@/lib/csv-export";
 import type { SnapCoverageRangeEntry } from "@/data/snapCoverageAtRiskFallback";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -95,6 +96,21 @@ export default function SnapCoverageAtRiskPage() {
     title: "SNAP Coverage at Risk | accessmi.org",
     description:
       "County-level modeled ranges of Michigan SNAP participants in categories affected by P.L. 119-21 work requirement provisions. Not a point estimate. Exposure does not equal loss.",
+    path: "/data/snap-coverage-at-risk",
+    jsonLd: {
+      "@type": "Dataset",
+      "name": "Michigan SNAP Coverage at Risk — P.L. 119-21 County Projections",
+      "description":
+        "County-level modeled ranges of Michigan SNAP participants in categories affected by P.L. 119-21 work requirement provisions. Based on MLPP Michigan estimate (74,000), allocated by county enrollment share with ±40% GAO-19-56 uncertainty band.",
+      "url": "https://accessmi.org/data/snap-coverage-at-risk",
+      "creator": { "@type": "Organization", "name": "accessmi.org", "url": "https://accessmi.org" },
+      "datePublished": "2026-04-09",
+      "dateModified": "2026-04-09",
+      "spatialCoverage": "Michigan",
+      "keywords": ["SNAP", "Michigan", "P.L. 119-21", "work requirements", "county projections"],
+      "measurementTechnique":
+        "Proportional county allocation from MLPP Michigan state estimate (74,000) with ±40% GAO-19-56 uncertainty band",
+    },
   });
 
   const { data, isLoading } = useSnapCoverageAtRisk();
@@ -166,7 +182,7 @@ export default function SnapCoverageAtRiskPage() {
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
             <div className="space-y-2">
-              <h2 className="text-lg font-semibold text-amber-900 dark:text-amber-300">
+              <h2 className="text-xl font-semibold text-amber-900 dark:text-amber-300">
                 Exposure does not equal loss
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -237,9 +253,19 @@ export default function SnapCoverageAtRiskPage() {
         <section className="space-y-3">
           <div className="flex items-center justify-between gap-4">
             <h2 className="text-xl font-semibold">County breakdown</h2>
-            <p className="text-xs text-muted-foreground">
-              Modeled range — not a point estimate
-            </p>
+            <div className="flex items-center gap-3">
+              <p className="text-xs text-muted-foreground hidden sm:block">
+                Modeled range — not a point estimate
+              </p>
+              <button
+                onClick={() => exportSnapCoverageAtRiskCsv(entries)}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors border border-border rounded px-2.5 py-1.5"
+                title="Download county data as CSV"
+              >
+                <Download className="h-3 w-3" />
+                CSV
+              </button>
+            </div>
           </div>
 
           <div className="rounded-lg border border-border overflow-x-auto">

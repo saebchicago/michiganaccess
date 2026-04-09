@@ -146,6 +146,15 @@ const Index = () => {
     description:
       "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
     path: "/",
+    jsonLd: {
+      "@type": "Organization",
+      "name": "accessmi.org",
+      "alternateName": "Access Michigan",
+      "url": "https://accessmi.org",
+      "description":
+        "Independent civic data resource organizing health, housing, energy, transportation, and legal services for all 83 Michigan counties.",
+      "areaServed": { "@type": "State", "name": "Michigan", "sameAs": "https://www.wikidata.org/wiki/Q1166" },
+    },
   });
 
   return (

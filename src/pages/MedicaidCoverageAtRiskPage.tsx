@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpDown, AlertTriangle, Users } from "lucide-react";
+import { ArrowUpDown, AlertTriangle, Users, Download } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,6 +9,7 @@ import { ProvenanceDisclaimer } from "@/components/shared/ProvenanceDisclaimer";
 import { DataProvenance } from "@/components/shared/DataProvenance";
 import { useMedicaidCoverageAtRisk } from "@/hooks/useMedicaidCoverageAtRisk";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { exportMedicaidCoverageAtRiskCsv } from "@/lib/csv-export";
 import type { MedicaidCoverageRangeEntry } from "@/data/medicaidCoverageAtRiskFallback";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -96,6 +97,22 @@ export default function MedicaidCoverageAtRiskPage() {
     title: "Medicaid Coverage at Risk | accessmi.org",
     description:
       "County-level modeled ranges of Michigan Medicaid enrollees in categories affected by P.L. 119-21 work requirement provisions. Not a point estimate. Exposure is not disenrollment.",
+    path: "/data/medicaid-coverage-at-risk",
+    jsonLd: {
+      "@type": "Dataset",
+      "name": "Michigan Medicaid Coverage at Risk — P.L. 119-21 County Projections",
+      "description":
+        "County-level modeled ranges of Michigan Medicaid enrollees in categories affected by P.L. 119-21 work requirement provisions. Urban Institute Michigan projection (171,000–355,000) allocated proportionally by ACS C27007 5-year 2023 county enrollment share.",
+      "url": "https://accessmi.org/data/medicaid-coverage-at-risk",
+      "creator": { "@type": "Organization", "name": "accessmi.org", "url": "https://accessmi.org" },
+      "datePublished": "2026-04-09",
+      "dateModified": "2026-04-09",
+      "spatialCoverage": "Michigan",
+      "temporalCoverage": "2023/2028",
+      "keywords": ["Medicaid", "Michigan", "P.L. 119-21", "work requirements", "county projections"],
+      "measurementTechnique":
+        "Proportional county allocation from Urban Institute Michigan statewide projection (March 2026)",
+    },
   });
 
   const { data, isLoading } = useMedicaidCoverageAtRisk();
@@ -247,9 +264,19 @@ export default function MedicaidCoverageAtRiskPage() {
         <section className="space-y-3">
           <div className="flex items-center justify-between gap-4">
             <h2 className="text-xl font-semibold">County breakdown</h2>
-            <p className="text-xs text-muted-foreground">
-              Modeled range — not a point estimate
-            </p>
+            <div className="flex items-center gap-3">
+              <p className="text-xs text-muted-foreground hidden sm:block">
+                Modeled range — not a point estimate
+              </p>
+              <button
+                onClick={() => exportMedicaidCoverageAtRiskCsv(entries)}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors border border-border rounded px-2.5 py-1.5"
+                title="Download county data as CSV"
+              >
+                <Download className="h-3 w-3" />
+                CSV
+              </button>
+            </div>
           </div>
 
           <div className="rounded-lg border border-border overflow-x-auto">

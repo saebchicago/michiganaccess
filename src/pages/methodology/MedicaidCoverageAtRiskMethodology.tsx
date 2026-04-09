@@ -23,6 +23,18 @@ export default function MedicaidCoverageAtRiskMethodology() {
     title: "Methodology: Medicaid Coverage at Risk | accessmi.org",
     description:
       "How accessmi.org models county-level Medicaid exposure ranges under P.L. 119-21 work requirement provisions.",
+    path: "/methodology/medicaid-coverage-at-risk",
+    jsonLd: {
+      "@type": "TechArticle",
+      "headline": "Methodology: Medicaid Coverage at Risk — Michigan County Projections",
+      "description":
+        "How county-level Medicaid exposure ranges are computed under P.L. 119-21 work requirement provisions. Proportional allocation from Urban Institute Michigan statewide projection using ACS C27007 county enrollment shares.",
+      "url": "https://accessmi.org/methodology/medicaid-coverage-at-risk",
+      "datePublished": "2026-04-09",
+      "dateModified": "2026-04-09",
+      "author": { "@type": "Organization", "name": "accessmi.org", "url": "https://accessmi.org" },
+      "about": "Medicaid coverage exposure under P.L. 119-21 work requirement provisions",
+    },
   });
 
   return (
@@ -196,11 +208,13 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 — County-level Medicaid/means-tested public coverage enrollment. ACS B27010 is the
                 design-document denominator; ACS C27007 (Medicaid/Means-Tested Public Coverage by
                 Sex by Age) was used as the implementable county-level equivalent. County
-                proportional shares — not absolute ACS values — are used for county allocation. The
-                ACS survey-based statewide total (~6.2M, broader "means-tested" definition) differs
-                from the CMS MBES administrative enrollment (~2.4M point-in-time); the county
-                proportion method preserves Urban Institute's statewide range regardless of this
-                difference. Accessed April 2026.
+                proportional shares — not absolute ACS values — are used for county allocation.
+                The ACS county total (6,206,095 statewide) differs from the CMS MBES
+                administrative enrollment (~2.4M point-in-time); the county proportion method
+                preserves Urban Institute's statewide range regardless of this difference. ACS
+                surveys are known to undercount low-income, non-citizen, and highly mobile
+                populations; county shares used here may slightly underrepresent counties with
+                higher concentrations of these groups. Accessed April 2026.
               </p>
             </div>
 
@@ -209,13 +223,26 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 Perspectives supporting P.L. 119-21 Medicaid work requirement provisions
               </p>
               <p className="text-muted-foreground">
-                We searched for analyses from organizations that support the P.L. 119-21 Medicaid
-                work requirement provisions, including Heritage Foundation, AEI, and CMS
-                communications. As of April 2026, no published analyses were identified that provide
-                Michigan-specific county-level projections comparable to the Urban Institute /
-                CBO figures used here. The CBO score (source 3 above) is the enacted-law
-                authoritative figure and is used here as a neutral baseline, not as an advocacy
-                estimate. If such analyses are published, this methodology will cite them.
+                The Trump administration and P.L. 119-21 proponents frame work requirements as
+                promoting self-sufficiency and labor force participation. CMS has issued guidance
+                supporting Section 1115 demonstration waiver programs that include work
+                requirements as a condition of Medicaid eligibility (see{" "}
+                <a
+                  href="https://www.medicaid.gov/medicaid/section-1115-demonstrations/about-section-1115-demonstrations/index.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-primary"
+                >
+                  CMS Section 1115 demonstration waivers
+                </a>
+                ). Heritage Foundation and AEI have published analyses arguing that work
+                requirements increase employment among Medicaid enrollees and reduce long-term
+                dependency on public assistance. As of April 2026, no published analyses from
+                these organizations provide Michigan-specific county-level enrollment projections
+                comparable to the Urban Institute / CBO figures used here. The CBO score (source
+                3 above) is the enacted-law authoritative figure and is used here as a neutral
+                baseline. If Michigan-specific analyses from any perspective are published,
+                this methodology will cite them.
               </p>
             </div>
 
@@ -251,13 +278,14 @@ export default function MedicaidCoverageAtRiskMethodology() {
               </li>
               <li>
                 <strong className="text-foreground">Statewide calibration</strong> — The ACS
-                county survey total (~6.2M statewide) differs from the CMS MBES administrative
-                point-in-time enrollment (~2.4M). The ACS "means-tested public coverage"
-                definition is broader, and the 5-year window averages PHE-era enrollment peaks.
-                We do not apply a calibration multiplier to county values — doing so would
-                require assumptions not supported by public data. The ACS county totals are used
-                only for their relative distribution (shares), not as absolute enrollment counts.
-                This is disclosed here and on every county row's tooltip.
+                county survey total (6,206,095 statewide — sum of C27007 estimates for all 83
+                Michigan counties) differs from the CMS MBES administrative point-in-time
+                enrollment (~2.4M). The ACS "means-tested public coverage" definition is broader,
+                and the 5-year window averages PHE-era enrollment peaks. We do not apply a
+                calibration multiplier to county values — doing so would require assumptions not
+                supported by public data. The ACS county totals are used only for their relative
+                distribution (shares), not as absolute enrollment counts. This is disclosed here
+                and on every county row's tooltip.
               </li>
               <li>
                 <strong className="text-foreground">State-level projection input</strong> — Urban
@@ -323,9 +351,21 @@ export default function MedicaidCoverageAtRiskMethodology() {
               provisions combined.
             </li>
             <li>
-              For small counties (Keweenaw, Luce, Ontonagon, Schoolcraft), ACS margins of error
-              are high relative to enrollment estimates. County-level projections for these
-              counties carry elevated uncertainty and should be interpreted with caution.
+              For small counties (Keweenaw, Luce, Ontonagon, Schoolcraft), ACS C27007 5-year 2023
+              coefficients of variation for Medicaid enrollment estimates are high (typically
+              20–50% for populations under 5,000). Keweenaw County (1,173 ACS-estimated enrollees)
+              has a particularly high coefficient of variation; its county-level projection should
+              be treated as illustrative only. Exact margins of error are available at{" "}
+              <a
+                href="https://data.census.gov/table/ACSDT5Y2023.C27007"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-primary"
+              >
+                data.census.gov table C27007
+              </a>
+              . The <code className="bg-muted px-0.5 rounded text-xs">Math.max(1, ...)</code> floor
+              prevents zero-display for these counties.
             </li>
             <li>
               Urban Institute's March 2026 projection reflects enacted-law work requirement
@@ -349,8 +389,9 @@ export default function MedicaidCoverageAtRiskMethodology() {
             not as an advocacy document but as a planning input: a rough, sourced,
             range-bounded estimate that a county health department, hospital, or journalist can
             use to frame a question, not answer it. The methodology is public, the uncertainty is
-            explicit, and the model will be updated when better data becomes available. We believe
-            making the uncertainty visible is more useful than leaving a data vacuum.
+            explicit, and the model will be updated when better data becomes available. Making the
+            uncertainty visible is more useful than leaving this question unanswered in public
+            planning records.
           </p>
         </section>
 

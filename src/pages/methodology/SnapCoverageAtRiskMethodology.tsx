@@ -36,6 +36,18 @@ export default function SnapCoverageAtRiskMethodology() {
     title: "Methodology: SNAP Coverage at Risk | accessmi.org",
     description:
       "How accessmi.org models county-level SNAP exposure ranges under P.L. 119-21 work requirement provisions.",
+    path: "/methodology/snap-coverage-at-risk",
+    jsonLd: {
+      "@type": "TechArticle",
+      "headline": "Methodology: SNAP Coverage at Risk — Michigan County Projections",
+      "description":
+        "How county-level SNAP exposure ranges are computed under P.L. 119-21 work requirement provisions. County allocation from MLPP Michigan estimate (74,000) with ±40% GAO-19-56 uncertainty band.",
+      "url": "https://accessmi.org/methodology/snap-coverage-at-risk",
+      "datePublished": "2026-04-09",
+      "dateModified": "2026-04-09",
+      "author": { "@type": "Organization", "name": "accessmi.org", "url": "https://accessmi.org" },
+      "about": "SNAP exposure under P.L. 119-21 ABAWD work requirement provisions",
+    },
   });
 
   return (
@@ -321,8 +333,8 @@ export default function SnapCoverageAtRiskMethodology() {
             input: a rough, sourced, uncertainty-bounded estimate that a county health
             department, food pantry network, or journalist can use to frame a question, not
             answer it. The methodology is public, the uncertainty is explicit, and the model
-            will be updated when better data becomes available. We believe making the
-            uncertainty visible is more useful than leaving a data vacuum.
+            will be updated when better data becomes available. Making the uncertainty visible
+            is more useful than leaving this question unanswered in public planning records.
           </p>
         </section>
 
