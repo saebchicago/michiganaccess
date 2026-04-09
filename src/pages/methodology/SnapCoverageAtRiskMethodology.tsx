@@ -6,14 +6,22 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 // Change log — every methodology update must be recorded here
 const CHANGE_LOG = [
   {
+    id: "2026-04-09-initial",
     date: "2026-04-09",
     description:
       "Initial methodology published. Proportional county allocation from MLPP/CBO state estimate. GAO-19-56 uncertainty band ±40%.",
   },
   {
+    id: "2026-04-09-source-corrections",
     date: "2026-04-09",
     description:
       "Source corrections: removed KFF citation (original URL 404, no equivalent live article found); updated USDA FNS E&T URL to fns.usda.gov/snap-et; removed ACS B22002 citation (not a model input — county allocation denominator is USDA FNS FY2022 data from Feature 1); updated technical step 3 to name the correct denominator source.",
+  },
+  {
+    id: "2026-04-09-browser-qa",
+    date: "2026-04-09",
+    description:
+      "Browser QA corrections: removed opacity-60 from supporting-perspectives source block; replaced trending-down icon with neutral users icon on state estimate card; added 'modeled range' qualifier directly to column headers; renamed 'Republican-aligned analyses' section to 'Perspectives supporting P.L. 119-21 work requirement provisions'; added inline MLPP sourcing notes for 123,000 and $410M contextual figures; named MLPP and CBPP explicitly on data page in place of 'independent analysts.'",
   },
 ];
 
@@ -117,7 +125,10 @@ export default function SnapCoverageAtRiskMethodology() {
                 — Michigan-specific analysis citing 74,000 Michigan adults in affected
                 categories, 123,000 total Michiganders in affected households, and an
                 estimated $410M in new annual state costs. Sourced from CBO/CBPP/FNS.
-                Accessed April 2026.
+                Accessed April 2026. Note: the 123,000 household figure and $410M state-cost
+                figure are cited here for context and are not independently modeled by
+                accessmi.org. Only the 74,000 adult figure is used as the state-level input
+                to the county allocation model.
               </p>
             </div>
 
@@ -160,17 +171,18 @@ export default function SnapCoverageAtRiskMethodology() {
               </p>
             </div>
 
-            <div className="border-l-2 border-border pl-4 opacity-60">
+            <div className="border-l-2 border-border pl-4">
               <p className="font-medium text-muted-foreground italic">
-                Republican-aligned analyses of P.L. 119-21 SNAP provisions
+                Perspectives supporting P.L. 119-21 work requirement provisions
               </p>
               <p className="text-muted-foreground">
-                As of April 2026, no published analyses from Heritage Foundation, American
-                Enterprise Institute (AEI), or CMS endorsing or contextualizing the P.L.
-                119-21 SNAP work requirement provisions were identified that address
-                Michigan-specific participation projections. CMS and USDA FNS have not
-                published independent projections of the participation effects. The CBO score
-                is the enacted-law authoritative figure; it is not an advocacy estimate.
+                We searched for analyses from organizations that support the P.L. 119-21 work
+                requirement expansion, including Heritage Foundation, AEI, and CMS
+                communications. As of April 2026, no published analyses were identified that
+                provide Michigan-specific county-level projections comparable to the MLPP/CBPP
+                figures used here. The CBO score (source 1 above) is the enacted-law
+                authoritative figure and is used here as a neutral baseline, not as an advocacy
+                estimate. If such analyses are published, this methodology will cite them.
               </p>
             </div>
 
@@ -243,9 +255,11 @@ export default function SnapCoverageAtRiskMethodology() {
               </li>
               <li>
                 <strong className="text-foreground">Display</strong> — Every county shows a
-                low–high range. No point estimate is displayed. The column header and caption
-                both note "(modeled range — not a point estimate)." The page-level disclaimer
-                repeats "Exposure does not equal loss" and links to this methodology page.
+                low–high range. No point estimate is displayed. The "At-risk low" and
+                "At-risk high" column headers each carry a "(modeled range — not a point
+                estimate)" qualifier directly beneath the sort button. A section subtitle
+                above the table repeats the qualifier. The page-level disclaimer repeats
+                "Exposure does not equal loss" and links to this methodology page.
               </li>
             </ol>
           </div>
@@ -310,7 +324,7 @@ export default function SnapCoverageAtRiskMethodology() {
           </p>
           <div className="space-y-2">
             {CHANGE_LOG.map((entry) => (
-              <div key={entry.date} className="flex gap-3 text-sm">
+              <div key={entry.id} className="flex gap-3 text-sm">
                 <span className="shrink-0 font-mono text-muted-foreground text-xs mt-0.5">
                   {entry.date}
                 </span>

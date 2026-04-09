@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpDown, AlertTriangle, Users, TrendingDown } from "lucide-react";
+import { ArrowUpDown, AlertTriangle, Users } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -171,7 +171,7 @@ export default function SnapCoverageAtRiskPage() {
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 These figures identify Michigan SNAP participants who fall into categories
-                that CBO and independent analysts project may be affected by P.L. 119-21.
+                that CBO, MLPP, and CBPP project may be affected by P.L. 119-21.
                 Individual outcomes depend on state implementation, work requirement compliance
                 pathways, employment status, and administrative factors. The ranges describe
                 populations at elevated exposure — they do not predict who will or will not
@@ -189,7 +189,7 @@ export default function SnapCoverageAtRiskPage() {
           <h2 className="sr-only">Statewide projection</h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <StatCard
-              icon={<TrendingDown className="h-5 w-5" />}
+              icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : fmtN(MLPP_STATE_ESTIMATE)}
               label="Michigan adults in affected ABAWD categories (MLPP state estimate)"
               provenance={
@@ -266,22 +266,32 @@ export default function SnapCoverageAtRiskPage() {
                     />
                   </th>
                   <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
-                    <SortButton
-                      col="projectedAffectedLow"
-                      label="At-risk low"
-                      sortKey={sortKey}
-                      sortDir={sortDir}
-                      onSort={handleSort}
-                    />
+                    <div className="flex flex-col items-end gap-0.5">
+                      <SortButton
+                        col="projectedAffectedLow"
+                        label="At-risk low"
+                        sortKey={sortKey}
+                        sortDir={sortDir}
+                        onSort={handleSort}
+                      />
+                      <span className="text-[9px] text-muted-foreground/70 font-normal">
+                        modeled range — not a point estimate
+                      </span>
+                    </div>
                   </th>
                   <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
-                    <SortButton
-                      col="projectedAffectedHigh"
-                      label="At-risk high"
-                      sortKey={sortKey}
-                      sortDir={sortDir}
-                      onSort={handleSort}
-                    />
+                    <div className="flex flex-col items-end gap-0.5">
+                      <SortButton
+                        col="projectedAffectedHigh"
+                        label="At-risk high"
+                        sortKey={sortKey}
+                        sortDir={sortDir}
+                        onSort={handleSort}
+                      />
+                      <span className="text-[9px] text-muted-foreground/70 font-normal">
+                        modeled range — not a point estimate
+                      </span>
+                    </div>
                   </th>
                 </tr>
               </thead>
@@ -327,7 +337,6 @@ export default function SnapCoverageAtRiskPage() {
                       County enrollment: USDA FNS FY2022 (annual average monthly participants).
                       At-risk range: MLPP 74,000 × county enrollment share, ±40% GAO-19-56
                       uncertainty band. Low = midpoint × 0.60, High = midpoint × 1.40.
-                      At-risk column header labeled "(modeled range — not a point estimate)."
                     </p>
                   </td>
                 </tr>
