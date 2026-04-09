@@ -167,8 +167,10 @@ Other HHS grants (measured, USASpending FY2024):
 
 ## Feature 3: Coverage at Risk (per county)
 
+> **Source freshness as of April 2026:** Urban Institute's March 2026 Michigan-specific projection is the most current post-enactment figure available. This feature must be refreshed if Urban Institute, CBPP, or MLPP publish updated Michigan-specific P.L. 119-21 analyses. Check quarterly.
+
 ### Purpose
-For each county, show current Medicaid enrollment (ACS-derived), current uninsured rate, and modeled enrollment loss range under HR 1 work requirements and redetermination provisions — over a 2027–2030 horizon. Answer: "How many people in this county could lose coverage?"
+For each county, show current Medicaid enrollment (ACS-derived), current uninsured rate, and modeled enrollment loss range under P.L. 119-21 work requirements and redetermination provisions — over a 2026–2028 horizon. Answer: "How many people in this county could lose coverage?"
 
 ### Data sources
 | Source | Fields used | Lag | Notes |
@@ -176,10 +178,12 @@ For each county, show current Medicaid enrollment (ACS-derived), current uninsur
 | ACS B27010 (5-year 2023) | County Medicaid enrollment share → enrollment count | Annual | Best available county proxy; label as ACS-derived estimate |
 | ACS B27001 | County total uninsured count and rate | 2023 5-year | Already integrated |
 | CDC PLACES | Uninsured rate validation (county-level, measured, 2023) | Annual, Aug 2024 | Cross-check for ACS figures |
-| KFF HR 1 allocations | Michigan total projected enrollment loss range (247K–412K) | July 2025 | County allocation from ACS enrollment share |
-| GAO/Arkansas benchmark | 25% coverage loss rate for work-requirement-eligible adults as historical model | 2020 (GAO-20-149) + Sommers et al. NEJM 2019 | Benchmark methodology, not Michigan-specific data |
+| Urban Institute (March 2026) | Michigan projected enrollment loss 171,000–355,000 by 2028 (work requirement provisions only) | March 2026 | Post-enactment P.L. 119-21; most current Michigan-specific figure available. County allocation from ACS enrollment share. Primary model input |
+| KFF (December 2025) | Michigan 10-year federal Medicaid spending reduction: $31.6B under P.L. 119-21 | December 2025 | Post-enactment spending figure; not an enrollment count. Use as spending-impact context alongside Urban enrollment projection |
+| MDHHS (August 2025) | >500,000 Michiganders at risk across all P.L. 119-21 Medicaid provisions | August 2025 | Broader scope than Urban (all provisions combined, not work requirements only). Use as context, not as the primary model input |
+| CBO (pub. 61570, July 2025) | National: 7.5M coverage loss by 2034; $326B federal savings from work requirements; $63B / 700K from redeterminations | One-time, July 2025 | National baseline. Michigan share ~2.6%. Urban Institute's Michigan range is grounded in this CBO national score |
+| GAO-20-149 / Sommers et al. NEJM 2019 | 25% coverage loss among work-requirement-eligible adults (Arkansas); 6.8 pp disenrollment / ~18,000 Arkansas disenrollees | 2020 / 2019 | Arkansas work-requirement benchmark. Urban Institute's methodology is grounded in these same findings. Cite as methodology reference, not as an uncertainty band input |
 | CMS MBES statewide enrollment | Michigan total Medicaid enrollment baseline (state-level) | Quarterly, ~6 month lag | Denominator validation for ACS-derived county figures |
-| MDHHS projection (pending verification) | "200,000 at risk" figure — if source confirmed | TBD | Do NOT publish until source URL confirmed; use KFF range until then |
 
 ### Modeling methodology (explicit, UI-visible)
 
@@ -193,25 +197,25 @@ County-level enrollment loss projection steps:
 
 ### County display
 ```
-[Ogemaw County] — Coverage Outlook 2027–2030
+[Ogemaw County] — Coverage Outlook 2026–2028
 
 Current Medicaid enrollment:   ~6,200 residents (ACS 2023 estimate, ~31% of population)
 Current uninsured rate:        11.4% (CDC PLACES, 2023)
 
-Under HR 1 provisions (projected, KFF/CBO, July 2025):
-  Enrollment loss range:   −900 to −1,600 residents by 2030
-  As % of current enrollment:  15%–26%
-  Remaining uninsured projection: 13%–17% of population by 2030
+Under P.L. 119-21 provisions (projected, Urban Institute/CBO, 2026):
+  Enrollment loss range:   −430 to −885 residents by 2028
+  As % of current enrollment:  7%–14%
+  Remaining uninsured projection: 12%–17% of population by 2028
 
-[chart: baseline enrollment → low scenario → high scenario, 2025–2030]
+[chart: baseline enrollment → low scenario → high scenario, 2025–2028]
 
-Sources: ACS B27010 (2023 5-year) · KFF state allocation (July 2025) · CBO HR 1 score (July 2025)
-Methodology: Arkansas work-requirement benchmark (NEJM 2019; GAO-20-149) proportionally applied.
+Sources: ACS B27010 (2023 5-year) · Urban Institute Michigan projection (March 2026) · CBO work requirements score (pub. 61570, July 2025)
+Methodology: Urban Institute Michigan-specific range (171,000–355,000) allocated by county ACS enrollment share. Arkansas work-requirement benchmark (NEJM 2019; GAO-20-149) underlies Urban Institute's methodology.
 These are modeled estimates. Actual outcomes depend on implementation, legal challenges, and state decisions not yet determined.
 ```
 
 ### Primary visual
-- **County page section**: "Coverage Outlook 2027–2030" — a small area chart (baseline → range band) showing enrollment trajectory, collapsed by default.
+- **County page section**: "Coverage Outlook 2026–2028" — a small area chart (baseline → range band) showing enrollment trajectory, collapsed by default.
 - **Statewide view** `/data/coverage-at-risk`: Michigan map, counties shaded by projected enrollment loss %, with a statewide summary card at top.
 
 ### Where it lives
@@ -228,9 +232,9 @@ These are modeled estimates. Actual outcomes depend on implementation, legal cha
 |------|-----------|
 | Projection treated as a prediction | Bold disclaimer on every render: "These are modeled estimates. Actual outcomes depend on legal challenges, state decisions, and implementation rules not yet final." |
 | ACS undercount leads to low baseline | Document ACS limitation (5–15% undercount vs. admin data) in tooltip. Show "estimated" prominently. |
-| MDHHS "200,000" figure cited without source | Do NOT use until source URL is confirmed. Use KFF 247K–412K range as the authoritative Michigan projection until then. |
+| Urban Institute range cited without scope clarity | Clearly label: "Urban Institute (March 2026) projects 171,000–355,000 Michigan adults may lose coverage due to work requirement provisions specifically. MDHHS cites >500,000 across all P.L. 119-21 provisions combined." Scope difference must be visible in the UI. |
 | County with small population produces unstable projection | Apply ACS margin-of-error check: if county Medicaid estimate MOE > 30% of estimate, suppress the projection and show "Insufficient sample size for county-level projection — see statewide estimates." |
-| Perceived as anti-HR 1 advocacy | Present as: "HR 1 provisions take effect [date]. CBO projects [X] nationally. KFF allocates [Y range] to Michigan. Michigan has [Z] current enrollees." Zero adjectives. |
+| Perceived as anti-P.L. 119-21 advocacy | Present as: "P.L. 119-21 work requirement provisions take effect January 1, 2027. CBO projects 7.5M coverage loss nationally by 2034. Urban Institute projects 171,000–355,000 Michigan adults affected by 2028. Michigan has [Z] current enrollees." Zero adjectives. |
 
 ---
 
