@@ -161,6 +161,8 @@ const pages = {
   FeedbackPage: lazy(() => import("@/pages/FeedbackPage")),
   ClosureWatchPage: lazy(() => import("@/pages/ClosureWatchPage")),
   SnapMichiganPage: lazy(() => import("@/pages/SnapMichiganPage")),
+  SnapCoverageAtRiskPage: lazy(() => import("@/pages/SnapCoverageAtRiskPage")),
+  SnapCoverageAtRiskMethodology: lazy(() => import("@/pages/methodology/SnapCoverageAtRiskMethodology")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -185,6 +187,8 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/data", component: pages.HealthDataDashboardPage, label: "Health Data" },
   { path: "/data-and-insights", component: pages.DataAndInsightsPage, label: "Data & Insights" },
   { path: "/data/snap-michigan", component: pages.SnapMichiganPage, label: "SNAP in Michigan" },
+  { path: "/data/snap-coverage-at-risk", component: pages.SnapCoverageAtRiskPage, label: "SNAP Coverage at Risk" },
+  { path: "/methodology/snap-coverage-at-risk", component: pages.SnapCoverageAtRiskMethodology, label: "Methodology: SNAP Coverage at Risk" },
   { path: "/domain-dashboard", component: pages.DomainDashboardPage, label: "Domain Dashboard" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
   { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
@@ -339,6 +343,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     children: [
       { label: "Data & Insights Hub", href: "/data-and-insights" },
       { label: "SNAP in Michigan", href: "/data/snap-michigan", badge: "V3" },
+      { label: "SNAP Coverage at Risk", href: "/data/snap-coverage-at-risk", badge: "V3" },
       { label: "Domain Dashboard", href: "/domain-dashboard", badge: "New" },
       { label: "Data Explorer", href: "/data-explorer", badge: "Census API" },
       { label: "CHNA Explorer", href: "/chna-explorer", badge: "Interactive" },
