@@ -5,6 +5,9 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  # Enables puppeteer prerender pass in vite.config.ts (production Netlify builds only).
+  # Not set in GitHub Actions CI — CI just validates the SPA shell builds correctly.
+  PRERENDER_ENABLED = "true"
 
 [functions]
   node_bundler = "esbuild"

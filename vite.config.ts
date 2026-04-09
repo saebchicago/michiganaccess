@@ -98,7 +98,9 @@ export default defineConfig(({ mode }) => ({
     // 'prerender-ready', then writes route-specific HTML to dist/.
     // Netlify serves these static files in preference to the catch-all
     // /index.html SPA fallback (static files always win unless force=true).
-    mode === "production" && prerender({
+    // Prerender is gated on PRERENDER_ENABLED=true (set in netlify.toml).
+    // Skipped in GitHub Actions CI (no env var) and local dev builds.
+    mode === "production" && process.env.PRERENDER_ENABLED === "true" && prerender({
       routes: [
         "/",
         "/story",
