@@ -5,33 +5,33 @@ Status: Phase 0 complete — strategic direction update 2026-04-09 — awaiting 
 
 ---
 
-## Strategic Direction (updated 2026-04-09)
+## Strategic direction: embed and credit, not duplicate
 
-The Phase 0 audit found that Michigan State University's Engaged Research and Evaluation Center (EREC), in active partnership with MiLEAP, already applies the CAP 3:1 childcare desert methodology to Michigan at county and ZIP level, updated daily from the LARA live data feed. This changes V4's posture.
+MSU EREC already applies CAP's 3:1 childcare desert methodology to Michigan at county and ZIP level, updated daily from LARA, in partnership with MiLEAP. accessmi.org will not rebuild this work. V4 is scoped as an embed-and-credit layer:
 
-### Primary approach: partnership-first
+**Primary approach**
+- accessmi adds a Childcare panel on county pages that surfaces EREC's county-level desert metrics
+- Prominent attribution: "Data: MSU Economic Research Excellence Center, applying Center for American Progress (2020) childcare desert methodology"
+- Deep link from every metric to the corresponding EREC dashboard view
+- accessmi does NOT recompute the CAP 3:1 ratio independently; we surface EREC's numbers
+- Optional enrichment: Census ACS B09001 (under-5 population) and B23008 (working-parent households) as demographic context, clearly separated from EREC's desert score
 
-accessmi.org will seek a partnership or attribution agreement with MSU EREC before building any independent desert calculation. If partnership is established, V4 will embed or prominently link to EREC's existing dashboard with full attribution — not rebuild their methodology. This avoids duplication of a trusted, government-partnered data product and makes accessmi.org a credible amplifier rather than a competing source.
+**Partnership precondition**
+- V4 Phase 1 does not proceed until MSU EREC confirms embed/attribution approval in writing
+- Outreach lead: [Saeb to identify EREC project contact at msu.edu]
+- If EREC declines, fall back to independent implementation citing CAP 2020 + EREC as prior art
 
-### Fallback approach: independent implementation
+**What this changes from original V4 scope**
+- No LARA ArcGIS ingestion required (EREC already does this)
+- No CAP methodology replication required
+- No GSQ ratings integration required (scope creep)
+- Build lift drops from "medium-complex Phase 2" to "single panel component with embed"
+- Attribution and relationship are the hard parts, not the code
 
-If EREC declines partnership or does not respond within a reasonable outreach window, accessmi.org will implement the CAP 3:1 calculation independently using:
-- LARA ArcGIS bulk download (licensed capacity, daily, CC-BY-SA)
-- Census ACS B09001 (under-5 population, census tract, public domain)
-- CAP's published methodology (2020 report, public domain)
-
-In the fallback, both CAP methodology and MSU EREC's prior work will be cited explicitly in the methodology page. accessmi.org will not imply EREC endorsement.
-
-### Phase gating
-
-- **V4 Phase 1 (design doc) will not start until a partnership outreach decision is made.** The decision is: (a) pursue partnership with EREC, (b) build independently under fallback, or (c) deprioritize V4 entirely.
-- **Phase 2 build scope depends on partnership outcome.** Partnership → embed/link + attribution layer. No partnership → independent CAP implementation + full methodology page.
-
-### Action required before Phase 1
-
-Human decision needed: authorize outreach to MSU EREC (erec.msu.edu), or choose fallback, or defer V4.
-
----
+**Out of scope for V4 unless EREC explicitly declines**
+- Rebuilding the desert calculation
+- Scraping LARA data
+- Producing an accessmi-branded childcare methodology
 
 ---
 
