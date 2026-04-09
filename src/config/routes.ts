@@ -159,6 +159,7 @@ const pages = {
   CivicRacesPage: lazy(() => import("@/pages/CivicRacesPage")),
   CivicFederalPage: lazy(() => import("@/pages/CivicFederalPage")),
   FeedbackPage: lazy(() => import("@/pages/FeedbackPage")),
+  SnapMichiganPage: lazy(() => import("@/pages/SnapMichiganPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -181,6 +182,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/learn", component: pages.LearnPage, label: "Learn" },
   { path: "/data", component: pages.HealthDataDashboardPage, label: "Health Data" },
   { path: "/data-and-insights", component: pages.DataAndInsightsPage, label: "Data & Insights" },
+  { path: "/data/snap-michigan", component: pages.SnapMichiganPage, label: "SNAP in Michigan" },
   { path: "/domain-dashboard", component: pages.DomainDashboardPage, label: "Domain Dashboard" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
   { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
@@ -334,6 +336,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     label: "Data & Insights",
     children: [
       { label: "Data & Insights Hub", href: "/data-and-insights" },
+      { label: "SNAP in Michigan", href: "/data/snap-michigan", badge: "V3" },
       { label: "Domain Dashboard", href: "/domain-dashboard", badge: "New" },
       { label: "Data Explorer", href: "/data-explorer", badge: "Census API" },
       { label: "CHNA Explorer", href: "/chna-explorer", badge: "Interactive" },
