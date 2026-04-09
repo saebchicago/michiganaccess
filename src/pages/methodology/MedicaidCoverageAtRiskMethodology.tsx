@@ -74,7 +74,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
               <p className="text-muted-foreground">
                 Urban Institute, March 2026.{" "}
                 <a
-                  href="https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbba-work-requirements"
+                  href="https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
@@ -82,8 +82,8 @@ export default function MedicaidCoverageAtRiskMethodology() {
                   urban.org — Medicaid work requirements projection
                 </a>{" "}
                 — Post-enactment Michigan-specific projection: 171,000–355,000 Michigan adults
-                projected to lose Medicaid coverage by 2028 under P.L. 119-21 work requirement
-                provisions. This is the primary state-level input to the county allocation model.
+                in categories projected to be affected by P.L. 119-21 work requirement
+                provisions by 2028. This is the primary state-level input to the county allocation model.
                 This is the most current post-enactment Michigan-specific figure available as of
                 April 2026. Accessed April 2026.
               </p>
@@ -97,7 +97,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
               <p className="text-muted-foreground">
                 Kaiser Family Foundation, December 2025.{" "}
                 <a
-                  href="https://www.kff.org/medicaid/issue-brief/allocating-cbos-estimated-federal-medicaid-spending-reductions-to-states-under-the-enacted-one-big-beautiful-bill/"
+                  href="https://www.kff.org/medicaid/allocating-cbos-estimates-of-federal-medicaid-spending-reductions-across-the-states-enacted-reconciliation-package/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
@@ -155,23 +155,25 @@ export default function MedicaidCoverageAtRiskMethodology() {
 
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                Sommers et al., NEJM 2019: Changes in Health Insurance Coverage Under Medicaid
-                Work Requirements — Arkansas, 2016–2019
+                Sommers et al., NEJM 2019: Medicaid Work Requirements — Results from the First
+                Year in Arkansas
               </p>
               <p className="text-muted-foreground">
-                Benjamin D. Sommers et al., New England Journal of Medicine, September 2019.{" "}
+                Benjamin D. Sommers, Alister D. Martin, Robert J. Blendon, E. John Orav, Arnold M.
+                Epstein. New England Journal of Medicine 2019;381:1073–1082.{" "}
                 <a
-                  href="https://www.nejm.org/doi/10.1056/NEJMsr1901794"
+                  href="https://www.nejm.org/doi/full/10.1056/NEJMsr1901772"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
                   nejm.org — Arkansas work requirements study
                 </a>{" "}
-                — Peer-reviewed Arkansas findings: 6.8 percentage point disenrollment; approximately
-                18,000 Arkansas disenrollees. These are the corrected published figures. Cited here
-                as the peer-reviewed empirical foundation for work requirement coverage loss
-                estimates; Urban Institute cites the same Arkansas evidence. Accessed April 2026.
+                — Peer-reviewed Arkansas study. Approximately 18,000 Arkansas adults lost Medicaid
+                coverage during the first year of work requirement implementation (June 2018
+                through April 2019), when a federal court halted the policy. Urban Institute's
+                Michigan projection derives its loss rate partly from this Arkansas evidence.
+                Accessed April 2026.
               </p>
             </div>
 
@@ -226,7 +228,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
             <h3 className="font-semibold text-foreground">Plain language</h3>
             <p className="leading-relaxed">
               We take Urban Institute's Michigan-specific projection of 171,000–355,000 adults
-              losing Medicaid coverage by 2028 under P.L. 119-21 work requirements (March 2026)
+              in affected categories under P.L. 119-21 work requirements by 2028 (March 2026)
               and apply it proportionally to each Michigan county based on each county's share of
               the state's total ACS-reported Medicaid enrollment. We use Urban's range directly —
               without adding a second uncertainty band — because Urban's low and high endpoints
@@ -257,8 +259,8 @@ export default function MedicaidCoverageAtRiskMethodology() {
               </li>
               <li>
                 <strong className="text-foreground">State-level projection input</strong> — Urban
-                Institute (March 2026) projects 171,000–355,000 Michigan adults may lose Medicaid
-                coverage by 2028 due to work requirement provisions specifically. This range is
+                Institute (March 2026) projects 171,000–355,000 Michigan adults are in categories
+                at elevated exposure under work requirement provisions by 2028. This range is
                 used directly as the state-level input. Urban's range already encodes
                 implementation scenario uncertainty; no additional band is applied by
                 accessmi.org.

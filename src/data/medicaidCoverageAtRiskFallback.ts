@@ -16,7 +16,7 @@
 // Primary projection source: Urban Institute, March 2026
 //   "Projected Reductions in Medicaid Expansion Enrollment Under OBBBA's Work Requirements"
 //   Michigan range: 171,000–355,000 by 2028 (work requirement provisions only)
-//   https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbba-work-requirements
+//   https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work
 // Secondary reference: CBO pub. 61570 (July 2025) — national baseline
 //   7.5M coverage loss by 2034; $326B federal savings from work requirements
 // Re-compute when: Urban Institute, CBPP, or MLPP publish updated Michigan-specific
@@ -130,10 +130,21 @@ const MEDICAID_COUNTY_FALLBACK: MedicaidCountyEntry[] = [
 const URBAN_MICHIGAN_LOW = 171_000;
 const URBAN_MICHIGAN_HIGH = 355_000;
 
-// CMS MBES administrative enrollment — disclosed in methodology as ~2.4M point-in-time.
-// NOT used as the allocation denominator (county ACS values sum to 6.2M due to broader
-// survey definition; using ACS sum as denominator preserves Urban's statewide total).
-// Exported for use in methodology page disclosure.
+/**
+ * @deprecated DO NOT USE AS A DENOMINATOR IN CALCULATIONS.
+ *
+ * This constant documents the CMS MBES administrative point-in-time Michigan
+ * Medicaid enrollment baseline (~2.4M) for disclosure purposes only. The county
+ * projection math in this file uses COUNTY_MEDICAID_ACS_TOTAL (6,206,095),
+ * which is the sum of ACS C27007 5-year 2023 county estimates. Using
+ * STATEWIDE_MEDICAID_ENROLLMENT as a denominator would inflate county shares
+ * by ~2.59x and produce county-level projections that do not sum to Urban
+ * Institute's 171,000–355,000 statewide range.
+ *
+ * The ACS vs CMS MBES discrepancy (ACS survey definition is broader than
+ * CMS point-in-time administrative counts) is disclosed in the methodology
+ * page under source block 6 (ACS B27010/C27007).
+ */
 export const STATEWIDE_MEDICAID_ENROLLMENT = 2_400_000;
 
 const PROJECTION_SOURCE_NAME =

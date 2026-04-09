@@ -124,7 +124,7 @@ export default function MedicaidCoverageAtRiskPage() {
   const modeled_provenance_props = {
     sourceName: "Urban Institute / CBO P.L. 119-21 Medicaid work requirements score",
     sourceUrl:
-      "https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbba-work-requirements",
+      "https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work",
     asOfDate: "March 2026",
     cadence: "Updated when Urban Institute, CBPP, or MLPP publish new Michigan estimates",
     dataKind: "modeled" as const,
@@ -188,11 +188,11 @@ export default function MedicaidCoverageAtRiskPage() {
             <StatCard
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "171,000–355,000"}
-              label="Michigan adults projected to lose Medicaid coverage by 2028 (Urban Institute projection)"
+              label="Michigan adults in categories affected by P.L. 119-21 work requirement provisions (Urban Institute projection, 2028 horizon)"
               provenance={
                 <DataProvenance
                   sourceName="Urban Institute — P.L. 119-21 Medicaid work requirements"
-                  sourceUrl="https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbba-work-requirements"
+                  sourceUrl="https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work"
                   asOfDate="March 2026"
                   cadence="Updated when Urban Institute publishes revised Michigan estimates"
                   dataKind="modeled"
@@ -208,10 +208,11 @@ export default function MedicaidCoverageAtRiskPage() {
               provenance={
                 <DataProvenance
                   sourceName="KFF — Allocating CBO's Federal Medicaid Spending Reductions"
-                  sourceUrl="https://www.kff.org/medicaid/issue-brief/allocating-cbos-estimated-federal-medicaid-spending-reductions-to-states-under-the-enacted-one-big-beautiful-bill/"
+                  sourceUrl="https://www.kff.org/medicaid/allocating-cbos-estimates-of-federal-medicaid-spending-reductions-across-the-states-enacted-reconciliation-package/"
                   asOfDate="December 2025"
                   cadence="Updated as CBO revises national scoring"
-                  dataKind="measured"
+                  dataKind="projected"
+                  methodologyUrl={METHODOLOGY_URL}
                   compact
                 />
               }

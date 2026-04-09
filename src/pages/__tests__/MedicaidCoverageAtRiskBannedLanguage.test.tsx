@@ -111,6 +111,10 @@ describe("MedicaidCoverageAtRisk — civic neutrality: banned advocacy language"
         assertNotPresent(src, /will\s+lose\s+coverage/i, relPath);
       });
 
+      it("does not use 'losing Medicaid'", () => {
+        assertNotPresent(src, /losing\s+medicaid/i, relPath);
+      });
+
       it("does not use 'gutted'", () => {
         assertNotPresent(src, /\bgutted\b/i, relPath);
       });
