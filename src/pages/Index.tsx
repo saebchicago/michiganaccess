@@ -144,7 +144,7 @@ const Index = () => {
   usePageMeta({
     title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
     description:
-      "Independent civic resource organizing health, housing, energy, transportation, and legal services across all 83 Michigan counties. Free, no tracking, open data.",
+      "Independent Michigan civic intelligence. County-level data on health, housing, energy, transportation, and legal services across all 83 counties. Built by and for fellow Michiganders.",
     path: "/",
     jsonLd: {
       "@type": "Organization",
