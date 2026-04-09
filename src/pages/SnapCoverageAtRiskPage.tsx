@@ -218,15 +218,14 @@ export default function SnapCoverageAtRiskPage() {
             <StatCard
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "83"}
-              label="Michigan counties with county-allocated modeled range"
+              label="Michigan counties — complete statewide coverage (all 83)"
               provenance={
                 <DataProvenance
-                  sourceName="County allocation from USDA FNS FY2022 enrollment share"
+                  sourceName="Michigan county count (fixed)"
                   sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate="FY2022"
-                  cadence="Refreshed when FNS county data updates"
-                  dataKind="modeled"
-                  methodologyUrl={METHODOLOGY_URL}
+                  cadence="Static — 83 Michigan counties"
+                  dataKind="measured"
                   compact
                 />
               }

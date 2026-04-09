@@ -23,6 +23,12 @@ const CHANGE_LOG = [
     description:
       "Browser QA corrections: removed opacity-60 from supporting-perspectives source block; replaced trending-down icon with neutral users icon on state estimate card; added 'modeled range' qualifier directly to column headers; renamed 'Republican-aligned analyses' section to 'Perspectives supporting P.L. 119-21 work requirement provisions'; added inline MLPP sourcing notes for 123,000 and $410M contextual figures; named MLPP and CBPP explicitly on data page in place of 'independent analysts.'",
   },
+  {
+    id: "2026-04-09-rereview-fixes",
+    date: "2026-04-09",
+    description:
+      "Second browser QA pass corrections: removed stale KFF reference from data page source list (inconsistency with methodology); named MLPP and CBPP on methodology page callout to match data page; corrected the 83-county stat card from (Modeled estimate) to measured count; replaced snapMichiganFallback.ts code reference with direct USDA FNS citation in technical step 3; removed the unsourced Michigan ~3.3% share parenthetical; replaced 'bear the practical weight' with 'are responsible for' in the 'Why we publish this' section.",
+  },
 ];
 
 export default function SnapCoverageAtRiskMethodology() {
@@ -58,8 +64,8 @@ export default function SnapCoverageAtRiskMethodology() {
             Exposure does not equal loss
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            This page identifies Michigan SNAP participants who fall into categories that CBO and
-            independent analysts project may be affected by provisions of P.L. 119-21. Being in
+            This page identifies Michigan SNAP participants who fall into categories that CBO,
+            MLPP, and CBPP project may be affected by provisions of P.L. 119-21. Being in
             an affected category is not the same as losing benefits. Individual outcomes depend
             on state implementation, work requirement compliance pathways, employment status, and
             administrative factors that vary by county and over time. The ranges on this page
@@ -223,8 +229,7 @@ export default function SnapCoverageAtRiskMethodology() {
                 <strong className="text-foreground">Michigan state estimate</strong> — MLPP derives
                 a Michigan-specific estimate of 74,000 adults at risk (39,000 ages 55–64; 35,000
                 with children age 14+) in households totaling 123,000 people. This figure is
-                sourced from CBO/CBPP/FNS and is proportionally consistent with Michigan's ~3.3%
-                share of national SNAP enrollment. We use MLPP's 74,000 as the state-level input
+                sourced from CBO/CBPP/FNS. We use MLPP's 74,000 as the state-level input
                 rather than applying Michigan's enrollment share to the national 2.4M directly,
                 because MLPP has already accounted for Michigan's ABAWD-eligible population mix.
               </li>
@@ -235,8 +240,13 @@ export default function SnapCoverageAtRiskMethodology() {
                   county_enrollment / sum(all_county_enrollments) × 74,000
                 </code>
                 . The enrollment figures are USDA FNS FY2022 county-level annual average
-                monthly participants, as surfaced in the Feature 1 fallback data
-                (snapMichiganFallback.ts). This uses straight enrollment share as a proxy for
+                monthly participants, sourced from USDA Food and Nutrition Service published
+                county data tables (see Sources). These figures are surfaced on accessmi.org's
+                Feature 1 dashboard at{" "}
+                <a href="/data/snap-michigan" className="underline hover:text-primary">
+                  /data/snap-michigan
+                </a>
+                . This uses straight enrollment share as a proxy for
                 adult ABAWD share at the county level. The simplification is documented here:
                 the FNS county-level data (FY2022) does not break enrollment down by ABAWD
                 eligibility category. A more precise allocation would require county-level ACS
@@ -305,7 +315,7 @@ export default function SnapCoverageAtRiskMethodology() {
           <p className="text-sm text-muted-foreground leading-relaxed">
             No public source currently provides county-level estimates of P.L. 119-21's SNAP
             impact for Michigan. CBO publishes national figures. MLPP publishes a state total.
-            Individual counties — which bear the practical weight of implementation through local
+            Individual counties — which are responsible for implementing the law through local
             MDHHS offices, food banks, and E&T providers — have no public baseline for planning.
             accessmi.org publishes this model not as an advocacy document but as a planning
             input: a rough, sourced, uncertainty-bounded estimate that a county health

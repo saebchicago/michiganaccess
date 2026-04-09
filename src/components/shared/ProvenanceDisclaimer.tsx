@@ -9,8 +9,8 @@ export function ProvenanceDisclaimer() {
       <p>
         This page combines measured public data with projections from named sources. All
         projected values are labeled and dated. accessmi.org does not produce original
-        forecasts; we surface the most current publicly available data from CBO, KFF, GAO,
-        MDHHS, MLPP, CMS, HRSA, USDA, Census, and other named sources.{" "}
+        forecasts; we surface the most current publicly available data from CBO, GAO,
+        MDHHS, MLPP, CBPP, USDA, and other named sources.{" "}
         {!expanded && (
           <button
             onClick={() => setExpanded(true)}
