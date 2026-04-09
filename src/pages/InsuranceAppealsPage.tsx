@@ -15,9 +15,9 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const InsuranceAppealsPage = () => {
   usePageMeta({
-    title: "Insurance Denial Appeal Tool — Free",
+    title: "Insurance Denial Appeal Tool — Michigan",
     description:
-      "Fight health insurance denials in Michigan. Free appeal letter generator, Medicaid fair hearing templates, and DIFS external review guidance.",
+      "Fight health insurance denials in Michigan. Appeal letter generator, Medicaid fair hearing templates, and DIFS external review guidance.",
     path: "/health/insurance-appeals",
     jsonLd: {
       "@type": "HowTo",

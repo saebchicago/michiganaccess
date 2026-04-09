@@ -160,7 +160,7 @@ export default function InsuranceCoveragePage() {
 
   usePageMeta({
     title: "Insurance & Coverage Guide — Michigan",
-    description: "Understand Medicaid, Medicare, Marketplace, FQHC, and private insurance options in Michigan. Free navigator tool, no tracking.",
+    description: "Understand Medicaid, Medicare, Marketplace, FQHC, and private insurance options in Michigan. County-level data and navigator for all 83 counties.",
     path: "/insurance-coverage",
     jsonLd: {
       "@type": "FAQPage",
