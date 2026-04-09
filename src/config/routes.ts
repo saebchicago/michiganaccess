@@ -159,6 +159,7 @@ const pages = {
   CivicRacesPage: lazy(() => import("@/pages/CivicRacesPage")),
   CivicFederalPage: lazy(() => import("@/pages/CivicFederalPage")),
   FeedbackPage: lazy(() => import("@/pages/FeedbackPage")),
+  ClosureWatchPage: lazy(() => import("@/pages/ClosureWatchPage")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -169,6 +170,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/insurance-coverage", component: pages.InsuranceCoveragePage, label: "Insurance & Coverage Guide" },
   { path: "/find-care", component: pages.FindCarePage, label: "Find Care" },
   { path: "/health-map", component: pages.HealthMapPage, label: "Health Map" },
+  { path: "/closure-watch", component: pages.ClosureWatchPage, label: "Closure Watch" },
   { path: "/financial-help", component: pages.FinancialHelpPage, label: "Financial Help" },
   { path: "/quality", component: pages.QualityRatingsPage, label: "Quality Ratings" },
   { path: "/conditions", component: pages.HealthConditionsPage, label: "Health Conditions" },
@@ -344,6 +346,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Health Equity", href: "/equity", badge: "Updated" },
       { label: "Energy Burden", href: "/energy-burden" },
       { label: "Data Centers", href: "/data-centers", badge: "New" },
+      { label: "Closure Watch", href: "/closure-watch", badge: "V2" },
       { label: "Find Your City", href: "/find-your-city", badge: "Interactive" },
       { label: "Disaster History", href: "/disaster-history", badge: "Live API" },
       { label: "SBA Lending Insights", href: "/sba-insights", badge: "New" },
