@@ -16,7 +16,10 @@
   status = 301
   force = true
 
-# SPA fallback: all routes serve index.html for client-side routing
+# SPA fallback: serves index.html for routes that have no prerendered HTML file.
+# Netlify serves static files BEFORE evaluating redirects (no force=true here),
+# so prerendered files (e.g. dist/story/index.html) are served directly and
+# this redirect only fires for routes without a corresponding static file.
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -46,6 +49,13 @@
 # Never cache index.html or SW files — ensures fresh code on every deploy
 [[headers]]
   for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Prerendered route HTML files — same no-cache policy as the SPA shell.
+# These are served from dist/*/index.html for each prerendered route.
+[[headers]]
+  for = "/*/index.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 

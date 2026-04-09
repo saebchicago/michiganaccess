@@ -3,6 +3,8 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
+// @ts-ignore — @prerenderer/rollup-plugin returns a Rollup OutputPlugin; Vite accepts it.
+import prerender from "@prerenderer/rollup-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -89,6 +91,60 @@ export default defineConfig(({ mode }) => ({
             purpose: "maskable",
           },
         ],
+      },
+    }),
+    // Static prerender — production builds only.
+    // Puppeteer navigates each route, waits for usePageMeta to dispatch
+    // 'prerender-ready', then writes route-specific HTML to dist/.
+    // Netlify serves these static files in preference to the catch-all
+    // /index.html SPA fallback (static files always win unless force=true).
+    mode === "production" && prerender({
+      routes: [
+        "/",
+        "/story",
+        "/data-and-insights",
+        "/data/medicaid-coverage-at-risk",
+        "/methodology/medicaid-coverage-at-risk",
+        "/data/snap-coverage-at-risk",
+        "/methodology/snap-coverage-at-risk",
+        "/data/snap-michigan",
+        "/closure-watch",
+        "/find-care",
+        "/financial-help",
+        "/resources",
+        "/health/insurance-appeals",
+        "/housing-options",
+        "/wellness",
+        "/reentry",
+        "/insurance-coverage",
+        "/insurance-appeals",
+        "/downloads",
+        "/press",
+        "/install",
+        "/privacy",
+        "/terms",
+        "/about",
+      ],
+      renderer: "@prerenderer/renderer-puppeteer",
+      rendererOptions: {
+        // Wait for usePageMeta to signal it has written all <head> tags.
+        renderAfterDocumentEvent: "prerender-ready",
+        // Limit concurrent puppeteer instances to stay within CI memory limits.
+        maxConcurrentRoutes: 2,
+        // Block external API calls during prerender — we only need meta tags,
+        // not data-fetched content. Same-origin asset chunks are not affected.
+        skipThirdPartyRequests: true,
+        // 60 s per route: generous for lazy-chunk resolution + useEffect flush.
+        timeout: 60000,
+      },
+      postProcess(renderedRoute: { html: string }) {
+        // Strip the local prerender server's origin from any absolute URLs
+        // that sneak into the HTML (canonical / og:url are set via BASE_URL
+        // = "https://accessmi.org" in usePageMeta, so this is a safety net).
+        renderedRoute.html = renderedRoute.html.replace(
+          /(https?:\/\/)?(localhost|127\.0\.0\.1):\d+\//g,
+          "https://accessmi.org/"
+        );
       },
     }),
   ].filter(Boolean),

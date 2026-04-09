@@ -59,6 +59,10 @@ export function usePageMeta({ title, description, path, ogImage, jsonLd }: PageM
       scriptEl.remove();
     }
 
+    // Signal puppeteer prerenderer that this page's meta tags are fully written.
+    // The event is ignored in normal browser sessions (no listener registered).
+    document.dispatchEvent(new Event('prerender-ready'));
+
     return () => {
       document.title = `${SITE_NAME} — Michigan, County by County`;
       const pageScript = document.querySelector('script[data-page-jsonld]');
