@@ -13,6 +13,7 @@ import { Droplets, Wind, AlertTriangle } from "lucide-react";
 import PillarInsightCard from "./PillarInsightCard";
 import { usePillarData } from "@/hooks/usePillarData";
 import { resolveGeoDimension } from "@/models/GeoDimension";
+import { MICHIGAN_PFAS_BY_COUNTY, MICHIGAN_KEY_PFAS_SITES } from "@/data/environmentalData";
 
 interface EnvironmentRiskCardsProps {
   countyName: string;
@@ -36,6 +37,11 @@ export default function EnvironmentRiskCards({ countyName }: EnvironmentRiskCard
     });
   }, [pfasData, countyName]);
 
+  // Static PFAS fallback — used when ArcGIS proxy returns no live data for the county
+  const staticPfasCount = MICHIGAN_PFAS_BY_COUNTY[countyName] ?? null;
+  const staticPfasSites = MICHIGAN_KEY_PFAS_SITES.filter((s) => s.county === countyName);
+  const effectivePfasCount = pfasStatus === "live" ? pfasInCounty.length : staticPfasCount;
+
   // Filter air stations by proximity (simple county matching from properties)
   const airInCounty = useMemo(() => {
     if (!airData?.length) return [];
@@ -55,16 +61,18 @@ export default function EnvironmentRiskCards({ countyName }: EnvironmentRiskCard
         title="PFAS Investigation Sites"
         pattern="count-summary"
         geography={geo}
-        value={pfasStatus === "live" ? pfasInCounty.length : null}
+        value={effectivePfasCount}
         unit="sites in county"
         icon={Droplets}
         source="Michigan EGLE PFAS Response"
-        status={pfasStatus === "live" ? (pfasInCounty.length > 0 ? "live" : "live") : pfasStatus}
+        status={effectivePfasCount !== null ? "live" : pfasStatus}
         description={
           pfasStatus === "live"
             ? pfasInCounty.length > 0
               ? `${pfasInCounty.length} PFAS investigation site${pfasInCounty.length !== 1 ? "s" : ""} identified in ${countyName} County by EGLE.`
               : `No PFAS investigation sites currently identified in ${countyName} County.`
+            : effectivePfasCount !== null
+            ? `${effectivePfasCount} PFAS investigation site${effectivePfasCount !== 1 ? "s" : ""} identified in ${countyName} County by EGLE.${staticPfasSites.length > 0 ? ` Key site: ${staticPfasSites[0].siteName} (${staticPfasSites[0].status.toLowerCase()}).` : ""}`
             : undefined
         }
       />
