@@ -37,6 +37,9 @@ import MichiganEnvBurdenMap from "@/components/MichiganEnvBurdenMap";
 import { FIPS_TO_COUNTY } from "@/data/michigan-topojson";
 import { getTRIByCounty } from "@/data/epa-tri";
 import { useECHOFacilities } from "@/hooks/useEPAEcho";
+import { MEDICAID_COVERAGE_AT_RISK_FALLBACK } from "@/data/medicaidCoverageAtRiskFallback";
+import { SNAP_COVERAGE_AT_RISK_FALLBACK } from "@/data/snapCoverageAtRiskFallback";
+import { DUAL_ELIGIBLE_EXPOSURE_FALLBACK } from "@/data/dualEligibleExposureFallback";
 
 // State benchmarks: County Health Rankings & Roadmaps 2025 edition
 // https://www.countyhealthrankings.org/health-data/michigan
@@ -488,6 +491,82 @@ export default function CountyPage() {
             Source: <a href="https://echo.epa.gov/" target="_blank" rel="noopener" className="text-primary hover:underline">EPA Enforcement and Compliance History Online (ECHO), live query</a>
           </p>
         </section>
+
+        {/* Policy Impact Projections */}
+        {(() => {
+          const medicaidEntry = MEDICAID_COVERAGE_AT_RISK_FALLBACK.find(e => e.county === county);
+          const snapEntry = SNAP_COVERAGE_AT_RISK_FALLBACK.find(e => e.county === county);
+          const dualEntry = DUAL_ELIGIBLE_EXPOSURE_FALLBACK.find(e => e.county === county);
+          return (
+            <section>
+              <h2 className="mb-4 text-xl font-bold text-foreground">Policy Impact Projections</h2>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <Card className="hover-lift">
+                  <CardContent className="py-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-medium text-foreground">Medicaid Coverage at Risk</p>
+                      <Badge variant="outline" className="text-[10px]">V2</Badge>
+                    </div>
+                    {medicaidEntry ? (
+                      <p className="text-sm font-bold text-foreground">
+                        {medicaidEntry.projectedLossLow.toLocaleString()} to {medicaidEntry.projectedLossHigh.toLocaleString()} adults
+                      </p>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">County-level projections available</p>
+                    )}
+                    <p className="text-[10px] text-muted-foreground">P.L. 119-21 work requirement exposure</p>
+                    <Link to="/data/medicaid-coverage-at-risk" className="text-xs font-medium text-primary hover:underline block">
+                      View county-level projections →
+                    </Link>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover-lift">
+                  <CardContent className="py-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-medium text-foreground">SNAP Coverage at Risk</p>
+                      <Badge variant="outline" className="text-[10px]">V2</Badge>
+                    </div>
+                    {snapEntry && snapEntry.projectedAffectedHigh > 0 ? (
+                      <p className="text-sm font-bold text-foreground">
+                        {snapEntry.projectedAffectedLow.toLocaleString()} to {snapEntry.projectedAffectedHigh.toLocaleString()} adults
+                      </p>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">County-level projections available</p>
+                    )}
+                    <p className="text-[10px] text-muted-foreground">P.L. 119-21 ABAWD time-limit exposure</p>
+                    <Link to="/data/snap-coverage-at-risk" className="text-xs font-medium text-primary hover:underline block">
+                      View county-level projections →
+                    </Link>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover-lift">
+                  <CardContent className="py-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-medium text-foreground">Dual-Eligible Exposure</p>
+                      <Badge variant="outline" className="text-[10px]">V3</Badge>
+                    </div>
+                    {dualEntry ? (
+                      <p className="text-sm font-bold text-foreground">
+                        {dualEntry.allocatedLow.toLocaleString()} to {dualEntry.allocatedHigh.toLocaleString()} residents
+                      </p>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">County-level estimates available</p>
+                    )}
+                    <p className="text-[10px] text-muted-foreground">Medicare + Medicaid enrollment (exempt from work requirements)</p>
+                    <Link to="/data/dual-eligible-exposure" className="text-xs font-medium text-primary hover:underline block">
+                      View county distribution →
+                    </Link>
+                  </CardContent>
+                </Card>
+              </div>
+              <p className="mt-3 text-[10px] text-muted-foreground">
+                Policy impact projections based on federal data. See individual pages for full methodology.
+              </p>
+            </section>
+          );
+        })()}
 
         {/* Municipalities & Governance */}
         <MunicipalToolkit county={county} />
