@@ -167,6 +167,7 @@ const pages = {
   MedicaidCoverageAtRiskMethodology: lazy(() => import("@/pages/methodology/MedicaidCoverageAtRiskMethodology")),
   DualEligibleExposurePage: lazy(() => import("@/pages/DualEligibleExposurePage")),
   DualEligibleExposureMethodology: lazy(() => import("@/pages/methodology/DualEligibleExposureMethodology")),
+  EnvironmentalMethodology: lazy(() => import("@/pages/methodology/EnvironmentalMethodology")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -197,6 +198,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/methodology/medicaid-coverage-at-risk", component: pages.MedicaidCoverageAtRiskMethodology, label: "Methodology: Medicaid Coverage at Risk" },
   { path: "/data/dual-eligible-exposure", component: pages.DualEligibleExposurePage, label: "Dual-Eligible Exposure" },
   { path: "/methodology/dual-eligible-exposure", component: pages.DualEligibleExposureMethodology, label: "Methodology: Dual-Eligible Exposure" },
+  { path: "/methodology/environmental", component: pages.EnvironmentalMethodology, label: "Environmental Methodology" },
   { path: "/domain-dashboard", component: pages.DomainDashboardPage, label: "Domain Dashboard" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
   { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
