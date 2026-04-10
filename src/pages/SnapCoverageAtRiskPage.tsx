@@ -39,14 +39,16 @@ function StatCard({
   value,
   label,
   provenance,
+  testId,
 }: {
   icon: React.ReactNode;
   value: string | number;
   label: string;
   provenance: React.ReactNode;
+  testId?: string;
 }) {
   return (
-    <Card>
+    <Card data-testid={testId}>
       <CardContent className="pt-4 pb-3">
         <div className="flex items-start gap-3">
           <div className="mt-0.5 text-amber-600 dark:text-amber-400">{icon}</div>
@@ -182,7 +184,7 @@ export default function SnapCoverageAtRiskPage() {
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold text-amber-900 dark:text-amber-300">
+              <h2 data-testid="snap-callout-heading" className="text-xl font-semibold text-amber-900 dark:text-amber-300">
                 Exposure does not equal loss
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -205,6 +207,7 @@ export default function SnapCoverageAtRiskPage() {
           <h2 className="sr-only">Statewide projection</h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <StatCard
+              testId="snap-stat-mlpp"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : fmtN(MLPP_STATE_ESTIMATE)}
               label="Michigan adults in affected ABAWD categories (MLPP state estimate)"
@@ -221,6 +224,7 @@ export default function SnapCoverageAtRiskPage() {
               }
             />
             <StatCard
+              testId="snap-stat-usda"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : fmtN(STATE_RANGE_LOW) + "–" + fmtN(STATE_RANGE_HIGH)}
               label="Statewide modeled range (±40% GAO uncertainty band) — not a point estimate"
@@ -232,6 +236,7 @@ export default function SnapCoverageAtRiskPage() {
               }
             />
             <StatCard
+              testId="snap-stat-counties"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "83"}
               label="Michigan counties — complete statewide coverage (all 83)"
@@ -258,6 +263,7 @@ export default function SnapCoverageAtRiskPage() {
                 Modeled range — not a point estimate
               </p>
               <button
+                data-testid="snap-csv-download"
                 onClick={() => exportSnapCoverageAtRiskCsv(entries)}
                 className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors border border-border rounded px-2.5 py-1.5"
                 title="Download county data as CSV"
@@ -269,7 +275,7 @@ export default function SnapCoverageAtRiskPage() {
           </div>
 
           <div className="rounded-lg border border-border overflow-x-auto">
-            <table className="w-full text-sm">
+            <table data-testid="snap-county-table" className="w-full text-sm">
               <thead className="bg-muted/40 border-b border-border">
                 <tr>
                   <th className="text-left px-4 py-3">
@@ -375,7 +381,7 @@ export default function SnapCoverageAtRiskPage() {
           <h2 className="text-sm font-semibold text-foreground">Related coverage-at-risk analyses</h2>
           <ul className="space-y-1 text-sm text-muted-foreground">
             <li>
-              <Link to="/data/medicaid-coverage-at-risk" className="text-primary hover:underline font-medium">
+              <Link data-testid="snap-medicaid-crosslink" to="/data/medicaid-coverage-at-risk" className="text-primary hover:underline font-medium">
                 Medicaid Coverage at Risk
               </Link>
               {" "}— county-level exposure to P.L. 119-21 work requirement provisions{" "}
@@ -389,6 +395,7 @@ export default function SnapCoverageAtRiskPage() {
         {/* ── Methodology link ── */}
         <div className="pt-2 border-t border-border flex items-center justify-between gap-4">
           <Link
+            data-testid="snap-methodology-link"
             to={METHODOLOGY_URL}
             className="text-sm text-primary hover:underline"
           >

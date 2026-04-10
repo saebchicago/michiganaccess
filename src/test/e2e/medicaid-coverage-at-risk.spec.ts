@@ -5,25 +5,27 @@ test.describe("Medicaid Coverage at Risk — V2 Feature 3", () => {
   test("data page renders h1, stat cards, and county table rows", async ({ page }) => {
     await page.goto("/data/medicaid-coverage-at-risk");
     await expect(page.locator("h1")).toContainText("Medicaid Coverage at Risk");
-    // Stat cards: three cards should be visible
-    await expect(page.locator("text=171,000–355,000")).toBeVisible();
-    await expect(page.locator("text=$31.6 billion")).toBeVisible();
-    // County table should have rows (Wayne County is always present)
-    await expect(page.locator("text=Wayne")).toBeVisible();
+    await expect(page.getByTestId("medicaid-stat-urban")).toBeVisible();
+    await expect(page.getByTestId("medicaid-stat-urban")).toContainText("171,000");
+    await expect(page.getByTestId("medicaid-stat-urban")).toContainText("355,000");
+    await expect(page.getByTestId("medicaid-stat-kff")).toContainText("$31.6");
+    await expect(page.getByTestId("medicaid-stat-counties")).toContainText("83");
+    await expect(page.getByTestId("medicaid-county-table")).toBeVisible();
+    await expect(page.getByTestId("medicaid-county-table").locator("tbody tr")).toHaveCount(83);
   });
 
   // T2: Scope qualifier labels visible on stat cards
   test("stat cards display scope qualifier labels", async ({ page }) => {
     await page.goto("/data/medicaid-coverage-at-risk");
-    await expect(page.locator("text=Work requirement provisions only")).toBeVisible();
-    await expect(page.locator("text=All P.L. 119-21 Medicaid provisions")).toBeVisible();
-    await expect(page.locator("text=Statewide coverage")).toBeVisible();
+    await expect(page.getByTestId("medicaid-stat-urban")).toContainText("Work requirement provisions only");
+    await expect(page.getByTestId("medicaid-stat-kff")).toContainText("All P.L. 119-21 Medicaid provisions");
+    await expect(page.getByTestId("medicaid-stat-counties")).toContainText("Statewide coverage");
   });
 
   // T3: Amber callout contains disclaimer text
   test("amber callout shows 'Exposure is not disenrollment'", async ({ page }) => {
     await page.goto("/data/medicaid-coverage-at-risk");
-    await expect(page.locator("text=Exposure is not disenrollment")).toBeVisible();
+    await expect(page.getByTestId("medicaid-callout-heading")).toHaveText("Exposure is not disenrollment");
   });
 
   // T4: Cross-feature navigation — Related analyses block links to SNAP page

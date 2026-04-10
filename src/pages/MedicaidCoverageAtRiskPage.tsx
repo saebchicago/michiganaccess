@@ -36,15 +36,17 @@ function StatCard({
   label,
   scope,
   provenance,
+  testId,
 }: {
   icon: React.ReactNode;
   value: string | number;
   label: string;
   scope?: string;
   provenance: React.ReactNode;
+  testId?: string;
 }) {
   return (
-    <Card>
+    <Card data-testid={testId}>
       <CardContent className="pt-4 pb-3">
         <div className="flex items-start gap-3">
           <div className="mt-0.5 text-amber-600 dark:text-amber-400">{icon}</div>
@@ -184,7 +186,7 @@ export default function MedicaidCoverageAtRiskPage() {
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold text-amber-900 dark:text-amber-300">
+              <h2 data-testid="medicaid-callout-heading" className="text-xl font-semibold text-amber-900 dark:text-amber-300">
                 Exposure is not disenrollment
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
@@ -208,6 +210,7 @@ export default function MedicaidCoverageAtRiskPage() {
           <h2 className="sr-only">Statewide projection</h2>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <StatCard
+              testId="medicaid-stat-urban"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "171,000–355,000"}
               label="Michigan adults in categories affected by P.L. 119-21 work requirement provisions (Urban Institute projection, 2028 horizon)"
@@ -225,6 +228,7 @@ export default function MedicaidCoverageAtRiskPage() {
               }
             />
             <StatCard
+              testId="medicaid-stat-kff"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "$31.6 billion"}
               label="Michigan federal Medicaid spending reduction over 10 years under P.L. 119-21 (KFF, December 2025)"
@@ -242,6 +246,7 @@ export default function MedicaidCoverageAtRiskPage() {
               }
             />
             <StatCard
+              testId="medicaid-stat-counties"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "83"}
               label="Michigan counties — complete statewide coverage (all 83)"
@@ -269,6 +274,7 @@ export default function MedicaidCoverageAtRiskPage() {
                 Modeled range — not a point estimate
               </p>
               <button
+                data-testid="medicaid-csv-download"
                 onClick={() => exportMedicaidCoverageAtRiskCsv(entries)}
                 className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors border border-border rounded px-2.5 py-1.5"
                 title="Download county data as CSV"
@@ -280,7 +286,7 @@ export default function MedicaidCoverageAtRiskPage() {
           </div>
 
           <div className="rounded-lg border border-border overflow-x-auto">
-            <table className="w-full text-sm">
+            <table data-testid="medicaid-county-table" className="w-full text-sm">
               <thead className="bg-muted/40 border-b border-border">
                 <tr>
                   <th className="text-left px-4 py-3">
@@ -390,7 +396,7 @@ export default function MedicaidCoverageAtRiskPage() {
           <h2 className="text-sm font-semibold text-foreground">Related coverage-at-risk analyses</h2>
           <ul className="space-y-1 text-sm text-muted-foreground">
             <li>
-              <Link to="/data/snap-coverage-at-risk" className="text-primary hover:underline font-medium">
+              <Link data-testid="medicaid-snap-crosslink" to="/data/snap-coverage-at-risk" className="text-primary hover:underline font-medium">
                 SNAP Coverage at Risk
               </Link>
               {" "}— county-level exposure to P.L. 119-21 ABAWD provisions{" "}
@@ -404,6 +410,7 @@ export default function MedicaidCoverageAtRiskPage() {
         {/* ── Methodology link ── */}
         <div className="pt-2 border-t border-border flex items-center justify-between gap-4">
           <Link
+            data-testid="medicaid-methodology-link"
             to={METHODOLOGY_URL}
             className="text-sm text-primary hover:underline"
           >
