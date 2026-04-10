@@ -15,17 +15,13 @@ export default {
   	extend: {
   		fontFamily: {
   			sans: [
-  				'Inter',
+  				'IBM Plex Sans',
   				'system-ui',
-  				'-apple-system',
-  				'BlinkMacSystemFont',
-  				'Segoe UI',
   				'sans-serif',
   			],
   			display: [
-  				'Inter',
+  				'IBM Plex Sans',
   				'system-ui',
-  				'-apple-system',
   				'sans-serif'
   			],
   			serif: [

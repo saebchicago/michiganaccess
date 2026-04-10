@@ -331,13 +331,7 @@ export default function CountyPage() {
                   <UninsuredSparkline currentRate={uninsuredH.value} county={county} />
                 </CardContent>
               </Card>
-            ) : (
-              <Card className="mt-4">
-                <CardContent className="py-4 text-center">
-                  <p className="text-sm text-muted-foreground">Uninsured trend data is not yet available for this county.</p>
-                </CardContent>
-              </Card>
-            );
+            ) : null;
           })()}
         </section>
 
@@ -416,21 +410,16 @@ export default function CountyPage() {
         {countyFips && (
           <section className="py-10 border-t border-border">
             <div className="container">
-              <div className="mb-4">
-                <h2 className="text-xl font-bold text-foreground">Environmental Burden — {county} County</h2>
-                <p className="text-sm text-muted-foreground mt-1">EJScreen-based burden indicators. Click any county to compare.</p>
-              </div>
+              <h2 className="text-xl font-bold text-foreground mb-4">Environmental Burden</h2>
               <MichiganEnvBurdenMap initialCounty={countyFips} />
             </div>
           </section>
         )}
 
         {/* EPA TRI Facilities */}
-        <section>
-          <h2 className="mb-4 text-xl font-bold text-foreground">EPA Toxic Release Inventory -- Top Facilities</h2>
-          {triFacilities.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No TRI-reporting facilities recorded for {county} County in this dataset cycle.</p>
-          ) : (
+        {triFacilities.length > 0 && (
+          <section>
+            <h2 className="mb-4 text-xl font-bold text-foreground">Toxic Release Inventory</h2>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {triFacilities.slice(0, 5).map((f) => (
                 <Card key={f.name} className="hover-lift">
@@ -448,11 +437,11 @@ export default function CountyPage() {
                 </Card>
               ))}
             </div>
-          )}
-          <p className="mt-3 text-[10px] text-muted-foreground">
-            Source: <a href="https://www.epa.gov/toxics-release-inventory-tri-program" target="_blank" rel="noopener" className="text-primary hover:underline">EPA Toxics Release Inventory, 2022 reporting year</a>
-          </p>
-        </section>
+            <p className="mt-3 text-[10px] text-muted-foreground">
+              Source: <a href="https://www.epa.gov/toxics-release-inventory-tri-program" target="_blank" rel="noopener" className="text-primary hover:underline">EPA Toxics Release Inventory, 2022 reporting year</a>
+            </p>
+          </section>
+        )}
 
         {/* EPA ECHO Compliance */}
         <section>
