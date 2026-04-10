@@ -48,4 +48,6 @@
   <url><loc>https://accessmi.org/methodology/snap-coverage-at-risk</loc><changefreq>monthly</changefreq><priority>0.5</priority><lastmod>2026-04-09</lastmod></url>
   <url><loc>https://accessmi.org/data/medicaid-coverage-at-risk</loc><changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-04-09</lastmod></url>
   <url><loc>https://accessmi.org/methodology/medicaid-coverage-at-risk</loc><changefreq>monthly</changefreq><priority>0.5</priority><lastmod>2026-04-09</lastmod></url>
+  <url><loc>https://accessmi.org/data/dual-eligible-exposure</loc><changefreq>monthly</changefreq><priority>0.7</priority><lastmod>2026-04-09</lastmod></url>
+  <url><loc>https://accessmi.org/methodology/dual-eligible-exposure</loc><changefreq>monthly</changefreq><priority>0.5</priority><lastmod>2026-04-09</lastmod></url>
 </urlset>

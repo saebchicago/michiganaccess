@@ -165,6 +165,8 @@ const pages = {
   SnapCoverageAtRiskMethodology: lazy(() => import("@/pages/methodology/SnapCoverageAtRiskMethodology")),
   MedicaidCoverageAtRiskPage: lazy(() => import("@/pages/MedicaidCoverageAtRiskPage")),
   MedicaidCoverageAtRiskMethodology: lazy(() => import("@/pages/methodology/MedicaidCoverageAtRiskMethodology")),
+  DualEligibleExposurePage: lazy(() => import("@/pages/DualEligibleExposurePage")),
+  DualEligibleExposureMethodology: lazy(() => import("@/pages/methodology/DualEligibleExposureMethodology")),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -193,6 +195,8 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/methodology/snap-coverage-at-risk", component: pages.SnapCoverageAtRiskMethodology, label: "Methodology: SNAP Coverage at Risk" },
   { path: "/data/medicaid-coverage-at-risk", component: pages.MedicaidCoverageAtRiskPage, label: "Medicaid Coverage at Risk" },
   { path: "/methodology/medicaid-coverage-at-risk", component: pages.MedicaidCoverageAtRiskMethodology, label: "Methodology: Medicaid Coverage at Risk" },
+  { path: "/data/dual-eligible-exposure", component: pages.DualEligibleExposurePage, label: "Dual-Eligible Exposure" },
+  { path: "/methodology/dual-eligible-exposure", component: pages.DualEligibleExposureMethodology, label: "Methodology: Dual-Eligible Exposure" },
   { path: "/domain-dashboard", component: pages.DomainDashboardPage, label: "Domain Dashboard" },
   { path: "/data-explorer", component: pages.DataExplorerPage, label: "Data Explorer" },
   { path: "/compare", component: pages.ComparePlacesPage, label: "Compare Counties" },
@@ -349,6 +353,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "SNAP in Michigan", href: "/data/snap-michigan", badge: "V3" },
       { label: "SNAP Coverage at Risk", href: "/data/snap-coverage-at-risk", badge: "V3" },
       { label: "Medicaid Coverage at Risk", href: "/data/medicaid-coverage-at-risk", badge: "V2" },
+      { label: "Dual-Eligible Exposure", href: "/data/dual-eligible-exposure", badge: "V3" },
       { label: "Domain Dashboard", href: "/domain-dashboard", badge: "New" },
       { label: "Data Explorer", href: "/data-explorer", badge: "Census API" },
       { label: "CHNA Explorer", href: "/chna-explorer", badge: "Interactive" },

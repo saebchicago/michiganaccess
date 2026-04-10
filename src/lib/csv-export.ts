@@ -69,6 +69,44 @@ export function exportMedicaidCoverageAtRiskCsv(
   triggerDownload(buildCsv(headers, rows, meta), `michigan-medicaid-coverage-at-risk-${date}.csv`);
 }
 
+export function exportDualEligibleExposureCsv(
+  entries: Array<{
+    county: string;
+    fips: string;
+    acsDualEstimate: number;
+    allocatedLow: number;
+    allocatedHigh: number;
+  }>
+): void {
+  const date = new Date().toISOString().slice(0, 10);
+  const meta = [
+    `accessmi.org — Michigan Dual-Eligible Exposure Map`,
+    `Generated: ${date}`,
+    `Framing: "Two programs, shared geography" — descriptive intersection, not a coverage-loss claim`,
+    `Dual-eligible residents are exempt from P.L. 119-21 work requirements (§71119 applies to expansion enrollees only)`,
+    `State range: ~335,000–405,000 Michigan dual-eligible residents (MACPAC CY2022 / KFF 2024–2025)`,
+    `County allocation: ACS B27010 5-year 2023 county shares × statewide range endpoints`,
+    `ACS denominator: 216,635 (sum of B27010_046E + B27010_062E for all 83 Michigan counties)`,
+    `Methodology: https://accessmi.org/methodology/dual-eligible-exposure`,
+    `IMPORTANT: ACS values are survey estimates with margins of error. Small-county figures have high relative MoE.`,
+  ];
+  const headers = [
+    "county",
+    "fips",
+    "acs_dual_estimate_b27010_2023",
+    "allocated_low",
+    "allocated_high",
+  ];
+  const rows = entries.map((e) => ({
+    county: e.county,
+    fips: e.fips,
+    acs_dual_estimate_b27010_2023: e.acsDualEstimate,
+    allocated_low: e.allocatedLow,
+    allocated_high: e.allocatedHigh,
+  }));
+  triggerDownload(buildCsv(headers, rows, meta), `michigan-dual-eligible-exposure-${date}.csv`);
+}
+
 export function exportSnapCoverageAtRiskCsv(
   entries: Array<{
     county: string;

@@ -107,6 +107,8 @@ export default defineConfig(({ mode }) => ({
         "/data-and-insights",
         "/data/medicaid-coverage-at-risk",
         "/methodology/medicaid-coverage-at-risk",
+        "/data/dual-eligible-exposure",
+        "/methodology/dual-eligible-exposure",
         "/data/snap-coverage-at-risk",
         "/methodology/snap-coverage-at-risk",
         "/data/snap-michigan",
