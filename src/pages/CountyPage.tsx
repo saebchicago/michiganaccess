@@ -36,6 +36,7 @@ import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSect
 import MichiganEnvBurdenMap from "@/components/MichiganEnvBurdenMap";
 import { FIPS_TO_COUNTY } from "@/data/michigan-topojson";
 import { getTRIByCounty } from "@/data/epa-tri";
+import { useECHOFacilities } from "@/hooks/useEPAEcho";
 
 // State benchmarks: County Health Rankings & Roadmaps 2025 edition
 // https://www.countyhealthrankings.org/health-data/michigan
@@ -157,6 +158,13 @@ export default function CountyPage() {
   const snapshotMetrics = buildCountySnapshotMetrics(county);
   const countyFips = Object.entries(FIPS_TO_COUNTY).find(([, name]) => name === county)?.[0];
   const triFacilities = getTRIByCounty(county);
+  const { data: echoFacilities, isLoading: echoLoading } = useECHOFacilities(county);
+  const echoTotal = echoFacilities?.length ?? 0;
+  const echoRCRA = echoFacilities?.filter(f => f.programs.includes("RCRA")).length ?? 0;
+  const echoCWA = echoFacilities?.filter(f => f.programs.includes("CWA")).length ?? 0;
+  const echoCAA = echoFacilities?.filter(f => f.programs.includes("CAA")).length ?? 0;
+  const echoSDWA = echoFacilities?.filter(f => f.programs.includes("SDWA")).length ?? 0;
+  const echoViolations = echoFacilities?.filter(f => f.violations12mo > 0).length ?? 0;
 
   return (
     <Layout>
@@ -440,6 +448,44 @@ export default function CountyPage() {
           )}
           <p className="mt-3 text-[10px] text-muted-foreground">
             Source: <a href="https://www.epa.gov/toxics-release-inventory-tri-program" target="_blank" rel="noopener" className="text-primary hover:underline">EPA Toxics Release Inventory, 2022 reporting year</a>
+          </p>
+        </section>
+
+        {/* EPA ECHO Compliance */}
+        <section>
+          <h2 className="mb-4 text-xl font-bold text-foreground">EPA Compliance Overview</h2>
+          {echoLoading ? (
+            <Card><CardContent className="py-4"><p className="text-sm text-muted-foreground">Loading EPA ECHO data...</p></CardContent></Card>
+          ) : echoFacilities && echoFacilities.length > 0 ? (
+            <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+              {[
+                { label: "Regulated Facilities", value: echoTotal },
+                { label: "Hazardous Waste (RCRA)", value: echoRCRA },
+                { label: "Water Discharge (CWA)", value: echoCWA },
+                { label: "Air Emissions (CAA)", value: echoCAA },
+                { label: "Drinking Water (SDWA)", value: echoSDWA },
+                { label: "Violations (12mo)", value: echoViolations },
+              ].map((stat) => (
+                <Card key={stat.label}>
+                  <CardContent className="py-4 text-center">
+                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                    <p className="text-[10px] text-muted-foreground">{stat.label}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <Card>
+              <CardContent className="py-4">
+                <p className="text-sm text-muted-foreground">
+                  EPA ECHO live data temporarily unavailable. View enforcement data directly at{" "}
+                  <a href="https://echo.epa.gov/" target="_blank" rel="noopener" className="text-primary hover:underline">echo.epa.gov</a>.
+                </p>
+              </CardContent>
+            </Card>
+          )}
+          <p className="mt-3 text-[10px] text-muted-foreground">
+            Source: <a href="https://echo.epa.gov/" target="_blank" rel="noopener" className="text-primary hover:underline">EPA Enforcement and Compliance History Online (ECHO), live query</a>
           </p>
         </section>
 
