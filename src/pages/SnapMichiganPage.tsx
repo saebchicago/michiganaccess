@@ -104,6 +104,7 @@ export default function SnapMichiganPage() {
     title: "SNAP in Michigan | accessmi.org",
     description:
       "Food assistance enrollment and retailer access across all 83 Michigan counties, sourced from USDA FNS and the SNAP Retailer Locator.",
+    path: "/data/snap-michigan",
   });
 
   const { data, isLoading } = useSnapMichigan();
