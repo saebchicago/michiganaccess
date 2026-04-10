@@ -146,11 +146,10 @@ export default function DualEligibleExposurePage() {
   }
 
   // Median county ACS dual estimate: 875 (Hillsdale — 42nd of 83 when sorted by value)
-  // Median allocated high: Math.round(405_000 × (875 / 216_635)) = 1,637
-  const medianAllocatedHigh = useMemo(() => {
+  const medianAcsDualEstimate = useMemo(() => {
     if (!entries.length) return 0;
-    const sorted_by_high = [...entries].map((e) => e.allocatedHigh).sort((a, b) => a - b);
-    return sorted_by_high[Math.floor(sorted_by_high.length / 2)];
+    const sorted_by_acs = [...entries].map((e) => e.acsDualEstimate).sort((a, b) => a - b);
+    return sorted_by_acs[Math.floor(sorted_by_acs.length / 2)];
   }, [entries]);
 
   return (
@@ -243,8 +242,8 @@ export default function DualEligibleExposurePage() {
             <StatCard
               testId="dual-stat-median"
               icon={<Activity className="h-5 w-5" />}
-              value={isLoading ? "…" : `~${fmtN(medianAllocatedHigh)}`}
-              label="Median county estimated dual-eligible population (allocated from statewide range high)"
+              value={isLoading ? "…" : `~${fmtN(medianAcsDualEstimate)}`}
+              label="Median Michigan county dual-eligible population (ACS)"
               scope="Half of Michigan counties have more, half have fewer"
               provenance={
                 <DataProvenance
