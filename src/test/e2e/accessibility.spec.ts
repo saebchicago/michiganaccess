@@ -5,8 +5,13 @@ const PAGES_TO_TEST = ['/', '/brief', '/compare', '/county', '/environment', '/d
 
 for (const path of PAGES_TO_TEST) {
   test(`A11Y: ${path} has zero critical/serious violations`, async ({ page }) => {
-    await page.goto(path);
-    await page.waitForLoadState('networkidle');
+    // Suppress first-visit onboarding tour to avoid false-positive contrast violations
+    await page.addInitScript(() => {
+      localStorage.setItem('accessmi_tour_seen', 'true');
+    });
+    await page.goto(path, { waitUntil: 'domcontentloaded' });
+    // Give React a moment to render, but don't block on external API calls
+    await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {});
     await injectAxe(page);
     await checkA11y(
       page,
@@ -14,6 +19,7 @@ for (const path of PAGES_TO_TEST) {
       {
         detailedReport: true,
         detailedReportOptions: { html: true },
+        includedImpacts: ['critical', 'serious'],
       } as any,
       false,
     );

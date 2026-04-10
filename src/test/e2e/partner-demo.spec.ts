@@ -34,8 +34,8 @@ test.describe("Partner Demo Path", () => {
 
   // ── 1. Homepage ──────────────────────────────────────────────────────────
   test("PD-1: homepage loads with key Michigan stats visible", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForLoadState("domcontentloaded");
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await page.waitForLoadState("networkidle", { timeout: 8000 }).catch(() => {});
 
     // Title
     await expect(page).toHaveTitle(/Access Michigan/i);
@@ -51,8 +51,8 @@ test.describe("Partner Demo Path", () => {
 
   // ── 2. Story page ────────────────────────────────────────────────────────
   test("PD-2: /story renders all 7 sections without crash", async ({ page }) => {
-    await page.goto("/story");
-    await page.waitForLoadState("domcontentloaded");
+    await page.goto("/story", { waitUntil: "domcontentloaded" });
+    await page.waitForLoadState("networkidle", { timeout: 8000 }).catch(() => {});
 
     await expectNoRuntimeError(page);
     await expectNoJunkData(page);
@@ -84,12 +84,14 @@ test.describe("Partner Demo Path", () => {
   test("PD-3: /county/wayne loads with health data, no NaN values", async ({ page }) => {
     await page.goto("/county/wayne");
     await page.waitForLoadState("domcontentloaded");
+    // Give React time to hydrate and render the county name (lazy-loaded page)
+    await page.waitForLoadState("networkidle", { timeout: 10000 }).catch(() => {});
 
     await expectNoRuntimeError(page);
     await expectNoJunkData(page);
 
-    // County name visible
-    await expect(page.locator("h1, h2").filter({ hasText: /Wayne/i }).first()).toBeVisible();
+    // County name visible (h1 renders synchronously once React hydrates)
+    await expect(page.locator("h1, h2").filter({ hasText: /Wayne/i }).first()).toBeVisible({ timeout: 10000 });
 
     // Uninsured rate stat should not be placeholder
     const body = await page.locator("body").innerText();
@@ -98,22 +100,22 @@ test.describe("Partner Demo Path", () => {
 
   // ── 4. Behavioral Health dashboard ───────────────────────────────────────
   test("PD-4: /behavioral-health renders key metrics", async ({ page }) => {
-    await page.goto("/behavioral-health");
-    await page.waitForLoadState("domcontentloaded");
+    await page.goto("/behavioral-health", { waitUntil: "domcontentloaded" });
+    await page.waitForLoadState("networkidle", { timeout: 8000 }).catch(() => {});
 
     await expectNoRuntimeError(page);
     await expectNoJunkData(page);
 
     // Key numbers
-    await expect(page.locator("text=1,945")).toBeVisible({ timeout: 10000 });
-    await expect(page.locator("text=47th")).toBeVisible();
-    await expect(page.locator("text=988")).toBeVisible();
+    await expect(page.locator("text=1,945").first()).toBeVisible({ timeout: 10000 });
+    await expect(page.locator("text=47th").first()).toBeVisible();
+    await expect(page.locator("text=988").first()).toBeVisible();
   });
 
   // ── 5. Find Care page ────────────────────────────────────────────────────
   test("PD-5: /find-care renders search UI without crash", async ({ page }) => {
-    await page.goto("/find-care");
-    await page.waitForLoadState("domcontentloaded");
+    await page.goto("/find-care", { waitUntil: "domcontentloaded" });
+    await page.waitForLoadState("networkidle", { timeout: 8000 }).catch(() => {});
 
     await expectNoRuntimeError(page);
     await expectNoJunkData(page);
@@ -125,8 +127,8 @@ test.describe("Partner Demo Path", () => {
 
   // ── 6. Source integrity spot-check ───────────────────────────────────────
   test("PD-6: story page source citations are clickable external links", async ({ page }) => {
-    await page.goto("/story");
-    await page.waitForLoadState("domcontentloaded");
+    await page.goto("/story", { waitUntil: "domcontentloaded" });
+    await page.waitForLoadState("networkidle", { timeout: 8000 }).catch(() => {});
 
     // CLOSUP link should exist and point to closup.umich.edu
     const closupLink = page.locator("a[href*='closup.umich.edu']");

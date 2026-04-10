@@ -377,7 +377,7 @@ const HeroSection = () => {
         aria-hidden="true"
       />
 
-      <div className="container relative z-10 py-16 md:py-24 lg:py-32">
+      <div className="container relative z-10 pt-16 pb-8 md:pt-24 md:pb-10 lg:pt-28 lg:pb-10">
         <div className="mx-auto max-w-2xl text-center">
           {/* Eyebrow */}
           <motion.p
@@ -408,6 +408,36 @@ const HeroSection = () => {
           >
             ZIP-level health, economic & housing data across all 83 counties. Free, forever.
           </motion.p>
+
+          {/* Key Michigan health signals — compact inline strip (above fold) */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.28, duration: 0.5 }}
+            className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-2 text-left"
+          >
+            {[
+              { title: "Diabetes", value: "10.8%", trend: "Rising", tone: "worsening" as const },
+              { title: "Life Expectancy", value: "74.2 yrs", trend: "Declining", tone: "worsening" as const },
+              { title: "Primary Care Access", value: "+4.2%", trend: "Improving", tone: "improving" as const },
+              { title: "Uninsured Rate", value: "5.2%", trend: "Improving", tone: "improving" as const },
+            ].map((signal) => (
+              <div
+                key={signal.title}
+                data-testid="signal-card"
+                className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 backdrop-blur-sm"
+              >
+                <p className="text-[10px] text-primary-foreground/50 uppercase tracking-wider mb-1">{signal.title}</p>
+                <p className="text-lg font-bold text-primary-foreground tabular-nums">{signal.value}</p>
+                <span
+                  data-testid="trend-indicator"
+                  className={`text-[10px] font-medium ${signal.tone === "improving" ? "text-green-400" : "text-red-400"}`}
+                >
+                  {signal.trend}
+                </span>
+              </div>
+            ))}
+          </motion.div>
 
           {/* Rotating Stats */}
           <RotatingStats />

@@ -2,6 +2,10 @@ import { test, expect } from '@playwright/test';
 
 test.describe('AccessMI User Journeys', () => {
   test.beforeEach(async ({ page }) => {
+    // Suppress first-visit onboarding tour so it does not intercept clicks
+    await page.addInitScript(() => {
+      localStorage.setItem('accessmi_tour_seen', 'true');
+    });
     await page.goto('/');
     await page.waitForLoadState('networkidle');
   });
@@ -73,8 +77,8 @@ test.describe('AccessMI User Journeys', () => {
     ];
 
     for (const link of navLinks) {
-      await page.goto(link);
-      await page.waitForLoadState('networkidle');
+      await page.goto(link, { waitUntil: 'domcontentloaded' });
+      await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {});
       const title = await page.title();
       expect(title).toBeTruthy();
       const errors: string[] = [];
@@ -89,10 +93,12 @@ test.describe('AccessMI User Journeys', () => {
     await page.waitForLoadState('networkidle');
     const mobileNav = page.locator('[data-testid="mobile-nav"]');
     await expect(mobileNav).toBeVisible();
-    // Verify no horizontal overflow
-    const bodyWidth = await page.evaluate(() => document.body.scrollWidth);
-    const viewportWidth = 375;
-    expect(bodyWidth).toBeLessThanOrEqual(viewportWidth + 2);
+    // Verify no horizontal overflow (use documentElement for accurate measurement)
+    const { scrollWidth, clientWidth } = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+    }));
+    expect(scrollWidth).toBeLessThanOrEqual(clientWidth + 2);
   });
 
   test('J7: search bar accepts input and does not crash', async ({ page }) => {

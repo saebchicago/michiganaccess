@@ -269,9 +269,12 @@ function MetricCard({ label, value, unit, color }: { label: string; value: numbe
   return (
     <div className="rounded border border-border bg-background p-2">
       <p className="text-[10px] text-muted-foreground uppercase tracking-wide mb-0.5">{label}</p>
-      <p className="text-lg font-bold" style={{ color }}>
+      <p className="text-lg font-bold text-foreground">
         {value}{unit}
       </p>
+      <div className="h-1 rounded-full bg-muted overflow-hidden mt-1">
+        <div className="h-full rounded-full" style={{ width: `${value}%`, background: color }} />
+      </div>
     </div>
   );
 }

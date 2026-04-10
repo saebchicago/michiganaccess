@@ -21,7 +21,7 @@ const NotFound = () => {
   return (
     <Layout>
       <div className="container max-w-2xl py-16 md:py-24 text-center space-y-6">
-        <div className="text-6xl font-bold text-primary/20 tabular-nums">404</div>
+        <div className="text-6xl font-bold text-muted-foreground tabular-nums" aria-hidden="true">404</div>
         <h1 className="text-2xl md:text-3xl font-bold text-foreground">
           Page Not Found
         </h1>

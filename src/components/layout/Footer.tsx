@@ -21,11 +21,11 @@ function FooterSection({ title, links, collapsible }: { title: string; links: { 
           onClick={() => setOpen(!open)}
           className="flex w-full items-center justify-between mb-3"
         >
-          <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</h4>
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</p>
           <ChevronDown className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
         </button>
       ) : (
-        <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</h4>
+        <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</p>
       )}
       {(!shouldCollapse || open) && (
         <ul className="space-y-2">

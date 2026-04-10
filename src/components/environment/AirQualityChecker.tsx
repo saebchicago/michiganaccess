@@ -89,11 +89,12 @@ export default function AirQualityChecker() {
             type="submit"
             size="sm"
             disabled={zip.length !== 5 || isFetching}
+            aria-label={isFetching ? "Loading air quality data" : "Check air quality"}
           >
             {isFetching ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
+              <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
             ) : (
-              <Search className="h-4 w-4" />
+              <Search className="h-4 w-4" aria-hidden="true" />
             )}
           </Button>
         </form>

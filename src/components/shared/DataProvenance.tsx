@@ -28,7 +28,7 @@ function DataProvenanceLegacy({
   return (
     <div
       className={`flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-md border border-border/50 bg-muted/30 px-4 py-2.5 text-[11px] text-muted-foreground ${className}`}
-      role="contentinfo"
+      role="note"
       aria-label="Data provenance"
     >
       <span className="inline-flex items-center gap-1">

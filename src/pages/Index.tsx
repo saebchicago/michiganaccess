@@ -237,6 +237,11 @@ const Index = () => {
 
       {/* ═══ YOUR COMMUNITY — moved to hero ZIP search above ═══ */}
 
+      {/* ═══ EXPLORE QUESTIONS — data-driven Q&A navigation ═══ */}
+      <SectionErrorBoundary title="Some content didn't load">
+        <ExploreQuestionsPanel />
+      </SectionErrorBoundary>
+
       {/* ═══ MICHIGAN PULSE — live intelligence signals ═══ */}
       <MichiganPulse />
 
