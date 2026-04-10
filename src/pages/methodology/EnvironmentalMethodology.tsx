@@ -49,13 +49,17 @@ export default function EnvironmentalMethodology() {
           </p>
           <ul className="space-y-3 text-sm">
             <li className="border-l-2 border-border pl-4">
-              <p className="font-medium">EPA EJScreen ZCTA static snapshot (15 Michigan ZCTAs, 3 Wayne)</p>
+              <p className="font-medium">EPA EJScreen ZCTA static snapshot (15 Michigan ZCTAs, 11 counties)</p>
               <p className="text-muted-foreground">
                 Source file: <code className="bg-muted px-1 rounded text-xs">src/data/ejscreen.ts</code>.
                 Data year: EJScreen v2.3, 2023. Rendered on <code className="bg-muted px-1 rounded text-xs">/county/:slug</code>{" "}
-                via <code className="bg-muted px-1 rounded text-xs">EnvironmentRiskCards</code> and the environmental burden map.
-                Percentiles are national (0 to 100, higher = more burdened). ZCTAs covered: 48201 (Detroit core),
-                48126 (Dearborn), 48154 (Livonia), plus 12 others statewide.
+                via <code className="bg-muted px-1 rounded text-xs">EnvironmentRiskCards</code> and the environmental burden
+                choropleth map. The map uses real EJScreen data for 11 of 83 Michigan counties; the remaining 72 counties
+                display a neutral "no data" state. For counties with multiple ZCTAs, the highest-burden ZCTA (by ej_index)
+                is shown as the representative value. Percentiles are national (0 to 100, higher = more burdened).
+                Counties covered: Wayne (ZCTAs 48201, 48126, 48154), Oakland (48075, 48084, 48067), Kent (49503),
+                Genesee (48502), Saginaw (48601), Washtenaw (48104), Grand Traverse (49684), Marquette (49855),
+                Luce (49853), Kalamazoo (49001), Macomb (48310).
                 Primary source:{" "}
                 <a href="https://www.epa.gov/ejscreen" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
                   epa.gov/ejscreen
@@ -172,14 +176,13 @@ export default function EnvironmentalMethodology() {
           <h2 className="text-xl font-semibold">Integration in progress</h2>
           <ul className="space-y-3 text-sm">
             <li className="border-l-2 border-blue-400/60 pl-4">
-              <p className="font-medium">EPA EJScreen full block-group dataset</p>
+              <p className="font-medium">EPA EJScreen full block-group dataset (all 83 counties)</p>
               <p className="text-muted-foreground">
                 Seed script exists at{" "}
                 <code className="bg-muted px-1 rounded text-xs">src/utils/data-ingestion/seed-ej-screen.ts</code>.
                 Supabase <code className="bg-muted px-1 rounded text-xs">ej_screen</code> table schema exists.
-                CSV load pending. Once seeded, the environmental burden map will replace illustrative
-                synthetic integers with real EJScreen block-group percentiles.
-                Until then, the map carries an explicit "Illustrative pending full EPA EJScreen integration" label.
+                CSV load pending. Once seeded, the environmental burden map will expand from the current 11-county
+                ZCTA snapshot to full block-group coverage for all 83 Michigan counties.
                 Primary source:{" "}
                 <a href="https://www.epa.gov/ejscreen" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
                   epa.gov/ejscreen
@@ -264,9 +267,9 @@ export default function EnvironmentalMethodology() {
               traceable to a primary source URL visible in the UI.
             </li>
             <li>
-              Never display values we cannot trace to a primary source. Synthetic or illustrative values
-              are explicitly labeled as such (example: the environmental burden map carries an "Illustrative" label
-              pending full EJScreen integration).
+              Never display values we cannot trace to a primary source. Where data coverage is incomplete,
+              the UI shows a clear "no data" state (example: the environmental burden map shows a neutral gray
+              for the 72 counties not yet covered by the ZCTA snapshot).
             </li>
             <li>
               Never characterize policy outcomes, industrial operations, or environmental conditions as good or bad.
