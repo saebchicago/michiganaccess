@@ -112,6 +112,7 @@ export default defineConfig(({ mode }) => ({
         "/data/snap-coverage-at-risk",
         "/methodology/snap-coverage-at-risk",
         "/data/snap-michigan",
+        "/methodology/environmental",
         "/closure-watch",
         "/find-care",
         "/financial-help",
