@@ -266,6 +266,21 @@ export default function DataAndInsightsPage() {
                   </Card>
                 </Link>
               </div>
+              <div className="grid gap-4 sm:grid-cols-2 mt-4">
+                <Link to="/data/dual-eligible-exposure">
+                  <Card className="hover:shadow-md hover:border-primary/20 transition-all cursor-pointer group h-full">
+                    <CardContent className="py-5 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <AlertCircle className="h-5 w-5 text-amber-600" />
+                        <Badge variant="outline" className="text-[10px]">V3</Badge>
+                      </div>
+                      <h4 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">Dual-Eligible Exposure</h4>
+                      <p className="text-xs text-muted-foreground">County-level view of Michiganders enrolled in both Medicare and Medicaid. Dual-eligibles are exempt from P.L. 119-21 work requirements.</p>
+                      <span className="text-xs text-primary font-medium flex items-center gap-1">View map <ChevronRight className="h-3 w-3" /></span>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </div>
             </div>
 
             {/* County Choropleth */}

@@ -289,6 +289,13 @@ const Index = () => {
                 <p className="text-xs text-muted-foreground">County-level exposure estimates under P.L. 119-21 ABAWD provisions</p>
               </div>
             </Link>
+            <Link to="/data/dual-eligible-exposure" className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group">
+              <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+              <div>
+                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Dual-Eligible Exposure</span>
+                <p className="text-xs text-muted-foreground">County-level view of Michiganders enrolled in both Medicare and Medicaid</p>
+              </div>
+            </Link>
             <Link to="/closure-watch" className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group">
               <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
               <div>
