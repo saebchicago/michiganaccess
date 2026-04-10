@@ -35,6 +35,7 @@ import { buildCountySnapshotMetrics } from "@/utils/snapshotMetrics";
 import CivicIntelligenceSection from "@/components/pillars/CivicIntelligenceSection";
 import MichiganEnvBurdenMap from "@/components/MichiganEnvBurdenMap";
 import { FIPS_TO_COUNTY } from "@/data/michigan-topojson";
+import { getTRIByCounty } from "@/data/epa-tri";
 
 // State benchmarks: County Health Rankings & Roadmaps 2025 edition
 // https://www.countyhealthrankings.org/health-data/michigan
@@ -155,6 +156,7 @@ export default function CountyPage() {
 
   const snapshotMetrics = buildCountySnapshotMetrics(county);
   const countyFips = Object.entries(FIPS_TO_COUNTY).find(([, name]) => name === county)?.[0];
+  const triFacilities = getTRIByCounty(county);
 
   return (
     <Layout>
@@ -411,6 +413,35 @@ export default function CountyPage() {
             </div>
           </section>
         )}
+
+        {/* EPA TRI Facilities */}
+        <section>
+          <h2 className="mb-4 text-xl font-bold text-foreground">EPA Toxic Release Inventory -- Top Facilities</h2>
+          {triFacilities.length === 0 ? (
+            <p className="text-sm text-muted-foreground">No TRI-reporting facilities recorded for {county} County in this dataset cycle.</p>
+          ) : (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {triFacilities.slice(0, 5).map((f) => (
+                <Card key={f.name} className="hover-lift">
+                  <CardContent className="py-4 space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-semibold text-sm text-foreground">{f.name}</h3>
+                      {f.carcinogensReleased && (
+                        <Badge variant="destructive" className="text-[10px] shrink-0">Carcinogen</Badge>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground">{f.city} · {f.industry}</p>
+                    <p className="text-sm font-bold text-foreground">{f.totalPoundsReleased.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">lbs (2022)</span></p>
+                    <p className="text-[10px] text-muted-foreground">Top chemical: {f.topChemical}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+          <p className="mt-3 text-[10px] text-muted-foreground">
+            Source: <a href="https://www.epa.gov/toxics-release-inventory-tri-program" target="_blank" rel="noopener" className="text-primary hover:underline">EPA Toxics Release Inventory, 2022 reporting year</a>
+          </p>
+        </section>
 
         {/* Municipalities & Governance */}
         <MunicipalToolkit county={county} />
