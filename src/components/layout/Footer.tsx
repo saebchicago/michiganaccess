@@ -296,6 +296,10 @@ const Footer = () => {
               {t("footer.dataAttribution")}
             </p>
           </div>
+          <p className="mt-3 text-center text-[10px] text-muted-foreground">
+            Michigan edition. National and global coverage at{" "}
+            <a href="https://ourintel.org" target="_blank" rel="noopener noreferrer" className="hover:underline">ourintel.org</a>.
+          </p>
         </div>
       </div>
     </footer>
