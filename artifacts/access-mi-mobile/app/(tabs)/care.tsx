@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   Platform,
@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 
 import { EmptyState } from "@/components/EmptyState";
 import { FacilityCard } from "@/components/FacilityCard";
@@ -29,8 +30,13 @@ const FACILITY_TYPES = [
 
 export default function CareScreen() {
   const colors = useColors();
-  const [county, setCounty] = useState("");
+  const params = useLocalSearchParams<{ county?: string }>();
+  const [county, setCounty] = useState(params.county ?? "");
   const [facilityType, setFacilityType] = useState("All");
+
+  useEffect(() => {
+    if (params.county) setCounty(params.county);
+  }, [params.county]);
 
   const { data, isLoading, error, refetch, isRefetching } = useFacilities(
     county.trim() || undefined,
