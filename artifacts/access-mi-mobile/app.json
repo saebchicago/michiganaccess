@@ -14,9 +14,12 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.replit.accessmimobile"
     },
-    "android": {},
+    "android": {
+      "package": "com.replit.accessmimobile"
+    },
     "web": {
       "favicon": "./assets/images/icon.png"
     },
