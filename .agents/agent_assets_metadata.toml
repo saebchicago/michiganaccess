@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "D6qnrhbzgKWMVdeU90Lou"
+uri = "file://artifacts/access-mi-mobile/assets/images/icon.png"
+type = "image"
+title = "generated_image"

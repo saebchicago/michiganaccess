@@ -1,0 +1,27 @@
+kind = "mobile"
+previewPath = "/mobile/"
+title = "Access MI Mobile"
+version = "1.0.0"
+id = "artifacts/access-mi-mobile"
+router = "expo-domain"
+
+[[integratedSkills]]
+name = "expo"
+version = "1.0.0"
+
+[[services]]
+ensurePreviewReachable = "/status"
+name = "expo"
+paths = [ "/mobile/" ]
+localPort = 23614
+
+[services.development]
+run = "pnpm --filter @workspace/access-mi-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/access-mi-mobile", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/access-mi-mobile", "run", "serve" ]
+
+[services.env]
+PORT = "23614"
+BASE_PATH = "/mobile/"
