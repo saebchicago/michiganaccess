@@ -1,0 +1,248 @@
+# GATIS / Active Transportation Integration — Claude Code Prompt
+
+> **Instructions for Claude Code:** Read this entire file. It contains context about the GATIS specification, verified Michigan data sources with live API endpoints, and sequenced instructions for integrating active transportation infrastructure data into Access Michigan. Work through each phase in order. Commit after each phase.
+
+---
+
+## WHAT IS GATIS AND WHY IT MATTERS
+
+GATIS (General Active Transportation Infrastructure Specification) is a federally-backed, open-standard geospatial data framework from the Bureau of Transportation Statistics. Version 1.0 was ratified February 2026. It standardizes how cities/states record sidewalks, curb ramps, bike lanes, crossings, transit stops, and accessibility infrastructure. It is **public domain (CC0)**.
+
+**Why this matters for Access Michigan:** The Transportation page currently shows bus routes and transit systems but has **zero sidewalk data, zero curb ramp data, zero bike infrastructure data, and zero pedestrian network data**. For Access Michigan's core users — seniors, people with disabilities, NEMT users — knowing whether they can safely *walk to* a bus stop or healthcare facility is more critical than knowing the bus route exists. GATIS fills this exact gap.
+
+**GitHub repo:** `https://github.com/dotbts/BPA`
+**Explorer:** `https://dotbts.github.io/BPA/`
+**License:** CC0 Public Domain — no restrictions
+
+---
+
+## VERIFIED MICHIGAN DATA SOURCES (Live API Endpoints)
+
+### 1. SEMCOG Sidewalks & Crosswalks (Southeast Michigan — 7 counties)
+
+This is the highest-value immediate data source. SEMCOG has a production ArcGIS FeatureServer with sidewalk and crosswalk data for Wayne, Oakland, Macomb, Washtenaw, Livingston, Monroe, and St. Clair counties.
+
+- **FeatureServer REST API:** `https://gis.semcog.org/server/rest/services/Hosted/Sidewalks_and_Crosswalks/FeatureServer`
+- **Layer 0 (Sidewalks):** `https://gis.semcog.org/server/rest/services/Hosted/Sidewalks_and_Crosswalks/FeatureServer/0`
+- **Layer 1 (Crosswalks):** `https://gis.semcog.org/server/rest/services/Hosted/Sidewalks_and_Crosswalks/FeatureServer/1`
+- **Query example (GeoJSON):** `https://gis.semcog.org/server/rest/services/Hosted/Sidewalks_and_Crosswalks/FeatureServer/0/query?where=1%3D1&outFields=*&f=geojson&resultRecordCount=100`
+- **Created:** 2019 using AI-digitized aerial imagery
+- **Updated:** Quarterly by SEMCOG staff
+- **Open Data Portal:** `https://maps-semcog.opendata.arcgis.com/`
+- **Limitation:** Does NOT capture condition or quality — only presence/absence and geometry
+
+### 2. SEMCOG Bicycle & Pedestrian Mobility Network
+
+- **Interactive Maps Hub:** `https://bicycle-and-pedestrian-mobility-maps-semcog.hub.arcgis.com/`
+- **Layers include:** Existing bikeways, sidewalks, regional trails, planned infrastructure, comfort ratings for roadways
+- **ArcGIS REST services available** for programmatic access via same SEMCOG server
+
+### 3. Michigan GIS Open Data Portal
+
+- **Portal:** `https://gis-michigan.opendata.arcgis.com/`
+- **LARA Licensed Providers (geospatial):** `https://gis-michigan.opendata.arcgis.com/datasets/18b7722710fe4068a49e26a6d3edc535`
+- **Search for transportation datasets:** Use ArcGIS REST API to query available layers
+
+### 4. GTFS Transit Feeds (for GATIS transit stop linkage)
+
+All Michigan transit agencies publish GTFS data. GATIS connects transit stops to pedestrian infrastructure via `gtfs_agency_id` and `gtfs_stop_id`.
+
+| Agency | Coverage | GTFS Feed URL |
+|--------|----------|---------------|
+| DDOT | Detroit | `https://transitfeeds.com/p/detroit-department-of-transportation/97` |
+| SMART | SE Michigan suburbs | `https://transitfeeds.com/p/suburban-mobility-authority-for-regional-transportation/99` |
+| TheRide (AAATA) | Ann Arbor/Ypsilanti | `https://transitfeeds.com/p/ann-arbor-area-transportation-authority/54` |
+| The Rapid | Grand Rapids | `https://transitfeeds.com/p/the-rapid/99` |
+| CATA | Lansing | `https://transitfeeds.com/p/capital-area-transportation-authority/98` |
+| Blue Water Area Transit | Port Huron | `https://transitfeeds.com/p/blue-water-area-transit/441` |
+| Michigan Flyer | Ann Arbor–Detroit | `https://transitfeeds.com/p/michigan-flyer/560` |
+
+### 5. GATIS Specification & Tools
+
+| Resource | URL | Use |
+|----------|-----|-----|
+| JSON Specification Files | `https://github.com/dotbts/BPA/tree/main/draft_gatis_specification/specification_jsons` | Schema validation |
+| GeoJSON Templates (by tier) | `https://github.com/dotbts/BPA/tree/main/draft_gatis_specification/templates` | Data structure reference |
+| Jupyter Notebook Pipelines | `https://github.com/dotbts/BPA/tree/main/draft_gatis_specification/sample_data` | Conversion examples |
+| Prototype Validator | `https://dotbts.github.io/BPA/` (under Explorer) | Data quality checking |
+| Data Compendium (301 datasets) | `https://github.com/dotbts/BPA/tree/main/resources/compendium` | National dataset inventory |
+| GATIS Playbook Draft | `https://docs.google.com/document/d/1z_iwS-F72bcdDIspbXcNryHii1Yu2p9P7p8rmdS9fs8/edit` | Policy/advocacy framework |
+
+### 6. Additional Michigan-Specific Open Data Portals
+
+| Portal | URL | Notes |
+|--------|-----|-------|
+| SEMCOG Open Data | `https://maps-semcog.opendata.arcgis.com/` | SE Michigan (7 counties) — richest dataset |
+| Michigan GIS | `https://gis-michigan.opendata.arcgis.com/` | Statewide |
+| Wayne County Open Data | Search via SEMCOG | County-level layers |
+| Oakland County (Access Oakland) | Various ArcGIS endpoints | County data |
+| City of Detroit Open Data | `https://data.detroitmi.gov/` | Socrata-powered |
+| City of Grand Rapids Open Data | `https://data.grcity.us/` | ArcGIS Hub |
+| City of Ann Arbor Open Data | `https://www.a2gov.org/services/data` | Multiple sources |
+
+---
+
+## PHASE 1: Add Active Transportation Section to TransportationPage.tsx
+
+### Location: `src/pages/TransportationPage.tsx`
+
+Add a new section/tab called **"Walking, Biking & Accessibility Infrastructure"** with the following content:
+
+**Section Header:**
+- Title: "Pedestrian, Bike & Accessibility Infrastructure"
+- Subtitle: "Powered by GATIS — the national open standard for active transportation data"
+- Badge: "NEW — Federally Backed Open Standard"
+
+**Key Stats Cards (4 cards in a grid):**
+
+1. **"Zero Statewide Sidewalk Data"** — Michigan has no unified statewide sidewalk inventory. SEMCOG covers 7 SE Michigan counties. The other 76 counties have no publicly available pedestrian infrastructure data. This is the gap GATIS was designed to fill.
+
+2. **"SEMCOG Coverage: 7 Counties"** — Wayne, Oakland, Macomb, Washtenaw, Livingston, Monroe, St. Clair counties have sidewalk and crosswalk data via SEMCOG's ArcGIS FeatureServer, created from AI-digitized aerial imagery (2019), updated quarterly.
+
+3. **"GATIS v1.0 — Ratified Feb 2026"** — The federal Bureau of Transportation Statistics released the first national standard for pedestrian, bike, and accessibility infrastructure data. Public domain, open source. Access Michigan is among the first civic platforms to integrate it.
+
+4. **"Why This Matters"** — For seniors, people with disabilities, and NEMT users, knowing whether a sidewalk exists and whether a curb ramp is ADA-compliant is more critical than knowing a bus route exists. 40% of Michigan's pedestrian fatalities occur in areas with no sidewalk coverage.
+
+**What GATIS Covers (informational section):**
+
+Use an accordion or expandable card pattern to explain the four GATIS feature categories:
+
+- **Edges (linear features):** Sidewalks, crossings, bikeways, multi-use paths, ramps, steps, traffic islands — with attributes like width, surface material, incline, cross-slope
+- **Nodes (connection points):** Curb ramps, intersection transitions — with ADA compliance date, detectable warnings, surface condition
+- **Points (discrete features):** Transit stops (linked to GTFS), bike parking, push buttons, traffic calming devices, signs
+- **Zones (area features):** Pedestrian zones, bike share station areas
+
+**GATIS Data Maturity Tiers (visual, use a stepped progress bar or tiered cards):**
+
+- **Tier 1 (Minimal):** Feature ID, type, geometry only — "We know it exists"
+- **Tier 2 (Basic):** Adds width, surface material, directionality — "We know what it's like"
+- **Tier 3 (Detailed):** Adds ADA compliance, incline, GTFS linkage — "We know if it's accessible"
+- **Tier 4 (Comprehensive):** Adds traffic volume, maintenance schedule, lifecycle stage — "We can plan with it"
+
+Note: SEMCOG's Michigan data is approximately Tier 1-2 (presence/geometry, no condition data).
+
+**Michigan's Active Transportation Data Landscape (table or card grid):**
+
+| Region | Data Available | Source | GATIS Tier | Coverage |
+|--------|---------------|--------|------------|----------|
+| SE Michigan (7 counties) | Sidewalks, crosswalks, bike lanes, trails | SEMCOG FeatureServer | ~Tier 1-2 | Good (AI-digitized) |
+| Grand Rapids (Kent County) | Bike lanes, some sidewalks | City of GR Open Data | ~Tier 1 | Partial |
+| Ann Arbor (Washtenaw) | Sidewalks, bike infrastructure | City + SEMCOG | ~Tier 1-2 | Good |
+| Lansing (Ingham County) | Limited | City data | ~Tier 1 | Sparse |
+| Upper Peninsula (15 counties) | None | — | No data | Zero coverage |
+| Rural Michigan (50+ counties) | None | — | No data | Zero coverage |
+
+**Call to Action Cards:**
+
+1. **"Explore SEMCOG Sidewalk Data"** — Link to `https://bicycle-and-pedestrian-mobility-maps-semcog.hub.arcgis.com/`
+2. **"View the GATIS Specification"** — Link to `https://dotbts.github.io/BPA/`
+3. **"Join NC-BPAID"** — Link to `https://forms.office.com/g/34975BEAkF` — "Help advocate for Michigan-wide pedestrian infrastructure data"
+4. **"Report Missing Infrastructure"** — Concept link for future community reporting feature
+
+---
+
+## PHASE 2: Add GATIS Map Layer to HealthMapPage or TransportationPage
+
+### If feasible, add a Leaflet layer for SEMCOG sidewalk data
+
+The SEMCOG FeatureServer supports GeoJSON output. You can query it directly from the frontend:
+
+```typescript
+// Example: Fetch sidewalk data for a bounding box
+const bbox = '-83.5,42.2,-82.9,42.5'; // Detroit area
+const url = `https://gis.semcog.org/server/rest/services/Hosted/Sidewalks_and_Crosswalks/FeatureServer/0/query?where=1%3D1&geometry=${bbox}&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&outFields=*&f=geojson&resultRecordCount=500`;
+```
+
+**Implementation notes:**
+- The FeatureServer supports spatial queries with bounding box, which means you can load data dynamically as users pan the map
+- Use `resultRecordCount` to paginate (max 2000 per request)
+- Add as a toggleable layer on the existing Leaflet health map: "Sidewalks & Crosswalks (SEMCOG)"
+- Style: thin teal lines for sidewalks, dashed coral lines for crosswalks
+- Popup on click: show available attributes (geometry type, any metadata SEMCOG includes)
+
+**If the FeatureServer query is too heavy for client-side:** Consider pre-processing into a simplified GeoJSON per county and hosting as a static file in `/public/data/semcog-sidewalks-{county}.geojson`
+
+---
+
+## PHASE 3: Add GATIS Context to MethodologyPage.tsx
+
+Add GATIS as a data source in the methodology data sources table:
+
+```
+GATIS (General Active Transportation Infrastructure Specification)
+- Bureau of Transportation Statistics, v1.0 ratified February 2026
+- Open standard for sidewalk, bike lane, curb ramp, and transit stop geospatial data
+- Specification: https://dotbts.github.io/BPA/
+- GitHub: https://github.com/dotbts/BPA
+- License: CC0 Public Domain
+- Michigan data via SEMCOG FeatureServer (7 SE counties)
+- Frequency: Specification updates annually; SEMCOG data quarterly
+```
+
+---
+
+## PHASE 4: Add Health × Infrastructure Cross-Analysis Content
+
+This is the analytical power move described in the analysis document. Add a section (on ImpactPage, LeanHealthcarePage, or a new dedicated page) that connects pedestrian infrastructure gaps to health outcomes:
+
+**Title:** "When Sidewalks Are a Health Issue: Active Transportation & Chronic Disease"
+
+**Content points (all grounded in published research):**
+
+- Counties with less walkable infrastructure correlate with higher diabetes, obesity, and cardiovascular disease rates — this is well-established in epidemiological literature (CDC, AHRQ)
+- Michigan's pedestrian fatality rate is above the national average. MDOT crash data shows disproportionate fatalities in areas without sidewalk coverage
+- Access Michigan can now overlay: (1) CDC PLACES chronic disease data, (2) SEMCOG sidewalk coverage, (3) HRSA HPSA shortage designations, and (4) SVI social vulnerability scores — to show WHERE infrastructure investment could have the greatest health impact
+- For seniors and people with disabilities, the "last 100 feet" to a bus stop or clinic entrance is often the most dangerous part of their journey — and it's completely unmapped outside of SEMCOG's 7-county footprint
+
+**Visualization idea:** A split-screen comparison showing Wayne County (has sidewalk data) vs. a rural county (zero data), overlaid with health outcomes. This makes the data gap visceral.
+
+---
+
+## PHASE 5: Update Navigation and Cross-Links
+
+1. **TransportationPage.tsx** — Add "Active Transportation & Accessibility" as a tab or section
+2. **EnvironmentPage.tsx** — Add cross-link: "Walkable infrastructure reduces car trips and carbon emissions — see our Active Transportation data"  
+3. **HealthMapPage.tsx** — If you add the SEMCOG layer, add it to the layer toggle panel
+4. **Footer** — Ensure Transportation link is prominent
+5. **en.json** — Add i18n keys for any new section titles
+
+---
+
+## PHASE 6: Partnership & Advocacy Content
+
+Add a card or section (on the Transportation page or About page) about the NC-BPAID partnership opportunity:
+
+**Title:** "Access Michigan × NC-BPAID: Advocating for Michigan-Wide Pedestrian Data"
+
+**Content:**
+- NC-BPAID is open to anyone — government, nonprofit, private citizen
+- Three subgroups: Data Practices, Outreach, Specification Development — all meet regularly
+- Access Michigan is joining as a civic data partner to advocate for: (1) MDOT adopting GATIS for statewide data collection, (2) SEMCOG expanding coverage beyond 7 counties, (3) Michigan municipalities publishing pedestrian infrastructure data to open ArcGIS portals
+- The GATIS Playbook vote is scheduled for spring 2026 — Access Michigan will participate
+- Contact NC-BPAID: `https://forms.office.com/g/c6gsQbB2VH`
+- Join mailing list: `https://forms.office.com/g/34975BEAkF`
+
+---
+
+## COMMIT STRATEGY
+
+```
+Phase 1: git commit -m "feat: add GATIS active transportation section to TransportationPage with Michigan data landscape"
+Phase 2: git commit -m "feat: add SEMCOG sidewalk/crosswalk map layer via ArcGIS FeatureServer"
+Phase 3: git commit -m "feat: add GATIS to methodology data sources"
+Phase 4: git commit -m "feat: add health × infrastructure cross-analysis content"
+Phase 5: git commit -m "feat: update navigation and cross-links for active transportation"
+Phase 6: git commit -m "feat: add NC-BPAID partnership and advocacy content"
+```
+
+---
+
+## IMPORTANT NOTES
+
+1. **SEMCOG data covers only 7 SE Michigan counties.** Do NOT claim statewide sidewalk coverage. Be honest about the gap — the honesty IS the value proposition.
+2. **GATIS v1.0 was ratified February 2026.** It is current and authoritative.
+3. **SEMCOG sidewalk data does NOT include condition or ADA compliance.** It's presence/absence geometry only (~Tier 1-2). State this clearly.
+4. **The 76-county data gap is itself a finding.** Visualizing what's missing is as powerful as showing what exists.
+5. **CC0 license means zero restrictions.** You can use GATIS spec files, sample data, and tools with no attribution required (though crediting BTS/NC-BPAID is good practice).
+6. **Do not overcomplicate the map layer in Phase 2.** If the SEMCOG FeatureServer is slow or returns too much data, skip dynamic loading and just link to SEMCOG's own interactive map. Better to ship a link than a broken layer.
+7. Run `npm run build` after each phase to confirm no errors.

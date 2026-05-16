@@ -1,0 +1,513 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Access Michigan Civic Design System ──────────────────── */
+    /* Primary: #3f51b5 → hsl(231 44% 48%) */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+
+    --primary: 231 44% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary: #ffca28 → hsl(45 100% 58%) */
+    --secondary: 45 100% 58%;
+    --secondary-foreground: 0 0% 13%;
+
+    --muted: 220 14% 95%;
+    --muted-foreground: 0 0% 33%;
+
+    /* Accent / tertiary: #558b2f → hsl(93 51% 36%) */
+    --accent: 93 51% 36%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Error: #c62828 → hsl(0 66% 47%) */
+    --destructive: 0 66% 47%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Warning: #ff9800 → hsl(36 100% 50%) */
+    --warning: 36 100% 50%;
+    --warning-foreground: 0 0% 13%;
+
+    /* Info: #5c6bc0 → hsl(232 36% 56%) */
+    --info: 232 36% 56%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 231 44% 48%;
+
+    --radius: 0.5rem;
+
+    /* Extended civic palette — lightness values tuned to meet WCAG AA 4.5:1
+       against white text (for bg usage) and against white background (for
+       text usage). See PERF_BASELINE.md and A11Y_VIOLATIONS.md for history. */
+    --michigan-blue: 231 44% 48%;
+    --forest-green: 93 56% 25%;
+    --teal: 186 50% 28%;
+    --sky-blue: 210 65% 38%;
+    --warm-gold: 45 100% 26%;
+    --coral: 4 72% 45%;
+    --navy: 231 50% 22%;
+    --slate: 220 12% 35%;
+
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 231 44% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 93 51% 36%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 231 44% 48%;
+
+    /* Chart colors */
+    --chart-1: 231 44% 48%;
+    --chart-2: 93 51% 36%;
+    --chart-3: 186 50% 36%;
+    --chart-4: 45 100% 58%;
+    --chart-5: 0 66% 47%;
+
+    --bottom-nav-h: 3.5rem;
+    --sab: env(safe-area-inset-bottom, 0px);
+    --safe-bottom: calc(var(--bottom-nav-h) + var(--sab));
+    --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 93%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 93%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 93%;
+
+    --primary: 232 55% 62%;
+    --primary-foreground: 0 0% 7%;
+
+    --secondary: 45 80% 52%;
+    --secondary-foreground: 0 0% 7%;
+
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 68%;
+
+    --accent: 93 40% 45%;
+    --accent-foreground: 0 0% 7%;
+
+    --destructive: 0 55% 40%;
+    --destructive-foreground: 0 0% 93%;
+
+    --warning: 36 80% 45%;
+    --warning-foreground: 0 0% 93%;
+
+    --info: 232 40% 60%;
+    --info-foreground: 0 0% 93%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 232 55% 62%;
+
+    --michigan-blue: 232 55% 62%;
+    --forest-green: 93 40% 45%;
+    --teal: 186 45% 45%;
+    --sky-blue: 210 55% 62%;
+    --warm-gold: 45 80% 62%;
+    --coral: 8 70% 65%;
+    --navy: 231 45% 30%;
+    --slate: 220 10% 55%;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 93%;
+    --sidebar-primary: 232 55% 62%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 93 40% 45%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 232 55% 62%;
+
+    --chart-1: 232 55% 62%;
+    --chart-2: 93 40% 45%;
+    --chart-3: 186 45% 45%;
+    --chart-4: 45 80% 52%;
+    --chart-5: 0 55% 50%;
+    --radius: 0.5rem;
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.2);
+    --shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.3);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.3);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.3);
+  }
+
+  /* High Contrast Mode */
+  .high-contrast {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --primary: 231 60% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 100% 42%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 20%;
+    --accent: 93 60% 28%;
+    --accent-foreground: 0 0% 100%;
+    --border: 0 0% 30%;
+    --input: 0 0% 30%;
+    --ring: 231 60% 35%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    /* Safety net against accidental horizontal overflow from decorative
+       elements, long unwrapped strings, or wide embedded widgets. Uses
+       `clip` instead of `hidden` so sticky positioning is preserved. */
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+
+  /* Tabular numerals for all data-heavy elements */
+  .font-mono,
+  [data-numeric],
+  td, th,
+  .text-2xl, .text-3xl, .text-4xl, .text-5xl {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Global interactive states ────────────────────────────────── */
+  /* Keyboard focus ring for all focusable elements */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background rounded-sm;
+  }
+
+  /* Subtle hover lift for clickable rows, cards, list items */
+  tr[onclick]:hover,
+  tr.cursor-pointer:hover,
+  li.cursor-pointer:hover,
+  [role="option"]:hover,
+  [role="listbox"] > *:hover,
+  [cmdk-item]:hover {
+    background-color: hsl(var(--muted) / 0.6);
+    transition: background-color 0.15s ease;
+  }
+}
+
+@layer utilities {
+  /* ── Normalized container spacing ───────────────────────────── */
+  /* Use on any grid/flex parent: gap-4 mobile → gap-6 desktop   */
+  .gap-responsive {
+    @apply gap-4 sm:gap-6;
+  }
+
+  /* Main page section spacing: space-y-6 mobile → space-y-8+ desktop */
+  .section-spacing {
+    @apply space-y-6 sm:space-y-8 lg:space-y-10;
+  }
+
+  .text-gradient-michigan {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--michigan-blue)), hsl(var(--teal)));
+  }
+
+  .bg-gradient-michigan {
+    background-image: linear-gradient(135deg, hsl(var(--michigan-blue)), hsl(var(--navy)));
+  }
+
+  .bg-gradient-hero {
+    background-image: linear-gradient(
+      160deg,
+      hsl(210 90% 12%),
+      hsl(210 80% 25%),
+      hsl(174 100% 30% / 0.9)
+    );
+  }
+
+  .shadow-michigan {
+    box-shadow: 0 8px 30px -8px hsl(var(--michigan-blue) / 0.18);
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 10px 25px -5px hsl(var(--michigan-blue) / 0.12),
+      0 8px 10px -6px hsl(var(--michigan-blue) / 0.08);
+  }
+  .hover-lift:hover .resource-icon,
+  .hover-lift:hover [data-icon] {
+    transform: scale(1.1) rotate(3deg);
+  }
+
+  /* Gradient text utility */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--michigan-blue)), hsl(var(--michigan-teal)));
+  }
+
+  /* Nav accent line */
+  .nav-accent {
+    background: linear-gradient(90deg, #0A4C95, #00A3A1, #2D5F3F);
+    height: 2px;
+    position: sticky;
+    top: 64px;
+    z-index: 49;
+  }
+
+  /* Resource card accent border slide-in */
+  .card-accent-border {
+    position: relative;
+    overflow: hidden;
+  }
+  .card-accent-border::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: hsl(var(--primary));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.25s ease-out;
+  }
+  .card-accent-border:hover::before {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+
+  /* Caption text utility */
+  .text-caption {
+    @apply text-xs font-medium uppercase tracking-[0.05em] text-muted-foreground;
+  }
+
+  /* Pulse animation for gap-area markers */
+  .pulse-marker {
+    animation: marker-pulse 2s ease-in-out infinite;
+  }
+  @keyframes marker-pulse {
+    0%, 100% { filter: drop-shadow(0 0 0 transparent); }
+    50% { filter: drop-shadow(0 0 8px hsl(var(--destructive) / 0.5)); }
+  }
+
+  /* Consistent focus ring */
+  .focus-ring {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+/* Respect prefers-reduced-motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hover-lift:hover {
+    transform: none;
+  }
+}
+
+/* Leaflet map z-index overrides so sheets/dialogs render above map */
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 40 !important;
+}
+.leaflet-control {
+  z-index: 41 !important;
+}
+
+/* Print styles for site report and PDF export */
+@media print {
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print\:hidden { display: none !important; }
+  .print\:block { display: block !important; }
+  @page { margin: 0.5in; size: letter; }
+  section { break-inside: avoid-page; }
+  table { font-size: 9px; }
+  tr { break-inside: avoid; }
+  header, footer, nav, [role="complementary"], .fixed,
+  [aria-label="Mobile navigation"],
+  [aria-label="Scroll to top"],
+  button[aria-label="Scroll to top"] { display: none !important; }
+  main { padding: 0 !important; }
+  .container { max-width: 100% !important; padding: 0 1rem !important; }
+  .hover-lift:hover { transform: none; box-shadow: none; }
+  .overflow-hidden { overflow: visible !important; }
+  /* Show all carousel items in print */
+  [aria-roledescription="carousel"] .overflow-hidden { overflow: visible !important; }
+  [aria-roledescription="carousel"] .flex { flex-wrap: wrap !important; }
+  [aria-roledescription="slide"] { flex: 0 0 33% !important; padding: 0.5rem !important; }
+  /* Ensure cards print cleanly */
+  .rounded-lg, .rounded-xl, .rounded-2xl { border-radius: 4px !important; }
+  .shadow-sm, .shadow-md, .shadow-lg, .shadow-michigan { box-shadow: none !important; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 8px; color: #666; }
+  img { max-width: 100% !important; }
+  /* Print header with date */
+  .print-header { display: block !important; }
+  /* Print legend styling */
+  .print-legend { display: block !important; border: 1px solid #ccc; padding: 0.5rem; margin-top: 0.5rem; font-size: 9px; }
+
+}
+
+/* ── Google Translate safety-net ─────────────────────────────────────────── */
+/* Suppress the GT top iframe/banner if a user visits via a translated URL.   */
+/* We use our own i18n (LanguageSwitcher) as the primary translation control. */
+.skiptranslate,
+#google_translate_element,
+.goog-te-banner-frame,
+.goog-te-gadget,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+  visibility: hidden !important;
+}
+/* Prevent GT from shifting the page body down when its top bar injects */
+body.translated-ltr,
+body.translated-rtl {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* ── Safe-area-aware bottom spacing (iPhone home indicator) ────────────────  */
+/* viewport-fit=cover is already set in index.html.                           */
+:root {
+  --bottom-nav-h: 3.5rem;                            /* h-14 = 56px */
+  --sab: env(safe-area-inset-bottom, 0px);
+  --safe-bottom: calc(var(--bottom-nav-h) + var(--sab));
+}
+
+/* Floating chat FAB — clears mobile bottom nav + safe area */
+.chat-fab {
+  position: fixed;
+  bottom: calc(var(--safe-bottom) + 1rem);
+  right: 1rem;
+  z-index: 40;
+}
+@media (min-width: 1024px) {
+  .chat-fab {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+}
+
+/* Floating chat window — sits above the FAB with breathing room */
+.chat-window {
+  position: fixed;
+  bottom: calc(var(--safe-bottom) + 5.5rem);
+  right: 1rem;
+  z-index: 50;
+}
+@media (min-width: 1024px) {
+  .chat-window {
+    bottom: 6rem;
+    right: 1.5rem;
+  }
+}
+
+/* RTL support for Arabic */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .ml-auto {
+  margin-left: unset;
+  margin-right: auto;
+}
+
+[dir="rtl"] .mr-auto {
+  margin-right: unset;
+  margin-left: auto;
+}
+
+[dir="rtl"] .space-x-1 > :not([hidden]) ~ :not([hidden]),
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]),
+[dir="rtl"] .space-x-3 > :not([hidden]) ~ :not([hidden]),
+[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* Hero search placeholder fade transition */
+.hero-search-input::placeholder {
+  transition: opacity 300ms ease;
+}
+.hero-search-input.placeholder-fading::placeholder {
+  opacity: 0.3;
+}
+
+/* Hide scroll chevron on short mobile viewports */
+@media (max-height: 699px) {
+  .scroll-explore-chevron {
+    display: none !important;
+  }
+}
+
+/* ── Clickable card hover lift ─────────────────────────────── */
+@layer utilities {
+  .card-hover {
+    @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md;
+  }
+}
+
+/* ── A11y: raise muted foreground opacity on tiny labels ────── */
+/* `text-muted-foreground/60` and `/70` at text-[9px] fall below the
+   WCAG AA 4.5:1 threshold on light backgrounds. Force full opacity so
+   the base --muted-foreground (33% lightness) handles contrast. */
+.text-muted-foreground\/60,
+.text-muted-foreground\/70 {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+/* ── A11y: distinguish links inside prose text ──────────────── */
+/* Links inside paragraphs must be distinguishable without relying on color
+   alone (WCAG 1.4.1 / link-in-text-block). Force underline on any anchor
+   inside a <p> unless the link opts out via the `no-underline` utility. */
+p a:not(.no-underline):not([class*="no-underline"]) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

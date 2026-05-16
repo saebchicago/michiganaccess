@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e3a5f" />
+  <title>Offline — Access Michigan</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: hsl(220, 16%, 98%);
+      color: hsl(220, 25%, 12%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      max-width: 420px;
+      width: 100%;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .icon {
+      width: 64px; height: 64px;
+      margin: 0 auto 1.5rem;
+      background: hsl(215, 65%, 28%);
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon svg { width: 32px; height: 32px; color: white; }
+    h1 { font-size: 1.375rem; font-weight: 700; margin-bottom: 0.75rem; color: hsl(215, 65%, 28%); }
+    p { font-size: 0.9375rem; line-height: 1.6; color: hsl(220, 10%, 46%); margin-bottom: 1.25rem; }
+    .crisis {
+      background: hsl(4, 65%, 96%);
+      border: 1px solid hsl(4, 65%, 85%);
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .crisis p { font-size: 0.8125rem; margin: 0; color: hsl(4, 65%, 38%); }
+    .crisis a { color: hsl(4, 65%, 38%); font-weight: 700; text-decoration: none; }
+    button {
+      background: hsl(215, 65%, 28%);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+    .tips { margin-top: 1.5rem; text-align: left; }
+    .tips h2 { font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: hsl(220, 10%, 46%); margin-bottom: 0.5rem; }
+    .tips ul { list-style: none; }
+    .tips li { font-size: 0.8125rem; color: hsl(220, 10%, 46%); padding: 0.25rem 0; padding-left: 1.25rem; position: relative; }
+    .tips li::before { content: '•'; position: absolute; left: 0; color: hsl(186, 50%, 36%); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636a9 9 0 11-12.728 0M12 9v4m0 4h.01" />
+      </svg>
+    </div>
+    <h1>You're Offline</h1>
+    <p>Access Michigan needs an internet connection to show live service data. Please check your connection and try again.</p>
+
+    <div class="crisis">
+      <p>🚨 <strong>Crisis?</strong> Call <a href="tel:988">988</a> or <a href="tel:911">911</a> — these work without internet.</p>
+    </div>
+
+    <button onclick="location.reload()">Try Again</button>
+
+    <div class="tips">
+      <h2>While you wait</h2>
+      <ul>
+        <li>Check Wi-Fi or mobile data</li>
+        <li>Move closer to your router</li>
+        <li>Toggle airplane mode off</li>
+        <li>Previously viewed pages may still load</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

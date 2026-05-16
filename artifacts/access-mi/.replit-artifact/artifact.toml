@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Access MI"
+version = "1.0.0"
+id = "artifacts/access-mi"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22454
+
+[services.development]
+run = "pnpm --filter @workspace/access-mi run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/access-mi", "run", "build" ]
+publicDir = "artifacts/access-mi/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22454"
+BASE_PATH = "/"
