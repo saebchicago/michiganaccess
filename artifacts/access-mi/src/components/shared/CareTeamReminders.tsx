@@ -102,7 +102,7 @@ const CareTeamReminders = () => {
               />
             </div>
             {reminders.length > 1 && (
-              <Button variant="ghost" size="icon" onClick={() => removeReminder(reminder.id)} className="shrink-0 mt-1">
+              <Button variant="ghost" size="icon" onClick={() => removeReminder(reminder.id)} className="shrink-0 mt-1" aria-label="Remove reminder">
                 <Trash2 className="h-4 w-4 text-muted-foreground" />
               </Button>
             )}

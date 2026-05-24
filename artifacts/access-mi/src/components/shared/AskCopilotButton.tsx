@@ -95,7 +95,7 @@ export default function AskCopilotButton({ context, label = "Ask Access Michigan
         <span className="text-xs font-semibold text-primary flex items-center gap-1.5">
           <MessageSquare className="h-3.5 w-3.5" /> Ask Access Michigan
         </span>
-        <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setOpen(false)}>
+        <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setOpen(false)} aria-label="Close copilot prompt">
           <X className="h-3.5 w-3.5" />
         </Button>
       </div>

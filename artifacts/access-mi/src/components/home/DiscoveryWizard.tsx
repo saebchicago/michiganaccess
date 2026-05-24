@@ -198,9 +198,9 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
                   <Users className="h-4 w-4" /> {t("wizard.step2HhSize")}
                 </label>
                 <div className="flex items-center gap-3">
-                  <Button variant="outline" size="icon" className="h-9 w-9" onClick={() => setHhSize(Math.max(1, hhSize - 1))}>−</Button>
+                  <Button variant="outline" size="icon" className="h-9 w-9" onClick={() => setHhSize(Math.max(1, hhSize - 1))} aria-label="Decrease household size">−</Button>
                   <span className="text-2xl font-bold w-8 text-center">{hhSize}</span>
-                  <Button variant="outline" size="icon" className="h-9 w-9" onClick={() => setHhSize(Math.min(10, hhSize + 1))}>+</Button>
+                  <Button variant="outline" size="icon" className="h-9 w-9" onClick={() => setHhSize(Math.min(10, hhSize + 1))} aria-label="Increase household size">+</Button>
                   {hhSize >= 8 && <Badge variant="outline" className="text-[10px]">8+</Badge>}
                 </div>
               </div>
@@ -321,7 +321,7 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
                 <Button variant="outline" onClick={handleSave} disabled={saved || results.length === 0} className="flex-1">
                   <Save className="mr-2 h-4 w-4" /> {saved ? t("wizard.saved") : t("wizard.saveResults")}
                 </Button>
-                <Button variant="outline" size="icon" onClick={handleShare} title={t("wizard.shareLink")}>
+                <Button variant="outline" size="icon" onClick={handleShare} title={t("wizard.shareLink")} aria-label={t("wizard.shareLink")}>
                   <Share2 className="h-4 w-4" />
                 </Button>
               </div>

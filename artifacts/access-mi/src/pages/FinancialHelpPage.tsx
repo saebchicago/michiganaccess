@@ -282,7 +282,7 @@ export default function FinancialHelpPage() {
                                 )}
                                 <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{prog.description}</p>
                               </div>
-                              <Button variant="ghost" size="icon" className="flex-shrink-0">
+                              <Button variant="ghost" size="icon" className="flex-shrink-0" aria-label={isExpanded ? "Collapse details" : "Expand details"}>
                                 {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                               </Button>
                             </div>

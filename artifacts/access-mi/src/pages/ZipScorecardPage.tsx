@@ -444,7 +444,7 @@ export default function ZipScorecardPage() {
                       {copied ? "Copied!" : "Share comparison"}
                     </Button>
                   )}
-                  <Button size="icon" variant="ghost" onClick={handleClearCompare} className="h-8 w-8">
+                  <Button size="icon" variant="ghost" onClick={handleClearCompare} className="h-8 w-8" aria-label="Clear comparison">
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
