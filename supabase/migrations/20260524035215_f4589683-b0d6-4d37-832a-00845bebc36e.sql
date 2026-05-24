@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Community events are publicly readable" ON public.community_events;
