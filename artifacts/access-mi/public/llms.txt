@@ -1,0 +1,53 @@
+# Access Michigan
+
+> Michigan civic intelligence platform — county-level health, environmental, financial, and social data across all 83 counties. Built by and for Michigan residents, with no login required.
+
+Access Michigan helps residents find care, understand benefits, compare counties, and navigate public services using authoritative public datasets (CDC PLACES, SVI, ALICE, EJSCREEN, FEMA, FRED, and state agency feeds). Every metric links back to its source and cadence; no mock data.
+
+## Pages
+
+- [Home](/): ZIP and county entry point for Michigan civic data.
+- [Find Care](/find-care): Search hospitals, clinics, FQHCs, and providers across Michigan.
+- [Financial Help](/financial-help): Screener for Medicaid, SNAP, WIC, energy assistance, and charity care eligibility.
+- [Insurance Coverage](/insurance-coverage): Coverage options, appeals, and Marketplace navigation.
+- [Health Map](/health-map): Map of facilities, deserts, and access gaps.
+- [Health Equity Atlas](/health-equity-atlas): County-level equity indicators and disparities.
+- [ZIP Intelligence](/zip-intelligence): Neighborhood-level scorecard by ZIP code.
+- [Civic Data Hub](/civic-data-hub): Authoritative open datasets powering the platform.
+- [Civic Data](/civic-data): Municipal records, FOIA contacts, and council resources.
+- [Clinical Trials](/clinical-trials): Active Michigan trials from ClinicalTrials.gov.
+- [Quality Ratings](/quality): Hospital and provider quality metrics.
+- [Cost Transparency](/costs): Procedure costs and price transparency tools.
+- [Prevention & Wellness](/wellness): Preventive care recommendations and screenings.
+- [Maternal Health](/maternal-health): Maternal and infant health indicators by county.
+- [Behavioral Health](/behavioral-health): Mental health and substance use resources.
+- [Tribal Nations](/tribal-nations): Resources for Michigan's federally recognized tribes.
+- [Reentry Care Navigator](/reentry): Health and social support for people returning home.
+- [Tax Comparison](/tax-comparison): Compare property and income taxes across municipalities.
+- [Environment](/environment): Environmental hazards, EJSCREEN, and air quality.
+- [Transportation](/transportation): Transit, mobility, and access barriers.
+- [Community Resources](/resources): Food, housing, and social services directory.
+- [Community Events](/community-events): Health fairs and community events across Michigan.
+- [Libraries](/libraries): Michigan public libraries directory.
+- [Notary Services](/notary-services): Where to find a notary across the state.
+- [Support Groups](/support): Peer support and recovery groups.
+- [Health News](/news): Michigan health and policy news.
+- [Health Conditions](/conditions): Condition-specific information and local resources.
+- [Health Data Dashboard](/data): Interactive county-level health dashboards.
+- [Data Sources](/data-sources): Every dataset, with cadence, license, and source link.
+- [Methodology](/methodology): How we score, rank, and surface insights.
+- [Our Intel](/our-intel): Original analyses and briefings.
+- [Decision Science](/decision-science): Models and scoring methodology.
+- [Quiz](/quiz): Civic and health literacy quiz.
+- [Story](/story): The story behind Access Michigan.
+- [About](/about): Mission, team, and values.
+- [Partnership](/partnership): Apply to partner with Access Michigan.
+- [Contact](/contact): Reach the team.
+- [Privacy](/privacy): Privacy practices and data handling.
+
+## Optional
+
+- [Replication](/replication): How to replicate this platform for other states.
+- [Learn](/learn): Background reading on the datasets and methods.
+- [Site Report](/closure-watch): Closure watch and facility status changes.
+- [Status](/status): Platform uptime and data freshness.
