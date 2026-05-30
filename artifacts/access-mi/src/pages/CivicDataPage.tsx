@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { Landmark, FileText, Users, DollarSign, Vote, Calendar, ExternalLink, TrendingUp, BarChart3, Scale, Building2, BookOpen, Search, Globe } from "lucide-react";
+import { Landmark, FileText, Users, DollarSign, Vote, Calendar, ExternalLink, TrendingUp, Scale, Building2, BookOpen, Search, Globe, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Legend } from "recharts";
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from "recharts";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import EnvironmentCallout from "@/components/shared/EnvironmentCallout";
@@ -21,6 +21,7 @@ import ALICEDashboard from "@/components/civic/ALICEDashboard";
 import BroadbandDashboard from "@/components/broadband/BroadbandDashboard";
 import EconomicPulse from "@/components/economic/EconomicPulse";
 import LegislativeTracker from "@/components/civic/LegislativeTracker";
+import { DataProvenance } from "@/components/shared/DataProvenance";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -28,42 +29,18 @@ const fadeUp = {
 };
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 
-// --- Demo Data ---
-const budgetData = [
-  { dept: "Education", shortLabel: "Education", amount: 16.8, pct: 28 },
-  { dept: "Health & Human Services", shortLabel: "Health/HHS", amount: 10.2, pct: 17 },
-  { dept: "Transportation", shortLabel: "Transport", amount: 5.8, pct: 10 },
-  { dept: "Corrections", shortLabel: "Corrections", amount: 4.1, pct: 7 },
-  { dept: "Environment", shortLabel: "Environment", amount: 2.3, pct: 4 },
-  { dept: "Public Safety", shortLabel: "Pub. Safety", amount: 2.1, pct: 3 },
-  { dept: "Other", shortLabel: "Other", amount: 18.7, pct: 31 },
-];
-
-const budgetPie = budgetData.map((d, i) => ({
-  ...d,
-  color: [
-    "hsl(209, 86%, 31%)", "hsl(0, 100%, 71%)", "hsl(27, 87%, 67%)",
-    "hsl(215, 19%, 35%)", "hsl(145, 32%, 30%)", "hsl(180, 100%, 32%)", "hsl(214, 74%, 59%)"
-  ][i],
-}));
-
-const foiaRequests = [
-  { year: "2019", submitted: 12400, fulfilled: 10800, denied: 820, pending: 780 },
-  { year: "2020", submitted: 14200, fulfilled: 11900, denied: 1100, pending: 1200 },
-  { year: "2021", submitted: 15800, fulfilled: 13500, denied: 1050, pending: 1250 },
-  { year: "2022", submitted: 16500, fulfilled: 14200, denied: 980, pending: 1320 },
-  { year: "2023", submitted: 18200, fulfilled: 15800, denied: 1100, pending: 1300 },
-  { year: "2024", submitted: 19500, fulfilled: 17100, denied: 1050, pending: 1350 },
-];
-
+// [VERIFIED] UF Election Lab VEP turnout — election.lab.ufl.edu/voter-turnout/
+// CSV files: Turnout_2016G_v1.0, Turnout_2018G_v1.1, Turnout_2020G_v1.2,
+//            Turnout_2022G_v1.0, Turnout_2024G_v0.3 (as of March 2, 2026)
 const voterTurnout = [
-  { year: "2016", turnout: 63.2, national: 60.1 },
-  { year: "2018", turnout: 57.8, national: 50.3 },
-  { year: "2020", turnout: 71.4, national: 66.8 },
-  { year: "2022", turnout: 55.2, national: 46.8 },
-  { year: "2024", turnout: 68.9, national: 62.5 },
+  { year: "2016", turnout: 65.54, national: 60.12 },
+  { year: "2018", turnout: 57.62, national: 50.05 },
+  { year: "2020", turnout: 73.27, national: 66.38 },
+  { year: "2022", turnout: 58.92, national: 46.22 },
+  { year: "2024", turnout: 74.64, national: 64.07 },
 ];
 
+// [VERIFIED] Michigan.gov — all four re-elected Nov 2022, current term 2023–2027
 const electedOfficials = [
   { title: "Governor", name: "Gretchen Whitmer", party: "Democrat", since: "2019", contact: "https://www.michigan.gov/whitmer" },
   { title: "Lt. Governor", name: "Garlin Gilchrist II", party: "Democrat", since: "2019", contact: "https://www.michigan.gov/ltgovernor" },
@@ -71,19 +48,38 @@ const electedOfficials = [
   { title: "Secretary of State", name: "Jocelyn Benson", party: "Democrat", since: "2019", contact: "https://www.michigan.gov/sos" },
 ];
 
-const publicMeetings = [
-  { body: "State Board of Education", date: "Mar 11, 2026", time: "9:30 AM", location: "John A. Hannah Building, Lansing", type: "Regular" },
-  { body: "Natural Resources Commission", date: "Mar 13, 2026", time: "10:00 AM", location: "Cadillac Place, Detroit", type: "Regular" },
-  { body: "Environmental Rules Committee", date: "Mar 18, 2026", time: "1:00 PM", location: "Virtual (Zoom)", type: "Public Hearing" },
-  { body: "MPSC Rate Case Hearing", date: "Mar 20, 2026", time: "9:00 AM", location: "Lansing, MI", type: "Hearing" },
-  { body: "Transportation Commission", date: "Mar 25, 2026", time: "10:00 AM", location: "MDOT Building, Lansing", type: "Regular" },
+// Open Meetings linkouts — replaces static past-dated list per Michigan OMA
+const openMeetingsLinks = [
+  { body: "State Board of Education", url: "https://www.michigan.gov/mde/about/boardofeducation" },
+  { body: "Natural Resources Commission", url: "https://www.michigan.gov/dnr/about/nrc" },
+  { body: "Environmental Advisory Bodies (EGLE)", url: "https://www.michigan.gov/egle/about/advisory-bodies" },
+  { body: "MPSC Rate Cases & Hearings", url: "https://mi-psc.my.site.com/s/" },
+  { body: "Michigan Transportation Commission", url: "https://www.michigan.gov/mdot/about/transportation-commission" },
 ];
 
+// [VERIFIED] UF Election Lab Nov 2024 | [VERIFIED] MI House/Senate Fiscal Agencies FY2025
 const getQuickStats = (t: (key: string) => string) => [
-  { icon: Landmark, label: t('civic.stateDepts'), value: "19", color: "text-primary", source: "Michigan.gov" },
-  { icon: FileText, label: t('civic.foiaRequests'), value: "19,500", color: "text-michigan-teal", source: "MI Transparency Portal" },
-  { icon: Vote, label: t('civic.voterTurnout'), value: "68.9%", color: "text-michigan-forest", source: "MI Sec. of State, Nov 2024" },
-  { icon: DollarSign, label: t('civic.fyBudget'), value: "$60B", color: "text-michigan-gold", source: "MI FY2025-26 Exec. Budget" },
+  {
+    icon: Vote,
+    label: t('civic.voterTurnout'),
+    value: "74.6%",
+    color: "text-michigan-forest",
+    source: "UF Election Lab, Nov 2024 [VERIFIED]",
+  },
+  {
+    icon: DollarSign,
+    label: "FY2025 Budget (All Funds)",
+    value: "$82.5B",
+    color: "text-michigan-gold",
+    source: "MI House Fiscal Agency, FY2025 enacted [VERIFIED]",
+  },
+  {
+    icon: DollarSign,
+    label: "FY2025 General Fund",
+    value: "$14.8B",
+    color: "text-primary",
+    source: "MI House Fiscal Agency, FY2025 enacted [VERIFIED]",
+  },
 ];
 
 const CivicDataPage = () => {
@@ -113,17 +109,36 @@ const CivicDataPage = () => {
         </div>
       </section>
 
+      {/* Methodology note */}
+      <section className="border-b border-border bg-card py-4">
+        <div className="container">
+          <Card className="border-primary/15 bg-primary/5">
+            <CardContent className="py-3">
+              <p className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
+                <Info className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" aria-hidden="true" />
+                <span>
+                  <strong className="text-foreground">Data standards:</strong> Every figure on this page is sourced from a primary government source or peer-reviewed dataset, with source name and as-of date shown inline.
+                  Figures without a confirmable primary source have been removed.
+                  Budget figures reflect FY2025 enacted appropriations (Michigan House/Senate Fiscal Agencies).
+                  Voter turnout uses VEP (Voting Eligible Population) methodology from the UF Election Lab, the standard measure for cross-state comparison.
+                </span>
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       {/* Quick Stats */}
       <section className="border-b border-border bg-card py-6">
         <div className="container">
-          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={stagger} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             {getQuickStats(t).map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="flex items-center gap-3 rounded-lg bg-background p-4">
                 <stat.icon className={`h-8 w-8 ${stat.color} shrink-0`} />
                 <div>
                   <p className="text-xl font-bold text-foreground">{stat.value}</p>
                   <p className="text-xs text-muted-foreground">{stat.label}</p>
-                  <p className="text-[9px] text-muted-foreground/50">{stat.source}</p>
+                  <p className="text-[9px] text-muted-foreground/70">{stat.source}</p>
                 </div>
               </motion.div>
             ))}
@@ -145,58 +160,79 @@ const CivicDataPage = () => {
 
             {/* Budget */}
             <TabsContent value="budget">
-              <motion.div initial="hidden" animate="show" variants={stagger} className="grid gap-8 lg:grid-cols-2">
+              <motion.div initial="hidden" animate="show" variants={stagger} className="space-y-6">
                 <motion.div variants={fadeUp}>
+                  <Card className="border-michigan-gold/20 bg-michigan-gold/5">
+                    <CardContent className="py-4">
+                      <p className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
+                        <Info className="h-4 w-4 text-michigan-gold flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <span>
+                          Departmental budget breakdowns without a confirmed primary source have been removed.
+                          The figures below are the enacted FY2025 totals as published by the Michigan House and Senate Fiscal Agencies.
+                          FY2026 (~$81B all-funds) was enacted October 2025.
+                          For the full enacted budget by department, see the{" "}
+                          <a href="https://www.michigan.gov/budget" target="_blank" rel="noopener" className="text-primary underline">
+                            Michigan State Budget Office
+                          </a>.
+                        </span>
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+
+                <motion.div variants={fadeUp} className="grid gap-6 sm:grid-cols-2">
                   <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <DollarSign className="h-5 w-5 text-michigan-gold" />
-                        {t('civic.budgetByDept')}
-                      </CardTitle>
-                      <CardDescription>{t('civic.budgetTotal')}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ResponsiveContainer width="100%" height={350}>
-                        <BarChart data={budgetData} layout="vertical" margin={{ left: 10, right: 20 }}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 20%, 90%)" />
-                          <XAxis type="number" unit="B" tickFormatter={(v) => `$${v}`} />
-                          <YAxis dataKey="dept" type="category" width={160} tick={{ fontSize: 12 }} />
-                          <Tooltip formatter={(v: number) => [`$${v}B`, "Spending"]} />
-                          <Bar dataKey="amount" fill="hsl(209, 86%, 31%)" radius={[0, 4, 4, 0]} />
-                        </BarChart>
-                      </ResponsiveContainer>
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <DollarSign className="h-8 w-8 text-michigan-gold shrink-0" />
+                        <div>
+                          <p className="text-3xl font-bold text-foreground">$82.52B</p>
+                          <p className="text-sm text-muted-foreground">All-Funds Budget</p>
+                        </div>
+                      </div>
+                      <DataProvenance
+                        sourceName="Michigan House Fiscal Agency / Senate Fiscal Agency"
+                        sourceUrl="https://www.michigan.gov/budget"
+                        asOfDate="FY2025 enacted"
+                        cadence="Annual"
+                        dataKind="measured"
+                      />
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <DollarSign className="h-8 w-8 text-primary shrink-0" />
+                        <div>
+                          <p className="text-3xl font-bold text-foreground">~$14.8B</p>
+                          <p className="text-sm text-muted-foreground">General Fund</p>
+                        </div>
+                      </div>
+                      <DataProvenance
+                        sourceName="Michigan House Fiscal Agency / Senate Fiscal Agency"
+                        sourceUrl="https://www.michigan.gov/budget"
+                        asOfDate="FY2025 enacted"
+                        cadence="Annual"
+                        dataKind="measured"
+                      />
                     </CardContent>
                   </Card>
                 </motion.div>
 
                 <motion.div variants={fadeUp}>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>{t('civic.budgetAllocation')}</CardTitle>
-                      <CardDescription>{t('civic.budgetAllocDesc')}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ResponsiveContainer width="100%" height={380}>
-                        <PieChart margin={{ top: 20, right: 40, bottom: 20, left: 40 }}>
-                          <Pie data={budgetPie} cx="50%" cy="50%" outerRadius={90} innerRadius={45} paddingAngle={2} dataKey="amount" label={({ pct }) => `${pct}%`} labelLine={{ strokeWidth: 1 }}>
-                            {budgetPie.map((entry, i) => (
-                              <Cell key={i} fill={entry.color} />
-                            ))}
-                          </Pie>
-                          <Tooltip formatter={(v: number, _name: string, props: any) => [`$${v}B (${props.payload.pct}%)`, props.payload.dept]} />
-                        </PieChart>
-                      </ResponsiveContainer>
-                      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                        {budgetPie.map((d) => (
-                          <div key={d.dept} className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <span className="inline-block h-3 w-3 shrink-0 rounded-sm" style={{ backgroundColor: d.color }} />
-                            <span>{d.dept} ({d.pct}%)</span>
-                          </div>
-                        ))}
+                  <Card className="border-primary/20 bg-primary/5">
+                    <CardContent className="flex flex-col gap-4 p-6 md:flex-row md:items-center">
+                      <DollarSign className="h-8 w-8 shrink-0 text-primary" />
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-foreground">Full Budget Detail</h3>
+                        <p className="text-sm text-muted-foreground">View enacted appropriations by department, fund type, and fiscal year at the official Michigan State Budget Office.</p>
                       </div>
-                      <p className="mt-4 text-sm text-muted-foreground">
-                        <strong>{t('civic.educationLeads')}</strong> at 28% of the budget, followed by Health & Human Services at 17%.
-                      </p>
+                      <Button variant="outline" asChild>
+                        <a href="https://www.michigan.gov/budget" target="_blank" rel="noopener">
+                          State Budget Office <ExternalLink className="ml-2 h-3 w-3" />
+                        </a>
+                      </Button>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -207,32 +243,20 @@ const CivicDataPage = () => {
             <TabsContent value="foia">
               <motion.div initial="hidden" animate="show" variants={stagger}>
                 <motion.div variants={fadeUp}>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <FileText className="h-5 w-5 text-michigan-teal" />
-                        {t('civic.foiaVolume')}
-                      </CardTitle>
-                      <CardDescription>{t('civic.foiaVolumeDesc')}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ResponsiveContainer width="100%" height={350}>
-                        <BarChart data={foiaRequests}>
-                          <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 20%, 90%)" />
-                          <XAxis dataKey="year" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Bar dataKey="fulfilled" fill="hsl(145, 32%, 30%)" name="Fulfilled" stackId="a" />
-                          <Bar dataKey="denied" fill="hsl(0, 100%, 71%)" name="Denied" stackId="a" />
-                          <Bar dataKey="pending" fill="hsl(27, 87%, 67%)" name="Pending" stackId="a" />
-                        </BarChart>
-                      </ResponsiveContainer>
+                  <Card className="border-michigan-teal/20 bg-michigan-teal/5 mb-6">
+                    <CardContent className="py-4">
+                      <p className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
+                        <Info className="h-4 w-4 text-michigan-teal flex-shrink-0 mt-0.5" aria-hidden="true" />
+                        <span>
+                          Michigan does not publish a statewide aggregate count of FOIA requests. A chart previously displayed here used fabricated placeholder data and has been removed.
+                          The information below explains how Michigan FOIA works and links to official resources.
+                        </span>
+                      </p>
                     </CardContent>
                   </Card>
                 </motion.div>
 
-                <motion.div variants={fadeUp} className="mt-8">
+                <motion.div variants={fadeUp}>
                   <Accordion type="single" collapsible>
                     <AccordionItem value="how">
                       <AccordionTrigger>{t('civic.howToFOIA')}</AccordionTrigger>
@@ -242,7 +266,7 @@ const CivicDataPage = () => {
                           <li>Identify the public body that holds the records you want.</li>
                           <li>Write a request describing the records with reasonable specificity.</li>
                           <li>Submit via mail, email, or the agency's online portal.</li>
-                          <li>The agency must respond within 5 business days.</li>
+                          <li>The agency must respond within 5 business days. (MCL 15.235)</li>
                         </ol>
                         <p className="mt-2">
                           <a href="https://www.michigan.gov/treasury/local/foil" target="_blank" rel="noopener" className="text-primary underline">Michigan FOIA Resources →</a>
@@ -252,7 +276,7 @@ const CivicDataPage = () => {
                     <AccordionItem value="cost">
                       <AccordionTrigger>{t('civic.foiaCost')}</AccordionTrigger>
                       <AccordionContent className="text-muted-foreground">
-                        Agencies can charge for search, review, and copying, but the first $20 of costs is waived for most requests. Indigent citizens may request fee waivers. Electronic records are generally less expensive than paper copies.
+                        Agencies can charge for search, review, and copying. Indigent individuals may receive a fee reduction of up to $20 by submitting an affidavit of eligibility. (MCL 15.234) Electronic records are generally less expensive than paper copies.
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -285,8 +309,17 @@ const CivicDataPage = () => {
                         </LineChart>
                       </ResponsiveContainer>
                       <p className="mt-4 text-sm text-muted-foreground">
-                        Michigan consistently outperforms the national average. The 2020 election saw a record 71.4% turnout following expanded absentee voting under Proposal 3 (2018).
+                        Michigan consistently outperforms the national average in voter participation. The 2024 election set a new state record at 74.6% of eligible voters, surpassing 2020 (73.3%). Both elections followed expanded voting access under Proposal 3 (2018).
                       </p>
+                      <div className="mt-3">
+                        <DataProvenance
+                          sourceName="UF Election Lab (Prof. Michael McDonald), VEP methodology"
+                          sourceUrl="https://election.lab.ufl.edu/voter-turnout/"
+                          asOfDate="March 2, 2026"
+                          cadence="Updated after each general election"
+                          dataKind="measured"
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -345,6 +378,15 @@ const CivicDataPage = () => {
                           </div>
                         ))}
                       </div>
+                      <div className="mt-4">
+                        <DataProvenance
+                          sourceName="Michigan.gov (official state website)"
+                          sourceUrl="https://www.michigan.gov"
+                          asOfDate="Jan 2023 (current term began)"
+                          cadence="Updated after elections"
+                          dataKind="measured"
+                        />
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -376,30 +418,33 @@ const CivicDataPage = () => {
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Calendar className="h-5 w-5 text-michigan-gold" />
-                        Upcoming Public Meetings & Hearings
+                        Public Meetings & Hearings
                       </CardTitle>
-                      <CardDescription>Open to public comment — attend in person or virtually</CardDescription>
+                      <CardDescription>
+                        Michigan's Open Meetings Act guarantees public access to government deliberations. Check each body's official calendar for current dates and agendas.
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
-                        {publicMeetings.map((meeting, i) => (
-                          <motion.div
-                            key={i}
-                            variants={fadeUp}
+                        {openMeetingsLinks.map((item) => (
+                          <div
+                            key={item.body}
                             className="flex flex-col gap-2 rounded-lg border border-border p-4 transition-colors hover:bg-muted/50 sm:flex-row sm:items-center sm:justify-between"
                           >
-                            <div className="flex-1">
-                              <p className="font-semibold text-foreground">{meeting.body}</p>
-                              <p className="text-sm text-muted-foreground">{meeting.date} · {meeting.time} · {meeting.location}</p>
-                            </div>
-                            <Badge variant={meeting.type === "Public Hearing" ? "destructive" : meeting.type === "Hearing" ? "secondary" : "outline"}>
-                              {meeting.type}
-                            </Badge>
-                          </motion.div>
+                            <p className="font-semibold text-foreground">{item.body}</p>
+                            <a
+                              href={item.url}
+                              target="_blank"
+                              rel="noopener"
+                              className="inline-flex items-center gap-1 text-sm text-primary hover:underline shrink-0"
+                            >
+                              Official calendar <ExternalLink className="h-3 w-3" />
+                            </a>
+                          </div>
                         ))}
                       </div>
                       <p className="mt-6 text-xs text-muted-foreground">
-                        Michigan's Open Meetings Act guarantees public access to government deliberations. All meetings listed are open to the public.
+                        Dates and times change. Always verify directly with the public body before attending. All meetings listed are subject to Michigan's Open Meetings Act.
                       </p>
                     </CardContent>
                   </Card>
@@ -409,7 +454,6 @@ const CivicDataPage = () => {
           </Tabs>
         </div>
       </section>
-
 
       {/* Open Data & Civic Engagement */}
       <section className="border-t border-border bg-muted/30 py-12 md:py-16">
@@ -440,7 +484,7 @@ const CivicDataPage = () => {
                     <li><strong>Identify the agency</strong> that holds the data (state department, county, city, school district, etc.).</li>
                     <li><strong>Write a specific request</strong> describing the records you want. Be as precise as possible.</li>
                     <li><strong>Submit via email, mail, or online portal.</strong> Many agencies have FOIA coordinators listed on their websites.</li>
-                    <li><strong>Expect a response within 5 business days.</strong> The agency must acknowledge your request and provide a cost estimate if fees apply.</li>
+                    <li><strong>Expect a response within 5 business days.</strong> The agency must acknowledge your request and provide a cost estimate if fees apply. (MCL 15.235)</li>
                   </ol>
                   <p className="pt-2">
                     <a href="https://www.michigan.gov/treasury/local/foil" target="_blank" rel="noopener" className="font-medium text-primary hover:underline">
@@ -511,9 +555,12 @@ const CivicDataPage = () => {
             <div className="grid gap-4 sm:grid-cols-2">
               <Card>
                 <CardContent className="p-6">
-                  <h3 className="font-semibold text-foreground mb-2">Michigan Broadband Map</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    95.3% of Michigan has 25/3 Mbps access, but 32.5% don't subscribe. BEAD program: $1.5+ billion for 200,000+ unserved locations. ROBIN Grant: $250M from Coronavirus Capital Projects Fund.
+                  <h3 className="font-semibold text-foreground mb-2">Michigan Broadband Funding</h3>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Michigan has received $1.5+ billion through the federal BEAD program targeting 200,000+ unserved locations, and $250M through the ROBIN Grant (Coronavirus Capital Projects Fund) for broadband infrastructure.
+                  </p>
+                  <p className="text-[10px] text-muted-foreground mb-3">
+                    Sources: NTIA BEAD Program [VERIFIED] · U.S. Treasury Capital Projects Fund [VERIFIED]
                   </p>
                   <Button variant="outline" size="sm" asChild>
                     <a href="https://michiganbroadbandmap.com/" target="_blank" rel="noopener">
@@ -529,7 +576,7 @@ const CivicDataPage = () => {
                     <li>• <a href="https://mi-psc.my.site.com/s/" target="_blank" rel="noopener" className="text-primary hover:underline">MPSC E-Dockets</a> — Utility rate cases & orders</li>
                     <li>• <a href="https://www.legislature.mi.gov/Bills" target="_blank" rel="noopener" className="text-primary hover:underline">MI Legislature Bill Search</a></li>
                     <li>• <a href="https://openstates.org/mi/" target="_blank" rel="noopener" className="text-primary hover:underline">Open States Michigan</a> — Votes & sponsors</li>
-                    <li>• <Link to="/data-centers" className="text-primary hover:underline">Data Center Pipeline</Link> — $11.3B+ in projects, energy demand, tax incentives</li>
+                    <li>• <Link to="/data-centers" className="text-primary hover:underline">Data Center Pipeline</Link></li>
                   </ul>
                 </CardContent>
               </Card>
@@ -599,12 +646,13 @@ const CivicDataPage = () => {
         <div className="container text-center">
           <p className="text-xs text-muted-foreground">
             Data Sources:{" "}
-            <a href="https://www.michigan.gov/budget" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan Budget Office</a>,{" "}
+            <a href="https://election.lab.ufl.edu/voter-turnout/" target="_blank" rel="noopener" className="underline hover:text-primary">UF Election Lab (VEP Turnout)</a>,{" "}
+            <a href="https://www.michigan.gov/budget" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan State Budget Office</a>,{" "}
             <a href="https://www.michigan.gov/sos" target="_blank" rel="noopener" className="underline hover:text-primary">Secretary of State</a>,{" "}
             <a href="https://www.legislature.mi.gov/" target="_blank" rel="noopener" className="underline hover:text-primary">Michigan Legislature</a>,{" "}
-            <a href="https://www.electproject.org/" target="_blank" rel="noopener" className="underline hover:text-primary">U.S. Elections Project</a>
+            <a href="https://www.ntia.gov/broadband" target="_blank" rel="noopener" className="underline hover:text-primary">NTIA BEAD Program</a>
           </p>
-          <p className="mt-2 text-xs text-muted-foreground">Data sourced from official Michigan state and federal public records. Some values reflect most recent available reporting periods.</p>
+          <p className="mt-2 text-xs text-muted-foreground">All figures are sourced from primary government sources or peer-reviewed datasets. Source names and as-of dates are shown inline on each claim.</p>
         </div>
       </section>
     </Layout>
