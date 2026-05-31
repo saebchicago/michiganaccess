@@ -1,0 +1,4 @@
+[build]
+  base    = "artifacts/access-mi"
+  command = "pnpm run build"
+  publish = "dist/public"
