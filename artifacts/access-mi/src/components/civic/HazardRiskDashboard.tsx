@@ -1,100 +1,63 @@
-import { motion } from "framer-motion";
-import { AlertTriangle, ExternalLink, Shield } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { HAZARD_RISK_DATA, RISK_COLORS } from "@/data/michigan-hazard-risk";
+import { ExternalLink, AlertTriangle } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+
+const FEMA_LINKS = [
+  {
+    body: "FEMA Resilience Analysis and Planning Tool (RAPT)",
+    url: "https://www.fema.gov/emergency-managers/practitioners/resilience-analysis-and-planning-tool",
+    label: "View county risk data",
+  },
+  {
+    body: "FEMA National Risk Index",
+    url: "https://www.fema.gov/flood-maps/products-tools/national-risk-index",
+    label: "NRI overview and methodology",
+  },
+];
 
 export default function HazardRiskDashboard() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-    >
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-base">
-            <AlertTriangle className="h-5 w-5 text-michigan-coral" />
-            Which Michigan Counties Face the Most Risk?
-          </CardTitle>
-          <CardDescription>
-            FEMA National Risk Index — expected annual loss, social vulnerability, and top hazards
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Summary stats */}
-          <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-lg border border-border p-3 text-center">
-              <p className="text-2xl font-bold text-michigan-coral">
-                {HAZARD_RISK_DATA.filter((d) => d.riskRating === "Very High" || d.riskRating === "Relatively High").length}
-              </p>
-              <p className="text-xs text-muted-foreground">High/Very High Risk Counties</p>
-            </div>
-            <div className="rounded-lg border border-border p-3 text-center">
-              <p className="text-2xl font-bold text-foreground">$892M</p>
-              <p className="text-xs text-muted-foreground">Highest Annual Loss (Wayne)</p>
-            </div>
-            <div className="rounded-lg border border-border p-3 text-center">
-              <p className="text-2xl font-bold text-michigan-gold">Severe Storm</p>
-              <p className="text-xs text-muted-foreground">#1 Hazard Statewide</p>
-            </div>
-          </div>
-
-          {/* Table */}
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm min-w-[600px]">
-              <thead>
-                <tr className="border-b border-border text-left">
-                  <th className="pb-2 text-xs font-medium text-muted-foreground">County</th>
-                  <th className="pb-2 text-xs font-medium text-muted-foreground">Risk</th>
-                  <th className="pb-2 text-xs font-medium text-muted-foreground text-right">Annual Loss</th>
-                  <th className="pb-2 text-xs font-medium text-muted-foreground">Vulnerability</th>
-                  <th className="pb-2 text-xs font-medium text-muted-foreground">Top Hazards</th>
-                </tr>
-              </thead>
-              <tbody>
-                {HAZARD_RISK_DATA.map((row) => (
-                  <tr key={row.county} className="border-b border-border/50 last:border-0">
-                    <td className="py-2.5 font-medium text-foreground">{row.county}</td>
-                    <td className="py-2.5">
-                      <Badge className={`text-[9px] ${RISK_COLORS[row.riskRating] || "bg-gray-400 text-white"}`}>
-                        {row.riskRating}
-                      </Badge>
-                    </td>
-                    <td className="py-2.5 text-right tabular-nums font-mono text-foreground">{row.expectedAnnualLoss}</td>
-                    <td className="py-2.5">
-                      <span className={`text-xs ${row.socialVulnerability.includes("High") ? "text-michigan-coral" : "text-muted-foreground"}`}>
-                        {row.socialVulnerability}
-                      </span>
-                    </td>
-                    <td className="py-2.5">
-                      <div className="flex flex-wrap gap-1">
-                        {row.topHazards.map((h) => (
-                          <span key={h} className="text-[9px] rounded bg-muted px-1.5 py-0.5 text-muted-foreground">
-                            {h}
-                          </span>
-                        ))}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <p className="text-[10px] text-muted-foreground">
-              Source: FEMA National Risk Index — 20 of 83 counties shown. Full data at hazards.fema.gov
-            </p>
-            <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
-              <a href="https://hazards.fema.gov/nri/map" target="_blank" rel="noopener">
-                Full NRI Map <ExternalLink className="ml-1 h-3 w-3" />
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <AlertTriangle className="h-5 w-5 text-michigan-coral" />
+          Michigan County Hazard Risk
+        </CardTitle>
+        <CardDescription>
+          County-level hazard risk data is published by FEMA. View current
+          expected annual loss, social vulnerability, and community resilience
+          figures at the National Risk Index.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          {FEMA_LINKS.map((item) => (
+            <div
+              key={item.body}
+              className="flex flex-col gap-2 rounded-lg border border-border p-4 transition-colors hover:bg-muted/50 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <p className="font-semibold text-foreground">{item.body}</p>
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-1 text-sm text-primary hover:underline shrink-0"
+              >
+                {item.label} <ExternalLink className="h-3 w-3" />
               </a>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-xs text-muted-foreground">
+          FEMA updates National Risk Index data annually. The standalone NRI map
+          was retired December 2025; current figures are available through RAPT.
+        </p>
+      </CardContent>
+    </Card>
   );
 }
