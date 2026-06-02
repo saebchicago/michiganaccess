@@ -128,7 +128,8 @@ export function CHNASharePage() {
   const system = HFH_SYSTEM;
   const domains = PRIORITY_DRIVER_MAP[priority.id] ?? [];
 
-  const [copied, setCopied] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedText, setCopiedText] = useState(false);
   const [downloading, setDownloading] = useState(false);
 
   usePageMeta({
@@ -139,15 +140,15 @@ export function CHNASharePage() {
 
   async function handleCopyLink() {
     await navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
   }
 
   async function handleCopyText() {
     const text = generateCHNABriefText(priority, system);
     await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedText(true);
+    setTimeout(() => setCopiedText(false), 2000);
   }
 
   async function handleDownloadPDF() {
@@ -223,7 +224,7 @@ export function CHNASharePage() {
               onClick={handleCopyLink}
               className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors"
             >
-              {copied ? (
+              {copiedLink ? (
                 <Check
                   className="h-3.5 w-3.5 text-emerald-600"
                   aria-hidden="true"
@@ -231,14 +232,21 @@ export function CHNASharePage() {
               ) : (
                 <Copy className="h-3.5 w-3.5" aria-hidden="true" />
               )}
-              {copied ? "Copied" : "Copy link"}
+              {copiedLink ? "Copied" : "Copy link"}
             </button>
             <button
               onClick={handleCopyText}
               className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors"
             >
-              <Copy className="h-3.5 w-3.5" aria-hidden="true" />
-              Copy as text
+              {copiedText ? (
+                <Check
+                  className="h-3.5 w-3.5 text-emerald-600"
+                  aria-hidden="true"
+                />
+              ) : (
+                <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+              )}
+              {copiedText ? "Copied" : "Copy as text"}
             </button>
             <button
               onClick={handleDownloadPDF}

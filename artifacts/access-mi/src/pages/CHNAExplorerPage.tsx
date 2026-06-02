@@ -28,7 +28,6 @@ import {
   Wind,
   Droplets,
   MapPin,
-  AlertCircle,
   Map,
   Share2,
   Download,
@@ -51,7 +50,6 @@ import type {
   CHNAGeography,
   CHNAMetric,
   IntegrityLabel,
-  DataMode,
 } from "@/types/chna";
 
 const fade = {
@@ -386,23 +384,6 @@ function geoLabel(geography: CHNAGeography, note?: string): string {
 
 // Sub-components
 
-function DataModeBanner({ mode }: { mode: DataMode }) {
-  if (mode === "live") return null;
-  return (
-    <div
-      className="flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-800"
-      role="status"
-      aria-live="polite"
-    >
-      <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-      <span>
-        <strong>Showing seed data:</strong> live tract layers connect in a
-        future build.
-      </span>
-    </div>
-  );
-}
-
 function PriorityCard({
   priority,
   selected,
@@ -611,7 +592,7 @@ function GranularityGapPanel({
   );
 }
 
-function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
+function PrioritiesTab() {
   const [selectedSystemId, setSelectedSystemId] = useState("hfh-2022");
   const [selectedPriorityId, setSelectedPriorityId] = useState(
     CHNA_PRIORITIES[0].id,
@@ -631,8 +612,6 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
 
   return (
     <div className="space-y-6">
-      <DataModeBanner mode={dataMode} />
-
       {/* System selector */}
       <div>
         <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -1189,8 +1168,6 @@ function CountyCompareTab() {
 
 // Main page export
 export function CHNAExplorerPage() {
-  const dataMode: DataMode = "fallback";
-
   usePageMeta({
     title: "CHNA Explorer — Access Michigan",
     description:
@@ -1241,7 +1218,7 @@ export function CHNAExplorerPage() {
           </TabsList>
 
           <TabsContent value="priorities">
-            <PrioritiesTab dataMode={dataMode} />
+            <PrioritiesTab />
           </TabsContent>
 
           <TabsContent value="county-compare">
