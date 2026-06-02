@@ -143,6 +143,11 @@ const pages = {
       default: m.CHNAExplorerPage,
     })),
   ),
+  CHNASharePage: lazy(() =>
+    import("@/pages/CHNASharePage").then((m) => ({
+      default: m.CHNASharePage,
+    })),
+  ),
   DetectionGapPage: lazy(() => import("@/pages/DetectionGapPage")),
   EquityScorecardPage: lazy(() => import("@/pages/EquityScorecardPage")),
   MarketIntelligencePage: lazy(() => import("@/pages/MarketIntelligencePage")),
@@ -658,6 +663,11 @@ export const APP_ROUTES: RouteEntry[] = [
     path: "/chna-explorer",
     component: pages.CHNAExplorerPage,
     label: "CHNA Explorer",
+  },
+  {
+    path: "/chna/share",
+    component: pages.CHNASharePage,
+    label: "CHNA Priority Brief",
   },
   {
     path: "/detection-gap",

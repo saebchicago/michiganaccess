@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -29,10 +30,13 @@ import {
   MapPin,
   AlertCircle,
   Map,
+  Share2,
+  Download,
 } from "lucide-react";
 import PrintButton from "@/components/shared/PrintButton";
 import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 import { CHNATractMap } from "@/components/chna/CHNATractMap";
+import { generateCHNABriefPDF } from "@/utils/generateCHNABrief";
 import {
   HFH_SYSTEM,
   CHNA_SYSTEM_OPTIONS,
@@ -612,6 +616,8 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
   const [selectedPriorityId, setSelectedPriorityId] = useState(
     CHNA_PRIORITIES[0].id,
   );
+  const [downloading, setDownloading] = useState(false);
+  const navigate = useNavigate();
 
   const selectedSystem =
     CHNA_SYSTEM_OPTIONS.find((s) => s.id === selectedSystemId) ??
@@ -689,19 +695,51 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
         className="space-y-5"
         aria-label={`Detail: ${selectedPriority.label}`}
       >
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-base font-semibold text-foreground">
-            {selectedPriority.label}
-          </h2>
-          <Badge
-            variant={
-              selectedPriority.scope === "enterprise" ? "default" : "secondary"
-            }
-          >
-            {selectedPriority.scope === "enterprise"
-              ? "Enterprise priority"
-              : `Site-specific: ${selectedPriority.hospitals?.join(", ")}`}
-          </Badge>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-base font-semibold text-foreground">
+              {selectedPriority.label}
+            </h2>
+            <Badge
+              variant={
+                selectedPriority.scope === "enterprise"
+                  ? "default"
+                  : "secondary"
+              }
+            >
+              {selectedPriority.scope === "enterprise"
+                ? "Enterprise priority"
+                : `Site-specific: ${selectedPriority.hospitals?.join(", ")}`}
+            </Badge>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() =>
+                navigate(
+                  `/chna/share?system=${selectedSystemId}&priority=${selectedPriorityId}`,
+                )
+              }
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors"
+            >
+              <Share2 className="h-3.5 w-3.5" aria-hidden="true" />
+              Share brief
+            </button>
+            <button
+              disabled={downloading}
+              onClick={async () => {
+                setDownloading(true);
+                try {
+                  await generateCHNABriefPDF(selectedPriority, systemData);
+                } finally {
+                  setDownloading(false);
+                }
+              }}
+              className="inline-flex items-center gap-1.5 rounded-md border border-primary bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-60"
+            >
+              <Download className="h-3.5 w-3.5" aria-hidden="true" />
+              {downloading ? "Generating..." : "Download PDF"}
+            </button>
+          </div>
         </div>
 
         {domains.map((domain) => (
