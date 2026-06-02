@@ -44,6 +44,8 @@ import type {
   CHNAPriority,
   CHNADomain,
   CHNAGeography,
+  CHNAMetric,
+  IntegrityLabel,
   DataMode,
 } from "@/types/chna";
 
@@ -425,27 +427,92 @@ function PriorityCard({
   );
 }
 
+// Shape markers for mixed-integrity groups. In single-integrity groups, no marker is shown.
+const INTEGRITY_MARKERS: Record<IntegrityLabel, string> = {
+  VERIFIED: "●",
+  MODELED: "◆",
+  PROJECTED: "▲",
+};
+
+interface LegendEntry {
+  integrityLabel: IntegrityLabel;
+  source: string;
+  vintage: string;
+  marker?: string;
+}
+
+function buildLegendEntries(
+  metrics: CHNAMetric[],
+  isMixed: boolean,
+): LegendEntry[] {
+  const seen = new Set<string>();
+  const entries: LegendEntry[] = [];
+  for (const m of metrics) {
+    const key = `${m.integrityLabel}|${m.source}|${m.vintage}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      entries.push({
+        integrityLabel: m.integrityLabel,
+        source: m.source,
+        vintage: m.vintage,
+        marker: isMixed ? INTEGRITY_MARKERS[m.integrityLabel] : undefined,
+      });
+    }
+  }
+  return entries;
+}
+
+function DomainLegend({ entries }: { entries: LegendEntry[] }) {
+  return (
+    <div
+      className="mb-2 flex flex-wrap gap-x-4 gap-y-1 border-b border-border pb-2"
+      aria-label="Data source legend"
+    >
+      {entries.map((entry, i) => (
+        <span
+          key={i}
+          className="flex items-center gap-1.5 text-[11px] text-muted-foreground"
+        >
+          {entry.marker && (
+            <span aria-hidden="true" className="font-bold">
+              {entry.marker}
+            </span>
+          )}
+          <IntegrityBadge label={entry.integrityLabel} />
+          <span>
+            {entry.source} ({entry.vintage})
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function MetricRow({
   label,
   value,
   unit,
   geography,
-  integrityLabel,
-  source,
-  vintage,
   note,
+  marker,
 }: {
   label: string;
   value: number | string;
   unit: string;
   geography: CHNAGeography;
-  integrityLabel: "VERIFIED" | "MODELED" | "PROJECTED";
-  source: string;
-  vintage: string;
   note?: string;
+  marker?: string;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border border-border bg-background px-3 py-2.5">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 rounded-md border border-border bg-background px-3 py-2.5">
+      {marker && (
+        <span
+          className="shrink-0 text-xs font-bold text-muted-foreground"
+          aria-hidden="true"
+        >
+          {marker}
+        </span>
+      )}
       <span className="min-w-0 flex-1 text-sm font-medium text-foreground">
         {label}
       </span>
@@ -456,13 +523,6 @@ function MetricRow({
       <Badge variant="outline" className="shrink-0 text-[10px] font-normal">
         {geoLabel(geography, note ?? undefined)}
       </Badge>
-      <IntegrityBadge label={integrityLabel} />
-      <span
-        className="w-full text-[10px] text-muted-foreground"
-        aria-label={`Source: ${source}, vintage ${vintage}`}
-      >
-        {source} ({vintage})
-      </span>
     </div>
   );
 }
@@ -482,6 +542,10 @@ function DomainSection({
 
   if (metrics.length === 0) return null;
 
+  const uniqueLabels = [...new Set(metrics.map((m) => m.integrityLabel))];
+  const isMixed = uniqueLabels.length > 1;
+  const legendEntries = buildLegendEntries(metrics, isMixed);
+
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
@@ -490,7 +554,8 @@ function DomainSection({
           {label}
         </h3>
       </div>
-      <div className="space-y-1.5">
+      <div className="rounded-md border border-border bg-muted/20 p-3 space-y-1.5">
+        <DomainLegend entries={legendEntries} />
         {metrics.map((m) => (
           <MetricRow
             key={m.id}
@@ -498,10 +563,8 @@ function DomainSection({
             value={m.value}
             unit={m.unit}
             geography={m.geography}
-            integrityLabel={m.integrityLabel}
-            source={m.source}
-            vintage={m.vintage}
             note={m.note}
+            marker={isMixed ? INTEGRITY_MARKERS[m.integrityLabel] : undefined}
           />
         ))}
       </div>
