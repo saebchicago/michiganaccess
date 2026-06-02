@@ -148,6 +148,9 @@ const pages = {
       default: m.CHNASharePage,
     })),
   ),
+  FOIAPage: lazy(() =>
+    import("@/pages/FOIAPage").then((m) => ({ default: m.FOIAPage })),
+  ),
   DetectionGapPage: lazy(() => import("@/pages/DetectionGapPage")),
   EquityScorecardPage: lazy(() => import("@/pages/EquityScorecardPage")),
   MarketIntelligencePage: lazy(() => import("@/pages/MarketIntelligencePage")),
@@ -640,6 +643,11 @@ export const APP_ROUTES: RouteEntry[] = [
     label: "Public Records & FOIA",
   },
   {
+    path: "/foia",
+    component: pages.FOIAPage,
+    label: "FOIA Request Builder",
+  },
+  {
     path: "/transparency/contractors",
     component: pages.ContractorsPage,
     label: "Federal Contractors",
@@ -924,6 +932,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Follow the Money", href: "/transparency/money" },
       { label: "All Parties", href: "/transparency/parties" },
       { label: "Public Records & FOIA", href: "/transparency/records" },
+      { label: "FOIA Request Builder", href: "/foia", badge: "Tool" },
       { label: "Public Safety", href: "/public-safety" },
     ],
   },
