@@ -34,6 +34,7 @@ import PrintButton from "@/components/shared/PrintButton";
 import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 import {
   HFH_SYSTEM,
+  CHNA_SYSTEM_OPTIONS,
   CHNA_PRIORITIES,
   CHNA_DRIVERS,
   CHNA_METRICS,
@@ -388,7 +389,7 @@ function DataModeBanner({ mode }: { mode: DataMode }) {
     >
       <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
       <span>
-        <strong>Showing seed data</strong> — live tract layers connect in a
+        <strong>Showing seed data:</strong> live tract layers connect in a
         future build.
       </span>
     </div>
@@ -508,7 +509,13 @@ function DomainSection({
   );
 }
 
-function GranularityGapPanel({ priorityId }: { priorityId: string }) {
+function GranularityGapPanel({
+  priorityId,
+  systemLabel,
+}: {
+  priorityId: string;
+  systemLabel: string;
+}) {
   const domains = PRIORITY_DRIVER_MAP[priorityId] ?? [];
   return (
     <Card className="border-dashed border-primary/30 bg-primary/3">
@@ -522,14 +529,14 @@ function GranularityGapPanel({ priorityId }: { priorityId: string }) {
       </CardHeader>
       <CardContent className="text-xs text-muted-foreground space-y-1.5">
         <p>
-          The HFH 2022 CHNA reports the{" "}
+          The {systemLabel} CHNA reports the{" "}
           {domains.map((d) => DOMAIN_CONFIG[d].label.toLowerCase()).join(", ")}{" "}
           indicators above at county or city level. Census-tract-level data for
           these domains exists in federal sources and can surface neighborhood
           patterns within the counties the CHNA covers.
         </p>
         <div className="mt-2 rounded border border-primary/20 bg-background px-3 py-2 text-[11px] font-medium text-primary">
-          Tract-level map layer: connects in the environmental build (SP2)
+          Tract-level map layer: coming in the next build
         </div>
       </CardContent>
     </Card>
@@ -537,9 +544,16 @@ function GranularityGapPanel({ priorityId }: { priorityId: string }) {
 }
 
 function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
+  const [selectedSystemId, setSelectedSystemId] = useState("hfh-2022");
   const [selectedPriorityId, setSelectedPriorityId] = useState(
     CHNA_PRIORITIES[0].id,
   );
+
+  const selectedSystem =
+    CHNA_SYSTEM_OPTIONS.find((s) => s.id === selectedSystemId) ??
+    CHNA_SYSTEM_OPTIONS[0];
+  const systemData = selectedSystemId === "hfh-2022" ? HFH_SYSTEM : HFH_SYSTEM;
+
   const selectedPriority = CHNA_PRIORITIES.find(
     (p) => p.id === selectedPriorityId,
   )!;
@@ -549,19 +563,41 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
     <div className="space-y-6">
       <DataModeBanner mode={dataMode} />
 
+      {/* System selector */}
+      <div>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          Health system
+        </label>
+        <Select value={selectedSystemId} onValueChange={setSelectedSystemId}>
+          <SelectTrigger className="w-full sm:w-80">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {CHNA_SYSTEM_OPTIONS.map((s) => (
+              <SelectItem key={s.id} value={s.id} disabled={!s.available}>
+                {s.label}
+                {!s.available && " (coming soon)"}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
       {/* System banner */}
       <Card className="bg-muted/40">
         <CardContent className="py-3">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <span className="font-semibold text-foreground">
-              {HFH_SYSTEM.label}
+              {systemData.label}
             </span>
             <span className="text-muted-foreground">
-              Service area: {HFH_SYSTEM.counties.join(", ")} counties;{" "}
-              {HFH_SYSTEM.cities?.join(", ")}
+              Service area: {systemData.counties.join(", ")} counties
+              {systemData.cities && systemData.cities.length > 0
+                ? `; ${systemData.cities.join(", ")}`
+                : ""}
             </span>
             <Badge variant="outline" className="text-[10px]">
-              CHNA vintage {HFH_SYSTEM.vintage}
+              CHNA vintage {systemData.vintage}
             </Badge>
           </div>
         </CardContent>
@@ -599,8 +635,8 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
             }
           >
             {selectedPriority.scope === "enterprise"
-              ? "Enterprise"
-              : `Hospital-specific: ${selectedPriority.hospitals?.join(", ")}`}
+              ? "Enterprise priority"
+              : `Site-specific: ${selectedPriority.hospitals?.join(", ")}`}
           </Badge>
         </div>
 
@@ -612,7 +648,10 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
           />
         ))}
 
-        <GranularityGapPanel priorityId={selectedPriorityId} />
+        <GranularityGapPanel
+          priorityId={selectedPriorityId}
+          systemLabel={selectedSystem.shortLabel}
+        />
       </div>
 
       {/* Integrity legend */}
@@ -629,9 +668,10 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
             fixed per source type and are not editorial characterizations.
           </p>
           <p>
-            <strong>Source:</strong> All CHNA priority metrics are drawn from
-            the Henry Ford Health 2022 Community Health Needs Assessment, which
-            cites BRFSS, MDHHS, CDC, and MDEQ as primary sources.
+            <strong>Source:</strong> Priority metrics are drawn from the{" "}
+            {selectedSystem.shortLabel} Community Health Needs Assessment (
+            {selectedSystem.vintage}), which cites BRFSS, MDHHS, CDC, and MDEQ
+            as primary sources.
           </p>
         </div>
       </div>
@@ -736,17 +776,17 @@ function CountyCompareTab() {
     () =>
       [
         county.svi >= 0.7 &&
-          `High social vulnerability (SVI ${county.svi}) — top quartile statewide`,
+          `High social vulnerability (SVI ${county.svi}), top quartile statewide`,
         county.obesity > MI_AVG.obesity * 1.1 &&
           `Obesity rate ${((county.obesity / MI_AVG.obesity - 1) * 100).toFixed(0)}% above state average`,
         county.foodInsec > MI_AVG.foodInsec * 1.1 &&
           `Food insecurity ${((county.foodInsec / MI_AVG.foodInsec - 1) * 100).toFixed(0)}% above state average`,
         county.pcp < MI_AVG.pcp * 0.8 &&
-          `Primary care physician shortage — ${county.pcp} per 100K vs. ${MI_AVG.pcp} state average`,
+          `Primary care physician shortage: ${county.pcp} per 100K vs. ${MI_AVG.pcp} state average`,
         county.energyBurden > 6 &&
-          `Energy burden ${county.energyBurden}% — exceeds DOE high-burden threshold (6%)`,
+          `Energy burden ${county.energyBurden}%, above the DOE high-burden threshold of 6%`,
         county.childPov > MI_AVG.childPov * 1.2 &&
-          `Child poverty rate ${county.childPov}% — significantly above state average`,
+          `Child poverty rate ${county.childPov}%, significantly above state average`,
       ].filter(Boolean) as string[],
     [county],
   );
@@ -1052,7 +1092,7 @@ export function CHNAExplorerPage() {
   usePageMeta({
     title: "CHNA Explorer — Access Michigan",
     description:
-      "Community Health Needs Assessment intelligence: HFH priority indicators and county-level health data across Michigan.",
+      "Michigan health system CHNA priorities mapped to workforce, air, water, and access indicators at neighborhood resolution: the granularity the CHNA itself does not provide.",
     path: "/chna-explorer",
   });
 
@@ -1083,9 +1123,9 @@ export function CHNAExplorerPage() {
               Community Health Needs Assessment
             </h1>
             <p className="text-muted-foreground">
-              Health system CHNA priorities mapped to the workforce, air, water,
-              and access indicators the CHNA names as drivers — at the
-              geographic granularity the CHNA itself does not provide.
+              Michigan health system CHNA priorities mapped to the workforce,
+              air, water, and access indicators the CHNA names as drivers, at
+              the neighborhood granularity the CHNA itself does not provide.
             </p>
           </motion.div>
         </div>
@@ -1094,7 +1134,7 @@ export function CHNAExplorerPage() {
       <div className="container max-w-5xl py-8">
         <Tabs defaultValue="priorities" className="space-y-6">
           <TabsList>
-            <TabsTrigger value="priorities">HFH Priorities</TabsTrigger>
+            <TabsTrigger value="priorities">System Priorities</TabsTrigger>
             <TabsTrigger value="county-compare">County Compare</TabsTrigger>
           </TabsList>
 

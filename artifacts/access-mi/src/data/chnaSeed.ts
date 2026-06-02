@@ -14,6 +14,52 @@ export const HFH_SYSTEM: CHNASystem = {
   cities: ["Detroit"],
 };
 
+export interface CHNASystemOption {
+  id: string;
+  label: string;
+  shortLabel: string;
+  vintage: string;
+  available: boolean;
+}
+
+export const CHNA_SYSTEM_OPTIONS: CHNASystemOption[] = [
+  {
+    id: "hfh-2022",
+    label: "Henry Ford Health (2022 CHNA)",
+    shortLabel: "Henry Ford Health",
+    vintage: "2022",
+    available: true,
+  },
+  {
+    id: "corewell-2022",
+    label: "Corewell Health (2022 CHNA)",
+    shortLabel: "Corewell Health",
+    vintage: "2022",
+    available: false,
+  },
+  {
+    id: "umich-2022",
+    label: "Michigan Medicine (2022 CHNA)",
+    shortLabel: "Michigan Medicine",
+    vintage: "2022",
+    available: false,
+  },
+  {
+    id: "sparrow-2022",
+    label: "Sparrow Health System (2022 CHNA)",
+    shortLabel: "Sparrow Health System",
+    vintage: "2022",
+    available: false,
+  },
+  {
+    id: "mclaren-2022",
+    label: "McLaren Health Care (2022 CHNA)",
+    shortLabel: "McLaren Health Care",
+    vintage: "2022",
+    available: false,
+  },
+];
+
 export const CHNA_PRIORITIES: CHNAPriority[] = [
   { id: "chronic-disease", label: "Chronic Disease", scope: "enterprise" },
   {
