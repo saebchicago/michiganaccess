@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -27,11 +28,14 @@ import {
   Wind,
   Droplets,
   MapPin,
-  AlertCircle,
   Map,
+  Share2,
+  Download,
 } from "lucide-react";
 import PrintButton from "@/components/shared/PrintButton";
 import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
+import { CHNATractMap } from "@/components/chna/CHNATractMap";
+import { generateCHNABriefPDF } from "@/utils/generateCHNABrief";
 import {
   HFH_SYSTEM,
   CHNA_SYSTEM_OPTIONS,
@@ -46,7 +50,6 @@ import type {
   CHNAGeography,
   CHNAMetric,
   IntegrityLabel,
-  DataMode,
 } from "@/types/chna";
 
 const fade = {
@@ -381,23 +384,6 @@ function geoLabel(geography: CHNAGeography, note?: string): string {
 
 // Sub-components
 
-function DataModeBanner({ mode }: { mode: DataMode }) {
-  if (mode === "live") return null;
-  return (
-    <div
-      className="flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-800"
-      role="status"
-      aria-live="polite"
-    >
-      <AlertCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-      <span>
-        <strong>Showing seed data:</strong> live tract layers connect in a
-        future build.
-      </span>
-    </div>
-  );
-}
-
 function PriorityCard({
   priority,
   selected,
@@ -594,23 +580,25 @@ function GranularityGapPanel({
         <p>
           The {systemLabel} CHNA reports the{" "}
           {domains.map((d) => DOMAIN_CONFIG[d].label.toLowerCase()).join(", ")}{" "}
-          indicators above at county or city level. Census-tract-level data for
-          these domains exists in federal sources and can surface neighborhood
-          patterns within the counties the CHNA covers.
+          indicators above at county or city level. The map below surfaces
+          census-tract-level data for these domains from federal sources,
+          revealing neighborhood patterns within the counties the CHNA covers.
         </p>
-        <div className="mt-2 rounded border border-primary/20 bg-background px-3 py-2 text-[11px] font-medium text-primary">
-          Tract-level map layer: coming in the next build
+        <div className="mt-3">
+          <CHNATractMap priorityId={priorityId} domains={domains} />
         </div>
       </CardContent>
     </Card>
   );
 }
 
-function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
+function PrioritiesTab() {
   const [selectedSystemId, setSelectedSystemId] = useState("hfh-2022");
   const [selectedPriorityId, setSelectedPriorityId] = useState(
     CHNA_PRIORITIES[0].id,
   );
+  const [downloading, setDownloading] = useState(false);
+  const navigate = useNavigate();
 
   const selectedSystem =
     CHNA_SYSTEM_OPTIONS.find((s) => s.id === selectedSystemId) ??
@@ -624,8 +612,6 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
 
   return (
     <div className="space-y-6">
-      <DataModeBanner mode={dataMode} />
-
       {/* System selector */}
       <div>
         <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -688,19 +674,51 @@ function PrioritiesTab({ dataMode }: { dataMode: DataMode }) {
         className="space-y-5"
         aria-label={`Detail: ${selectedPriority.label}`}
       >
-        <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-base font-semibold text-foreground">
-            {selectedPriority.label}
-          </h2>
-          <Badge
-            variant={
-              selectedPriority.scope === "enterprise" ? "default" : "secondary"
-            }
-          >
-            {selectedPriority.scope === "enterprise"
-              ? "Enterprise priority"
-              : `Site-specific: ${selectedPriority.hospitals?.join(", ")}`}
-          </Badge>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-base font-semibold text-foreground">
+              {selectedPriority.label}
+            </h2>
+            <Badge
+              variant={
+                selectedPriority.scope === "enterprise"
+                  ? "default"
+                  : "secondary"
+              }
+            >
+              {selectedPriority.scope === "enterprise"
+                ? "Enterprise priority"
+                : `Site-specific: ${selectedPriority.hospitals?.join(", ")}`}
+            </Badge>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() =>
+                navigate(
+                  `/chna/share?system=${selectedSystemId}&priority=${selectedPriorityId}`,
+                )
+              }
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors"
+            >
+              <Share2 className="h-3.5 w-3.5" aria-hidden="true" />
+              Share brief
+            </button>
+            <button
+              disabled={downloading}
+              onClick={async () => {
+                setDownloading(true);
+                try {
+                  await generateCHNABriefPDF(selectedPriority, systemData);
+                } finally {
+                  setDownloading(false);
+                }
+              }}
+              className="inline-flex items-center gap-1.5 rounded-md border border-primary bg-primary px-2.5 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-60"
+            >
+              <Download className="h-3.5 w-3.5" aria-hidden="true" />
+              {downloading ? "Generating..." : "Download PDF"}
+            </button>
+          </div>
         </div>
 
         {domains.map((domain) => (
@@ -1150,8 +1168,6 @@ function CountyCompareTab() {
 
 // Main page export
 export function CHNAExplorerPage() {
-  const dataMode: DataMode = "fallback";
-
   usePageMeta({
     title: "CHNA Explorer — Access Michigan",
     description:
@@ -1202,7 +1218,7 @@ export function CHNAExplorerPage() {
           </TabsList>
 
           <TabsContent value="priorities">
-            <PrioritiesTab dataMode={dataMode} />
+            <PrioritiesTab />
           </TabsContent>
 
           <TabsContent value="county-compare">
