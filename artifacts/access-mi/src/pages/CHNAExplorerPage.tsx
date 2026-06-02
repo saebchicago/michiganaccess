@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import PrintButton from "@/components/shared/PrintButton";
 import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
+import { CHNATractMap } from "@/components/chna/CHNATractMap";
 import {
   HFH_SYSTEM,
   CHNA_SYSTEM_OPTIONS,
@@ -594,12 +595,12 @@ function GranularityGapPanel({
         <p>
           The {systemLabel} CHNA reports the{" "}
           {domains.map((d) => DOMAIN_CONFIG[d].label.toLowerCase()).join(", ")}{" "}
-          indicators above at county or city level. Census-tract-level data for
-          these domains exists in federal sources and can surface neighborhood
-          patterns within the counties the CHNA covers.
+          indicators above at county or city level. The map below surfaces
+          census-tract-level data for these domains from federal sources,
+          revealing neighborhood patterns within the counties the CHNA covers.
         </p>
-        <div className="mt-2 rounded border border-primary/20 bg-background px-3 py-2 text-[11px] font-medium text-primary">
-          Tract-level map layer: coming in the next build
+        <div className="mt-3">
+          <CHNATractMap priorityId={priorityId} domains={domains} />
         </div>
       </CardContent>
     </Card>
