@@ -70,7 +70,7 @@ export default function ZoningPage() {
 
   return (
     <Layout>
-      <main className="min-h-screen">
+      <div className="min-h-screen">
         {/* Hero */}
         <section className="bg-gradient-to-br from-michigan-blue/10 via-background to-forest-green/5 py-16 md:py-24">
           <div className="container max-w-4xl text-center space-y-6">
@@ -283,7 +283,7 @@ export default function ZoningPage() {
             Always contact your local planning department for official zoning determinations. Links are provided as a public service and may change without notice.
           </p>
         </section>
-      </main>
+      </div>
     </Layout>
   );
 }
