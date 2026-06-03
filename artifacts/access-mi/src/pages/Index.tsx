@@ -142,9 +142,9 @@ const Index = () => {
   const [triageOpen, setTriageOpen] = useState(false);
 
   usePageMeta({
-    title: "Access Michigan: Health, Housing, Energy & Services | Open Data",
+    title: "Health, Housing & Civic Data",
     description:
-      "Independent Michigan civic intelligence. County-level data on health, housing, energy, transportation, and legal services across all 83 counties. Built by and for fellow Michiganders.",
+      "County-level Michigan data on health, housing, energy, and services across all 83 counties. Independent, no login required.",
     path: "/",
     jsonLd: {
       "@type": "Organization",
