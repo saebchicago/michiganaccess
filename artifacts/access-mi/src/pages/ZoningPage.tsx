@@ -283,7 +283,7 @@ export default function ZoningPage() {
             Always contact your local planning department for official zoning determinations. Links are provided as a public service and may change without notice.
           </p>
         </section>
-      </main>
+      </div>
     </Layout>
   );
 }
