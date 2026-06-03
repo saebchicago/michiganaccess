@@ -589,8 +589,8 @@ const EnvironmentPage = () => {
                         <Zap className="mb-3 h-8 w-8 text-michigan-gold" />
                         <h3 className="mb-2 font-semibold text-foreground">{item.title}</h3>
                         <p className="mb-4 text-sm text-muted-foreground">{item.desc}</p>
-                        <a href={item.link} target="_blank" rel="noopener" className="text-sm font-medium text-primary hover:underline">
-                          {t('environment.learnMore')} <ExternalLink className="ml-1 inline h-3 w-3" />
+                        <a href={item.link} target="_blank" rel="noopener" aria-label={`Learn more about ${item.title} (opens in new window)`} className="text-sm font-medium text-primary hover:underline">
+                          {t('environment.learnMore')} about {item.title} <ExternalLink className="ml-1 inline h-3 w-3" aria-hidden="true" />
                         </a>
                       </CardContent>
                     </Card>
