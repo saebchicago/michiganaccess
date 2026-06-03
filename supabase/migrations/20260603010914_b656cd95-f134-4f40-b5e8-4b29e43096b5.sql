@@ -1,0 +1,1 @@
+REVOKE SELECT (contact_phone, contact_email) ON public.community_events FROM anon, authenticated;
