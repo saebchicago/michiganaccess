@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Link } from "react-router-dom";
+import { RESOURCE_COUNT_DISPLAY } from "@/config/platformConstants";
 import {
   Select,
   SelectContent,
@@ -14,7 +15,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowRight, Heart, Database, MapPin, DollarSign, AlertTriangle, Building } from "lucide-react";
+import {
+  ArrowRight,
+  Heart,
+  Database,
+  MapPin,
+  DollarSign,
+  AlertTriangle,
+  Building,
+} from "lucide-react";
 
 /* ── Funnel rates ────────────────────────────────────────────────────── */
 const SCREEN_POSITIVE_RATE = 0.274;
@@ -31,10 +40,26 @@ interface HealthRegion {
   description: string;
 }
 const REGIONS: Record<string, HealthRegion> = {
-  statewide: { label: "Statewide", defaultPop: 1_000_000, description: "All Michigan health systems combined" },
-  metro_detroit: { label: "Metro Detroit", defaultPop: 1_800_000, description: "Wayne, Oakland, Macomb tri-county" },
-  west_michigan: { label: "West Michigan", defaultPop: 650_000, description: "Kent, Ottawa, Muskegon, Allegan" },
-  upper_peninsula: { label: "Upper Peninsula", defaultPop: 120_000, description: "15 UP counties" },
+  statewide: {
+    label: "Statewide",
+    defaultPop: 1_000_000,
+    description: "All Michigan health systems combined",
+  },
+  metro_detroit: {
+    label: "Metro Detroit",
+    defaultPop: 1_800_000,
+    description: "Wayne, Oakland, Macomb tri-county",
+  },
+  west_michigan: {
+    label: "West Michigan",
+    defaultPop: 650_000,
+    description: "Kent, Ottawa, Muskegon, Allegan",
+  },
+  upper_peninsula: {
+    label: "Upper Peninsula",
+    defaultPop: 120_000,
+    description: "15 UP counties",
+  },
 };
 
 /* ── Source labels ────────────────────────────────────────────────────── */
@@ -47,7 +72,11 @@ const SOURCES = {
 
 /* ── Formatting helpers ──────────────────────────────────────────────── */
 const fmt = (n: number) =>
-  n >= 1_000_000 ? `${(n / 1_000_000).toFixed(1)}M` : n >= 1_000 ? `${(n / 1_000).toFixed(0)}K` : String(Math.round(n));
+  n >= 1_000_000
+    ? `${(n / 1_000_000).toFixed(1)}M`
+    : n >= 1_000
+      ? `${(n / 1_000).toFixed(0)}K`
+      : String(Math.round(n));
 const fmtDollar = (n: number) =>
   n >= 1_000_000_000
     ? `$${(n / 1_000_000_000).toFixed(1)}B`
@@ -67,7 +96,15 @@ interface Stage {
   source: string;
 }
 
-function FunnelBar({ stage, maxValue, index }: { stage: Stage; maxValue: number; index: number }) {
+function FunnelBar({
+  stage,
+  maxValue,
+  index,
+}: {
+  stage: Stage;
+  maxValue: number;
+  index: number;
+}) {
   const widthPct = Math.max((stage.value / maxValue) * 100, 4);
   return (
     <motion.div
@@ -78,29 +115,51 @@ function FunnelBar({ stage, maxValue, index }: { stage: Stage; maxValue: number;
       className="space-y-1"
     >
       <div className="flex items-end justify-between">
-        <span className="text-sm font-semibold text-gray-200">{stage.label}</span>
-        <span className="text-xs text-gray-400 tabular-nums">{fmt(stage.value)} people</span>
+        <span className="text-sm font-semibold text-gray-200">
+          {stage.label}
+        </span>
+        <span className="text-xs text-gray-400 tabular-nums">
+          {fmt(stage.value)} people
+        </span>
       </div>
       <div className="w-full bg-white/5 rounded-lg h-10 overflow-hidden relative">
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: `${widthPct}%` }}
           viewport={{ once: true }}
-          transition={{ delay: index * 0.15 + 0.2, duration: 0.8, ease: "easeOut" }}
+          transition={{
+            delay: index * 0.15 + 0.2,
+            duration: 0.8,
+            ease: "easeOut",
+          }}
           className={`h-full rounded-lg ${stage.color} flex items-center px-3`}
         >
-          <span className="text-xs font-bold text-white whitespace-nowrap">{stage.pct}%</span>
+          <span className="text-xs font-bold text-white whitespace-nowrap">
+            {stage.pct}%
+          </span>
         </motion.div>
       </div>
       <div className="flex items-center justify-between">
-        <p className="text-[11px] text-gray-500 leading-snug flex-1">{stage.desc}</p>
-        <span className="text-[9px] text-gray-600 ml-2 shrink-0 italic">{stage.source}</span>
+        <p className="text-[11px] text-gray-500 leading-snug flex-1">
+          {stage.desc}
+        </p>
+        <span className="text-[9px] text-gray-600 ml-2 shrink-0 italic">
+          {stage.source}
+        </span>
       </div>
     </motion.div>
   );
 }
 
-function GapCallout({ label, value, delay }: { label: string; value: string; delay: number }) {
+function GapCallout({
+  label,
+  value,
+  delay,
+}: {
+  label: string;
+  value: string;
+  delay: number;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -208,10 +267,18 @@ export default function DetectionGapPage() {
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent" />
           <div className="max-w-5xl mx-auto px-6 py-12 relative">
-            <Breadcrumbs items={[{ label: "Partners", href: "/partners" }, { label: "Detection Gap" }]} />
+            <Breadcrumbs
+              items={[
+                { label: "Partners", href: "/partners" },
+                { label: "Detection Gap" },
+              ]}
+            />
             <div className="flex items-center gap-2 mb-4 mt-4">
               <div className="w-10 h-1 bg-primary rounded-full" />
-              <Badge variant="outline" className="uppercase tracking-wider text-xs border-primary/30 text-primary">
+              <Badge
+                variant="outline"
+                className="uppercase tracking-wider text-xs border-primary/30 text-primary"
+              >
                 Research Insight
               </Badge>
             </div>
@@ -227,8 +294,9 @@ export default function DetectionGapPage() {
               </span>
             </motion.h1>
             <p className="text-base text-gray-400 max-w-xl">
-              Michigan health systems screen millions for social needs but lack the infrastructure to connect patients to
-              services. Select a region and adjust the slider to model impact at any scale.
+              Michigan health systems screen millions for social needs but lack
+              the infrastructure to connect patients to services. Select a
+              region and adjust the slider to model impact at any scale.
             </p>
           </div>
         </div>
@@ -244,7 +312,9 @@ export default function DetectionGapPage() {
             {/* Region selector */}
             <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-gray-300">Health System Region</label>
+                <label className="text-xs font-semibold text-gray-300">
+                  Health System Region
+                </label>
                 <Select value={region} onValueChange={handleRegionChange}>
                   <SelectTrigger className="w-52 bg-white/5 border-white/10 text-white h-9">
                     <Building className="h-3.5 w-3.5 mr-1.5 text-gray-400" />
@@ -259,16 +329,29 @@ export default function DetectionGapPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <p className="text-xs text-gray-500 mt-1 sm:mt-4">{regionData.description}</p>
+              <p className="text-xs text-gray-500 mt-1 sm:mt-4">
+                {regionData.description}
+              </p>
             </div>
 
             {/* Volume slider */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <label className="text-sm font-semibold text-gray-200">Adjust Screening Volume</label>
-                <span className="text-lg font-bold text-primary tabular-nums">{fmt(volume[0])} patients</span>
+                <label className="text-sm font-semibold text-gray-200">
+                  Adjust Screening Volume
+                </label>
+                <span className="text-lg font-bold text-primary tabular-nums">
+                  {fmt(volume[0])} patients
+                </span>
               </div>
-              <Slider value={volume} onValueChange={setVolume} min={50_000} max={5_000_000} step={50_000} className="w-full" />
+              <Slider
+                value={volume}
+                onValueChange={setVolume}
+                min={50_000}
+                max={5_000_000}
+                step={50_000}
+                className="w-full"
+              />
               <div className="flex justify-between mt-2 text-[10px] text-gray-600">
                 <span>50K</span>
                 <span>1M (Trinity actual)</span>
@@ -320,41 +403,70 @@ export default function DetectionGapPage() {
                 <h3 className="text-sm font-bold text-gray-200 flex items-center gap-2">
                   <DollarSign className="h-4 w-4 text-michigan-gold" />
                   Cost of Inaction
-                  <Badge variant="outline" className="text-[8px] border-michigan-gold/30 text-michigan-gold">
+                  <Badge
+                    variant="outline"
+                    className="text-[8px] border-michigan-gold/30 text-michigan-gold"
+                  >
                     Illustrative
                   </Badge>
                 </h3>
 
                 <div className="space-y-3">
                   <div className="rounded-lg bg-michigan-coral/10 border border-michigan-coral/20 p-3">
-                    <p className="text-xl font-bold text-michigan-coral">{fmtDollar(calc.unmetNeedsCost)}</p>
-                    <p className="text-[10px] text-michigan-coral/70">est. annual cost of unmet needs</p>
-                    <p className="text-[9px] text-gray-600 italic mt-1">Illustrative: $3,200/person/yr avg</p>
+                    <p className="text-xl font-bold text-michigan-coral">
+                      {fmtDollar(calc.unmetNeedsCost)}
+                    </p>
+                    <p className="text-[10px] text-michigan-coral/70">
+                      est. annual cost of unmet needs
+                    </p>
+                    <p className="text-[9px] text-gray-600 italic mt-1">
+                      Illustrative: $3,200/person/yr avg
+                    </p>
                   </div>
 
                   <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-3">
-                    <p className="text-xl font-bold text-red-400">{fmt(calc.preventableHospitalizations)}</p>
-                    <p className="text-[10px] text-red-400/70">preventable hospitalizations</p>
-                    <p className="text-[9px] text-gray-600 italic mt-1">Illustrative: 8% of unconnected</p>
+                    <p className="text-xl font-bold text-red-400">
+                      {fmt(calc.preventableHospitalizations)}
+                    </p>
+                    <p className="text-[10px] text-red-400/70">
+                      preventable hospitalizations
+                    </p>
+                    <p className="text-[9px] text-gray-600 italic mt-1">
+                      Illustrative: 8% of unconnected
+                    </p>
                   </div>
 
                   <div className="rounded-lg bg-michigan-gold/10 border border-michigan-gold/20 p-3">
-                    <p className="text-xl font-bold text-michigan-gold">{fmtDollar(calc.gapCost)}</p>
-                    <p className="text-[10px] text-michigan-gold/70">preventable hospitalization cost</p>
-                    <p className="text-[9px] text-gray-600 italic mt-1">Illustrative: AHRQ $14,500 avg</p>
+                    <p className="text-xl font-bold text-michigan-gold">
+                      {fmtDollar(calc.gapCost)}
+                    </p>
+                    <p className="text-[10px] text-michigan-gold/70">
+                      preventable hospitalization cost
+                    </p>
+                    <p className="text-[9px] text-gray-600 italic mt-1">
+                      Illustrative: AHRQ $14,500 avg
+                    </p>
                   </div>
 
                   <div className="rounded-lg bg-michigan-forest/10 border border-michigan-forest/20 p-3">
-                    <p className="text-xl font-bold text-michigan-forest">{fmtDollar(calc.savings)}</p>
-                    <p className="text-[10px] text-michigan-forest/70">savings from connections made</p>
+                    <p className="text-xl font-bold text-michigan-forest">
+                      {fmtDollar(calc.savings)}
+                    </p>
+                    <p className="text-[10px] text-michigan-forest/70">
+                      savings from connections made
+                    </p>
                   </div>
                 </div>
               </div>
 
               <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-[10px] text-gray-500">
                 <AlertTriangle className="h-3 w-3 inline mr-1 text-michigan-gold" />
-                All dollar calculations are <strong className="text-gray-400">illustrative estimates</strong> based on published
-                research averages. Actual costs vary by region, payer mix, and patient acuity.
+                All dollar calculations are{" "}
+                <strong className="text-gray-400">
+                  illustrative estimates
+                </strong>{" "}
+                based on published research averages. Actual costs vary by
+                region, payer mix, and patient acuity.
               </div>
             </motion.div>
           </div>
@@ -369,19 +481,29 @@ export default function DetectionGapPage() {
           >
             <Card className="bg-michigan-forest/10 border-michigan-forest/20">
               <CardContent className="py-5 text-center">
-                <p className="text-3xl font-bold text-michigan-forest">{fmt(calc.prevented)}</p>
-                <p className="text-xs text-gray-400 mt-1">hospitalizations prevented</p>
+                <p className="text-3xl font-bold text-michigan-forest">
+                  {fmt(calc.prevented)}
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  hospitalizations prevented
+                </p>
               </CardContent>
             </Card>
             <Card className="bg-primary/10 border-primary/20">
               <CardContent className="py-5 text-center">
-                <p className="text-3xl font-bold text-primary">{fmtDollar(calc.savings)}</p>
-                <p className="text-xs text-gray-400 mt-1">estimated cost savings</p>
+                <p className="text-3xl font-bold text-primary">
+                  {fmtDollar(calc.savings)}
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  estimated cost savings
+                </p>
               </CardContent>
             </Card>
             <Card className="bg-michigan-coral/10 border-michigan-coral/20">
               <CardContent className="py-5 text-center">
-                <p className="text-3xl font-bold text-michigan-coral">{fmtDollar(calc.gapCost)}</p>
+                <p className="text-3xl font-bold text-michigan-coral">
+                  {fmtDollar(calc.gapCost)}
+                </p>
                 <p className="text-xs text-gray-400 mt-1">lost to the gap</p>
               </CardContent>
             </Card>
@@ -394,10 +516,14 @@ export default function DetectionGapPage() {
             viewport={{ once: true }}
             className="mt-10 rounded-2xl border border-michigan-gold/20 bg-michigan-gold/5 p-8 text-center"
           >
-            <h3 className="text-xl font-bold text-white mb-2">Is your system ready to close this gap?</h3>
+            <h3 className="text-xl font-bold text-white mb-2">
+              Is your system ready to close this gap?
+            </h3>
             <p className="text-sm text-gray-400 mb-6 max-w-lg mx-auto">
-              Access Michigan provides the infrastructure layer between screening and services — structured referral
-              pathways, equity-weighted routing, and real-time resource data across all 83 counties.
+              Access Michigan provides the infrastructure layer between
+              screening and services — structured referral pathways,
+              equity-weighted routing, and real-time resource data across all 83
+              counties.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Link
@@ -428,14 +554,21 @@ export default function DetectionGapPage() {
             viewport={{ once: true }}
             className="mt-12 rounded-2xl border border-primary/20 bg-primary/5 p-8"
           >
-            <h3 className="text-lg font-bold text-white mb-2">Access Michigan Bridges This Gap</h3>
+            <h3 className="text-lg font-bold text-white mb-2">
+              Access Michigan Bridges This Gap
+            </h3>
             <p className="text-sm text-gray-400 mb-6">
-              The missing infrastructure between screening and services — structured, equity-weighted, covering every county.
+              The missing infrastructure between screening and services —
+              structured, equity-weighted, covering every county.
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
               {[
                 { icon: MapPin, stat: "83", label: "counties covered" },
-                { icon: Database, stat: "15,000+", label: "resources indexed" },
+                {
+                  icon: Database,
+                  stat: RESOURCE_COUNT_DISPLAY,
+                  label: "resources indexed",
+                },
                 { icon: Heart, stat: "25+", label: "data sources integrated" },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
@@ -449,7 +582,10 @@ export default function DetectionGapPage() {
                 </div>
               ))}
             </div>
-            <Link to="/for-health-systems" className="inline-flex items-center gap-1 mt-6 text-sm text-primary hover:underline">
+            <Link
+              to="/for-health-systems"
+              className="inline-flex items-center gap-1 mt-6 text-sm text-primary hover:underline"
+            >
               For Health System Leaders <ArrowRight className="h-3 w-3" />
             </Link>
           </motion.div>
@@ -457,13 +593,16 @@ export default function DetectionGapPage() {
           {/* Sources */}
           <div className="mt-12 rounded-lg border border-white/10 bg-white/5 p-4">
             <p className="text-xs text-gray-500">
-              <strong className="text-gray-400">Data Sources:</strong> Trinity Health Community Impact Report (FY2025, published
-              Jan 2026) — 27.4% unmet need rate; ~16% hospitalization reduction is system-reported and not independently verified or peer-reviewed.{" "}
-              NACHC 2023 Social Determinants Screening Report — 68% screen positive illustrative benchmark.{" "}
-              Journal of AHIMA 2023 — 42% referral rate illustrative.{" "}
-              RWJF 2022 Evidence Hub — 31% connection rate illustrative.{" "}
-              CDC Social Determinants of Health evidence base. Cost per preventable hospitalization ($14,500) from AHRQ HCUP.{" "}
-              All dollar figures are illustrative. See{" "}
+              <strong className="text-gray-400">Data Sources:</strong> Trinity
+              Health Community Impact Report (FY2025, published Jan 2026) —
+              27.4% unmet need rate; ~16% hospitalization reduction is
+              system-reported and not independently verified or peer-reviewed.{" "}
+              NACHC 2023 Social Determinants Screening Report — 68% screen
+              positive illustrative benchmark. Journal of AHIMA 2023 — 42%
+              referral rate illustrative. RWJF 2022 Evidence Hub — 31%
+              connection rate illustrative. CDC Social Determinants of Health
+              evidence base. Cost per preventable hospitalization ($14,500) from
+              AHRQ HCUP. All dollar figures are illustrative. See{" "}
               <a href="/methodology" className="text-primary hover:underline">
                 Methodology
               </a>

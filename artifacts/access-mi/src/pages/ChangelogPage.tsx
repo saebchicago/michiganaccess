@@ -5,7 +5,18 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Rss, Calendar, Sparkles, Database, Shield, Map, Users, BarChart3, Zap, Rocket } from "lucide-react";
+import {
+  Rss,
+  Calendar,
+  Sparkles,
+  Database,
+  Shield,
+  Map,
+  Users,
+  BarChart3,
+  Zap,
+  Rocket,
+} from "lucide-react";
 
 interface ChangelogEntry {
   month: string;
@@ -24,7 +35,9 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
-    month: "April", year: "2026", title: "WCAG 2.1 AA Cleanup — v9.2",
+    month: "April",
+    year: "2026",
+    title: "WCAG 2.1 AA Cleanup — v1.16",
     icon: Shield,
     tag: "improvement",
     items: [
@@ -46,7 +59,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "April", year: "2026", title: "Credibility, E2E Hardening & A11y — v9.1",
+    month: "April",
+    year: "2026",
+    title: "Credibility, E2E Hardening & A11y — v1.15",
     icon: Shield,
     tag: "improvement",
     items: [
@@ -68,7 +83,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "PolicyMap-Level Intelligence — v9.0",
+    month: "March",
+    year: "2026",
+    title: "PolicyMap-Level Intelligence — v1.14",
     icon: Rocket,
     tag: "feature",
     items: [
@@ -84,7 +101,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Intelligence & Engagement — v8.0",
+    month: "March",
+    year: "2026",
+    title: "Intelligence & Engagement — v1.13",
     icon: Sparkles,
     tag: "feature",
     items: [
@@ -100,7 +119,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Deep Federal Data — v7.0",
+    month: "March",
+    year: "2026",
+    title: "Deep Federal Data — v1.12",
     icon: Database,
     tag: "data",
     items: [
@@ -114,7 +135,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Federal Data Expansion — v6.0",
+    month: "March",
+    year: "2026",
+    title: "Federal Data Expansion — v1.11",
     icon: Shield,
     tag: "data",
     items: [
@@ -128,7 +151,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Max Impact Release — v5.0",
+    month: "March",
+    year: "2026",
+    title: "Max Impact Release — v1.10",
     icon: Rocket,
     tag: "feature",
     items: [
@@ -151,7 +176,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Interactive Engagement — v4.3",
+    month: "March",
+    year: "2026",
+    title: "Interactive Engagement — v1.9",
     icon: Sparkles,
     tag: "feature",
     items: [
@@ -163,11 +190,13 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Data Universe Expansion — v4.0",
+    month: "March",
+    year: "2026",
+    title: "Data Universe Expansion — v1.8",
     icon: Database,
     tag: "feature",
     items: [
-      "60+ verified data sources page at /data-sources — every organization credited",
+      "Verified data sources page at /data-sources — every organization credited",
       "PFAS contamination card: 250+ sites, 102 'Do Not Eat' water bodies, only US PFAS deer advisory",
       "Childcare desert tracker: ~125,000 children lacking formal slots",
       "Education equity: 27.9% chronic absenteeism, 84% graduation rate (record), 196 school-based health centers",
@@ -181,7 +210,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Equity Bridge Sprint — v3.3",
+    month: "March",
+    year: "2026",
+    title: "Equity Bridge Sprint — v1.7",
     icon: Users,
     tag: "feature",
     items: [
@@ -196,7 +227,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Intelligence Platform Release — v3.0",
+    month: "March",
+    year: "2026",
+    title: "Intelligence Platform Release — v1.6",
     icon: Rocket,
     tag: "feature",
     items: [
@@ -215,7 +248,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Data Supremacy Release — v2.0",
+    month: "March",
+    year: "2026",
+    title: "Data Supremacy Release — v1.5",
     icon: Zap,
     tag: "feature",
     items: [
@@ -230,7 +265,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Water Safety, Data Integrity & Platform Maturity",
+    month: "March",
+    year: "2026",
+    title: "Water Safety, Data Integrity & Platform Maturity",
     icon: Database,
     tag: "feature",
     items: [
@@ -257,7 +294,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "February", year: "2026", title: "Hyper-Local Insight Engine & Trust UX",
+    month: "February",
+    year: "2026",
+    title: "Hyper-Local Insight Engine & Trust UX",
     icon: Shield,
     tag: "feature",
     items: [
@@ -272,7 +311,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "January", year: "2026", title: "Strategic Portfolio & Regional Intelligence",
+    month: "January",
+    year: "2026",
+    title: "Strategic Portfolio & Regional Intelligence",
     icon: BarChart3,
     tag: "feature",
     items: [
@@ -284,7 +325,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "December", year: "2025", title: "Insurance Appeals & Complex Care",
+    month: "December",
+    year: "2025",
+    title: "Insurance Appeals & Complex Care",
     icon: Sparkles,
     tag: "feature",
     items: [
@@ -296,7 +339,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "November", year: "2025", title: "Expanded Data Coverage",
+    month: "November",
+    year: "2025",
+    title: "Expanded Data Coverage",
     icon: Database,
     tag: "data",
     items: [
@@ -308,7 +353,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "October", year: "2025", title: "Platform Foundation",
+    month: "October",
+    year: "2025",
+    title: "Platform Foundation",
     icon: Map,
     tag: "improvement",
     items: [
@@ -329,12 +376,16 @@ const RSS_XML = `<?xml version="1.0" encoding="UTF-8"?>
     <description>Monthly platform updates for Access Michigan — statewide civic health infrastructure.</description>
     <language>en-us</language>
     <atom:link href="https://accessmi.org/changelog.xml" rel="self" type="application/rss+xml"/>
-    ${entries.map((e) => `<item>
+    ${entries
+      .map(
+        (e) => `<item>
       <title>${e.month} ${e.year}: ${e.title}</title>
       <description>${e.items.join("; ")}</description>
       <pubDate>${new Date(`${e.month} 1, ${e.year}`).toUTCString()}</pubDate>
       <guid>https://accessmi.org/changelog#${e.month.toLowerCase()}-${e.year}</guid>
-    </item>`).join("\n    ")}
+    </item>`,
+      )
+      .join("\n    ")}
   </channel>
 </rss>`;
 
@@ -350,8 +401,9 @@ function downloadRSS() {
 
 const ChangelogPage = () => {
   usePageMeta({
-     title: "What's New — Access Michigan",
-    description: "Monthly platform updates, new features, and data expansions for Access Michigan.",
+    title: "What's New — Access Michigan",
+    description:
+      "Monthly platform updates, new features, and data expansions for Access Michigan.",
     path: "/changelog",
   });
 
@@ -359,15 +411,30 @@ const ChangelogPage = () => {
     <Layout>
       <section className="py-16">
         <div className="container max-w-3xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-            <Badge variant="outline" className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-10"
+          >
+            <Badge
+              variant="outline"
+              className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary"
+            >
               <Calendar className="mr-1 h-3 w-3" /> Changelog
             </Badge>
-            <h1 className="text-3xl font-bold text-foreground mb-2">What's New</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              What's New
+            </h1>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              Monthly updates on features, data expansions, and platform improvements.
+              Monthly updates on features, data expansions, and platform
+              improvements.
             </p>
-            <Button variant="outline" size="sm" className="mt-4 gap-2 text-xs" onClick={downloadRSS}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-4 gap-2 text-xs"
+              onClick={downloadRSS}
+            >
               <Rss className="h-3 w-3" /> Download RSS Feed
             </Button>
           </motion.div>
@@ -387,10 +454,14 @@ const ChangelogPage = () => {
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div className="flex items-center gap-2">
                         <entry.icon className="h-4 w-4 text-primary" />
-                        <h2 className="text-sm font-bold text-foreground">{entry.title}</h2>
+                        <h2 className="text-sm font-bold text-foreground">
+                          {entry.title}
+                        </h2>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Badge className={`text-[10px] ${TAG_STYLES[entry.tag]}`}>
+                        <Badge
+                          className={`text-[10px] ${TAG_STYLES[entry.tag]}`}
+                        >
                           {entry.tag}
                         </Badge>
                         <span className="text-[10px] text-muted-foreground font-medium">
@@ -400,7 +471,10 @@ const ChangelogPage = () => {
                     </div>
                     <ul className="space-y-1.5">
                       {entry.items.map((item) => (
-                        <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground">
+                        <li
+                          key={item}
+                          className="flex items-start gap-2 text-xs text-muted-foreground"
+                        >
                           <Zap className="h-3 w-3 mt-0.5 shrink-0 text-primary/50" />
                           {item}
                         </li>
@@ -414,7 +488,11 @@ const ChangelogPage = () => {
 
           <div className="mt-10 text-center">
             <p className="text-[10px] text-muted-foreground">
-              For partnership inquiries or feature requests, <Link to="/contact" className="text-primary hover:underline">reach out</Link>.
+              For partnership inquiries or feature requests,{" "}
+              <Link to="/contact" className="text-primary hover:underline">
+                reach out
+              </Link>
+              .
             </p>
           </div>
         </div>

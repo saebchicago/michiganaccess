@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Shield, UserX, Scale, CalendarCheck, ArrowRight } from "lucide-react";
+import { PLATFORM_FRESHNESS } from "@/config/platformConstants";
 
 const cards = [
   {
@@ -20,14 +21,18 @@ const cards = [
   },
   {
     icon: CalendarCheck,
-    title: "Updated March 2026",
-    description: "Methodology and trust log published openly.",
+    title: `Verified ${PLATFORM_FRESHNESS.lastVerified}`,
+    description: `Last pulled ${PLATFORM_FRESHNESS.lastPulled}. Methodology and trust log published openly.`,
   },
 ];
 
 export default function TrustPanel() {
   return (
-    <section id="trust-panel" className="py-10 bg-muted/20 border-y border-border/40" aria-labelledby="trust-heading">
+    <section
+      id="trust-panel"
+      className="py-10 bg-muted/20 border-y border-border/40"
+      aria-labelledby="trust-heading"
+    >
       <div className="container max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -36,7 +41,10 @@ export default function TrustPanel() {
           transition={{ duration: 0.4 }}
           className="text-center mb-6"
         >
-          <h2 id="trust-heading" className="text-lg font-bold text-foreground sm:text-xl">
+          <h2
+            id="trust-heading"
+            className="text-lg font-bold text-foreground sm:text-xl"
+          >
             Why trust Access Michigan?
           </h2>
         </motion.div>
@@ -54,7 +62,9 @@ export default function TrustPanel() {
                 <c.icon className="h-4 w-4 text-primary" aria-hidden="true" />
               </div>
               <p className="text-sm font-semibold text-foreground">{c.title}</p>
-              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{c.description}</p>
+              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                {c.description}
+              </p>
             </motion.div>
           ))}
         </div>

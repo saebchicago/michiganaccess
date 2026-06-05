@@ -1,34 +1,71 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Database, MapPin, Shield, Activity, FileText } from "lucide-react";
+import {
+  CheckCircle2,
+  Database,
+  MapPin,
+  Shield,
+  Activity,
+  FileText,
+} from "lucide-react";
 import { useCountUp } from "@/hooks/useCountUp";
+import {
+  RESOURCE_COUNT_DISPLAY,
+  COUNTIES_COVERED,
+} from "@/config/platformConstants";
 
-function AnimatedMetric({ icon: Icon, rawValue, label }: { icon: React.ElementType; rawValue: string; label: string }) {
+function AnimatedMetric({
+  icon: Icon,
+  rawValue,
+  label,
+}: {
+  icon: React.ElementType;
+  rawValue: string;
+  label: string;
+}) {
   const numericMatch = rawValue.match(/^([\d,]+)/);
-  const numericPart = numericMatch ? parseInt(numericMatch[1].replace(/,/g, ""), 10) : null;
+  const numericPart = numericMatch
+    ? parseInt(numericMatch[1].replace(/,/g, ""), 10)
+    : null;
   const suffix = numericPart !== null ? rawValue.replace(/^[\d,]+/, "") : "";
   const { value, ref } = useCountUp(numericPart ?? 0, 1400);
 
   return (
-    <div className="flex flex-col items-center text-center gap-1" ref={ref as React.RefObject<HTMLDivElement>}>
+    <div
+      className="flex flex-col items-center text-center gap-1"
+      ref={ref as React.RefObject<HTMLDivElement>}
+    >
       <div className="flex items-center gap-1.5">
         <Icon className="h-3.5 w-3.5 text-primary" />
         <span className="text-lg font-bold text-foreground tabular-nums">
-          {numericPart !== null ? `${value.toLocaleString()}${suffix}` : rawValue}
+          {numericPart !== null
+            ? `${value.toLocaleString()}${suffix}`
+            : rawValue}
         </span>
       </div>
-      <span className="text-[10px] text-muted-foreground leading-tight">{label}</span>
+      <span className="text-[10px] text-muted-foreground leading-tight">
+        {label}
+      </span>
       <CheckCircle2 className="h-3 w-3 text-michigan-forest" />
     </div>
   );
 }
 
 const metrics = [
-  { icon: MapPin, value: "83", suffix: "/83", label: "Counties Indexed" },
+  {
+    icon: MapPin,
+    value: String(COUNTIES_COVERED),
+    suffix: `/${COUNTIES_COVERED}`,
+    label: "Counties Indexed",
+  },
   { icon: Shield, value: "✓", label: "Verified Resource Protocols Active" },
   { icon: Database, value: "6", label: "Federal Data Feeds Integrated" },
   { icon: Activity, value: "<3s", label: "p95 Page Load" },
-  { icon: FileText, value: "15000+", label: "Resources Cataloged" },
+  {
+    icon: FileText,
+    value: RESOURCE_COUNT_DISPLAY,
+    label: "Resources Cataloged",
+  },
 ];
 
 export default function SystemImpactBar() {
