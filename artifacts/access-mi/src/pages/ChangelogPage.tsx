@@ -442,8 +442,8 @@ const ChangelogPage = () => {
           <div className="space-y-6">
             {entries.map((entry, i) => (
               <motion.div
-                key={`${entry.month}-${entry.year}`}
-                id={`${entry.month.toLowerCase()}-${entry.year}`}
+                key={`${entry.month}-${entry.year}-${entry.title}`}
+                id={`${entry.month.toLowerCase()}-${entry.year}-${i}`}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
