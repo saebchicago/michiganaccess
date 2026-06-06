@@ -41,6 +41,7 @@ const pages = {
   AboutPage: lazy(() => import("@/pages/AboutPage")),
   FindCarePage: lazy(() => import("@/pages/FindCarePage")),
   FinancialHelpPage: lazy(() => import("@/pages/FinancialHelpPage")),
+  BenefitsHubPage: lazy(() => import("@/pages/BenefitsHubPage")),
   QualityRatingsPage: lazy(() => import("@/pages/QualityRatingsPage")),
   CommunityResourcesPage: lazy(() => import("@/pages/CommunityResourcesPage")),
   HealthConditionsPage: lazy(() => import("@/pages/HealthConditionsPage")),
@@ -223,6 +224,11 @@ export const APP_ROUTES: RouteEntry[] = [
     path: "/financial-help",
     component: pages.FinancialHelpPage,
     label: "Financial Help",
+  },
+  {
+    path: "/benefits",
+    component: pages.BenefitsHubPage,
+    label: "Benefits & Decisions",
   },
   {
     path: "/quality",
