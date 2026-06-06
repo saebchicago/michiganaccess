@@ -2,30 +2,64 @@ import { useState, useMemo } from "react";
 import DataProvenance from "@/components/shared/DataProvenance";
 import { motion } from "framer-motion";
 import {
-  Shield, Award, BarChart3, Star, Building2, ChevronDown, Info, ExternalLink,
-  TrendingUp, Heart, Activity, Users
+  Shield,
+  Award,
+  BarChart3,
+  Star,
+  Building2,
+  ChevronDown,
+  Info,
+  ExternalLink,
+  TrendingUp,
+  Heart,
+  Activity,
+  Users,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFacilities, type Facility } from "@/hooks/useFacilities";
-import { useQualityMetrics, type QualityMetric } from "@/hooks/useQualityMetrics";
+import {
+  useQualityMetrics,
+  type QualityMetric,
+} from "@/hooks/useQualityMetrics";
 import { Link } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-  RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
-  Cell
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  Cell,
 } from "recharts";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.4 } }),
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.4 },
+  }),
 };
 
 const CHART_COLORS = [
@@ -42,30 +76,77 @@ const gradeColors: Record<string, string> = {
   C: "bg-michigan-gold/10 text-michigan-gold border-michigan-gold/20",
   D: "bg-michigan-coral/10 text-michigan-coral border-michigan-coral/20",
   F: "bg-destructive/10 text-destructive border-destructive/20",
+  "Not Rated": "bg-muted text-muted-foreground border-border",
 };
+
+/** Natural dedup key. CMS provider IDs are not in the facilities table,
+ *  so we collapse on (name, city, state) which uniquely identifies a
+ *  hospital site even when the same facility appears under multiple
+ *  county slots in the source data. */
+function facilityKey(f: Facility): string {
+  return [
+    f.name.trim().toLowerCase(),
+    f.city.trim().toLowerCase(),
+    f.state.trim().toLowerCase(),
+  ].join("|");
+}
+
+/** Pick the canonical record when duplicates exist. Prefer the row with
+ *  a Leapfrog grade; break ties on higher quality_score. */
+function pickCanonical(a: Facility, b: Facility): Facility {
+  const aHasGrade = !!a.leapfrog_grade;
+  const bHasGrade = !!b.leapfrog_grade;
+  if (aHasGrade && !bHasGrade) return a;
+  if (bHasGrade && !aHasGrade) return b;
+  return (a.quality_score || 0) >= (b.quality_score || 0) ? a : b;
+}
+
+/** Label shown in the grade badge. Real Leapfrog grades pass through;
+ *  hospitals without a Leapfrog grade get an explicit "Not Rated" pill
+ *  so the row never reads as "score 85, no grade". */
+function gradeLabel(f: Facility): keyof typeof gradeColors {
+  if (f.leapfrog_grade && f.leapfrog_grade in gradeColors) {
+    return f.leapfrog_grade as keyof typeof gradeColors;
+  }
+  return "Not Rated";
+}
 
 export default function QualityRatingsPage() {
   usePageMeta({
     title: "Quality Ratings",
-    description: "Compare hospital quality scores, patient safety grades, and accreditation status across Michigan healthcare facilities.",
+    description:
+      "Compare hospital quality scores, patient safety grades, and accreditation status across Michigan healthcare facilities.",
     path: "/quality",
     jsonLd: {
       "@type": "WebPage",
-      "name": "Quality Ratings — Access Michigan",
-      "description": "Hospital quality scores, Leapfrog grades, and accreditation for Michigan facilities.",
-      "url": "https://accessmi.org/quality",
+      name: "Quality Ratings — Access Michigan",
+      description:
+        "Hospital quality scores, Leapfrog grades, and accreditation for Michigan facilities.",
+      url: "https://accessmi.org/quality",
     },
   });
-  const { data: facilities = [], isLoading: facLoading } = useFacilities(["hospital"]);
+  const { data: facilities = [], isLoading: facLoading } = useFacilities([
+    "hospital",
+  ]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const { data: metrics = [], isLoading: metLoading } = useQualityMetrics(
-    selectedIds.length > 0 ? selectedIds : undefined
+    selectedIds.length > 0 ? selectedIds : undefined,
   );
 
-  const hospitals = useMemo(() =>
-    [...facilities].sort((a, b) => (b.quality_score || 0) - (a.quality_score || 0)),
-    [facilities]
-  );
+  const hospitals = useMemo(() => {
+    // Deduplicate on (name, city, state) so a single hospital that the
+    // source data lists under multiple county slots collapses to one row,
+    // and the "Hospitals Rated" count matches what users see in the list.
+    const byKey = new Map<string, Facility>();
+    for (const f of facilities) {
+      const key = facilityKey(f);
+      const existing = byKey.get(key);
+      byKey.set(key, existing ? pickCanonical(existing, f) : f);
+    }
+    return [...byKey.values()].sort(
+      (a, b) => (b.quality_score || 0) - (a.quality_score || 0),
+    );
+  }, [facilities]);
 
   const toggleSelect = (id: string) => {
     setSelectedIds((prev) => {
@@ -75,9 +156,9 @@ export default function QualityRatingsPage() {
     });
   };
 
-  const selectedFacilities = useMemo(() =>
-    hospitals.filter((h) => selectedIds.includes(h.id)),
-    [hospitals, selectedIds]
+  const selectedFacilities = useMemo(
+    () => hospitals.filter((h) => selectedIds.includes(h.id)),
+    [hospitals, selectedIds],
   );
 
   // Group metrics by type for charts
@@ -97,7 +178,9 @@ export default function QualityRatingsPage() {
     return metricNames.map((name) => {
       const row: Record<string, string | number | null> = { metric: name };
       selectedFacilities.forEach((f, idx) => {
-        const m = metrics.find((met) => met.metric_name === name && met.facility_id === f.id);
+        const m = metrics.find(
+          (met) => met.metric_name === name && met.facility_id === f.id,
+        );
         row[f.name] = m?.value ?? null;
       });
       const first = metrics.find((m) => m.metric_name === name);
@@ -122,7 +205,8 @@ export default function QualityRatingsPage() {
       selectedFacilities.forEach((f) => {
         let val = 0;
         if (d.key === "quality_score") val = f.quality_score || 0;
-        else if (d.key === "services") val = Math.min((f.services?.length || 0) / 8, 1) * 100;
+        else if (d.key === "services")
+          val = Math.min((f.services?.length || 0) / 8, 1) * 100;
         else {
           const dc = f.digital_capabilities as Record<string, boolean> | null;
           val = dc ? (Object.values(dc).filter(Boolean).length / 3) * 100 : 0;
@@ -148,21 +232,45 @@ export default function QualityRatingsPage() {
   return (
     <Layout>
       <div className="container pt-6">
-        <Breadcrumbs items={[{ label: "Services", href: "/find-care" }, { label: "Quality Ratings" }]} />
+        <Breadcrumbs
+          items={[
+            { label: "Services", href: "/find-care" },
+            { label: "Quality Ratings" },
+          ]}
+        />
       </div>
       {/* Hero */}
       <section className="bg-gradient-to-b from-michigan-forest/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            custom={0}
+          >
             <span className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest">
               Quality & Safety
             </span>
           </motion.div>
-          <motion.h1 variants={fadeUp} custom={1} initial="hidden" animate="visible" className="mb-3 text-3xl font-bold text-foreground lg:text-5xl">
+          <motion.h1
+            variants={fadeUp}
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            className="mb-3 text-3xl font-bold text-foreground lg:text-5xl"
+          >
             Hospital Quality & Safety Ratings
           </motion.h1>
-          <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Compare Michigan hospitals using independent safety grades, clinical quality metrics, and patient experience scores from CMS, Leapfrog, and HCAHPS.
+          <motion.p
+            variants={fadeUp}
+            custom={2}
+            initial="hidden"
+            animate="visible"
+            className="mx-auto max-w-2xl text-lg text-muted-foreground"
+          >
+            Compare Michigan hospitals using independent safety grades, clinical
+            quality metrics, and patient experience scores from CMS, Leapfrog,
+            and HCAHPS.
           </motion.p>
         </div>
       </section>
@@ -171,18 +279,49 @@ export default function QualityRatingsPage() {
         {/* Overview Cards */}
         <div className="grid gap-4 sm:grid-cols-4">
           {[
-            { label: "Hospitals Rated", value: hospitals.length, icon: Building2, color: "text-primary" },
-            { label: "Leapfrog A Grades", value: hospitals.filter((h) => h.leapfrog_grade === "A").length, icon: Shield, color: "text-michigan-forest" },
-            { label: "Magnet Recognized", value: hospitals.filter((h) => h.is_magnet).length, icon: Award, color: "text-michigan-gold" },
-            { label: "Blue Distinction", value: hospitals.filter((h) => h.is_blue_distinction).length, icon: Heart, color: "text-michigan-sky" },
+            {
+              label: "Hospitals Rated",
+              value: hospitals.length,
+              icon: Building2,
+              color: "text-primary",
+            },
+            {
+              label: "Leapfrog A Grades",
+              value: hospitals.filter((h) => h.leapfrog_grade === "A").length,
+              icon: Shield,
+              color: "text-michigan-forest",
+            },
+            {
+              label: "Magnet Recognized",
+              value: hospitals.filter((h) => h.is_magnet).length,
+              icon: Award,
+              color: "text-michigan-gold",
+            },
+            {
+              label: "Blue Distinction",
+              value: hospitals.filter((h) => h.is_blue_distinction).length,
+              icon: Heart,
+              color: "text-michigan-sky",
+            },
           ].map((stat, i) => (
-            <motion.div key={stat.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+            <motion.div
+              key={stat.label}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              custom={i}
+            >
               <Card>
                 <CardContent className="flex items-center gap-3 py-4">
                   <stat.icon className={`h-8 w-8 ${stat.color}`} />
                   <div>
-                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
+                    <p className="text-2xl font-bold text-foreground">
+                      {stat.value}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {stat.label}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -191,7 +330,13 @@ export default function QualityRatingsPage() {
         </div>
 
         {/* Leapfrog Grade Distribution */}
-        <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          custom={0}
+        >
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -202,13 +347,19 @@ export default function QualityRatingsPage() {
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
                 <BarChart data={gradeDistribution}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="hsl(var(--border))"
+                  />
                   <XAxis dataKey="grade" tick={{ fontSize: 14 }} />
                   <YAxis tick={{ fontSize: 12 }} />
                   <Tooltip />
                   <Bar dataKey="count" name="Hospitals" radius={[6, 6, 0, 0]}>
                     {gradeDistribution.map((entry, i) => (
-                      <Cell key={entry.grade} fill={CHART_COLORS[i % CHART_COLORS.length]} />
+                      <Cell
+                        key={entry.grade}
+                        fill={CHART_COLORS[i % CHART_COLORS.length]}
+                      />
                     ))}
                   </Bar>
                 </BarChart>
@@ -223,9 +374,13 @@ export default function QualityRatingsPage() {
         <section>
           <div className="flex items-center gap-3 mb-4">
             <TrendingUp className="h-5 w-5 text-primary" />
-            <h2 className="text-xl font-bold text-foreground">Compare Hospitals (Up to 3)</h2>
+            <h2 className="text-xl font-bold text-foreground">
+              Compare Hospitals (Up to 3)
+            </h2>
           </div>
-          <p className="text-sm text-muted-foreground mb-4">Select hospitals below to compare quality metrics side-by-side.</p>
+          <p className="text-sm text-muted-foreground mb-4">
+            Select hospitals below to compare quality metrics side-by-side.
+          </p>
 
           {isLoading ? (
             <div className="flex items-center justify-center py-12">
@@ -245,14 +400,27 @@ export default function QualityRatingsPage() {
                     >
                       <CardContent className="py-3 flex items-center justify-between">
                         <div className="min-w-0">
-                          <p className="text-sm font-medium text-foreground truncate">{h.name}</p>
-                          <p className="text-xs text-muted-foreground">{h.city}, {h.county} Co.</p>
+                          <p className="text-sm font-medium text-foreground truncate">
+                            {h.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {h.city}, {h.county} Co.
+                          </p>
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
-                          {h.leapfrog_grade && (
-                            <Badge className={`${gradeColors[h.leapfrog_grade] || ""} text-xs`}>{h.leapfrog_grade}</Badge>
-                          )}
-                          <span className="text-sm font-bold text-foreground">{h.quality_score || "—"}</span>
+                          {(() => {
+                            const label = gradeLabel(h);
+                            return (
+                              <Badge
+                                className={`${gradeColors[label]} text-xs`}
+                              >
+                                {label}
+                              </Badge>
+                            );
+                          })()}
+                          <span className="text-sm font-bold text-foreground">
+                            {h.quality_score || "—"}
+                          </span>
                         </div>
                       </CardContent>
                     </Card>
@@ -262,7 +430,11 @@ export default function QualityRatingsPage() {
 
               {/* Comparison Charts */}
               {selectedIds.length > 0 && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="space-y-8"
+                >
                   <Tabs defaultValue="bar">
                     <TabsList>
                       <TabsTrigger value="bar">Bar Comparison</TabsTrigger>
@@ -275,16 +447,36 @@ export default function QualityRatingsPage() {
                         <Card>
                           <CardContent className="py-4">
                             <ResponsiveContainer width="100%" height={400}>
-                              <BarChart data={comparisonChartData} layout="vertical">
-                                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                              <BarChart
+                                data={comparisonChartData}
+                                layout="vertical"
+                              >
+                                <CartesianGrid
+                                  strokeDasharray="3 3"
+                                  stroke="hsl(var(--border))"
+                                />
                                 <XAxis type="number" tick={{ fontSize: 11 }} />
-                                <YAxis dataKey="metric" type="category" width={160} tick={{ fontSize: 11 }} />
+                                <YAxis
+                                  dataKey="metric"
+                                  type="category"
+                                  width={160}
+                                  tick={{ fontSize: 11 }}
+                                />
                                 <Tooltip />
                                 <Legend />
                                 {selectedFacilities.map((f, i) => (
-                                  <Bar key={f.id} dataKey={f.name} fill={CHART_COLORS[i]} radius={[0, 4, 4, 0]} />
+                                  <Bar
+                                    key={f.id}
+                                    dataKey={f.name}
+                                    fill={CHART_COLORS[i]}
+                                    radius={[0, 4, 4, 0]}
+                                  />
                                 ))}
-                                <Bar dataKey="National Avg" fill="hsl(var(--muted-foreground))" radius={[0, 4, 4, 0]} />
+                                <Bar
+                                  dataKey="National Avg"
+                                  fill="hsl(var(--muted-foreground))"
+                                  radius={[0, 4, 4, 0]}
+                                />
                               </BarChart>
                             </ResponsiveContainer>
                           </CardContent>
@@ -292,7 +484,9 @@ export default function QualityRatingsPage() {
                       ) : (
                         <Card>
                           <CardContent className="py-8 text-center text-muted-foreground">
-                            No detailed metrics available for selected hospitals yet. Quality scores and accreditations are shown in the table view.
+                            No detailed metrics available for selected hospitals
+                            yet. Quality scores and accreditations are shown in
+                            the table view.
                           </CardContent>
                         </Card>
                       )}
@@ -304,10 +498,24 @@ export default function QualityRatingsPage() {
                           <ResponsiveContainer width="100%" height={350}>
                             <RadarChart data={radarData}>
                               <PolarGrid stroke="hsl(var(--border))" />
-                              <PolarAngleAxis dataKey="dimension" tick={{ fontSize: 12 }} />
-                              <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fontSize: 10 }} />
+                              <PolarAngleAxis
+                                dataKey="dimension"
+                                tick={{ fontSize: 12 }}
+                              />
+                              <PolarRadiusAxis
+                                angle={30}
+                                domain={[0, 100]}
+                                tick={{ fontSize: 10 }}
+                              />
                               {selectedFacilities.map((f, i) => (
-                                <Radar key={f.id} name={f.name} dataKey={f.name} stroke={CHART_COLORS[i]} fill={CHART_COLORS[i]} fillOpacity={0.15} />
+                                <Radar
+                                  key={f.id}
+                                  name={f.name}
+                                  dataKey={f.name}
+                                  stroke={CHART_COLORS[i]}
+                                  fill={CHART_COLORS[i]}
+                                  fillOpacity={0.15}
+                                />
                               ))}
                               <Legend />
                               <Tooltip />
@@ -323,27 +531,76 @@ export default function QualityRatingsPage() {
                           <table className="w-full text-sm min-w-[500px]">
                             <thead>
                               <tr className="border-b">
-                                <th className="py-2 text-left text-xs text-muted-foreground">Metric</th>
+                                <th className="py-2 text-left text-xs text-muted-foreground">
+                                  Metric
+                                </th>
                                 {selectedFacilities.map((f) => (
-                                  <th key={f.id} className="py-2 text-left text-xs font-semibold text-foreground">{f.name}</th>
+                                  <th
+                                    key={f.id}
+                                    className="py-2 text-left text-xs font-semibold text-foreground"
+                                  >
+                                    {f.name}
+                                  </th>
                                 ))}
                               </tr>
                             </thead>
                             <tbody>
                               {[
-                                { label: "Quality Score", fn: (f: Facility) => `${f.quality_score || "N/A"}/100` },
-                                { label: "Leapfrog Grade", fn: (f: Facility) => f.leapfrog_grade || "N/A" },
-                                { label: "Magnet Recognition", fn: (f: Facility) => f.is_magnet ? "Yes ✓" : "No" },
-                                { label: "Blue Distinction", fn: (f: Facility) => f.is_blue_distinction ? "Yes ✓" : "No" },
-                                { label: "Joint Commission", fn: (f: Facility) => f.joint_commission ? "Yes ✓" : "No" },
-                                { label: "Telehealth", fn: (f: Facility) => f.telehealth_available ? "Yes ✓" : "No" },
-                                { label: "Services Count", fn: (f: Facility) => String(f.services?.length || 0) },
-                                { label: "System", fn: (f: Facility) => f.system_affiliation || "Independent" },
+                                {
+                                  label: "Quality Score",
+                                  fn: (f: Facility) =>
+                                    `${f.quality_score || "N/A"}/100`,
+                                },
+                                {
+                                  label: "Leapfrog Grade",
+                                  fn: (f: Facility) =>
+                                    f.leapfrog_grade || "N/A",
+                                },
+                                {
+                                  label: "Magnet Recognition",
+                                  fn: (f: Facility) =>
+                                    f.is_magnet ? "Yes ✓" : "No",
+                                },
+                                {
+                                  label: "Blue Distinction",
+                                  fn: (f: Facility) =>
+                                    f.is_blue_distinction ? "Yes ✓" : "No",
+                                },
+                                {
+                                  label: "Joint Commission",
+                                  fn: (f: Facility) =>
+                                    f.joint_commission ? "Yes ✓" : "No",
+                                },
+                                {
+                                  label: "Telehealth",
+                                  fn: (f: Facility) =>
+                                    f.telehealth_available ? "Yes ✓" : "No",
+                                },
+                                {
+                                  label: "Services Count",
+                                  fn: (f: Facility) =>
+                                    String(f.services?.length || 0),
+                                },
+                                {
+                                  label: "System",
+                                  fn: (f: Facility) =>
+                                    f.system_affiliation || "Independent",
+                                },
                               ].map((row) => (
-                                <tr key={row.label} className="border-b border-border/50">
-                                  <td className="py-2 text-xs text-muted-foreground">{row.label}</td>
+                                <tr
+                                  key={row.label}
+                                  className="border-b border-border/50"
+                                >
+                                  <td className="py-2 text-xs text-muted-foreground">
+                                    {row.label}
+                                  </td>
                                   {selectedFacilities.map((f) => (
-                                    <td key={f.id} className="py-2 text-xs text-foreground">{row.fn(f)}</td>
+                                    <td
+                                      key={f.id}
+                                      className="py-2 text-xs text-foreground"
+                                    >
+                                      {row.fn(f)}
+                                    </td>
                                   ))}
                                 </tr>
                               ))}
@@ -365,24 +622,62 @@ export default function QualityRatingsPage() {
         <section>
           <div className="flex items-center gap-3 mb-4">
             <Info className="h-5 w-5 text-muted-foreground" />
-            <h2 className="text-xl font-bold text-foreground">Methodology & Data Sources</h2>
+            <h2 className="text-xl font-bold text-foreground">
+              Methodology & Data Sources
+            </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {[
-              { title: "CMS Hospital Compare", desc: "Clinical quality indicators, readmission rates, mortality data, patient safety indicators.", url: "https://data.cms.gov/provider-data/", icon: Activity },
-              { title: "Leapfrog Hospital Safety Grade", desc: "Independent A–F safety grades based on errors, injuries, accidents, and infections.", url: "https://www.hospitalsafetygrade.org/", icon: Shield },
-              { title: "HCAHPS Patient Experience", desc: "Standardized patient experience survey — overall rating, recommendation %, communication scores.", url: "https://hcahpsonline.org/", icon: Users },
-              { title: "ANCC Magnet Recognition", desc: "Gold standard for nursing excellence — superior nursing processes and patient outcomes.", url: "https://www.nursingworld.org/organizational-programs/magnet/", icon: Award },
+              {
+                title: "CMS Hospital Compare",
+                desc: "Clinical quality indicators, readmission rates, mortality data, patient safety indicators.",
+                url: "https://data.cms.gov/provider-data/",
+                icon: Activity,
+              },
+              {
+                title: "Leapfrog Hospital Safety Grade",
+                desc: "Independent A–F safety grades based on errors, injuries, accidents, and infections.",
+                url: "https://www.hospitalsafetygrade.org/",
+                icon: Shield,
+              },
+              {
+                title: "HCAHPS Patient Experience",
+                desc: "Standardized patient experience survey — overall rating, recommendation %, communication scores.",
+                url: "https://hcahpsonline.org/",
+                icon: Users,
+              },
+              {
+                title: "ANCC Magnet Recognition",
+                desc: "Gold standard for nursing excellence — superior nursing processes and patient outcomes.",
+                url: "https://www.nursingworld.org/organizational-programs/magnet/",
+                icon: Award,
+              },
             ].map((src, i) => (
-              <motion.div key={src.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
+              <motion.div
+                key={src.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                custom={i}
+              >
                 <Card className="h-full hover-lift">
                   <CardContent className="py-4">
                     <div className="flex items-start gap-3">
                       <src.icon className="mt-0.5 h-5 w-5 text-primary flex-shrink-0" />
                       <div>
-                        <h3 className="text-sm font-semibold text-foreground">{src.title}</h3>
-                        <p className="text-xs text-muted-foreground mt-1">{src.desc}</p>
-                        <a href={src.url} target="_blank" rel="noopener" className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                        <h3 className="text-sm font-semibold text-foreground">
+                          {src.title}
+                        </h3>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {src.desc}
+                        </p>
+                        <a
+                          href={src.url}
+                          target="_blank"
+                          rel="noopener"
+                          className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                        >
                           <ExternalLink className="h-3 w-3" /> View source
                         </a>
                       </div>
@@ -393,7 +688,10 @@ export default function QualityRatingsPage() {
             ))}
           </div>
           <div className="mt-4 text-center">
-            <Link to="/about#methodology" className="text-sm text-primary hover:underline">
+            <Link
+              to="/about#methodology"
+              className="text-sm text-primary hover:underline"
+            >
               View full ranking methodology →
             </Link>
           </div>
