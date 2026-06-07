@@ -38,4 +38,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://michiganaccess.lovable.app/sitemap.xml
+Sitemap: https://accessmi.org/sitemap.xml
