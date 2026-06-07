@@ -31,24 +31,39 @@ export default function ZipIntelligencePage() {
   }, [params]);
 
   usePageMeta({
-    title: "Health Score for Any Michigan ZIP Code | 40 CDC Measures | accessmi.org",
-    description: "Type your ZIP code. See 40 health, equity, and social measures. Build custom charts. Compare to Michigan and national averages.",
+    title:
+      "Health Score for Any Michigan ZIP Code | 40 CDC Measures | accessmi.org",
+    description:
+      "Type your ZIP code. See 40 health, equity, and social measures. Build custom charts. Compare to Michigan and national averages.",
     path: "/zip-intelligence",
     jsonLd: {
       "@type": "WebApplication",
-      "name": "Michigan ZIP Intelligence",
-      "url": "https://accessmi.org/zip-intelligence",
-      "applicationCategory": "HealthApplication",
-      "operatingSystem": "All",
+      name: "Michigan ZIP Intelligence",
+      url: "https://accessmi.org/zip-intelligence",
+      applicationCategory: "HealthApplication",
+      operatingSystem: "All",
     },
   });
 
   if (isEmbed) {
     return (
       <div className="p-4 max-w-4xl mx-auto">
-        <ZipIntelligenceBuilder initialZip={initialZip} initialMeasures={initialMeasures} />
+        <ZipIntelligenceBuilder
+          key={`zip-${initialZip}`}
+          initialZip={initialZip}
+          initialMeasures={initialMeasures}
+        />
         <p className="text-[9px] text-muted-foreground text-center mt-4">
-          Powered by <a href="https://accessmi.org" target="_blank" rel="noopener" className="text-primary hover:underline">Access Michigan</a> · CDC PLACES 2024
+          Powered by{" "}
+          <a
+            href="https://accessmi.org"
+            target="_blank"
+            rel="noopener"
+            className="text-primary hover:underline"
+          >
+            Access Michigan
+          </a>{" "}
+          · CDC PLACES 2024
         </p>
       </div>
     );
@@ -60,30 +75,44 @@ export default function ZipIntelligencePage() {
 
       <section className="bg-gradient-to-br from-primary/8 via-michigan-teal/5 to-background py-12">
         <div className="container max-w-3xl text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <Badge variant="outline" className="mb-3 text-xs uppercase tracking-wider border-primary/30 text-primary">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Badge
+              variant="outline"
+              className="mb-3 text-xs uppercase tracking-wider border-primary/30 text-primary"
+            >
               <BarChart3 className="h-3 w-3 mr-1" /> Build Your Own Charts
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
               Know Your Neighborhood
             </h1>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Type your ZIP code. See 40 health measures. Build custom charts. Compare to Michigan and national averages.
+              Type your ZIP code. See 40 health measures. Build custom charts.
+              Compare to Michigan and national averages.
             </p>
             <p className="text-[10px] text-muted-foreground mt-1">
-              Powered by CDC PLACES — the most granular public health data in America.
+              Powered by CDC PLACES — the most granular public health data in
+              America.
             </p>
           </motion.div>
         </div>
       </section>
 
       <div className="container max-w-4xl py-8">
-        <ZipIntelligenceBuilder initialZip={initialZip} initialMeasures={initialMeasures} />
+        <ZipIntelligenceBuilder
+          key={`zip-${initialZip}`}
+          initialZip={initialZip}
+          initialMeasures={initialMeasures}
+        />
       </div>
 
       {/* Popular ZIPs */}
       <section className="container max-w-3xl py-8 border-t border-border">
-        <h3 className="text-sm font-semibold text-foreground mb-3">Popular Michigan ZIP codes</h3>
+        <h3 className="text-sm font-semibold text-foreground mb-3">
+          Popular Michigan ZIP codes
+        </h3>
         <div className="flex flex-wrap gap-2">
           {POPULAR_ZIPS.map((z) => (
             <Link
@@ -100,9 +129,18 @@ export default function ZipIntelligencePage() {
       {/* Source */}
       <section className="container max-w-3xl py-6 border-t border-border">
         <p className="text-[10px] text-muted-foreground text-center">
-          Data from CDC PLACES 2024 release (BRFSS 2022 small area estimates). Robert Wood Johnson Foundation. CDC Foundation.
-          Measures are model-based estimates and may differ from local surveillance. See{" "}
-          <a href="https://www.cdc.gov/places/" target="_blank" rel="noopener" className="text-primary hover:underline">cdc.gov/places</a> for methodology.
+          Data from CDC PLACES 2024 release (BRFSS 2022 small area estimates).
+          Robert Wood Johnson Foundation. CDC Foundation. Measures are
+          model-based estimates and may differ from local surveillance. See{" "}
+          <a
+            href="https://www.cdc.gov/places/"
+            target="_blank"
+            rel="noopener"
+            className="text-primary hover:underline"
+          >
+            cdc.gov/places
+          </a>{" "}
+          for methodology.
         </p>
       </section>
     </Layout>
