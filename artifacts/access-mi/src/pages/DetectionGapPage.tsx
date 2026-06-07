@@ -7,7 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Link } from "react-router-dom";
-import { RESOURCE_COUNT_DISPLAY } from "@/config/platformConstants";
+import {
+  RESOURCE_COUNT_DISPLAY,
+  DATA_SOURCE_DISPLAY,
+} from "@/config/platformConstants";
 import {
   Select,
   SelectContent,
@@ -569,7 +572,11 @@ export default function DetectionGapPage() {
                   stat: RESOURCE_COUNT_DISPLAY,
                   label: "resources indexed",
                 },
-                { icon: Heart, stat: "25+", label: "data sources integrated" },
+                {
+                  icon: Heart,
+                  stat: DATA_SOURCE_DISPLAY,
+                  label: "data sources integrated",
+                },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/20">

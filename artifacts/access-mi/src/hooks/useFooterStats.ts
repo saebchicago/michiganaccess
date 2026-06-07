@@ -1,17 +1,17 @@
 /**
  * useFooterStats — dynamic civic platform metrics for the Footer status bar.
+ *
+ * Every number this hook returns must come from the platform SSOT
+ * (`@/config/platformConstants`). Adding a local hardcoded count here is
+ * how the platform ended up showing "7 data feeds" in the footer while
+ * /status only pinged 4 endpoints.
  */
 import { useState, useEffect } from "react";
-
-export const DATA_SOURCES = [
-  "MDHHS",
-  "Michigan 2-1-1",
-  "CMS (Medicare)",
-  "HRSA",
-  "CDC",
-  "EPA AirNow",
-  "Leapfrog (Safety)",
-] as const;
+import {
+  MONITORED_API_FEEDS_COUNT,
+  COUNTIES_COVERED,
+  RESOURCE_COUNT_DISPLAY,
+} from "@/config/platformConstants";
 
 export interface FooterStats {
   dataFeeds: number;
@@ -20,8 +20,6 @@ export interface FooterStats {
   countyCount: number;
   lastRefresh: string;
 }
-
-const MICHIGAN_COUNTY_COUNT = 83;
 
 export function formatLoadTime(ms: number): string {
   if (ms < 1000) return `${ms}ms`;
@@ -38,11 +36,15 @@ export function loadTimeColor(ms: number | null): string {
 
 export function useFooterStats(): FooterStats {
   const [loadMs, setLoadMs] = useState<number | null>(null);
-  const [resourceCount, setResourceCount] = useState<string>("700+");
+  const [resourceCount, setResourceCount] = useState<string>(
+    RESOURCE_COUNT_DISPLAY,
+  );
 
   useEffect(() => {
     const measure = () => {
-      const entries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
+      const entries = performance.getEntriesByType(
+        "navigation",
+      ) as PerformanceNavigationTiming[];
       const nav = entries[0];
       if (nav && nav.loadEventEnd > 0) {
         setLoadMs(Math.round(nav.loadEventEnd - nav.startTime));
@@ -89,7 +91,7 @@ export function useFooterStats(): FooterStats {
         }
       })
       .catch(() => {
-        // Silently fall back to static "700+"
+        // Silently fall back to the SSOT display string.
       })
       .finally(() => clearTimeout(timer));
 
@@ -100,10 +102,10 @@ export function useFooterStats(): FooterStats {
   }, []);
 
   return {
-    dataFeeds: DATA_SOURCES.length,
+    dataFeeds: MONITORED_API_FEEDS_COUNT,
     loadMs,
     resourceCount,
-    countyCount: MICHIGAN_COUNTY_COUNT,
+    countyCount: COUNTIES_COVERED,
     lastRefresh: new Date().toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
