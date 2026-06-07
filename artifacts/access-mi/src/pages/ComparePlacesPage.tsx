@@ -475,21 +475,47 @@ export default function ComparePlacesPage() {
     path: "/compare",
   });
 
-  // Parse initial selections from URL (e.g., ?selections=zip:48201,county:Oakland)
+  // Parse initial selections from URL. Two formats supported, both
+  // already in the wild via existing share links:
+  //   - ?selections=zip:48201,county:Oakland   (this page's native format)
+  //   - ?a=Wayne&b=Oakland                     (emitted by QuickCompare's
+  //                                             "Share comparison" button)
+  // Either should hydrate both gauges; previously only the first did,
+  // so /compare?a=Wayne&b=Oakland landed on the default empty state.
   const initialSelections = useMemo(() => {
-    const param = searchParams.get("selections");
-    if (!param)
-      return [resolveSelection("Wayne")!, resolveSelection("Oakland")!].filter(
-        Boolean,
-      );
-    return param
-      .split(",")
-      .map((s) => {
-        const [type, value] = s.split(":");
-        if (type === "zip") return resolveSelection(value);
+    const parseToken = (raw: string): CompareSelection | null => {
+      if (!raw) return null;
+      const trimmed = raw.trim();
+      if (!trimmed) return null;
+      // Tokens may include a "zip:" / "county:" prefix or be a bare
+      // county name / 5-digit ZIP.
+      if (trimmed.includes(":")) {
+        const [, value] = trimmed.split(":");
         return resolveSelection(value);
-      })
-      .filter(Boolean) as CompareSelection[];
+      }
+      return resolveSelection(trimmed);
+    };
+
+    const selectionsParam = searchParams.get("selections");
+    if (selectionsParam) {
+      return selectionsParam
+        .split(",")
+        .map(parseToken)
+        .filter(Boolean) as CompareSelection[];
+    }
+
+    const a = searchParams.get("a");
+    const b = searchParams.get("b");
+    if (a || b) {
+      return [a, b]
+        .filter((v): v is string => !!v)
+        .map(parseToken)
+        .filter(Boolean) as CompareSelection[];
+    }
+
+    return [resolveSelection("Wayne")!, resolveSelection("Oakland")!].filter(
+      Boolean,
+    );
   }, []);
 
   const [selected, setSelected] =

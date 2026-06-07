@@ -285,14 +285,19 @@ export default function DetectionGapPage() {
                 Research Insight
               </Badge>
             </div>
+            {/* Render "The Detection Gap" as one continuous string
+                so crawlers and screen readers see the full headline.
+                The visual line break is driven by CSS (md:block on
+                the second span) rather than a literal <br/>, which
+                previously left the h1 truncated to "The Detection"
+                in static previews and on some text-only renders. */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-3xl md:text-5xl font-extrabold leading-tight mb-4"
             >
-              The Detection
-              <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-destructive to-[hsl(var(--michigan-gold))]">
+              The Detection{" "}
+              <span className="md:block text-transparent bg-clip-text bg-gradient-to-r from-destructive to-[hsl(var(--michigan-gold))]">
                 Gap
               </span>
             </motion.h1>

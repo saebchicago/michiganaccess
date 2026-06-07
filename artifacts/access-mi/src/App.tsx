@@ -163,6 +163,24 @@ const App = () => (
                     path="/county-compare"
                     element={<Navigate to="/compare" replace />}
                   />
+                  {/* Short popular URLs. These were resolving to the
+                      catch-all NotFound (and on Netlify previously to
+                      "County Not Found" when a redirect rule sent them
+                      into /county/[slug]). Declaring them here as
+                      redirects to the canonical page ensures both the
+                      crawler and the SPA agree on the destination. */}
+                  <Route
+                    path="/snap"
+                    element={<Navigate to="/data/snap-michigan" replace />}
+                  />
+                  <Route
+                    path="/water"
+                    element={<Navigate to="/environment" replace />}
+                  />
+                  <Route
+                    path="/civic"
+                    element={<Navigate to="/civic-data" replace />}
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
