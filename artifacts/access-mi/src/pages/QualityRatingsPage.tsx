@@ -276,6 +276,28 @@ export default function QualityRatingsPage() {
       </section>
 
       <div className="container max-w-6xl py-10 space-y-10">
+        {/* Data vintage banner — visible alongside the headline counts so
+         *  readers don't have to scroll to the footer to learn how current
+         *  the underlying CMS / Leapfrog / HCAHPS pulls are. */}
+        <div className="rounded-md border border-border bg-muted/40 px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+          <span className="flex items-center gap-2">
+            <Info className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>
+              Hospital records as of{" "}
+              <strong className="text-foreground">Q4 2024</strong>. Leapfrog
+              grades refresh twice yearly; CMS quality scores reflect the most
+              recent public pull. Where a Leapfrog grade is missing, the row is
+              labeled <em>Not Rated</em> rather than assigned a letter.
+            </span>
+          </span>
+          <Link
+            to="/methodology"
+            className="text-primary hover:underline whitespace-nowrap"
+          >
+            Methodology
+          </Link>
+        </div>
+
         {/* Overview Cards */}
         <div className="grid gap-4 sm:grid-cols-4">
           {[
