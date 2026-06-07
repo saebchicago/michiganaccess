@@ -1,0 +1,26 @@
+# Netlify build config.
+#
+# Why this file exists: the repo's root package.json has a preinstall
+# script that rejects npm with exit 1, plus npm-incompatible
+# `esbuild>...` override keys. Netlify's default install step uses
+# npm, so dependency installation has been failing on every push.
+# Forcing bun (bun.lock is the lockfile of record at the repo root)
+# fixes both: the preinstall check passes for bun/*, and bun parses
+# the workspace overrides correctly.
+
+[build]
+  base = "."
+  command = "bun install && bun run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+  BUN_VERSION = "1.1.42"
+
+# SPA fallback: serve index.html for any client-side route that has
+# no prerendered static file. Listed last so prerendered HTML on disk
+# is still served first when present.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
