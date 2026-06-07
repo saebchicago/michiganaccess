@@ -22,7 +22,6 @@ import { useTranslation } from "react-i18next";
 import ReportIssue from "@/components/shared/ReportIssue";
 import {
   useFooterStats,
-  DATA_SOURCES,
   formatLoadTime,
   loadTimeColor,
 } from "@/hooks/useFooterStats";
@@ -318,20 +317,15 @@ const Footer = () => {
             Public Data Sources
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            {(
-              [
-                { label: "MDHHS", icon: Building2 },
-                { label: "Michigan 2-1-1", icon: Phone },
-                { label: "CMS (Medicare)", icon: Shield },
-                { label: "HRSA", icon: HandHeart },
-                { label: "CDC", icon: Activity },
-                { label: "EPA AirNow", icon: Landmark },
-                { label: "Leapfrog (Safety)", icon: CheckCircle2 },
-              ] satisfies {
-                label: (typeof DATA_SOURCES)[number];
-                icon: React.ElementType;
-              }[]
-            ).map((src) => (
+            {[
+              { label: "MDHHS", icon: Building2 },
+              { label: "Michigan 2-1-1", icon: Phone },
+              { label: "CMS (Medicare)", icon: Shield },
+              { label: "HRSA", icon: HandHeart },
+              { label: "CDC", icon: Activity },
+              { label: "EPA AirNow", icon: Landmark },
+              { label: "Leapfrog (Safety)", icon: CheckCircle2 },
+            ].map((src) => (
               <div key={src.label} className="flex items-center gap-1.5">
                 <src.icon
                   className="h-3 w-3 text-muted-foreground"

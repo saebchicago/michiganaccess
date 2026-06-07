@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Search, Compass, BookOpen } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import {
+  DATA_SOURCE_DISPLAY,
+  COUNTIES_COVERED,
+} from "@/config/platformConstants";
 
 const HowItHelps = () => {
   const { t } = useTranslation();
@@ -33,8 +37,15 @@ const HowItHelps = () => {
           transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
-          <h2 className="text-2xl font-bold text-foreground md:text-3xl">{t("howItHelps.title")}</h2>
-          <p className="mt-2 text-muted-foreground">{t("howItHelps.subtitle")}</p>
+          <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+            {t("howItHelps.title")}
+          </h2>
+          <p className="mt-2 text-muted-foreground">
+            {t("howItHelps.subtitle", {
+              sourceCount: DATA_SOURCE_DISPLAY,
+              countyCount: COUNTIES_COVERED,
+            })}
+          </p>
         </motion.div>
 
         <div className="grid gap-10 md:grid-cols-3">
@@ -50,8 +61,12 @@ const HowItHelps = () => {
               <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
                 <col.icon className="h-7 w-7 text-primary" />
               </div>
-              <h3 className="mb-3 text-lg font-semibold text-foreground">{col.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{col.description}</p>
+              <h3 className="mb-3 text-lg font-semibold text-foreground">
+                {col.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {col.description}
+              </p>
             </motion.div>
           ))}
         </div>
