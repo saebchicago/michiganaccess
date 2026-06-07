@@ -63,6 +63,39 @@ export const LANGUAGES_SUPPORTED = 4;
 export const COUNTIES_COVERED = 83;
 
 /**
+ * Count of registered political parties on the Michigan ballot.
+ *
+ * Derived from the canonical list in src/data/michiganParties.ts
+ * (Democratic, Republican, Libertarian, Green, Working Class,
+ * U.S. Taxpayers, Natural Law). The Transparency Hub and the All
+ * Parties page previously hardcoded "8" in copy while the data
+ * file only ever held 7 entries; this constant makes the copy and
+ * the underlying data the same number.
+ *
+ * Source: Michigan Secretary of State Bureau of Elections, 2025.
+ * If a party gains or loses ballot access, update both
+ * src/data/michiganParties.ts and this constant in the same commit
+ * so they cannot drift again.
+ */
+export const MICHIGAN_POLITICAL_PARTY_COUNT = 7;
+
+/**
+ * Number of external data-source APIs the platform actively monitors
+ * for live availability on the /status page.
+ *
+ * Derived from src/lib/health-check.ts (CDC PLACES, NWS Weather,
+ * FDA Recalls, ClinicalTrials.gov). Use this anywhere copy claims
+ * "monitored feeds", "verified feeds", or similar so the number on
+ * the page and the number /status actually pings cannot diverge.
+ *
+ * Note: this is NOT the same as DATA_SOURCE_COUNT (41 publisher
+ * organizations). Most of the 41 publishers ship as static data
+ * imports, not live API calls; the four here are the ones with
+ * always-on uptime checks.
+ */
+export const MONITORED_API_FEEDS_COUNT = 4;
+
+/**
  * Canonical platform release timeline.
  *
  * One log, not three. Older "v2.0 – v9.2" entries previously living in
