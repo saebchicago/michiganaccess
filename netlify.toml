@@ -1,0 +1,25 @@
+# Netlify config for the Access Michigan site.
+#
+# Build settings (command, publish dir, package manager) are NOT set
+# here; they live in the Netlify dashboard and currently work via
+# pnpm auto-detection + the dashboard `npm run build` command.
+# Adding a [build] block here would override those silently.
+#
+# Only thing this file does today: add baseline HTTP security headers.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(self), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# The /embed route exists so partners can iframe the widget on their
+# own domains. Drop X-Frame-Options for that path only so embedding
+# works; the rest of the site stays SAMEORIGIN.
+[[headers]]
+  for = "/embed*"
+  [headers.values]
+    X-Frame-Options = ""
