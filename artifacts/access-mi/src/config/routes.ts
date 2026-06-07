@@ -384,11 +384,6 @@ export const APP_ROUTES: RouteEntry[] = [
     component: pages.DomainDashboardPage,
     label: "Legal Aid Intelligence",
   },
-  {
-    path: "/benefits",
-    component: pages.DomainDashboardPage,
-    label: "Benefits Intelligence",
-  },
   { path: "/civic-data", component: pages.CivicDataPage, label: "Civic Data" },
   {
     path: "/civic-data-hub",
