@@ -83,8 +83,10 @@
     --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
     --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
     --shadow: 0 1px 3px 0 hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+    --shadow-md:
+      0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg:
+      0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
   }
 
   .dark {
@@ -174,7 +176,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
 
   html {
@@ -186,7 +188,13 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
     font-size: 16px;
     line-height: 1.6;
     overflow-x: clip;
@@ -195,8 +203,12 @@
   /* Tabular numerals for all data-heavy elements */
   .font-mono,
   [data-numeric],
-  td, th,
-  .text-2xl, .text-3xl, .text-4xl, .text-5xl {
+  td,
+  th,
+  .text-2xl,
+  .text-3xl,
+  .text-4xl,
+  .text-5xl {
     font-variant-numeric: tabular-nums;
   }
 
@@ -238,11 +250,19 @@
 
   .text-gradient-michigan {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--michigan-blue)), hsl(var(--teal)));
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--michigan-blue)),
+      hsl(var(--teal))
+    );
   }
 
   .bg-gradient-michigan {
-    background-image: linear-gradient(135deg, hsl(var(--michigan-blue)), hsl(var(--navy)));
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--michigan-blue)),
+      hsl(var(--navy))
+    );
   }
 
   .bg-gradient-hero {
@@ -276,12 +296,16 @@
   /* Gradient text utility */
   .gradient-text {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--michigan-blue)), hsl(var(--michigan-teal)));
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--michigan-blue)),
+      hsl(var(--michigan-teal))
+    );
   }
 
   /* Nav accent line */
   .nav-accent {
-    background: linear-gradient(90deg, #0A4C95, #00A3A1, #2D5F3F);
+    background: linear-gradient(90deg, #0a4c95, #00a3a1, #2d5f3f);
     height: 2px;
     position: sticky;
     top: 64px;
@@ -320,8 +344,13 @@
     animation: marker-pulse 2s ease-in-out infinite;
   }
   @keyframes marker-pulse {
-    0%, 100% { filter: drop-shadow(0 0 0 transparent); }
-    50% { filter: drop-shadow(0 0 8px hsl(var(--destructive) / 0.5)); }
+    0%,
+    100% {
+      filter: drop-shadow(0 0 0 transparent);
+    }
+    50% {
+      filter: drop-shadow(0 0 8px hsl(var(--destructive) / 0.5));
+    }
   }
 
   /* Consistent focus ring */
@@ -332,7 +361,9 @@
 
 /* Respect prefers-reduced-motion globally */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -355,35 +386,96 @@
 
 /* Print styles for site report and PDF export */
 @media print {
-  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .print\:hidden { display: none !important; }
-  .print\:block { display: block !important; }
-  @page { margin: 0.5in; size: letter; }
-  section { break-inside: avoid-page; }
-  table { font-size: 9px; }
-  tr { break-inside: avoid; }
-  header, footer, nav, [role="complementary"], .fixed,
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+  .print\:block {
+    display: block !important;
+  }
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+  section {
+    break-inside: avoid-page;
+  }
+  table {
+    font-size: 9px;
+  }
+  tr {
+    break-inside: avoid;
+  }
+  header,
+  footer,
+  nav,
+  [role="complementary"],
+  .fixed,
   [aria-label="Mobile navigation"],
   [aria-label="Scroll to top"],
-  button[aria-label="Scroll to top"] { display: none !important; }
-  main { padding: 0 !important; }
-  .container { max-width: 100% !important; padding: 0 1rem !important; }
-  .hover-lift:hover { transform: none; box-shadow: none; }
-  .overflow-hidden { overflow: visible !important; }
+  button[aria-label="Scroll to top"] {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+  .container {
+    max-width: 100% !important;
+    padding: 0 1rem !important;
+  }
+  .hover-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .overflow-hidden {
+    overflow: visible !important;
+  }
   /* Show all carousel items in print */
-  [aria-roledescription="carousel"] .overflow-hidden { overflow: visible !important; }
-  [aria-roledescription="carousel"] .flex { flex-wrap: wrap !important; }
-  [aria-roledescription="slide"] { flex: 0 0 33% !important; padding: 0.5rem !important; }
+  [aria-roledescription="carousel"] .overflow-hidden {
+    overflow: visible !important;
+  }
+  [aria-roledescription="carousel"] .flex {
+    flex-wrap: wrap !important;
+  }
+  [aria-roledescription="slide"] {
+    flex: 0 0 33% !important;
+    padding: 0.5rem !important;
+  }
   /* Ensure cards print cleanly */
-  .rounded-lg, .rounded-xl, .rounded-2xl { border-radius: 4px !important; }
-  .shadow-sm, .shadow-md, .shadow-lg, .shadow-michigan { box-shadow: none !important; }
-  a[href]::after { content: " (" attr(href) ")"; font-size: 8px; color: #666; }
-  img { max-width: 100% !important; }
+  .rounded-lg,
+  .rounded-xl,
+  .rounded-2xl {
+    border-radius: 4px !important;
+  }
+  .shadow-sm,
+  .shadow-md,
+  .shadow-lg,
+  .shadow-michigan {
+    box-shadow: none !important;
+  }
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 8px;
+    color: #666;
+  }
+  img {
+    max-width: 100% !important;
+  }
   /* Print header with date */
-  .print-header { display: block !important; }
+  .print-header {
+    display: block !important;
+  }
   /* Print legend styling */
-  .print-legend { display: block !important; border: 1px solid #ccc; padding: 0.5rem; margin-top: 0.5rem; font-size: 9px; }
-
+  .print-legend {
+    display: block !important;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 9px;
+  }
 }
 
 /* ── Google Translate safety-net ─────────────────────────────────────────── */
@@ -408,7 +500,7 @@ body.translated-rtl {
 /* ── Safe-area-aware bottom spacing (iPhone home indicator) ────────────────  */
 /* viewport-fit=cover is already set in index.html.                           */
 :root {
-  --bottom-nav-h: 3.5rem;                            /* h-14 = 56px */
+  --bottom-nav-h: 3.5rem; /* h-14 = 56px */
   --sab: env(safe-area-inset-bottom, 0px);
   --safe-bottom: calc(var(--bottom-nav-h) + var(--sab));
 }
