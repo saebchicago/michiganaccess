@@ -23,3 +23,8 @@
   for = "/embed*"
   [headers.values]
     X-Frame-Options = ""
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
