@@ -1,12 +1,36 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, MapPin, Building2, Heart, FileText, Loader2, Clock, TrendingUp, Sparkles, AlertCircle } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  Building2,
+  Heart,
+  FileText,
+  Loader2,
+  Clock,
+  TrendingUp,
+  Sparkles,
+  AlertCircle,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command";
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "@/components/ui/command";
 import { supabase } from "@/integrations/supabase/client";
 import { countyToSlug } from "@/utils/countyUtils";
-import { getSearchSuggestions, getPopularSuggestions, getMisspellingCorrection, parseComboQuery, type SearchSuggestion } from "@/utils/searchUtils";
+import {
+  getSearchSuggestions,
+  getPopularSuggestions,
+  getMisspellingCorrection,
+  parseComboQuery,
+  type SearchSuggestion,
+} from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
 import { useCounty } from "@/contexts/CountyContext";
 
@@ -18,17 +42,47 @@ export function commandSiteSearch(command: SiteSearchCommand = "open") {
   document.dispatchEvent(
     new CustomEvent(SITE_SEARCH_COMMAND_EVENT, {
       detail: { command },
-    })
+    }),
   );
 }
 
 const ACTION_SHORTCUTS = [
-  { command: "/call", label: "Find crisis lines & hotlines", href: "/find-care", icon: "📞" },
-  { command: "/food", label: "Find food assistance near you", href: "/resources", icon: "🍎" },
-  { command: "/insurance", label: "Insurance help & appeals", href: "/health/insurance-appeals", icon: "🛡️" },
-  { command: "/shelter", label: "Find housing & shelter", href: "/resources", icon: "🏠" },
-  { command: "/dental", label: "Find affordable dental care", href: "/find-care", icon: "🦷" },
-  { command: "/transport", label: "Transportation assistance", href: "/transportation", icon: "🚌" },
+  {
+    command: "/call",
+    label: "Find crisis lines & hotlines",
+    href: "/find-care",
+    icon: "📞",
+  },
+  {
+    command: "/food",
+    label: "Find food assistance near you",
+    href: "/resources",
+    icon: "🍎",
+  },
+  {
+    command: "/insurance",
+    label: "Insurance help & appeals",
+    href: "/health/insurance-appeals",
+    icon: "🛡️",
+  },
+  {
+    command: "/shelter",
+    label: "Find housing & shelter",
+    href: "/resources",
+    icon: "🏠",
+  },
+  {
+    command: "/dental",
+    label: "Find affordable dental care",
+    href: "/find-care",
+    icon: "🦷",
+  },
+  {
+    command: "/transport",
+    label: "Transportation assistance",
+    href: "/transportation",
+    icon: "🚌",
+  },
 ];
 
 const STATIC_PAGES = [
@@ -37,9 +91,17 @@ const STATIC_PAGES = [
   { label: "Financial Help", href: "/financial-help", category: "page" },
   { label: "Community Resources", href: "/resources", category: "page" },
   { label: "Transportation", href: "/transportation", category: "page" },
-  { label: "Insurance Appeals", href: "/health/insurance-appeals", category: "page" },
+  {
+    label: "Insurance Appeals",
+    href: "/health/insurance-appeals",
+    category: "page",
+  },
   { label: "Health Conditions", href: "/conditions", category: "page" },
-  { label: "Environment & Air Quality", href: "/environment", category: "page" },
+  {
+    label: "Environment & Air Quality",
+    href: "/environment",
+    category: "page",
+  },
   { label: "Civic Data", href: "/civic-data", category: "page" },
   { label: "Quality Ratings", href: "/quality", category: "page" },
   { label: "Cost Transparency", href: "/costs", category: "page" },
@@ -48,7 +110,11 @@ const STATIC_PAGES = [
   { label: "Executive Summary", href: "/executive-summary", category: "page" },
   { label: "Health Equity", href: "/equity", category: "page" },
   { label: "Lean Healthcare", href: "/lean-healthcare", category: "page" },
-  { label: "For Health Systems", href: "/for-health-systems", category: "page" },
+  {
+    label: "For Health Systems",
+    href: "/for-health-systems",
+    category: "page",
+  },
   { label: "Case Studies", href: "/case-studies", category: "page" },
   { label: "Impact Dashboard", href: "/impact", category: "page" },
   { label: "Life Navigator", href: "/life-navigator", category: "page" },
@@ -56,8 +122,16 @@ const STATIC_PAGES = [
   { label: "Utility Outages", href: "/outages", category: "page" },
   { label: "About", href: "/about", category: "page" },
   { label: "Contact", href: "/contact", category: "page" },
-  { label: "BD Financial Model", href: "/bd-financial-model", category: "page" },
-  { label: "Market Intelligence", href: "/market-intelligence", category: "page" },
+  {
+    label: "BD Financial Model",
+    href: "/bd-financial-model",
+    category: "page",
+  },
+  {
+    label: "Market Intelligence",
+    href: "/market-intelligence",
+    category: "page",
+  },
   { label: "Portfolio", href: "/portfolio", category: "page" },
 ];
 
@@ -83,7 +157,10 @@ function saveRecentSearch(term: string) {
   const recent = getRecentSearches().filter((t) => t !== term);
   recent.unshift(term);
   try {
-    localStorage.setItem(RECENT_KEY, JSON.stringify(recent.slice(0, MAX_RECENT)));
+    localStorage.setItem(
+      RECENT_KEY,
+      JSON.stringify(recent.slice(0, MAX_RECENT)),
+    );
   } catch {}
 }
 
@@ -94,10 +171,14 @@ export default function SiteSearch() {
   const [loading, setLoading] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [correction, setCorrection] = useState<string | null>(null);
-  const [smartSuggestions, setSmartSuggestions] = useState<SearchSuggestion[]>([]);
+  const [smartSuggestions, setSmartSuggestions] = useState<SearchSuggestion[]>(
+    [],
+  );
   const navigate = useNavigate();
   const { setZip } = useCounty();
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     if (open) setRecentSearches(getRecentSearches());
@@ -105,7 +186,8 @@ export default function SiteSearch() {
 
   useEffect(() => {
     const onCommand = (event: Event) => {
-      const detail = (event as CustomEvent<{ command: SiteSearchCommand }>).detail;
+      const detail = (event as CustomEvent<{ command: SiteSearchCommand }>)
+        .detail;
       const command = detail?.command;
       if (!command) return;
 
@@ -114,7 +196,10 @@ export default function SiteSearch() {
       else setOpen((o) => !o);
     };
 
-    document.addEventListener(SITE_SEARCH_COMMAND_EVENT, onCommand as EventListener);
+    document.addEventListener(
+      SITE_SEARCH_COMMAND_EVENT,
+      onCommand as EventListener,
+    );
 
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -133,7 +218,10 @@ export default function SiteSearch() {
     document.addEventListener("keydown", handler);
 
     return () => {
-      document.removeEventListener(SITE_SEARCH_COMMAND_EVENT, onCommand as EventListener);
+      document.removeEventListener(
+        SITE_SEARCH_COMMAND_EVENT,
+        onCommand as EventListener,
+      );
       document.removeEventListener("keydown", handler);
     };
   }, []);
@@ -155,7 +243,9 @@ export default function SiteSearch() {
     const term = q.toLowerCase();
 
     // Static pages filter
-    const pageResults: SearchResult[] = STATIC_PAGES.filter((p) => p.label.toLowerCase().includes(term))
+    const pageResults: SearchResult[] = STATIC_PAGES.filter((p) =>
+      p.label.toLowerCase().includes(term),
+    )
       .slice(0, 4)
       .map((p) => ({ ...p, category: "page" as const }));
 
@@ -177,7 +267,7 @@ export default function SiteSearch() {
         .or(
           `name.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%,county.ilike.%${searchTerm}%${
             comboCounty ? `,county.eq.${comboCounty}` : ""
-          }`
+          }`,
         )
         .limit(5),
 
@@ -187,7 +277,7 @@ export default function SiteSearch() {
         .or(
           `resource_name.ilike.%${searchTerm}%,county.ilike.%${searchTerm}%,city.ilike.%${searchTerm}%${
             comboCounty ? `,county.eq.${comboCounty}` : ""
-          }`
+          }`,
         )
         .limit(5),
     ]);
@@ -225,12 +315,14 @@ export default function SiteSearch() {
       });
     }
 
-    const facilityResults: SearchResult[] = (facilities.data ?? []).map((f) => ({
-      label: f.name,
-      sublabel: `${f.city}, ${f.county} County · ${f.facility_type}`,
-      href: "/find-care",
-      category: "facility",
-    }));
+    const facilityResults: SearchResult[] = (facilities.data ?? []).map(
+      (f) => ({
+        label: f.name,
+        sublabel: `${f.city}, ${f.county} County · ${f.facility_type}`,
+        href: "/find-care",
+        category: "facility",
+      }),
+    );
 
     const resourceResults: SearchResult[] = (resources.data ?? []).map((r) => ({
       label: r.resource_name,
@@ -239,7 +331,12 @@ export default function SiteSearch() {
       category: "resource",
     }));
 
-    setResults([...pageResults, ...countyResults, ...facilityResults, ...resourceResults]);
+    setResults([
+      ...pageResults,
+      ...countyResults,
+      ...facilityResults,
+      ...resourceResults,
+    ]);
     setLoading(false);
   }, []);
 
@@ -357,7 +454,11 @@ export default function SiteSearch() {
               {/* Action Shortcuts when query starts with / */}
               {query.startsWith("/") && (
                 <CommandGroup heading="⚡ Action Shortcuts">
-                  {ACTION_SHORTCUTS.filter((s) => s.command.startsWith(query.toLowerCase()) || query === "/").map((s) => (
+                  {ACTION_SHORTCUTS.filter(
+                    (s) =>
+                      s.command.startsWith(query.toLowerCase()) ||
+                      query === "/",
+                  ).map((s) => (
                     <CommandItem
                       key={s.command}
                       value={`action-${s.command}`}
@@ -367,7 +468,9 @@ export default function SiteSearch() {
                       <span className="text-base">{s.icon}</span>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium">{s.label}</p>
-                        <p className="text-[10px] text-muted-foreground font-mono">{s.command}</p>
+                        <p className="text-[10px] text-muted-foreground font-mono">
+                          {s.command}
+                        </p>
                       </div>
                     </CommandItem>
                   ))}
@@ -383,7 +486,9 @@ export default function SiteSearch() {
                   >
                     <AlertCircle className="h-3.5 w-3.5 text-warm-gold flex-shrink-0" />
                     <span className="text-muted-foreground">Did you mean</span>
-                    <span className="font-semibold text-foreground">{correction}</span>
+                    <span className="font-semibold text-foreground">
+                      {correction}
+                    </span>
                     <span className="text-muted-foreground">?</span>
                   </button>
                 </div>
@@ -411,7 +516,9 @@ export default function SiteSearch() {
                         )}
                         <span className="text-sm">{s.label}</span>
                         {s.category === "correction" && s.matchedTerm && (
-                          <span className="text-xs text-muted-foreground ml-auto italic">corrected</span>
+                          <span className="text-xs text-muted-foreground ml-auto italic">
+                            corrected
+                          </span>
                         )}
                       </CommandItem>
                     ))}
@@ -453,21 +560,26 @@ export default function SiteSearch() {
               )}
 
               {/* No DB results + no smart suggestions = empty fallback */}
-              {query.length >= 2 && !loading && results.length === 0 && smartSuggestions[0]?.category === "popular" && (
-                <CommandGroup heading={`No results for "${query}" - try a county, ZIP, or service name`}>
-                  {smartSuggestions.map((s, i) => (
-                    <CommandItem
-                      key={`fallback-${i}`}
-                      value={`fallback-${s.label}`}
-                      onSelect={() => handleSelect(s.href)}
-                      className="flex items-center gap-3 cursor-pointer"
-                    >
-                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm">{s.label}</span>
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              )}
+              {query.length >= 2 &&
+                !loading &&
+                results.length === 0 &&
+                smartSuggestions[0]?.category === "popular" && (
+                  <CommandGroup
+                    heading={`No results for "${query}" - try a county, ZIP, or service name`}
+                  >
+                    {smartSuggestions.map((s, i) => (
+                      <CommandItem
+                        key={`fallback-${i}`}
+                        value={`fallback-${s.label}`}
+                        onSelect={() => handleSelect(s.href)}
+                        className="flex items-center gap-3 cursor-pointer"
+                      >
+                        <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm">{s.label}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                )}
 
               {/* DB results */}
               {Object.entries(grouped).map(([cat, items]) => (
@@ -482,15 +594,25 @@ export default function SiteSearch() {
                       {iconFor(cat)}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
-                          <p className="text-sm font-medium truncate">{item.label}</p>
+                          <p className="text-sm font-medium truncate">
+                            {item.label}
+                          </p>
                           {cat === "zip" && (
-                            <span className="inline-flex items-center rounded bg-accent/15 px-1.5 py-0 text-[9px] font-bold uppercase tracking-wider text-accent">ZIP</span>
+                            <span className="inline-flex items-center rounded bg-accent/15 px-1.5 py-0 text-[9px] font-bold uppercase tracking-wider text-accent">
+                              ZIP
+                            </span>
                           )}
                           {cat === "county" && (
-                            <span className="inline-flex items-center rounded bg-primary/10 px-1.5 py-0 text-[9px] font-bold uppercase tracking-wider text-primary">County</span>
+                            <span className="inline-flex items-center rounded bg-primary/10 px-1.5 py-0 text-[9px] font-bold uppercase tracking-wider text-primary">
+                              County
+                            </span>
                           )}
                         </div>
-                        {item.sublabel && <p className="text-xs text-muted-foreground truncate">{item.sublabel}</p>}
+                        {item.sublabel && (
+                          <p className="text-xs text-muted-foreground truncate">
+                            {item.sublabel}
+                          </p>
+                        )}
                       </div>
                     </CommandItem>
                   ))}
@@ -499,9 +621,14 @@ export default function SiteSearch() {
             </CommandList>
 
             <div className="border-t border-border px-3 py-2 text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
-              <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">⌘K</kbd>
-              to toggle · type a county name for local results · type <kbd className="rounded border border-border bg-muted px-1 py-0 font-mono text-[10px]">/</kbd> for
-              shortcuts
+              <kbd className="rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+                ⌘K
+              </kbd>
+              to toggle · type a county name for local results · type{" "}
+              <kbd className="rounded border border-border bg-muted px-1 py-0 font-mono text-[10px]">
+                /
+              </kbd>{" "}
+              for shortcuts
             </div>
           </Command>
         </DialogContent>

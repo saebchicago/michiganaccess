@@ -41,7 +41,7 @@ export default function OurIntelPage() {
     setLoading(true);
     try {
       if (supabaseConfigured) {
-        await supabase.from("collaborator_interest").insert({
+        await supabase.from("collaborator_interest" as any).insert({
           email: form.email.trim(),
           name: form.name.trim() || null,
           state: form.state.trim(),

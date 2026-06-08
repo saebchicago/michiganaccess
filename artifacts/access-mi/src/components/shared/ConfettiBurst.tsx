@@ -24,12 +24,12 @@ const PALETTE = [
 
 interface Particle {
   id: number;
-  x: number;       // final x (vw units from center)
-  y: number;       // final y (negative = upward, in vh)
+  x: number; // final x (vw units from center)
+  y: number; // final y (negative = upward, in vh)
   color: string;
-  size: number;     // px
-  rotate: number;   // degrees
-  delay: number;    // seconds
+  size: number; // px
+  rotate: number; // degrees
+  delay: number; // seconds
   shape: "square" | "circle" | "rect";
 }
 
@@ -70,6 +70,7 @@ export default function ConfettiBurst({ active, onDone }: ConfettiBurstProps) {
       }, 1400);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, [active, onDone]);
 
   if (typeof document === "undefined") return null;
@@ -106,8 +107,8 @@ export default function ConfettiBurst({ active, onDone }: ConfettiBurstProps) {
                   p.shape === "circle"
                     ? "50%"
                     : p.shape === "rect"
-                    ? "2px"
-                    : "3px",
+                      ? "2px"
+                      : "3px",
               }}
             />
           ))}

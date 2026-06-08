@@ -23,6 +23,6 @@ i18n
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],
     },
-  });
+  } as any);
 
 export default i18n;

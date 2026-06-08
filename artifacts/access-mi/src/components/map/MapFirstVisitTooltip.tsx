@@ -9,7 +9,9 @@ interface MapFirstVisitTooltipProps {
   onOpenLayers?: () => void;
 }
 
-export default function MapFirstVisitTooltip({ onOpenLayers }: MapFirstVisitTooltipProps) {
+export default function MapFirstVisitTooltip({
+  onOpenLayers,
+}: MapFirstVisitTooltipProps) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -21,6 +23,7 @@ export default function MapFirstVisitTooltip({ onOpenLayers }: MapFirstVisitTool
     } catch {
       // localStorage unavailable
     }
+    return undefined;
   }, []);
 
   const dismiss = () => {
@@ -42,7 +45,11 @@ export default function MapFirstVisitTooltip({ onOpenLayers }: MapFirstVisitTool
           transition={{ duration: 0.3 }}
           className="absolute left-3 top-16 z-[1001] w-64 rounded-lg border border-border bg-card p-4 shadow-lg lg:left-[19rem] lg:top-4"
         >
-          <button onClick={dismiss} className="absolute right-2 top-2 p-1 text-muted-foreground hover:text-foreground" aria-label="Dismiss">
+          <button
+            onClick={dismiss}
+            className="absolute right-2 top-2 p-1 text-muted-foreground hover:text-foreground"
+            aria-label="Dismiss"
+          >
             <X className="h-3.5 w-3.5" />
           </button>
           <div className="flex items-start gap-3">
@@ -50,9 +57,12 @@ export default function MapFirstVisitTooltip({ onOpenLayers }: MapFirstVisitTool
               <Lightbulb className="h-4 w-4 text-michigan-gold" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-foreground">Explore health data layers</p>
+              <p className="text-sm font-semibold text-foreground">
+                Explore health data layers
+              </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                Toggle air quality, transit routes, school safety, and facility locations.
+                Toggle air quality, transit routes, school safety, and facility
+                locations.
               </p>
             </div>
           </div>
