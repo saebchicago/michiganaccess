@@ -17,6 +17,10 @@ import {
   Zap,
   Rocket,
 } from "lucide-react";
+import WhatsNewBanner from "@/components/home/WhatsNewBanner";
+import InsightOfWeek from "@/components/home/InsightOfWeek";
+import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
+import { Suspense } from "react";
 
 interface ChangelogEntry {
   month: string;
@@ -496,6 +500,21 @@ const ChangelogPage = () => {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Recently added - relocated from home page during IA restructure */}
+      <section className="container mx-auto px-4 py-10 border-t border-border">
+        <h2 className="text-xl font-bold mb-4">Recently added</h2>
+
+        <SectionErrorBoundary title="What's new didn't load">
+          <WhatsNewBanner />
+        </SectionErrorBoundary>
+
+        <SectionErrorBoundary title="Insight of the week didn't load">
+          <Suspense fallback={null}>
+            <InsightOfWeek />
+          </Suspense>
+        </SectionErrorBoundary>
       </section>
     </Layout>
   );

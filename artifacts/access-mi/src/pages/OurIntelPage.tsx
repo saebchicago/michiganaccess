@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
+import ExecutiveLandingStrip from "@/components/home/ExecutiveLandingStrip";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -310,6 +311,9 @@ export default function OurIntelPage() {
           </p>
         </div>
       </div>
+
+      {/* Executive landing strip - relocated from home during IA restructure */}
+      <ExecutiveLandingStrip />
     </Layout>
   );
 }
