@@ -1,13 +1,14 @@
-A
-  publish = "dist/public"
+[build]
+  command = "npm run build"
+  publish = "dist"
+
 # Netlify config for the Access Michigan site.
 #
-# Build settings (base, command, publish dir) are defined in the [build]
-# block above so the monorepo publish directory is set explicitly and
-# tracked in version control. This overrides any build settings configured
-# in the Netlify dashboard.
-#
-# It also adds baseline HTTP security headers (below).
+# The [build] block above pins the build command and the publish dir
+# (repo-root dist/, which is what the npm run build script ultimately
+# copies to). This overrides any build settings configured in the
+# Netlify dashboard. The rest of this file adds baseline HTTP security
+# headers and a cache header for /data/*.
 
 [[headers]]
   for = "/*"
