@@ -1,5 +1,5 @@
 /**
- * HUD Fair Market Rents, FY2025 — 15 major Michigan ZIPs.
+ * HUD Fair Market Rents, FY2025 - 15 major Michigan ZIPs.
  * Source: huduser.gov/portal/datasets/fmr.html
  * FMR = 40th-percentile gross rent for standard-quality units.
  */

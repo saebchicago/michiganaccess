@@ -19,7 +19,7 @@ const standards = [
   { icon: Eye, title: "Visual Accessibility", items: [
     "Color contrast ratios meet WCAG 2.1 AA minimum (4.5:1 for text, 3:1 for large text)",
     "User-controlled High Contrast mode persisted via localStorage",
-    "No information conveyed by color alone — icons and text labels supplement all color indicators",
+    "No information conveyed by color alone - icons and text labels supplement all color indicators",
     "Responsive text sizing that respects browser zoom up to 200%",
   ]},
   { icon: Keyboard, title: "Keyboard Navigation", items: [
@@ -100,7 +100,7 @@ export default function AccessibilityPage() {
               Access Michigan strives to conform to the <strong>Web Content Accessibility Guidelines (WCAG) 2.1 Level AA</strong> standards. These guidelines are developed by the World Wide Web Consortium (W3C) and are widely regarded as the international standard for web accessibility.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              As a civic resource serving vulnerable populations — including uninsured residents, seniors with limited digital literacy, refugees navigating language barriers, and people with disabilities — accessibility is not an afterthought. It is a core design principle that informs every decision we make.
+              As a civic resource serving vulnerable populations - including uninsured residents, seniors with limited digital literacy, refugees navigating language barriers, and people with disabilities - accessibility is not an afterthought. It is a core design principle that informs every decision we make.
             </p>
           </div>
         </motion.section>

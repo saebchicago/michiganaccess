@@ -1,5 +1,5 @@
 /**
- * InsuranceNavigator — 3-step wizard to help users identify their likely
+ * InsuranceNavigator - 3-step wizard to help users identify their likely
  * insurance pathway: Medicare, Medicaid, FQHC sliding-fee, or Private/BCBS.
  * Now includes ZIP-aware area hints on the results step.
  */
@@ -68,13 +68,13 @@ function SlidingFeeCalc() {
   const annual = parseFloat(income) || 0;
   const pct = fpl > 0 ? (annual / fpl) * 100 : 0;
 
-  let category = "—";
+  let category = "-";
   let desc = "Enter your income above.";
   if (annual > 0) {
-    if (pct <= 100) { category = "A"; desc = "Nominal fee — you pay very little for most services."; }
-    else if (pct <= 150) { category = "B"; desc = "Reduced fee — a moderate discount off the full price."; }
-    else if (pct <= 200) { category = "C"; desc = "Partial discount — you still pay less than full price."; }
-    else { category = "Full"; desc = "Income above 200% FPL — full price, but payment plans may be available."; }
+    if (pct <= 100) { category = "A"; desc = "Nominal fee - you pay very little for most services."; }
+    else if (pct <= 150) { category = "B"; desc = "Reduced fee - a moderate discount off the full price."; }
+    else if (pct <= 200) { category = "C"; desc = "Partial discount - you still pay less than full price."; }
+    else { category = "Full"; desc = "Income above 200% FPL - full price, but payment plans may be available."; }
   }
 
   return (
@@ -111,7 +111,7 @@ function AreaHints() {
   const profile = getCountyProfile(county);
   const cd = getCountyCrossDomain(county);
   const uninsuredRaw = profile.healthHighlights.find(h => h.label.toLowerCase().includes("uninsured"))?.value;
-  // Count FQHC mentions from profile data — rough proxy
+  // Count FQHC mentions from profile data - rough proxy
   const fqhcNote = profile.countyType === "urban"
     ? "multiple federally-qualified or sliding-scale clinics"
     : profile.countyType === "suburban"
@@ -121,7 +121,7 @@ function AreaHints() {
   return (
     <div className="rounded-lg border border-primary/20 bg-primary/5 px-3 py-2.5 space-y-1">
       <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
-        <MapPin className="h-3 w-3 text-primary" /> In your area — {county} County
+        <MapPin className="h-3 w-3 text-primary" /> In your area - {county} County
       </p>
       {uninsuredRaw && (
         <p className="text-[11px] text-muted-foreground">
@@ -133,7 +133,7 @@ function AreaHints() {
       </p>
       {cd.povertyRate !== null && cd.povertyRate > 15 && (
         <p className="text-[11px] text-muted-foreground flex items-center gap-1">
-          <Info className="h-3 w-3" /> Poverty rate ({cd.povertyRate}%) is above state average — Medicaid eligibility may be especially relevant here.
+          <Info className="h-3 w-3" /> Poverty rate ({cd.povertyRate}%) is above state average - Medicaid eligibility may be especially relevant here.
         </p>
       )}
     </div>
@@ -403,8 +403,8 @@ function JargonRow() {
     <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-[11px] text-muted-foreground">
       <JargonTip term="Deductible" definition="The amount you pay out of pocket each year before your insurance starts to help pay. Think of it like a 'threshold' you cross first." />
       <JargonTip term="Co-pay" definition="A fixed amount (like $20) you pay each time you visit the doctor. The insurance pays the rest." />
-      <JargonTip term="Premium" definition="The monthly bill you pay just to have the insurance — even if you don't use it that month." />
-      <JargonTip term="EOB" definition="Explanation of Benefits — a paper your insurance sends after a visit that shows what they paid and what you owe." />
+      <JargonTip term="Premium" definition="The monthly bill you pay just to have the insurance - even if you don't use it that month." />
+      <JargonTip term="EOB" definition="Explanation of Benefits - a paper your insurance sends after a visit that shows what they paid and what you owe." />
     </div>
   );
 }

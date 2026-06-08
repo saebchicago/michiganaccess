@@ -1,5 +1,5 @@
-// OpenStreetMap Overpass API — no key required
-// Docs: overpass-api.de — rate limited, cache aggressively
+// OpenStreetMap Overpass API - no key required
+// Docs: overpass-api.de - rate limited, cache aggressively
 
 import { useQuery } from "@tanstack/react-query";
 

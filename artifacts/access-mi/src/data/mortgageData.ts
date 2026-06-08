@@ -1,6 +1,6 @@
 // Home Mortgage Disclosure Act (HMDA) data
 // Source: Consumer Financial Protection Bureau (CFPB)
-// ffiec.cfpb.gov/hmda/explorer — public data, annual
+// ffiec.cfpb.gov/hmda/explorer - public data, annual
 
 export interface HMDACountyData {
   county: string;

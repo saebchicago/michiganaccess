@@ -93,9 +93,9 @@ function incrementCommunityCount(pathwayId: string) {
 
 const MILESTONES = [3, 5, 7, 10];
 const MILESTONE_MESSAGES: Record<number, { title: string; description: string }> = {
-  3: { title: "🎯 Getting Started!", description: "3 steps done — you're building momentum." },
-  5: { title: "⭐ Halfway There!", description: "5 steps complete — great progress!" },
-  7: { title: "🏅 Almost Done!", description: "7 steps checked — the finish line is close." },
+  3: { title: "🎯 Getting Started!", description: "3 steps done - you're building momentum." },
+  5: { title: "⭐ Halfway There!", description: "5 steps complete - great progress!" },
+  7: { title: "🏅 Almost Done!", description: "7 steps checked - the finish line is close." },
   10: { title: "🏆 Pathway Complete!", description: "All 10 steps done! You're helping build a healthier Michigan." },
 };
 

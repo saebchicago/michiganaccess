@@ -98,7 +98,7 @@ export default function FDARecallFeed() {
           <p className="text-xs text-muted-foreground text-center py-4">No recent Michigan food recalls.</p>
         )}
         <div className="flex items-center justify-between">
-          <p className="text-[10px] text-muted-foreground">Source: FDA openFDA — Michigan food enforcement</p>
+          <p className="text-[10px] text-muted-foreground">Source: FDA openFDA - Michigan food enforcement</p>
           <a href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts" target="_blank" rel="noopener" className="text-[10px] text-primary hover:underline flex items-center gap-0.5">
             All Recalls <ExternalLink className="h-2.5 w-2.5" />
           </a>

@@ -67,7 +67,7 @@ export default function NotificationPrompt({ className = "" }: { className?: str
             <div className="flex gap-2 mt-2">
               {permission === "denied" ? (
                 <span className="text-xs text-muted-foreground flex items-center gap-1">
-                  <BellOff className="h-3 w-3" /> Notifications blocked — enable in browser settings
+                  <BellOff className="h-3 w-3" /> Notifications blocked - enable in browser settings
                 </span>
               ) : (
                 <>

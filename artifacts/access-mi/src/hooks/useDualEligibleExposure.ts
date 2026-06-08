@@ -15,10 +15,10 @@ export function useDualEligibleExposure() {
       // fresher MACPAC / ACS data. Interface remains DualEligibleCountyEntry[].
       return DUAL_ELIGIBLE_EXPOSURE_FALLBACK;
     },
-    // initialData ensures first paint has complete data — avoids isLoading:true on first
+    // initialData ensures first paint has complete data - avoids isLoading:true on first
     // render which can cause a repaint race with Layout's Framer Motion opacity animation.
     initialData: DUAL_ELIGIBLE_EXPOSURE_FALLBACK,
-    staleTime: 24 * 60 * 60 * 1000, // 24 hours — dual-eligible population data is updated annually
+    staleTime: 24 * 60 * 60 * 1000, // 24 hours - dual-eligible population data is updated annually
     retry: 1,
   });
 }

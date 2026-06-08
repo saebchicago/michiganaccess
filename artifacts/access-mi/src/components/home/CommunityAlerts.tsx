@@ -196,7 +196,7 @@ export default function CommunityAlerts() {
               </div>
               <div className="rounded-md bg-muted/30 border border-border/50 p-2">
                 <p className="text-[11px] leading-relaxed">
-                  <strong>Consumers Energy</strong> — Check current rates and planned changes for non-DTE service areas.
+                  <strong>Consumers Energy</strong> - Check current rates and planned changes for non-DTE service areas.
                 </p>
                 <a href="https://www.consumersenergy.com/residential/rates" target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary hover:underline inline-flex items-center gap-0.5 mt-1">
                   View Consumers Energy rates <ExternalLink className="h-2.5 w-2.5" />
@@ -252,7 +252,7 @@ export default function CommunityAlerts() {
           {/* 5. Benefits & Social Services */}
           <AlertCard open={openCards.benefits} onToggle={() => toggle("benefits")} title="Benefits & Social Services" icon={HeartHandshake} timestamp="Current">
             <div className="space-y-2">
-              <p className="text-[11px] text-muted-foreground">Apply for Michigan benefits through MiBridges — a single portal for multiple programs.</p>
+              <p className="text-[11px] text-muted-foreground">Apply for Michigan benefits through MiBridges - a single portal for multiple programs.</p>
               <div className="grid grid-cols-2 gap-1.5">
                 {[
                   { name: "SNAP (Food)", desc: "Food assistance" },

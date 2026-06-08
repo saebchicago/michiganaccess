@@ -1,5 +1,5 @@
 /**
- * Mini CSS bar indicator — a single horizontal bar with label, value, and fill %.
+ * Mini CSS bar indicator - a single horizontal bar with label, value, and fill %.
  * No chart libraries, pure CSS.
  */
 

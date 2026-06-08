@@ -26,7 +26,7 @@ function generateQRMatrix(data: string): boolean[][] {
   drawFinder(0, 14);
   drawFinder(14, 0);
   
-  // Data area — hash the URL to create a deterministic pattern
+  // Data area - hash the URL to create a deterministic pattern
   let hash = 0;
   for (let i = 0; i < data.length; i++) hash = ((hash << 5) - hash + data.charCodeAt(i)) | 0;
   for (let r = 0; r < size; r++) for (let c = 0; c < size; c++) {
@@ -80,7 +80,7 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
   }, [referralUrl]);
 
   const shareViaEmail = useCallback(() => {
-     const subject = encodeURIComponent(`Check out ${title} — Access Michigan`);
+     const subject = encodeURIComponent(`Check out ${title} - Access Michigan`);
     const body = encodeURIComponent(
       `I found this helpful resource on Access Michigan and thought you might benefit:\n\n${title}\n${referralUrl}\n\nAccess Michigan helps residents find healthcare, financial help, community resources, and more across all 83 counties.`
     );
@@ -91,7 +91,7 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
     if (navigator.share) {
       try {
         await navigator.share({
-           title: `${title} — Access Michigan`,
+           title: `${title} - Access Michigan`,
           text: "I found this helpful resource on Access Michigan.",
           url: referralUrl,
         });
@@ -103,7 +103,7 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
 
   const handlePrintForSomeone = useCallback(() => {
     const printWindow = window.open("", "_blank");
-    if (!printWindow) { toast.error("Popup blocked — please allow popups"); return; }
+    if (!printWindow) { toast.error("Popup blocked - please allow popups"); return; }
     
     const resourceList = resources?.map(r => 
       `<div style="margin-bottom:12px;padding:8px;border:1px solid #ddd;border-radius:4px">
@@ -124,13 +124,13 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
         .footer{margin-top:20px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#888}
       </style></head><body>
       <h1>🏥 ${title}</h1>
-      <p class="subtitle">Access Michigan — Your guide to services across Michigan</p>
+      <p class="subtitle">Access Michigan - Your guide to services across Michigan</p>
       <div class="crisis"><strong>In Crisis?</strong> Call <strong>988</strong> (Suicide & Crisis Lifeline) · Text HOME to 741741 · Call <strong>211</strong> for local services</div>
       ${resourceList ? `<h2 style="font-size:16px;margin-top:20px">Key Resources</h2>${resourceList}` : ""}
       <p style="margin-top:16px;font-size:13px">Visit online for more services, interactive maps, and real-time information:</p>
       <p class="url">${currentUrl.replace(/[?&].*/, "")}</p>
       <div class="footer">
-        <p>Access Michigan — Independent, non-commercial civic resource</p>
+        <p>Access Michigan - Independent, non-commercial civic resource</p>
         <p>No cookies · No tracking · No personal data collected</p>
         <p>Printed ${new Date().toLocaleDateString()}</p>
       </div>
@@ -182,7 +182,7 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
             Print for Someone
           </h4>
           <p className="text-xs text-muted-foreground mb-2">
-            Generate a simplified one-page resource list — great for elderly or low-tech family members.
+            Generate a simplified one-page resource list - great for elderly or low-tech family members.
           </p>
           <Button size="sm" variant="outline" className="h-7 text-xs gap-1" onClick={handlePrintForSomeone}>
             <Printer className="h-3 w-3" /> Print Simplified Page
@@ -243,7 +243,7 @@ export default function ReferralToolkit({ pageTitle, pageUrl, resources }: Refer
                     const rects = matrix.flatMap((row, r) =>
                       row.map((cell, c) => cell ? `<rect x="${c*cellSize}" y="${r*cellSize}" width="${cellSize}" height="${cellSize}" fill="#1e3a5f"/>` : "")
                     ).join("");
-                     printW.document.write(`<!DOCTYPE html><html><head><title>QR Code — Access Michigan</title>
+                     printW.document.write(`<!DOCTYPE html><html><head><title>QR Code - Access Michigan</title>
                       <style>body{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:Arial,sans-serif;margin:0}
                       h1{font-size:24px;color:#1e3a5f;margin-bottom:8px}p{font-size:14px;color:#666;margin:4px 0}.loc{font-size:12px;color:#0A4C95;margin-top:8px}</style></head>
                        <body><h1>🏥 Access Michigan</h1><p>Find healthcare, services & resources</p>

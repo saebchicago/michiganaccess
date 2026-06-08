@@ -64,7 +64,7 @@ const fadeUp = {
 };
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 
-// [VERIFIED] UF Election Lab VEP turnout — election.lab.ufl.edu/voter-turnout/
+// [VERIFIED] UF Election Lab VEP turnout - election.lab.ufl.edu/voter-turnout/
 // CSV files: Turnout_2016G_v1.0, Turnout_2018G_v1.1, Turnout_2020G_v1.2,
 //            Turnout_2022G_v1.0, Turnout_2024G_v0.3 (as of March 2, 2026)
 const voterTurnout = [
@@ -75,7 +75,7 @@ const voterTurnout = [
   { year: "2024", turnout: 74.64, national: 64.07 },
 ];
 
-// [VERIFIED] Michigan.gov — all four re-elected Nov 2022, current term 2023–2027
+// [VERIFIED] Michigan.gov - all four re-elected Nov 2022, current term 2023–2027
 const electedOfficials = [
   {
     title: "Governor",
@@ -107,7 +107,7 @@ const electedOfficials = [
   },
 ];
 
-// Open Meetings linkouts — replaces static past-dated list per Michigan OMA
+// Open Meetings linkouts - replaces static past-dated list per Michigan OMA
 const openMeetingsLinks = [
   {
     body: "State Board of Education",

@@ -1,5 +1,5 @@
 /**
- * CompareZipsPage — Side-by-side ZIP code comparison.
+ * CompareZipsPage - Side-by-side ZIP code comparison.
  * Designed for residents, CHNA teams, VBC programs, journalists, and policymakers.
  * Structural context over blame. Data honesty over estimation.
  */
@@ -198,8 +198,8 @@ export default function CompareZipsPage() {
   );
 
   usePageMeta({
-    title: "Compare ZIP Codes — Access Michigan",
-    description: "See how Michigan ZIP codes line up on health, coverage, housing, utilities, transportation, and environment — with context, not blame.",
+    title: "Compare ZIP Codes - Access Michigan",
+    description: "See how Michigan ZIP codes line up on health, coverage, housing, utilities, transportation, and environment - with context, not blame.",
     path: "/compare-zips",
   });
 
@@ -268,7 +268,7 @@ export default function CompareZipsPage() {
 
   const copilotContext = hasComparison
     ? `Context: compare_zips. Comparing ZIP codes: ${activeZips.join(", ")} (counties: ${counties.join(", ")}). Data coverage: ${summary!.dataCoverage}. Metrics: ${summary!.metricDefinitions.map(d => d.label).join(", ")}. Instructions: Provide a short summary of the biggest differences between these ZIPs, a "for residents" block, a "for CHNA / planning" block, and 2 cautions about over-interpreting ZIP-level data.`
-    : "ZIP comparison page — no active comparison yet.";
+    : "ZIP comparison page - no active comparison yet.";
 
   return (
     <Layout>
@@ -282,10 +282,10 @@ export default function CompareZipsPage() {
               ZIP Comparison
             </div>
             <h1 className="text-2xl font-bold text-foreground sm:text-3xl lg:text-4xl">
-              Compare ZIP codes — clearly and fairly
+              Compare ZIP codes - clearly and fairly
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto text-sm sm:text-base">
-              See how Michigan ZIP codes line up on health, coverage, housing, utilities, transportation, and environment — with context, not blame.
+              See how Michigan ZIP codes line up on health, coverage, housing, utilities, transportation, and environment - with context, not blame.
             </p>
             <p className="text-xs text-muted-foreground/70 mt-2 flex items-center justify-center gap-1.5">
               <Shield className="h-3 w-3" aria-hidden="true" />
@@ -336,7 +336,7 @@ export default function CompareZipsPage() {
         <div className="container max-w-5xl py-8 space-y-8 print:py-4">
           {/* Print-only header */}
           <div className="hidden print-header print:block text-center border-b border-border pb-3 mb-4">
-            <p className="text-lg font-bold">Access Michigan — ZIP Comparison: {activeZips.join(" vs ")}</p>
+            <p className="text-lg font-bold">Access Michigan - ZIP Comparison: {activeZips.join(" vs ")}</p>
             <p className="text-xs text-muted-foreground">Generated {new Date().toLocaleDateString()} · Data as of March 2026 · accessmi.org/compare-zips</p>
           </div>
 
@@ -355,7 +355,7 @@ export default function CompareZipsPage() {
                   </li>
                   <li className="flex gap-2">
                     <span className="text-warning mt-0.5 shrink-0">•</span>
-                    Use these comparisons to understand where services, infrastructure, and investment are stronger or weaker — not to shame communities.
+                    Use these comparisons to understand where services, infrastructure, and investment are stronger or weaker - not to shame communities.
                   </li>
                   <li className="flex gap-2">
                     <span className="text-warning mt-0.5 shrink-0">•</span>
@@ -432,7 +432,7 @@ export default function CompareZipsPage() {
                   </h3>
                   <ul className="space-y-2.5 text-xs text-muted-foreground">
                     <li>
-                      These ZIP codes have different levels of nearby primary care and housing cost burden. Differences often reflect where resources have been invested — not the quality of the people who live there.
+                      These ZIP codes have different levels of nearby primary care and housing cost burden. Differences often reflect where resources have been invested - not the quality of the people who live there.
                     </li>
                     <li>
                       If your ZIP shows gaps in coverage or access, help may be available through local programs and navigators.
@@ -461,7 +461,7 @@ export default function CompareZipsPage() {
                       Use these metrics to identify where to deepen qualitative work and community engagement for your next CHNA or community benefit plan.
                     </li>
                     <li>
-                      Use these numbers to validate lived experience, not replace it — especially where data coverage is "Medium" or "Limited."
+                      Use these numbers to validate lived experience, not replace it - especially where data coverage is "Medium" or "Limited."
                     </li>
                     <li>
                       For deeper analysis, export data and combine with your internal claims, EHR, and survey data.
@@ -485,7 +485,7 @@ export default function CompareZipsPage() {
                     <li>
                       If something looks off, you can{" "}
                       <Link to="/contact" className="text-primary hover:underline">contact us</Link>
-                      {" "}— we regularly fix issues and publish changes.
+                      {" "}- we regularly fix issues and publish changes.
                     </li>
                   </ul>
                 </CardContent>

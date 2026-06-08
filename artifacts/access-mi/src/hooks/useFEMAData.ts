@@ -1,5 +1,5 @@
 // FEMA Disaster Declarations & National Risk Index
-// Public REST API — no key required
+// Public REST API - no key required
 // Docs: www.fema.gov/api/open
 
 import { useQuery } from "@tanstack/react-query";

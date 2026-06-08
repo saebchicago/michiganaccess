@@ -44,7 +44,7 @@ export default function PrivacyPage() {
 
       <div className="container max-w-4xl py-12 space-y-14">
 
-        {/* 1 — Overview */}
+        {/* 1 - Overview */}
         <Section icon={Shield} title="1. Overview" index={0}>
           <p>
             Access Michigan ("the Platform") is an independent, non-commercial civic resource that helps Michigan residents navigate healthcare, social services, and community resources. We are <strong>not a government agency, healthcare provider, or insurance company</strong>. We do not sell advertising, and we do not monetize your data in any way.
@@ -56,21 +56,21 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 2 — What We Don't Do */}
+        {/* 2 - What We Don't Do */}
         <Section icon={Lock} title="2. What We Do NOT Do" index={1}>
           <ul className="list-disc pl-6 space-y-2">
-            <li><strong>No targeted advertising</strong> — Access Michigan displays zero ads.</li>
-            <li><strong>No sale or sharing of personal data</strong> — We never sell, rent, license, or share your information with third parties for marketing.</li>
-            <li><strong>No user accounts or login required</strong> — The Platform is fully accessible without creating an account or providing identifying information.</li>
-            <li><strong>No tracking cookies</strong> — We do not use cookies for analytics, advertising, or behavioral profiling.</li>
-            <li><strong>No attempt to identify individuals</strong> — We do not fingerprint browsers, track across sites, or build user profiles.</li>
-            <li><strong>No storage of Protected Health Information (PHI)</strong> — Health-related tools (AI appeals generator, benefits wizard, symptom information) process data client-side. We do not store, transmit, or retain any health information you enter.</li>
+            <li><strong>No targeted advertising</strong> - Access Michigan displays zero ads.</li>
+            <li><strong>No sale or sharing of personal data</strong> - We never sell, rent, license, or share your information with third parties for marketing.</li>
+            <li><strong>No user accounts or login required</strong> - The Platform is fully accessible without creating an account or providing identifying information.</li>
+            <li><strong>No tracking cookies</strong> - We do not use cookies for analytics, advertising, or behavioral profiling.</li>
+            <li><strong>No attempt to identify individuals</strong> - We do not fingerprint browsers, track across sites, or build user profiles.</li>
+            <li><strong>No storage of Protected Health Information (PHI)</strong> - Health-related tools (AI appeals generator, benefits wizard, symptom information) process data client-side. We do not store, transmit, or retain any health information you enter.</li>
           </ul>
         </Section>
 
         <Separator />
 
-        {/* 3 — What We May Collect */}
+        {/* 3 - What We May Collect */}
         <Section icon={Database} title="3. Information We May Collect" index={2}>
           <h3 className="text-base font-semibold text-foreground mt-2 mb-2">3a. Operational Server Logs</h3>
           <p>
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 4 — AI Features */}
+        {/* 4 - AI Features */}
         <Section icon={Eye} title="4. Automated Features" index={3}>
           <p>
             Access Michigan includes AI-powered tools such as the chat assistant and insurance appeal letter generator. Important privacy details about these features:
@@ -125,7 +125,7 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 5 — Third-Party Services */}
+        {/* 5 - Third-Party Services */}
         <Section icon={Globe} title="5. Third-Party Services" index={4}>
           <p>
             Access Michigan integrates data from public agencies and may load resources from third-party services. Each may have its own privacy policy:
@@ -155,7 +155,7 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 6 — Data Security */}
+        {/* 6 - Data Security */}
         <Section icon={Shield} title="6. Data Security" index={5}>
           <p>
             We employ industry-standard security measures to protect any data we handle:
@@ -165,13 +165,13 @@ export default function PrivacyPage() {
             <li><strong>Row-Level Security (RLS):</strong> Database tables enforce strict access controls. Public submissions (contact forms, feedback) are insert-only; no public read or modification access.</li>
             <li><strong>Input validation:</strong> All backend functions validate and sanitize inputs using Zod schema validation.</li>
             <li><strong>Rate limiting:</strong> Backend functions enforce rate limits (5–10 requests per minute) to prevent abuse.</li>
-            <li><strong>No authentication required:</strong> Since we don't require accounts, there are no passwords or credentials to protect — reducing attack surface by design.</li>
+            <li><strong>No authentication required:</strong> Since we don't require accounts, there are no passwords or credentials to protect - reducing attack surface by design.</li>
           </ul>
         </Section>
 
         <Separator />
 
-        {/* 7 — HIPAA */}
+        {/* 7 - HIPAA */}
         <Section icon={AlertTriangle} title="7. HIPAA Disclaimer" index={6}>
           <div className="rounded-xl border-2 border-michigan-coral/30 bg-michigan-coral/5 p-6">
             <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
@@ -200,7 +200,7 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 8 — Michigan Privacy Rights */}
+        {/* 8 - Michigan Privacy Rights */}
         <Section icon={Scale} title="8. Your Rights Under Michigan & Federal Law" index={7}>
           <p>
             Michigan residents have specific privacy protections under state and federal law:
@@ -236,7 +236,7 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 9 — Data Retention */}
+        {/* 9 - Data Retention */}
         <Section icon={FileText} title="9. Data Retention" index={8}>
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[500px]">
@@ -270,7 +270,7 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 10 — Changes */}
+        {/* 10 - Changes */}
         <Section icon={FileText} title="10. Changes to This Policy" index={9}>
           <p>
             We may update this Privacy Policy to reflect changes in our practices or applicable law. When we make material changes, we will update the "Last Updated" date at the top of this page. We encourage you to review this policy periodically.

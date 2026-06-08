@@ -1,37 +1,60 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZM2FDRXSDD"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ZM2FDRXSDD');
-    </script>
+    <!-- Google Analytics (gtag.js, G-ZM2FDRXSDD) was previously loaded
+         here on every page. It was removed to honor the platform's
+         site-wide "no cookies, no tracking, no personal data collected"
+         promise stated on the Footer, Methodology page, About page,
+         Impact dashboard, Feedback page, Technical page, Site Report,
+         Executive Summary, eligibility screener, and Metrics API page.
+         If usage analytics are added back in the future they must come
+         from a cookieless provider and the privacy copy must be
+         updated atomically with the wiring. Tracked in the Trust audit
+         (fix/trust). -->
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon-optimized.png" type="image/png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="preconnect" href="https://api.weather.gov" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="dns-prefetch" href="https://znahhtdbcgepezrxwnah.supabase.co" />
-    <title>Access Michigan — Michigan, County by County</title>
+    <title>Access Michigan - Michigan, County by County</title>
     <meta name="theme-color" content="#1e3a5f" />
     <link rel="apple-touch-icon" href="/pwa-192x192.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <meta name="referrer" content="no-referrer" />
     <meta name="apple-mobile-web-app-title" content="MI Access" />
-    <meta name="description" content="Michigan civic intelligence, built by and for fellow citizens. County-level health, environmental, and social data across all 83 counties." />
+    <meta
+      name="description"
+      content="Michigan civic intelligence, built by and for fellow citizens. County-level health, environmental, and social data across all 83 counties."
+    />
     <meta name="author" content="Access Michigan" />
-    <meta name="keywords" content="Michigan services, housing assistance Michigan, food assistance, health services, SNAP Michigan, Medicaid Michigan, community resources" />
+    <meta
+      name="keywords"
+      content="Michigan services, housing assistance Michigan, food assistance, health services, SNAP Michigan, Medicaid Michigan, community resources"
+    />
     <link rel="canonical" href="https://accessmi.org" />
 
-    <meta property="og:title" content="Access Michigan — Michigan, County by County" />
-    <meta property="og:description" content="Michigan civic intelligence, built by and for fellow citizens. County-level health, environmental, and social data across all 83 counties." />
+    <meta
+      property="og:title"
+      content="Access Michigan - Michigan, County by County"
+    />
+    <meta
+      property="og:description"
+      content="Michigan civic intelligence, built by and for fellow citizens. County-level health, environmental, and social data across all 83 counties."
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://accessmi.org" />
     <meta property="og:image" content="https://accessmi.org/og-image.png" />
@@ -39,46 +62,60 @@
     <meta property="og:site_name" content="Access Michigan" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Access Michigan — County by County" />
-    <meta name="twitter:description" content="Michigan civic intelligence, built by and for fellow citizens. County-level health, environmental, and social data across all 83 counties." />
+    <meta name="twitter:title" content="Access Michigan - County by County" />
+    <meta
+      name="twitter:description"
+      content="Michigan civic intelligence, built by and for fellow citizens. County-level health, environmental, and social data across all 83 counties."
+    />
     <meta name="twitter:image" content="https://accessmi.org/og-image.png" />
 
     <!-- JSON-LD structured data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Access Michigan",
-      "description": "Independent civic project organizing Michigan health, housing, energy, transportation, and legal resources into a single structured gateway.",
-      "url": "https://accessmi.org",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://accessmi.org/find-care?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      },
-      "publisher": {
-        "@type": "Organization",
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
         "name": "Access Michigan",
-        "description": "Independent, non-commercial civic resource platform",
-        "url": "https://accessmi.org"
+        "description": "Independent civic project organizing Michigan health, housing, energy, transportation, and legal resources into a single structured gateway.",
+        "url": "https://accessmi.org",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://accessmi.org/find-care?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Access Michigan",
+          "description": "Independent, non-commercial civic resource platform",
+          "url": "https://accessmi.org"
+        }
       }
-    }
     </script>
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Dataset",
-      "name": "Michigan Community Resources Database",
-      "description": "Curated database of 700+ community resources across all 83 Michigan counties including health, housing, food, transportation, and legal services.",
-      "url": "https://accessmi.org/resources",
-      "license": "https://accessmi.org/data-validation",
-      "creator": { "@type": "Organization", "name": "Access Michigan" },
-      "datePublished": "2026-01-08",
-      "dateModified": "2026-04-10",
-      "keywords": ["Michigan", "civic intelligence", "county data", "health access", "environmental burden", "public policy", "83 counties"],
-      "temporalCoverage": "2024/..",
-      "spatialCoverage": { "@type": "Place", "name": "Michigan, United States" }
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": "Michigan Community Resources Database",
+        "description": "Curated database of 15,000+ community resources across all 83 Michigan counties including health, housing, food, transportation, and legal services.",
+        "url": "https://accessmi.org/resources",
+        "license": "https://accessmi.org/data-validation",
+        "creator": { "@type": "Organization", "name": "Access Michigan" },
+        "datePublished": "2026-01-08",
+        "dateModified": "2026-04-10",
+        "keywords": [
+          "Michigan",
+          "civic intelligence",
+          "county data",
+          "health access",
+          "environmental burden",
+          "public policy",
+          "83 counties"
+        ],
+        "temporalCoverage": "2024/..",
+        "spatialCoverage": {
+          "@type": "Place",
+          "name": "Michigan, United States"
+        }
+      }
     </script>
   </head>
 

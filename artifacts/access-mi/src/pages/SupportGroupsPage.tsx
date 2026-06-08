@@ -118,7 +118,7 @@ export default function SupportGroupsPage() {
     path: "/support",
     jsonLd: {
       "@type": "WebPage",
-      name: "Support Groups — Access Michigan",
+      name: "Support Groups - Access Michigan",
       description: "Directory of support groups and peer support services in Michigan.",
     },
   });

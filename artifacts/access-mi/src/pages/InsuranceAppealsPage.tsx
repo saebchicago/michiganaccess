@@ -15,7 +15,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const InsuranceAppealsPage = () => {
   usePageMeta({
-    title: "Insurance Denial Appeal Tool — Michigan",
+    title: "Insurance Denial Appeal Tool - Michigan",
     description:
       "Fight health insurance denials in Michigan. Appeal letter generator, Medicaid fair hearing templates, and DIFS external review guidance.",
     path: "/health/insurance-appeals",
@@ -65,7 +65,7 @@ const InsuranceAppealsPage = () => {
             </h1>
             <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
               Michigan law guarantees your right to appeal. Access Michigan gives you free tools
-              to build your case — no sign-up, no data stored.
+              to build your case - no sign-up, no data stored.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" variant="secondary" asChild>

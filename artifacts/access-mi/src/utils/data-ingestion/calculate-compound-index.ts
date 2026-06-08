@@ -45,7 +45,7 @@ async function calculate() {
 
   const bbMap = new Map((bbTracts || []).map((b) => [b.census_tract_id, b]));
 
-  // 3. Get EJ data (aggregate to tract level — max of block groups)
+  // 3. Get EJ data (aggregate to tract level - max of block groups)
   const { data: ejData } = await supabase
     .from("ej_screen")
     .select("census_tract_id, ej_index_pm25, ej_index_ozone, ej_index_diesel, ej_index_lead, ej_index_superfund");
@@ -65,11 +65,11 @@ async function calculate() {
     const foodScore = ft.food_desert_flag ? 100 : ft.low_income ? 50 : 0;
     const bb = bbMap.get(ft.census_tract_id);
     const bbScore = bb ? ((bb.pct_unserved || 0) + (bb.pct_underserved || 0)) : 50; // default 50 if no data
-    const transitScore = 50; // placeholder — would need spatial query for stop density
-    const hpsaScore = 50; // placeholder — would need HRSA HPSA lookup
-    const sviScore = 50; // placeholder — would need CDC SVI lookup
+    const transitScore = 50; // placeholder - would need spatial query for stop density
+    const hpsaScore = 50; // placeholder - would need HRSA HPSA lookup
+    const sviScore = 50; // placeholder - would need CDC SVI lookup
     const ejScore = ejMap.get(ft.census_tract_id) || 0;
-    const energyScore = 50; // placeholder — would need ACEEE data
+    const energyScore = 50; // placeholder - would need ACEEE data
 
     const compound = (
       foodScore * 0.15 +

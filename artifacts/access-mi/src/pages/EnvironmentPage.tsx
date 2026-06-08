@@ -67,7 +67,7 @@ const renewableGrowth = [
   { year: "2024", solar: 15.8, wind: 12.9, hydro: 2.2 },
 ];
 
-// EIA SEDS — Michigan vs National residential electricity price & consumption (1990–2023)
+// EIA SEDS - Michigan vs National residential electricity price & consumption (1990–2023)
 const eiaSEDS = [
   { year: "1990", miPrice: 7.4, natPrice: 7.8, miConsumption: 30.2, natConsumption: 29.5 },
   { year: "1995", miPrice: 8.1, natPrice: 8.4, miConsumption: 31.8, natConsumption: 31.1 },
@@ -135,7 +135,7 @@ const EnvironmentPage = () => {
     }
   }, [location.hash]);
 
-  // Fetch live CDC PLACES data for Michigan counties (no measure filter — get diverse health metrics)
+  // Fetch live CDC PLACES data for Michigan counties (no measure filter - get diverse health metrics)
   const { data: cdcData, isLoading: cdcLoading, isError: cdcError } = useCDCData(
     "places-county",
     "",
@@ -230,7 +230,7 @@ const EnvironmentPage = () => {
                 <MichiganForecast />
               </motion.div>
               <motion.div initial="hidden" animate="show" variants={stagger} className="grid gap-8 lg:grid-cols-2">
-                {/* AQI Chart — CDC PLACES live data */}
+                {/* AQI Chart - CDC PLACES live data */}
                 <motion.div variants={fadeUp}>
                   <Card>
                     <CardHeader>
@@ -241,7 +241,7 @@ const EnvironmentPage = () => {
                       </CardTitle>
                       <CardDescription>
                         {isLiveData
-                          ? `${t('environment.liveData')} — ${cdcData?.source || "CDC Open Data"}`
+                          ? `${t('environment.liveData')} - ${cdcData?.source || "CDC Open Data"}`
                           : t('environment.fallbackData')}
                       </CardDescription>
                     </CardHeader>
@@ -392,7 +392,7 @@ const EnvironmentPage = () => {
                     <div>
                       <h2 className="text-xl font-bold text-foreground">Water Safety & Contamination</h2>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        Michigan's water safety journey — from Flint to PFAS to lead line replacement — makes water quality data more essential here than almost anywhere in America.
+                        Michigan's water safety journey - from Flint to PFAS to lead line replacement - makes water quality data more essential here than almost anywhere in America.
                       </p>
                     </div>
                   </div>
@@ -408,7 +408,7 @@ const EnvironmentPage = () => {
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
-                        <p className="text-sm text-muted-foreground">Michigan has identified <strong>200+</strong> PFAS sites — more than any other state. MPART (established 2017) coordinates response.</p>
+                        <p className="text-sm text-muted-foreground">Michigan has identified <strong>200+</strong> PFAS sites - more than any other state. MPART (established 2017) coordinates response.</p>
                         <ul className="space-y-2 text-xs text-muted-foreground">
                           <li>• Drinking water standard: 8 parts per trillion (strictest in US)</li>
                           <li>• "Forever chemicals" from firefighting foam & industrial waste</li>
@@ -520,7 +520,7 @@ const EnvironmentPage = () => {
                   </Card>
                 </motion.div>
 
-                {/* EIA SEDS — Electricity Price Comparison */}
+                {/* EIA SEDS - Electricity Price Comparison */}
                 <motion.div variants={fadeUp}>
                   <Card>
                     <CardHeader>
@@ -549,7 +549,7 @@ const EnvironmentPage = () => {
                   </Card>
                 </motion.div>
 
-                {/* EIA SEDS — Per-Capita Consumption */}
+                {/* EIA SEDS - Per-Capita Consumption */}
                 <motion.div variants={fadeUp}>
                   <Card>
                     <CardHeader>
@@ -572,7 +572,7 @@ const EnvironmentPage = () => {
                         </AreaChart>
                       </ResponsiveContainer>
                       <p className="text-xs text-muted-foreground mt-3">
-                        <strong>Insight:</strong> Michigan's per-capita energy consumption has declined 13% since 2005, driven by efficiency programs and deindustrialization — now 18% below the national average.
+                        <strong>Insight:</strong> Michigan's per-capita energy consumption has declined 13% since 2005, driven by efficiency programs and deindustrialization - now 18% below the national average.
                       </p>
                     </CardContent>
                   </Card>
@@ -589,8 +589,8 @@ const EnvironmentPage = () => {
                         <Zap className="mb-3 h-8 w-8 text-michigan-gold" />
                         <h3 className="mb-2 font-semibold text-foreground">{item.title}</h3>
                         <p className="mb-4 text-sm text-muted-foreground">{item.desc}</p>
-                        <a href={item.link} target="_blank" rel="noopener" className="text-sm font-medium text-primary hover:underline">
-                          {t('environment.learnMore')} <ExternalLink className="ml-1 inline h-3 w-3" />
+                        <a href={item.link} target="_blank" rel="noopener" aria-label={`Learn more about ${item.title} (opens in new window)`} className="text-sm font-medium text-primary hover:underline">
+                          {t('environment.learnMore')} about {item.title} <ExternalLink className="ml-1 inline h-3 w-3" aria-hidden="true" />
                         </a>
                       </CardContent>
                     </Card>
@@ -608,7 +608,7 @@ const EnvironmentPage = () => {
               </motion.div>
             </TabsContent>
 
-            {/* Programs & Rebates — Sustainability & Energy */}
+            {/* Programs & Rebates - Sustainability & Energy */}
             <TabsContent value="programs">
               <motion.div initial="hidden" animate="show" variants={stagger} className="space-y-8">
                 {/* LIHEAP */}
@@ -653,7 +653,7 @@ const EnvironmentPage = () => {
                 {/* Residential Rebates */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <Zap className="h-5 w-5 text-michigan-gold" /> Residential Rebates — MiHER ($211M from IRA)
+                    <Zap className="h-5 w-5 text-michigan-gold" /> Residential Rebates - MiHER ($211M from IRA)
                   </h2>
                   <p className="text-sm text-muted-foreground mb-4">Michigan Home Energy Rebate program launched statewide April 23, 2025. Total funding: <strong>$211 million</strong> (HOMES: $105.7M, HEAR: $105.3M). Target: up to <strong>15,000 households</strong>. HOMES + HEAR combined max: up to <strong>$34,000/household</strong>. Call center: 855-510-7080.</p>
                   <div className="grid gap-6 sm:grid-cols-2">
@@ -694,8 +694,8 @@ const EnvironmentPage = () => {
                         <AlertTriangle className="h-6 w-6 shrink-0 text-michigan-coral mt-0.5" />
                         <div>
                           <h3 className="font-semibold text-foreground mb-2">IRA Tax Credit Update</h3>
-                          <p className="text-sm text-muted-foreground"><strong>25C (Energy Efficient Home Improvement Credit): EXPIRED</strong> — Terminated December 31, 2025 by the "One Big Beautiful Bill" (signed July 4, 2025).</p>
-                          <p className="text-sm text-muted-foreground mt-2"><strong>25D (Residential Clean Energy Credit): STILL ACTIVE</strong> — 30% through 2032 for solar, wind, geothermal, and battery storage. MiHER rebates are stackable with 25D and utility rebates.</p>
+                          <p className="text-sm text-muted-foreground"><strong>25C (Energy Efficient Home Improvement Credit): EXPIRED</strong> - Terminated December 31, 2025 by the "One Big Beautiful Bill" (signed July 4, 2025).</p>
+                          <p className="text-sm text-muted-foreground mt-2"><strong>25D (Residential Clean Energy Credit): STILL ACTIVE</strong> - 30% through 2032 for solar, wind, geothermal, and battery storage. MiHER rebates are stackable with 25D and utility rebates.</p>
                         </div>
                       </div>
                     </CardContent>
@@ -709,7 +709,7 @@ const EnvironmentPage = () => {
                   </h2>
                   <Card className="hover:border-michigan-teal/30 transition-colors">
                     <CardContent className="p-6">
-                      <h3 className="font-semibold text-foreground mb-2">Michigan Saves — Low-Interest Green Loans</h3>
+                      <h3 className="font-semibold text-foreground mb-2">Michigan Saves - Low-Interest Green Loans</h3>
                       <p className="text-sm text-muted-foreground mb-3">In 2024: <strong>7,304 residential projects</strong> and <strong>$96.6 million</strong> financed ($108.1M total investment). Average savings: <strong>$347/year</strong>. Cumulative: 50,000+ customers, <strong>$500+ million</strong> financed, 207 GWh saved. Plus a $97M grant from EPA Greenhouse Gas Reduction Fund. Loan terms: $1,000–$75,000, from 6.49% APR, up to 15 years.</p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         <Badge variant="outline" className="text-xs">Solar</Badge>
@@ -837,7 +837,7 @@ const EnvironmentPage = () => {
                       <div className="space-y-4">
                         <div className="rounded-lg bg-michigan-forest/10 p-4">
                           <p className="text-3xl font-bold text-michigan-forest">89%</p>
-                          <p className="text-sm text-muted-foreground">Container return rate — highest in the nation</p>
+                          <p className="text-sm text-muted-foreground">Container return rate - highest in the nation</p>
                         </div>
                         <div className="rounded-lg bg-michigan-teal/10 p-4">
                           <p className="text-3xl font-bold text-michigan-teal">$1.2B+</p>
@@ -914,7 +914,7 @@ const EnvironmentPage = () => {
                     <AccordionItem value="pfas">
                       <AccordionTrigger>PFAS Contamination</AccordionTrigger>
                       <AccordionContent className="text-muted-foreground">
-                        Michigan has identified 200+ PFAS contamination sites — more than any other state. "Forever chemicals" from firefighting foam and industrial waste have contaminated groundwater and surface water. The state has adopted some of the nation's strictest PFAS standards at 8 parts per trillion for drinking water.
+                        Michigan has identified 200+ PFAS contamination sites - more than any other state. "Forever chemicals" from firefighting foam and industrial waste have contaminated groundwater and surface water. The state has adopted some of the nation's strictest PFAS standards at 8 parts per trillion for drinking water.
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -931,7 +931,7 @@ const EnvironmentPage = () => {
                     <div>
                       <h2 className="text-xl font-bold text-foreground">Environmental Justice in Michigan</h2>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        Low-income communities and communities of color disproportionately bear environmental burdens — from air pollution to contaminated water. Michigan's Office of the Environmental Justice Public Advocate works to address these disparities.
+                        Low-income communities and communities of color disproportionately bear environmental burdens - from air pollution to contaminated water. Michigan's Office of the Environmental Justice Public Advocate works to address these disparities.
                       </p>
                     </div>
                   </div>
@@ -979,7 +979,7 @@ const EnvironmentPage = () => {
                     <CardContent className="p-6">
                       <Globe className="mb-3 h-8 w-8 text-michigan-teal" />
                       <h3 className="mb-2 font-semibold">Michigan EJ Screen Tool</h3>
-                      <p className="mb-4 text-sm text-muted-foreground">Use the EPA's EJScreen tool to explore environmental justice indicators for any Michigan community — pollution burden, health vulnerabilities, and demographic factors.</p>
+                      <p className="mb-4 text-sm text-muted-foreground">Use the EPA's EJScreen tool to explore environmental justice indicators for any Michigan community - pollution burden, health vulnerabilities, and demographic factors.</p>
                       <Button variant="outline" asChild>
                         <a href="https://ejscreen.epa.gov/mapper/" target="_blank" rel="noopener">
                           Open EJScreen <ExternalLink className="ml-2 h-3 w-3" />
@@ -1040,7 +1040,7 @@ const EnvironmentPage = () => {
                   <Card className="border-red-200/50 dark:border-red-900/30 bg-red-50/30 dark:bg-red-950/10">
                     <CardContent className="py-5">
                       <h3 className="text-sm font-bold text-foreground mb-1">Most Vulnerable: Wayne County</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">98,000 residents with no vehicle AND low food access — the highest concentration in Michigan. Food deserts in Detroit, Flint, and Saginaw overlap with transit deserts, creating compounding access barriers.</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">98,000 residents with no vehicle AND low food access - the highest concentration in Michigan. Food deserts in Detroit, Flint, and Saginaw overlap with transit deserts, creating compounding access barriers.</p>
                       <p className="text-[9px] text-muted-foreground/60 mt-2">Source: USDA Food Access Research Atlas 2019</p>
                       <div className="flex gap-3 mt-2">
                         <Link to="/transportation" className="text-xs text-primary hover:underline">See transit data →</Link>

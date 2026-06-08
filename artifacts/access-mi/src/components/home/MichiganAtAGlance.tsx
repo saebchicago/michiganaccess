@@ -6,13 +6,26 @@ import { Card, CardContent } from "@/components/ui/card";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { Badge } from "@/components/ui/badge";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
+import { RESOURCE_COUNT } from "@/config/platformConstants";
 
 type MetricKey = "uninsured" | "pcp" | "food";
 
 const METRICS: { key: MetricKey; label: string; desc: string }[] = [
-  { key: "uninsured", label: "Uninsured Rate", desc: "% of residents without health insurance" },
-  { key: "pcp", label: "Primary Care Ratio", desc: "Residents per primary care physician" },
-  { key: "food", label: "Food Insecurity", desc: "% of residents facing food insecurity" },
+  {
+    key: "uninsured",
+    label: "Uninsured Rate",
+    desc: "% of residents without health insurance",
+  },
+  {
+    key: "pcp",
+    label: "Primary Care Ratio",
+    desc: "Residents per primary care physician",
+  },
+  {
+    key: "food",
+    label: "Food Insecurity",
+    desc: "% of residents facing food insecurity",
+  },
 ];
 
 function parseMetric(county: string, key: MetricKey): number {
@@ -45,10 +58,26 @@ function getColor(val: number, key: MetricKey): string {
 }
 
 const HIGHLIGHT_COUNTIES = [
-  "Wayne", "Oakland", "Kent", "Genesee", "Washtenaw",
-  "Macomb", "Ingham", "Kalamazoo", "Saginaw", "Muskegon",
-  "Ottawa", "Berrien", "Calhoun", "Jackson", "Livingston",
-  "Monroe", "Allegan", "Eaton", "Bay", "Midland",
+  "Wayne",
+  "Oakland",
+  "Kent",
+  "Genesee",
+  "Washtenaw",
+  "Macomb",
+  "Ingham",
+  "Kalamazoo",
+  "Saginaw",
+  "Muskegon",
+  "Ottawa",
+  "Berrien",
+  "Calhoun",
+  "Jackson",
+  "Livingston",
+  "Monroe",
+  "Allegan",
+  "Eaton",
+  "Bay",
+  "Midland",
 ];
 
 const SEARCH_TOPICS = [
@@ -76,11 +105,18 @@ export default function MichiganAtAGlance() {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <Badge variant="outline" className="mb-3 text-xs uppercase tracking-wider border-primary/30 text-primary">
+          <Badge
+            variant="outline"
+            className="mb-3 text-xs uppercase tracking-wider border-primary/30 text-primary"
+          >
             Real data, real-time
           </Badge>
-          <h2 className="text-2xl font-bold text-foreground">Michigan at a Glance</h2>
-          <p className="text-sm text-muted-foreground mt-1">Health metrics across all 83 counties — updated from public sources</p>
+          <h2 className="text-2xl font-bold text-foreground">
+            Michigan at a Glance
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Health metrics across all 83 counties - updated from public sources
+          </p>
         </motion.div>
 
         {/* Metric toggle */}
@@ -110,13 +146,17 @@ export default function MichiganAtAGlance() {
           <Card>
             <CardContent className="p-5">
               <p className="text-xs text-muted-foreground mb-3">
-                {METRICS.find((m) => m.key === activeMetric)?.desc} — top 20 counties by population
+                {METRICS.find((m) => m.key === activeMetric)?.desc} - top 20
+                counties by population
               </p>
               <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5">
                 {HIGHLIGHT_COUNTIES.map((county) => {
                   const val = parseMetric(county, activeMetric);
                   const color = getColor(val, activeMetric);
-                  const display = activeMetric === "pcp" ? `${(val / 1000).toFixed(1)}K:1` : `${val}%`;
+                  const display =
+                    activeMetric === "pcp"
+                      ? `${(val / 1000).toFixed(1)}K:1`
+                      : `${val}%`;
                   return (
                     <Link
                       key={county}
@@ -137,11 +177,23 @@ export default function MichiganAtAGlance() {
               </div>
               <div className="flex items-center justify-between mt-3">
                 <div className="flex items-center gap-3 text-[10px] text-muted-foreground">
-                  <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-sm bg-michigan-forest" /> Good</span>
-                  <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-sm bg-michigan-gold" /> Moderate</span>
-                  <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-sm bg-michigan-coral" /> Needs Attention</span>
+                  <span className="flex items-center gap-1">
+                    <span className="h-2 w-2 rounded-sm bg-michigan-forest" />{" "}
+                    Good
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="h-2 w-2 rounded-sm bg-michigan-gold" />{" "}
+                    Moderate
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="h-2 w-2 rounded-sm bg-michigan-coral" />{" "}
+                    Needs Attention
+                  </span>
                 </div>
-                <Link to="/compare" className="text-[10px] text-primary hover:underline flex items-center gap-0.5">
+                <Link
+                  to="/compare"
+                  className="text-[10px] text-primary hover:underline flex items-center gap-0.5"
+                >
                   Compare all counties <ArrowRight className="h-2.5 w-2.5" />
                 </Link>
               </div>
@@ -152,9 +204,30 @@ export default function MichiganAtAGlance() {
         {/* Stat cards */}
         <div className="grid gap-4 sm:grid-cols-3 mb-8">
           {[
-            { icon: Heart, value: 2400, suffix: "+", label: "Healthcare providers tracked", sub: "CMS, HRSA, Leapfrog quality data", color: "text-michigan-coral" },
-            { icon: Droplets, value: 200, suffix: "+", label: "PFAS sites monitored", sub: "MPART interactive map, 8 ppt standard", color: "text-michigan-teal" },
-            { icon: Users, value: 15000, suffix: "+", label: "Community resources indexed", sub: "Food, housing, legal, utilities, health", color: "text-primary" },
+            {
+              icon: Heart,
+              value: 2400,
+              suffix: "+",
+              label: "Healthcare providers tracked",
+              sub: "CMS, HRSA, Leapfrog quality data",
+              color: "text-michigan-coral",
+            },
+            {
+              icon: Droplets,
+              value: 200,
+              suffix: "+",
+              label: "PFAS sites monitored",
+              sub: "MPART interactive map, 8 ppt standard",
+              color: "text-michigan-teal",
+            },
+            {
+              icon: Users,
+              value: RESOURCE_COUNT,
+              suffix: "+",
+              label: "Community resources indexed",
+              sub: "Food, housing, legal, utilities, health",
+              color: "text-primary",
+            },
           ].map((item) => (
             <motion.div
               key={item.label}
@@ -168,9 +241,17 @@ export default function MichiganAtAGlance() {
                     <item.icon className={`h-5 w-5 ${item.color}`} />
                   </div>
                   <div>
-                    <AnimatedCounter value={item.value} suffix={item.suffix} className={`text-2xl font-bold ${item.color}`} />
-                    <p className="text-sm font-medium text-foreground">{item.label}</p>
-                    <p className="text-[10px] text-muted-foreground mt-0.5">{item.sub}</p>
+                    <AnimatedCounter
+                      value={item.value}
+                      suffix={item.suffix}
+                      className={`text-2xl font-bold ${item.color}`}
+                    />
+                    <p className="text-sm font-medium text-foreground">
+                      {item.label}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                      {item.sub}
+                    </p>
                   </div>
                 </CardContent>
               </Card>

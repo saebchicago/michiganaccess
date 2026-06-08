@@ -1,5 +1,5 @@
 /**
- * Shared SDOH Priority Heat Visual — shows 3-level intensity for key domains.
+ * Shared SDOH Priority Heat Visual - shows 3-level intensity for key domains.
  * Pure CSS bars, no chart library.
  */
 import { Heart, Home, Zap, Bus, Brain, Activity } from "lucide-react";

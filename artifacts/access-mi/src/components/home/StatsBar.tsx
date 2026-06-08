@@ -3,12 +3,23 @@ import { Building2, Users, MapPin, Heart, FileText, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useRef, useEffect, useState } from "react";
+import { RESOURCE_COUNT, COUNTIES_COVERED } from "@/config/platformConstants";
 
-function AnimatedStat({ value, suffix = "" }: { value: number; suffix?: string }) {
+function AnimatedStat({
+  value,
+  suffix = "",
+}: {
+  value: number;
+  suffix?: string;
+}) {
   const { value: display, ref } = useCountUp(value, 1200);
   return (
-    <span ref={ref as React.RefObject<HTMLSpanElement>} className="text-4xl font-light tracking-tight text-primary-foreground tabular-nums">
-      {display.toLocaleString()}{suffix}
+    <span
+      ref={ref as React.RefObject<HTMLSpanElement>}
+      className="text-4xl font-light tracking-tight text-primary-foreground tabular-nums"
+    >
+      {display.toLocaleString()}
+      {suffix}
     </span>
   );
 }
@@ -18,8 +29,18 @@ const StatsBar = () => {
 
   const stats = [
     { icon: Building2, value: 88, suffix: "", label: "Healthcare Facilities" },
-    { icon: MapPin, value: 83, suffix: "", label: t("stats.counties") },
-    { icon: Heart, value: 15000, suffix: "+", label: "Community Resources" },
+    {
+      icon: MapPin,
+      value: COUNTIES_COVERED,
+      suffix: "",
+      label: t("stats.counties"),
+    },
+    {
+      icon: Heart,
+      value: RESOURCE_COUNT,
+      suffix: "+",
+      label: "Community Resources",
+    },
     { icon: Users, value: 170, suffix: "+", label: "Municipalities Tracked" },
     { icon: FileText, value: 183, suffix: "M+", label: "Energy Assistance" },
     { icon: Zap, value: 12, suffix: "", label: "Live Data Feeds" },
@@ -46,7 +67,9 @@ const StatsBar = () => {
             >
               <stat.icon className="mb-1 h-5 w-5 text-michigan-gold" />
               <AnimatedStat value={stat.value} suffix={stat.suffix} />
-              <span className="text-[11px] font-medium uppercase tracking-widest text-primary-foreground/60">{stat.label}</span>
+              <span className="text-[11px] font-medium uppercase tracking-widest text-primary-foreground/60">
+                {stat.label}
+              </span>
             </motion.div>
           ))}
         </motion.div>

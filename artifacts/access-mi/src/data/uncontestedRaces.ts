@@ -26,7 +26,7 @@ export const MICHIGAN_RACE_DATA: RegionalRaceData[] = [
     uncontestedPct: 75.5,
     zeroCandidate: 210,
     worstOfficeType: "Township trustee",
-    bestOpportunity: "School board — 52% uncontested",
+    bestOpportunity: "School board - 52% uncontested",
     year: 2024,
   },
   {
@@ -59,7 +59,7 @@ export const MICHIGAN_RACE_DATA: RegionalRaceData[] = [
     uncontestedPct: 84.8,
     zeroCandidate: 160,
     worstOfficeType: "Township clerk / treasurer",
-    bestOpportunity: "School board — critical shortage",
+    bestOpportunity: "School board - critical shortage",
     year: 2024,
   },
   {
@@ -70,7 +70,7 @@ export const MICHIGAN_RACE_DATA: RegionalRaceData[] = [
     uncontestedPct: 90.1,
     zeroCandidate: 220,
     worstOfficeType: "Village council",
-    bestOpportunity: "All types — critical shortage",
+    bestOpportunity: "All types - critical shortage",
     year: 2024,
   },
 ];

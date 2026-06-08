@@ -123,7 +123,7 @@ export default function DataFreshnessDashboard() {
 
       <p className="text-[10px] text-muted-foreground">
         Freshness status reflects expected refresh cadence vs. last known update. "Live" sources provide real-time or continuous data.
-        Status is manually verified — not automatically monitored.
+        Status is manually verified - not automatically monitored.
       </p>
     </motion.div>
   );

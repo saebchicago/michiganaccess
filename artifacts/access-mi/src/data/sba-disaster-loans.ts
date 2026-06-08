@@ -1,5 +1,5 @@
 /**
- * SBA Disaster Loan Data — Michigan County-Level
+ * SBA Disaster Loan Data - Michigan County-Level
  * Modeled from SBA disaster loan reports, FY2020-2024.
  * Illustrative county-level estimates based on public FOIA data.
  */

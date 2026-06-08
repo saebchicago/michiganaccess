@@ -46,7 +46,7 @@ export default function CommunityReportForm({ county, placeSlug, zipcode }: Prop
       });
       if (error) throw error;
       setSubmitted(true);
-      toast.success("Report submitted — thank you for helping improve our data.");
+      toast.success("Report submitted - thank you for helping improve our data.");
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {

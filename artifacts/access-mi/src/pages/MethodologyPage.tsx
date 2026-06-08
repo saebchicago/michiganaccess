@@ -6,16 +6,38 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import {
-  Database, Shield, Users, Accessibility, Languages, Globe, Eye,
-  ArrowRight, BarChart3, Heart, CheckCircle2, Info, Layers,
-  Monitor, Phone, Printer, FileText, Scale
+  Database,
+  Shield,
+  Users,
+  Accessibility,
+  Languages,
+  Globe,
+  Eye,
+  ArrowRight,
+  BarChart3,
+  Heart,
+  CheckCircle2,
+  Info,
+  Layers,
+  Monitor,
+  Phone,
+  Printer,
+  FileText,
+  Scale,
 } from "lucide-react";
-import { DataClassification, DataClassificationLegend } from "@/components/shared/DataClassification";
+import {
+  DataClassification,
+  DataClassificationLegend,
+} from "@/components/shared/DataClassification";
 import DataFreshnessDashboard from "@/components/shared/DataFreshnessDashboard";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }),
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.5 },
+  }),
 };
 
 const flowSteps = [
@@ -67,51 +89,97 @@ const equityPrinciples = [
     icon: Accessibility,
     title: "Universal Design From Lived Experience",
     desc: "Every feature tested through personas representing uninsured individuals, limited English proficiency, cognitive disabilities, low digital literacy, and rural isolation.",
-    example: "Safety-net clinics surfaced first in search results, not buried beneath others.",
+    example:
+      "Safety-net clinics surfaced first in search results, not buried beneath others.",
   },
   {
     icon: Scale,
     title: "Dignity in Information Architecture",
-    desc: 'No shaming language. Financial assistance presented as a normal pathway, not an exception.',
-    example: '"Sliding scale based on income" — not "free care" or "charity care."',
+    desc: "No shaming language. Financial assistance presented as a normal pathway, not an exception.",
+    example:
+      '"Sliding scale based on income" - not "free care" or "charity care."',
   },
   {
     icon: Eye,
     title: "Progressive Disclosure for Cognitive Accessibility",
     desc: "Complex data starts simple; users choose depth. No information overload.",
-    example: 'Hospital quality shows "95/100" upfront; click expands to 15 detailed metrics.',
+    example:
+      'Hospital quality shows "95/100" upfront; click expands to 15 detailed metrics.',
   },
   {
     icon: Layers,
     title: "Multi-Modal Access",
     desc: "Visual (maps, charts), textual (summaries), actionable (phone numbers, directions).",
-    example: "Download options for screen readers, print-optimized resource pages.",
+    example:
+      "Download options for screen readers, print-optimized resource pages.",
   },
 ];
 
 const scoringWeights = [
-  { label: "Geographic Access", pct: 40, color: "bg-primary", desc: "Drive time from user location (not straight-line distance)" },
-  { label: "Clinical Quality", pct: 30, color: "bg-michigan-forest", desc: "CMS scores + Leapfrog grades + specialty accreditations" },
-  { label: "Service Comprehensiveness", pct: 15, color: "bg-michigan-teal", desc: "Integrated services (behavioral health, social work, telehealth)" },
-  { label: "Digital Accessibility", pct: 15, color: "bg-michigan-sky", desc: "Online scheduling, language services, patient portals" },
+  {
+    label: "Geographic Access",
+    pct: 40,
+    color: "bg-primary",
+    desc: "Drive time from user location (not straight-line distance)",
+  },
+  {
+    label: "Clinical Quality",
+    pct: 30,
+    color: "bg-michigan-forest",
+    desc: "CMS scores + Leapfrog grades + specialty accreditations",
+  },
+  {
+    label: "Service Comprehensiveness",
+    pct: 15,
+    color: "bg-michigan-teal",
+    desc: "Integrated services (behavioral health, social work, telehealth)",
+  },
+  {
+    label: "Digital Accessibility",
+    pct: 15,
+    color: "bg-michigan-sky",
+    desc: "Online scheduling, language services, patient portals",
+  },
 ];
 
 export default function MethodologyPage() {
   const { t } = useTranslation();
-  usePageMeta({ title: t("methodologyPage.badge"), description: t("methodologyPage.subtitle"), path: "/methodology" });
+  usePageMeta({
+    title: t("methodologyPage.badge"),
+    description: t("methodologyPage.subtitle"),
+    path: "/methodology",
+  });
   return (
     <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
           <Breadcrumbs items={[{ label: t("methodologyPage.badge") }]} />
-          <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+          <motion.span
+            initial="hidden"
+            animate="visible"
+            variants={fade}
+            custom={0}
+            className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary"
+          >
             {t("methodologyPage.badge")}
           </motion.span>
-          <motion.h1 variants={fade} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
+          <motion.h1
+            variants={fade}
+            custom={1}
+            initial="hidden"
+            animate="visible"
+            className="mb-4 text-3xl font-bold text-foreground lg:text-5xl"
+          >
             {t("methodologyPage.title")}
           </motion.h1>
-          <motion.p variants={fade} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
+          <motion.p
+            variants={fade}
+            custom={2}
+            initial="hidden"
+            animate="visible"
+            className="mx-auto max-w-2xl text-lg text-muted-foreground"
+          >
             {t("methodologyPage.subtitle")}
           </motion.p>
         </div>
@@ -120,30 +188,57 @@ export default function MethodologyPage() {
       <div className="container max-w-5xl py-12 space-y-16">
         {/* Data Integration Framework */}
         <section>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fade}
+            custom={0}
+          >
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                 <Database className="h-5 w-5 text-primary" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">{t("methodologyPage.frameworkTitle")}</h2>
-                <p className="text-sm text-muted-foreground">{t("methodologyPage.frameworkSubtitle")}</p>
+                <h2 className="text-2xl font-bold text-foreground">
+                  {t("methodologyPage.frameworkTitle")}
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  {t("methodologyPage.frameworkSubtitle")}
+                </p>
               </div>
             </div>
           </motion.div>
 
           <div className="grid gap-4 md:grid-cols-4">
             {flowSteps.map((step, i) => (
-              <motion.div key={step.titleKey} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i} className="relative">
+              <motion.div
+                key={step.titleKey}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fade}
+                custom={i}
+                className="relative"
+              >
                 <Card className="h-full hover-lift">
                   <CardContent className="pt-6">
-                    <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg ${step.color.split(" ")[0]}`}>
-                      <step.icon className={`h-5 w-5 ${step.color.split(" ")[1]}`} />
+                    <div
+                      className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg ${step.color.split(" ")[0]}`}
+                    >
+                      <step.icon
+                        className={`h-5 w-5 ${step.color.split(" ")[1]}`}
+                      />
                     </div>
-                    <h3 className="mb-2 text-sm font-bold text-foreground">{t(`methodologyPage.${step.titleKey}`)}</h3>
+                    <h3 className="mb-2 text-sm font-bold text-foreground">
+                      {t(`methodologyPage.${step.titleKey}`)}
+                    </h3>
                     <ul className="space-y-1">
                       {step.items.map((item) => (
-                        <li key={item} className="flex items-start gap-1.5 text-xs text-muted-foreground">
+                        <li
+                          key={item}
+                          className="flex items-start gap-1.5 text-xs text-muted-foreground"
+                        >
                           <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" />
                           {item}
                         </li>
@@ -163,29 +258,53 @@ export default function MethodologyPage() {
 
         {/* Equity-Centered Design Principles */}
         <section>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fade}
+            custom={0}
+          >
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
                 <Heart className="h-5 w-5 text-michigan-coral" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">{t("methodologyPage.equityTitle")}</h2>
-                <p className="text-sm text-muted-foreground">{t("methodologyPage.equitySubtitle")}</p>
+                <h2 className="text-2xl font-bold text-foreground">
+                  {t("methodologyPage.equityTitle")}
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  {t("methodologyPage.equitySubtitle")}
+                </p>
               </div>
             </div>
           </motion.div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {equityPrinciples.map((p, i) => (
-              <motion.div key={p.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
+              <motion.div
+                key={p.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fade}
+                custom={i}
+              >
                 <Card className="h-full hover-lift">
                   <CardContent className="pt-6">
                     <p.icon className="mb-3 h-5 w-5 text-michigan-coral" />
-                    <h3 className="mb-1 text-sm font-bold text-foreground">{p.title}</h3>
-                    <p className="mb-3 text-xs text-muted-foreground">{p.desc}</p>
+                    <h3 className="mb-1 text-sm font-bold text-foreground">
+                      {p.title}
+                    </h3>
+                    <p className="mb-3 text-xs text-muted-foreground">
+                      {p.desc}
+                    </p>
                     <div className="rounded-md bg-muted/50 p-2.5 border border-border">
                       <p className="text-[11px] text-muted-foreground">
-                        <span className="font-semibold text-foreground">{t("methodologyPage.example")}:</span> {p.example}
+                        <span className="font-semibold text-foreground">
+                          {t("methodologyPage.example")}:
+                        </span>{" "}
+                        {p.example}
                       </p>
                     </div>
                   </CardContent>
@@ -199,14 +318,24 @@ export default function MethodologyPage() {
 
         {/* Data Normalization */}
         <section>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fade}
+            custom={0}
+          >
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
                 <Layers className="h-5 w-5 text-michigan-teal" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">Data Normalization & Ingestion</h2>
-                <p className="text-sm text-muted-foreground">How raw federal datasets become usable civic infrastructure</p>
+                <h2 className="text-2xl font-bold text-foreground">
+                  Data Normalization & Ingestion
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  How raw federal datasets become usable civic infrastructure
+                </p>
               </div>
             </div>
           </motion.div>
@@ -310,7 +439,8 @@ export default function MethodologyPage() {
                 url: "https://mi-suddr.com/data/",
               },
               {
-                source: "GATIS (General Active Transportation Infrastructure Specification)",
+                source:
+                  "GATIS (General Active Transportation Infrastructure Specification)",
                 desc: "Bureau of Transportation Statistics open standard (v1.0, March 2026) for sidewalk, bike lane, curb ramp, and transit stop geospatial data. Michigan data via SEMCOG FeatureServer covering 7 SE counties (Wayne, Oakland, Macomb, Washtenaw, Livingston, Monroe, St. Clair). CC0 Public Domain.",
                 frequency: "Spec: annual; SEMCOG: quarterly",
                 url: "https://dotbts.github.io/BPA/",
@@ -382,8 +512,9 @@ export default function MethodologyPage() {
                 url: "https://www.ers.usda.gov/data-products/food-access-research-atlas/",
               },
               {
-                source: "United for ALICE (Asset Limited, Income Constrained, Employed)",
-                desc: "County-level ALICE Threshold data — households above poverty but below cost of living. Survival Budget breakdowns by household type.",
+                source:
+                  "United for ALICE (Asset Limited, Income Constrained, Employed)",
+                desc: "County-level ALICE Threshold data - households above poverty but below cost of living. Survival Budget breakdowns by household type.",
                 frequency: "Annual",
                 url: "https://unitedforalice.org/state-overview/michigan",
               },
@@ -395,7 +526,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "EGLE Brownfields",
-                desc: "Sites where EGLE has provided redevelopment incentives — grants, loans, tax increment financing, or free environmental assessments.",
+                desc: "Sites where EGLE has provided redevelopment incentives - grants, loans, tax increment financing, or free environmental assessments.",
                 frequency: "Updated as incentives are awarded",
                 url: "https://gis-egle.hub.arcgis.com/maps/egle::brownfields",
               },
@@ -407,7 +538,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "Michigan GIS Open Data Portal",
-                desc: "State-level geospatial datasets — boundaries, demographics, geology, infrastructure. Downloadable as shapefile, KML, CSV, or via ArcGIS REST API.",
+                desc: "State-level geospatial datasets - boundaries, demographics, geology, infrastructure. Downloadable as shapefile, KML, CSV, or via ArcGIS REST API.",
                 frequency: "Varies by dataset",
                 url: "https://gis-michigan.opendata.arcgis.com/",
               },
@@ -425,7 +556,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "USDA SNAP Retailer Locator",
-                desc: "Authorized SNAP retailers in Michigan — grocery stores, convenience stores, farmers markets. Geocoded with store type classification.",
+                desc: "Authorized SNAP retailers in Michigan - grocery stores, convenience stores, farmers markets. Geocoded with store type classification.",
                 frequency: "Continuously updated",
                 url: "https://usda-fns.hub.arcgis.com/datasets/USDA-FNS::snap-store-locations/",
               },
@@ -443,7 +574,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "March of Dimes PeriStats",
-                desc: "County-level maternal and infant health indicators — preterm birth, low birth weight, prenatal care access, teen birth rate.",
+                desc: "County-level maternal and infant health indicators - preterm birth, low birth weight, prenatal care access, teen birth rate.",
                 frequency: "Annual",
                 url: "https://www.marchofdimes.org/peristats/",
               },
@@ -472,17 +603,45 @@ export default function MethodologyPage() {
                 url: "/health-equity-atlas",
               },
             ].map((src) => (
-              <details key={src.source} className="group rounded-lg border border-border">
+              <details
+                key={src.source}
+                className="group rounded-lg border border-border"
+              >
                 <summary className="flex items-center justify-between gap-3 px-4 py-3 cursor-pointer hover:bg-muted/50 transition-colors list-none">
-                  <span className="text-sm font-medium text-foreground">{src.source}</span>
+                  <span className="text-sm font-medium text-foreground">
+                    {src.source}
+                  </span>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="rounded-full bg-michigan-teal/15 px-2 py-0.5 text-[10px] font-semibold text-foreground">{src.frequency}</span>
-                    <svg className="h-3.5 w-3.5 text-muted-foreground transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    <span className="rounded-full bg-michigan-teal/15 px-2 py-0.5 text-[10px] font-semibold text-foreground">
+                      {src.frequency}
+                    </span>
+                    <svg
+                      className="h-3.5 w-3.5 text-muted-foreground transition-transform group-open:rotate-180"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
                   </div>
                 </summary>
                 <div className="px-4 pb-3 border-t border-border/50">
-                  <p className="text-xs text-muted-foreground leading-relaxed mt-2">{src.desc}</p>
-                  <a href={src.url} target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary hover:underline mt-1 inline-block">{src.url}</a>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-2">
+                    {src.desc}
+                  </p>
+                  <a
+                    href={src.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] text-primary hover:underline mt-1 inline-block"
+                  >
+                    {src.url}
+                  </a>
                 </div>
               </details>
             ))}
@@ -490,10 +649,24 @@ export default function MethodologyPage() {
 
           <div className="rounded-lg border border-border bg-muted/50 p-4">
             <p className="text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">Normalization Pipeline:</span> All datasets undergo schema mapping → FIPS code standardization → deduplication → geocoding → confidence scoring before entering the presentation layer. Records with incomplete geographic identifiers are flagged for manual review rather than dropped, ensuring rural and tribal area coverage.
+              <span className="font-semibold text-foreground">
+                Normalization Pipeline:
+              </span>{" "}
+              All datasets undergo schema mapping → FIPS code standardization →
+              deduplication → geocoding → confidence scoring before entering the
+              presentation layer. Records with incomplete geographic identifiers
+              are flagged for manual review rather than dropped, ensuring rural
+              and tribal area coverage.
             </p>
             <p className="text-xs text-muted-foreground mt-2">
-              <span className="font-semibold text-foreground">Caveats:</span> Some county-level data may be suppressed for small populations (&lt;20 events) to protect privacy. Energy burden estimates are modeled from census tract-level data and may not reflect individual household circumstances. MDHHS disparity indices use age-adjusted rates; year-over-year comparisons should account for methodology changes. All data has inherent lag (typically 1–2 years from collection to publication).
+              <span className="font-semibold text-foreground">Caveats:</span>{" "}
+              Some county-level data may be suppressed for small populations
+              (&lt;20 events) to protect privacy. Energy burden estimates are
+              modeled from census tract-level data and may not reflect
+              individual household circumstances. MDHHS disparity indices use
+              age-adjusted rates; year-over-year comparisons should account for
+              methodology changes. All data has inherent lag (typically 1–2
+              years from collection to publication).
             </p>
           </div>
         </section>
@@ -509,33 +682,63 @@ export default function MethodologyPage() {
 
         {/* Quality Ranking Methodology */}
         <section>
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fade}
+            custom={0}
+          >
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
                 <BarChart3 className="h-5 w-5 text-michigan-forest" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground">{t("methodologyPage.rankingTitle")}</h2>
-                <p className="text-sm text-muted-foreground">{t("methodologyPage.rankingSubtitle")}</p>
+                <h2 className="text-2xl font-bold text-foreground">
+                  {t("methodologyPage.rankingTitle")}
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  {t("methodologyPage.rankingSubtitle")}
+                </p>
               </div>
             </div>
           </motion.div>
 
           {/* Formula */}
           <div className="mb-6 rounded-xl border border-primary/20 bg-primary/5 p-6">
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">{t("methodologyPage.formulaLabel")}</p>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              {t("methodologyPage.formulaLabel")}
+            </p>
             <p className="font-mono text-sm text-foreground leading-relaxed">
-              COMPOSITE = <span className="text-primary font-bold">40%</span> Geographic Access + <span className="text-michigan-forest font-bold">30%</span> Clinical Quality + <span className="text-michigan-teal font-bold">15%</span> Service Comprehensiveness + <span className="text-michigan-sky font-bold">15%</span> Digital Accessibility
+              COMPOSITE = <span className="text-primary font-bold">40%</span>{" "}
+              Geographic Access +{" "}
+              <span className="text-michigan-forest font-bold">30%</span>{" "}
+              Clinical Quality +{" "}
+              <span className="text-michigan-teal font-bold">15%</span> Service
+              Comprehensiveness +{" "}
+              <span className="text-michigan-sky font-bold">15%</span> Digital
+              Accessibility
             </p>
           </div>
 
           {/* Weight bars */}
           <div className="space-y-4 mb-8">
             {scoringWeights.map((w, i) => (
-              <motion.div key={w.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i}>
+              <motion.div
+                key={w.label}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fade}
+                custom={i}
+              >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-semibold text-foreground">{w.label}</span>
-                  <span className="text-sm font-bold text-primary">{w.pct}%</span>
+                  <span className="text-sm font-semibold text-foreground">
+                    {w.label}
+                  </span>
+                  <span className="text-sm font-bold text-primary">
+                    {w.pct}%
+                  </span>
                 </div>
                 <div className="h-2.5 w-full rounded-full bg-muted">
                   <motion.div
@@ -555,7 +758,9 @@ export default function MethodologyPage() {
           <div className="rounded-xl border-2 border-michigan-coral/30 bg-michigan-coral/5 p-6">
             <div className="flex items-center gap-2 mb-3">
               <Shield className="h-5 w-5 text-michigan-coral" />
-              <h3 className="text-sm font-bold text-foreground">{t("methodologyPage.equityOverrideTitle")}</h3>
+              <h3 className="text-sm font-bold text-foreground">
+                {t("methodologyPage.equityOverrideTitle")}
+              </h3>
             </div>
             <ul className="space-y-2">
               {[
@@ -563,7 +768,10 @@ export default function MethodologyPage() {
                 "Filters never completely hide safety-net options",
                 '"Recommended for uninsured patients" callouts displayed alongside quality badges',
               ].map((rule) => (
-                <li key={rule} className="flex items-start gap-2 text-xs text-muted-foreground">
+                <li
+                  key={rule}
+                  className="flex items-start gap-2 text-xs text-muted-foreground"
+                >
                   <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-michigan-coral" />
                   {rule}
                 </li>
@@ -575,26 +783,63 @@ export default function MethodologyPage() {
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             <Card className="border-destructive/20">
               <CardContent className="pt-6">
-                <h4 className="mb-3 text-sm font-bold text-destructive">{t("methodologyPage.standardRanking")}</h4>
+                <h4 className="mb-3 text-sm font-bold text-destructive">
+                  {t("methodologyPage.standardRanking")}
+                </h4>
                 <ol className="space-y-2 text-xs text-muted-foreground">
-                  <li className="flex gap-2"><span className="font-bold text-foreground">1.</span> Large Health System — 2.1 mi</li>
-                  <li className="flex gap-2"><span className="font-bold text-foreground">2.</span> Specialty Practice — 3.4 mi</li>
-                  <li className="flex gap-2"><span className="font-bold text-foreground">3.</span> Private Clinic — 4.0 mi</li>
-                  <li className="flex gap-2 text-muted-foreground"><span className="font-bold">7.</span> FQHC (Safety-Net) — 5.8 mi</li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-foreground">1.</span> Large
+                    Health System - 2.1 mi
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-foreground">2.</span>{" "}
+                    Specialty Practice - 3.4 mi
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-foreground">3.</span>{" "}
+                    Private Clinic - 4.0 mi
+                  </li>
+                  <li className="flex gap-2 text-muted-foreground">
+                    <span className="font-bold">7.</span> FQHC (Safety-Net) -
+                    5.8 mi
+                  </li>
                 </ol>
-                <p className="mt-3 text-xs font-medium text-destructive">⚠ Safety-net clinic buried at position 7 despite being most relevant for uninsured</p>
+                <p className="mt-3 text-xs font-medium text-destructive">
+                  ⚠ Safety-net clinic buried at position 7 despite being most
+                  relevant for uninsured
+                </p>
               </CardContent>
             </Card>
             <Card className="border-michigan-forest/20">
               <CardContent className="pt-6">
-                <h4 className="mb-3 text-sm font-bold text-michigan-forest">{t("methodologyPage.equityRanking")}</h4>
+                <h4 className="mb-3 text-sm font-bold text-michigan-forest">
+                  {t("methodologyPage.equityRanking")}
+                </h4>
                 <ol className="space-y-2 text-xs text-muted-foreground">
-                  <li className="flex gap-2"><span className="font-bold text-foreground">1.</span> Large Health System — 2.1 mi <span className="text-michigan-forest">· Quality: A</span></li>
-                  <li className="flex gap-2"><span className="font-bold text-foreground">2.</span> <span className="font-semibold text-michigan-forest">FQHC — 5.8 mi · "No one turned away"</span></li>
-                  <li className="flex gap-2"><span className="font-bold text-foreground">3.</span> Specialty Practice — 3.4 mi</li>
-                  <li className="flex gap-2"><span className="font-bold text-foreground">4.</span> Private Clinic — 4.0 mi</li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-foreground">1.</span> Large
+                    Health System - 2.1 mi{" "}
+                    <span className="text-michigan-forest">· Quality: A</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-foreground">2.</span>{" "}
+                    <span className="font-semibold text-michigan-forest">
+                      FQHC - 5.8 mi · "No one turned away"
+                    </span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-foreground">3.</span>{" "}
+                    Specialty Practice - 3.4 mi
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="font-bold text-foreground">4.</span>{" "}
+                    Private Clinic - 4.0 mi
+                  </li>
                 </ol>
-                <p className="mt-3 text-[11px] text-michigan-forest">✅ Safety-net clinic elevated with equity boost for vulnerable populations</p>
+                <p className="mt-3 text-[11px] text-michigan-forest">
+                  ✅ Safety-net clinic elevated with equity boost for vulnerable
+                  populations
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -609,8 +854,13 @@ export default function MethodologyPage() {
               <Info className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">How to Read Data on Access Michigan</h2>
-              <p className="text-sm text-muted-foreground">Every metric is labeled so you always know what you're looking at</p>
+              <h2 className="text-2xl font-bold text-foreground">
+                How to Read Data on Access Michigan
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Every metric is labeled so you always know what you're looking
+                at
+              </p>
             </div>
           </div>
 
@@ -619,28 +869,51 @@ export default function MethodologyPage() {
               <div className="flex items-start gap-3">
                 <DataClassification type="verified" />
               </div>
-              <p className="text-sm text-muted-foreground mt-2">This data comes directly from an authoritative public source (CMS, CDC, HRSA, Census, MDHHS) and has been validated through our ingestion pipeline. It reflects real-world measurements.</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                This data comes directly from an authoritative public source
+                (CMS, CDC, HRSA, Census, MDHHS) and has been validated through
+                our ingestion pipeline. It reflects real-world measurements.
+              </p>
             </div>
 
             <div className="rounded-lg border border-border p-4">
               <div className="flex items-start gap-3">
                 <DataClassification type="modeled" />
               </div>
-              <p className="text-sm text-muted-foreground mt-2">This value is computed from verified public datasets using a transparent formula. The Civic Insight Score, for example, combines uninsured rates, food insecurity, and county type into a single 0–100 index. The methodology is documented above.</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                This value is computed from verified public datasets using a
+                transparent formula. The Civic Insight Score, for example,
+                combines four U.S. Census Bureau ACS measures - median household
+                income (B19013), poverty rate (B17001), share of adults 25+ with
+                a bachelor's degree (B15003), and unemployment rate (B23025) -
+                into a single 0–100 index. Each input is mapped to a 0–100
+                sub-score and averaged. When the Census API is unavailable for a
+                selected county, the score renders as "data unavailable" rather
+                than falling back to a default value.
+              </p>
             </div>
 
             <div className="rounded-lg border border-border p-4">
               <div className="flex items-start gap-3">
                 <DataClassification type="illustrative" />
               </div>
-              <p className="text-sm text-muted-foreground mt-2">This content demonstrates what the platform can do using realistic scenarios. It is not a measured outcome. Case studies, example scores, and projected analyses carry this label.</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                This content demonstrates what the platform can do using
+                realistic scenarios. It is not a measured outcome. Case studies,
+                example scores, and projected analyses carry this label.
+              </p>
             </div>
 
             <div className="rounded-lg border border-border p-4">
               <div className="flex items-start gap-3">
                 <DataClassification type="pending" />
               </div>
-              <p className="text-sm text-muted-foreground mt-2">Data for this geography is not yet available. Access Michigan is expanding coverage — when a county or metric lacks sufficient source data, we show this label rather than displaying incomplete information.</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Data for this geography is not yet available. Access Michigan is
+                expanding coverage - when a county or metric lacks sufficient
+                source data, we show this label rather than displaying
+                incomplete information.
+              </p>
             </div>
           </div>
         </section>
@@ -652,27 +925,75 @@ export default function MethodologyPage() {
               <Info className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">SDOH Detection Gap Funnel</h2>
-              <p className="text-sm text-muted-foreground">How the 1.77M → 7,105 funnel is constructed</p>
+              <h2 className="text-2xl font-bold text-foreground">
+                SDOH Detection Gap Funnel
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                How the 1.77M → 7,105 funnel is constructed
+              </p>
             </div>
           </div>
           <div className="space-y-3 text-sm text-muted-foreground">
             <p>
-              The Detection Gap funnel is a <strong className="text-foreground">modeled estimate</strong>, not measured Michigan outcomes. It applies published national benchmark rates to Michigan's Medicaid MCO enrollment to illustrate where the SDOH screening and referral pipeline loses people between eligibility and documented benefit.
+              The Detection Gap funnel is a{" "}
+              <strong className="text-foreground">modeled estimate</strong>, not
+              measured Michigan outcomes. It applies published national
+              benchmark rates to Michigan's Medicaid MCO enrollment to
+              illustrate where the SDOH screening and referral pipeline loses
+              people between eligibility and documented benefit.
             </p>
             <ul className="list-disc pl-5 space-y-1.5">
-              <li><strong className="text-foreground">Starting pool:</strong> 1,772,000 Michigan Medicaid MCO beneficiaries (HMA March 2025 enrollment report).</li>
-              <li><strong className="text-foreground">Screening rate:</strong> 27.0% applied as reference, anchored on Trinity Health's published 27.4% rate across 1M+ outpatients (FY2025).</li>
-              <li><strong className="text-foreground">Positive-screen rate:</strong> ~27% national average (NACHC 2023 SDOH Screening Report).</li>
-              <li><strong className="text-foreground">Referral-to-services rate:</strong> ~50% national average (CMS Accountable Health Communities Model, final evaluation).</li>
-              <li><strong className="text-foreground">Referral completion rate:</strong> ~11% national average (Health Affairs 2023 meta-analysis of closed-loop referral studies).</li>
-              <li><strong className="text-foreground">Health improvement documented:</strong> Not quantified — no publicly available Michigan-specific data.</li>
+              <li>
+                <strong className="text-foreground">Starting pool:</strong>{" "}
+                1,772,000 Michigan Medicaid MCO beneficiaries (HMA March 2025
+                enrollment report).
+              </li>
+              <li>
+                <strong className="text-foreground">Screening rate:</strong>{" "}
+                27.0% applied as reference, anchored on Trinity Health's
+                published 27.4% rate across 1M+ outpatients (FY2025).
+              </li>
+              <li>
+                <strong className="text-foreground">
+                  Positive-screen rate:
+                </strong>{" "}
+                ~27% national average (NACHC 2023 SDOH Screening Report).
+              </li>
+              <li>
+                <strong className="text-foreground">
+                  Referral-to-services rate:
+                </strong>{" "}
+                ~50% national average (CMS Accountable Health Communities Model,
+                final evaluation).
+              </li>
+              <li>
+                <strong className="text-foreground">
+                  Referral completion rate:
+                </strong>{" "}
+                ~11% national average (Health Affairs 2023 meta-analysis of
+                closed-loop referral studies).
+              </li>
+              <li>
+                <strong className="text-foreground">
+                  Health improvement documented:
+                </strong>{" "}
+                Not quantified - no publicly available Michigan-specific data.
+              </li>
             </ul>
             <p>
-              The "With Access Michigan" projection is an <strong className="text-foreground">illustrative platform target</strong>, not an achieved outcome. Projected screening, referral, and completion rates assume unified intake, closed-loop tracking, and CIE integration — none of which are retrospectively measured.
+              The "With Access Michigan" projection is an{" "}
+              <strong className="text-foreground">
+                illustrative platform target
+              </strong>
+              , not an achieved outcome. Projected screening, referral, and
+              completion rates assume unified intake, closed-loop tracking, and
+              CIE integration - none of which are retrospectively measured.
             </p>
             <p className="text-xs text-muted-foreground/70">
-              What this funnel is not: a count of Michigan residents whose needs were actually met, a peer-reviewed study, or a claim that the national benchmarks apply uniformly to every Michigan MCO. Use it to size the gap, not to audit a specific program.
+              What this funnel is not: a count of Michigan residents whose needs
+              were actually met, a peer-reviewed study, or a claim that the
+              national benchmarks apply uniformly to every Michigan MCO. Use it
+              to size the gap, not to audit a specific program.
             </p>
           </div>
         </section>
@@ -684,8 +1005,12 @@ export default function MethodologyPage() {
               <Info className="h-5 w-5 text-amber-600 dark:text-amber-400" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">Limitations & Known Gaps</h2>
-              <p className="text-sm text-muted-foreground">What we don't have yet, and what to watch for</p>
+              <h2 className="text-2xl font-bold text-foreground">
+                Limitations & Known Gaps
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                What we don't have yet, and what to watch for
+              </p>
             </div>
           </div>
           <div className="space-y-3">
@@ -697,7 +1022,10 @@ export default function MethodologyPage() {
               "Utility stress: Disconnection, arrears, and assistance participation levels are currently illustrative placeholders pending integration of MPSC quarterly data.",
               "No individual claims data: All data is population-level. We do not access or display individual health records, claims, or member information.",
             ].map((item, i) => (
-              <div key={i} className="flex gap-3 rounded-lg border border-border p-3">
+              <div
+                key={i}
+                className="flex gap-3 rounded-lg border border-border p-3"
+              >
                 <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600 dark:text-amber-400" />
                 <p className="text-sm text-muted-foreground">{item}</p>
               </div>
@@ -714,8 +1042,12 @@ export default function MethodologyPage() {
               <Shield className="h-5 w-5 text-michigan-forest" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">How we keep this honest</h2>
-              <p className="text-sm text-muted-foreground">Our commitments to data integrity</p>
+              <h2 className="text-2xl font-bold text-foreground">
+                How we keep this honest
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Our commitments to data integrity
+              </p>
             </div>
           </div>
           <div className="rounded-xl border border-michigan-forest/20 bg-michigan-forest/[0.03] p-6 space-y-3">
@@ -725,14 +1057,23 @@ export default function MethodologyPage() {
               "Every number is either from a named public dataset or a clearly labeled modeled index, with methods in one place.",
               "When we find mistakes or better methods, we fix them and update this page.",
             ].map((bullet) => (
-              <div key={bullet} className="flex items-start gap-2 text-sm text-muted-foreground">
+              <div
+                key={bullet}
+                className="flex items-start gap-2 text-sm text-muted-foreground"
+              >
                 <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-michigan-forest" />
                 {bullet}
               </div>
             ))}
             <p className="text-xs text-muted-foreground italic pt-1">
-              We invite researchers, journalists, and community partners to audit our methods and tell us what they see.{" "}
-              <a href="/contact?subject=Methods%20audit" className="text-primary hover:underline font-medium">Contact us here →</a>
+              We invite researchers, journalists, and community partners to
+              audit our methods and tell us what they see.{" "}
+              <a
+                href="/contact?subject=Methods%20audit"
+                className="text-primary hover:underline font-medium"
+              >
+                Contact us here →
+              </a>
             </p>
           </div>
         </section>
@@ -746,24 +1087,51 @@ export default function MethodologyPage() {
               <FileText className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground">Trust & Data Fixes</h2>
-              <p className="text-sm text-muted-foreground">Concrete corrections we've made to improve accuracy</p>
+              <h2 className="text-2xl font-bold text-foreground">
+                Trust & Data Fixes
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Concrete corrections we've made to improve accuracy
+              </p>
             </div>
           </div>
           <div className="space-y-3">
             {[
-              { fix: "Removed fabricated impact projections from About page; all impact copy now describes goals qualitatively until measured outcomes are available.", date: "March 2026" },
-              { fix: "Replaced aspirational performance claims ('Sub-3-second loads on 3G', 'automated weekly pulls') with accurate present-tense descriptions.", date: "March 2026" },
-              { fix: "Moved community events contact info into a safe public view to protect organizer privacy.", date: "February 2026" },
-              { fix: "Restricted direct reads on ingestion logs and internal tables; added RLS policies to all public-facing tables.", date: "February 2026" },
-              { fix: "Labeled all composite scores (Civic Insight Score, access gap index) as 'Modeled estimate' with methodology links.", date: "February 2026" },
-              { fix: "Removed fabricated impact offsets from beta counters; all impact numbers now come from real data.", date: "February 2026" },
+              {
+                fix: "Removed fabricated impact projections from About page; all impact copy now describes goals qualitatively until measured outcomes are available.",
+                date: "March 2026",
+              },
+              {
+                fix: "Replaced aspirational performance claims ('Sub-3-second loads on 3G', 'automated weekly pulls') with accurate present-tense descriptions.",
+                date: "March 2026",
+              },
+              {
+                fix: "Moved community events contact info into a safe public view to protect organizer privacy.",
+                date: "February 2026",
+              },
+              {
+                fix: "Restricted direct reads on ingestion logs and internal tables; added RLS policies to all public-facing tables.",
+                date: "February 2026",
+              },
+              {
+                fix: "Labeled all composite scores (Civic Insight Score, access gap index) as 'Modeled estimate' with methodology links.",
+                date: "February 2026",
+              },
+              {
+                fix: "Removed fabricated impact offsets from beta counters; all impact numbers now come from real data.",
+                date: "February 2026",
+              },
             ].map((entry, i) => (
-              <div key={i} className="flex gap-3 rounded-lg border border-border p-3">
+              <div
+                key={i}
+                className="flex gap-3 rounded-lg border border-border p-3"
+              >
                 <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-michigan-forest" />
                 <div>
                   <p className="text-sm text-muted-foreground">{entry.fix}</p>
-                  <p className="text-[10px] text-muted-foreground mt-1">{entry.date}</p>
+                  <p className="text-[10px] text-muted-foreground mt-1">
+                    {entry.date}
+                  </p>
                 </div>
               </div>
             ))}
@@ -775,18 +1143,29 @@ export default function MethodologyPage() {
         {/* Future Integration Note */}
         <section className="space-y-4">
           <h2 className="text-xl font-semibold flex items-center gap-2">
-            <Eye className="h-5 w-5 text-primary" /> Future Data Integration Plans
+            <Eye className="h-5 w-5 text-primary" /> Future Data Integration
+            Plans
           </h2>
           <Card>
             <CardContent className="p-5 space-y-3">
               <p className="text-sm text-muted-foreground leading-relaxed">
-                All data on Access Michigan is currently population-level and sourced from public agencies. We do not access individual claims, member records, or protected health information (PHI).
+                All data on Access Michigan is currently population-level and
+                sourced from public agencies. We do not access individual
+                claims, member records, or protected health information (PHI).
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong>Looking ahead:</strong> In the future, we may let users securely connect their own health plan — for example, through Patient Access APIs (FHIR-based) — so they can see personal coverage and claims alongside community data. This will be opt-in, heavily protected with encryption and consent management, and never shared with third parties or used for marketing.
+                <strong>Looking ahead:</strong> In the future, we may let users
+                securely connect their own health plan - for example, through
+                Patient Access APIs (FHIR-based) - so they can see personal
+                coverage and claims alongside community data. This will be
+                opt-in, heavily protected with encryption and consent
+                management, and never shared with third parties or used for
+                marketing.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                This feature is not yet implemented. When it is, we will document its privacy architecture, data handling practices, and user consent flows on this page.
+                This feature is not yet implemented. When it is, we will
+                document its privacy architecture, data handling practices, and
+                user consent flows on this page.
               </p>
             </CardContent>
           </Card>

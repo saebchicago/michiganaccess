@@ -24,7 +24,7 @@ export default function BroadbandRealityCard() {
               <p className="text-[10px] text-muted-foreground">Facing adoption barriers</p>
             </div>
           </div>
-          <p className="text-xs text-muted-foreground">FCC says broadband is "available" — but Microsoft telemetry shows actual usage is far lower. BEAD's $1.559B builds infrastructure, but affordability and digital literacy gaps persist.</p>
+          <p className="text-xs text-muted-foreground">FCC says broadband is "available" - but Microsoft telemetry shows actual usage is far lower. BEAD's $1.559B builds infrastructure, but affordability and digital literacy gaps persist.</p>
           <Button variant="outline" size="sm" className="text-xs" asChild>
             <a href="https://michiganbroadbandmap.com/" target="_blank" rel="noopener">Michigan Broadband Map <ExternalLink className="ml-1 h-3 w-3" /></a>
           </Button>

@@ -30,8 +30,11 @@ const PageLoader = () => (
       <div className="h-4 w-full rounded bg-muted animate-pulse" />
       <div className="h-4 w-4/5 rounded bg-muted animate-pulse" />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-8">
-        {[1,2,3].map(i => (
-          <div key={i} className="rounded-lg border border-border p-5 space-y-3">
+        {[1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="rounded-lg border border-border p-5 space-y-3"
+          >
             <div className="h-5 w-2/3 rounded bg-muted animate-pulse" />
             <div className="h-3 w-full rounded bg-muted animate-pulse" />
             <div className="h-3 w-4/5 rounded bg-muted animate-pulse" />
@@ -65,26 +68,119 @@ const App = () => (
                       }
                     />
                   ))}
-                  {/* Semantic aliases — redirect common URL guesses */}
-                  <Route path="/health-equity" element={<Navigate to="/equity" replace />} />
-                  <Route path="/broadband" element={<Navigate to="/civic-data" replace />} />
-                  <Route path="/chna" element={<Navigate to="/chna-explorer" replace />} />
-                  <Route path="/map" element={<Navigate to="/health-map" replace />} />
-                  <Route path="/check-benefits" element={<Navigate to="/financial-help" replace />} />
-                  <Route path="/data-hub" element={<Navigate to="/data-and-insights" replace />} />
-                  <Route path="/health-data" element={<Navigate to="/data" replace />} />
-                  <Route path="/representatives" element={<Navigate to="/civic-data" replace />} />
-                  {/* Life-event scenario aliases — partner-shareable URLs */}
-                  <Route path="/life-events" element={<Navigate to="/life-navigator" replace />} />
-                  <Route path="/life-event/new-baby" element={<Navigate to="/life-navigator?scenario=baby" replace />} />
-                  <Route path="/life-event/job-loss" element={<Navigate to="/life-navigator?scenario=lost-job" replace />} />
-                  <Route path="/life-event/turning-65" element={<Navigate to="/life-navigator?scenario=turning-65" replace />} />
-                  <Route path="/life-event/eviction" element={<Navigate to="/life-navigator?scenario=housing" replace />} />
-                  <Route path="/life-event/new-diagnosis" element={<Navigate to="/life-navigator?scenario=diagnosis" replace />} />
-                  <Route path="/life-event/new-to-michigan" element={<Navigate to="/life-navigator?scenario=new-to-mi" replace />} />
-                  <Route path="/life-event/reentry" element={<Navigate to="/reentry" replace />} />
+                  {/* Semantic aliases - redirect common URL guesses */}
+                  <Route
+                    path="/health-equity"
+                    element={<Navigate to="/equity" replace />}
+                  />
+                  <Route
+                    path="/broadband"
+                    element={<Navigate to="/civic-data" replace />}
+                  />
+                  <Route
+                    path="/chna"
+                    element={<Navigate to="/chna-explorer" replace />}
+                  />
+                  <Route
+                    path="/map"
+                    element={<Navigate to="/health-map" replace />}
+                  />
+                  <Route
+                    path="/check-benefits"
+                    element={<Navigate to="/benefits" replace />}
+                  />
+                  <Route
+                    path="/data-hub"
+                    element={<Navigate to="/data-and-insights" replace />}
+                  />
+                  <Route
+                    path="/health-data"
+                    element={<Navigate to="/data" replace />}
+                  />
+                  <Route
+                    path="/representatives"
+                    element={<Navigate to="/civic-data" replace />}
+                  />
+                  {/* Life-event scenario aliases - partner-shareable URLs */}
+                  <Route
+                    path="/life-events"
+                    element={<Navigate to="/life-navigator" replace />}
+                  />
+                  <Route
+                    path="/life-event/new-baby"
+                    element={
+                      <Navigate to="/life-navigator?scenario=baby" replace />
+                    }
+                  />
+                  <Route
+                    path="/life-event/job-loss"
+                    element={
+                      <Navigate
+                        to="/life-navigator?scenario=lost-job"
+                        replace
+                      />
+                    }
+                  />
+                  <Route
+                    path="/life-event/turning-65"
+                    element={
+                      <Navigate
+                        to="/life-navigator?scenario=turning-65"
+                        replace
+                      />
+                    }
+                  />
+                  <Route
+                    path="/life-event/eviction"
+                    element={
+                      <Navigate to="/life-navigator?scenario=housing" replace />
+                    }
+                  />
+                  <Route
+                    path="/life-event/new-diagnosis"
+                    element={
+                      <Navigate
+                        to="/life-navigator?scenario=diagnosis"
+                        replace
+                      />
+                    }
+                  />
+                  <Route
+                    path="/life-event/new-to-michigan"
+                    element={
+                      <Navigate
+                        to="/life-navigator?scenario=new-to-mi"
+                        replace
+                      />
+                    }
+                  />
+                  <Route
+                    path="/life-event/reentry"
+                    element={<Navigate to="/reentry" replace />}
+                  />
                   {/* Duplicate route consolidation */}
-                  <Route path="/county-compare" element={<Navigate to="/compare" replace />} />
+                  <Route
+                    path="/county-compare"
+                    element={<Navigate to="/compare" replace />}
+                  />
+                  {/* Short popular URLs. These were resolving to the
+                      catch-all NotFound (and on Netlify previously to
+                      "County Not Found" when a redirect rule sent them
+                      into /county/[slug]). Declaring them here as
+                      redirects to the canonical page ensures both the
+                      crawler and the SPA agree on the destination. */}
+                  <Route
+                    path="/snap"
+                    element={<Navigate to="/data/snap-michigan" replace />}
+                  />
+                  <Route
+                    path="/water"
+                    element={<Navigate to="/environment" replace />}
+                  />
+                  <Route
+                    path="/civic"
+                    element={<Navigate to="/civic-data" replace />}
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

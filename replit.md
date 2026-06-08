@@ -14,7 +14,7 @@ A civic data platform providing Michigan residents with verified public health, 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- Frontend: React 18, Vite, Tailwind v3, shadcn/ui, react-router-dom
+- Frontend: React 19, Vite 7, Tailwind v3, shadcn/ui, react-router-dom v7
 - API: Express 5 (api-server artifact)
 - DB: PostgreSQL + Drizzle ORM
 - Validation: Zod (`zod/v4`), `drizzle-zod`
@@ -34,7 +34,7 @@ A civic data platform providing Michigan residents with verified public health, 
 
 ## Architecture decisions
 
-- **Supabase kept as-is**: The app uses 18+ Supabase edge functions as external API proxies (CDC, Census, ArcGIS, GTFS, etc.) and 20+ tables. Replacing these with Replit primitives is a large project. The client degrades gracefully when Supabase credentials are missing.
+- **Supabase kept as-is**: The app uses Supabase edge functions as external API proxies (CDC, Census, ArcGIS, GTFS, etc.) and ~20 tables. Only `supabase/functions/chna-data-proxy` is checked into this repo; the other edge functions live remote-only in the Supabase project and are deployed/managed there. Replacing them with Replit primitives is a large project. The client degrades gracefully when Supabase credentials are missing.
 - **No auth**: The app is fully public-facing — no login required.
 - **Tailwind v3**: The original app uses Tailwind v3 + shadcn with a custom CSS variable design system. Not upgraded to v4 to preserve exact styling.
 - **react-router-dom**: Uses BrowserRouter (not wouter) with lazy-loaded routes via `src/config/routes.ts`.
@@ -51,7 +51,8 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 - The app needs `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` set to enable data features. Without them, Supabase-dependent features silently degrade (the client warns in console).
 - Data ingestion scripts live in `src/utils/data-ingestion/` — these seed Supabase, not the Replit DB.
-- PWA plugin (`vite-plugin-pwa`) and prerenderer (`@prerenderer/rollup-plugin`) from the original were dropped — not supported in Replit workflow.
+- PWA plugin (`vite-plugin-pwa`) from the original was dropped — not supported in Replit workflow.
+- Static prerendering for SEO is done by `artifacts/access-mi/scripts/prerender-meta.mjs`, run as part of the package's `build` script after `vite build`. It writes per-route HTML into `dist/` using the metadata table in `src/config/routeMeta.ts`.
 
 ## Pointers
 

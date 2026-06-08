@@ -23,7 +23,7 @@ export interface UseLazyLoadOptions<T> {
 }
 export interface UseLazyLoadResult<T> {
   /** Ref to attach to the DOM node you want to observe. */
-  observedRef: React.RefObject<HTMLDivElement>;
+  observedRef: React.RefObject<HTMLDivElement | null>;
   data: T | null;
   /** True only on the very first load (use for skeleton state). */
   isFirstLoad: boolean;
@@ -121,5 +121,13 @@ export function useLazyLoad<T>(
   useEffect(() => {
     return () => abortRef.current?.abort();
   }, []);
-  return { observedRef, data, isFirstLoad, isLoading, error, isVisible, refetch };
+  return {
+    observedRef,
+    data,
+    isFirstLoad,
+    isLoading,
+    error,
+    isVisible,
+    refetch,
+  };
 }

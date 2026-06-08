@@ -177,13 +177,13 @@ export default function CommunityResourcesPage() {
     path: "/resources",
     jsonLd: {
       "@type": "WebPage",
-      "name": `${dynamicTitle} — Access Michigan`,
+      "name": `${dynamicTitle} - Access Michigan`,
       "description": "Food, housing, transportation, and mental health support services across all 83 Michigan counties.",
       "url": "https://accessmi.org/resources",
       "provider": { "@type": "Organization", "name": "Access Michigan" },
     },
   });
-  // Load ALL resources — local dropdown and tabs handle filtering
+  // Load ALL resources - local dropdown and tabs handle filtering
   const { data: resources = [], isLoading } = useCommunityResources();
 
   // Resolve initial category from URL param
@@ -280,7 +280,7 @@ export default function CommunityResourcesPage() {
 
   return (
     <Layout>
-      {/* County context banner — above hero for immediate visibility */}
+      {/* County context banner - above hero for immediate visibility */}
       {globalCounty && (
         <div className="bg-primary/10 border-b border-primary/20 px-4 py-2.5">
           <div className="container flex items-center justify-between gap-3">
@@ -358,7 +358,7 @@ export default function CommunityResourcesPage() {
             </p>
           </TabsContent>
           <TabsContent value="list" className="mt-4 space-y-6">
-        {/* Smart Filter — recommended categories */}
+        {/* Smart Filter - recommended categories */}
         {!search && activeTab === "all" && (
           <div className="space-y-3">
             <div className="flex items-center gap-2">
@@ -485,7 +485,7 @@ export default function CommunityResourcesPage() {
           </Select>
         </div>
 
-        {/* Results — progressive disclosure */}
+        {/* Results - progressive disclosure */}
         {isLoading ? (
           <ContentSkeleton variant="cards" count={6} />
         ) : filtered.length === 0 ? (

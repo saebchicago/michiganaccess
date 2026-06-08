@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpDown, AlertTriangle, Users, Download } from "lucide-react";
+import { COUNTIES_COVERED } from "@/config/platformConstants";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,7 +15,11 @@ import type { MedicaidCoverageRangeEntry } from "@/data/medicaidCoverageAtRiskFa
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type SortKey = "county" | "currentEnrollment" | "projectedLossLow" | "projectedLossHigh";
+type SortKey =
+  | "county"
+  | "currentEnrollment"
+  | "projectedLossLow"
+  | "projectedLossHigh";
 type SortDir = "asc" | "desc";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -24,7 +29,7 @@ const METHODOLOGY_URL = "/methodology/medicaid-coverage-at-risk";
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function fmtN(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "-";
   return n.toLocaleString();
 }
 
@@ -49,12 +54,20 @@ function StatCard({
     <Card data-testid={testId}>
       <CardContent className="pt-4 pb-3">
         <div className="flex items-start gap-3">
-          <div className="mt-0.5 text-amber-600 dark:text-amber-400">{icon}</div>
+          <div className="mt-0.5 text-amber-600 dark:text-amber-400">
+            {icon}
+          </div>
           <div className="flex-1 min-w-0">
-            <p className="text-2xl font-bold text-foreground tabular-nums">{value}</p>
-            <p className="text-xs text-muted-foreground leading-tight">{label}</p>
+            <p className="text-2xl font-bold text-foreground tabular-nums">
+              {value}
+            </p>
+            <p className="text-xs text-muted-foreground leading-tight">
+              {label}
+            </p>
             {scope && (
-              <p className="text-xs text-muted-foreground mt-0.5 leading-tight">{scope}</p>
+              <p className="text-xs text-muted-foreground mt-0.5 leading-tight">
+                {scope}
+              </p>
             )}
             <div className="mt-1">{provenance}</div>
           </div>
@@ -84,7 +97,9 @@ function SortButton({
     <button
       onClick={() => onSort(col)}
       className={`flex items-center gap-1 text-left text-xs font-medium hover:text-primary transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
-      aria-sort={active ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+      aria-sort={
+        active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
+      }
     >
       {label}
       <ArrowUpDown className="h-3 w-3 shrink-0" />
@@ -102,17 +117,27 @@ export default function MedicaidCoverageAtRiskPage() {
     path: "/data/medicaid-coverage-at-risk",
     jsonLd: {
       "@type": "Dataset",
-      "name": "Michigan Medicaid Coverage at Risk — P.L. 119-21 County Projections",
-      "description":
+      name: "Michigan Medicaid Coverage at Risk - P.L. 119-21 County Projections",
+      description:
         "County-level modeled ranges of Michigan Medicaid enrollees in categories affected by P.L. 119-21 work requirement provisions. Urban Institute Michigan projection (171,000–355,000) allocated proportionally by ACS C27007 5-year 2023 county enrollment share.",
-      "url": "https://accessmi.org/data/medicaid-coverage-at-risk",
-      "creator": { "@type": "Organization", "name": "accessmi.org", "url": "https://accessmi.org" },
-      "datePublished": "2026-04-09",
-      "dateModified": "2026-04-09",
-      "spatialCoverage": "Michigan",
-      "temporalCoverage": "2023/2028",
-      "keywords": ["Medicaid", "Michigan", "P.L. 119-21", "work requirements", "county projections"],
-      "measurementTechnique":
+      url: "https://accessmi.org/data/medicaid-coverage-at-risk",
+      creator: {
+        "@type": "Organization",
+        name: "accessmi.org",
+        url: "https://accessmi.org",
+      },
+      datePublished: "2026-04-09",
+      dateModified: "2026-04-09",
+      spatialCoverage: "Michigan",
+      temporalCoverage: "2023/2028",
+      keywords: [
+        "Medicaid",
+        "Michigan",
+        "P.L. 119-21",
+        "work requirements",
+        "county projections",
+      ],
+      measurementTechnique:
         "Proportional county allocation from Urban Institute Michigan statewide projection (March 2026)",
     },
   });
@@ -146,11 +171,13 @@ export default function MedicaidCoverageAtRiskPage() {
   }
 
   const modeled_provenance_props = {
-    sourceName: "Urban Institute / CBO P.L. 119-21 Medicaid work requirements score",
+    sourceName:
+      "Urban Institute / CBO P.L. 119-21 Medicaid work requirements score",
     sourceUrl:
       "https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work",
     asOfDate: "March 2026",
-    cadence: "Updated when Urban Institute, CBPP, or MLPP publish new Michigan estimates",
+    cadence:
+      "Updated when Urban Institute, CBPP, or MLPP publish new Michigan estimates",
     dataKind: "modeled" as const,
     methodologyUrl: METHODOLOGY_URL,
   };
@@ -168,13 +195,18 @@ export default function MedicaidCoverageAtRiskPage() {
         {/* ── Hero ── */}
         <section>
           <div className="flex items-start gap-3 mb-3">
-            <Badge variant="outline" className="mt-1 shrink-0">V2</Badge>
+            <Badge variant="outline" className="mt-1 shrink-0">
+              V2
+            </Badge>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Medicaid Coverage at Risk</h1>
+              <h1 className="text-3xl font-bold tracking-tight">
+                Medicaid Coverage at Risk
+              </h1>
               <p className="text-muted-foreground mt-1">
-                Michigan county-level estimates of Medicaid enrollees in categories affected by
-                P.L. 119-21 work requirement provisions (Urban Institute, March 2026). All figures
-                are modeled ranges — not point estimates. Exposure is not disenrollment.
+                Michigan county-level estimates of Medicaid enrollees in
+                categories affected by P.L. 119-21 work requirement provisions
+                (Urban Institute, March 2026). All figures are modeled ranges -
+                not point estimates. Exposure is not disenrollment.
               </p>
             </div>
           </div>
@@ -186,18 +218,26 @@ export default function MedicaidCoverageAtRiskPage() {
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
             <div className="space-y-2">
-              <h2 data-testid="medicaid-callout-heading" className="text-xl font-semibold text-amber-900 dark:text-amber-300">
+              <h2
+                data-testid="medicaid-callout-heading"
+                className="text-xl font-semibold text-amber-900 dark:text-amber-300"
+              >
                 Exposure is not disenrollment
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                These figures identify Michigan Medicaid enrollees who fall into categories that
-                Urban Institute, CBO, and CBPP project may be affected by P.L. 119-21 work
-                requirement provisions. Being in an affected category is not the same as losing
-                coverage. Individual outcomes depend on state implementation decisions, work
-                requirement compliance pathways, income and employment changes, and administrative
-                factors. The ranges describe populations at elevated exposure — they do not predict
-                who will or will not retain Medicaid enrollment.{" "}
-                <Link to={METHODOLOGY_URL} className="underline hover:text-primary">
+                These figures identify Michigan Medicaid enrollees who fall into
+                categories that Urban Institute, CBO, and CBPP project may be
+                affected by P.L. 119-21 work requirement provisions. Being in an
+                affected category is not the same as losing coverage. Individual
+                outcomes depend on state implementation decisions, work
+                requirement compliance pathways, income and employment changes,
+                and administrative factors. The ranges describe populations at
+                elevated exposure - they do not predict who will or will not
+                retain Medicaid enrollment.{" "}
+                <Link
+                  to={METHODOLOGY_URL}
+                  className="underline hover:text-primary"
+                >
                   Full methodology →
                 </Link>
               </p>
@@ -217,7 +257,7 @@ export default function MedicaidCoverageAtRiskPage() {
               scope="Work requirement provisions only"
               provenance={
                 <DataProvenance
-                  sourceName="Urban Institute — P.L. 119-21 Medicaid work requirements"
+                  sourceName="Urban Institute - P.L. 119-21 Medicaid work requirements"
                   sourceUrl="https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work"
                   asOfDate="March 2026"
                   cadence="Updated when Urban Institute publishes revised Michigan estimates"
@@ -235,7 +275,7 @@ export default function MedicaidCoverageAtRiskPage() {
               scope="All P.L. 119-21 Medicaid provisions"
               provenance={
                 <DataProvenance
-                  sourceName="KFF — Allocating CBO's Federal Medicaid Spending Reductions"
+                  sourceName="KFF - Allocating CBO's Federal Medicaid Spending Reductions"
                   sourceUrl="https://www.kff.org/medicaid/allocating-cbos-estimates-of-federal-medicaid-spending-reductions-across-the-states-enacted-reconciliation-package/"
                   asOfDate="December 2025"
                   cadence="Updated as CBO revises national scoring"
@@ -248,15 +288,15 @@ export default function MedicaidCoverageAtRiskPage() {
             <StatCard
               testId="medicaid-stat-counties"
               icon={<Users className="h-5 w-5" />}
-              value={isLoading ? "…" : "83"}
-              label="Michigan counties — complete statewide coverage (all 83)"
+              value={isLoading ? "…" : String(COUNTIES_COVERED)}
+              label={`Michigan counties - complete statewide coverage (all ${COUNTIES_COVERED})`}
               scope="Statewide coverage"
               provenance={
                 <DataProvenance
                   sourceName="U.S. Census Bureau county list"
                   sourceUrl="https://www.census.gov/library/reference/code-lists/ansi.html"
                   asOfDate="2026"
-                  cadence="Static — 83 Michigan counties"
+                  cadence="Static - 83 Michigan counties"
                   dataKind="measured"
                   compact
                 />
@@ -271,7 +311,7 @@ export default function MedicaidCoverageAtRiskPage() {
             <h2 className="text-xl font-semibold">County breakdown</h2>
             <div className="flex items-center gap-3">
               <p className="text-xs text-muted-foreground hidden sm:block">
-                Modeled range — not a point estimate
+                Modeled range - not a point estimate
               </p>
               <button
                 data-testid="medicaid-csv-download"
@@ -286,7 +326,10 @@ export default function MedicaidCoverageAtRiskPage() {
           </div>
 
           <div className="rounded-lg border border-border overflow-x-auto">
-            <table data-testid="medicaid-county-table" className="w-full text-sm">
+            <table
+              data-testid="medicaid-county-table"
+              className="w-full text-sm"
+            >
               <thead className="bg-muted/40 border-b border-border">
                 <tr>
                   <th className="text-left px-4 py-3">
@@ -317,7 +360,7 @@ export default function MedicaidCoverageAtRiskPage() {
                         onSort={handleSort}
                       />
                       <span className="text-[9px] text-muted-foreground/70 font-normal">
-                        modeled range — not a point estimate
+                        modeled range - not a point estimate
                       </span>
                     </div>
                   </th>
@@ -331,7 +374,7 @@ export default function MedicaidCoverageAtRiskPage() {
                         onSort={handleSort}
                       />
                       <span className="text-[9px] text-muted-foreground/70 font-normal">
-                        modeled range — not a point estimate
+                        modeled range - not a point estimate
                       </span>
                     </div>
                   </th>
@@ -340,13 +383,19 @@ export default function MedicaidCoverageAtRiskPage() {
               <tbody className="divide-y divide-border">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground text-sm">
+                    <td
+                      colSpan={4}
+                      className="px-4 py-8 text-center text-muted-foreground text-sm"
+                    >
                       Loading…
                     </td>
                   </tr>
                 ) : (
                   sorted.map((entry: MedicaidCoverageRangeEntry) => (
-                    <tr key={entry.fips} className="hover:bg-muted/30 transition-colors">
+                    <tr
+                      key={entry.fips}
+                      className="hover:bg-muted/30 transition-colors"
+                    >
                       <td className="px-4 py-2.5 font-medium">
                         <Link
                           to={`/county/${entry.slug}`}
@@ -372,15 +421,16 @@ export default function MedicaidCoverageAtRiskPage() {
               <tfoot className="border-t border-border bg-muted/20">
                 <tr>
                   <td colSpan={4} className="px-4 py-3">
-                    <DataProvenance
-                      {...modeled_provenance_props}
-                      compact
-                    />
+                    <DataProvenance {...modeled_provenance_props} compact />
                     <p className="text-[10px] text-muted-foreground mt-1">
-                      Current enrollment: ACS 2023 5-year C27007 (means-tested public coverage,
-                      county-level estimates). Projected loss range: Urban Institute Michigan
-                      projection (171,000–355,000) × county ACS enrollment share.{" "}
-                      <Link to={METHODOLOGY_URL} className="underline hover:text-primary">
+                      Current enrollment: ACS 2023 5-year C27007 (means-tested
+                      public coverage, county-level estimates). Projected loss
+                      range: Urban Institute Michigan projection
+                      (171,000–355,000) × county ACS enrollment share.{" "}
+                      <Link
+                        to={METHODOLOGY_URL}
+                        className="underline hover:text-primary"
+                      >
                         Full methodology →
                       </Link>
                     </p>
@@ -393,14 +443,23 @@ export default function MedicaidCoverageAtRiskPage() {
 
         {/* ── Related analyses ── */}
         <section className="rounded-lg border border-border bg-muted/20 px-5 py-4 space-y-2">
-          <h2 className="text-sm font-semibold text-foreground">Related coverage-at-risk analyses</h2>
+          <h2 className="text-sm font-semibold text-foreground">
+            Related coverage-at-risk analyses
+          </h2>
           <ul className="space-y-1 text-sm text-muted-foreground">
             <li>
-              <Link data-testid="medicaid-snap-crosslink" to="/data/snap-coverage-at-risk" className="text-primary hover:underline font-medium">
+              <Link
+                data-testid="medicaid-snap-crosslink"
+                to="/data/snap-coverage-at-risk"
+                className="text-primary hover:underline font-medium"
+              >
                 SNAP Coverage at Risk
-              </Link>
-              {" "}— county-level exposure to P.L. 119-21 ABAWD provisions{" "}
-              <Link to="/methodology/snap-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
+              </Link>{" "}
+              - county-level exposure to P.L. 119-21 ABAWD provisions{" "}
+              <Link
+                to="/methodology/snap-coverage-at-risk"
+                className="text-xs text-muted-foreground hover:underline"
+              >
                 (methodology)
               </Link>
             </li>

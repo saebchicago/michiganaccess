@@ -2,7 +2,7 @@ import { Database, Clock, FileText, MessageSquare, ExternalLink, Info } from "lu
 import { Link } from "react-router-dom";
 
 // ---------------------------------------------------------------------------
-// Legacy DataProvenance — default export, used by existing pages
+// Legacy DataProvenance - default export, used by existing pages
 // ---------------------------------------------------------------------------
 
 interface DataProvenanceLegacyProps {
@@ -72,7 +72,7 @@ function DataProvenanceLegacy({
 export default DataProvenanceLegacy;
 
 // ---------------------------------------------------------------------------
-// DataProvenance — named export, V2/V3 civic intelligence primitive
+// DataProvenance - named export, V2/V3 civic intelligence primitive
 // ---------------------------------------------------------------------------
 
 export type DataKind = "measured" | "projected" | "modeled";

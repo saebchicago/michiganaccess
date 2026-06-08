@@ -38,7 +38,7 @@ function generateInsights(data: PlacesMeasure[], zip: string): { text: string; t
     if (gap < bestGap.gap) bestGap = { measure: d.short_question_text, gap, value: d.data_value, stateAvg };
   }
 
-  if (worstGap.gap > 2) insights.push({ text: `${zip} has ${worstGap.measure} at ${worstGap.value.toFixed(1)}% — ${worstGap.gap.toFixed(1)} points above the Michigan average.`, type: "warning" });
+  if (worstGap.gap > 2) insights.push({ text: `${zip} has ${worstGap.measure} at ${worstGap.value.toFixed(1)}% - ${worstGap.gap.toFixed(1)} points above the Michigan average.`, type: "warning" });
   if (bestGap.gap < -2) insights.push({ text: `${zip} performs better than Michigan on ${bestGap.measure} (${bestGap.value.toFixed(1)}% vs ${bestGap.stateAvg.toFixed(1)}%).`, type: "good" });
 
   const uninsured = data.find((d) => d.short_question_text === "Lack of Health Insurance");
@@ -311,7 +311,7 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
                               <tr key={d.short_question_text} className="border-b border-border/50">
                                 <td className="py-2 text-xs text-foreground">{d.short_question_text}</td>
                                 <td className="py-2 text-xs text-right font-semibold">{d.data_value.toFixed(1)}%</td>
-                                {activeZip2 && <td className="py-2 text-xs text-right">{z2 ? `${z2.data_value.toFixed(1)}%` : "—"}</td>}
+                                {activeZip2 && <td className="py-2 text-xs text-right">{z2 ? `${z2.data_value.toFixed(1)}%` : "-"}</td>}
                                 <td className="py-2 text-xs text-right text-muted-foreground">{stateAvg.toFixed(1)}%</td>
                                 <td className="py-2 text-xs text-right text-muted-foreground">{(US_AVERAGES[d.short_question_text] || 0).toFixed(1)}%</td>
                                 <td className={`py-2 text-xs text-right font-semibold ${diff > 2 ? "text-michigan-coral" : diff < -2 ? "text-michigan-forest" : "text-muted-foreground"}`}>
@@ -345,10 +345,10 @@ export default function ZipIntelligenceBuilder({ initialZip, initialMeasures }: 
                                 return (
                                   <tr key={d.short_question_text} className="border-b border-border/50">
                                     <td className="py-2 text-xs text-foreground">{d.short_question_text}</td>
-                                    <td className="py-2 text-xs text-right text-muted-foreground">{prev != null ? `${prev.toFixed(1)}%` : "—"}</td>
+                                    <td className="py-2 text-xs text-right text-muted-foreground">{prev != null ? `${prev.toFixed(1)}%` : "-"}</td>
                                     <td className="py-2 text-xs text-right font-semibold">{curr.toFixed(1)}%</td>
                                     <td className={`py-2 text-xs text-right font-semibold ${change != null && change > 0.5 ? "text-michigan-coral" : change != null && change < -0.5 ? "text-michigan-forest" : "text-muted-foreground"}`}>
-                                      {change != null ? `${change > 0 ? "+" : ""}${change.toFixed(1)}` : "—"}
+                                      {change != null ? `${change > 0 ? "+" : ""}${change.toFixed(1)}` : "-"}
                                     </td>
                                   </tr>
                                 );

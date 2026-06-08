@@ -1,7 +1,7 @@
 // Federal spending data by Michigan county
 // Source: USASpending.gov API, FY2024
 // All values in USD millions
-// Label: "USASpending.gov FY2024 — federal awards to Michigan counties"
+// Label: "USASpending.gov FY2024 - federal awards to Michigan counties"
 
 export interface CountyFederalSpending {
   county: string;
@@ -19,7 +19,7 @@ export interface CountyFederalSpending {
 }
 
 export const MICHIGAN_FEDERAL_SPENDING: CountyFederalSpending[] = [
-  // Top 20 counties by population — seed with FY2024 data
+  // Top 20 counties by population - seed with FY2024 data
   // Source: USASpending.gov county spending profiles
   { county: "Wayne", fips: "26163", total_awards_millions: 4820,
     medicaid_millions: 2100, snap_millions: 380, housing_millions: 420,
@@ -73,7 +73,7 @@ export const MICHIGAN_FEDERAL_SPENDING: CountyFederalSpending[] = [
     fy: 2024, source: "USASpending.gov FY2024" },
 ];
 
-// Federal dependency ratio — what % of estimated county public revenue
+// Federal dependency ratio - what % of estimated county public revenue
 // is from federal sources (illustrative composite)
 export function getFederalDependencyScore(county: string): number | null {
   const record = MICHIGAN_FEDERAL_SPENDING.find(r => r.county === county);

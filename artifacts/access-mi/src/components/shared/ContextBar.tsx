@@ -362,7 +362,7 @@ export default function ContextBar() {
             </button>
           </TooltipTrigger>
           <TooltipContent side="bottom" className="max-w-xs text-xs">
-            This bar shows your active filters — location, persona, and eligibility — which
+            This bar shows your active filters - location, persona, and eligibility - which
             control all data and recommendations across the site.{" "}
             <Link to="/data-validation" className="text-primary underline">
               Learn more

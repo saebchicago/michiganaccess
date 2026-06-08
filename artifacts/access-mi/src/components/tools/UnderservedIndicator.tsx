@@ -61,7 +61,7 @@ export default function UnderservedIndicator({ zip }: UnderservedIndicatorProps)
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
             <AlertTriangle className="h-5 w-5 text-michigan-teal" />
-            Underserved ZIP Assessment — {zip}
+            Underserved ZIP Assessment - {zip}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -137,7 +137,7 @@ export default function UnderservedIndicator({ zip }: UnderservedIndicatorProps)
                       <div className="rounded-lg bg-muted/50 p-3 text-[10px] text-muted-foreground space-y-1">
                         <p><strong>Health Burden:</strong> County health ranking score. Below 40 = High, 40-60 = Moderate.</p>
                         <p><strong>Economic Hardship:</strong> ZIP EITC claim rate. Above 30% = High, 20-30% = Moderate.</p>
-                        <p><strong>Environmental Risk:</strong> EPA TRI data — carcinogen presence or high total pounds.</p>
+                        <p><strong>Environmental Risk:</strong> EPA TRI data - carcinogen presence or high total pounds.</p>
                         <p><strong>Provider Access:</strong> HRSA Health Professional Shortage Area designation.</p>
                         <p><strong>Digital Access:</strong> FCC broadband adoption. Below 70% = Desert, 70-80% = Limited.</p>
                         <p className="pt-1">Overall flag based on count of High/Desert dimensions: 0 = Well-Served, 1 = Moderate Need, 2-3 = Underserved, 4+ = Critically Underserved.</p>
@@ -147,7 +147,7 @@ export default function UnderservedIndicator({ zip }: UnderservedIndicatorProps)
                 </AnimatePresence>
 
                 <p className="text-[9px] text-muted-foreground pt-1">
-                  Composite indicator combining CDC PLACES, IRS SOI, EPA TRI, HRSA, and FCC data. Illustrative — not a validated index.
+                  Composite indicator combining CDC PLACES, IRS SOI, EPA TRI, HRSA, and FCC data. Illustrative - not a validated index.
                 </p>
               </motion.div>
             )}

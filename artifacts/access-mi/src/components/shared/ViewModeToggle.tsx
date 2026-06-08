@@ -1,5 +1,5 @@
 /**
- * Standard / CHNA-VBC view toggle — reusable across Brief, Compare pages.
+ * Standard / CHNA-VBC view toggle - reusable across Brief, Compare pages.
  */
 import { cn } from "@/lib/utils";
 import { Info } from "lucide-react";

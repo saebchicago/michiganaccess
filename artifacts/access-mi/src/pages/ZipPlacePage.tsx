@@ -155,7 +155,7 @@ export default function ZipPlacePage() {
   const zipBachMoE = getCensusMOE(zipACS, "B15003", "B15003_022E");
 
   usePageMeta({
-    title: place ? `ZIP ${place.slug} Community Brief — Access Michigan` : "ZIP Code Not Found",
+    title: place ? `ZIP ${place.slug} Community Brief - Access Michigan` : "ZIP Code Not Found",
     description: place
       ? buildBriefMetaDescription(place)
       : "ZIP code not found",
@@ -238,7 +238,7 @@ export default function ZipPlacePage() {
               zipValue={zipIncome}
               countyValue={countyIncome}
               stateValue={MI_STATE_BENCHMARKS.medianIncome}
-              format={(v) => v !== null ? `$${v.toLocaleString()}` : "—"}
+              format={(v) => v !== null ? `$${v.toLocaleString()}` : "-"}
               higherIsBetter={true}
               soWhat="Higher income generally means more local spending power and tax base."
               estimate={zipIncome}
@@ -249,7 +249,7 @@ export default function ZipPlacePage() {
               zipValue={zipPovRate}
               countyValue={countyPovRate}
               stateValue={MI_STATE_BENCHMARKS.povertyRate}
-              format={(v) => v !== null ? `${v}%` : "—"}
+              format={(v) => v !== null ? `${v}%` : "-"}
               higherIsBetter={false}
               soWhat="Lower poverty rates indicate broader economic stability in this area."
               estimate={zipPovNum}
@@ -260,7 +260,7 @@ export default function ZipPlacePage() {
               zipValue={zipBachRate}
               countyValue={countyBachRate}
               stateValue={MI_STATE_BENCHMARKS.bachelorRate}
-              format={(v) => v !== null ? `${v}%` : "—"}
+              format={(v) => v !== null ? `${v}%` : "-"}
               higherIsBetter={true}
               soWhat="Education attainment correlates with health outcomes and earning potential."
               estimate={zipBachNum}
@@ -319,7 +319,7 @@ export default function ZipPlacePage() {
 
         <Separator />
 
-        {/* Civic Intelligence — 4 pillar cards + detail */}
+        {/* Civic Intelligence - 4 pillar cards + detail */}
         {place.parentCounty && <CivicIntelligenceSection countyName={place.parentCounty} />}
 
         <Separator />

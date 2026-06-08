@@ -1,4 +1,4 @@
-// Census ACS 5-Year Estimates — direct public API, no key required
+// Census ACS 5-Year Estimates - direct public API, no key required
 // Focused on race/ethnicity, language, disability demographics by ZIP
 // Docs: api.census.gov/data/2022/acs/acs5
 

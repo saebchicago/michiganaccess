@@ -175,10 +175,10 @@ export default function MarketIntelligence({ region, facilities }: Props) {
 
       <div className="flex items-center justify-between flex-wrap gap-2">
         <p className="text-[9px] text-muted-foreground">
-          Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI — for planning purposes only.
+          Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI - for planning purposes only.
         </p>
         <div className="flex gap-2">
-          <ShareButton title={`Market Brief: ${region.name}`} description={`Ambulatory gap analysis for ${region.name} — ${totalFacilities} facilities across ${region.counties.length} counties.`} />
+          <ShareButton title={`Market Brief: ${region.name}`} description={`Ambulatory gap analysis for ${region.name} - ${totalFacilities} facilities across ${region.counties.length} counties.`} />
           <Button size="sm" variant="outline" className="text-xs gap-1.5" onClick={() => downloadMarketBrief(region, gaps, systemDensity, totalFacilities, highNeedCounties.length)}>
             <FileDown className="h-3.5 w-3.5" />
             Download Market Brief
@@ -220,7 +220,7 @@ th{font-size:10px;color:#6b7280;font-weight:500;text-transform:uppercase}.system
 <h2>County Access Gap Analysis</h2>
 <table><thead><tr><th>County</th><th style="text-align:center">Population</th><th style="text-align:center">Facilities</th><th style="text-align:center">PCP Sites</th><th style="text-align:center">Vulnerability</th></tr></thead><tbody>${rows}</tbody></table>
 ${systemDensity.length > 0 ? `<h2>Regional System Presence</h2><p class="systems">${systemList}</p>` : ""}
-<p class="footer">Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI — for planning purposes only. Source: Michigan Access (accessmi.org)</p>
+<p class="footer">Vulnerability scores derived from uninsured rate, food insecurity, and primary care ratios. Not a clinical SVI - for planning purposes only. Source: Michigan Access (accessmi.org)</p>
 </body></html>`;
 
   const blob = new Blob([html], { type: "text/html" });

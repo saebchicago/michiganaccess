@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
-// Change log — every methodology update must be recorded here
+// Change log - every methodology update must be recorded here
 // IMPORTANT: each entry must have a unique `id` field (not just `date`)
 // to prevent React duplicate-key warnings when multiple entries share a date.
 const CHANGE_LOG = [
@@ -26,7 +26,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
     path: "/methodology/medicaid-coverage-at-risk",
     jsonLd: {
       "@type": "TechArticle",
-      "headline": "Methodology: Medicaid Coverage at Risk — Michigan County Projections",
+      "headline": "Methodology: Medicaid Coverage at Risk - Michigan County Projections",
       "description":
         "How county-level Medicaid exposure ranges are computed under P.L. 119-21 work requirement provisions. Proportional allocation from Urban Institute Michigan statewide projection using ACS C27007 county enrollment shares.",
       "url": "https://accessmi.org/methodology/medicaid-coverage-at-risk",
@@ -68,7 +68,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
             in an affected category is not the same as losing coverage. Individual outcomes depend
             on state implementation decisions, work requirement compliance pathways, income and
             employment changes, and administrative factors that vary by county and over time. The
-            ranges on this page describe populations at elevated exposure — they do not predict who
+            ranges on this page describe populations at elevated exposure - they do not predict who
             will or will not retain Medicaid enrollment.
           </p>
         </section>
@@ -91,9 +91,9 @@ export default function MedicaidCoverageAtRiskMethodology() {
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  urban.org — Medicaid work requirements projection
+                  urban.org - Medicaid work requirements projection
                 </a>{" "}
-                — Post-enactment Michigan-specific projection: 171,000–355,000 Michigan adults
+                - Post-enactment Michigan-specific projection: 171,000–355,000 Michigan adults
                 in categories projected to be affected by P.L. 119-21 work requirement
                 provisions by 2028. This is the primary state-level input to the county allocation model.
                 This is the most current post-enactment Michigan-specific figure available as of
@@ -114,9 +114,9 @@ export default function MedicaidCoverageAtRiskMethodology() {
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  kff.org — Federal Medicaid spending reductions by state
+                  kff.org - Federal Medicaid spending reductions by state
                 </a>{" "}
-                — Michigan 10-year federal Medicaid spending reduction: $31.6 billion under P.L.
+                - Michigan 10-year federal Medicaid spending reduction: $31.6 billion under P.L.
                 119-21. This is a spending figure, not an enrollment count. Used as statewide
                 spending-context statistic; not used as the county allocation input. Accessed
                 April 2026.
@@ -125,7 +125,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
 
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                CBO: Estimated Budgetary Effects of P.L. 119-21 — Medicaid Provisions
+                CBO: Estimated Budgetary Effects of P.L. 119-21 - Medicaid Provisions
               </p>
               <p className="text-muted-foreground">
                 Congressional Budget Office, July 2025 (pub. 61570).{" "}
@@ -135,9 +135,9 @@ export default function MedicaidCoverageAtRiskMethodology() {
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  cbo.gov — pub. 61570 publication landing page
+                  cbo.gov - pub. 61570 publication landing page
                 </a>{" "}
-                — National baseline: 7.5 million coverage loss by 2034; $326 billion federal
+                - National baseline: 7.5 million coverage loss by 2034; $326 billion federal
                 savings from work requirements specifically; $63 billion / 700,000 coverage loss
                 from redetermination changes. Urban Institute's Michigan projection is grounded
                 in this CBO national score. Accessed April 2026.
@@ -146,7 +146,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
 
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                GAO-20-149: Medicaid — Actions Needed to Address Weaknesses in Oversight of
+                GAO-20-149: Medicaid - Actions Needed to Address Weaknesses in Oversight of
                 Costs to Administer Work Requirements
               </p>
               <p className="text-muted-foreground">
@@ -159,7 +159,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 >
                   gao.gov/products/gao-20-149
                 </a>{" "}
-                — GAO-20-149 documents the administrative costs Arkansas and other states incurred
+                - GAO-20-149 documents the administrative costs Arkansas and other states incurred
                 to implement Medicaid work requirements. Cited here for context on implementation
                 burden, not as a source for coverage loss estimates. Coverage loss figures
                 (approximately 18,000 Arkansas disenrollees) come from Sommers et al. NEJM 2019
@@ -169,7 +169,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
 
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                Sommers et al., NEJM 2019: Medicaid Work Requirements — Results from the First
+                Sommers et al., NEJM 2019: Medicaid Work Requirements - Results from the First
                 Year in Arkansas
               </p>
               <p className="text-muted-foreground">
@@ -181,9 +181,9 @@ export default function MedicaidCoverageAtRiskMethodology() {
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  nejm.org — Arkansas work requirements study
+                  nejm.org - Arkansas work requirements study
                 </a>{" "}
-                — Peer-reviewed Arkansas study. Approximately 18,000 Arkansas adults lost Medicaid
+                - Peer-reviewed Arkansas study. Approximately 18,000 Arkansas adults lost Medicaid
                 coverage during the first year of work requirement implementation (June 2018
                 through April 2019), when a federal court halted the policy. Urban Institute's
                 Michigan projection derives its loss rate partly from this Arkansas evidence.
@@ -203,12 +203,12 @@ export default function MedicaidCoverageAtRiskMethodology() {
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  data.census.gov — ACS C27007
+                  data.census.gov - ACS C27007
                 </a>{" "}
-                — County-level Medicaid/means-tested public coverage enrollment. ACS B27010 is the
+                - County-level Medicaid/means-tested public coverage enrollment. ACS B27010 is the
                 design-document denominator; ACS C27007 (Medicaid/Means-Tested Public Coverage by
                 Sex by Age) was used as the implementable county-level equivalent. County
-                proportional shares — not absolute ACS values — are used for county allocation.
+                proportional shares - not absolute ACS values - are used for county allocation.
                 The ACS county total (6,206,095 statewide) differs from the CMS MBES
                 administrative enrollment (~2.4M point-in-time); the county proportion method
                 preserves Urban Institute's statewide range regardless of this difference. ACS
@@ -259,8 +259,8 @@ export default function MedicaidCoverageAtRiskMethodology() {
               We take Urban Institute's Michigan-specific projection of 171,000–355,000 adults
               in affected categories under P.L. 119-21 work requirements by 2028 (March 2026)
               and apply it proportionally to each Michigan county based on each county's share of
-              the state's total ACS-reported Medicaid enrollment. We use Urban's range directly —
-              without adding a second uncertainty band — because Urban's low and high endpoints
+              the state's total ACS-reported Medicaid enrollment. We use Urban's range directly -
+              without adding a second uncertainty band - because Urban's low and high endpoints
               already encode their own implementation scenario modeling. We present the result as
               a range, never a point estimate.
             </p>
@@ -270,25 +270,25 @@ export default function MedicaidCoverageAtRiskMethodology() {
             <h3 className="font-semibold">Technical steps</h3>
             <ol className="list-decimal list-inside space-y-2 text-muted-foreground leading-relaxed">
               <li>
-                <strong className="text-foreground">Baseline county enrollment</strong> — County
+                <strong className="text-foreground">Baseline county enrollment</strong> - County
                 Medicaid enrollment is sourced from ACS 2023 5-year, table C27007 (Medicaid/
                 Means-Tested Public Coverage by Sex by Age), variables C27007_003E (male) and
                 C27007_012E (female) summed per county. All 83 Michigan counties returned clean
                 values. Source: ACS B27010 / C27007 5-year 2023 (see Sources above).
               </li>
               <li>
-                <strong className="text-foreground">Statewide calibration</strong> — The ACS
-                county survey total (6,206,095 statewide — sum of C27007 estimates for all 83
+                <strong className="text-foreground">Statewide calibration</strong> - The ACS
+                county survey total (6,206,095 statewide - sum of C27007 estimates for all 83
                 Michigan counties) differs from the CMS MBES administrative point-in-time
                 enrollment (~2.4M). The ACS "means-tested public coverage" definition is broader,
                 and the 5-year window averages PHE-era enrollment peaks. We do not apply a
-                calibration multiplier to county values — doing so would require assumptions not
+                calibration multiplier to county values - doing so would require assumptions not
                 supported by public data. The ACS county totals are used only for their relative
                 distribution (shares), not as absolute enrollment counts. This is disclosed here
                 and on every county row's tooltip.
               </li>
               <li>
-                <strong className="text-foreground">State-level projection input</strong> — Urban
+                <strong className="text-foreground">State-level projection input</strong> - Urban
                 Institute (March 2026) projects 171,000–355,000 Michigan adults are in categories
                 at elevated exposure under work requirement provisions by 2028. This range is
                 used directly as the state-level input. Urban's range already encodes
@@ -296,7 +296,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 accessmi.org.
               </li>
               <li>
-                <strong className="text-foreground">County allocation</strong> — Each county's
+                <strong className="text-foreground">County allocation</strong> - Each county's
                 projected loss range is computed as:{" "}
                 <code className="bg-muted px-1 rounded text-xs">
                   county_loss = county_ACS_enrollment / sum(all_county_ACS_enrollments) × urban_state_figure
@@ -305,18 +305,18 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 straight ACS enrollment share as a proxy for work-requirement-eligible adult
                 share at the county level. A more precise allocation would require county-level
                 PUMS microdata on Medicaid participation by age, household type, and employment
-                status — not available in published tables.
+                status - not available in published tables.
               </li>
               <li>
-                <strong className="text-foreground">Floor</strong> —{" "}
+                <strong className="text-foreground">Floor</strong> -{" "}
                 <code className="bg-muted px-1 rounded text-xs">Math.max(1, ...)</code> applied
                 to both endpoints. Prevents zero-displays for very small counties (Keweenaw,
                 Luce, Schoolcraft) where the allocation would otherwise round to zero.
               </li>
               <li>
-                <strong className="text-foreground">Display</strong> — Every county shows a
+                <strong className="text-foreground">Display</strong> - Every county shows a
                 low–high range. No point estimate is displayed. The "Projected loss low" and
-                "Projected loss high" column headers each carry a "modeled range — not a point
+                "Projected loss high" column headers each carry a "modeled range - not a point
                 estimate" qualifier directly beneath the sort button. The page subtitle and the
                 amber callout both repeat "Exposure is not disenrollment" and link to this page.
               </li>
@@ -383,9 +383,9 @@ export default function MedicaidCoverageAtRiskMethodology() {
           <p className="text-sm text-muted-foreground leading-relaxed">
             No public source currently provides county-level estimates of P.L. 119-21's Medicaid
             impact for Michigan. Urban Institute publishes a Michigan state range. CBO publishes
-            national figures. Individual counties — which are responsible for implementing the
+            national figures. Individual counties - which are responsible for implementing the
             law through local MDHHS offices, Federally Qualified Health Centers, and managed care
-            contractors — have no public baseline for planning. accessmi.org publishes this model
+            contractors - have no public baseline for planning. accessmi.org publishes this model
             not as an advocacy document but as a planning input: a rough, sourced,
             range-bounded estimate that a county health department, hospital, or journalist can
             use to frame a question, not answer it. The methodology is public, the uncertainty is

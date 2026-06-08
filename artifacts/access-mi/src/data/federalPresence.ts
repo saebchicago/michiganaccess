@@ -2,7 +2,7 @@
 // Sources: OPM FedScope Employment Cube (public dataset),
 // GSA Federal Building portfolio,
 // SSA Field Office Location data (data.gov),
-// FACA Database (facadatabase.gov) — Excel download
+// FACA Database (facadatabase.gov) - Excel download
 // USASpending.gov FY2024
 
 export interface FederalAgencyPresence {
@@ -94,7 +94,7 @@ export const MICHIGAN_RELEVANT_FACA = [
   {
     name: "Advisory Committee on Minority Health",
     agency: "HHS / OMH",
-    relevance: "Advises on health disparities — directly relevant to Detroit, Flint, Saginaw",
+    relevance: "Advises on health disparities - directly relevant to Detroit, Flint, Saginaw",
     publicNominations: true,
     nominationUrl: "https://minorityhealth.hhs.gov/committees",
     michiganRepresentation: "Historically underrepresented",
@@ -102,7 +102,7 @@ export const MICHIGAN_RELEVANT_FACA = [
   {
     name: "National Advisory Council on Migrant Health",
     agency: "HRSA",
-    relevance: "Migrant and seasonal farmworker health — relevant to West Michigan agricultural counties",
+    relevance: "Migrant and seasonal farmworker health - relevant to West Michigan agricultural counties",
     publicNominations: true,
     nominationUrl: "https://bphc.hrsa.gov",
     michiganRepresentation: "1 current Michigan member",
@@ -110,7 +110,7 @@ export const MICHIGAN_RELEVANT_FACA = [
   {
     name: "Advisory Council on Alzheimer's Research",
     agency: "HHS / NIA",
-    relevance: "National Alzheimer's plan — Michigan has high prevalence",
+    relevance: "National Alzheimer's plan - Michigan has high prevalence",
     publicNominations: true,
     nominationUrl: "https://aspe.hhs.gov/collaborations-committees",
     michiganRepresentation: "Typically 0\u20131 Michigan members",
@@ -118,7 +118,7 @@ export const MICHIGAN_RELEVANT_FACA = [
   {
     name: "EPA Science Advisory Board",
     agency: "EPA",
-    relevance: "Reviews environmental science — critical for Great Lakes and Flint water recovery",
+    relevance: "Reviews environmental science - critical for Great Lakes and Flint water recovery",
     publicNominations: true,
     nominationUrl: "https://www.epa.gov/sab",
     michiganRepresentation: "Occasionally represented",

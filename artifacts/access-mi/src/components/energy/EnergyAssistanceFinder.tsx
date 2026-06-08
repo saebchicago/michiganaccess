@@ -307,7 +307,7 @@ export default function EnergyAssistanceFinder({ compact = false }: Props) {
 
         {/* Footer */}
         <p className="text-[10px] text-muted-foreground text-center">
-          Data: MDHHS, DTE Energy, Consumers Energy, THAW Fund, US DOE · Eligibility is estimated — contact the program to confirm.
+          Data: MDHHS, DTE Energy, Consumers Energy, THAW Fund, US DOE · Eligibility is estimated - contact the program to confirm.
         </p>
       </CardContent>
     </Card>

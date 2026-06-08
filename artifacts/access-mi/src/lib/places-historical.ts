@@ -1,5 +1,5 @@
 /**
- * CDC PLACES historical comparison — 2023 vs 2024 release at ZCTA level.
+ * CDC PLACES historical comparison - 2023 vs 2024 release at ZCTA level.
  * Dataset IDs: 2024 = qnzd-25i4, 2023 = swc5-untb (county) / cwsq-ngmh (tract)
  * Note: swc5-untb is county-level only and returns [] for ZCTA queries.
  *       Fallback: try kee5-23sr (ZCTA-level 2023 release). If both fail, return empty.

@@ -1,6 +1,14 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpDown, AlertTriangle, Users, MapPin, Activity, Download } from "lucide-react";
+import {
+  ArrowUpDown,
+  AlertTriangle,
+  Users,
+  MapPin,
+  Activity,
+  Download,
+} from "lucide-react";
+import { COUNTIES_COVERED } from "@/config/platformConstants";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -24,7 +32,7 @@ const METHODOLOGY_URL = "/methodology/dual-eligible-exposure";
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function fmtN(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "-";
   return n.toLocaleString();
 }
 
@@ -49,12 +57,20 @@ function StatCard({
     <Card data-testid={testId}>
       <CardContent className="pt-4 pb-3">
         <div className="flex items-start gap-3">
-          <div className="mt-0.5 text-amber-600 dark:text-amber-400">{icon}</div>
+          <div className="mt-0.5 text-amber-600 dark:text-amber-400">
+            {icon}
+          </div>
           <div className="flex-1 min-w-0">
-            <p className="text-2xl font-bold text-foreground tabular-nums">{value}</p>
-            <p className="text-xs text-muted-foreground leading-tight">{label}</p>
+            <p className="text-2xl font-bold text-foreground tabular-nums">
+              {value}
+            </p>
+            <p className="text-xs text-muted-foreground leading-tight">
+              {label}
+            </p>
             {scope && (
-              <p className="text-xs text-muted-foreground mt-0.5 leading-tight">{scope}</p>
+              <p className="text-xs text-muted-foreground mt-0.5 leading-tight">
+                {scope}
+              </p>
             )}
             <div className="mt-1">{provenance}</div>
           </div>
@@ -84,7 +100,9 @@ function SortButton({
     <button
       onClick={() => onSort(col)}
       className={`flex items-center gap-1 text-left text-xs font-medium hover:text-primary transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
-      aria-sort={active ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+      aria-sort={
+        active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
+      }
     >
       {label}
       <ArrowUpDown className="h-3 w-3 shrink-0" />
@@ -102,17 +120,29 @@ export default function DualEligibleExposurePage() {
     path: "/data/dual-eligible-exposure",
     jsonLd: {
       "@type": "Dataset",
-      "name": "Michigan Dual-Eligible Exposure Map — Medicare + Medicaid County Distribution",
-      "description":
+      name: "Michigan Dual-Eligible Exposure Map - Medicare + Medicaid County Distribution",
+      description:
         "County-level view of Michigan residents enrolled in both Medicare and Medicaid simultaneously. ACS B27010 county shares applied to MACPAC 2022 / KFF 2024–2025 statewide range (335,000–405,000). Dual-eligible residents are exempt from P.L. 119-21 work requirements.",
-      "url": "https://accessmi.org/data/dual-eligible-exposure",
-      "creator": { "@type": "Organization", "name": "accessmi.org", "url": "https://accessmi.org" },
-      "datePublished": "2026-04-09",
-      "dateModified": "2026-04-09",
-      "spatialCoverage": "Michigan",
-      "temporalCoverage": "2023",
-      "keywords": ["dual-eligible", "Medicare", "Medicaid", "Michigan", "P.L. 119-21", "§71119", "county map"],
-      "measurementTechnique":
+      url: "https://accessmi.org/data/dual-eligible-exposure",
+      creator: {
+        "@type": "Organization",
+        name: "accessmi.org",
+        url: "https://accessmi.org",
+      },
+      datePublished: "2026-04-09",
+      dateModified: "2026-04-09",
+      spatialCoverage: "Michigan",
+      temporalCoverage: "2023",
+      keywords: [
+        "dual-eligible",
+        "Medicare",
+        "Medicaid",
+        "Michigan",
+        "P.L. 119-21",
+        "§71119",
+        "county map",
+      ],
+      measurementTechnique:
         "Proportional county allocation from MACPAC/KFF statewide range using ACS B27010 5-year 2023 county shares",
     },
   });
@@ -145,10 +175,12 @@ export default function DualEligibleExposurePage() {
     }
   }
 
-  // Median county ACS dual estimate: 875 (Hillsdale — 42nd of 83 when sorted by value)
+  // Median county ACS dual estimate: 875 (Hillsdale - 42nd of 83 when sorted by value)
   const medianAcsDualEstimate = useMemo(() => {
     if (!entries.length) return 0;
-    const sorted_by_acs = [...entries].map((e) => e.acsDualEstimate).sort((a, b) => a - b);
+    const sorted_by_acs = [...entries]
+      .map((e) => e.acsDualEstimate)
+      .sort((a, b) => a - b);
     return sorted_by_acs[Math.floor(sorted_by_acs.length / 2)];
   }, [entries]);
 
@@ -165,12 +197,17 @@ export default function DualEligibleExposurePage() {
         {/* ── Hero ── */}
         <section>
           <div className="flex items-start gap-3 mb-3">
-            <Badge variant="outline" className="mt-1 shrink-0">V3</Badge>
+            <Badge variant="outline" className="mt-1 shrink-0">
+              V3
+            </Badge>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Dual-Eligible Exposure in Michigan</h1>
+              <h1 className="text-3xl font-bold tracking-tight">
+                Dual-Eligible Exposure in Michigan
+              </h1>
               <p className="text-muted-foreground mt-1">
-                County-level view of Michiganders enrolled in both Medicare and Medicaid.{" "}
-                Dual-eligible residents are exempt from P.L. 119-21 work requirements. This map shows where they live.
+                County-level view of Michiganders enrolled in both Medicare and
+                Medicaid. Dual-eligible residents are exempt from P.L. 119-21
+                work requirements. This map shows where they live.
               </p>
             </div>
           </div>
@@ -182,17 +219,26 @@ export default function DualEligibleExposurePage() {
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
             <div className="space-y-2">
-              <h2 data-testid="dual-callout-heading" className="text-xl font-semibold text-amber-900 dark:text-amber-300">
-                Dual-eligible residents are exempt from P.L. 119-21 work requirements. This map shows where they live.
+              <h2
+                data-testid="dual-callout-heading"
+                className="text-xl font-semibold text-amber-900 dark:text-amber-300"
+              >
+                Dual-eligible residents are exempt from P.L. 119-21 work
+                requirements. This map shows where they live.
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Dual-eligible individuals enroll in Medicaid through the aged (65+) or disabled
-                pathway — not through ACA expansion. P.L. 119-21 §71119 work requirements apply
-                exclusively to expansion enrollees ages 19–64. Michigan's approximately 335,000–405,000
-                dual-eligible residents are categorically exempt from these provisions. This feature
-                shows the geographic distribution of this protected population, providing context for
-                the county-level Medicaid and SNAP coverage-at-risk maps.{" "}
-                <Link to={METHODOLOGY_URL} className="underline hover:text-primary">
+                Dual-eligible individuals enroll in Medicaid through the aged
+                (65+) or disabled pathway - not through ACA expansion. P.L.
+                119-21 §71119 work requirements apply exclusively to expansion
+                enrollees ages 19–64. Michigan's approximately 335,000–405,000
+                dual-eligible residents are categorically exempt from these
+                provisions. This feature shows the geographic distribution of
+                this protected population, providing context for the
+                county-level Medicaid and SNAP coverage-at-risk maps.{" "}
+                <Link
+                  to={METHODOLOGY_URL}
+                  className="underline hover:text-primary"
+                >
                   Full methodology →
                 </Link>
               </p>
@@ -225,7 +271,7 @@ export default function DualEligibleExposurePage() {
             <StatCard
               testId="dual-stat-counties"
               icon={<MapPin className="h-5 w-5" />}
-              value={isLoading ? "…" : "83"}
+              value={isLoading ? "…" : String(COUNTIES_COVERED)}
               label="Michigan counties with dual-eligible data (ACS B27010 5-year 2023)"
               scope="Complete statewide coverage"
               provenance={
@@ -335,13 +381,19 @@ export default function DualEligibleExposurePage() {
               <tbody className="divide-y divide-border">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground text-sm">
+                    <td
+                      colSpan={4}
+                      className="px-4 py-8 text-center text-muted-foreground text-sm"
+                    >
                       Loading…
                     </td>
                   </tr>
                 ) : (
                   sorted.map((entry: DualEligibleCountyEntry) => (
-                    <tr key={entry.fips} className="hover:bg-muted/30 transition-colors">
+                    <tr
+                      key={entry.fips}
+                      className="hover:bg-muted/30 transition-colors"
+                    >
                       <td className="px-4 py-2.5 font-medium">
                         <Link
                           to={`/county/${entry.slug}`}
@@ -377,10 +429,15 @@ export default function DualEligibleExposurePage() {
                       compact
                     />
                     <p className="text-[10px] text-muted-foreground mt-1">
-                      ACS dual-eligible count: B27010_046E (ages 35–64) + B27010_062E (ages 65+) per county.
-                      Allocated low/high: county ACS share × statewide range endpoints (335,000 / 405,000).
-                      ACS statewide total used as denominator: 216,635.{" "}
-                      <Link to={METHODOLOGY_URL} className="underline hover:text-primary">
+                      ACS dual-eligible count: B27010_046E (ages 35–64) +
+                      B27010_062E (ages 65+) per county. Allocated low/high:
+                      county ACS share × statewide range endpoints (335,000 /
+                      405,000). ACS statewide total used as denominator:
+                      216,635.{" "}
+                      <Link
+                        to={METHODOLOGY_URL}
+                        className="underline hover:text-primary"
+                      >
                         Full methodology →
                       </Link>
                     </p>
@@ -393,23 +450,39 @@ export default function DualEligibleExposurePage() {
 
         {/* ── Related analyses ── */}
         <section className="rounded-lg border border-border bg-muted/20 px-5 py-4 space-y-2">
-          <h2 className="text-sm font-semibold text-foreground">Related coverage-at-risk analyses</h2>
+          <h2 className="text-sm font-semibold text-foreground">
+            Related coverage-at-risk analyses
+          </h2>
           <ul className="space-y-1 text-sm text-muted-foreground">
             <li>
-              <Link data-testid="dual-snap-crosslink" to="/data/snap-coverage-at-risk" className="text-primary hover:underline font-medium">
+              <Link
+                data-testid="dual-snap-crosslink"
+                to="/data/snap-coverage-at-risk"
+                className="text-primary hover:underline font-medium"
+              >
                 SNAP Coverage at Risk
-              </Link>
-              {" "}— county-level exposure to P.L. 119-21 ABAWD provisions{" "}
-              <Link to="/methodology/snap-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
+              </Link>{" "}
+              - county-level exposure to P.L. 119-21 ABAWD provisions{" "}
+              <Link
+                to="/methodology/snap-coverage-at-risk"
+                className="text-xs text-muted-foreground hover:underline"
+              >
                 (methodology)
               </Link>
             </li>
             <li>
-              <Link data-testid="dual-medicaid-crosslink" to="/data/medicaid-coverage-at-risk" className="text-primary hover:underline font-medium">
+              <Link
+                data-testid="dual-medicaid-crosslink"
+                to="/data/medicaid-coverage-at-risk"
+                className="text-primary hover:underline font-medium"
+              >
                 Medicaid Coverage at Risk
-              </Link>
-              {" "}— county-level exposure to P.L. 119-21 work requirement provisions{" "}
-              <Link to="/methodology/medicaid-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
+              </Link>{" "}
+              - county-level exposure to P.L. 119-21 work requirement provisions{" "}
+              <Link
+                to="/methodology/medicaid-coverage-at-risk"
+                className="text-xs text-muted-foreground hover:underline"
+              >
                 (methodology)
               </Link>
             </li>

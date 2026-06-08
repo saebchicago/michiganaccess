@@ -35,13 +35,15 @@ export default function EventCalendarPreview() {
           Upcoming Health & Community Events
         </h2>
         <p className="mt-2 text-muted-foreground max-w-2xl mx-auto text-sm">
-          Static event calendar sourced from Michigan nonprofits, health systems, and civic organizations. Ideal for embedding or sharing with your community.
+          Static event calendar sourced from Michigan nonprofits, health
+          systems, and civic organizations. Ideal for embedding or sharing with
+          your community.
         </p>
       </div>
 
       {events.length > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-          {events.map((evt) => (
+          {events.map((evt: any) => (
             <Card key={evt.id} className="hover-lift">
               <CardContent className="pt-5 space-y-2">
                 <div className="flex items-center justify-between">
@@ -54,7 +56,9 @@ export default function EventCalendarPreview() {
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm font-semibold text-foreground line-clamp-2">{evt.title}</p>
+                <p className="text-sm font-semibold text-foreground line-clamp-2">
+                  {evt.title}
+                </p>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
                   <Calendar className="h-3 w-3" />
                   {format(parseISO(evt.event_date), "MMM d, yyyy")}
@@ -70,7 +74,8 @@ export default function EventCalendarPreview() {
       ) : (
         <Card className="mb-6">
           <CardContent className="py-8 text-center text-sm text-muted-foreground">
-            No upcoming events found. Check back soon or visit the full events page.
+            No upcoming events found. Check back soon or visit the full events
+            page.
           </CardContent>
         </Card>
       )}

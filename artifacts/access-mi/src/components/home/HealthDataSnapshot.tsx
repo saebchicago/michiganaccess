@@ -18,7 +18,7 @@ import { buildStateSnapshotMetrics, buildCountySnapshotMetrics } from "@/utils/s
 import InsightNarrative from "@/components/home/InsightNarrative";
 import { COUNTY_INTELLIGENCE_KPIS, MICHIGAN_AVERAGES } from "@/data/michigan-intelligence";
 
-// Heavy map components — lazy loaded
+// Heavy map components - lazy loaded
 const CountyChoropleth = lazy(() => import("@/components/dashboard/CountyChoropleth"));
 const EnergyBurdenMap = lazy(() => import("@/components/dashboard/EnergyBurdenMap"));
 import DataActionBanners from "@/components/home/DataActionBanners";
@@ -209,7 +209,7 @@ export default function HealthDataSnapshot() {
                     </>
                   ) : (
                     <>
-                      <p className="text-xl font-bold text-slate-500">—</p>
+                      <p className="text-xl font-bold text-slate-500">-</p>
                       <Badge variant="outline" className="text-[10px] border-slate-600 text-slate-500 mt-1">
                         Data pending
                       </Badge>
@@ -224,7 +224,7 @@ export default function HealthDataSnapshot() {
         {/* Data-to-Action Banners */}
         <DataActionBanners />
 
-        {/* Charts — hidden on mobile */}
+        {/* Charts - hidden on mobile */}
         <div className="hidden md:grid gap-6 lg:grid-cols-2 mb-8">
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
             <Card className="bg-slate-800/60 border-slate-700/50">
@@ -233,7 +233,7 @@ export default function HealthDataSnapshot() {
                   <Activity className="h-4 w-4 text-rose-400" />
                   Chronic Disease: Michigan vs. National
                 </h3>
-                <p className="text-[11px] text-slate-400 mb-3">Prevalence rates (%) — Source: CDC BRFSS</p>
+                <p className="text-[11px] text-slate-400 mb-3">Prevalence rates (%) - Source: CDC BRFSS</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={chronicData} barGap={2}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -266,7 +266,7 @@ export default function HealthDataSnapshot() {
                   <TrendingUp className="h-4 w-4 text-emerald-400" />
                   Healthcare Access Trends (2020–2025)
                 </h3>
-                <p className="text-[11px] text-slate-400 mb-3">Insurance coverage & telehealth adoption — Source: CMS, MDHHS</p>
+                <p className="text-[11px] text-slate-400 mb-3">Insurance coverage & telehealth adoption - Source: CMS, MDHHS</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <AreaChart data={accessTrends}>
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -318,7 +318,7 @@ export default function HealthDataSnapshot() {
           </Card>
         </div>
 
-        {/* County Choropleth Heatmap — hidden on mobile */}
+        {/* County Choropleth Heatmap - hidden on mobile */}
         <div className="hidden md:block">
           <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
@@ -340,7 +340,7 @@ export default function HealthDataSnapshot() {
                     Key Disparity: Infant Mortality
                   </p>
                   <p className="text-xs text-slate-300">
-                    Black infants in Michigan face 2.6× the mortality rate of white infants — among the widest gaps nationally.
+                    Black infants in Michigan face 2.6× the mortality rate of white infants - among the widest gaps nationally.
                     Michigan's Maternal Health Equity Initiative allocates $120M toward doula coverage and extended postpartum Medicaid.
                   </p>
                   <p className="text-[10px] text-slate-500 mt-1">Source: CDC WONDER, Michigan DHHS Vital Records, 2024</p>

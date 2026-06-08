@@ -16,7 +16,7 @@ const fadeUp = {
 
 export default function RegionsPage() {
   usePageMeta({
-    title: "Michigan Regions — Regional Health & Services Overview",
+    title: "Michigan Regions - Regional Health & Services Overview",
     description: "Explore Michigan's six regions for comparable health metrics, access gaps, community resources, and nonprofit organizations.",
     path: "/regions",
   });

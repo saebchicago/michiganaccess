@@ -102,7 +102,7 @@ export default function RegionalGateway() {
             toast.success(`Located: ${county} County`);
             navigate(`/county/${county.toLowerCase().replace(/[.\s]+/g, "-")}`);
           } else {
-            toast.info("It looks like you're outside Michigan — showing all regions.");
+            toast.info("It looks like you're outside Michigan - showing all regions.");
           }
         } catch {
           toast.error("Could not determine your county. Try searching instead.");
@@ -194,7 +194,7 @@ export default function RegionalGateway() {
                       className="cursor-pointer outline-none"
                       tabIndex={0}
                       role="group"
-                      aria-label="Michigan regional map — click to find your county"
+                      aria-label="Michigan regional map - click to find your county"
                       onMouseEnter={() => { if (!isMobile && !hasGeoCache) setGeoOpen(true); }}
                       onFocus={() => { if (!hasGeoCache) setGeoOpen(true); }}
                       onClick={() => { if (isMobile && !hasGeoCache) setGeoOpen(true); }}
@@ -235,7 +235,7 @@ export default function RegionalGateway() {
                             <g key={region.id}>
                               {/* Native browser tooltip */}
                               <title>
-                                {`${region.name}${vitals ? ` — ${vitals.headlineStat}` : ""}`}
+                                {`${region.name}${vitals ? ` - ${vitals.headlineStat}` : ""}`}
                               </title>
 
                               {/* Region polygon */}
@@ -274,7 +274,7 @@ export default function RegionalGateway() {
                                 }
                               />
 
-                              {/* Line 1 label — white with dark stroke for universal readability */}
+                              {/* Line 1 label - white with dark stroke for universal readability */}
                               {label && (
                                 <text
                                   x={label.x}
@@ -424,7 +424,7 @@ style={{ opacity: hovered === region.id ? 1 : 0.9, transition: "opacity 0.2s eas
                         <span className="font-semibold text-foreground">
                           {REGION_POP[hoveredRegion.id]
                             ? `${(REGION_POP[hoveredRegion.id] / 1_000_000).toFixed(1)}M`
-                            : "—"}
+                            : "-"}
                         </span>
                       </div>
                     </div>
@@ -470,7 +470,7 @@ style={{ opacity: hovered === region.id ? 1 : 0.9, transition: "opacity 0.2s eas
                       Explore {hoveredRegion.name}
                       <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                     </Button>
-                    {/* Mobile hint — only visible when region is touch-selected */}
+                    {/* Mobile hint - only visible when region is touch-selected */}
                     {isMobile && selected === hoveredRegion.id && (
                       <p className="text-center text-[10px] text-muted-foreground mt-1.5">
                         Tap the map region again to open →

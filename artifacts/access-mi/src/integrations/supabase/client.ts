@@ -1,7 +1,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "./types";
 
-// These are the Supabase anon (publishable) credentials — intentionally public.
+// These are the Supabase anon (publishable) credentials - intentionally public.
 // The anon key has "role":"anon" in its JWT payload and is protected by Supabase
 // Row Level Security on the server. Never use the service-role key here.
 // Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env.local (local
@@ -17,7 +17,7 @@ export const supabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 if (!supabaseConfigured) {
     console.warn(
-        "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY — " +
+        "[supabase] Missing VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY - " +
         "Supabase features will be unavailable. Set them in .env.local or Netlify env vars."
     );
 }

@@ -83,7 +83,7 @@ function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<type
     const bench = benchmarks[label];
     rows.push([label, ...compareData.map(d => {
       const m = d.stats.metrics.find(x => x.label === label);
-      return m?.value ?? "—";
+      return m?.value ?? "-";
     }), bench?.state ?? "", bench?.us ?? ""]);
   });
 
@@ -92,10 +92,10 @@ function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<type
     rows.push([]);
     rows.push(["--- Executive Metrics ---"]);
     rows.push(["Facilities per 100K Pop", ...compareData.map(d =>
-      d.stats.totalPop > 0 ? ((d.stats.facilityCount / d.stats.totalPop) * 100000).toFixed(1) : "—"
+      d.stats.totalPop > 0 ? ((d.stats.facilityCount / d.stats.totalPop) * 100000).toFixed(1) : "-"
     ), "", ""]);
     rows.push(["Resources per 100K Pop", ...compareData.map(d =>
-      d.stats.totalPop > 0 ? ((d.stats.resourceCount / d.stats.totalPop) * 100000).toFixed(1) : "—"
+      d.stats.totalPop > 0 ? ((d.stats.resourceCount / d.stats.totalPop) * 100000).toFixed(1) : "-"
     ), "", ""]);
     allMetricLabels.forEach(label => {
       const bench = benchmarks[label];
@@ -103,7 +103,7 @@ function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<type
       const benchVal = parseFloat(bench.state.replace(/[^0-9.]/g, ""));
       rows.push([`${label} vs MI Avg (pts)`, ...compareData.map(d => {
         const m = d.stats.metrics.find(x => x.label === label);
-        return m ? (m.numericAvg - benchVal).toFixed(1) : "—";
+        return m ? (m.numericAvg - benchVal).toFixed(1) : "-";
       }), "0", ""]);
     });
   }
@@ -127,7 +127,7 @@ function exportCSV(compareData: { region: MichiganRegion; stats: ReturnType<type
 
 export default function RegionComparePage() {
   usePageMeta({
-    title: "Regional Comparison Dashboard — Michigan Health Access",
+    title: "Regional Comparison Dashboard - Michigan Health Access",
     description: "Compare health metrics, access gaps, and resources across Michigan regions side-by-side.",
     path: "/regions/compare",
   });
@@ -262,13 +262,13 @@ export default function RegionComparePage() {
                                 return (
                                   <td key={region.id} className="py-2.5 text-center">
                                     <span className={`text-xs font-semibold ${worse ? "text-destructive" : "text-foreground"}`}>
-                                      {m?.value ?? "—"}
+                                      {m?.value ?? "-"}
                                     </span>
                                   </td>
                                 );
                               })}
-                              <td className="py-2.5 text-center text-xs text-muted-foreground">{bench?.state ?? "—"}</td>
-                              <td className="py-2.5 text-center text-xs text-muted-foreground">{bench?.us ?? "—"}</td>
+                              <td className="py-2.5 text-center text-xs text-muted-foreground">{bench?.state ?? "-"}</td>
+                              <td className="py-2.5 text-center text-xs text-muted-foreground">{bench?.us ?? "-"}</td>
                             </tr>
                           );
                         })}
@@ -303,7 +303,7 @@ export default function RegionComparePage() {
                             <td className="py-2.5 text-xs text-foreground font-medium">Facilities per 100K</td>
                             {compareData.map(({ region, stats }) => (
                               <td key={region.id} className="py-2.5 text-center text-xs font-semibold text-foreground">
-                                {stats.totalPop > 0 ? ((stats.facilityCount / stats.totalPop) * 100000).toFixed(1) : "—"}
+                                {stats.totalPop > 0 ? ((stats.facilityCount / stats.totalPop) * 100000).toFixed(1) : "-"}
                               </td>
                             ))}
                           </tr>
@@ -311,7 +311,7 @@ export default function RegionComparePage() {
                             <td className="py-2.5 text-xs text-foreground font-medium">Resources per 100K</td>
                             {compareData.map(({ region, stats }) => (
                               <td key={region.id} className="py-2.5 text-center text-xs font-semibold text-foreground">
-                                {stats.totalPop > 0 ? ((stats.resourceCount / stats.totalPop) * 100000).toFixed(1) : "—"}
+                                {stats.totalPop > 0 ? ((stats.resourceCount / stats.totalPop) * 100000).toFixed(1) : "-"}
                               </td>
                             ))}
                           </tr>
@@ -328,7 +328,7 @@ export default function RegionComparePage() {
                                   return (
                                     <td key={region.id} className="py-2.5 text-center">
                                       <span className={`text-xs font-semibold ${diff && diff > 0 ? "text-destructive" : "text-michigan-forest"}`}>
-                                        {diff !== null ? `${diff > 0 ? "+" : ""}${diff.toFixed(1)} pts` : "—"}
+                                        {diff !== null ? `${diff > 0 ? "+" : ""}${diff.toFixed(1)} pts` : "-"}
                                       </span>
                                     </td>
                                   );

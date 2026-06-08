@@ -40,7 +40,7 @@ export default function DisparityGapChart() {
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
             <Users className="h-4 w-4 text-primary" />
-            Racial/Ethnic Disparity Gap Index — Michigan
+            Racial/Ethnic Disparity Gap Index - Michigan
           </CardTitle>
           <p className="text-xs text-muted-foreground">
             Gap magnitude between highest and lowest racial/ethnic group for each health indicator.

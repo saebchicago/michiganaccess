@@ -1,4 +1,32 @@
-[build]
-  base    = "artifacts/access-mi"
-  command = "pnpm run build"
+A
   publish = "dist/public"
+# Netlify config for the Access Michigan site.
+#
+# Build settings (base, command, publish dir) are defined in the [build]
+# block above so the monorepo publish directory is set explicitly and
+# tracked in version control. This overrides any build settings configured
+# in the Netlify dashboard.
+#
+# It also adds baseline HTTP security headers (below).
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(self), interest-cohort=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# The /embed route exists so partners can iframe the widget on their
+# own domains. Drop X-Frame-Options for that path only so embedding
+# works; the rest of the site stays SAMEORIGIN.
+[[headers]]
+  for = "/embed*"
+  [headers.values]
+    X-Frame-Options = ""
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"

@@ -12,7 +12,7 @@ export default function CitizenInitiativeBanner() {
               Built by residents using public data.
             </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Independent civic resource — not affiliated with any government agency.
+              Independent civic resource - not affiliated with any government agency.
             </p>
             <div className="flex items-center gap-2 mt-1.5">
               <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">

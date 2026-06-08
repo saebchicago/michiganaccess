@@ -3,7 +3,7 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
-// Change log — every methodology update must be recorded here
+// Change log - every methodology update must be recorded here
 const CHANGE_LOG = [
   {
     id: "2026-04-09-initial",
@@ -15,7 +15,7 @@ const CHANGE_LOG = [
     id: "2026-04-09-source-corrections",
     date: "2026-04-09",
     description:
-      "Source corrections: removed KFF citation (original URL 404, no equivalent live article found); updated USDA FNS E&T URL to fns.usda.gov/snap-et; removed ACS B22002 citation (not a model input — county allocation denominator is USDA FNS FY2022 data from Feature 1); updated technical step 3 to name the correct denominator source.",
+      "Source corrections: removed KFF citation (original URL 404, no equivalent live article found); updated USDA FNS E&T URL to fns.usda.gov/snap-et; removed ACS B22002 citation (not a model input - county allocation denominator is USDA FNS FY2022 data from Feature 1); updated technical step 3 to name the correct denominator source.",
   },
   {
     id: "2026-04-09-browser-qa",
@@ -39,7 +39,7 @@ export default function SnapCoverageAtRiskMethodology() {
     path: "/methodology/snap-coverage-at-risk",
     jsonLd: {
       "@type": "TechArticle",
-      "headline": "Methodology: SNAP Coverage at Risk — Michigan County Projections",
+      "headline": "Methodology: SNAP Coverage at Risk - Michigan County Projections",
       "description":
         "How county-level SNAP exposure ranges are computed under P.L. 119-21 work requirement provisions. County allocation from MLPP Michigan estimate (74,000) with ±40% GAO-19-56 uncertainty band.",
       "url": "https://accessmi.org/methodology/snap-coverage-at-risk",
@@ -81,7 +81,7 @@ export default function SnapCoverageAtRiskMethodology() {
             an affected category is not the same as losing benefits. Individual outcomes depend
             on state implementation, work requirement compliance pathways, employment status, and
             administrative factors that vary by county and over time. The ranges on this page
-            describe populations at elevated exposure — they do not predict who will or will not
+            describe populations at elevated exposure - they do not predict who will or will not
             retain SNAP enrollment.
           </p>
         </section>
@@ -105,14 +105,14 @@ export default function SnapCoverageAtRiskMethodology() {
                 >
                   cbo.gov/system/files/2025-08/61367-SNAP.pdf
                 </a>{" "}
-                — Provides the enacted-law national projection of 2.4 million/month average
+                - Provides the enacted-law national projection of 2.4 million/month average
                 SNAP participation reduction over FY2025–2034. This is the primary numeric
                 input to the state and county models. Accessed April 2026.
               </p>
             </div>
 
             <div className="border-l-2 border-border pl-4">
-              <p className="font-medium">CBPP: SNAP Fact Sheet — Michigan</p>
+              <p className="font-medium">CBPP: SNAP Fact Sheet - Michigan</p>
               <p className="text-muted-foreground">
                 Center on Budget and Policy Priorities, 2025.{" "}
                 <a
@@ -123,13 +123,13 @@ export default function SnapCoverageAtRiskMethodology() {
                 >
                   cbpp.org/snap-state-factsheets
                 </a>{" "}
-                — Michigan-specific SNAP participation context and analysis of P.L. 119-21
+                - Michigan-specific SNAP participation context and analysis of P.L. 119-21
                 impact. Accessed April 2026.
               </p>
             </div>
 
             <div className="border-l-2 border-border pl-4">
-              <p className="font-medium">MLPP: The Cost of the Federal Megabill — Food Assistance</p>
+              <p className="font-medium">MLPP: The Cost of the Federal Megabill - Food Assistance</p>
               <p className="text-muted-foreground">
                 Michigan League for Public Policy, November 2025.{" "}
                 <a
@@ -138,9 +138,9 @@ export default function SnapCoverageAtRiskMethodology() {
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  mlpp.org — Food Assistance analysis
+                  mlpp.org - Food Assistance analysis
                 </a>{" "}
-                — Michigan-specific analysis citing 74,000 Michigan adults in affected
+                - Michigan-specific analysis citing 74,000 Michigan adults in affected
                 categories, 123,000 total Michiganders in affected households, and an
                 estimated $410M in new annual state costs. Sourced from CBO/CBPP/FNS.
                 Accessed April 2026. Note: the 123,000 household figure and $410M state-cost
@@ -152,7 +152,7 @@ export default function SnapCoverageAtRiskMethodology() {
 
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                GAO-19-56: SNAP — Improved Monitoring of States' Use of Work-Related
+                GAO-19-56: SNAP - Improved Monitoring of States' Use of Work-Related
                 Exemptions and Reporting of Work Requirements
               </p>
               <p className="text-muted-foreground">
@@ -165,7 +165,7 @@ export default function SnapCoverageAtRiskMethodology() {
                 >
                   gao.gov/products/gao-19-56
                 </a>{" "}
-                — Historical analysis of SNAP work requirement implementation across states,
+                - Historical analysis of SNAP work requirement implementation across states,
                 including actual vs. projected participation loss. Provides the basis for
                 the ±40% uncertainty band used in county range estimates. Accessed April 2026.
               </p>
@@ -183,7 +183,7 @@ export default function SnapCoverageAtRiskMethodology() {
                 >
                   fns.usda.gov/snap-et
                 </a>{" "}
-                — SNAP E&T program overview, including state plan requirements and
+                - SNAP E&T program overview, including state plan requirements and
                 participation data. Used to contextualize the gap between work requirement
                 imposition and actual E&T slot availability. Accessed April 2026.
               </p>
@@ -219,8 +219,8 @@ export default function SnapCoverageAtRiskMethodology() {
               based on each county's share of the state's total SNAP enrollment (the most
               current available county-level data, USDA FNS FY2022). We then apply Michigan's
               share of the national projection using MLPP's Michigan-specific estimate of 74,000
-              adults in affected categories. We present the result as a range — never a point
-              estimate — using an uncertainty band derived from GAO's historical study of work
+              adults in affected categories. We present the result as a range - never a point
+              estimate - using an uncertainty band derived from GAO's historical study of work
               requirement implementation, which found actual participation losses ranging from
               approximately 60% to 140% of projected amounts.
             </p>
@@ -230,7 +230,7 @@ export default function SnapCoverageAtRiskMethodology() {
             <h3 className="font-semibold">Technical steps</h3>
             <ol className="list-decimal list-inside space-y-2 text-muted-foreground leading-relaxed">
               <li>
-                <strong className="text-foreground">National CBO projection</strong> — P.L. 119-21
+                <strong className="text-foreground">National CBO projection</strong> - P.L. 119-21
                 is projected to reduce SNAP participation by an average of 2.4 million
                 persons/month over FY2025–2034, primarily through expansion of ABAWD (Able-Bodied
                 Adults Without Dependents) work requirements to ages 55–64 and adults with
@@ -238,7 +238,7 @@ export default function SnapCoverageAtRiskMethodology() {
                 pub. 61367, August 2025.
               </li>
               <li>
-                <strong className="text-foreground">Michigan state estimate</strong> — MLPP derives
+                <strong className="text-foreground">Michigan state estimate</strong> - MLPP derives
                 a Michigan-specific estimate of 74,000 adults at risk (39,000 ages 55–64; 35,000
                 with children age 14+) in households totaling 123,000 people. This figure is
                 sourced from CBO/CBPP/FNS. We use MLPP's 74,000 as the state-level input
@@ -246,7 +246,7 @@ export default function SnapCoverageAtRiskMethodology() {
                 because MLPP has already accounted for Michigan's ABAWD-eligible population mix.
               </li>
               <li>
-                <strong className="text-foreground">County allocation</strong> — Each county's
+                <strong className="text-foreground">County allocation</strong> - Each county's
                 projected range midpoint is computed as:{" "}
                 <code className="bg-muted px-1 rounded text-xs">
                   county_enrollment / sum(all_county_enrollments) × 74,000
@@ -266,7 +266,7 @@ export default function SnapCoverageAtRiskMethodology() {
                 status. That data is not publicly available at county level in published tables.
               </li>
               <li>
-                <strong className="text-foreground">Uncertainty band</strong> — GAO-19-56 examined
+                <strong className="text-foreground">Uncertainty band</strong> - GAO-19-56 examined
                 historical SNAP work requirement implementations and found that actual
                 participation losses ranged widely relative to projections. We apply a ±40%
                 uncertainty band:{" "}
@@ -276,9 +276,9 @@ export default function SnapCoverageAtRiskMethodology() {
                 as ranges; the midpoint is never shown in isolation.
               </li>
               <li>
-                <strong className="text-foreground">Display</strong> — Every county shows a
+                <strong className="text-foreground">Display</strong> - Every county shows a
                 low–high range. No point estimate is displayed. The "At-risk low" and
-                "At-risk high" column headers each carry a "(modeled range — not a point
+                "At-risk high" column headers each carry a "(modeled range - not a point
                 estimate)" qualifier directly beneath the sort button. A section subtitle
                 above the table repeats the qualifier. The page-level disclaimer repeats
                 "Exposure does not equal loss" and links to this methodology page.
@@ -293,13 +293,13 @@ export default function SnapCoverageAtRiskMethodology() {
           <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground leading-relaxed">
             <li>Does not predict individual benefit outcomes</li>
             <li>
-              Does not account for state-level implementation choices — for example, Michigan
+              Does not account for state-level implementation choices - for example, Michigan
               could expand E&T program capacity, negotiate waivers, or implement exemptions
               that reduce the affected population below the modeled range
             </li>
             <li>
               Does not model the separate participation loss from administrative burden
-              increases (tightened redetermination frequency, eligibility verification costs) —
+              increases (tightened redetermination frequency, eligibility verification costs) -
               CBO projects these cause additional losses beyond work requirement impact, but they
               are not modeled at county level from public data
             </li>
@@ -310,11 +310,11 @@ export default function SnapCoverageAtRiskMethodology() {
             </li>
             <li>
               Does not model geographic variation in E&T program slot availability, rural
-              transportation access, or employer density — all factors that affect compliance
+              transportation access, or employer density - all factors that affect compliance
               capacity
             </li>
             <li>
-              Does not use county-level ABAWD eligibility data — such data is not publicly
+              Does not use county-level ABAWD eligibility data - such data is not publicly
               available from FNS at county level; straight enrollment share is used instead
               (documented above)
             </li>
@@ -327,8 +327,8 @@ export default function SnapCoverageAtRiskMethodology() {
           <p className="text-sm text-muted-foreground leading-relaxed">
             No public source currently provides county-level estimates of P.L. 119-21's SNAP
             impact for Michigan. CBO publishes national figures. MLPP publishes a state total.
-            Individual counties — which are responsible for implementing the law through local
-            MDHHS offices, food banks, and E&T providers — have no public baseline for planning.
+            Individual counties - which are responsible for implementing the law through local
+            MDHHS offices, food banks, and E&T providers - have no public baseline for planning.
             accessmi.org publishes this model not as an advocacy document but as a planning
             input: a rough, sourced, uncertainty-bounded estimate that a county health
             department, food pantry network, or journalist can use to frame a question, not

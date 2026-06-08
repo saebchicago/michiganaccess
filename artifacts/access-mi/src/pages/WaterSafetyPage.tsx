@@ -90,9 +90,9 @@ function WaterChecker() {
             <div className="flex items-start gap-3">
               <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-bold text-green-700 dark:text-green-400">{searchCounty} County — No Active Issues Found</p>
+                <p className="text-sm font-bold text-green-700 dark:text-green-400">{searchCounty} County - No Active Issues Found</p>
                 <p className="text-xs text-green-600 dark:text-green-400 mt-1">No active EPA drinking water violations. No PFAS sites in this county's dataset.</p>
-                <p className="text-[9px] text-green-500/70 mt-1">Source: EPA SDWIS + EGLE MPART. This is not a guarantee — check with your local water utility.</p>
+                <p className="text-[9px] text-green-500/70 mt-1">Source: EPA SDWIS + EGLE MPART. This is not a guarantee - check with your local water utility.</p>
               </div>
             </div>
           </motion.div>
@@ -103,7 +103,7 @@ function WaterChecker() {
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-bold text-amber-700 dark:text-amber-400">{searchCounty} County — Awareness Items</p>
+                <p className="text-sm font-bold text-amber-700 dark:text-amber-400">{searchCounty} County - Awareness Items</p>
                 {pfasCount > 0 && <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">{pfasCount} PFAS investigation site(s) in county (EGLE MPART)</p>}
                 {(violations?.length ?? 0) > 0 && <p className="text-xs text-amber-600 dark:text-amber-400">{violations?.length} drinking water system(s) with violation history</p>}
                 <p className="text-[9px] text-amber-500/70 mt-1">Source: EPA SDWIS + EGLE MPART. Contact your water utility for current status.</p>
@@ -117,7 +117,7 @@ function WaterChecker() {
             <div className="flex items-start gap-3">
               <AlertTriangle className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-bold text-red-700 dark:text-red-400">{searchCounty} County — Health-Based Violations Found</p>
+                <p className="text-sm font-bold text-red-700 dark:text-red-400">{searchCounty} County - Health-Based Violations Found</p>
                 <p className="text-xs text-red-600 dark:text-red-400 mt-1">{healthBased.length} health-based drinking water violation(s) on record</p>
                 <p className="text-[9px] text-red-500/70 mt-1">Source: EPA SDWIS. Contact your water utility immediately for current status and safe water guidance.</p>
               </div>
@@ -131,7 +131,7 @@ function WaterChecker() {
 
 export default function WaterSafetyPage() {
   usePageMeta({
-    title: "Water Safety & PFAS Intelligence — Access Michigan",
+    title: "Water Safety & PFAS Intelligence - Access Michigan",
     description: "Michigan PFAS contamination map, EPA drinking water violations, USGS stream data, and Great Lakes freshwater intelligence.",
     path: "/environment/water",
   });

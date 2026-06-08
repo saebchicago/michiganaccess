@@ -49,7 +49,7 @@ export default function UtilityStressSection({ county }: { county: string }) {
 
         {isExample && (
           <Badge variant="outline" className="text-[9px] text-amber-600 border-amber-300 bg-amber-50 dark:bg-amber-950/20">
-            Example only — utility stress data integration coming soon
+            Example only - utility stress data integration coming soon
           </Badge>
         )}
 

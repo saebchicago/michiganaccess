@@ -38,7 +38,7 @@ const CATEGORY_META: Record<string, { label: string; color: string }> = {
 const ALL_PROGRAMS: SearchableProgram[] = [
   // Community
   { title: "WIC Nutrition Program", description: "Free nutrition support, healthy food, and breastfeeding help for pregnant women, new moms, and children under 5.", eligibility: ["families", "children"], url: "https://www.michigan.gov/mdhhs/assistance-programs/wic", category: "Community" },
-  { title: "School-Based Health Centers", description: "On-site medical, dental, and mental health services at schools — no transportation barriers for students.", eligibility: ["children", "teens"], url: "https://www.michigan.gov/mdhhs/doing-business/providers/sbhc", category: "Community", counties: ["Wayne", "Oakland", "Kent", "Genesee", "Washtenaw", "Ingham", "Kalamazoo", "Muskegon", "Saginaw", "Berrien"] },
+  { title: "School-Based Health Centers", description: "On-site medical, dental, and mental health services at schools - no transportation barriers for students.", eligibility: ["children", "teens"], url: "https://www.michigan.gov/mdhhs/doing-business/providers/sbhc", category: "Community", counties: ["Wayne", "Oakland", "Kent", "Genesee", "Washtenaw", "Ingham", "Kalamazoo", "Muskegon", "Saginaw", "Berrien"] },
   { title: "Maternal Infant Health Program", description: "Home visits, care coordination, and support for pregnant women and families with infants in Michigan.", eligibility: ["families", "children"], url: "https://www.michigan.gov/mdhhs/keep-mi-healthy/maternal-and-infant-health", category: "Community" },
   { title: "MDHHS Emergency Shelter Assistance", description: "Temporary housing assistance for families and individuals facing homelessness across Michigan counties.", eligibility: ["families", "seniors"], url: "https://www.michigan.gov/mdhhs/assistance-programs/emergency-services", category: "Community" },
   { title: "Great Start Readiness Program (GSRP)", description: "Free state-funded preschool for 4-year-olds from income-eligible families. Available in all 83 counties.", eligibility: ["children", "families"], url: "https://www.michigan.gov/mde/services/early-learners/gsrp", category: "Community" },
@@ -51,7 +51,7 @@ const ALL_PROGRAMS: SearchableProgram[] = [
   { title: "SMART & DDOT Transit (Metro Detroit)", description: "Regional bus networks serving Wayne, Oakland, and Macomb counties with fixed routes and FAST express service.", eligibility: ["commuters", "families"], url: "https://www.smartbus.org", category: "Transportation", counties: ["Wayne", "Oakland", "Macomb"] },
   { title: "The Rapid (Grand Rapids)", description: "Bus rapid transit and fixed routes serving Kent County including Silver Line and Laker Line services.", eligibility: ["commuters", "families"], url: "https://www.ridetherapid.org", category: "Transportation", counties: ["Kent"] },
   { title: "MyRide2 Mobility Management", description: "Door-to-door rides for seniors and people with disabilities in Oakland, Macomb, Washtenaw, and Wayne counties via Lyft partnership.", eligibility: ["seniors", "disabilities"], url: "https://myride2.com", category: "Transportation", counties: ["Oakland", "Macomb", "Washtenaw", "Wayne"] },
-  { title: "MTA Flint Your Ride", description: "Personalized demand-response transit for Genesee County residents — curb-to-curb service with advance scheduling.", eligibility: ["all residents"], url: "https://www.mtaflint.org/your-ride", category: "Transportation", counties: ["Genesee"] },
+  { title: "MTA Flint Your Ride", description: "Personalized demand-response transit for Genesee County residents - curb-to-curb service with advance scheduling.", eligibility: ["all residents"], url: "https://www.mtaflint.org/your-ride", category: "Transportation", counties: ["Genesee"] },
   { title: "Hope Network Specialized Transportation", description: "Medical, employment, and social rides for individuals with disabilities and barriers to transportation across Michigan.", eligibility: ["disabilities", "job seekers"], url: "https://hopenetwork.org/transportation", category: "Transportation" },
   { title: "Western Oakland Transportation Authority (WOTA)", description: "Door-to-door demand-response rides prioritizing seniors, persons with disabilities, and veterans in western Oakland County.", eligibility: ["seniors", "disabilities", "veterans"], url: "https://ridewota.org", category: "Transportation", counties: ["Oakland"] },
   { title: "RideLink (Kent County)", description: "Transportation coordination for seniors 60+ in Kent County connecting to medical appointments and essential services.", eligibility: ["seniors"], url: "https://www.ridetherapid.org/additional-services/ridelink", category: "Transportation", counties: ["Kent"] },
@@ -69,14 +69,14 @@ const ALL_PROGRAMS: SearchableProgram[] = [
   { title: "Michigan Home Energy Rebate (MiHER)", description: "Federal rebates: HOMES up to $20,000, HEAR up to $14,000. Combined max $34,000/household. $211M total funding from IRA. Launched statewide April 2025.", eligibility: ["homeowners", "families"], url: "https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate", category: "Energy" },
   { title: "LIHEAP Heating Assistance", description: "$183M allocated (FY2025). 434K+ households served for heating. Benefits up to $2,205. Apply through MI Bridges.", eligibility: ["low-income", "seniors"], url: "https://newmibridges.michigan.gov", category: "Energy" },
   { title: "MEAP (Michigan Energy Assistance)", description: "$54.5M budget (2025). Up to $2,205 for heating bills. New eligibility: 60% SMI (~$61,861/family of 4). Projected to reach $100M by 2028.", eligibility: ["low-income", "families"], url: "https://www.michigan.gov/mpsc/consumer/energy-assistance", category: "Energy" },
-  { title: "Michigan Saves Clean Energy Financing", description: "$96.6M financed in 2024 — 50,000+ customers served. Loans $1,000–$75,000, from 6.49% APR, up to 15 years. $97M EPA grant received.", eligibility: ["homeowners"], url: "https://michigansaves.org/home-energy-improvements/", category: "Energy" },
+  { title: "Michigan Saves Clean Energy Financing", description: "$96.6M financed in 2024 - 50,000+ customers served. Loans $1,000–$75,000, from 6.49% APR, up to 15 years. $97M EPA grant received.", eligibility: ["homeowners"], url: "https://michigansaves.org/home-energy-improvements/", category: "Energy" },
   { title: "DTE Energy Efficiency Programs", description: "Low-income funding: $63M (2024), $73M (2025). Free energy audits, appliance rebates, and weatherization. Every $1 returns ~$2.40–$3.18.", eligibility: ["homeowners", "renters"], url: "https://www.dteenergy.com/us/en/residential/save-money-energy.html", category: "Energy", counties: ["Wayne", "Oakland", "Macomb", "Monroe", "Washtenaw", "Lenawee", "St. Clair"] },
   { title: "Consumers Energy Efficiency Programs", description: "Nearly $600M plan (2024–2025). Income-qualified electric: $85.3M (29% increase). Income-qualified gas: $113.1M (56% increase). $5.5B+ cumulative savings since 2009.", eligibility: ["homeowners", "renters"], url: "https://www.consumersenergy.com/residential/save-money-and-energy", category: "Energy", counties: ["Kent", "Kalamazoo", "Jackson", "Ingham", "Bay", "Saginaw", "Muskegon", "Grand Traverse"] },
   { title: "Weatherization Assistance Program", description: "~$21M/yr DOE base + ~$183M Bipartisan Infrastructure Law funding. Up to $15,000/household for insulation, air sealing, furnace repair. Income ≤200% FPG.", eligibility: ["low-income", "seniors"], url: "https://www.michigan.gov/egle/about/organization/materials-management/energy/weatherization", category: "Energy" },
   // Environment
   { title: "EGLE Air Quality Alerts", description: "Real-time air quality monitoring and health advisories from Michigan's Department of Environment, Great Lakes, and Energy.", eligibility: ["all residents"], url: "https://www.michigan.gov/egle/about/organization/air-quality", category: "Environment" },
   { title: "Michigan Safe Drinking Water", description: "Water quality testing, lead service line replacement programs, and public water system reports by county.", eligibility: ["homeowners", "renters"], url: "https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health", category: "Environment" },
-  { title: "Great Lakes Restoration Initiative", description: "Federal programs protecting the Great Lakes — habitat restoration, invasive species management, and beach monitoring.", eligibility: ["communities"], url: "https://www.glri.us", category: "Environment" },
+  { title: "Great Lakes Restoration Initiative", description: "Federal programs protecting the Great Lakes - habitat restoration, invasive species management, and beach monitoring.", eligibility: ["communities"], url: "https://www.glri.us", category: "Environment" },
   { title: "Michigan Recycling & Composting", description: "County recycling guides, drop-off locations, hazardous waste events, and composting programs statewide.", eligibility: ["all residents"], url: "https://www.michigan.gov/egle/about/organization/materials-management/recycling", category: "Environment" },
   { title: "Michigan State Parks & Trails", description: "Over 100 state parks and 13,000+ miles of trails. Recreation Passport provides vehicle entry to all state parks.", eligibility: ["all residents"], url: "https://www.michigan.gov/dnr/places/state-parks", category: "Environment" },
   { title: "Environmental Justice Screening", description: "Identify communities disproportionately impacted by pollution using Michigan's EJ screening tool and get priority resources.", eligibility: ["communities"], url: "https://www.michigan.gov/egle/about/organization/environmental-justice", category: "Environment" },
@@ -119,23 +119,23 @@ const ALL_PROGRAMS: SearchableProgram[] = [
   { title: "Kent County Emergency Management", description: "Local hazard mitigation, severe weather preparedness, and emergency shelter information for Kent County.", eligibility: ["Kent County residents"], url: "https://www.accesskent.com/departments/emergency-management/", category: "Disaster Prep", counties: ["Kent"] },
   { title: "Michigan Community Action – Disaster Recovery", description: "Low-income disaster recovery assistance, temporary housing, and emergency supplies through local Community Action Agencies.", eligibility: ["low-income households"], url: "https://www.mcaaa.org", category: "Disaster Prep" },
   // Culture & Rec
-  { title: "Michigan Activity Pass", description: "Free day passes to over 100 state parks, campgrounds, and recreation areas — available at any Michigan library.", eligibility: ["library card holders"], url: "https://www.michigan.gov/dnr/places/state-parks/map", category: "Culture & Rec" },
+  { title: "Michigan Activity Pass", description: "Free day passes to over 100 state parks, campgrounds, and recreation areas - available at any Michigan library.", eligibility: ["library card holders"], url: "https://www.michigan.gov/dnr/places/state-parks/map", category: "Culture & Rec" },
   { title: "Michigan Council for Arts & Cultural Affairs", description: "Grants, programs, and events supporting arts education, public art, and cultural programming statewide.", eligibility: ["organizations", "artists"], url: "https://www.michigan.gov/leo/bureaus-agencies/mcaca", category: "Culture & Rec" },
   { title: "Detroit Public Library", description: "Free digital resources, literacy programs, job readiness workshops, and community meeting spaces across 23 branches.", eligibility: ["Detroit residents"], url: "https://detroitpubliclibrary.org", category: "Culture & Rec", counties: ["Wayne"] },
   { title: "Grand Rapids Public Library", description: "Free programs including STEM labs, language learning, business development resources, and youth summer reading.", eligibility: ["Grand Rapids area residents"], url: "https://www.grpl.org", category: "Culture & Rec", counties: ["Kent"] },
   { title: "Michigan History Center", description: "Museums, archives, and historical sites preserving Michigan's heritage. Free admission days and educational programs.", eligibility: ["all residents"], url: "https://www.michigan.gov/mhc", category: "Culture & Rec" },
   { title: "Pure Michigan Trails", description: "Over 13,000 miles of multi-use trails for hiking, biking, and skiing. Trail maps, conditions, and accessibility info.", eligibility: ["all residents"], url: "https://www.michigan.org/trails", category: "Culture & Rec" },
   { title: "Michigan Philharmonic & Local Arts", description: "Affordable and free concerts, community theater, and cultural festivals across Michigan communities.", eligibility: ["all residents"], url: "https://www.michiganphil.org", category: "Culture & Rec" },
-  // Beyond Resources — Faith, Housing, Multi-Sector
+  // Beyond Resources - Faith, Housing, Multi-Sector
   { title: "Kalamazoo Gospel Mission", description: "Emergency shelter, meals, addiction recovery, medical/dental clinic, and workforce training for individuals experiencing homelessness.", eligibility: ["homeless", "families", "low-income"], url: "https://www.kzoogospel.org", category: "Community", counties: ["Kalamazoo"] },
   { title: "Storehouse of Community Resources", description: "Food assistance, education programs, disaster relief, clothing, and emergency support for families in Southwest Michigan.", eligibility: ["families", "low-income"], url: "https://storehousemi.org", category: "Community", counties: ["Kalamazoo", "Van Buren", "Allegan", "Calhoun"] },
   { title: "Wayne Metropolitan Community Action Agency", description: "Housing stability, energy assistance, workforce development, education, and emergency services for Wayne County residents.", eligibility: ["low-income", "families", "seniors"], url: "https://www.waynemetro.org", category: "Community", counties: ["Wayne"] },
-  { title: "CNS Healthcare — Community Mental Health", description: "Outpatient mental health, substance abuse treatment, psychiatric services, and crisis intervention across Southeast Michigan.", eligibility: ["all residents"], url: "https://www.cnshealthcare.org", category: "Community", counties: ["Wayne", "Oakland", "Washtenaw", "Livingston"] },
-  { title: "Connect4Care — Family Resource Network", description: "Care coordination connecting families to health, social services, education, and community resources across Michigan.", eligibility: ["families", "children"], url: "https://connect4care.org", category: "Youth & Family" },
+  { title: "CNS Healthcare - Community Mental Health", description: "Outpatient mental health, substance abuse treatment, psychiatric services, and crisis intervention across Southeast Michigan.", eligibility: ["all residents"], url: "https://www.cnshealthcare.org", category: "Community", counties: ["Wayne", "Oakland", "Washtenaw", "Livingston"] },
+  { title: "Connect4Care - Family Resource Network", description: "Care coordination connecting families to health, social services, education, and community resources across Michigan.", eligibility: ["families", "children"], url: "https://connect4care.org", category: "Youth & Family" },
   { title: "St. Patrick Senior Center", description: "Transportation, recreation, meals, health screenings, and social programs for seniors in Detroit and Wayne County.", eligibility: ["seniors"], url: "https://stpatsrctr.org", category: "Veterans & Seniors", counties: ["Wayne"] },
   { title: "Neighborhood Legal Services Michigan", description: "Free civil legal aid for health-related legal issues, family law, housing, and public benefits in Southeast Michigan.", eligibility: ["low-income", "families"], url: "https://nlsmichigan.org", category: "Legal & Civic", counties: ["Wayne", "Oakland", "Macomb"] },
   { title: "Community Foundation for Southeast Michigan", description: "Grants for environmental stewardship, arts, education, and community development across 7 Southeast Michigan counties.", eligibility: ["communities", "organizations"], url: "https://cfsem.org", category: "Environment", counties: ["Wayne", "Oakland", "Macomb", "Monroe", "Washtenaw", "Livingston", "St. Clair"] },
-  { title: "National Association of Conservation Districts — MI", description: "Local conservation districts supporting recycling, soil health, water quality, and outdoor recreation in Michigan communities.", eligibility: ["all residents"], url: "https://www.nacdnet.org", category: "Environment" },
+  { title: "National Association of Conservation Districts - MI", description: "Local conservation districts supporting recycling, soil health, water quality, and outdoor recreation in Michigan communities.", eligibility: ["all residents"], url: "https://www.nacdnet.org", category: "Environment" },
 ];
 
 const SECTIONS = [
@@ -337,7 +337,7 @@ const SpotlightTabs = () => {
             Explore Community Resources
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Browse programs across 10 service categories — filtered to your county
+            Browse programs across 10 service categories - filtered to your county
           </p>
         </div>
 
@@ -391,7 +391,7 @@ const SpotlightTabs = () => {
           </div>
         ) : (
           <>
-            {/* Recommended for You — 3x2 grid */}
+            {/* Recommended for You - 3x2 grid */}
             <div className="max-w-5xl mx-auto mb-8">
               <div className="flex items-center gap-2 mb-4">
                 <Star className="h-5 w-5 text-primary fill-primary" />
@@ -421,7 +421,7 @@ const SpotlightTabs = () => {
               </Button>
             </div>
 
-            {/* Category grids — persona-prioritized */}
+            {/* Category grids - persona-prioritized */}
             {audience && audience !== "resident" && (
               <p className="text-xs text-muted-foreground text-center mb-2">
                 Showing categories most relevant to <span className="font-medium text-foreground">health systems</span> first

@@ -49,7 +49,7 @@ export default function AirQualityPage() {
               <span className="text-sm font-medium text-primary">Air Quality & Toxic Environment</span>
             </motion.div>
             <motion.h1 variants={fadeUp} custom={1} className="mb-4 text-4xl font-bold text-foreground md:text-5xl">
-              Breathe Easy — Know What's Near You
+              Breathe Easy - Know What's Near You
             </motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-lg text-muted-foreground">
               Live AQI monitoring, EPA-regulated facility tracking, and toxic release data for Michigan counties. 60+ Superfund sites. Thousands of regulated facilities.
@@ -147,7 +147,7 @@ export default function AirQualityPage() {
               </div>
             )}
             {facilities && facilities.length === 0 && selectedCounty && (
-              <p className="text-sm text-muted-foreground py-4">No active regulated facilities found for {selectedCounty} County in EPA ECHO. This may indicate an API limitation — check echo.epa.gov directly.</p>
+              <p className="text-sm text-muted-foreground py-4">No active regulated facilities found for {selectedCounty} County in EPA ECHO. This may indicate an API limitation - check echo.epa.gov directly.</p>
             )}
           </CardContent>
         </Card>

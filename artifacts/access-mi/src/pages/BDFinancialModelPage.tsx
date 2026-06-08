@@ -259,11 +259,11 @@ function ServiceLineTab({ sl, onSl }: ServiceLineTabProps) {
 
     let staticInsight = "";
     if (npv > 20e6)
-      staticInsight = `Strong opportunity — NPV exceeds $20M at ${sl.grw}% annual growth. Commercial mix at ${sl.commercial}% is ${sl.commercial > 40 ? "above" : "near"} break-even threshold. Recommend organic build scenario.`;
+      staticInsight = `Strong opportunity - NPV exceeds $20M at ${sl.grw}% annual growth. Commercial mix at ${sl.commercial}% is ${sl.commercial > 40 ? "above" : "near"} break-even threshold. Recommend organic build scenario.`;
     else if (npv > 5e6)
-      staticInsight = `Moderate returns — NPV of ${fmtM(npv)} is positive but sensitive to cost ratio. Consider JV structure to reduce startup exposure and accelerate time to revenue.`;
+      staticInsight = `Moderate returns - NPV of ${fmtM(npv)} is positive but sensitive to cost ratio. Consider JV structure to reduce startup exposure and accelerate time to revenue.`;
     else
-      staticInsight = `Thin margins at current inputs. Revisit volume ramp or payer mix — or consider acquiring an existing player to capture immediate cash flow.`;
+      staticInsight = `Thin margins at current inputs. Revisit volume ramp or payer mix - or consider acquiring an existing player to capture immediate cash flow.`;
 
     return { npv, y1net, be, ms, chartData, staticInsight };
   }, [sl]);
@@ -426,7 +426,7 @@ function ServiceLineTab({ sl, onSl }: ServiceLineTabProps) {
       {/* ── Sensitivity Tornado Chart ─────────────────────────────────────── */}
       <div className="rounded-lg border border-border p-4">
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-          NPV sensitivity — which inputs matter most (±10% swing, $M)
+          NPV sensitivity - which inputs matter most (±10% swing, $M)
         </p>
         <ResponsiveContainer width="100%" height={180}>
           <BarChart
@@ -625,7 +625,7 @@ function MarketOpportunityTab() {
             <button
               key={c.name}
               onClick={() => handleCountyClick(c)}
-              aria-label={`View ${c.name} County analysis — opportunity score ${c.opp}/100, SVI ${c.svi.toFixed(2)}`}
+              aria-label={`View ${c.name} County analysis - opportunity score ${c.opp}/100, SVI ${c.svi.toFixed(2)}`}
               aria-pressed={isSelected}
               className={`w-full flex items-center gap-3 py-2 px-2 rounded border-b border-border/40 text-left transition-all hover:bg-muted/30 ${
                 isSelected ? "ring-1 ring-michigan-teal bg-michigan-teal/5" : ""
@@ -653,7 +653,7 @@ function MarketOpportunityTab() {
         {selected && (
           <>
             <div className="flex items-center gap-2 mb-3">
-              <p className="text-xs font-semibold text-foreground">{selected.name} County — AI Analysis</p>
+              <p className="text-xs font-semibold text-foreground">{selected.name} County - AI Analysis</p>
               <Badge variant="outline" className="text-xs">{selected.opp}/100 opportunity</Badge>
             </div>
             {aiLoading && (
@@ -668,7 +668,7 @@ function MarketOpportunityTab() {
 
       <p className="text-xs text-muted-foreground leading-relaxed border-t border-border pt-4">
         Opportunity scores derived from CDC Social Vulnerability Index 2022, HRSA Health Professional Shortage Area data,
-        and County Health Rankings 2025. Scores are composite indices for strategic planning — not actuarial projections.
+        and County Health Rankings 2025. Scores are composite indices for strategic planning - not actuarial projections.
       </p>
     </div>
   );
@@ -704,8 +704,8 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
     }));
 
     const insight = intervened < 100
-      ? `Low intervention volume — only ${Math.round(intervened)} patients reached per year. Increase screening rate or navigation capacity.`
-      : `${Math.round(intervened).toLocaleString()} patients reached annually through SDOH navigation. Projected ${sdoh.rr}% readmission reduction generates ${fmtM(readmitSave)} in Year 1 savings — a ${roi3.toFixed(1)}× 3-year ROI on program cost.`;
+      ? `Low intervention volume - only ${Math.round(intervened)} patients reached per year. Increase screening rate or navigation capacity.`
+      : `${Math.round(intervened).toLocaleString()} patients reached annually through SDOH navigation. Projected ${sdoh.rr}% readmission reduction generates ${fmtM(readmitSave)} in Year 1 savings - a ${roi3.toFixed(1)}× 3-year ROI on program cost.`;
 
     return { readmitSave, edSave, vbcBonus, roi3, chartData, insight };
   }, [sdoh]);
@@ -741,11 +741,11 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
       <p className="text-sm text-muted-foreground max-w-2xl">
         Model the downstream financial impact of SDOH interventions
         on readmissions, ED utilization, and value-based care contract
-        performance. In VBC arrangements — MSSP ACOs, BCBSM Blueprint,
-        Medicare Advantage risk — SDOH navigation directly drives shared
+        performance. In VBC arrangements - MSSP ACOs, BCBSM Blueprint,
+        Medicare Advantage risk - SDOH navigation directly drives shared
         savings, Stars scores, and total cost of care reduction.
         Anchored to Trinity Health (27.4% unmet need from 1M+ screened;
-        system-reported ~16% readmission reduction, FY2025 — not independently verified)
+        system-reported ~16% readmission reduction, FY2025 - not independently verified)
         and Henry Ford Health ACO data.
       </p>
 
@@ -1091,8 +1091,8 @@ function ExportShareTab({ slState, sdohState }: ExportShareTabProps) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function BDFinancialModelPage() {
   usePageMeta({
-    title: "BD Financial Model — Access Michigan",
-    description: "Interactive partnership and market development scenario modeler. Service line NPV, build vs. partner vs. acquire comparisons, market opportunity scoring, and SDOH ROI — built on Michigan public health data.",
+    title: "BD Financial Model - Access Michigan",
+    description: "Interactive partnership and market development scenario modeler. Service line NPV, build vs. partner vs. acquire comparisons, market opportunity scoring, and SDOH ROI - built on Michigan public health data.",
     path: "/bd-financial-model",
   });
 
@@ -1133,7 +1133,7 @@ export default function BDFinancialModelPage() {
     };
   });
 
-  // ── Resume banner — visible when localStorage differs from defaults ────────
+  // ── Resume banner - visible when localStorage differs from defaults ────────
   const [showBanner, setShowBanner] = useState<boolean>(() => {
     // Don't show if URL params are present (user came from a shared link)
     const hasUrlParams = ["vol","rpe","pop","scr"].some(k => searchParams.get(k) !== null);
@@ -1205,7 +1205,7 @@ export default function BDFinancialModelPage() {
             initial="hidden" animate="visible" variants={fadeUp} custom={2}
             className="text-muted-foreground max-w-2xl text-lg mb-6"
           >
-            Quantify partnership value, compare growth strategies, and identify market opportunity across Michigan's 83 counties — built on CDC SVI, HRSA shortage area, and County Health Rankings data.
+            Quantify partnership value, compare growth strategies, and identify market opportunity across Michigan's 83 counties - built on CDC SVI, HRSA shortage area, and County Health Rankings data.
           </motion.p>
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={3} className="flex flex-wrap gap-3">
             <Button asChild size="sm" variant="outline">
@@ -1254,7 +1254,7 @@ export default function BDFinancialModelPage() {
             Financial projections are illustrative scenario models for strategic planning purposes. Market opportunity scores
             derived from <strong className="text-foreground">CDC Social Vulnerability Index 2022</strong>, <strong className="text-foreground">HRSA Health Professional Shortage Area</strong> data,
             and <strong className="text-foreground">County Health Rankings 2025</strong>. SDOH impact parameters anchored to published outcomes
-            from <strong className="text-foreground">Trinity Health</strong> (27.4% unmet social need rate from 1M+ screened; system-reported ~16% hospitalization reduction, FY2025 — not independently verified) and
+            from <strong className="text-foreground">Trinity Health</strong> (27.4% unmet social need rate from 1M+ screened; system-reported ~16% hospitalization reduction, FY2025 - not independently verified) and
             <strong className="text-foreground">Henry Ford Health</strong> ACO shared savings data (PY2024 $19.97M). Not actuarial projections.
             AI-generated narratives are for strategic planning illustration only.
           </p>

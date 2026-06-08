@@ -157,7 +157,7 @@ export default function DrugPriceLookup() {
         </CardTitle>
         <p className="text-xs text-muted-foreground">
           Search FDA-approved medications for estimated pricing (CMS NADAC averages) and find nearby pharmacies. 
-          No data is stored — all lookups are private.
+          No data is stored - all lookups are private.
         </p>
       </CardHeader>
       <CardContent>
@@ -293,7 +293,7 @@ export default function DrugPriceLookup() {
                 <AlertTriangle className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
                 <p className="text-[10px] text-muted-foreground leading-relaxed">
                   Prices are estimated from CMS National Average Drug Acquisition Cost (NADAC) data and may vary by pharmacy and insurance. 
-                  This tool is for informational purposes only — always confirm pricing with your pharmacy. 
+                  This tool is for informational purposes only - always confirm pricing with your pharmacy. 
                   No personal data is collected or stored.
                 </p>
               </div>

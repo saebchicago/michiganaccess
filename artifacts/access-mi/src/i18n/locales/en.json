@@ -57,7 +57,7 @@
   },
   "systems": {
     "title": "What Is Access Michigan?",
-    "description": "Independent. Non-commercial. Organizes public data from 40+ sources so Michigan residents can find services without navigating 12 different agency websites."
+    "description": "Independent. Non-commercial. Organizes public data from {{sourceCount}} sources so Michigan residents can find services without navigating 12 different agency websites."
   },
   "crisis": {
     "title": "Need Immediate Help?",
@@ -72,7 +72,7 @@
   "getHelp": "Get Help Now",
   "prototype": {
     "title": "Live Platform:",
-    "description": "40+ public data sources. Updated continuously from CMS, CDC, HRSA, NWS, USGS, FDA, and FEMA.",
+    "description": "{{sourceCount}} public data sources. Updated continuously from CMS, CDC, HRSA, NWS, USGS, FDA, and FEMA.",
     "viewMethodology": "View our data methodology",
     "and": "and",
     "viewTechnical": "technical architecture"
@@ -89,7 +89,7 @@
     "transportation": "Transportation & Safety",
     "transportationDesc": "Bus routes, paratransit, NEMT options, and the state's first pedestrian infrastructure data.",
     "activeTransportation": "Walking, Biking & Accessibility",
-    "activeTransportationDesc": "Sidewalk and bike lane coverage powered by the federal GATIS standard. 76 counties have zero data — we mapped that gap.",
+    "activeTransportationDesc": "Sidewalk and bike lane coverage powered by the federal GATIS standard. 76 counties have zero data - we mapped that gap.",
     "environment": "Energy & Environment",
     "environmentDesc": "Live air quality by ZIP, PFAS contamination maps, river levels, and energy costs.",
     "civicData": "Civic Data",
@@ -97,7 +97,7 @@
     "financialHelp": "Financial Help",
     "financialHelpDesc": "Energy assistance ($183M available), Medicaid, SNAP, and rebates up to $34K per household.",
     "communityResources": "Community Resources",
-    "communityResourcesDesc": "211-sourced food banks, shelters, legal aid, and support groups — searchable by county.",
+    "communityResourcesDesc": "211-sourced food banks, shelters, legal aid, and support groups - searchable by county.",
     "explore": "Explore →"
   },
   "stats": {
@@ -111,13 +111,13 @@
   },
   "howItHelps": {
     "title": "What You Can Do Here",
-    "subtitle": "Free. No login required. 40+ public data sources across all 83 counties.",
+    "subtitle": "Free. No login required. {{sourceCount}} public data sources across all {{countyCount}} counties.",
     "findQualityCare": "Search 2,400+ Providers by Quality Score",
-    "findQualityCareDesc": "CMS star ratings, patient safety grades, and Medicaid acceptance — for hospitals, clinics, and individual doctors. Not advertising. Not sponsored listings.",
+    "findQualityCareDesc": "CMS star ratings, patient safety grades, and Medicaid acceptance - for hospitals, clinics, and individual doctors. Not advertising. Not sponsored listings.",
     "navigateSystems": "Check What You Qualify For",
-    "navigateSystemsDesc": "LIHEAP, SNAP, Medicaid, MiHER energy rebates, childcare assistance — answer three questions and see your options.",
+    "navigateSystemsDesc": "LIHEAP, SNAP, Medicaid, MiHER energy rebates, childcare assistance - answer three questions and see your options.",
     "stayInformed": "See How Your County Compares",
-    "stayInformedDesc": "Diabetes rates, energy burden, air quality, opioid data, pedestrian infrastructure — county by county, updated from CDC, CMS, and USGS."
+    "stayInformedDesc": "Diabetes rates, energy burden, air quality, opioid data, pedestrian infrastructure - county by county, updated from CDC, CMS, and USGS."
   },
   "featuredTopics": {
      "title": "Featured Topics",
@@ -260,7 +260,7 @@
   "environment": {
     "badge": "Environment & Sustainability",
     "title": "Michigan's Environmental Health",
-    "subtitle": "Air quality, water safety, clean energy progress, recycling programs, and environmental justice across Michigan — sourced from EPA, EGLE, EIA, and USGS.",
+    "subtitle": "Air quality, water safety, clean energy progress, recycling programs, and environmental justice across Michigan - sourced from EPA, EGLE, EIA, and USGS.",
     "airWater": "Air & Water",
     "cleanEnergy": "Clean Energy",
     "recycling": "Recycling",
@@ -294,7 +294,7 @@
   "civic": {
     "badge": "Civic Data & Open Government",
     "title": "Michigan Open Government Hub",
-    "subtitle": "Budget transparency, FOIA tracking, voter info, elected officials, and public meeting schedules — all in one place.",
+    "subtitle": "Budget transparency, FOIA tracking, voter info, elected officials, and public meeting schedules - all in one place.",
     "budget": "Budget",
     "foiaTracker": "FOIA Tracker",
     "elections": "Elections",
@@ -313,7 +313,7 @@
     "voterTurnoutChart": "Michigan Voter Turnout vs. National Average",
     "voterTurnoutDesc": "Percentage of eligible voters who cast ballots (2016–2024)",
     "registerToVote": "Register to Vote",
-    "registerToVoteDesc": "Register online, by mail, or in person — including same-day registration at your local clerk's office.",
+    "registerToVoteDesc": "Register online, by mail, or in person - including same-day registration at your local clerk's office.",
     "findPollingPlace": "Find Your Polling Place",
     "findPollingPlaceDesc": "Look up your polling location, sample ballot, and elected officials by address.",
     "trackBallot": "Track Your Ballot",
@@ -355,7 +355,7 @@
   "conditions": {
     "badge": "Care Pathways",
     "title": "Health Condition Guides",
-    "subtitle": "Find the best care for your condition — facilities, specialists, and support services ranked by quality and accessibility.",
+    "subtitle": "Find the best care for your condition - facilities, specialists, and support services ranked by quality and accessibility.",
     "topFacilities": "Top Facilities",
     "specialists": "Specialists",
     "supportServices": "Support Services",
@@ -393,18 +393,18 @@
   "aboutPage": {
     "badge": "About Access Michigan",
     "title": "Helping Michigan Families Navigate Health, Safety & Transportation",
-    "subtitle": "An independent civic resource organizing public health, safety, and transportation data for all Michigan residents — regardless of income, insurance status, or background.",
+    "subtitle": "An independent civic resource organizing public health, safety, and transportation data for all Michigan residents - regardless of income, insurance status, or background.",
     "missionTitle": "Our Mission",
-    "missionDesc": "Access Michigan exists to help Michigan residents navigate healthcare, energy, transportation, safety, and public services — finding quality resources, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy information, regardless of income, insurance status, or background.",
+    "missionDesc": "Access Michigan exists to help Michigan residents navigate healthcare, energy, transportation, safety, and public services - finding quality resources, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy information, regardless of income, insurance status, or background.",
     "independentTitle": "Independent & Objective",
     "independentDesc": "No advertising, no paid placements. Rankings based on publicly available, third-party quality data.",
     "residentFirstTitle": "Resident-First",
-    "residentFirstDesc": "Every design decision optimizes for the person seeking care — not for health systems or insurers.",
+    "residentFirstDesc": "Every design decision optimizes for the person seeking care - not for health systems or insurers.",
     "dataDrivenTitle": "Transparent & Verifiable",
     "dataDrivenDesc": "All data sources cited. Methodology published. Rankings explainable and reproducible.",
     "rankingTitle": "How We Rank Healthcare Providers",
-    "rankingSubtitle": "Transparent methodology — no hidden criteria",
-    "rankingDesc": "Search results are ranked by a composite score across four dimensions: distance, CMS quality rating, service breadth, and digital access. The best-performing providers rank first — not because they paid us, but because they score higher on public metrics.",
+    "rankingSubtitle": "Transparent methodology - no hidden criteria",
+    "rankingDesc": "Search results are ranked by a composite score across four dimensions: distance, CMS quality rating, service breadth, and digital access. The best-performing providers rank first - not because they paid us, but because they score higher on public metrics.",
     "distanceFactor": "Distance from You",
     "qualityFactor": "Quality & Safety Scores",
     "digitalFactor": "Digital Access",
@@ -421,7 +421,7 @@
     "technologySubtitle": "Built for growth and sustainability",
     "limitationsTitle": "Limitations & Disclaimers",
      "portfolioTitle": "Open Civic Infrastructure",
-    "portfolioDesc": "Designed to be replicated. 40+ public data sources. Any state can build this."
+    "portfolioDesc": "Designed to be replicated. {{sourceCount}} public data sources. Any state can build this."
   },
   "methodologyPage": {
     "badge": "Data Methodology",
@@ -509,7 +509,7 @@
   "wizard": {
     "cta": "Find Programs for Me",
     "title": "Find Programs for Me",
-    "intro": "Answer 3 quick questions — we'll find programs matched to your situation. No sign-up. No data stored.",
+    "intro": "Answer 3 quick questions - we'll find programs matched to your situation. No sign-up. No data stored.",
     "stepOf": "Step {{step}} of 4",
     "seconds": "~60 seconds",
     "foundPrograms": "We found {{count}} programs for you",

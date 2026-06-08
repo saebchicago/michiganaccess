@@ -1,7 +1,7 @@
 /**
- * Community Resilience Score — composite 0-100 from multiple dimensions.
+ * Community Resilience Score - composite 0-100 from multiple dimensions.
  * Higher = more resilient community.
- * THIS IS AN ILLUSTRATIVE COMPOSITE — not a validated resilience index.
+ * THIS IS AN ILLUSTRATIVE COMPOSITE - not a validated resilience index.
  */
 
 export interface ResilienceInput {
@@ -36,7 +36,7 @@ export function computeResilienceScore(input: ResilienceInput): ResilienceResult
   const digital = Math.max(0, Math.min(100, input.broadbandPct));
 
   const score = Math.round(disaster * 0.25 + economic * 0.25 + health * 0.20 + safetyNet * 0.15 + digital * 0.15);
-  const grade = score >= 80 ? "Tier 1 — Strong" : score >= 70 ? "Tier 2 — Moderate" : score >= 55 ? "Tier 3 — Limited" : score >= 40 ? "Tier 4 — Priority" : "Tier 5 — Critical";
+  const grade = score >= 80 ? "Tier 1 - Strong" : score >= 70 ? "Tier 2 - Moderate" : score >= 55 ? "Tier 3 - Limited" : score >= 40 ? "Tier 4 - Priority" : "Tier 5 - Critical";
 
   const dims = { disaster, economic, health, safetyNet, digital };
   const LABELS: Record<string, string> = {

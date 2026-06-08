@@ -1,5 +1,5 @@
 /**
- * Life Situation Navigation — "Explore by Life Situation"
+ * Life Situation Navigation - "Explore by Life Situation"
  * Dynamically filters existing indicators + actions by life context.
  */
 import { useState } from "react";

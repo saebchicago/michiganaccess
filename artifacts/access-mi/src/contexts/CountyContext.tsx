@@ -1,19 +1,99 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { MICHIGAN_REGIONS, type MichiganRegion } from "@/data/michigan-regions";
 import { zipToCounty } from "@/data/michigan-county-seats";
 
 export const MICHIGAN_COUNTIES = [
-  "Alcona", "Alger", "Allegan", "Alpena", "Antrim", "Arenac", "Baraga", "Barry",
-  "Bay", "Benzie", "Berrien", "Branch", "Calhoun", "Cass", "Charlevoix", "Cheboygan",
-  "Chippewa", "Clare", "Clinton", "Crawford", "Delta", "Dickinson", "Eaton", "Emmet",
-  "Genesee", "Gladwin", "Gogebic", "Grand Traverse", "Gratiot", "Hillsdale", "Houghton",
-  "Huron", "Ingham", "Ionia", "Iosco", "Iron", "Isabella", "Jackson", "Kalamazoo",
-  "Kalkaska", "Kent", "Keweenaw", "Lake", "Lapeer", "Leelanau", "Lenawee", "Livingston",
-  "Luce", "Mackinac", "Macomb", "Manistee", "Marquette", "Mason", "Mecosta", "Menominee",
-  "Midland", "Missaukee", "Monroe", "Montcalm", "Montmorency", "Muskegon", "Newaygo",
-  "Oakland", "Oceana", "Ogemaw", "Ontonagon", "Osceola", "Oscoda", "Otsego", "Ottawa",
-  "Presque Isle", "Roscommon", "Saginaw", "Sanilac", "Schoolcraft", "Shiawassee",
-  "St. Clair", "St. Joseph", "Tuscola", "Van Buren", "Washtenaw", "Wayne", "Wexford",
+  "Alcona",
+  "Alger",
+  "Allegan",
+  "Alpena",
+  "Antrim",
+  "Arenac",
+  "Baraga",
+  "Barry",
+  "Bay",
+  "Benzie",
+  "Berrien",
+  "Branch",
+  "Calhoun",
+  "Cass",
+  "Charlevoix",
+  "Cheboygan",
+  "Chippewa",
+  "Clare",
+  "Clinton",
+  "Crawford",
+  "Delta",
+  "Dickinson",
+  "Eaton",
+  "Emmet",
+  "Genesee",
+  "Gladwin",
+  "Gogebic",
+  "Grand Traverse",
+  "Gratiot",
+  "Hillsdale",
+  "Houghton",
+  "Huron",
+  "Ingham",
+  "Ionia",
+  "Iosco",
+  "Iron",
+  "Isabella",
+  "Jackson",
+  "Kalamazoo",
+  "Kalkaska",
+  "Kent",
+  "Keweenaw",
+  "Lake",
+  "Lapeer",
+  "Leelanau",
+  "Lenawee",
+  "Livingston",
+  "Luce",
+  "Mackinac",
+  "Macomb",
+  "Manistee",
+  "Marquette",
+  "Mason",
+  "Mecosta",
+  "Menominee",
+  "Midland",
+  "Missaukee",
+  "Monroe",
+  "Montcalm",
+  "Montmorency",
+  "Muskegon",
+  "Newaygo",
+  "Oakland",
+  "Oceana",
+  "Ogemaw",
+  "Ontonagon",
+  "Osceola",
+  "Oscoda",
+  "Otsego",
+  "Ottawa",
+  "Presque Isle",
+  "Roscommon",
+  "Saginaw",
+  "Sanilac",
+  "Schoolcraft",
+  "Shiawassee",
+  "St. Clair",
+  "St. Joseph",
+  "Tuscola",
+  "Van Buren",
+  "Washtenaw",
+  "Wayne",
+  "Wexford",
 ] as const;
 
 export type MichiganCounty = (typeof MICHIGAN_COUNTIES)[number];
@@ -57,7 +137,9 @@ interface CountyContextValue {
   toggleSubPersona: (sp: SubPersona) => void;
   /** Eligibility profile for FPL-based filtering */
   eligibility: EligibilityProfile;
-  setEligibility: (e: Partial<Pick<EligibilityProfile, "householdSize" | "annualIncome">>) => void;
+  setEligibility: (
+    e: Partial<Pick<EligibilityProfile, "householdSize" | "annualIncome">>,
+  ) => void;
   clearEligibility: () => void;
   /** Granular location (ZIP / census tract) */
   granularLocation: GranularLocation;
@@ -138,7 +220,9 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     return [];
   });
 
-  const [granularLoc, setGranularLoc] = useState<Omit<GranularLocation, "granularity">>(() => {
+  const [granularLoc, setGranularLoc] = useState<
+    Omit<GranularLocation, "granularity">
+  >(() => {
     try {
       const stored = localStorage.getItem(GRANULAR_STORAGE_KEY);
       if (stored) return JSON.parse(stored);
@@ -173,7 +257,10 @@ export function CountyProvider({ children }: { children: ReactNode }) {
   // Persist eligibility
   useEffect(() => {
     try {
-      localStorage.setItem(ELIGIBILITY_STORAGE_KEY, JSON.stringify(eligibilityInputs));
+      localStorage.setItem(
+        ELIGIBILITY_STORAGE_KEY,
+        JSON.stringify(eligibilityInputs),
+      );
     } catch {}
   }, [eligibilityInputs]);
 
@@ -191,64 +278,83 @@ export function CountyProvider({ children }: { children: ReactNode }) {
     } catch {}
   }, [granularLoc]);
 
-  const setCounty = (c: MichiganCounty | null) => {
+  // Setters are wrapped in useCallback so their identity is stable across
+  // renders. Consumers that pass these into useEffect dep arrays
+  // (CountyPage syncs the URL county into the context via such an
+  // effect) would otherwise loop infinitely on every provider render.
+  const setCounty = useCallback((c: MichiganCounty | null) => {
     setCountyState(c);
     if (c) {
       setRegionState(null);
       // Clear granular if switching county
       setGranularLoc({ zip: null, censusTract: null, resolvedCounty: null });
     }
-  };
+  }, []);
 
-  const setRegion = (r: MichiganRegion | null) => {
+  const setRegion = useCallback((r: MichiganRegion | null) => {
     setRegionState(r);
     if (r) {
       setCountyState(null);
       setGranularLoc({ zip: null, censusTract: null, resolvedCounty: null });
     }
-  };
+  }, []);
 
-  const setAudience = (a: Audience | null) => {
+  const setAudience = useCallback((a: Audience | null) => {
     setAudienceState(a);
-  };
+  }, []);
 
-  const toggleSubPersona = (sp: SubPersona) => {
+  const toggleSubPersona = useCallback((sp: SubPersona) => {
     setSubPersonas((prev) =>
-      prev.includes(sp) ? prev.filter((s) => s !== sp) : [...prev, sp]
+      prev.includes(sp) ? prev.filter((s) => s !== sp) : [...prev, sp],
     );
-  };
+  }, []);
 
-  const setEligibility = (partial: Partial<Pick<EligibilityProfile, "householdSize" | "annualIncome">>) => {
-    setEligibilityInputs((prev) => ({ ...prev, ...partial }));
-  };
+  const setEligibility = useCallback(
+    (
+      partial: Partial<
+        Pick<EligibilityProfile, "householdSize" | "annualIncome">
+      >,
+    ) => {
+      setEligibilityInputs((prev) => ({ ...prev, ...partial }));
+    },
+    [],
+  );
 
-  const clearEligibility = () => {
+  const clearEligibility = useCallback(() => {
     setEligibilityInputs({ householdSize: null, annualIncome: null });
-  };
+  }, []);
 
-  const setZip = (zip: string | null) => {
+  const setZip = useCallback((zip: string | null) => {
     if (zip) {
       const resolved = zipToCounty(zip) as MichiganCounty | null;
       setGranularLoc({ zip, censusTract: null, resolvedCounty: resolved });
       // Auto-set county context if resolved
       if (resolved) setCountyState(resolved);
     } else {
-      setGranularLoc((prev) => ({ ...prev, zip: null, resolvedCounty: prev.censusTract ? prev.resolvedCounty : null }));
+      setGranularLoc((prev) => ({
+        ...prev,
+        zip: null,
+        resolvedCounty: prev.censusTract ? prev.resolvedCounty : null,
+      }));
     }
-  };
+  }, []);
 
-  const setCensusTract = (tract: string | null) => {
+  const setCensusTract = useCallback((tract: string | null) => {
     setGranularLoc((prev) => ({ ...prev, censusTract: tract }));
-  };
+  }, []);
 
-  const clearGranularLocation = () => {
+  const clearGranularLocation = useCallback(() => {
     setGranularLoc({ zip: null, censusTract: null, resolvedCounty: null });
-  };
+  }, []);
 
   // Compute FPL percentage
   const fplPercent =
     eligibilityInputs.householdSize && eligibilityInputs.annualIncome
-      ? Math.round((eligibilityInputs.annualIncome / getFPLThreshold(eligibilityInputs.householdSize)) * 100)
+      ? Math.round(
+          (eligibilityInputs.annualIncome /
+            getFPLThreshold(eligibilityInputs.householdSize)) *
+            100,
+        )
       : null;
 
   const eligibility: EligibilityProfile = {
@@ -260,12 +366,12 @@ export function CountyProvider({ children }: { children: ReactNode }) {
   const granularity: GranularityLevel = granularLoc.censusTract
     ? "tract"
     : granularLoc.zip
-    ? "zip"
-    : county
-    ? "county"
-    : region
-    ? "region"
-    : "state";
+      ? "zip"
+      : county
+        ? "county"
+        : region
+          ? "region"
+          : "state";
 
   const granularLocation: GranularLocation = {
     ...granularLoc,
@@ -278,40 +384,77 @@ export function CountyProvider({ children }: { children: ReactNode }) {
   const locationLabel = granularLoc.censusTract
     ? `Tract ${granularLoc.censusTract}`
     : granularLoc.zip
-    ? `ZIP ${granularLoc.zip}${granularLoc.resolvedCounty ? ` · ${granularLoc.resolvedCounty} County` : ""}`
-    : county
-    ? `${county} County`
-    : region
-    ? region.name
-    : "All Michigan";
+      ? `ZIP ${granularLoc.zip}${granularLoc.resolvedCounty ? ` · ${granularLoc.resolvedCounty} County` : ""}`
+      : county
+        ? `${county} County`
+        : region
+          ? region.name
+          : "All Michigan";
 
   const filterLabel = county
     ? `${county} County`
     : region
-    ? region.name
-    : "All Michigan";
+      ? region.name
+      : "All Michigan";
 
   const activeCounties: MichiganCounty[] = county
     ? [county]
     : region
-    ? region.counties
-    : [...MICHIGAN_COUNTIES];
+      ? region.counties
+      : [...MICHIGAN_COUNTIES];
+
+  // Memoize the context value so consumers don't re-render on every
+  // provider render. With the useCallback'd setters above, this object
+  // only changes when an actual state value changes.
+  const value = useMemo<CountyContextValue>(
+    () => ({
+      county,
+      setCounty,
+      countyLabel,
+      region,
+      setRegion,
+      activeCounties,
+      filterLabel,
+      audience,
+      setAudience,
+      subPersonas,
+      toggleSubPersona,
+      eligibility,
+      setEligibility,
+      clearEligibility,
+      granularLocation,
+      setZip,
+      setCensusTract,
+      clearGranularLocation,
+      locationLabel,
+      granularity,
+    }),
+    [
+      county,
+      setCounty,
+      countyLabel,
+      region,
+      setRegion,
+      activeCounties,
+      filterLabel,
+      audience,
+      setAudience,
+      subPersonas,
+      toggleSubPersona,
+      eligibility,
+      setEligibility,
+      clearEligibility,
+      granularLocation,
+      setZip,
+      setCensusTract,
+      clearGranularLocation,
+      locationLabel,
+      granularity,
+    ],
+  );
 
   return (
-    <CountyContext.Provider
-      value={{
-        county, setCounty, countyLabel,
-        region, setRegion,
-        activeCounties, filterLabel,
-        audience, setAudience,
-        subPersonas, toggleSubPersona,
-        eligibility, setEligibility, clearEligibility,
-        granularLocation, setZip, setCensusTract, clearGranularLocation,
-        locationLabel, granularity,
-      }}
-    >
-      {children}
-    </CountyContext.Provider>
+    <CountyContext.Provider value={value}>{children}</CountyContext.Provider>
   );
 }
 

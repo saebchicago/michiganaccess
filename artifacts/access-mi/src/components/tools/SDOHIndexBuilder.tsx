@@ -290,7 +290,7 @@ export default function SDOHIndexBuilder() {
         <div className="flex items-start gap-2 p-3 rounded-lg bg-muted/30 border border-border/50">
           <Info className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
           <p className="text-[10px] text-muted-foreground leading-relaxed">
-            <strong>Illustrative composite</strong> — 2022-2024 public data estimates. Dimension scores derived from ACS, BLS, USDA, and County Health Rankings data.
+            <strong>Illustrative composite</strong> - 2022-2024 public data estimates. Dimension scores derived from ACS, BLS, USDA, and County Health Rankings data.
             Weights auto-normalize to 100%. This tool is for exploratory analysis; it does not represent an official index.
           </p>
         </div>

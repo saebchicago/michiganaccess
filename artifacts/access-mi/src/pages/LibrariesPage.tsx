@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 const MICHIGAN_LIBRARY_SYSTEMS = [
-  { name: "Michigan eLibrary (MeL)", url: "https://mel.org", desc: "Statewide digital library — free access to databases, eBooks, and research tools for all Michigan residents.", coverage: "Statewide" },
+  { name: "Michigan eLibrary (MeL)", url: "https://mel.org", desc: "Statewide digital library - free access to databases, eBooks, and research tools for all Michigan residents.", coverage: "Statewide" },
   { name: "Detroit Public Library", url: "https://detroitpubliclibrary.org", desc: "24 branches serving Detroit with free internet, programming, and community resources.", coverage: "Wayne County" },
   { name: "Ann Arbor District Library", url: "https://aadl.org", desc: "Innovative library system with extensive digital collections and community events.", coverage: "Washtenaw County" },
   { name: "Kent District Library", url: "https://kdl.org", desc: "20 branches across Kent County offering reading programs, job resources, and technology access.", coverage: "Kent County" },
@@ -50,7 +50,7 @@ const LibrariesPage = () => {
           </div>
           <h1 className="mb-3 text-3xl font-bold text-foreground md:text-4xl">Michigan Public Libraries</h1>
           <p className="text-muted-foreground">
-            Every Michigan resident has free access to library services — internet, databases, eBooks, job resources, and community programs.
+            Every Michigan resident has free access to library services - internet, databases, eBooks, job resources, and community programs.
           </p>
         </div>
       </section>

@@ -37,7 +37,7 @@ export default function EnvironmentRiskCards({ countyName }: EnvironmentRiskCard
     });
   }, [pfasData, countyName]);
 
-  // Static PFAS fallback — used when ArcGIS proxy returns no live data for the county
+  // Static PFAS fallback - used when ArcGIS proxy returns no live data for the county
   const staticPfasCount = MICHIGAN_PFAS_BY_COUNTY[countyName] ?? null;
   const staticPfasSites = MICHIGAN_KEY_PFAS_SITES.filter((s) => s.county === countyName);
   const effectivePfasCount = pfasStatus === "live" ? pfasInCounty.length : staticPfasCount;
@@ -96,7 +96,7 @@ export default function EnvironmentRiskCards({ countyName }: EnvironmentRiskCard
         }
       />
 
-      {/* EJ Index — Pending */}
+      {/* EJ Index - Pending */}
       <PillarInsightCard
         title="EPA EJScreen Index"
         pattern="percentile"

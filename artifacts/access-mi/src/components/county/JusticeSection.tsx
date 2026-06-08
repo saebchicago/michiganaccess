@@ -202,7 +202,7 @@ export default function JusticeSection({ county }: Props) {
                 {info.accessibility.languageSupport && (
                   <li className="flex items-center gap-2">
                     <HelpCircle className="h-3.5 w-3.5 text-primary" />
-                    Language interpretation services are available — ask the court clerk.
+                    Language interpretation services are available - ask the court clerk.
                   </li>
                 )}
                 {info.accessibility.adaInformationUrl && (
@@ -217,7 +217,7 @@ export default function JusticeSection({ county }: Props) {
                   <li className="flex items-center gap-2">
                     <Scale className="h-3.5 w-3.5 text-primary" />
                     <a href={info.accessibility.selfHelpCenterUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                      Self-help resources — navigate the system on your own →
+                      Self-help resources - navigate the system on your own →
                     </a>
                   </li>
                 )}

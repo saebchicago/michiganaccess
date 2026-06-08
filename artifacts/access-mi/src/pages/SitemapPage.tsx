@@ -15,7 +15,7 @@ const ICON_MAP: Record<string, React.ElementType> = {
 export default function SitemapPage() {
   usePageMeta({
     title: "Site Map",
-    description: "Complete navigation tree for Access Michigan — find any page or feature quickly.",
+    description: "Complete navigation tree for Access Michigan - find any page or feature quickly.",
     path: "/sitemap",
   });
 

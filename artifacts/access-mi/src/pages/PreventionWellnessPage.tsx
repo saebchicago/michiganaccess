@@ -30,7 +30,7 @@ interface Screening {
 
 const screeningsByAge: Record<string, Screening[]> = {
   "18-39": [
-    { name: "Blood Pressure", ageRange: "18+", frequency: "Every 1-2 years", description: "Hypertension screening — the silent killer. No symptoms until damage is done.", priority: "essential" },
+    { name: "Blood Pressure", ageRange: "18+", frequency: "Every 1-2 years", description: "Hypertension screening - the silent killer. No symptoms until damage is done.", priority: "essential" },
     { name: "Cholesterol (Lipid Panel)", ageRange: "20+", frequency: "Every 4-6 years", description: "Total cholesterol, LDL, HDL, triglycerides. More frequent if risk factors present.", priority: "essential" },
     { name: "Depression Screening", ageRange: "18+", frequency: "Annual", description: "PHQ-9 screening for major depressive disorder. Covered under preventive care.", priority: "recommended" },
     { name: "Cervical Cancer (Pap Smear)", ageRange: "21-65", frequency: "Every 3 years", description: "Pap test or HPV co-testing every 5 years starting at age 30.", priority: "essential" },
@@ -62,7 +62,7 @@ const vaccineSchedule = [
   { name: "Shingles (Shingrix)", who: "50+", when: "2-dose series", note: "Even if you had chickenpox or prior Zostavax" },
   { name: "Pneumococcal (PCV20)", who: "65+ or risk factors", when: "1 dose PCV20", note: "Also for adults 19-64 with certain conditions" },
   { name: "HPV (Gardasil 9)", who: "9-26 (catch-up to 45)", when: "2 or 3 dose series", note: "Prevents cervical, throat, and other cancers" },
-  { name: "RSV (Abrysvo/Arexvy)", who: "60+ or 32-36 weeks pregnant", when: "Single dose", note: "New vaccine — approved 2023 for older adults" },
+  { name: "RSV (Abrysvo/Arexvy)", who: "60+ or 32-36 weeks pregnant", when: "Single dose", note: "New vaccine - approved 2023 for older adults" },
 ];
 
 const wellnessTips = [
@@ -87,7 +87,7 @@ export default function PreventionWellnessPage() {
     path: "/wellness",
     jsonLd: {
       "@type": "MedicalWebPage",
-      name: "Prevention & Wellness — Access Michigan",
+      name: "Prevention & Wellness - Access Michigan",
       about: { "@type": "MedicalCondition", name: "Preventive healthcare" },
     },
   });
@@ -110,7 +110,7 @@ export default function PreventionWellnessPage() {
             Stay Ahead of Disease
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Age-specific screening recommendations, vaccine schedules, and wellness guidance based on USPSTF, CDC, and ACS guidelines — all based on USPSTF, CDC, and ACS guidelines.
+            Age-specific screening recommendations, vaccine schedules, and wellness guidance based on USPSTF, CDC, and ACS guidelines - all based on USPSTF, CDC, and ACS guidelines.
           </motion.p>
         </div>
       </section>
@@ -253,7 +253,7 @@ export default function PreventionWellnessPage() {
           <CardContent className="py-4">
             <p className="text-xs text-muted-foreground leading-relaxed">
               <Shield className="inline h-3.5 w-3.5 mr-1 text-primary" />
-              <strong>Clinical Guidelines:</strong> Screening recommendations based on U.S. Preventive Services Task Force (USPSTF) A/B ratings, CDC Advisory Committee on Immunization Practices (ACIP), and American Cancer Society guidelines. Individual needs may vary — discuss with your healthcare provider.
+              <strong>Clinical Guidelines:</strong> Screening recommendations based on U.S. Preventive Services Task Force (USPSTF) A/B ratings, CDC Advisory Committee on Immunization Practices (ACIP), and American Cancer Society guidelines. Individual needs may vary - discuss with your healthcare provider.
             </p>
           </CardContent>
         </Card>

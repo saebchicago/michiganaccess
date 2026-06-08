@@ -161,7 +161,7 @@ export default function FrontDoorTriage({ onClose }: FrontDoorTriageProps) {
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                   className="mt-6 rounded-xl border border-primary/20 bg-primary/[0.03] p-4">
                   <p className="text-sm font-medium text-foreground">Find financial help that fits your situation.</p>
-                  <p className="text-xs text-muted-foreground mt-1">Based on {county || `ZIP ${zip}`} — see programs you may qualify for below.</p>
+                  <p className="text-xs text-muted-foreground mt-1">Based on {county || `ZIP ${zip}`} - see programs you may qualify for below.</p>
                 </motion.div>
               )}
 

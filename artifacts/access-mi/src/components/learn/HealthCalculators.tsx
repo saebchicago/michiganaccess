@@ -94,7 +94,7 @@ export default function HealthCalculators() {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-muted-foreground">Simple health tools to help you understand your numbers. <strong>These are not diagnostic tools</strong> — discuss results with your healthcare provider.</p>
+      <p className="text-sm text-muted-foreground">Simple health tools to help you understand your numbers. <strong>These are not diagnostic tools</strong> - discuss results with your healthcare provider.</p>
 
       <div className="grid gap-6 md:grid-cols-2">
         {/* BMI Calculator */}
@@ -253,7 +253,7 @@ export default function HealthCalculators() {
               <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
                 <p><strong className="text-michigan-forest">Low (0–3):</strong> Maintain healthy habits</p>
                 <p><strong className="text-michigan-gold">Moderate (4–6):</strong> Talk to your doctor about screening</p>
-                <p><strong className="text-michigan-coral">High (7+):</strong> Get tested — schedule an A1C test</p>
+                <p><strong className="text-michigan-coral">High (7+):</strong> Get tested - schedule an A1C test</p>
               </div>
             </div>
           </CardContent>
@@ -317,7 +317,7 @@ export default function HealthCalculators() {
               <HeartPulse className="h-5 w-5 text-michigan-coral" />
               <h3 className="text-lg font-bold text-foreground">Target Heart Rate Zones</h3>
             </div>
-            <p className="text-xs text-muted-foreground mb-4">Karvonen method — personalized training zones based on your age and resting heart rate.</p>
+            <p className="text-xs text-muted-foreground mb-4">Karvonen method - personalized training zones based on your age and resting heart rate.</p>
             <div className="space-y-3">
               <div>
                 <label className="text-sm font-medium text-foreground mb-1 block">Age: {thrAge}</label>

@@ -1,5 +1,5 @@
 /**
- * Federal investment data by county — SBA business loans, SBA disaster loans,
+ * Federal investment data by county - SBA business loans, SBA disaster loans,
  * and estimated FEMA assistance.
  * Sources: SBA FOIA loan data, FEMA OpenFEMA disaster declarations.
  * Values are illustrative estimates compiled from public data.

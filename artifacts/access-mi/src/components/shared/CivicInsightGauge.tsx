@@ -1,5 +1,5 @@
 /**
- * CivicInsightGauge — semicircle 0-100 score gauge.
+ * CivicInsightGauge - semicircle 0-100 score gauge.
  *
  * Renders an accessible SVG arc with colour-coded tiers:
  *   ≥75  → "Strong"          (#2E7D32 forest green)

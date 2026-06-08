@@ -42,7 +42,7 @@ export default function StaticResourceCard({ resource: r, index }: Props) {
                 {isPhone ? (
                   <><Phone className="mr-1.5 h-3.5 w-3.5" />Call Now</>
                 ) : (
-                  <><ExternalLink className="mr-1.5 h-3.5 w-3.5" />Visit {r.name.split("—")[0].trim()}</>
+                  <><ExternalLink className="mr-1.5 h-3.5 w-3.5" />Visit {r.name.split("-")[0].trim()}</>
                 )}
               </a>
             </Button>

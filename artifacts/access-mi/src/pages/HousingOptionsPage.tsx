@@ -1,5 +1,5 @@
 /**
- * HousingOptionsPage — step-by-step housing help flow.
+ * HousingOptionsPage - step-by-step housing help flow.
  * Uses existing community_resources + static findhelp links.
  * No PHI. External links labeled clearly.
  */
@@ -63,7 +63,7 @@ function ExtLink({ href, children }: { href: string; children: React.ReactNode }
     >
       {children}
       <ExternalLink className="h-3 w-3 shrink-0" />
-      <span className="sr-only">(opens external site — you are leaving Access Michigan)</span>
+      <span className="sr-only">(opens external site - you are leaving Access Michigan)</span>
     </a>
   );
 }
@@ -72,7 +72,7 @@ export default function HousingOptionsPage() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   usePageMeta({
-    title: "Find Housing Options — Access Michigan",
+    title: "Find Housing Options - Access Michigan",
     description: "Step-by-step help finding emergency shelter, affordable rentals, and subsidized housing in Michigan.",
     path: "/housing-options",
   });
@@ -134,7 +134,7 @@ export default function HousingOptionsPage() {
         </div>
 
         <AnimatePresence mode="wait">
-          {/* Step 1 — Location */}
+          {/* Step 1 - Location */}
           {step === 1 && (
             <motion.div key="s1" {...fadeSlide} className="space-y-4">
               <Card>
@@ -165,7 +165,7 @@ export default function HousingOptionsPage() {
             </motion.div>
           )}
 
-          {/* Step 2 — Situation */}
+          {/* Step 2 - Situation */}
           {step === 2 && (
             <motion.div key="s2" {...fadeSlide} className="space-y-4">
               <Card>
@@ -196,7 +196,7 @@ export default function HousingOptionsPage() {
             </motion.div>
           )}
 
-          {/* Step 3 — Income */}
+          {/* Step 3 - Income */}
           {step === 3 && (
             <motion.div key="s3" {...fadeSlide} className="space-y-4">
               <Card>
@@ -222,7 +222,7 @@ export default function HousingOptionsPage() {
             </motion.div>
           )}
 
-          {/* Step 4 — Results */}
+          {/* Step 4 - Results */}
           {step === 4 && (
             <motion.div key="s4" {...fadeSlide} className="space-y-5">
               {/* Crisis alert for emergency */}
@@ -233,50 +233,50 @@ export default function HousingOptionsPage() {
                       <Phone className="h-4 w-4" /> If you are in immediate danger, call 911
                     </div>
                     <div className="text-xs space-y-1 text-foreground/80">
-                      <p><strong>Michigan 211:</strong> <a href="tel:211" className="text-primary underline">Call 211</a> — shelter, food, and crisis services 24/7</p>
-                      <p><strong>National DV Hotline:</strong> <a href="tel:1-800-799-7233" className="text-primary underline">1-800-799-7233</a> — safety planning, shelter referrals</p>
+                      <p><strong>Michigan 211:</strong> <a href="tel:211" className="text-primary underline">Call 211</a> - shelter, food, and crisis services 24/7</p>
+                      <p><strong>National DV Hotline:</strong> <a href="tel:1-800-799-7233" className="text-primary underline">1-800-799-7233</a> - safety planning, shelter referrals</p>
                       <p><strong>988 Suicide & Crisis Lifeline:</strong> <a href="tel:988" className="text-primary underline">Call or text 988</a></p>
                     </div>
                   </CardContent>
                 </Card>
               )}
 
-              {/* Section 1 — Emergency / short-term */}
+              {/* Section 1 - Emergency / short-term */}
               <Card>
                 <CardContent className="pt-5 space-y-3">
                   <div className="flex items-center gap-2 font-semibold text-sm"><AlertTriangle className="h-4 w-4 text-amber-600" /> Emergency & Short-Term Help</div>
                   <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://mi211.org">Michigan 211 — Housing & Shelter</ExtLink> — search for emergency shelters and crisis housing in {countyLabel}.</span></li>
-                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://www.michigan.gov/mdhhs/assistance-programs/emergency-relief">MDHHS Emergency Relief</ExtLink> — state emergency assistance for rent, utilities, and home repairs.</span></li>
+                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://mi211.org">Michigan 211 - Housing & Shelter</ExtLink> - search for emergency shelters and crisis housing in {countyLabel}.</span></li>
+                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://www.michigan.gov/mdhhs/assistance-programs/emergency-relief">MDHHS Emergency Relief</ExtLink> - state emergency assistance for rent, utilities, and home repairs.</span></li>
                     {(shelterResources ?? []).slice(0, 3).map((r) => (
                       <li key={r.id} className="flex items-start gap-2">
                         <ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" />
                         <span>
                           {r.website ? <ExtLink href={r.website}>{r.resource_name}</ExtLink> : <strong>{r.resource_name}</strong>}
-                          {r.phone && <> — <a href={`tel:${r.phone}`} className="text-primary underline">{r.phone}</a></>}
-                          {r.description && <span className="text-muted-foreground"> — {r.description}</span>}
+                          {r.phone && <> - <a href={`tel:${r.phone}`} className="text-primary underline">{r.phone}</a></>}
+                          {r.description && <span className="text-muted-foreground"> - {r.description}</span>}
                         </span>
                       </li>
                     ))}
-                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://www.salvationarmyusa.org/usn/provide-shelter/">Salvation Army Shelters</ExtLink> — emergency lodging and meals.</span></li>
+                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://www.salvationarmyusa.org/usn/provide-shelter/">Salvation Army Shelters</ExtLink> - emergency lodging and meals.</span></li>
                   </ul>
                 </CardContent>
               </Card>
 
-              {/* Section 2 — Subsidized & affordable */}
+              {/* Section 2 - Subsidized & affordable */}
               <Card>
                 <CardContent className="pt-5 space-y-3">
                   <div className="flex items-center gap-2 font-semibold text-sm"><Building2 className="h-4 w-4 text-primary" /> Subsidized & Affordable Housing</div>
                   <ul className="space-y-2 text-sm">
-                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://resources.hud.gov/">HUD Resource Locator</ExtLink> — search for subsidized apartments, public housing, and voucher programs.</span></li>
-                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://www.michigan.gov/mshda">Michigan State Housing Development Authority (MSHDA)</ExtLink> — rental assistance, homeownership programs, and affordable housing locator.</span></li>
-                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://affordablehousingonline.com/housing-search/Michigan">Affordable Housing Online — Michigan</ExtLink> — search waitlists and income-restricted listings.</span></li>
+                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://resources.hud.gov/">HUD Resource Locator</ExtLink> - search for subsidized apartments, public housing, and voucher programs.</span></li>
+                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://www.michigan.gov/mshda">Michigan State Housing Development Authority (MSHDA)</ExtLink> - rental assistance, homeownership programs, and affordable housing locator.</span></li>
+                    <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://affordablehousingonline.com/housing-search/Michigan">Affordable Housing Online - Michigan</ExtLink> - search waitlists and income-restricted listings.</span></li>
                     {(housingResources ?? []).slice(0, 3).map((r) => (
                       <li key={r.id} className="flex items-start gap-2">
                         <ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" />
                         <span>
                           {r.website ? <ExtLink href={r.website}>{r.resource_name}</ExtLink> : <strong>{r.resource_name}</strong>}
-                          {r.description && <span className="text-muted-foreground"> — {r.description}</span>}
+                          {r.description && <span className="text-muted-foreground"> - {r.description}</span>}
                         </span>
                       </li>
                     ))}
@@ -289,7 +289,7 @@ export default function HousingOptionsPage() {
                 </CardContent>
               </Card>
 
-              {/* Section 3 — Market rentals */}
+              {/* Section 3 - Market rentals */}
               <Card>
                 <CardContent className="pt-5 space-y-3">
                   <div className="flex items-center gap-2 font-semibold text-sm"><Search className="h-4 w-4 text-primary" /> Market Rentals & Safer Searching</div>
@@ -297,7 +297,7 @@ export default function HousingOptionsPage() {
                     <p>When searching for market-rate rentals, keep these tips in mind:</p>
                     <ul className="space-y-1 list-disc pl-4">
                       <li>Use multiple listing sites to compare prices and availability.</li>
-                      <li>Avoid cash-only arrangements and unofficial leases — always get things in writing.</li>
+                      <li>Avoid cash-only arrangements and unofficial leases - always get things in writing.</li>
                       <li>Michigan fair housing law protects against discrimination based on race, religion, sex, disability, familial status, and more. If you suspect discrimination, contact the <ExtLink href="https://www.michigan.gov/mdcr">Michigan Department of Civil Rights</ExtLink>.</li>
                     </ul>
                   </div>
@@ -323,8 +323,8 @@ export default function HousingOptionsPage() {
                   <CardContent className="pt-5 space-y-3">
                     <div className="flex items-center gap-2 font-semibold text-sm"><Scale className="h-4 w-4 text-primary" /> Legal Help</div>
                     <ul className="space-y-2 text-sm">
-                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://michiganlegalhelp.org/self-help-tools/housing">Michigan Legal Help — Housing</ExtLink> — free legal information about eviction, landlord disputes, and housing rights.</span></li>
-                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://www.hud.gov/findacounselor">HUD Housing Counseling</ExtLink> — free, HUD-approved housing counselors for foreclosure prevention and rental help.</span></li>
+                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://michiganlegalhelp.org/self-help-tools/housing">Michigan Legal Help - Housing</ExtLink> - free legal information about eviction, landlord disputes, and housing rights.</span></li>
+                      <li className="flex items-start gap-2"><ChevronRight className="h-3.5 w-3.5 mt-0.5 shrink-0 text-muted-foreground" /><span><ExtLink href="https://www.hud.gov/findacounselor">HUD Housing Counseling</ExtLink> - free, HUD-approved housing counselors for foreclosure prevention and rental help.</span></li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -354,7 +354,7 @@ export default function HousingOptionsPage() {
           <Info className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
           <p className="text-[11px] text-muted-foreground leading-relaxed">
             Access Michigan connects you with public resources and does not determine eligibility for any program.
-            We do not store any information you enter on this page. External links are clearly marked — when you
+            We do not store any information you enter on this page. External links are clearly marked - when you
             click them, you leave Access Michigan.
           </p>
         </div>

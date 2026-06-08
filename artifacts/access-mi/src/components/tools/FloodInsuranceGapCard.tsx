@@ -34,7 +34,7 @@ export default function FloodInsuranceGapCard({ county }: FloodInsuranceGapCardP
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
             <Droplets className="h-5 w-5 text-michigan-teal" />
-            Flood Insurance Gap — {data.county} County
+            Flood Insurance Gap - {data.county} County
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -126,7 +126,7 @@ export default function FloodInsuranceGapCard({ county }: FloodInsuranceGapCardP
 
                 <p className="text-xs text-muted-foreground">
                   {data.totalClaimsSince1978.toLocaleString()} claims since 1978 but only{" "}
-                  {data.policiesInForce.toLocaleString()} active policies — many properties
+                  {data.policiesInForce.toLocaleString()} active policies - many properties
                   have experienced flooding without maintaining coverage.
                 </p>
 

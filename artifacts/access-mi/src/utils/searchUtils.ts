@@ -8,7 +8,7 @@ const KEYWORD_SUGGESTIONS: { term: string; label: string; href: string; category
   { term: "wic", label: "WIC (Women, Infants & Children)", href: "/find-care?q=WIC", category: "program" },
   { term: "snap", label: "SNAP / Food Assistance", href: "/financial-help", category: "program" },
   { term: "food stamps", label: "SNAP / Food Assistance (Food Stamps)", href: "/financial-help", category: "program" },
-  { term: "mibridges", label: "MiBridges — Apply for Benefits Online", href: "/financial-help", category: "program" },
+  { term: "mibridges", label: "MiBridges - Apply for Benefits Online", href: "/financial-help", category: "program" },
   { term: "ebt", label: "SNAP / EBT Card", href: "/financial-help", category: "program" },
   { term: "medicaid", label: "Medicaid / Healthy Michigan", href: "/financial-help", category: "program" },
   { term: "medicare", label: "Medicare", href: "/financial-help", category: "program" },

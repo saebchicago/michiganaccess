@@ -28,7 +28,7 @@ const cards = [
     title: "Government & Policy",
     subtitle: "County Health · MDHHS · Legislature",
     description:
-      "Gap analysis, SDOH mapping, and outcome tracking — county-level data to support policy decisions across all 83 counties.",
+      "Gap analysis, SDOH mapping, and outcome tracking - county-level data to support policy decisions across all 83 counties.",
     cta: "View Impact Data",
     href: "/impact",
     gradient: "from-michigan-blue to-michigan-sky",

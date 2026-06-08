@@ -41,7 +41,7 @@ export default function NewsletterSignup() {
             <h2 className="text-sm font-bold text-foreground">Weekly Insight Digest</h2>
           </div>
           <p className="text-xs text-muted-foreground max-w-md mx-auto">
-            Get one data-backed Michigan insight per week. No spam — just facts.
+            Get one data-backed Michigan insight per week. No spam - just facts.
           </p>
 
           {submitted ? (

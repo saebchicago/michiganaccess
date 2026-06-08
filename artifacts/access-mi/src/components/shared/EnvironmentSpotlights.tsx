@@ -32,7 +32,7 @@ const PROGRAMS: Program[] = [
   },
   {
     title: "Great Lakes Restoration Initiative",
-    description: "Federal programs protecting the Great Lakes — habitat restoration, invasive species management, and beach monitoring.",
+    description: "Federal programs protecting the Great Lakes - habitat restoration, invasive species management, and beach monitoring.",
     eligibility: ["communities"],
     url: "https://www.glri.us",
     icon: <Fish className="h-5 w-5" />,

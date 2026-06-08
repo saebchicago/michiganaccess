@@ -25,7 +25,7 @@ export default function HistoricalContextCard({ zip }: HistoricalContextCardProp
               Historical Context
             </span>
             <span className={`text-[9px] px-1.5 py-0.5 rounded font-semibold bg-white/60 dark:bg-black/20 ${config.textColor} ${config.darkText}`}>
-              HOLC Grade {holc.holcGrade} — {holc.holcLabel}
+              HOLC Grade {holc.holcGrade} - {holc.holcLabel}
             </span>
           </div>
           <p className="text-xs text-foreground leading-relaxed mb-2">{holc.historicalDescription}</p>

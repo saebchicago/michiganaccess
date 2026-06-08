@@ -10,7 +10,12 @@ import SectorOverlayControls from "@/components/map/SectorOverlayControls";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCounty } from "@/contexts/CountyContext";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import MapFirstVisitTooltip from "@/components/map/MapFirstVisitTooltip";
 import NetworkFilter from "@/components/map/NetworkFilter";
 
@@ -22,26 +27,39 @@ const DEFAULT_LAYERS = LAYERS.filter((l) => l.defaultOn).map((l) => l.id);
 export default function HealthMapPage() {
   const { t } = useTranslation();
   const { county } = useCounty();
-  usePageMeta({ title: "Health Map", description: "Interactive map of Michigan healthcare facilities with quality scores, transit access, and layer controls.", path: "/health-map" });
+  usePageMeta({
+    title: "Health Map",
+    description:
+      "Interactive map of Michigan healthcare facilities with quality scores, transit access, and layer controls.",
+    path: "/health-map",
+  });
   const [activeLayers, setActiveLayers] = useState<string[]>(DEFAULT_LAYERS);
-  const [activeOverlays, setActiveOverlays] = useState<string[]>(["county-boundaries"]);
+  const [activeOverlays, setActiveOverlays] = useState<string[]>([
+    "county-boundaries",
+  ]);
   const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
   const { data: facilities = [], isLoading } = useFacilities(undefined, county);
 
   const toggleLayer = useCallback((layerId: string) => {
     setActiveLayers((prev) =>
-      prev.includes(layerId) ? prev.filter((id) => id !== layerId) : [...prev, layerId]
+      prev.includes(layerId)
+        ? prev.filter((id) => id !== layerId)
+        : [...prev, layerId],
     );
   }, []);
 
   const toggleOverlay = useCallback((id: string) => {
     setActiveOverlays((prev) =>
-      prev.includes(id) ? prev.filter((o) => o !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((o) => o !== id) : [...prev, id],
     );
   }, []);
 
   return (
     <Layout>
+      <h1 className="sr-only">
+        Michigan Health Map - interactive facility locator with quality scores
+        and layer controls
+      </h1>
       <div className="relative flex h-[calc(100vh-4rem)] flex-col lg:flex-row">
         {/* Desktop sidebar */}
         <motion.aside
@@ -52,25 +70,43 @@ export default function HealthMapPage() {
         >
           <div className="flex items-center gap-2">
             <MapPin className="h-5 w-5 text-primary" />
-            <h2 className="text-lg font-bold text-foreground">{t('healthMap.title')}</h2>
+            <h2 className="text-lg font-bold text-foreground">
+              {t("healthMap.title")}
+            </h2>
           </div>
           <p className="text-xs text-muted-foreground">
-            {t('healthMap.description')}
-            {county && <span className="block mt-1 font-medium text-primary">Filtered: {county} County</span>}
+            {t("healthMap.description")}
+            {county && (
+              <span className="block mt-1 font-medium text-primary">
+                Filtered: {county} County
+              </span>
+            )}
           </p>
 
-          <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
-          <SectorOverlayControls activeOverlays={activeOverlays} onToggleOverlay={toggleOverlay} />
-          <NetworkFilter selectedSystem={selectedSystem} onSelect={setSelectedSystem} />
+          <MapLayerControls
+            activeLayers={activeLayers}
+            onToggleLayer={toggleLayer}
+          />
+          <SectorOverlayControls
+            activeOverlays={activeOverlays}
+            onToggleOverlay={toggleOverlay}
+          />
+          <NetworkFilter
+            selectedSystem={selectedSystem}
+            onSelect={setSelectedSystem}
+          />
           <MapLegend />
 
           <div className="mt-auto rounded-lg border border-border bg-muted/50 p-3">
             <div className="flex items-start gap-2">
               <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted-foreground" />
               <div>
-                <p className="text-[10px] font-semibold text-muted-foreground">{t('healthMap.dataNotice')}</p>
+                <p className="text-[10px] font-semibold text-muted-foreground">
+                  {t("healthMap.dataNotice")}
+                </p>
                 <p className="text-[10px] text-muted-foreground">
-                  {t('healthMap.dataNoticeText')} Data overlays from Michigan GIS, MDOT, EGLE. Click a county boundary to view its subpage.
+                  {t("healthMap.dataNoticeText")} Data overlays from Michigan
+                  GIS, MDOT, EGLE. Click a county boundary to view its subpage.
                 </p>
               </div>
             </div>
@@ -83,15 +119,24 @@ export default function HealthMapPage() {
             <SheetTrigger asChild>
               <Button size="sm" variant="secondary" className="shadow-md">
                 <Layers className="mr-1.5 h-4 w-4" />
-                {t('healthMap.layers')}
+                {t("healthMap.layers")}
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-80 overflow-y-auto">
-              <SheetTitle>{t('healthMap.mapLayers')}</SheetTitle>
+              <SheetTitle>{t("healthMap.mapLayers")}</SheetTitle>
               <div className="mt-4 flex flex-col gap-4">
-                <MapLayerControls activeLayers={activeLayers} onToggleLayer={toggleLayer} />
-                <SectorOverlayControls activeOverlays={activeOverlays} onToggleOverlay={toggleOverlay} />
-                <NetworkFilter selectedSystem={selectedSystem} onSelect={setSelectedSystem} />
+                <MapLayerControls
+                  activeLayers={activeLayers}
+                  onToggleLayer={toggleLayer}
+                />
+                <SectorOverlayControls
+                  activeOverlays={activeOverlays}
+                  onToggleOverlay={toggleOverlay}
+                />
+                <NetworkFilter
+                  selectedSystem={selectedSystem}
+                  onSelect={setSelectedSystem}
+                />
                 <MapLegend />
               </div>
             </SheetContent>
@@ -100,7 +145,7 @@ export default function HealthMapPage() {
 
         <MapFirstVisitTooltip />
 
-        {/* Map — lazy loaded */}
+        {/* Map - lazy loaded */}
         <div className="relative flex-1">
           {isLoading && (
             <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-background/80 backdrop-blur-sm">
@@ -110,15 +155,19 @@ export default function HealthMapPage() {
                 className="flex flex-col items-center gap-3"
               >
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-                <p className="text-sm font-medium text-muted-foreground">{t('healthMap.loading')}</p>
+                <p className="text-sm font-medium text-muted-foreground">
+                  {t("healthMap.loading")}
+                </p>
               </motion.div>
             </div>
           )}
-          <Suspense fallback={
-            <div className="flex h-full items-center justify-center bg-muted/30">
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-            </div>
-          }>
+          <Suspense
+            fallback={
+              <div className="flex h-full items-center justify-center bg-muted/30">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+              </div>
+            }
+          >
             <HealthMap
               facilities={facilities}
               activeLayers={activeLayers}

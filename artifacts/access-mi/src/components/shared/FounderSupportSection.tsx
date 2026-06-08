@@ -14,14 +14,14 @@ export default function FounderSupportSection() {
           <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-xl mx-auto">
             Access Michigan is built and maintained by a healthcare data professional who saw how hard
             it is for ordinary people to find the services and information they need. This is an
-            independent, non-commercial civic project — no ads, no tracking, no paywalls, ever.
+            independent, non-commercial civic project - no ads, no tracking, no paywalls, ever.
           </p>
         </div>
 
         {/* Trust signals */}
         <div className="flex flex-wrap justify-center gap-5 text-xs text-muted-foreground mb-8">
           {[
-            { icon: Shield, text: "Independent — not a government agency" },
+            { icon: Shield, text: "Independent - not a government agency" },
             { icon: Lock, text: "No tracking, cookies, or ads" },
             { icon: Globe, text: "Free for all Michigan residents" },
           ].map((item) => (
@@ -42,7 +42,7 @@ export default function FounderSupportSection() {
               <p className="text-sm font-semibold text-foreground">Support Access Michigan</p>
               <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                 Your contribution helps cover hosting, data infrastructure, and development. Access is
-                always free — donations never affect what you can see or use.
+                always free - donations never affect what you can see or use.
               </p>
             </div>
             <a

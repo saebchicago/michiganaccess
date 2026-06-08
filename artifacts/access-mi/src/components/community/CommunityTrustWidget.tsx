@@ -1,5 +1,5 @@
 /**
- * Community Trust Widget — Social proof system for resources.
+ * Community Trust Widget - Social proof system for resources.
  * Allows "Verified Helpful" upvotes and "Out of Date" reports.
  * Uses existing resource_ratings and community_reports tables.
  */

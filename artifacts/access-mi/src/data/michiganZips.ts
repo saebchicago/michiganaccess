@@ -1,5 +1,5 @@
 /**
- * Michigan ZIP-to-County lookup — ~100 major ZIPs.
+ * Michigan ZIP-to-County lookup - ~100 major ZIPs.
  * Sources: USPS, Census Bureau ZCTA-to-County crosswalk.
  */
 

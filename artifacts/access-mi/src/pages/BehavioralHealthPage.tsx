@@ -28,16 +28,16 @@ const PSYCH_BED_DATA = [
   { region: "Mid-Michigan", beds: 284, population: 1100000, per100k: 25.8, color: "#22c55e" },
   { region: "Northern LP", beds: 148, population: 600000, per100k: 24.7, color: "#f59e0b" },
   { region: "Upper Peninsula", beds: 42, population: 300000, per100k: 14.0, color: "#ef4444" },
-  /* Source: TAC — 1,945 total beds, 19 per 100K, 47th nationally. Recommended 40-60 per 100K */
+  /* Source: TAC - 1,945 total beds, 19 per 100K, 47th nationally. Recommended 40-60 per 100K */
 ];
 
 // Source: MDHHS 988 Performance Reports
 const CRISIS_988_DATA = {
   totalCalls: 261000, /* July 2022 - Sept 2025 */
   avgAnswerTimeSec: 13,
-  inStateAnswerRate: 90, /* % — best among high-volume states */
+  inStateAnswerRate: 90, /* % - best among high-volume states */
   monthlyVolumeGrowth: "5,000 → 10,000+",
-  primaryCenter: "MiCAL (Common Ground, Oakland County) — handles ~85% of calls",
+  primaryCenter: "MiCAL (Common Ground, Oakland County) - handles ~85% of calls",
   source: "MDHHS 988 Suicide & Crisis Lifeline Performance Reports",
 };
 
@@ -73,7 +73,7 @@ const CHILDREN_DATA = {
   source: "MDHHS / Bridge Michigan / MHA",
 };
 
-// CSU data — Source: MDHHS Crisis Stabilization
+// CSU data - Source: MDHHS Crisis Stabilization
 const CSU_DATA = {
   funding: 56000000, /* $56M for 13 adult CSUs */
   totalPlanned: 13,
@@ -95,7 +95,7 @@ const bedDonut = [
 
 export default function BehavioralHealthPage() {
   usePageMeta({
-    title: "Behavioral Health Crisis Dashboard — Access Michigan",
+    title: "Behavioral Health Crisis Dashboard - Access Michigan",
     description: "Michigan's behavioral health infrastructure: psychiatric beds, 988 lifeline, CCBHCs, SUD treatment access, children's mental health. Michigan's #1 CHNA-identified need.",
     path: "/behavioral-health",
   });
@@ -235,7 +235,7 @@ export default function BehavioralHealthPage() {
           {/* Tab 2: Crisis Infrastructure */}
           <TabsContent value="crisis" className="mt-6 space-y-6">
             <Card>
-              <CardHeader><CardTitle className="text-base">988 Suicide & Crisis Lifeline — Michigan</CardTitle></CardHeader>
+              <CardHeader><CardTitle className="text-base">988 Suicide & Crisis Lifeline - Michigan</CardTitle></CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                   <div className="text-center"><p className="text-2xl font-bold text-foreground tabular-nums">{(CRISIS_988_DATA.totalCalls / 1000).toFixed(0)}K</p><p className="text-xs text-muted-foreground">calls answered</p><p className="text-[9px] text-muted-foreground/60">July 2022 – Sept 2025</p></div>

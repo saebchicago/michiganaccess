@@ -10,7 +10,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 export default function LifeNavigatorPage() {
   usePageMeta({
-    title: "Life Navigator — Civic Tools",
+    title: "Life Navigator - Civic Tools",
     description: "Navigate life milestones, explore value-based care benchmarks, and access civic tools for Michigan residents.",
     path: "/life-navigator",
   });
@@ -41,7 +41,7 @@ export default function LifeNavigatorPage() {
             transition={{ delay: 0.2 }}
             className="mx-auto max-w-2xl text-lg text-muted-foreground"
           >
-            Step-by-step guides for major life milestones, regional health benchmarks, and civic resources — all in one place.
+            Step-by-step guides for major life milestones, regional health benchmarks, and civic resources - all in one place.
           </motion.p>
         </div>
       </section>

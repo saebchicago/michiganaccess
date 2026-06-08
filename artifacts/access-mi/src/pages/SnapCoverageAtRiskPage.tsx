@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpDown, AlertTriangle, Users, Download } from "lucide-react";
+import { COUNTIES_COVERED } from "@/config/platformConstants";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,13 +15,17 @@ import type { SnapCoverageRangeEntry } from "@/data/snapCoverageAtRiskFallback";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-type SortKey = "county" | "currentSnapEnrollment" | "projectedAffectedLow" | "projectedAffectedHigh";
+type SortKey =
+  | "county"
+  | "currentSnapEnrollment"
+  | "projectedAffectedLow"
+  | "projectedAffectedHigh";
 type SortDir = "asc" | "desc";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 // Statewide range from MLPP 74,000 × GAO uncertainty band (×0.60 / ×1.40)
-const STATE_RANGE_LOW = 44_400;   // 74,000 × 0.60
+const STATE_RANGE_LOW = 44_400; // 74,000 × 0.60
 const STATE_RANGE_HIGH = 103_600; // 74,000 × 1.40
 const MLPP_STATE_ESTIMATE = 74_000;
 const METHODOLOGY_URL = "/methodology/snap-coverage-at-risk";
@@ -28,7 +33,7 @@ const METHODOLOGY_URL = "/methodology/snap-coverage-at-risk";
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function fmtN(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "-";
   return n.toLocaleString();
 }
 
@@ -51,10 +56,16 @@ function StatCard({
     <Card data-testid={testId}>
       <CardContent className="pt-4 pb-3">
         <div className="flex items-start gap-3">
-          <div className="mt-0.5 text-amber-600 dark:text-amber-400">{icon}</div>
+          <div className="mt-0.5 text-amber-600 dark:text-amber-400">
+            {icon}
+          </div>
           <div className="flex-1 min-w-0">
-            <p className="text-2xl font-bold text-foreground tabular-nums">{value}</p>
-            <p className="text-xs text-muted-foreground leading-tight">{label}</p>
+            <p className="text-2xl font-bold text-foreground tabular-nums">
+              {value}
+            </p>
+            <p className="text-xs text-muted-foreground leading-tight">
+              {label}
+            </p>
             <div className="mt-1">{provenance}</div>
           </div>
         </div>
@@ -83,7 +94,9 @@ function SortButton({
     <button
       onClick={() => onSort(col)}
       className={`flex items-center gap-1 text-left text-xs font-medium hover:text-primary transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
-      aria-sort={active ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+      aria-sort={
+        active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
+      }
     >
       {label}
       <ArrowUpDown className="h-3 w-3 shrink-0" />
@@ -101,16 +114,26 @@ export default function SnapCoverageAtRiskPage() {
     path: "/data/snap-coverage-at-risk",
     jsonLd: {
       "@type": "Dataset",
-      "name": "Michigan SNAP Coverage at Risk — P.L. 119-21 County Projections",
-      "description":
+      name: "Michigan SNAP Coverage at Risk - P.L. 119-21 County Projections",
+      description:
         "County-level modeled ranges of Michigan SNAP participants in categories affected by P.L. 119-21 work requirement provisions. Based on MLPP Michigan estimate (74,000), allocated by county enrollment share with ±40% GAO-19-56 uncertainty band.",
-      "url": "https://accessmi.org/data/snap-coverage-at-risk",
-      "creator": { "@type": "Organization", "name": "accessmi.org", "url": "https://accessmi.org" },
-      "datePublished": "2026-04-09",
-      "dateModified": "2026-04-09",
-      "spatialCoverage": "Michigan",
-      "keywords": ["SNAP", "Michigan", "P.L. 119-21", "work requirements", "county projections"],
-      "measurementTechnique":
+      url: "https://accessmi.org/data/snap-coverage-at-risk",
+      creator: {
+        "@type": "Organization",
+        name: "accessmi.org",
+        url: "https://accessmi.org",
+      },
+      datePublished: "2026-04-09",
+      dateModified: "2026-04-09",
+      spatialCoverage: "Michigan",
+      keywords: [
+        "SNAP",
+        "Michigan",
+        "P.L. 119-21",
+        "work requirements",
+        "county projections",
+      ],
+      measurementTechnique:
         "Proportional county allocation from MLPP Michigan state estimate (74,000) with ±40% GAO-19-56 uncertainty band",
     },
   });
@@ -145,7 +168,8 @@ export default function SnapCoverageAtRiskPage() {
 
   const modeled_provenance_props = {
     sourceName: "MLPP/CBO P.L. 119-21 SNAP score",
-    sourceUrl: "https://mlpp.org/the-cost-of-the-federal-megabill-food-assistance/",
+    sourceUrl:
+      "https://mlpp.org/the-cost-of-the-federal-megabill-food-assistance/",
     asOfDate: "April 2026",
     cadence: "Updated when source estimates change",
     dataKind: "modeled" as const,
@@ -166,13 +190,18 @@ export default function SnapCoverageAtRiskPage() {
         {/* ── Hero ── */}
         <section>
           <div className="flex items-start gap-3 mb-3">
-            <Badge variant="outline" className="mt-1 shrink-0">V3</Badge>
+            <Badge variant="outline" className="mt-1 shrink-0">
+              V3
+            </Badge>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">SNAP Coverage at Risk</h1>
+              <h1 className="text-3xl font-bold tracking-tight">
+                SNAP Coverage at Risk
+              </h1>
               <p className="text-muted-foreground mt-1">
-                Michigan county-level estimates of SNAP participants in categories affected by
-                P.L. 119-21 work requirement provisions. All figures are modeled ranges —
-                not point estimates. Exposure does not equal loss.
+                Michigan county-level estimates of SNAP participants in
+                categories affected by P.L. 119-21 work requirement provisions.
+                All figures are modeled ranges - not point estimates. Exposure
+                does not equal loss.
               </p>
             </div>
           </div>
@@ -184,17 +213,24 @@ export default function SnapCoverageAtRiskPage() {
           <div className="flex items-start gap-2">
             <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400 mt-0.5" />
             <div className="space-y-2">
-              <h2 data-testid="snap-callout-heading" className="text-xl font-semibold text-amber-900 dark:text-amber-300">
+              <h2
+                data-testid="snap-callout-heading"
+                className="text-xl font-semibold text-amber-900 dark:text-amber-300"
+              >
                 Exposure does not equal loss
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                These figures identify Michigan SNAP participants who fall into categories
-                that CBO, MLPP, and CBPP project may be affected by P.L. 119-21.
-                Individual outcomes depend on state implementation, work requirement compliance
-                pathways, employment status, and administrative factors. The ranges describe
-                populations at elevated exposure — they do not predict who will or will not
+                These figures identify Michigan SNAP participants who fall into
+                categories that CBO, MLPP, and CBPP project may be affected by
+                P.L. 119-21. Individual outcomes depend on state implementation,
+                work requirement compliance pathways, employment status, and
+                administrative factors. The ranges describe populations at
+                elevated exposure - they do not predict who will or will not
                 retain SNAP enrollment.{" "}
-                <Link to={METHODOLOGY_URL} className="underline hover:text-primary">
+                <Link
+                  to={METHODOLOGY_URL}
+                  className="underline hover:text-primary"
+                >
                   Full methodology →
                 </Link>
               </p>
@@ -213,7 +249,7 @@ export default function SnapCoverageAtRiskPage() {
               label="Michigan adults in affected ABAWD categories (MLPP state estimate)"
               provenance={
                 <DataProvenance
-                  sourceName="MLPP — Federal Megabill Food Assistance"
+                  sourceName="MLPP - Federal Megabill Food Assistance"
                   sourceUrl="https://mlpp.org/the-cost-of-the-federal-megabill-food-assistance/"
                   asOfDate="November 2025"
                   cadence="Updated as legislation develops"
@@ -226,26 +262,27 @@ export default function SnapCoverageAtRiskPage() {
             <StatCard
               testId="snap-stat-usda"
               icon={<Users className="h-5 w-5" />}
-              value={isLoading ? "…" : fmtN(STATE_RANGE_LOW) + "–" + fmtN(STATE_RANGE_HIGH)}
-              label="Statewide modeled range (±40% GAO uncertainty band) — not a point estimate"
+              value={
+                isLoading
+                  ? "…"
+                  : fmtN(STATE_RANGE_LOW) + "–" + fmtN(STATE_RANGE_HIGH)
+              }
+              label="Statewide modeled range (±40% GAO uncertainty band) - not a point estimate"
               provenance={
-                <DataProvenance
-                  {...modeled_provenance_props}
-                  compact
-                />
+                <DataProvenance {...modeled_provenance_props} compact />
               }
             />
             <StatCard
               testId="snap-stat-counties"
               icon={<Users className="h-5 w-5" />}
-              value={isLoading ? "…" : "83"}
-              label="Michigan counties — complete statewide coverage (all 83)"
+              value={isLoading ? "…" : String(COUNTIES_COVERED)}
+              label={`Michigan counties - complete statewide coverage (all ${COUNTIES_COVERED})`}
               provenance={
                 <DataProvenance
                   sourceName="Michigan county count (fixed)"
                   sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate="FY2022"
-                  cadence="Static — 83 Michigan counties"
+                  cadence="Static - 83 Michigan counties"
                   dataKind="measured"
                   compact
                 />
@@ -260,7 +297,7 @@ export default function SnapCoverageAtRiskPage() {
             <h2 className="text-xl font-semibold">County breakdown</h2>
             <div className="flex items-center gap-3">
               <p className="text-xs text-muted-foreground hidden sm:block">
-                Modeled range — not a point estimate
+                Modeled range - not a point estimate
               </p>
               <button
                 data-testid="snap-csv-download"
@@ -306,7 +343,7 @@ export default function SnapCoverageAtRiskPage() {
                         onSort={handleSort}
                       />
                       <span className="text-[9px] text-muted-foreground/70 font-normal">
-                        modeled range — not a point estimate
+                        modeled range - not a point estimate
                       </span>
                     </div>
                   </th>
@@ -320,7 +357,7 @@ export default function SnapCoverageAtRiskPage() {
                         onSort={handleSort}
                       />
                       <span className="text-[9px] text-muted-foreground/70 font-normal">
-                        modeled range — not a point estimate
+                        modeled range - not a point estimate
                       </span>
                     </div>
                   </th>
@@ -329,13 +366,19 @@ export default function SnapCoverageAtRiskPage() {
               <tbody className="divide-y divide-border">
                 {isLoading ? (
                   <tr>
-                    <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground text-sm">
+                    <td
+                      colSpan={4}
+                      className="px-4 py-8 text-center text-muted-foreground text-sm"
+                    >
                       Loading…
                     </td>
                   </tr>
                 ) : (
                   sorted.map((entry: SnapCoverageRangeEntry) => (
-                    <tr key={entry.fips} className="hover:bg-muted/30 transition-colors">
+                    <tr
+                      key={entry.fips}
+                      className="hover:bg-muted/30 transition-colors"
+                    >
                       <td className="px-4 py-2.5 font-medium">
                         <Link
                           to={`/county/${entry.county.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}`}
@@ -360,14 +403,12 @@ export default function SnapCoverageAtRiskPage() {
               <tfoot className="border-t border-border bg-muted/20">
                 <tr>
                   <td colSpan={4} className="px-4 py-3">
-                    <DataProvenance
-                      {...modeled_provenance_props}
-                      compact
-                    />
+                    <DataProvenance {...modeled_provenance_props} compact />
                     <p className="text-[10px] text-muted-foreground mt-1">
-                      County enrollment: USDA FNS FY2022 (annual average monthly participants).
-                      At-risk range: MLPP 74,000 × county enrollment share, ±40% GAO-19-56
-                      uncertainty band. Low = midpoint × 0.60, High = midpoint × 1.40.
+                      County enrollment: USDA FNS FY2022 (annual average monthly
+                      participants). At-risk range: MLPP 74,000 × county
+                      enrollment share, ±40% GAO-19-56 uncertainty band. Low =
+                      midpoint × 0.60, High = midpoint × 1.40.
                     </p>
                   </td>
                 </tr>
@@ -378,14 +419,23 @@ export default function SnapCoverageAtRiskPage() {
 
         {/* ── Related analyses ── */}
         <section className="rounded-lg border border-border bg-muted/20 px-5 py-4 space-y-2">
-          <h2 className="text-sm font-semibold text-foreground">Related coverage-at-risk analyses</h2>
+          <h2 className="text-sm font-semibold text-foreground">
+            Related coverage-at-risk analyses
+          </h2>
           <ul className="space-y-1 text-sm text-muted-foreground">
             <li>
-              <Link data-testid="snap-medicaid-crosslink" to="/data/medicaid-coverage-at-risk" className="text-primary hover:underline font-medium">
+              <Link
+                data-testid="snap-medicaid-crosslink"
+                to="/data/medicaid-coverage-at-risk"
+                className="text-primary hover:underline font-medium"
+              >
                 Medicaid Coverage at Risk
-              </Link>
-              {" "}— county-level exposure to P.L. 119-21 work requirement provisions{" "}
-              <Link to="/methodology/medicaid-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
+              </Link>{" "}
+              - county-level exposure to P.L. 119-21 work requirement provisions{" "}
+              <Link
+                to="/methodology/medicaid-coverage-at-risk"
+                className="text-xs text-muted-foreground hover:underline"
+              >
                 (methodology)
               </Link>
             </li>

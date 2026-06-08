@@ -40,7 +40,7 @@ import {
 
 const MAX_SELECTIONS = 4;
 
-/** A selected geography — either a county name or a ZIP code */
+/** A selected geography - either a county name or a ZIP code */
 interface GeoSelection {
   id: string; // display key: county name or ZIP
   type: "county" | "zip";
@@ -211,8 +211,8 @@ function useRowData(sel: GeoSelection): RowData {
     f.facility_type === "sud" || f.facility_type === "behavioral_health" ||
     (f.specialties ?? []).some((s: string) => /substance|addiction|behavioral/i.test(s))
   ).length ?? null;
-  const uninsured = profile.healthHighlights.find((h) => h.label === "Uninsured rate")?.value ?? "—";
-  const foodInsec = profile.healthHighlights.find((h) => h.label === "Food insecurity")?.value ?? "—";
+  const uninsured = profile.healthHighlights.find((h) => h.label === "Uninsured rate")?.value ?? "-";
+  const foodInsec = profile.healthHighlights.find((h) => h.label === "Food insecurity")?.value ?? "-";
   return { sel, population: profile.population, uninsured, healthCount, sudCount, foodInsec };
 }
 
@@ -226,7 +226,7 @@ type SortKey = "label" | "population" | "uninsured" | "healthCount" | "sudCount"
 type SortDir = "asc" | "desc";
 
 function parseNumeric(v: string | number | null): number | null {
-  if (v === null || v === "—") return null;
+  if (v === null || v === "-") return null;
   if (typeof v === "number") return v;
   const n = parseFloat(v.replace(/[^0-9.]/g, ""));
   return isNaN(n) ? null : n;
@@ -344,10 +344,10 @@ function ComparisonSummaryTable({ selections }: { selections: GeoSelection[] }) 
                     {r.sel.type === "zip" && <MapPin className="h-3 w-3 inline mr-1" />}
                     {r.sel.label}
                   </TableCell>
-                  <TableCell className={`text-xs ${hl(r._origIdx, "population")}`}>{r.population > 0 ? r.population.toLocaleString() : "—"}</TableCell>
+                  <TableCell className={`text-xs ${hl(r._origIdx, "population")}`}>{r.population > 0 ? r.population.toLocaleString() : "-"}</TableCell>
                   <TableCell className={`text-xs ${hl(r._origIdx, "uninsured")}`}>{r.uninsured}</TableCell>
-                  <TableCell className={`text-xs ${hl(r._origIdx, "healthCount")}`}>{r.healthCount !== null ? r.healthCount : "—"}</TableCell>
-                  <TableCell className={`text-xs ${hl(r._origIdx, "sudCount")}`}>{r.sudCount !== null && r.sudCount > 0 ? r.sudCount : "—"}</TableCell>
+                  <TableCell className={`text-xs ${hl(r._origIdx, "healthCount")}`}>{r.healthCount !== null ? r.healthCount : "-"}</TableCell>
+                  <TableCell className={`text-xs ${hl(r._origIdx, "sudCount")}`}>{r.sudCount !== null && r.sudCount > 0 ? r.sudCount : "-"}</TableCell>
                   <TableCell className={`text-xs ${hl(r._origIdx, "foodInsec")}`}>{r.foodInsec}</TableCell>
                 </TableRow>
               ))}

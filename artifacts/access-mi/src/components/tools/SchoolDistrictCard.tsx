@@ -75,7 +75,7 @@ function DistrictRow({ d }: { d: SchoolDistrict }) {
 
   return (
     <div className="rounded-lg border border-border p-3 space-y-2">
-      {/* Level 1: Key KPI — grade + trend visible without interaction */}
+      {/* Level 1: Key KPI - grade + trend visible without interaction */}
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center justify-between min-h-[44px]"

@@ -5,7 +5,18 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Rss, Calendar, Sparkles, Database, Shield, Map, Users, BarChart3, Zap, Rocket } from "lucide-react";
+import {
+  Rss,
+  Calendar,
+  Sparkles,
+  Database,
+  Shield,
+  Map,
+  Users,
+  BarChart3,
+  Zap,
+  Rocket,
+} from "lucide-react";
 
 interface ChangelogEntry {
   month: string;
@@ -24,7 +35,9 @@ const TAG_STYLES: Record<string, string> = {
 
 const entries: ChangelogEntry[] = [
   {
-    month: "April", year: "2026", title: "WCAG 2.1 AA Cleanup — v9.2",
+    month: "April",
+    year: "2026",
+    title: "WCAG 2.1 AA Cleanup - v1.16",
     icon: Shield,
     tag: "improvement",
     items: [
@@ -42,16 +55,18 @@ const entries: ChangelogEntry[] = [
       "Color contrast: global CSS override forces text-muted-foreground/60 and /70 micro-labels to full base --muted-foreground opacity",
       "Color contrast: per-component fixes to DetectionGapFunnel drop-off labels, ZipScorecardPage trend indicators, WeatherAlertBanner +N-more counter, RxKidsCallout teal copy, Header 'Check Benefits' gold button, Footer load-time indicator, health-score tier badges, LiveDemoPreview amber Tier 3 badge, ZipScorecardPage contractors CTA",
       "DOM nesting: AIAppealGenerator Badge-in-p converted to div+span so React stops warning about div-inside-p on /insurance-appeals",
-      "All 10 priority routes now report zero critical/serious axe violations — full WCAG 2.1 AA conformance on the audited surface",
+      "All 10 priority routes now report zero critical/serious axe violations - full WCAG 2.1 AA conformance on the audited surface",
     ],
   },
   {
-    month: "April", year: "2026", title: "Credibility, E2E Hardening & A11y — v9.1",
+    month: "April",
+    year: "2026",
+    title: "Credibility, E2E Hardening & A11y - v1.15",
     icon: Shield,
     tag: "improvement",
     items: [
       "Fixed /environment runtime crash caused by a missing AskCopilotButton import that tripped the route-level ErrorBoundary",
-      "Migrated Leaflet map tiles from OSM volunteer servers (returning 403s under Referer policy) to CARTO Voyager CDN — HealthMap, EmbeddedMap, and NarcanLocator now render tiles behind their pins",
+      "Migrated Leaflet map tiles from OSM volunteer servers (returning 403s under Referer policy) to CARTO Voyager CDN - HealthMap, EmbeddedMap, and NarcanLocator now render tiles behind their pins",
       "EPA PFAS standard corrected across the Michigan Pulse card: 70 ppt health advisory → 4.0 ppt April 2024 final MCL for PFOA and PFOS; Michigan's 8 ppt standard reframed as predating the federal rule rather than 'strictest in US'",
       "Dataset count reconciled to '40+' everywhere (was a mix of 35+/60+), matching the dynamic counter on /data-sources",
       "Homepage Detroit/Troy tax teaser synced with live calculator ($1,302 → $2,523)",
@@ -63,12 +78,14 @@ const entries: ChangelogEntry[] = [
       "Life-event scenarios are now deep-linkable: /life-event/new-baby, /life-event/job-loss, /life-event/turning-65, /life-event/eviction, /life-event/new-diagnosis, /life-event/new-to-michigan, /life-event/reentry, plus /life-events alias. LifeEventNavigator reads ?scenario= from the URL and a new 'What's Happening' tab hosts it inside /life-navigator",
       "E2E route smoke test covering 128 routes (126 passing) with failure log at FAILED_ROUTES.md",
       "axe-core a11y audit covering 10 priority routes (report at A11Y_VIOLATIONS.md); root-cause CSS fix eliminates the universal link-in-text-block violation on every page",
-      "Mobile overflow killed across the board via overflow-x: clip on html/body — iPhone SE and iPhone 14 viewports render every priority route without horizontal scroll",
+      "Mobile overflow killed across the board via overflow-x: clip on html/body - iPhone SE and iPhone 14 viewports render every priority route without horizontal scroll",
       "Performance baseline captured in PERF_BASELINE.md with follow-up recommendations for vendor-ui splitting",
     ],
   },
   {
-    month: "March", year: "2026", title: "PolicyMap-Level Intelligence — v9.0",
+    month: "March",
+    year: "2026",
+    title: "PolicyMap-Level Intelligence - v1.14",
     icon: Rocket,
     tag: "feature",
     items: [
@@ -84,7 +101,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Intelligence & Engagement — v8.0",
+    month: "March",
+    year: "2026",
+    title: "Intelligence & Engagement - v1.13",
     icon: Sparkles,
     tag: "feature",
     items: [
@@ -100,7 +119,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Deep Federal Data — v7.0",
+    month: "March",
+    year: "2026",
+    title: "Deep Federal Data - v1.12",
     icon: Database,
     tag: "data",
     items: [
@@ -114,7 +135,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Federal Data Expansion — v6.0",
+    month: "March",
+    year: "2026",
+    title: "Federal Data Expansion - v1.11",
     icon: Shield,
     tag: "data",
     items: [
@@ -128,7 +151,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Max Impact Release — v5.0",
+    month: "March",
+    year: "2026",
+    title: "Max Impact Release - v1.10",
     icon: Rocket,
     tag: "feature",
     items: [
@@ -151,7 +176,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Interactive Engagement — v4.3",
+    month: "March",
+    year: "2026",
+    title: "Interactive Engagement - v1.9",
     icon: Sparkles,
     tag: "feature",
     items: [
@@ -163,11 +190,13 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Data Universe Expansion — v4.0",
+    month: "March",
+    year: "2026",
+    title: "Data Universe Expansion - v1.8",
     icon: Database,
     tag: "feature",
     items: [
-      "60+ verified data sources page at /data-sources — every organization credited",
+      "Verified data sources page at /data-sources - every organization credited",
       "PFAS contamination card: 250+ sites, 102 'Do Not Eat' water bodies, only US PFAS deer advisory",
       "Childcare desert tracker: ~125,000 children lacking formal slots",
       "Education equity: 27.9% chronic absenteeism, 84% graduation rate (record), 196 school-based health centers",
@@ -181,12 +210,14 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Equity Bridge Sprint — v3.3",
+    month: "March",
+    year: "2026",
+    title: "Equity Bridge Sprint - v1.7",
     icon: Users,
     tag: "feature",
     items: [
       "ALICE population layer: 41% of Michigan households below the survival threshold, with racial/age/household breakdowns",
-      "Returning Citizens navigator at /reentry: housing, ID, healthcare, employment, legal help — 7th Life Event card added",
+      "Returning Citizens navigator at /reentry: housing, ID, healthcare, employment, legal help - 7th Life Event card added",
       "Language Access: 298K Spanish + 172K Arabic speakers mapped by county hotspot",
       "Pharmacy desert risk: 15 high-risk counties, -7.4% chain decline tracked",
       "Eligibility pre-screener: 3 questions → 10 Michigan assistance programs, zero data stored",
@@ -196,7 +227,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Intelligence Platform Release — v3.0",
+    month: "March",
+    year: "2026",
+    title: "Intelligence Platform Release - v1.6",
     icon: Rocket,
     tag: "feature",
     items: [
@@ -207,7 +240,7 @@ const entries: ChangelogEntry[] = [
       "Buy Me a Coffee: community sustainability model at /support (hidden on help pages)",
       "Embeddable widget URLs corrected to accessmi.org",
       "8 semantic URL redirects (/health-equity, /broadband, /chna, /map, etc.)",
-      "About page: visual overhaul — 3-icon Problem/Solution/Mission row",
+      "About page: visual overhaul - 3-icon Problem/Solution/Mission row",
       "Methodology: collapsible accordion for 35+ data sources",
       "True CountUp rolling animations on all stat displays",
       "Card hover lift (-translate-y-0.5) + gradient nav accent line",
@@ -215,7 +248,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Data Supremacy Release — v2.0",
+    month: "March",
+    year: "2026",
+    title: "Data Supremacy Release - v1.5",
     icon: Zap,
     tag: "feature",
     items: [
@@ -230,25 +265,27 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "March", year: "2026", title: "Water Safety, Data Integrity & Platform Maturity",
+    month: "March",
+    year: "2026",
+    title: "Water Safety, Data Integrity & Platform Maturity",
     icon: Database,
     tag: "feature",
     items: [
       "Water Safety tab: PFAS interactive map (200+ sites), Flint lead line tracker (98% replaced), Water Well Viewer for private wells",
-      "Replaced unverified MSHIELD data with Trinity Health's published numbers — 27.4% screening rate from 1M+ outpatients. ~16% hospitalization reduction is system-reported, not independently verified.",
+      "Replaced unverified MSHIELD data with Trinity Health's published numbers - 27.4% screening rate from 1M+ outpatients. ~16% hospitalization reduction is system-reported, not independently verified.",
       "Energy numbers updated across the board: LIHEAP $183M, MiHER $211M, Michigan Saves $96.6M. 25C expired Dec 31 2025; 25D still good through 2032.",
       "6 new live API widgets: AirNow (ZIP-level AQI), EIA (MI vs national electricity prices), USGS (river monitoring), NWS (weather alerts + 7-day forecast), FDA (Class I drug recalls), Census ACS (county economic data)",
-      "Detection Gap funnel rebuilt — drag a slider from 100K to 5M screenings and watch the dollar cost of unconnected patients recalculate live",
+      "Detection Gap funnel rebuilt - drag a slider from 100K to 5M screenings and watch the dollar cost of unconnected patients recalculate live",
       "76 of 83 Michigan counties have zero sidewalk data. We mapped that gap using the federal GATIS standard.",
       "Homepage: Michigan at a Glance section with mini county heatmap (toggle between uninsured rate, PCP ratio, food insecurity)",
       "Energy burden × diabetes prevalence scatter plot. Counties above 8% energy burden show 1.4× higher diabetes rates.",
-      "CDC PLACES tract-level explorer — county averages hide massive disparities. Wayne County diabetes ranges from 8% to 22% across tracts.",
-      "CMS Physician Compare search — find medical school, hospital affiliations, and Medicare status. Different data than NPI registry.",
-      "Data Freshness Dashboard on Methodology page — 15 sources tracked, status visible",
+      "CDC PLACES tract-level explorer - county averages hide massive disparities. Wayne County diabetes ranges from 8% to 22% across tracts.",
+      "CMS Physician Compare search - find medical school, hospital affiliations, and Medicare status. Different data than NPI registry.",
+      "Data Freshness Dashboard on Methodology page - 15 sources tracked, status visible",
       "FEMA NRI hazard risk for 20 Michigan counties. Wayne: $892M expected annual loss. Severe storms top hazard statewide.",
-      "ALICE dashboard — 43% of Michigan households earn too much for safety nets, too little for financial stability. Lake County: 64%.",
+      "ALICE dashboard - 43% of Michigan households earn too much for safety nets, too little for financial stability. Lake County: 64%.",
       "Food desert mapping: 185 food desert tracts in Wayne County. Rural counties like Lake and Oscoda have 50%+ population affected.",
-      "Replication Framework page at /replicate — 11 national APIs that work for any state, documented with setup times",
+      "Replication Framework page at /replicate - 11 national APIs that work for any state, documented with setup times",
       "Impact stories showing composited scenarios: Maria in Wayne County finding an FQHC, the Nguyen family tracking PFAS contamination",
       "Childcare hub linking to LARA (7,500 licensed providers), Great Start ratings, MI School Data",
       "8-year trend charts: uninsured rate dropped from 11% to 5.8% post-ACA. Opioid deaths peaked at 3,074 in 2022, down 7.5% in 2023.",
@@ -257,7 +294,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "February", year: "2026", title: "Hyper-Local Insight Engine & Trust UX",
+    month: "February",
+    year: "2026",
+    title: "Hyper-Local Insight Engine & Trust UX",
     icon: Shield,
     tag: "feature",
     items: [
@@ -272,7 +311,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "January", year: "2026", title: "Strategic Portfolio & Regional Intelligence",
+    month: "January",
+    year: "2026",
+    title: "Strategic Portfolio & Regional Intelligence",
     icon: BarChart3,
     tag: "feature",
     items: [
@@ -284,7 +325,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "December", year: "2025", title: "Insurance Appeals & Complex Care",
+    month: "December",
+    year: "2025",
+    title: "Insurance Appeals & Complex Care",
     icon: Sparkles,
     tag: "feature",
     items: [
@@ -296,7 +339,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "November", year: "2025", title: "Expanded Data Coverage",
+    month: "November",
+    year: "2025",
+    title: "Expanded Data Coverage",
     icon: Database,
     tag: "data",
     items: [
@@ -308,7 +353,9 @@ const entries: ChangelogEntry[] = [
     ],
   },
   {
-    month: "October", year: "2025", title: "Platform Foundation",
+    month: "October",
+    year: "2025",
+    title: "Platform Foundation",
     icon: Map,
     tag: "improvement",
     items: [
@@ -326,15 +373,19 @@ const RSS_XML = `<?xml version="1.0" encoding="UTF-8"?>
   <channel>
      <title>Access Michigan Changelog</title>
     <link>https://accessmi.org/changelog</link>
-    <description>Monthly platform updates for Access Michigan — statewide civic health infrastructure.</description>
+    <description>Monthly platform updates for Access Michigan - statewide civic health infrastructure.</description>
     <language>en-us</language>
     <atom:link href="https://accessmi.org/changelog.xml" rel="self" type="application/rss+xml"/>
-    ${entries.map((e) => `<item>
+    ${entries
+      .map(
+        (e) => `<item>
       <title>${e.month} ${e.year}: ${e.title}</title>
       <description>${e.items.join("; ")}</description>
       <pubDate>${new Date(`${e.month} 1, ${e.year}`).toUTCString()}</pubDate>
       <guid>https://accessmi.org/changelog#${e.month.toLowerCase()}-${e.year}</guid>
-    </item>`).join("\n    ")}
+    </item>`,
+      )
+      .join("\n    ")}
   </channel>
 </rss>`;
 
@@ -350,8 +401,9 @@ function downloadRSS() {
 
 const ChangelogPage = () => {
   usePageMeta({
-     title: "What's New — Access Michigan",
-    description: "Monthly platform updates, new features, and data expansions for Access Michigan.",
+    title: "What's New - Access Michigan",
+    description:
+      "Monthly platform updates, new features, and data expansions for Access Michigan.",
     path: "/changelog",
   });
 
@@ -359,15 +411,30 @@ const ChangelogPage = () => {
     <Layout>
       <section className="py-16">
         <div className="container max-w-3xl">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-            <Badge variant="outline" className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-10"
+          >
+            <Badge
+              variant="outline"
+              className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary"
+            >
               <Calendar className="mr-1 h-3 w-3" /> Changelog
             </Badge>
-            <h1 className="text-3xl font-bold text-foreground mb-2">What's New</h1>
+            <h1 className="text-3xl font-bold text-foreground mb-2">
+              What's New
+            </h1>
             <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-              Monthly updates on features, data expansions, and platform improvements.
+              Monthly updates on features, data expansions, and platform
+              improvements.
             </p>
-            <Button variant="outline" size="sm" className="mt-4 gap-2 text-xs" onClick={downloadRSS}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="mt-4 gap-2 text-xs"
+              onClick={downloadRSS}
+            >
               <Rss className="h-3 w-3" /> Download RSS Feed
             </Button>
           </motion.div>
@@ -375,8 +442,8 @@ const ChangelogPage = () => {
           <div className="space-y-6">
             {entries.map((entry, i) => (
               <motion.div
-                key={`${entry.month}-${entry.year}`}
-                id={`${entry.month.toLowerCase()}-${entry.year}`}
+                key={`${entry.month}-${entry.year}-${entry.title}`}
+                id={`${entry.month.toLowerCase()}-${entry.year}-${i}`}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -387,10 +454,14 @@ const ChangelogPage = () => {
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div className="flex items-center gap-2">
                         <entry.icon className="h-4 w-4 text-primary" />
-                        <h2 className="text-sm font-bold text-foreground">{entry.title}</h2>
+                        <h2 className="text-sm font-bold text-foreground">
+                          {entry.title}
+                        </h2>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Badge className={`text-[10px] ${TAG_STYLES[entry.tag]}`}>
+                        <Badge
+                          className={`text-[10px] ${TAG_STYLES[entry.tag]}`}
+                        >
                           {entry.tag}
                         </Badge>
                         <span className="text-[10px] text-muted-foreground font-medium">
@@ -400,7 +471,10 @@ const ChangelogPage = () => {
                     </div>
                     <ul className="space-y-1.5">
                       {entry.items.map((item) => (
-                        <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground">
+                        <li
+                          key={item}
+                          className="flex items-start gap-2 text-xs text-muted-foreground"
+                        >
                           <Zap className="h-3 w-3 mt-0.5 shrink-0 text-primary/50" />
                           {item}
                         </li>
@@ -414,7 +488,11 @@ const ChangelogPage = () => {
 
           <div className="mt-10 text-center">
             <p className="text-[10px] text-muted-foreground">
-              For partnership inquiries or feature requests, <Link to="/contact" className="text-primary hover:underline">reach out</Link>.
+              For partnership inquiries or feature requests,{" "}
+              <Link to="/contact" className="text-primary hover:underline">
+                reach out
+              </Link>
+              .
             </p>
           </div>
         </div>

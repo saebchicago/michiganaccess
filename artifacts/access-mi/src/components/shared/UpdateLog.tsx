@@ -9,7 +9,7 @@ const updates = [
     version: "1.4.0",
     icon: Database,
     color: "text-michigan-teal",
-    title: "Live API Integration — HRSA & CDC",
+    title: "Live API Integration - HRSA & CDC",
     items: [
       "Added HRSA health center proxy for live Federally Qualified Health Center data",
       "Added CDC PLACES & Chronic Disease Indicator proxy for county-level health metrics",

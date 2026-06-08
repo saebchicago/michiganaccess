@@ -1,5 +1,5 @@
-// Eviction Lab data — Princeton University
-// Source: evictionlab.org — public research data
+// Eviction Lab data - Princeton University
+// Source: evictionlab.org - public research data
 // County-level eviction filing rates 2018-2023
 
 export interface EvictionRecord {

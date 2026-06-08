@@ -119,7 +119,7 @@ const communityFinderCards = [
 export default function ComplexCarePage() {
   const [search, setSearch] = useState("");
   usePageMeta({
-    title: "Complex Care Navigation — Autoimmune & Rare Diseases",
+    title: "Complex Care Navigation - Autoimmune & Rare Diseases",
     description: "Directory of autoimmune and rare disease resources, specialists, and community support across Michigan.",
     path: "/complex-care",
   });

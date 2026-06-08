@@ -12,11 +12,11 @@ import { toast } from "sonner";
 interface Props {
   title: string;
   description?: string;
-  /** Optional override URL — defaults to current page */
+  /** Optional override URL - defaults to current page */
   url?: string;
 }
 
-/** Ensure share URL is same-origin or a well-formed https URL — prevents open redirect / javascript: URIs */
+/** Ensure share URL is same-origin or a well-formed https URL - prevents open redirect / javascript: URIs */
 function getSafeUrl(url: string | undefined): string {
   const candidate = url || window.location.href;
   if (candidate.startsWith("/") || candidate.startsWith(window.location.origin)) return candidate;
@@ -43,7 +43,7 @@ export default function ShareButton({ title, description, url }: Props) {
   }, [shareUrl]);
 
   const shareTwitter = useCallback(() => {
-    const text = encodeURIComponent(`${title}${description ? ` — ${description}` : ""}`);
+    const text = encodeURIComponent(`${title}${description ? ` - ${description}` : ""}`);
     const u = encodeURIComponent(shareUrl);
     window.open(`https://twitter.com/intent/tweet?text=${text}&url=${u}`, "_blank", "width=600,height=400");
   }, [title, description, shareUrl]);

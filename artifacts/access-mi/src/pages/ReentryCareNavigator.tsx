@@ -38,8 +38,8 @@ const SECTIONS = [
     icon: Heart,
     title: "Get Healthcare",
     items: [
-      "Healthy Michigan Plan (Medicaid) — apply immediately, most returning citizens qualify",
-      "FQHCs (community health centers) — serve everyone regardless of background",
+      "Healthy Michigan Plan (Medicaid) - apply immediately, most returning citizens qualify",
+      "FQHCs (community health centers) - serve everyone regardless of background",
       "Substance use treatment: MDOC OARS, Recovery Community Organizations",
       "Mental health crisis: 988 Suicide & Crisis Lifeline",
       "Hepatitis C treatment: MDOC expanded funding to $10.5M",
@@ -52,7 +52,7 @@ const SECTIONS = [
     title: "Find Employment",
     items: [
       "Michigan Works! offices (all 83 counties)",
-      "MiCRI (Michigan Citizen Reentry Initiative) — job training + placement",
+      "MiCRI (Michigan Citizen Reentry Initiative) - job training + placement",
       "Vocational Village graduates: 69% employment rate on parole",
       "MDOC Goodwill Flip the Script",
       "Michigan Rehabilitation Services",
@@ -94,7 +94,7 @@ export default function ReentryCareNavigator() {
               Coming Home to Michigan
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Resources for returning citizens and their families — housing, healthcare, ID, employment, and legal help across 83 counties.
+              Resources for returning citizens and their families - housing, healthcare, ID, employment, and legal help across 83 counties.
             </p>
           </motion.div>
         </div>
@@ -156,7 +156,7 @@ export default function ReentryCareNavigator() {
           <CardContent className="p-5 text-center">
             <Phone className="h-6 w-6 text-michigan-teal mx-auto mb-2" />
             <p className="text-sm font-semibold text-foreground">Not sure where to start?</p>
-            <p className="text-xs text-muted-foreground mb-3">Call 211 — they can connect you to local reentry services.</p>
+            <p className="text-xs text-muted-foreground mb-3">Call 211 - they can connect you to local reentry services.</p>
             <Button variant="outline" size="sm" asChild>
               <a href="tel:211">Call 2-1-1 (Free, 24/7)</a>
             </Button>

@@ -46,7 +46,7 @@ export default function SBADashboard() {
         ))}
       </div>
 
-      {/* Bar chart — top 15 counties by total lending amount */}
+      {/* Bar chart - top 15 counties by total lending amount */}
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-base">Top 15 Counties by SBA Lending Volume</CardTitle>
@@ -92,7 +92,7 @@ export default function SBADashboard() {
         <Card className="border-primary/30">
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base">{selected.county} County — SBA Detail</CardTitle>
+              <CardTitle className="text-base">{selected.county} County - SBA Detail</CardTitle>
               <button
                 className="text-xs text-muted-foreground hover:text-foreground"
                 onClick={() => setSelected(null)}

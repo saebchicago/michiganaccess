@@ -294,7 +294,7 @@ export default function FOIARequestBuilder() {
           </AccordionItem>
         </Accordion>
         <p className="text-[10px] text-muted-foreground mt-3 leading-relaxed">
-          This tool helps you draft a FOIA request based on Michigan's Freedom of Information Act (MCL 15.231–15.246) and the federal FOIA (5 U.S.C. § 552). Templates are provided for convenience — adapt them to your specific situation. Submitting a request does not guarantee records will be released; exemptions may apply. For legal advice, consult an attorney.
+          This tool helps you draft a FOIA request based on Michigan's Freedom of Information Act (MCL 15.231–15.246) and the federal FOIA (5 U.S.C. § 552). Templates are provided for convenience - adapt them to your specific situation. Submitting a request does not guarantee records will be released; exemptions may apply. For legal advice, consult an attorney.
         </p>
       </CardContent>
     </Card>
