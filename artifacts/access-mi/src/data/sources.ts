@@ -71,7 +71,6 @@ export const CC_BY_4: License = {
 // ILLUSTRATIVE entries below show the shape. Verify and replace before ship.
 
 export const DATA_SOURCES: Record<string, DataSource> = {
-  // ILLUSTRATIVE - verify and replace before ship
   "acs-b27010": {
     id: "acs-b27010",
     label: "VERIFIED",
@@ -87,7 +86,6 @@ export const DATA_SOURCES: Record<string, DataSource> = {
     accessedAt: "2026-06-08",
     lastVerifiedAt: "2026-06-08",
   },
-  // ILLUSTRATIVE - verify and replace before ship
   "cdc-places-access": {
     id: "cdc-places-access",
     label: "VERIFIED",
@@ -97,7 +95,7 @@ export const DATA_SOURCES: Record<string, DataSource> = {
     shortTitle: "CDC PLACES",
     datasetId: "ACCESS2",
     datasetLabel: "Measure ACCESS2",
-    vintage: "2024",
+    vintage: "2023",
     url: "https://www.cdc.gov/places/",
     license: PUBLIC_DOMAIN_FEDERAL,
     accessedAt: "2026-06-08",
