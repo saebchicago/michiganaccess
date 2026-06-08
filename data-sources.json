@@ -1,9 +1,7 @@
 {
   "//": "Replace illustrative entries with real endpoints, then remove the _illustrative flag. classification MUST be one of: verified | modeled | projected. The build fails on any other value or on a blocked provider (ihme, gbd).",
-
   "exclude_fips_prefixes": [],
   "//exclude_note": "26 = Michigan. Keep this for ourintel and chronic per HFHS COI. For michiganaccess, where Michigan IS the subject, set this to [].",
-
   "sources": [
     {
       "id": "worldbank_health_exp",
@@ -16,7 +14,6 @@
     {
       "id": "census_acs_county",
       "provider": "census",
-      "_illustrative": true,
       "url": "https://api.census.gov/data/2023/acs/acs5?get=NAME&for=county:*",
       "license": "US Public Domain",
       "classification": "verified",
