@@ -7,6 +7,13 @@ import UpdateLog from "@/components/shared/UpdateLog";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import HealthEquitySection from "@/components/home/HealthEquitySection";
+import CapabilityStrip from "@/components/home/CapabilityStrip";
+import MichiganPulse from "@/components/home/MichiganPulse";
+import ExploreQuestionsPanel from "@/components/home/ExploreQuestionsPanel";
+import DataStoriesSection from "@/components/stories/DataStoriesSection";
+import HeroSection from "@/components/home/HeroSection";
+import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
+import { Suspense } from "react";
 
 import {
   Shield,
@@ -1010,6 +1017,37 @@ export default function AboutPage() {
           </a>
         </div>
       </div>
+
+      {/* What's on AccessMI - relocated from home page during IA restructure */}
+      <section className="container mx-auto px-4 py-12 border-t border-border">
+        <h2 className="text-2xl font-bold mb-2">What's on AccessMI</h2>
+        <p className="text-sm text-muted-foreground mb-8">
+          The fuller tour of the platform's capabilities, live signals, and the
+          questions the community is asking.
+        </p>
+
+        <SectionErrorBoundary title="Capability strip didn't load">
+          <CapabilityStrip />
+        </SectionErrorBoundary>
+
+        <SectionErrorBoundary title="Michigan Pulse didn't load">
+          <MichiganPulse />
+        </SectionErrorBoundary>
+
+        <SectionErrorBoundary title="Explore Questions didn't load">
+          <ExploreQuestionsPanel />
+        </SectionErrorBoundary>
+
+        <SectionErrorBoundary title="Data stories didn't load">
+          <Suspense fallback={null}>
+            <DataStoriesSection />
+          </Suspense>
+        </SectionErrorBoundary>
+
+        <SectionErrorBoundary title="Mission overview didn't load">
+          <HeroSection />
+        </SectionErrorBoundary>
+      </section>
     </Layout>
   );
 }

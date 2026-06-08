@@ -1,529 +1,258 @@
-import { lazy, Suspense, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Database,
-  DollarSign,
-  X,
-  Sparkles,
   ArrowRight,
   Heart,
+  MapPin,
+  Database,
+  BarChart3,
+  ShieldCheck,
+  Sparkles,
 } from "lucide-react";
-import { AnimatePresence } from "framer-motion";
-const FrontDoorTriage = lazy(() => import("@/components/home/FrontDoorTriage"));
-const DetectionGapFunnel = lazy(
-  () => import("@/components/shared/DetectionGapFunnel"),
-);
 
 import Layout from "@/components/layout/Layout";
-import { DATA_SOURCE_DISPLAY } from "@/config/platformConstants";
-import HeroSection from "@/components/home/HeroSection";
-import TrustPanel from "@/components/home/TrustPanel";
-import HomePrimaryPaths from "@/components/home/HomePrimaryPaths";
-import HomeSectorGrid from "@/components/home/HomeSectorGrid";
-import CivicIntelligenceHub from "@/components/home/CivicIntelligenceHub";
-import InsightSignalsSection from "@/components/home/InsightSignalsSection";
-import ExploreQuestionsPanel from "@/components/home/ExploreQuestionsPanel";
-import OutageAlertBanner from "@/components/home/OutageAlertBanner";
-import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
-import LocationNudgeBanner from "@/components/home/LocationNudgeBanner";
-import { usePageMeta } from "@/hooks/usePageMeta";
-import DataPulse from "@/components/home/DataPulse";
-import MichiganPulse from "@/components/home/MichiganPulse";
-import CapabilityStrip from "@/components/home/CapabilityStrip";
-import LiveDemoPreview from "@/components/home/LiveDemoPreview";
-import QuickCompare from "@/components/home/QuickCompare";
-const LifeEventNavigator = lazy(
-  () => import("@/components/tools/LifeEventNavigator"),
-);
-const DataStoriesSection = lazy(
-  () => import("@/components/stories/DataStoriesSection"),
-);
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AccessChat } from "@/components/AccessChat";
-import SectionErrorBoundary from "@/components/shared/SectionErrorBoundary";
-import LazySection from "@/components/shared/LazySection";
-import DataProvenance from "@/components/shared/DataProvenance";
-import YourCommunity from "@/components/home/YourCommunity";
-const InsightOfWeek = lazy(() => import("@/components/home/InsightOfWeek"));
-const NewsletterSignup = lazy(
-  () => import("@/components/home/NewsletterSignup"),
-);
-const TransparencyPanel = lazy(
-  () => import("@/components/home/TransparencyPanel"),
-);
+import OutageAlertBanner from "@/components/home/OutageAlertBanner";
+import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
-// ── Below-fold: lazy-loaded ──
-const FounderSupportSection = lazy(
-  () => import("@/components/shared/FounderSupportSection"),
-);
-const NearbyResourceFinder = lazy(
-  () => import("@/components/home/NearbyResourceFinder"),
-);
-const CoreAccessGrid = lazy(() => import("@/components/home/CoreAccessGrid"));
-const RegionalGateway = lazy(() => import("@/components/home/RegionalGateway"));
-const SystemsExplainer = lazy(
-  () => import("@/components/home/SystemsExplainer"),
-);
-const CivicDataCalloutCard = lazy(
-  () => import("@/components/home/CivicDataCalloutCard"),
-);
-const MichiganAtAGlance = lazy(
-  () => import("@/components/home/MichiganAtAGlance"),
-);
-const CommunityAlerts = lazy(() => import("@/components/home/CommunityAlerts"));
-const ImpactStories = lazy(() => import("@/components/shared/ImpactStories"));
-
-const SectionFallback = () => (
-  <div className="py-8 flex justify-center">
-    <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-  </div>
-);
-
-const SectionSkeleton = ({ height = "200px" }: { height?: string }) => (
-  <div className="py-8" style={{ minHeight: height }}>
-    <div className="container max-w-4xl space-y-3">
-      <div className="h-6 w-48 rounded bg-muted animate-pulse" />
-      <div className="h-4 w-72 rounded bg-muted/60 animate-pulse" />
-      <div className="grid gap-3 sm:grid-cols-2 mt-4">
-        <div className="h-24 rounded-xl bg-muted/40 animate-pulse" />
-        <div className="h-24 rounded-xl bg-muted/40 animate-pulse" />
-      </div>
-    </div>
-  </div>
-);
-
+// Preserved for back-compat with consumers like AudienceSelector that still
+// import this type from the home page.
 export type PersonaView = "resident" | "professional";
 
-function WhatsNewBanner() {
-  const [dismissed, setDismissed] = useState(() => {
-    try {
-      return sessionStorage.getItem("whats-new-v9-dismissed") === "1";
-    } catch {
-      return false;
-    }
-  });
-  if (dismissed) return null;
-  const dismiss = () => {
-    try {
-      sessionStorage.setItem("whats-new-v9-dismissed", "1");
-    } catch {
-      /* ignore */
-    }
-    setDismissed(true);
-  };
+// ─── Layer 2 cluster definitions ─────────────────────────────────────────────
+//
+// Each cluster card carries: a label, a one-line purpose, an anchor id (used by
+// nav), and a short list of tools. "Tools" are the existing Layer 3 destination
+// pages — clicking through goes to the actual tool, not back to this card.
+
+type ClusterTool = { label: string; href: string };
+type Cluster = {
+  id: string;
+  label: string;
+  purpose: string;
+  icon: typeof Heart;
+  accent: string;
+  tools: ClusterTool[];
+};
+
+const CLUSTERS: Cluster[] = [
+  {
+    id: "get-benefits",
+    label: "Get benefits",
+    purpose: "Find resources and eligibility help by life event or situation.",
+    icon: Heart,
+    accent: "border-rose-200 bg-rose-50 dark:bg-rose-950/20",
+    tools: [
+      { label: "Life event navigator", href: "/benefits" },
+      { label: "Find care near you", href: "/find-care" },
+      { label: "Insurance & coverage", href: "/insurance-coverage" },
+      { label: "Financial help", href: "/financial-help" },
+      { label: "Community resources", href: "/resources" },
+    ],
+  },
+  {
+    id: "explore-area",
+    label: "Explore your area",
+    purpose: "County and ZIP-level signals, comparisons, and cost of living.",
+    icon: MapPin,
+    accent: "border-teal-200 bg-teal-50 dark:bg-teal-950/20",
+    tools: [
+      { label: "ZIP intelligence", href: "/zip-intelligence" },
+      { label: "Find your city", href: "/find-your-city" },
+      { label: "Compare counties", href: "/compare" },
+      { label: "Tax comparison", href: "/tax-comparison" },
+      { label: "Civic data hub", href: "/civic-data-hub" },
+    ],
+  },
+  {
+    id: "health-coverage",
+    label: "Health and coverage",
+    purpose: "Coverage at risk, access gaps, and closure tracking.",
+    icon: ShieldCheck,
+    accent: "border-amber-200 bg-amber-50 dark:bg-amber-950/20",
+    tools: [
+      {
+        label: "Medicaid coverage at risk",
+        href: "/data/medicaid-coverage-at-risk",
+      },
+      { label: "SNAP coverage at risk", href: "/data/snap-coverage-at-risk" },
+      { label: "Dual-eligible exposure", href: "/data/dual-eligible-exposure" },
+      { label: "Closure watch", href: "/closure-watch" },
+      { label: "Detection gap", href: "/detection-gap" },
+    ],
+  },
+  {
+    id: "policy-investment",
+    label: "Policy and investment",
+    purpose: "Federal investment, equity atlas, briefs, and full data exports.",
+    icon: BarChart3,
+    accent: "border-purple-200 bg-purple-50 dark:bg-purple-950/20",
+    tools: [
+      { label: "Public investment", href: "/public-investment" },
+      { label: "Health equity atlas", href: "/health-equity-atlas" },
+      { label: "Data sources", href: "/data-sources" },
+      { label: "Downloads", href: "/downloads" },
+      { label: "Methodology", href: "/methodology" },
+    ],
+  },
+];
+
+// ─── Layer 1: orientation strip (above the fold) ─────────────────────────────
+
+function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
+  const [zip, setZip] = useState("");
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -4 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="border-b border-primary/20 bg-primary/5"
-    >
-      <div className="container max-w-5xl flex items-center justify-between gap-3 py-2.5 px-4">
-        <div className="flex items-center gap-2 text-sm min-w-0">
-          <Sparkles className="h-4 w-4 text-primary shrink-0" />
-          <span className="text-foreground font-medium truncate">
-            <span className="font-bold">NEW:</span> ZIP Code Health Scorecards
-            &middot; Service Area Builder &middot; Impact Stories &middot; HUD
-            Housing Data
-          </span>
-        </div>
-        <div className="flex items-center gap-2 shrink-0">
+    <section className="container mx-auto px-4 pt-16 pb-12 max-w-4xl">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="text-center space-y-5"
+      >
+        <h1 className="text-3xl md:text-4xl font-bold leading-tight text-foreground">
+          Civic intelligence for every Michigan county.
+        </h1>
+        <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+          Independent data, federal sources, and the methodology behind every
+          number — organized so you can find what affects you, your patients, or
+          your community.
+        </p>
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (zip.trim().length === 5) onZipSubmit(zip.trim());
+          }}
+          className="flex gap-2 max-w-sm mx-auto"
+          aria-label="Find data for your ZIP code"
+        >
+          <Input
+            inputMode="numeric"
+            pattern="[0-9]{5}"
+            maxLength={5}
+            placeholder="Enter your ZIP code"
+            value={zip}
+            onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
+            className="text-center"
+            aria-label="ZIP code"
+          />
+          <Button type="submit" disabled={zip.trim().length !== 5}>
+            Look up
+            <ArrowRight className="w-4 h-4 ml-1" />
+          </Button>
+        </form>
+
+        <p className="text-xs text-muted-foreground">
           <Link
-            to="/zip-intelligence"
-            className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"
+            to="/methodology"
+            className="inline-flex items-center gap-1 underline-offset-2 hover:underline"
           >
-            Explore <ArrowRight className="h-3 w-3" />
+            <Sparkles className="w-3.5 h-3.5" />
+            Every number carries its source and label — see the methodology
           </Link>
-          <button
-            aria-label="Dismiss"
-            onClick={dismiss}
-            className="rounded p-1 hover:bg-muted transition-colors"
-          >
-            <X className="h-3.5 w-3.5 text-muted-foreground" />
-          </button>
-        </div>
-      </div>
-    </motion.div>
+        </p>
+      </motion.div>
+    </section>
   );
 }
 
-function ExecutiveLandingStrip() {
-  const [dismissed, setDismissed] = useState(() => {
-    try {
-      return localStorage.getItem("exec-strip-dismissed") === "1";
-    } catch {
-      return false;
-    }
-  });
-  if (dismissed) return null;
-  const dismiss = () => {
-    try {
-      localStorage.setItem("exec-strip-dismissed", "1");
-    } catch {
-      /* ignore */
-    }
-    setDismissed(true);
-  };
+// ─── Layer 2: cluster cards + Recently added ─────────────────────────────────
+
+function ClusterCard({ cluster }: { cluster: Cluster }) {
+  const Icon = cluster.icon;
   return (
-    <div className="border-t border-border/40 bg-muted/30 py-2 px-4">
-      <div className="container max-w-5xl flex items-center justify-between gap-3 text-xs text-muted-foreground">
-        <span>
-          <Link
-            to="/for-health-systems"
-            className="text-primary hover:underline font-medium"
-          >
-            For health systems &amp; partners →
-          </Link>{" "}
-          BD scenario modeler, market intelligence, and SDOH ROI tools.
-        </span>
-        <button
-          aria-label="Dismiss"
-          onClick={dismiss}
-          className="shrink-0 rounded p-1 hover:bg-muted transition-colors"
-        >
-          <X className="h-3 w-3" />
-        </button>
+    <article
+      id={cluster.id}
+      className={`rounded-xl border p-5 transition-shadow hover:shadow-md ${cluster.accent}`}
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <Icon className="h-5 w-5 text-foreground" />
+        <h2 className="text-base font-semibold text-foreground">
+          {cluster.label}
+        </h2>
       </div>
-    </div>
+      <p className="text-xs text-muted-foreground mb-4">{cluster.purpose}</p>
+      <ul className="space-y-1.5">
+        {cluster.tools.map((tool) => (
+          <li key={tool.href}>
+            <Link
+              to={tool.href}
+              className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-primary group"
+            >
+              <ArrowRight className="h-3.5 w-3.5 text-primary/70 group-hover:text-primary transition-colors" />
+              <span className="group-hover:underline">{tool.label}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </article>
   );
 }
+
+function RecentlyAddedCard() {
+  return (
+    <article
+      id="recently-added"
+      className="rounded-xl border border-border bg-muted/30 p-5"
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <Database className="h-5 w-5 text-foreground" />
+        <h2 className="text-base font-semibold text-foreground">
+          Recently added
+        </h2>
+      </div>
+      <p className="text-xs text-muted-foreground mb-4">
+        New tools, datasets, and methodology updates land here.
+      </p>
+      <Link
+        to="/changelog"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+      >
+        See the systems history
+        <ArrowRight className="h-3.5 w-3.5" />
+      </Link>
+    </article>
+  );
+}
+
+function Layer2ClusterGrid() {
+  return (
+    <section
+      aria-label="Choose a path"
+      className="container mx-auto px-4 pb-16 max-w-5xl"
+    >
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {CLUSTERS.map((c) => (
+          <ClusterCard key={c.id} cluster={c} />
+        ))}
+        <RecentlyAddedCard />
+      </div>
+    </section>
+  );
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
 
 const Index = () => {
-  const [triageOpen, setTriageOpen] = useState(false);
-
+  const navigate = useNavigate();
   usePageMeta({
-    title: "Health, Housing & Civic Data",
+    title: "AccessMI — Civic intelligence for Michigan",
     description:
-      "County-level Michigan data on health, housing, energy, and services across all 83 counties. Independent, no login required.",
-    path: "/",
-    jsonLd: {
-      "@type": "Organization",
-      name: "accessmi.org",
-      alternateName: "Access Michigan",
-      url: "https://accessmi.org",
-      description:
-        "Independent civic data resource organizing health, housing, energy, transportation, and legal services for all 83 Michigan counties.",
-      areaServed: {
-        "@type": "State",
-        name: "Michigan",
-        sameAs: "https://www.wikidata.org/wiki/Q1166",
-      },
-    },
+      "Find benefits, explore your area, watch health coverage risks, and dig into policy and investment data — all sourced from primary federal records.",
   });
 
   return (
     <Layout>
-      {/* ═══ FRONT DOOR TRIAGE ═══ */}
-      <AnimatePresence>
-        {triageOpen && (
-          <Suspense fallback={null}>
-            <FrontDoorTriage onClose={() => setTriageOpen(false)} />
-          </Suspense>
-        )}
-      </AnimatePresence>
-
-      {/* ═══ ALERTS ═══ */}
       <OutageAlertBanner />
       <CountyWelcomeBanner />
 
-      {/* ═══ HERO - mission + search ═══ */}
-      <HeroSection />
-
-      {/* ═══ GET HELP NOW - front door triage trigger ═══ */}
-      <section className="container -mt-6 mb-4 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mx-auto max-w-md"
-        >
-          <button
-            onClick={() => setTriageOpen(true)}
-            className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-michigan-teal text-white py-3.5 px-6 text-sm font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all"
-          >
-            <Heart className="h-4.5 w-4.5" fill="currentColor" />
-            Get Help Now - Find Resources in Your County
-          </button>
-        </motion.div>
-      </section>
-
-      {/* ═══ LIFE EVENT NAVIGATOR - primary engagement hook (shown early for discoverability) ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <Suspense fallback={<SectionSkeleton height="200px" />}>
-          <LifeEventNavigator />
-        </Suspense>
-      </SectionErrorBoundary>
-
-      {/* ═══ WHAT'S NEW BANNER ═══ */}
-      <WhatsNewBanner />
-
-      {/* ═══ CAPABILITY STRIP ═══ */}
-      <CapabilityStrip />
-
-      {/* ═══ ROLE-BASED JOURNEYS ═══ */}
-      <section className="container py-10">
-        <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-xl font-bold text-foreground text-center mb-6"
-        >
-          Where do you want to start?
-        </motion.h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              icon: "\u{1F464}",
-              label: "I'm a Michigan Resident",
-              desc: "Health resources, water safety, who represents you",
-              href: "/zip/48201",
-              color:
-                "bg-teal-50 dark:bg-teal-950/20 border-teal-200 dark:border-teal-900/40",
-              cta: "Check My ZIP",
-            },
-            {
-              icon: "\u{1F3E5}",
-              label: "I Work in Healthcare",
-              desc: "Market intelligence, SDOH gaps, CHNA export",
-              href: "/detection-gap",
-              color: "bg-primary/5 border-primary/20",
-              cta: "Explore Service Area",
-            },
-            {
-              icon: "\u{1F4CB}",
-              label: "I'm a Policymaker",
-              desc: "Federal investment, fiscal risk, civic participation",
-              href: "/public-investment",
-              color:
-                "bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-900/40",
-              cta: "Public Investment",
-            },
-            {
-              icon: "\u{1F52C}",
-              label: "I'm a Researcher",
-              desc: "Full data export, methodology, transparency layer",
-              href: "/downloads",
-              color:
-                "bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-900/40",
-              cta: "Access Data",
-            },
-          ].map((role, i) => (
-            <motion.div
-              key={role.label}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-            >
-              <Link to={role.href} className="block group">
-                <div
-                  className={`rounded-xl border p-5 h-full transition-all hover:shadow-md ${role.color}`}
-                >
-                  <span className="text-2xl">{role.icon}</span>
-                  <h3 className="text-sm font-bold text-foreground mt-2 group-hover:text-primary transition-colors">
-                    {role.label}
-                  </h3>
-                  <p className="text-xs text-muted-foreground mt-1 mb-3">
-                    {role.desc}
-                  </p>
-                  <span className="text-xs text-primary font-medium inline-flex items-center gap-1 group-hover:underline">
-                    {role.cta} <ArrowRight className="h-3 w-3" />
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* ═══ DETECTION GAP - compact funnel ═══ */}
-      <section className="container py-10">
-        <Suspense
-          fallback={<div className="h-48 animate-pulse bg-muted rounded-xl" />}
-        >
-          <DetectionGapFunnel variant="compact" />
-        </Suspense>
-      </section>
-
-      {/* ═══ YOUR COMMUNITY - moved to hero ZIP search above ═══ */}
-
-      {/* ═══ EXPLORE QUESTIONS - data-driven Q&A navigation ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <ExploreQuestionsPanel />
-      </SectionErrorBoundary>
-
-      {/* ═══ MICHIGAN PULSE - live intelligence signals ═══ */}
-      <MichiganPulse />
-
-      {/* ═══ LIVE DEMO PREVIEW ═══ */}
-      <LiveDemoPreview />
-
-      {/* ═══ INSIGHT OF THE WEEK ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <Suspense fallback={<SectionSkeleton height="160px" />}>
-          <InsightOfWeek />
-        </Suspense>
-      </SectionErrorBoundary>
-
-      {/* ═══ DATA STORIES ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <Suspense fallback={<SectionSkeleton height="200px" />}>
-          <DataStoriesSection />
-        </Suspense>
-      </SectionErrorBoundary>
-
-      {/* ═══ TAX TEASER ═══ */}
-      <section className="py-4 border-b border-border/30">
-        <div className="container max-w-5xl">
-          <Link
-            to="/tax-comparison"
-            className="flex items-center gap-3 rounded-xl border border-michigan-gold/20 bg-michigan-gold/5 px-4 py-3 hover:bg-michigan-gold/10 transition-colors group"
-          >
-            <DollarSign className="h-5 w-5 text-michigan-gold shrink-0" />
-            <p className="text-sm text-foreground">
-              Living in <strong>Troy vs Detroit</strong> on an $80K salary?
-              You'd keep roughly{" "}
-              <strong className="text-michigan-forest">$2,523 more</strong> per
-              year based on current Michigan tax schedules.{" "}
-              <span className="text-primary font-medium group-hover:underline">
-                See full calculator &rarr;
-              </span>
-            </p>
-          </Link>
-        </div>
-      </section>
-
-      {/* ═══ COVERAGE AT RISK ═══ */}
-      <section className="py-5 border-b border-border/40">
-        <div className="container max-w-5xl">
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
-            P.L. 119-21 Impact Projections
-          </p>
-          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            <Link
-              to="/data/medicaid-coverage-at-risk"
-              className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group"
-            >
-              <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
-              <div>
-                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                  Medicaid Coverage at Risk
-                </span>
-                <p className="text-xs text-muted-foreground">
-                  County-level exposure estimates under P.L. 119-21 work
-                  requirement provisions
-                </p>
-              </div>
-            </Link>
-            <Link
-              to="/data/snap-coverage-at-risk"
-              className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group"
-            >
-              <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
-              <div>
-                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                  SNAP Coverage at Risk
-                </span>
-                <p className="text-xs text-muted-foreground">
-                  County-level exposure estimates under P.L. 119-21 ABAWD
-                  provisions
-                </p>
-              </div>
-            </Link>
-            <Link
-              to="/data/dual-eligible-exposure"
-              className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group"
-            >
-              <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
-              <div>
-                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                  Dual-Eligible Exposure
-                </span>
-                <p className="text-xs text-muted-foreground">
-                  County-level view of Michiganders enrolled in both Medicare
-                  and Medicaid
-                </p>
-              </div>
-            </Link>
-            <Link
-              to="/closure-watch"
-              className="flex items-start gap-2 rounded-lg border border-border px-4 py-3 hover:bg-muted/50 hover:border-primary/20 transition-all group"
-            >
-              <ArrowRight className="h-4 w-4 shrink-0 text-primary mt-0.5" />
-              <div>
-                <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                  Closure Watch
-                </span>
-                <p className="text-xs text-muted-foreground">
-                  Michigan hospital and clinic closure tracking and early
-                  warning signals
-                </p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ RESEARCH & COMPARE ═══ */}
-      <section className="py-8 bg-muted/20 border-y border-border/40">
-        <div className="container max-w-5xl">
-          <div className="grid gap-6 lg:grid-cols-2 items-start">
-            <div className="text-center lg:text-left">
-              <h2 className="text-xl font-bold text-foreground mb-2">
-                For research & policy
-              </h2>
-              <p className="text-sm text-muted-foreground mb-4">
-                Compare counties, export briefs, explore the equity atlas.
-              </p>
-              <div className="flex flex-wrap justify-center lg:justify-start gap-2">
-                <Link to="/health-equity-atlas">
-                  <Button size="sm" className="gap-1.5">
-                    <Database className="h-3.5 w-3.5" /> Equity Atlas
-                  </Button>
-                </Link>
-                <Link to="/compare">
-                  <Button size="sm" variant="outline">
-                    Compare Counties
-                  </Button>
-                </Link>
-                <Link to="/data-sources">
-                  <Button size="sm" variant="outline">
-                    {DATA_SOURCE_DISPLAY} Data Sources
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            <QuickCompare />
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ NEWSLETTER SIGNUP ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <Suspense fallback={<SectionSkeleton height="120px" />}>
-          <NewsletterSignup />
-        </Suspense>
-      </SectionErrorBoundary>
-
-      {/* ═══ TRANSPARENCY PANEL ═══ */}
-      <SectionErrorBoundary title="Some content didn't load">
-        <Suspense fallback={<SectionSkeleton height="140px" />}>
-          <TransparencyPanel />
-        </Suspense>
-      </SectionErrorBoundary>
-
-      {/* ═══ PROVENANCE ═══ */}
-      <div className="container py-4">
-        <DataProvenance
-          source="Public datasets (State of Michigan + federal agencies). Independently organized."
-          updated="2026-03-22"
-          methodologyHref="/methodology"
-        />
-      </div>
-
-      {/* ═══ EXECUTIVE LANDING STRIP ═══ */}
-      <ExecutiveLandingStrip />
+      <Layer1Hero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
+      <Layer2ClusterGrid />
 
       <AccessChat />
     </Layout>

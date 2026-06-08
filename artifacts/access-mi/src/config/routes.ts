@@ -804,6 +804,15 @@ export const RESERVED_SLUGS: Set<string> = new Set(
 // ── Header Navigation Groups ────────────────────────────────────────────────
 
 export const NAV_GROUPS: (NavGroup | NavLink)[] = [
+  // ─── Layer 2 clusters (exposed directly per the IA spec) ───────────────────
+  // These mirror the homepage Layer 2 cards and anchor users at the cluster
+  // entry on the homepage. Full per-cluster destination pages can replace the
+  // anchors in a follow-up if we want dedicated cluster URLs.
+  { label: "Get benefits", href: "/#get-benefits" },
+  { label: "Explore your area", href: "/#explore-area" },
+  { label: "Health and coverage", href: "/#health-coverage" },
+  { label: "Policy and investment", href: "/#policy-investment" },
+  // ───────────────────────────────────────────────────────────────────────────
   {
     label: "Find Help",
     children: [
