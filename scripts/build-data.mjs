@@ -47,7 +47,12 @@ async function fetchJson(url) {
         const body = await res.text().catch(() => "");
         fail(`fetch failed HTTP ${res.status} for ${url}\n  body snippet: ${body.slice(0, 200)}`);
       }
-      return res.json();
+      const text = await res.text();
+      try {
+        return JSON.parse(text);
+      } catch {
+        fail(`non-JSON response (HTTP ${res.status}) for ${url}\n  snippet: ${text.slice(0, 200)}`);
+      }
     } catch (err) {
       clearTimeout(timer);
       lastErr = err;
