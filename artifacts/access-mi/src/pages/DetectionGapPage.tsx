@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import {
   RESOURCE_COUNT_DISPLAY,
   DATA_SOURCE_DISPLAY,
+  COUNTIES_COVERED,
 } from "@/config/platformConstants";
 import {
   Select,
@@ -571,7 +572,11 @@ export default function DetectionGapPage() {
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
               {[
-                { icon: MapPin, stat: "83", label: "counties covered" },
+                {
+                  icon: MapPin,
+                  stat: String(COUNTIES_COVERED),
+                  label: "counties covered",
+                },
                 {
                   icon: Database,
                   stat: RESOURCE_COUNT_DISPLAY,

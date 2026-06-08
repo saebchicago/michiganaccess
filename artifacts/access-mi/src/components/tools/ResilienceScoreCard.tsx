@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { computeResilienceScore } from "@/lib/resilience-score";
 import { getResilienceInput } from "@/data/county-resilience";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
+import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
 
 const TIER_COLORS: Record<string, string> = {
   "Tier 1 - Strong": "#22c55e",
@@ -30,17 +31,34 @@ function ScoreGauge({ score, color }: { score: number; color: string }) {
   return (
     <div className="relative w-36 h-36 mx-auto">
       <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
-        <circle cx="60" cy="60" r="54" fill="none" stroke="hsl(214, 20%, 90%)" strokeWidth="8" />
+        <circle
+          cx="60"
+          cy="60"
+          r="54"
+          fill="none"
+          stroke="hsl(214, 20%, 90%)"
+          strokeWidth="8"
+        />
         <motion.circle
-          cx="60" cy="60" r="54" fill="none" stroke={color} strokeWidth="8"
-          strokeLinecap="round" strokeDasharray={circumference}
+          cx="60"
+          cy="60"
+          r="54"
+          fill="none"
+          stroke={color}
+          strokeWidth="8"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset: dashOffset }}
           transition={{ duration: 1.5, ease: "easeOut" }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <AnimatedCounter value={score} className="text-3xl font-bold text-foreground" duration={1.5} />
+        <AnimatedCounter
+          value={score}
+          className="text-3xl font-bold text-foreground"
+          duration={1.5}
+        />
         <span className="text-[10px] text-muted-foreground">/100</span>
       </div>
     </div>
@@ -48,7 +66,14 @@ function ScoreGauge({ score, color }: { score: number; color: string }) {
 }
 
 function DimensionBar({ label, value }: { label: string; value: number }) {
-  const barColor = value >= 70 ? "#22c55e" : value >= 50 ? "#3b82f6" : value >= 40 ? "#eab308" : "#ef4444";
+  const barColor =
+    value >= 70
+      ? "#22c55e"
+      : value >= 50
+        ? "#3b82f6"
+        : value >= 40
+          ? "#eab308"
+          : "#ef4444";
   return (
     <div className="space-y-1">
       <div className="flex justify-between text-[10px]">
@@ -76,7 +101,10 @@ export default function ResilienceScoreCard({ county }: Props) {
   const [methodOpen, setMethodOpen] = useState(false);
 
   const input = useMemo(() => getResilienceInput(county), [county]);
-  const result = useMemo(() => (input ? computeResilienceScore(input) : null), [input]);
+  const result = useMemo(
+    () => (input ? computeResilienceScore(input) : null),
+    [input],
+  );
 
   if (!input || !result) {
     return (
@@ -97,18 +125,29 @@ export default function ResilienceScoreCard({ county }: Props) {
       <Card className="border-primary/20">
         <CardContent className="p-6 space-y-5">
           {/* Header */}
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Community Resilience Score
+          <div className="text-center space-y-1">
+            <div className="flex items-center justify-center gap-2">
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Community Resilience Score
+              </p>
+              <ProvenanceTag
+                label="MODELED"
+                source="Composite of FEMA, SBA, ACS, CDC PLACES, ALICE, FCC"
+              />
+            </div>
+            <p className="text-sm text-foreground font-medium">
+              {county} County
             </p>
-            <p className="text-sm text-foreground font-medium">{county} County</p>
           </div>
 
           {/* Gauge + Grade - stack on mobile */}
           <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
             <ScoreGauge score={result.score} color={gradeColor} />
             <Badge
-              style={{ backgroundColor: gradeColor, color: result.grade.includes("Limited") ? "#000" : "#fff" }}
+              style={{
+                backgroundColor: gradeColor,
+                color: result.grade.includes("Limited") ? "#000" : "#fff",
+              }}
               className="text-sm px-4 py-2 font-semibold"
             >
               {result.grade}
@@ -117,9 +156,15 @@ export default function ResilienceScoreCard({ county }: Props) {
 
           {/* Dimension bars */}
           <div className="space-y-3">
-            {(Object.entries(result.dimensions) as [string, number][]).map(([key, value]) => (
-              <DimensionBar key={key} label={DIM_LABELS[key] || key} value={value} />
-            ))}
+            {(Object.entries(result.dimensions) as [string, number][]).map(
+              ([key, value]) => (
+                <DimensionBar
+                  key={key}
+                  label={DIM_LABELS[key] || key}
+                  value={value}
+                />
+              ),
+            )}
           </div>
 
           {/* Strengths & Vulnerabilities */}
@@ -130,7 +175,11 @@ export default function ResilienceScoreCard({ county }: Props) {
                   <CheckCircle2 className="h-3 w-3" /> Strengths
                 </p>
                 {result.strengths.map((s) => (
-                  <Badge key={s} variant="outline" className="text-[9px] mr-1 mb-1 border-michigan-forest/30 text-michigan-forest">
+                  <Badge
+                    key={s}
+                    variant="outline"
+                    className="text-[9px] mr-1 mb-1 border-michigan-forest/30 text-michigan-forest"
+                  >
                     {s}
                   </Badge>
                 ))}
@@ -142,7 +191,11 @@ export default function ResilienceScoreCard({ county }: Props) {
                   <AlertTriangle className="h-3 w-3" /> Vulnerabilities
                 </p>
                 {result.vulnerabilities.map((v) => (
-                  <Badge key={v} variant="outline" className="text-[9px] mr-1 mb-1 border-michigan-coral/30 text-michigan-coral">
+                  <Badge
+                    key={v}
+                    variant="outline"
+                    className="text-[9px] mr-1 mb-1 border-michigan-coral/30 text-michigan-coral"
+                  >
                     {v}
                   </Badge>
                 ))}
@@ -158,21 +211,30 @@ export default function ResilienceScoreCard({ county }: Props) {
             >
               <Info className="h-3 w-3" />
               Methodology
-              <ChevronDown className={`h-3 w-3 transition-transform ${methodOpen ? "rotate-180" : ""}`} />
+              <ChevronDown
+                className={`h-3 w-3 transition-transform ${methodOpen ? "rotate-180" : ""}`}
+              />
             </button>
             {methodOpen && (
-              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="overflow-hidden">
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="overflow-hidden"
+              >
                 <p className="text-[9px] text-muted-foreground mt-2 leading-relaxed">
-                  The Community Resilience Score is a weighted composite of five dimensions:
-                  Disaster Preparedness (25%) - based on historical disaster declaration frequency;
-                  Economic Capacity (25%) - SBA lending per capita + median household income;
-                  Health Infrastructure (20%) - county health ranking score;
-                  Social Safety Net (15%) - inverse of ALICE threshold rate;
-                  Digital Connectivity (15%) - broadband adoption percentage.
-                  Each dimension scores 0-100, then weighted to produce the final score.
+                  The Community Resilience Score is a weighted composite of five
+                  dimensions: Disaster Preparedness (25%) - based on historical
+                  disaster declaration frequency; Economic Capacity (25%) - SBA
+                  lending per capita + median household income; Health
+                  Infrastructure (20%) - county health ranking score; Social
+                  Safety Net (15%) - inverse of ALICE threshold rate; Digital
+                  Connectivity (15%) - broadband adoption percentage. Each
+                  dimension scores 0-100, then weighted to produce the final
+                  score.
                 </p>
                 <p className="text-[9px] text-muted-foreground mt-1 italic">
-                  Illustrative composite index. Not a validated resilience measure.
+                  Illustrative composite index. Not a validated resilience
+                  measure.
                 </p>
               </motion.div>
             )}

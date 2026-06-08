@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { computeHealthScore } from "@/lib/health-score";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
+import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
 import type { PlacesMeasure } from "@/lib/places-client";
 
 function ScoreGauge({ score, color }: { score: number; color: string }) {
@@ -14,17 +15,34 @@ function ScoreGauge({ score, color }: { score: number; color: string }) {
   return (
     <div className="relative w-36 h-36 mx-auto">
       <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
-        <circle cx="60" cy="60" r="54" fill="none" stroke="hsl(214, 20%, 90%)" strokeWidth="8" />
+        <circle
+          cx="60"
+          cy="60"
+          r="54"
+          fill="none"
+          stroke="hsl(214, 20%, 90%)"
+          strokeWidth="8"
+        />
         <motion.circle
-          cx="60" cy="60" r="54" fill="none" stroke={color} strokeWidth="8"
-          strokeLinecap="round" strokeDasharray={circumference}
+          cx="60"
+          cy="60"
+          r="54"
+          fill="none"
+          stroke={color}
+          strokeWidth="8"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset: dashOffset }}
           transition={{ duration: 1.5, ease: "easeOut" }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <AnimatedCounter value={score} className="text-3xl font-bold text-foreground" duration={1.5} />
+        <AnimatedCounter
+          value={score}
+          className="text-3xl font-bold text-foreground"
+          duration={1.5}
+        />
         <span className="text-[10px] text-muted-foreground">/100</span>
       </div>
     </div>
@@ -39,7 +57,9 @@ interface Props {
 export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
   const dataMap = useMemo(() => {
     const m: Record<string, number> = {};
-    data.forEach((d) => { m[d.short_question_text] = d.data_value; });
+    data.forEach((d) => {
+      m[d.short_question_text] = d.data_value;
+    });
     return m;
   }, [data]);
 
@@ -50,14 +70,18 @@ export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
       <Card className="border-primary/20">
         <CardContent className="p-6 text-center space-y-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Neighborhood Health Score</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Neighborhood Health Score
+            </p>
             <p className="text-sm text-foreground font-medium">ZIP {zipCode}</p>
           </div>
 
           <ScoreGauge score={result.score} color={result.color} />
 
           <div className="text-center space-y-1">
-            <span className={`text-sm font-semibold ${result.tier?.color ?? "text-muted-foreground"}`}>
+            <span
+              className={`text-sm font-semibold ${result.tier?.color ?? "text-muted-foreground"}`}
+            >
               {result.tier?.badge ?? result.grade}
             </span>
             <p className="text-xs text-muted-foreground max-w-xs mx-auto">
@@ -72,7 +96,13 @@ export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
                   <CheckCircle2 className="h-3 w-3" /> Strengths
                 </p>
                 {result.strengths.map((s) => (
-                  <Badge key={s} variant="outline" className="text-[9px] mr-1 mb-1 border-michigan-forest/30 text-michigan-forest">{s}</Badge>
+                  <Badge
+                    key={s}
+                    variant="outline"
+                    className="text-[9px] mr-1 mb-1 border-michigan-forest/30 text-michigan-forest"
+                  >
+                    {s}
+                  </Badge>
                 ))}
               </div>
             )}
@@ -82,7 +112,13 @@ export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
                   <AlertTriangle className="h-3 w-3" /> Concerns
                 </p>
                 {result.concerns.map((c) => (
-                  <Badge key={c} variant="outline" className="text-[9px] mr-1 mb-1 border-michigan-coral/30 text-michigan-coral">{c}</Badge>
+                  <Badge
+                    key={c}
+                    variant="outline"
+                    className="text-[9px] mr-1 mb-1 border-michigan-coral/30 text-michigan-coral"
+                  >
+                    {c}
+                  </Badge>
                 ))}
               </div>
             )}
@@ -93,11 +129,21 @@ export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
               <Info className="h-3 w-3" /> How is this calculated?
             </summary>
             <p className="text-[9px] text-muted-foreground mt-2 leading-relaxed">
-              Composite of 12 CDC PLACES measures weighted by health impact. Each measure scores 0-100 based on distance from Michigan state average. This is an illustrative composite, not a clinical assessment. Source: CDC PLACES 2024, BRFSS 2022.
+              Composite of 12 CDC PLACES measures weighted by health impact.
+              Each measure scores 0-100 based on distance from Michigan state
+              average. This is an illustrative composite, not a clinical
+              assessment. Source: CDC PLACES 2024, BRFSS 2022.
             </p>
           </details>
 
-          <button onClick={() => document.getElementById("zip-builder")?.scrollIntoView({ behavior: "smooth" })} className="text-xs text-primary hover:underline flex items-center gap-1 mx-auto">
+          <button
+            onClick={() =>
+              document
+                .getElementById("zip-builder")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="text-xs text-primary hover:underline flex items-center gap-1 mx-auto"
+          >
             <ArrowDown className="h-3 w-3" /> Explore the full data
           </button>
         </CardContent>
