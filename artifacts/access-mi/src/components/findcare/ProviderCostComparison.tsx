@@ -242,7 +242,7 @@ export default function ProviderCostComparison({ providers, facilityMap }: Props
                         </TableCell>
                         <TableCell className="text-right">
                           <span className={`text-xs font-bold ${isCheapest ? "text-michigan-forest" : "text-destructive"}`}>
-                            ${costs?.uninsured ?? "—"}
+                            ${costs?.uninsured ?? "-"}
                           </span>
                           {isCheapest && (
                             <Badge className="ml-1 bg-michigan-forest/10 text-michigan-forest text-[9px] px-1">Lowest</Badge>
@@ -250,7 +250,7 @@ export default function ProviderCostComparison({ providers, facilityMap }: Props
                           {costs && <p className="text-[9px] text-muted-foreground">/{costs.unit}</p>}
                         </TableCell>
                         <TableCell className="text-right">
-                          <span className="text-xs font-bold text-primary">${costs?.insured ?? "—"}</span>
+                          <span className="text-xs font-bold text-primary">${costs?.insured ?? "-"}</span>
                           {costs && <p className="text-[9px] text-muted-foreground">/{costs.unit}</p>}
                         </TableCell>
                         {allInsuranceInComparison.slice(0, 4).map((ins) => (

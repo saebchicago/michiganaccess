@@ -24,7 +24,7 @@ const METHODOLOGY_URL = "/methodology/medicaid-coverage-at-risk";
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function fmtN(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "-";
   return n.toLocaleString();
 }
 
@@ -102,7 +102,7 @@ export default function MedicaidCoverageAtRiskPage() {
     path: "/data/medicaid-coverage-at-risk",
     jsonLd: {
       "@type": "Dataset",
-      "name": "Michigan Medicaid Coverage at Risk — P.L. 119-21 County Projections",
+      "name": "Michigan Medicaid Coverage at Risk - P.L. 119-21 County Projections",
       "description":
         "County-level modeled ranges of Michigan Medicaid enrollees in categories affected by P.L. 119-21 work requirement provisions. Urban Institute Michigan projection (171,000–355,000) allocated proportionally by ACS C27007 5-year 2023 county enrollment share.",
       "url": "https://accessmi.org/data/medicaid-coverage-at-risk",
@@ -174,7 +174,7 @@ export default function MedicaidCoverageAtRiskPage() {
               <p className="text-muted-foreground mt-1">
                 Michigan county-level estimates of Medicaid enrollees in categories affected by
                 P.L. 119-21 work requirement provisions (Urban Institute, March 2026). All figures
-                are modeled ranges — not point estimates. Exposure is not disenrollment.
+                are modeled ranges - not point estimates. Exposure is not disenrollment.
               </p>
             </div>
           </div>
@@ -195,7 +195,7 @@ export default function MedicaidCoverageAtRiskPage() {
                 requirement provisions. Being in an affected category is not the same as losing
                 coverage. Individual outcomes depend on state implementation decisions, work
                 requirement compliance pathways, income and employment changes, and administrative
-                factors. The ranges describe populations at elevated exposure — they do not predict
+                factors. The ranges describe populations at elevated exposure - they do not predict
                 who will or will not retain Medicaid enrollment.{" "}
                 <Link to={METHODOLOGY_URL} className="underline hover:text-primary">
                   Full methodology →
@@ -217,7 +217,7 @@ export default function MedicaidCoverageAtRiskPage() {
               scope="Work requirement provisions only"
               provenance={
                 <DataProvenance
-                  sourceName="Urban Institute — P.L. 119-21 Medicaid work requirements"
+                  sourceName="Urban Institute - P.L. 119-21 Medicaid work requirements"
                   sourceUrl="https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work"
                   asOfDate="March 2026"
                   cadence="Updated when Urban Institute publishes revised Michigan estimates"
@@ -235,7 +235,7 @@ export default function MedicaidCoverageAtRiskPage() {
               scope="All P.L. 119-21 Medicaid provisions"
               provenance={
                 <DataProvenance
-                  sourceName="KFF — Allocating CBO's Federal Medicaid Spending Reductions"
+                  sourceName="KFF - Allocating CBO's Federal Medicaid Spending Reductions"
                   sourceUrl="https://www.kff.org/medicaid/allocating-cbos-estimates-of-federal-medicaid-spending-reductions-across-the-states-enacted-reconciliation-package/"
                   asOfDate="December 2025"
                   cadence="Updated as CBO revises national scoring"
@@ -249,14 +249,14 @@ export default function MedicaidCoverageAtRiskPage() {
               testId="medicaid-stat-counties"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "83"}
-              label="Michigan counties — complete statewide coverage (all 83)"
+              label="Michigan counties - complete statewide coverage (all 83)"
               scope="Statewide coverage"
               provenance={
                 <DataProvenance
                   sourceName="U.S. Census Bureau county list"
                   sourceUrl="https://www.census.gov/library/reference/code-lists/ansi.html"
                   asOfDate="2026"
-                  cadence="Static — 83 Michigan counties"
+                  cadence="Static - 83 Michigan counties"
                   dataKind="measured"
                   compact
                 />
@@ -271,7 +271,7 @@ export default function MedicaidCoverageAtRiskPage() {
             <h2 className="text-xl font-semibold">County breakdown</h2>
             <div className="flex items-center gap-3">
               <p className="text-xs text-muted-foreground hidden sm:block">
-                Modeled range — not a point estimate
+                Modeled range - not a point estimate
               </p>
               <button
                 data-testid="medicaid-csv-download"
@@ -317,7 +317,7 @@ export default function MedicaidCoverageAtRiskPage() {
                         onSort={handleSort}
                       />
                       <span className="text-[9px] text-muted-foreground/70 font-normal">
-                        modeled range — not a point estimate
+                        modeled range - not a point estimate
                       </span>
                     </div>
                   </th>
@@ -331,7 +331,7 @@ export default function MedicaidCoverageAtRiskPage() {
                         onSort={handleSort}
                       />
                       <span className="text-[9px] text-muted-foreground/70 font-normal">
-                        modeled range — not a point estimate
+                        modeled range - not a point estimate
                       </span>
                     </div>
                   </th>
@@ -399,7 +399,7 @@ export default function MedicaidCoverageAtRiskPage() {
               <Link data-testid="medicaid-snap-crosslink" to="/data/snap-coverage-at-risk" className="text-primary hover:underline font-medium">
                 SNAP Coverage at Risk
               </Link>
-              {" "}— county-level exposure to P.L. 119-21 ABAWD provisions{" "}
+              {" "}- county-level exposure to P.L. 119-21 ABAWD provisions{" "}
               <Link to="/methodology/snap-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
                 (methodology)
               </Link>

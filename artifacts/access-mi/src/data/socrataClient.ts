@@ -65,7 +65,7 @@ export async function querySocrata(
       });
 
       if (res.status === 429) {
-        // Rate limited — return what we have
+        // Rate limited - return what we have
         console.warn("[socrataClient] rate limited, returning partial data");
         break;
       }

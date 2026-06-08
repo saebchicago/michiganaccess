@@ -30,7 +30,7 @@ export default function GetToCarePanel({ county, zip, coverageType }: { county?:
 
         <div className="text-xs text-muted-foreground space-y-2">
           <p>
-            <strong>Medicaid NEMT:</strong> If you have Medicaid (Healthy Michigan Plan), you may be eligible for free rides to medical appointments. This is called Non-Emergency Medical Transportation (NEMT). Many Medicaid health plans use transportation vendors — check your plan materials or{" "}
+            <strong>Medicaid NEMT:</strong> If you have Medicaid (Healthy Michigan Plan), you may be eligible for free rides to medical appointments. This is called Non-Emergency Medical Transportation (NEMT). Many Medicaid health plans use transportation vendors - check your plan materials or{" "}
             <ExtLink href="https://newmibridges.michigan.gov">MI Bridges</ExtLink> for details.
           </p>
           <p>Call your health plan's member services line to schedule a ride, usually 2–3 days in advance.</p>
@@ -44,7 +44,7 @@ export default function GetToCarePanel({ county, zip, coverageType }: { county?:
                 <span className="mt-0.5 h-1.5 w-1.5 rounded-full bg-primary/50 shrink-0" />
                 <span>
                   {r.website ? <ExtLink href={r.website}>{r.resource_name}</ExtLink> : <strong>{r.resource_name}</strong>}
-                  {r.phone && <> — <a href={`tel:${r.phone}`} className="text-primary underline">{r.phone}</a></>}
+                  {r.phone && <> - <a href={`tel:${r.phone}`} className="text-primary underline">{r.phone}</a></>}
                 </span>
               </div>
             ))}

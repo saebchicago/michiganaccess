@@ -151,7 +151,7 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     effectiveYear: 2026,
     sourceUrl:
       "https://www.michigan.gov/mdhhs/assistance-programs/medicaid/health-care-programs-eligibility",
-    sourceName: "Michigan MDHHS — Health Care Programs Eligibility",
+    sourceName: "Michigan MDHHS - Health Care Programs Eligibility",
     provenance: "VERIFIED",
     learnMoreHref: "/find-care",
   },
@@ -164,7 +164,7 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     ruleLabel: "130% FPL gross income test (federal baseline)",
     effectiveYear: 2026,
     sourceUrl: "https://www.fns.usda.gov/snap/allotment/cola/fy26",
-    sourceName: "USDA FNS — FY2026 SNAP Cost-of-Living Adjustments",
+    sourceName: "USDA FNS - FY2026 SNAP Cost-of-Living Adjustments",
     provenance: "VERIFIED",
     learnMoreHref: "/financial-help",
   },
@@ -179,7 +179,7 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     effectiveYear: 2026,
     sourceUrl:
       "https://www.fns.usda.gov/wic/income-eligibility-guidelines-2025-26",
-    sourceName: "USDA FNS — WIC Income Eligibility Guidelines",
+    sourceName: "USDA FNS - WIC Income Eligibility Guidelines",
     provenance: "VERIFIED",
     learnMoreHref: "/financial-help",
   },
@@ -194,7 +194,7 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     effectiveYear: 2026,
     sourceUrl:
       "https://www.michigan.gov/mdhhs/assistance-programs/medicaid/health-care-programs-eligibility",
-    sourceName: "Michigan MDHHS — Children's Health Coverage",
+    sourceName: "Michigan MDHHS - Children's Health Coverage",
     provenance: "VERIFIED",
     learnMoreHref: "/find-care",
   },
@@ -208,7 +208,7 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     effectiveYear: 2026,
     sourceUrl:
       "https://www.michigan.gov/mdhhs/inside-mdhhs/newsroom/2025/08/07/public-notice-proposed-liheap-state-plan-for-fy-2026",
-    sourceName: "Michigan MDHHS — FY2026 LIHEAP State Plan",
+    sourceName: "Michigan MDHHS - FY2026 LIHEAP State Plan",
     provenance: "VERIFIED",
     learnMoreHref: "/financial-help",
   },
@@ -222,13 +222,13 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     effectiveYear: 2026,
     sourceUrl:
       "https://www.michigan.gov/mdhhs/inside-mdhhs/newsroom/2025/08/07/public-notice-proposed-liheap-state-plan-for-fy-2026",
-    sourceName: "Michigan MDHHS — FY2026 LIHEAP State Plan",
+    sourceName: "Michigan MDHHS - FY2026 LIHEAP State Plan",
     provenance: "VERIFIED",
     learnMoreHref: "/financial-help",
   },
   {
     id: "msp_qmb",
-    name: "Medicare Savings — QMB",
+    name: "Medicare Savings - QMB",
     summary:
       "Pays Medicare Part A and Part B premiums plus most cost-sharing. Apply through Michigan Medicaid.",
     fplMultiplier: 1.0,
@@ -237,12 +237,12 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     effectiveYear: 2026,
     sourceUrl:
       "https://www.medicare.gov/basics/costs/help/medicare-savings-programs",
-    sourceName: "CMS — Medicare Savings Programs (2026)",
+    sourceName: "CMS - Medicare Savings Programs (2026)",
     provenance: "VERIFIED",
   },
   {
     id: "msp_slmb",
-    name: "Medicare Savings — SLMB",
+    name: "Medicare Savings - SLMB",
     summary:
       "Pays the Medicare Part B premium for people just above the QMB income limit.",
     fplMultiplier: 1.2,
@@ -251,12 +251,12 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     effectiveYear: 2026,
     sourceUrl:
       "https://www.medicare.gov/basics/costs/help/medicare-savings-programs",
-    sourceName: "CMS — Medicare Savings Programs (2026)",
+    sourceName: "CMS - Medicare Savings Programs (2026)",
     provenance: "VERIFIED",
   },
   {
     id: "msp_qi",
-    name: "Medicare Savings — QI",
+    name: "Medicare Savings - QI",
     summary:
       "Pays the Medicare Part B premium for people just above the SLMB income limit.",
     fplMultiplier: 1.35,
@@ -265,7 +265,7 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     effectiveYear: 2026,
     sourceUrl:
       "https://www.medicare.gov/basics/costs/help/medicare-savings-programs",
-    sourceName: "CMS — Medicare Savings Programs (2026)",
+    sourceName: "CMS - Medicare Savings Programs (2026)",
     provenance: "VERIFIED",
   },
   {
@@ -279,7 +279,7 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     requiredAny: ["age_65_plus", "disability"],
     effectiveYear: 2026,
     sourceUrl: "https://www.ssa.gov/oact/cola/SSI.html",
-    sourceName: "SSA — 2026 SSI Federal Payment Amounts",
+    sourceName: "SSA - 2026 SSI Federal Payment Amounts",
     provenance: "MODELED",
   },
 ];

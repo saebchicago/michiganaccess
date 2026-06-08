@@ -14,7 +14,7 @@ interface MiBill {
   url: string;
 }
 
-// Mock data — replace with Open States API when key is available
+// Mock data - replace with Open States API when key is available
 const MOCK_BILLS: MiBill[] = [
   { identifier: "HB 4001", title: "Medicaid expansion coverage for postpartum period", latestAction: "Referred to Health Policy Committee", latestActionDate: "2026-03-18", chamber: "lower", url: "https://www.legislature.mi.gov/Bills" },
   { identifier: "SB 2105", title: "PFAS remediation funding for municipal water systems", latestAction: "Passed Senate, sent to House", latestActionDate: "2026-03-15", chamber: "upper", url: "https://www.legislature.mi.gov/Bills" },
@@ -26,7 +26,7 @@ const MOCK_BILLS: MiBill[] = [
 const CATEGORIES = ["All", "Health", "Environment", "Economic", "Education", "Housing"] as const;
 
 async function fetchBills(): Promise<MiBill[]> {
-  // Open States API requires a free key — using mock data until configured
+  // Open States API requires a free key - using mock data until configured
   // To enable: get key at openstates.org/accounts/signup, set as env var
   try {
     const apiKey = import.meta.env.VITE_OPENSTATES_API_KEY;

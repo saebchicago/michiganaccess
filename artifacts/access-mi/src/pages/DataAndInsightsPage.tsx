@@ -162,7 +162,7 @@ const powerUserActions = [
 
 export default function DataAndInsightsPage() {
   usePageMeta({
-    title: "Data & Insights — Dashboards, Equity & Open Data",
+    title: "Data & Insights - Dashboards, Equity & Open Data",
     description:
       "Real-time health equity dashboards, facility data, and open datasets for researchers, health systems, and civic organizations.",
     path: "/data-and-insights",
@@ -469,7 +469,7 @@ export default function DataAndInsightsPage() {
                 <p className="text-xs text-muted-foreground">
                   The Compare Counties tool adds Civic Insight scores, equity
                   lens, community voice ratings, insurance breakdown, and PDF
-                  export — for up to 4 counties at once.
+                  export - for up to 4 counties at once.
                 </p>
               </div>
               <Link
@@ -657,7 +657,7 @@ export default function DataAndInsightsPage() {
                     <li className="flex items-start gap-2">
                       <Database className="h-4 w-4 text-primary shrink-0 mt-0.5" />{" "}
                       <span>
-                        <strong>Health indicators</strong> — uninsured rate,
+                        <strong>Health indicators</strong> - uninsured rate,
                         life expectancy, ER visits, primary care ratios for all
                         83 counties
                       </span>
@@ -665,7 +665,7 @@ export default function DataAndInsightsPage() {
                     <li className="flex items-start gap-2">
                       <Heart className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />{" "}
                       <span>
-                        <strong>Equity metrics</strong> — infant mortality
+                        <strong>Equity metrics</strong> - infant mortality
                         disparities, rural vs. urban gaps, shortage area
                         designations
                       </span>
@@ -673,7 +673,7 @@ export default function DataAndInsightsPage() {
                     <li className="flex items-start gap-2">
                       <MapPin className="h-4 w-4 text-michigan-teal shrink-0 mt-0.5" />{" "}
                       <span>
-                        <strong>Facility data</strong> — hospitals, clinics,
+                        <strong>Facility data</strong> - hospitals, clinics,
                         FQHCs, provider counts by county and specialty
                       </span>
                     </li>
@@ -774,22 +774,22 @@ export default function DataAndInsightsPage() {
           </h2>
           <p className="text-sm text-muted-foreground">
             Direct links to official CSV and data downloads from authoritative
-            sources. Files open in a new tab — no processing by Access Michigan.
+            sources. Files open in a new tab - no processing by Access Michigan.
           </p>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
               {
-                name: "SVI 2022 — County & Tract Scores",
+                name: "SVI 2022 - County & Tract Scores",
                 desc: "CDC/ATSDR Social Vulnerability Index for Michigan, all census tracts and counties.",
                 url: "https://www.atsdr.cdc.gov/placeandhealth/svi/data_documentation_download.html",
               },
               {
-                name: "United For ALICE — Michigan County Table",
+                name: "United For ALICE - Michigan County Table",
                 desc: "ALICE threshold data, household survival budget, and county-level reports.",
                 url: "https://www.unitedforalice.org/county-reports/Michigan",
               },
               {
-                name: "County Health Rankings — Michigan",
+                name: "County Health Rankings - Michigan",
                 desc: "Health outcomes, behaviors, clinical care, and social factors for all 83 counties.",
                 url: "https://www.countyhealthrankings.org/explore-health-rankings/michigan/data-and-resources",
               },
@@ -805,7 +805,7 @@ export default function DataAndInsightsPage() {
               },
               {
                 name: "Census ACS Data",
-                desc: "American Community Survey 5-year estimates — demographics, housing, economic data.",
+                desc: "American Community Survey 5-year estimates - demographics, housing, economic data.",
                 url: "https://data.census.gov/",
               },
             ].map((item) => (
@@ -844,7 +844,7 @@ export default function DataAndInsightsPage() {
             Explore Michigan's Open Civic Data
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto text-sm">
-            Browse verified datasets from ArcGIS, Socrata, and state agencies —
+            Browse verified datasets from ArcGIS, Socrata, and state agencies -
             covering transportation, environment, housing, health, and public
             safety.
           </p>

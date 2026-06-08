@@ -124,7 +124,7 @@ export default function HealthNewsPage() {
             Michigan Health News
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Curated updates on disease outbreaks, research advances, policy changes, and community health wins across Michigan — sourced from official agencies.
+            Curated updates on disease outbreaks, research advances, policy changes, and community health wins across Michigan - sourced from official agencies.
           </motion.p>
         </div>
       </section>
@@ -220,7 +220,7 @@ export default function HealthNewsPage() {
             <CardContent className="py-4">
               <p className="text-xs text-muted-foreground leading-relaxed">
                 <Shield className="inline h-3.5 w-3.5 mr-1 text-primary" />
-                <strong>Source Integrity:</strong> All health news is sourced from official agencies including Michigan DHHS, CDC, NIH, CMS, SAMHSA, and peer-reviewed journals. This platform does not produce original editorial content — we curate and summarize from authoritative sources only.
+                <strong>Source Integrity:</strong> All health news is sourced from official agencies including Michigan DHHS, CDC, NIH, CMS, SAMHSA, and peer-reviewed journals. This platform does not produce original editorial content - we curate and summarize from authoritative sources only.
               </p>
             </CardContent>
           </Card>

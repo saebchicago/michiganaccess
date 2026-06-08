@@ -115,7 +115,7 @@ export default function MichiganAtAGlance() {
             Michigan at a Glance
           </h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Health metrics across all 83 counties — updated from public sources
+            Health metrics across all 83 counties - updated from public sources
           </p>
         </motion.div>
 
@@ -146,7 +146,7 @@ export default function MichiganAtAGlance() {
           <Card>
             <CardContent className="p-5">
               <p className="text-xs text-muted-foreground mb-3">
-                {METRICS.find((m) => m.key === activeMetric)?.desc} — top 20
+                {METRICS.find((m) => m.key === activeMetric)?.desc} - top 20
                 counties by population
               </p>
               <div className="grid grid-cols-5 sm:grid-cols-10 gap-1.5">

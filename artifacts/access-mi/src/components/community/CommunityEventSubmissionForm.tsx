@@ -93,7 +93,7 @@ export default function CommunityEventSubmissionForm() {
       });
       if (error) throw error;
       setSubmitted(true);
-      toast.success("Event submitted for review — thank you!");
+      toast.success("Event submitted for review - thank you!");
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {

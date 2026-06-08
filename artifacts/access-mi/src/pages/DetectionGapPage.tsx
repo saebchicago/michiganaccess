@@ -186,7 +186,7 @@ export default function DetectionGapPage() {
   const [volume, setVolume] = useState([regionData.defaultPop]);
 
   usePageMeta({
-    title: "The Detection Gap — Access Michigan",
+    title: "The Detection Gap - Access Michigan",
     description:
       "Health systems screen millions for social needs but lack the infrastructure to act. See the data behind Michigan's detection-to-action gap.",
     path: "/detection-gap",
@@ -235,7 +235,7 @@ export default function DetectionGapPage() {
       source: SOURCES.screened,
     },
     {
-      label: "Screen Positive — Unmet Need (27.4%)",
+      label: "Screen Positive - Unmet Need (27.4%)",
       value: calc.positive,
       pct: 27.4,
       color: "bg-michigan-teal",
@@ -258,7 +258,7 @@ export default function DetectionGapPage() {
       pct: 31,
       color: "bg-michigan-forest",
       bgColor: "bg-michigan-forest/20",
-      desc: "Of those referred, only 31% successfully connect — the rest fall through gaps.",
+      desc: "Of those referred, only 31% successfully connect - the rest fall through gaps.",
       source: SOURCES.connection,
     },
   ];
@@ -376,7 +376,7 @@ export default function DetectionGapPage() {
 
               <GapCallout
                 label={`${fmt(calc.screened - calc.positive)} patients screened negative`}
-                value="No social needs detected — they exit the funnel"
+                value="No social needs detected - they exit the funnel"
                 delay={0.3}
               />
 
@@ -384,7 +384,7 @@ export default function DetectionGapPage() {
 
               <GapCallout
                 label={`${fmt(calc.positive - calc.actuallyReferred)} never referred`}
-                value="Screened positive but no referral — 58% of positive screens"
+                value="Screened positive but no referral - 58% of positive screens"
                 delay={0.45}
               />
 
@@ -392,7 +392,7 @@ export default function DetectionGapPage() {
 
               <GapCallout
                 label={`${fmt(calc.actuallyReferred - calc.connected)} referred but not connected`}
-                value="Referral made but connection failed — 69% referral drop-off"
+                value="Referral made but connection failed - 69% referral drop-off"
                 delay={0.6}
               />
 
@@ -529,7 +529,7 @@ export default function DetectionGapPage() {
             </h3>
             <p className="text-sm text-gray-400 mb-6 max-w-lg mx-auto">
               Access Michigan provides the infrastructure layer between
-              screening and services — structured referral pathways,
+              screening and services - structured referral pathways,
               equity-weighted routing, and real-time resource data across all 83
               counties.
             </p>
@@ -566,7 +566,7 @@ export default function DetectionGapPage() {
               Access Michigan Bridges This Gap
             </h3>
             <p className="text-sm text-gray-400 mb-6">
-              The missing infrastructure between screening and services —
+              The missing infrastructure between screening and services -
               structured, equity-weighted, covering every county.
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
@@ -606,12 +606,12 @@ export default function DetectionGapPage() {
           <div className="mt-12 rounded-lg border border-white/10 bg-white/5 p-4">
             <p className="text-xs text-gray-500">
               <strong className="text-gray-400">Data Sources:</strong> Trinity
-              Health Community Impact Report (FY2025, published Jan 2026) —
+              Health Community Impact Report (FY2025, published Jan 2026) -
               27.4% unmet need rate; ~16% hospitalization reduction is
               system-reported and not independently verified or peer-reviewed.{" "}
-              NACHC 2023 Social Determinants Screening Report — 68% screen
-              positive illustrative benchmark. Journal of AHIMA 2023 — 42%
-              referral rate illustrative. RWJF 2022 Evidence Hub — 31%
+              NACHC 2023 Social Determinants Screening Report - 68% screen
+              positive illustrative benchmark. Journal of AHIMA 2023 - 42%
+              referral rate illustrative. RWJF 2022 Evidence Hub - 31%
               connection rate illustrative. CDC Social Determinants of Health
               evidence base. Cost per preventable hospitalization ($14,500) from
               AHRQ HCUP. All dollar figures are illustrative. See{" "}

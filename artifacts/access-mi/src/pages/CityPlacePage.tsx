@@ -39,7 +39,7 @@ export default function CityPlacePage() {
   const place = useMemo(() => cityName ? resolvePlace({ type: "city", cityName }) : null, [cityName]);
 
   usePageMeta({
-    title: place ? `${place.name} Community Brief — Access Michigan` : "City Not Found",
+    title: place ? `${place.name} Community Brief - Access Michigan` : "City Not Found",
     description: place
       ? buildBriefMetaDescription(place)
       : "City not found",
@@ -191,7 +191,7 @@ export default function CityPlacePage() {
         </div>
 
         <DataProvenance
-          source="County Health Rankings, Census ACS, MDHHS, DOE LEAD, FCC — county-level averages for city context"
+          source="County Health Rankings, Census ACS, MDHHS, DOE LEAD, FCC - county-level averages for city context"
           updated="2025"
           methodologyHref="/data-validation"
         />

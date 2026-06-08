@@ -1,5 +1,5 @@
 /**
- * DemographicBreakdown — Live ACS demographic visualizations for a place.
+ * DemographicBreakdown - Live ACS demographic visualizations for a place.
  * Race/ethnicity bar chart, income, housing tenure, education attainment.
  */
 import { useMemo } from "react";

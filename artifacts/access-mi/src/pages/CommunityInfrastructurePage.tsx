@@ -38,7 +38,7 @@ const INFRASTRUCTURE_SECTIONS = [
   {
     icon: Vote,
     title: "Voting & Elections",
-    description: "Register to vote, find your polling place, track your absentee ballot, and view sample ballots — all through the Michigan Voter Information Center.",
+    description: "Register to vote, find your polling place, track your absentee ballot, and view sample ballots - all through the Michigan Voter Information Center.",
     internalLink: "/civic-data",
     internalLabel: "Civic Data Page",
     externalLink: "https://mvic.sos.state.mi.us/",
@@ -58,7 +58,7 @@ const INFRASTRUCTURE_SECTIONS = [
 const CommunityInfrastructurePage = () => {
   usePageMeta({
     title: "Community Infrastructure | Access Michigan",
-    description: "Navigate Michigan's civic infrastructure — libraries, transit, courts, voting, and community centers.",
+    description: "Navigate Michigan's civic infrastructure - libraries, transit, courts, voting, and community centers.",
     path: "/community-infrastructure",
   });
 
@@ -76,7 +76,7 @@ const CommunityInfrastructurePage = () => {
             Community Infrastructure
           </h1>
           <p className="text-muted-foreground">
-            Access the essential civic services that serve every Michigan community — libraries, transit, courts, voting locations, and community centers.
+            Access the essential civic services that serve every Michigan community - libraries, transit, courts, voting locations, and community centers.
           </p>
         </div>
       </section>

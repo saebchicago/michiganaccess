@@ -15,7 +15,7 @@ export function useSnapCoverageAtRisk() {
       // fresher county enrollment data. Interface remains SnapCoverageRangeEntry[].
       return SNAP_COVERAGE_AT_RISK_FALLBACK;
     },
-    staleTime: 24 * 60 * 60 * 1000, // 24 hours — projection re-runs are infrequent
+    staleTime: 24 * 60 * 60 * 1000, // 24 hours - projection re-runs are infrequent
     retry: 1,
   });
 }

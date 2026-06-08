@@ -24,7 +24,7 @@ export default function HelpfulVote({ pagePath, zip }: HelpfulVoteProps) {
       }
       setVoted(true);
     } catch {
-      // Fail silently — feedback is non-critical
+      // Fail silently - feedback is non-critical
     }
   };
 

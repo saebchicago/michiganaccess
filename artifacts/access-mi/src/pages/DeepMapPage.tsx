@@ -26,7 +26,7 @@ interface LayerDef {
 }
 
 const MAP_LAYERS: LayerDef[] = [
-  { id: "broadband", label: "Broadband Access", icon: "\u{1F4E1}", color: "#3b82f6", description: "FCC broadband coverage — % with 25/3 Mbps+", source: "FCC National Broadband Map 2024" },
+  { id: "broadband", label: "Broadband Access", icon: "\u{1F4E1}", color: "#3b82f6", description: "FCC broadband coverage - % with 25/3 Mbps+", source: "FCC National Broadband Map 2024" },
   { id: "food-access", label: "Food Access", icon: "\u{1F6D2}", color: "#16a34a", description: "USDA food desert classification", source: "USDA Food Access Research Atlas 2019" },
   { id: "pfas", label: "PFAS Sites", icon: "\u26A0\uFE0F", color: "#dc2626", description: "Confirmed PFAS contamination sites", source: "EGLE MPART 2026" },
   { id: "disaster-risk", label: "Disaster Risk", icon: "\u{1F32A}\uFE0F", color: "#f59e0b", description: "FEMA NRI composite risk score", source: "FEMA National Risk Index 2023" },
@@ -41,7 +41,7 @@ const COUNTY_CENTROIDS: Record<string, [number, number]> = {
 };
 
 export default function DeepMapPage() {
-  usePageMeta({ title: "Deep Map — GIS Intelligence — Access Michigan", description: "8 data layers on one map. Broadband, food access, PFAS, disaster risk, energy burden — every Michigan county.", path: "/map/layers" });
+  usePageMeta({ title: "Deep Map - GIS Intelligence - Access Michigan", description: "8 data layers on one map. Broadband, food access, PFAS, disaster risk, energy burden - every Michigan county.", path: "/map/layers" });
 
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -111,7 +111,7 @@ export default function DeepMapPage() {
       MICHIGAN_KEY_PFAS_SITES.forEach(s => {
         if (!s.lat || !s.lon) return;
         L.circleMarker([s.lat, s.lon], { radius: 8, fillColor: "#dc2626", fillOpacity: (opacities.pfas ?? 90) / 100, color: "#fff", weight: 2 })
-          .bindTooltip(`${s.siteName}\n${s.county} County — ${s.status}\n${s.contaminants.join(", ")}${s.maxConcentrationPpt ? `\nMax: ${s.maxConcentrationPpt.toLocaleString()} ppt` : ""}`, { sticky: true })
+          .bindTooltip(`${s.siteName}\n${s.county} County - ${s.status}\n${s.contaminants.join(", ")}${s.maxConcentrationPpt ? `\nMax: ${s.maxConcentrationPpt.toLocaleString()} ppt` : ""}`, { sticky: true })
           .addTo(lg);
       });
       lg.addTo(map);
@@ -168,7 +168,7 @@ export default function DeepMapPage() {
         <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
           <div>
             <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-              <Layers className="h-6 w-6 text-primary" /> Deep Map — GIS Intelligence
+              <Layers className="h-6 w-6 text-primary" /> Deep Map - GIS Intelligence
             </h1>
             <p className="text-sm text-muted-foreground">{MAP_LAYERS.length} data layers. One map. Every Michigan county.</p>
           </div>

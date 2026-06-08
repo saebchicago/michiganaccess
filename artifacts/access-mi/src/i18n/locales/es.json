@@ -57,7 +57,7 @@
   },
   "systems": {
     "title": "¿Qué Es Access Michigan?",
-    "description": "Access Michigan es un recurso independiente y no comercial que organiza información de servicios públicos de agencias estatales en una interfaz única y estructurada. No reemplaza los servicios gubernamentales — los hace más fáciles de encontrar, entender y usar."
+    "description": "Access Michigan es un recurso independiente y no comercial que organiza información de servicios públicos de agencias estatales en una interfaz única y estructurada. No reemplaza los servicios gubernamentales - los hace más fáciles de encontrar, entender y usar."
   },
   "crisis": {
     "title": "¿Necesita Ayuda Inmediata?",
@@ -259,7 +259,7 @@
   "environment": {
     "badge": "Medio Ambiente y Sostenibilidad",
     "title": "Salud Ambiental de Michigan",
-    "subtitle": "Calidad del aire, seguridad del agua, progreso en energía limpia, programas de reciclaje y justicia ambiental — información basada en datos para los recursos naturales de Michigan.",
+    "subtitle": "Calidad del aire, seguridad del agua, progreso en energía limpia, programas de reciclaje y justicia ambiental - información basada en datos para los recursos naturales de Michigan.",
     "airWater": "Aire y Agua",
     "cleanEnergy": "Energía Limpia",
     "recycling": "Reciclaje",
@@ -293,7 +293,7 @@
   "civic": {
     "badge": "Datos Cívicos y Gobierno Abierto",
     "title": "Centro de Gobierno Abierto de Michigan",
-    "subtitle": "Transparencia presupuestaria, seguimiento FOIA, participación electoral, funcionarios electos y horarios de reuniones públicas — empoderando la participación cívica informada.",
+    "subtitle": "Transparencia presupuestaria, seguimiento FOIA, participación electoral, funcionarios electos y horarios de reuniones públicas - empoderando la participación cívica informada.",
     "budget": "Presupuesto",
     "foiaTracker": "Seguimiento FOIA",
     "elections": "Elecciones",
@@ -312,7 +312,7 @@
     "voterTurnoutChart": "Participación Electoral de Michigan vs. Promedio Nacional",
     "voterTurnoutDesc": "Porcentaje de votantes elegibles que emitieron su voto (2016–2024)",
     "registerToVote": "Registrarse para Votar",
-    "registerToVoteDesc": "Regístrese en línea, por correo o en persona — incluyendo registro el mismo día en la oficina de su secretario local.",
+    "registerToVoteDesc": "Regístrese en línea, por correo o en persona - incluyendo registro el mismo día en la oficina de su secretario local.",
     "findPollingPlace": "Encontrar su Lugar de Votación",
     "findPollingPlaceDesc": "Busque su lugar de votación, boleta de muestra y funcionarios electos por dirección.",
     "trackBallot": "Rastrear su Boleta",
@@ -354,7 +354,7 @@
   "conditions": {
     "badge": "Vías de Atención",
     "title": "Guías de Condiciones de Salud",
-    "subtitle": "Encuentre la mejor atención para su condición — instalaciones, especialistas y servicios de apoyo clasificados por calidad y accesibilidad.",
+    "subtitle": "Encuentre la mejor atención para su condición - instalaciones, especialistas y servicios de apoyo clasificados por calidad y accesibilidad.",
     "topFacilities": "Mejores Instalaciones",
     "specialists": "Especialistas",
     "supportServices": "Servicios de Apoyo",
@@ -392,17 +392,17 @@
   "aboutPage": {
     "badge": "Acerca de Access Michigan",
     "title": "Ayudando a las Familias de Michigan a Navegar Salud, Seguridad y Transporte",
-    "subtitle": "Un recurso cívico independiente basado en datos, creado para mejorar el acceso a salud, seguridad y transporte para todos los residentes de Michigan — sin importar ingresos, estado de seguro o antecedentes.",
+    "subtitle": "Un recurso cívico independiente basado en datos, creado para mejorar el acceso a salud, seguridad y transporte para todos los residentes de Michigan - sin importar ingresos, estado de seguro o antecedentes.",
     "missionTitle": "Nuestra Misión",
-    "missionDesc": "Access Michigan existe para ayudar a los residentes de Michigan a navegar la atención médica, la educación y el transporte — encontrando atención de calidad, accediendo a asistencia financiera y tomando decisiones informadas. Creemos que todos merecen acceso a recursos confiables, sin importar ingresos, estado de seguro o antecedentes.",
+    "missionDesc": "Access Michigan existe para ayudar a los residentes de Michigan a navegar la atención médica, la educación y el transporte - encontrando atención de calidad, accediendo a asistencia financiera y tomando decisiones informadas. Creemos que todos merecen acceso a recursos confiables, sin importar ingresos, estado de seguro o antecedentes.",
     "independentTitle": "Independiente y Objetivo",
     "independentDesc": "Sin publicidad, sin ubicaciones pagadas. Clasificaciones basadas en datos de calidad de terceros disponibles públicamente.",
     "residentFirstTitle": "Prioridad al Residente",
-    "residentFirstDesc": "Cada decisión de diseño optimiza para la persona que busca atención — no para sistemas de salud o aseguradoras.",
+    "residentFirstDesc": "Cada decisión de diseño optimiza para la persona que busca atención - no para sistemas de salud o aseguradoras.",
     "dataDrivenTitle": "Basado en Datos y Transparente",
     "dataDrivenDesc": "Todas las fuentes de datos citadas. Metodología publicada. Clasificaciones explicables y reproducibles.",
     "rankingTitle": "Cómo Clasificamos a los Proveedores de Salud",
-    "rankingSubtitle": "Metodología transparente — sin criterios ocultos",
+    "rankingSubtitle": "Metodología transparente - sin criterios ocultos",
     "rankingDesc": "Cuando busca atención, nuestra plataforma clasifica los resultados usando una puntuación compuesta ponderada basada en cuatro dimensiones objetivas.",
     "distanceFactor": "Distancia desde Usted",
     "qualityFactor": "Puntuaciones de Calidad y Seguridad",
@@ -420,7 +420,7 @@
     "technologySubtitle": "Construido para el crecimiento y la sostenibilidad",
     "limitationsTitle": "Limitaciones y Descargos de Responsabilidad",
      "portfolioTitle": "Beta Pública",
-    "portfolioDesc": "Access Michigan es una beta pública funcional — un recurso cívico orientado a la comunidad construido para ayudar a los residentes de Michigan a navegar salud, seguridad, energía, transporte y servicios públicos. Mejora continuamente con comentarios de la comunidad e integración de datos abiertos."
+    "portfolioDesc": "Access Michigan es una beta pública funcional - un recurso cívico orientado a la comunidad construido para ayudar a los residentes de Michigan a navegar salud, seguridad, energía, transporte y servicios públicos. Mejora continuamente con comentarios de la comunidad e integración de datos abiertos."
   },
   "methodologyPage": {
     "badge": "Metodología de Datos",
@@ -508,7 +508,7 @@
   "wizard": {
     "cta": "Encontrar Programas para Mí",
     "title": "Encontrar Programas para Mí",
-    "intro": "Responde 3 preguntas rápidas — encontraremos programas adaptados a tu situación. Sin registro. Sin datos almacenados.",
+    "intro": "Responde 3 preguntas rápidas - encontraremos programas adaptados a tu situación. Sin registro. Sin datos almacenados.",
     "stepOf": "Paso {{step}} de 4",
     "seconds": "~60 segundos",
     "foundPrograms": "Encontramos {{count}} programas para ti",

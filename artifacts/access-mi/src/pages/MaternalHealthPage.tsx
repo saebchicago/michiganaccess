@@ -15,7 +15,7 @@ const fadeUp = {
   visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }),
 };
 
-// Verified data anchors — NEVER estimated
+// Verified data anchors - NEVER estimated
 const STATE_METRICS = {
   maternalMortality: 19.1, // per 100K, NCHS 2018-2023
   infantMortality: 6.1,    // per 1K, 2023
@@ -50,7 +50,7 @@ const DISPARITY_DATA = COUNTY_IMR
 
 export default function MaternalHealthPage() {
   usePageMeta({
-    title: "Maternal & Infant Health — Access Michigan",
+    title: "Maternal & Infant Health - Access Michigan",
     description: "Michigan maternal mortality: 19.1/100K. Infant mortality: 6.1/1K. County-level data with racial disparity breakdowns from MDHHS and March of Dimes.",
     path: "/maternal-health",
   });
@@ -72,7 +72,7 @@ export default function MaternalHealthPage() {
             </motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-muted-foreground max-w-2xl mx-auto">
               Maternal mortality: <strong>19.1</strong> per 100K live births. Infant mortality: <strong>6.1</strong> per 1,000.
-              Racial disparities persist — Black infant mortality is 2-3× the white rate in most counties where data is available.
+              Racial disparities persist - Black infant mortality is 2-3× the white rate in most counties where data is available.
             </motion.p>
           </motion.div>
         </div>

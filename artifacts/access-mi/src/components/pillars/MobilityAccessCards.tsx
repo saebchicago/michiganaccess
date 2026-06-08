@@ -40,7 +40,7 @@ export default function MobilityAccessCards({ countyName }: MobilityAccessCardsP
     if (!evData?.length) return [];
     return evData.filter((row) => {
       const city = String(row.City ?? row.city ?? "");
-      // Simple match — EV data has City field, not County
+      // Simple match - EV data has City field, not County
       // For Wayne County, match Detroit; for Kent, match Grand Rapids, etc.
       return city.toLowerCase().includes(countyName.toLowerCase());
     });

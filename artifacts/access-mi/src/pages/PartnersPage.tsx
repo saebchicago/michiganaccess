@@ -60,21 +60,21 @@ const ILLUSTRATIVE_SCENARIOS = [
     title: "Finding Sliding-Scale Care in Rural Michigan",
     story:
       "Illustrative scenario: A family in the Upper Peninsula could use Access Michigan to locate the nearest FQHC, discover sliding-scale payment options, and generate an appeal letter if a referral were denied.",
-    outcome: "Illustrative — not a real person or observed outcome.",
+    outcome: "Illustrative - not a real person or observed outcome.",
   },
   {
     title: "Connecting Seniors to Transportation",
     story:
       "Illustrative scenario: A senior in Genesee County could find non-emergency medical transportation options through the platform to attend regular appointments.",
     outcome:
-      "Illustrative — demonstrates platform capabilities, not measured results.",
+      "Illustrative - demonstrates platform capabilities, not measured results.",
   },
   {
     title: "School-Based Health Awareness",
     story:
       "Illustrative scenario: A parent could use the community program spotlight to find school-based health centers near their children's schools.",
     outcome:
-      "Illustrative — shows possible use case, not a documented outcome.",
+      "Illustrative - shows possible use case, not a documented outcome.",
   },
 ];
 
@@ -207,7 +207,7 @@ const PartnersPage = () => {
           <p className="text-center text-sm text-muted-foreground mb-8 max-w-2xl mx-auto">
             Access Michigan is designed to integrate with health systems and
             civic technology platforms. These represent partnership categories
-            we're exploring—not current endorsements.
+            we're exploring-not current endorsements.
           </p>
           <div className="grid gap-6 md:grid-cols-2">
             {PARTNER_CATEGORIES.map((cat) => (

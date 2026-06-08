@@ -25,7 +25,7 @@ function getMetrics(county: string) {
   const h = p.healthHighlights;
   const uninsured = parseFloat(h[0]?.value || "0");
   const food = parseFloat(h[2]?.value || "0");
-  const pcr = h[1]?.value || "—";
+  const pcr = h[1]?.value || "-";
   // Civic score is the inverse of the shared CADI so this widget agrees
   // with the Health Equity Atlas. Higher = better; lower = more access
   // barriers compound.

@@ -14,7 +14,7 @@ const paths = [
   {
     icon: MapPin,
     title: "See my community's data",
-    description: "Health, coverage, utilities, environment, and transportation — for your ZIP or county.",
+    description: "Health, coverage, utilities, environment, and transportation - for your ZIP or county.",
     href: "/brief",
     color: "text-primary",
     bg: "bg-primary/10",

@@ -1048,7 +1048,7 @@ export default function ZipScorecardPage() {
           const signals = [
             {
               label: "Eviction Filing Rate",
-              value: eviction ? `${eviction.eviction_filing_rate}%` : "—",
+              value: eviction ? `${eviction.eviction_filing_rate}%` : "-",
               context: eviction
                 ? `${eviction.evictions.toLocaleString()} filings/yr`
                 : "Data unavailable",
@@ -1061,9 +1061,9 @@ export default function ZipScorecardPage() {
             },
             {
               label: "Federal Dependency",
-              value: depScore ? `${depScore}%` : "—",
+              value: depScore ? `${depScore}%` : "-",
               context: "Of county public revenue from federal sources",
-              source: "USASpending.gov FY2024 — Illustrative composite",
+              source: "USASpending.gov FY2024 - Illustrative composite",
               severity:
                 (depScore ?? 0) > 40
                   ? ("high" as const)
@@ -1073,7 +1073,7 @@ export default function ZipScorecardPage() {
             {
               label: "211 Calls/1k Residents",
               value: "7.5",
-              context: "Michigan average — county data pending",
+              context: "Michigan average - county data pending",
               source: "Michigan 211 Annual Report 2024",
               severity: "moderate" as const,
               icon: "\u{1F4DE}",
@@ -1211,14 +1211,14 @@ export default function ZipScorecardPage() {
               : nri.compositeRisk > 20
                 ? "Moderate"
                 : "Low"
-            : "—";
+            : "-";
           const energyStatus = energy
             ? energy.lowIncomeBurdenPct > 10
               ? "High"
               : energy.lowIncomeBurdenPct > 7
                 ? "Moderate"
                 : "Low"
-            : "—";
+            : "-";
 
           return (
             <Card className="border-michigan-teal/10 bg-gradient-to-r from-michigan-teal/[0.03] to-transparent">
@@ -1252,7 +1252,7 @@ export default function ZipScorecardPage() {
                     <p
                       className={`text-lg font-bold tabular-nums ${disasterStatus === "Elevated" ? "text-red-600" : disasterStatus === "Moderate" ? "text-amber-600" : "text-green-600"}`}
                     >
-                      {nri ? nri.compositeRisk.toFixed(1) : "—"}
+                      {nri ? nri.compositeRisk.toFixed(1) : "-"}
                     </p>
                     <p className="text-[10px] font-medium text-foreground">
                       Disaster Risk
@@ -1265,7 +1265,7 @@ export default function ZipScorecardPage() {
                     <p
                       className={`text-lg font-bold tabular-nums ${energyStatus === "High" ? "text-red-600" : energyStatus === "Moderate" ? "text-amber-600" : "text-green-600"}`}
                     >
-                      {energy ? `${energy.lowIncomeBurdenPct}%` : "—"}
+                      {energy ? `${energy.lowIncomeBurdenPct}%` : "-"}
                     </p>
                     <p className="text-[10px] font-medium text-foreground">
                       Energy Burden (Low-Income)
@@ -1884,7 +1884,7 @@ export default function ZipScorecardPage() {
                 <Card className="border-amber-200/50 dark:border-amber-900/30 bg-amber-50/30 dark:bg-amber-950/10">
                   <CardContent className="py-4">
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      ZIP code demographics shape health outcomes — not because
+                      ZIP code demographics shape health outcomes - not because
                       of race, but because of systems. Structural factors like
                       housing, employment, and access create the patterns
                       visible here.
@@ -2053,22 +2053,22 @@ export default function ZipScorecardPage() {
           </summary>
           <div className="text-[11px] text-muted-foreground mt-2 leading-relaxed space-y-2 max-w-2xl">
             <p>
-              <strong>Health Score</strong> — Composite of 12 CDC PLACES
+              <strong>Health Score</strong> - Composite of 12 CDC PLACES
               measures weighted by health impact, compared to Michigan state
               averages.
             </p>
             <p>
-              <strong>Economic Score</strong> — Based on adjusted gross income,
+              <strong>Economic Score</strong> - Based on adjusted gross income,
               EITC participation, and median household income relative to state
               benchmarks.
             </p>
             <p>
-              <strong>Environment Score</strong> — Derived from asthma
+              <strong>Environment Score</strong> - Derived from asthma
               prevalence, physical inactivity, and sleep duration as proxies for
               environmental health.
             </p>
             <p>
-              <strong>Composite</strong> — Weighted blend: 45% health, 35%
+              <strong>Composite</strong> - Weighted blend: 45% health, 35%
               economic, 20% environment. This is an illustrative index, not a
               clinical or policy assessment.
             </p>

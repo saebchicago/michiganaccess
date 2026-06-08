@@ -104,7 +104,7 @@ export default function FiscalCliffCalculator() {
             <p className="text-xs text-muted-foreground mt-0.5">
               Simulate the impact of federal funding reductions on Michigan counties.
               Based on USASpending.gov FY2024 data. Dollar impacts are illustrative
-              estimates — actual effects depend on program structure and state matching requirements.
+              estimates - actual effects depend on program structure and state matching requirements.
             </p>
           </div>
         </div>
@@ -188,7 +188,7 @@ export default function FiscalCliffCalculator() {
               Estimated funding loss across Michigan
             </p>
             <p className="text-[9px] text-red-500/70 mt-1">
-              Illustrative estimate — USASpending.gov FY2024
+              Illustrative estimate - USASpending.gov FY2024
             </p>
           </div>
           <div className="rounded-xl border border-orange-200 bg-orange-50 dark:bg-orange-950/30 dark:border-orange-900/40 p-4">

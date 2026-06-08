@@ -100,7 +100,7 @@ export default function DisasterAccelerationChart({ disasters }: Props) {
             <CardTitle className="text-base">Disaster Acceleration: 1970s vs 2020s</CardTitle>
           </div>
           <p className="text-xs text-muted-foreground">
-            Unique federal disaster declarations per decade. The 2020s count runs through 2025 — the decade is incomplete.
+            Unique federal disaster declarations per decade. The 2020s count runs through 2025 - the decade is incomplete.
           </p>
         </CardHeader>
         <CardContent>
@@ -194,7 +194,7 @@ export default function DisasterAccelerationChart({ disasters }: Props) {
             Michigan averaged <span className="font-bold text-primary">{avgEarly}</span> declarations/decade in the 1970s-90s.
             Since 2010: <span className="font-bold text-red-600 dark:text-red-400">{avgRecent}</span>/decade
             {pctIncrease > 0 && (
-              <> — a <span className="font-bold text-red-600 dark:text-red-400">{pctIncrease}%</span> increase</>
+              <> - a <span className="font-bold text-red-600 dark:text-red-400">{pctIncrease}%</span> increase</>
             )}.
           </p>
         </CardContent>

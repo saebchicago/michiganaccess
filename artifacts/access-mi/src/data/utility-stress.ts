@@ -1,7 +1,7 @@
 /**
- * Utility Customer Stress — county-level summary types and stub data.
+ * Utility Customer Stress - county-level summary types and stub data.
  * Based on MPSC quarterly utility data patterns.
- * All current values are ILLUSTRATIVE — real MPSC data integration pending.
+ * All current values are ILLUSTRATIVE - real MPSC data integration pending.
  */
 
 export type UtilityStressLevel = "low" | "medium" | "high" | "unknown";
@@ -15,7 +15,7 @@ export interface CountyUtilityStressSummary {
   sourceShort: string;
 }
 
-// Illustrative stub data — clearly labeled as example-only
+// Illustrative stub data - clearly labeled as example-only
 const STUB_DATA: Record<string, Omit<CountyUtilityStressSummary, "countyId" | "sourceShort">> = {
   Wayne:     { disconnectionLevel: "high", arrearsLevel: "high", assistanceParticipationLevel: "high", asOfQuarter: "Q4 2024" },
   Oakland:   { disconnectionLevel: "low", arrearsLevel: "low", assistanceParticipationLevel: "medium", asOfQuarter: "Q4 2024" },

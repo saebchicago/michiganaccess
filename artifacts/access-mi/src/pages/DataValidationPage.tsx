@@ -83,7 +83,7 @@ const DATA_SOURCES: DataSource[] = [
     url: "https://www.aceee.org/research-report/u2006",
     description: "Low-income energy affordability data by county.",
     usedFor:
-      "Energy burden choropleth on /data — modeled county-level estimates.",
+      "Energy burden choropleth on /data - modeled county-level estimates.",
     type: "modeled",
     updateCadence: "Periodic (research reports)",
   },
@@ -101,7 +101,7 @@ const DATA_SOURCES: DataSource[] = [
     description:
       "FDA drug approval database, product labeling, adverse events.",
     usedFor:
-      "/learn drug data widget — real-time search of approved medications.",
+      "/learn drug data widget - real-time search of approved medications.",
     type: "live_api",
     updateCadence: "Daily",
   },
@@ -109,7 +109,7 @@ const DATA_SOURCES: DataSource[] = [
     name: "Michigan MODA Dashboard",
     url: "https://michigan.gov/opioids/category-data",
     description:
-      "Michigan Overdose Data to Action — overdose deaths by county, vulnerability index.",
+      "Michigan Overdose Data to Action - overdose deaths by county, vulnerability index.",
     usedFor: "/support-groups substance abuse trends charts.",
     type: "modeled",
     updateCadence: "Annual/semi-annual",
@@ -142,7 +142,7 @@ const DATA_SOURCES: DataSource[] = [
     name: "Michigan DHHS",
     url: "https://www.michigan.gov/mdhhs",
     description:
-      "Michigan Department of Health and Human Services — county-level service directories.",
+      "Michigan Department of Health and Human Services - county-level service directories.",
     usedFor:
       "County health profiles, Medicaid guidance, substance abuse contacts.",
     type: "curated",
@@ -152,7 +152,7 @@ const DATA_SOURCES: DataSource[] = [
     name: "County Health Rankings",
     url: "https://www.countyhealthrankings.org/",
     description:
-      "Robert Wood Johnson Foundation — county health factor rankings.",
+      "Robert Wood Johnson Foundation - county health factor rankings.",
     usedFor:
       "County profile benchmarks (uninsured rate, food insecurity, PCP ratio).",
     type: "static",
@@ -205,7 +205,7 @@ export default function DataValidationPage() {
     path: "/data-validation",
     jsonLd: {
       "@type": "WebPage",
-      name: "Data Sources & Validation — Access Michigan",
+      name: "Data Sources & Validation - Access Michigan",
       description:
         "Transparency page listing all data sources, methodologies, and limitations.",
       url: "https://accessmi.org/data-validation",
@@ -408,7 +408,7 @@ export default function DataValidationPage() {
                 </strong>{" "}
                 Impact stories and use case examples on partner and homepage
                 sections are hypothetical illustrations of how the platform
-                could be used — not documented outcomes.
+                could be used - not documented outcomes.
               </p>
               <p>
                 <strong className="text-foreground">No endorsements.</strong>{" "}

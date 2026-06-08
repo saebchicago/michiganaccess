@@ -23,6 +23,6 @@ export function useFacilities(facilityTypes?: string[], county?: string | string
       if (error) throw error;
       return data as Facility[];
     },
-    staleTime: 24 * 60 * 60 * 1000, // 24h — facility data changes infrequently
+    staleTime: 24 * 60 * 60 * 1000, // 24h - facility data changes infrequently
   });
 }

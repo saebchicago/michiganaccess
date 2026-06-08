@@ -24,7 +24,7 @@ const METHODOLOGY_URL = "/methodology/dual-eligible-exposure";
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function fmtN(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "-";
   return n.toLocaleString();
 }
 
@@ -102,7 +102,7 @@ export default function DualEligibleExposurePage() {
     path: "/data/dual-eligible-exposure",
     jsonLd: {
       "@type": "Dataset",
-      "name": "Michigan Dual-Eligible Exposure Map — Medicare + Medicaid County Distribution",
+      "name": "Michigan Dual-Eligible Exposure Map - Medicare + Medicaid County Distribution",
       "description":
         "County-level view of Michigan residents enrolled in both Medicare and Medicaid simultaneously. ACS B27010 county shares applied to MACPAC 2022 / KFF 2024–2025 statewide range (335,000–405,000). Dual-eligible residents are exempt from P.L. 119-21 work requirements.",
       "url": "https://accessmi.org/data/dual-eligible-exposure",
@@ -145,7 +145,7 @@ export default function DualEligibleExposurePage() {
     }
   }
 
-  // Median county ACS dual estimate: 875 (Hillsdale — 42nd of 83 when sorted by value)
+  // Median county ACS dual estimate: 875 (Hillsdale - 42nd of 83 when sorted by value)
   const medianAcsDualEstimate = useMemo(() => {
     if (!entries.length) return 0;
     const sorted_by_acs = [...entries].map((e) => e.acsDualEstimate).sort((a, b) => a - b);
@@ -187,7 +187,7 @@ export default function DualEligibleExposurePage() {
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Dual-eligible individuals enroll in Medicaid through the aged (65+) or disabled
-                pathway — not through ACA expansion. P.L. 119-21 §71119 work requirements apply
+                pathway - not through ACA expansion. P.L. 119-21 §71119 work requirements apply
                 exclusively to expansion enrollees ages 19–64. Michigan's approximately 335,000–405,000
                 dual-eligible residents are categorically exempt from these provisions. This feature
                 shows the geographic distribution of this protected population, providing context for
@@ -399,7 +399,7 @@ export default function DualEligibleExposurePage() {
               <Link data-testid="dual-snap-crosslink" to="/data/snap-coverage-at-risk" className="text-primary hover:underline font-medium">
                 SNAP Coverage at Risk
               </Link>
-              {" "}— county-level exposure to P.L. 119-21 ABAWD provisions{" "}
+              {" "}- county-level exposure to P.L. 119-21 ABAWD provisions{" "}
               <Link to="/methodology/snap-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
                 (methodology)
               </Link>
@@ -408,7 +408,7 @@ export default function DualEligibleExposurePage() {
               <Link data-testid="dual-medicaid-crosslink" to="/data/medicaid-coverage-at-risk" className="text-primary hover:underline font-medium">
                 Medicaid Coverage at Risk
               </Link>
-              {" "}— county-level exposure to P.L. 119-21 work requirement provisions{" "}
+              {" "}- county-level exposure to P.L. 119-21 work requirement provisions{" "}
               <Link to="/methodology/medicaid-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
                 (methodology)
               </Link>

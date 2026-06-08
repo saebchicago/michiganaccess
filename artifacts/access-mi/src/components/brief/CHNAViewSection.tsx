@@ -13,8 +13,8 @@ import SDOHPriorityHeat from "./SDOHPriorityHeat";
 import CHNAPlannerNotes from "./CHNAPlannerNotes";
 
 function getVal(hh: { label: string; value: string }[] | undefined, search: string): string {
-  if (!hh) return "—";
-  return hh.find((h) => h.label.toLowerCase().includes(search.toLowerCase()))?.value || "—";
+  if (!hh) return "-";
+  return hh.find((h) => h.label.toLowerCase().includes(search.toLowerCase()))?.value || "-";
 }
 
 interface CHNASection {
@@ -39,7 +39,7 @@ function buildCHNASections(county: string): CHNASection[] {
       title: "Care, Coverage, & Quality",
       bullets: [
         `Uninsured rate: ${uninsured}%${parseFloat(uninsured) > 6.2 ? " (above MI average of 6.2%)" : parseFloat(uninsured) <= 6.2 ? " (at or below MI average)" : ""}`,
-        primaryCare !== "—" ? `Primary care access ratio: ${primaryCare}` : "Primary care access ratio: data pending",
+        primaryCare !== "-" ? `Primary care access ratio: ${primaryCare}` : "Primary care access ratio: data pending",
         `Medicaid coverage is ${parseFloat(uninsured) > 8 ? "a critical gap area" : "relatively accessible"} in this county.`,
       ],
     },
@@ -49,7 +49,7 @@ function buildCHNASections(county: string): CHNASection[] {
       bullets: [
         cd.rentBurden !== null ? `Rent-burdened households: ${cd.rentBurden}%${cd.rentBurden > (MI_STATE_AVERAGES.rentBurden ?? 30) ? " (above state average)" : ""}` : "Rent burden data: pending",
         cd.povertyRate !== null ? `Poverty rate: ${cd.povertyRate}%${cd.povertyRate > 13.8 ? " (above MI average of 13.8%)" : ""}` : "Poverty rate: pending",
-        `Food insecurity: ${food}%${parseFloat(food) > 13.5 ? " — above the state average, compounding health challenges" : ""}`,
+        `Food insecurity: ${food}%${parseFloat(food) > 13.5 ? " - above the state average, compounding health challenges" : ""}`,
       ],
     },
     {
@@ -98,7 +98,7 @@ export default function CHNAViewSection({ county }: { county: string }) {
                 <li>• Pair quantitative indicators with community engagement and lived experience for a complete CHNA picture.</li>
               </ul>
               <p className="text-[9px] text-muted-foreground/60 mt-1">
-                Contextual guidance — not program-specific advice. See{" "}
+                Contextual guidance - not program-specific advice. See{" "}
                 <Link to="/methodology" className="text-primary hover:underline">methodology</Link> for details.
               </p>
             </CardContent>

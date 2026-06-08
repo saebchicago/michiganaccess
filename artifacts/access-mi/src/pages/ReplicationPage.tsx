@@ -31,7 +31,7 @@ const NATIONAL_APIS = [
 
 export default function ReplicationPage() {
   usePageMeta({
-    title: "Replicate This Platform — Access Michigan",
+    title: "Replicate This Platform - Access Michigan",
     description: "Open blueprint for building civic intelligence infrastructure in any U.S. state. 11 national APIs, documented methodology, reusable architecture.",
     path: "/replicate",
   });
@@ -70,7 +70,7 @@ export default function ReplicationPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { icon: Server, label: "Stack", desc: "React + Vite + Supabase. Free tier gets you started. Deploy on Netlify or Vercel." },
-              { icon: Database, label: "APIs", desc: "11 national APIs that work for any state — no paid keys required for most." },
+              { icon: Database, label: "APIs", desc: "11 national APIs that work for any state - no paid keys required for most." },
               { icon: Globe, label: "Design", desc: "shadcn/ui + Tailwind CSS. Open component library. Dark mode included." },
               { icon: CheckCircle2, label: "Data", desc: "National APIs cover 80%. Add your state's 211, DHHS, utility, and environmental data." },
             ].map((item, i) => (

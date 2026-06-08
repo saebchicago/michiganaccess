@@ -69,6 +69,6 @@ export function useHRSAData(state: string = "MI", limit: number = 50) {
       }
     },
     staleTime: 60 * 60 * 1000,
-    retry: 0, // No retries needed — fallback handles failures
+    retry: 0, // No retries needed - fallback handles failures
   });
 }

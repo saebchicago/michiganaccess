@@ -120,7 +120,7 @@ const quadrants = [
         source: "Privacy policy",
       },
       {
-        text: "Open civic infrastructure — free for all Michigan residents",
+        text: "Open civic infrastructure - free for all Michigan residents",
         source: "Platform policy",
       },
       {
@@ -154,7 +154,7 @@ const audiences = [
 
 const ExecutiveSummaryPage = () => {
   usePageMeta({
-    title: "Executive Summary — Access Michigan",
+    title: "Executive Summary - Access Michigan",
     description: `Access Michigan: a civic health navigation platform aggregating ${DATA_SOURCE_DISPLAY} public data sources across all ${COUNTIES_COVERED} Michigan counties to support health equity and community navigation.`,
     path: "/executive-summary",
   });
@@ -188,12 +188,12 @@ const ExecutiveSummaryPage = () => {
               >
                 accessmi.org/bd-financial-model
               </Link>{" "}
-              — service line NPV, partnership scenario comparisons, and SDOH ROI
+              - service line NPV, partnership scenario comparisons, and SDOH ROI
               modeling built on Michigan public health data.
             </p>
           </motion.div>
 
-          {/* Platform Facts — verifiable only */}
+          {/* Platform Facts - verifiable only */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -270,7 +270,7 @@ const ExecutiveSummaryPage = () => {
               <p className="text-xs text-muted-foreground">
                 <strong className="text-foreground">Public Beta:</strong> Access
                 Michigan is a new civic resource. Statistics below reflect
-                platform capabilities and publicly sourced data points — not
+                platform capabilities and publicly sourced data points - not
                 measured platform outcomes. Exploratory impact scenarios are
                 available on the{" "}
                 <Link
@@ -357,7 +357,7 @@ const ExecutiveSummaryPage = () => {
               </Link>
             </Button>
             <ShareButton
-              title="Access Michigan — Executive Summary"
+              title="Access Michigan - Executive Summary"
               description={`Civic health navigation platform: ${COUNTIES_COVERED} counties, ${RESOURCE_COUNT_DISPLAY} records indexed, ${DATA_SOURCE_DISPLAY} public data sources.`}
             />
           </div>

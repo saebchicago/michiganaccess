@@ -1,5 +1,5 @@
 /**
- * CHNA Planner Notes — actionable bullet insights and discussion questions.
+ * CHNA Planner Notes - actionable bullet insights and discussion questions.
  */
 import { Card, CardContent } from "@/components/ui/card";
 import { ClipboardList } from "lucide-react";
@@ -23,10 +23,10 @@ export default function CHNAPlannerNotes({ county }: { county: string }) {
   const insights: string[] = [];
 
   if (!isNaN(uninsured) && uninsured > 7) {
-    insights.push(`Uninsured rate (${uninsured}%) exceeds the state average — coverage outreach should be a priority.`);
+    insights.push(`Uninsured rate (${uninsured}%) exceeds the state average - coverage outreach should be a priority.`);
   }
   if (!isNaN(food) && food > 13.5) {
-    insights.push(`Food insecurity (${food}%) is above the state norm — consider food pharmacy or pantry partnerships.`);
+    insights.push(`Food insecurity (${food}%) is above the state norm - consider food pharmacy or pantry partnerships.`);
   }
   if (cd.rentBurden !== null && cd.rentBurden > (MI_STATE_AVERAGES.rentBurden ?? 30)) {
     insights.push(`Housing cost burden (${cd.rentBurden}% rent-burdened) may drive housing instability and health impacts.`);
@@ -36,7 +36,7 @@ export default function CHNAPlannerNotes({ county }: { county: string }) {
   }
 
   if (insights.length === 0) {
-    insights.push("Key indicators are near or below state averages — focus on maintaining access and monitoring trends.");
+    insights.push("Key indicators are near or below state averages - focus on maintaining access and monitoring trends.");
   }
 
   const questions = [
@@ -51,7 +51,7 @@ export default function CHNAPlannerNotes({ county }: { county: string }) {
       <CardContent className="py-5 space-y-4">
         <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
           <ClipboardList className="h-4 w-4 text-primary" />
-          Planner Notes — {county} County
+          Planner Notes - {county} County
         </h3>
         <div className="space-y-2">
           <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">Key Insights</p>

@@ -1,4 +1,4 @@
-// ProPublica Nonprofit Explorer API — no key required
+// ProPublica Nonprofit Explorer API - no key required
 // Source: projects.propublica.org/nonprofits/api/v2
 
 import { useQuery } from "@tanstack/react-query";

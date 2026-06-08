@@ -11,11 +11,11 @@ interface Question { q: string; options: string[]; answer: number; fact: string;
 const QUESTIONS: Question[] = [
   { q: "How many Michigan cities have their own income tax?", options: ["8", "14", "24", "36"], answer: 2, fact: "24 Michigan cities levy their own income tax. Detroit's is the highest at 2.4%.", source: "MI Treasury" },
   { q: "What percentage of Michigan households are below the ALICE threshold?", options: ["22%", "31%", "41%", "55%"], answer: 2, fact: "41% of Michigan households earn too much for safety nets but can't afford basics.", source: "United For ALICE 2023" },
-  { q: "Which Michigan city has the most expensive auto insurance?", options: ["Detroit", "Flint", "Hamtramck", "Pontiac"], answer: 2, fact: "Hamtramck averages $773/month — the highest in Michigan.", source: "Quadrant Information Services 2025" },
+  { q: "Which Michigan city has the most expensive auto insurance?", options: ["Detroit", "Flint", "Hamtramck", "Pontiac"], answer: 2, fact: "Hamtramck averages $773/month - the highest in Michigan.", source: "Quadrant Information Services 2025" },
   { q: "How many Michigan counties have zero pedestrian infrastructure data?", options: ["12", "38", "54", "76"], answer: 3, fact: "76 of 83 counties have no publicly available sidewalk data.", source: "SEMCOG / GATIS" },
   { q: "What is Michigan's statewide infant mortality rate?", options: ["3.2/1K", "4.8/1K", "6.1/1K", "8.4/1K"], answer: 2, fact: "6.1 per 1,000 live births (2023). Black IMR is 2-3× the white rate.", source: "MDHHS / March of Dimes" },
-  { q: "How many 'Do Not Eat' water bodies does Michigan have for PFAS?", options: ["28", "55", "102", "184"], answer: 2, fact: "102 water bodies — Michigan has the nation's most aggressive PFAS monitoring.", source: "EGLE MPART / MDHHS" },
-  { q: "What is Michigan's flat state income tax rate?", options: ["3.25%", "4.25%", "5.0%", "5.75%"], answer: 1, fact: "Michigan has a flat 4.25% state income tax — one of the simpler systems in the US.", source: "MI Treasury" },
+  { q: "How many 'Do Not Eat' water bodies does Michigan have for PFAS?", options: ["28", "55", "102", "184"], answer: 2, fact: "102 water bodies - Michigan has the nation's most aggressive PFAS monitoring.", source: "EGLE MPART / MDHHS" },
+  { q: "What is Michigan's flat state income tax rate?", options: ["3.25%", "4.25%", "5.0%", "5.75%"], answer: 1, fact: "Michigan has a flat 4.25% state income tax - one of the simpler systems in the US.", source: "MI Treasury" },
   { q: "How many people experienced homelessness in Michigan in 2024?", options: ["8,400", "18,200", "31,211", "52,500"], answer: 2, fact: "31,211 Michiganders experienced homelessness. Black households are 3.6× more likely.", source: "HUD PIT Count 2024" },
   { q: "What percentage of Michigan counties have dental health professional shortages?", options: ["28%", "45%", "59/83 (71%)", "78/83 (94%)"], answer: 2, fact: "59 of 83 counties have dental HPSAs. 12 counties have fewer than 5 dentists.", source: "MDHHS / HRSA" },
   { q: "Michigan's BEAD broadband allocation is the 4th highest in the US. How much?", options: ["$450M", "$892M", "$1.559B", "$2.3B"], answer: 2, fact: "$1.559 billion to connect 492,000 unserved/underserved households.", source: "NTIA / MIHI" },
@@ -49,7 +49,7 @@ export default function MichiganQuiz() {
 
   const handleShare = () => {
     const text = `I scored ${score}/10 on the Michigan Data Quiz! How well do you know Michigan? accessmi.org/quiz`;
-    navigator.clipboard.writeText(text).then(() => toast.success("Score copied — share it!"));
+    navigator.clipboard.writeText(text).then(() => toast.success("Score copied - share it!"));
   };
 
   const reset = () => { setCurrent(0); setScore(0); setSelected(null); setShowAnswer(false); setDone(false); };

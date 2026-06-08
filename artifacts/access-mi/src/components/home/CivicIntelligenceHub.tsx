@@ -153,7 +153,7 @@ export default function CivicIntelligenceHub() {
         value: selectedCountyIntelligence.primaryCareRatio,
         description: `${selectedCountyIntelligence.mentalHealthAccess}% mental health access index.`,
         signal: getPolicySignal(
-          selectedCountyIntelligence.primaryCareRatio === "—" ? "stable" : undefined,
+          selectedCountyIntelligence.primaryCareRatio === "-" ? "stable" : undefined,
           selectedCountyIntelligence.erVisitRate > MICHIGAN_AVERAGES.erVisitRate,
         ),
       },
@@ -162,7 +162,7 @@ export default function CivicIntelligenceHub() {
         value: selectedCountyIntelligence.foodInsecurity,
         description: "Share of residents facing food access pressure.",
         signal: getPolicySignal(
-          selectedCountyIntelligence.foodInsecurity === "—" ? "stable" : undefined,
+          selectedCountyIntelligence.foodInsecurity === "-" ? "stable" : undefined,
           Number.parseFloat(selectedCountyIntelligence.foodInsecurity) >= 16,
         ),
       },

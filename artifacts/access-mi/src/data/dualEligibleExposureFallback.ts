@@ -1,6 +1,6 @@
-// Dual-Eligible Exposure — county fallback data
+// Dual-Eligible Exposure - county fallback data
 // Computed: 2026-04-09
-// Feature: V3 Feature 3 — "Two programs, shared geography"
+// Feature: V3 Feature 3 - "Two programs, shared geography"
 //
 // FRAMING ANCHOR:
 //   "Dual-eligible residents are exempt from P.L. 119-21 work requirements.
@@ -11,8 +11,8 @@
 //
 // COUNTY ALLOCATION METHOD:
 //   1. ACS B27010 5-year 2023, variables:
-//        B27010_046E — ages 35–64: simultaneous Medicare + Medicaid/means-tested coverage
-//        B27010_062E — ages 65+:   simultaneous Medicare + Medicaid/means-tested coverage
+//        B27010_046E - ages 35–64: simultaneous Medicare + Medicaid/means-tested coverage
+//        B27010_062E - ages 65+:   simultaneous Medicare + Medicaid/means-tested coverage
 //      API: https://api.census.gov/data/2023/acs/acs5?get=NAME,B27010_046E,B27010_062E&for=county:*&in=state:26
 //      Fetched: April 2026. All 83 Michigan counties returned clean values.
 //   2. acsDualEstimate = B27010_046E + B27010_062E per county
@@ -24,7 +24,7 @@
 //   - ACS B27010 is a survey estimate with margins of error. Small-county figures
 //     (Keweenaw, Luce, Ontonagon, Schoolcraft) have high relative MoE (20–50%).
 //   - ACS captures simultaneous survey-reported coverage, not the CMS administrative
-//     "dual-eligible" category. ACS underestimates administrative enrollment — the
+//     "dual-eligible" category. ACS underestimates administrative enrollment - the
 //     ACS statewide total (216,635) is roughly 53% of the MACPAC administrative
 //     figure (405,000). County shares, not absolute ACS values, drive the allocation.
 //   - The statewide display range (335,000–405,000) combines MACPAC 2022 and KFF
@@ -40,7 +40,7 @@
 //   - KFF State Health Facts 2024 (March enrollment): 353,820 Michigan dual-eligibles
 //     Source: https://www.kff.org/state-health-policy-data/state-indicator/number-of-dual-eligible-individuals/
 //   - KFF State Health Facts 2025 (January enrollment): 334,716 Michigan dual-eligibles
-//     Source: same KFF URL — live, verified April 2026
+//     Source: same KFF URL - live, verified April 2026
 //
 // See /methodology/dual-eligible-exposure for full methodology.
 
@@ -104,13 +104,13 @@ const DUAL_ELIGIBLE_ACS_COUNTY: DualEligibleAcsEntry[] = [
   { county: "Kalamazoo", fips: "26077", acsDualEstimate: 3796 }, // 1869 + 1927
   { county: "Kalkaska", fips: "26079", acsDualEstimate: 479 }, // 241 + 238
   { county: "Kent", fips: "26081", acsDualEstimate: 10843 },   // 5155 + 5688
-  { county: "Keweenaw", fips: "26083", acsDualEstimate: 50 },  // 39 + 11 — high relative MoE; treat as illustrative
+  { county: "Keweenaw", fips: "26083", acsDualEstimate: 50 },  // 39 + 11 - high relative MoE; treat as illustrative
   { county: "Lake", fips: "26085", acsDualEstimate: 640 },     // 223 + 417
   { county: "Lapeer", fips: "26087", acsDualEstimate: 1584 },  // 690 + 894
   { county: "Leelanau", fips: "26089", acsDualEstimate: 203 }, // 81 + 122
   { county: "Lenawee", fips: "26091", acsDualEstimate: 1756 }, // 1029 + 727
   { county: "Livingston", fips: "26093", acsDualEstimate: 1824 }, // 725 + 1099
-  { county: "Luce", fips: "26095", acsDualEstimate: 186 },     // 89 + 97 — high relative MoE
+  { county: "Luce", fips: "26095", acsDualEstimate: 186 },     // 89 + 97 - high relative MoE
   { county: "Mackinac", fips: "26097", acsDualEstimate: 324 }, // 188 + 136
   { county: "Macomb", fips: "26099", acsDualEstimate: 18598 }, // 7801 + 10797
   { county: "Manistee", fips: "26101", acsDualEstimate: 711 }, // 247 + 464
@@ -128,7 +128,7 @@ const DUAL_ELIGIBLE_ACS_COUNTY: DualEligibleAcsEntry[] = [
   { county: "Oakland", fips: "26125", acsDualEstimate: 19110 }, // 6677 + 12433
   { county: "Oceana", fips: "26127", acsDualEstimate: 683 },   // 284 + 399
   { county: "Ogemaw", fips: "26129", acsDualEstimate: 695 },   // 360 + 335
-  { county: "Ontonagon", fips: "26131", acsDualEstimate: 189 }, // 92 + 97 — high relative MoE
+  { county: "Ontonagon", fips: "26131", acsDualEstimate: 189 }, // 92 + 97 - high relative MoE
   { county: "Osceola", fips: "26133", acsDualEstimate: 791 },  // 436 + 355
   { county: "Oscoda", fips: "26135", acsDualEstimate: 292 },   // 127 + 165
   { county: "Otsego", fips: "26137", acsDualEstimate: 620 },   // 276 + 344
@@ -139,7 +139,7 @@ const DUAL_ELIGIBLE_ACS_COUNTY: DualEligibleAcsEntry[] = [
   { county: "St. Clair", fips: "26147", acsDualEstimate: 3246 }, // 1656 + 1590
   { county: "St. Joseph", fips: "26149", acsDualEstimate: 1544 }, // 920 + 624
   { county: "Sanilac", fips: "26151", acsDualEstimate: 836 },  // 443 + 393
-  { county: "Schoolcraft", fips: "26153", acsDualEstimate: 198 }, // 103 + 95 — high relative MoE
+  { county: "Schoolcraft", fips: "26153", acsDualEstimate: 198 }, // 103 + 95 - high relative MoE
   { county: "Shiawassee", fips: "26155", acsDualEstimate: 1360 }, // 891 + 469
   { county: "Tuscola", fips: "26157", acsDualEstimate: 1734 }, // 1045 + 689
   { county: "Van Buren", fips: "26159", acsDualEstimate: 1775 }, // 816 + 959
@@ -149,7 +149,7 @@ const DUAL_ELIGIBLE_ACS_COUNTY: DualEligibleAcsEntry[] = [
 ];
 // ACS county total (denominator for shares): 216,635
 // MACPAC administrative total (used for allocation): 405,000 (high) / 335,000 (low)
-// County shares are derived from the ACS total — see methodology note above.
+// County shares are derived from the ACS total - see methodology note above.
 
 // ── Type ──────────────────────────────────────────────────────────────────────
 

@@ -1,5 +1,5 @@
 /**
- * "What you can do" actions per domain — curated Michigan-specific links.
+ * "What you can do" actions per domain - curated Michigan-specific links.
  * Each action is independently verifiable and does not imply endorsement.
  */
 
@@ -31,7 +31,7 @@ export const DOMAIN_ACTIONS: Record<DomainId, DomainAction[]> = {
   ],
   housing: [
     { title: "MSHDA Housing Programs", description: "Rental assistance, homebuyer programs, and emergency housing", href: "https://www.michigan.gov/mshda", external: true },
-    { title: "MI Legal Aid — Housing", description: "Free legal help for tenants facing eviction or unsafe housing", href: "https://michiganlegalhelp.org/self-help-tools/housing", external: true },
+    { title: "MI Legal Aid - Housing", description: "Free legal help for tenants facing eviction or unsafe housing", href: "https://michiganlegalhelp.org/self-help-tools/housing", external: true },
     { title: "HUD Housing Counseling", description: "Find a HUD-approved counseling agency near you", href: "https://www.hud.gov/findacounselor", external: true },
     { title: "Emergency Shelter via 2-1-1", description: "Immediate shelter referrals for individuals and families", href: "tel:211" },
   ],

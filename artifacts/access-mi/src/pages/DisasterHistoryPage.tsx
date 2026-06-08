@@ -10,7 +10,7 @@ const fade = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, trans
 
 export default function DisasterHistoryPage() {
   usePageMeta({
-    title: "FEMA Disaster History — Access Michigan",
+    title: "FEMA Disaster History - Access Michigan",
     description: "Interactive dashboard of FEMA disaster declarations in Michigan from 1953 to present, powered by the live OpenFEMA API.",
     path: "/disaster-history",
   });

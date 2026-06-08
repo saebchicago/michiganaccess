@@ -25,7 +25,7 @@ export default function PageFeedback() {
         comment: commentText.trim() || null,
       });
     } catch {
-      // INSERT succeeds via RLS but SELECT denied causes client error — expected
+      // INSERT succeeds via RLS but SELECT denied causes client error - expected
     } finally {
       setSubmitting(false);
     }
@@ -93,7 +93,7 @@ export default function PageFeedback() {
                   : "Thanks for flagging it. What could be improved?"}
               </p>
               <Textarea
-                placeholder="Optional — share any details…"
+                placeholder="Optional - share any details…"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
                 maxLength={500}

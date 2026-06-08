@@ -9,7 +9,7 @@ const config: PartnerPageConfig = {
   breadcrumbLabel: "Health Plans & Medicaid",
   intro: [
     "Access Michigan provides community-level intelligence across all 83 Michigan counties that health plans and Medicaid managed care organizations can use to strengthen value-based care, improve HEDIS and quality measures, and meet CHNA reporting requirements.",
-    "Our platform surfaces social risk factors — food insecurity, housing instability, utility burden, and transportation gaps — at the county and ZIP level, helping plans identify and address non-clinical drivers of utilization.",
+    "Our platform surfaces social risk factors - food insecurity, housing instability, utility burden, and transportation gaps - at the county and ZIP level, helping plans identify and address non-clinical drivers of utilization.",
   ],
   whatYouGet: [
     "Targeted CHNA briefs by ZIP code and county with SDOH overlays for your service area",

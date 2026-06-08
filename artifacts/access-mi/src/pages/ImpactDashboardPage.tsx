@@ -70,7 +70,7 @@ const PERSONAS = [
   {
     icon: Users,
     title: "Uninsured Resident",
-    desc: "Finds free clinics, sliding-scale providers, and Medicaid enrollment help across their county — no account required.",
+    desc: "Finds free clinics, sliding-scale providers, and Medicaid enrollment help across their county - no account required.",
     color: "text-primary",
   },
   {
@@ -138,7 +138,7 @@ function AnimatedStat({
 
 export default function ImpactDashboardPage() {
   usePageMeta({
-    title: "Platform Impact — Access Michigan",
+    title: "Platform Impact - Access Michigan",
     description: `Access Michigan platform impact metrics: ${COUNTIES_COVERED} counties, 15,000+ resources, ${DATA_SOURCE_DISPLAY} data sources, ${LANGUAGES_SUPPORTED} languages, zero cost.`,
     path: "/impact",
   });

@@ -52,7 +52,7 @@ export default function EnergyPriceTracker() {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <Zap className="h-5 w-5 text-michigan-gold" />
-          Live Electricity Prices — Michigan vs. National
+          Live Electricity Prices - Michigan vs. National
         </CardTitle>
         <CardDescription>
           Residential retail price (¢/kWh) · Last 12 months
@@ -142,7 +142,7 @@ export default function EnergyPriceTracker() {
           >
             U.S. Energy Information Administration <ExternalLink className="h-2.5 w-2.5" />
           </a>{" "}
-          — updated monthly
+          - updated monthly
         </p>
       </CardContent>
     </Card>

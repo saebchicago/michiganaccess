@@ -34,7 +34,7 @@ const studies = [
     tag: "Ambulatory Gap Analysis",
     title: "Identifying PCP Shortage Corridors in SE Michigan",
     challenge:
-      "Monroe and Lenawee counties are designated Health Professional Shortage Areas (HPSAs) with primary care ratios exceeding 2,500:1 — well above the state benchmark of 1,200:1. Residents in these areas face extended drive times to the nearest accepting provider.",
+      "Monroe and Lenawee counties are designated Health Professional Shortage Areas (HPSAs) with primary care ratios exceeding 2,500:1 - well above the state benchmark of 1,200:1. Residents in these areas face extended drive times to the nearest accepting provider.",
     challengeSource: "HRSA HPSA designations (2024); County Health Rankings",
     approach: [
       "SVI-weighted gap analysis to identify underserved ZIP codes using Census + CDC data",
@@ -124,7 +124,7 @@ const studies = [
 
 const CaseStudiesPage = () => {
   usePageMeta({
-    title: "Case Studies — Access Michigan",
+    title: "Case Studies - Access Michigan",
     description:
       "Exploratory case studies demonstrating how public data infrastructure can support ambulatory gap analysis, insurance appeal access, and SDOH navigation in Michigan.",
     path: "/case-studies",
@@ -166,7 +166,7 @@ const CaseStudiesPage = () => {
               <AlertTriangle className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
               <div>
                 <p className="text-sm font-semibold text-foreground mb-1">
-                  Illustrative Scenarios — Not Measured Outcomes
+                  Illustrative Scenarios - Not Measured Outcomes
                 </p>
                 <p className="text-xs text-muted-foreground">
                   These case studies present{" "}
@@ -306,7 +306,7 @@ const CaseStudiesPage = () => {
 
           <div className="mt-10 text-center">
             <ShareButton
-              title="Access Michigan — Exploratory Case Studies"
+              title="Access Michigan - Exploratory Case Studies"
               description="Illustrative scenarios: ambulatory gap analysis, insurance appeal automation, and SDOH navigation across Michigan."
             />
           </div>

@@ -42,7 +42,7 @@ function getRegionBg(pct: number): string {
 
 const CivicPowerPage = () => {
   usePageMeta({
-    title: "Civic Power Map — Access Michigan",
+    title: "Civic Power Map - Access Michigan",
     description: "Michigan's democracy has open seats. 79.7% of races uncontested. Find where to serve, who represents you, and where candidates are needed.",
     path: "/civic-power",
   });
@@ -69,7 +69,7 @@ const CivicPowerPage = () => {
               Michigan's Democracy Has Open Seats
             </motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              79.7% of Michigan's 15,139 elections in 2024 had only one candidate — the highest rate among large states nationally. Thousands of governing board seats go unfilled every year. This is where to start.
+              79.7% of Michigan's 15,139 elections in 2024 had only one candidate - the highest rate among large states nationally. Thousands of governing board seats go unfilled every year. This is where to start.
             </motion.p>
             <motion.p variants={fadeUp} custom={3} className="text-xs text-muted-foreground/70 mt-2">
               Ballotpedia 2024 · CLOSUP MPPS 2025
@@ -120,17 +120,17 @@ const CivicPowerPage = () => {
           {[
             {
               icon: Users, title: "Who Represents You",
-              desc: "Enter your ZIP code and see every elected official and governing body — federal, state, county, and local.",
+              desc: "Enter your ZIP code and see every elected official and governing body - federal, state, county, and local.",
               href: "/officials", color: "text-primary",
             },
             {
               icon: BookOpen, title: "Where to Serve",
-              desc: "15 types of governing boards where Michigan residents can apply. Health, housing, transit, environment, education — with how-to-apply guides.",
+              desc: "15 types of governing boards where Michigan residents can apply. Health, housing, transit, environment, education - with how-to-apply guides.",
               href: "/civic-power/boards", color: "text-michigan-teal", badge: "New",
             },
             {
               icon: Vote, title: "Races That Need Candidates",
-              desc: "79.7% of Michigan races were uncontested in 2024. See which regions and office types have the greatest need — and how to file.",
+              desc: "79.7% of Michigan races were uncontested in 2024. See which regions and office types have the greatest need - and how to file.",
               href: "/civic-power/races", color: "text-red-600", badge: "New",
             },
             {
@@ -178,7 +178,7 @@ const CivicPowerPage = () => {
       <section className="container pb-10">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Michigan vs. Midwest Peers — Uncontested Race Rate</CardTitle>
+            <CardTitle className="text-base">Michigan vs. Midwest Peers - Uncontested Race Rate</CardTitle>
             <p className="text-xs text-muted-foreground">Source: Ballotpedia Analysis of Uncontested Elections 2024</p>
           </CardHeader>
           <CardContent>
@@ -253,7 +253,7 @@ const CivicPowerPage = () => {
               <AlertTriangle className="h-5 w-5 text-red-500 mb-2" />
               <h3 className="text-sm font-bold text-foreground mb-2">The Flint Warning</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                In 2013, Michigan emergency managers replaced elected officials in cities and school districts representing the majority of the state's Black residents. Four appointed managers — no elected voice — led to a water crisis affecting 100,000 people.
+                In 2013, Michigan emergency managers replaced elected officials in cities and school districts representing the majority of the state's Black residents. Four appointed managers - no elected voice - led to a water crisis affecting 100,000 people.
               </p>
               <p className="text-[9px] text-muted-foreground/60 mt-2">Source: Milbank Quarterly, Jacobson et al. 2020</p>
             </CardContent>
@@ -263,7 +263,7 @@ const CivicPowerPage = () => {
               <TrendingDown className="h-5 w-5 text-amber-600 mb-2" />
               <h3 className="text-sm font-bold text-foreground mb-2">The 8% Turnout Crisis</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Michigan school boards control $15B+ in annual K-12 spending — yet average election turnout is 8%. Nationally, contested races generate 3–15 percentage points more turnout.
+                Michigan school boards control $15B+ in annual K-12 spending - yet average election turnout is 8%. Nationally, contested races generate 3–15 percentage points more turnout.
               </p>
               <p className="text-[9px] text-muted-foreground/60 mt-2">Source: CLOSUP / WWU Electoral Competitiveness Study</p>
             </CardContent>

@@ -114,7 +114,7 @@ export default function ResourceGapAnalysis({ region, regionResources, allResour
                 />
                 {item.isUnderserved && (
                   <p className="text-[10px] text-destructive font-medium">
-                    ⚠ {Math.abs(item.gap)}% below statewide average — potential service gap
+                    ⚠ {Math.abs(item.gap)}% below statewide average - potential service gap
                   </p>
                 )}
                 {item.isStrong && (

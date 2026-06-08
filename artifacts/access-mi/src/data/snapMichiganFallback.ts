@@ -10,7 +10,7 @@
 // Retailer counts: USDA SNAP Retailer Locator, December 2025
 //   Source: USDA SNAP Authorized Retailer Store Data
 //   URL: https://www.fns.usda.gov/snap/retailer-locator/data
-//   County-level retailer counts not available pending CSV parse — marked null.
+//   County-level retailer counts not available pending CSV parse - marked null.
 //   Statewide total (9,200+) is from V3_SOURCE_AUDIT.md.
 // MDHHS Green Book extractor (specced in V3_DESIGN.md) would reduce county lag to ~6 weeks.
 // Do not add fabricated estimates. Missing data is null.
@@ -44,18 +44,18 @@ const RETAILER_SOURCE_URL =
   "https://www.fns.usda.gov/snap/retailer-locator/data";
 
 export const SNAP_STATE_FALLBACK: SnapStateData = {
-  // Michigan statewide monthly enrollment — USDA FNS state tables, January 2026
+  // Michigan statewide monthly enrollment - USDA FNS state tables, January 2026
   stateTotal: 1_370_000,
   stateAsOf: "January 2026",
   stateSourceUrl: FNS_SOURCE_URL,
   // Monthly issuance: Michigan FY2025 monthly average benefit issuance
-  // USDA FNS state issuance tables — most current available
+  // USDA FNS state issuance tables - most current available
   benefitIssuanceMonthly: 280_000_000,
   benefitAsOf: "January 2026",
   benefitSourceUrl: FNS_SOURCE_URL,
 };
 
-// All 83 Michigan counties — USDA FNS FY2022 average monthly participation
+// All 83 Michigan counties - USDA FNS FY2022 average monthly participation
 // Sorted alphabetically. Retailer counts pending USDA CSV parse (set null).
 export const SNAP_COUNTY_FALLBACK: SnapCountyData[] = [
   { county: "Alcona",         fips: "26001", enrollmentTotal:  1_617, enrollmentHouseholds:   766, enrollmentAsOf: "FY2022", sourceName: FNS_SOURCE_NAME, sourceUrl: FNS_SOURCE_URL, retailerCount: null, retailerAsOf: "December 2025", retailerSourceUrl: RETAILER_SOURCE_URL },

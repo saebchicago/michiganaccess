@@ -96,7 +96,7 @@ const DOWNLOADS: { section: string; items: DownloadItem[] }[] = [
 
 export default function DownloadCenterPage() {
   usePageMeta({
-    title: "Download Center — Access Michigan",
+    title: "Download Center - Access Michigan",
     description:
       "Download community briefs, county comparisons, health maps, and raw data exports across all 83 Michigan counties.",
     path: "/downloads",

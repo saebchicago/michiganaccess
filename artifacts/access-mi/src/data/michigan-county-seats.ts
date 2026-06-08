@@ -110,7 +110,7 @@ export function resolveLocation(input: string): { postal_code?: string; city?: s
     return { city: COUNTY_SEATS[countyMatch] };
   }
 
-  // City name match — check MICHIGAN_CITIES first (includes suburbs)
+  // City name match - check MICHIGAN_CITIES first (includes suburbs)
   const cityLower = trimmed.toLowerCase();
   const cityMatch = MICHIGAN_CITIES.find(
     (c) => c.city.toLowerCase() === cityLower

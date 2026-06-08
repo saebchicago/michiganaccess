@@ -1,5 +1,5 @@
 /**
- * Live Air Quality Card — fetches real-time AQI data from the airnow-proxy edge function.
+ * Live Air Quality Card - fetches real-time AQI data from the airnow-proxy edge function.
  * Shows localized AQI for the nearest station to the user's place, with health alert banner when AQI > 100.
  */
 import { useMemo } from "react";
@@ -96,7 +96,7 @@ export default function LiveEnvironmentalCard({ zipCode, city, county }: Props) 
             <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
             <div className="space-y-2">
               <h3 className="font-bold text-red-800 dark:text-red-300 text-sm">
-                Community Health Alert — Air Quality {aqiInfo.label}
+                Community Health Alert - Air Quality {aqiInfo.label}
               </h3>
               <p className="text-xs text-red-700 dark:text-red-400">
                 Current AQI is {maxAQI}, which is {aqiInfo.label.toLowerCase()}. MDHHS recommends the following precautions:
@@ -104,7 +104,7 @@ export default function LiveEnvironmentalCard({ zipCode, city, county }: Props) 
               <Accordion type="single" collapsible>
                 <AccordionItem value="precautions" className="border-red-200 dark:border-red-800">
                   <AccordionTrigger className="text-xs font-semibold text-red-800 dark:text-red-300 py-2">
-                    <Heart className="h-3.5 w-3.5 mr-1.5" /> Protect Your Lungs — Precautions for Sensitive Groups
+                    <Heart className="h-3.5 w-3.5 mr-1.5" /> Protect Your Lungs - Precautions for Sensitive Groups
                   </AccordionTrigger>
                   <AccordionContent>
                     <ul className="space-y-1.5">
@@ -136,7 +136,7 @@ export default function LiveEnvironmentalCard({ zipCode, city, county }: Props) 
             <Wind className="h-4 w-4 text-primary" />
             Live Air Quality
             <Badge variant="outline" className={`text-[10px] ml-auto ${aqiInfo.color} ${aqiInfo.textColor} border-0`}>
-              AQI {maxAQI} — {aqiInfo.label}
+              AQI {maxAQI} - {aqiInfo.label}
             </Badge>
           </CardTitle>
           <CardDescription className="text-xs">

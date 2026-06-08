@@ -12,7 +12,7 @@ export interface LobbyingIndustrySummary {
   source: string;
 }
 
-// Illustrative aggregate — download full data at mitn.michigan.gov
+// Illustrative aggregate - download full data at mitn.michigan.gov
 export const MICHIGAN_LOBBYING_BY_INDUSTRY: LobbyingIndustrySummary[] = [
   { industry: "Healthcare & Pharmaceuticals", totalRegisteredLobbyists: 312, totalExpenditures: 24800000, topClients: ["Michigan Health & Hospital Association", "Blue Cross Blue Shield of Michigan", "Michigan State Medical Society"], policyFocusAreas: ["Medicaid reimbursement rates", "Certificate of Need regulations", "Mental health parity"], source: "Michigan MiTN 2024 \u2014 Illustrative aggregate" },
   { industry: "Energy & Utilities", totalRegisteredLobbyists: 178, totalExpenditures: 18400000, topClients: ["Consumers Energy", "DTE Energy", "Michigan Energy Innovation Business Council"], policyFocusAreas: ["Utility rate cases (MPSC)", "Renewable energy standards", "Nuclear energy policy"], source: "Michigan MiTN 2024 \u2014 Illustrative aggregate" },

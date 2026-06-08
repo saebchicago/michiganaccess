@@ -127,7 +127,7 @@ export default function LifeEventNavigator() {
             Start here
           </Badge>
           <h2 className="text-2xl font-bold tracking-tight text-foreground">What's happening in your life?</h2>
-          <p className="text-sm text-muted-foreground mt-1">Pick a situation — we'll show you what's available.</p>
+          <p className="text-sm text-muted-foreground mt-1">Pick a situation - we'll show you what's available.</p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">

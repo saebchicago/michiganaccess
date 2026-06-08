@@ -1,5 +1,5 @@
 /**
- * FEMA National Flood Insurance Program (NFIP) — 12 Michigan counties.
+ * FEMA National Flood Insurance Program (NFIP) - 12 Michigan counties.
  * Source: fema.gov/openfema. Data from 1978-present.
  * Claims data includes all NFIP claims; policies are current in-force count.
  */

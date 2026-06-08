@@ -23,7 +23,7 @@ const SectionFallback = () => (
   </div>
 );
 
-/** Authoritative data catalog — curated list of public datasets referenced by Access Michigan */
+/** Authoritative data catalog - curated list of public datasets referenced by Access Michigan */
 interface CatalogEntry {
   name: string;
   domain: "Health" | "Social" | "Environment" | "Safety" | "Infrastructure" | "Civic";
@@ -35,9 +35,9 @@ interface CatalogEntry {
 
 const DATA_CATALOG: CatalogEntry[] = [
   { name: "CDC Social Vulnerability Index (SVI)", domain: "Health", geography: "Tract", frequency: "Every 4 years", sourceUrl: "https://www.atsdr.cdc.gov/placeandhealth/svi/", description: "Census tract-level vulnerability scores across socioeconomic, housing, and demographic dimensions." },
-  { name: "United For ALICE — Michigan", domain: "Social", geography: "County", frequency: "Annual", sourceUrl: "https://www.unitedforalice.org/county-reports/Michigan", description: "Asset-Limited, Income-Constrained, Employed household counts and thresholds by county." },
+  { name: "United For ALICE - Michigan", domain: "Social", geography: "County", frequency: "Annual", sourceUrl: "https://www.unitedforalice.org/county-reports/Michigan", description: "Asset-Limited, Income-Constrained, Employed household counts and thresholds by county." },
   { name: "MDHHS Health Equity Data", domain: "Health", geography: "County", frequency: "Annual", sourceUrl: "https://www.michigan.gov/mdhhs/inside-mdhhs/legislationpolicy/2022-2024-social-determinants-of-health-strategy", description: "State social determinants of health strategy, hubs, and equity indicators." },
-  { name: "Michigan 2-1-1", domain: "Social", geography: "County", frequency: "Ongoing", sourceUrl: "https://mi211.org", description: "Community resource referral database — food, housing, utilities, transportation." },
+  { name: "Michigan 2-1-1", domain: "Social", geography: "County", frequency: "Ongoing", sourceUrl: "https://mi211.org", description: "Community resource referral database - food, housing, utilities, transportation." },
   { name: "CMS Provider Data Catalog", domain: "Health", geography: "Facility", frequency: "Monthly", sourceUrl: "https://data.cms.gov/provider-data", description: "Hospital quality, provider enrollment, Medicare utilization, and Open Payments data." },
   { name: "HHS Medicaid Provider Spending", domain: "Health", geography: "State", frequency: "Annual", sourceUrl: "https://opendata.hhs.gov/datasets/medicaid-provider-spending/", description: "State-level Medicaid provider spending and utilization patterns." },
   { name: "EPA AirNow", domain: "Environment", geography: "County", frequency: "Hourly", sourceUrl: "https://www.airnow.gov/", description: "Real-time air quality index (AQI) readings from monitoring stations." },
@@ -101,7 +101,7 @@ function DatasetDetail({ datasetId }: { datasetId: string }) {
               {data.slice(0, 10).map((row, i) => (
                 <tr key={i} className="border-t border-border/50">
                   {Object.keys(data[0]).slice(0, 6).map((key) => (
-                    <td key={key} className="px-3 py-2 text-foreground">{String(row[key] ?? "—").slice(0, 80)}</td>
+                    <td key={key} className="px-3 py-2 text-foreground">{String(row[key] ?? "-").slice(0, 80)}</td>
                   ))}
                 </tr>
               ))}
@@ -113,7 +113,7 @@ function DatasetDetail({ datasetId }: { datasetId: string }) {
         <p className="text-sm text-muted-foreground">No records returned. This dataset may require specific query parameters.</p>
       )}
       <DataProvenance
-        source={`${dataset.provider} — ${dataset.name}`}
+        source={`${dataset.provider} - ${dataset.name}`}
         updated={lastUpdated?.toLocaleDateString() ?? "Pending"}
         methodologyHref="/data-validation"
       />
@@ -129,7 +129,7 @@ const CivicDataHubPage = () => {
   const [sortAsc, setSortAsc] = useState(true);
 
   usePageMeta({
-    title: "Civic Data Hub — Michigan Data Catalog",
+    title: "Civic Data Hub - Michigan Data Catalog",
     description: "Browse Michigan's authoritative public datasets: health, social, environment, safety, and infrastructure. Direct links to official sources.",
     path: "/civic-data-hub",
   });
@@ -180,7 +180,7 @@ const CivicDataHubPage = () => {
             Michigan Civic Data Hub
           </h1>
           <p className="text-muted-foreground">
-            Browse public datasets powering civic transparency across Michigan — from health and housing to environment, safety, and infrastructure.
+            Browse public datasets powering civic transparency across Michigan - from health and housing to environment, safety, and infrastructure.
           </p>
         </div>
       </section>
@@ -201,7 +201,7 @@ const CivicDataHubPage = () => {
             <div>
               <h2 className="text-xl font-bold text-foreground">Authoritative Data Sources</h2>
               <p className="text-sm text-muted-foreground mt-1">
-                {DATA_CATALOG.length} public datasets referenced by Access Michigan — each with a direct link to the official source.
+                {DATA_CATALOG.length} public datasets referenced by Access Michigan - each with a direct link to the official source.
               </p>
             </div>
             <div className="relative w-full sm:w-64">
@@ -259,7 +259,7 @@ const CivicDataHubPage = () => {
             <CardContent className="py-6 space-y-3">
               <h2 className="text-lg font-bold text-foreground">How to Use This for Analysis</h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                The datasets listed above are the same sources used by CHNA teams, health system planners, journalists, and civic researchers across Michigan. Each links directly to the authoritative source — we do not host or mirror these datasets. To use them in your work: <strong>1)</strong> Click "Source" to visit the official portal. <strong>2)</strong> Download the data in the format you need (CSV, shapefile, API). <strong>3)</strong> Cross-reference with Access Michigan's county briefs and comparison tools for context. <strong>4)</strong> Cite both the original source and Access Michigan when publishing.
+                The datasets listed above are the same sources used by CHNA teams, health system planners, journalists, and civic researchers across Michigan. Each links directly to the authoritative source - we do not host or mirror these datasets. To use them in your work: <strong>1)</strong> Click "Source" to visit the official portal. <strong>2)</strong> Download the data in the format you need (CSV, shapefile, API). <strong>3)</strong> Cross-reference with Access Michigan's county briefs and comparison tools for context. <strong>4)</strong> Cite both the original source and Access Michigan when publishing.
               </p>
               <p className="text-xs text-muted-foreground/70">
                 Questions about data methodology or availability? <a href="/contact" className="text-primary hover:underline">Contact us</a> or see the <a href="/methodology" className="text-primary hover:underline">full methodology</a>.
@@ -322,7 +322,7 @@ const CivicDataHubPage = () => {
           <h2 className="text-xl font-bold text-foreground mb-4">Data Transparency</h2>
           <DataProvenance
             source="ArcGIS REST Services (State of Michigan GIS), City of Detroit Open Data (Socrata SODA API)"
-            updated="Live — cached 10 min"
+            updated="Live - cached 10 min"
             methodologyHref="/data-validation"
           />
         </section>

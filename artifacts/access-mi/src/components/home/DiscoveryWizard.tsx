@@ -35,7 +35,7 @@ const PROGRAMS: Program[] = [
   { name: "SNAP (Bridge Card)", description: "Monthly food assistance on a Bridge Card for groceries.", eligibility: "130", link: "/financial-help", category: "food", situations: ["food", "bills"], urgency: 5 },
   { name: "WIC", description: "Nutrition for pregnant women, new mothers, and children under 5.", eligibility: "185", link: "/financial-help", category: "food", situations: ["food"], urgency: 4 },
   { name: "LIHEAP (Heating Assistance)", description: "Help paying home heating bills during cold months.", eligibility: "150", link: "/financial-help", category: "energy", situations: ["energy", "bills"], urgency: 5 },
-  { name: "Consumers Energy — Helping Neighbors", description: "Free home energy upgrades for income-qualified customers.", eligibility: "200", link: "/environment", category: "energy", situations: ["energy"], urgency: 3 },
+  { name: "Consumers Energy - Helping Neighbors", description: "Free home energy upgrades for income-qualified customers.", eligibility: "200", link: "/environment", category: "energy", situations: ["energy"], urgency: 3 },
   { name: "MiHER HOMES Rebate", description: "Up to $8,000 for whole-home energy efficiency improvements.", eligibility: "150", link: "/environment", category: "energy", situations: ["energy"], urgency: 3 },
   { name: "MiHER HEAR Rebate", description: "Point-of-sale rebates up to $14,000 for heat pumps.", eligibility: "150", link: "/environment", category: "energy", situations: ["energy"], urgency: 3 },
   { name: "MSHDA Housing Assistance", description: "Rental assistance, homebuyer programs, and foreclosure prevention.", eligibility: "200", link: "/resources", category: "housing", situations: ["housing", "bills"], urgency: 5 },
@@ -48,7 +48,7 @@ const FPL_BASE = 15060;
 const FPL_PER = 5380;
 const getFPL = (size: number) => FPL_BASE + FPL_PER * (size - 1);
 
-// Situation IDs — labels resolved via i18n at render time
+// Situation IDs - labels resolved via i18n at render time
 const SITUATION_IDS = [
   { id: "healthcare", icon: HeartPulse, color: "border-emerald-500/40 bg-emerald-500/10" },
   { id: "bills",      icon: DollarSign, color: "border-amber-500/40 bg-amber-500/10" },
@@ -126,19 +126,19 @@ export default function DiscoveryWizard({ open, onOpenChange }: DiscoveryWizardP
       localStorage.setItem("mi-wizard-results", JSON.stringify({ situation, hhSize, income, county: selectedCounty, results: results.map((r) => r.name), savedAt: new Date().toISOString() }));
       setSaved(true);
     } catch {
-      toast.error("Could not save results — your browser storage may be full.");
+      toast.error("Could not save results - your browser storage may be full.");
     }
   };
 
   const handleShare = async () => {
-    // Only include non-sensitive fields (situation + county) in the share URL — no income or household size
+    // Only include non-sensitive fields (situation + county) in the share URL - no income or household size
     const params = new URLSearchParams({ s: situation ?? "", c: selectedCounty });
     const url = `${window.location.origin}/?wizard=${params.toString()}`;
     try {
       await navigator.clipboard.writeText(url);
       toast.success("Link copied to clipboard!");
     } catch {
-      toast.error("Could not copy link — please copy the URL from your browser's address bar.");
+      toast.error("Could not copy link - please copy the URL from your browser's address bar.");
     }
   };
 

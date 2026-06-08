@@ -40,9 +40,9 @@ const lifeStages = [
     id: "children", label: "Children (0–12)", icon: Baby,
     topics: [
       { title: "Childhood Vaccinations", desc: "CDC-recommended schedule for immunizations from birth through age 12.", source: "CDC" },
-      { title: "Growth & Development Milestones", desc: "What to expect at each age — motor skills, speech, social development.", source: "AAP" },
-      { title: "Common Childhood Illnesses", desc: "Ear infections, strep throat, RSV, croup — when to call the doctor.", source: "Michigan DHHS" },
-      { title: "Nutrition & Healthy Eating", desc: "Building healthy habits early — portion sizes, picky eating, food allergies.", source: "USDA" },
+      { title: "Growth & Development Milestones", desc: "What to expect at each age - motor skills, speech, social development.", source: "AAP" },
+      { title: "Common Childhood Illnesses", desc: "Ear infections, strep throat, RSV, croup - when to call the doctor.", source: "Michigan DHHS" },
+      { title: "Nutrition & Healthy Eating", desc: "Building healthy habits early - portion sizes, picky eating, food allergies.", source: "USDA" },
       { title: "Lead Exposure Prevention", desc: "Michigan-specific guidance on testing, risk factors, and safe homes.", source: "Michigan DHHS" },
     ]
   },
@@ -50,7 +50,7 @@ const lifeStages = [
     id: "teens", label: "Teens (13–17)", icon: GraduationCap,
     topics: [
       { title: "Mental Health & Stress", desc: "Recognizing anxiety, depression, and building coping skills during adolescence.", source: "NIMH" },
-      { title: "Substance Use Prevention", desc: "Vaping, alcohol, cannabis — facts teens need. Michigan-specific resources.", source: "SAMHSA" },
+      { title: "Substance Use Prevention", desc: "Vaping, alcohol, cannabis - facts teens need. Michigan-specific resources.", source: "SAMHSA" },
       { title: "Sports Physicals & Injury Prevention", desc: "Pre-participation exams, concussion awareness, and safe training.", source: "AAP" },
       { title: "Sexual Health Education", desc: "Age-appropriate, medically accurate information on puberty and reproductive health.", source: "CDC" },
     ]
@@ -58,8 +58,8 @@ const lifeStages = [
   {
     id: "adults", label: "Adults (18–64)", icon: Users,
     topics: [
-      { title: "Preventive Screenings by Age", desc: "Blood pressure, cholesterol, cancer screenings — what's recommended and when.", source: "USPSTF" },
-      { title: "Managing Chronic Conditions", desc: "Diabetes, hypertension, heart disease — self-management and when to get help.", source: "CDC" },
+      { title: "Preventive Screenings by Age", desc: "Blood pressure, cholesterol, cancer screenings - what's recommended and when.", source: "USPSTF" },
+      { title: "Managing Chronic Conditions", desc: "Diabetes, hypertension, heart disease - self-management and when to get help.", source: "CDC" },
       { title: "Workplace Health & Ergonomics", desc: "Preventing repetitive strain, managing stress, and staying active at work.", source: "OSHA" },
       { title: "Reproductive & Maternal Health", desc: "Preconception care, prenatal resources, and postpartum support in Michigan.", source: "ACOG" },
       { title: "Understanding Health Insurance", desc: "Navigating plans, deductibles, copays, and Michigan marketplace options.", source: "CMS" },
@@ -68,7 +68,7 @@ const lifeStages = [
   {
     id: "seniors", label: "Seniors (65+)", icon: Heart,
     topics: [
-      { title: "Fall Prevention", desc: "Home safety, balance exercises, medication review — Michigan falls are a leading cause of injury.", source: "CDC" },
+      { title: "Fall Prevention", desc: "Home safety, balance exercises, medication review - Michigan falls are a leading cause of injury.", source: "CDC" },
       { title: "Medicare & Medicaid Basics", desc: "Parts A, B, C, D explained in plain language. Michigan-specific enrollment help.", source: "CMS" },
       { title: "Alzheimer's & Dementia", desc: "Warning signs, caregiver resources, Michigan Area Agency on Aging support.", source: "Alzheimer's Assoc." },
       { title: "Medication Management", desc: "Avoiding dangerous interactions, organizing prescriptions, pharmacist consultations.", source: "FDA" },
@@ -80,17 +80,17 @@ const lifeStages = [
 /* ───── Clinical jargon decoder ───── */
 const jargonTerms = [
   { term: "Benign", plain: "Not cancer. The growth or condition is not harmful or spreading.", example: "\"The biopsy showed a benign cyst\" means it's not cancerous." },
-  { term: "Prognosis", plain: "The expected outcome of your condition — how it's likely to progress.", example: "\"Your prognosis is good\" means your doctor expects a positive outcome." },
+  { term: "Prognosis", plain: "The expected outcome of your condition - how it's likely to progress.", example: "\"Your prognosis is good\" means your doctor expects a positive outcome." },
   { term: "Comorbidity", plain: "Having two or more health conditions at the same time.", example: "Diabetes and high blood pressure together are comorbidities." },
   { term: "Contraindicated", plain: "A treatment or medication that should NOT be used because it could be harmful.", example: "\"This drug is contraindicated with your current medication\" means don't take both." },
   { term: "Palliative", plain: "Care focused on comfort and quality of life, not curing the disease.", example: "Palliative care can be given alongside curative treatment." },
   { term: "Acute vs. Chronic", plain: "Acute = sudden and short-term. Chronic = long-lasting (3+ months).", example: "A cold is acute; diabetes is chronic." },
   { term: "CBC (Complete Blood Count)", plain: "A common blood test that measures red cells, white cells, and platelets.", example: "Your doctor orders a CBC to check for infection or anemia." },
-  { term: "NPO", plain: "Nothing by mouth — you should not eat or drink, usually before a procedure.", example: "\"NPO after midnight\" means stop eating and drinking at midnight before surgery." },
-  { term: "PRN", plain: "As needed — take the medication only when you need it, not on a set schedule.", example: "\"Take ibuprofen PRN for pain\" means only when you're hurting." },
+  { term: "NPO", plain: "Nothing by mouth - you should not eat or drink, usually before a procedure.", example: "\"NPO after midnight\" means stop eating and drinking at midnight before surgery." },
+  { term: "PRN", plain: "As needed - take the medication only when you need it, not on a set schedule.", example: "\"Take ibuprofen PRN for pain\" means only when you're hurting." },
   { term: "Referral", plain: "When your doctor sends you to see a specialist for more focused care.", example: "A referral to a cardiologist means you'll see a heart doctor." },
   { term: "Formulary", plain: "The list of medications your insurance plan covers.", example: "Check if your drug is on the formulary to know your copay." },
-  { term: "Prior Authorization", plain: "Insurance company approval required before certain treatments or medications.", example: "Your MRI needs prior authorization — your doctor's office handles this." },
+  { term: "Prior Authorization", plain: "Insurance company approval required before certain treatments or medications.", example: "Your MRI needs prior authorization - your doctor's office handles this." },
 ];
 
 /* ───── Doctor visit prep ───── */
@@ -99,7 +99,7 @@ const visitPrepTips = [
   { title: "List All Medications", desc: "Include prescriptions, over-the-counter drugs, vitamins, and supplements with doses." },
   { title: "Prepare Your Questions", desc: "Write 3–5 questions. Start with the most important one in case time runs short." },
   { title: "Bring a Support Person", desc: "A friend or family member can help you remember information and ask questions." },
-  { title: "Know Your Family History", desc: "List conditions that run in your family — heart disease, cancer, diabetes, etc." },
+  { title: "Know Your Family History", desc: "List conditions that run in your family - heart disease, cancer, diabetes, etc." },
   { title: "Ask About Next Steps", desc: "Before leaving, confirm: What should I do next? When should I follow up? What symptoms to watch for?" },
 ];
 
@@ -124,7 +124,7 @@ export default function LearnPage() {
     path: "/learn",
     jsonLd: {
       "@type": "MedicalWebPage",
-      name: "Health Education Library — Access Michigan",
+      name: "Health Education Library - Access Michigan",
       about: { "@type": "MedicalCondition", name: "General health education" },
     },
   });
@@ -148,7 +148,7 @@ export default function LearnPage() {
             Understand Your Health
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Plain-language health education, a symptom body map, clinical jargon decoder, and tools to prepare for your next doctor visit — all sourced from trusted agencies.
+            Plain-language health education, a symptom body map, clinical jargon decoder, and tools to prepare for your next doctor visit - all sourced from trusted agencies.
           </motion.p>
         </div>
       </section>
@@ -165,7 +165,7 @@ export default function LearnPage() {
 
           {/* ───── BODY MAP TAB ───── */}
           <TabsContent value="body-map" className="space-y-6 mt-6">
-            <p className="text-sm text-muted-foreground">Select a body region to explore common symptoms and related conditions. <strong>This is not a diagnosis tool</strong> — always consult a healthcare provider.</p>
+            <p className="text-sm text-muted-foreground">Select a body region to explore common symptoms and related conditions. <strong>This is not a diagnosis tool</strong> - always consult a healthcare provider.</p>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {bodyRegions.map((region, i) => {
                 const Icon = region.icon;
@@ -233,7 +233,7 @@ export default function LearnPage() {
 
           {/* ───── LIFE STAGE TAB ───── */}
           <TabsContent value="life-stage" className="space-y-6 mt-6">
-            <p className="text-sm text-muted-foreground">Health topics organized by age group — written at an 8th-grade reading level with Michigan-specific resources when available.</p>
+            <p className="text-sm text-muted-foreground">Health topics organized by age group - written at an 8th-grade reading level with Michigan-specific resources when available.</p>
             <Accordion type="single" collapsible className="space-y-2">
               {lifeStages.map((stage) => {
                 const StageIcon = stage.icon;

@@ -32,6 +32,6 @@ export function useMunicipalities(county?: string) {
       return data as Municipality[];
     },
     enabled: !!county,
-    staleTime: 24 * 60 * 60 * 1000, // 24h — municipality data rarely changes
+    staleTime: 24 * 60 * 60 * 1000, // 24h - municipality data rarely changes
   });
 }

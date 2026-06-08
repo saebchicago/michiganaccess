@@ -68,7 +68,7 @@ const App = () => (
                       }
                     />
                   ))}
-                  {/* Semantic aliases — redirect common URL guesses */}
+                  {/* Semantic aliases - redirect common URL guesses */}
                   <Route
                     path="/health-equity"
                     element={<Navigate to="/equity" replace />}
@@ -101,7 +101,7 @@ const App = () => (
                     path="/representatives"
                     element={<Navigate to="/civic-data" replace />}
                   />
-                  {/* Life-event scenario aliases — partner-shareable URLs */}
+                  {/* Life-event scenario aliases - partner-shareable URLs */}
                   <Route
                     path="/life-events"
                     element={<Navigate to="/life-navigator" replace />}

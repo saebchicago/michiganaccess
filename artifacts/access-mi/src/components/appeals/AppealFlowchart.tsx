@@ -120,7 +120,7 @@ const AppealFlowchart = () => {
         </h2>
         <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
           Insurance denials are not final. Follow this proven 3-step
-          process—based on 2025 Michigan DIFS data—to fight back.
+          process-based on 2025 Michigan DIFS data-to fight back.
         </p>
       </div>
 

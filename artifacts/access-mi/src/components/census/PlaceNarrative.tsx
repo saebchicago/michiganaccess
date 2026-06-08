@@ -1,5 +1,5 @@
 /**
- * PlaceNarrative — AI-generated Census Reporter-style narrative for a place.
+ * PlaceNarrative - AI-generated Census Reporter-style narrative for a place.
  * Uses live ACS data + Lovable AI to create contextual paragraphs.
  */
 import { useState, useEffect, useMemo } from "react";

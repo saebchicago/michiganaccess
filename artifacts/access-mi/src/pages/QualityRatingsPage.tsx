@@ -119,7 +119,7 @@ export default function QualityRatingsPage() {
     path: "/quality",
     jsonLd: {
       "@type": "WebPage",
-      name: "Quality Ratings — Access Michigan",
+      name: "Quality Ratings - Access Michigan",
       description:
         "Hospital quality scores, Leapfrog grades, and accreditation for Michigan facilities.",
       url: "https://accessmi.org/quality",
@@ -276,7 +276,7 @@ export default function QualityRatingsPage() {
       </section>
 
       <div className="container max-w-6xl py-10 space-y-10">
-        {/* Data vintage banner — visible alongside the headline counts so
+        {/* Data vintage banner - visible alongside the headline counts so
          *  readers don't have to scroll to the footer to learn how current
          *  the underlying CMS / Leapfrog / HCAHPS pulls are. */}
         <div className="rounded-md border border-border bg-muted/40 px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
@@ -441,7 +441,7 @@ export default function QualityRatingsPage() {
                             );
                           })()}
                           <span className="text-sm font-bold text-foreground">
-                            {h.quality_score || "—"}
+                            {h.quality_score || "-"}
                           </span>
                         </div>
                       </CardContent>
@@ -664,13 +664,13 @@ export default function QualityRatingsPage() {
               },
               {
                 title: "HCAHPS Patient Experience",
-                desc: "Standardized patient experience survey — overall rating, recommendation %, communication scores.",
+                desc: "Standardized patient experience survey - overall rating, recommendation %, communication scores.",
                 url: "https://hcahpsonline.org/",
                 icon: Users,
               },
               {
                 title: "ANCC Magnet Recognition",
-                desc: "Gold standard for nursing excellence — superior nursing processes and patient outcomes.",
+                desc: "Gold standard for nursing excellence - superior nursing processes and patient outcomes.",
                 url: "https://www.nursingworld.org/organizational-programs/magnet/",
                 icon: Award,
               },

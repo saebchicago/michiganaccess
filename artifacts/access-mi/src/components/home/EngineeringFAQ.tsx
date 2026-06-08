@@ -24,7 +24,7 @@ const faqItems = [
     question:
       "How does this platform divert low-acuity cases from the ED to Urgent Care?",
     answer:
-      "The platform applies a multi-signal triage logic: when users search for care, the system surfaces urgent care, retail clinics, and telehealth options above emergency departments for non-emergent conditions. Filtering algorithms prioritize facilities by wait time estimates, walk-in availability, and service match — reducing unnecessary ED utilization by routing low-acuity demand to appropriate points of care. This mirrors industrial throughput optimization by matching demand type to the correct service tier.",
+      "The platform applies a multi-signal triage logic: when users search for care, the system surfaces urgent care, retail clinics, and telehealth options above emergency departments for non-emergent conditions. Filtering algorithms prioritize facilities by wait time estimates, walk-in availability, and service match - reducing unnecessary ED utilization by routing low-acuity demand to appropriate points of care. This mirrors industrial throughput optimization by matching demand type to the correct service tier.",
   },
   {
     id: "integrity",
@@ -33,14 +33,14 @@ const faqItems = [
     question:
       "How do you validate sources from CMS and MDHHS to prevent 'resource decay'?",
     answer:
-      "Every data source is ingested through Edge Function proxies with a 1-hour cache TTL. Each record carries a freshness indicator showing the last-verified date. Cross-source validation compares CMS Hospital Compare records against HRSA UDS data and Michigan DHHS facility registries. Stale records (>90 days without verification) are flagged with degraded confidence scores. Automated reconciliation jobs detect closures, address changes, and service modifications — preventing the 'resource decay' that plagues static directories.",
+      "Every data source is ingested through Edge Function proxies with a 1-hour cache TTL. Each record carries a freshness indicator showing the last-verified date. Cross-source validation compares CMS Hospital Compare records against HRSA UDS data and Michigan DHHS facility registries. Stale records (>90 days without verification) are flagged with degraded confidence scores. Automated reconciliation jobs detect closures, address changes, and service modifications - preventing the 'resource decay' that plagues static directories.",
   },
   {
     id: "leakage",
     icon: GitBranch,
     category: "Leakage Reduction",
     question: "How does centralizing SDOH resources reduce network leakage?",
-    answer: `Network leakage occurs when patients exit a coordinated care ecosystem due to unmet social needs — housing instability, food insecurity, or transportation barriers. By integrating ${RESOURCE_COUNT_DISPLAY} community resources (food banks, housing assistance, transit programs) into a single search interface alongside clinical providers, the platform keeps patients connected to wraparound services within their geographic network. This reduces out-of-network referrals and supports care continuity, directly aligning with managed care leakage reduction strategies.`,
+    answer: `Network leakage occurs when patients exit a coordinated care ecosystem due to unmet social needs - housing instability, food insecurity, or transportation barriers. By integrating ${RESOURCE_COUNT_DISPLAY} community resources (food banks, housing assistance, transit programs) into a single search interface alongside clinical providers, the platform keeps patients connected to wraparound services within their geographic network. This reduces out-of-network referrals and supports care continuity, directly aligning with managed care leakage reduction strategies.`,
   },
   {
     id: "vbc",
@@ -49,7 +49,7 @@ const faqItems = [
     question:
       "How does bridging gaps in housing and food security support long-term outcomes?",
     answer:
-      "Social determinants account for 40–60% of health outcomes. Trinity Health screened 1M+ outpatients and found 27.4% reported at least one unmet social need; their 162 CHWs addressed 16,300+ social needs. Trinity Health system-reported a ~16% reduction in preventable hospitalizations among dually-enrolled patients (July 2021–July 2024; source: Trinity Health/FindHelp case study 2025, not independently verified). The platform's SDOH integration surfaces housing stability programs, SNAP enrollment, utility assistance, and employment services alongside clinical care — creating a unified access layer for the non-clinical factors that drive readmissions, chronic disease progression, and ED overutilization. For value-based contracts, this supports total cost of care reduction by addressing root causes rather than downstream symptoms. The system tracks resource availability across all 83 counties to ensure equitable SDOH coverage.",
+      "Social determinants account for 40–60% of health outcomes. Trinity Health screened 1M+ outpatients and found 27.4% reported at least one unmet social need; their 162 CHWs addressed 16,300+ social needs. Trinity Health system-reported a ~16% reduction in preventable hospitalizations among dually-enrolled patients (July 2021–July 2024; source: Trinity Health/FindHelp case study 2025, not independently verified). The platform's SDOH integration surfaces housing stability programs, SNAP enrollment, utility assistance, and employment services alongside clinical care - creating a unified access layer for the non-clinical factors that drive readmissions, chronic disease progression, and ED overutilization. For value-based contracts, this supports total cost of care reduction by addressing root causes rather than downstream symptoms. The system tracks resource availability across all 83 counties to ensure equitable SDOH coverage.",
   },
 ];
 

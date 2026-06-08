@@ -73,7 +73,7 @@ const fadeUp = {
 const PROGRAMS = [
   {
     id: "medicaid",
-    title: "Medicaid — Healthy Michigan Plan",
+    title: "Medicaid - Healthy Michigan Plan",
     icon: ShieldCheck,
     color:
       "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300",
@@ -150,7 +150,7 @@ const PROGRAMS = [
     icon: Building2,
     color:
       "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
-    who: "Everyone — insured or uninsured. Fees are based on a sliding scale tied to household income.",
+    who: "Everyone - insured or uninsured. Fees are based on a sliding scale tied to household income.",
     covers:
       "Primary care, dental, behavioral health, pharmacy, labs, prenatal care. Some centers offer vision and substance use treatment.",
     howToApply:
@@ -254,7 +254,7 @@ const EXPLAINER_CARDS = [
     paragraphs: [
       "Federally Qualified Health Centers (FQHCs) serve everyone regardless of insurance status or ability to pay. Fees are based on a sliding scale tied to your household income.",
       "Services typically include primary care, dental, behavioral health, pharmacy, labs, and prenatal care. Some centers also offer vision, substance use treatment, and transportation assistance.",
-      "Michigan has over 40 FQHC organizations with 300+ service sites. You can walk in or call — no referral needed. Bring proof of income for a fee reduction.",
+      "Michigan has over 40 FQHC organizations with 300+ service sites. You can walk in or call - no referral needed. Bring proof of income for a fee reduction.",
     ],
     updated: `${FRESHNESS_STAMP}. Always confirm details with HRSA or your local health center.`,
   },
@@ -264,13 +264,13 @@ export default function InsuranceCoveragePage() {
   const [activeTab, setActiveTab] = useState("overview");
 
   usePageMeta({
-    title: "Insurance & Coverage Guide — Michigan",
+    title: "Insurance & Coverage Guide - Michigan",
     description:
       "Understand Medicaid, Medicare, Marketplace, FQHC, and private insurance options in Michigan. County-level data and navigator for all 83 counties.",
     path: "/insurance-coverage",
     jsonLd: {
       "@type": "FAQPage",
-      name: "Insurance & Coverage Guide — Access Michigan",
+      name: "Insurance & Coverage Guide - Access Michigan",
       description:
         "Comprehensive guide to health insurance options for Michigan residents.",
     },
@@ -303,7 +303,7 @@ export default function InsuranceCoveragePage() {
               Michigan Insurance & Coverage Guide
             </h1>
             <p className="text-muted-foreground text-base md:text-lg leading-relaxed max-w-2xl">
-              Understand your options —{" "}
+              Understand your options -{" "}
               <JargonTip
                 term="Medicaid"
                 tip="Free or low-cost health coverage from the state for people with low income."
@@ -318,7 +318,7 @@ export default function InsuranceCoveragePage() {
                 term="Marketplace"
                 tip="Health insurance plans you can buy during Open Enrollment, often with financial help."
               />
-              , FQHCs, or private plans — explained in plain language with links
+              , FQHCs, or private plans - explained in plain language with links
               to official Michigan resources.
             </p>
             <p className="text-xs text-muted-foreground mt-3 flex items-center gap-1.5">
@@ -338,7 +338,7 @@ export default function InsuranceCoveragePage() {
           className="mb-10"
         >
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-            <HelpCircle className="h-5 w-5 text-primary" /> Start here — what's
+            <HelpCircle className="h-5 w-5 text-primary" /> Start here - what's
             your situation?
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -379,7 +379,7 @@ export default function InsuranceCoveragePage() {
             </TabsTrigger>
             {PROGRAMS.map((p) => (
               <TabsTrigger key={p.id} value={p.id} className="text-xs">
-                {p.title.split("—")[0].split("(")[0].trim()}
+                {p.title.split("-")[0].split("(")[0].trim()}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -641,7 +641,7 @@ export default function InsuranceCoveragePage() {
                         care plan such as{" "}
                         <JargonTip
                           term="BCBS Complete"
-                          tip="Blue Cross Complete of Michigan — a Medicaid managed care plan operated by BCBSM."
+                          tip="Blue Cross Complete of Michigan - a Medicaid managed care plan operated by BCBSM."
                         />
                         , Meridian, Molina, Priority Health, or UnitedHealthcare
                         Community Plan. Your plan manages your benefits, assigns
@@ -711,7 +711,7 @@ export default function InsuranceCoveragePage() {
                 <div className="rounded-md border border-border bg-muted/30 px-4 py-3 space-y-2">
                   <p className="text-[11px] text-muted-foreground flex items-center gap-1.5">
                     <ShieldCheck className="h-3.5 w-3.5" />
-                    For guidance only — this is an independent civic resource,
+                    For guidance only - this is an independent civic resource,
                     not affiliated with any insurer or government agency. Final
                     eligibility is determined by the program administrator.
                   </p>
@@ -719,7 +719,7 @@ export default function InsuranceCoveragePage() {
                     <Shield className="h-3.5 w-3.5" />
                     We do not see individual claims, member data, or eligibility
                     records. We explain coverage structure and connect you to
-                    official resources — we do not make eligibility
+                    official resources - we do not make eligibility
                     determinations.
                   </p>
                 </div>

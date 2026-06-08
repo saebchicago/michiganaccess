@@ -1,5 +1,5 @@
 /**
- * FRED data client — fetches CSV time series without API key.
+ * FRED data client - fetches CSV time series without API key.
  * Uses the direct graph download endpoint.
  */
 

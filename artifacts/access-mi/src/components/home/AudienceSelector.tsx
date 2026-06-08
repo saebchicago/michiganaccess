@@ -94,7 +94,7 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
           })}
         </div>
 
-        {/* Sub-persona tags — visible when Resident is selected */}
+        {/* Sub-persona tags - visible when Resident is selected */}
         {isResident && (
           <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2.5">
             <span className="text-[10px] text-muted-foreground mr-1">I'm also a:</span>

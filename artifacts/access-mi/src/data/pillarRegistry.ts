@@ -2,7 +2,7 @@
  * Pillar Dataset Registry
  *
  * Central registry of all datasets organized by civic intelligence pillar.
- * To add a dataset, add an entry below — no Lovable prompt needed.
+ * To add a dataset, add an entry below - no Lovable prompt needed.
  *
  * RULE: Every dataset must reference a REAL public data source.
  * If not yet ingested, set `status: "pending"` and the UI will show
@@ -37,7 +37,7 @@ export interface PillarDataset {
   refreshCadence: string;
   /** How we ingest this data */
   ingestionMethod: IngestionMethod;
-  /** Ingestion detail — table name, endpoint, etc. */
+  /** Ingestion detail - table name, endpoint, etc. */
   ingestionTarget: string;
   /** "live" = wired with real data; "pending" = registered but not yet ingested */
   status: DatasetStatus;
@@ -116,7 +116,7 @@ export const ENVIRONMENT_DATASETS: PillarDataset[] = [
     ingestionMethod: "arcgis-proxy",
     ingestionTarget: "pfas-sites",
     status: "live",
-    description: "EGLE PFAS Areas of Interest — active investigation and response sites across Michigan.",
+    description: "EGLE PFAS Areas of Interest - active investigation and response sites across Michigan.",
   },
   {
     id: "env-air-quality",

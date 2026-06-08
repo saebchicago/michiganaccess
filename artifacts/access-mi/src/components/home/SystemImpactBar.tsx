@@ -81,7 +81,7 @@ export default function SystemImpactBar() {
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="h-1.5 w-1.5 rounded-full bg-michigan-forest animate-pulse" />
             <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-              System Status — All Services Operational
+              System Status - All Services Operational
             </span>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">

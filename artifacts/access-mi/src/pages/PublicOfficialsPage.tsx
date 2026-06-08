@@ -61,8 +61,8 @@ function NonprofitSearchPanel() {
                   <td className="py-2 pr-4 font-medium max-w-[200px] truncate">{r.name}</td>
                   <td className="py-2 pr-4 text-muted-foreground">{r.city}</td>
                   <td className="py-2 pr-4 tabular-nums text-muted-foreground">{r.ein}</td>
-                  <td className="py-2 pr-4 tabular-nums">{r.revenue ? `$${(r.revenue / 1e6).toFixed(1)}M` : "—"}</td>
-                  <td className="py-2 tabular-nums">{r.assets ? `$${(r.assets / 1e6).toFixed(1)}M` : "—"}</td>
+                  <td className="py-2 pr-4 tabular-nums">{r.revenue ? `$${(r.revenue / 1e6).toFixed(1)}M` : "-"}</td>
+                  <td className="py-2 tabular-nums">{r.assets ? `$${(r.assets / 1e6).toFixed(1)}M` : "-"}</td>
                 </tr>
               ))}
             </tbody>
@@ -78,7 +78,7 @@ function NonprofitSearchPanel() {
 }
 
 export default function PublicOfficialsPage() {
-  usePageMeta({ title: "Public Officials & Workforce — Access Michigan", description: "Michigan Legislature, federal workforce data, state salary ranges, and nonprofit grant recipients.", path: "/transparency/officials" });
+  usePageMeta({ title: "Public Officials & Workforce - Access Michigan", description: "Michigan Legislature, federal workforce data, state salary ranges, and nonprofit grant recipients.", path: "/transparency/officials" });
 
   return (
     <Layout>
@@ -152,7 +152,7 @@ export default function PublicOfficialsPage() {
           </TabsContent>
 
           <TabsContent value="federal" className="mt-6 space-y-6">
-            <p className="text-xs text-muted-foreground">Aggregate data from OPM FedScope Employment Cube (public). No individual names — agency/county level only.</p>
+            <p className="text-xs text-muted-foreground">Aggregate data from OPM FedScope Employment Cube (public). No individual names - agency/county level only.</p>
             <div className="grid gap-3 sm:grid-cols-2">
               {FEDERAL_AGENCIES.map(a => (
                 <Card key={a.agency}>

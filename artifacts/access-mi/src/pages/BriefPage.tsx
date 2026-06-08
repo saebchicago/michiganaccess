@@ -76,10 +76,10 @@ function getVal(
   hh: { label: string; value: string }[] | undefined,
   search: string,
 ): string {
-  if (!hh) return "—";
+  if (!hh) return "-";
   return (
     hh.find((h) => h.label.toLowerCase().includes(search.toLowerCase()))
-      ?.value || "—"
+      ?.value || "-"
   );
 }
 
@@ -130,7 +130,7 @@ function buildUrgentSummary(
     );
   }
   lines.push(
-    `Utilities & Environment: Energy burden and outage data are key equity indicators — check the Value & Performance section on the county page for details.`,
+    `Utilities & Environment: Energy burden and outage data are key equity indicators - check the Value & Performance section on the county page for details.`,
   );
   return lines;
 }
@@ -210,10 +210,10 @@ export default function BriefPage() {
 
   usePageMeta({
     title: county
-      ? `${county} County Brief — Access Michigan`
-      : "County Brief — Access Michigan",
+      ? `${county} County Brief - Access Michigan`
+      : "County Brief - Access Michigan",
     description: county
-      ? `Civic snapshot for ${county} County, Michigan — key health, economic, and access metrics at a glance.`
+      ? `Civic snapshot for ${county} County, Michigan - key health, economic, and access metrics at a glance.`
       : "Generate a quick civic brief for any Michigan county.",
     path: "/brief",
   });
@@ -264,7 +264,7 @@ export default function BriefPage() {
             {county ? `${county} County Brief` : "Generate Your County Brief"}
           </h1>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            A quick civic snapshot — key health, economic, and access metrics at
+            A quick civic snapshot - key health, economic, and access metrics at
             a glance.
           </p>
         </div>
@@ -302,7 +302,7 @@ export default function BriefPage() {
             {/* Print-only header */}
             <div className="hidden print-header print:block text-center border-b border-border pb-3 mb-4">
               <p className="text-lg font-bold">
-                Access Michigan — {county} County Brief
+                Access Michigan - {county} County Brief
               </p>
               <p className="text-xs text-muted-foreground">
                 Generated {new Date().toLocaleDateString()} · Data as of March
@@ -340,13 +340,13 @@ export default function BriefPage() {
                     onClick={() => {
                       const profile = county ? COUNTY_PROFILES[county] : null;
                       const h = profile?.healthHighlights || [];
-                      const pop = profile?.population?.toLocaleString() || "—";
-                      const uninsured = h[0]?.value || "—";
-                      const food = h[2]?.value || "—";
+                      const pop = profile?.population?.toLocaleString() || "-";
+                      const uninsured = h[0]?.value || "-";
+                      const food = h[2]?.value || "-";
                       const w = window.open("", "_blank");
                       if (!w) return;
                       w.document.write(
-                        `<html><head><title>${county} County — CHNA Intelligence Brief</title><style>body{font-family:system-ui,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#1a1a1a}h1{font-size:24px;color:#0A4C95;border-bottom:2px solid #00A3A1;padding-bottom:8px}h2{font-size:16px;color:#0A4C95;margin-top:24px}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}.stat-card{border:1px solid #e5e7eb;border-radius:8px;padding:12px;text-align:center}.stat-value{font-size:28px;font-weight:700;color:#0A4C95}.stat-label{font-size:11px;color:#6b7280}.narrative{background:#f9fafb;border-left:3px solid #00A3A1;padding:12px 16px;margin:16px 0;font-size:13px;line-height:1.6}.footer{margin-top:40px;padding-top:16px;border-top:1px solid #e5e7eb;font-size:10px;color:#9ca3af}@media print{body{padding:20px}}</style></head><body><h1>${county} County — CHNA Intelligence Brief</h1><p style="font-size:12px;color:#6b7280">Generated ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · Source: Access Michigan (accessmi.org)</p><div class="narrative"><strong>Executive Summary:</strong> ${county} County (pop. ${pop}) has an uninsured rate of ${uninsured} and food insecurity at ${food}. Data sourced from ${DATA_SOURCE_DISPLAY} verified public agencies.</div><h2>Key Health Indicators</h2><div class="stat-grid"><div class="stat-card"><div class="stat-value">${uninsured}</div><div class="stat-label">Uninsured Rate</div></div><div class="stat-card"><div class="stat-value">${h[1]?.value || "—"}</div><div class="stat-label">PCP Ratio</div></div><div class="stat-card"><div class="stat-value">${food}</div><div class="stat-label">Food Insecurity</div></div></div><h2>Data Sources</h2><p style="font-size:10px;color:#6b7280">CDC PLACES · CMS Hospital Compare · HRSA HPSA · County Health Rankings · Census ACS · MDHHS · March of Dimes · ACEEE LEAD · EPA EJScreen · FCC BDC</p><div class="footer"><p>Access Michigan · accessmi.org · Independent civic intelligence platform</p><p>Auto-generated from verified public data. Composite scores are modeled estimates — see accessmi.org/methodology.</p></div></body></html>`,
+                        `<html><head><title>${county} County - CHNA Intelligence Brief</title><style>body{font-family:system-ui,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#1a1a1a}h1{font-size:24px;color:#0A4C95;border-bottom:2px solid #00A3A1;padding-bottom:8px}h2{font-size:16px;color:#0A4C95;margin-top:24px}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}.stat-card{border:1px solid #e5e7eb;border-radius:8px;padding:12px;text-align:center}.stat-value{font-size:28px;font-weight:700;color:#0A4C95}.stat-label{font-size:11px;color:#6b7280}.narrative{background:#f9fafb;border-left:3px solid #00A3A1;padding:12px 16px;margin:16px 0;font-size:13px;line-height:1.6}.footer{margin-top:40px;padding-top:16px;border-top:1px solid #e5e7eb;font-size:10px;color:#9ca3af}@media print{body{padding:20px}}</style></head><body><h1>${county} County - CHNA Intelligence Brief</h1><p style="font-size:12px;color:#6b7280">Generated ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · Source: Access Michigan (accessmi.org)</p><div class="narrative"><strong>Executive Summary:</strong> ${county} County (pop. ${pop}) has an uninsured rate of ${uninsured} and food insecurity at ${food}. Data sourced from ${DATA_SOURCE_DISPLAY} verified public agencies.</div><h2>Key Health Indicators</h2><div class="stat-grid"><div class="stat-card"><div class="stat-value">${uninsured}</div><div class="stat-label">Uninsured Rate</div></div><div class="stat-card"><div class="stat-value">${h[1]?.value || "-"}</div><div class="stat-label">PCP Ratio</div></div><div class="stat-card"><div class="stat-value">${food}</div><div class="stat-label">Food Insecurity</div></div></div><h2>Data Sources</h2><p style="font-size:10px;color:#6b7280">CDC PLACES · CMS Hospital Compare · HRSA HPSA · County Health Rankings · Census ACS · MDHHS · March of Dimes · ACEEE LEAD · EPA EJScreen · FCC BDC</p><div class="footer"><p>Access Michigan · accessmi.org · Independent civic intelligence platform</p><p>Auto-generated from verified public data. Composite scores are modeled estimates - see accessmi.org/methodology.</p></div></body></html>`,
                       );
                       w.document.close();
                       w.print();
@@ -391,7 +391,7 @@ export default function BriefPage() {
                         ))}
                       </ul>
                       <p className="text-[10px] text-muted-foreground mt-2">
-                        Rule-based flags from existing indicators — prompts for
+                        Rule-based flags from existing indicators - prompts for
                         attention, not causal analyses.{" "}
                         <a
                           href="/methodology"
@@ -476,7 +476,7 @@ export default function BriefPage() {
                             {getVal(profile.healthHighlights, "primary care") ||
                               "See county page"}
                           </strong>{" "}
-                          — critical for VBC program design
+                          - critical for VBC program design
                         </span>
                       </li>
                       <li className="flex gap-2">
@@ -556,7 +556,7 @@ export default function BriefPage() {
               </>
             )}
 
-            {/* Utility Customer Stress — shown in both views */}
+            {/* Utility Customer Stress - shown in both views */}
             <UtilityStressSection county={county} />
 
             {/* Get to Care panel */}
@@ -569,7 +569,7 @@ export default function BriefPage() {
             {/* Score breakdown */}
             <CivicScoreBreakdown countyName={county} compositeScore={score} />
 
-            {/* Key Indicator Cluster — CSS mini-bars */}
+            {/* Key Indicator Cluster - CSS mini-bars */}
             <MetricCluster county={county} />
 
             {/* Headline metrics */}

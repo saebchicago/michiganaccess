@@ -138,7 +138,7 @@ export default function MilestoneStepper() {
       <TabsContent value="naturalization">
         <div className="mb-4 rounded-lg border border-primary/20 bg-primary/5 p-3">
           <p className="text-xs text-muted-foreground">
-            <strong className="text-foreground">U.S. Citizenship Path</strong> — Based on USCIS naturalization standards.
+            <strong className="text-foreground">U.S. Citizenship Path</strong> - Based on USCIS naturalization standards.
             For legal assistance in Michigan, contact the{" "}
             <a href="https://michiganimmigrant.org" target="_blank" rel="noopener" className="text-primary underline">Michigan Immigrant Rights Center (MIRC)</a>{" "}
             or <a href="https://www.accesscommunity.org" target="_blank" rel="noopener" className="text-primary underline">ACCESS</a> for social services.
@@ -150,7 +150,7 @@ export default function MilestoneStepper() {
       <TabsContent value="gdl">
         <div className="mb-4 rounded-lg border border-michigan-teal/20 bg-michigan-teal/5 p-3">
           <p className="text-xs text-muted-foreground">
-            <strong className="text-foreground">Michigan Graduated Driver Licensing</strong> — The GDL program helps new drivers gain experience safely.
+            <strong className="text-foreground">Michigan Graduated Driver Licensing</strong> - The GDL program helps new drivers gain experience safely.
             Visit your local{" "}
             <a href="https://www.michigan.gov/sos" target="_blank" rel="noopener" className="text-primary underline">Secretary of State</a> office to begin.
           </p>
@@ -161,7 +161,7 @@ export default function MilestoneStepper() {
       <TabsContent value="ordinance">
         <div className="mb-4 rounded-lg border border-michigan-gold/20 bg-michigan-gold/5 p-3">
           <p className="text-xs text-muted-foreground">
-            <strong className="text-foreground">Know Your Local Laws</strong> — Access municipal codes for Michigan's largest cities.
+            <strong className="text-foreground">Know Your Local Laws</strong> - Access municipal codes for Michigan's largest cities.
             Ordinances cover zoning, noise, parking, business licensing, and more.
           </p>
         </div>

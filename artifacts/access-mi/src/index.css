@@ -48,7 +48,7 @@
 
     --radius: 0.5rem;
 
-    /* Extended civic palette — lightness values tuned to meet WCAG AA 4.5:1
+    /* Extended civic palette - lightness values tuned to meet WCAG AA 4.5:1
        against white text (for bg usage) and against white background (for
        text usage). See PERF_BASELINE.md and A11Y_VIOLATIONS.md for history. */
     --michigan-blue: 231 44% 48%;
@@ -505,7 +505,7 @@ body.translated-rtl {
   --safe-bottom: calc(var(--bottom-nav-h) + var(--sab));
 }
 
-/* Floating chat FAB — clears mobile bottom nav + safe area */
+/* Floating chat FAB - clears mobile bottom nav + safe area */
 .chat-fab {
   position: fixed;
   bottom: calc(var(--safe-bottom) + 1rem);
@@ -519,7 +519,7 @@ body.translated-rtl {
   }
 }
 
-/* Floating chat window — sits above the FAB with breathing room */
+/* Floating chat window - sits above the FAB with breathing room */
 .chat-window {
   position: fixed;
   bottom: calc(var(--safe-bottom) + 5.5rem);

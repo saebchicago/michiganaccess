@@ -13,7 +13,7 @@ import { MICHIGAN_FEDERAL_AGENCIES, MICHIGAN_RELEVANT_FACA } from "@/data/federa
 
 const CivicFederalPage = () => {
   usePageMeta({
-    title: "Federal Presence in Michigan — Access Michigan",
+    title: "Federal Presence in Michigan - Access Michigan",
     description: "7 major federal agencies, 140+ Michigan offices, and federal advisory committees with public nomination processes.",
     path: "/civic-power/federal",
   });

@@ -80,7 +80,7 @@ const POLICIES: PolicyCard[] = [
     id: "ira-part-d",
     title: "IRA Medicare Drug Price Cap",
     headline:
-      "$2,000 cap on Medicare drug costs starting 2025 — spread payments monthly",
+      "$2,000 cap on Medicare drug costs starting 2025 - spread payments monthly",
     impact: "major",
     categories: ["health", "seniors"],
     whatItMeans:
@@ -88,7 +88,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "The Inflation Reduction Act restructured Medicare Part D cost-sharing. The annual $2,000 cap applies to covered drugs. The Medicare Prescription Payment Plan (M3P) lets enrollees spread costs evenly over the year.",
     effective: "January 2025",
-    source: "CMS.gov — Medicare Part D Changes 2025",
+    source: "CMS.gov - Medicare Part D Changes 2025",
     serviceLink: "/learn",
     serviceLinkLabel: "Check your drug coverage options",
   },
@@ -104,7 +104,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "CMS Interoperability and Prior Authorization Final Rule (CMS-0057-F) sets new response timelines for Medicare Advantage, Medicaid, CHIP, and Exchange plans. Electronic prior authorization (ePA) systems are required by 2027.",
     effective: "January 2024 (Phase 1)",
-    source: "CMS.gov — CMS-0057-F Final Rule",
+    source: "CMS.gov - CMS-0057-F Final Rule",
     serviceLink: "/appeals",
     serviceLinkLabel: "Learn how to appeal a denial",
   },
@@ -112,7 +112,7 @@ const POLICIES: PolicyCard[] = [
     id: "mhpaea",
     title: "Mental Health Parity (MHPAEA)",
     headline:
-      "Mental health care must be as accessible as physical care — new rules enforce this",
+      "Mental health care must be as accessible as physical care - new rules enforce this",
     impact: "access",
     categories: ["health", "family"],
     whatItMeans:
@@ -120,7 +120,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "The MHPAEA Final Rule (2024) strengthens enforcement of the Mental Health Parity and Addiction Equity Act. Plans must document and share comparative analyses of their nonquantitative treatment limitations with regulators.",
     effective: "2024 plan year",
-    source: "DOL.gov — MHPAEA Final Rule 2024",
+    source: "DOL.gov - MHPAEA Final Rule 2024",
     serviceLink: "/find-care",
     serviceLinkLabel: "Find mental health providers",
   },
@@ -132,11 +132,11 @@ const POLICIES: PolicyCard[] = [
     impact: "access",
     categories: ["health"],
     whatItMeans:
-      "Michigan now requires Medicaid managed care plans to earn health equity accreditation — showing they are actively closing gaps in care based on race, language, disability, and income. This means better accountability for plan performance.",
+      "Michigan now requires Medicaid managed care plans to earn health equity accreditation - showing they are actively closing gaps in care based on race, language, disability, and income. This means better accountability for plan performance.",
     details:
       "MDHHS Comprehensive Health Care Program (CHCP) requires managed care organizations to pursue NCQA Health Equity Accreditation by 2025. Plans must track and close disparities in HEDIS quality measures.",
     effective: "2025",
-    source: "Michigan.gov/MDHHS — MHP Contract Requirements",
+    source: "Michigan.gov/MDHHS - MHP Contract Requirements",
     serviceLink: "/health",
     serviceLinkLabel: "Understand your Medicaid plan",
   },
@@ -152,7 +152,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "The No Surprises Act (part of the Consolidated Appropriations Act 2021) bans surprise billing in emergencies and for certain non-emergency services at in-network facilities. Disputes between providers and insurers go through independent dispute resolution.",
     effective: "January 2022 (ongoing enforcement)",
-    source: "CMS.gov — No Surprises Act",
+    source: "CMS.gov - No Surprises Act",
     serviceLink: "/find-care",
     serviceLinkLabel: "Compare care costs near you",
   },
@@ -168,7 +168,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "CMS updated network adequacy standards for Medicare Advantage (2024) and Medicaid managed care. Michigan MDHHS enforces additional time-and-distance standards for Medicaid Health Plan enrollees across all 83 counties.",
     effective: "2024 plan year",
-    source: "CMS.gov — Network Adequacy Final Rule",
+    source: "CMS.gov - Network Adequacy Final Rule",
     serviceLink: "/find-care",
     serviceLinkLabel: "Find in-network providers near you",
   },
@@ -184,7 +184,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "Michigan is transitioning Dual Eligible Special Needs Plans (DSNPs) to fully integrated care models under the MICH program. The phased rollout targets 2025-2026. Approximately 240,000 Michiganders are dual eligible and may be affected.",
     effective: "2025-2026 (phased rollout)",
-    source: "Michigan.gov/MDHHS — Integrated Care Initiative",
+    source: "Michigan.gov/MDHHS - Integrated Care Initiative",
     serviceLink: "/seniors",
     serviceLinkLabel: "Learn about dual-eligible plans",
   },
@@ -196,11 +196,11 @@ const POLICIES: PolicyCard[] = [
     impact: "access",
     categories: ["health", "seniors", "family"],
     whatItMeans:
-      "Your Medicaid or Medicare Advantage plan is now required to screen you for social needs — housing instability, food insecurity, transportation — and connect you to community services. They must track whether those referrals actually helped.",
+      "Your Medicaid or Medicare Advantage plan is now required to screen you for social needs - housing instability, food insecurity, transportation - and connect you to community services. They must track whether those referrals actually helped.",
     details:
       "CMS AHEAD Model and MDHHS contract requirements mandate that managed care plans use a validated SDOH screening tool, refer members to community-based organizations, and report rates of closed social care loops.",
     effective: "2024-2025",
-    source: "CMS.gov — AHEAD Model; Michigan.gov/MDHHS",
+    source: "CMS.gov - AHEAD Model; Michigan.gov/MDHHS",
     serviceLink: "/",
     serviceLinkLabel: "Find social services near you",
   },
@@ -216,7 +216,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "The Thrifty Food Plan was re-evaluated in 2021 (USDA FNS), leading to average SNAP benefit increases. Emergency allotments ended in February 2023. Gross income limits and standard deductions are updated annually each October.",
     effective: "October each year (annual update)",
-    source: "USDA FNS — SNAP Program",
+    source: "USDA FNS - SNAP Program",
     serviceLink: "/food",
     serviceLinkLabel: "Check SNAP eligibility",
   },
@@ -232,7 +232,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "USDA FNS updated WIC food packages in June 2024 to expand fruits, vegetables, and whole grains. Michigan WIC serves approximately 220,000 participants monthly through local health departments and community clinics.",
     effective: "June 2024 (food package update)",
-    source: "USDA FNS — WIC Food Package Final Rule",
+    source: "USDA FNS - WIC Food Package Final Rule",
     serviceLink: "/food",
     serviceLinkLabel: "Find WIC services near you",
   },
@@ -264,7 +264,7 @@ const POLICIES: PolicyCard[] = [
     details:
       "Michigan CCAP serves families earning up to 185% of the Federal Poverty Level. The Family Independence Program provides up to 48 months of cash assistance. 2024 state budget investments expanded CCAP provider payment rates.",
     effective: "Ongoing (rate updates 2024)",
-    source: "Michigan.gov/MDHHS — FIP and CCAP",
+    source: "Michigan.gov/MDHHS - FIP and CCAP",
     serviceLink: "/family",
     serviceLinkLabel: "Find family assistance programs",
   },
@@ -340,7 +340,7 @@ const TIMELINE = [
   {
     date: "Jun 2024",
     event:
-      "WIC food packages expanded — more fruits, vegetables, and culturally relevant foods added",
+      "WIC food packages expanded - more fruits, vegetables, and culturally relevant foods added",
     category: "food",
   },
   {
@@ -352,7 +352,7 @@ const TIMELINE = [
   {
     date: "Ongoing",
     event:
-      "MSHDA rental assistance applications open — availability varies by county",
+      "MSHDA rental assistance applications open - availability varies by county",
     category: "housing",
   },
 ];
@@ -692,7 +692,7 @@ export const PolicyIntel = () => {
         Policy summaries are written in plain language for Michigan residents.
         Sources include CMS.gov, DOL.gov, USDA FNS, Michigan.gov/MDHHS, and
         Michigan.gov/MSHDA. This tracker is for informational purposes only and
-        does not constitute legal or benefits advice. accessmi.org —
+        does not constitute legal or benefits advice. accessmi.org -
         non-commercial civic technology.
       </p>
     </section>

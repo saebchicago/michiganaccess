@@ -29,7 +29,7 @@ const fadeUp = {
 };
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 
-// [VERIFIED] UF Election Lab VEP turnout — election.lab.ufl.edu/voter-turnout/
+// [VERIFIED] UF Election Lab VEP turnout - election.lab.ufl.edu/voter-turnout/
 // CSV files: Turnout_2016G_v1.0, Turnout_2018G_v1.1, Turnout_2020G_v1.2,
 //            Turnout_2022G_v1.0, Turnout_2024G_v0.3 (as of March 2, 2026)
 const voterTurnout = [
@@ -40,7 +40,7 @@ const voterTurnout = [
   { year: "2024", turnout: 74.64, national: 64.07 },
 ];
 
-// [VERIFIED] Michigan.gov — all four re-elected Nov 2022, current term 2023–2027
+// [VERIFIED] Michigan.gov - all four re-elected Nov 2022, current term 2023–2027
 const electedOfficials = [
   { title: "Governor", name: "Gretchen Whitmer", party: "Democrat", since: "2019", contact: "https://www.michigan.gov/whitmer" },
   { title: "Lt. Governor", name: "Garlin Gilchrist II", party: "Democrat", since: "2019", contact: "https://www.michigan.gov/ltgovernor" },
@@ -48,7 +48,7 @@ const electedOfficials = [
   { title: "Secretary of State", name: "Jocelyn Benson", party: "Democrat", since: "2019", contact: "https://www.michigan.gov/sos" },
 ];
 
-// Open Meetings linkouts — replaces static past-dated list per Michigan OMA
+// Open Meetings linkouts - replaces static past-dated list per Michigan OMA
 const openMeetingsLinks = [
   { body: "State Board of Education", url: "https://www.michigan.gov/mde/about/boardofeducation" },
   { body: "Natural Resources Commission", url: "https://www.michigan.gov/dnr/about/nrc" },
@@ -326,7 +326,7 @@ const CivicDataPage = () => {
 
                 <motion.div variants={fadeUp} className="mt-8 grid gap-6 md:grid-cols-3">
                   {[
-                    { title: "Register to Vote", desc: "Register online, by mail, or in person — including same-day registration at your local clerk's office.", link: "https://mvic.sos.state.mi.us/registervoter", icon: Users },
+                    { title: "Register to Vote", desc: "Register online, by mail, or in person - including same-day registration at your local clerk's office.", link: "https://mvic.sos.state.mi.us/registervoter", icon: Users },
                     { title: "Find Your Polling Place", desc: "Look up your polling location, sample ballot, and elected officials by address.", link: "https://mvic.sos.state.mi.us/", icon: Building2 },
                     { title: "Track Your Ballot", desc: "Check the status of your absentee ballot from application to counting.", link: "https://mvic.sos.state.mi.us/voter/index", icon: TrendingUp },
                   ].map((item) => (
@@ -479,7 +479,7 @@ const CivicDataPage = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-sm text-muted-foreground">
-                  <p>The <strong>Freedom of Information Act (FOIA)</strong> gives anyone the right to request records from any Michigan public body — no reason needed.</p>
+                  <p>The <strong>Freedom of Information Act (FOIA)</strong> gives anyone the right to request records from any Michigan public body - no reason needed.</p>
                   <ol className="list-decimal space-y-1 pl-5">
                     <li><strong>Identify the agency</strong> that holds the data (state department, county, city, school district, etc.).</li>
                     <li><strong>Write a specific request</strong> describing the records you want. Be as precise as possible.</li>
@@ -505,7 +505,7 @@ const CivicDataPage = () => {
                   <p>Before filing a request, check if the data is already publicly available through these top resources:</p>
                   <ul className="space-y-2">
                     {[
-                      { name: "Michigan Open Data Portal", url: "https://data.michigan.gov", desc: "State government datasets — health, education, infrastructure, and more" },
+                      { name: "Michigan Open Data Portal", url: "https://data.michigan.gov", desc: "State government datasets - health, education, infrastructure, and more" },
                       { name: "Data.gov", url: "https://data.gov", desc: "Federal open data including Michigan-specific datasets from EPA, HHS, DOT" },
                       { name: "U.S. Census Bureau", url: "https://data.census.gov", desc: "Demographics, economics, housing data by county, city, and tract" },
                       { name: "Michigan Legislature", url: "https://www.legislature.mi.gov", desc: "Bills, voting records, committee schedules, and session archives" },
@@ -573,9 +573,9 @@ const CivicDataPage = () => {
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-foreground mb-2">Regulatory & Legislative Tools</h3>
                   <ul className="space-y-2 text-sm text-muted-foreground mb-3">
-                    <li>• <a href="https://mi-psc.my.site.com/s/" target="_blank" rel="noopener" className="text-primary hover:underline">MPSC E-Dockets</a> — Utility rate cases & orders</li>
+                    <li>• <a href="https://mi-psc.my.site.com/s/" target="_blank" rel="noopener" className="text-primary hover:underline">MPSC E-Dockets</a> - Utility rate cases & orders</li>
                     <li>• <a href="https://www.legislature.mi.gov/Bills" target="_blank" rel="noopener" className="text-primary hover:underline">MI Legislature Bill Search</a></li>
-                    <li>• <a href="https://openstates.org/mi/" target="_blank" rel="noopener" className="text-primary hover:underline">Open States Michigan</a> — Votes & sponsors</li>
+                    <li>• <a href="https://openstates.org/mi/" target="_blank" rel="noopener" className="text-primary hover:underline">Open States Michigan</a> - Votes & sponsors</li>
                     <li>• <Link to="/data-centers" className="text-primary hover:underline">Data Center Pipeline</Link></li>
                   </ul>
                 </CardContent>

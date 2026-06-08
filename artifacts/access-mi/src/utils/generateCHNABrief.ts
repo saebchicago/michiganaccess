@@ -39,7 +39,7 @@ export function generateCHNABriefText(
       : `Hospital-specific: ${priority.hospitals?.join(", ")}`;
 
   const lines: string[] = [
-    "CHNA Explorer — Access Michigan (accessmi.org)",
+    "CHNA Explorer - Access Michigan (accessmi.org)",
     `${system.label} · Community Health Needs Assessment ${system.vintage}`,
     `Generated ${date}`,
     "",
@@ -75,7 +75,7 @@ export function generateCHNABriefText(
     "  PROJECTED = forward-looking estimate",
     "",
     `Source: ${system.label} CHNA (${system.vintage}), citing BRFSS, MDHHS, CDC, MDEQ.`,
-    "Powered by Access Michigan — accessmi.org",
+    "Powered by Access Michigan - accessmi.org",
   );
 
   return lines.join("\n");

@@ -86,12 +86,12 @@ const MODE_TABS: { mode: NPISearchMode; label: string; icon: typeof Stethoscope 
 /* ── Main page ────────────────────────────────── */
 export default function FindCarePage() {
   usePageMeta({
-    title: "Find Help — Access Michigan",
-    description: "Find care, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.",
+    title: "Find Help - Access Michigan",
+    description: "Find care, health centers, food assistance, housing help, and more - all across Michigan. Free. Private. No account needed.",
     path: "/find-care",
     jsonLd: {
       "@type": "MedicalWebPage",
-      "name": "Find Help — Access Michigan",
+      "name": "Find Help - Access Michigan",
       "about": { "@type": "MedicalCondition", "name": "Healthcare Access" },
       "audience": { "@type": "PeopleAudience", "geographicArea": { "@type": "State", "name": "Michigan" } },
     },
@@ -336,7 +336,7 @@ export default function FindCarePage() {
             transition={{ delay: 0.1 }}
             className="mx-auto max-w-xl text-center text-muted-foreground mb-6"
           >
-            Find care, health centers, food assistance, housing help, and more — all across Michigan. Free. Private. No account needed.
+            Find care, health centers, food assistance, housing help, and more - all across Michigan. Free. Private. No account needed.
           </motion.p>
 
           {/* ── Mode Selector Tabs ── */}
@@ -460,7 +460,7 @@ export default function FindCarePage() {
                 <div className="flex items-start gap-2 rounded-lg bg-muted/60 border border-border px-3 py-2.5">
                   <Info className="h-4 w-4 text-michigan-blue shrink-0 mt-0.5" />
                   <p className="text-xs text-muted-foreground">
-                    Search the national NPI registry — includes all licensed Michigan providers. If a provider enrolled recently, they may appear here even if not in insurance directories.
+                    Search the national NPI registry - includes all licensed Michigan providers. If a provider enrolled recently, they may appear here even if not in insurance directories.
                   </p>
                 </div>
               </>
@@ -506,14 +506,14 @@ export default function FindCarePage() {
           <p className="mt-4 text-center text-sm text-muted-foreground">
             Or call{" "}
             <a href="tel:211" className="font-bold text-primary underline">2-1-1</a>{" "}
-            — free, confidential help 24/7
+            - free, confidential help 24/7
           </p>
         </div>
       </section>
 
       {/* ── Results area ── */}
       <div ref={resultsRef} className="container py-8 scroll-mt-4">
-        {/* Initial state — quick link cards */}
+        {/* Initial state - quick link cards */}
         {isInitial && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}

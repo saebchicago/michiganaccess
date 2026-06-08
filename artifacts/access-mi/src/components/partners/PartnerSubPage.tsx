@@ -1,5 +1,5 @@
 /**
- * Partner page template — reused for health-systems, health-plans, utilities-regulators.
+ * Partner page template - reused for health-systems, health-plans, utilities-regulators.
  */
 import { useState } from "react";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -37,7 +37,7 @@ function PartnerContactForm({ partnerType }: { partnerType: string }) {
     const { error } = await supabase.from("contact_messages").insert({
       name: `${fd.get("name")} (${fd.get("org")})`,
       email: String(fd.get("email")),
-      subject: `Partner Inquiry: ${partnerType} — ${fd.get("role")}`,
+      subject: `Partner Inquiry: ${partnerType} - ${fd.get("role")}`,
       message: String(fd.get("message")),
     });
     setSubmitting(false);

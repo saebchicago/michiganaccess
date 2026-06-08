@@ -106,7 +106,7 @@ function buildPopupContent(facility: Facility): string {
       <div style="font-size:14px;font-weight:700;color:#003B5C;margin-bottom:2px;">${facility.name}</div>
       ${facility.system_affiliation ? `<div style="font-size:11px;color:#64748b;margin-bottom:6px;">${facility.system_affiliation}</div>` : ''}
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
-        <span style="background:${qualityColor};color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;">${qualityLabel} ${facility.quality_score ?? '—'}/100</span>
+        <span style="background:${qualityColor};color:#fff;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;">${qualityLabel} ${facility.quality_score ?? '-'}/100</span>
         <span style="font-size:11px;color:#64748b;">${typeLabel}</span>
       </div>
       ${badges.length ? `<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">${badges.join('')}</div>` : ''}

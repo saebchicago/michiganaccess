@@ -1,5 +1,5 @@
 /**
- * Michigan Tax Data — verified from public sources.
+ * Michigan Tax Data - verified from public sources.
  * Sources: Michigan Treasury, IRS, city ordinances, Quadrant Information Services
  * Last verified: March 2026
  */

@@ -27,7 +27,7 @@ export default function AnimatedCounter({
     if (!isInView || hasAnimated.current) return;
     hasAnimated.current = true;
 
-    // Reset to 0 then animate up — only triggers when actually in viewport
+    // Reset to 0 then animate up - only triggers when actually in viewport
     setCurrent(0);
     const startTime = performance.now();
     const durationMs = duration * 1000;

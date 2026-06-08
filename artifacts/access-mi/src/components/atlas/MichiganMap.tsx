@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-// Bundled locally for reliability — CDN was failing in some environments
+// Bundled locally for reliability - CDN was failing in some environments
 const TOPO_URL = "/data/us-counties-10m.json";
 
 export default function MichiganMap({
@@ -149,7 +149,7 @@ export default function MichiganMap({
   if (error) {
     return (
       <div className={`flex items-center justify-center bg-muted/30 rounded-xl ${className}`} style={{ height }}>
-        <p className="text-xs text-muted-foreground">Map unavailable — showing data in table view</p>
+        <p className="text-xs text-muted-foreground">Map unavailable - showing data in table view</p>
       </div>
     );
   }

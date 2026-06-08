@@ -47,7 +47,7 @@ const TOP_PROGRAMS = [
   { title: "Healthy Michigan Plan (Medicaid)", desc: "Free or low-cost health coverage for adults 19–64 with income up to 138% FPL.", href: "/financial-help", icon: Shield },
   { title: "SNAP Food Assistance", desc: "Monthly benefits for groceries. Apply through MDHHS.", href: "https://www.michigan.gov/mdhhs/assistance-programs/food", icon: Heart },
   { title: "LIHEAP Heating Assistance", desc: "Help paying heating bills for income-eligible households.", href: "/environment", icon: Activity },
-  { title: "Michigan 2-1-1", desc: "Free, confidential referrals for housing, food, transportation, and more — 24/7.", href: "tel:211", icon: Phone },
+  { title: "Michigan 2-1-1", desc: "Free, confidential referrals for housing, food, transportation, and more - 24/7.", href: "tel:211", icon: Phone },
   { title: "WIC Nutrition Program", desc: "Free nutrition support for pregnant women, new moms, and children under 5.", href: "https://www.michigan.gov/mdhhs/assistance-programs/wic", icon: Heart },
   { title: "Find a Doctor or Clinic", desc: "Search providers by specialty, location, or NPI across Michigan.", href: "/find-care", icon: Stethoscope },
 ];
@@ -144,7 +144,7 @@ export default function PlacePage() {
   const canonicalSlug = place?.slug || slug || "";
 
   usePageMeta({
-    title: place ? `${place.name} Community Brief — Access Michigan` : "Place Not Found",
+    title: place ? `${place.name} Community Brief - Access Michigan` : "Place Not Found",
     description: place
       ? buildBriefMetaDescription(place)
       : "Place not found",
@@ -169,11 +169,11 @@ export default function PlacePage() {
       <Breadcrumbs items={buildPlaceBreadcrumbs(place)} />
       <DomainJumpNav />
 
-      {/* Hero — dynamic color based on community signals */}
+      {/* Hero - dynamic color based on community signals */}
       <PlaceHero place={place} countyName={countyName} profile={profile} />
 
       <div className="container py-10 space-y-10">
-        {/* Crisis callout — always visible at top of services area */}
+        {/* Crisis callout - always visible at top of services area */}
         <CalloutBanner
           variant="error"
           title="Need immediate help?"
@@ -190,7 +190,7 @@ export default function PlacePage() {
         {/* 0. Michigan Community Brief */}
         <MichiganCommunityBrief place={place} />
 
-        {/* 1. Community Summary — "3 Things to Know" */}
+        {/* 1. Community Summary - "3 Things to Know" */}
         <CommunitySummary place={place} />
 
         {/* 2. Life Situations */}
@@ -301,12 +301,12 @@ export default function PlacePage() {
 
         <Separator />
 
-        {/* Value & Performance — VBC/PBR metrics */}
+        {/* Value & Performance - VBC/PBR metrics */}
         <ValuePerformanceSection place={place} />
 
         <Separator />
 
-        {/* Civic Intelligence — 4 pillar cards + detail */}
+        {/* Civic Intelligence - 4 pillar cards + detail */}
         <CivicIntelligenceSection countyName={countyName} />
 
         <Separator />
@@ -332,7 +332,7 @@ export default function PlacePage() {
               <CardContent className="py-5 space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">For Live Help</p>
                 <p className="text-sm text-foreground">
-                  Call <a href="tel:211" className="font-bold text-primary hover:underline">2-1-1</a> — free, confidential referrals 24/7
+                  Call <a href="tel:211" className="font-bold text-primary hover:underline">2-1-1</a> - free, confidential referrals 24/7
                 </p>
                 <p className="text-xs text-muted-foreground">Michigan 2-1-1 is a public resource, not affiliated with Access Michigan.</p>
               </CardContent>

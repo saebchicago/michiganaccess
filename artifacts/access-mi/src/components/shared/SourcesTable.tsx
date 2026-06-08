@@ -1,5 +1,5 @@
 /**
- * SourcesTable — Reusable provenance table for Place pages.
+ * SourcesTable - Reusable provenance table for Place pages.
  * Shows all data sources used on the page with citation metadata.
  */
 import { ExternalLink, AlertCircle } from "lucide-react";

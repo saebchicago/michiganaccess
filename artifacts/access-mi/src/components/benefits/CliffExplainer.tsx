@@ -127,7 +127,7 @@ export function CliffExplainer() {
               </div>
               <ProvenanceTag
                 label="MODELED"
-                source="Federal Reserve Bank of Atlanta — CLIFF Dashboard"
+                source="Federal Reserve Bank of Atlanta - CLIFF Dashboard"
               />
             </div>
             <div className="flex flex-wrap items-center gap-3">

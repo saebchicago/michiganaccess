@@ -25,7 +25,7 @@ const PERSONAS: Persona[] = [
     location: "Detroit, Wayne County",
     situation: "Maria's dental claim was denied by Medicaid after she finally got coverage through Healthy Michigan Plan.",
     solution: "Used our Medicaid Fair Hearing template → benefits continued during appeal → approval in 21 days.",
-    successStory: "\"I didn't know I could fight back. The template made it so easy—I just filled in my information and mailed it.\"",
+    successStory: "\"I didn't know I could fight back. The template made it so easy-I just filled in my information and mailed it.\"",
     links: [
       { label: "Financial assistance", href: "/financial-help" },
       { label: "Free clinics nearby", href: "/find-care" },

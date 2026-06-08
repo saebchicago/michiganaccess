@@ -1,4 +1,4 @@
-# ACCESS MICHIGAN — Content Expansion Super-Prompt
+# ACCESS MICHIGAN - Content Expansion Super-Prompt
 
 > **Instructions for Claude Code:** Read this entire file first. It contains your codebase context, verified data to insert, and sequenced update instructions. Work through each section in order. After each major update, commit with a descriptive message. If a file doesn't exist yet, create it following the patterns of existing pages. Ask me before making destructive changes to working components.
 
@@ -54,7 +54,7 @@ src/
 
 ## PHASE 1: UPDATE EXISTING PAGES WITH VERIFIED DATA
 
-### 1A. EnvironmentPage.tsx — Energy Programs with Real Numbers
+### 1A. EnvironmentPage.tsx - Energy Programs with Real Numbers
 
 Find the energy-related content sections and update with these **verified** figures:
 
@@ -73,7 +73,7 @@ Find the energy-related content sections and update with these **verified** figu
 - New eligibility (Oct 2025): 60% State Median Income (~$61,861 for family of 4)
 - URL: `https://www.michigan.gov/mpsc/consumer/energy-assistance`
 
-**MiHER (Michigan Home Energy Rebate) — Launched statewide April 23, 2025:**
+**MiHER (Michigan Home Energy Rebate) - Launched statewide April 23, 2025:**
 - Total funding: **$211 million** from IRA (HOMES: $105.7M, HEAR: $105.3M)
 - Target: up to **15,000 households**
 - HOMES rebates: up to $20,000/household (100% covered for 0-80% AMI)
@@ -104,9 +104,9 @@ Find the energy-related content sections and update with these **verified** figu
 - Cumulative savings since 2009: Over **$5.5 billion**
 - Nearly 200,000 low-income customers served
 
-**IRA Tax Credits — CRITICAL UPDATE:**
-- **25C (Energy Efficient Home Improvement Credit): EXPIRED December 31, 2025** — terminated by "One Big Beautiful Bill" (signed July 4, 2025)
-- **25D (Residential Clean Energy Credit): STILL ACTIVE** — 30% through 2032 for solar, wind, geothermal, battery
+**IRA Tax Credits - CRITICAL UPDATE:**
+- **25C (Energy Efficient Home Improvement Credit): EXPIRED December 31, 2025** - terminated by "One Big Beautiful Bill" (signed July 4, 2025)
+- **25D (Residential Clean Energy Credit): STILL ACTIVE** - 30% through 2032 for solar, wind, geothermal, battery
 - MiHER rebates are stackable with 25D and utility rebates
 
 **MI Healthy Climate Plan targets:**
@@ -119,7 +119,7 @@ Find the energy-related content sections and update with these **verified** figu
 **Also add the renewable energy chart data if not already present:**
 Update the `renewableGrowth` data array with factual Michigan generation mix data.
 
-### 1B. BenefitsWizard.tsx — Update Program Data
+### 1B. BenefitsWizard.tsx - Update Program Data
 
 In `src/components/home/BenefitsWizard.tsx`, update the `allPrograms` array:
 
@@ -127,19 +127,19 @@ In `src/components/home/BenefitsWizard.tsx`, update the `allPrograms` array:
 - Update MiHER HOMES to "Up to $20,000" (not $8,000)
 - Update MiHER HEAR to "Up to $14,000" (not original figure)
 - Add combined note: "HOMES + HEAR = up to $34,000/household"
-- Add MEAP as a new program: "Michigan Energy Assistance Program — Up to $2,205 for heating bills. Now serving 60% SMI (~$61,861/family of 4). Apply via MI Bridges."
+- Add MEAP as a new program: "Michigan Energy Assistance Program - Up to $2,205 for heating bills. Now serving 60% SMI (~$61,861/family of 4). Apply via MI Bridges."
 - **Remove or flag the 25C tax credit as expired**
 
-### 1C. SpotlightTabs.tsx — Update Energy Resource Cards
+### 1C. SpotlightTabs.tsx - Update Energy Resource Cards
 
 In `src/components/shared/SpotlightTabs.tsx`, update the Energy category entries:
 
 - MiHER: Update amounts to match verified data above
-- Michigan Saves: Add "**$96.6M financed in 2024** — 50,000+ customers served"
+- Michigan Saves: Add "**$96.6M financed in 2024** - 50,000+ customers served"
 - Add MEAP as a new entry with URL
 - Update DTE/Consumers descriptions with verified budget numbers
 
-### 1D. FinancialHelpPage.tsx — Add MEAP and Update Amounts
+### 1D. FinancialHelpPage.tsx - Add MEAP and Update Amounts
 
 Add MEAP as a prominent financial assistance program. Update any LIHEAP references with the $183M allocation and 434K household figure. Ensure MiHER appears with correct combined $34K maximum.
 
@@ -147,7 +147,7 @@ Add MEAP as a prominent financial assistance program. Update any LIHEAP referenc
 
 ## PHASE 2: VBC AND HEALTH SYSTEM DATA UPDATES
 
-### 2A. LeanHealthcarePage.tsx — Update VBC Metrics
+### 2A. LeanHealthcarePage.tsx - Update VBC Metrics
 
 Update the `wasteTable` and VBC sections with verified data:
 
@@ -188,11 +188,11 @@ Update the `wasteTable` and VBC sections with verified data:
   - Cohort 2: United Way of Bay County, Muskegon County Health Dept, Heart of West Michigan United Way (Kent County)
 - Advisory Council Report (March 2025): `https://www.michigan.gov/mdhhs/-/media/Project/Websites/mdhhs/Inside-MDHHS/Policy-and-Planning/Social-Determinants-of-Health-Strategy/SDOH-AC-Recs-Report-FINAL-032025.pdf`
 
-### 2B. EngineeringFAQ.tsx — Update FAQ Answers
+### 2B. EngineeringFAQ.tsx - Update FAQ Answers
 
 Update the VBC FAQ answer to use verified Trinity Health data instead of unverified MSHIELD data. Replace "34% requested assistance" with "27.4% of 1M+ screened reported at least one unmet need (Trinity Health, FY2025)."
 
-### 2C. ForHealthSystemsPage.tsx — Update B2B Pitch
+### 2C. ForHealthSystemsPage.tsx - Update B2B Pitch
 
 Update with real health system financials:
 - Henry Ford: $5.28B revenue, $85M financial assistance, $19.97M ACO savings
@@ -200,7 +200,7 @@ Update with real health system financials:
 - Trinity: $2.9B community impact, 162 CHWs, 16% hospitalization reduction
 - All MI hospitals combined: **$4.5+ billion** in community benefit (MHA)
 
-### 2D. ValueBadges.tsx — Verify MVC Metrics
+### 2D. ValueBadges.tsx - Verify MVC Metrics
 
 Confirm the MVC PY 2026-2027 tooltip text matches the actual technical document. Key metrics: sepsis 14-day follow-up rate, cardiac rehab participation rate, and the new health equity measure.
 
@@ -212,7 +212,7 @@ Confirm the MVC PY 2026-2027 tooltip text matches the actual technical document.
 
 Follow the pattern of `ImpactPage.tsx`. Create a new page with these sections:
 
-**Hero:** "Michigan's Data Center Landscape" — subtitle about the $11.3B+ in announced projects
+**Hero:** "Michigan's Data Center Landscape" - subtitle about the $11.3B+ in announced projects
 
 **Stargate Project Overview Card:**
 - $7 billion investment, 1.4 GW demand
@@ -241,7 +241,7 @@ Follow the pattern of `ImpactPage.tsx`. Create a new page with these sections:
 **Energy Demand Section:**
 - DTE pipeline: 8.4 GW total (1.4 GW executed, 3+ GW advanced talks, 4+ GW additional)
 - Consumers pipeline: 15 GW economic development; ~3 GW probable by 2035
-- Combined: ~16 GW — would nearly double combined utility demand
+- Combined: ~16 GW - would nearly double combined utility demand
 - UCS analysis: demand could nearly double by 2050; 57% of growth by 2030 from data centers
 
 **Community Impact Cards:**
@@ -252,7 +252,7 @@ Follow the pattern of `ImpactPage.tsx`. Create a new page with these sections:
 
 **Environmental Concerns Section:**
 - Stargate: closed-loop cooling (low water)
-- Project Cannoli: evaporative cooling — estimated 3.6M gallons/day from GLWA
+- Project Cannoli: evaporative cooling - estimated 3.6M gallons/day from GLWA
 - Michigan electricity demand could nearly double by 2050 (UCS)
 
 **Add Recharts visualizations:**
@@ -283,7 +283,7 @@ Add "Data Centers" to:
 
 ## PHASE 4: UPDATE METHODOLOGY & PRESS PAGES
 
-### 4A. MethodologyPage.tsx — Add New Data Sources
+### 4A. MethodologyPage.tsx - Add New Data Sources
 
 Add these to the data sources table:
 
@@ -328,7 +328,7 @@ MI-SUDDR (Substance Use Data Repository)
 - URL: https://mi-suddr.com/data/
 ```
 
-### 4B. PressPage.tsx — Update Quick Facts
+### 4B. PressPage.tsx - Update Quick Facts
 
 Update the `FACTS` array:
 ```typescript
@@ -337,7 +337,7 @@ const FACTS = [
   { label: "Resources Indexed", value: "15,000+" },
   { label: "Data Sources", value: "CMS, HRSA, CDC, MDHHS, DOE, USGS, AirNow" },
   { label: "Languages", value: "English, Spanish, Arabic, Bengali" },
-  { label: "Cost to Users", value: "Free — No login required" },
+  { label: "Cost to Users", value: "Free - No login required" },
   { label: "Personal Data Collected", value: "None" },
   { label: "MI Hospital Community Benefit", value: "$4.5B+ (all systems combined)" },
   { label: "Energy Programs Tracked", value: "LIHEAP, MEAP, MiHER, WAP, MI Saves" },
@@ -348,7 +348,7 @@ const FACTS = [
 
 ## PHASE 5: ADD REAL-TIME DATA FEEDS CONTENT
 
-### 5A. EnvironmentPage.tsx — Add Air Quality Section
+### 5A. EnvironmentPage.tsx - Add Air Quality Section
 
 Add a card or section with:
 - Link to MiAir: `https://www.michigan.gov/MiAir` (40+ monitoring stations)
@@ -356,21 +356,21 @@ Add a card or section with:
 - Note: Free API key at `https://docs.airnowapi.org/login`
 - Display: "Check your local air quality by ZIP code"
 
-### 5B. EnvironmentPage.tsx or New Section — Water Quality
+### 5B. EnvironmentPage.tsx or New Section - Water Quality
 
 Add Great Lakes monitoring:
 - GLOS/Seagull real-time buoy data: `https://seagull.glos.org/`
 - USGS Michigan water data: `https://waterdata.usgs.gov/state/michigan/`
 - EGLE water monitoring: `https://www.michigan.gov/egle/public/learn/water-quality`
 
-### 5C. HealthDataDashboardPage.tsx — Add Opioid/Substance Data
+### 5C. HealthDataDashboardPage.tsx - Add Opioid/Substance Data
 
 Add section linking to:
 - MODA Dashboard: `https://www.michigan.gov/opioids/category-data`
 - MI-SUDDR: `https://mi-suddr.com/data/`
 - Wastewater surveillance: `https://www.michigan.gov/coronavirus/stats/wastewater-surveillance/dashboard`
 
-### 5D. CivicDataPage.tsx — Add Broadband Section
+### 5D. CivicDataPage.tsx - Add Broadband Section
 
 Add:
 - Michigan broadband map: `https://michiganbroadbandmap.com/`
@@ -421,4 +421,4 @@ Phase 6: git commit -m "feat: update homepage stats, civic data links, i18n valu
 5. **Michigan has 7 confirmed SDOH hubs, not 8.** Update any references.
 6. If you encounter TypeScript errors, fix them before moving to the next phase.
 7. Run `npm run build` after each phase to verify no build errors.
-8. The site uses Tailwind — keep all styling inline with utility classes, no external CSS files.
+8. The site uses Tailwind - keep all styling inline with utility classes, no external CSS files.

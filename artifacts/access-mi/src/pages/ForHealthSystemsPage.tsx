@@ -35,7 +35,7 @@ const valueProps = [
     items: [
       "Service line NPV with payer mix modeling",
       "Build vs. partner vs. acquire comparison",
-      "Market opportunity scoring — all 83 counties",
+      "Market opportunity scoring - all 83 counties",
       "SDOH financial impact with VBC attribution",
     ],
     cta: { label: "Open Modeler", href: "/bd-financial-model" },
@@ -98,7 +98,7 @@ function SystemImpactCalculator() {
 
         <div className="rounded-md bg-muted/30 p-3">
           <p className="text-[10px] text-muted-foreground leading-relaxed">
-            <strong>Assumptions:</strong> 35% diversion rate for low-acuity ED visits (Weinick et al., Health Affairs); $3,200 avg. ED visit cost (AHRQ HCUP StatBrief #268); 2.4× SDOH referral multiplier; $420 avg. community benefit value per connection (IRS Schedule H benchmarks). All figures are illustrative projections — actual results depend on implementation, market conditions, and system-specific factors.
+            <strong>Assumptions:</strong> 35% diversion rate for low-acuity ED visits (Weinick et al., Health Affairs); $3,200 avg. ED visit cost (AHRQ HCUP StatBrief #268); 2.4× SDOH referral multiplier; $420 avg. community benefit value per connection (IRS Schedule H benchmarks). All figures are illustrative projections - actual results depend on implementation, market conditions, and system-specific factors.
           </p>
         </div>
       </CardContent>
@@ -107,7 +107,7 @@ function SystemImpactCalculator() {
 }
 
 const ForHealthSystemsPage = () => {
-  usePageMeta({ title: "For Health Systems — Access Michigan", description: "Ambulatory network optimization, community benefit ROI, and referral leakage analysis for operations leaders.", path: "/for-health-systems" });
+  usePageMeta({ title: "For Health Systems - Access Michigan", description: "Ambulatory network optimization, community benefit ROI, and referral leakage analysis for operations leaders.", path: "/for-health-systems" });
 
   return (
     <Layout>
@@ -123,7 +123,7 @@ const ForHealthSystemsPage = () => {
             <div className="flex items-start gap-3">
               <Info className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
               <p className="text-xs text-muted-foreground">
-                <strong className="text-foreground">Exploratory Framework:</strong> Access Michigan is in Public Beta. The value propositions and calculator below present <strong>projected analytical capabilities</strong> based on the platform's data infrastructure and published benchmarks — not measured outcomes. See <a href="/lean-healthcare" className="text-primary hover:underline">Lean Healthcare Engineering</a> for sourced citations.
+                <strong className="text-foreground">Exploratory Framework:</strong> Access Michigan is in Public Beta. The value propositions and calculator below present <strong>projected analytical capabilities</strong> based on the platform's data infrastructure and published benchmarks - not measured outcomes. See <a href="/lean-healthcare" className="text-primary hover:underline">Lean Healthcare Engineering</a> for sourced citations.
               </p>
             </div>
           </motion.div>
@@ -220,7 +220,7 @@ const ForHealthSystemsPage = () => {
         </div>
       </section>
 
-      {/* Detection Gap Funnel — full version */}
+      {/* Detection Gap Funnel - full version */}
       <section className="container pb-12">
         <Card>
           <CardContent className="py-6">

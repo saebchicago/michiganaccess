@@ -12,10 +12,10 @@ export interface ForecastPeriod {
 }
 
 const FALLBACK: ForecastPeriod[] = [
-  { name: "Today", temperature: 45, temperatureUnit: "F", windSpeed: "10 mph", windDirection: "W", shortForecast: "Partly Cloudy", detailedForecast: "Forecast unavailable — check weather.gov", isDaytime: true },
-  { name: "Tonight", temperature: 32, temperatureUnit: "F", windSpeed: "5 mph", windDirection: "NW", shortForecast: "Mostly Clear", detailedForecast: "Forecast unavailable — check weather.gov", isDaytime: false },
-  { name: "Tomorrow", temperature: 48, temperatureUnit: "F", windSpeed: "8 mph", windDirection: "SW", shortForecast: "Sunny", detailedForecast: "Forecast unavailable — check weather.gov", isDaytime: true },
-  { name: "Tomorrow Night", temperature: 34, temperatureUnit: "F", windSpeed: "5 mph", windDirection: "W", shortForecast: "Clear", detailedForecast: "Forecast unavailable — check weather.gov", isDaytime: false },
+  { name: "Today", temperature: 45, temperatureUnit: "F", windSpeed: "10 mph", windDirection: "W", shortForecast: "Partly Cloudy", detailedForecast: "Forecast unavailable - check weather.gov", isDaytime: true },
+  { name: "Tonight", temperature: 32, temperatureUnit: "F", windSpeed: "5 mph", windDirection: "NW", shortForecast: "Mostly Clear", detailedForecast: "Forecast unavailable - check weather.gov", isDaytime: false },
+  { name: "Tomorrow", temperature: 48, temperatureUnit: "F", windSpeed: "8 mph", windDirection: "SW", shortForecast: "Sunny", detailedForecast: "Forecast unavailable - check weather.gov", isDaytime: true },
+  { name: "Tomorrow Night", temperature: 34, temperatureUnit: "F", windSpeed: "5 mph", windDirection: "W", shortForecast: "Clear", detailedForecast: "Forecast unavailable - check weather.gov", isDaytime: false },
 ];
 
 export const MI_CITIES: { name: string; lat: number; lng: number }[] = [

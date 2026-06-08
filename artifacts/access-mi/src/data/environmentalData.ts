@@ -1,4 +1,4 @@
-// Michigan Environmental Data — Planet Michigan Phase 15
+// Michigan Environmental Data - Planet Michigan Phase 15
 // Sources documented per dataset below
 
 // ── PFAS SITES BY COUNTY ──
@@ -58,7 +58,7 @@ export const MICHIGAN_KEY_PFAS_SITES: PFASSite[] = [
   },
 ];
 
-// ── FEMA NATIONAL RISK INDEX — MICHIGAN COUNTIES ──
+// ── FEMA NATIONAL RISK INDEX - MICHIGAN COUNTIES ──
 // Source: FEMA NRI, updated 2023
 // Risk scores: 0–100, higher = greater risk
 
@@ -150,7 +150,7 @@ export const MICHIGAN_DISASTER_HISTORY = {
 
 // ── MICHIGAN PFAS STANDARDS ──
 // Source: EGLE groundwater standards Aug 3, 2020; EPA MCL finalized April 10, 2024 (4 ppt PFOA/PFOS drinking water)
-// Note: EPA announced review of PFNA, PFHxS MCLs in May 2025 — under reconsideration as of 2026; PFOA/PFOS 4 ppt MCLs remain in effect
+// Note: EPA announced review of PFNA, PFHxS MCLs in May 2025 - under reconsideration as of 2026; PFOA/PFOS 4 ppt MCLs remain in effect
 // Michigan 8/16 ppt values are the 2020 GROUNDWATER cleanup standards, which predate the 2024 federal DRINKING WATER MCLs
 
 export const PFAS_STANDARDS = [

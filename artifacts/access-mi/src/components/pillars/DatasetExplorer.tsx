@@ -3,7 +3,7 @@
  *
  * Lists datasets by pillar and geography level.
  * For a selected dataset, queries real data and shows table + basic stats.
- * Shows "not yet loaded" for pending datasets — never fake rows.
+ * Shows "not yet loaded" for pending datasets - never fake rows.
  */
 
 import { useState, useMemo } from "react";
@@ -226,7 +226,7 @@ function DatasetDetail({ datasetId, countyFilter }: { datasetId: string; countyF
               <tr key={i} className="border-t border-border/50 hover:bg-muted/30">
                 {columns.slice(0, 8).map((key) => (
                   <td key={key} className="px-3 py-2 text-foreground whitespace-nowrap max-w-[200px] truncate">
-                    {String(row[key] ?? "—").slice(0, 100)}
+                    {String(row[key] ?? "-").slice(0, 100)}
                   </td>
                 ))}
               </tr>

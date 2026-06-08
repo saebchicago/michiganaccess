@@ -87,7 +87,7 @@ export default function PillarInsightCard({
       <Card>
         <CardContent className="p-5">
           <h3 className="font-semibold text-sm text-foreground mb-1">{title}</h3>
-          <DataUnavailable reason="Data not yet available — dataset registered but ingestion pending." />
+          <DataUnavailable reason="Data not yet available - dataset registered but ingestion pending." />
           {source && <p className="text-[10px] text-muted-foreground mt-2">Source: {source}</p>}
         </CardContent>
       </Card>
@@ -195,7 +195,7 @@ export default function PillarInsightCard({
             </div>
             {typeof value === "number" && typeof compareValue === "number" && value > 0 && compareValue < value && (
               <p className="text-amber-600 dark:text-amber-400 font-medium mt-1">
-                ⚠ Capacity gap detected — need exceeds available resources.
+                ⚠ Capacity gap detected - need exceeds available resources.
               </p>
             )}
           </div>

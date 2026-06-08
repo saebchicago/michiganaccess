@@ -1,5 +1,5 @@
 /**
- * Universal Benefits Pre-Screener — 2026 Michigan FPL-based eligibility flow.
+ * Universal Benefits Pre-Screener - 2026 Michigan FPL-based eligibility flow.
  * 4-step interactive screener with document checklists.
  * Uses 2026 MDHHS eligibility standards.
  */
@@ -143,7 +143,7 @@ export default function UniversalPreScreener() {
           <Badge variant="outline" className="text-[10px] ml-auto">2026 Standards</Badge>
         </CardTitle>
         <p className="text-xs text-muted-foreground">
-          Check which Michigan assistance programs you may qualify for. No data is stored — 100% private.
+          Check which Michigan assistance programs you may qualify for. No data is stored - 100% private.
         </p>
       </CardHeader>
 

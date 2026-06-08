@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 
 // NOAA Great Lakes water levels via CO-OPS API
 // Station IDs for Michigan Great Lakes gauges
-// Fallback levels (ft IGLD) if NOAA API is unavailable — from USACE monthly bulletins
+// Fallback levels (ft IGLD) if NOAA API is unavailable - from USACE monthly bulletins
 const FALLBACK_LEVELS: Record<string, number> = {
   "9075014": 578.8,  // Michigan-Huron
   "9099064": 601.9,  // Superior
@@ -66,7 +66,7 @@ export default function GreatLakesLevels() {
             </div>
           )}
 
-          {/* Level 1: Key KPI — Michigan-Huron level prominently */}
+          {/* Level 1: Key KPI - Michigan-Huron level prominently */}
           {data && (
             <>
               <button
@@ -78,7 +78,7 @@ export default function GreatLakesLevels() {
                   <div className="text-left">
                     <p className="text-[10px] text-muted-foreground">Michigan-Huron</p>
                     <p className="text-2xl font-bold text-primary">
-                      {data[0]?.currentFt != null ? `${data[0].currentFt.toFixed(1)} ft` : "—"}
+                      {data[0]?.currentFt != null ? `${data[0].currentFt.toFixed(1)} ft` : "-"}
                     </p>
                     {data[0]?.currentFt != null && (
                       <span className={`text-[10px] ${(data[0].currentFt - data[0].avgFt) > 0.5 ? "text-michigan-teal" : (data[0].currentFt - data[0].avgFt) < -0.5 ? "text-michigan-coral" : "text-muted-foreground"}`}>
@@ -111,7 +111,7 @@ export default function GreatLakesLevels() {
                           <div key={lake.name} className="rounded-lg border border-border p-3 text-center">
                             <p className="text-xs font-semibold text-foreground">{lake.name}</p>
                             <p className="text-lg font-bold text-primary">
-                              {lake.currentFt != null ? `${lake.currentFt.toFixed(1)} ft` : "—"}
+                              {lake.currentFt != null ? `${lake.currentFt.toFixed(1)} ft` : "-"}
                             </p>
                             {diff != null && (
                               <Badge variant="outline" className={`text-[8px] ${diff > 0.5 ? "text-michigan-teal" : diff < -0.5 ? "text-michigan-coral" : "text-muted-foreground"}`}>

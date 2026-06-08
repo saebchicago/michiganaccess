@@ -207,10 +207,10 @@ export default function MoneyFlowSankey() {
       <div className="mb-3 flex items-center justify-between flex-wrap gap-2">
         <div>
           <h3 className="text-sm font-bold text-foreground">
-            Federal Money Flow — Michigan FY2024
+            Federal Money Flow - Michigan FY2024
           </h3>
           <p className="text-xs text-muted-foreground">
-            Source: USASpending.gov FY2024 — federal awards to Michigan counties
+            Source: USASpending.gov FY2024 - federal awards to Michigan counties
           </p>
         </div>
         <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">

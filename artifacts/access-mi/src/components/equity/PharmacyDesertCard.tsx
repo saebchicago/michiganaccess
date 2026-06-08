@@ -19,7 +19,7 @@ export default function PharmacyDesertCard() {
           <CardTitle className="flex items-center gap-2 text-base">
             <Pill className="h-5 w-5 text-michigan-coral" /> Pharmacy Access Risk
           </CardTitle>
-          <CardDescription>Estimated based on county type and reported chain closures — not precise pharmacy counts</CardDescription>
+          <CardDescription>Estimated based on county type and reported chain closures - not precise pharmacy counts</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-3 sm:grid-cols-3">

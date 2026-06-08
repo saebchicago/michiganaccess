@@ -44,7 +44,7 @@ const ZONING_CATEGORIES = [
   { code: "M-1", title: "Light Industrial", icon: Factory, description: "Light manufacturing, warehouses, flex space. Usually buffered from residential areas." },
   { code: "AG", title: "Agricultural", icon: TreePine, description: "Farming, large lot single-family, rural uses. Minimum lot sizes typically 10+ acres." },
   { code: "PUD", title: "Planned Unit Development", icon: Landmark, description: "Custom mixed-use project with negotiated standards. Requires special approval from planning commission." },
-  { code: "FP / FLD", title: "Floodplain Overlay", icon: Waves, description: "FEMA flood zone — special insurance and building requirements. Development restrictions apply." },
+  { code: "FP / FLD", title: "Floodplain Overlay", icon: Waves, description: "FEMA flood zone - special insurance and building requirements. Development restrictions apply." },
 ];
 
 const fadeUp = {
@@ -203,7 +203,7 @@ export default function ZoningPage() {
                       <cat.icon className="h-5 w-5 text-michigan-blue shrink-0" />
                       <div>
                         <span className="font-semibold text-foreground">{cat.code}</span>
-                        <span className="text-muted-foreground ml-2">— {cat.title}</span>
+                        <span className="text-muted-foreground ml-2">- {cat.title}</span>
                       </div>
                     </div>
                   </AccordionTrigger>

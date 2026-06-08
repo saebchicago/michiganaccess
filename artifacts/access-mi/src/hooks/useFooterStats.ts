@@ -1,5 +1,5 @@
 /**
- * useFooterStats — dynamic civic platform metrics for the Footer status bar.
+ * useFooterStats - dynamic civic platform metrics for the Footer status bar.
  *
  * Every number this hook returns must come from the platform SSOT
  * (`@/config/platformConstants`). Adding a local hardcoded count here is

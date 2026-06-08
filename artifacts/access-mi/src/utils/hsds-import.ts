@@ -7,7 +7,7 @@
  * Open Referral HSDS: https://docs.openreferral.org/
  * Michigan 211 partnership contact: Shelby Lummis, slummis@uwmich.org
  *
- * This is a foundation stub — full implementation requires HSDS data samples
+ * This is a foundation stub - full implementation requires HSDS data samples
  * from Michigan 211.
  */
 
@@ -107,7 +107,7 @@ export function validateHsdsPackage(data: {
 
 /**
  * Maps HSDS data to the Access Michigan community_resources format.
- * Stub — expand when real HSDS data is available from Michigan 211.
+ * Stub - expand when real HSDS data is available from Michigan 211.
  */
 export function mapHsdsToResources(data: {
   organizations: HsdsOrganization[];

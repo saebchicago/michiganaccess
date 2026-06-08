@@ -18,7 +18,7 @@ interface Program {
 const PROGRAMS: Program[] = [
   {
     title: "Michigan Activity Pass",
-    description: "Free day passes to over 100 state parks, campgrounds, and recreation areas — available at any Michigan library.",
+    description: "Free day passes to over 100 state parks, campgrounds, and recreation areas - available at any Michigan library.",
     eligibility: ["library card holders"],
     url: "https://www.michigan.gov/dnr/places/state-parks/map",
     icon: <TreePine className="h-5 w-5" />,

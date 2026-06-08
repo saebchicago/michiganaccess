@@ -121,7 +121,7 @@ export default function SiteSearch() {
         e.preventDefault();
         commandSiteSearch("toggle");
       }
-      // "/" shortcut (like GitHub) — only when not typing in a field
+      // "/" shortcut (like GitHub) - only when not typing in a field
       if (e.key === "/" && !e.metaKey && !e.ctrlKey) {
         const tag = (e.target as HTMLElement)?.tagName;
         if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
@@ -212,7 +212,7 @@ export default function SiteSearch() {
         seenCounties.add(m.county);
         countyResults.push({
           label: `${m.county} County`,
-          sublabel: "County profile — health data, programs & resources",
+          sublabel: "County profile - health data, programs & resources",
           href: `/place/${countyToSlug(m.county)}-county`,
           category: "county",
         });
@@ -454,7 +454,7 @@ export default function SiteSearch() {
 
               {/* No DB results + no smart suggestions = empty fallback */}
               {query.length >= 2 && !loading && results.length === 0 && smartSuggestions[0]?.category === "popular" && (
-                <CommandGroup heading={`No results for "${query}" — try a county, ZIP, or service name`}>
+                <CommandGroup heading={`No results for "${query}" - try a county, ZIP, or service name`}>
                   {smartSuggestions.map((s, i) => (
                     <CommandItem
                       key={`fallback-${i}`}

@@ -1,5 +1,5 @@
 /**
- * MetricCluster — groups 3 key metric cards with mini-bar indicators.
+ * MetricCluster - groups 3 key metric cards with mini-bar indicators.
  * Pure CSS, no chart lib dependency.
  */
 import { Card, CardContent } from "@/components/ui/card";
@@ -31,24 +31,24 @@ export default function MetricCluster({ county }: MetricClusterProps) {
       icon: Heart,
       title: "Health",
       items: [
-        { label: "Uninsured", value: !isNaN(uninsured) ? `${uninsured}%` : "—", fill: !isNaN(uninsured) ? (uninsured / 15) * 100 : 0, color: "bg-primary" },
-        { label: "Food Insecurity", value: !isNaN(food) ? `${food}%` : "—", fill: !isNaN(food) ? (food / 25) * 100 : 0, color: "bg-michigan-coral" },
+        { label: "Uninsured", value: !isNaN(uninsured) ? `${uninsured}%` : "-", fill: !isNaN(uninsured) ? (uninsured / 15) * 100 : 0, color: "bg-primary" },
+        { label: "Food Insecurity", value: !isNaN(food) ? `${food}%` : "-", fill: !isNaN(food) ? (food / 25) * 100 : 0, color: "bg-michigan-coral" },
       ],
     },
     {
       icon: Home,
       title: "Housing",
       items: [
-        { label: "Rent Burdened", value: cd.rentBurden !== null ? `${cd.rentBurden}%` : "—", fill: cd.rentBurden !== null ? (cd.rentBurden / 50) * 100 : 0, color: "bg-michigan-gold" },
-        { label: "Poverty Rate", value: cd.povertyRate !== null ? `${cd.povertyRate}%` : "—", fill: cd.povertyRate !== null ? (cd.povertyRate / 30) * 100 : 0, color: "bg-michigan-gold" },
+        { label: "Rent Burdened", value: cd.rentBurden !== null ? `${cd.rentBurden}%` : "-", fill: cd.rentBurden !== null ? (cd.rentBurden / 50) * 100 : 0, color: "bg-michigan-gold" },
+        { label: "Poverty Rate", value: cd.povertyRate !== null ? `${cd.povertyRate}%` : "-", fill: cd.povertyRate !== null ? (cd.povertyRate / 30) * 100 : 0, color: "bg-michigan-gold" },
       ],
     },
     {
       icon: Zap,
       title: "Utilities",
       items: [
-        { label: "Water Compliance", value: cd.drinkingWaterCompliance !== null ? `${cd.drinkingWaterCompliance}%` : "—", fill: cd.drinkingWaterCompliance !== null ? cd.drinkingWaterCompliance : 0, color: "bg-michigan-teal" },
-        { label: "Vehicle Access", value: cd.vehicleAccess !== null ? `${cd.vehicleAccess}%` : "—", fill: cd.vehicleAccess !== null ? cd.vehicleAccess : 0, color: "bg-michigan-forest" },
+        { label: "Water Compliance", value: cd.drinkingWaterCompliance !== null ? `${cd.drinkingWaterCompliance}%` : "-", fill: cd.drinkingWaterCompliance !== null ? cd.drinkingWaterCompliance : 0, color: "bg-michigan-teal" },
+        { label: "Vehicle Access", value: cd.vehicleAccess !== null ? `${cd.vehicleAccess}%` : "-", fill: cd.vehicleAccess !== null ? cd.vehicleAccess : 0, color: "bg-michigan-forest" },
       ],
     },
   ];

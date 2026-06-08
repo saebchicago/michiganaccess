@@ -115,7 +115,7 @@ export default function CompoundDeficitRanking() {
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
             <Info className="h-5 w-5 text-primary" />
-            Compound Access Deficit Index — 83 County Rankings
+            Compound Access Deficit Index - 83 County Rankings
           </CardTitle>
           <CardDescription>
             Weighted index: food (15%) + broadband (15%) + transit (15%) +

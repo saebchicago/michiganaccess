@@ -1,5 +1,5 @@
 /**
- * CDC PLACES API client — ZCTA (ZIP code) level health data
+ * CDC PLACES API client - ZCTA (ZIP code) level health data
  * Source: CDC, Robert Wood Johnson Foundation, CDC Foundation
  * Dataset: qnzd-25i4 (ZCTA 2024 release)
  * No auth required.

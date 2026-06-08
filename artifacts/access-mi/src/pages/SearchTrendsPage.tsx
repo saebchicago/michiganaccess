@@ -222,7 +222,7 @@ export default function SearchTrendsPage() {
                               {t.zeroResults > 0 ? (
                                 <Badge variant="destructive" className="text-[10px]">{t.zeroResults}</Badge>
                               ) : (
-                                <span className="text-muted-foreground">—</span>
+                                <span className="text-muted-foreground">-</span>
                               )}
                             </td>
                           </tr>
@@ -261,7 +261,7 @@ export default function SearchTrendsPage() {
                 <CardHeader><CardTitle className="text-lg">Search Source Breakdown</CardTitle></CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Where searches originate — hero search bar vs. command palette (⌘K).
+                    Where searches originate - hero search bar vs. command palette (⌘K).
                   </p>
                   {data.sourceBreakdown && data.sourceBreakdown.length > 0 ? (
                     <div className="grid gap-6 md:grid-cols-2 items-center">
@@ -312,7 +312,7 @@ export default function SearchTrendsPage() {
 
             <TabsContent value="gaps">
               <Card>
-                <CardHeader><CardTitle className="text-lg">Content Gaps — Searches with Zero Results</CardTitle></CardHeader>
+                <CardHeader><CardTitle className="text-lg">Content Gaps - Searches with Zero Results</CardTitle></CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">
                     These terms returned no results, indicating potential content or resource gaps to address.

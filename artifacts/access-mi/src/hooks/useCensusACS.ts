@@ -145,7 +145,7 @@ export function useCensusACS(options: UseCensusACSOptions) {
 
 /** True when the response carries usable ACS data. Treat any
  *  unavailable-source or parse-error payload as a hard failure
- *  upstream — never as a reason to substitute defaults. */
+ *  upstream - never as a reason to substitute defaults. */
 export function isCensusAvailable(
   data: CensusACSResponse | undefined,
 ): data is CensusACSResponse {

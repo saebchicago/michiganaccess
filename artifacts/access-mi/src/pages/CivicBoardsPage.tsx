@@ -13,8 +13,8 @@ import BoardCard from "@/components/civic/BoardCard";
 
 const CivicBoardsPage = () => {
   usePageMeta({
-    title: "Where to Serve — Governing Boards — Access Michigan",
-    description: "15 types of Michigan governing boards where residents can apply. Health, housing, transit, environment, education — with how-to-apply guides.",
+    title: "Where to Serve - Governing Boards - Access Michigan",
+    description: "15 types of Michigan governing boards where residents can apply. Health, housing, transit, environment, education - with how-to-apply guides.",
     path: "/civic-power/boards",
   });
 
@@ -47,7 +47,7 @@ const CivicBoardsPage = () => {
               ~50,000 Governing Board Seats
             </h1>
             <p className="text-base text-muted-foreground">
-              Only 7% of governing board members found their seat through public channels. Here are {MICHIGAN_BOARDS.length} board types — with who appoints, compensation, time commitment, and how to apply.
+              Only 7% of governing board members found their seat through public channels. Here are {MICHIGAN_BOARDS.length} board types - with who appoints, compensation, time commitment, and how to apply.
             </p>
             <p className="text-xs text-muted-foreground/60 mt-1">Santa Cruz County 2025 Boards Survey · Michigan statutory authorities</p>
           </div>

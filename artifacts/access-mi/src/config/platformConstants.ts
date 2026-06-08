@@ -56,7 +56,7 @@ export const RESOURCE_COUNT_DISPLAY = "15,000+";
  */
 export const RESOURCE_COUNT = 15000;
 
-/** Site-supported UI languages — matches src/i18n locales (en, es, ar, bn). */
+/** Site-supported UI languages - matches src/i18n locales (en, es, ar, bn). */
 export const LANGUAGES_SUPPORTED = 4;
 
 /** All 83 Michigan counties. Constant for consistency with copy. */
@@ -151,7 +151,7 @@ export const CURRENT_VERSION =
   PLATFORM_RELEASES[PLATFORM_RELEASES.length - 1]!.version;
 
 /**
- * Three-field freshness model — replaces single "Updated <month>" stamps.
+ * Three-field freshness model - replaces single "Updated <month>" stamps.
  *
  *   sourceYear     vintage of the underlying data (e.g., "2022 5-Year ACS")
  *   lastPulled     when we ingested it into the platform (YYYY-MM-DD)

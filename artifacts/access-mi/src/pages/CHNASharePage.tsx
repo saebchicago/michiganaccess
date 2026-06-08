@@ -133,7 +133,7 @@ export function CHNASharePage() {
   const [downloading, setDownloading] = useState(false);
 
   usePageMeta({
-    title: `${priority.label} — CHNA Brief — Access Michigan`,
+    title: `${priority.label} - CHNA Brief - Access Michigan`,
     description: `${system.label} CHNA priority brief: ${priority.label}. Tract-level SDOH and environmental indicators at neighborhood resolution.`,
     path: "/chna/share",
   });
@@ -320,7 +320,7 @@ export function CHNASharePage() {
           <Link to="/chna-explorer" className="text-primary hover:underline">
             Explore the full CHNA dataset
           </Link>
-          {" — "}
+          {" - "}
           <a href="https://accessmi.org" className="hover:underline">
             accessmi.org
           </a>

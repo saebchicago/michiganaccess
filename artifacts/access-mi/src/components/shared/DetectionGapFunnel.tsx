@@ -42,7 +42,7 @@ export default function DetectionGapFunnel({ variant = "full" }: DetectionGapFun
             <h3 className="text-sm font-bold text-foreground">The Detection Gap</h3>
             <Badge variant="outline" className="text-[9px] font-normal uppercase tracking-wider text-muted-foreground border-border">Modeled Estimate</Badge>
           </div>
-          <p className="text-xs text-muted-foreground">From 1.77M beneficiaries to documented outcomes — where the system loses people</p>
+          <p className="text-xs text-muted-foreground">From 1.77M beneficiaries to documented outcomes - where the system loses people</p>
           <p className="text-[10px] text-muted-foreground mt-1">
             Method: Michigan MCO enrollment (1.77M) × national benchmark rates (NACHC, AHC Model). Not measured MI outcomes.{" "}
             <Link to="/methodology#sdoh-funnel" className="underline hover:text-foreground">Methodology →</Link>
@@ -92,7 +92,7 @@ export default function DetectionGapFunnel({ variant = "full" }: DetectionGapFun
                   {stage.pct != null ? (
                     <span className="text-xs font-semibold tabular-nums text-foreground">{stage.pct}%</span>
                   ) : (
-                    <span className="text-xs text-muted-foreground">—</span>
+                    <span className="text-xs text-muted-foreground">-</span>
                   )}
                 </div>
               </div>

@@ -21,7 +21,7 @@ export default function StatusPage2() {
   const [results, setResults] = useState<HealthCheckResult[]>([]);
   const [loading, setLoading] = useState(true);
 
-  usePageMeta({ title: "System Status — Access Michigan", description: "Live API health status for Access Michigan data sources.", path: "/status" });
+  usePageMeta({ title: "System Status - Access Michigan", description: "Live API health status for Access Michigan data sources.", path: "/status" });
 
   const refresh = async () => {
     setLoading(true);

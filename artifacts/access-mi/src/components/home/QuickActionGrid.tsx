@@ -23,7 +23,7 @@ export default function QuickActionGrid() {
     <section className="py-10">
       <div className="container">
         <h2 className="mb-1 text-lg font-bold text-foreground md:text-xl">I need to…</h2>
-        <p className="mb-5 text-sm text-muted-foreground">Pick what you need — we'll take you straight there.</p>
+        <p className="mb-5 text-sm text-muted-foreground">Pick what you need - we'll take you straight there.</p>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
           {actions.map((a, i) => (
             <motion.div key={a.label} initial="hidden" whileInView="show" viewport={{ once: true }} variants={item} custom={i}>

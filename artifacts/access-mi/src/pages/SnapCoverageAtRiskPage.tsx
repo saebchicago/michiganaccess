@@ -28,7 +28,7 @@ const METHODOLOGY_URL = "/methodology/snap-coverage-at-risk";
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function fmtN(n: number | null | undefined): string {
-  if (n == null) return "—";
+  if (n == null) return "-";
   return n.toLocaleString();
 }
 
@@ -101,7 +101,7 @@ export default function SnapCoverageAtRiskPage() {
     path: "/data/snap-coverage-at-risk",
     jsonLd: {
       "@type": "Dataset",
-      "name": "Michigan SNAP Coverage at Risk — P.L. 119-21 County Projections",
+      "name": "Michigan SNAP Coverage at Risk - P.L. 119-21 County Projections",
       "description":
         "County-level modeled ranges of Michigan SNAP participants in categories affected by P.L. 119-21 work requirement provisions. Based on MLPP Michigan estimate (74,000), allocated by county enrollment share with ±40% GAO-19-56 uncertainty band.",
       "url": "https://accessmi.org/data/snap-coverage-at-risk",
@@ -171,7 +171,7 @@ export default function SnapCoverageAtRiskPage() {
               <h1 className="text-3xl font-bold tracking-tight">SNAP Coverage at Risk</h1>
               <p className="text-muted-foreground mt-1">
                 Michigan county-level estimates of SNAP participants in categories affected by
-                P.L. 119-21 work requirement provisions. All figures are modeled ranges —
+                P.L. 119-21 work requirement provisions. All figures are modeled ranges -
                 not point estimates. Exposure does not equal loss.
               </p>
             </div>
@@ -192,7 +192,7 @@ export default function SnapCoverageAtRiskPage() {
                 that CBO, MLPP, and CBPP project may be affected by P.L. 119-21.
                 Individual outcomes depend on state implementation, work requirement compliance
                 pathways, employment status, and administrative factors. The ranges describe
-                populations at elevated exposure — they do not predict who will or will not
+                populations at elevated exposure - they do not predict who will or will not
                 retain SNAP enrollment.{" "}
                 <Link to={METHODOLOGY_URL} className="underline hover:text-primary">
                   Full methodology →
@@ -213,7 +213,7 @@ export default function SnapCoverageAtRiskPage() {
               label="Michigan adults in affected ABAWD categories (MLPP state estimate)"
               provenance={
                 <DataProvenance
-                  sourceName="MLPP — Federal Megabill Food Assistance"
+                  sourceName="MLPP - Federal Megabill Food Assistance"
                   sourceUrl="https://mlpp.org/the-cost-of-the-federal-megabill-food-assistance/"
                   asOfDate="November 2025"
                   cadence="Updated as legislation develops"
@@ -227,7 +227,7 @@ export default function SnapCoverageAtRiskPage() {
               testId="snap-stat-usda"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : fmtN(STATE_RANGE_LOW) + "–" + fmtN(STATE_RANGE_HIGH)}
-              label="Statewide modeled range (±40% GAO uncertainty band) — not a point estimate"
+              label="Statewide modeled range (±40% GAO uncertainty band) - not a point estimate"
               provenance={
                 <DataProvenance
                   {...modeled_provenance_props}
@@ -239,13 +239,13 @@ export default function SnapCoverageAtRiskPage() {
               testId="snap-stat-counties"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "83"}
-              label="Michigan counties — complete statewide coverage (all 83)"
+              label="Michigan counties - complete statewide coverage (all 83)"
               provenance={
                 <DataProvenance
                   sourceName="Michigan county count (fixed)"
                   sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate="FY2022"
-                  cadence="Static — 83 Michigan counties"
+                  cadence="Static - 83 Michigan counties"
                   dataKind="measured"
                   compact
                 />
@@ -260,7 +260,7 @@ export default function SnapCoverageAtRiskPage() {
             <h2 className="text-xl font-semibold">County breakdown</h2>
             <div className="flex items-center gap-3">
               <p className="text-xs text-muted-foreground hidden sm:block">
-                Modeled range — not a point estimate
+                Modeled range - not a point estimate
               </p>
               <button
                 data-testid="snap-csv-download"
@@ -306,7 +306,7 @@ export default function SnapCoverageAtRiskPage() {
                         onSort={handleSort}
                       />
                       <span className="text-[9px] text-muted-foreground/70 font-normal">
-                        modeled range — not a point estimate
+                        modeled range - not a point estimate
                       </span>
                     </div>
                   </th>
@@ -320,7 +320,7 @@ export default function SnapCoverageAtRiskPage() {
                         onSort={handleSort}
                       />
                       <span className="text-[9px] text-muted-foreground/70 font-normal">
-                        modeled range — not a point estimate
+                        modeled range - not a point estimate
                       </span>
                     </div>
                   </th>
@@ -384,7 +384,7 @@ export default function SnapCoverageAtRiskPage() {
               <Link data-testid="snap-medicaid-crosslink" to="/data/medicaid-coverage-at-risk" className="text-primary hover:underline font-medium">
                 Medicaid Coverage at Risk
               </Link>
-              {" "}— county-level exposure to P.L. 119-21 work requirement provisions{" "}
+              {" "}- county-level exposure to P.L. 119-21 work requirement provisions{" "}
               <Link to="/methodology/medicaid-coverage-at-risk" className="text-xs text-muted-foreground hover:underline">
                 (methodology)
               </Link>

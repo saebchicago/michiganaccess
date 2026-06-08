@@ -42,23 +42,23 @@ const NotaryServicesPage = () => {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li className="flex gap-2">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
-                <span><strong>Banks & Credit Unions</strong> — Most branches offer free notary services to account holders.</span>
+                <span><strong>Banks & Credit Unions</strong> - Most branches offer free notary services to account holders.</span>
               </li>
               <li className="flex gap-2">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
-                <span><strong>UPS Stores & Shipping Centers</strong> — Available for a small fee, no appointment needed at most locations.</span>
+                <span><strong>UPS Stores & Shipping Centers</strong> - Available for a small fee, no appointment needed at most locations.</span>
               </li>
               <li className="flex gap-2">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
-                <span><strong>Public Libraries</strong> — Some Michigan libraries provide notary services; call ahead to confirm.</span>
+                <span><strong>Public Libraries</strong> - Some Michigan libraries provide notary services; call ahead to confirm.</span>
               </li>
               <li className="flex gap-2">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
-                <span><strong>Law Offices & Real Estate Offices</strong> — Often have a notary on staff.</span>
+                <span><strong>Law Offices & Real Estate Offices</strong> - Often have a notary on staff.</span>
               </li>
               <li className="flex gap-2">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary shrink-0" aria-hidden="true" />
-                <span><strong>AAA Offices</strong> — Available for members at many Michigan locations.</span>
+                <span><strong>AAA Offices</strong> - Available for members at many Michigan locations.</span>
               </li>
             </ul>
           </CardContent>
@@ -72,7 +72,7 @@ const NotaryServicesPage = () => {
             </h2>
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>• Bring a <strong>valid photo ID</strong> (driver's license, passport, or state ID).</p>
-              <p>• <strong>Do not sign</strong> the document before meeting the notary — they must witness your signature.</p>
+              <p>• <strong>Do not sign</strong> the document before meeting the notary - they must witness your signature.</p>
               <p>• Michigan law caps notary fees at <strong>$10 per notarial act</strong>.</p>
               <p>• <strong>Remote Online Notarization (RON)</strong> is legal in Michigan since 2018, allowing notarization via video call.</p>
             </div>
@@ -86,13 +86,13 @@ const NotaryServicesPage = () => {
               <a href="https://www.michigan.gov/sos/services/notary" target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-xs">
                   <ExternalLink className="h-3 w-3" aria-hidden="true" />
-                  Michigan Secretary of State — Notary Information
+                  Michigan Secretary of State - Notary Information
                 </Button>
               </a>
               <a href="https://www.nationalnotary.org/notary-bulletin" target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" size="sm" className="w-full justify-start gap-2 text-xs">
                   <ExternalLink className="h-3 w-3" aria-hidden="true" />
-                  National Notary Association — Find a Notary
+                  National Notary Association - Find a Notary
                 </Button>
               </a>
             </div>

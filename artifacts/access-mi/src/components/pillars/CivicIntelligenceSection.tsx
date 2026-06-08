@@ -78,7 +78,7 @@ export default function CivicIntelligenceSection({ countyName }: CivicIntelligen
         </div>
       </div>
 
-      {/* Summary cards — one per pillar, clickable */}
+      {/* Summary cards - one per pillar, clickable */}
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {PILLARS.map((p) => (
           <Link

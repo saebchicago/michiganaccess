@@ -319,7 +319,7 @@ export default function HealthEquityAtlasPage() {
         </Suspense>
       </div>
 
-      {/* Key Findings — verified data anchors */}
+      {/* Key Findings - verified data anchors */}
       <section className="container max-w-5xl py-8">
         <h2 className="text-lg font-bold text-foreground mb-4">Key Findings</h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

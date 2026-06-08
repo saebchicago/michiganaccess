@@ -49,7 +49,7 @@ export default function MarketIntelligencePage() {
   const [sortMetric, setSortMetric] = useState("avgSvi");
 
   usePageMeta({
-    title: "Regional Market Intelligence — Access Michigan",
+    title: "Regional Market Intelligence - Access Michigan",
     description: "Ambulatory gap analysis and health system presence across Michigan's 7 major regions.",
     path: "/market-intelligence",
   });

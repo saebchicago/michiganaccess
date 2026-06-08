@@ -51,7 +51,7 @@ export default function FinancialHelpPage() {
     path: "/financial-help",
     jsonLd: {
       "@type": "FAQPage",
-      "name": "Financial Help — Access Michigan",
+      "name": "Financial Help - Access Michigan",
       "description": "Free and reduced-cost healthcare, insurance programs, and prescription assistance for Michigan residents.",
       "url": "https://accessmi.org/financial-help",
       "mainEntity": [

@@ -44,7 +44,7 @@ function parseMetricValue(county: string, metric: Metric): number | null {
     }
     case "pcpRatio": {
       const v = profile.healthHighlights[1]?.value;
-      if (!v || v === "—" || v === "Varies") return null;
+      if (!v || v === "-" || v === "Varies") return null;
       const n = parseFloat(v.replace(/[,:]/g, "").split(":")[0] || "");
       return isNaN(n) ? null : n;
     }
@@ -241,7 +241,7 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
                       whileHover={{ scale: 1.15, zIndex: 10 }}
                       transition={{ type: "spring", stiffness: 400, damping: 20 }}
                       role="gridcell"
-                      aria-label={`${d.name} County: ${formatValue(d.value!, metric)} — rank ${sortedData.indexOf(d) + 1} of ${sortedData.length}`}
+                      aria-label={`${d.name} County: ${formatValue(d.value!, metric)} - rank ${sortedData.indexOf(d) + 1} of ${sortedData.length}`}
                     >
                       <span className="absolute inset-0 flex items-center justify-center text-[7px] sm:text-[8px] font-bold text-white/90 leading-none text-center px-0.5 drop-shadow-sm">
                         {d.name.length > 6 ? d.name.substring(0, 5) + "…" : d.name}

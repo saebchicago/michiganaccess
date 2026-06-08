@@ -15,12 +15,12 @@ export interface MichiganRegion {
 //   Forest green      #2E7D32  (West Michigan)
 //   Harvest orange    #F57C00  (East Central / Thumb)
 //   Teal              #26A69A  (South Central)
-//   Lake Superior     #0277BD  (Upper Peninsula — blue variant)
+//   Lake Superior     #0277BD  (Upper Peninsula - blue variant)
 export const MICHIGAN_REGIONS: MichiganRegion[] = [
   {
     id: "southeast",
     name: "Southeast Michigan",
-    description: "Metro Detroit region — the state's largest population center with major health systems and urban services.",
+    description: "Metro Detroit region - the state's largest population center with major health systems and urban services.",
     counties: ["Wayne", "Oakland", "Macomb", "Washtenaw", "Livingston", "Monroe", "St. Clair", "Lenawee", "Lapeer"],
     center: [42.45, -83.35],
     zoom: 9,
@@ -38,7 +38,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
   {
     id: "west",
     name: "West Michigan",
-    description: "Grand Rapids region — growing metro area with strong community health and nonprofit networks.",
+    description: "Grand Rapids region - growing metro area with strong community health and nonprofit networks.",
     counties: ["Kent", "Ottawa", "Muskegon", "Allegan", "Berrien", "Van Buren", "Cass", "St. Joseph", "Newaygo", "Oceana", "Mason", "Manistee", "Lake", "Osceola", "Mecosta", "Montcalm"],
     center: [43.1, -85.9],
     zoom: 8,
@@ -56,7 +56,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
   {
     id: "northwest",
     name: "Northern Lower Michigan",
-    description: "Traverse City region and northern communities — resort areas with seasonal healthcare demand.",
+    description: "Traverse City region and northern communities - resort areas with seasonal healthcare demand.",
     counties: ["Grand Traverse", "Emmet", "Charlevoix", "Antrim", "Benzie", "Leelanau", "Kalkaska", "Wexford", "Missaukee", "Roscommon", "Otsego", "Crawford", "Ogemaw", "Iosco", "Alpena", "Montmorency", "Oscoda", "Presque Isle", "Cheboygan", "Alcona"],
     center: [44.8, -85.0],
     zoom: 8,
@@ -65,7 +65,7 @@ export const MICHIGAN_REGIONS: MichiganRegion[] = [
   {
     id: "upper-peninsula",
     name: "Upper Peninsula",
-    description: "Michigan's UP — vast rural territory with critical access hospitals and frontier health challenges.",
+    description: "Michigan's UP - vast rural territory with critical access hospitals and frontier health challenges.",
     counties: ["Marquette", "Chippewa", "Delta", "Houghton", "Dickinson", "Menominee", "Baraga", "Gogebic", "Iron", "Keweenaw", "Luce", "Mackinac", "Ontonagon", "Schoolcraft", "Alger"],
     center: [46.3, -86.5],
     zoom: 7,

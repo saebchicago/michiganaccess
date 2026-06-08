@@ -1,5 +1,5 @@
 /**
- * Geo Dimension — Shared geography spine for all pillars.
+ * Geo Dimension - Shared geography spine for all pillars.
  *
  * Every dataset links to at least one key: ZIP, county FIPS, or census tract GEOID.
  * This model normalizes geography across health, environment, mobility, and economic pillars.

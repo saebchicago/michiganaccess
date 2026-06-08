@@ -1,5 +1,5 @@
 /**
- * MoEBadge — Shows a data quality warning when margin of error exceeds 20% of the estimate.
+ * MoEBadge - Shows a data quality warning when margin of error exceeds 20% of the estimate.
  */
 import { AlertTriangle } from "lucide-react";
 import {

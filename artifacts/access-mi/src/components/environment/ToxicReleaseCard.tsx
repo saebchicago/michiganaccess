@@ -29,7 +29,7 @@ export default function ToxicReleaseCard({ county }: Props) {
         </div>
 
         <div className="rounded-md bg-muted/50 px-3 py-2 text-xs text-foreground">
-          {facilities.length} {facilities.length === 1 ? "facility" : "facilities"} reporting toxic releases in {county} County — {(totalPounds / 1000000).toFixed(1)} million pounds released in 2022
+          {facilities.length} {facilities.length === 1 ? "facility" : "facilities"} reporting toxic releases in {county} County - {(totalPounds / 1000000).toFixed(1)} million pounds released in 2022
         </div>
 
         <div className="space-y-2">

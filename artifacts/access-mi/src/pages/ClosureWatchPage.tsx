@@ -164,7 +164,7 @@ export default function ClosureWatchPage() {
     path: "/closure-watch",
     jsonLd: {
       "@type": "WebPage",
-      name: "Michigan Closure Watch — Access Michigan",
+      name: "Michigan Closure Watch - Access Michigan",
       url: "https://accessmi.org/closure-watch",
     },
   });
@@ -195,7 +195,7 @@ export default function ClosureWatchPage() {
   );
 
   const mostRecentAsOf = useMemo(() => {
-    if (!verified.length) return "—";
+    if (!verified.length) return "-";
     const latest = verified.reduce((a, b) => (a.asOf > b.asOf ? a : b));
     return formatDate(latest.asOf);
   }, [verified]);
@@ -318,7 +318,7 @@ export default function ClosureWatchPage() {
         {/* Map */}
         <section>
           <h2 className="text-base font-semibold text-foreground mb-3">
-            Verified closures — Michigan map
+            Verified closures - Michigan map
           </h2>
           <Suspense
             fallback={

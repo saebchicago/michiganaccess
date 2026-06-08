@@ -1,4 +1,4 @@
-// Source Manifest — verified data anchors for the platform
+// Source Manifest - verified data anchors for the platform
 // Every numeric claim should trace to an entry here
 // Used by QA scripts and data freshness tracker
 
@@ -17,7 +17,7 @@ export const SOURCE_MANIFEST: VerifiedClaim[] = [
   { value: "625,852", context: "Michigan 211 annual requests", source: "Michigan 211", url: "https://mi211.org", verified: true },
   { value: "35", context: "Critical Access Hospitals in Michigan", source: "Flex Monitoring Team", url: "https://flexmonitoring.org", verified: true },
   { value: "$183.3M", context: "LIHEAP allocation Michigan", source: "LIHEAP Clearinghouse", url: "https://liheapch.acf.hhs.gov", verified: true },
-  { value: "$211M", context: "MiHER allocation (IRA/DOE energy rebates)", source: "EGLE", url: "https://michigan.gov/egle", verified: true, notes: "Michigan Home Energy Rebates — energy efficiency program, NOT Medicaid HRSN" },
+  { value: "$211M", context: "MiHER allocation (IRA/DOE energy rebates)", source: "EGLE", url: "https://michigan.gov/egle", verified: true, notes: "Michigan Home Energy Rebates - energy efficiency program, NOT Medicaid HRSN" },
   { value: "11,000+", context: "MiHER households served", source: "EGLE 2025 EOY Report", url: "https://michigan.gov/egle", verified: true },
   { value: "$96.6M", context: "Michigan Saves financed 2024", source: "Michigan Saves", url: "https://michigansaves.org", verified: true },
   { value: "328", context: "Confirmed PFAS contamination sites + 38 AOI", source: "MPART/EGLE", url: "https://michigan.gov/pfasresponse", verified: true },

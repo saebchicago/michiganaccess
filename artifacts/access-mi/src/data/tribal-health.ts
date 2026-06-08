@@ -1,5 +1,5 @@
 /** Michigan's 12 federally recognized tribal nations and their health facilities.
- * These are sovereign health systems — not state facilities. */
+ * These are sovereign health systems - not state facilities. */
 
 export interface TribalHealthFacility {
   tribe: string;

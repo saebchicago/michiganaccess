@@ -34,7 +34,7 @@ const HOW_TO_RUN = [
   },
   {
     title: "City Council",
-    content: "Varies by city charter — most require a nominating petition or caucus process. Check your city clerk's office for specific requirements and filing deadlines. Some cities hold partisan primaries; many are non-partisan.",
+    content: "Varies by city charter - most require a nominating petition or caucus process. Check your city clerk's office for specific requirements and filing deadlines. Some cities hold partisan primaries; many are non-partisan.",
     link: "https://mvic.sos.state.mi.us",
   },
   {
@@ -56,7 +56,7 @@ const HOW_TO_RUN = [
 
 const CivicRacesPage = () => {
   usePageMeta({
-    title: "Races That Need Candidates — Access Michigan",
+    title: "Races That Need Candidates - Access Michigan",
     description: "79.7% of Michigan's 15,139 races in 2024 were uncontested. See which regions and office types need candidates most.",
     path: "/civic-power/races",
   });
@@ -165,7 +165,7 @@ const CivicRacesPage = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-base">Which Offices Are Most Uncontested?</CardTitle>
-            <p className="text-xs text-muted-foreground">Michigan 2024 — estimated by office type. Source: Ballotpedia / Michigan SOS</p>
+            <p className="text-xs text-muted-foreground">Michigan 2024 - estimated by office type. Source: Ballotpedia / Michigan SOS</p>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">

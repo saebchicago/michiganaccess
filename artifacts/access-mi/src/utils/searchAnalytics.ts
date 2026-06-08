@@ -2,7 +2,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 /**
  * Log an anonymized search term to the search_analytics table.
- * Fire-and-forget — never blocks UI. No PII is stored.
+ * Fire-and-forget - never blocks UI. No PII is stored.
  */
 export function logSearch(params: {
   term: string;
@@ -33,7 +33,7 @@ export function logSearch(params: {
           corrected_to: params.correctedTo ?? null,
         });
     } catch {
-      // silent — never interrupt UX
+      // silent - never interrupt UX
     }
   })();
 }

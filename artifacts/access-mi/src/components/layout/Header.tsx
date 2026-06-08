@@ -32,7 +32,7 @@ import {
 } from "@/config/routes";
 import { cn } from "@/lib/utils";
 
-/** Check if current path matches a nav href — supports exact match and prefix match for nested routes */
+/** Check if current path matches a nav href - supports exact match and prefix match for nested routes */
 function isRouteActive(currentPath: string, href: string): boolean {
   if (currentPath === href) return true;
   // For routes like /zip/:code, match the prefix /zip

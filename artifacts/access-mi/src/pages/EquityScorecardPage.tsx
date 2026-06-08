@@ -229,7 +229,7 @@ export default function EquityScorecardPage() {
           </p>
         </div>
       </div>
-      {/* Equity Dashboard — Tabbed Sections */}
+      {/* Equity Dashboard - Tabbed Sections */}
       <div className="container max-w-5xl py-8">
         {/* Stat strip */}
         <div className="flex flex-wrap items-center justify-center gap-4 mb-6 text-center">

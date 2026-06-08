@@ -34,7 +34,7 @@ export default function TaxComparisonPage() {
               Michigan Tax Comparison
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
-              Same salary, two locations — see how much you'd keep. Includes city income tax, property tax, and auto insurance.
+              Same salary, two locations - see how much you'd keep. Includes city income tax, property tax, and auto insurance.
             </p>
           </motion.div>
         </div>

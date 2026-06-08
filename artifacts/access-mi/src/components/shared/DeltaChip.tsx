@@ -14,7 +14,7 @@ import { ArrowUp, ArrowDown, Minus } from "lucide-react";
  * @param benchmark    The comparison baseline (county avg, state avg)
  * @param higherIsBetter  true → higher value = green; false → lower = green
  * @param label        Short label shown after "vs" (e.g. "County", "MI Avg")
- * @param showAbsolute Optional — show the absolute diff instead of %
+ * @param showAbsolute Optional - show the absolute diff instead of %
  * @param precision    Decimal places for the diff (default 1)
  */
 export interface DeltaChipProps {

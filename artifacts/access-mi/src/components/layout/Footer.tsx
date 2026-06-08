@@ -28,7 +28,7 @@ import {
 import { replayTour } from "@/components/shared/OnboardingTour";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { DATA_SOURCE_DISPLAY } from "@/config/platformConstants";
-// toast import removed — no longer needed
+// toast import removed - no longer needed
 
 function FooterSection({
   title,
@@ -234,7 +234,7 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Link sections — collapsible on mobile for Services & About */}
+          {/* Link sections - collapsible on mobile for Services & About */}
           {footerSections.map((section) => (
             <FooterSection
               key={section.title}
@@ -252,7 +252,7 @@ const Footer = () => {
           <div className="flex items-center justify-center gap-2 mb-3">
             <div className="h-1.5 w-1.5 rounded-full bg-michigan-forest animate-pulse" />
             <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-              System Status — All Services Operational
+              System Status - All Services Operational
             </span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
@@ -349,7 +349,7 @@ const Footer = () => {
           <div className="mx-auto max-w-xl rounded-lg border border-primary/20 bg-primary/[0.06] px-4 py-3 text-center">
             <p className="flex items-center justify-center gap-1.5 text-xs text-foreground">
               <Sparkles className="h-3.5 w-3.5 text-primary" />
-              <span className="font-semibold">Access Michigan</span> — founded
+              <span className="font-semibold">Access Michigan</span> - founded
               as a citizen initiative by Michigan residents, continuously
               improving with community feedback.
             </p>

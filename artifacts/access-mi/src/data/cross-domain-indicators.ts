@@ -1,5 +1,5 @@
 /**
- * Cross-Domain County Indicators — Static curated data for all 83 Michigan counties.
+ * Cross-Domain County Indicators - Static curated data for all 83 Michigan counties.
  * Sources: ACS 5-Year (2022), BLS LAUS (2024), NCES/MI DOE (2023), FBI UCR (2022), EPA SDWIS (2024).
  * Where a metric is genuinely unavailable, use null.
  */

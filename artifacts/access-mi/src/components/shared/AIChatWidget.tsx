@@ -11,7 +11,7 @@ interface Message {
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const CHAT_URL = `${SUPABASE_URL}/functions/v1/civic-copilot`;
 
-/** Crisis signal detection — confidence-based, not exact match */
+/** Crisis signal detection - confidence-based, not exact match */
 const CRISIS_SIGNALS = [
   "suicide", "kill myself", "end my life", "hurt myself", "self harm",
   "crisis", "homeless tonight", "eviction today", "can't afford food",

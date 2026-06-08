@@ -8,7 +8,7 @@ const METRICS_FEATURES = [
   {
     icon: BarChart3,
     title: "Aggregated Usage Metrics",
-    description: "Page-level satisfaction rates, resource category utilization, and county-level engagement — fully anonymized.",
+    description: "Page-level satisfaction rates, resource category utilization, and county-level engagement - fully anonymized.",
   },
   {
     icon: Shield,

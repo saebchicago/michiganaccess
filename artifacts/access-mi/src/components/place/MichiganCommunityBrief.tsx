@@ -1,5 +1,5 @@
 /**
- * Michigan Community Brief — Deterministic civic briefing engine.
+ * Michigan Community Brief - Deterministic civic briefing engine.
  * Synthesizes existing Place indicators into a readable civic brief with
  * signal classification, resident takeaways, action priorities, and statewide context.
  */
@@ -65,7 +65,7 @@ const THEME_TEMPLATES: Record<string, (place: Place, signals: ClassifiedSignal[]
   housing: (place, signals) => {
     const rent = signals.find(s => s.indicator.id === "rent-burden");
     const poverty = signals.find(s => s.indicator.id === "poverty-rate");
-    if (rent?.direction === "worse") return `Housing costs are a pressure point — rent burden is higher than the Michigan average.`;
+    if (rent?.direction === "worse") return `Housing costs are a pressure point - rent burden is higher than the Michigan average.`;
     if (poverty?.direction === "worse") return `Economic strain is evident, with poverty rates above the state average.`;
     if (rent?.direction === "better") return `Housing affordability is relatively strong compared to Michigan overall.`;
     return null;
@@ -73,7 +73,7 @@ const THEME_TEMPLATES: Record<string, (place: Place, signals: ClassifiedSignal[]
   health: (place, signals) => {
     const uninsured = signals.find(s => s.indicator.id === "uninsured");
     const pc = signals.find(s => s.indicator.id === "pc-ratio");
-    if (uninsured?.direction === "worse" && pc?.direction === "worse") return `Healthcare access faces dual challenges — higher uninsured rates and fewer primary care providers per resident.`;
+    if (uninsured?.direction === "worse" && pc?.direction === "worse") return `Healthcare access faces dual challenges - higher uninsured rates and fewer primary care providers per resident.`;
     if (uninsured?.direction === "better") return `Health insurance coverage is stronger than most Michigan counties.`;
     if (pc?.direction === "worse") return `Primary care access is limited relative to population size.`;
     return null;
@@ -86,7 +86,7 @@ const THEME_TEMPLATES: Record<string, (place: Place, signals: ClassifiedSignal[]
   workforce: (place, signals) => {
     const income = signals.find(s => s.indicator.id === "median-income");
     const unemp = signals.find(s => s.indicator.id === "unemployment");
-    if (income?.direction === "worse" && unemp?.direction === "worse") return `The local economy shows strain — household incomes are lower and unemployment is higher than the state average.`;
+    if (income?.direction === "worse" && unemp?.direction === "worse") return `The local economy shows strain - household incomes are lower and unemployment is higher than the state average.`;
     if (income?.direction === "better") return `Household incomes are above the Michigan median, suggesting relative economic stability.`;
     if (unemp?.direction === "worse") return `Unemployment is higher than the state average, which may affect household stability.`;
     return null;
@@ -167,7 +167,7 @@ function buildNarrativeInsights(place: Place, classified: ClassifiedSignal[]): s
       const label = s.indicator.label;
       const phr = s.direction === "worse"
         ? `${label} is ${s.deviationPct.toFixed(0)}% ${s.indicator.direction === "lower-is-better" ? "above" : "below"} the state average.`
-        : `${label} is ${s.deviationPct.toFixed(0)}% ${s.indicator.direction === "lower-is-better" ? "below" : "above"} the state average — a relative strength.`;
+        : `${label} is ${s.deviationPct.toFixed(0)}% ${s.indicator.direction === "lower-is-better" ? "below" : "above"} the state average - a relative strength.`;
       insights.push(phr);
     }
   }
@@ -279,7 +279,7 @@ export function buildBriefMetaDescription(place: Place): string {
   const indicators = buildFullIndicators(place);
   const classified = classifyAll(indicators);
   const top = classified.slice(0, 2);
-  if (top.length === 0) return `Community brief for ${place.name}, Michigan — explore local health data and civic resources.`;
+  if (top.length === 0) return `Community brief for ${place.name}, Michigan - explore local health data and civic resources.`;
   const phrases = top.map(s => {
     const l = s.indicator.label.toLowerCase();
     return s.direction === "worse" ? `${l} above state avg` : `${l} is a strength`;
@@ -323,7 +323,7 @@ export default function MichiganCommunityBrief({ place }: { place: Place }) {
         <p className="text-xs text-muted-foreground">
           {sparse
             ? "Some indicators in this area have limited sample sizes. Insights blend available data with contextual community trends."
-            : "Every insight below comes from public indicators shown on this page — CDC, Census, HRSA, and state sources."}
+            : "Every insight below comes from public indicators shown on this page - CDC, Census, HRSA, and state sources."}
         </p>
       </motion.div>
 

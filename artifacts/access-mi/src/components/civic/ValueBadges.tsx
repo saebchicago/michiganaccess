@@ -21,7 +21,7 @@ export default function ValueBadges({ specialty, boardCertified, yearsExperience
 
   const specLower = specialty.toLowerCase();
 
-  // Sepsis follow-up metric — relevant for hospitalists, IM, critical care
+  // Sepsis follow-up metric - relevant for hospitalists, IM, critical care
   if (["internal medicine", "hospitalist", "critical care", "pulmonology", "infectious disease"].some((s) => specLower.includes(s))) {
     badges.push({
       label: "Sepsis Follow-Up",
@@ -31,7 +31,7 @@ export default function ValueBadges({ specialty, boardCertified, yearsExperience
     });
   }
 
-  // Cardiac rehab participation — cardiology, family med, IM
+  // Cardiac rehab participation - cardiology, family med, IM
   if (["cardiology", "internal medicine", "family medicine", "cardiac", "cardiovascular"].some((s) => specLower.includes(s))) {
     badges.push({
       label: "Cardiac Rehab",
@@ -41,7 +41,7 @@ export default function ValueBadges({ specialty, boardCertified, yearsExperience
     });
   }
 
-  // Health equity measure — NEW in PY 2026-2027 (1pt)
+  // Health equity measure - NEW in PY 2026-2027 (1pt)
   if (["family medicine", "internal medicine", "pediatrics", "ob/gyn", "obstetrics", "community health"].some((s) => specLower.includes(s))) {
     badges.push({
       label: "Health Equity",
@@ -51,7 +51,7 @@ export default function ValueBadges({ specialty, boardCertified, yearsExperience
     });
   }
 
-  // General VBC excellence — board certified with 10+ years
+  // General VBC excellence - board certified with 10+ years
   if (boardCertified && (yearsExperience || 0) >= 10) {
     badges.push({
       label: "VBC Leader",

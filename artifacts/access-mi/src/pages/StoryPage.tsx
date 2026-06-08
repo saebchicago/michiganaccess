@@ -231,7 +231,7 @@ export default function StoryPage() {
             {/* Source: SAMHSA/MDHHS 988 Performance */}
             <p className="text-base text-foreground">
               But Michigan answers 988 crisis calls in{" "}
-              <strong className="text-michigan-teal">13 seconds</strong> — best
+              <strong className="text-michigan-teal">13 seconds</strong> - best
               among high-volume states.
             </p>
             <p className="text-xs text-muted-foreground mt-1">
@@ -323,7 +323,7 @@ export default function StoryPage() {
               <CardContent className="py-5">
                 <p className="text-sm text-foreground leading-relaxed">
                   <strong>Sturgis Hospital</strong> converted to Michigan's
-                  first Rural Emergency Hospital in July 2023 — trading
+                  first Rural Emergency Hospital in July 2023 - trading
                   inpatient beds for guaranteed $291K/month federal payments and
                   105% outpatient rates.
                 </p>
@@ -385,7 +385,7 @@ export default function StoryPage() {
                     The Response
                   </p>
                   <p className="text-sm text-foreground leading-relaxed">
-                    Rx Kids — Flint's universal perinatal cash transfer —
+                    Rx Kids - Flint's universal perinatal cash transfer -
                     achieved 98% enrollment and raised trust in healthcare
                     institutions by 10 percentage points.
                   </p>
@@ -443,7 +443,7 @@ export default function StoryPage() {
             <button
               type="button"
               onClick={() => setTriageOpen(true)}
-              aria-label="Open help finder — get connected to Michigan resources"
+              aria-label="Open help finder - get connected to Michigan resources"
               className="inline-flex items-center gap-2 rounded-xl bg-white text-michigan-blue py-3 px-8 text-sm font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all"
             >
               <Heart className="h-4 w-4" fill="currentColor" /> Get Help Now
@@ -487,7 +487,7 @@ export default function StoryPage() {
             {...fadeIn}
             className="text-center text-sm text-muted-foreground mt-8"
           >
-            accessmi.org — Independent Michigan civic intelligence. Built by and
+            accessmi.org - Independent Michigan civic intelligence. Built by and
             for fellow Michiganders.
           </motion.p>
         </div>

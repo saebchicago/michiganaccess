@@ -18,7 +18,7 @@ function generateRecommendations(dataMap: Record<string, number>): string[] {
     .sort((a, b) => b.gap - a.gap);
 
   for (const g of gaps.slice(0, 3)) {
-    recs.push(`${g.measure} intervention needed (${g.value.toFixed(1)}% — ${g.gap.toFixed(1)} points above state average)`);
+    recs.push(`${g.measure} intervention needed (${g.value.toFixed(1)}% - ${g.gap.toFixed(1)} points above state average)`);
   }
   if (dataMap["Lack of Health Insurance"] && dataMap["Lack of Health Insurance"] > 8) {
     recs.push("Insurance enrollment outreach recommended");
@@ -47,7 +47,7 @@ export default function CommunityReportCard({ zipCode, data }: Props) {
     const w = window.open("", "_blank");
     if (!w) return;
 
-    w.document.write(`<!DOCTYPE html><html><head><title>Community Health Report Card — ZIP ${zipCode}</title>
+    w.document.write(`<!DOCTYPE html><html><head><title>Community Health Report Card - ZIP ${zipCode}</title>
 <style>
 body{font-family:system-ui,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#1a1a1a}
 h1{font-size:22px;color:#0A4C95;border-bottom:2px solid #00A3A1;padding-bottom:8px;margin-bottom:4px}
@@ -70,7 +70,7 @@ h2{font-size:15px;color:#0A4C95;margin-top:20px}
 <p class="meta">ZIP Code ${zipCode} · Population: ~${pop.toLocaleString()} · Generated ${date} · Source: Access Michigan (accessmi.org)</p>
 <div class="score-box">
 <div class="score-num">${score.score}</div>
-<div>/100 — <span class="grade">${score.tier?.badge ?? score.grade}</span></div>
+<div>/100 - <span class="grade">${score.tier?.badge ?? score.grade}</span></div>
 <p style="font-size:11px;color:#6b7280;margin-top:4px">${score.tier?.opportunity ?? ""}</p>
 <p style="font-size:10px;color:#6b7280;margin-top:8px">Neighborhood Health Score (illustrative composite)</p>
 </div>
@@ -88,7 +88,7 @@ ${recs.length ? `<h2>Recommendations</h2><div class="recs"><ol style="margin:0;p
 <p style="font-size:10px;color:#6b7280">CDC PLACES 2024 · BRFSS 2022 · Robert Wood Johnson Foundation · CDC Foundation · Census ACS</p>
 <div class="footer">
 <p>Access Michigan · accessmi.org · Independent civic intelligence platform</p>
-<p>Modeled estimates — see accessmi.org/methodology for documentation.</p>
+<p>Modeled estimates - see accessmi.org/methodology for documentation.</p>
 </div></body></html>`);
     w.document.close();
     w.print();

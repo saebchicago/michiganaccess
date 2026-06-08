@@ -69,7 +69,7 @@ export default function AirQualityChecker() {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <Wind className="h-5 w-5 text-michigan-sky" />
-          Live Air Quality — Check Your ZIP
+          Live Air Quality - Check Your ZIP
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -152,7 +152,7 @@ export default function AirQualityChecker() {
           >
             AirNow.gov <ExternalLink className="h-2.5 w-2.5" />
           </a>{" "}
-          — updated hourly
+          - updated hourly
         </p>
       </CardContent>
     </Card>

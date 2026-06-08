@@ -22,7 +22,7 @@ export default function MapSearchControl({ onLocationSelect }: MapSearchControlP
     if (!query.trim()) return;
     setLoading(true);
     try {
-      // Nominatim — free, privacy-respecting geocoder (OSM)
+      // Nominatim - free, privacy-respecting geocoder (OSM)
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query + ", Michigan")}&format=json&limit=5&countrycodes=us&viewbox=-90.5,41.6,-82.1,48.3&bounded=1`,
         { headers: { "User-Agent": "MichiganAccess/1.0" } }

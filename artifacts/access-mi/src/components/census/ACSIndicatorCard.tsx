@@ -1,5 +1,5 @@
 /**
- * ACSIndicatorCard — displays a single ACS metric with comparison to state avg
+ * ACSIndicatorCard - displays a single ACS metric with comparison to state avg
  * and a "So What?" contextual tooltip.
  */
 import { Card, CardContent } from "@/components/ui/card";
@@ -33,7 +33,7 @@ function getSoWhat(label: string, numericVal: number | null, stateVal: number | 
     return `Average monthly housing cost. HUD considers >30% of income "cost-burdened."`;
   }
   if (l.includes("poverty")) {
-    return `Percent of residents below the federal poverty threshold — affects eligibility for Medicaid, SNAP, and LIHEAP.`;
+    return `Percent of residents below the federal poverty threshold - affects eligibility for Medicaid, SNAP, and LIHEAP.`;
   }
   if (l.includes("unemploy")) {
     return `Share of the labor force actively seeking work. Higher rates may signal fewer local job opportunities.`;

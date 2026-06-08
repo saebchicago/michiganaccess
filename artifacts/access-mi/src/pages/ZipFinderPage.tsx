@@ -32,7 +32,7 @@ const METRICS: MetricDef[] = [
     key: "uninsured",
     label: "Uninsured Rate",
     unit: "%",
-    getter: () => null, // CDC PLACES is async — not available statically; we use quickstats proxy
+    getter: () => null, // CDC PLACES is async - not available statically; we use quickstats proxy
     source: "CDC PLACES 2024",
   },
   {
@@ -108,7 +108,7 @@ let nextId = 1;
 
 export default function ZipFinderPage() {
   usePageMeta({
-    title: "ZIP Finder — Multi-Criteria Filter",
+    title: "ZIP Finder - Multi-Criteria Filter",
     description: "Find Michigan ZIP codes by filtering on health, economic, and environmental metrics.",
     path: "/zip-finder",
   });
