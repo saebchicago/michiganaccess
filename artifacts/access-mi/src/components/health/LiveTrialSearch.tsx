@@ -42,7 +42,7 @@ export default function LiveTrialSearch() {
           Search Live Clinical Trials in Michigan
         </CardTitle>
         <CardDescription>
-          Real-time data from ClinicalTrials.gov — currently recruiting studies
+          Real-time data from ClinicalTrials.gov - currently recruiting studies
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

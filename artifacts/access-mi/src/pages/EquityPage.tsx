@@ -80,7 +80,7 @@ const travelBurden = [
 
 const EquityPage = () => {
   usePageMeta({
-    title: "Health Equity Framework — Access Michigan",
+    title: "Health Equity Framework - Access Michigan",
     description:
       "CDC SVI-weighted search ranking and safety-net prioritization across all 83 Michigan counties.",
     path: "/equity",
@@ -219,7 +219,7 @@ const EquityPage = () => {
           <Card className="mb-8">
             <CardContent className="py-6">
               <h2 className="text-lg font-bold text-foreground mb-1 flex items-center gap-2">
-                <Clock className="h-5 w-5 text-primary" /> Travel Time Burden —
+                <Clock className="h-5 w-5 text-primary" /> Travel Time Burden -
                 HPSA-Designated Counties
               </h2>
               <p className="text-xs text-muted-foreground mb-4">

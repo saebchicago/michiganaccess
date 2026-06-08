@@ -15,7 +15,7 @@ export interface WeeklyInsight {
 export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
   {
     week: 0,
-    text: "Rural Michigan counties have 7x fewer PCPs per capita than urban counties — yet rural residents travel 3x further for specialty care.",
+    text: "Rural Michigan counties have 7x fewer PCPs per capita than urban counties - yet rural residents travel 3x further for specialty care.",
     source: "HRSA HPSA data + County Health Rankings & Roadmaps, 2025 edition",
     href: "/health-equity-atlas",
     dataPoints: [
@@ -26,7 +26,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
   },
   {
     week: 1,
-    text: "41% of Michigan households fall below the ALICE threshold — earning too much for aid but not enough for basics.",
+    text: "41% of Michigan households fall below the ALICE threshold - earning too much for aid but not enough for basics.",
     source: "United For ALICE 2023",
     href: "/equity",
     dataPoints: [
@@ -81,7 +81,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
   },
   {
     week: 6,
-    text: "Michigan's prison population dropped from 51,554 to 32,778 — the lowest since 1991.",
+    text: "Michigan's prison population dropped from 51,554 to 32,778 - the lowest since 1991.",
     source: "MDOC 2025",
     href: "/reentry",
     dataPoints: [
@@ -136,7 +136,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
   },
   {
     week: 11,
-    text: "Birmingham (48009) has an average AGI of $142,000 while Detroit East (48205) averages $21,200 — a 6.7x gap within 20 miles.",
+    text: "Birmingham (48009) has an average AGI of $142,000 while Detroit East (48205) averages $21,200 - a 6.7x gap within 20 miles.",
     source: "IRS SOI 2021",
     href: "/zip/48009",
     dataPoints: [

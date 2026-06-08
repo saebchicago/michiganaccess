@@ -60,7 +60,7 @@ const InstallPage = () => {
           </div>
           <h1 className="text-3xl font-bold text-foreground md:text-4xl">Install Access Michigan</h1>
           <p className="mt-3 text-muted-foreground">
-            Add to your home screen for instant, app-like access — no app store needed.
+            Add to your home screen for instant, app-like access - no app store needed.
           </p>
         </div>
 
@@ -107,7 +107,7 @@ const InstallPage = () => {
               </li>
               <li className="flex items-start gap-3">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">4</span>
-                <span>Tap <strong className="text-foreground">Add</strong> — MI Access appears on your home screen</span>
+                <span>Tap <strong className="text-foreground">Add</strong> - MI Access appears on your home screen</span>
               </li>
             </ol>
           </div>

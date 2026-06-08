@@ -220,7 +220,7 @@ export default function ShouldIMoveCalculator() {
                 ? `${cityA} wins on ${wins.A} of 4 dimensions`
                 : wins.B > wins.A
                   ? `${cityB} wins on ${wins.B} of 4 dimensions`
-                  : "It's a tie — consider your priorities"}
+                  : "It's a tie - consider your priorities"}
             </p>
           </div>
 

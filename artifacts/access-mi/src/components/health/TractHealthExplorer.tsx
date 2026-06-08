@@ -63,7 +63,7 @@ export default function TractHealthExplorer() {
           Neighborhood-Level Health Data
         </CardTitle>
         <CardDescription>
-          Census tract variation within a single county — county averages hide massive disparities
+          Census tract variation within a single county - county averages hide massive disparities
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -105,7 +105,7 @@ export default function TractHealthExplorer() {
               <AlertTriangle className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />
               <p className="text-xs text-foreground leading-relaxed">
                 In <strong>{countyName} County</strong>, {measureLabel.toLowerCase()} prevalence ranges from{" "}
-                <strong>{min.toFixed(1)}%</strong> to <strong>{max.toFixed(1)}%</strong> across census tracts — a{" "}
+                <strong>{min.toFixed(1)}%</strong> to <strong>{max.toFixed(1)}%</strong> across census tracts - a{" "}
                 <strong>{gap} percentage point gap</strong> within the same county.
               </p>
             </div>
@@ -120,7 +120,7 @@ export default function TractHealthExplorer() {
                   formatter={(v: number) => [`${v.toFixed(1)}%`, measureLabel]}
                   labelFormatter={(label: string, payload: any[]) => {
                     const d = payload?.[0]?.payload;
-                    return d ? `${d.fullName} (pop: ${d.pop || "—"})` : label;
+                    return d ? `${d.fullName} (pop: ${d.pop || "-"})` : label;
                   }}
                   contentStyle={{ borderRadius: 8, fontSize: 11, border: "1px solid hsl(214, 20%, 90%)" }}
                 />

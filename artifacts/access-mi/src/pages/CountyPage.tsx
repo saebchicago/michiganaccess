@@ -91,7 +91,7 @@ export default function CountyPage() {
   const { setCounty } = useCounty();
 
   usePageMeta({
-    title: county ? `${county}, MI | Access Michigan — Civic Intelligence` : "County Not Found",
+    title: county ? `${county}, MI | Access Michigan - Civic Intelligence` : "County Not Found",
     description: county ? `County-level health, environmental, and social data for ${county}. Source: CDC PLACES, EPA EJScreen, County Health Rankings.` : "County not found.",
     path: `/county/${slug}`,
     jsonLd: county ? {
@@ -403,7 +403,7 @@ export default function CountyPage() {
           </section>
         )}
 
-        {/* Civic Intelligence — 4 pillar cards + detail */}
+        {/* Civic Intelligence - 4 pillar cards + detail */}
         <CivicIntelligenceSection countyName={county} />
 
         {/* Environmental Burden Map */}

@@ -65,7 +65,7 @@ export default function SuggestResource({ zip, county, pageUrl }: SuggestResourc
             className="absolute top-8 left-0 z-50 w-80 rounded-xl border border-border bg-background shadow-xl p-4 space-y-3">
             {submitted ? (
               <div className="flex items-center gap-2 text-sm text-green-600">
-                <Check className="h-4 w-4" /> Thank you — your feedback helps improve this platform.
+                <Check className="h-4 w-4" /> Thank you - your feedback helps improve this platform.
               </div>
             ) : (
               <>

@@ -227,10 +227,10 @@ const Index = () => {
       <OutageAlertBanner />
       <CountyWelcomeBanner />
 
-      {/* ═══ HERO — mission + search ═══ */}
+      {/* ═══ HERO - mission + search ═══ */}
       <HeroSection />
 
-      {/* ═══ GET HELP NOW — front door triage trigger ═══ */}
+      {/* ═══ GET HELP NOW - front door triage trigger ═══ */}
       <section className="container -mt-6 mb-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -243,12 +243,12 @@ const Index = () => {
             className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-michigan-teal text-white py-3.5 px-6 text-sm font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all"
           >
             <Heart className="h-4.5 w-4.5" fill="currentColor" />
-            Get Help Now — Find Resources in Your County
+            Get Help Now - Find Resources in Your County
           </button>
         </motion.div>
       </section>
 
-      {/* ═══ LIFE EVENT NAVIGATOR — primary engagement hook (shown early for discoverability) ═══ */}
+      {/* ═══ LIFE EVENT NAVIGATOR - primary engagement hook (shown early for discoverability) ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
         <Suspense fallback={<SectionSkeleton height="200px" />}>
           <LifeEventNavigator />
@@ -337,7 +337,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ═══ DETECTION GAP — compact funnel ═══ */}
+      {/* ═══ DETECTION GAP - compact funnel ═══ */}
       <section className="container py-10">
         <Suspense
           fallback={<div className="h-48 animate-pulse bg-muted rounded-xl" />}
@@ -346,14 +346,14 @@ const Index = () => {
         </Suspense>
       </section>
 
-      {/* ═══ YOUR COMMUNITY — moved to hero ZIP search above ═══ */}
+      {/* ═══ YOUR COMMUNITY - moved to hero ZIP search above ═══ */}
 
-      {/* ═══ EXPLORE QUESTIONS — data-driven Q&A navigation ═══ */}
+      {/* ═══ EXPLORE QUESTIONS - data-driven Q&A navigation ═══ */}
       <SectionErrorBoundary title="Some content didn't load">
         <ExploreQuestionsPanel />
       </SectionErrorBoundary>
 
-      {/* ═══ MICHIGAN PULSE — live intelligence signals ═══ */}
+      {/* ═══ MICHIGAN PULSE - live intelligence signals ═══ */}
       <MichiganPulse />
 
       {/* ═══ LIVE DEMO PREVIEW ═══ */}

@@ -316,7 +316,7 @@ const SOURCES: Record<string, Source[]> = {
 
 export default function DataSourcesPage() {
   usePageMeta({
-    title: "Data Sources — Access Michigan",
+    title: "Data Sources - Access Michigan",
     description: `${DATA_SOURCE_DISPLAY} verified public source organizations (${DATA_SOURCE_BREAKDOWN.federal} federal, ${DATA_SOURCE_BREAKDOWN.state} state, ${DATA_SOURCE_BREAKDOWN.nonprofit} nonprofit) powering Michigan's civic intelligence platform. Every organization credited.`,
     path: "/data-sources",
   });

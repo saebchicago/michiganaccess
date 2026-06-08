@@ -45,7 +45,7 @@ const DISASTER_COLORS: Record<string, string> = {
 
 export default function DisasterPage() {
   usePageMeta({
-    title: "Disaster Intelligence — Access Michigan",
+    title: "Disaster Intelligence - Access Michigan",
     description: "Michigan disaster risk analysis: FEMA NRI county scores, 104 presidential disaster declarations, flood risk, and community resilience data.",
     path: "/environment/disaster",
   });
@@ -185,7 +185,7 @@ export default function DisasterPage() {
         <Card>
           <CardHeader>
             <CardTitle className="text-base">County Disaster History (Live)</CardTitle>
-            <p className="text-xs text-muted-foreground">Real-time FEMA API — select a county to see declarations. Source: FEMA OpenFEMA API</p>
+            <p className="text-xs text-muted-foreground">Real-time FEMA API - select a county to see declarations. Source: FEMA OpenFEMA API</p>
           </CardHeader>
           <CardContent>
             <Select value={selectedCounty ?? ""} onValueChange={v => setSelectedCounty(v || null)}>
@@ -215,7 +215,7 @@ export default function DisasterPage() {
                         <td className="py-2 pr-4 tabular-nums">{d.declarationDate?.slice(0, 4)}</td>
                         <td className="py-2 pr-4"><Badge variant="outline" className="text-[10px]">{d.incidentType}</Badge></td>
                         <td className="py-2 pr-4 text-muted-foreground max-w-[200px] truncate">{d.title}</td>
-                        <td className="py-2 text-[10px] text-muted-foreground">{d.programsActivated.join(", ") || "—"}</td>
+                        <td className="py-2 text-[10px] text-muted-foreground">{d.programsActivated.join(", ") || "-"}</td>
                       </tr>
                     ))}
                   </tbody>

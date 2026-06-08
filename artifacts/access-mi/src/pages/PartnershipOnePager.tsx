@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function PartnershipOnePager() {
   usePageMeta({
-    title: "Partnership One-Pager — Access Michigan",
+    title: "Partnership One-Pager - Access Michigan",
     description: "Downloadable partnership capabilities summary for health system decision-makers.",
     path: "/partnerships/health-systems/one-pager",
   });
@@ -124,7 +124,7 @@ export default function PartnershipOnePager() {
           <section>
             <h2 className="text-lg font-bold text-foreground mb-3 border-l-4 border-michigan-teal pl-3">Case Study Highlight</h2>
             <div className="rounded-lg border border-michigan-teal/20 bg-michigan-teal/5 p-4 space-y-2">
-              <h3 className="font-semibold text-sm text-foreground">Regional Health System — CHNA Enhancement</h3>
+              <h3 className="font-semibold text-sm text-foreground">Regional Health System - CHNA Enhancement</h3>
               <p className="text-xs text-muted-foreground">
                 A mid-Michigan health system integrated Access Michigan data into their triennial CHNA workflow, achieving a 42% reduction in data-gathering time, identifying 3 previously unknown service deserts, and streamlining IRS Schedule H documentation.
               </p>

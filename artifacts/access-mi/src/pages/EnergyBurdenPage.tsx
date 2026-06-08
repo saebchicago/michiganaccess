@@ -34,7 +34,7 @@ function sevStyle(severity: string) {
 
 export default function EnergyBurdenPage() {
   usePageMeta({
-    title: "Energy Burden Dashboard — Access Michigan",
+    title: "Energy Burden Dashboard - Access Michigan",
     description: "County-level energy affordability data across Michigan, showing energy burden percentages and DOE threshold analysis.",
     path: "/energy-burden",
   });

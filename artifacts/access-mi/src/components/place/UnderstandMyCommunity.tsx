@@ -1,5 +1,5 @@
 /**
- * "Understand My Community" — Global CTA component
+ * "Understand My Community" - Global CTA component
  * ZIP input → navigates to Place page, auto-scrolls to Community Summary.
  */
 import { useState } from "react";

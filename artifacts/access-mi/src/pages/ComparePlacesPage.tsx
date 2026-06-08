@@ -1,5 +1,5 @@
 /**
- * ComparePlacesPage — Side-by-side county comparison.
+ * ComparePlacesPage - Side-by-side county comparison.
  * Phase 2 upgrades:
  *   • Community Voice column with ratings, notes, report count, CTA
  *   • Equity Lens toggle that highlights worst-performer cells
@@ -469,7 +469,7 @@ const SECTION_LABELS: Record<CompareMetric["section"], string> = {
 export default function ComparePlacesPage() {
   const [searchParams] = useSearchParams();
   usePageMeta({
-    title: "Compare Places — Side-by-Side Census Data | Access Michigan",
+    title: "Compare Places - Side-by-Side Census Data | Access Michigan",
     description:
       "Compare up to 4 Michigan counties or ZIP codes with live Census ACS data, community voice, equity lens, and PDF export.",
     path: "/compare",
@@ -530,7 +530,7 @@ export default function ComparePlacesPage() {
   const countyNames = Object.keys(MI_COUNTY_FIPS).sort();
   const selectedIds = new Set(selected.map((s) => s.id));
 
-  // Always call all 4 hooks (Rules of Hooks — no conditional calls)
+  // Always call all 4 hooks (Rules of Hooks - no conditional calls)
   const q0 = useSelectionData(selected[0] || null);
   const q1 = useSelectionData(selected[1] || null);
   const q2 = useSelectionData(selected[2] || null);
@@ -1279,7 +1279,7 @@ export default function ComparePlacesPage() {
                                   );
                                 })}
                                 <td className="py-2.5 px-3 text-right text-xs text-muted-foreground hidden lg:table-cell">
-                                  {mi !== undefined ? metric.format(mi) : "—"}
+                                  {mi !== undefined ? metric.format(mi) : "-"}
                                 </td>
                               </tr>
                             );

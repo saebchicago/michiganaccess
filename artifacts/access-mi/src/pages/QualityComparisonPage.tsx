@@ -79,7 +79,7 @@ export default function QualityComparisonPage() {
   const [selected, setSelected] = useState([1, 2, 3]);
 
   usePageMeta({
-    title: "Facility Quality Comparison — Access Michigan",
+    title: "Facility Quality Comparison - Access Michigan",
     description: "Compare Michigan healthcare facilities side-by-side using composite quality scoring.",
     path: "/quality/compare",
   });
@@ -141,7 +141,7 @@ export default function QualityComparisonPage() {
                   <Card>
                     <CardHeader className="text-center pb-2">
                       <CardTitle className="text-base">{f.name}</CardTitle>
-                      <p className="text-xs text-muted-foreground">{f.type} — {f.county} County</p>
+                      <p className="text-xs text-muted-foreground">{f.type} - {f.county} County</p>
                       <div className="flex justify-center flex-wrap gap-1.5 mt-2">
                         {f.magnet && <Badge variant="secondary" className="text-[10px]">Magnet</Badge>}
                         {f.leapfrog !== "N/A" && <Badge variant="secondary" className="text-[10px]">Leapfrog {f.leapfrog}</Badge>}

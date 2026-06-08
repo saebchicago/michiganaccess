@@ -29,7 +29,7 @@ export default function EmbedWidget() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-4">
-        <h1 className="sr-only">Access Michigan — Quick Search Widget</h1>
+        <h1 className="sr-only">Access Michigan - Quick Search Widget</h1>
         {/* Branding */}
         <div className="flex items-center justify-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-michigan">

@@ -1,5 +1,5 @@
 /**
- * Local Insight Engine — renders cross-domain indicators grouped by domain,
+ * Local Insight Engine - renders cross-domain indicators grouped by domain,
  * with "What stands out", "What you can do" actions, and full provenance.
  */
 import { useMemo, useState } from "react";

@@ -1169,7 +1169,7 @@ function CountyCompareTab() {
 // Main page export
 export function CHNAExplorerPage() {
   usePageMeta({
-    title: "CHNA Explorer — Access Michigan",
+    title: "CHNA Explorer - Access Michigan",
     description:
       "Michigan health system CHNA priorities mapped to workforce, air, water, and access indicators at neighborhood resolution: the granularity the CHNA itself does not provide.",
     path: "/chna-explorer",

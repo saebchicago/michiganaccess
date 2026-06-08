@@ -1,5 +1,5 @@
 /**
- * ACS Table Catalog — curated Census tables with human-readable metadata.
+ * ACS Table Catalog - curated Census tables with human-readable metadata.
  * Used by useCensusACS hook and Data Explorer UI.
  */
 

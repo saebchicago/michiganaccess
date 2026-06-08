@@ -73,7 +73,7 @@ export default function RegionPage() {
   const region = MICHIGAN_REGIONS.find(r => r.id === regionId);
 
   usePageMeta({
-    title: region ? `${region.name} — Regional Overview` : "Region Not Found",
+    title: region ? `${region.name} - Regional Overview` : "Region Not Found",
     description: region ? region.description : "Region not found.",
     path: `/region/${regionId}`,
   });

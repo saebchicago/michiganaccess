@@ -66,7 +66,7 @@ export default function BroadbandDashboard() {
           <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 flex items-start gap-2">
             <AlertTriangle className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />
             <p className="text-xs text-foreground">
-              Rural northern Michigan counties are hardest hit. <strong>Lake County</strong> has 42% of locations unserved — the highest rate in the state.
+              Rural northern Michigan counties are hardest hit. <strong>Lake County</strong> has 42% of locations unserved - the highest rate in the state.
             </p>
           </div>
         </CardContent>

@@ -10,7 +10,7 @@ const fade = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, trans
 
 export default function SBAInsightsPage() {
   usePageMeta({
-    title: "SBA Economic Intelligence — Access Michigan",
+    title: "SBA Economic Intelligence - Access Michigan",
     description: "Small business lending trends across Michigan counties, including SBA loan volume, equity metrics, and industry breakdown.",
     path: "/sba-insights",
   });
@@ -25,7 +25,7 @@ export default function SBAInsightsPage() {
             <Badge variant="outline" className="mb-3 uppercase tracking-wider text-xs">Economic Intelligence</Badge>
             <h1 className="text-3xl font-extrabold text-foreground mb-2">SBA Small Business Lending</h1>
             <p className="text-muted-foreground">
-              County-level SBA lending data for Michigan — loan volume, equity indicators, and economic impact.
+              County-level SBA lending data for Michigan - loan volume, equity indicators, and economic impact.
             </p>
           </motion.div>
         </div>

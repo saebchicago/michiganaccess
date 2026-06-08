@@ -54,7 +54,7 @@ function AlertCard({ alert }: { alert: WeatherAlert }) {
             <p className="text-xs text-muted-foreground mt-2 leading-relaxed whitespace-pre-line">
               {alert.description}
             </p>
-            <p className="text-[10px] text-muted-foreground mt-1 italic">— {alert.senderName}</p>
+            <p className="text-[10px] text-muted-foreground mt-1 italic">- {alert.senderName}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -112,7 +112,7 @@ export default function WeatherAlerts() {
         )}
 
         <p className="text-[10px] text-muted-foreground mt-2">
-          Source: National Weather Service — updated every 10 minutes
+          Source: National Weather Service - updated every 10 minutes
         </p>
       </CardContent>
     </Card>

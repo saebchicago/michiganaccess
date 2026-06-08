@@ -1,5 +1,5 @@
-// EPA ECHO — Enforcement and Compliance History Online
-// Public REST API — no key required
+// EPA ECHO - Enforcement and Compliance History Online
+// Public REST API - no key required
 // Docs: echo.epa.gov/tools/web-services
 
 import { useQuery } from "@tanstack/react-query";

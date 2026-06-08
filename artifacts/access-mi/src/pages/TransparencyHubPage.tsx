@@ -28,9 +28,9 @@ const fadeUp = {
 
 export default function TransparencyHubPage() {
   usePageMeta({
-    title: "Transparency Intelligence — Access Michigan",
+    title: "Transparency Intelligence - Access Michigan",
     description:
-      "Public money. Public contracts. Public officials. Federal contractors, lobbying, campaign finance, all Michigan political parties — sourced from primary records.",
+      "Public money. Public contracts. Public officials. Federal contractors, lobbying, campaign finance, all Michigan political parties - sourced from primary records.",
     path: "/transparency",
   });
 
@@ -38,7 +38,7 @@ export default function TransparencyHubPage() {
     <Layout>
       <Breadcrumbs items={[{ label: "Transparency" }]} />
 
-      {/* Hero — dark theme */}
+      {/* Hero - dark theme */}
       <section className="relative overflow-hidden bg-slate-900 py-16 md:py-20">
         <div className="container">
           <motion.div
@@ -131,7 +131,7 @@ export default function TransparencyHubPage() {
             {
               icon: Building2,
               title: "Federal Contractors",
-              desc: "Every federal contract awarded in Michigan — searchable by company, county, or industry. $14.2B in FY2024.",
+              desc: "Every federal contract awarded in Michigan - searchable by company, county, or industry. $14.2B in FY2024.",
               href: "/transparency/contractors",
               color: "text-amber-600",
               badge: "Live API",

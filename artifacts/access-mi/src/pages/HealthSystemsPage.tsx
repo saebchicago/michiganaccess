@@ -21,7 +21,7 @@ import { supabase } from "@/integrations/supabase/client";
 /* ── Case Studies ── */
 const CASE_STUDIES = [
   {
-    title: "Illustrative: Regional Health System — CHNA Enhancement",
+    title: "Illustrative: Regional Health System - CHNA Enhancement",
     challenge: "A mid-Michigan health system needs granular, county-level social determinant data to supplement their triennial Community Health Needs Assessment but lacks the internal analytics capacity to aggregate and visualize it.",
     solution: "Access Michigan's aggregated public data across 83 counties could supplement CHNA workflows with real-time views of transportation barriers, food insecurity hotspots, and uninsured population indicators.",
     outcomes: [
@@ -32,7 +32,7 @@ const CASE_STUDIES = [
     icon: BarChart3,
   },
   {
-    title: "Illustrative: Academic Medical Center — Referral Intelligence",
+    title: "Illustrative: Academic Medical Center - Referral Intelligence",
     challenge: "An academic medical center's community benefit office struggles to track whether patients referred to social services actually connect with those resources, creating a blind spot in their continuum of care.",
     solution: "Access Michigan's unified resource directory could provide referral pathway mapping across community health workers, FQHC navigators, and social service organizations to support closed-loop tracking.",
     outcomes: [
@@ -43,7 +43,7 @@ const CASE_STUDIES = [
     icon: Activity,
   },
   {
-    title: "Illustrative: Rural Hospital Network — Access Gap Mapping",
+    title: "Illustrative: Rural Hospital Network - Access Gap Mapping",
     challenge: "A multi-hospital rural network knows patients travel long distances for care but lacks data to quantify access gaps or advocate for mobile health investments.",
     solution: "Access Michigan's geo-mapped HRSA shortage data, transit overlay, and resource density data could support planning for mobile clinic deployment and grant applications.",
     outcomes: [
@@ -93,7 +93,7 @@ function HealthSystemContactForm() {
       const { error } = await supabase.from("partnership_submissions" as any).insert([form] as any);
       if (error) throw error;
       setSubmitted(true);
-      toast.success("Thank you — we'll be in touch within 2 business days.");
+      toast.success("Thank you - we'll be in touch within 2 business days.");
     } catch {
       toast.error("Submission failed. Please try again.");
     } finally {

@@ -1,4 +1,4 @@
-// Medicaid Coverage at Risk — county projection fallback data
+// Medicaid Coverage at Risk - county projection fallback data
 // Computed: 2026-04-09
 // Method: Proportional allocation of Urban Institute Michigan-specific projection range
 //         (171,000–355,000 adults) to counties by ACS C27007 5-year 2023 enrollment share.
@@ -17,7 +17,7 @@
 //   "Projected Reductions in Medicaid Expansion Enrollment Under OBBBA's Work Requirements"
 //   Michigan range: 171,000–355,000 by 2028 (work requirement provisions only)
 //   https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work
-// Secondary reference: CBO pub. 61570 (July 2025) — national baseline
+// Secondary reference: CBO pub. 61570 (July 2025) - national baseline
 //   https://www.cbo.gov/publication/61570
 //   7.5M coverage loss by 2034; $326B federal savings from work requirements
 // Re-compute when: Urban Institute, CBPP, or MLPP publish updated Michigan-specific
@@ -122,11 +122,11 @@ const MEDICAID_COUNTY_FALLBACK: MedicaidCountyEntry[] = [
 ];
 // ACS county total: 6,206,095 (sum of all 83 counties, C27007 means-tested public coverage)
 // CMS MBES administrative enrollment ~2.4M (point-in-time; narrower definition).
-// County shares are derived from the ACS total — see methodology note above.
+// County shares are derived from the ACS total - see methodology note above.
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-// Urban Institute, March 2026 — Michigan-specific P.L. 119-21 work requirements projection
+// Urban Institute, March 2026 - Michigan-specific P.L. 119-21 work requirements projection
 // "Projected Reductions in Medicaid Expansion Enrollment Under OBBBA's Work Requirements"
 const URBAN_MICHIGAN_LOW = 171_000;
 const URBAN_MICHIGAN_HIGH = 355_000;
@@ -153,7 +153,7 @@ const PROJECTION_SOURCE_NAME =
 const METHODOLOGY_URL = "/methodology/medicaid-coverage-at-risk";
 const PROJECTION_AS_OF = "2026-04";
 
-// Sum of ACS county values — used as allocation denominator to preserve statewide total
+// Sum of ACS county values - used as allocation denominator to preserve statewide total
 const COUNTY_MEDICAID_ACS_TOTAL = MEDICAID_COUNTY_FALLBACK.reduce(
   (sum, c) => sum + c.medicaidEnrollment,
   0

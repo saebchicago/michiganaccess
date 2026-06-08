@@ -1,5 +1,5 @@
 /**
- * ZipBriefTour — A 3-step guided tour for the ZIP → Mirror → Brief flow.
+ * ZipBriefTour - A 3-step guided tour for the ZIP → Mirror → Brief flow.
  * Separate from the main OnboardingTour; stored under its own localStorage key.
  */
 import { useState, useEffect, useCallback, useRef } from "react";

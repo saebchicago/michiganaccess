@@ -1,5 +1,5 @@
 /**
- * Community Summary Engine — "3 Things to Know About [Place]"
+ * Community Summary Engine - "3 Things to Know About [Place]"
  * Auto-ranks indicators by deviation from Michigan averages.
  */
 import { useMemo } from "react";

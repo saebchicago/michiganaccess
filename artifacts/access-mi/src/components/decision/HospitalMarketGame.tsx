@@ -13,7 +13,7 @@ const SCENARIOS: Record<Scenario, { title: string; desc: string; revenue: number
     desc: "Hospital continues operating all services at current volume",
     revenue: 8200000, costs: 9400000,
     communityImpact: "24/7 ER + inpatient + OB retained. 3 OB nurses serve 180 births/year.",
-    realExample: "This is the current reality for Michigan's 35 Critical Access Hospitals — 13 of which are at risk (CHQPR Dec 2025).",
+    realExample: "This is the current reality for Michigan's 35 Critical Access Hospitals - 13 of which are at risk (CHQPR Dec 2025).",
     badge: "Current", badgeColor: "bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400",
   },
   ob_closes: {
@@ -26,10 +26,10 @@ const SCENARIOS: Record<Scenario, { title: string; desc: string; revenue: number
   },
   reh_conversion: {
     title: "REH Conversion",
-    desc: "Convert to Rural Emergency Hospital — keep ER, drop inpatient",
+    desc: "Convert to Rural Emergency Hospital - keep ER, drop inpatient",
     revenue: 9700000, costs: 8900000,
     communityImpact: "ER + outpatient + observation retained. No inpatient beds. $291K/month federal payment + 105% outpatient PPS.",
-    realExample: "Sturgis Hospital chose this in July 2023 — Michigan's first and only REH. ~44-48 REH conversions nationally (CMS).",
+    realExample: "Sturgis Hospital chose this in July 2023 - Michigan's first and only REH. ~44-48 REH conversions nationally (CMS).",
     badge: "Innovation", badgeColor: "bg-teal-100 text-teal-700 dark:bg-teal-950/30 dark:text-teal-400",
   },
 };

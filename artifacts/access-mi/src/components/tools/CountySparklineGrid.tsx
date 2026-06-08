@@ -156,7 +156,7 @@ export default function CountySparklineGrid() {
                   />
                 </div>
                 <span className="text-[8px] text-muted-foreground mt-0.5">
-                  {value !== null ? `${value}${def.unit}` : "—"}
+                  {value !== null ? `${value}${def.unit}` : "-"}
                 </span>
               </Link>
             );

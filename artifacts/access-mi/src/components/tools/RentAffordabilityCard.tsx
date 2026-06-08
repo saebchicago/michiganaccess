@@ -32,7 +32,7 @@ export default function RentAffordabilityCard({ zip }: RentAffordabilityCardProp
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
             <Home className="h-5 w-5 text-michigan-teal" />
-            Rental Affordability — {zip}
+            Rental Affordability - {zip}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">

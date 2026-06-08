@@ -1,5 +1,5 @@
 /**
- * ConfettiBurst — lightweight celebration animation using Framer Motion.
+ * ConfettiBurst - lightweight celebration animation using Framer Motion.
  * No external dependencies (canvas-confetti, party-js, etc.) required.
  *
  * Usage:

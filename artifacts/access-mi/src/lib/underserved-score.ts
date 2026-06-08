@@ -1,5 +1,5 @@
 /**
- * Underserved ZIP Identifier — multi-dimensional need assessment.
+ * Underserved ZIP Identifier - multi-dimensional need assessment.
  * THIS IS AN ILLUSTRATIVE COMPOSITE. Label clearly.
  */
 

@@ -136,7 +136,7 @@ function FirstTimePrompt() {
           First time here?
         </p>
         <p className="text-[11px] text-primary-foreground/70 leading-relaxed mb-2">
-          Tell us what you need — we'll show you where to start. No account
+          Tell us what you need - we'll show you where to start. No account
           required.
         </p>
         <div className="flex items-center justify-center gap-2">
@@ -445,7 +445,7 @@ const HeroSection = () => {
             Free, forever.
           </motion.p>
 
-          {/* Key Michigan health signals — compact inline strip (above fold) */}
+          {/* Key Michigan health signals - compact inline strip (above fold) */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -502,7 +502,7 @@ const HeroSection = () => {
           {/* Rotating Stats */}
           <RotatingStats />
 
-          {/* ZIP Input — Primary CTA */}
+          {/* ZIP Input - Primary CTA */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -544,7 +544,7 @@ const HeroSection = () => {
             </p>
           </motion.div>
 
-          {/* Preview thumbnails — what you'll get */}
+          {/* Preview thumbnails - what you'll get */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -788,7 +788,7 @@ const HeroSection = () => {
                           Try a popular search
                         </p>
                         <p className="text-[10px] text-muted-foreground mt-0.5">
-                          No results for &ldquo;{searchQuery}&rdquo; — try a
+                          No results for &ldquo;{searchQuery}&rdquo; - try a
                           county name, ZIP code, or service type
                         </p>
                       </div>

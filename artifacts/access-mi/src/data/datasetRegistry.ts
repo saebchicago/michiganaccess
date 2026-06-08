@@ -2,12 +2,12 @@
  * Michigan Civic Dataset Registry
  *
  * To add a new dataset, simply add an entry to the appropriate array below.
- * No Lovable prompt needed — just edit this file.
+ * No Lovable prompt needed - just edit this file.
  */
 
 import type { CivicSource } from "./civicSources";
 
-// ── STATEWIDE — ArcGIS ─────────────────────────────────────────────────────
+// ── STATEWIDE - ArcGIS ─────────────────────────────────────────────────────
 
 export const STATEWIDE_DATASETS: CivicSource[] = [
   {
@@ -67,7 +67,7 @@ export const STATEWIDE_DATASETS: CivicSource[] = [
   },
 ];
 
-// ── DETROIT — Socrata ───────────────────────────────────────────────────────
+// ── DETROIT - Socrata ───────────────────────────────────────────────────────
 
 export const DETROIT_DATASETS: CivicSource[] = [
   {

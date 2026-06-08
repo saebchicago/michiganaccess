@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useWaterData, type WaterSite } from "@/hooks/useWaterData";
 
 function flowStatus(cfs: number | null): { label: string; className: string } {
-  if (cfs === null) return { label: "—", className: "text-muted-foreground" };
+  if (cfs === null) return { label: "-", className: "text-muted-foreground" };
   if (cfs > 5000) return { label: "High", className: "text-michigan-coral font-semibold" };
   if (cfs > 1000) return { label: "Above Normal", className: "text-michigan-gold font-semibold" };
   return { label: "Normal", className: "text-michigan-forest" };
@@ -16,7 +16,7 @@ function formatTime(iso: string) {
     const d = new Date(iso);
     return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true });
   } catch {
-    return "—";
+    return "-";
   }
 }
 
@@ -37,12 +37,12 @@ function SiteRow({ site }: { site: WaterSite }) {
       </td>
       <td className="py-2.5 pr-3 text-right">
         <span className="text-sm tabular-nums font-mono text-foreground">
-          {site.streamflow !== null ? site.streamflow.toLocaleString() : "—"}
+          {site.streamflow !== null ? site.streamflow.toLocaleString() : "-"}
         </span>
       </td>
       <td className="py-2.5 pr-3 text-right">
         <span className="text-sm tabular-nums font-mono text-foreground">
-          {site.gageHeight !== null ? site.gageHeight.toFixed(1) : "—"}
+          {site.gageHeight !== null ? site.gageHeight.toFixed(1) : "-"}
         </span>
       </td>
       <td className="py-2.5 pr-3">
@@ -126,7 +126,7 @@ export default function WaterMonitorWidget() {
             >
               USGS National Water Information System <ExternalLink className="h-2.5 w-2.5" />
             </a>{" "}
-            — updated every 15 minutes
+            - updated every 15 minutes
           </p>
           <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
             <a href="https://waterdata.usgs.gov/state/michigan/" target="_blank" rel="noopener">

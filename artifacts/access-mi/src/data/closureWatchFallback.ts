@@ -1,9 +1,9 @@
 /**
  * DATA_SOURCES.md
  *
- * Primary source: Cecil G. Sheps Center for Health Services Research — Rural Hospital Closures
+ * Primary source: Cecil G. Sheps Center for Health Services Research - Rural Hospital Closures
  *   URL: https://www.shepscenter.unc.edu/programs-projects/rural-health/rural-hospital-closures/
- *   Format: Excel (.xlsx) download only — no JSON, CSV, or RSS feed available.
+ *   Format: Excel (.xlsx) download only - no JSON, CSV, or RSS feed available.
  *   PHASE B BLOCKER: Because Sheps Center publishes Excel only (not a machine-readable API),
  *   the `sheps-closures` Edge Function cannot be built as a scheduled JSON fetch.
  *   Resolution: ship fallback data only; revisit Phase B when/if Sheps publishes a CSV/API,
@@ -26,7 +26,7 @@ export interface ClosureEntry {
   county: string;
   latitude: number;
   longitude: number;
-  closureDate: string;        // ISO date — use first day of month if exact date unknown
+  closureDate: string;        // ISO date - use first day of month if exact date unknown
   closureType: "full-closure" | "service-line-elimination" | "merger" | "conversion";
   summary: string;
   sources: Array<{
@@ -54,7 +54,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
     closureDate: "2024-04-20",
     closureType: "full-closure",
     summary:
-      "Aspirus Health closed this 18-bed critical access hospital — the only hospital in Ontonagon County — on April 20, 2024, converting it to an outpatient rural health clinic; the nearest emergency room is now 47 miles away at Baraga County Memorial Hospital.",
+      "Aspirus Health closed this 18-bed critical access hospital - the only hospital in Ontonagon County - on April 20, 2024, converting it to an outpatient rural health clinic; the nearest emergency room is now 47 miles away at Baraga County Memorial Hospital.",
     sources: [
       {
         name: "Upper Michigan's Source",
@@ -235,13 +235,13 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
     id: "munson-grayling-ob-announced-2023",
     facilityName: "Munson Healthcare Grayling Hospital",
     facilityType: "service-line",
-    serviceLineAffected: "Obstetrics / Labor & Delivery (delivery services — prenatal care continuing)",
+    serviceLineAffected: "Obstetrics / Labor & Delivery (delivery services - prenatal care continuing)",
     address: "197 N Ingham Ave",
     city: "Grayling",
     county: "Crawford",
     latitude: 44.660,
     longitude: -84.712,
-    closureDate: "2026-07-01",  // projected — summer 2026 per Munson announcement
+    closureDate: "2026-07-01",  // projected - summer 2026 per Munson announcement
     closureType: "service-line-elimination",
     summary:
       "Munson Healthcare announced in September 2023 that delivery services at Grayling Hospital will close when a new regional birthing center opens at Otsego Memorial Hospital in Gaylord, projected summer 2026; prenatal and postnatal care will continue in Grayling.",
@@ -398,7 +398,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
     id: "sturgis-hospital-reh-conversion-2023",
     facilityName: "Sturgis Hospital",
     facilityType: "hospital",
-    serviceLineAffected: "Inpatient acute care (converted to Rural Emergency Hospital — emergency care only)",
+    serviceLineAffected: "Inpatient acute care (converted to Rural Emergency Hospital - emergency care only)",
     address: "916 Myrtle Ave",
     city: "Sturgis",
     county: "St. Joseph",
@@ -428,7 +428,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// _CANDIDATES — single-source only or outside the 2020+ window
+// _CANDIDATES - single-source only or outside the 2020+ window
 // Not displayed by default. Requires a second source before promoting to
 // CLOSURE_WATCH_FALLBACK.
 // ---------------------------------------------------------------------------
@@ -437,10 +437,10 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
 export const _CANDIDATES = [
   {
     id: "mercy-health-muskegon-hackley-campus-consolidation-2020",
-    facilityName: "Mercy Health Muskegon — Hackley Campus ER",
+    facilityName: "Mercy Health Muskegon - Hackley Campus ER",
     note: "The Hackley Campus ER closed October 17, 2020 as part of a planned campus consolidation " +
           "(all inpatient services including L&D moved to the new Mercy Campus tower). " +
-          "This was a campus consolidation, not an OB elimination — L&D services continued at the Mercy Campus. " +
+          "This was a campus consolidation, not an OB elimination - L&D services continued at the Mercy Campus. " +
           "Source: Health Care Relocations trade publication (single source). " +
           "No second independent source from the approved list confirmed the OB-specific detail. " +
           "ACTION: confirm via AHA or Becker's before promoting.",

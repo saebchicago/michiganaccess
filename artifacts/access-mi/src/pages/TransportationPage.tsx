@@ -69,7 +69,7 @@ const seniorAccess = [
   { region: "SW Michigan", gap: 38, available: 62 },
 ];
 
-// NHTSA FARS — Michigan traffic fatalities by crash type (2018–2023)
+// NHTSA FARS - Michigan traffic fatalities by crash type (2018–2023)
 const nhtsaFatalities = [
   { year: "2018", pedestrian: 161, cyclist: 30, motorVehicle: 785, total: 976 },
   { year: "2019", pedestrian: 158, cyclist: 27, motorVehicle: 800, total: 985 },
@@ -79,7 +79,7 @@ const nhtsaFatalities = [
   { year: "2023", pedestrian: 175, cyclist: 29, motorVehicle: 841, total: 1045 },
 ];
 
-// NHTSA — Michigan fatalities by county (top 10)
+// NHTSA - Michigan fatalities by county (top 10)
 const crashesByCounty = [
   { county: "Wayne", fatalities: 245, population: "1.75M" },
   { county: "Oakland", fatalities: 98, population: "1.27M" },
@@ -120,14 +120,14 @@ const sections: Section[] = [
     label: "Public Transit & Trip Planning",
     icon: Train,
     color: "text-michigan-blue",
-    description: "Plan trips by bus, van, or rail across Michigan — whether you're commuting, getting to a medical appointment, or exploring your region.",
+    description: "Plan trips by bus, van, or rail across Michigan - whether you're commuting, getting to a medical appointment, or exploring your region.",
     resources: [
       { title: "Michigan Trip Planner (MDOT)", description: "Statewide public-transit route finder covering rural and small-city fixed-route and demand-response services.", link: "https://www.michigan.gov/mdot/travel/mobility/public-transit", region: "Statewide", audienceTags: ["seniors", "people-with-disabilities", "parents"] },
       { title: "Commuter Connect Michigan", description: "Plan commutes, medical trips, and event travel. Includes vanpool matching, carpool options, and park-and-ride locations.", link: "https://www.commuterconnect.org/", region: "Statewide", audienceTags: ["parents", "seniors", "students"] },
-      { title: "RTA Transit App — Southeast Michigan", description: "Plan, pay, and track real-time buses across DDOT, SMART, QLine, and D2A2 in Metro Detroit.", link: "https://rtamichigan.org/transit-app/", region: "SE Michigan", audienceTags: ["parents", "students", "seniors"] },
+      { title: "RTA Transit App - Southeast Michigan", description: "Plan, pay, and track real-time buses across DDOT, SMART, QLine, and D2A2 in Metro Detroit.", link: "https://rtamichigan.org/transit-app/", region: "SE Michigan", audienceTags: ["parents", "students", "seniors"] },
       { title: "Detroit Transit (DDOT) App & Info", description: "Official DDOT rider tools: real-time bus tracking, route maps, and fare information for Detroit city bus routes.", link: "https://detroitmi.gov/departments/detroit-department-transportation", region: "Metro Detroit", audienceTags: ["parents", "students", "seniors"] },
-      { title: "The Rapid — Grand Rapids Trip Planner", description: "Plan bus trips, check real-time arrivals, and find routes across the Grand Rapids metro area including Laker Line BRT.", link: "https://www.ridetherapid.org/", region: "West Michigan", audienceTags: ["parents", "students", "seniors"] },
-      { title: "TheRide — Ann Arbor Area Transportation", description: "Trip planning, fare information, and service alerts for Ann Arbor and Ypsilanti area bus routes. Includes FlexRide on-demand zones.", link: "https://www.theride.org/", region: "Ann Arbor", audienceTags: ["students", "parents", "seniors"] },
+      { title: "The Rapid - Grand Rapids Trip Planner", description: "Plan bus trips, check real-time arrivals, and find routes across the Grand Rapids metro area including Laker Line BRT.", link: "https://www.ridetherapid.org/", region: "West Michigan", audienceTags: ["parents", "students", "seniors"] },
+      { title: "TheRide - Ann Arbor Area Transportation", description: "Trip planning, fare information, and service alerts for Ann Arbor and Ypsilanti area bus routes. Includes FlexRide on-demand zones.", link: "https://www.theride.org/", region: "Ann Arbor", audienceTags: ["students", "parents", "seniors"] },
       { title: "Michigan Amtrak & Rail Services", description: "Intercity rail options connecting Michigan cities including the Wolverine, Blue Water, and Pere Marquette lines.", link: "https://www.michigan.gov/mdot/travel/mobility/rail", region: "Statewide", audienceTags: ["parents", "students", "seniors"] },
       { title: "Capital Area Transportation Authority (CATA)", description: "Bus service for greater Lansing area with fixed routes, rural service, and Spec-Tran paratransit.", link: "https://www.cata.org/", region: "Lansing", audienceTags: ["students", "seniors", "parents"] },
       { title: "Blue Water Area Transit", description: "Fixed-route and demand-response service in St. Clair County, including connections to Port Huron.", link: "https://www.bfrz.org/blue-water-area-transit", region: "Thumb Region", audienceTags: ["seniors", "parents"] },
@@ -140,9 +140,9 @@ const sections: Section[] = [
     color: "text-michigan-forest",
     description: "Find your school district's bus routes, track your child's bus, and understand Michigan's pupil-transportation rules and safety standards.",
     resources: [
-      { title: "Michigan Dept. of Education — Pupil Transportation", description: "Statewide rules for school bus operations, driver training requirements, and parent guidance on student transportation rights and safety.", link: "https://www.michigan.gov/mde/services/pupil-transportation", region: "Statewide", audienceTags: ["parents", "students"] },
+      { title: "Michigan Dept. of Education - Pupil Transportation", description: "Statewide rules for school bus operations, driver training requirements, and parent guidance on student transportation rights and safety.", link: "https://www.michigan.gov/mde/services/pupil-transportation", region: "Statewide", audienceTags: ["parents", "students"] },
       { title: "Ann Arbor Public Schools Transportation", description: "Bus routes, schedules, and the MyStop app for real-time bus arrival tracking.", link: "https://www.a2schools.org/transportation", region: "Ann Arbor", audienceTags: ["parents", "students"] },
-      { title: "Oak Park Schools — Transportation Registration", description: "Online registration portal for school bus service, route lookup, and contact information.", link: "https://www.oakparkschools.org/transportation", region: "Metro Detroit", audienceTags: ["parents", "students"] },
+      { title: "Oak Park Schools - Transportation Registration", description: "Online registration portal for school bus service, route lookup, and contact information.", link: "https://www.oakparkschools.org/transportation", region: "Metro Detroit", audienceTags: ["parents", "students"] },
       { title: "Dearborn Public Schools Transportation", description: "Bus routes, safety procedures, and district transportation policies. First in Michigan with citywide AI stop-arm cameras.", link: "https://dearbornschools.org/departments/transportation/", region: "Metro Detroit", audienceTags: ["parents", "students"] },
       { title: "Grand Rapids Public Schools Transportation", description: "Bus route finder, eligibility information, and transportation contact details for GRPS families.", link: "https://www.grps.org/transportation", region: "West Michigan", audienceTags: ["parents", "students"] },
     ],
@@ -168,13 +168,13 @@ const sections: Section[] = [
     color: "text-michigan-teal",
     description: "Specialized transportation services for seniors, people with disabilities, and those needing door-to-door assistance or travel training.",
     resources: [
-      { title: "MyRide2 — Travel Training & Mobility Management", description: "Free travel-training program that teaches seniors and people with disabilities how to use public transit safely.", link: "https://www.myride2.com/", region: "Statewide", audienceTags: ["seniors", "people-with-disabilities"] },
-      { title: "Disability Rights Michigan — Transportation Access", description: "Know your rights: ADA paratransit requirements, accessible vehicle standards, and how to file complaints.", link: "https://www.drmich.org/", region: "Statewide", audienceTags: ["people-with-disabilities"] },
-      { title: "Michigan Area Agencies on Aging — Ride Programs", description: "Local ride programs for adults 60+ including medical appointment rides, grocery trips, and social outings.", link: "https://www.michigan.gov/osa", region: "Statewide", audienceTags: ["seniors"] },
+      { title: "MyRide2 - Travel Training & Mobility Management", description: "Free travel-training program that teaches seniors and people with disabilities how to use public transit safely.", link: "https://www.myride2.com/", region: "Statewide", audienceTags: ["seniors", "people-with-disabilities"] },
+      { title: "Disability Rights Michigan - Transportation Access", description: "Know your rights: ADA paratransit requirements, accessible vehicle standards, and how to file complaints.", link: "https://www.drmich.org/", region: "Statewide", audienceTags: ["people-with-disabilities"] },
+      { title: "Michigan Area Agencies on Aging - Ride Programs", description: "Local ride programs for adults 60+ including medical appointment rides, grocery trips, and social outings.", link: "https://www.michigan.gov/osa", region: "Statewide", audienceTags: ["seniors"] },
       { title: "SMART Connector & ADA Paratransit (Metro Detroit)", description: "Door-to-door shared-ride service for people who cannot use fixed-route buses due to a disability.", link: "https://www.smartbus.org/Services/Paratransit", region: "SE Michigan", audienceTags: ["seniors", "people-with-disabilities"] },
-      { title: "MichiVan — Vanpool Program", description: "Affordable commuter vanpools with wheelchair-accessible vehicle options available.", link: "https://www.michigan.gov/mdot/travel/mobility/vanpool", region: "Statewide", audienceTags: ["people-with-disabilities", "seniors", "parents"] },
+      { title: "MichiVan - Vanpool Program", description: "Affordable commuter vanpools with wheelchair-accessible vehicle options available.", link: "https://www.michigan.gov/mdot/travel/mobility/vanpool", region: "Statewide", audienceTags: ["people-with-disabilities", "seniors", "parents"] },
       { title: "Non-Emergency Medical Transportation (NEMT)", description: "Medicaid-covered rides to and from medical appointments for eligible Michigan residents.", link: "https://www.michigan.gov/mdhhs", region: "Statewide", audienceTags: ["seniors", "people-with-disabilities", "parents"] },
-      { title: "Michigan Association of United Ways — Ride United", description: "Free and subsidized rides for low-income residents to essential appointments and services.", link: "https://www.uwmich.org/", region: "Statewide", audienceTags: ["seniors", "people-with-disabilities", "parents"] },
+      { title: "Michigan Association of United Ways - Ride United", description: "Free and subsidized rides for low-income residents to essential appointments and services.", link: "https://www.uwmich.org/", region: "Statewide", audienceTags: ["seniors", "people-with-disabilities", "parents"] },
     ],
   },
 ];
@@ -182,8 +182,8 @@ const sections: Section[] = [
 const safetyChecklist = [
   { text: "Teach children to stand at least 6 feet (3 giant steps) away from the curb while waiting for the bus.", icon: Users },
   { text: "Remind kids to wait for the bus to fully stop and the driver to signal before crossing.", icon: Eye },
-  { text: "Michigan law: Drivers must stop at least 20 feet from a school bus with flashing red lights — in both directions (unless divided highway).", icon: AlertTriangle },
-  { text: "If your child drops something near the bus, tell them to tell the driver — never reach under the bus.", icon: ShieldCheck },
+  { text: "Michigan law: Drivers must stop at least 20 feet from a school bus with flashing red lights - in both directions (unless divided highway).", icon: AlertTriangle },
+  { text: "If your child drops something near the bus, tell them to tell the driver - never reach under the bus.", icon: ShieldCheck },
   { text: "Report drivers who illegally pass stopped school buses to your local police or school district.", icon: Camera },
   { text: "Review your child's bus route and stop location at the start of each school year.", icon: BookOpen },
 ];
@@ -249,7 +249,7 @@ function StatsCards() {
 function DataChartsTab() {
   return (
     <div className="space-y-8">
-      {/* NHTSA FARS — Fatalities by Type */}
+      {/* NHTSA FARS - Fatalities by Type */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
         <Card>
           <CardHeader className="pb-2">
@@ -279,13 +279,13 @@ function DataChartsTab() {
         </Card>
       </motion.div>
 
-      {/* NHTSA — Fatalities by County */}
+      {/* NHTSA - Fatalities by County */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
               <MapPin className="h-4 w-4 text-michigan-blue" />
-              Traffic Fatalities by County — Top 10 (NHTSA)
+              Traffic Fatalities by County - Top 10 (NHTSA)
             </CardTitle>
             <p className="text-xs text-muted-foreground">2023 data · Source: NHTSA FARS / Michigan State Police</p>
           </CardHeader>
@@ -314,7 +314,7 @@ function DataChartsTab() {
               <TrendingUp className="h-4 w-4 text-michigan-blue" />
               Michigan Public Transit Ridership (2020–2025)
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Millions of annual rides — recovery trend post-pandemic</p>
+            <p className="text-xs text-muted-foreground">Millions of annual rides - recovery trend post-pandemic</p>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={260}>
@@ -341,7 +341,7 @@ function DataChartsTab() {
               <Camera className="h-4 w-4 text-michigan-coral" />
               School Bus Stop-Arm Violations by County
             </CardTitle>
-            <p className="text-xs text-muted-foreground">Annual estimated violations — Dearborn* shows impact of AI camera enforcement</p>
+            <p className="text-xs text-muted-foreground">Annual estimated violations - Dearborn* shows impact of AI camera enforcement</p>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={280}>
@@ -362,7 +362,7 @@ function DataChartsTab() {
               <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded-sm bg-michigan-forest" /> AI camera deployed</span>
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              <strong>Insight:</strong> Dearborn — a leader in AI-powered stop-arm enforcement — shows 71% fewer violations per bus compared to similar-sized districts. AI-enforced accountability deters illegal passing before it happens.
+              <strong>Insight:</strong> Dearborn - a leader in AI-powered stop-arm enforcement - shows 71% fewer violations per bus compared to similar-sized districts. AI-enforced accountability deters illegal passing before it happens.
             </p>
           </CardContent>
         </Card>
@@ -418,7 +418,7 @@ function StopArmCameraExplainer() {
               </AccordionTrigger>
               <AccordionContent className="text-sm text-muted-foreground leading-relaxed space-y-2">
                 <p>AI-powered stop-arm camera systems mount multiple cameras on the exterior of school buses. When the bus stops and activates its red flashing lights and extended stop arm, the cameras begin recording.</p>
-                <p>Computer vision AI analyzes the footage in real-time to detect any vehicle that illegally passes the stopped bus. The system identifies the vehicle's license plate with high accuracy, and a citation is automatically generated and mailed to the registered owner — similar to a red-light camera ticket.</p>
+                <p>Computer vision AI analyzes the footage in real-time to detect any vehicle that illegally passes the stopped bus. The system identifies the vehicle's license plate with high accuracy, and a citation is automatically generated and mailed to the registered owner - similar to a red-light camera ticket.</p>
                 <p>This removes the burden from bus drivers (who previously had to memorize plates while watching children) and increases enforcement 10–50x beyond what police patrols alone can achieve.</p>
               </AccordionContent>
             </AccordionItem>
@@ -430,9 +430,9 @@ function StopArmCameraExplainer() {
               <AccordionContent className="text-sm text-muted-foreground leading-relaxed space-y-2">
                 <p>Stop-arm camera programs are designed with strict privacy guardrails:</p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>Cameras only activate when the bus's red lights are flashing — they do not record continuously.</li>
+                  <li>Cameras only activate when the bus's red lights are flashing - they do not record continuously.</li>
                   <li>Only footage of potential violations is reviewed; non-violation clips are automatically deleted.</li>
-                  <li>No student images are captured — cameras face outward toward traffic, not inside the bus.</li>
+                  <li>No student images are captured - cameras face outward toward traffic, not inside the bus.</li>
                   <li>License plate data is used solely for citation purposes and is not shared with third parties.</li>
                   <li>Programs operate under municipal or school district authority with public oversight.</li>
                 </ul>
@@ -476,7 +476,7 @@ function StopArmCameraExplainer() {
                     </ul>
                   </div>
                 </div>
-                <p className="text-xs"><strong>Key insight:</strong> The deterrent effect is the most powerful outcome. When drivers know every bus has cameras, violation rates plummet — protecting students even when no citation is issued.</p>
+                <p className="text-xs"><strong>Key insight:</strong> The deterrent effect is the most powerful outcome. When drivers know every bus has cameras, violation rates plummet - protecting students even when no citation is issued.</p>
               </AccordionContent>
             </AccordionItem>
 
@@ -485,10 +485,10 @@ function StopArmCameraExplainer() {
                 <span className="flex items-center gap-2"><BarChart3 className="h-4 w-4 text-michigan-blue" />Student Safety Statistics</span>
               </AccordionTrigger>
               <AccordionContent className="text-sm text-muted-foreground leading-relaxed space-y-2">
-                <p>Nationally, school buses are the safest form of surface transportation for students — but the danger zone is outside the bus:</p>
+                <p>Nationally, school buses are the safest form of surface transportation for students - but the danger zone is outside the bus:</p>
                 <ul className="list-disc pl-5 space-y-1">
                   <li><strong>17 million</strong> stop-arm violations occur annually nationwide (NASDPTS estimate)</li>
-                  <li><strong>95%</strong> of school-bus related fatalities happen outside the bus — in loading/unloading zones</li>
+                  <li><strong>95%</strong> of school-bus related fatalities happen outside the bus - in loading/unloading zones</li>
                   <li><strong>108,000+</strong> violations were recorded on a single survey day across participating states</li>
                   <li>Districts with AI camera enforcement see <strong>50–80% reduction</strong> in violations within the first year</li>
                 </ul>
@@ -510,15 +510,15 @@ const michiganDataLandscape = [
   { region: "Grand Rapids (Kent County)", data: "Bike lanes, some sidewalks", source: "City of GR Open Data", tier: "~Tier 1", coverage: "Partial" },
   { region: "Ann Arbor (Washtenaw)", data: "Sidewalks, bike infrastructure", source: "City + SEMCOG", tier: "~Tier 1-2", coverage: "Good" },
   { region: "Lansing (Ingham County)", data: "Limited", source: "City data", tier: "~Tier 1", coverage: "Sparse" },
-  { region: "Upper Peninsula (15 counties)", data: "None", source: "—", tier: "No data", coverage: "Zero coverage" },
-  { region: "Rural Michigan (50+ counties)", data: "None", source: "—", tier: "No data", coverage: "Zero coverage" },
+  { region: "Upper Peninsula (15 counties)", data: "None", source: "-", tier: "No data", coverage: "Zero coverage" },
+  { region: "Rural Michigan (50+ counties)", data: "None", source: "-", tier: "No data", coverage: "Zero coverage" },
 ];
 
 const gatisTiers = [
-  { tier: 1, label: "Minimal", description: "Feature ID, type, geometry only — \"We know it exists\"", color: "bg-red-400" },
-  { tier: 2, label: "Basic", description: "Adds width, surface material, directionality — \"We know what it's like\"", color: "bg-orange-400" },
-  { tier: 3, label: "Detailed", description: "Adds ADA compliance, incline, GTFS linkage — \"We know if it's accessible\"", color: "bg-yellow-400" },
-  { tier: 4, label: "Comprehensive", description: "Adds traffic volume, maintenance schedule, lifecycle stage — \"We can plan with it\"", color: "bg-green-400" },
+  { tier: 1, label: "Minimal", description: "Feature ID, type, geometry only - \"We know it exists\"", color: "bg-red-400" },
+  { tier: 2, label: "Basic", description: "Adds width, surface material, directionality - \"We know what it's like\"", color: "bg-orange-400" },
+  { tier: 3, label: "Detailed", description: "Adds ADA compliance, incline, GTFS linkage - \"We know if it's accessible\"", color: "bg-yellow-400" },
+  { tier: 4, label: "Comprehensive", description: "Adds traffic volume, maintenance schedule, lifecycle stage - \"We can plan with it\"", color: "bg-green-400" },
 ];
 
 function ActiveTransportationTab() {
@@ -530,11 +530,11 @@ function ActiveTransportationTab() {
           <div className="flex flex-wrap items-center gap-3 mb-3">
             <h2 className="text-xl font-bold text-foreground">Pedestrian, Bike & Accessibility Infrastructure</h2>
             <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">
-              NEW — Federally Backed Open Standard
+              NEW - Federally Backed Open Standard
             </Badge>
           </div>
           <p className="text-sm text-muted-foreground">
-            Powered by GATIS — the national open standard for active transportation data from the Bureau of Transportation Statistics (v1.0, February 2026).
+            Powered by GATIS - the national open standard for active transportation data from the Bureau of Transportation Statistics (v1.0, February 2026).
           </p>
         </div>
       </motion.div>
@@ -557,7 +557,7 @@ function ActiveTransportationTab() {
             bgColor: "bg-michigan-blue/10",
           },
           {
-            title: "GATIS v1.0 — Ratified March 2026",
+            title: "GATIS v1.0 - Ratified March 2026",
             description: "The federal Bureau of Transportation Statistics released the first national standard for pedestrian, bike, and accessibility infrastructure data. Public domain, open source. Access Michigan is among the first civic platforms to integrate it.",
             icon: CheckCircle2,
             color: "text-michigan-forest",
@@ -604,7 +604,7 @@ function ActiveTransportationTab() {
                   <span className="flex items-center gap-2"><Footprints className="h-4 w-4 text-michigan-teal" />Edges (Linear Features)</span>
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
-                  Sidewalks, crossings, bikeways, multi-use paths, ramps, steps, traffic islands — with attributes like width, surface material, incline, and cross-slope.
+                  Sidewalks, crossings, bikeways, multi-use paths, ramps, steps, traffic islands - with attributes like width, surface material, incline, and cross-slope.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="nodes" className="border rounded-lg px-4">
@@ -612,7 +612,7 @@ function ActiveTransportationTab() {
                   <span className="flex items-center gap-2"><Construction className="h-4 w-4 text-michigan-coral" />Nodes (Connection Points)</span>
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
-                  Curb ramps, intersection transitions — with ADA compliance date, detectable warnings, and surface condition.
+                  Curb ramps, intersection transitions - with ADA compliance date, detectable warnings, and surface condition.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="points" className="border rounded-lg px-4">
@@ -673,7 +673,7 @@ function ActiveTransportationTab() {
               <MapPin className="h-4 w-4 text-michigan-blue" />
               Michigan's Active Transportation Data Landscape
             </CardTitle>
-            <p className="text-xs text-muted-foreground">The 76-county data gap is itself a finding — visualizing what's missing is as powerful as showing what exists.</p>
+            <p className="text-xs text-muted-foreground">The 76-county data gap is itself a finding - visualizing what's missing is as powerful as showing what exists.</p>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -772,7 +772,7 @@ function ActiveTransportationTab() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-xs text-muted-foreground leading-relaxed">
-              NC-BPAID is open to anyone — government, nonprofit, or private citizen. Three subgroups meet regularly: <strong>Data Practices</strong>, <strong>Outreach</strong>, and <strong>Specification Development</strong>.
+              NC-BPAID is open to anyone - government, nonprofit, or private citizen. Three subgroups meet regularly: <strong>Data Practices</strong>, <strong>Outreach</strong>, and <strong>Specification Development</strong>.
             </p>
 
             <div className="space-y-2">
@@ -792,7 +792,7 @@ function ActiveTransportationTab() {
             </div>
 
             <p className="text-xs text-muted-foreground italic">
-              The GATIS Playbook vote is scheduled for spring 2026 — Access Michigan will participate.
+              The GATIS Playbook vote is scheduled for spring 2026 - Access Michigan will participate.
             </p>
 
             <div className="flex gap-2 flex-wrap">
@@ -830,7 +830,7 @@ export default function TransportationPage() {
     path: "/transportation",
     jsonLd: {
       "@type": "WebPage",
-      "name": "Transportation & Safety — Access Michigan",
+      "name": "Transportation & Safety - Access Michigan",
       "description": "Public transit routes, school bus safety data, and accessible transportation options across Michigan.",
       "url": "https://accessmi.org/transportation",
     },
@@ -964,7 +964,7 @@ export default function TransportationPage() {
               )}
             </div>
 
-            {/* Safety Checklist — on safety tab */}
+            {/* Safety Checklist - on safety tab */}
             {activeTab === "safety" && (
               <>
                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
@@ -998,7 +998,7 @@ export default function TransportationPage() {
                   </Card>
                 </motion.div>
 
-                {/* Transportation Safety — MDOT Tips & BusPatrol Integration */}
+                {/* Transportation Safety - MDOT Tips & BusPatrol Integration */}
                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
                   <Card className="border-michigan-coral/20">
                     <CardHeader className="pb-3">
@@ -1020,7 +1020,7 @@ export default function TransportationPage() {
                             { tip: "Arrive at the bus stop 5 minutes early. Never chase a moving bus.", icon: Bus },
                             { tip: "Wait until the bus stops completely and the door opens before approaching.", icon: Eye },
                             { tip: "Cross the street at least 10 feet in front of the bus where the driver can see you.", icon: Users },
-                            { tip: "Never walk behind a school bus — drivers cannot see you.", icon: AlertTriangle },
+                            { tip: "Never walk behind a school bus - drivers cannot see you.", icon: AlertTriangle },
                             { tip: "Use handrails when boarding and exiting. Watch for drawstrings or loose straps.", icon: CheckCircle2 },
                             { tip: "If you drop something near the bus, tell the driver instead of picking it up yourself.", icon: ShieldCheck },
                           ].map((item, i) => (
@@ -1041,7 +1041,7 @@ export default function TransportationPage() {
                       <div className="border-t border-border pt-5">
                         <h4 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
                           <Camera className="h-4 w-4 text-michigan-coral" />
-                          BusPatrol Integration — Partner Guidance
+                          BusPatrol Integration - Partner Guidance
                         </h4>
                         <div className="rounded-lg border border-michigan-coral/15 bg-michigan-coral/5 p-4 space-y-3">
                           <p className="text-xs text-muted-foreground leading-relaxed">
@@ -1109,12 +1109,12 @@ export default function TransportationPage() {
           </TabsContent>
         </Tabs>
 
-        {/* Health & Safety cross-reference — on safety tab */}
+        {/* Health & Safety cross-reference - on safety tab */}
         {activeTab === "safety" && (
           <HealthSafetyCallout />
         )}
 
-        {/* School Safety callout — on school tab */}
+        {/* School Safety callout - on school tab */}
         {activeTab === "school" && (
           <SchoolSafetyCallout />
         )}
@@ -1125,7 +1125,7 @@ export default function TransportationPage() {
             <CardContent className="py-6 text-center space-y-3">
               <ClipboardList className="h-8 w-8 mx-auto text-primary" />
               <p className="text-sm font-semibold text-foreground">Prepare for Your Visit</p>
-              <p className="text-xs text-muted-foreground">Clinic visit or school day checklist—download and print.</p>
+              <p className="text-xs text-muted-foreground">Clinic visit or school day checklist-download and print.</p>
               <VisitPrepChecklist />
             </CardContent>
           </Card>

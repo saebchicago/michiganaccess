@@ -181,7 +181,7 @@ const statusColors: Record<string, string> = {
 
 const DataCenterPage = () => {
   usePageMeta({
-    title: "Data Center Insights — Access Michigan",
+    title: "Data Center Insights - Access Michigan",
     description: `Michigan's ${investmentDisplay} in disclosed data center investment across ${pipelineProjects.length} announced projects: Stargate, energy demand, community impact, environmental concerns, and regulatory updates.`,
     path: "/data-centers",
   });
@@ -247,7 +247,7 @@ const DataCenterPage = () => {
               <div className="flex items-center gap-3">
                 <Building2 className="h-6 w-6 text-primary" />
                 <div>
-                  <CardTitle>Stargate Project — $7 Billion</CardTitle>
+                  <CardTitle>Stargate Project - $7 Billion</CardTitle>
                   <CardDescription>
                     Oracle / OpenAI / Related Digital · Saline Township,
                     Washtenaw County
@@ -587,7 +587,7 @@ const DataCenterPage = () => {
                   </h3>
                   <p className="text-xs text-muted-foreground">
                     Stargate: closed-loop cooling (low water use). Project
-                    Cannoli: evaporative cooling — estimated 3.6M gallons/day
+                    Cannoli: evaporative cooling - estimated 3.6M gallons/day
                     from GLWA.
                   </p>
                 </div>

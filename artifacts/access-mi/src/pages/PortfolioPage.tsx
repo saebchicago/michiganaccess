@@ -18,7 +18,7 @@ const fade = {
 
 export default function PortfolioPage() {
   usePageMeta({
-    title: "Portfolio — Access Michigan",
+    title: "Portfolio - Access Michigan",
     description: "Three civic intelligence tools built to make complex health and strategic decisions legible.",
     path: "/portfolio",
   });
@@ -44,7 +44,7 @@ export default function PortfolioPage() {
             variants={fade} custom={2} initial="hidden" animate="visible"
             className="mx-auto max-w-2xl text-lg text-muted-foreground"
           >
-            Make complexity legible — for patients, clinicians, executives, and strategists.
+            Make complexity legible - for patients, clinicians, executives, and strategists.
             Each platform is live, free, and built on public data.
           </motion.p>
         </div>
@@ -55,7 +55,7 @@ export default function PortfolioPage() {
         {/* Platform Cards */}
         <div className="space-y-6">
 
-          {/* Card 1 — accessmi.org */}
+          {/* Card 1 - accessmi.org */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
             <Card className="border-l-4 border-l-michigan-teal overflow-hidden">
               <CardContent className="pt-6 pb-6">
@@ -80,12 +80,12 @@ export default function PortfolioPage() {
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">
                   Civic platform mapping healthcare access, financial assistance, and social services
-                  across Michigan's 83 counties — with a live business development financial scenario
+                  across Michigan's 83 counties - with a live business development financial scenario
                   modeler built on CDC SVI and HRSA data.
                 </p>
                 <ul className="space-y-2 mb-5">
                   {[
-                    "BD financial modeler: service line NPV, build vs. partner vs. acquire, SDOH ROI — all interactive, all sourced",
+                    "BD financial modeler: service line NPV, build vs. partner vs. acquire, SDOH ROI - all interactive, all sourced",
                     "83-county market opportunity scoring using CDC Social Vulnerability Index and HRSA shortage area data",
                     "SDOH financial impact modeling anchored to Henry Ford Health and Trinity Health published outcomes",
                   ].map((point) => (
@@ -102,7 +102,7 @@ export default function PortfolioPage() {
             </Card>
           </motion.div>
 
-          {/* Card 2 — chronicintel.com */}
+          {/* Card 2 - chronicintel.com */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={1}>
             <Card className="border-l-4 border-l-blue-500 overflow-hidden">
               <CardContent className="pt-6 pb-6">
@@ -126,7 +126,7 @@ export default function PortfolioPage() {
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Decision intelligence for chronic disease — epidemiology, clinical trial pipelines,
+                  Decision intelligence for chronic disease - epidemiology, clinical trial pipelines,
                   equity signals, and innovation scoring across 301 conditions. Role-adaptive content
                   for clinicians, researchers, and executives.
                 </p>
@@ -134,7 +134,7 @@ export default function PortfolioPage() {
                   {[
                     "301 conditions mapped against active clinical trial pipelines and pharma R&D activity",
                     "Equity flags marking documented racial, socioeconomic, and sex-based disparities in diagnosis and treatment",
-                    "Instant structured PDF reports — client-side generation, no data transmitted, no account required",
+                    "Instant structured PDF reports - client-side generation, no data transmitted, no account required",
                   ].map((point) => (
                     <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-500" />
@@ -151,7 +151,7 @@ export default function PortfolioPage() {
             </Card>
           </motion.div>
 
-          {/* Card 3 — decisionplay.app */}
+          {/* Card 3 - decisionplay.app */}
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={2}>
             <Card className="border-l-4 border-l-amber-500 overflow-hidden">
               <CardContent className="pt-6 pb-6">
@@ -175,15 +175,15 @@ export default function PortfolioPage() {
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Paste any strategic situation — a negotiation, a transformation initiative, a tough
-                  call — and instantly see the game theory underneath. Who has leverage, what the
+                  Paste any strategic situation - a negotiation, a transformation initiative, a tough
+                  call - and instantly see the game theory underneath. Who has leverage, what the
                   incentives are, what moves are available.
                 </p>
                 <ul className="space-y-2 mb-5">
                   {[
                     "Game theory engine that surfaces leverage, incentives, and strategic structure from plain-language descriptions",
                     "Healthcare transformation scenario pack: JVs, AI proposals, build vs. acquire decisions, M&A dynamics",
-                    "Runs entirely in the browser — no account, no server, no data stored. Private by architecture.",
+                    "Runs entirely in the browser - no account, no server, no data stored. Private by architecture.",
                   ].map((point) => (
                     <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
@@ -222,7 +222,7 @@ export default function PortfolioPage() {
               {
                 icon: Users,
                 title: "Built for the decision-maker",
-                text: "Not for the data scientist. Complexity is handled by the platform — not exported to the user.",
+                text: "Not for the data scientist. Complexity is handled by the platform - not exported to the user.",
               },
             ].map((col, i) => (
               <motion.div key={col.title} variants={fade} custom={i + 1}>

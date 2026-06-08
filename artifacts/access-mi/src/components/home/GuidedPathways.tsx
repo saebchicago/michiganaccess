@@ -15,7 +15,7 @@ const pathways = [
     id: "uninsured",
     icon: ShieldAlert,
     title: "I need care but don't have insurance",
-    supportText: "You're not alone — many Michiganders are finding affordable care right now.",
+    supportText: "You're not alone - many Michiganders are finding affordable care right now.",
     description: "Find sliding-scale clinics, Medicaid enrollment, and charity care programs",
     links: [
       { label: "Check Medicaid Eligibility", href: "/financial-help" },
@@ -49,7 +49,7 @@ const pathways = [
     id: "new-resident",
     icon: MapPin,
     title: "I just moved to Michigan",
-    supportText: "Welcome — getting settled is a process, and we're here to help.",
+    supportText: "Welcome - getting settled is a process, and we're here to help.",
     description: "Find local doctors, enroll in coverage, and discover community services",
     links: [
       { label: "Find Doctors Near Me", href: "/find-care" },
@@ -66,7 +66,7 @@ const pathways = [
     id: "emergency",
     icon: Siren,
     title: "I need help right now",
-    supportText: "Help is available 24/7 — you can reach someone right now.",
+    supportText: "Help is available 24/7 - you can reach someone right now.",
     description: "Crisis lines, urgent care, and emergency resources",
     links: [
       { label: "Call 988 Crisis Line", href: "tel:988" },
@@ -96,7 +96,7 @@ const GuidedPathways = forwardRef<HTMLElement>(function GuidedPathways(_props, r
       <div className="container">
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-10 text-center">
           <h2 className="text-2xl font-bold text-foreground md:text-3xl">How can we help you today?</h2>
-          <p className="mt-2 text-muted-foreground">Pick the situation that fits yours — we'll guide you to the right resources.</p>
+          <p className="mt-2 text-muted-foreground">Pick the situation that fits yours - we'll guide you to the right resources.</p>
         </motion.div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {pathways.map((p, i) => {
@@ -169,7 +169,7 @@ const GuidedPathways = forwardRef<HTMLElement>(function GuidedPathways(_props, r
                         </div>
                       </CardContent>
 
-                      {/* Expanded content — checklist */}
+                      {/* Expanded content - checklist */}
                       {isExpanded && p.id !== "emergency" && (
                         <CardFooter className="pt-0 pb-5 px-6 flex-col gap-3 border-t border-border">
                           <motion.div

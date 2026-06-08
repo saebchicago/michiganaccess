@@ -100,7 +100,7 @@ export default function HealthMapPage() {
 
         <MapFirstVisitTooltip />
 
-        {/* Map — lazy loaded */}
+        {/* Map - lazy loaded */}
         <div className="relative flex-1">
           {isLoading && (
             <div className="absolute inset-0 z-[1000] flex items-center justify-center bg-background/80 backdrop-blur-sm">

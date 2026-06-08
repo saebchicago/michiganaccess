@@ -7,7 +7,7 @@ const cards = [
   {
     icon: Shield,
     title: "Verified public data",
-    description: "MDHHS, CMS, CDC, EPA, Leapfrog — organized and cited.",
+    description: "MDHHS, CMS, CDC, EPA, Leapfrog - organized and cited.",
   },
   {
     icon: UserX,

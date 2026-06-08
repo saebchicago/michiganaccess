@@ -26,7 +26,7 @@ export default function EducationEquityCard() {
               <Badge variant="outline" className="text-[8px] mt-1 border-michigan-forest/30 text-michigan-forest">2024-25</Badge>
             </div>
           </div>
-          <p className="text-xs text-muted-foreground">196 school-based health centers serve 37,000+ children across 52% of Michigan counties. Detroit DPSCD: 60.9% chronic absenteeism — highest in state.</p>
+          <p className="text-xs text-muted-foreground">196 school-based health centers serve 37,000+ children across 52% of Michigan counties. Detroit DPSCD: 60.9% chronic absenteeism - highest in state.</p>
           <div className="flex justify-between items-center">
             <p className="text-[10px] text-muted-foreground">Source: MDE 2024-25, SCHA-MI</p>
             <a href="https://www.mischooldata.org" target="_blank" rel="noopener" className="text-[10px] text-primary hover:underline flex items-center gap-0.5">MI School Data <ExternalLink className="h-2.5 w-2.5" /></a>

@@ -97,7 +97,7 @@ const equityPrinciples = [
     title: "Dignity in Information Architecture",
     desc: "No shaming language. Financial assistance presented as a normal pathway, not an exception.",
     example:
-      '"Sliding scale based on income" — not "free care" or "charity care."',
+      '"Sliding scale based on income" - not "free care" or "charity care."',
   },
   {
     icon: Eye,
@@ -514,7 +514,7 @@ export default function MethodologyPage() {
               {
                 source:
                   "United for ALICE (Asset Limited, Income Constrained, Employed)",
-                desc: "County-level ALICE Threshold data — households above poverty but below cost of living. Survival Budget breakdowns by household type.",
+                desc: "County-level ALICE Threshold data - households above poverty but below cost of living. Survival Budget breakdowns by household type.",
                 frequency: "Annual",
                 url: "https://unitedforalice.org/state-overview/michigan",
               },
@@ -526,7 +526,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "EGLE Brownfields",
-                desc: "Sites where EGLE has provided redevelopment incentives — grants, loans, tax increment financing, or free environmental assessments.",
+                desc: "Sites where EGLE has provided redevelopment incentives - grants, loans, tax increment financing, or free environmental assessments.",
                 frequency: "Updated as incentives are awarded",
                 url: "https://gis-egle.hub.arcgis.com/maps/egle::brownfields",
               },
@@ -538,7 +538,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "Michigan GIS Open Data Portal",
-                desc: "State-level geospatial datasets — boundaries, demographics, geology, infrastructure. Downloadable as shapefile, KML, CSV, or via ArcGIS REST API.",
+                desc: "State-level geospatial datasets - boundaries, demographics, geology, infrastructure. Downloadable as shapefile, KML, CSV, or via ArcGIS REST API.",
                 frequency: "Varies by dataset",
                 url: "https://gis-michigan.opendata.arcgis.com/",
               },
@@ -556,7 +556,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "USDA SNAP Retailer Locator",
-                desc: "Authorized SNAP retailers in Michigan — grocery stores, convenience stores, farmers markets. Geocoded with store type classification.",
+                desc: "Authorized SNAP retailers in Michigan - grocery stores, convenience stores, farmers markets. Geocoded with store type classification.",
                 frequency: "Continuously updated",
                 url: "https://usda-fns.hub.arcgis.com/datasets/USDA-FNS::snap-store-locations/",
               },
@@ -574,7 +574,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "March of Dimes PeriStats",
-                desc: "County-level maternal and infant health indicators — preterm birth, low birth weight, prenatal care access, teen birth rate.",
+                desc: "County-level maternal and infant health indicators - preterm birth, low birth weight, prenatal care access, teen birth rate.",
                 frequency: "Annual",
                 url: "https://www.marchofdimes.org/peristats/",
               },
@@ -789,18 +789,18 @@ export default function MethodologyPage() {
                 <ol className="space-y-2 text-xs text-muted-foreground">
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">1.</span> Large
-                    Health System — 2.1 mi
+                    Health System - 2.1 mi
                   </li>
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">2.</span>{" "}
-                    Specialty Practice — 3.4 mi
+                    Specialty Practice - 3.4 mi
                   </li>
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">3.</span>{" "}
-                    Private Clinic — 4.0 mi
+                    Private Clinic - 4.0 mi
                   </li>
                   <li className="flex gap-2 text-muted-foreground">
-                    <span className="font-bold">7.</span> FQHC (Safety-Net) —
+                    <span className="font-bold">7.</span> FQHC (Safety-Net) -
                     5.8 mi
                   </li>
                 </ol>
@@ -818,22 +818,22 @@ export default function MethodologyPage() {
                 <ol className="space-y-2 text-xs text-muted-foreground">
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">1.</span> Large
-                    Health System — 2.1 mi{" "}
+                    Health System - 2.1 mi{" "}
                     <span className="text-michigan-forest">· Quality: A</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">2.</span>{" "}
                     <span className="font-semibold text-michigan-forest">
-                      FQHC — 5.8 mi · "No one turned away"
+                      FQHC - 5.8 mi · "No one turned away"
                     </span>
                   </li>
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">3.</span>{" "}
-                    Specialty Practice — 3.4 mi
+                    Specialty Practice - 3.4 mi
                   </li>
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">4.</span>{" "}
-                    Private Clinic — 4.0 mi
+                    Private Clinic - 4.0 mi
                   </li>
                 </ol>
                 <p className="mt-3 text-[11px] text-michigan-forest">
@@ -883,9 +883,9 @@ export default function MethodologyPage() {
               <p className="text-sm text-muted-foreground mt-2">
                 This value is computed from verified public datasets using a
                 transparent formula. The Civic Insight Score, for example,
-                combines four U.S. Census Bureau ACS measures — median household
+                combines four U.S. Census Bureau ACS measures - median household
                 income (B19013), poverty rate (B17001), share of adults 25+ with
-                a bachelor's degree (B15003), and unemployment rate (B23025) —
+                a bachelor's degree (B15003), and unemployment rate (B23025) -
                 into a single 0–100 index. Each input is mapped to a 0–100
                 sub-score and averaged. When the Census API is unavailable for a
                 selected county, the score renders as "data unavailable" rather
@@ -910,7 +910,7 @@ export default function MethodologyPage() {
               </div>
               <p className="text-sm text-muted-foreground mt-2">
                 Data for this geography is not yet available. Access Michigan is
-                expanding coverage — when a county or metric lacks sufficient
+                expanding coverage - when a county or metric lacks sufficient
                 source data, we show this label rather than displaying
                 incomplete information.
               </p>
@@ -977,7 +977,7 @@ export default function MethodologyPage() {
                 <strong className="text-foreground">
                   Health improvement documented:
                 </strong>{" "}
-                Not quantified — no publicly available Michigan-specific data.
+                Not quantified - no publicly available Michigan-specific data.
               </li>
             </ul>
             <p>
@@ -987,7 +987,7 @@ export default function MethodologyPage() {
               </strong>
               , not an achieved outcome. Projected screening, referral, and
               completion rates assume unified intake, closed-loop tracking, and
-              CIE integration — none of which are retrospectively measured.
+              CIE integration - none of which are retrospectively measured.
             </p>
             <p className="text-xs text-muted-foreground/70">
               What this funnel is not: a count of Michigan residents whose needs
@@ -1155,8 +1155,8 @@ export default function MethodologyPage() {
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 <strong>Looking ahead:</strong> In the future, we may let users
-                securely connect their own health plan — for example, through
-                Patient Access APIs (FHIR-based) — so they can see personal
+                securely connect their own health plan - for example, through
+                Patient Access APIs (FHIR-based) - so they can see personal
                 coverage and claims alongside community data. This will be
                 opt-in, heavily protected with encryption and consent
                 management, and never shared with third parties or used for

@@ -1,6 +1,6 @@
 // Michigan Registered Political Parties
 // Source: Michigan Secretary of State Bureau of Elections
-// Presented with strict neutrality — identical format for all parties
+// Presented with strict neutrality - identical format for all parties
 
 export interface MichiganPoliticalParty {
   id: string;
@@ -46,9 +46,9 @@ export const MICHIGAN_PARTIES: MichiganPoliticalParty[] = [
     id: "libertarian", officialName: "Libertarian Party of Michigan", shortName: "Libertarian",
     ballotStatus: "Minor", founded: 1972, website: "michiganlp.org",
     currentStateOfficeholders: 0,
-    candidateFilingProcess: "Requires nominating petition; no primary — convention nomination",
+    candidateFilingProcess: "Requires nominating petition; no primary - convention nomination",
     petitionRequirementDifferent: true,
-    petitionNote: "Requires signatures equal to 1% of total votes cast for Secretary of State in last election — often more burdensome than major party filing.",
+    petitionNote: "Requires signatures equal to 1% of total votes cast for Secretary of State in last election - often more burdensome than major party filing.",
     keyPolicyFocus: ["Individual liberty", "Free market economics", "Non-interventionist foreign policy", "Criminal justice reform"],
     lastGovernorCandidate: "Mary Buzuma", lastGovernorVotePct: 1.5, lastGovernorVoteYear: 2022,
     color: "#f5a623", source: "Michigan SOS Bureau of Elections 2025",
@@ -59,7 +59,7 @@ export const MICHIGAN_PARTIES: MichiganPoliticalParty[] = [
     currentStateOfficeholders: 0,
     candidateFilingProcess: "Petition signatures required; convention nomination",
     petitionRequirementDifferent: true,
-    petitionNote: "Same 1% petition requirement as other minor parties — typically 30,000+ signatures statewide.",
+    petitionNote: "Same 1% petition requirement as other minor parties - typically 30,000+ signatures statewide.",
     keyPolicyFocus: ["Environmental protection", "Single-payer healthcare", "Campaign finance reform", "Ranked choice voting"],
     lastGovernorCandidate: "Garland Favorito (2018)", lastGovernorVotePct: 1.1, lastGovernorVoteYear: 2018,
     color: "#2d6a4f", source: "Michigan SOS Bureau of Elections 2025",

@@ -19,7 +19,7 @@ export default function HazardRiskDashboard() {
             Which Michigan Counties Face the Most Risk?
           </CardTitle>
           <CardDescription>
-            FEMA National Risk Index — expected annual loss, social vulnerability, and top hazards
+            FEMA National Risk Index - expected annual loss, social vulnerability, and top hazards
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -85,7 +85,7 @@ export default function HazardRiskDashboard() {
 
           <div className="flex items-center justify-between">
             <p className="text-[10px] text-muted-foreground">
-              Source: FEMA National Risk Index — 20 of 83 counties shown. Full data at hazards.fema.gov
+              Source: FEMA National Risk Index - 20 of 83 counties shown. Full data at hazards.fema.gov
             </p>
             <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
               <a href="https://hazards.fema.gov/nri/map" target="_blank" rel="noopener">

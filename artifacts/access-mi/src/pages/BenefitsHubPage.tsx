@@ -47,7 +47,7 @@ const TOOLS: HubTool[] = [
 
 export default function BenefitsHubPage() {
   usePageMeta({
-    title: "Benefits & Decisions — Access Michigan",
+    title: "Benefits & Decisions - Access Michigan",
     description:
       "Sourced life-stage benefits map, a preliminary eligibility screener, and a benefits-cliff explainer. Informational only. Eligibility is decided by the program.",
     path: "/benefits",

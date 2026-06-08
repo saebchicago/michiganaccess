@@ -120,11 +120,11 @@ export default function CostTransparencyPage() {
 
   usePageMeta({
     title: "Cost Transparency",
-    description: "Compare healthcare costs across Michigan facilities. Know before you go — the same procedure can cost 3-5x more depending on where you go.",
+    description: "Compare healthcare costs across Michigan facilities. Know before you go - the same procedure can cost 3-5x more depending on where you go.",
     path: "/costs",
     jsonLd: {
       "@type": "WebPage",
-      name: "Healthcare Cost Transparency — Access Michigan",
+      name: "Healthcare Cost Transparency - Access Michigan",
       description: "Compare procedure costs and prescription prices across Michigan healthcare facilities.",
     },
   });
@@ -158,7 +158,7 @@ export default function CostTransparencyPage() {
             Know Before You Go
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Compare healthcare costs across Michigan facilities. Prices vary dramatically — the same procedure can cost 3-5x more depending on where you go.
+            Compare healthcare costs across Michigan facilities. Prices vary dramatically - the same procedure can cost 3-5x more depending on where you go.
           </motion.p>
         </div>
       </section>
@@ -255,7 +255,7 @@ export default function CostTransparencyPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-base">
                   <BarChart3 className="h-4 w-4 text-primary" />
-                  Facility Price Comparison — {procedure.name}
+                  Facility Price Comparison - {procedure.name}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -359,11 +359,11 @@ export default function CostTransparencyPage() {
 
           <TabsContent value="tips" className="mt-6 space-y-4">
             {[
-              { title: "Always Ask for an Itemized Bill", desc: "Hospitals are required to provide itemized bills. Review every charge — billing errors occur in up to 80% of medical bills. Dispute charges you don't recognize.", icon: Calculator },
+              { title: "Always Ask for an Itemized Bill", desc: "Hospitals are required to provide itemized bills. Review every charge - billing errors occur in up to 80% of medical bills. Dispute charges you don't recognize.", icon: Calculator },
               { title: "Request Cash-Pay / Self-Pay Discounts", desc: "Most hospitals offer 20-60% discounts for uninsured patients who pay upfront. Ask the billing department before your procedure.", icon: DollarSign },
               { title: "Apply for Charity Care Before Collections", desc: "Michigan hospitals with charity care programs must inform patients. Apply within 240 days of your first bill. Many programs cover patients up to 400% FPL.", icon: Shield },
               { title: "Use the No Surprises Act", desc: "Federal law protects you from surprise out-of-network bills for emergency services and certain non-emergency services at in-network facilities.", icon: Shield },
-              { title: "Negotiate Payment Plans", desc: "Hospitals must offer interest-free payment plans. You can negotiate monthly amounts based on ability to pay — don't accept the first offer.", icon: TrendingDown },
+              { title: "Negotiate Payment Plans", desc: "Hospitals must offer interest-free payment plans. You can negotiate monthly amounts based on ability to pay - don't accept the first offer.", icon: TrendingDown },
             ].map((tip, i) => (
               <motion.div key={tip.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
                 <Card className="hover-lift">

@@ -11,7 +11,7 @@ interface LazySectionProps {
 /**
  * Defers rendering of children until the section scrolls near the viewport.
  * Uses IntersectionObserver with a generous rootMargin so content loads
- * just before the user reaches it — zero layout shift, zero wasted work.
+ * just before the user reaches it - zero layout shift, zero wasted work.
  */
 export default function LazySection({
   children,

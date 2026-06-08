@@ -37,27 +37,27 @@ interface NarcanLocation {
   lng: number;
 }
 
-// Michigan standing order naloxone distribution points — curated dataset
+// Michigan standing order naloxone distribution points - curated dataset
 const NARCAN_LOCATIONS: NarcanLocation[] = [
-  { name: "CVS Pharmacy — Detroit", type: "pharmacy", address: "2401 W Grand Blvd", city: "Detroit", county: "Wayne", phone: "313-895-1052", hours: "8 AM–10 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.368, lng: -83.093 },
-  { name: "Walgreens — Detroit Midtown", type: "pharmacy", address: "6501 Woodward Ave", city: "Detroit", county: "Wayne", phone: "313-871-0320", hours: "8 AM–10 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.364, lng: -83.072 },
+  { name: "CVS Pharmacy - Detroit", type: "pharmacy", address: "2401 W Grand Blvd", city: "Detroit", county: "Wayne", phone: "313-895-1052", hours: "8 AM–10 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.368, lng: -83.093 },
+  { name: "Walgreens - Detroit Midtown", type: "pharmacy", address: "6501 Woodward Ave", city: "Detroit", county: "Wayne", phone: "313-871-0320", hours: "8 AM–10 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.364, lng: -83.072 },
   { name: "Wayne County Health Dept", type: "health_dept", address: "33030 Van Born Rd", city: "Wayne", county: "Wayne", phone: "734-727-7000", website: "https://www.waynecounty.com/departments/hhvs/public-health.aspx", hours: "Mon–Fri 8 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.280, lng: -83.387 },
-  { name: "Community Health Access — Harm Reduction", type: "community", address: "3401 E Jefferson Ave", city: "Detroit", county: "Wayne", phone: "313-822-9510", hours: "Mon–Fri 9 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.340, lng: -83.020 },
+  { name: "Community Health Access - Harm Reduction", type: "community", address: "3401 E Jefferson Ave", city: "Detroit", county: "Wayne", phone: "313-822-9510", hours: "Mon–Fri 9 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.340, lng: -83.020 },
   { name: "Washtenaw County Health Dept", type: "health_dept", address: "555 Towner St", city: "Ypsilanti", county: "Washtenaw", phone: "734-544-6700", website: "https://www.washtenaw.org/839/Public-Health", hours: "Mon–Fri 8:30 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.241, lng: -83.613 },
-  { name: "CVS Pharmacy — Ann Arbor", type: "pharmacy", address: "2000 W Stadium Blvd", city: "Ann Arbor", county: "Washtenaw", phone: "734-665-8215", hours: "8 AM–10 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.274, lng: -83.770 },
+  { name: "CVS Pharmacy - Ann Arbor", type: "pharmacy", address: "2000 W Stadium Blvd", city: "Ann Arbor", county: "Washtenaw", phone: "734-665-8215", hours: "8 AM–10 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.274, lng: -83.770 },
   { name: "Kent County Health Dept", type: "health_dept", address: "700 Fuller Ave NE", city: "Grand Rapids", county: "Kent", phone: "616-632-7100", website: "https://www.accesskent.com/Health/", hours: "Mon–Fri 8 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.975, lng: -85.651 },
   { name: "Mel Trotter Ministries", type: "community", address: "225 Commerce Ave SW", city: "Grand Rapids", county: "Kent", phone: "616-454-8249", website: "https://www.meltrotter.org/", hours: "24/7", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.960, lng: -85.672 },
-  { name: "Rite Aid — Kalamazoo", type: "pharmacy", address: "501 N Burdick St", city: "Kalamazoo", county: "Kalamazoo", phone: "269-343-3677", hours: "9 AM–9 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.297, lng: -85.585 },
+  { name: "Rite Aid - Kalamazoo", type: "pharmacy", address: "501 N Burdick St", city: "Kalamazoo", county: "Kalamazoo", phone: "269-343-3677", hours: "9 AM–9 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.297, lng: -85.585 },
   { name: "Kalamazoo County Health Dept", type: "health_dept", address: "311 E Alcott St", city: "Kalamazoo", county: "Kalamazoo", phone: "269-373-5200", website: "https://www.kalcounty.com/hcs/", hours: "Mon–Fri 8 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.289, lng: -85.579 },
   { name: "Genesee County Health Dept", type: "health_dept", address: "630 S Saginaw St, Ste 4", city: "Flint", county: "Genesee", phone: "810-257-3612", website: "https://gchd.us/", hours: "Mon–Fri 8 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 43.011, lng: -83.688 },
   { name: "Insight Recovery Center", type: "community", address: "1016 Roe St", city: "Flint", county: "Genesee", phone: "810-232-2090", hours: "Mon–Fri 8 AM–6 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 43.019, lng: -83.703 },
   { name: "Ingham County Health Dept", type: "health_dept", address: "5303 S Cedar St", city: "Lansing", county: "Ingham", phone: "517-887-4311", website: "https://hd.ingham.org/", hours: "Mon–Fri 8 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.693, lng: -84.567 },
-  { name: "Meijer Pharmacy — Lansing", type: "pharmacy", address: "6200 S Pennsylvania Ave", city: "Lansing", county: "Ingham", phone: "517-887-3939", hours: "8 AM–9 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.681, lng: -84.553 },
+  { name: "Meijer Pharmacy - Lansing", type: "pharmacy", address: "6200 S Pennsylvania Ave", city: "Lansing", county: "Ingham", phone: "517-887-3939", hours: "8 AM–9 PM", hasNarcan: true, hasFitKits: false, isFree: false, training: false, lat: 42.681, lng: -84.553 },
   { name: "Saginaw County Health Dept", type: "health_dept", address: "1600 N Michigan Ave", city: "Saginaw", county: "Saginaw", phone: "989-758-3800", website: "https://www.saginawcounty.com/health-department/", hours: "Mon–Fri 8 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 43.434, lng: -83.954 },
   { name: "Munson Medical Center", type: "hospital", address: "1105 Sixth St", city: "Traverse City", county: "Grand Traverse", phone: "231-935-5000", website: "https://www.munsonhealthcare.org/", hours: "24/7 ER", hasNarcan: true, hasFitKits: false, isFree: false, training: true, lat: 44.762, lng: -85.624 },
-  { name: "UP Health System — Marquette", type: "hospital", address: "580 W College Ave", city: "Marquette", county: "Marquette", phone: "906-449-3000", website: "https://www.mghs.org/", hours: "24/7 ER", hasNarcan: true, hasFitKits: false, isFree: false, training: true, lat: 46.547, lng: -87.404 },
+  { name: "UP Health System - Marquette", type: "hospital", address: "580 W College Ave", city: "Marquette", county: "Marquette", phone: "906-449-3000", website: "https://www.mghs.org/", hours: "24/7 ER", hasNarcan: true, hasFitKits: false, isFree: false, training: true, lat: 46.547, lng: -87.404 },
   { name: "Marquette County Health Dept", type: "health_dept", address: "184 US-41 E", city: "Negaunee", county: "Marquette", phone: "906-475-9977", hours: "Mon–Fri 8 AM–4:30 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 46.497, lng: -87.596 },
-  { name: "Oakland County Health — Narcan Program", type: "health_dept", address: "1200 N Telegraph Rd", city: "Pontiac", county: "Oakland", phone: "248-858-1280", website: "https://www.oakgov.com/health", hours: "Mon–Fri 8:30 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.641, lng: -83.289 },
+  { name: "Oakland County Health - Narcan Program", type: "health_dept", address: "1200 N Telegraph Rd", city: "Pontiac", county: "Oakland", phone: "248-858-1280", website: "https://www.oakgov.com/health", hours: "Mon–Fri 8:30 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.641, lng: -83.289 },
   { name: "Macomb County Health Dept", type: "health_dept", address: "43525 Elizabeth Rd", city: "Mt Clemens", county: "Macomb", phone: "586-469-5235", website: "https://health.macombgov.org/", hours: "Mon–Fri 8:30 AM–5 PM", hasNarcan: true, hasFitKits: true, isFree: true, training: true, lat: 42.601, lng: -82.890 },
 ];
 
@@ -192,7 +192,7 @@ export default function NarcanLocator() {
         </div>
         <div>
           <h2 className="text-xl font-bold text-foreground">Naloxone (Narcan) Locator</h2>
-          <p className="text-sm text-muted-foreground">Find free and retail naloxone near you — Michigan's standing order allows purchase without a prescription</p>
+          <p className="text-sm text-muted-foreground">Find free and retail naloxone near you - Michigan's standing order allows purchase without a prescription</p>
         </div>
       </div>
 

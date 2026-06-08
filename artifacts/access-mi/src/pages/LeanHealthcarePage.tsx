@@ -58,17 +58,17 @@ const wasteTable = [
 
 const sources = [
   { label: "AHRQ HCUP StatBrief #268", url: "https://hcup-us.ahrq.gov/reports/statbriefs/sb268-ED-Costs-2017.jsp" },
-  { label: "ASPE/HHS — Social Determinants of Health (2022)", url: "https://aspe.hhs.gov/reports/addressing-social-determinants-health-examples-successful-evidence-based-strategies" },
-  { label: "Healthy People 2030 — SDOH", url: "https://health.gov/healthypeople/priority-areas/social-determinants-health" },
-  { label: "PMC — Lean in Healthcare Systematic Review", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5765299/" },
-  { label: "PMC — SDOH Referral Completion Meta-Analysis", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8107233/" },
-  { label: "CDC — Social Determinants of Health at CDC", url: "https://www.cdc.gov/about/priorities/social-determinants-of-health.html" },
+  { label: "ASPE/HHS - Social Determinants of Health (2022)", url: "https://aspe.hhs.gov/reports/addressing-social-determinants-health-examples-successful-evidence-based-strategies" },
+  { label: "Healthy People 2030 - SDOH", url: "https://health.gov/healthypeople/priority-areas/social-determinants-health" },
+  { label: "PMC - Lean in Healthcare Systematic Review", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5765299/" },
+  { label: "PMC - SDOH Referral Completion Meta-Analysis", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8107233/" },
+  { label: "CDC - Social Determinants of Health at CDC", url: "https://www.cdc.gov/about/priorities/social-determinants-of-health.html" },
   { label: "CMS Hospital Compare Refresh Schedule", url: "https://ecqi.healthit.gov/" },
   { label: "HRSA UDS Reporting", url: "https://bphc.hrsa.gov/data-reporting/uds-training-and-technical-assistance" },
-  { label: "Trinity Health — Community Impact Report (FY2025, Jan 2026)", url: "https://company.findhelp.com/blog/2025/09/10/trinity-health-preventable-hospitalizations/" },
-  { label: "Henry Ford Health — ACO Shared Savings (CMS)", url: "https://www.cms.gov/priorities/innovation/innovation-models/aco" },
+  { label: "Trinity Health - Community Impact Report (FY2025, Jan 2026)", url: "https://company.findhelp.com/blog/2025/09/10/trinity-health-preventable-hospitalizations/" },
+  { label: "Henry Ford Health - ACO Shared Savings (CMS)", url: "https://www.cms.gov/priorities/innovation/innovation-models/aco" },
   { label: "MVC PY 2026-2027 Technical Document", url: "https://michiganvalue.org/wp-content/uploads/2024/10/MVC-P4P-Technical-Document-PY26-27-FINAL-10.26.24-compressed-compressed.pdf" },
-  { label: "MiCHWA — CHW Medicaid Registry", url: "https://michwa.org/mi-medicaid-chw-credential-registry/" },
+  { label: "MiCHWA - CHW Medicaid Registry", url: "https://michwa.org/mi-medicaid-chw-credential-registry/" },
   { label: "MDHHS SDOH Advisory Council Report (March 2025)", url: "https://www.michigan.gov/mdhhs/-/media/Project/Websites/mdhhs/Inside-MDHHS/Policy-and-Planning/Social-Determinants-of-Health-Strategy/SDOH-AC-Recs-Report-FINAL-032025.pdf" },
 ];
 
@@ -133,7 +133,7 @@ const verifiedOutcomes = [
 
 const LeanHealthcarePage = () => {
   usePageMeta({
-    title: "Lean Healthcare Engineering — Access Michigan",
+    title: "Lean Healthcare Engineering - Access Michigan",
     description: "Management engineering methodology: throughput optimization, leakage reduction, and value-based care ROI projections with sourced citations.",
     path: "/lean-healthcare",
   });
@@ -152,7 +152,7 @@ const LeanHealthcarePage = () => {
                 Lean Healthcare at Population Scale
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Management engineering applies process optimization principles — originally developed in manufacturing — to reduce waste and improve flow in healthcare delivery. This page outlines projected impact using sourced benchmarks.
+                Management engineering applies process optimization principles - originally developed in manufacturing - to reduce waste and improve flow in healthcare delivery. This page outlines projected impact using sourced benchmarks.
               </p>
             </motion.div>
 
@@ -218,7 +218,7 @@ const LeanHealthcarePage = () => {
                                   <Info className="h-3 w-3 text-muted-foreground" />
                                 </TooltipTrigger>
                                 <TooltipContent className="max-w-xs text-xs">
-                                  <strong>Poka-Yoke</strong> (ポカヨケ): Japanese for "mistake-proofing" — a Lean technique from the Toyota Production System that uses system design to prevent errors before they occur.
+                                  <strong>Poka-Yoke</strong> (ポカヨケ): Japanese for "mistake-proofing" - a Lean technique from the Toyota Production System that uses system design to prevent errors before they occur.
                                 </TooltipContent>
                               </Tooltip>
                             )}
@@ -302,7 +302,7 @@ const LeanHealthcarePage = () => {
             </Card>
 
             <div className="text-center">
-              <ShareButton title="Lean Healthcare Engineering — Access Michigan" description="Throughput optimization, leakage reduction, and value-based care projected ROI methodology." />
+              <ShareButton title="Lean Healthcare Engineering - Access Michigan" description="Throughput optimization, leakage reduction, and value-based care projected ROI methodology." />
             </div>
           </div>
         </section>

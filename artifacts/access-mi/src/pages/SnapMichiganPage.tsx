@@ -18,7 +18,7 @@ type SortKey = "county" | "enrollmentTotal" | "enrollmentPct" | "retailerCount";
 type SortDir = "asc" | "desc";
 
 // Michigan county populations (ACS 2022 5-year estimates, approximate)
-// Used only to compute enrollment % of population — does not affect source-cited figures.
+// Used only to compute enrollment % of population - does not affect source-cited figures.
 const COUNTY_POP: Record<string, number> = {
   Alcona: 10_600, Alger: 9_100, Allegan: 120_800, Alpena: 28_200, Antrim: 23_800,
   Arenac: 14_800, Baraga: 8_300, Barry: 62_300, Bay: 103_200, Benzie: 17_900,
@@ -163,13 +163,13 @@ export default function SnapMichiganPage() {
   }
 
   function fmtN(n: number | null | undefined): string {
-    if (n == null) return "—";
+    if (n == null) return "-";
     return n.toLocaleString();
   }
 
   function fmtPct(county: SnapCountyData): string {
     const pop = COUNTY_POP[county.county];
-    if (!pop || !county.enrollmentTotal) return "—";
+    if (!pop || !county.enrollmentTotal) return "-";
     return ((county.enrollmentTotal / pop) * 100).toFixed(1) + "%";
   }
 
@@ -213,7 +213,7 @@ export default function SnapMichiganPage() {
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <StatCard
               icon={<Users className="h-5 w-5" />}
-              value={isLoading ? "…" : stateData ? (stateData.stateTotal / 1_000_000).toFixed(1) + "M" : "—"}
+              value={isLoading ? "…" : stateData ? (stateData.stateTotal / 1_000_000).toFixed(1) + "M" : "-"}
               label="Michigan residents receiving SNAP (statewide, current month)"
               provenance={
                 <DataProvenance
@@ -228,7 +228,7 @@ export default function SnapMichiganPage() {
             />
             <StatCard
               icon={<TrendingDown className="h-5 w-5" />}
-              value={isLoading ? "…" : stateData ? "$" + (stateData.benefitIssuanceMonthly / 1_000_000).toFixed(0) + "M" : "—"}
+              value={isLoading ? "…" : stateData ? "$" + (stateData.benefitIssuanceMonthly / 1_000_000).toFixed(0) + "M" : "-"}
               label="Estimated monthly benefit issuance (statewide)"
               provenance={
                 <DataProvenance
@@ -352,7 +352,7 @@ export default function SnapMichiganPage() {
 
           <p className="text-[11px] text-muted-foreground mt-2">
             % of population derived from ACS 2022 5-year estimates. Retailer counts pending
-            USDA SNAP Retailer Locator CSV parse — county-level data not yet extracted.{" "}
+            USDA SNAP Retailer Locator CSV parse - county-level data not yet extracted.{" "}
             <a
               href="https://www.fns.usda.gov/snap/retailer-locator/data"
               target="_blank"
@@ -406,7 +406,7 @@ export default function SnapMichiganPage() {
               <p>
                 <strong className="text-foreground">Enrollment % of population.</strong> Derived
                 by dividing SNAP enrollment by ACS 2022 5-year county population estimates. This
-                is a rough indicator of relative participation — not an eligibility rate or
+                is a rough indicator of relative participation - not an eligibility rate or
                 coverage rate.
               </p>
               <div className="mt-2 space-y-1.5">

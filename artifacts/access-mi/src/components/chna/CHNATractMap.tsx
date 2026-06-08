@@ -90,8 +90,8 @@ function buildEJScreenGroup(tracts: EJScreenTract[]): L.LayerGroup {
     m.bindPopup(
       `<strong>${t.county} County</strong><br>` +
         `Tract: ${t.tractFips}<br>` +
-        `PM2.5 percentile: ${t.pm25Percentile ?? "—"}<br>` +
-        `Air toxics cancer risk: ${t.airToxicsCancerRisk ?? "—"} per million<br>` +
+        `PM2.5 percentile: ${t.pm25Percentile ?? "-"}<br>` +
+        `Air toxics cancer risk: ${t.airToxicsCancerRisk ?? "-"} per million<br>` +
         `<em style="font-size:11px">Source: EJScreen 2.32 (EPA) · Modeled</em>`,
     );
     group.addLayer(m);
@@ -107,8 +107,8 @@ function buildAQSGroup(monitors: AQSMonitor[]): L.LayerGroup {
     marker.bindPopup(
       `<strong>${m.name}</strong><br>` +
         `${m.city ?? ""}<br>` +
-        `AQI: ${m.aqi ?? "—"}<br>` +
-        `PM2.5: ${m.pm25 ?? "—"} µg/m³<br>` +
+        `AQI: ${m.aqi ?? "-"}<br>` +
+        `PM2.5: ${m.pm25 ?? "-"} µg/m³<br>` +
         `<em style="font-size:11px">Source: EPA AirNow / AQS · Verified${m.provisional ? " (provisional)" : ""}</em>`,
     );
     group.addLayer(marker);
@@ -158,8 +158,8 @@ function buildNRIGroup(tracts: NRITract[]): L.LayerGroup {
     m.bindPopup(
       `<strong>${t.county} County</strong><br>` +
         `Tract: ${t.tractFips}<br>` +
-        `Risk rating: ${t.riskRating ?? "—"}<br>` +
-        `Risk score: ${t.riskScore ?? "—"}<br>` +
+        `Risk rating: ${t.riskRating ?? "-"}<br>` +
+        `Risk score: ${t.riskScore ?? "-"}<br>` +
         `<em style="font-size:11px">Source: FEMA NRI · Modeled</em>`,
     );
     group.addLayer(m);

@@ -18,7 +18,7 @@ const lobbyChartData = MICHIGAN_LOBBYING_BY_INDUSTRY
   .map(l => ({ industry: l.industry.replace(" & ", " &\n"), expenditures: l.totalExpenditures / 1e6 }));
 
 export default function FollowMoneyPage() {
-  usePageMeta({ title: "Follow the Money — Access Michigan", description: "Michigan lobbying expenditures, campaign finance resources, and political contribution data. All parties, all public record.", path: "/transparency/money" });
+  usePageMeta({ title: "Follow the Money - Access Michigan", description: "Michigan lobbying expenditures, campaign finance resources, and political contribution data. All parties, all public record.", path: "/transparency/money" });
 
   return (
     <Layout>
@@ -31,7 +31,7 @@ export default function FollowMoneyPage() {
               <DollarSign className="h-4 w-4 text-teal-400" />
               <span className="text-sm font-medium text-teal-400">Follow the Money</span>
             </motion.div>
-            <motion.h1 variants={fadeUp} custom={1} className="mb-4 text-3xl font-bold text-white md:text-4xl">Follow the Money — Michigan</motion.h1>
+            <motion.h1 variants={fadeUp} custom={1} className="mb-4 text-3xl font-bold text-white md:text-4xl">Follow the Money - Michigan</motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-base text-slate-300">Lobbying. Campaign contributions. PACs. All public record. All searchable. All parties treated equally.</motion.p>
           </motion.div>
         </div>
@@ -61,7 +61,7 @@ export default function FollowMoneyPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-base">Lobbying Expenditures by Industry</CardTitle>
-                <p className="text-xs text-muted-foreground">Source: Michigan MiTN 2024 — Illustrative aggregate. Full data at mitn.michigan.gov</p>
+                <p className="text-xs text-muted-foreground">Source: Michigan MiTN 2024 - Illustrative aggregate. Full data at mitn.michigan.gov</p>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px]">
@@ -103,11 +103,11 @@ export default function FollowMoneyPage() {
           <TabsContent value="campaign" className="mt-6 space-y-6">
             <Card className="border-primary/20 bg-primary/[0.03]">
               <CardContent className="py-5">
-                <h3 className="text-sm font-bold text-foreground mb-2">Michigan Campaign Finance — MiTN</h3>
+                <h3 className="text-sm font-bold text-foreground mb-2">Michigan Campaign Finance - MiTN</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   Michigan campaign finance records are public and searchable via MiTN (Michigan Transparency Network), launched 2024 to replace the legacy MERTS system. Anyone can search without creating an account. MiTN combines campaign finance reporting, lobby expense reporting, personal financial disclosures, and legal defense fund disclosures into one centralized system.
                 </p>
-                <p className="text-[9px] text-muted-foreground/60 mt-2">Source: Michigan SOS — mitn.michigan.gov</p>
+                <p className="text-[9px] text-muted-foreground/60 mt-2">Source: Michigan SOS - mitn.michigan.gov</p>
                 <a href="https://mitn.michigan.gov" target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline mt-3 inline-flex items-center gap-1" aria-label="Search MiTN, opens in new window">Search Michigan Campaign Finance <ExternalLink className="h-3 w-3" aria-hidden="true" /></a>
               </CardContent>
             </Card>
@@ -116,7 +116,7 @@ export default function FollowMoneyPage() {
               <CardContent className="py-5">
                 <h3 className="text-sm font-bold text-foreground mb-2">Contribution Limits</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed mb-2">Michigan sets contribution limits for candidates, PACs, and party committees. Corporations cannot contribute directly to candidates but may form PACs.</p>
-                <p className="text-[9px] text-muted-foreground/60">Source: MCL 169.246 — Michigan Campaign Finance Act</p>
+                <p className="text-[9px] text-muted-foreground/60">Source: MCL 169.246 - Michigan Campaign Finance Act</p>
               </CardContent>
             </Card>
 
@@ -130,7 +130,7 @@ export default function FollowMoneyPage() {
           <TabsContent value="federal" className="mt-6 space-y-6">
             <Card className="bg-primary/[0.03] border-primary/20">
               <CardContent className="py-6 text-center">
-                <p className="text-sm text-muted-foreground mb-3">See the full federal investment picture — $14.2B in FY2024</p>
+                <p className="text-sm text-muted-foreground mb-3">See the full federal investment picture - $14.2B in FY2024</p>
                 <Button asChild><Link to="/public-investment">Public Investment Dashboard <ArrowRight className="ml-1.5 h-4 w-4" /></Link></Button>
               </CardContent>
             </Card>

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CLOSURE_WATCH_FALLBACK, type ClosureEntry } from "@/data/closureWatchFallback";
 
 /**
- * useClosureWatch — returns verified Michigan hospital/service-line closure entries.
+ * useClosureWatch - returns verified Michigan hospital/service-line closure entries.
  *
  * Phase B note: the `sheps-closures` Supabase Edge Function has not been built because
  * the Sheps Center publishes Excel-only (no JSON/CSV/RSS API). Until a structured feed
@@ -20,7 +20,7 @@ export function useClosureWatch() {
       //   return data as ClosureEntry[];
       return CLOSURE_WATCH_FALLBACK;
     },
-    staleTime: 24 * 60 * 60 * 1000, // 24 hours — closure data changes infrequently
+    staleTime: 24 * 60 * 60 * 1000, // 24 hours - closure data changes infrequently
     retry: 1,
   });
 }

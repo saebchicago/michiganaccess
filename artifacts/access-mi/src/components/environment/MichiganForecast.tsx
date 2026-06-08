@@ -83,7 +83,7 @@ export default function MichiganForecast() {
         )}
 
         <p className="text-[10px] text-muted-foreground">
-          Source: NWS — updated hourly
+          Source: NWS - updated hourly
         </p>
       </CardContent>
     </Card>

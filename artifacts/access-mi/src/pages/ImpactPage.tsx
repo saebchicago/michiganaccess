@@ -36,7 +36,7 @@ const caseStudies = [
   {
     icon: Brain,
     title: "Closing Mental Health Access Gaps",
-    subtitle: "Exploratory Analysis — Northern Michigan",
+    subtitle: "Exploratory Analysis - Northern Michigan",
     color: "text-michigan-coral",
     bgColor: "bg-michigan-coral/5 border-michigan-coral/20",
     challenge: "Northern Michigan counties show 35% higher depression rates but 60% fewer mental health providers per capita than state average.",
@@ -57,7 +57,7 @@ const caseStudies = [
   {
     icon: Bus,
     title: "Transportation as Health Infrastructure",
-    subtitle: "Exploratory Analysis — Transit-Health Intersection",
+    subtitle: "Exploratory Analysis - Transit-Health Intersection",
     color: "text-michigan-teal",
     bgColor: "bg-michigan-teal/5 border-michigan-teal/20",
     challenge: "An estimated 23% of missed medical appointments are attributed to transportation barriers nationally. Transit data remains siloed from health facility data in most Michigan communities.",
@@ -78,7 +78,7 @@ const caseStudies = [
   {
     icon: BarChart3,
     title: "Public Data as Community Intelligence",
-    subtitle: "Exploratory Analysis — 83-County Landscape",
+    subtitle: "Exploratory Analysis - 83-County Landscape",
     color: "text-primary",
     bgColor: "bg-primary/5 border-primary/20",
     challenge: "Understanding regional health needs requires expensive consulting. Public data exists but is scattered across 83 county health departments, federal agencies, and state portals.",
@@ -103,7 +103,7 @@ export default function ImpactPage() {
   const { t } = useTranslation();
   usePageMeta({
     title: "Impact & Technology | Access Michigan",
-    description: "How Access Michigan uses public data to support health equity analysis across 83 Michigan counties — exploratory case studies and platform capabilities.",
+    description: "How Access Michigan uses public data to support health equity analysis across 83 Michigan counties - exploratory case studies and platform capabilities.",
     path: "/impact",
   });
 
@@ -127,7 +127,7 @@ export default function ImpactPage() {
 
       <div className="container max-w-5xl py-12 space-y-16">
 
-        {/* Platform Status — verifiable facts only */}
+        {/* Platform Status - verifiable facts only */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
           <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
@@ -160,7 +160,7 @@ export default function ImpactPage() {
           <div className="rounded-lg border border-border bg-muted/50 p-4 flex items-start gap-3">
             <Info className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
             <p className="text-xs text-muted-foreground">
-              All figures above reflect current platform data. Access Michigan is in <strong>Public Beta</strong> — capabilities are expanding with community feedback. See <Link to="/data-validation" className="text-primary hover:underline">Data Sources & Validation</Link> for full methodology.
+              All figures above reflect current platform data. Access Michigan is in <strong>Public Beta</strong> - capabilities are expanding with community feedback. See <Link to="/data-validation" className="text-primary hover:underline">Data Sources & Validation</Link> for full methodology.
             </p>
           </div>
         </motion.section>
@@ -259,7 +259,7 @@ export default function ImpactPage() {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-foreground">When Sidewalks Are a Health Issue</h2>
-              <p className="text-sm text-muted-foreground">Active Transportation & Chronic Disease — powered by GATIS</p>
+              <p className="text-sm text-muted-foreground">Active Transportation & Chronic Disease - powered by GATIS</p>
             </div>
           </div>
           <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">
@@ -277,7 +277,7 @@ export default function ImpactPage() {
                     The Connection
                   </h4>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Counties with less walkable infrastructure correlate with higher diabetes, obesity, and cardiovascular disease rates — this is well-established in epidemiological literature (CDC, AHRQ).
+                    Counties with less walkable infrastructure correlate with higher diabetes, obesity, and cardiovascular disease rates - this is well-established in epidemiological literature (CDC, AHRQ).
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     Michigan's pedestrian fatality rate is above the national average. MDOT crash data shows disproportionate fatalities in areas without sidewalk coverage.
@@ -315,7 +315,7 @@ export default function ImpactPage() {
                   The "Last 100 Feet" Problem
                 </h4>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  For seniors and people with disabilities, the "last 100 feet" to a bus stop or clinic entrance is often the most dangerous part of their journey — and it's completely unmapped outside of SEMCOG's 7-county footprint. A bus route is meaningless if there's no sidewalk to reach the stop.
+                  For seniors and people with disabilities, the "last 100 feet" to a bus stop or clinic entrance is often the most dangerous part of their journey - and it's completely unmapped outside of SEMCOG's 7-county footprint. A bus route is meaningless if there's no sidewalk to reach the stop.
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-lg border border-michigan-teal/20 bg-background p-3">
@@ -338,7 +338,7 @@ export default function ImpactPage() {
                   </div>
                 </div>
                 <p className="text-[10px] text-muted-foreground italic">
-                  The 76-county data gap is itself a finding. GATIS provides the standard — now Michigan needs the data collection to match.
+                  The 76-county data gap is itself a finding. GATIS provides the standard - now Michigan needs the data collection to match.
                 </p>
               </div>
 

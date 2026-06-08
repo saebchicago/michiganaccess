@@ -49,7 +49,7 @@ function downloadCsv(filename: string, content: string) {
 const EXPORTS = [
   {
     label: "County Health Profile (CSV)",
-    description: "14 counties — life expectancy, insurance, PCP, obesity, infant mortality, diabetes, and health ranking.",
+    description: "14 counties - life expectancy, insurance, PCP, obesity, infant mortality, diabetes, and health ranking.",
     action: () => {
       const headers = ["County", "Life Expectancy", "Insured Rate %", "PCP per 100k", "Obesity Rate %", "Infant Mortality /1k", "Diabetes Rate %", "Health Rank /83"];
       const rows = COUNTY_DATA.map((c) => [c.county, c.lifeExpectancy, c.insuredRate, c.pcpPer100k, c.obesityRate, c.infantMortality, c.diabetesRate, c.healthRank]);

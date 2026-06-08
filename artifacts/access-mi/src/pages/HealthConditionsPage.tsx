@@ -173,7 +173,7 @@ export default function HealthConditionsPage() {
     path: "/conditions",
     jsonLd: {
       "@type": "MedicalWebPage",
-      name: "Health Conditions — Access Michigan",
+      name: "Health Conditions - Access Michigan",
       about: {
         "@type": "MedicalCondition",
         name: "Common health conditions in Michigan",
@@ -335,7 +335,7 @@ export default function HealthConditionsPage() {
                               className={`flex h-12 w-12 items-center justify-center rounded-full border-2 ${f.quality_score && f.quality_score >= 80 ? "border-michigan-gold bg-michigan-gold/5" : "border-border bg-muted/50"}`}
                             >
                               <span className="text-sm font-bold text-foreground">
-                                {f.quality_score || "—"}
+                                {f.quality_score || "-"}
                               </span>
                             </div>
                             <span className="mt-0.5 text-[9px] text-muted-foreground">

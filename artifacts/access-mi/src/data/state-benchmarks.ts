@@ -1,6 +1,6 @@
 /**
  * Michigan statewide benchmark values used across components for comparisons.
- * Single source of truth — update here to affect all comparison displays.
+ * Single source of truth - update here to affect all comparison displays.
  *
  * Sources:
  *  - foodInsecurityRate: Feeding America, Map the Meal Gap 2024, Michigan state summary

@@ -215,7 +215,7 @@ export default function SubstanceAbuseInsights() {
                   downloadCSV("mi-overdose-trends.csv", ["Year","Total","Opioid","Stimulant","Alcohol"], OVERDOSE_TRENDS.map(r => [r.year, r.total, r.opioid, r.stimulant, r.alcohol]))
                 }><Download className="h-3 w-3" />CSV</Button>
               </div>
-              <p className="text-xs text-muted-foreground">Michigan opioid deaths decreased ~5% in 2023 — the first sustained decline since 2018.</p>
+              <p className="text-xs text-muted-foreground">Michigan opioid deaths decreased ~5% in 2023 - the first sustained decline since 2018.</p>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={280}>
@@ -283,7 +283,7 @@ export default function SubstanceAbuseInsights() {
                   downloadCSV("mi-youth-substance-use.csv", ["Substance","8th_Grade_%","10th_Grade_%","12th_Grade_%"], YOUTH_USE.map(r => [r.substance, r.grade8, r.grade10, r.grade12]))
                 }><Download className="h-3 w-3" />CSV</Button>
               </div>
-              <p className="text-xs text-muted-foreground">Past-year use prevalence among U.S. students — a key indicator for Michigan prevention programs.</p>
+              <p className="text-xs text-muted-foreground">Past-year use prevalence among U.S. students - a key indicator for Michigan prevention programs.</p>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={260}>
@@ -335,7 +335,7 @@ export default function SubstanceAbuseInsights() {
         {[
           { title: "MODA Dashboard", desc: "Interactive overdose heatmaps by county/ZIP with vulnerability index.", url: "https://michigan.gov/opioids/category-data", source: "michigan.gov" },
           { title: "MI-SUDDR Resources", desc: "Drug trends, treatment data, harm reduction dashboards, and reports.", url: "https://mi-suddr.com/resources-2", source: "mi-suddr.com" },
-          { title: "Monitoring the Future", desc: "National adolescent substance use survey — charts and annual reports.", url: "https://monitoringthefuture.org", source: "monitoringthefuture.org" },
+          { title: "Monitoring the Future", desc: "National adolescent substance use survey - charts and annual reports.", url: "https://monitoringthefuture.org", source: "monitoringthefuture.org" },
           { title: "U-M Opioid Surveillance", desc: "Michigan opioid data, injury center analytics, and SOS county summaries.", url: "https://injurycenter.umich.edu/opioid-surveillance", source: "umich.edu" },
         ].map(d => (
           <Card key={d.title} className="hover:shadow-md transition-shadow">

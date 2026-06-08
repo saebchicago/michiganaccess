@@ -1,5 +1,5 @@
 /**
- * SBA Small Business Lending Data — Michigan County-Level
+ * SBA Small Business Lending Data - Michigan County-Level
  * Modeled from SBA FOIA FY2020-2024 (data.sba.gov). Illustrative county-level estimates.
  */
 

@@ -5,8 +5,8 @@ import { CheckCircle, ArrowRight } from "lucide-react";
 
 const features = [
   "Ranks healthcare by quality, not who pays for placement",
-  "Maps real-time resources — air quality, transit, facilities",
-  "Filters by your situation — uninsured, caregiver, new resident",
+  "Maps real-time resources - air quality, transit, facilities",
+  "Filters by your situation - uninsured, caregiver, new resident",
   "Works across all 83 counties, Detroit to the Upper Peninsula",
 ];
 
@@ -31,7 +31,7 @@ const SystemsExplainer = forwardRef<HTMLElement>(function SystemsExplainer(_prop
           What Is Access Michigan?
         </h2>
         <p className="mt-3 text-base text-muted-foreground leading-relaxed">
-          A <strong className="text-foreground">free, independent resource hub</strong> that connects you with the right services — without the runaround.
+          A <strong className="text-foreground">free, independent resource hub</strong> that connects you with the right services - without the runaround.
         </p>
       </motion.div>
 

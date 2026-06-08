@@ -38,7 +38,7 @@ export function getALICEByCounty(county: string): ALICECountyData | null {
 
 export const MICHIGAN_ALICE_STATEWIDE = MICHIGAN_ALICE.find(a => a.county === "Michigan (Statewide)")!;
 
-// ALICE Survival Budget — what basic survival costs vs common wages
+// ALICE Survival Budget - what basic survival costs vs common wages
 export interface ALICESurvivalBudget {
   countyType: "urban" | "rural";
   housingMonthly: number;

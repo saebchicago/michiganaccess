@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 
-// No baseline stats — all metrics come from live anonymous self-reports only
+// No baseline stats - all metrics come from live anonymous self-reports only
 
 const ImpactDashboard = () => {
   const { toast } = useToast();
@@ -75,7 +75,7 @@ const ImpactDashboard = () => {
         </p>
       </div>
 
-      {/* Stats grid — live self-reported data only */}
+      {/* Stats grid - live self-reported data only */}
       {totalAppeals > 0 ? (
         <div className="grid gap-4 sm:grid-cols-3">
           <Card className="relative overflow-hidden">

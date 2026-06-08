@@ -1,7 +1,7 @@
 // Michigan municipal bond issuances
-// Source: MSRB EMMA (emma.msrb.org) — public record
+// Source: MSRB EMMA (emma.msrb.org) - public record
 // Seeded with major issuances FY2022-2024
-// Label: "MSRB EMMA — Municipal Securities Rulemaking Board"
+// Label: "MSRB EMMA - Municipal Securities Rulemaking Board"
 
 export interface MunicipalBond {
   issuer: string;

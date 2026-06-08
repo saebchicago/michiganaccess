@@ -80,7 +80,7 @@ export default function ALICEDashboard() {
           </div>
 
           <p className="text-xs text-muted-foreground leading-relaxed">
-            <strong>This is why Access Michigan exists.</strong> The ALICE population — people who work but can't afford housing, childcare, food, transportation, and healthcare simultaneously — is the exact audience this platform serves. They earn too much for traditional safety nets but not enough to be financially stable.
+            <strong>This is why Access Michigan exists.</strong> The ALICE population - people who work but can't afford housing, childcare, food, transportation, and healthcare simultaneously - is the exact audience this platform serves. They earn too much for traditional safety nets but not enough to be financially stable.
           </p>
         </CardContent>
       </Card>
@@ -115,7 +115,7 @@ export default function ALICEDashboard() {
               <DollarSign className="h-4 w-4 text-michigan-gold" />
               ALICE Survival Budget (Family of 4, MI)
             </CardTitle>
-            <CardDescription>Monthly cost to meet basic needs — not thrive, just survive</CardDescription>
+            <CardDescription>Monthly cost to meet basic needs - not thrive, just survive</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">

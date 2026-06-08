@@ -42,7 +42,7 @@ const STAGES: LifeStageNode[] = [
         name: "Healthy Michigan Plan or pregnancy Medicaid",
         blurb:
           "Full Medicaid coverage during pregnancy. Stays in effect for 12 months after the end of pregnancy under Michigan's continuous postpartum coverage rule.",
-        sourceName: "Michigan MDHHS — Health Care Programs Eligibility",
+        sourceName: "Michigan MDHHS - Health Care Programs Eligibility",
         sourceUrl:
           "https://www.michigan.gov/mdhhs/assistance-programs/medicaid/health-care-programs-eligibility",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
@@ -51,7 +51,7 @@ const STAGES: LifeStageNode[] = [
         name: "WIC",
         blurb:
           "Nutrition support and food package during pregnancy and through the postpartum year. Income limit is 185% FPL.",
-        sourceName: "USDA FNS — WIC Income Eligibility Guidelines",
+        sourceName: "USDA FNS - WIC Income Eligibility Guidelines",
         sourceUrl:
           "https://www.fns.usda.gov/wic/income-eligibility-guidelines-2025-26",
         applyUrl: OFFICIAL_WIC_URL,
@@ -69,7 +69,7 @@ const STAGES: LifeStageNode[] = [
         name: "WIC (children under 5)",
         blurb:
           "Continues for the child through age 5 if household income stays at or under 185% FPL.",
-        sourceName: "USDA FNS — WIC Income Eligibility Guidelines",
+        sourceName: "USDA FNS - WIC Income Eligibility Guidelines",
         sourceUrl:
           "https://www.fns.usda.gov/wic/income-eligibility-guidelines-2025-26",
         applyUrl: OFFICIAL_WIC_URL,
@@ -78,7 +78,7 @@ const STAGES: LifeStageNode[] = [
         name: "MIChild / CHIP",
         blurb:
           "Health coverage for uninsured children under 19. Income limit is 212% FPL.",
-        sourceName: "Michigan MDHHS — Children's Health Coverage",
+        sourceName: "Michigan MDHHS - Children's Health Coverage",
         sourceUrl:
           "https://www.michigan.gov/mdhhs/assistance-programs/medicaid/health-care-programs-eligibility",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
@@ -95,7 +95,7 @@ const STAGES: LifeStageNode[] = [
         name: "Healthy Michigan Plan",
         blurb:
           "Medicaid expansion for adults 19-64. Income test is 138% FPL on a current-income basis, so a recent job loss often makes a household newly eligible.",
-        sourceName: "Michigan MDHHS — Health Care Programs Eligibility",
+        sourceName: "Michigan MDHHS - Health Care Programs Eligibility",
         sourceUrl:
           "https://www.michigan.gov/mdhhs/assistance-programs/medicaid/health-care-programs-eligibility",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
@@ -104,7 +104,7 @@ const STAGES: LifeStageNode[] = [
         name: "SNAP (Bridge Card)",
         blurb:
           "Monthly food assistance. Federal baseline rule is 130% FPL gross income.",
-        sourceName: "USDA FNS — FY2026 SNAP Cost-of-Living Adjustments",
+        sourceName: "USDA FNS - FY2026 SNAP Cost-of-Living Adjustments",
         sourceUrl: "https://www.fns.usda.gov/snap/allotment/cola/fy26",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
       },
@@ -112,7 +112,7 @@ const STAGES: LifeStageNode[] = [
         name: "State Emergency Relief",
         blurb:
           "One-time help for shutoffs, eviction, and similar emergencies. Income limit is 150% FPL.",
-        sourceName: "Michigan MDHHS — FY2026 LIHEAP State Plan",
+        sourceName: "Michigan MDHHS - FY2026 LIHEAP State Plan",
         sourceUrl:
           "https://www.michigan.gov/mdhhs/inside-mdhhs/newsroom/2025/08/07/public-notice-proposed-liheap-state-plan-for-fy-2026",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
@@ -139,7 +139,7 @@ const STAGES: LifeStageNode[] = [
         name: "Medicare Savings Programs (QMB, SLMB, QI)",
         blurb:
           "Three tiers based on income: QMB at 100% FPL, SLMB at 120% FPL, QI at 135% FPL. Asset test applies.",
-        sourceName: "CMS — Medicare Savings Programs (2026)",
+        sourceName: "CMS - Medicare Savings Programs (2026)",
         sourceUrl: OFFICIAL_MSP_URL,
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
       },
@@ -156,7 +156,7 @@ const STAGES: LifeStageNode[] = [
         name: "Supplemental Security Income (SSI)",
         blurb:
           "Federal cash assistance for low-income adults 65+ or with a qualifying disability, and for low-income disabled children. 2026 federal benefit rate is $994 per month for an individual.",
-        sourceName: "SSA — 2026 SSI Federal Payment Amounts",
+        sourceName: "SSA - 2026 SSI Federal Payment Amounts",
         sourceUrl: "https://www.ssa.gov/oact/cola/SSI.html",
         applyUrl: OFFICIAL_SSA_URL,
       },
@@ -164,7 +164,7 @@ const STAGES: LifeStageNode[] = [
         name: "Dual-eligible Medicaid + Medicare",
         blurb:
           "People on Medicare who also qualify for Medicaid (typically through QMB) get help with premiums, cost-sharing, and benefits Medicare does not cover.",
-        sourceName: "Michigan MDHHS — Medicaid",
+        sourceName: "Michigan MDHHS - Medicaid",
         sourceUrl:
           "https://www.michigan.gov/mdhhs/assistance-programs/medicaid/health-care-programs-eligibility",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
@@ -181,7 +181,7 @@ const STAGES: LifeStageNode[] = [
         name: "SNAP (Bridge Card)",
         blurb:
           "Federal baseline rule is 130% FPL gross income. Michigan's categorical eligibility raises the effective gross income test for some households.",
-        sourceName: "USDA FNS — SNAP Eligibility",
+        sourceName: "USDA FNS - SNAP Eligibility",
         sourceUrl: "https://www.fns.usda.gov/snap/recipient/eligibility",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
       },

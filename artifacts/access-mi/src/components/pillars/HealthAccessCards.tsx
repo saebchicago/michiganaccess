@@ -8,7 +8,7 @@
  * 4. Comparison view
  *
  * All data from Supabase facilities/resources tables + county profiles.
- * No mock data — shows "data not available" when missing.
+ * No mock data - shows "data not available" when missing.
  */
 
 import { useMemo, useState } from "react";

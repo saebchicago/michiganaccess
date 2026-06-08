@@ -66,7 +66,7 @@ export default function IRSIncomeCard({ zip }: Props) {
         />
 
         <div className="rounded-md bg-muted/50 px-3 py-2 text-xs text-foreground">
-          {data.eitcPct}% of filers claim EITC — ${(data.eitcTotalAmount / 1000000).toFixed(1)}M total claimed
+          {data.eitcPct}% of filers claim EITC - ${(data.eitcTotalAmount / 1000000).toFixed(1)}M total claimed
         </div>
 
         <div className="grid grid-cols-2 gap-3">

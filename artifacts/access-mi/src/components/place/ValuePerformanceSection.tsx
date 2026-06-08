@@ -57,7 +57,7 @@ function DeltaIndicator({
 }) {
   if (direction === "neutral")
     return <Minus className="h-3 w-3 text-muted-foreground" />;
-  // We show a generic indicator — actual comparison would need numeric data
+  // We show a generic indicator - actual comparison would need numeric data
   return direction === "higher-is-better" ? (
     <TrendingUp className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
   ) : (
@@ -80,7 +80,7 @@ function buildDomains(place: Place): VPDomain[] {
   return [
     {
       id: "health-vbc",
-      title: "Health — Value-Based Care",
+      title: "Health - Value-Based Care",
       subtitle: "Avoidable use, access equity, and social risk.",
       funderNote: "Use for CHNAs, community benefit, VBC program design.",
       icon: Activity,
@@ -127,7 +127,7 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "energy-pbr",
-      title: "Energy — Performance-Based Regulation",
+      title: "Energy - Performance-Based Regulation",
       subtitle: "Reliability, outage equity, and energy burden.",
       funderNote: "Use for PBR rate cases, equity filings, utility performance reviews.",
       icon: Zap,
@@ -165,7 +165,7 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "water",
-      title: "Water — Safe, Affordable, Reliable",
+      title: "Water - Safe, Affordable, Reliable",
       subtitle: "Drinking water quality, lead risk, and affordability.",
       funderNote: "Use for infrastructure grants, lead remediation priorities.",
       icon: Droplets,
@@ -193,7 +193,7 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "transportation",
-      title: "Transportation — Access & Safety",
+      title: "Transportation - Access & Safety",
       subtitle: "Transit coverage, crash burden, and connectivity.",
       funderNote: "Use for transit grants, Safe Routes to School, MDOT planning.",
       icon: Bus,
@@ -221,7 +221,7 @@ function buildDomains(place: Place): VPDomain[] {
     },
     {
       id: "environment",
-      title: "Environment — Justice & Exposure",
+      title: "Environment - Justice & Exposure",
       subtitle: "Air quality, contamination risk, and environmental justice.",
       funderNote: "Use for EJ screening, Superfund proximity analysis, CHNA environmental factors.",
       icon: TreePine,
@@ -314,7 +314,7 @@ export default function ValuePerformanceSection({ place }: { place: Place }) {
             </TooltipProvider>
           </h2>
           <p className="text-sm text-muted-foreground mt-0.5">
-            How well systems are working here — across health, utilities, water, transportation, and environment.
+            How well systems are working here - across health, utilities, water, transportation, and environment.
           </p>
         </div>
         <NerdModeToggle />

@@ -17,7 +17,7 @@ export interface BroadbandAvailability {
   source: string;
 }
 
-// Seeded from FCC BDC 2024 — Michigan counties
+// Seeded from FCC BDC 2024 - Michigan counties
 export const MICHIGAN_BROADBAND_SEED: BroadbandAvailability[] = [
   { county: "Wayne", fips: "26163", pct_25_3_covered: 97.2, pct_100_20_covered: 94.1, pct_gigabit_covered: 68.4, total_locations: 892000, unserved_locations: 24890, underserved_locations: 28100, dominant_technology: "Cable/Fiber", source: "FCC National Broadband Map 2024" },
   { county: "Oakland", fips: "26125", pct_25_3_covered: 98.1, pct_100_20_covered: 96.2, pct_gigabit_covered: 72.1, total_locations: 524000, unserved_locations: 9920, underserved_locations: 10400, dominant_technology: "Cable/Fiber", source: "FCC National Broadband Map 2024" },

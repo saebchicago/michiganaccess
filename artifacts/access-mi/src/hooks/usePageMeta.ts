@@ -11,7 +11,7 @@ interface PageMeta {
 
 export function usePageMeta({ title, description, path, ogImage, jsonLd }: PageMeta) {
   useEffect(() => {
-    const fullTitle = title === SITE_NAME ? title : `${title} — ${SITE_NAME}`;
+    const fullTitle = title === SITE_NAME ? title : `${title} - ${SITE_NAME}`;
     document.title = fullTitle;
 
     const setMeta = (attr: string, key: string, content: string) => {
@@ -64,7 +64,7 @@ export function usePageMeta({ title, description, path, ogImage, jsonLd }: PageM
     document.dispatchEvent(new Event('prerender-ready'));
 
     return () => {
-      document.title = `${SITE_NAME} — Michigan, County by County`;
+      document.title = `${SITE_NAME} - Michigan, County by County`;
       const pageScript = document.querySelector('script[data-page-jsonld]');
       if (pageScript) pageScript.remove();
     };

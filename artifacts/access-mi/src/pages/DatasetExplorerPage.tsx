@@ -49,7 +49,7 @@ const DatasetExplorerPage = () => {
             Michigan Dataset Explorer
           </h1>
           <p className="text-muted-foreground">
-            Browse datasets across four civic pillars — health access, environmental risk,
+            Browse datasets across four civic pillars - health access, environmental risk,
             mobility, and economic stress. All data sourced from authoritative public agencies.
           </p>
         </div>

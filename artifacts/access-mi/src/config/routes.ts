@@ -332,7 +332,7 @@ export const APP_ROUTES: RouteEntry[] = [
     component: pages.ComparePlacesPage,
     label: "Compare Counties",
   },
-  // /county-compare removed — redirect in App.tsx
+  // /county-compare removed - redirect in App.tsx
   {
     path: "/compare-zips",
     component: pages.CompareZipsPage,
@@ -450,7 +450,7 @@ export const APP_ROUTES: RouteEntry[] = [
   {
     path: "/about/ourintel",
     component: pages.OurIntelPage,
-    label: "ourintel.org — National Vision",
+    label: "ourintel.org - National Vision",
   },
   {
     path: "/tribal-nations",
@@ -758,7 +758,7 @@ export const APP_ROUTES: RouteEntry[] = [
   {
     path: "/map/layers",
     component: pages.DeepMapPage,
-    label: "Deep Map — GIS Intelligence",
+    label: "Deep Map - GIS Intelligence",
   },
   {
     path: "/civic-power",
@@ -790,7 +790,7 @@ export const APP_ROUTES: RouteEntry[] = [
     component: pages.DownloadCenterPage,
     label: "Download Center",
   },
-  // Dynamic catch-all: county shortcut — MUST be last explicit single-segment route
+  // Dynamic catch-all: county shortcut - MUST be last explicit single-segment route
   { path: "/:slug", component: pages.CountyRedirect, label: "County Redirect" },
 ];
 

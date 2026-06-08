@@ -440,7 +440,7 @@ export default function AboutPage() {
             {[
               {
                 title: "Distance-First, Quality-Enhanced",
-                desc: "Default sort is distance. When facilities are similarly close (within 2 miles), higher quality scores break the tie — nudging toward safer, more comprehensive options naturally.",
+                desc: "Default sort is distance. When facilities are similarly close (within 2 miles), higher quality scores break the tie - nudging toward safer, more comprehensive options naturally.",
               },
               {
                 title: "Visual Quality Cues",
@@ -511,7 +511,7 @@ export default function AboutPage() {
               {
                 icon: Users,
                 title: "Social Determinants Integration",
-                desc: "Food, housing, transportation, and financial assistance navigation integrated alongside clinical care — not as afterthought, but as core infrastructure.",
+                desc: "Food, housing, transportation, and financial assistance navigation integrated alongside clinical care - not as afterthought, but as core infrastructure.",
               },
               {
                 icon: Shield,
@@ -779,7 +779,7 @@ export default function AboutPage() {
                 communities find and understand the services available to them.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Access Michigan complements — but does not replace — government
+                Access Michigan complements - but does not replace - government
                 services, 2-1-1, or direct service providers. We organize
                 publicly available data into an accessible, navigable format so
                 residents can make informed decisions and institutions can
@@ -815,7 +815,7 @@ export default function AboutPage() {
                 Access Michigan offers an optional "My Settings" feature (the
                 gear icon in the header) where you can set your ZIP code,
                 coverage type, and other preferences. This information is stored
-                only in your browser's local storage on your device — it is
+                only in your browser's local storage on your device - it is
                 never sent to our servers. You can clear it at any time from the
                 same panel.
               </p>
@@ -896,7 +896,7 @@ export default function AboutPage() {
           </h3>
           <p className="mx-auto max-w-2xl text-sm text-muted-foreground">
             Nonprofits, researchers, civic groups, and public agencies are
-            invited to explore how Access Michigan can support their work —
+            invited to explore how Access Michigan can support their work -
             whether through data sharing, community feedback, or joint
             navigation improvements. We welcome informal advisors, domain
             experts, and community leaders who share our commitment to equitable

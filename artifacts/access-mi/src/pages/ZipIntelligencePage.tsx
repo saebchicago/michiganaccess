@@ -93,7 +93,7 @@ export default function ZipIntelligencePage() {
               Compare to Michigan and national averages.
             </p>
             <p className="text-[10px] text-muted-foreground mt-1">
-              Powered by CDC PLACES — the most granular public health data in
+              Powered by CDC PLACES - the most granular public health data in
               America.
             </p>
           </motion.div>

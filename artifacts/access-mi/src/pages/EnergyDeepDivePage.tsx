@@ -30,14 +30,14 @@ const COUNTY_INCOMES: Record<string, number> = {
 
 const PROGRAMS = [
   { name: "LIHEAP Michigan", amount: "$183.3M", desc: "Federal Low-Income Home Energy Assistance", eligibility: "Up to 150% FPL", url: "https://www.michigan.gov/mdhhs/assistance-programs/energy", source: "Verified anchor" },
-  { name: "MiHER", amount: "$211M", desc: "Michigan Healthy Environment & Resilience — up to $34K/household", eligibility: "Income-eligible households", url: "https://www.michigan.gov/egle/about/featured/miher", source: "Verified anchor" },
+  { name: "MiHER", amount: "$211M", desc: "Michigan Healthy Environment & Resilience - up to $34K/household", eligibility: "Income-eligible households", url: "https://www.michigan.gov/egle/about/featured/miher", source: "Verified anchor" },
   { name: "Michigan Saves", amount: "$96.6M financed", desc: "Green lending for energy efficiency upgrades", eligibility: "All Michigan residents", url: "https://michigansaves.org", source: "Verified anchor" },
   { name: "Weatherization (WAP)", amount: "Varies", desc: "Free home weatherization for low-income households", eligibility: "Up to 200% FPL", url: "https://www.michigan.gov/mdhhs/assistance-programs/weatherization", source: "DOE WAP" },
 ];
 
 export default function EnergyDeepDivePage() {
   usePageMeta({
-    title: "Energy Burden Intelligence — Access Michigan",
+    title: "Energy Burden Intelligence - Access Michigan",
     description: "Michigan county energy burden analysis. Low-income households spend up to 12% of income on energy. LIHEAP, MiHER, solar potential data.",
     path: "/environment/energy",
   });
@@ -77,7 +77,7 @@ export default function EnergyDeepDivePage() {
               Michigan Energy Burden
             </motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-lg text-muted-foreground">
-              Low-income Michigan households spend up to 12% of their income on energy — 3x the national affordability target. Over 250,000 households are eligible for assistance.
+              Low-income Michigan households spend up to 12% of their income on energy - 3x the national affordability target. Over 250,000 households are eligible for assistance.
             </motion.p>
             <motion.p variants={fadeUp} custom={3} className="text-xs text-muted-foreground/70 mt-2">ACEEE LEAD Tool 2023 · DOE · LIHEAP</motion.p>
           </motion.div>
@@ -106,7 +106,7 @@ export default function EnergyDeepDivePage() {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-[9px] text-muted-foreground/60 mt-2">Illustrative — based on ACEEE LEAD Tool county-level estimates</p>
+            <p className="text-[9px] text-muted-foreground/60 mt-2">Illustrative - based on ACEEE LEAD Tool county-level estimates</p>
           </CardContent>
         </Card>
 
@@ -173,7 +173,7 @@ export default function EnergyDeepDivePage() {
               <div>
                 <h3 className="text-sm font-bold text-foreground mb-1">Solar Potential</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Despite its northern latitude, Michigan has significant solar potential — especially in southern counties.
+                  Despite its northern latitude, Michigan has significant solar potential - especially in southern counties.
                   Counties like Oakland and Washtenaw score 7/10 on NREL's solar resource scale. The MiHER program ($211M)
                   and Michigan Saves ($96.6M financed in 2024) make solar more accessible than ever.
                 </p>

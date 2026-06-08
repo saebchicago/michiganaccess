@@ -2,7 +2,7 @@
  * Compound Access Deficit Index (CADI).
  *
  * Single authoritative scoring function shared by every surface that
- * displays the CADI score — atlas map layer, county detail panel, and
+ * displays the CADI score - atlas map layer, county detail panel, and
  * the rankings table. Keeping the formula here prevents the prior split
  * where the map used uninsured*2 + food*1.5 while the rankings table
  * used a 7-axis weighted index, producing different numbers for the

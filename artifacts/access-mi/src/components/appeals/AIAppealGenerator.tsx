@@ -156,7 +156,7 @@ const AIAppealGenerator = () => {
               Denial Details
             </CardTitle>
             <CardDescription>
-              Use general terms—do not enter any personal identifiers
+              Use general terms-do not enter any personal identifiers
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

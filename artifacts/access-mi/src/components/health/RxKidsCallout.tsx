@@ -16,12 +16,12 @@ export default function RxKidsCallout({ county }: RxKidsCalloutProps) {
         <Baby className="h-4 w-4 text-teal-600 mt-0.5 shrink-0" />
         <div>
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="text-xs font-bold text-teal-700 dark:text-teal-400">Rx Kids — National Innovation</span>
+            <span className="text-xs font-bold text-teal-700 dark:text-teal-400">Rx Kids - National Innovation</span>
             {isActive && <span className="text-[9px] bg-teal-600 text-white px-1.5 py-0.5 rounded font-semibold">ACTIVE IN {county.toUpperCase()}</span>}
             {isExpanding && !isActive && <span className="text-[10px] bg-teal-100 dark:bg-teal-800 text-teal-900 dark:text-teal-200 px-1.5 py-0.5 rounded font-semibold">EXPANDING TO {county.toUpperCase()}</span>}
           </div>
           <p className="text-xs text-teal-800 dark:text-teal-300 mb-2">
-            {RX_KIDS_SUMMARY.programName} is the nation's first citywide maternal and infant cash prescription program — {RX_KIDS_SUMMARY.strings.toLowerCase()}. Launched in Flint in January 2024.
+            {RX_KIDS_SUMMARY.programName} is the nation's first citywide maternal and infant cash prescription program - {RX_KIDS_SUMMARY.strings.toLowerCase()}. Launched in Flint in January 2024.
           </p>
           <div className="grid grid-cols-3 gap-2 mb-2">
             <div className="text-center bg-white/60 dark:bg-black/20 rounded-lg p-2">

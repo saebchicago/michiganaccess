@@ -129,7 +129,7 @@ export function resolvePlace(params: {
         confidence: "high",
         countyProfile: profile,
         isFallback: true,
-        fallbackLabel: `Showing ${townshipMatch.county} County data — ${townshipMatch.label} is part of ${townshipMatch.county} County`,
+        fallbackLabel: `Showing ${townshipMatch.county} County data - ${townshipMatch.label} is part of ${townshipMatch.county} County`,
       };
     }
 

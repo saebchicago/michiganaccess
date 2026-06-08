@@ -2,7 +2,7 @@
  * Resilience inputs for 25 major Michigan counties.
  * Sources: FEMA disaster declarations, SBA FOIA loan data, Census ACS 2022,
  * County Health Rankings & Roadmaps, 2025 edition, United For ALICE 2023, FCC broadband data.
- * Values are illustrative composites — not validated survey data.
+ * Values are illustrative composites - not validated survey data.
  */
 
 import type { ResilienceInput } from "@/lib/resilience-score";

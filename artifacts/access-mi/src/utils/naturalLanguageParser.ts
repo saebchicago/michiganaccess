@@ -118,7 +118,7 @@ export function parseNaturalLanguage(query: string): ParsedIntent {
     }
   }
 
-  // 2. Extract county (e.g., "in Wayne", "near Oakland") — skip if already found via ZIP
+  // 2. Extract county (e.g., "in Wayne", "near Oakland") - skip if already found via ZIP
   if (!county) {
     for (const prep of LOCATION_PREPS) {
       for (const c of MICHIGAN_COUNTIES) {

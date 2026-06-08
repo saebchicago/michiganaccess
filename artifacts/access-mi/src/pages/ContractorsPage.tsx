@@ -15,7 +15,7 @@ const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: (i: number) => ({ opaci
 const COUNTIES = ["Wayne", "Oakland", "Macomb", "Kent", "Genesee", "Washtenaw", "Ingham", "Kalamazoo", "Saginaw"];
 
 export default function ContractorsPage() {
-  usePageMeta({ title: "Federal Contractors — Access Michigan", description: "Every federal contract awarded in Michigan — searchable by county. Live USASpending.gov data.", path: "/transparency/contractors" });
+  usePageMeta({ title: "Federal Contractors - Access Michigan", description: "Every federal contract awarded in Michigan - searchable by county. Live USASpending.gov data.", path: "/transparency/contractors" });
 
   const [county, setCounty] = useState<string | undefined>(undefined);
   const { data: contractors, isLoading } = useMichiganContractors(county);
@@ -34,7 +34,7 @@ export default function ContractorsPage() {
               <span className="text-sm font-medium text-amber-400">Federal Contractors</span>
             </motion.div>
             <motion.h1 variants={fadeUp} custom={1} className="mb-4 text-3xl font-bold text-white md:text-4xl">Federal Contracts in Michigan</motion.h1>
-            <motion.p variants={fadeUp} custom={2} className="text-base text-slate-300">Every federal contract, every award, every recipient — reported by law under the DATA Act. $14.2B flowed to Michigan in FY2024.</motion.p>
+            <motion.p variants={fadeUp} custom={2} className="text-base text-slate-300">Every federal contract, every award, every recipient - reported by law under the DATA Act. $14.2B flowed to Michigan in FY2024.</motion.p>
             <motion.p variants={fadeUp} custom={3} className="text-xs text-slate-500 mt-2">Source: USASpending.gov FY2024</motion.p>
           </motion.div>
         </div>
@@ -102,7 +102,7 @@ export default function ContractorsPage() {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-[9px] text-muted-foreground/60 mt-2">Source: USASpending.gov FY2024. Live API data — results may vary. All contracts $10,000+ reported under FFATA.</p>
+                <p className="text-[9px] text-muted-foreground/60 mt-2">Source: USASpending.gov FY2024. Live API data - results may vary. All contracts $10,000+ reported under FFATA.</p>
               </>
             )}
             {contractors && contractors.length === 0 && !isLoading && (

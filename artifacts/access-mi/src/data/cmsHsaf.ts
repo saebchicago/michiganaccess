@@ -1,5 +1,5 @@
 /**
- * CMS Hospital Service Area File — top 3 hospitals by Medicare discharges
+ * CMS Hospital Service Area File - top 3 hospitals by Medicare discharges
  * for ~10 Michigan ZIP codes.
  *
  * Source: CMS Hospital Service Area File. Medicare inpatient only.

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
-/** Renders saved/starred items panel — used on homepage */
+/** Renders saved/starred items panel - used on homepage */
 export default function WatchlistPanel() {
   const { items, toggle, clear, count } = useWatchlist();
 
@@ -53,7 +53,7 @@ export default function WatchlistPanel() {
         {count > 6 && (
           <p className="text-[10px] text-muted-foreground mt-2">+ {count - 6} more saved items</p>
         )}
-        <p className="text-[9px] text-muted-foreground mt-2">Stored locally on your device — never sent to any server.</p>
+        <p className="text-[9px] text-muted-foreground mt-2">Stored locally on your device - never sent to any server.</p>
       </div>
     </section>
   );

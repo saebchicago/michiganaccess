@@ -11,7 +11,7 @@ import { MICHIGAN_TRIBAL_NATIONS, TRIBAL_HEALTH_SUMMARY } from "@/data/tribalNat
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }) };
 
 export default function TribalNationsPage() {
-  usePageMeta({ title: "Michigan Tribal Nations — Access Michigan", description: "Michigan's 12 federally recognized tribal nations: sovereign health infrastructure, equity data, and community resources.", path: "/tribal-nations" });
+  usePageMeta({ title: "Michigan Tribal Nations - Access Michigan", description: "Michigan's 12 federally recognized tribal nations: sovereign health infrastructure, equity data, and community resources.", path: "/tribal-nations" });
 
   return (
     <Layout>
@@ -26,7 +26,7 @@ export default function TribalNationsPage() {
             </motion.div>
             <motion.h1 variants={fadeUp} custom={1} className="mb-4 text-3xl font-bold text-foreground md:text-4xl">12 Sovereign Nations</motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-base text-muted-foreground">
-              Michigan's 12 federally recognized tribal nations operate as sovereign governments with their own health systems, social services, and governance structures. The health disparities documented here reflect systemic inequities — not tribal community characteristics.
+              Michigan's 12 federally recognized tribal nations operate as sovereign governments with their own health systems, social services, and governance structures. The health disparities documented here reflect systemic inequities - not tribal community characteristics.
             </motion.p>
           </motion.div>
         </div>

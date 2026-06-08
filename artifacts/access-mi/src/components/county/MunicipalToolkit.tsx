@@ -153,7 +153,7 @@ function FOIADialog({ municipality }: { municipality: Municipality }) {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-base">
             <Shield className="h-4 w-4 text-primary" />
-            FOIA Request — {municipality.name}
+            FOIA Request - {municipality.name}
           </DialogTitle>
         </DialogHeader>
         <div className="space-y-3">

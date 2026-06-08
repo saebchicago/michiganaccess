@@ -17,7 +17,7 @@ const STORIES: Story[] = [
   {
     name: "Maria",
     county: "Wayne County",
-    narrative: "After losing her insurance, Maria used Access Michigan to find a sliding-scale clinic 2 miles from her home in Southwest Detroit. The platform showed her that Wayne County has the highest density of FQHCs in the state — 23 clinics serving 180,000+ patients. She enrolled in the Healthy Michigan Plan within a week.",
+    narrative: "After losing her insurance, Maria used Access Michigan to find a sliding-scale clinic 2 miles from her home in Southwest Detroit. The platform showed her that Wayne County has the highest density of FQHCs in the state - 23 clinics serving 180,000+ patients. She enrolled in the Healthy Michigan Plan within a week.",
     connections: [
       { label: "Find Care → FQHC filter", href: "/find-care" },
       { label: "Medicaid enrollment", href: "/health/insurance" },
@@ -28,7 +28,7 @@ const STORIES: Story[] = [
   {
     name: "James",
     county: "Genesee County",
-    narrative: "As a veteran managing diabetes and PTSD in Flint, James needed both VA care and community support. Access Michigan's county profile showed that Genesee County has a 13.8% diabetes rate — 1.5× the state average — and connected him to three peer support groups and a CHW navigator.",
+    narrative: "As a veteran managing diabetes and PTSD in Flint, James needed both VA care and community support. Access Michigan's county profile showed that Genesee County has a 13.8% diabetes rate - 1.5× the state average - and connected him to three peer support groups and a CHW navigator.",
     connections: [
       { label: "County health profile", href: "/brief?county=Genesee" },
       { label: "Community resources", href: "/resources" },
@@ -39,7 +39,7 @@ const STORIES: Story[] = [
   {
     name: "Dorothy",
     county: "Marquette County",
-    narrative: "Living alone in the Upper Peninsula, Dorothy's nearest hospital is 45 minutes away. Access Michigan's transportation section showed her ALTRAN dial-a-ride service and the GATIS data revealed there are zero sidewalks in her township — highlighting why medical transport, not walking, is her only option.",
+    narrative: "Living alone in the Upper Peninsula, Dorothy's nearest hospital is 45 minutes away. Access Michigan's transportation section showed her ALTRAN dial-a-ride service and the GATIS data revealed there are zero sidewalks in her township - highlighting why medical transport, not walking, is her only option.",
     connections: [
       { label: "Transportation services", href: "/transportation" },
       { label: "GATIS infrastructure data", href: "/transportation#active-transport" },
@@ -96,7 +96,7 @@ export default function ImpactStories() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-foreground">
-                        {story.name} <span className="font-normal text-muted-foreground">— {story.county}</span>
+                        {story.name} <span className="font-normal text-muted-foreground">- {story.county}</span>
                       </p>
                       <p className="text-sm text-muted-foreground leading-relaxed mt-1">{story.narrative}</p>
                       <div className="flex flex-wrap gap-2 mt-3">

@@ -1,5 +1,5 @@
 /**
- * useZipData — React Query hook that aggregates ZIP-level data
+ * useZipData - React Query hook that aggregates ZIP-level data
  * from CDC PLACES, IRS SOI, HUD FMR, Census quickstats, and RUCA.
  */
 import { useQuery } from "@tanstack/react-query";

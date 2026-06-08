@@ -1,5 +1,5 @@
 // Live federal spending data from USASpending.gov
-// No API key required — public DATA Act endpoint
+// No API key required - public DATA Act endpoint
 // Docs: https://api.usaspending.gov/
 
 import { useQuery } from "@tanstack/react-query";

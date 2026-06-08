@@ -58,7 +58,7 @@ export default function FoodAccessMap() {
           <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 flex items-start gap-2">
             <AlertTriangle className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />
             <p className="text-xs text-foreground">
-              Rural counties like <strong>Lake (52%)</strong>, <strong>Oscoda (49%)</strong>, and <strong>Crawford (42%)</strong> have the highest % of population in food deserts — but <strong>Wayne County</strong> has the most food desert tracts (185) by total count.
+              Rural counties like <strong>Lake (52%)</strong>, <strong>Oscoda (49%)</strong>, and <strong>Crawford (42%)</strong> have the highest % of population in food deserts - but <strong>Wayne County</strong> has the most food desert tracts (185) by total count.
             </p>
           </div>
 

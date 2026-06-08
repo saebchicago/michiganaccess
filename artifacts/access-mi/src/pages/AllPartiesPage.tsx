@@ -91,7 +91,7 @@ export default function AllPartiesPage() {
             >
               <Vote className="h-4 w-4 text-white" />
               <span className="text-sm font-medium text-white">
-                All Michigan Parties — Equal Treatment
+                All Michigan Parties - Equal Treatment
               </span>
             </motion.div>
             <motion.h1
@@ -136,7 +136,7 @@ export default function AllPartiesPage() {
           </CardContent>
         </Card>
 
-        {/* Party Cards — IDENTICAL structure for all */}
+        {/* Party Cards - IDENTICAL structure for all */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {MICHIGAN_PARTIES.map((party, i) => (
             <motion.div
@@ -200,7 +200,7 @@ export default function AllPartiesPage() {
                   </div>
                   {party.lastGovernorVotePct != null && (
                     <p className="text-[10px] text-muted-foreground mb-2">
-                      Last governor: {party.lastGovernorCandidate} —{" "}
+                      Last governor: {party.lastGovernorCandidate} -{" "}
                       {party.lastGovernorVotePct}% ({party.lastGovernorVoteYear}
                       )
                     </p>
@@ -279,7 +279,7 @@ export default function AllPartiesPage() {
                 <tr className="border-b border-border/40">
                   <td className="py-2 pr-4 font-medium">Primary election</td>
                   <td className="py-2 pr-4">Yes</td>
-                  <td className="py-2">No — convention nomination</td>
+                  <td className="py-2">No - convention nomination</td>
                 </tr>
               </tbody>
             </table>
@@ -290,7 +290,7 @@ export default function AllPartiesPage() {
         <Card>
           <CardHeader>
             <CardTitle className="text-base">
-              Michigan vs. Other States — Ballot Access Difficulty
+              Michigan vs. Other States - Ballot Access Difficulty
             </CardTitle>
             <p className="text-xs text-muted-foreground">
               Source: Ballot Access News / Michigan SOS

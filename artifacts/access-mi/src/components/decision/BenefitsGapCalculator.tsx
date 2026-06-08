@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getALICEByCounty, MICHIGAN_ALICE_STATEWIDE } from "@/data/aliceData";
 
-// Federal Poverty Level 2024 — Source: HHS ASPE
+// Federal Poverty Level 2024 - Source: HHS ASPE
 const FPL_2024: Record<number, number> = { 1: 15060, 2: 20440, 3: 25820, 4: 31200, 5: 36580 };
 
 const COUNTIES = ["Wayne","Oakland","Macomb","Kent","Genesee","Washtenaw","Ingham","Kalamazoo","Saginaw","Ottawa","Muskegon","Berrien","Jackson","Calhoun","Livingston","Monroe","St. Clair","Allegan","Bay","Midland"];
@@ -26,16 +26,16 @@ export default function BenefitsGapCalculator() {
 
   const programs = useMemo((): Program[] => {
     const list: Program[] = [];
-    // Source: SNAP — 200% FPL (MI broad-based categorical eligibility)
+    // Source: SNAP - 200% FPL (MI broad-based categorical eligibility)
     list.push({ name: "SNAP (Food Assistance)", eligible: fplPct <= 200, monthlyValue: householdSize * 234, source: "USDA FY2025 max allotments" });
-    // Source: Healthy Michigan Plan — 138% FPL
+    // Source: Healthy Michigan Plan - 138% FPL
     list.push({ name: "Medicaid (Healthy Michigan)", eligible: !insured && fplPct <= 138, monthlyValue: householdSize * 600, source: "CMS per capita estimate" });
-    // Source: LIHEAP — 150% FPL, $183.3M allocation
-    list.push({ name: "LIHEAP (Energy Assistance)", eligible: fplPct <= 150, monthlyValue: 83, source: "LIHEAP Clearinghouse — $183.3M MI allocation" });
-    // Source: WIC — 185% FPL, pregnant/postpartum/children <5
-    list.push({ name: "WIC", eligible: fplPct <= 185 && householdSize > 1, monthlyValue: 75, source: "USDA WIC — 185% FPL threshold" });
-    // Source: MiHER — categorical via Medicaid
-    list.push({ name: "MiHER (Energy Rebates)", eligible: !insured && fplPct <= 138, monthlyValue: 50, source: "EGLE — $211M allocation, Medicaid = auto-eligible" });
+    // Source: LIHEAP - 150% FPL, $183.3M allocation
+    list.push({ name: "LIHEAP (Energy Assistance)", eligible: fplPct <= 150, monthlyValue: 83, source: "LIHEAP Clearinghouse - $183.3M MI allocation" });
+    // Source: WIC - 185% FPL, pregnant/postpartum/children <5
+    list.push({ name: "WIC", eligible: fplPct <= 185 && householdSize > 1, monthlyValue: 75, source: "USDA WIC - 185% FPL threshold" });
+    // Source: MiHER - categorical via Medicaid
+    list.push({ name: "MiHER (Energy Rebates)", eligible: !insured && fplPct <= 138, monthlyValue: 50, source: "EGLE - $211M allocation, Medicaid = auto-eligible" });
     return list;
   }, [fplPct, insured, householdSize]);
 
@@ -110,7 +110,7 @@ export default function BenefitsGapCalculator() {
 
       {/* Icon array */}
       <div>
-        <p className="text-xs font-medium text-foreground mb-2">Enrollment gap — of every 100 eligible residents:</p>
+        <p className="text-xs font-medium text-foreground mb-2">Enrollment gap - of every 100 eligible residents:</p>
         <div className="flex flex-wrap gap-[2px]">
           {Array.from({ length: 100 }, (_, i) => (
             <div key={i} className={`w-2 h-3 rounded-sm ${i < enrolled ? "bg-primary" : "bg-red-300"}`} />
@@ -120,7 +120,7 @@ export default function BenefitsGapCalculator() {
           <span><span className="inline-block h-2 w-2 rounded-sm bg-primary mr-1" />{enrolled} enrolled</span>
           <span><span className="inline-block h-2 w-2 rounded-sm bg-red-300 mr-1" />{eligible} eligible but not receiving</span>
         </div>
-        <p className="text-[9px] text-muted-foreground mt-1">Illustrative — based on national SNAP/Medicaid participation rates</p>
+        <p className="text-[9px] text-muted-foreground mt-1">Illustrative - based on national SNAP/Medicaid participation rates</p>
       </div>
 
       <a href="https://newmibridges.michigan.gov" target="_blank" rel="noopener noreferrer"

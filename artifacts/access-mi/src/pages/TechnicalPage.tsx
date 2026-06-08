@@ -95,7 +95,7 @@ const interopStandards = [
   {
     icon: Link2,
     title: "HL7 CDA & ADT Integration-Ready",
-    desc: "Architecture supports ingestion of HL7 v2 ADT messages and CDA documents for real-time bed availability, ED wait times, and discharge planning — critical for ambulatory network optimization.",
+    desc: "Architecture supports ingestion of HL7 v2 ADT messages and CDA documents for real-time bed availability, ED wait times, and discharge planning - critical for ambulatory network optimization.",
     tags: ["HL7 v2", "CDA R2", "ADT Messages"],
   },
 ];

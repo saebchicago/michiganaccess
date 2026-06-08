@@ -25,7 +25,7 @@ export default function ChildcareDesertCard() {
           </div>
           <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 flex items-start gap-2">
             <AlertTriangle className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />
-            <p className="text-xs text-foreground">Childcare deserts force ALICE families out of the workforce. Rural counties — Lake, Oscoda, Montmorency, Crawford, Missaukee — have the worst gaps.</p>
+            <p className="text-xs text-foreground">Childcare deserts force ALICE families out of the workforce. Rural counties - Lake, Oscoda, Montmorency, Crawford, Missaukee - have the worst gaps.</p>
           </div>
           <p className="text-[10px] text-muted-foreground">Source: <a href="https://childcaregap.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground">Bipartisan Policy Center childcaregap.org</a>, LARA Licensed Providers, Census ACS</p>
         </CardContent>

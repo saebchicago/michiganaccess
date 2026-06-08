@@ -124,7 +124,7 @@ export default function ALICESurvivalBudget() {
             )}
 
             <p className="text-[9px] text-muted-foreground mt-3">
-              Source: United Way ALICE Methodology 2025 + BLS OES Michigan 2024. Budget is illustrative — actual costs vary by location. ALICE hardship in {county} County: {alice?.combinedHardshipPct ?? MICHIGAN_ALICE_STATEWIDE.combinedHardshipPct}%.
+              Source: United Way ALICE Methodology 2025 + BLS OES Michigan 2024. Budget is illustrative - actual costs vary by location. ALICE hardship in {county} County: {alice?.combinedHardshipPct ?? MICHIGAN_ALICE_STATEWIDE.combinedHardshipPct}%.
             </p>
           </CardContent>
         </Card>

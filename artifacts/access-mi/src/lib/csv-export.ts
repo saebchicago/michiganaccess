@@ -44,7 +44,7 @@ export function exportMedicaidCoverageAtRiskCsv(
 ): void {
   const date = new Date().toISOString().slice(0, 10);
   const meta = [
-    `accessmi.org — Michigan Medicaid Coverage at Risk`,
+    `accessmi.org - Michigan Medicaid Coverage at Risk`,
     `Generated: ${date}`,
     `Source: Urban Institute Michigan projection (171,000–355,000) × ACS C27007 5-year 2023 county enrollment share`,
     `Denominator: 6,206,095 (sum of ACS C27007 county estimates for all 83 Michigan counties)`,
@@ -80,9 +80,9 @@ export function exportDualEligibleExposureCsv(
 ): void {
   const date = new Date().toISOString().slice(0, 10);
   const meta = [
-    `accessmi.org — Michigan Dual-Eligible Exposure Map`,
+    `accessmi.org - Michigan Dual-Eligible Exposure Map`,
     `Generated: ${date}`,
-    `Framing: "Two programs, shared geography" — descriptive intersection, not a coverage-loss claim`,
+    `Framing: "Two programs, shared geography" - descriptive intersection, not a coverage-loss claim`,
     `Dual-eligible residents are exempt from P.L. 119-21 work requirements (§71119 applies to expansion enrollees only)`,
     `State range: ~335,000–405,000 Michigan dual-eligible residents (MACPAC CY2022 / KFF 2024–2025)`,
     `County allocation: ACS B27010 5-year 2023 county shares × statewide range endpoints`,
@@ -118,7 +118,7 @@ export function exportSnapCoverageAtRiskCsv(
 ): void {
   const date = new Date().toISOString().slice(0, 10);
   const meta = [
-    `accessmi.org — Michigan SNAP Coverage at Risk`,
+    `accessmi.org - Michigan SNAP Coverage at Risk`,
     `Generated: ${date}`,
     `Source: MLPP Michigan estimate (74,000) × USDA FNS FY2022 county enrollment share`,
     `Uncertainty band: ±40% (GAO-19-56 historical range). Low = midpoint × 0.60, High = midpoint × 1.40.`,

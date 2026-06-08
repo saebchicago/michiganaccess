@@ -1,5 +1,5 @@
 /**
- * ZIP Code Comparison — Data interfaces & real indicator catalog.
+ * ZIP Code Comparison - Data interfaces & real indicator catalog.
  * Metrics are resolved from county-level curated data (cross-domain indicators
  * and county profiles) via zipToCounty(). Where no data exists, null is used.
  */
@@ -51,7 +51,7 @@ export interface ZipComparisonSummary {
   globalSources: string[];
 }
 
-// ── Metric catalog (v1 — curated) ───────────────────────────────────────────
+// ── Metric catalog (v1 - curated) ───────────────────────────────────────────
 
 export const METRIC_GROUPS: { id: MetricGroupId; title: string; iconName: string }[] = [
   { id: "health_coverage", title: "Health & Coverage", iconName: "Heart" },

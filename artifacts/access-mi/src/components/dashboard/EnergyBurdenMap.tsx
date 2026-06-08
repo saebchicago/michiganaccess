@@ -114,7 +114,7 @@ const METRICS = [
   { id: "gasBill", label: "Gas/Heat Only", unit: "$", description: "Average monthly natural gas / heating bill" },
 ];
 
-// EIA SEDS time-series data — Michigan vs National (residential electricity ¢/kWh & per-capita BTU)
+// EIA SEDS time-series data - Michigan vs National (residential electricity ¢/kWh & per-capita BTU)
 const EIA_SEDS_PRICE: { year: number; michigan: number; national: number }[] = [
   { year: 2010, michigan: 11.9, national: 11.5 },
   { year: 2012, michigan: 13.5, national: 11.9 },
@@ -258,7 +258,7 @@ export default function EnergyBurdenMap({ compact = false }: EnergyBurdenMapProp
           Energy Disparity Heatmaps
         </CardTitle>
         <p className="text-xs text-muted-foreground">
-          All 83 Michigan counties — Sources: ACEEE LEAD Tool, EIA SEDS, DTE Outage Center
+          All 83 Michigan counties - Sources: ACEEE LEAD Tool, EIA SEDS, DTE Outage Center
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -354,7 +354,7 @@ export default function EnergyBurdenMap({ compact = false }: EnergyBurdenMapProp
           {/* ── Tab 2: Electric vs Gas Breakdown ── */}
           <TabsContent value="breakdown" className="space-y-4 mt-4">
             <p className="text-xs text-muted-foreground">
-              Top 10 highest-burden counties — Stacked electric vs. gas/heating costs.
+              Top 10 highest-burden counties - Stacked electric vs. gas/heating costs.
               UP counties spend up to 60% on heating due to propane dependence and older housing stock.
             </p>
             <div className="h-[320px]">
@@ -406,7 +406,7 @@ export default function EnergyBurdenMap({ compact = false }: EnergyBurdenMapProp
                   </ResponsiveContainer>
                 </div>
                 <p className="text-[10px] text-muted-foreground mt-1">
-                  Michigan electricity prices are <strong>25% above national average</strong> — up 61% since 2010.
+                  Michigan electricity prices are <strong>25% above national average</strong> - up 61% since 2010.
                 </p>
               </div>
 
@@ -430,7 +430,7 @@ export default function EnergyBurdenMap({ compact = false }: EnergyBurdenMapProp
                   </ResponsiveContainer>
                 </div>
                 <p className="text-[10px] text-muted-foreground mt-1">
-                  Michigan uses <strong>20% less energy per capita</strong> than the national average — declining steadily since 2010.
+                  Michigan uses <strong>20% less energy per capita</strong> than the national average - declining steadily since 2010.
                 </p>
               </div>
             </TabsContent>
@@ -445,7 +445,7 @@ export default function EnergyBurdenMap({ compact = false }: EnergyBurdenMapProp
               <div>
                 <p className="text-sm font-semibold text-foreground">Energy Poverty Disparity</p>
                 <p className="text-xs text-muted-foreground">
-                  Low-income Michigan households spend up to 9.8% of income on energy — 3× the national affordable threshold of 3%.
+                  Low-income Michigan households spend up to 9.8% of income on energy - 3× the national affordable threshold of 3%.
                   Rural Upper Peninsula counties face the highest burden due to older housing stock, propane dependence, and limited weatherization access.
                 </p>
                 <p className="text-[10px] text-muted-foreground mt-1">Source: ACEEE LEAD Tool, 2024 Power Struggle Report, EIA SEDS</p>

@@ -8,11 +8,11 @@ import { getResilienceInput } from "@/data/county-resilience";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
 const TIER_COLORS: Record<string, string> = {
-  "Tier 1 — Strong": "#22c55e",
-  "Tier 2 — Moderate": "#3b82f6",
-  "Tier 3 — Limited": "#eab308",
-  "Tier 4 — Priority": "#f97316",
-  "Tier 5 — Critical": "#ef4444",
+  "Tier 1 - Strong": "#22c55e",
+  "Tier 2 - Moderate": "#3b82f6",
+  "Tier 3 - Limited": "#eab308",
+  "Tier 4 - Priority": "#f97316",
+  "Tier 5 - Critical": "#ef4444",
 };
 
 const DIM_LABELS: Record<string, string> = {
@@ -104,7 +104,7 @@ export default function ResilienceScoreCard({ county }: Props) {
             <p className="text-sm text-foreground font-medium">{county} County</p>
           </div>
 
-          {/* Gauge + Grade — stack on mobile */}
+          {/* Gauge + Grade - stack on mobile */}
           <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
             <ScoreGauge score={result.score} color={gradeColor} />
             <Badge
@@ -164,11 +164,11 @@ export default function ResilienceScoreCard({ county }: Props) {
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="overflow-hidden">
                 <p className="text-[9px] text-muted-foreground mt-2 leading-relaxed">
                   The Community Resilience Score is a weighted composite of five dimensions:
-                  Disaster Preparedness (25%) — based on historical disaster declaration frequency;
-                  Economic Capacity (25%) — SBA lending per capita + median household income;
-                  Health Infrastructure (20%) — county health ranking score;
-                  Social Safety Net (15%) — inverse of ALICE threshold rate;
-                  Digital Connectivity (15%) — broadband adoption percentage.
+                  Disaster Preparedness (25%) - based on historical disaster declaration frequency;
+                  Economic Capacity (25%) - SBA lending per capita + median household income;
+                  Health Infrastructure (20%) - county health ranking score;
+                  Social Safety Net (15%) - inverse of ALICE threshold rate;
+                  Digital Connectivity (15%) - broadband adoption percentage.
                   Each dimension scores 0-100, then weighted to produce the final score.
                 </p>
                 <p className="text-[9px] text-muted-foreground mt-1 italic">

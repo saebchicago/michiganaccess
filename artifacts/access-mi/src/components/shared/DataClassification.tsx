@@ -13,7 +13,7 @@ const CONFIG = {
     className: "text-michigan-teal bg-michigan-teal/8 border-michigan-teal/20",
   },
   illustrative: {
-    label: "Illustrative example — demonstrates platform capability",
+    label: "Illustrative example - demonstrates platform capability",
     icon: Lightbulb,
     className: "text-michigan-gold bg-michigan-gold/8 border-michigan-gold/20",
   },

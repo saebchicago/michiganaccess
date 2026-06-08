@@ -81,7 +81,7 @@ export default function PhysicianCompare() {
           Medicare Provider Details
         </CardTitle>
         <CardDescription>
-          Medical school, hospital affiliations, and Medicare participation — data not in NPI registry
+          Medical school, hospital affiliations, and Medicare participation - data not in NPI registry
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -142,7 +142,7 @@ export default function PhysicianCompare() {
           >
             CMS Physician Compare <ExternalLink className="h-2.5 w-2.5" />
           </a>{" "}
-          — Medicare-participating providers, updated quarterly
+          - Medicare-participating providers, updated quarterly
         </p>
       </CardContent>
     </Card>

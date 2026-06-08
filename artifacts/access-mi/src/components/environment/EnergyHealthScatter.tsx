@@ -126,7 +126,7 @@ export default function EnergyHealthScatter() {
         {[
           { stat: "1.4×", desc: "Counties with >8% energy burden have 1.4× higher diabetes rates than those below 5%", color: "border-michigan-coral/20 bg-michigan-coral/5" },
           { stat: "23%", desc: "Michigan's average residential rate (20.8¢/kWh) is 23% above the national average (16.9¢/kWh)", color: "border-michigan-gold/20 bg-michigan-gold/5" },
-          { stat: "76", desc: "Counties with zero pedestrian infrastructure data — often the same communities with highest energy burden", color: "border-primary/20 bg-primary/5" },
+          { stat: "76", desc: "Counties with zero pedestrian infrastructure data - often the same communities with highest energy burden", color: "border-primary/20 bg-primary/5" },
         ].map((item) => (
           <Card key={item.stat} className={item.color}>
             <CardContent className="py-4">

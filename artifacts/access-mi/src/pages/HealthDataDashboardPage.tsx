@@ -111,7 +111,7 @@ export default function HealthDataDashboardPage() {
             Michigan Health at a Glance
           </motion.h1>
           <motion.p variants={fadeUp} custom={2} initial="hidden" animate="visible" className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Interactive dashboards showing health trends, access indicators, equity metrics, and county comparisons — powered by data from CDC, CMS, MDHHS, and County Health Rankings.
+            Interactive dashboards showing health trends, access indicators, equity metrics, and county comparisons - powered by data from CDC, CMS, MDHHS, and County Health Rankings.
           </motion.p>
         </div>
       </section>
@@ -293,7 +293,7 @@ export default function HealthDataDashboardPage() {
               <CardContent className="py-4">
                 <p className="text-sm text-foreground font-medium mb-1">Key Finding: Infant Mortality Disparity</p>
                 <p className="text-sm text-muted-foreground">
-                  Black infants in Michigan die at 2.6x the rate of white infants — among the widest gaps nationally. 
+                  Black infants in Michigan die at 2.6x the rate of white infants - among the widest gaps nationally. 
                   Michigan's Maternal Health Equity Initiative allocates $120M toward doula coverage, extended postpartum Medicaid, and 25 new birthing centers.
                 </p>
                 <p className="text-xs text-muted-foreground mt-2">Source: CDC WONDER, Michigan DHHS Vital Records, 2024</p>

@@ -1,5 +1,5 @@
 /**
- * DataExplorerPage — PolicyMap-style interactive Census data explorer.
+ * DataExplorerPage - PolicyMap-style interactive Census data explorer.
  * Browse ACS tables by topic, select geography, visualize + compare.
  */
 import { useState, useMemo } from "react";
@@ -35,7 +35,7 @@ const DOMAIN_ICONS: Record<CensusDomain, typeof Users> = {
 
 export default function DataExplorerPage() {
   usePageMeta({
-    title: "Data Explorer — Census & Community Indicators | Access Michigan",
+    title: "Data Explorer - Census & Community Indicators | Access Michigan",
     description: "Explore 50+ Census ACS tables for any Michigan county. Compare demographics, economics, housing, and education data.",
     path: "/data-explorer",
   });

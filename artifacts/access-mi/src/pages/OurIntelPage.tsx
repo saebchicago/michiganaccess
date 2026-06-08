@@ -12,7 +12,7 @@ import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.5 } }) };
 
 export default function OurIntelPage() {
-  usePageMeta({ title: "ourintel.org — National Civic Intelligence Vision", description: "Civic intelligence infrastructure, built for every community, starting with Michigan.", path: "/about/ourintel" });
+  usePageMeta({ title: "ourintel.org - National Civic Intelligence Vision", description: "Civic intelligence infrastructure, built for every community, starting with Michigan.", path: "/about/ourintel" });
 
   const [form, setForm] = useState({ email: "", name: "", state: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -37,7 +37,7 @@ export default function OurIntelPage() {
     <Layout>
       <Breadcrumbs items={[{ label: "About", href: "/about" }, { label: "ourintel.org" }]} />
 
-      {/* Hero — navy */}
+      {/* Hero - navy */}
       <section className="bg-slate-900 py-20 md:py-28">
         <div className="container max-w-3xl text-center">
           <motion.div initial="hidden" animate="visible">
@@ -60,7 +60,7 @@ export default function OurIntelPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-4">The Problem</h2>
           <p className="text-base text-muted-foreground leading-relaxed">
-            Millions of Americans make life decisions — where to live, whether to trust their water, who represents them, where public money goes — without access to the data that describes their own communities. That data exists. It's just not organized for them.
+            Millions of Americans make life decisions - where to live, whether to trust their water, who represents them, where public money goes - without access to the data that describes their own communities. That data exists. It's just not organized for them.
           </p>
         </section>
 
@@ -89,7 +89,7 @@ export default function OurIntelPage() {
         <section>
           <h2 className="text-xl font-bold text-foreground mb-4">The National Vision</h2>
           <p className="text-base text-muted-foreground leading-relaxed mb-6">
-            ourintel.org is the collaboration framework for building this in every US state — not a national platform built top-down, but a network of state-level implementations built by people who know their communities.
+            ourintel.org is the collaboration framework for building this in every US state - not a national platform built top-down, but a network of state-level implementations built by people who know their communities.
           </p>
           <div className="space-y-3">
             {[

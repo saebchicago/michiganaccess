@@ -20,7 +20,7 @@ const FACTS = [
   { label: "Live API Integrations", value: "18" },
   { label: "Data Sources", value: DATA_SOURCE_DISPLAY },
   { label: "Languages", value: "English, Spanish, Arabic, Bengali" },
-  { label: "Cost to Users", value: "Free — No login required" },
+  { label: "Cost to Users", value: "Free - No login required" },
   { label: "Personal Data Collected", value: "None" },
   { label: "Live Feeds", value: "AirNow, USGS, NWS, NPPES, FDA" },
 ];
@@ -33,7 +33,7 @@ export default function PressPage() {
     path: "/press",
     jsonLd: {
       "@type": "WebPage",
-      name: "Press Kit — Access Michigan",
+      name: "Press Kit - Access Michigan",
       url: "https://accessmi.org/press",
     },
   });
@@ -92,7 +92,7 @@ export default function PressPage() {
                 Access Michigan pulls data from {DATA_SOURCE_DISPLAY} public
                 sources, including CMS hospital ratings, CDC disease prevalence,
                 NWS weather alerts, USGS river monitoring, FDA drug recalls, and
-                more — and organizes it by county so Michigan residents can find
+                more - and organizes it by county so Michigan residents can find
                 healthcare, energy assistance, and community services without
                 creating an account or giving up personal data. It's free, it's
                 independent, and it doesn't take money from health systems.
@@ -130,7 +130,7 @@ export default function PressPage() {
             Coverage & Mentions
           </h2>
           <p className="text-sm text-muted-foreground">
-            Press inquiries welcome — outreach in progress.
+            Press inquiries welcome - outreach in progress.
           </p>
         </section>
       </div>

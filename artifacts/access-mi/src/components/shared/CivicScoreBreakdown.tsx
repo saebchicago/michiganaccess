@@ -1,5 +1,5 @@
 /**
- * CivicScoreBreakdown — Segmented Civic Insight Score with sub-indices.
+ * CivicScoreBreakdown - Segmented Civic Insight Score with sub-indices.
  *
  * Phase 1: Two sub-indices displayed as stacked bars inside an accordion.
  *   1) Community Vulnerability Index (40%): income + poverty + education z-scores
@@ -257,8 +257,8 @@ export default function CivicScoreBreakdown({ countyName, compositeScore }: Civi
             <div className="space-y-1.5">
               <p className="font-semibold text-foreground text-[11px]">Data Sources</p>
               <ul className="space-y-1 ml-3 list-disc">
-                <li><strong>Community Vulnerability (40%):</strong> U.S. Census ACS 2024 5-year estimates — uninsured rate, food insecurity, primary care physician ratio</li>
-                <li><strong>Access Friction (60%):</strong> Real-time platform data — insurance appeal outcomes, community incident reports, utility outage exposure per 1,000 residents</li>
+                <li><strong>Community Vulnerability (40%):</strong> U.S. Census ACS 2024 5-year estimates - uninsured rate, food insecurity, primary care physician ratio</li>
+                <li><strong>Access Friction (60%):</strong> Real-time platform data - insurance appeal outcomes, community incident reports, utility outage exposure per 1,000 residents</li>
               </ul>
             </div>
 

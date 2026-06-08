@@ -49,7 +49,7 @@ function useDebounced<T>(value: T, delay: number): T {
 function DiffCell({ a, b }: { a: number; b: number }) {
   const diff = b - a;
   if (Math.abs(diff) < 10)
-    return <span className="text-muted-foreground">—</span>;
+    return <span className="text-muted-foreground">-</span>;
   return (
     <span
       className={
@@ -261,7 +261,7 @@ export default function TaxComparisonCalculator() {
             Comparison
           </CardTitle>
           <CardDescription>
-            Same salary, two locations — see how much you'd keep.
+            Same salary, two locations - see how much you'd keep.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

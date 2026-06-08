@@ -19,7 +19,7 @@ export default function LanguageAccessCard() {
             <Globe className="h-5 w-5 text-primary" /> Language Access in Michigan
           </CardTitle>
           <CardDescription>
-            Spanish is Michigan's second most-spoken language statewide (298K speakers per Census ACS). Southeast Michigan is also home to 172K Arabic speakers — one of the largest Arabic-speaking populations in the US.
+            Spanish is Michigan's second most-spoken language statewide (298K speakers per Census ACS). Southeast Michigan is also home to 172K Arabic speakers - one of the largest Arabic-speaking populations in the US.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -53,7 +53,7 @@ export default function LanguageAccessCard() {
           <div className="rounded-lg border border-border bg-muted/30 p-3 flex items-start gap-2">
             <Info className="h-4 w-4 text-primary shrink-0 mt-0.5" />
             <p className="text-xs text-muted-foreground">
-              Michigan law requires interpreter services at hospitals and government agencies. If you need language help, ask for an interpreter — it's free.
+              Michigan law requires interpreter services at hospitals and government agencies. If you need language help, ask for an interpreter - it's free.
             </p>
           </div>
 

@@ -1,5 +1,5 @@
 /**
- * usePersonalProfile — client-only personal profile stored in localStorage.
+ * usePersonalProfile - client-only personal profile stored in localStorage.
  * No PHI or claims data. No server-side storage.
  * Users can clear at any time.
  */

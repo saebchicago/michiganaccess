@@ -1,5 +1,5 @@
 /**
- * Contact My Representative — One-Click Advocacy Layer.
+ * Contact My Representative - One-Click Advocacy Layer.
  * Maps Michigan ZIP/City to state legislature contacts and generates
  * pre-filled emails with Community Brief pressure data.
  */
@@ -58,7 +58,7 @@ function generateEmailBody(place: Place, pressures: { label: string; deviation: 
   body += `I believe every community deserves equitable access to healthcare, housing, and economic opportunity. `;
   body += `I would appreciate a response outlining current and planned initiatives.\n\n`;
   body += `Respectfully,\n[Your Name]\n${areaName}, Michigan${zip ? ` ${zip}` : ""}\n\n`;
-  body += `---\nData source: Access Michigan (accessmichigan.org) — a nonprofit civic data platform.`;
+  body += `---\nData source: Access Michigan (accessmichigan.org) - a nonprofit civic data platform.`;
 
   return body;
 }
@@ -69,7 +69,7 @@ export default function ContactRepresentative({ place }: Props) {
   const [copied, setCopied] = useState(false);
 
   const subject = encodeURIComponent(
-    `Community Concerns — ${place.city || place.name}${place.zip ? `, ZIP ${place.zip}` : ""}`
+    `Community Concerns - ${place.city || place.name}${place.zip ? `, ZIP ${place.zip}` : ""}`
   );
   const body = encodeURIComponent(emailBody);
 
@@ -80,7 +80,7 @@ export default function ContactRepresentative({ place }: Props) {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  // Evidence strength badge — show when any pressure is in bottom 10%
+  // Evidence strength badge - show when any pressure is in bottom 10%
   const evidenceStrength = useMemo(() => {
     const indicators = buildFullIndicators(place);
     let extremeCount = 0;
@@ -115,7 +115,7 @@ export default function ContactRepresentative({ place }: Props) {
                   : "border-amber-400/50 text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950"
               }`}
             >
-              {evidenceStrength === "high" ? "⚡ High Evidence" : "📊 Moderate Evidence"} — data-backed advocacy
+              {evidenceStrength === "high" ? "⚡ High Evidence" : "📊 Moderate Evidence"} - data-backed advocacy
             </Badge>
           )}
         </div>

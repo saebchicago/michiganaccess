@@ -5,7 +5,7 @@ import FOIARequestBuilder from "@/components/civic/FOIARequestBuilder";
 
 export function FOIAPage() {
   usePageMeta({
-    title: "FOIA Request Builder — Access Michigan",
+    title: "FOIA Request Builder - Access Michigan",
     description:
       "Draft professional public records requests for Michigan municipal, county, or federal agencies. Browser-only, no data stored.",
     path: "/foia",
@@ -27,7 +27,7 @@ export function FOIAPage() {
           </h1>
           <p className="text-muted-foreground">
             Draft a public records request for any Michigan city, county, or
-            federal agency. Generated entirely in your browser — nothing is
+            federal agency. Generated entirely in your browser - nothing is
             stored or transmitted.
           </p>
         </div>

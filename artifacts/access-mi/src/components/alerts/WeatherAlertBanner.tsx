@@ -33,7 +33,7 @@ export default function WeatherAlertBanner() {
           onClick={() => setExpanded(!expanded)}
           className="flex-1 text-left text-xs font-medium truncate"
         >
-          {primary.event} — {primary.areaDesc?.split(";")[0]}
+          {primary.event} - {primary.areaDesc?.split(";")[0]}
           {top.length > 1 && (
             <span className="ml-1 font-semibold">+{top.length - 1} more</span>
           )}
@@ -66,7 +66,7 @@ export default function WeatherAlertBanner() {
             <div className="container pb-2 space-y-1">
               {top.map((a) => (
                 <div key={a.id} className="text-[11px] opacity-90">
-                  <strong>{a.event}</strong> —{" "}
+                  <strong>{a.event}</strong> -{" "}
                   {a.areaDesc?.split(";").slice(0, 3).join(", ")}
                   {a.expires && (
                     <span className="opacity-70">

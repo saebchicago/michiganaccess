@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 
 const EMBEDS = [
   {
-    title: "IHME GBD Compare — Disease Burden Explorer",
+    title: "IHME GBD Compare - Disease Burden Explorer",
     description: "Compare Michigan-specific disease burden, risk factors, and mortality trends against national and global benchmarks. Use the GBD Compare tool to explore age-standardized rates for conditions like cardiovascular disease, diabetes, and substance use disorders.",
     src: "https://vizhub.healthdata.org/gbd-compare/",
     source: "University of Washington IHME",
@@ -13,7 +13,7 @@ const EMBEDS = [
     fullSiteLabel: "Open full IHME GBD Compare in new tab",
   },
   {
-    title: "CDC NCHS — Vital Statistics Rapid Release",
+    title: "CDC NCHS - Vital Statistics Rapid Release",
     description: "Provisional vital statistics including birth, death, and infant mortality data with interactive county-level breakdowns from the National Center for Health Statistics.",
     src: "https://www.cdc.gov/nchs/nvss/vsrr.htm",
     source: "CDC National Center for Health Statistics",

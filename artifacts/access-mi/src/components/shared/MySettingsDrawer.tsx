@@ -1,5 +1,5 @@
 /**
- * MySettingsDrawer — optional personalization panel.
+ * MySettingsDrawer - optional personalization panel.
  * All data stays in localStorage on the user's device.
  */
 import { useState } from "react";

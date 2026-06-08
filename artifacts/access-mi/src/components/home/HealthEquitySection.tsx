@@ -23,7 +23,7 @@ export default function HealthEquitySection() {
           </h2>
         </motion.div>
 
-        {/* Qualitative mission — no numeric projections */}
+        {/* Qualitative mission - no numeric projections */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -32,7 +32,7 @@ export default function HealthEquitySection() {
           <Card className="mb-8 border-primary/15 bg-primary/[0.03]">
             <CardContent className="py-6 space-y-4">
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Access Michigan exists to make it easier for people and organizations to see where systems are working—and where they're failing—at the ZIP and county level.
+                Access Michigan exists to make it easier for people and organizations to see where systems are working-and where they're failing-at the ZIP and county level.
               </p>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Our goals are simple but ambitious: help more residents understand and use their benefits, reduce preventable harm from outages and housing instability, and give communities better leverage in conversations with hospitals, plans, utilities, and government.
@@ -47,7 +47,7 @@ export default function HealthEquitySection() {
           </Card>
         </motion.div>
 
-        {/* Before / After comparison — illustrative but factual about our algorithm */}
+        {/* Before / After comparison - illustrative but factual about our algorithm */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

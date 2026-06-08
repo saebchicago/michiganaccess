@@ -169,7 +169,7 @@ function FederalFundingTab() {
       sums.Energy += r.energy_millions;
     }
     const entries = Object.entries(sums);
-    if (entries.every(([, v]) => v === 0)) return "—";
+    if (entries.every(([, v]) => v === 0)) return "-";
     return entries.reduce((a, b) => (b[1] > a[1] ? b : a))[0];
   }, [filtered]);
 
@@ -242,7 +242,7 @@ function FederalFundingTab() {
             Federal Spending by Category
           </CardTitle>
           <p className="text-xs text-muted-foreground">
-            Source: USASpending.gov FY2024 — values in $M
+            Source: USASpending.gov FY2024 - values in $M
           </p>
         </CardHeader>
         <CardContent>
@@ -463,10 +463,10 @@ function MunicipalBondsTab() {
 
       <div className="space-y-1">
         <p className="text-[10px] text-muted-foreground">
-          Source: MSRB EMMA — public municipal securities record
+          Source: MSRB EMMA - public municipal securities record
         </p>
         <p className="text-[10px] text-muted-foreground italic">
-          Illustrative — not exhaustive. Visit emma.msrb.org for complete
+          Illustrative - not exhaustive. Visit emma.msrb.org for complete
           records.
         </p>
       </div>
@@ -528,7 +528,7 @@ function FiscalVulnerabilityTab() {
                 investment continuity matters most.
               </p>
               <p className="text-xs text-muted-foreground mt-2 italic">
-                Illustrative composite — see methodology
+                Illustrative composite - see methodology
               </p>
             </div>
           </div>
@@ -611,7 +611,7 @@ function FiscalVulnerabilityTab() {
                   }
                   labelFormatter={(_, payload) => {
                     const p = payload?.[0]?.payload;
-                    return p ? `${p.county} County — ${p.quadrant}` : "";
+                    return p ? `${p.county} County - ${p.quadrant}` : "";
                   }}
                 />
                 <Scatter data={scatterData} shape="circle">
@@ -673,7 +673,7 @@ function FiscalVulnerabilityTab() {
               Critical Fiscal Vulnerability Counties
             </CardTitle>
             <p className="text-xs text-muted-foreground">
-              High equity need + high federal dependency — most exposed to
+              High equity need + high federal dependency - most exposed to
               federal funding changes. Illustrative composite.
             </p>
           </CardHeader>
@@ -727,7 +727,7 @@ function FiscalVulnerabilityTab() {
 
 const PublicInvestmentPage = () => {
   usePageMeta({
-    title: "Public Investment Intelligence — Access Michigan",
+    title: "Public Investment Intelligence - Access Michigan",
     description:
       "How federal and municipal capital flows through Michigan's 83 counties. Federal funding, municipal bonds, and fiscal vulnerability analysis.",
     path: "/public-investment",
@@ -768,7 +768,7 @@ const PublicInvestmentPage = () => {
               className="text-lg text-muted-foreground"
             >
               How federal and municipal capital flows through Michigan's 83
-              counties — tracking funding, bonds, and fiscal vulnerability.
+              counties - tracking funding, bonds, and fiscal vulnerability.
             </motion.p>
           </motion.div>
         </div>
@@ -865,7 +865,7 @@ const PublicInvestmentPage = () => {
                   <strong>Data Sources:</strong> Federal spending from
                   USASpending.gov FY2024 (public record). Municipal bonds from
                   MSRB EMMA (public municipal securities record). Federal
-                  dependency and equity scores are illustrative composites — not
+                  dependency and equity scores are illustrative composites - not
                   official government metrics.
                 </p>
                 <p className="text-xs text-muted-foreground">

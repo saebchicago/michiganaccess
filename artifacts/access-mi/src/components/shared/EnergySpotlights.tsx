@@ -55,7 +55,7 @@ const PROGRAMS: Program[] = [
   },
   {
     title: "Weatherization Assistance Program",
-    description: "Free home weatherization for income-eligible households — insulation, air sealing, and furnace repair.",
+    description: "Free home weatherization for income-eligible households - insulation, air sealing, and furnace repair.",
     eligibility: ["low-income", "seniors"],
     url: "https://www.michigan.gov/egle/about/organization/materials-management/energy/weatherization",
     icon: <Home className="h-5 w-5" />,

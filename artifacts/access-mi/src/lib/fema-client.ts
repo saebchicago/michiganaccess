@@ -1,5 +1,5 @@
 /**
- * OpenFEMA API client — Disaster Declarations for Michigan
+ * OpenFEMA API client - Disaster Declarations for Michigan
  * Source: FEMA NEMIS via OpenFEMA
  * API: Free, no key required, REST JSON
  * IMPORTANT: state field uses abbreviation 'MI', not 'Michigan'

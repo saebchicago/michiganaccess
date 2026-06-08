@@ -80,7 +80,7 @@ export const COUNTY_PROFILES: Record<string, CountyProfile> = {
   Iosco:           { population: 25127, majorCities: ["Tawas City", "East Tawas", "Oscoda"], countyType: "rural", healthHighlights: h("8.8%","4,190:1","15.7%") },
   Iron:            { population: 11211, majorCities: ["Iron River", "Crystal Falls"], countyType: "rural", healthHighlights: h("7.5%","5,610:1","13.4%") },
   Kalkaska:        { population: 18210, majorCities: ["Kalkaska", "Rapid City"], countyType: "rural", healthHighlights: h("10.1%","6,070:1","16.3%") },
-  Keweenaw:        { population: 2116, majorCities: ["Mohawk", "Ahmeek"], countyType: "rural", healthHighlights: h("8.9%","—","13.8%") },
+  Keweenaw:        { population: 2116, majorCities: ["Mohawk", "Ahmeek"], countyType: "rural", healthHighlights: h("8.9%","-","13.8%") },
   Lake:            { population: 12010, majorCities: ["Baldwin", "Luther"], countyType: "rural", healthHighlights: h("11.2%","6,010:1","19.5%") },
   Leelanau:        { population: 22301, majorCities: ["Leland", "Suttons Bay", "Empire"], countyType: "rural", healthHighlights: h("7.6%","3,720:1","9.7%","stable","down") },
   Luce:            { population: 6286, majorCities: ["Newberry", "McMillan"], countyType: "rural", healthHighlights: h("8.4%","6,290:1","16.1%") },

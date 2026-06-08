@@ -1,5 +1,5 @@
 /**
- * Trust & Transparency — "Why some local data shows county averages"
+ * Trust & Transparency - "Why some local data shows county averages"
  */
 import { useState } from "react";
 import { Info, ChevronDown, ChevronUp } from "lucide-react";

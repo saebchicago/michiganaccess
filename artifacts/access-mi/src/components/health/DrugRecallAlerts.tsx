@@ -65,7 +65,7 @@ export default function DrugRecallAlerts() {
 
         <div className="flex items-center justify-between">
           <p className="text-[10px] text-muted-foreground">
-            Source: FDA openFDA — Class I recalls (risk of serious injury or death)
+            Source: FDA openFDA - Class I recalls (risk of serious injury or death)
           </p>
           <a
             href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts"

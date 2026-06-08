@@ -17,7 +17,7 @@ const Loader = () => <div className="h-64 animate-pulse bg-muted rounded-xl" />;
 
 export default function DecisionSciencePage() {
   usePageMeta({
-    title: "Decision Science — Game Theory for Michigan Health — Access Michigan",
+    title: "Decision Science - Game Theory for Michigan Health - Access Michigan",
     description: "Interactive simulations: Benefits Gap Calculator, Hospital Market Dynamics, ALICE Survival Budget. Powered by DecisionPlay.",
     path: "/decision-science",
   });
@@ -37,7 +37,7 @@ export default function DecisionSciencePage() {
               Why Does Michigan's Healthcare System Work This Way?
             </motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-base text-muted-foreground">
-              Interactive simulations powered by game theory and behavioral economics — using real Michigan data.
+              Interactive simulations powered by game theory and behavioral economics - using real Michigan data.
             </motion.p>
             <motion.div variants={fadeUp} custom={3} className="mt-3">
               <a href="https://decisionplay.app" target="_blank" rel="noopener noreferrer"

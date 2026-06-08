@@ -8,7 +8,7 @@ const useCases = [
   {
     icon: Search,
     title: "Find Affordable Care",
-    description: "Search for sliding-scale dental, medical, or mental health services by county — results in under 2 minutes.",
+    description: "Search for sliding-scale dental, medical, or mental health services by county - results in under 2 minutes.",
     color: "text-michigan-teal",
     bg: "bg-michigan-teal/10",
     cta: { label: "Search Now", href: "/find-care" },
@@ -24,7 +24,7 @@ const useCases = [
   {
     icon: MapPin,
     title: "Coordinate Senior Services",
-    description: "Find Meals on Wheels, free ride programs, and caregiver resources for an elderly family member — all from one search.",
+    description: "Find Meals on Wheels, free ride programs, and caregiver resources for an elderly family member - all from one search.",
     color: "text-primary",
     bg: "bg-primary/10",
     cta: { label: "Explore Resources", href: "/resources" },

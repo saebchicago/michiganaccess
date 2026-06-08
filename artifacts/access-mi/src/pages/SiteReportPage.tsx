@@ -8,7 +8,7 @@ import { Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /* ------------------------------------------------------------------ */
-/*  Printable site report — designed for browser "Print → Save as PDF" */
+/*  Printable site report - designed for browser "Print → Save as PDF" */
 /* ------------------------------------------------------------------ */
 
 function Note({ children }: { children: React.ReactNode }) {
@@ -65,7 +65,7 @@ export default function SiteReportPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-3">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto" />
-          <h1 className="text-base font-semibold text-foreground">Access Michigan — Full Site Report</h1>
+          <h1 className="text-base font-semibold text-foreground">Access Michigan - Full Site Report</h1>
           <p className="text-sm text-muted-foreground">Loading all site data for report…</p>
         </div>
       </div>
@@ -74,10 +74,10 @@ export default function SiteReportPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8 text-sm leading-relaxed print:px-0 print:py-0 print:max-w-none">
-      {/* Print button — hidden in print */}
+      {/* Print button - hidden in print */}
       <div className="print:hidden mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Access Michigan — Full Site Report</h1>
+          <h1 className="text-2xl font-bold">Access Michigan - Full Site Report</h1>
           <p className="text-muted-foreground text-xs mt-1">
             Use your browser's <strong>Print → Save as PDF</strong> (Ctrl/Cmd+P) to export this page.
           </p>
@@ -89,7 +89,7 @@ export default function SiteReportPage() {
 
       {/* Header for PDF */}
       <div className="hidden print:block mb-6">
-        <h1 className="text-xl font-bold">Access Michigan — Comprehensive Site Report</h1>
+        <h1 className="text-xl font-bold">Access Michigan - Comprehensive Site Report</h1>
         <p className="text-xs text-muted-foreground">Generated {new Date().toLocaleDateString()}</p>
       </div>
 
@@ -98,11 +98,11 @@ export default function SiteReportPage() {
         <ol className="list-decimal list-inside space-y-1 text-xs">
           <li>Site Overview & Architecture</li>
           <li>Home Page</li>
-          <li>Find Care — Facilities ({facilities.length})</li>
-          <li>Find Care — Provider Directory ({providers.length})</li>
+          <li>Find Care - Facilities ({facilities.length})</li>
+          <li>Find Care - Provider Directory ({providers.length})</li>
           <li>Health Map</li>
-          <li>Financial Help — Programs ({programs.length})</li>
-          <li>Quality Ratings — Metrics ({metrics.length})</li>
+          <li>Financial Help - Programs ({programs.length})</li>
+          <li>Quality Ratings - Metrics ({metrics.length})</li>
           <li>Community Resources ({resources.length})</li>
           <li>Health Conditions</li>
           <li>Interactive Elements Summary</li>
@@ -115,7 +115,7 @@ export default function SiteReportPage() {
         <p>Access Michigan is a public civic-infrastructure platform providing free, transparent access to healthcare facility data, provider directories, community resources, transportation tools, financial assistance programs, and quality metrics across the state of Michigan.</p>
         <ul className="list-disc list-inside mt-2 space-y-0.5 text-xs">
           <li><strong>Tech stack:</strong> React 18 + Vite + TypeScript + Tailwind CSS + shadcn/ui</li>
-          <li><strong>Backend:</strong> Lovable Cloud (Supabase) — 5 public tables, all read-only via RLS</li>
+          <li><strong>Backend:</strong> Lovable Cloud (Supabase) - 5 public tables, all read-only via RLS</li>
           <li><strong>Maps:</strong> Leaflet for geographic facility visualization</li>
           <li><strong>Rate limiting:</strong> Edge function proxy (30 req/min per IP, max 100 rows)</li>
           <li><strong>Privacy:</strong> No cookies, no user tracking, no personal data collection</li>
@@ -150,7 +150,7 @@ export default function SiteReportPage() {
       </Section>
 
       {/* ── 3. FACILITIES ── */}
-      <Section title={`3. Find Care — Facilities (${facilities.length} total)`}>
+      <Section title={`3. Find Care - Facilities (${facilities.length} total)`}>
         <Note>The live site has filter controls: facility type dropdown, county dropdown, search input, and toggle switches for telehealth/walk-in/accepting patients. A Leaflet map shows facility pins. Clicking a facility card scrolls to details.</Note>
         <p className="mb-2">All facilities in the database:</p>
         <table className="w-full text-[10px] border border-border">
@@ -182,7 +182,7 @@ export default function SiteReportPage() {
       </Section>
 
       {/* ── 4. PROVIDERS ── */}
-      <Section title={`4. Find Care — Provider Directory (${providers.length} total)`}>
+      <Section title={`4. Find Care - Provider Directory (${providers.length} total)`}>
         <Note>The live site has filters: search by name/specialty, specialty dropdown ({specialties.length} specialties available), language dropdown. Cards show ratings, board certification badges, telehealth availability, and linked facility info.</Note>
         <p className="mb-1"><strong>Specialties:</strong> {specialties.join(", ") || "None"}</p>
         <table className="w-full text-[10px] border border-border">
@@ -216,11 +216,11 @@ export default function SiteReportPage() {
       {/* ── 5. HEALTH MAP ── */}
       <Section title="5. Health Map">
         <p>Interactive Leaflet map centered on Michigan showing all facilities as pins, color-coded by facility type. Users can toggle map layers and view a legend.</p>
-        <Note>Interactive map with: layer toggle controls (facility types), zoom/pan, clickable pins showing facility details in popups, and a color-coded legend. The map cannot be rendered in PDF — see facilities table above for the full dataset.</Note>
+        <Note>Interactive map with: layer toggle controls (facility types), zoom/pan, clickable pins showing facility details in popups, and a color-coded legend. The map cannot be rendered in PDF - see facilities table above for the full dataset.</Note>
       </Section>
 
       {/* ── 6. FINANCIAL HELP ── */}
-      <Section title={`6. Financial Help — Programs (${programs.length} total)`}>
+      <Section title={`6. Financial Help - Programs (${programs.length} total)`}>
         <Note>The live site has filter tabs by program type ({programTypes.join(", ") || "various types"}), and expandable cards showing eligibility criteria, how to apply, and covered services.</Note>
         <table className="w-full text-[10px] border border-border">
           <thead>
@@ -259,7 +259,7 @@ export default function SiteReportPage() {
       </Section>
 
       {/* ── 7. QUALITY METRICS ── */}
-      <Section title={`7. Quality Ratings — Metrics (${metrics.length} total)`}>
+      <Section title={`7. Quality Ratings - Metrics (${metrics.length} total)`}>
         <Note>The live site shows Recharts bar/line charts comparing facility metrics to state and national averages. Users can filter by metric type and facility. Charts are interactive with tooltips on hover.</Note>
         <table className="w-full text-[10px] border border-border">
           <thead>
@@ -400,7 +400,7 @@ export default function SiteReportPage() {
 
       {/* Footer */}
       <div className="text-center text-[10px] text-muted-foreground border-t border-border pt-4 mt-8">
-        <p>Access Michigan — Site Report — Generated {new Date().toLocaleString()}</p>
+        <p>Access Michigan - Site Report - Generated {new Date().toLocaleString()}</p>
         <p>This document is for review purposes. All data is publicly available civic infrastructure.</p>
       </div>
     </div>
