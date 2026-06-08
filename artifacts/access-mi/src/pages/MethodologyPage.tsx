@@ -30,6 +30,7 @@ import {
   DataClassificationLegend,
 } from "@/components/shared/DataClassification";
 import DataFreshnessDashboard from "@/components/shared/DataFreshnessDashboard";
+import { SourcesRegistry } from "@/components/SourcesRegistry";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -1170,6 +1171,11 @@ export default function MethodologyPage() {
             </CardContent>
           </Card>
         </section>
+
+        <Separator />
+
+        {/* Citation registry (system of record) */}
+        <SourcesRegistry />
       </div>
     </Layout>
   );
