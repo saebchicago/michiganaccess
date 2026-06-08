@@ -1,4 +1,13 @@
 {
-  "built_at": "2026-06-08T01:17:58.840Z",
-  "datasets": []
+  "built_at": "2026-06-08T16:57:30.774Z",
+  "datasets": [
+    {
+      "id": "census_acs_county",
+      "provider": "census",
+      "license": "US Public Domain",
+      "classification": "verified",
+      "records": 3223,
+      "path": "/data/census_acs_county.json"
+    }
+  ]
 }
