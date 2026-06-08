@@ -128,6 +128,7 @@ function composeRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
         }
       };
     }
+    return undefined;
   };
 
   rememberCallback(key, callback as React.RefCallback<unknown>);
@@ -162,6 +163,7 @@ function useComposedRefs<T>(...refs: PossibleRef<T>[]): React.RefCallback<T> {
           }
         };
       }
+      return undefined;
     };
   }
 

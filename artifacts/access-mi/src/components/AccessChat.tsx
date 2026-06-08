@@ -7,7 +7,91 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
 
-const MI_COUNTIES = ["Alcona","Alger","Allegan","Alpena","Antrim","Arenac","Baraga","Barry","Bay","Benzie","Berrien","Branch","Calhoun","Cass","Charlevoix","Cheboygan","Chippewa","Clare","Clinton","Crawford","Delta","Dickinson","Eaton","Emmet","Genesee","Gladwin","Gogebic","Grand Traverse","Gratiot","Hillsdale","Houghton","Huron","Ingham","Ionia","Iosco","Iron","Isabella","Jackson","Kalamazoo","Kalkaska","Kent","Keweenaw","Lake","Lapeer","Leelanau","Lenawee","Livingston","Luce","Mackinac","Macomb","Manistee","Marquette","Mason","Mecosta","Menominee","Midland","Missaukee","Monroe","Montcalm","Montmorency","Muskegon","Newaygo","Oakland","Oceana","Ogemaw","Ontonagon","Osceola","Oscoda","Otsego","Ottawa","Presque Isle","Roscommon","Saginaw","Sanilac","Schoolcraft","Shiawassee","St. Clair","St. Joseph","Tuscola","Van Buren","Washtenaw","Wayne","Wexford"];
+const MI_COUNTIES = [
+  "Alcona",
+  "Alger",
+  "Allegan",
+  "Alpena",
+  "Antrim",
+  "Arenac",
+  "Baraga",
+  "Barry",
+  "Bay",
+  "Benzie",
+  "Berrien",
+  "Branch",
+  "Calhoun",
+  "Cass",
+  "Charlevoix",
+  "Cheboygan",
+  "Chippewa",
+  "Clare",
+  "Clinton",
+  "Crawford",
+  "Delta",
+  "Dickinson",
+  "Eaton",
+  "Emmet",
+  "Genesee",
+  "Gladwin",
+  "Gogebic",
+  "Grand Traverse",
+  "Gratiot",
+  "Hillsdale",
+  "Houghton",
+  "Huron",
+  "Ingham",
+  "Ionia",
+  "Iosco",
+  "Iron",
+  "Isabella",
+  "Jackson",
+  "Kalamazoo",
+  "Kalkaska",
+  "Kent",
+  "Keweenaw",
+  "Lake",
+  "Lapeer",
+  "Leelanau",
+  "Lenawee",
+  "Livingston",
+  "Luce",
+  "Mackinac",
+  "Macomb",
+  "Manistee",
+  "Marquette",
+  "Mason",
+  "Mecosta",
+  "Menominee",
+  "Midland",
+  "Missaukee",
+  "Monroe",
+  "Montcalm",
+  "Montmorency",
+  "Muskegon",
+  "Newaygo",
+  "Oakland",
+  "Oceana",
+  "Ogemaw",
+  "Ontonagon",
+  "Osceola",
+  "Oscoda",
+  "Otsego",
+  "Ottawa",
+  "Presque Isle",
+  "Roscommon",
+  "Saginaw",
+  "Sanilac",
+  "Schoolcraft",
+  "Shiawassee",
+  "St. Clair",
+  "St. Joseph",
+  "Tuscola",
+  "Van Buren",
+  "Washtenaw",
+  "Wayne",
+  "Wexford",
+];
 
 function detectCounty(text: string): string | null {
   const lower = text.toLowerCase();
@@ -20,19 +104,37 @@ function detectCounty(text: string): string | null {
 async function fetchContextForCounty(county: string): Promise<string> {
   if (!supabaseConfigured) return "";
   try {
-    const { data: facilities } = await supabase
-      .from("facilities")
+    const { data: facilities } = (await (supabase.from("facilities") as any)
       .select("name, type, city, phone")
       .ilike("county", county)
-      .limit(10);
-    const { data: resources } = await supabase
-      .from("community_resources")
+      .limit(10)) as { data: any[] | null };
+    const { data: resources } = (await (
+      supabase.from("community_resources") as any
+    )
       .select("name, category, city, phone")
       .ilike("county", county)
-      .limit(10);
+      .limit(10)) as { data: any[] | null };
     const parts: string[] = [];
-    if (facilities?.length) parts.push("FACILITIES:\n" + facilities.map(f => `- ${f.name} (${f.type}) in ${f.city}${f.phone ? `, ${f.phone}` : ""}`).join("\n"));
-    if (resources?.length) parts.push("COMMUNITY RESOURCES:\n" + resources.map(r => `- ${r.name} (${r.category}) in ${r.city}${r.phone ? `, ${r.phone}` : ""}`).join("\n"));
+    if (facilities?.length)
+      parts.push(
+        "FACILITIES:\n" +
+          facilities
+            .map(
+              (f: any) =>
+                `- ${f.name} (${f.type}) in ${f.city}${f.phone ? `, ${f.phone}` : ""}`,
+            )
+            .join("\n"),
+      );
+    if (resources?.length)
+      parts.push(
+        "COMMUNITY RESOURCES:\n" +
+          resources
+            .map(
+              (r: any) =>
+                `- ${r.name} (${r.category}) in ${r.city}${r.phone ? `, ${r.phone}` : ""}`,
+            )
+            .join("\n"),
+      );
     return parts.join("\n\n");
   } catch {
     return "";
@@ -52,7 +154,10 @@ export function AccessChat() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
   }, [messages]);
 
   async function handleSend(e: React.FormEvent) {
@@ -74,11 +179,16 @@ export function AccessChat() {
     try {
       // RAG: detect county in user message, fetch Supabase context
       const detectedCounty = detectCounty(trimmed);
-      let dataContext: { county: string; data: Record<string, unknown> } | undefined;
+      let dataContext:
+        | { county: string; data: Record<string, unknown> }
+        | undefined;
       if (detectedCounty) {
         const contextStr = await fetchContextForCounty(detectedCounty);
         if (contextStr) {
-          dataContext = { county: detectedCounty, data: { resources: contextStr } };
+          dataContext = {
+            county: detectedCounty,
+            data: { resources: contextStr },
+          };
         }
       }
 
@@ -135,17 +245,23 @@ export function AccessChat() {
               <CardTitle className="text-lg">Ask Access Michigan</CardTitle>
             </div>
             <p className="text-sm text-muted-foreground">
-              Questions about Michigan services, benefits, or MI-Access assessments.
+              Questions about Michigan services, benefits, or MI-Access
+              assessments.
             </p>
           </CardHeader>
           <CardContent className="p-0">
             {/* Messages */}
-            <div ref={scrollRef} className="h-72 overflow-y-auto p-4 space-y-3 bg-muted/20">
+            <div
+              ref={scrollRef}
+              className="h-72 overflow-y-auto p-4 space-y-3 bg-muted/20"
+            >
               {messages.length === 0 && (
                 <div className="text-center text-muted-foreground text-sm py-8 space-y-2">
                   <Bot className="h-8 w-8 mx-auto opacity-40" />
                   <p>Ask a question to get started.</p>
-                  <p className="text-xs italic">"Explain MI-Access in simple terms for a parent."</p>
+                  <p className="text-xs italic">
+                    "Explain MI-Access in simple terms for a parent."
+                  </p>
                 </div>
               )}
               <AnimatePresence>
@@ -189,7 +305,10 @@ export function AccessChat() {
             </div>
 
             {/* Input */}
-            <form onSubmit={handleSend} className="p-3 border-t border-border bg-background">
+            <form
+              onSubmit={handleSend}
+              className="p-3 border-t border-border bg-background"
+            >
               <div className="flex gap-2">
                 <Input
                   value={input}
@@ -211,7 +330,8 @@ export function AccessChat() {
                 </Button>
               </div>
               <p className="mt-1.5 text-[9px] text-muted-foreground">
-                This assistant explains Michigan services and public data. It cannot provide medical or legal advice.
+                This assistant explains Michigan services and public data. It
+                cannot provide medical or legal advice.
               </p>
             </form>
 
