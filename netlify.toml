@@ -1,11 +1,13 @@
+A
+  publish = "dist/public"
 # Netlify config for the Access Michigan site.
 #
-# Build settings (command, publish dir, package manager) are NOT set
-# here; they live in the Netlify dashboard and currently work via
-# pnpm auto-detection + the dashboard `npm run build` command.
-# Adding a [build] block here would override those silently.
+# Build settings (base, command, publish dir) are defined in the [build]
+# block above so the monorepo publish directory is set explicitly and
+# tracked in version control. This overrides any build settings configured
+# in the Netlify dashboard.
 #
-# Only thing this file does today: add baseline HTTP security headers.
+# It also adds baseline HTTP security headers (below).
 
 [[headers]]
   for = "/*"
