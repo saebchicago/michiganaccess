@@ -28,9 +28,40 @@ function fail(msg) {
 }
 
 async function fetchJson(url) {
-  const res = await fetch(url, { headers: { "user-agent": "open-data-pipeline" } });
-  if (!res.ok) fail(`fetch failed ${res.status} for ${url}`);
-  return res.json();
+  const MAX_ATTEMPTS = 3;
+  const DELAY_MS = 5000;
+  const TIMEOUT_MS = 60000;
+
+  let lastErr;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+    try {
+      const res = await fetch(url, {
+        headers: { "user-agent": "open-data-pipeline" },
+        signal: controller.signal,
+        redirect: "follow",
+      });
+      clearTimeout(timer);
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        fail(`fetch failed HTTP ${res.status} for ${url}\n  body snippet: ${body.slice(0, 200)}`);
+      }
+      const text = await res.text();
+      try {
+        return JSON.parse(text);
+      } catch {
+        fail(`non-JSON response (HTTP ${res.status}) for ${url}\n  snippet: ${text.slice(0, 200)}`);
+      }
+    } catch (err) {
+      clearTimeout(timer);
+      lastErr = err;
+      const reason = err.name === "AbortError" ? `timeout after ${TIMEOUT_MS}ms` : err.message;
+      console.error(`  attempt ${attempt}/${MAX_ATTEMPTS} failed for ${url}: ${reason}`);
+      if (attempt < MAX_ATTEMPTS) await new Promise((r) => setTimeout(r, DELAY_MS));
+    }
+  }
+  throw new Error(`all ${MAX_ATTEMPTS} attempts failed for ${url}: ${lastErr?.message}`);
 }
 
 // Drop rows whose FIPS code starts with any excluded prefix (e.g. "26" = Michigan).
@@ -62,7 +93,11 @@ async function main() {
     }
 
     console.log(`→ ${src.id} (${src.provider})`);
-    let rows = await fetchJson(src.url);
+    let url = src.url;
+    if (src.provider === "census" && process.env.CENSUS_API_KEY) {
+      url += `&key=${process.env.CENSUS_API_KEY}`;
+    }
+    let rows = await fetchJson(url);
     if (src.fips_field) rows = applyFipsExclusions(rows, src.fips_field, excludePrefixes);
 
     const payload = {
@@ -94,4 +129,4 @@ async function main() {
   console.log(`✓ manifest written with ${manifest.datasets.length} datasets`);
 }
 
-main().catch(() => process.exit(1));
+main().catch((err) => { console.error(err); process.exit(1); });

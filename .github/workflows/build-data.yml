@@ -28,6 +28,7 @@ jobs:
         env:
           DATA_SOURCES: data-sources.json
           OUT_DIR: artifacts/access-mi/public/data
+          CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
 
       - name: Commit if changed
         run: |
