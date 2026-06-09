@@ -98,7 +98,7 @@ function SystemImpactCalculator() {
 
         <div className="rounded-md bg-muted/30 p-3">
           <p className="text-[10px] text-muted-foreground leading-relaxed">
-            <strong>Assumptions:</strong> 35% diversion rate for low-acuity ED visits (Weinick et al., Health Affairs); $3,200 avg. ED visit cost (AHRQ HCUP StatBrief #268); 2.4× SDOH referral multiplier; $420 avg. community benefit value per connection (IRS Schedule H benchmarks). All figures are illustrative projections - actual results depend on implementation, market conditions, and system-specific factors.
+            <strong>Assumptions:</strong> 35% diversion rate for low-acuity ED visits (Weinick et al., Health Affairs); $3,200 avg. ED visit cost (AHRQ HCUP StatBrief #268); 2.4× SDOH referral multiplier; $420 avg. community benefit value per connection (IRS Schedule H benchmarks). All figures are modeled projections - actual results depend on implementation, market conditions, and system-specific factors.
           </p>
         </div>
       </CardContent>

@@ -131,8 +131,8 @@ export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
             <p className="text-[9px] text-muted-foreground mt-2 leading-relaxed">
               Composite of 12 CDC PLACES measures weighted by health impact.
               Each measure scores 0-100 based on distance from Michigan state
-              average. This is an illustrative composite, not a clinical
-              assessment. Source: CDC PLACES 2024, BRFSS 2022.
+              average. This is a modeled composite, not a clinical assessment.
+              Source: CDC PLACES 2024, BRFSS 2022.
             </p>
           </details>
 

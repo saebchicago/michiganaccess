@@ -2069,7 +2069,7 @@ export default function ZipScorecardPage() {
             </p>
             <p>
               <strong>Composite</strong> - Weighted blend: 45% health, 35%
-              economic, 20% environment. This is an illustrative index, not a
+              economic, 20% environment. This is an modeled index, not a
               clinical or policy assessment.
             </p>
           </div>

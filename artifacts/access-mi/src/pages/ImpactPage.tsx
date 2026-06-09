@@ -338,14 +338,14 @@ export default function ImpactPage() {
               </p>
               <p className="text-xs text-muted-foreground">
                 The following case studies are{" "}
-                <strong>illustrative scenarios</strong> that demonstrate how
+                <strong>modeled scenarios</strong> that demonstrate how
                 Access Michigan's data infrastructure could support health
                 equity analysis. They use real public data sources but present{" "}
                 <strong>projected methodologies, not measured outcomes</strong>.
                 No endorsement by or partnership with named agencies is implied.
               </p>
               <div className="mt-2">
-                <DataClassification type="illustrative" />
+                <DataClassification type="projected" />
               </div>
             </div>
           </div>

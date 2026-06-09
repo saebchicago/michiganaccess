@@ -3,41 +3,52 @@ import { cn } from "@/lib/utils";
 
 const CONFIG: Record<
   IntegrityLabel,
-  { text: string; className: string; title: string }
+  { text: string; className: string; baseTitle: string }
 > = {
   VERIFIED: {
-    text: "VERIFIED",
-    className: "bg-emerald-100 text-emerald-800 border-emerald-200",
-    title: "Measured directly from a primary federal or state source",
+    text: "verified",
+    className: "bg-emerald-50 text-emerald-800 border-emerald-200",
+    baseTitle: "Measured directly from a primary federal or state source",
   },
   MODELED: {
-    text: "MODELED",
-    className: "bg-sky-100 text-sky-800 border-sky-200",
-    title: "Derived or calculated from verified inputs",
+    text: "modeled",
+    className: "bg-sky-50 text-sky-800 border-sky-200",
+    baseTitle: "Derived or calculated from verified inputs",
   },
   PROJECTED: {
-    text: "PROJECTED",
-    className: "bg-amber-100 text-amber-800 border-amber-200",
-    title: "Forward-looking estimate",
+    text: "projected",
+    className: "bg-amber-50 text-amber-800 border-amber-200",
+    baseTitle: "Forward-looking estimate",
   },
 };
 
 interface IntegrityBadgeProps {
   label: IntegrityLabel;
+  /** Source organization (e.g. "CDC PLACES"). Shown in the tooltip. */
+  source?: string;
+  /** Data vintage (e.g. "2022 5-Year ACS"). Shown in the tooltip. */
+  vintage?: string;
   className?: string;
 }
 
-export function IntegrityBadge({ label, className }: IntegrityBadgeProps) {
-  const { text, className: colorClass, title } = CONFIG[label];
+export function IntegrityBadge({
+  label,
+  source,
+  vintage,
+  className,
+}: IntegrityBadgeProps) {
+  const { text, className: colorClass, baseTitle } = CONFIG[label];
+  const provenance = [source, vintage].filter(Boolean).join(" · ");
+  const title = provenance ? `${baseTitle}. ${provenance}.` : baseTitle;
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded border px-1.5 py-0.5 text-[10px] font-semibold tracking-wider",
+        "inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium leading-tight",
         colorClass,
         className,
       )}
       title={title}
-      aria-label={`Data integrity: ${text}`}
+      aria-label={`Data integrity: ${text}${provenance ? ` (${provenance})` : ""}`}
     >
       {text}
     </span>

@@ -148,7 +148,7 @@ export default function DualEligibleExposureMethodology() {
                 . All 83 Michigan counties returned clean values. Statewide ACS total: 216,635
                 (denominator for county shares). Small-county ACS values (Keweenaw, Luce,
                 Ontonagon, Schoolcraft) have high relative margins of error and should be treated
-                as illustrative. Accessed April 2026.
+                as modeled. Accessed April 2026.
               </p>
             </div>
 
@@ -369,7 +369,7 @@ export default function DualEligibleExposureMethodology() {
               Small county ACS margins of error apply. For Keweenaw (50), Luce (186),
               Ontonagon (189), and Schoolcraft (198), ACS B27010 coefficients of variation
               are high (typically 30–60%). County-level allocations for these counties should
-              be treated as illustrative only. Exact margins of error are available at{" "}
+              be treated as modeled only. Exact margins of error are available at{" "}
               <a
                 href="https://data.census.gov/table/ACSDT5Y2023.B27010"
                 target="_blank"

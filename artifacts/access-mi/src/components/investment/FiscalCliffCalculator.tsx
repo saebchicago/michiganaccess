@@ -11,37 +11,94 @@ import { MICHIGAN_FEDERAL_SPENDING } from "@/data/federalSpending";
 
 // Program-specific dependency percentages by county
 // Source: Illustrative composite from USASpending.gov FY2024
-const PROGRAM_DEPENDENCY: Record<string, {
-  medicaid_pct: number;
-  snap_pct: number;
-  housing_pct: number;
-  health_grants_pct: number;
-}> = {
-  Wayne:     { medicaid_pct: 44, snap_pct: 8,  housing_pct: 9,  health_grants_pct: 18 },
-  Genesee:   { medicaid_pct: 47, snap_pct: 16, housing_pct: 12, health_grants_pct: 8 },
-  Saginaw:   { medicaid_pct: 44, snap_pct: 16, housing_pct: 13, health_grants_pct: 9 },
-  Oakland:   { medicaid_pct: 34, snap_pct: 6,  housing_pct: 10, health_grants_pct: 18 },
-  Macomb:    { medicaid_pct: 39, snap_pct: 8,  housing_pct: 11, health_grants_pct: 15 },
-  Kent:      { medicaid_pct: 39, snap_pct: 9,  housing_pct: 12, health_grants_pct: 14 },
-  Washtenaw: { medicaid_pct: 28, snap_pct: 6,  housing_pct: 12, health_grants_pct: 25 },
-  Ingham:    { medicaid_pct: 31, snap_pct: 5,  housing_pct: 8,  health_grants_pct: 34 },
-  Kalamazoo: { medicaid_pct: 39, snap_pct: 10, housing_pct: 13, health_grants_pct: 15 },
+const PROGRAM_DEPENDENCY: Record<
+  string,
+  {
+    medicaid_pct: number;
+    snap_pct: number;
+    housing_pct: number;
+    health_grants_pct: number;
+  }
+> = {
+  Wayne: {
+    medicaid_pct: 44,
+    snap_pct: 8,
+    housing_pct: 9,
+    health_grants_pct: 18,
+  },
+  Genesee: {
+    medicaid_pct: 47,
+    snap_pct: 16,
+    housing_pct: 12,
+    health_grants_pct: 8,
+  },
+  Saginaw: {
+    medicaid_pct: 44,
+    snap_pct: 16,
+    housing_pct: 13,
+    health_grants_pct: 9,
+  },
+  Oakland: {
+    medicaid_pct: 34,
+    snap_pct: 6,
+    housing_pct: 10,
+    health_grants_pct: 18,
+  },
+  Macomb: {
+    medicaid_pct: 39,
+    snap_pct: 8,
+    housing_pct: 11,
+    health_grants_pct: 15,
+  },
+  Kent: {
+    medicaid_pct: 39,
+    snap_pct: 9,
+    housing_pct: 12,
+    health_grants_pct: 14,
+  },
+  Washtenaw: {
+    medicaid_pct: 28,
+    snap_pct: 6,
+    housing_pct: 12,
+    health_grants_pct: 25,
+  },
+  Ingham: {
+    medicaid_pct: 31,
+    snap_pct: 5,
+    housing_pct: 8,
+    health_grants_pct: 34,
+  },
+  Kalamazoo: {
+    medicaid_pct: 39,
+    snap_pct: 10,
+    housing_pct: 13,
+    health_grants_pct: 15,
+  },
 };
 
 // Medicaid enrollees estimate by county (Michigan MDHHS 2024)
 const MEDICAID_ENROLLEES: Record<string, number> = {
-  Wayne: 580000, Genesee: 142000, Oakland: 128000, Macomb: 98000,
-  Kent: 104000, Saginaw: 68000, Ingham: 74000, Kalamazoo: 58000,
-  Washtenaw: 44000, Muskegon: 42000,
+  Wayne: 580000,
+  Genesee: 142000,
+  Oakland: 128000,
+  Macomb: 98000,
+  Kent: 104000,
+  Saginaw: 68000,
+  Ingham: 74000,
+  Kalamazoo: 58000,
+  Washtenaw: 44000,
+  Muskegon: 42000,
 };
 
 type Severity = "critical" | "high" | "moderate";
 type ProgramKey = "medicaid" | "snap" | "housing" | "all";
 
 const SEVERITY_COLORS: Record<Severity, string> = {
-  critical: "text-red-600 bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-900/40",
+  critical:
+    "text-red-600 bg-red-50 border-red-200 dark:bg-red-950/30 dark:border-red-900/40",
   high: "text-orange-600 bg-orange-50 border-orange-200 dark:bg-orange-950/30 dark:border-orange-900/40",
-  moderate: "text-amber-600 bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-900/40",
+  moderate:
+    "text-amber-600 bg-amber-50 border-amber-200 dark:bg-amber-950/30 dark:border-amber-900/40",
 };
 
 export default function FiscalCliffCalculator() {
@@ -49,7 +106,7 @@ export default function FiscalCliffCalculator() {
   const [program, setProgram] = useState<ProgramKey>("medicaid");
 
   const impacts = useMemo(() => {
-    return MICHIGAN_FEDERAL_SPENDING.map(county => {
+    return MICHIGAN_FEDERAL_SPENDING.map((county) => {
       const dep = PROGRAM_DEPENDENCY[county.county];
       if (!dep) return null;
 
@@ -57,7 +114,8 @@ export default function FiscalCliffCalculator() {
       let residentsAffected = 0;
 
       if (program === "medicaid" || program === "all") {
-        const medicaidDollars = county.total_awards_millions * (dep.medicaid_pct / 100);
+        const medicaidDollars =
+          county.total_awards_millions * (dep.medicaid_pct / 100);
         dollarImpact += medicaidDollars * (cutPct / 100);
         const enrollees = MEDICAID_ENROLLEES[county.county] ?? 0;
         residentsAffected += Math.round(enrollees * (cutPct / 100) * 0.3);
@@ -66,17 +124,21 @@ export default function FiscalCliffCalculator() {
         const snapDollars = county.total_awards_millions * (dep.snap_pct / 100);
         dollarImpact += snapDollars * (cutPct / 100);
         residentsAffected += Math.round(
-          (county.snap_millions * (cutPct / 100) * 1000000) / 1200
+          (county.snap_millions * (cutPct / 100) * 1000000) / 1200,
         );
       }
       if (program === "housing" || program === "all") {
-        const housingDollars = county.total_awards_millions * (dep.housing_pct / 100);
+        const housingDollars =
+          county.total_awards_millions * (dep.housing_pct / 100);
         dollarImpact += housingDollars * (cutPct / 100);
       }
 
-      const severity: Severity = dollarImpact > 200
-        ? "critical"
-        : dollarImpact > 50 ? "high" : "moderate";
+      const severity: Severity =
+        dollarImpact > 200
+          ? "critical"
+          : dollarImpact > 50
+            ? "high"
+            : "moderate";
 
       return {
         county: county.county,
@@ -84,7 +146,8 @@ export default function FiscalCliffCalculator() {
         residentsAffected,
         severity,
       };
-    }).filter((x): x is NonNullable<typeof x> => x !== null)
+    })
+      .filter((x): x is NonNullable<typeof x> => x !== null)
       .sort((a, b) => b.dollarImpactM - a.dollarImpactM);
   }, [cutPct, program]);
 
@@ -102,9 +165,10 @@ export default function FiscalCliffCalculator() {
               Fiscal Cliff Calculator
             </h3>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Simulate the impact of federal funding reductions on Michigan counties.
-              Based on USASpending.gov FY2024 data. Dollar impacts are illustrative
-              estimates - actual effects depend on program structure and state matching requirements.
+              Simulate the impact of federal funding reductions on Michigan
+              counties. Based on USASpending.gov FY2024 data. Dollar impacts are
+              modeled estimates - actual effects depend on program structure and
+              state matching requirements.
             </p>
           </div>
         </div>
@@ -149,12 +213,12 @@ export default function FiscalCliffCalculator() {
             Program to Cut
           </label>
           <div className="grid grid-cols-2 gap-2">
-            {([
+            {[
               { key: "medicaid" as const, label: "Medicaid" },
               { key: "snap" as const, label: "SNAP / Food" },
               { key: "housing" as const, label: "Housing" },
               { key: "all" as const, label: "All Programs" },
-            ]).map(p => (
+            ].map((p) => (
               <button
                 key={p.key}
                 onClick={() => setProgram(p.key)}
@@ -206,7 +270,7 @@ export default function FiscalCliffCalculator() {
           <div className="rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-900/40 p-4">
             <TrendingDown className="h-4 w-4 text-amber-600 mb-1" />
             <p className="text-2xl font-bold text-amber-700 dark:text-amber-400 tabular-nums">
-              {impacts.filter(i => i.severity === "critical").length} counties
+              {impacts.filter((i) => i.severity === "critical").length} counties
             </p>
             <p className="text-xs text-amber-600 dark:text-amber-400">
               Face "critical" impact level
@@ -226,10 +290,10 @@ export default function FiscalCliffCalculator() {
           </p>
         </div>
         <div className="divide-y divide-border">
-          {impacts.slice(0, 8).map(impact => {
+          {impacts.slice(0, 8).map((impact) => {
             const barWidth = Math.min(
               100,
-              (impact.dollarImpactM / (impacts[0]?.dollarImpactM ?? 1)) * 100
+              (impact.dollarImpactM / (impacts[0]?.dollarImpactM ?? 1)) * 100,
             );
             return (
               <motion.div
@@ -252,8 +316,8 @@ export default function FiscalCliffCalculator() {
                         impact.severity === "critical"
                           ? "bg-red-500"
                           : impact.severity === "high"
-                          ? "bg-orange-500"
-                          : "bg-amber-400"
+                            ? "bg-orange-500"
+                            : "bg-amber-400"
                       }`}
                     />
                   </div>
@@ -264,7 +328,9 @@ export default function FiscalCliffCalculator() {
                   </p>
                 </div>
                 <div className="w-20 shrink-0">
-                  <Badge className={`text-[10px] border ${SEVERITY_COLORS[impact.severity]}`}>
+                  <Badge
+                    className={`text-[10px] border ${SEVERITY_COLORS[impact.severity]}`}
+                  >
                     {impact.severity}
                   </Badge>
                 </div>
@@ -275,9 +341,10 @@ export default function FiscalCliffCalculator() {
       </div>
 
       <p className="text-[9px] text-muted-foreground/60">
-        All figures are illustrative estimates based on USASpending.gov FY2024 county-level award data.
-        Actual program impacts depend on program structure, state matching requirements, and federal rulemaking.
-        Not financial or policy advice.
+        All figures are modeled estimates based on USASpending.gov FY2024
+        county-level award data. Actual program impacts depend on program
+        structure, state matching requirements, and federal rulemaking. Not
+        financial or policy advice.
       </p>
     </div>
   );

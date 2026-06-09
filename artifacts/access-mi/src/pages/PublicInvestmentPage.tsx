@@ -865,7 +865,7 @@ const PublicInvestmentPage = () => {
                   <strong>Data Sources:</strong> Federal spending from
                   USASpending.gov FY2024 (public record). Municipal bonds from
                   MSRB EMMA (public municipal securities record). Federal
-                  dependency and equity scores are illustrative composites - not
+                  dependency and equity scores are modeled composites - not
                   official government metrics.
                 </p>
                 <p className="text-xs text-muted-foreground">

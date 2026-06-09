@@ -49,7 +49,7 @@ const SCENARIOS: PolicyScenario[] = [
     currentCoverage: 35,
     maxTarget: 95,
     costPerPerson: 85,
-    sourceNote: "United Way 211 network reports. Per-contact cost illustrative from national 211 operational data.",
+    sourceNote: "United Way 211 network reports. Per-contact cost modeled from national 211 operational data.",
     regionalSplit: [
       { label: "Southeast MI", pct: 38 },
       { label: "West MI", pct: 24 },
@@ -65,7 +65,7 @@ const SCENARIOS: PolicyScenario[] = [
     currentCoverage: 22,
     maxTarget: 60,
     costPerPerson: 1800,
-    sourceNote: "HRSA FQHC program data. Cost per new patient illustrative from UDS averages.",
+    sourceNote: "HRSA FQHC program data. Cost per new patient modeled from UDS averages.",
     regionalSplit: [
       { label: "Southeast MI", pct: 35 },
       { label: "West MI", pct: 20 },
@@ -81,7 +81,7 @@ const SCENARIOS: PolicyScenario[] = [
     currentCoverage: 8,
     maxTarget: 50,
     costPerPerson: 1200,
-    sourceNote: "MN, OR CHW reimbursement models. Cost per beneficiary illustrative from published evaluations.",
+    sourceNote: "MN, OR CHW reimbursement models. Cost per beneficiary modeled from published evaluations.",
     regionalSplit: [
       { label: "Southeast MI", pct: 40 },
       { label: "West MI", pct: 22 },
@@ -97,7 +97,7 @@ const SCENARIOS: PolicyScenario[] = [
     currentCoverage: 28,
     maxTarget: 75,
     costPerPerson: 650,
-    sourceNote: "MI DHHS LIHEAP reports. Per-household benefit illustrative from ACEEE/LIHEAP data.",
+    sourceNote: "MI DHHS LIHEAP reports. Per-household benefit modeled from ACEEE/LIHEAP data.",
     regionalSplit: [
       { label: "Southeast MI", pct: 32 },
       { label: "West MI", pct: 20 },

@@ -3,22 +3,23 @@ import { Link } from "react-router-dom";
 
 const CONFIG = {
   verified: {
-    label: "Verified public data",
+    label: "verified - measured directly from a primary public source",
     icon: CheckCircle2,
-    className: "text-michigan-forest bg-michigan-forest/8 border-michigan-forest/20",
+    className:
+      "text-michigan-forest bg-michigan-forest/8 border-michigan-forest/20",
   },
   modeled: {
-    label: "Model estimate derived from public datasets",
+    label: "modeled - derived or estimated from public datasets",
     icon: FlaskConical,
     className: "text-michigan-teal bg-michigan-teal/8 border-michigan-teal/20",
   },
-  illustrative: {
-    label: "Illustrative example - demonstrates platform capability",
+  projected: {
+    label: "projected - forward-looking platform target",
     icon: Lightbulb,
     className: "text-michigan-gold bg-michigan-gold/8 border-michigan-gold/20",
   },
   pending: {
-    label: "Data not yet available for this county",
+    label: "pending - data not yet available for this county",
     icon: Clock,
     className: "text-muted-foreground bg-muted/50 border-border",
   },

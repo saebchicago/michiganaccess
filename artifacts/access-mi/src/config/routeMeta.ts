@@ -52,7 +52,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/methodology",
     title: "Methodology | Access Michigan",
     description:
-      "How Access Michigan sources, validates, and presents Michigan civic data. Data classification (verified, modeled, illustrative), the Civic Insight Score formula, and equity-centered design principles.",
+      "How Access Michigan sources, validates, and presents Michigan civic data. Data classification (verified, modeled, projected), the Civic Insight Score formula, and equity-centered design principles.",
     h1: "Methodology and data transparency",
     summary:
       "Sourcing, validation, and a transparent record of every score and threshold on the platform.",

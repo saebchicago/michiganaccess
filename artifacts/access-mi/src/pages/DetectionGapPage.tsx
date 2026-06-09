@@ -69,9 +69,9 @@ const REGIONS: Record<string, HealthRegion> = {
 /* ── Source labels ────────────────────────────────────────────────────── */
 const SOURCES = {
   screened: "Trinity Health 2023 SDOH Screening Report (verified)",
-  positive: "NACHC 2023 (illustrative)",
-  referral: "Journal of AHIMA 2023 (illustrative)",
-  connection: "RWJF 2022 (illustrative)",
+  positive: "NACHC 2023 (modeled)",
+  referral: "Journal of AHIMA 2023 (modeled)",
+  connection: "RWJF 2022 (modeled)",
 };
 
 /* ── Formatting helpers ──────────────────────────────────────────────── */
@@ -471,9 +471,7 @@ export default function DetectionGapPage() {
               <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-[10px] text-gray-500">
                 <AlertTriangle className="h-3 w-3 inline mr-1 text-michigan-gold" />
                 All dollar calculations are{" "}
-                <strong className="text-gray-400">
-                  illustrative estimates
-                </strong>{" "}
+                <strong className="text-gray-400">modeled estimates</strong>{" "}
                 based on published research averages. Actual costs vary by
                 region, payer mix, and patient acuity.
               </div>
@@ -615,11 +613,11 @@ export default function DetectionGapPage() {
               27.4% unmet need rate; ~16% hospitalization reduction is
               system-reported and not independently verified or peer-reviewed.{" "}
               NACHC 2023 Social Determinants Screening Report - 68% screen
-              positive illustrative benchmark. Journal of AHIMA 2023 - 42%
-              referral rate illustrative. RWJF 2022 Evidence Hub - 31%
-              connection rate illustrative. CDC Social Determinants of Health
-              evidence base. Cost per preventable hospitalization ($14,500) from
-              AHRQ HCUP. All dollar figures are illustrative. See{" "}
+              positive modeled benchmark. Journal of AHIMA 2023 - 42% referral
+              rate modeled. RWJF 2022 Evidence Hub - 31% connection rate
+              modeled. CDC Social Determinants of Health evidence base. Cost per
+              preventable hospitalization ($14,500) from AHRQ HCUP. All dollar
+              figures are modeled. See{" "}
               <a href="/methodology" className="text-primary hover:underline">
                 Methodology
               </a>
