@@ -10,26 +10,56 @@
  */
 
 import { DATA_FRESHNESS_SOURCES } from "@/data/dataFreshness";
+import { SOURCES_BREAKDOWN, SOURCES_TOTAL } from "@/data/sourcesRegistry";
+import { ATLAS_LAYERS } from "@/config/atlasLayers";
 
 /**
  * Total verified public source ORGANIZATIONS powering the platform.
  *
+ * Derived from `src/data/sourcesRegistry.ts`. The expected canonical
+ * value is 41 (23 federal + 9 state + 9 nonprofit). If the registry
+ * grows or shrinks, update the EXPECTED_* constants below in the same
+ * commit so the build assertion does not fail silently.
+ *
  * Rule: count unique source organizations by publisher entity, not API
- * endpoints or downstream tables. Derived dynamically from the SOURCES
- * registry on the /data-sources page so the number cannot drift from
- * what users actually see listed.
+ * endpoints or downstream tables.
  */
-export const DATA_SOURCE_COUNT = 41;
-
-/** Federal / state / nonprofit subtotals (sum must equal DATA_SOURCE_COUNT). */
-export const DATA_SOURCE_BREAKDOWN = {
+const EXPECTED_SOURCE_COUNT = 41;
+const EXPECTED_SOURCE_BREAKDOWN = {
   federal: 23,
   state: 9,
   nonprofit: 9,
 } as const;
 
+if (SOURCES_TOTAL !== EXPECTED_SOURCE_COUNT) {
+  throw new Error(
+    `platformConstants: SOURCES_REGISTRY length is ${SOURCES_TOTAL}, expected ${EXPECTED_SOURCE_COUNT}. Update EXPECTED_SOURCE_COUNT or fix the registry.`,
+  );
+}
+if (
+  SOURCES_BREAKDOWN.federal !== EXPECTED_SOURCE_BREAKDOWN.federal ||
+  SOURCES_BREAKDOWN.state !== EXPECTED_SOURCE_BREAKDOWN.state ||
+  SOURCES_BREAKDOWN.nonprofit !== EXPECTED_SOURCE_BREAKDOWN.nonprofit
+) {
+  throw new Error(
+    `platformConstants: SOURCES_BREAKDOWN drift — registry=${JSON.stringify(SOURCES_BREAKDOWN)}, expected=${JSON.stringify(EXPECTED_SOURCE_BREAKDOWN)}.`,
+  );
+}
+
+export const DATA_SOURCE_COUNT = SOURCES_TOTAL;
+export const DATA_SOURCE_BREAKDOWN = SOURCES_BREAKDOWN;
+
 export const DATA_SOURCE_RULE =
   "Unique source organizations counted by publisher entity (federal agency, state agency, or nonprofit/academic publisher). API endpoints from the same publisher are not double-counted.";
+
+/**
+ * Canonical provenance phrasing for metadata and visible copy.
+ *
+ * Replaces ad-hoc strings like "federal and state agencies" (which omits
+ * the 9 nonprofit publishers) so search snippets and on-page chrome stay
+ * accurate when the breakdown changes.
+ */
+export const SOURCE_PROVENANCE = "federal, state, and nonprofit public sources";
 
 /**
  * Human-readable marketing display for source count.
@@ -38,7 +68,14 @@ export const DATA_SOURCE_RULE =
  * DATA_SOURCE_COUNT is used in counter components, schema, and counts
  * that need exact arithmetic.
  */
-export const DATA_SOURCE_DISPLAY = "41";
+export const DATA_SOURCE_DISPLAY = String(DATA_SOURCE_COUNT);
+
+/**
+ * Number of equity layers shown on /health-equity-atlas. Derived from
+ * the layer config; copy that says "Eight equity layers" or "10 layers"
+ * is wrong by construction. Use this constant in visible counts.
+ */
+export const ATLAS_LAYER_COUNT = ATLAS_LAYERS.length;
 
 /**
  * Aggregated records across all integrated datasets and feeds.

@@ -1,35 +1,15 @@
 import { Radio } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { ATLAS_LAYERS, type AtlasLayer } from "@/config/atlasLayers";
 
-export type AtlasLayer =
-  | "compound"
-  | "food_desert"
-  | "broadband"
-  | "infant_mortality"
-  | "ej_index"
-  | "energy_burden"
-  | "uninsured"
-  | "poverty"
-  | "alice"
-  | "pharmacy";
+export type { AtlasLayer };
 
 interface Props {
   active: AtlasLayer;
   onChange: (layer: AtlasLayer) => void;
 }
 
-const LAYERS: { key: AtlasLayer; label: string; source: string }[] = [
-  { key: "compound", label: "Compound Access Deficit", source: "Access Michigan Index" },
-  { key: "food_desert", label: "Food Desert Tracts", source: "USDA" },
-  { key: "broadband", label: "Broadband % Unserved", source: "FCC" },
-  { key: "infant_mortality", label: "Infant Mortality Rate", source: "MDHHS" },
-  { key: "ej_index", label: "EJ Index (max)", source: "EPA EJScreen" },
-  { key: "energy_burden", label: "Energy Burden %", source: "ACEEE/DOE" },
-  { key: "uninsured", label: "Uninsured Rate", source: "ACS" },
-  { key: "poverty", label: "Poverty Rate", source: "ACS" },
-  { key: "alice", label: "ALICE Rate (Below Threshold)", source: "United For ALICE" },
-  { key: "pharmacy", label: "Pharmacy Access Risk", source: "NCPDP 2024" },
-];
+const LAYERS = ATLAS_LAYERS;
 
 export default function LayerSelector({ active, onChange }: Props) {
   return (
@@ -47,9 +27,13 @@ export default function LayerSelector({ active, onChange }: Props) {
               : "text-muted-foreground hover:bg-muted"
           }`}
         >
-          <Radio className={`h-3 w-3 shrink-0 ${active === layer.key ? "text-primary" : "text-muted-foreground/40"}`} />
+          <Radio
+            className={`h-3 w-3 shrink-0 ${active === layer.key ? "text-primary" : "text-muted-foreground/40"}`}
+          />
           <span className="flex-1">{layer.label}</span>
-          <Badge variant="outline" className="text-[8px] shrink-0">{layer.source}</Badge>
+          <Badge variant="outline" className="text-[8px] shrink-0">
+            {layer.source}
+          </Badge>
         </button>
       ))}
     </div>

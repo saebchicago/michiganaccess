@@ -43,7 +43,7 @@ export const ROUTE_META: RouteMeta[] = [
     title:
       "Access Michigan: Health, Housing, Energy & Services | Open Data | Access Michigan",
     description:
-      "Michigan's open civic intelligence platform. ZIP-level health, housing, energy, and benefits data sourced from 41 verified federal and state agencies. Free, no account required.",
+      "Michigan's open civic intelligence platform. ZIP-level health, housing, energy, and benefits data sourced from 41 verified federal, state, and nonprofit public sources. Free, no account required.",
     h1: "Michigan's public data, organized for action",
     summary:
       "ZIP-level health, economic, and housing data across 83 counties. Free. Forever.",
@@ -267,9 +267,9 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/health-equity-atlas",
     title: "Michigan Health Equity Atlas | Access Michigan",
     description:
-      "Eight health-equity layers across Michigan's 83 counties: uninsured, food access, infant mortality, broadband, environmental justice, ALICE economic burden, energy burden, pharmacy access.",
+      "10 health-equity layers across Michigan's 83 counties: compound access deficit, food deserts, broadband, infant mortality, environmental justice, energy burden, uninsured, poverty, ALICE rate, and pharmacy access.",
     h1: "Michigan Health Equity Atlas",
-    summary: "Eight equity layers, 83 counties, one map.",
+    summary: "10 equity layers, 83 counties, one map.",
   },
   {
     path: "/civic-data-hub",
