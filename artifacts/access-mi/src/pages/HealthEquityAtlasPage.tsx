@@ -11,6 +11,10 @@ import LayerSelector, {
 } from "@/components/atlas/LayerSelector";
 import CountyDetailPanel from "@/components/atlas/CountyDetailPanel";
 import MapLegend from "@/components/atlas/MapLegend";
+import {
+  ATLAS_LAYER_COUNT,
+  COUNTIES_COVERED,
+} from "@/config/platformConstants";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { getALICEByCounty } from "@/data/aliceData";
 import { MICHIGAN_FEMA_NRI } from "@/data/environmentalData";
@@ -214,8 +218,9 @@ export default function HealthEquityAtlasPage() {
               Michigan Health Equity Atlas
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              83 counties. 8 data layers. One view of where access gaps
-              compound. Select a layer, click any county for detail.
+              {COUNTIES_COVERED} counties. {ATLAS_LAYER_COUNT} data layers. One
+              view of where access gaps compound. Select a layer, click any
+              county for detail.
             </p>
           </motion.div>
         </div>

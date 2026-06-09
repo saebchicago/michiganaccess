@@ -55,7 +55,7 @@ const METRICS = [
   },
 ];
 
-const ILLUSTRATIVE_SCENARIOS = [
+const EXAMPLE_SCENARIOS = [
   {
     title: "Finding Sliding-Scale Care in Rural Michigan",
     story:
@@ -176,7 +176,7 @@ const PartnersPage = () => {
             measured outcomes.
           </p>
           <div className="grid gap-6 md:grid-cols-3">
-            {ILLUSTRATIVE_SCENARIOS.map((story) => (
+            {EXAMPLE_SCENARIOS.map((story) => (
               <Card key={story.title} className="h-full">
                 <CardHeader>
                   <CardTitle className="text-base">{story.title}</CardTitle>

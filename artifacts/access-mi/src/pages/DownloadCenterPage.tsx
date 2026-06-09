@@ -30,7 +30,7 @@ const DOWNLOADS: { section: string; items: DownloadItem[] }[] = [
           "Full profile with health, housing, economic & environmental data for any county.",
         icon: FileText,
         action: "link",
-        href: "/brief/wayne",
+        href: "/brief?county=wayne",
       },
       {
         title: "ZIP Scorecard",

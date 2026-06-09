@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { APP_ROUTES } from "@/config/routes";
+import { APP_ROUTES } from "@/routes/manifest";
 
 /**
  * Recovery-flavored 404 page. The previous version was a generic

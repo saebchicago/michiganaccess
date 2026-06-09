@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense } from "react";
 import { CountyProvider } from "./contexts/CountyContext";
 import { NerdModeProvider } from "./contexts/NerdModeContext";
-import { APP_ROUTES } from "./config/routes";
+import { APP_ROUTES } from "./routes/manifest";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";

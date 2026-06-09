@@ -896,7 +896,7 @@ export default function MethodologyPage() {
 
             <div className="rounded-lg border border-border p-4">
               <div className="flex items-start gap-3">
-                <DataClassification type="illustrative" />
+                <DataClassification type="projected" />
               </div>
               <p className="text-sm text-muted-foreground mt-2">
                 This content demonstrates what the platform can do using
@@ -984,7 +984,7 @@ export default function MethodologyPage() {
             <p>
               The "With Access Michigan" projection is an{" "}
               <strong className="text-foreground">
-                illustrative platform target
+                projected platform target
               </strong>
               , not an achieved outcome. Projected screening, referral, and
               completion rates assume unified intake, closed-loop tracking, and
@@ -1020,7 +1020,7 @@ export default function MethodologyPage() {
               "Data lag: CMS and CDC datasets are typically 6–12 months behind current conditions. Census ACS data reflects 5-year rolling estimates.",
               "Coverage gaps: Not all facilities and providers in Michigan are listed. Coverage is expanding continuously as new data sources are integrated.",
               "Modeled indices: Composite scores (e.g., Civic Insight Score) combine verified data using documented formulas, but the resulting index is a model, not a direct measurement.",
-              "Utility stress: Disconnection, arrears, and assistance participation levels are currently illustrative placeholders pending integration of MPSC quarterly data.",
+              "Utility stress: Disconnection, arrears, and assistance participation levels are currently modeled placeholders pending integration of MPSC quarterly data.",
               "No individual claims data: All data is population-level. We do not access or display individual health records, claims, or member information.",
             ].map((item, i) => (
               <div

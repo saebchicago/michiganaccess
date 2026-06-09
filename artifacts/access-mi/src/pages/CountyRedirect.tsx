@@ -1,6 +1,6 @@
 import { Navigate, useParams } from "react-router-dom";
 import NotFound from "./NotFound";
-import { RESERVED_SLUGS } from "@/config/routes";
+import { RESERVED_SLUGS } from "@/routes/manifest";
 
 const CountyRedirect = () => {
   const { slug } = useParams<{ slug: string }>();

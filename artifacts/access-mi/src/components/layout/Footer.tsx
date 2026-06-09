@@ -276,15 +276,6 @@ const Footer = () => {
                 colorClass: "text-foreground",
               },
               {
-                icon: Timer,
-                value:
-                  stats.loadMs !== null
-                    ? `~${formatLoadTime(stats.loadMs)}`
-                    : "…",
-                label: "Load Time",
-                colorClass: loadTimeColor(stats.loadMs),
-              },
-              {
                 icon: FileText,
                 value: stats.resourceCount,
                 label: "Resources",
@@ -307,7 +298,12 @@ const Footer = () => {
             ))}
           </div>
           <p className="text-center text-[10px] text-muted-foreground mt-2">
-            Data refreshed March 2026
+            Site updated{" "}
+            {new Date(__BUILD_TIMESTAMP__).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </p>
         </div>
 

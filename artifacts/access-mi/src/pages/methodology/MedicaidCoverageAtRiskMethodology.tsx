@@ -355,7 +355,7 @@ export default function MedicaidCoverageAtRiskMethodology() {
               coefficients of variation for Medicaid enrollment estimates are high (typically
               20–50% for populations under 5,000). Keweenaw County (1,173 ACS-estimated enrollees)
               has a particularly high coefficient of variation; its county-level projection should
-              be treated as illustrative only. Exact margins of error are available at{" "}
+              be treated as modeled only. Exact margins of error are available at{" "}
               <a
                 href="https://data.census.gov/table/ACSDT5Y2023.C27007"
                 target="_blank"
