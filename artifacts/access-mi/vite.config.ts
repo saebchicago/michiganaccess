@@ -16,6 +16,12 @@ const basePath = process.env.BASE_PATH ?? "/";
 
 export default defineConfig({
   base: basePath,
+  define: {
+    // Build-time timestamp used by the footer freshness chip. Single
+    // source of truth for "Site updated"; per-source vintage comes
+    // from the data registry (see DATA_FRESHNESS_SOURCES).
+    __BUILD_TIMESTAMP__: JSON.stringify(new Date().toISOString()),
+  },
   plugins: [
     react(),
     runtimeErrorOverlay(),
