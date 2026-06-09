@@ -29,7 +29,7 @@ import {
   isNavGroup,
   type NavGroup,
   type NavLink as NavLinkType,
-} from "@/config/routes";
+} from "@/routes/manifest";
 import { cn } from "@/lib/utils";
 
 /** Check if current path matches a nav href - supports exact match and prefix match for nested routes */

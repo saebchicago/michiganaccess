@@ -31,3 +31,99 @@
   for = "/data/*"
   [headers.values]
     Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+# Renamed routes — declared as <Navigate> inside the SPA. Mirror them
+# at the edge so crawlers and direct nav skip the SPA round-trip and
+# get the canonical URL via a 301. Order MUST stay above the SPA
+# catch-all below; Netlify evaluates redirects top-down.
+[[redirects]]
+  from = "/health-equity"
+  to = "/equity"
+  status = 301
+[[redirects]]
+  from = "/broadband"
+  to = "/civic-data"
+  status = 301
+[[redirects]]
+  from = "/chna"
+  to = "/chna-explorer"
+  status = 301
+[[redirects]]
+  from = "/map"
+  to = "/health-map"
+  status = 301
+[[redirects]]
+  from = "/check-benefits"
+  to = "/benefits"
+  status = 301
+[[redirects]]
+  from = "/data-hub"
+  to = "/data-and-insights"
+  status = 301
+[[redirects]]
+  from = "/health-data"
+  to = "/data"
+  status = 301
+[[redirects]]
+  from = "/representatives"
+  to = "/civic-data"
+  status = 301
+[[redirects]]
+  from = "/county-compare"
+  to = "/compare"
+  status = 301
+[[redirects]]
+  from = "/snap"
+  to = "/data/snap-michigan"
+  status = 301
+[[redirects]]
+  from = "/water"
+  to = "/environment"
+  status = 301
+[[redirects]]
+  from = "/civic"
+  to = "/civic-data"
+  status = 301
+[[redirects]]
+  from = "/life-events"
+  to = "/life-navigator"
+  status = 301
+[[redirects]]
+  from = "/life-event/new-baby"
+  to = "/life-navigator?scenario=baby"
+  status = 301
+[[redirects]]
+  from = "/life-event/job-loss"
+  to = "/life-navigator?scenario=lost-job"
+  status = 301
+[[redirects]]
+  from = "/life-event/turning-65"
+  to = "/life-navigator?scenario=turning-65"
+  status = 301
+[[redirects]]
+  from = "/life-event/eviction"
+  to = "/life-navigator?scenario=housing"
+  status = 301
+[[redirects]]
+  from = "/life-event/new-diagnosis"
+  to = "/life-navigator?scenario=diagnosis"
+  status = 301
+[[redirects]]
+  from = "/life-event/new-to-michigan"
+  to = "/life-navigator?scenario=new-to-mi"
+  status = 301
+[[redirects]]
+  from = "/life-event/reentry"
+  to = "/reentry"
+  status = 301
+
+# SPA fallback. Without this, every non-prerendered route 404s on
+# direct nav and on hard refresh. The prerender step writes static
+# dist/<path>/index.html for the routes in the manifest with
+# `prerender: true`; Netlify serves those before falling through to
+# this catch-all for everything else. Status 200 (not 301) so the
+# URL the user typed is preserved for React Router to consume.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
