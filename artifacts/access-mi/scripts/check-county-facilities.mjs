@@ -15,6 +15,7 @@
  * 5+ from MDHHS).
  */
 import { readFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -30,18 +31,16 @@ const profilesPath = path.join(
 );
 
 /**
- * Counties whose canonical facility count is publicly known and where
- * a static seed below the floor is a likely indicator of a data gap.
- * Update if MDHHS / HRSA / CMS counts change.
+ * Path to a verified MDHHS / LARA county-by-county facility-count
+ * extract. When this file exists, the script fails the build for any
+ * county whose seed count is below the verified value. Until the
+ * owner-triggered data PR lands the file, the script prints a notice
+ * and exits 0 so it can still ship as a guard.
  */
-const FACILITY_FLOOR = {
-  Saginaw: 5,
-  Wayne: 30,
-  Oakland: 25,
-  Kent: 10,
-  Macomb: 15,
-  Washtenaw: 8,
-};
+const REFERENCE_PATH = path.join(
+  projectRoot,
+  "src/data/countyFacilityReference.json",
+);
 
 async function main() {
   const facilitiesSrc = await readFile(facilitiesPath, "utf8");
@@ -64,24 +63,46 @@ async function main() {
     facilityCounts.set(canonical, (facilityCounts.get(canonical) ?? 0) + 1);
   }
 
-  console.log(
-    `[check-county-facilities] static seed: ${facilityCounts.size} counties, ${[...facilityCounts.values()].reduce((a, b) => a + b, 0)} facilities total.`,
+  const totalFacilities = [...facilityCounts.values()].reduce(
+    (a, b) => a + b,
+    0,
   );
-  console.log("[check-county-facilities] per-county counts below floor:");
+  console.log(
+    `[check-county-facilities] static seed: ${facilityCounts.size} counties, ${totalFacilities} facilities total.`,
+  );
 
-  let flagged = 0;
-  for (const [county, floor] of Object.entries(FACILITY_FLOOR)) {
+  if (!existsSync(REFERENCE_PATH)) {
+    console.log(
+      `[check-county-facilities] notice: no reference extract at ${path.relative(projectRoot, REFERENCE_PATH)}; skipping floor check. Add the MDHHS/LARA extract to enforce.`,
+    );
+    return;
+  }
+
+  const reference = JSON.parse(await readFile(REFERENCE_PATH, "utf8"));
+  const shortfalls = [];
+  for (const [county, refCount] of Object.entries(reference)) {
     const seed = facilityCounts.get(county) ?? 0;
-    if (seed < floor) {
-      console.log(
-        `  ${county}: seed=${seed}, MDHHS-floor=${floor}, gap=${floor - seed}`,
-      );
-      flagged++;
+    if (seed < refCount) {
+      shortfalls.push({ county, seed, ref: refCount, gap: refCount - seed });
     }
   }
-  if (flagged === 0) {
-    console.log("  none — every floor-checked county meets its minimum.");
+
+  if (shortfalls.length === 0) {
+    console.log(
+      `[check-county-facilities] ok — every county meets its reference count.`,
+    );
+    return;
   }
+
+  console.error(
+    `[check-county-facilities] FAIL — ${shortfalls.length} county(ies) below the verified reference:`,
+  );
+  for (const s of shortfalls) {
+    console.error(
+      `  ${s.county}: seed=${s.seed}, reference=${s.ref}, gap=${s.gap}`,
+    );
+  }
+  process.exit(1);
 }
 
 main().catch((err) => {
