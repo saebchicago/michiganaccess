@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "build": "node scripts/check-links.mjs && node scripts/check-counts.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs",
+    "build": "node scripts/check-links.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:counts": "node scripts/check-counts.mjs",
+    "check:zip-population": "node scripts/check-zip-population.mjs",
+    "check:county-facilities": "node scripts/check-county-facilities.mjs",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:e2e": "playwright test --config=playwright.config.ts",
