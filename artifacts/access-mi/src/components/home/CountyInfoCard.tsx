@@ -1,15 +1,28 @@
 import { motion } from "framer-motion";
-import { Users, MapPin, Activity, TrendingDown, TrendingUp, Minus, Building2 } from "lucide-react";
+import {
+  Users,
+  MapPin,
+  Activity,
+  TrendingDown,
+  TrendingUp,
+  Minus,
+  Building2,
+} from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
-import { getCountyProfile } from "@/data/michigan-county-profiles";
+import {
+  getCountyProfile,
+  COUNTY_POPULATION_SOURCE,
+} from "@/data/michigan-county-profiles";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const trendIcon = (trend?: "up" | "down" | "stable") => {
-  if (trend === "down") return <TrendingDown className="h-3 w-3 text-[hsl(var(--forest-green))]" />;
-  if (trend === "up") return <TrendingUp className="h-3 w-3 text-[hsl(var(--coral))]" />;
+  if (trend === "down")
+    return <TrendingDown className="h-3 w-3 text-[hsl(var(--forest-green))]" />;
+  if (trend === "up")
+    return <TrendingUp className="h-3 w-3 text-[hsl(var(--coral))]" />;
   return <Minus className="h-3 w-3 text-muted-foreground" />;
 };
 
@@ -26,7 +39,10 @@ const CountyInfoCard = () => {
     : "Data unavailable";
 
   return (
-    <section className="container py-6" aria-label={`${county} County overview`}>
+    <section
+      className="container py-6"
+      aria-label={`${county} County overview`}
+    >
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -41,11 +57,17 @@ const CountyInfoCard = () => {
                   {county} County
                 </h2>
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge variant="secondary" className="text-xs font-normal capitalize">
+                  <Badge
+                    variant="secondary"
+                    className="text-xs font-normal capitalize"
+                  >
                     {profile.countyType}
                   </Badge>
                   {profile.population > 0 && (
-                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <span
+                      className="flex items-center gap-1 text-xs text-muted-foreground"
+                      title={COUNTY_POPULATION_SOURCE}
+                    >
                       <Users className="h-3 w-3" />
                       Pop. {population}
                     </span>
@@ -60,10 +82,16 @@ const CountyInfoCard = () => {
             {/* Major Cities */}
             {profile.majorCities.length > 0 && (
               <div className="mb-4">
-                <p className="text-xs font-medium text-muted-foreground mb-1.5">Major Communities</p>
+                <p className="text-xs font-medium text-muted-foreground mb-1.5">
+                  Major Communities
+                </p>
                 <div className="flex flex-wrap gap-1.5">
                   {profile.majorCities.map((city) => (
-                    <Badge key={city} variant="outline" className="text-xs font-normal">
+                    <Badge
+                      key={city}
+                      variant="outline"
+                      className="text-xs font-normal"
+                    >
                       {city}
                     </Badge>
                   ))}
@@ -76,16 +104,24 @@ const CountyInfoCard = () => {
               <div className="rounded-md bg-secondary/60 p-3">
                 <div className="flex items-center gap-1.5 mb-1">
                   <Building2 className="h-3.5 w-3.5 text-primary" />
-                  <span className="text-xs text-muted-foreground">Facilities</span>
+                  <span className="text-xs text-muted-foreground">
+                    Facilities
+                  </span>
                 </div>
-                <p className="text-xl font-bold text-foreground">{facilities.length}</p>
+                <p className="text-xl font-bold text-foreground">
+                  {facilities.length}
+                </p>
               </div>
               <div className="rounded-md bg-secondary/60 p-3">
                 <div className="flex items-center gap-1.5 mb-1">
                   <Users className="h-3.5 w-3.5 text-primary" />
-                  <span className="text-xs text-muted-foreground">Resources</span>
+                  <span className="text-xs text-muted-foreground">
+                    Resources
+                  </span>
                 </div>
-                <p className="text-xl font-bold text-foreground">{resources.length}</p>
+                <p className="text-xl font-bold text-foreground">
+                  {resources.length}
+                </p>
               </div>
             </div>
 
@@ -93,7 +129,9 @@ const CountyInfoCard = () => {
             <div>
               <div className="flex items-center gap-1.5 mb-2">
                 <Activity className="h-3.5 w-3.5 text-accent" />
-                <p className="text-xs font-medium text-muted-foreground">Key Health Indicators</p>
+                <p className="text-xs font-medium text-muted-foreground">
+                  Key Health Indicators
+                </p>
               </div>
               <div className="space-y-1.5">
                 {profile.healthHighlights.map((h) => (
@@ -101,7 +139,9 @@ const CountyInfoCard = () => {
                     key={h.label}
                     className="flex items-center justify-between rounded-md bg-muted/50 px-3 py-2"
                   >
-                    <span className="text-xs text-muted-foreground">{h.label}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {h.label}
+                    </span>
                     <span className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
                       {h.value}
                       {trendIcon(h.trend)}
@@ -110,7 +150,8 @@ const CountyInfoCard = () => {
                 ))}
               </div>
               <p className="mt-2 text-[10px] text-muted-foreground/60">
-                Sources: U.S. Census Bureau, County Health Rankings, USDA
+                Population: {COUNTY_POPULATION_SOURCE}. Health & food: County
+                Health Rankings 2025, USDA Food Environment Atlas.
               </p>
             </div>
           </CardContent>
