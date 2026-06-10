@@ -86,12 +86,11 @@ export const ROUTE_META: RouteMeta[] = [
   },
   {
     path: "/benefits",
-    title: "Benefits & Decisions | Access Michigan",
+    title: "Benefits Education | Access Michigan",
     description:
-      "Sourced life-stage benefits map, a preliminary eligibility screener, and a benefits-cliff explainer. Informational only. Eligibility is decided by the program.",
-    h1: "Benefits & Decisions",
-    summary:
-      "What you may qualify for in plain language. Three sourced tools, one page.",
+      "Educational explainers of Michigan benefit programs: a sourced life-stage map, how eligibility rules work, and a benefits-cliff explainer. Informational only. Eligibility is decided by the program.",
+    h1: "How Michigan benefit programs work",
+    summary: "Three educational tools, one page. Sourced. Informational only.",
   },
   {
     path: "/quality",

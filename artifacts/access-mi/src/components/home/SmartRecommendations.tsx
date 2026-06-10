@@ -23,7 +23,9 @@ export function recordPageVisit(path: string, label: string, category: string) {
     const filtered = history.filter((h) => h.path !== path);
     filtered.unshift({ path, label, category });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered.slice(0, 20)));
-  } catch { /* localStorage unavailable */ }
+  } catch {
+    /* localStorage unavailable */
+  }
 }
 
 function getBrowsingHistory(): RecentView[] {
@@ -36,30 +38,73 @@ function getBrowsingHistory(): RecentView[] {
 }
 
 // Category → related suggestions
-const CATEGORY_RECS: Record<string, { label: string; path: string; why: string }[]> = {
+const CATEGORY_RECS: Record<
+  string,
+  { label: string; path: string; why: string }[]
+> = {
   "find-care": [
-    { label: "Compare Quality Ratings", path: "/quality", why: "Compare before you choose" },
+    {
+      label: "Compare Quality Ratings",
+      path: "/quality",
+      why: "Compare before you choose",
+    },
     { label: "See What Care Costs", path: "/costs", why: "Understand pricing" },
-    { label: "Get Financial Help", path: "/financial-help", why: "Find coverage options" },
+    {
+      label: "Financial help explainer",
+      path: "/financial-help",
+      why: "How Michigan assistance programs work",
+    },
   ],
   health: [
-    { label: "Insurance Appeals", path: "/health/insurance-appeals", why: "Fight a denial" },
-    { label: "Explore Health Data", path: "/data", why: "Community health metrics" },
+    {
+      label: "Insurance Appeals",
+      path: "/health/insurance-appeals",
+      why: "Fight a denial",
+    },
+    {
+      label: "Explore Health Data",
+      path: "/data",
+      why: "Community health metrics",
+    },
   ],
   financial: [
-    { label: "Check Your Benefits", path: "/financial-help", why: "Eligibility screener" },
-    { label: "Find Local Resources", path: "/resources", why: "Community programs" },
-    { label: "Insurance Appeals", path: "/health/insurance-appeals", why: "Appeal a denial" },
+    {
+      label: "Benefits education",
+      path: "/financial-help",
+      why: "How eligibility rules work",
+    },
+    {
+      label: "Find Local Resources",
+      path: "/resources",
+      why: "Community programs",
+    },
+    {
+      label: "Insurance Appeals",
+      path: "/health/insurance-appeals",
+      why: "Appeal a denial",
+    },
   ],
   civic: [
     { label: "Open Government Hub", path: "/civic-data", why: "Budget & FOIA" },
-    { label: "Check Your Environment", path: "/environment", why: "Air & water quality" },
+    {
+      label: "Check Your Environment",
+      path: "/environment",
+      why: "Air & water quality",
+    },
     { label: "Explore Regions", path: "/regions", why: "Regional comparisons" },
   ],
   resources: [
-    { label: "Find a Support Group", path: "/support", why: "Connect with others" },
+    {
+      label: "Find a Support Group",
+      path: "/support",
+      why: "Connect with others",
+    },
     { label: "Upcoming Events", path: "/events", why: "Community calendar" },
-    { label: "Get Around Safely", path: "/transportation", why: "Transit options" },
+    {
+      label: "Get Around Safely",
+      path: "/transportation",
+      why: "Transit options",
+    },
   ],
 };
 
@@ -80,8 +125,13 @@ export default function SmartRecommendations() {
       catCounts[h.category] = (catCounts[h.category] || 0) + 1;
     });
 
-    const topCatFromHistory = Object.entries(catCounts).sort((a, b) => b[1] - a[1])[0]?.[0];
-    const topCat = topCatFromHistory || (audience ? AUDIENCE_DEFAULT_CAT[audience] : null) || "find-care";
+    const topCatFromHistory = Object.entries(catCounts).sort(
+      (a, b) => b[1] - a[1],
+    )[0]?.[0];
+    const topCat =
+      topCatFromHistory ||
+      (audience ? AUDIENCE_DEFAULT_CAT[audience] : null) ||
+      "find-care";
     const recs = CATEGORY_RECS[topCat] || CATEGORY_RECS["find-care"];
 
     // Filter out pages already visited recently
@@ -109,7 +159,9 @@ export default function SmartRecommendations() {
         >
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-accent" />
-            <h3 className="text-sm font-bold text-foreground">Recommended for You</h3>
+            <h3 className="text-sm font-bold text-foreground">
+              Recommended for You
+            </h3>
             {county && (
               <Badge variant="outline" className="text-[10px]">
                 {county} County
@@ -118,11 +170,23 @@ export default function SmartRecommendations() {
           </div>
           <p className="text-xs text-muted-foreground">
             {recommendations.lastVisited ? (
-              <>Based on your interest in{" "}
-              <span className="font-medium text-foreground">{recommendations.lastVisited.label}</span>,
-              others in your region also explored:</>
+              <>
+                Based on your interest in{" "}
+                <span className="font-medium text-foreground">
+                  {recommendations.lastVisited.label}
+                </span>
+                , others in your region also explored:
+              </>
             ) : audience ? (
-              <>Suggested for <span className="font-medium text-foreground">{audience === "health-system" ? "health systems" : "residents"}</span>:</>
+              <>
+                Suggested for{" "}
+                <span className="font-medium text-foreground">
+                  {audience === "health-system"
+                    ? "health systems"
+                    : "residents"}
+                </span>
+                :
+              </>
             ) : (
               <>Popular resources in your area:</>
             )}
@@ -133,8 +197,12 @@ export default function SmartRecommendations() {
                 <Card className="hover-lift border border-border/60 cursor-pointer">
                   <CardContent className="py-3 flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-semibold text-foreground">{rec.label}</p>
-                      <p className="text-[10px] text-muted-foreground">{rec.why}</p>
+                      <p className="text-xs font-semibold text-foreground">
+                        {rec.label}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {rec.why}
+                      </p>
                     </div>
                     <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />
                   </CardContent>

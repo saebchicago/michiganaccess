@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Map as MapIcon, ShieldCheck, TrendingUp, Info } from "lucide-react";
+import { Map as MapIcon, ShieldCheck, TrendingUp } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { LifeStageMap } from "@/components/benefits/LifeStageMap";
 import { BenefitsScreener } from "@/components/benefits/BenefitsScreener";
 import { CliffExplainer } from "@/components/benefits/CliffExplainer";
-import { OFFICIAL_MI_BRIDGES_URL } from "@/data/benefitsRules";
+import { OfficialChannelNotice } from "@/components/shared/OfficialChannelNotice";
 
 type HubTab = "map" | "screener" | "cliff";
 
@@ -31,9 +30,9 @@ const TOOLS: HubTool[] = [
   },
   {
     id: "screener",
-    title: "Am I eligible?",
+    title: "How eligibility rules work",
     blurb:
-      "A quick preliminary estimate against 2026 income rules. Final eligibility is decided by the program.",
+      "See what 2026 federal and Michigan income rules indicate for a household like yours. Informational only - the program decides eligibility.",
     icon: ShieldCheck,
   },
   {
@@ -47,9 +46,9 @@ const TOOLS: HubTool[] = [
 
 export default function BenefitsHubPage() {
   usePageMeta({
-    title: "Benefits & Decisions - Access Michigan",
+    title: "Benefits Education - Access Michigan",
     description:
-      "Sourced life-stage benefits map, a preliminary eligibility screener, and a benefits-cliff explainer. Informational only. Eligibility is decided by the program.",
+      "Educational explainers of Michigan benefit programs: a sourced life-stage map, how eligibility rules work, and a benefits-cliff explainer. Informational only. Eligibility is decided by the program.",
     path: "/benefits",
   });
 
@@ -58,7 +57,7 @@ export default function BenefitsHubPage() {
   return (
     <Layout>
       <div className="container pt-6">
-        <Breadcrumbs items={[{ label: "Benefits & Decisions" }]} />
+        <Breadcrumbs items={[{ label: "Benefits Education" }]} />
       </div>
 
       <section className="bg-gradient-to-b from-primary/5 to-background py-12 md:py-16">
@@ -72,15 +71,15 @@ export default function BenefitsHubPage() {
               variant="outline"
               className="mb-3 uppercase tracking-wider text-xs"
             >
-              Benefits & Decisions
+              Benefits Education
             </Badge>
             <h1 className="text-3xl font-bold text-foreground md:text-4xl">
-              What you may qualify for, in plain language
+              How Michigan benefit programs work
             </h1>
             <p className="mt-3 max-w-2xl mx-auto text-sm text-muted-foreground">
-              Three tools, one page. Every income limit is sourced to a federal
-              or state primary source. Nothing here is a determination, and
-              nothing is stored.
+              Three educational tools, one page. Every income limit is sourced
+              to a federal or state primary source. Nothing here is a
+              determination, and nothing is stored.
             </p>
           </motion.div>
         </div>
@@ -112,25 +111,12 @@ export default function BenefitsHubPage() {
           ))}
         </div>
 
-        <Card className="border-muted bg-muted/30">
-          <CardContent className="flex items-start gap-2 py-4 text-xs text-muted-foreground">
-            <Info className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-            <p>
-              These tools are informational. They are not a determination of
-              eligibility, not financial advice, and not legal advice. The
-              official Michigan application portal is{" "}
-              <a
-                href={OFFICIAL_MI_BRIDGES_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-foreground"
-              >
-                MI Bridges (newmibridges.michigan.gov)
-              </a>
-              . For help filling out an application, call 211.
-            </p>
-          </CardContent>
-        </Card>
+        <OfficialChannelNotice />
+        <p className="px-1 text-[11px] text-muted-foreground">
+          These tools are informational. They are not a determination of
+          eligibility, not financial advice, and not legal advice. For help
+          filling out an application, call 211.
+        </p>
 
         <Tabs value={tab} onValueChange={(v) => setTab(v as HubTab)}>
           <TabsList className="grid grid-cols-3">

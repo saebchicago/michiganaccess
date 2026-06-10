@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { AccessChat } from "@/components/AccessChat";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
+import { OfficialChannelNotice } from "@/components/shared/OfficialChannelNotice";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 // Preserved for back-compat with consumers like AudienceSelector that still
@@ -41,31 +42,17 @@ type Cluster = {
 
 const CLUSTERS: Cluster[] = [
   {
-    id: "get-benefits",
-    label: "Get benefits",
-    purpose: "Find resources and eligibility help by life event or situation.",
-    icon: Heart,
-    accent: "border-rose-200 bg-rose-50 dark:bg-rose-950/20",
+    id: "policy-investment",
+    label: "Policy and investment",
+    purpose: "Federal investment, equity atlas, briefs, and full data exports.",
+    icon: BarChart3,
+    accent: "border-purple-200 bg-purple-50 dark:bg-purple-950/20",
     tools: [
-      { label: "Life event navigator", href: "/benefits" },
-      { label: "Find care near you", href: "/find-care" },
-      { label: "Insurance & coverage", href: "/insurance-coverage" },
-      { label: "Financial help", href: "/financial-help" },
-      { label: "Community resources", href: "/resources" },
-    ],
-  },
-  {
-    id: "explore-area",
-    label: "Explore your area",
-    purpose: "County and ZIP-level signals, comparisons, and cost of living.",
-    icon: MapPin,
-    accent: "border-teal-200 bg-teal-50 dark:bg-teal-950/20",
-    tools: [
-      { label: "ZIP intelligence", href: "/zip-intelligence" },
-      { label: "Find your city", href: "/find-your-city" },
-      { label: "Compare counties", href: "/compare" },
-      { label: "Tax comparison", href: "/tax-comparison" },
-      { label: "Civic data hub", href: "/civic-data-hub" },
+      { label: "Public investment", href: "/public-investment" },
+      { label: "Health equity atlas", href: "/health-equity-atlas" },
+      { label: "Data sources", href: "/data-sources" },
+      { label: "Downloads", href: "/downloads" },
+      { label: "Methodology", href: "/methodology" },
     ],
   },
   {
@@ -86,17 +73,31 @@ const CLUSTERS: Cluster[] = [
     ],
   },
   {
-    id: "policy-investment",
-    label: "Policy and investment",
-    purpose: "Federal investment, equity atlas, briefs, and full data exports.",
-    icon: BarChart3,
-    accent: "border-purple-200 bg-purple-50 dark:bg-purple-950/20",
+    id: "explore-area",
+    label: "Explore your area",
+    purpose: "County and ZIP-level signals, comparisons, and cost of living.",
+    icon: MapPin,
+    accent: "border-teal-200 bg-teal-50 dark:bg-teal-950/20",
     tools: [
-      { label: "Public investment", href: "/public-investment" },
-      { label: "Health equity atlas", href: "/health-equity-atlas" },
-      { label: "Data sources", href: "/data-sources" },
-      { label: "Downloads", href: "/downloads" },
-      { label: "Methodology", href: "/methodology" },
+      { label: "ZIP intelligence", href: "/zip-intelligence" },
+      { label: "Find your city", href: "/find-your-city" },
+      { label: "Compare counties", href: "/compare" },
+      { label: "Tax comparison", href: "/tax-comparison" },
+      { label: "Civic data hub", href: "/civic-data-hub" },
+    ],
+  },
+  {
+    id: "learn-benefits",
+    label: "Learn about benefits",
+    purpose: "How Michigan benefit programs and eligibility rules work.",
+    icon: Heart,
+    accent: "border-rose-200 bg-rose-50 dark:bg-rose-950/20",
+    tools: [
+      { label: "Life event navigator", href: "/benefits" },
+      { label: "Find care near you", href: "/find-care" },
+      { label: "Insurance & coverage", href: "/insurance-coverage" },
+      { label: "Financial help", href: "/financial-help" },
+      { label: "Community resources", href: "/resources" },
     ],
   },
 ];
@@ -165,6 +166,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
 
 function ClusterCard({ cluster }: { cluster: Cluster }) {
   const Icon = cluster.icon;
+  const isBenefits = cluster.id === "learn-benefits";
   return (
     <article
       id={cluster.id}
@@ -190,6 +192,11 @@ function ClusterCard({ cluster }: { cluster: Cluster }) {
           </li>
         ))}
       </ul>
+      {isBenefits && (
+        <div className="mt-4">
+          <OfficialChannelNotice variant="compact" />
+        </div>
+      )}
     </article>
   );
 }
@@ -243,7 +250,7 @@ const Index = () => {
   usePageMeta({
     title: "AccessMI — Civic intelligence for Michigan",
     description:
-      "Find benefits, explore your area, watch health coverage risks, and dig into policy and investment data — all sourced from primary federal records.",
+      "Explore Michigan policy and investment data, health coverage trends, county and ZIP-level signals, and educational explainers of how benefit programs work — all sourced from primary federal records.",
   });
 
   return (

@@ -170,7 +170,7 @@ const Header = () => {
                 }
               >
                 <Sparkles className="h-3.5 w-3.5" />
-                Check Benefits
+                Learn about benefits
               </Link>
             </Button>
             <Button

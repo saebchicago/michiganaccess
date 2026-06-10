@@ -11,7 +11,7 @@ const STEPS = [
   },
   {
     title: "Life Event Navigator",
-    desc: "Pick a life situation and see every program you may qualify for.",
+    desc: "Pick a life situation and see which Michigan programs apply.",
   },
   {
     title: "Eligibility Screener",
