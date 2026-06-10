@@ -46,7 +46,7 @@ export interface PillarInsightCardProps {
   /** Status of the underlying dataset */
   status?: "live" | "pending" | "error" | "empty";
   /** Optional description */
-  description?: string;
+  description?: React.ReactNode;
   /** Icon component */
   icon?: React.ComponentType<{ className?: string }>;
 }
