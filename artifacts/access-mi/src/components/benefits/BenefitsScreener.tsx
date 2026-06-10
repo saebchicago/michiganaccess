@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import { OfficialChannelNotice } from "@/components/shared/OfficialChannelNotice";
 import {
   BENEFITS_GLOSSARY,
   FPL_EFFECTIVE_YEAR,
@@ -105,11 +106,11 @@ export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <ShieldCheck className="h-5 w-5 text-primary" aria-hidden="true" />
-          Am I eligible?
+          How eligibility rules work
         </CardTitle>
         <CardDescription>
-          A preliminary estimate, not a determination. Final eligibility is
-          decided by the program.
+          Enter household details to see what 2026 federal and Michigan income
+          rules indicate. The program decides eligibility, not this page.
         </CardDescription>
         <p className="mt-1 text-[11px] text-muted-foreground">
           Calculations happen in your browser. Nothing about your situation is
@@ -257,7 +258,7 @@ export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
                   <ArrowLeft className="mr-1 h-3 w-3" aria-hidden="true" /> Back
                 </Button>
                 <Button onClick={() => setStep("results")} className="text-sm">
-                  See preliminary estimate{" "}
+                  See what the rules indicate{" "}
                   <ArrowRight className="ml-1 h-3 w-3" aria-hidden="true" />
                 </Button>
               </div>
@@ -275,7 +276,7 @@ export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    Preliminary estimate
+                    What the rules indicate
                   </p>
                   <p className="text-xs text-muted-foreground">
                     Household of {householdSize}, income about $
@@ -300,13 +301,15 @@ export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
                 className="rounded-lg border border-primary/20 bg-primary/5 p-3 text-xs text-foreground"
               >
                 <p className="font-semibold">
-                  This is an estimate, not a determination.
+                  This shows what the rules indicate, not a determination.
                 </p>
                 <p className="mt-1 text-muted-foreground">
-                  Eligibility is decided by the program. Use the apply links
-                  below to file the actual application or talk to a navigator.
+                  Eligibility is decided by the program. To apply, use
+                  Michigan's official portal (MI Bridges) or call 211.
                 </p>
               </div>
+
+              <OfficialChannelNotice variant="compact" />
 
               <section
                 aria-labelledby="may-qualify-heading"
@@ -316,7 +319,8 @@ export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
                   id="may-qualify-heading"
                   className="text-sm font-semibold text-foreground"
                 >
-                  You may qualify for ({results.mayQualify.length})
+                  Programs whose rules match this household (
+                  {results.mayQualify.length})
                 </h3>
                 {results.mayQualify.length === 0 && (
                   <p className="text-xs text-muted-foreground">
@@ -347,7 +351,7 @@ export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
                         </div>
                       </div>
                       <Badge variant="outline" className="text-[10px] shrink-0">
-                        May qualify
+                        Rules match
                       </Badge>
                     </div>
                     <p className="mt-2 text-[11px] text-muted-foreground">
@@ -362,7 +366,7 @@ export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       >
-                        Apply on MI Bridges
+                        Apply at Michigan's official portal (MI Bridges)
                         <ExternalLink className="h-3 w-3" aria-hidden="true" />
                       </a>
                       <a
@@ -445,17 +449,9 @@ export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
                   />
                   <p>
                     Need help applying? Call 211 (free) or talk to a MI Bridges
-                    Navigator through{" "}
-                    <a
-                      href={OFFICIAL_MI_BRIDGES_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline hover:text-foreground"
-                    >
-                      MI Bridges
-                    </a>
-                    . This screener does not store, share, or transmit anything
-                    about you. Calculations happen in your browser only.
+                    Navigator through Michigan's official portal. This screener
+                    does not store, share, or transmit anything about you.
+                    Calculations happen in your browser only.
                   </p>
                 </div>
               </div>

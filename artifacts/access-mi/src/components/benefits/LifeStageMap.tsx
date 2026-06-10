@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import { OfficialChannelNotice } from "@/components/shared/OfficialChannelNotice";
 import {
   OFFICIAL_MI_BRIDGES_URL,
   OFFICIAL_SSA_URL,
@@ -192,11 +193,12 @@ const STAGES: LifeStageNode[] = [
 export function LifeStageMap() {
   return (
     <div className="space-y-4">
-      <div className="rounded-lg border border-border bg-muted/30 p-4 text-xs text-muted-foreground">
+      <OfficialChannelNotice variant="compact" />
+      <p className="px-1 text-[11px] text-muted-foreground">
         Life-stage entries below are informational. Eligibility for each program
         is decided by the program, not by this page. Apply links go to official
         .gov portals only.
-      </div>
+      </p>
 
       <ol className="relative space-y-4 border-l border-border pl-6">
         {STAGES.map((stage) => (
@@ -241,7 +243,7 @@ export function LifeStageMap() {
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-1 font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                         >
-                          How to apply
+                          How to apply at the official portal
                           <ExternalLink
                             className="h-3 w-3"
                             aria-hidden="true"
