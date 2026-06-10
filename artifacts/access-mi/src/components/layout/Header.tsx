@@ -91,9 +91,14 @@ const Header = () => {
                 aria-hidden="true"
               />
             </div>
-            <span className="text-sm font-bold text-foreground">
-              Access Michigan
-            </span>
+            <div className="flex flex-col leading-tight">
+              <span className="text-sm font-bold text-foreground">
+                Access Michigan
+              </span>
+              <span className="text-[9px] text-muted-foreground">
+                Independent civic data
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
