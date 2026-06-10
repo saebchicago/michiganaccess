@@ -808,10 +808,10 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
   // These mirror the homepage Layer 2 cards and anchor users at the cluster
   // entry on the homepage. Full per-cluster destination pages can replace the
   // anchors in a follow-up if we want dedicated cluster URLs.
-  { label: "Get benefits", href: "/#get-benefits" },
-  { label: "Explore your area", href: "/#explore-area" },
-  { label: "Health and coverage", href: "/#health-coverage" },
   { label: "Policy and investment", href: "/#policy-investment" },
+  { label: "Health and coverage", href: "/#health-coverage" },
+  { label: "Explore your area", href: "/#explore-area" },
+  { label: "Learn about benefits", href: "/#learn-benefits" },
   // ───────────────────────────────────────────────────────────────────────────
   {
     label: "Find Help",
@@ -958,10 +958,10 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
 
 export const SITEMAP_SECTIONS: SitemapSection[] = [
   {
-    title: "Get the Help You Need",
+    title: "Learn about programs and resources",
     iconName: "Heart",
     links: [
-      { label: "Get Financial Help", href: "/financial-help" },
+      { label: "Financial-help explainer", href: "/financial-help" },
       { label: "Community Resources", href: "/resources" },
       {
         label: "Insurance Appeals",
