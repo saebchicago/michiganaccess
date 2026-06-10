@@ -29,6 +29,13 @@ import {
 } from "@/models/GeoDimension";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { FacilityCountDisclosure } from "@/components/shared/FacilityCountDisclosure";
+import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
+import {
+  COUNTY_FACILITY_COUNTS,
+  VERIFIED_HEALTH_FACILITIES,
+  VERIFIED_FACILITY_PROVENANCE,
+  VERIFIED_FACILITY_SOURCE_LABEL,
+} from "@/data/verifiedHealthFacilities";
 import {
   Select,
   SelectContent,
@@ -120,6 +127,25 @@ export default function HealthAccessCards({
 
   const filteredCount = filteredFacilities?.length ?? null;
 
+  // Verified counts derived from the static extract (CMS Hospital General
+  // Information + HRSA Health Center Sites). These bypass Supabase so the
+  // card reflects the upstream truth even before the seed loader has run
+  // against production. Per PAUSE 1 (Definition B) the count is hospitals
+  // plus active FQHC service-delivery sites.
+  const verifiedTotal = COUNTY_FACILITY_COUNTS[countyName] ?? 0;
+  const verifiedHospitals = VERIFIED_HEALTH_FACILITIES.filter(
+    (f) => f.county === countyName && f.type === "hospital",
+  ).length;
+  const verifiedFqhcs = verifiedTotal - verifiedHospitals;
+  const verifiedVintage = VERIFIED_FACILITY_PROVENANCE.fetched_at.slice(0, 10);
+  const verifiedBadge = (
+    <IntegrityBadge
+      label="VERIFIED"
+      source="CMS Hospital General Info + HRSA Health Center Sites"
+      vintage={verifiedVintage}
+    />
+  );
+
   return (
     <div className="space-y-4">
       {/* Facility type filter */}
@@ -151,38 +177,43 @@ export default function HealthAccessCards({
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {/* Care Availability — facility counts withheld until verified
-          against an MDHHS/LARA reference extract. Per PAUSE 2 we ship
-          the metric tile without the descriptive sentence so a thin
-          live count (audit found Saginaw=1) cannot mislead a reader. */}
         <PillarInsightCard
           title="Care Availability"
           pattern="rate-per-population"
           geography={geo}
-          value={primary?.totalFacilities ?? null}
+          value={verifiedTotal}
           unit="facilities per 10,000"
           perPopulation={10000}
           icon={Building2}
-          source="State licensing data via Access Michigan database"
-          status={primary ? "live" : "empty"}
-          description="Facility data under verification."
+          source={VERIFIED_FACILITY_SOURCE_LABEL}
+          status="live"
+          description={
+            <span className="inline-flex flex-wrap items-center gap-1.5">
+              {verifiedHospitals} hospital
+              {verifiedHospitals === 1 ? "" : "s"} and {verifiedFqhcs} federally
+              qualified health center site
+              {verifiedFqhcs === 1 ? "" : "s"} in {countyName} County.
+              {verifiedBadge}
+            </span>
+          }
         />
 
-        {/* Hospitals per capita */}
         <PillarInsightCard
           title="Hospital Access"
           pattern="rate-per-population"
           geography={geo}
-          value={primary?.hospitals ?? null}
+          value={verifiedHospitals}
           unit="hospitals per 10,000"
           perPopulation={10000}
           icon={Heart}
-          source="Licensed facilities database"
-          status={primary ? "live" : "empty"}
+          source={VERIFIED_FACILITY_SOURCE_LABEL}
+          status="live"
           description={
-            primary
-              ? `${primary.hospitals} hospital${primary.hospitals !== 1 ? "s" : ""} in ${countyName} County.`
-              : undefined
+            <span className="inline-flex flex-wrap items-center gap-1.5">
+              {verifiedHospitals} CMS-certified hospital
+              {verifiedHospitals === 1 ? "" : "s"} in {countyName} County.
+              {verifiedBadge}
+            </span>
           }
         />
 
