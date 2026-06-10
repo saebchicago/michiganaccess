@@ -297,6 +297,10 @@ const Footer = () => {
               </div>
             ))}
           </div>
+          <p className="text-center text-[11px] text-muted-foreground mt-3 max-w-xl mx-auto">
+            AccessMI is an independent civic data and education project. It is
+            not affiliated with the State of Michigan or any government agency.
+          </p>
           <p className="text-center text-[10px] text-muted-foreground mt-2">
             Site updated{" "}
             {new Date(__BUILD_TIMESTAMP__).toLocaleDateString("en-US", {

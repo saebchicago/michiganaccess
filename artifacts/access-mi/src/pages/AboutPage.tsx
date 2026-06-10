@@ -207,6 +207,19 @@ export default function AboutPage() {
             {t("aboutPage.subtitle")}
           </motion.p>
 
+          <motion.p
+            variants={fadeUp}
+            custom={2.5}
+            initial="hidden"
+            animate="visible"
+            className="mx-auto max-w-2xl mt-4 text-sm text-muted-foreground border border-border rounded-lg px-5 py-3 bg-muted/30"
+          >
+            AccessMI is an independent, non-governmental project. It organizes
+            public data from federal, state, and nonprofit sources for education
+            and research. It cannot enroll anyone in any program; applications
+            happen at official government portals.
+          </motion.p>
+
           {/* Problem → Solution → Mission */}
           <motion.div
             variants={fadeUp}

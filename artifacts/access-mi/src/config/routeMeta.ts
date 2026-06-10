@@ -43,7 +43,7 @@ export const ROUTE_META: RouteMeta[] = [
     title:
       "Access Michigan: Health, Housing, Energy & Services | Open Data | Access Michigan",
     description:
-      "Michigan's open civic intelligence platform. ZIP-level health, housing, energy, and benefits data sourced from 41 verified federal, state, and nonprofit public sources. Free, no account required.",
+      "Michigan's independent open civic intelligence platform. ZIP-level health, housing, energy, and benefits data sourced from 41 verified federal, state, and nonprofit public sources. Free, no account required.",
     h1: "Michigan's public data, organized for action",
     summary:
       "ZIP-level health, economic, and housing data across 83 counties. Free. Forever.",
@@ -249,7 +249,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/about",
     title: "About | Access Michigan",
     description:
-      "Access Michigan is a nonpartisan, citizen-built open data platform. Mission, methodology, governance, and how to contribute or replicate the platform.",
+      "Access Michigan is a nonpartisan, independent, citizen-built open data platform. Mission, methodology, governance, and how to contribute or replicate the platform.",
     h1: "About Access Michigan",
     summary:
       "A nonpartisan civic intelligence platform for Michigan, built on public data.",
