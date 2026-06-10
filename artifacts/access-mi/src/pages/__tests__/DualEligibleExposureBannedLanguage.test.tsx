@@ -59,7 +59,7 @@ function readSourceFile(relPath: string): string {
 function assertNotPresent(source: string, pattern: RegExp, file: string) {
   expect(
     pattern.test(source),
-    `Banned pattern /${pattern.source}/${pattern.flags} found in ${file}`
+    `Banned pattern /${pattern.source}/${pattern.flags} found in ${file}`,
   ).toBe(false);
 }
 
@@ -106,7 +106,7 @@ describe("DualEligibleExposure — civic neutrality: banned advocacy language", 
         assertNotPresent(src, /\bgutted\b/i, relPath);
       });
 
-      it("does not use \"Trump's cuts\" or \"Trump cuts\"", () => {
+      it('does not use "Trump\'s cuts" or "Trump cuts"', () => {
         assertNotPresent(src, /trump.{0,4}cuts/i, relPath);
       });
 
@@ -198,23 +198,30 @@ describe("DualEligibleExposure — civic neutrality: no payer or insurer names",
 describe("DualEligibleExposure — civic neutrality: required framing", () => {
   it("data page contains anchor phrase verbatim", () => {
     const src = readSourceFile("src/pages/DualEligibleExposurePage.tsx");
-    expect(src).toContain(
-      "Dual-eligible residents are exempt from P.L. 119-21 work requirements. This map shows where they live."
+    // Collapse JSX line breaks before matching — phrase may span multiple source lines
+    const normalized = src.replace(/\s+/g, " ");
+    expect(normalized).toContain(
+      "Dual-eligible residents are exempt from P.L. 119-21 work requirements. This map shows where they live.",
     );
   });
 
   it("data page anchor phrase appears at least twice (subtitle and callout h2)", () => {
     const src = readSourceFile("src/pages/DualEligibleExposurePage.tsx");
-    const count = (src.match(
-      /Dual-eligible residents are exempt from P\.L\. 119-21 work requirements\. This map shows where they live\./g
-    ) || []).length;
+    const normalized = src.replace(/\s+/g, " ");
+    const count = (
+      normalized.match(
+        /Dual-eligible residents are exempt from P\.L\. 119-21 work requirements\. This map shows where they live\./g,
+      ) || []
+    ).length;
     expect(count).toBeGreaterThanOrEqual(2);
   });
 
   it("methodology page contains anchor phrase verbatim", () => {
-    const src = readSourceFile("src/pages/methodology/DualEligibleExposureMethodology.tsx");
+    const src = readSourceFile(
+      "src/pages/methodology/DualEligibleExposureMethodology.tsx",
+    );
     expect(src).toContain(
-      "Dual-eligible residents are exempt from P.L. 119-21 work requirements. This map shows where they live."
+      "Dual-eligible residents are exempt from P.L. 119-21 work requirements. This map shows where they live.",
     );
   });
 
@@ -224,12 +231,16 @@ describe("DualEligibleExposure — civic neutrality: required framing", () => {
   });
 
   it("methodology page uses P.L. 119-21", () => {
-    const src = readSourceFile("src/pages/methodology/DualEligibleExposureMethodology.tsx");
+    const src = readSourceFile(
+      "src/pages/methodology/DualEligibleExposureMethodology.tsx",
+    );
     expect(src).toMatch(/P\.L\.\s*119-21/i);
   });
 
   it("methodology page cites MACPAC", () => {
-    const src = readSourceFile("src/pages/methodology/DualEligibleExposureMethodology.tsx");
+    const src = readSourceFile(
+      "src/pages/methodology/DualEligibleExposureMethodology.tsx",
+    );
     expect(src).toContain("MACPAC");
   });
 
@@ -239,7 +250,9 @@ describe("DualEligibleExposure — civic neutrality: required framing", () => {
   });
 
   it("methodology page cites ACS B27010", () => {
-    const src = readSourceFile("src/pages/methodology/DualEligibleExposureMethodology.tsx");
+    const src = readSourceFile(
+      "src/pages/methodology/DualEligibleExposureMethodology.tsx",
+    );
     expect(src).toContain("ACS B27010");
   });
 
@@ -249,12 +262,16 @@ describe("DualEligibleExposure — civic neutrality: required framing", () => {
   });
 
   it("methodology page cites §71119 work requirement exemption", () => {
-    const src = readSourceFile("src/pages/methodology/DualEligibleExposureMethodology.tsx");
+    const src = readSourceFile(
+      "src/pages/methodology/DualEligibleExposureMethodology.tsx",
+    );
     expect(src).toContain("§71119");
   });
 
   it("methodology page cites §71101 MSP provision", () => {
-    const src = readSourceFile("src/pages/methodology/DualEligibleExposureMethodology.tsx");
+    const src = readSourceFile(
+      "src/pages/methodology/DualEligibleExposureMethodology.tsx",
+    );
     expect(src).toContain("§71101");
   });
 });
