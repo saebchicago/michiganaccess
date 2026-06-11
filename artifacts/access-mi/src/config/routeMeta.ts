@@ -40,10 +40,9 @@ export interface RouteMeta {
 export const ROUTE_META: RouteMeta[] = [
   {
     path: "/",
-    title:
-      "Access Michigan: Health, Housing, Energy & Services | Open Data | Access Michigan",
+    title: "Access Michigan: Health, Housing & Energy Assistance",
     description:
-      "Michigan's independent open civic intelligence platform. ZIP-level health, housing, energy, and benefits data sourced from 41 verified federal, state, and nonprofit public sources. Free, no account required.",
+      "Michigan health, housing, energy, and benefits data for all 83 counties. Verified from 41 federal and public sources. Free, no account required.",
     h1: "Michigan's public data, organized for action",
     summary:
       "ZIP-level health, economic, and housing data across 83 counties. Free. Forever.",
@@ -52,7 +51,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/methodology",
     title: "Methodology | Access Michigan",
     description:
-      "How Access Michigan sources, validates, and presents Michigan civic data. Data classification (verified, modeled, projected), the Civic Insight Score formula, and equity-centered design principles.",
+      "How Access Michigan sources and validates civic data. Covers data classification, the Civic Insight Score, and equity-centered design principles.",
     h1: "Methodology and data transparency",
     summary:
       "Sourcing, validation, and a transparent record of every score and threshold on the platform.",
@@ -61,7 +60,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/health-map",
     title: "Michigan Health Map | Access Michigan",
     description:
-      "Interactive map of Michigan health facilities, federally qualified health centers, behavioral health providers, and CMS-rated hospitals across all 83 counties.",
+      "Interactive map of Michigan health facilities: FQHCs, behavioral health providers, and CMS-rated hospitals across all 83 counties.",
     h1: "Michigan Health Map",
     summary:
       "Locate hospitals, clinics, FQHCs, and behavioral health services anywhere in Michigan.",
@@ -70,7 +69,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/transportation",
     title: "Transportation Access | Access Michigan",
     description:
-      "Public transit, paratransit, non-emergency medical transport, and rural ride programs across Michigan's 83 counties. Sourced from MDOT, SEMCOG, and the federal Bureau of Transportation Statistics.",
+      "Public transit, paratransit, non-emergency medical transport, and rural ride programs across Michigan's 83 counties. Sourced from MDOT and SEMCOG.",
     h1: "Transportation access in Michigan",
     summary:
       "Rural transit, ADA paratransit, NEMT, and rideshare programs by county.",
@@ -79,7 +78,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/find-care",
     title: "Find Care Near You | Access Michigan",
     description:
-      "Search Michigan healthcare providers by ZIP, county, specialty, or insurance. Federally qualified health centers, sliding-scale clinics, behavioral health, and Leapfrog-rated hospitals.",
+      "Search Michigan healthcare providers by ZIP or county. FQHCs, sliding-scale clinics, behavioral health providers, and Leapfrog-rated hospitals.",
     h1: "Find Care Near You",
     summary:
       "Search Michigan providers, clinics, and hospitals by ZIP or county.",
@@ -88,7 +87,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/benefits",
     title: "Benefits Education | Access Michigan",
     description:
-      "Educational explainers of Michigan benefit programs: a sourced life-stage map, how eligibility rules work, and a benefits-cliff explainer. Informational only. Eligibility is decided by the program.",
+      "Educational explainers of Michigan benefit programs: a life-stage map, eligibility rules, and a benefits-cliff explainer. Informational only.",
     h1: "How Michigan benefit programs work",
     summary: "Three educational tools, one page. Sourced. Informational only.",
   },
@@ -96,7 +95,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/quality",
     title: "Hospital Quality & Safety Ratings | Access Michigan",
     description:
-      "Compare Michigan hospitals on Leapfrog safety grades, CMS quality scores, Magnet recognition, and patient experience metrics. Sourced from CMS Hospital Compare and Leapfrog Hospital Safety Grade.",
+      "Compare Michigan hospitals on Leapfrog safety grades, CMS quality scores, Magnet status, and patient experience metrics. Sourced from CMS and Leapfrog.",
     h1: "Hospital Quality & Safety Ratings",
     summary:
       "Independent safety grades, CMS quality scores, and accreditations for Michigan hospitals.",
@@ -132,7 +131,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/financial-help",
     title: "Financial Help | Access Michigan",
     description:
-      "Michigan financial assistance programs for healthcare, housing, energy, and food. Includes a preliminary eligibility screener and links to the official MI Bridges application portal.",
+      "Michigan financial assistance programs for healthcare, housing, energy, and food. Preliminary eligibility screener links to MI Bridges.",
     h1: "Financial Help",
     summary:
       "Michigan financial assistance programs, with a preliminary screener routing to MI Bridges.",
@@ -157,8 +156,7 @@ export const ROUTE_META: RouteMeta[] = [
   },
   {
     path: "/zip-intelligence",
-    title:
-      "Health Score for Any Michigan ZIP Code | 40 CDC Measures | accessmi.org",
+    title: "Michigan ZIP Health Score: 40 CDC Measures | Access Michigan",
     description:
       "Type your ZIP code. See 40 health, equity, and social measures. Build custom charts. Compare to Michigan and national averages.",
     h1: "Know your neighborhood",
@@ -169,7 +167,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/environment",
     title: "Environment | Access Michigan",
     description:
-      "Michigan environmental data: PFAS contamination sites, EJSCREEN equity indicators, FEMA flood and disaster risk, EGLE water infrastructure, and EPA TRI/ECHO facility records.",
+      "Michigan environmental data: PFAS sites, EJSCREEN equity indicators, FEMA flood risk, EGLE water infrastructure, and EPA TRI/ECHO facility records.",
     h1: "Michigan environmental data",
     summary:
       "PFAS, water infrastructure, environmental justice, and disaster risk by county.",
@@ -204,7 +202,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/energy",
     title: "Energy | Access Michigan",
     description:
-      "Michigan energy data: LIHEAP and State Emergency Relief eligibility, MEAP heating assistance, MiHER home energy rebates, and Consumers Energy and DTE equity programs.",
+      "Michigan energy data: LIHEAP and State Emergency Relief eligibility, MEAP heating assistance, MiHER rebates, and utility equity programs.",
     h1: "Energy assistance in Michigan",
     summary:
       "Heating assistance, rebates, and clean-energy financing programs by county.",
@@ -249,7 +247,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/about",
     title: "About | Access Michigan",
     description:
-      "Access Michigan is a nonpartisan, independent, citizen-built open data platform. Mission, methodology, governance, and how to contribute or replicate the platform.",
+      "Access Michigan is a nonpartisan, independent, citizen-built civic data platform. Mission, methodology, governance, and how to contribute.",
     h1: "About Access Michigan",
     summary:
       "A nonpartisan civic intelligence platform for Michigan, built on public data.",
@@ -266,7 +264,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/health-equity-atlas",
     title: "Michigan Health Equity Atlas | Access Michigan",
     description:
-      "10 health-equity layers across Michigan's 83 counties: compound access deficit, food deserts, broadband, infant mortality, environmental justice, energy burden, uninsured, poverty, ALICE rate, and pharmacy access.",
+      "10 health-equity layers across Michigan's 83 counties: access deficit, food deserts, broadband, infant mortality, environmental justice, and energy burden.",
     h1: "Michigan Health Equity Atlas",
     summary: "10 equity layers, 83 counties, one map.",
   },
@@ -283,7 +281,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/brief",
     title: "County Brief | Access Michigan",
     description:
-      "Citation-grade county brief for any Michigan county: population, facility count, uninsured rate, food insecurity, primary care ratio, and economic hardship. Each statistic carries its source, vintage, and integrity label.",
+      "Citation-grade county brief: population, facilities, uninsured rate, food insecurity, and primary care ratio. Each statistic sourced and labeled.",
     h1: "Michigan County Brief",
     summary:
       "One-page sourced county brief for health departments, journalists, and grant writers. Free.",
