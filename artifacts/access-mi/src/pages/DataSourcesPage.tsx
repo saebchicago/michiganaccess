@@ -13,6 +13,16 @@ import {
   SOURCES_BY_CATEGORY as SOURCES,
   SOURCES_REGISTRY,
 } from "@/data/sourcesRegistry";
+import facilitiesData from "@/data/verifiedHealthFacilities.json";
+
+const FACILITY_ORGS = new Set(["CMS", "HRSA"]);
+const facilityFetchedAt = new Date(
+  facilitiesData.provenance.fetched_at,
+).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
 
 export default function DataSourcesPage() {
   usePageMeta({
@@ -99,6 +109,11 @@ export default function DataSourcesPage() {
                     <p className="text-xs text-muted-foreground mt-2">
                       Powers: {src.powers}
                     </p>
+                    {FACILITY_ORGS.has(src.org) && (
+                      <p className="text-[10px] text-muted-foreground mt-1">
+                        Last fetched: {facilityFetchedAt}
+                      </p>
+                    )}
                     <a
                       href={src.url}
                       target="_blank"

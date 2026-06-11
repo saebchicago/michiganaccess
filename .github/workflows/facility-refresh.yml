@@ -1,0 +1,107 @@
+name: facility-refresh
+# Runbook: PEP population refresh (annual, owner-dispatch only — no cron).
+#   gh workflow run facility-refresh.yml --ref main -f run_population_refresh=true
+on:
+  schedule:
+    - cron: "0 11 * * 1"    # Mondays 11:00 UTC = 06:00 ET
+  workflow_dispatch:
+    inputs:
+      run_population_refresh:
+        description: "Also refresh Census PEP population estimates (annual)"
+        type: boolean
+        default: false
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Fetch latest facility data
+        run: node artifacts/access-mi/scripts/build-facility-dataset.mjs
+      - name: Refresh Census PEP population (owner-dispatch only)
+        if: inputs.run_population_refresh == true
+        run: node artifacts/access-mi/scripts/refresh-county-population.mjs
+      - name: Check for drift
+        id: drift
+        run: |
+          if git diff --quiet \
+            artifacts/access-mi/src/data/verifiedHealthFacilities.json \
+            artifacts/access-mi/src/data/countyFacilityReference.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No facility drift — skipping PR."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run full gate on updated data
+        if: steps.drift.outputs.changed == 'true'
+        working-directory: artifacts/access-mi
+        run: pnpm build && pnpm check:tests
+      - name: Capture diff summary
+        if: steps.drift.outputs.changed == 'true'
+        id: summary
+        run: |
+          node - <<'EOF'
+          const fs = require("fs");
+          const before = JSON.parse(
+            require("child_process")
+              .execSync("git show HEAD:artifacts/access-mi/src/data/verifiedHealthFacilities.json")
+              .toString()
+          );
+          const after = JSON.parse(
+            fs.readFileSync("artifacts/access-mi/src/data/verifiedHealthFacilities.json", "utf8")
+          );
+          const out = process.env.GITHUB_OUTPUT;
+          const append = (k, v) => fs.appendFileSync(out, `${k}=${v}\n`);
+          append("old_total", before.provenance.mi_total);
+          append("new_total", after.provenance.mi_total);
+          append("old_date",  before.provenance.fetched_at);
+          append("new_date",  after.provenance.fetched_at);
+          EOF
+      - name: Create PR
+        if: steps.drift.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OLD_TOTAL: ${{ steps.summary.outputs.old_total }}
+          NEW_TOTAL: ${{ steps.summary.outputs.new_total }}
+          OLD_DATE:  ${{ steps.summary.outputs.old_date }}
+          NEW_DATE:  ${{ steps.summary.outputs.new_date }}
+        run: |
+          BRANCH="data/facility-refresh-$(date -u +%Y%m%d-%H%M)"
+          git config user.name "facility-refresh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add \
+            artifacts/access-mi/src/data/verifiedHealthFacilities.json \
+            artifacts/access-mi/src/data/countyFacilityReference.json
+          git commit -m "data: facility dataset refresh $(date -u +%Y-%m-%d)"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "data: facility dataset refresh $(date -u +%Y-%m-%d)" \
+            --body "## Facility Dataset Drift Detected
+
+| Metric | Previous | New |
+|--------|----------|-----|
+| Total facilities | $OLD_TOTAL | $NEW_TOTAL |
+| Fetched at (UTC) | $OLD_DATE | $NEW_DATE |
+
+Sources: CMS Hospital General Info + HRSA Health Center Service Delivery Sites
+
+Full gate passed (check-links, check-counts, check-zip-population, check-county-facilities, vite build, prerender, vitest).
+
+**Action required after merge:** Rerun the Supabase seed loader:
+\`\`\`bash
+node artifacts/access-mi/scripts/load-facilities-to-supabase.mjs
+\`\`\`"

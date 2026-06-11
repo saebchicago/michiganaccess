@@ -125,6 +125,10 @@ async function main() {
     console.log(`  wrote ${src.id}.json (${Array.isArray(rows) ? rows.length : "?"} records)`);
   }
 
+  if (manifest.datasets.length === 0) {
+    console.log("⚠ no real datasets ran — skipping manifest write (nothing to commit)");
+    return;
+  }
   await writeFile(join(OUT_DIR, "manifest.json"), JSON.stringify(manifest, null, 2));
   console.log(`✓ manifest written with ${manifest.datasets.length} datasets`);
 }
