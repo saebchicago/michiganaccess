@@ -279,6 +279,15 @@ export const ROUTE_META: RouteMeta[] = [
     summary:
       "Federal investment, broadband, and democratic-participation data, by district.",
   },
+  {
+    path: "/brief",
+    title: "County Brief | Access Michigan",
+    description:
+      "Citation-grade county brief for any Michigan county: population, facility count, uninsured rate, food insecurity, primary care ratio, and economic hardship. Each statistic carries its source, vintage, and integrity label.",
+    h1: "Michigan County Brief",
+    summary:
+      "One-page sourced county brief for health departments, journalists, and grant writers. Free.",
+  },
 ];
 
 /**

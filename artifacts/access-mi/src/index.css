@@ -476,6 +476,16 @@
     margin-top: 0.5rem;
     font-size: 9px;
   }
+  /* Brief stat blocks — keep grid in print, force 2-col */
+  [data-brief-stat] {
+    break-inside: avoid;
+    border: 1px solid #ccc !important;
+    background: #fafafa !important;
+  }
+  /* Suppress link-href expansion inside citation pre block */
+  pre a[href]::after {
+    content: none !important;
+  }
 }
 
 /* ── Google Translate safety-net ─────────────────────────────────────────── */
