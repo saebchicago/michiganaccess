@@ -1,5 +1,28 @@
 import "@testing-library/jest-dom";
 
+const _storage: Record<string, string> = {};
+const localStorageMock = {
+  getItem: (key: string) => _storage[key] ?? null,
+  setItem: (key: string, value: string) => {
+    _storage[key] = String(value);
+  },
+  removeItem: (key: string) => {
+    delete _storage[key];
+  },
+  clear: () => {
+    Object.keys(_storage).forEach((k) => delete _storage[k]);
+  },
+  get length() {
+    return Object.keys(_storage).length;
+  },
+  key: (i: number) => Object.keys(_storage)[i] ?? null,
+};
+Object.defineProperty(window, "localStorage", {
+  value: localStorageMock,
+  writable: true,
+  configurable: true,
+});
+
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: (query: string) => ({
