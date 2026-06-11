@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import PageFeedback from "@/components/shared/PageFeedback";
 import CivicDataCallout from "@/components/shared/CivicDataCallout";
 import { useSearchParams } from "react-router-dom";
@@ -9,12 +9,16 @@ import {
   MICHIGAN_COUNTIES,
   type MichiganCounty,
 } from "@/contexts/CountyContext";
-import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
+import {
+  COUNTY_PROFILES,
+  COUNTY_POPULATION_SOURCE,
+} from "@/data/michigan-county-profiles";
 import {
   getCountyCrossDomain,
   MI_STATE_AVERAGES,
 } from "@/data/cross-domain-indicators";
-import { DATA_SOURCE_DISPLAY } from "@/config/platformConstants";
+import { getALICEByCounty } from "@/data/aliceData";
+import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -35,18 +39,18 @@ import {
   TrendingDown,
   Minus,
   MapPin,
-  BarChart3,
   FileText,
   Activity,
   Zap,
-  Droplets,
-  TreePine,
   AlertTriangle,
+  Copy,
+  Check,
+  ShieldCheck,
 } from "lucide-react";
 import MetricCluster from "@/components/brief/MetricCluster";
+import { BriefStatBlock } from "@/components/brief/BriefStatBlock";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import CivicScoreBreakdown from "@/components/shared/CivicScoreBreakdown";
-import { DataClassification } from "@/components/shared/DataClassification";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
 import ViewModeToggle, {
   type ViewMode,
@@ -55,6 +59,8 @@ import CHNAViewSection from "@/components/brief/CHNAViewSection";
 import UtilityStressSection from "@/components/brief/UtilityStressSection";
 import GetToCarePanel from "@/components/brief/GetToCarePanel";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
+import { generateBriefPDF } from "@/utils/generateBriefPDF";
+import type { BriefStat } from "@/utils/generateBriefPDF";
 
 function computeCivicScore(county: string): number {
   const profile = COUNTY_PROFILES[county];
@@ -195,6 +201,8 @@ export default function BriefPage() {
   const printRef = useRef<HTMLDivElement>(null);
   const { profile: personalProfile } = usePersonalProfile();
   const [viewMode, setViewMode] = useState<ViewMode>("standard");
+  const [copied, setCopied] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   // Support ?county=Wayne from "Try it now" links
   useEffect(() => {
@@ -252,6 +260,112 @@ export default function BriefPage() {
       ? `County Brief for ${county} County, Michigan. Population: ${profile.population}. Type: ${profile.countyType}. Cities: ${profile.majorCities.join(", ")}. Uninsured: ${getVal(profile.healthHighlights, "uninsured")}. Food insecurity: ${getVal(profile.healthHighlights, "food")}. Civic Score: ${score}/100.`
       : "";
 
+  const aliceData = county ? getALICEByCounty(county) : null;
+  const facilityCount =
+    county != null
+      ? ((countyFacilityRef.counts as Record<string, number>)[county] ?? null)
+      : null;
+  const facilityFetched = new Date(
+    countyFacilityRef.provenance.fetched_at,
+  ).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  const retrievedDate = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const countySlug = county?.toLowerCase().replace(/\s+/g, "-") ?? "";
+  const citeText = county
+    ? `AccessMI (independent civic data project). ${county} County Brief. Data vintages as listed per statistic. accessmi.org/brief?county=${countySlug}. Retrieved ${retrievedDate}.`
+    : "";
+
+  const briefStats: BriefStat[] =
+    county && profile
+      ? [
+          {
+            label: "Population",
+            value: profile.population.toLocaleString(),
+            badge: "VERIFIED",
+            source: "Census Bureau PEP",
+            vintage: "Vintage 2024",
+          },
+          {
+            label: "Health Facilities",
+            value:
+              facilityCount === 0
+                ? "0 (verified zero)"
+                : facilityCount != null
+                  ? String(facilityCount)
+                  : "no data",
+            badge: facilityCount != null ? "VERIFIED" : "no data",
+            source: "CMS + HRSA",
+            vintage: facilityFetched,
+          },
+          {
+            label: "Uninsured Rate",
+            value: getVal(profile.healthHighlights, "uninsured"),
+            badge: "VERIFIED",
+            source: "County Health Rankings",
+            vintage: "2025 edition",
+          },
+          {
+            label: "Primary Care Ratio",
+            value: getVal(profile.healthHighlights, "primary care"),
+            badge: "VERIFIED",
+            source: "County Health Rankings",
+            vintage: "2025 edition",
+          },
+          {
+            label: "Food Insecurity",
+            value: getVal(profile.healthHighlights, "food"),
+            badge: "VERIFIED",
+            source: "County Health Rankings",
+            vintage: "2025 edition",
+          },
+          {
+            label: "ALICE Economic Hardship",
+            value: aliceData ? `${aliceData.combinedHardshipPct}%` : "no data",
+            badge: aliceData ? "VERIFIED" : "no data",
+            source: "United Way ALICE Report",
+            vintage: "2025 (2023 data)",
+          },
+          {
+            label: "Civic Insight Score",
+            value: score != null ? `${score}/100` : "no data",
+            badge: "MODELED",
+            source: "AccessMI derived",
+            vintage: "Computed from verified inputs",
+          },
+        ]
+      : [];
+
+  const handleDownloadPDF = useCallback(async () => {
+    if (!county || !profile || score === null) return;
+    setPdfLoading(true);
+    try {
+      await generateBriefPDF({
+        countyName: county,
+        countySlug,
+        stats: briefStats,
+        citeText,
+        retrievedDate,
+      });
+    } finally {
+      setPdfLoading(false);
+    }
+  }, [county, profile, score, briefStats, citeText, countySlug, retrievedDate]);
+
+  const handleCopy = useCallback(() => {
+    if (!citeText) return;
+    navigator.clipboard.writeText(citeText).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [citeText]);
+
   return (
     <Layout>
       <section className="bg-gradient-to-b from-primary/5 to-background py-12 lg:py-16">
@@ -302,11 +416,15 @@ export default function BriefPage() {
             {/* Print-only header */}
             <div className="hidden print-header print:block text-center border-b border-border pb-3 mb-4">
               <p className="text-lg font-bold">
-                Access Michigan - {county} County Brief
+                AccessMI — {county} County Brief
               </p>
               <p className="text-xs text-muted-foreground">
-                Generated {new Date().toLocaleDateString()} · Data as of March
-                2026 · accessmi.org/brief
+                Generated {retrievedDate} · accessmi.org/brief?county=
+                {countySlug}
+              </p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">
+                AccessMI is an independent civic data and education project. Not
+                affiliated with the State of Michigan or any government agency.
               </p>
             </div>
             {/* Score card */}
@@ -337,22 +455,11 @@ export default function BriefPage() {
                   <Button
                     size="sm"
                     className="gap-1.5"
-                    onClick={() => {
-                      const profile = county ? COUNTY_PROFILES[county] : null;
-                      const h = profile?.healthHighlights || [];
-                      const pop = profile?.population?.toLocaleString() || "-";
-                      const uninsured = h[0]?.value || "-";
-                      const food = h[2]?.value || "-";
-                      const w = window.open("", "_blank");
-                      if (!w) return;
-                      w.document.write(
-                        `<html><head><title>${county} County - CHNA Intelligence Brief</title><style>body{font-family:system-ui,sans-serif;max-width:800px;margin:0 auto;padding:40px;color:#1a1a1a}h1{font-size:24px;color:#0A4C95;border-bottom:2px solid #00A3A1;padding-bottom:8px}h2{font-size:16px;color:#0A4C95;margin-top:24px}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0}.stat-card{border:1px solid #e5e7eb;border-radius:8px;padding:12px;text-align:center}.stat-value{font-size:28px;font-weight:700;color:#0A4C95}.stat-label{font-size:11px;color:#6b7280}.narrative{background:#f9fafb;border-left:3px solid #00A3A1;padding:12px 16px;margin:16px 0;font-size:13px;line-height:1.6}.footer{margin-top:40px;padding-top:16px;border-top:1px solid #e5e7eb;font-size:10px;color:#9ca3af}@media print{body{padding:20px}}</style></head><body><h1>${county} County - CHNA Intelligence Brief</h1><p style="font-size:12px;color:#6b7280">Generated ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · Source: Access Michigan (accessmi.org)</p><div class="narrative"><strong>Executive Summary:</strong> ${county} County (pop. ${pop}) has an uninsured rate of ${uninsured} and food insecurity at ${food}. Data sourced from ${DATA_SOURCE_DISPLAY} verified public agencies.</div><h2>Key Health Indicators</h2><div class="stat-grid"><div class="stat-card"><div class="stat-value">${uninsured}</div><div class="stat-label">Uninsured Rate</div></div><div class="stat-card"><div class="stat-value">${h[1]?.value || "-"}</div><div class="stat-label">PCP Ratio</div></div><div class="stat-card"><div class="stat-value">${food}</div><div class="stat-label">Food Insecurity</div></div></div><h2>Data Sources</h2><p style="font-size:10px;color:#6b7280">CDC PLACES · CMS Hospital Compare · HRSA HPSA · County Health Rankings · Census ACS · MDHHS · March of Dimes · ACEEE LEAD · EPA EJScreen · FCC BDC</p><div class="footer"><p>Access Michigan · accessmi.org · Independent civic intelligence platform</p><p>Auto-generated from verified public data. Composite scores are modeled estimates - see accessmi.org/methodology.</p></div></body></html>`,
-                      );
-                      w.document.close();
-                      w.print();
-                    }}
+                    onClick={handleDownloadPDF}
+                    disabled={pdfLoading}
                   >
-                    <FileDown className="h-3.5 w-3.5" /> CHNA Brief (PDF)
+                    <FileDown className="h-3.5 w-3.5" />
+                    {pdfLoading ? "Generating…" : "Download PDF"}
                   </Button>
                   <Button
                     variant="outline"
@@ -572,44 +679,56 @@ export default function BriefPage() {
             {/* Key Indicator Cluster - CSS mini-bars */}
             <MetricCluster county={county} />
 
-            {/* Headline metrics */}
+            {/* Citation-grade stat blocks */}
             <div>
-              <h3 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-1.5">
-                <BarChart3 className="h-4 w-4 text-primary" /> Headline Metrics
+              <h3 className="text-sm font-semibold text-foreground mb-3">
+                Key Indicators — sourced, labeled, citable
               </h3>
-              {profile.healthHighlights &&
-              profile.healthHighlights.length > 0 ? (
-                <div className="space-y-3">
-                  <DataClassification type="verified" />
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    {profile.healthHighlights.map((m) => (
-                      <Card key={m.label}>
-                        <CardContent className="py-4 text-center">
-                          <p className="text-xs text-muted-foreground mb-1">
-                            {m.label}
-                          </p>
-                          <p className="text-2xl font-bold text-foreground">
-                            {m.value}
-                          </p>
-                          <div className="flex items-center justify-center gap-1 mt-1">
-                            {trendIcon(m.trend)}
-                            <span className="text-[10px] text-muted-foreground capitalize">
-                              {m.trend || "stable"}
-                            </span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <DataClassification type="pending" />
-                  <p className="text-sm text-muted-foreground">
-                    Headline metrics are not yet available for this county.
-                  </p>
-                </div>
-              )}
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {briefStats.map((stat) => (
+                  <BriefStatBlock
+                    key={stat.label}
+                    label={stat.label}
+                    value={stat.value === "no data" ? null : stat.value}
+                    badge={stat.badge === "no data" ? "VERIFIED" : stat.badge}
+                    source={stat.source}
+                    vintage={stat.vintage}
+                    nullNote={
+                      stat.badge === "no data"
+                        ? "No data available for this county"
+                        : undefined
+                    }
+                  />
+                ))}
+              </div>
+              <p className="text-[10px] text-muted-foreground mt-2">
+                Population source:{" "}
+                <span className="font-medium">{COUNTY_POPULATION_SOURCE}</span>
+              </p>
+            </div>
+
+            {/* Cite this page */}
+            <div className="rounded-lg border border-border bg-muted/30 p-4">
+              <h3 className="text-xs font-semibold text-foreground flex items-center gap-1.5 mb-2">
+                <FileText className="h-3.5 w-3.5 text-primary" />
+                Cite this page
+              </h3>
+              <pre className="text-[11px] text-foreground/80 whitespace-pre-wrap font-mono leading-relaxed bg-background rounded border border-border px-3 py-2">
+                {citeText}
+              </pre>
+              <Button
+                variant="outline"
+                size="sm"
+                className="mt-2 gap-1.5 text-[11px]"
+                onClick={handleCopy}
+              >
+                {copied ? (
+                  <Check className="h-3 w-3 text-michigan-forest" />
+                ) : (
+                  <Copy className="h-3 w-3" />
+                )}
+                {copied ? "Copied!" : "Copy citation"}
+              </Button>
             </div>
 
             {/* Partner CTA */}
@@ -628,23 +747,23 @@ export default function BriefPage() {
               <CivicDataCallout />
             </div>
 
-            {/* Data note */}
-            <div className="rounded-lg border border-border bg-muted/50 p-4 print:border-border">
-              <p className="text-xs text-muted-foreground flex items-start gap-1.5">
-                <FileText className="h-3.5 w-3.5 mt-0.5 shrink-0" />
-                Data drawn from County Health Rankings & Roadmaps, 2025 edition,
-                U.S. Census 2023, and USDA Food Environment Atlas. This brief is
-                for informational purposes only.
-                <a
-                  href="/methodology"
-                  className="text-primary hover:underline ml-0.5"
-                >
+            {/* Independence + methodology footer — always visible, screen and print */}
+            <div className="rounded-lg border border-border bg-muted/20 px-4 py-3 flex items-start gap-2">
+              <ShieldCheck
+                className="h-3.5 w-3.5 text-michigan-forest mt-0.5 shrink-0"
+                aria-hidden="true"
+              />
+              <p className="text-[11px] text-muted-foreground leading-relaxed">
+                AccessMI is an independent civic data and education project. It
+                is not affiliated with the State of Michigan or any government
+                agency. Data is for informational purposes only.{" "}
+                <a href="/methodology" className="text-primary hover:underline">
                   Full methodology →
                 </a>
               </p>
             </div>
 
-            {/* Print + Feedback */}
+            {/* Print button + Feedback */}
             <div className="flex items-center justify-end print:hidden">
               <Button
                 variant="outline"
