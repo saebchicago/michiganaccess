@@ -43,6 +43,7 @@ import DownloadCountyGuide from "@/components/county/DownloadCountyGuide";
 import MunicipalToolkit from "@/components/county/MunicipalToolkit";
 import RecentlyViewedBar from "@/components/county/RecentlyViewedBar";
 import UninsuredSparkline from "@/components/county/UninsuredSparkline";
+import PopulationSparkline from "@/components/county/PopulationSparkline";
 import SnapshotCard from "@/components/shared/SnapshotCard";
 import DataConfidenceCard, {
   buildDataConfidence,
@@ -390,6 +391,13 @@ export default function CountyPage() {
             ))
           )}
         </motion.div>
+
+        {/* Population trend sparkline */}
+        <Card>
+          <CardContent className="py-4">
+            <PopulationSparkline county={county} />
+          </CardContent>
+        </Card>
 
         {/* Health Highlights */}
         <section>

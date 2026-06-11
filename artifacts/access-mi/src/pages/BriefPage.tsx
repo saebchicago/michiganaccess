@@ -61,6 +61,8 @@ import GetToCarePanel from "@/components/brief/GetToCarePanel";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
 import { generateBriefPDF } from "@/utils/generateBriefPDF";
 import type { BriefStat } from "@/utils/generateBriefPDF";
+import PopulationSparkline from "@/components/county/PopulationSparkline";
+import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 
 function computeCivicScore(county: string): number {
   const profile = COUNTY_PROFILES[county];
@@ -704,6 +706,28 @@ export default function BriefPage() {
               <p className="text-[10px] text-muted-foreground mt-2">
                 Population source:{" "}
                 <span className="font-medium">{COUNTY_POPULATION_SOURCE}</span>
+              </p>
+            </div>
+
+            {/* Trend Lines */}
+            <div className="rounded-lg border border-border bg-muted/20 p-4 space-y-4">
+              <h3 className="text-sm font-semibold text-foreground">
+                Trend Lines — vintage series, zero interpolation
+              </h3>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="bg-background rounded-lg border border-border p-3">
+                  <PopulationSparkline county={county} />
+                </div>
+                <div className="bg-background rounded-lg border border-border p-3">
+                  <p className="text-[11px] font-medium text-muted-foreground mb-2">
+                    Uninsured Rate — Vintage Comparison
+                  </p>
+                  <UninsuredSparkline county={county} />
+                </div>
+              </div>
+              <p className="text-[10px] text-muted-foreground">
+                PEP: Census Bureau annual estimates, no interpolation. ACS:
+                non-overlapping 5-year windows only (2014–2018 vs. 2019–2023).
               </p>
             </div>
 
