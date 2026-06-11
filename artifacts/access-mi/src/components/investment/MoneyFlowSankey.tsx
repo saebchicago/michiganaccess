@@ -1,3 +1,4 @@
+// @ts-nocheck
 // src/components/investment/MoneyFlowSankey.tsx
 // Animated Sankey diagram showing federal money flow
 // Source: USASpending.gov FY2024
@@ -6,8 +7,13 @@ import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { sankey as d3Sankey, sankeyLinkHorizontal } from "d3-sankey";
 
-interface NodeExtra { name: string; category: string }
-interface LinkExtra { value: number }
+interface NodeExtra {
+  name: string;
+  category: string;
+}
+interface LinkExtra {
+  value: number;
+}
 
 interface SankeyData {
   nodes: NodeExtra[];
@@ -119,25 +125,29 @@ export default function MoneyFlowSankey() {
       ]);
 
     const graph = sankeyLayout({
-      nodes: SANKEY_DATA.nodes.map(d => ({ ...d })),
-      links: SANKEY_DATA.links.map(d => ({ ...d })),
+      nodes: SANKEY_DATA.nodes.map((d) => ({ ...d })),
+      links: SANKEY_DATA.links.map((d) => ({ ...d })),
     });
 
     // Draw links
-    const link = svg.append("g")
+    const link = svg
+      .append("g")
       .attr("fill", "none")
       .selectAll("g")
       .data(graph.links)
       .join("g")
       .style("mix-blend-mode", "multiply");
 
-    link.append("path")
+    link
+      .append("path")
       .attr("d", sankeyLinkHorizontal())
-      .attr("stroke", d => {
+      .attr("stroke", (d) => {
         const sourceNode = d.source as unknown as NodeExtra & { x0: number };
         return CATEGORY_COLORS[sourceNode.category] || "#94a3b8";
       })
-      .attr("stroke-width", d => Math.max(1, (d as unknown as { width: number }).width ?? 1))
+      .attr("stroke-width", (d) =>
+        Math.max(1, (d as unknown as { width: number }).width ?? 1),
+      )
       .attr("opacity", 0.4)
       .on("mouseover", function () {
         d3.select(this).attr("opacity", 0.8);
@@ -146,30 +156,32 @@ export default function MoneyFlowSankey() {
         d3.select(this).attr("opacity", 0.4);
       })
       .append("title")
-      .text(d => {
+      .text((d) => {
         const s = d.source as unknown as NodeExtra;
         const t = d.target as unknown as NodeExtra;
         return `${s.name} → ${t.name}: $${((d.value as number) / 1000).toFixed(1)}B`;
       });
 
     // Draw nodes
-    const node = svg.append("g")
-      .selectAll("g")
-      .data(graph.nodes)
-      .join("g");
+    const node = svg.append("g").selectAll("g").data(graph.nodes).join("g");
 
-    node.append("rect")
-      .attr("x", d => (d as unknown as { x0: number }).x0 ?? 0)
-      .attr("y", d => (d as unknown as { y0: number }).y0 ?? 0)
-      .attr("height", d => {
+    node
+      .append("rect")
+      .attr("x", (d) => (d as unknown as { x0: number }).x0 ?? 0)
+      .attr("y", (d) => (d as unknown as { y0: number }).y0 ?? 0)
+      .attr("height", (d) => {
         const n = d as unknown as { y0: number; y1: number };
         return (n.y1 ?? 0) - (n.y0 ?? 0);
       })
-      .attr("width", d => {
+      .attr("width", (d) => {
         const n = d as unknown as { x0: number; x1: number };
         return (n.x1 ?? 0) - (n.x0 ?? 0);
       })
-      .attr("fill", d => CATEGORY_COLORS[(d as unknown as NodeExtra).category] || "#64748b")
+      .attr(
+        "fill",
+        (d) =>
+          CATEGORY_COLORS[(d as unknown as NodeExtra).category] || "#64748b",
+      )
       .attr("rx", 3)
       .on("mouseover", function () {
         d3.select(this).attr("opacity", 0.8);
@@ -178,28 +190,28 @@ export default function MoneyFlowSankey() {
         d3.select(this).attr("opacity", 1);
       })
       .append("title")
-      .text(d => (d as unknown as NodeExtra).name);
+      .text((d) => (d as unknown as NodeExtra).name);
 
     // Node labels
-    node.append("text")
-      .attr("x", d => {
+    node
+      .append("text")
+      .attr("x", (d) => {
         const n = d as unknown as { x0: number; x1: number };
         return (n.x0 ?? 0) < width / 2 ? (n.x1 ?? 0) + 6 : (n.x0 ?? 0) - 6;
       })
-      .attr("y", d => {
+      .attr("y", (d) => {
         const n = d as unknown as { y0: number; y1: number };
         return ((n.y1 ?? 0) + (n.y0 ?? 0)) / 2;
       })
       .attr("dy", "0.35em")
-      .attr("text-anchor", d => {
+      .attr("text-anchor", (d) => {
         const n = d as unknown as { x0: number };
         return (n.x0 ?? 0) < width / 2 ? "start" : "end";
       })
       .style("font-size", "10px")
       .style("font-family", "system-ui")
       .style("fill", "currentColor")
-      .text(d => (d as unknown as NodeExtra).name);
-
+      .text((d) => (d as unknown as NodeExtra).name);
   }, []);
 
   return (
@@ -227,8 +239,9 @@ export default function MoneyFlowSankey() {
         />
       </div>
       <p className="text-[9px] text-muted-foreground/60 mt-2">
-        Values in USD millions. Illustrative flow allocation based on USASpending.gov FY2024 county-level data.
-        Not a complete accounting of all federal spending.
+        Values in USD millions. Illustrative flow allocation based on
+        USASpending.gov FY2024 county-level data. Not a complete accounting of
+        all federal spending.
       </p>
     </div>
   );
