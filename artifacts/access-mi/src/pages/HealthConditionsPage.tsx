@@ -283,7 +283,7 @@ export default function HealthConditionsPage() {
                     <p.icon className={`h-6 w-6 ${p.color}`} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">{p.label}</h3>
+                    <h2 className="font-semibold text-foreground">{p.label}</h2>
                     <p className="text-xs text-muted-foreground line-clamp-2">
                       {p.description}
                     </p>
