@@ -29,3 +29,6 @@ jobs:
       - name: Unit tests
         working-directory: artifacts/access-mi
         run: pnpm check:tests
+      - name: A11y gate
+        working-directory: artifacts/access-mi
+        run: pnpm test:a11y
