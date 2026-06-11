@@ -1,0 +1,3460 @@
+{
+  "$schema": "trendSeries.v1",
+  "provenance": {
+    "generatedAt": "2026-06-11T02:47:19.365Z",
+    "buildScript": "artifacts/access-mi/scripts/seed-trend-series.mjs",
+    "note": "Seed file: PEP verified, ACS pending CI run with CENSUS_API_KEY",
+    "validityRules": [
+      "ACS pair gap must be >= 5 years (non-overlapping 5-year windows)",
+      "All 83 Michigan counties required for every metric and vintage",
+      "Population range: 500–2,000,000 per county per year",
+      "Uninsured rate range: 0–50% per county per vintage",
+      "HTML-masked 200 responses cause immediate build failure"
+    ],
+    "excludedMetrics": [
+      {
+        "metric": "CDC PLACES",
+        "reason": "Model-based; CDC explicitly discourages cross-release trend comparison"
+      },
+      {
+        "metric": "ALICE hardship",
+        "reason": "Insufficient Michigan county coverage for defensible trend (8 of 83 counties seeded in v1)"
+      },
+      {
+        "metric": "Food insecurity",
+        "reason": "Feeding America county estimates use a national model; year-over-year county deltas reflect model updates, not real change"
+      }
+    ],
+    "metrics": {
+      "population": {
+        "description": "Annual population estimates, PEP Vintage 2024",
+        "vintages": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024
+        ],
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "description": "Percent civilian noninstitutionalized population uninsured, ACS 5-year",
+        "variable": "S2701_C03_001E",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "overlapGapYears": 5,
+        "acsWindowV1": "2014–2018",
+        "acsWindowV2": "2019–2023",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "status": "pending-ci"
+      }
+    }
+  },
+  "counties": {
+    "Alcona": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 10185
+          },
+          {
+            "vintage": 2021,
+            "value": 10285
+          },
+          {
+            "vintage": 2022,
+            "value": 10375
+          },
+          {
+            "vintage": 2023,
+            "value": 10513
+          },
+          {
+            "vintage": 2024,
+            "value": 10624
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Alger": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 8839
+          },
+          {
+            "vintage": 2021,
+            "value": 8770
+          },
+          {
+            "vintage": 2022,
+            "value": 8767
+          },
+          {
+            "vintage": 2023,
+            "value": 8740
+          },
+          {
+            "vintage": 2024,
+            "value": 8695
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Allegan": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 120661
+          },
+          {
+            "vintage": 2021,
+            "value": 121055
+          },
+          {
+            "vintage": 2022,
+            "value": 121262
+          },
+          {
+            "vintage": 2023,
+            "value": 121874
+          },
+          {
+            "vintage": 2024,
+            "value": 122429
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Alpena": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 28879
+          },
+          {
+            "vintage": 2021,
+            "value": 28933
+          },
+          {
+            "vintage": 2022,
+            "value": 28813
+          },
+          {
+            "vintage": 2023,
+            "value": 28870
+          },
+          {
+            "vintage": 2024,
+            "value": 28903
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Antrim": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 23460
+          },
+          {
+            "vintage": 2021,
+            "value": 23877
+          },
+          {
+            "vintage": 2022,
+            "value": 24296
+          },
+          {
+            "vintage": 2023,
+            "value": 24466
+          },
+          {
+            "vintage": 2024,
+            "value": 24536
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Arenac": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 15009
+          },
+          {
+            "vintage": 2021,
+            "value": 15023
+          },
+          {
+            "vintage": 2022,
+            "value": 15115
+          },
+          {
+            "vintage": 2023,
+            "value": 15152
+          },
+          {
+            "vintage": 2024,
+            "value": 15087
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Baraga": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 8141
+          },
+          {
+            "vintage": 2021,
+            "value": 8231
+          },
+          {
+            "vintage": 2022,
+            "value": 8194
+          },
+          {
+            "vintage": 2023,
+            "value": 8222
+          },
+          {
+            "vintage": 2024,
+            "value": 8169
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Barry": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 62607
+          },
+          {
+            "vintage": 2021,
+            "value": 63141
+          },
+          {
+            "vintage": 2022,
+            "value": 63389
+          },
+          {
+            "vintage": 2023,
+            "value": 63881
+          },
+          {
+            "vintage": 2024,
+            "value": 64025
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Bay": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 103747
+          },
+          {
+            "vintage": 2021,
+            "value": 103116
+          },
+          {
+            "vintage": 2022,
+            "value": 102754
+          },
+          {
+            "vintage": 2023,
+            "value": 102774
+          },
+          {
+            "vintage": 2024,
+            "value": 102651
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Benzie": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 17993
+          },
+          {
+            "vintage": 2021,
+            "value": 18240
+          },
+          {
+            "vintage": 2022,
+            "value": 18336
+          },
+          {
+            "vintage": 2023,
+            "value": 18460
+          },
+          {
+            "vintage": 2024,
+            "value": 18520
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Berrien": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 154426
+          },
+          {
+            "vintage": 2021,
+            "value": 153598
+          },
+          {
+            "vintage": 2022,
+            "value": 153064
+          },
+          {
+            "vintage": 2023,
+            "value": 152651
+          },
+          {
+            "vintage": 2024,
+            "value": 152703
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Branch": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 44878
+          },
+          {
+            "vintage": 2021,
+            "value": 45209
+          },
+          {
+            "vintage": 2022,
+            "value": 44612
+          },
+          {
+            "vintage": 2023,
+            "value": 45613
+          },
+          {
+            "vintage": 2024,
+            "value": 46187
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Calhoun": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 134219
+          },
+          {
+            "vintage": 2021,
+            "value": 133905
+          },
+          {
+            "vintage": 2022,
+            "value": 133475
+          },
+          {
+            "vintage": 2023,
+            "value": 133505
+          },
+          {
+            "vintage": 2024,
+            "value": 133785
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Cass": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 51553
+          },
+          {
+            "vintage": 2021,
+            "value": 51523
+          },
+          {
+            "vintage": 2022,
+            "value": 51409
+          },
+          {
+            "vintage": 2023,
+            "value": 51566
+          },
+          {
+            "vintage": 2024,
+            "value": 51550
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Charlevoix": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 26035
+          },
+          {
+            "vintage": 2021,
+            "value": 26192
+          },
+          {
+            "vintage": 2022,
+            "value": 26117
+          },
+          {
+            "vintage": 2023,
+            "value": 26089
+          },
+          {
+            "vintage": 2024,
+            "value": 26105
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Cheboygan": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 25585
+          },
+          {
+            "vintage": 2021,
+            "value": 25746
+          },
+          {
+            "vintage": 2022,
+            "value": 25946
+          },
+          {
+            "vintage": 2023,
+            "value": 26078
+          },
+          {
+            "vintage": 2024,
+            "value": 25964
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Chippewa": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 36787
+          },
+          {
+            "vintage": 2021,
+            "value": 35861
+          },
+          {
+            "vintage": 2022,
+            "value": 36236
+          },
+          {
+            "vintage": 2023,
+            "value": 36340
+          },
+          {
+            "vintage": 2024,
+            "value": 36253
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Clare": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 30843
+          },
+          {
+            "vintage": 2021,
+            "value": 31143
+          },
+          {
+            "vintage": 2022,
+            "value": 31321
+          },
+          {
+            "vintage": 2023,
+            "value": 31376
+          },
+          {
+            "vintage": 2024,
+            "value": 31405
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Clinton": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 79171
+          },
+          {
+            "vintage": 2021,
+            "value": 79432
+          },
+          {
+            "vintage": 2022,
+            "value": 79652
+          },
+          {
+            "vintage": 2023,
+            "value": 79823
+          },
+          {
+            "vintage": 2024,
+            "value": 80050
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Crawford": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 12987
+          },
+          {
+            "vintage": 2021,
+            "value": 13271
+          },
+          {
+            "vintage": 2022,
+            "value": 13431
+          },
+          {
+            "vintage": 2023,
+            "value": 13557
+          },
+          {
+            "vintage": 2024,
+            "value": 13599
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Delta": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 36874
+          },
+          {
+            "vintage": 2021,
+            "value": 36838
+          },
+          {
+            "vintage": 2022,
+            "value": 36818
+          },
+          {
+            "vintage": 2023,
+            "value": 36846
+          },
+          {
+            "vintage": 2024,
+            "value": 36687
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Dickinson": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 25907
+          },
+          {
+            "vintage": 2021,
+            "value": 25824
+          },
+          {
+            "vintage": 2022,
+            "value": 25977
+          },
+          {
+            "vintage": 2023,
+            "value": 26069
+          },
+          {
+            "vintage": 2024,
+            "value": 25995
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Eaton": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 109199
+          },
+          {
+            "vintage": 2021,
+            "value": 108921
+          },
+          {
+            "vintage": 2022,
+            "value": 108962
+          },
+          {
+            "vintage": 2023,
+            "value": 109072
+          },
+          {
+            "vintage": 2024,
+            "value": 109494
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Emmet": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 34113
+          },
+          {
+            "vintage": 2021,
+            "value": 34303
+          },
+          {
+            "vintage": 2022,
+            "value": 34204
+          },
+          {
+            "vintage": 2023,
+            "value": 34039
+          },
+          {
+            "vintage": 2024,
+            "value": 33949
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Genesee": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 405793
+          },
+          {
+            "vintage": 2021,
+            "value": 404713
+          },
+          {
+            "vintage": 2022,
+            "value": 402031
+          },
+          {
+            "vintage": 2023,
+            "value": 401711
+          },
+          {
+            "vintage": 2024,
+            "value": 402279
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Gladwin": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 25370
+          },
+          {
+            "vintage": 2021,
+            "value": 25475
+          },
+          {
+            "vintage": 2022,
+            "value": 25667
+          },
+          {
+            "vintage": 2023,
+            "value": 25959
+          },
+          {
+            "vintage": 2024,
+            "value": 25995
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Gogebic": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 14346
+          },
+          {
+            "vintage": 2021,
+            "value": 14372
+          },
+          {
+            "vintage": 2022,
+            "value": 14399
+          },
+          {
+            "vintage": 2023,
+            "value": 14263
+          },
+          {
+            "vintage": 2024,
+            "value": 14217
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Grand Traverse": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 95427
+          },
+          {
+            "vintage": 2021,
+            "value": 95985
+          },
+          {
+            "vintage": 2022,
+            "value": 96337
+          },
+          {
+            "vintage": 2023,
+            "value": 96457
+          },
+          {
+            "vintage": 2024,
+            "value": 96625
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Gratiot": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 41687
+          },
+          {
+            "vintage": 2021,
+            "value": 41298
+          },
+          {
+            "vintage": 2022,
+            "value": 41134
+          },
+          {
+            "vintage": 2023,
+            "value": 41434
+          },
+          {
+            "vintage": 2024,
+            "value": 41372
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Hillsdale": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 45730
+          },
+          {
+            "vintage": 2021,
+            "value": 45622
+          },
+          {
+            "vintage": 2022,
+            "value": 45714
+          },
+          {
+            "vintage": 2023,
+            "value": 45616
+          },
+          {
+            "vintage": 2024,
+            "value": 45590
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Houghton": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 37256
+          },
+          {
+            "vintage": 2021,
+            "value": 37528
+          },
+          {
+            "vintage": 2022,
+            "value": 37792
+          },
+          {
+            "vintage": 2023,
+            "value": 37847
+          },
+          {
+            "vintage": 2024,
+            "value": 38041
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Huron": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 31372
+          },
+          {
+            "vintage": 2021,
+            "value": 31319
+          },
+          {
+            "vintage": 2022,
+            "value": 31150
+          },
+          {
+            "vintage": 2023,
+            "value": 30943
+          },
+          {
+            "vintage": 2024,
+            "value": 30780
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Ingham": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 285007
+          },
+          {
+            "vintage": 2021,
+            "value": 271662
+          },
+          {
+            "vintage": 2022,
+            "value": 284761
+          },
+          {
+            "vintage": 2023,
+            "value": 287710
+          },
+          {
+            "vintage": 2024,
+            "value": 290427
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Ionia": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 66891
+          },
+          {
+            "vintage": 2021,
+            "value": 66853
+          },
+          {
+            "vintage": 2022,
+            "value": 66774
+          },
+          {
+            "vintage": 2023,
+            "value": 66104
+          },
+          {
+            "vintage": 2024,
+            "value": 66250
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Iosco": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 25189
+          },
+          {
+            "vintage": 2021,
+            "value": 25362
+          },
+          {
+            "vintage": 2022,
+            "value": 25460
+          },
+          {
+            "vintage": 2023,
+            "value": 25361
+          },
+          {
+            "vintage": 2024,
+            "value": 25361
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Iron": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 11619
+          },
+          {
+            "vintage": 2021,
+            "value": 11597
+          },
+          {
+            "vintage": 2022,
+            "value": 11686
+          },
+          {
+            "vintage": 2023,
+            "value": 11722
+          },
+          {
+            "vintage": 2024,
+            "value": 11709
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Isabella": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 64521
+          },
+          {
+            "vintage": 2021,
+            "value": 64264
+          },
+          {
+            "vintage": 2022,
+            "value": 64483
+          },
+          {
+            "vintage": 2023,
+            "value": 64485
+          },
+          {
+            "vintage": 2024,
+            "value": 65072
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Jackson": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 160223
+          },
+          {
+            "vintage": 2021,
+            "value": 160181
+          },
+          {
+            "vintage": 2022,
+            "value": 159828
+          },
+          {
+            "vintage": 2023,
+            "value": 159835
+          },
+          {
+            "vintage": 2024,
+            "value": 160233
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Kalamazoo": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 261814
+          },
+          {
+            "vintage": 2021,
+            "value": 260566
+          },
+          {
+            "vintage": 2022,
+            "value": 261417
+          },
+          {
+            "vintage": 2023,
+            "value": 263297
+          },
+          {
+            "vintage": 2024,
+            "value": 264780
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Kalkaska": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 17929
+          },
+          {
+            "vintage": 2021,
+            "value": 17994
+          },
+          {
+            "vintage": 2022,
+            "value": 18230
+          },
+          {
+            "vintage": 2023,
+            "value": 18422
+          },
+          {
+            "vintage": 2024,
+            "value": 18618
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Kent": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 658524
+          },
+          {
+            "vintage": 2021,
+            "value": 658979
+          },
+          {
+            "vintage": 2022,
+            "value": 660134
+          },
+          {
+            "vintage": 2023,
+            "value": 665109
+          },
+          {
+            "vintage": 2024,
+            "value": 673002
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Keweenaw": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 2059
+          },
+          {
+            "vintage": 2021,
+            "value": 2108
+          },
+          {
+            "vintage": 2022,
+            "value": 2151
+          },
+          {
+            "vintage": 2023,
+            "value": 2181
+          },
+          {
+            "vintage": 2024,
+            "value": 2161
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Lake": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 12098
+          },
+          {
+            "vintage": 2021,
+            "value": 12281
+          },
+          {
+            "vintage": 2022,
+            "value": 12665
+          },
+          {
+            "vintage": 2023,
+            "value": 12766
+          },
+          {
+            "vintage": 2024,
+            "value": 13005
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Lapeer": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 88587
+          },
+          {
+            "vintage": 2021,
+            "value": 88667
+          },
+          {
+            "vintage": 2022,
+            "value": 88701
+          },
+          {
+            "vintage": 2023,
+            "value": 89060
+          },
+          {
+            "vintage": 2024,
+            "value": 89168
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Leelanau": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 22308
+          },
+          {
+            "vintage": 2021,
+            "value": 22630
+          },
+          {
+            "vintage": 2022,
+            "value": 22891
+          },
+          {
+            "vintage": 2023,
+            "value": 22970
+          },
+          {
+            "vintage": 2024,
+            "value": 22871
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Lenawee": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 99318
+          },
+          {
+            "vintage": 2021,
+            "value": 99105
+          },
+          {
+            "vintage": 2022,
+            "value": 98284
+          },
+          {
+            "vintage": 2023,
+            "value": 97621
+          },
+          {
+            "vintage": 2024,
+            "value": 97746
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Livingston": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 193989
+          },
+          {
+            "vintage": 2021,
+            "value": 195344
+          },
+          {
+            "vintage": 2022,
+            "value": 196083
+          },
+          {
+            "vintage": 2023,
+            "value": 196772
+          },
+          {
+            "vintage": 2024,
+            "value": 196976
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Luce": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 6410
+          },
+          {
+            "vintage": 2021,
+            "value": 5976
+          },
+          {
+            "vintage": 2022,
+            "value": 6254
+          },
+          {
+            "vintage": 2023,
+            "value": 6389
+          },
+          {
+            "vintage": 2024,
+            "value": 6328
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Mackinac": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 10811
+          },
+          {
+            "vintage": 2021,
+            "value": 10906
+          },
+          {
+            "vintage": 2022,
+            "value": 10983
+          },
+          {
+            "vintage": 2023,
+            "value": 10942
+          },
+          {
+            "vintage": 2024,
+            "value": 11144
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Macomb": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 880294
+          },
+          {
+            "vintage": 2021,
+            "value": 877789
+          },
+          {
+            "vintage": 2022,
+            "value": 875735
+          },
+          {
+            "vintage": 2023,
+            "value": 879271
+          },
+          {
+            "vintage": 2024,
+            "value": 886175
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Manistee": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 25070
+          },
+          {
+            "vintage": 2021,
+            "value": 25340
+          },
+          {
+            "vintage": 2022,
+            "value": 25334
+          },
+          {
+            "vintage": 2023,
+            "value": 25485
+          },
+          {
+            "vintage": 2024,
+            "value": 25519
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Marquette": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 66544
+          },
+          {
+            "vintage": 2021,
+            "value": 66278
+          },
+          {
+            "vintage": 2022,
+            "value": 67103
+          },
+          {
+            "vintage": 2023,
+            "value": 67654
+          },
+          {
+            "vintage": 2024,
+            "value": 67979
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Mason": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 29037
+          },
+          {
+            "vintage": 2021,
+            "value": 29350
+          },
+          {
+            "vintage": 2022,
+            "value": 29357
+          },
+          {
+            "vintage": 2023,
+            "value": 29199
+          },
+          {
+            "vintage": 2024,
+            "value": 29093
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Mecosta": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 40426
+          },
+          {
+            "vintage": 2021,
+            "value": 40692
+          },
+          {
+            "vintage": 2022,
+            "value": 41424
+          },
+          {
+            "vintage": 2023,
+            "value": 41722
+          },
+          {
+            "vintage": 2024,
+            "value": 41947
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Menominee": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 23450
+          },
+          {
+            "vintage": 2021,
+            "value": 23325
+          },
+          {
+            "vintage": 2022,
+            "value": 23289
+          },
+          {
+            "vintage": 2023,
+            "value": 23123
+          },
+          {
+            "vintage": 2024,
+            "value": 23050
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Midland": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 83493
+          },
+          {
+            "vintage": 2021,
+            "value": 83504
+          },
+          {
+            "vintage": 2022,
+            "value": 83761
+          },
+          {
+            "vintage": 2023,
+            "value": 84007
+          },
+          {
+            "vintage": 2024,
+            "value": 84022
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Missaukee": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 15067
+          },
+          {
+            "vintage": 2021,
+            "value": 15176
+          },
+          {
+            "vintage": 2022,
+            "value": 15228
+          },
+          {
+            "vintage": 2023,
+            "value": 15325
+          },
+          {
+            "vintage": 2024,
+            "value": 15239
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Monroe": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 154909
+          },
+          {
+            "vintage": 2021,
+            "value": 155569
+          },
+          {
+            "vintage": 2022,
+            "value": 155412
+          },
+          {
+            "vintage": 2023,
+            "value": 155590
+          },
+          {
+            "vintage": 2024,
+            "value": 156045
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Montcalm": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 66659
+          },
+          {
+            "vintage": 2021,
+            "value": 67361
+          },
+          {
+            "vintage": 2022,
+            "value": 67317
+          },
+          {
+            "vintage": 2023,
+            "value": 68431
+          },
+          {
+            "vintage": 2024,
+            "value": 69314
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Montmorency": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 9170
+          },
+          {
+            "vintage": 2021,
+            "value": 9304
+          },
+          {
+            "vintage": 2022,
+            "value": 9563
+          },
+          {
+            "vintage": 2023,
+            "value": 9714
+          },
+          {
+            "vintage": 2024,
+            "value": 9828
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Muskegon": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 174794
+          },
+          {
+            "vintage": 2021,
+            "value": 175581
+          },
+          {
+            "vintage": 2022,
+            "value": 175526
+          },
+          {
+            "vintage": 2023,
+            "value": 176476
+          },
+          {
+            "vintage": 2024,
+            "value": 177428
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Newaygo": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 50095
+          },
+          {
+            "vintage": 2021,
+            "value": 50401
+          },
+          {
+            "vintage": 2022,
+            "value": 50771
+          },
+          {
+            "vintage": 2023,
+            "value": 51189
+          },
+          {
+            "vintage": 2024,
+            "value": 51504
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Oakland": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 1272526
+          },
+          {
+            "vintage": 2021,
+            "value": 1272776
+          },
+          {
+            "vintage": 2022,
+            "value": 1275098
+          },
+          {
+            "vintage": 2023,
+            "value": 1281836
+          },
+          {
+            "vintage": 2024,
+            "value": 1296888
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Oceana": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 26716
+          },
+          {
+            "vintage": 2021,
+            "value": 26873
+          },
+          {
+            "vintage": 2022,
+            "value": 26964
+          },
+          {
+            "vintage": 2023,
+            "value": 27010
+          },
+          {
+            "vintage": 2024,
+            "value": 27014
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Ogemaw": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 20785
+          },
+          {
+            "vintage": 2021,
+            "value": 20781
+          },
+          {
+            "vintage": 2022,
+            "value": 20890
+          },
+          {
+            "vintage": 2023,
+            "value": 20983
+          },
+          {
+            "vintage": 2024,
+            "value": 20985
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Ontonagon": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 5803
+          },
+          {
+            "vintage": 2021,
+            "value": 5872
+          },
+          {
+            "vintage": 2022,
+            "value": 5895
+          },
+          {
+            "vintage": 2023,
+            "value": 5857
+          },
+          {
+            "vintage": 2024,
+            "value": 5824
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Osceola": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 22902
+          },
+          {
+            "vintage": 2021,
+            "value": 23190
+          },
+          {
+            "vintage": 2022,
+            "value": 23257
+          },
+          {
+            "vintage": 2023,
+            "value": 23289
+          },
+          {
+            "vintage": 2024,
+            "value": 23484
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Oscoda": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 8235
+          },
+          {
+            "vintage": 2021,
+            "value": 8322
+          },
+          {
+            "vintage": 2022,
+            "value": 8400
+          },
+          {
+            "vintage": 2023,
+            "value": 8572
+          },
+          {
+            "vintage": 2024,
+            "value": 8596
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Otsego": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 25135
+          },
+          {
+            "vintage": 2021,
+            "value": 25335
+          },
+          {
+            "vintage": 2022,
+            "value": 25583
+          },
+          {
+            "vintage": 2023,
+            "value": 25785
+          },
+          {
+            "vintage": 2024,
+            "value": 26083
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Ottawa": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 296899
+          },
+          {
+            "vintage": 2021,
+            "value": 298394
+          },
+          {
+            "vintage": 2022,
+            "value": 300910
+          },
+          {
+            "vintage": 2023,
+            "value": 303575
+          },
+          {
+            "vintage": 2024,
+            "value": 306235
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Presque Isle": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 12999
+          },
+          {
+            "vintage": 2021,
+            "value": 13174
+          },
+          {
+            "vintage": 2022,
+            "value": 13357
+          },
+          {
+            "vintage": 2023,
+            "value": 13278
+          },
+          {
+            "vintage": 2024,
+            "value": 13230
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Roscommon": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 23465
+          },
+          {
+            "vintage": 2021,
+            "value": 23651
+          },
+          {
+            "vintage": 2022,
+            "value": 23711
+          },
+          {
+            "vintage": 2023,
+            "value": 23920
+          },
+          {
+            "vintage": 2024,
+            "value": 23932
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Saginaw": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 189883
+          },
+          {
+            "vintage": 2021,
+            "value": 189533
+          },
+          {
+            "vintage": 2022,
+            "value": 188425
+          },
+          {
+            "vintage": 2023,
+            "value": 187769
+          },
+          {
+            "vintage": 2024,
+            "value": 187714
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "St. Clair": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 160394
+          },
+          {
+            "vintage": 2021,
+            "value": 160243
+          },
+          {
+            "vintage": 2022,
+            "value": 159882
+          },
+          {
+            "vintage": 2023,
+            "value": 160280
+          },
+          {
+            "vintage": 2024,
+            "value": 160308
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "St. Joseph": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 60942
+          },
+          {
+            "vintage": 2021,
+            "value": 60857
+          },
+          {
+            "vintage": 2022,
+            "value": 60814
+          },
+          {
+            "vintage": 2023,
+            "value": 61062
+          },
+          {
+            "vintage": 2024,
+            "value": 61171
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Sanilac": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 40504
+          },
+          {
+            "vintage": 2021,
+            "value": 40545
+          },
+          {
+            "vintage": 2022,
+            "value": 40536
+          },
+          {
+            "vintage": 2023,
+            "value": 40434
+          },
+          {
+            "vintage": 2024,
+            "value": 40293
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Schoolcraft": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 8057
+          },
+          {
+            "vintage": 2021,
+            "value": 8048
+          },
+          {
+            "vintage": 2022,
+            "value": 8189
+          },
+          {
+            "vintage": 2023,
+            "value": 8167
+          },
+          {
+            "vintage": 2024,
+            "value": 8178
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Shiawassee": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 68004
+          },
+          {
+            "vintage": 2021,
+            "value": 67992
+          },
+          {
+            "vintage": 2022,
+            "value": 67970
+          },
+          {
+            "vintage": 2023,
+            "value": 68005
+          },
+          {
+            "vintage": 2024,
+            "value": 67982
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Tuscola": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 53311
+          },
+          {
+            "vintage": 2021,
+            "value": 53043
+          },
+          {
+            "vintage": 2022,
+            "value": 52932
+          },
+          {
+            "vintage": 2023,
+            "value": 52856
+          },
+          {
+            "vintage": 2024,
+            "value": 52757
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Van Buren": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 75566
+          },
+          {
+            "vintage": 2021,
+            "value": 75685
+          },
+          {
+            "vintage": 2022,
+            "value": 75690
+          },
+          {
+            "vintage": 2023,
+            "value": 75905
+          },
+          {
+            "vintage": 2024,
+            "value": 76129
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Washtenaw": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 371849
+          },
+          {
+            "vintage": 2021,
+            "value": 365041
+          },
+          {
+            "vintage": 2022,
+            "value": 367947
+          },
+          {
+            "vintage": 2023,
+            "value": 370398
+          },
+          {
+            "vintage": 2024,
+            "value": 373875
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Wayne": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 1789655
+          },
+          {
+            "vintage": 2021,
+            "value": 1775196
+          },
+          {
+            "vintage": 2022,
+            "value": 1763011
+          },
+          {
+            "vintage": 2023,
+            "value": 1762371
+          },
+          {
+            "vintage": 2024,
+            "value": 1771063
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    },
+    "Wexford": {
+      "population": {
+        "series": [
+          {
+            "vintage": 2020,
+            "value": 33689
+          },
+          {
+            "vintage": 2021,
+            "value": 33906
+          },
+          {
+            "vintage": 2022,
+            "value": 34062
+          },
+          {
+            "vintage": 2023,
+            "value": 34266
+          },
+          {
+            "vintage": 2024,
+            "value": 34460
+          }
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau Population Estimates Program (PEP)",
+        "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
+      },
+      "uninsuredRate": {
+        "status": "pending-ci",
+        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
+        "vintages": [
+          2018,
+          2023
+        ],
+        "label": "VERIFIED",
+        "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
+        "overlapGapYears": 5
+      }
+    }
+  }
+}
