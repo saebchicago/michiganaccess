@@ -15,7 +15,7 @@
 | App shell (Footer) | PASS | 0 |
 | CHNAExplorerPage | PASS | 0 |
 | CountyPage | PASS | 0 |
-| HealthConditionsPage | FAIL | 1 |
+| HealthConditionsPage | PASS (resolved) | 0 |
 
 ---
 
@@ -30,12 +30,13 @@
 | Node count | 1 reported (first offending node) |
 | Offending node | `<h3 class="font-semibold text-foreground">Diabetes Care</h3>` |
 | axe selector | `.ring-2 > .p-4.sm\:p-6.sm\:pt-0 > div:nth-child(2) > h3` |
+| **Status** | **RESOLVED** |
 
 **Description:** Heading levels should only increase by one. The page hero renders `<h1>` but the pathway selection cards use `<h3>` without an intervening `<h2>`, violating the heading-order rule.
 
-**Root cause (source location):** `src/pages/HealthConditionsPage.tsx:286` - pathway card headings are `<h3>` with no `<h2>` section heading above them. The same pattern repeats at line 347 for facility name headings inside the detail panel (not triggered in this run because facilities are mocked empty).
+**Root cause (source location):** `src/pages/HealthConditionsPage.tsx:286` - pathway card headings were `<h3>` with no `<h2>` section heading above them.
 
-**Fix guidance:** Introduce a visually-styled `<h2>` section heading (e.g., "Care Pathways") between the hero `<h1>` and the pathway card `<h3>` elements, or demote the pathway card headings to `<h2>` if no section heading is needed.
+**Resolution:** Demoted pathway card headings from `<h3>` to `<h2>` at `src/pages/HealthConditionsPage.tsx:286`, preserving all Tailwind classes. Committed in "fix: heading-order violation on HealthConditionsPage".
 
 ---
 
