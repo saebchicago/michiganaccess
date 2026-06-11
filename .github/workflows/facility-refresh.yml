@@ -2,7 +2,7 @@ name: facility-refresh
 # Runbooks (owner-dispatch only):
 #   PEP population refresh (annual):
 #     gh workflow run facility-refresh.yml --ref main -f run_population_refresh=true
-#   Trend series — PEP annual + ACS uninsured pair (requires CENSUS_API_KEY secret):
+#   Trend series - PEP annual + ACS uninsured pair (requires CENSUS_API_KEY secret):
 #     gh workflow run facility-refresh.yml --ref main -f run_trend_refresh=true
 on:
   schedule:
@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
       - uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -41,7 +41,7 @@ jobs:
       - name: Refresh Census PEP population (owner-dispatch only)
         if: inputs.run_population_refresh == true
         run: node artifacts/access-mi/scripts/refresh-county-population.mjs --apply
-      - name: Refresh trend series — PEP + ACS (owner-dispatch only)
+      - name: Refresh trend series - PEP + ACS (owner-dispatch only)
         if: inputs.run_trend_refresh == true
         env:
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
@@ -54,7 +54,7 @@ jobs:
             artifacts/access-mi/src/data/countyFacilityReference.json \
             artifacts/access-mi/src/data/trendSeries.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No facility drift — skipping PR."
+            echo "No facility drift - skipping PR."
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
@@ -102,20 +102,23 @@ jobs:
             artifacts/access-mi/src/data/trendSeries.json
           git commit -m "data: facility dataset refresh $(date -u +%Y-%m-%d)"
           git push origin "$BRANCH"
+          {
+            echo "## Facility Dataset Drift Detected"
+            echo ""
+            echo "| Metric | Previous | New |"
+            echo "|--------|----------|-----|"
+            echo "| Total facilities | $OLD_TOTAL | $NEW_TOTAL |"
+            echo "| Fetched at (UTC) | $OLD_DATE | $NEW_DATE |"
+            echo ""
+            echo "Sources: CMS Hospital General Info + HRSA Health Center Service Delivery Sites"
+            echo ""
+            echo "Full gate passed (check-links, check-counts, check-zip-population, check-county-facilities, vite build, prerender, vitest)."
+            echo ""
+            echo "**Action required after merge:** Rerun the Supabase seed loader:"
+            echo '```bash'
+            echo "node artifacts/access-mi/scripts/load-facilities-to-supabase.mjs"
+            echo '```'
+          } > /tmp/pr-body.md
           gh pr create \
             --title "data: facility dataset refresh $(date -u +%Y-%m-%d)" \
-            --body "## Facility Dataset Drift Detected
-
-| Metric | Previous | New |
-|--------|----------|-----|
-| Total facilities | $OLD_TOTAL | $NEW_TOTAL |
-| Fetched at (UTC) | $OLD_DATE | $NEW_DATE |
-
-Sources: CMS Hospital General Info + HRSA Health Center Service Delivery Sites
-
-Full gate passed (check-links, check-counts, check-zip-population, check-county-facilities, vite build, prerender, vitest).
-
-**Action required after merge:** Rerun the Supabase seed loader:
-\`\`\`bash
-node artifacts/access-mi/scripts/load-facilities-to-supabase.mjs
-\`\`\`"
+            --body-file /tmp/pr-body.md
