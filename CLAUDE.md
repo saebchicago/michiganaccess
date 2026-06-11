@@ -11,7 +11,7 @@ Never run `npm install` in this repo. Use `pnpm install --frozen-lockfile`.
 - `pnpm check:tests` - vitest unit tests (must pass before any commit)
 - `pnpm typecheck` - TypeScript type check
 - `pnpm build` - full build with all data-integrity guards (slow; run before merging)
-- `pnpm test:a11y` - Playwright a11y audit (requires dev server; run manually)
+- `pnpm test:a11y` - vitest-axe a11y smoke tests (no dev server needed; runs in CI)
 
 ## Standing decisions (see FIXLOG.md for full rationale)
 
@@ -35,6 +35,6 @@ IntegrityBadge component with VERIFIED / MODELED / PROJECTED / PENDING label.
 Replace `—` with `-` or spaced en dash ` - ` in all files you touch.
 
 ## CI
-`.github/workflows/ci.yml` runs typecheck + vitest on every push and PR.
+`.github/workflows/ci.yml` runs typecheck + vitest + a11y gate on every push and PR.
 `.github/workflows/facility-refresh.yml` runs the facility data refresh (schedule + dispatch).
 `.github/workflows/build-data.yml` runs the open-data rebuild (schedule + dispatch).
