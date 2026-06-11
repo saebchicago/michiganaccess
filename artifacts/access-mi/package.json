@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "build": "node scripts/check-links.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs",
+    "build": "node scripts/generate-sitemap.mjs && node scripts/check-links.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:counts": "node scripts/check-counts.mjs",
     "check:zip-population": "node scripts/check-zip-population.mjs",

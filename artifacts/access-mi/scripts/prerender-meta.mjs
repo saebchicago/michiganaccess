@@ -192,6 +192,95 @@ function rewriteHead(html, meta) {
   return out;
 }
 
+// Per-route JSON-LD blocks injected into prerendered HTML.
+// Keys match routeMeta paths. Values are plain objects (serialized at inject time).
+// MUST NOT: no GovernmentOrganization types; no affiliation with State of Michigan.
+const ROUTE_JSONLD = {
+  "/data-sources": {
+    "@context": "https://schema.org",
+    "@type": "DataCatalog",
+    "name": "Access Michigan Open Data Registry",
+    "description":
+      "Registry of 41 verified public datasets used by the Access Michigan civic platform. Sources: U.S. Census Bureau, CDC, CMS, HRSA, County Health Rankings, USDA, EPA — covering all 83 Michigan counties.",
+    "url": `${SITE_URL}/data-sources`,
+    "license": `${SITE_URL}/methodology`,
+    "creator": {
+      "@type": "Organization",
+      "name": "Access Michigan",
+      "description":
+        "Independent civic data and education project. Not affiliated with the State of Michigan or any government agency.",
+      "url": SITE_URL,
+    },
+    "distribution": [
+      {
+        "@type": "DataDownload",
+        "encodingFormat": "text/html",
+        "contentUrl": `${SITE_URL}/data-sources`,
+      },
+    ],
+    "spatialCoverage": { "@type": "Place", "name": "Michigan, United States" },
+    "keywords": [
+      "Michigan",
+      "open data",
+      "civic data",
+      "health data",
+      "county data",
+      "83 counties",
+    ],
+  },
+  "/brief": {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Michigan County Civic Briefs",
+    "description":
+      "Citation-grade county brief for any of Michigan's 83 counties. Each statistic carries its source, vintage, and integrity label. Includes population (Census PEP), health facilities (CMS+HRSA), uninsured rate (ACS), food insecurity, primary care ratio, and economic hardship.",
+    "url": `${SITE_URL}/brief`,
+    "license": `${SITE_URL}/methodology`,
+    "creator": {
+      "@type": "Organization",
+      "name": "Access Michigan",
+      "description":
+        "Independent civic data and education project. Not affiliated with the State of Michigan or any government agency.",
+      "url": SITE_URL,
+    },
+    "spatialCoverage": { "@type": "Place", "name": "Michigan, United States" },
+    "keywords": [
+      "Michigan",
+      "county brief",
+      "civic data",
+      "health data",
+      "county data",
+      "83 counties",
+      "citation",
+    ],
+  },
+};
+
+// Inject a route-specific JSON-LD block into <head> if one is defined.
+// Uses a marker comment pair so the script is safe to re-run (idempotent).
+const JSONLD_MARKER_START = "<!-- prerender-jsonld:start -->";
+const JSONLD_MARKER_END = "<!-- prerender-jsonld:end -->";
+
+function injectRouteJsonLd(html, routePath) {
+  const schema = ROUTE_JSONLD[routePath];
+  if (!schema) return html;
+
+  // Strip any previously injected block (idempotent re-runs)
+  const stripped = html.replace(
+    new RegExp(`${JSONLD_MARKER_START}[\\s\\S]*?${JSONLD_MARKER_END}\\s*`, "g"),
+    "",
+  );
+
+  const block =
+    `  ${JSONLD_MARKER_START}\n` +
+    `  <script type="application/ld+json">\n` +
+    `    ${JSON.stringify(schema, null, 2).replace(/\n/g, "\n    ")}\n` +
+    `  </script>\n` +
+    `  ${JSONLD_MARKER_END}\n`;
+
+  return stripped.replace(/<\/head>/i, `${block}  </head>`);
+}
+
 const PRERENDER_MARKER_START = "<!-- prerender-meta:start -->";
 const PRERENDER_MARKER_END = "<!-- prerender-meta:end -->";
 
@@ -269,7 +358,10 @@ async function main() {
     if (meta.path === "/") continue;
     const routeDir = path.join(distDir, meta.path.replace(/^\/+/, ""));
     await mkdir(routeDir, { recursive: true });
-    const html = injectNoscript(rewriteHead(indexHtml, meta), meta);
+    const html = injectRouteJsonLd(
+      injectNoscript(rewriteHead(indexHtml, meta), meta),
+      meta.path,
+    );
     await writeFile(path.join(routeDir, "index.html"), html, "utf8");
     written++;
   }
