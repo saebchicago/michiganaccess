@@ -295,9 +295,6 @@ export default function TechnicalPage() {
                 <h2 className="text-2xl font-bold text-foreground">
                   {t("technicalPage.interopTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("technicalPage.interopSubtitle")}
-                </p>
               </div>
             </div>
           </motion.div>
@@ -341,14 +338,6 @@ export default function TechnicalPage() {
                 </Card>
               </motion.div>
             ))}
-          </div>
-
-          <div className="mt-6 rounded-lg border border-border bg-muted/50 p-4">
-            <p className="text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">
-                {t("technicalPage.interopNote")}
-              </span>
-            </p>
           </div>
         </section>
 

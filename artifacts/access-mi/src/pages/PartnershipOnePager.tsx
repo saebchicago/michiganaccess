@@ -148,30 +148,18 @@ export default function PartnershipOnePager() {
             </div>
           </section>
 
-          {/* Key Metrics */}
+          {/* Geographic Coverage */}
           <section>
             <h2 className="text-lg font-bold text-foreground mb-3 border-l-4 border-michigan-teal pl-3">
-              Platform Impact
+              Geographic Coverage
             </h2>
-            <div className="grid grid-cols-4 gap-3 text-center">
-              {[
-                { value: String(COUNTIES_COVERED), label: "Counties Covered" },
-                { value: "12,400+", label: "FQHC Map Views" },
-                { value: "1,850+", label: "Appeals Generated" },
-                { value: "3,200+", label: "Coverage Pathfinder Runs" },
-              ].map((m) => (
-                <div
-                  key={m.label}
-                  className="rounded-lg border border-border p-3"
-                >
-                  <p className="text-xl font-bold text-michigan-teal">
-                    {m.value}
-                  </p>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">
-                    {m.label}
-                  </p>
-                </div>
-              ))}
+            <div className="rounded-lg border border-border p-4 text-center">
+              <p className="text-3xl font-bold text-michigan-teal">
+                {COUNTIES_COVERED}
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Michigan counties covered
+              </p>
             </div>
           </section>
 
@@ -182,14 +170,11 @@ export default function PartnershipOnePager() {
             </h2>
             <div className="flex flex-wrap gap-2">
               {[
-                "FHIR R4",
-                "HL7 v2",
-                "USCDI v3",
-                "IRS Schedule H",
-                "HIPAA Compliant",
-                "No PHI Stored",
-                "No Cookies",
+                "No PHI Collected or Stored",
+                "No Tracking Cookies",
                 "No Ads",
+                "Aligned to IRS 501(r)/Schedule H",
+                "Open Methodology",
               ].map((s) => (
                 <span
                   key={s}
@@ -201,31 +186,13 @@ export default function PartnershipOnePager() {
             </div>
           </section>
 
-          {/* Case Study Highlight */}
-          <section>
-            <h2 className="text-lg font-bold text-foreground mb-3 border-l-4 border-michigan-teal pl-3">
-              Case Study Highlight
-            </h2>
-            <div className="rounded-lg border border-michigan-teal/20 bg-michigan-teal/5 p-4 space-y-2">
-              <h3 className="font-semibold text-sm text-foreground">
-                Regional Health System - CHNA Enhancement
-              </h3>
-              <p className="text-xs text-muted-foreground">
-                A mid-Michigan health system integrated Access Michigan data
-                into their triennial CHNA workflow, achieving a 42% reduction in
-                data-gathering time, identifying 3 previously unknown service
-                deserts, and streamlining IRS Schedule H documentation.
-              </p>
-            </div>
-          </section>
-
           {/* Contact */}
           <section className="text-center border-t border-michigan-teal/20 pt-6">
             <h2 className="text-lg font-bold text-foreground mb-2">
               Start the Conversation
             </h2>
             <p className="text-xs text-muted-foreground mb-3">
-              Our partnerships team responds within 2 business days.
+              Saeb Ahsan, founder, responds within 2 business days.
             </p>
             <p className="text-sm text-michigan-teal font-medium">
               accessmi.org/partnerships/health-systems

@@ -218,7 +218,7 @@ export default function HealthMap({
   const { data: cataData } = useArcGISData("cata-routes", showCATA);
   const { data: ddotLive } = useGTFSRealtime("ddot", showDDOTLive);
   const { data: therideLive } = useGTFSRealtime("theride", showTheRideLive);
-  const { data: aqiData } = useAirQuality(showAQI);
+  const { data: aqiData, isError: aqiError } = useAirQuality(showAQI);
 
   const allLiveVehicles = useMemo(() => {
     const vehicles = [];
@@ -796,8 +796,20 @@ export default function HealthMap({
               </span>
             </div>
           ))}
+          {aqiError && (
+            <p className="mt-1.5 text-[9px] text-red-500">
+              AQI data unavailable - fetch failed
+            </p>
+          )}
           <p className="mt-1.5 text-[9px] text-muted-foreground">
             Source: EPA AirNow · Updated hourly
+            {aqiData?.fetched_at && (
+              <>
+                {" "}
+                · Last updated:{" "}
+                {new Date(aqiData.fetched_at).toLocaleTimeString()}
+              </>
+            )}
           </p>
         </div>
       )}
