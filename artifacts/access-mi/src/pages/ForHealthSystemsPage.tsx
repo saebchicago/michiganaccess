@@ -22,6 +22,7 @@ import {
   Info,
 } from "lucide-react";
 import ShareButton from "@/components/shared/ShareButton";
+import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 
 const valueProps = [
   {
@@ -326,6 +327,12 @@ const ForHealthSystemsPage = () => {
                       2024)
                     </li>
                   </ul>
+                  <IntegrityBadge
+                    label="VERIFIED"
+                    source="HFH Mosaic ACO press release"
+                    vintage="PY2024, Dec 2025"
+                    className="mt-3"
+                  />
                 </CardContent>
               </Card>
               <Card>
@@ -351,6 +358,12 @@ const ForHealthSystemsPage = () => {
                       • 45% reduction in health disparities (system-reported)
                     </li>
                   </ul>
+                  <IntegrityBadge
+                    label="MODELED"
+                    source="Trinity Health Community Impact Report"
+                    vintage="FY2025, system-reported"
+                    className="mt-3"
+                  />
                 </CardContent>
               </Card>
               <Card>
@@ -374,6 +387,12 @@ const ForHealthSystemsPage = () => {
                     </li>
                     <li>• Largest health system in Michigan</li>
                   </ul>
+                  <IntegrityBadge
+                    label="VERIFIED"
+                    source="Corewell Health Annual Report"
+                    vintage="FY2023"
+                    className="mt-3"
+                  />
                 </CardContent>
               </Card>
               <Card>
@@ -393,6 +412,12 @@ const ForHealthSystemsPage = () => {
                     <li>• 7 MDHHS SDOH Hubs launched statewide</li>
                     <li>• MVC covers ~84% of insured Michiganders</li>
                   </ul>
+                  <IntegrityBadge
+                    label="MODELED"
+                    source="MHA Community Benefit Report"
+                    vintage="2023-2024, system-reported"
+                    className="mt-3"
+                  />
                 </CardContent>
               </Card>
             </div>

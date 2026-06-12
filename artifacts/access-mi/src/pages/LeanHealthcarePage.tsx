@@ -3,6 +3,8 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
+import type { IntegrityLabel } from "@/types/chna";
 import {
   Activity,
   GitBranch,
@@ -184,7 +186,13 @@ const sources = [
 
 /* ── verified health system VBC outcomes ────────────────────────────── */
 
-const verifiedOutcomes = [
+const verifiedOutcomes: {
+  system: string;
+  highlights: string[];
+  source: string;
+  integrityLabel: IntegrityLabel;
+  vintage: string;
+}[] = [
   {
     system: "Trinity Health (FY2025)",
     highlights: [
@@ -198,6 +206,8 @@ const verifiedOutcomes = [
     ],
     source:
       "Trinity Health Community Impact Report (Jan 2026) / FindHelp case study. Not independently verified or peer-reviewed.",
+    integrityLabel: "MODELED",
+    vintage: "FY2025, system-reported",
   },
   {
     system: "Henry Ford Health",
@@ -208,6 +218,8 @@ const verifiedOutcomes = [
     ],
     source:
       "Henry Ford Health Mosaic ACO press release (Dec 2025): henryford.com/news/2025/12/henry-ford-health-mosaic-accountable-care-organization-earns-27-million-in-shared-savings",
+    integrityLabel: "VERIFIED",
+    vintage: "PY2024, Dec 2025 press release",
   },
   {
     system: "CHW Medicaid Reimbursement (Statewide)",
@@ -218,6 +230,8 @@ const verifiedOutcomes = [
       "ROI: >$2 return per $1 invested",
     ],
     source: "MDHHS Medicaid policy; MiCHWA registry",
+    integrityLabel: "VERIFIED",
+    vintage: "2024, MDHHS",
   },
   {
     system: "Michigan Value Collaborative (PY 2026-2027)",
@@ -227,15 +241,19 @@ const verifiedOutcomes = [
       "Key measures: sepsis 14-day follow-up rate, cardiac rehab participation rate, health equity",
     ],
     source: "MVC P4P Technical Document PY26-27",
+    integrityLabel: "VERIFIED",
+    vintage: "PY2026-2027, MVC",
   },
   {
     system: "MDHHS SDOH Hubs (7 Confirmed)",
     highlights: [
       "Cohort 1: Detroit Health Dept, District Health Dept #10, Greater Flint Health Coalition/United Way, Wayne County Health Dept",
       "Cohort 2: United Way of Bay County, Muskegon County Health Dept, Heart of West Michigan United Way (Kent County)",
-      "Launched January–May 2024; Advisory Council Report published March 2025",
+      "Launched January-May 2024; Advisory Council Report published March 2025",
     ],
     source: "MDHHS SDOH Strategy Advisory Council",
+    integrityLabel: "VERIFIED",
+    vintage: "2024-2025, MDHHS",
   },
 ];
 
@@ -458,9 +476,16 @@ const LeanHealthcarePage = () => {
                           </li>
                         ))}
                       </ul>
-                      <p className="text-[10px] text-muted-foreground">
-                        <strong>Source:</strong> {outcome.source}
-                      </p>
+                      <div className="flex items-start gap-2 flex-wrap">
+                        <IntegrityBadge
+                          label={outcome.integrityLabel}
+                          source={outcome.source}
+                          vintage={outcome.vintage}
+                        />
+                        <p className="text-[10px] text-muted-foreground">
+                          <strong>Source:</strong> {outcome.source}
+                        </p>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
