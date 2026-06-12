@@ -77,7 +77,7 @@ import Header from "@/components/layout/Header";
 
 // ── tests ─────────────────────────────────────────────────────────────────────
 
-describe("Footer — D1 independence disclosure", () => {
+describe("Footer  -  D1 independence disclosure", () => {
   it("renders the full D1 sentence", () => {
     render(
       <MemoryRouter>
@@ -100,12 +100,12 @@ describe("Footer — D1 independence disclosure", () => {
     const el = screen.getByText(
       /AccessMI is an independent civic data and education project\./i,
     );
-    // Must be visible — not hidden by details/summary or aria-hidden
+    // Must be visible  -  not hidden by details/summary or aria-hidden
     expect(el).toBeVisible();
   });
 });
 
-describe("Header — D2 tagline", () => {
+describe("Header  -  D2 tagline", () => {
   it("renders 'Independent civic data' tagline in the logo lockup", () => {
     render(
       <MemoryRouter>

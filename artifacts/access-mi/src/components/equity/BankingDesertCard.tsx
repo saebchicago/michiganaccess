@@ -17,10 +17,10 @@ export default function BankingDesertCard() {
           <p className="text-xs text-muted-foreground">Credit unions and CDFIs help fill gaps, but access to check cashing, small business loans, and mortgage services remains limited.</p>
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" size="sm" className="text-xs" asChild>
-              <a href="https://www.fedcommunities.org/data/banking-deserts-dashboard/" target="_blank" rel="noopener">Fed Banking Deserts Dashboard <ExternalLink className="ml-1 h-3 w-3" /></a>
+              <a href="https://www.fedcommunities.org/data/banking-deserts-dashboard/" target="_blank" rel="noopener noreferrer">Fed Banking Deserts Dashboard <ExternalLink className="ml-1 h-3 w-3" /></a>
             </Button>
             <Button variant="outline" size="sm" className="text-xs" asChild>
-              <a href="https://banks.data.fdic.gov/bankfind-suite/bankfind" target="_blank" rel="noopener">FDIC BankFind <ExternalLink className="ml-1 h-3 w-3" /></a>
+              <a href="https://banks.data.fdic.gov/bankfind-suite/bankfind" target="_blank" rel="noopener noreferrer">FDIC BankFind <ExternalLink className="ml-1 h-3 w-3" /></a>
             </Button>
           </div>
           <p className="text-[10px] text-muted-foreground">Source: Federal Reserve Banking Deserts Dashboard 2025, FDIC BankFind Suite</p>

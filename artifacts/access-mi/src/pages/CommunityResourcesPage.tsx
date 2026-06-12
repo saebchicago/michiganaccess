@@ -111,7 +111,7 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${r.address}, ${r.city}, ${r.state} ${r.zip || ""}`)}`}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
                 <Button size="sm" variant="default" className="h-7 text-xs"><MapPin className="mr-1 h-3 w-3" />Get Directions</Button>
               </a>
@@ -122,7 +122,7 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
               </a>
             )}
             {r.website && (
-              <a href={r.website} target="_blank" rel="noopener">
+              <a href={r.website} target="_blank" rel="noopener noreferrer">
                 <Button size="sm" variant="outline" className="h-7 text-xs"><ExternalLink className="mr-1 h-3 w-3" />Website</Button>
               </a>
             )}

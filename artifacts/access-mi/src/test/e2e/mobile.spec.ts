@@ -32,7 +32,7 @@ for (const vp of VIEWPORTS) {
       await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('networkidle').catch(() => {});
 
-      // Use accessible name — the site's mobile nav trigger exposes "Menu"
+      // Use accessible name  -  the site's mobile nav trigger exposes "Menu"
       // via an sr-only span inside a Button. Scope to the header and filter
       // to visible to avoid matching hidden nav triggers on desktop-only
       // branches.
@@ -81,7 +81,7 @@ for (const vp of VIEWPORTS) {
       if (smallTargets.length > 0) {
         console.log(`Small tap targets on / (${vp.name}):`, smallTargets);
       }
-      // Don't hard-fail — inline icons may be smaller by design. Log for review.
+      // Don't hard-fail  -  inline icons may be smaller by design. Log for review.
       expect(smallTargets.length).toBeLessThan(50);
     });
   });

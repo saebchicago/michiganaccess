@@ -83,6 +83,32 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // React core - cached across all routes
+          if (
+            id.includes("node_modules/react/") ||
+            id.includes("node_modules/react-dom/") ||
+            id.includes("node_modules/react-router-dom/") ||
+            id.includes("node_modules/scheduler/")
+          ) {
+            return "vendor-react";
+          }
+          // framer-motion is ~200 KB and used in almost every page
+          if (id.includes("node_modules/framer-motion/")) {
+            return "vendor-motion";
+          }
+          // i18n stack - i18next + plugins (locales are lazy-loaded separately)
+          if (
+            id.includes("node_modules/i18next") ||
+            id.includes("node_modules/react-i18next")
+          ) {
+            return "vendor-i18n";
+          }
+        },
+      },
+    },
   },
   server: {
     port,

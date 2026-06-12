@@ -627,7 +627,7 @@ export default function AboutPage() {
                         <a
                           href={source.url}
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                           aria-label={`Open ${source.name} in a new tab`}
                           className="text-primary hover:underline"
                         >
@@ -870,7 +870,7 @@ export default function AboutPage() {
                 </div>
                 <ul className="space-y-2.5">
                   {[
-                    "No ads, no tracking, no pay-to-play listings.",
+                    "No pay-to-play listings.",
                     "If we don't have data for a ZIP or topic, we say so instead of guessing.",
                     "Every number is either from a named public dataset or a clearly labeled modeled index, with methods in one place.",
                     "When we find mistakes or better methods, we fix them and update this page.",

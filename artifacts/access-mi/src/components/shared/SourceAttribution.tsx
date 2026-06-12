@@ -15,7 +15,7 @@ export default function SourceAttribution({ agency, year, url, className = "" }:
       <a
         href={url}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
         className={`text-[10px] text-muted-foreground hover:text-primary inline-flex items-center gap-0.5 ${className}`}
       >
         {text} <ExternalLink className="h-2 w-2" />

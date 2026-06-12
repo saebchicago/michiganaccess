@@ -81,7 +81,7 @@ export default function EconomicPulse() {
           <a
             href="https://fred.stlouisfed.org/series/MIUR"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
           >
             Michigan Unemployment Rate (FRED MIUR){" "}

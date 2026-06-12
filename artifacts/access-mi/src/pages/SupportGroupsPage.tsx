@@ -226,7 +226,7 @@ export default function SupportGroupsPage() {
                           {group.languages.length > 1 && <span className="flex items-center gap-1"><Globe className="h-3 w-3" />{group.languages.join(", ")}</span>}
                         </div>
                         {group.website && (
-                          <a href={group.website} target="_blank" rel="noopener" className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                          <a href={group.website} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline">
                             <ExternalLink className="h-3 w-3" />Visit Website
                           </a>
                         )}

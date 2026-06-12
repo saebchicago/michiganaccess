@@ -58,7 +58,7 @@ export default function ZipIntelligencePage() {
           <a
             href="https://accessmi.org"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="text-primary hover:underline"
           >
             Access Michigan
@@ -135,7 +135,7 @@ export default function ZipIntelligencePage() {
           <a
             href="https://www.cdc.gov/places/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="text-primary hover:underline"
           >
             cdc.gov/places

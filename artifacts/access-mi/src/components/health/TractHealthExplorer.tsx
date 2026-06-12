@@ -145,7 +145,7 @@ export default function TractHealthExplorer() {
           <a
             href="https://www.cdc.gov/places/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="text-primary hover:underline inline-flex items-center gap-0.5"
           >
             CDC PLACES 2025, Census Tract Level <ExternalLink className="h-2.5 w-2.5" />

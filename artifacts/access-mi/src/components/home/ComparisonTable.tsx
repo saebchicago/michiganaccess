@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
 import { Check, X, Minus } from "lucide-react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type CellValue = "yes" | "no" | "partial";
 
@@ -12,14 +19,54 @@ interface Feature {
 }
 
 const features: Feature[] = [
-  { label: "Quality-ranked results (not pay-to-play)", michigan: "yes", twoOneOne: "no", healthPlan: "no" },
-  { label: "All 83 Michigan counties", michigan: "yes", twoOneOne: "partial", healthPlan: "partial" },
-  { label: "Provider ratings & credentials", michigan: "yes", twoOneOne: "no", healthPlan: "partial" },
-  { label: "Insurance appeal tools", michigan: "yes", twoOneOne: "no", healthPlan: "no" },
-  { label: "Social services (food, housing, transit)", michigan: "yes", twoOneOne: "yes", healthPlan: "no" },
-  { label: "Real-time transit & air quality", michigan: "yes", twoOneOne: "no", healthPlan: "no" },
-  { label: "Equity-adjusted scoring", michigan: "yes", twoOneOne: "no", healthPlan: "no" },
-  { label: "Free & no account required", michigan: "yes", twoOneOne: "yes", healthPlan: "no" },
+  {
+    label: "Quality-ranked results (not pay-to-play)",
+    michigan: "yes",
+    twoOneOne: "no",
+    healthPlan: "no",
+  },
+  {
+    label: "All 83 Michigan counties",
+    michigan: "yes",
+    twoOneOne: "partial",
+    healthPlan: "partial",
+  },
+  {
+    label: "Provider ratings & credentials",
+    michigan: "yes",
+    twoOneOne: "no",
+    healthPlan: "partial",
+  },
+  {
+    label: "Insurance appeal tools",
+    michigan: "yes",
+    twoOneOne: "no",
+    healthPlan: "no",
+  },
+  {
+    label: "Social services (food, housing, transit)",
+    michigan: "yes",
+    twoOneOne: "yes",
+    healthPlan: "no",
+  },
+  {
+    label: "Real-time transit & air quality",
+    michigan: "yes",
+    twoOneOne: "no",
+    healthPlan: "no",
+  },
+  {
+    label: "Equity-adjusted scoring",
+    michigan: "yes",
+    twoOneOne: "no",
+    healthPlan: "no",
+  },
+  {
+    label: "No account required",
+    michigan: "yes",
+    twoOneOne: "yes",
+    healthPlan: "no",
+  },
 ];
 
 const CellIcon = ({ value }: { value: CellValue }) => {
@@ -54,19 +101,35 @@ export default function ComparisonTable() {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50">
-                <TableHead className="w-[45%] text-xs font-semibold">Feature</TableHead>
-                <TableHead className="text-center text-xs font-semibold text-primary">Access Michigan</TableHead>
-                <TableHead className="text-center text-xs font-semibold">211</TableHead>
-                <TableHead className="text-center text-xs font-semibold">Health Plan Dirs</TableHead>
+                <TableHead className="w-[45%] text-xs font-semibold">
+                  Feature
+                </TableHead>
+                <TableHead className="text-center text-xs font-semibold text-primary">
+                  Access Michigan
+                </TableHead>
+                <TableHead className="text-center text-xs font-semibold">
+                  211
+                </TableHead>
+                <TableHead className="text-center text-xs font-semibold">
+                  Health Plan Dirs
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {features.map((f) => (
                 <TableRow key={f.label}>
-                  <TableCell className="text-xs font-medium py-2.5">{f.label}</TableCell>
-                  <TableCell className="text-center py-2.5"><CellIcon value={f.michigan} /></TableCell>
-                  <TableCell className="text-center py-2.5"><CellIcon value={f.twoOneOne} /></TableCell>
-                  <TableCell className="text-center py-2.5"><CellIcon value={f.healthPlan} /></TableCell>
+                  <TableCell className="text-xs font-medium py-2.5">
+                    {f.label}
+                  </TableCell>
+                  <TableCell className="text-center py-2.5">
+                    <CellIcon value={f.michigan} />
+                  </TableCell>
+                  <TableCell className="text-center py-2.5">
+                    <CellIcon value={f.twoOneOne} />
+                  </TableCell>
+                  <TableCell className="text-center py-2.5">
+                    <CellIcon value={f.healthPlan} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -74,7 +137,8 @@ export default function ComparisonTable() {
         </div>
 
         <p className="text-[10px] text-muted-foreground text-center mt-3">
-          Comparison based on publicly available features as of 2026. "Partial" = limited coverage or functionality.
+          Comparison based on publicly available features as of 2026. "Partial"
+          = limited coverage or functionality.
         </p>
       </motion.div>
     </section>

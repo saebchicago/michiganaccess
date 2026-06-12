@@ -62,7 +62,7 @@ export default function EmbedShowcase() {
                   <Copy className="h-3 w-3 mr-1" /> Copy Code
                 </Button>
                 <Button size="sm" variant="ghost" asChild>
-                  <a href={w.previewUrl} target="_blank" rel="noopener">
+                  <a href={w.previewUrl} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-3 w-3" />
                   </a>
                 </Button>

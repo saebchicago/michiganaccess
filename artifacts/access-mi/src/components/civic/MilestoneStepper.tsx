@@ -140,8 +140,8 @@ export default function MilestoneStepper() {
           <p className="text-xs text-muted-foreground">
             <strong className="text-foreground">U.S. Citizenship Path</strong> - Based on USCIS naturalization standards.
             For legal assistance in Michigan, contact the{" "}
-            <a href="https://michiganimmigrant.org" target="_blank" rel="noopener" className="text-primary underline">Michigan Immigrant Rights Center (MIRC)</a>{" "}
-            or <a href="https://www.accesscommunity.org" target="_blank" rel="noopener" className="text-primary underline">ACCESS</a> for social services.
+            <a href="https://michiganimmigrant.org" target="_blank" rel="noopener noreferrer" className="text-primary underline">Michigan Immigrant Rights Center (MIRC)</a>{" "}
+            or <a href="https://www.accesscommunity.org" target="_blank" rel="noopener noreferrer" className="text-primary underline">ACCESS</a> for social services.
           </p>
         </div>
         <StepList steps={NATURALIZATION_STEPS} />
@@ -152,7 +152,7 @@ export default function MilestoneStepper() {
           <p className="text-xs text-muted-foreground">
             <strong className="text-foreground">Michigan Graduated Driver Licensing</strong> - The GDL program helps new drivers gain experience safely.
             Visit your local{" "}
-            <a href="https://www.michigan.gov/sos" target="_blank" rel="noopener" className="text-primary underline">Secretary of State</a> office to begin.
+            <a href="https://www.michigan.gov/sos" target="_blank" rel="noopener noreferrer" className="text-primary underline">Secretary of State</a> office to begin.
           </p>
         </div>
         <StepList steps={GDL_STEPS} />

@@ -7,7 +7,7 @@
  *
  * Scope: homepage components + BenefitsHubPage.
  * Excluded: UniversalPreScreener.tsx results display (data-driven output
- * shown only after user completes the screener — not acquisition framing).
+ * shown only after user completes the screener  -  not acquisition framing).
  */
 
 import { describe, it, expect } from "vitest";

@@ -2,7 +2,7 @@
  * Anchor guard for CLAIMS.md VERIFIED rows.
  * Each test asserts a distinctive snippet exists in the evidence file cited in
  * CLAIMS.md. If the anchor drifts (renamed constant, deleted copy, etc.) the
- * test fails — alerting that a claim needs re-verification or CLAIMS.md update.
+ * test fails  -  alerting that a claim needs re-verification or CLAIMS.md update.
  *
  * Mutation-proven: mutating any anchor text below causes exit 1 in the suite.
  */
@@ -19,7 +19,7 @@ function read(rel: string) {
   return readFileSync(resolve(root, rel), "utf8");
 }
 
-describe("Claims anchor guard — VERIFIED rows", () => {
+describe("Claims anchor guard  -  VERIFIED rows", () => {
   // V-1: 41 sources build assertion
   it("V-1: platformConstants.ts asserts SOURCES_TOTAL === 41", () => {
     const src = read("src/config/platformConstants.ts");
@@ -41,7 +41,7 @@ describe("Claims anchor guard — VERIFIED rows", () => {
     expect(src).toContain("chat-mistral");
   });
 
-  // V-4: GA removed from index.html — no gtag script tag
+  // V-4: GA removed from index.html  -  no gtag script tag
   it("V-4: index.html does not contain active gtag script", () => {
     const src = read("index.html");
     // The GA comment-out block is present; the actual gtag script is not
@@ -112,7 +112,7 @@ describe("Claims anchor guard — VERIFIED rows", () => {
   });
 });
 
-describe("Claims anchor guard — FALSE-fixed rows", () => {
+describe("Claims anchor guard  -  FALSE-fixed rows", () => {
   // F-1 fix: PrivacyPage no longer says "client-side" for appeal generator
   it("F-1 fix: PrivacyPage does not claim AI tools process data 'client-side'", () => {
     const src = read("src/pages/PrivacyPage.tsx");

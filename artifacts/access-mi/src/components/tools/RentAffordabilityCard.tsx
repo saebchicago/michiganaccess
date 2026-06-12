@@ -121,7 +121,7 @@ export default function RentAffordabilityCard({ zip }: RentAffordabilityCardProp
                   <a
                     href="https://huduser.gov/portal/datasets/fmr.html"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     huduser.gov

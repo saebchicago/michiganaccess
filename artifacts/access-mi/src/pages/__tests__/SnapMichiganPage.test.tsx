@@ -125,7 +125,7 @@ describe("SnapMichiganPage", () => {
 
   it("Wayne County has the highest enrollment in default sort", () => {
     renderPage();
-    // Default sort is enrollmentTotal desc — Wayne should be first link
+    // Default sort is enrollmentTotal desc  -  Wayne should be first link
     const rows = screen.getAllByRole("link").filter(
       (el) => el.getAttribute("aria-label")?.includes("County data")
     );

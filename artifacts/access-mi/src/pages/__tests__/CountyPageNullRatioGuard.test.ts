@@ -38,7 +38,7 @@ describe("CountyPage null-ratio guard", () => {
   });
 
   it("ratioSeverity is only assigned inside the isFinite guard, not outside it", () => {
-    // The assignment must appear nested inside Number.isFinite(ratioNum) — verify the guard
+    // The assignment must appear nested inside Number.isFinite(ratioNum)  -  verify the guard
     // wraps the assignment by checking the source order: isFinite guard precedes the assignment.
     const isFinitePos = src.indexOf(
       "Number.isFinite(ratioNum) && ratioNum > 0",

@@ -32,7 +32,7 @@ type ViolationRow = {
 const allViolations: ViolationRow[] = [];
 
 test.describe.configure({ mode: 'serial' });
-test.describe('A11y audit — priority routes', () => {
+test.describe('A11y audit  -  priority routes', () => {
   test.beforeEach(async ({ page }) => {
     // Suppress first-visit onboarding tour so axe doesn't sample the
     // card mid-fade (transparent card reveals crisis-bar coral and

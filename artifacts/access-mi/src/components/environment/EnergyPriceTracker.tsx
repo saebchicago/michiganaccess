@@ -137,7 +137,7 @@ export default function EnergyPriceTracker() {
           <a
             href="https://www.eia.gov/electricity/monthly/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="text-primary hover:underline inline-flex items-center gap-0.5"
           >
             U.S. Energy Information Administration <ExternalLink className="h-2.5 w-2.5" />

@@ -17,10 +17,10 @@ export default function LeadWaterCard() {
           <p className="text-xs text-muted-foreground">Flint: 98% replaced, ~500 remaining. Spring 2026 work scheduled to complete.</p>
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" size="sm" className="text-xs" asChild>
-              <a href="https://www.michigan.gov/egle/about/featured/mi-lead-safe" target="_blank" rel="noopener">MiLeadSafe Dashboard <ExternalLink className="ml-1 h-3 w-3" /></a>
+              <a href="https://www.michigan.gov/egle/about/featured/mi-lead-safe" target="_blank" rel="noopener noreferrer">MiLeadSafe Dashboard <ExternalLink className="ml-1 h-3 w-3" /></a>
             </Button>
             <Button variant="outline" size="sm" className="text-xs" asChild>
-              <a href="https://www.safewaterengineering.com/hottopics/milslrtracker" target="_blank" rel="noopener">Lead Service Line Tracker (MiLeadSafe) <ExternalLink className="ml-1 h-3 w-3" /></a>
+              <a href="https://www.safewaterengineering.com/hottopics/milslrtracker" target="_blank" rel="noopener noreferrer">Lead Service Line Tracker (MiLeadSafe) <ExternalLink className="ml-1 h-3 w-3" /></a>
             </Button>
           </div>
           <p className="text-[10px] text-muted-foreground">Source: EGLE Lead & Copper Rule, MiLeadSafe, MiTracking</p>

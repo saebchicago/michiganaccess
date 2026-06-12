@@ -26,7 +26,10 @@ export default function NewsletterSignup() {
       });
       setSubmitted(true);
     } catch {
-      toast({ title: "Something went wrong. Try again.", variant: "destructive" });
+      toast({
+        title: "Something went wrong. Try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -38,7 +41,9 @@ export default function NewsletterSignup() {
         <div className="rounded-xl border border-border bg-card p-6 text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <Mail className="h-5 w-5 text-primary" />
-            <h2 className="text-sm font-bold text-foreground">Weekly Insight Digest</h2>
+            <h2 className="text-sm font-bold text-foreground">
+              Weekly Insight Digest
+            </h2>
           </div>
           <p className="text-xs text-muted-foreground max-w-md mx-auto">
             Get one data-backed Michigan insight per week. No spam - just facts.
@@ -60,14 +65,19 @@ export default function NewsletterSignup() {
                 className="h-9 text-sm"
                 disabled={loading}
               />
-              <Button size="sm" className="h-9 px-4 text-xs shrink-0" onClick={handleSubmit} disabled={loading}>
+              <Button
+                size="sm"
+                className="h-9 px-4 text-xs shrink-0"
+                onClick={handleSubmit}
+                disabled={loading}
+              >
                 {loading ? "…" : "Subscribe"}
               </Button>
             </div>
           )}
 
           <p className="text-[10px] text-muted-foreground/60">
-            No tracking. Unsubscribe anytime. We never share your email.
+            Unsubscribe anytime. We never share your email.
           </p>
         </div>
       </div>

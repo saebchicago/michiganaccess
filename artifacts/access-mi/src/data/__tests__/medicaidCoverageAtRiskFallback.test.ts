@@ -7,7 +7,7 @@ import {
 // ── Sanity checks ─────────────────────────────────────────────────────────────
 
 describe("MEDICAID_COVERAGE_AT_RISK_FALLBACK", () => {
-  it("has exactly 83 entries — one per Michigan county", () => {
+  it("has exactly 83 entries  -  one per Michigan county", () => {
     expect(MEDICAID_COVERAGE_AT_RISK_FALLBACK).toHaveLength(83);
   });
 

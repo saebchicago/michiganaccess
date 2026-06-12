@@ -69,7 +69,7 @@ vi.mock("@/data/cross-domain-indicators", () => ({
   MI_STATE_AVERAGES: {},
 }));
 
-// CountyContext — will be overridden per describe block
+// CountyContext  -  will be overridden per describe block
 const mockSetCounty = vi.fn();
 let mockCounty: string | null = "Saginaw";
 
@@ -101,7 +101,7 @@ const briefSrc = fs.readFileSync(
 
 // ── source-inspection guard ───────────────────────────────────────────────────
 
-describe("BriefPage source — no hand-typed date literals", () => {
+describe("BriefPage source  -  no hand-typed date literals", () => {
   it("BriefPage.tsx contains no YYYY-MM-DD date literals", () => {
     expect(briefSrc).not.toMatch(/20\d\d-\d\d-\d\d/);
   });
@@ -131,7 +131,7 @@ describe("BriefPage source — no hand-typed date literals", () => {
 
 // ── Saginaw (full data) ───────────────────────────────────────────────────────
 
-describe("BriefPage — Saginaw (full data)", () => {
+describe("BriefPage  -  Saginaw (full data)", () => {
   it("renders stat blocks with source labels", () => {
     renderBrief("Saginaw");
     const statBlocks = document.querySelectorAll("[data-brief-stat]");
@@ -187,7 +187,7 @@ describe("BriefPage — Saginaw (full data)", () => {
 
 // ── Keweenaw (null / genuine-zero paths) ─────────────────────────────────────
 
-describe("BriefPage — Keweenaw (null handling)", () => {
+describe("BriefPage  -  Keweenaw (null handling)", () => {
   it("renders without crashing for Keweenaw", () => {
     expect(() => renderBrief("Keweenaw")).not.toThrow();
   });
@@ -214,7 +214,7 @@ describe("BriefPage — Keweenaw (null handling)", () => {
   it("facilities block shows 0 for Keweenaw, not blank", () => {
     renderBrief("Keweenaw");
     expect(screen.getByText("Health Facilities")).toBeInTheDocument();
-    // Keweenaw is expected_zero_counties — count is 0, shown as "0 (verified zero)"
+    // Keweenaw is expected_zero_counties  -  count is 0, shown as "0 (verified zero)"
     expect(screen.getByText(/0 \(verified zero\)/)).toBeInTheDocument();
   });
 
@@ -226,13 +226,13 @@ describe("BriefPage — Keweenaw (null handling)", () => {
     ).toBeInTheDocument();
   });
 
-  it("no contradictory badges — null stats do not show 'verified' with a value", () => {
+  it("no contradictory badges  -  null stats do not show 'verified' with a value", () => {
     renderBrief("Keweenaw");
     const statBlocks = document.querySelectorAll("[data-brief-stat]");
     statBlocks.forEach((block) => {
       const italic = block.querySelector("p.italic");
       if (italic) {
-        // This is a null block — it should not have a bold value sibling
+        // This is a null block  -  it should not have a bold value sibling
         const boldVal = block.querySelector("p.text-2xl");
         expect(boldVal).toBeNull();
       }

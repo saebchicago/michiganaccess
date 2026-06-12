@@ -1053,7 +1053,7 @@ export default function MethodologyPage() {
           </div>
           <div className="rounded-xl border border-michigan-forest/20 bg-michigan-forest/[0.03] p-6 space-y-3">
             {[
-              "No ads, no tracking, no pay-to-play listings.",
+              "No pay-to-play listings.",
               "If we don't have data for a ZIP or topic, we say so instead of guessing.",
               "Every number is either from a named public dataset or a clearly labeled modeled index, with methods in one place.",
               "When we find mistakes or better methods, we fix them and update this page.",

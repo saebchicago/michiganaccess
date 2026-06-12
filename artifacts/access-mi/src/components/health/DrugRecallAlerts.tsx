@@ -70,7 +70,7 @@ export default function DrugRecallAlerts() {
           <a
             href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="text-[10px] text-primary hover:underline flex items-center gap-0.5"
           >
             All FDA Recalls <ExternalLink className="h-2.5 w-2.5" />

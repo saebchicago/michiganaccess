@@ -677,7 +677,7 @@ const EnvironmentPage = () => {
                       <a
                         href="https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                       >
                         {t("environment.checkAdvisories")}{" "}
                         <ExternalLink className="ml-2 h-3 w-3" />
@@ -710,7 +710,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://www.michigan.gov/MiAir"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           MiAir <ExternalLink className="ml-1 h-3 w-3" />
                         </a>
@@ -719,7 +719,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://www.airnowapi.org/aq/observation/zipCode/current/"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           AirNow API <ExternalLink className="ml-1 h-3 w-3" />
                         </a>
@@ -742,7 +742,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://seagull.glos.org/"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           GLOS Seagull <ExternalLink className="ml-1 h-3 w-3" />
                         </a>
@@ -751,7 +751,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://waterdata.usgs.gov/state/michigan/"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           USGS Water <ExternalLink className="ml-1 h-3 w-3" />
                         </a>
@@ -760,7 +760,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://www.michigan.gov/egle/public/learn/water-quality"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           EGLE Water <ExternalLink className="ml-1 h-3 w-3" />
                         </a>
@@ -831,7 +831,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.michigan.gov/egle/maps-data/mpart-pfas-gis"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                           >
                             <MapPin className="h-3 w-3" /> MPART PFAS
@@ -840,7 +840,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://gis-egle.hub.arcgis.com/datasets/egle::michigan-pfas-sites-and-areas-of-interest/about"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                           >
                             <ExternalLink className="h-3 w-3" /> ArcGIS PFAS
@@ -849,7 +849,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.michigan.gov/pfasresponse"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                           >
                             <ExternalLink className="h-3 w-3" /> Test Your Well
@@ -891,7 +891,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.michigan.gov/egle/about/featured/mi-lead-safe"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                           >
                             <ExternalLink className="h-3 w-3" /> MiLeadSafe
@@ -900,7 +900,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.safewaterengineering.com/hottopics/milslrtracker"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                           >
                             <ExternalLink className="h-3 w-3" /> Lead Service
@@ -937,7 +937,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                           >
                             <ExternalLink className="h-3 w-3" /> EGLE Drinking
@@ -946,7 +946,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.michigan.gov/egle/maps-data/water-well-viewer"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                           >
                             <MapPin className="h-3 w-3" /> Water Well Viewer
@@ -1173,7 +1173,7 @@ const EnvironmentPage = () => {
                         <a
                           href={item.link}
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                           aria-label={`Learn more about ${item.title} (opens in new window)`}
                           className="text-sm font-medium text-primary hover:underline"
                         >
@@ -1244,7 +1244,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://newmibridges.michigan.gov"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                           >
                             Apply via MI Bridges{" "}
                             <ExternalLink className="ml-2 h-3 w-3" />
@@ -1282,7 +1282,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.michigan.gov/mpsc/consumer/energy-assistance"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                           >
                             Learn More <ExternalLink className="ml-2 h-3 w-3" />
                           </a>
@@ -1333,7 +1333,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                           >
                             Apply Now <ExternalLink className="ml-2 h-3 w-3" />
                           </a>
@@ -1367,7 +1367,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.michigan.gov/egle/about/organization/materials-management/energy/rfps-loans/home-energy-rebate-programs/get-rebate"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                           >
                             Learn More <ExternalLink className="ml-2 h-3 w-3" />
                           </a>
@@ -1449,7 +1449,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://michigansaves.org/home-energy-improvements/"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           Explore Loans{" "}
                           <ExternalLink className="ml-2 h-3 w-3" />
@@ -1482,7 +1482,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.dteenergy.com/us/en/residential/save-money-energy.html"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                           >
                             DTE Programs{" "}
                             <ExternalLink className="ml-2 h-3 w-3" />
@@ -1508,7 +1508,7 @@ const EnvironmentPage = () => {
                           <a
                             href="https://www.consumersenergy.com/residential/save-money-and-energy"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                           >
                             Consumers Programs{" "}
                             <ExternalLink className="ml-2 h-3 w-3" />
@@ -1540,7 +1540,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://www.michigan.gov/leo/bureaus-agencies/wd/programs/going-pro"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           Learn More <ExternalLink className="ml-2 h-3 w-3" />
                         </a>
@@ -1581,7 +1581,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://www.michigan.gov/leo/bureaus-agencies/mihi"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           Check Availability{" "}
                           <ExternalLink className="ml-2 h-3 w-3" />
@@ -1688,7 +1688,7 @@ const EnvironmentPage = () => {
                             <a
                               href="https://www.recyclemichiganresources.com/"
                               target="_blank"
-                              rel="noopener"
+                              rel="noopener noreferrer"
                               className="text-primary underline"
                             >
                               RecycleMichiganResources.com
@@ -1792,7 +1792,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://www.michigan.gov/invasives"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                           className="text-primary underline"
                         >
                           invasive species portal
@@ -1939,7 +1939,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://ejscreen.epa.gov/mapper/"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           Open EJScreen{" "}
                           <ExternalLink className="ml-2 h-3 w-3" />
@@ -1962,7 +1962,7 @@ const EnvironmentPage = () => {
                         <a
                           href="https://www.michigan.gov/egle/about/contact/pollution-emergency-alerting-system"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           Report Concern{" "}
                           <ExternalLink className="ml-2 h-3 w-3" />
@@ -2190,7 +2190,7 @@ const EnvironmentPage = () => {
             <a
               href="https://data.cdc.gov/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               CDC PLACES
@@ -2199,7 +2199,7 @@ const EnvironmentPage = () => {
             <a
               href="https://www.epa.gov/outdoor-air-quality-data"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               EPA AirNow
@@ -2208,7 +2208,7 @@ const EnvironmentPage = () => {
             <a
               href="https://www.michigan.gov/egle"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               Michigan EGLE
@@ -2217,7 +2217,7 @@ const EnvironmentPage = () => {
             <a
               href="https://www.eia.gov/state/?sid=MI"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               U.S. EIA
@@ -2226,7 +2226,7 @@ const EnvironmentPage = () => {
             <a
               href="https://www.glerl.noaa.gov/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               NOAA GLERL
@@ -2235,7 +2235,7 @@ const EnvironmentPage = () => {
             <a
               href="https://ejscreen.epa.gov/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               EPA EJScreen

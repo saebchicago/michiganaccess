@@ -171,8 +171,7 @@ export default function PartnershipOnePager() {
             <div className="flex flex-wrap gap-2">
               {[
                 "No PHI Collected or Stored",
-                "No Tracking Cookies",
-                "No Ads",
+                "No User Accounts Required",
                 "Aligned to IRS 501(r)/Schedule H",
                 "Open Methodology",
               ].map((s) => (

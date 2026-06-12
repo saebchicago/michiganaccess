@@ -161,7 +161,7 @@ export default function PopulationSparkline({ county }: Props) {
         </ResponsiveContainer>
       </div>
 
-      {/* Peer comparison — div not p because Badge renders a div */}
+      {/* Peer comparison  -  div not p because Badge renders a div */}
       {peer && peerRelative && (
         <div className="text-[10px] text-muted-foreground flex flex-wrap items-center gap-x-1">
           <span className="font-medium">

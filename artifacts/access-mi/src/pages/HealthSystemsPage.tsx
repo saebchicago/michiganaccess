@@ -391,8 +391,7 @@ export default function HealthSystemsPage() {
           <div className="flex flex-wrap justify-center gap-2 mt-8">
             {[
               "No PHI Collected or Stored",
-              "No Tracking Cookies",
-              "No Ads",
+              "No User Accounts Required",
               "Aligned to IRS 501(r)/Schedule H",
               "Open Methodology",
             ].map((std) => (

@@ -58,13 +58,13 @@ export default function PFASAlertCard() {
               <a
                 href="https://www.michigan.gov/egle/maps-data/mpart-pfas-gis"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
               >
                 EGLE PFAS Map <ExternalLink className="ml-1 h-3 w-3" />
               </a>
             </Button>
             <Button variant="outline" size="sm" className="text-xs" asChild>
-              <a href="https://glpan.org" target="_blank" rel="noopener">
+              <a href="https://glpan.org" target="_blank" rel="noopener noreferrer">
                 GLPAN Interactive Map <ExternalLink className="ml-1 h-3 w-3" />
               </a>
             </Button>

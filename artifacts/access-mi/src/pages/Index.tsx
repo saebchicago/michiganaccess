@@ -28,7 +28,7 @@ export type PersonaView = "resident" | "professional";
 //
 // Each cluster card carries: a label, a one-line purpose, an anchor id (used by
 // nav), and a short list of tools. "Tools" are the existing Layer 3 destination
-// pages — clicking through goes to the actual tool, not back to this card.
+// pages  -  clicking through goes to the actual tool, not back to this card.
 
 type ClusterTool = { label: string; href: string };
 type Cluster = {
@@ -120,7 +120,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
         </h1>
         <p className="text-sm text-muted-foreground max-w-xl mx-auto">
           Independent data, federal sources, and the methodology behind every
-          number — organized so you can find what affects you, your patients, or
+          number  -  organized so you can find what affects you, your patients, or
           your community.
         </p>
 
@@ -154,7 +154,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
             className="inline-flex items-center gap-1 underline-offset-2 hover:underline"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            Every number carries its source and label — see the methodology
+            Every number carries its source and label  -  see the methodology
           </Link>
         </p>
       </motion.div>
@@ -248,9 +248,9 @@ function Layer2ClusterGrid() {
 const Index = () => {
   const navigate = useNavigate();
   usePageMeta({
-    title: "AccessMI — Civic intelligence for Michigan",
+    title: "AccessMI  -  Civic intelligence for Michigan",
     description:
-      "Explore Michigan policy and investment data, health coverage trends, county and ZIP-level signals, and educational explainers of how benefit programs work — all sourced from primary federal records.",
+      "Explore Michigan policy and investment data, health coverage trends, county and ZIP-level signals, and educational explainers of how benefit programs work  -  all sourced from primary federal records.",
   });
 
   return (

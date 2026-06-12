@@ -159,7 +159,7 @@ export default function ALICEDashboard() {
           </div>
           <p className="text-[10px] text-muted-foreground mt-3">
             Source:{" "}
-            <a href="https://unitedforalice.org/state-overview/michigan" target="_blank" rel="noopener" className="text-primary hover:underline">
+            <a href="https://unitedforalice.org/state-overview/michigan" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
               United for ALICE, 2023 data
             </a>. ALICE Threshold = poverty + ALICE households combined.
           </p>

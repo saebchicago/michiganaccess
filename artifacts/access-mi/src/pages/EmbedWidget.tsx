@@ -65,7 +65,7 @@ export default function EmbedWidget() {
           <a
             href="https://accessmi.org/find-care"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="flex items-center gap-1 hover:text-primary"
           >
             <MapPin className="h-3 w-3" /> Find Care
@@ -77,7 +77,7 @@ export default function EmbedWidget() {
         </div>
 
         <p className="text-center text-[9px] text-muted-foreground">
-          Powered by <a href="https://accessmi.org" target="_blank" rel="noopener" className="underline hover:text-primary">Access Michigan</a> · Non-commercial civic resource
+          Powered by <a href="https://accessmi.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">Access Michigan</a> · Non-commercial civic resource
         </p>
       </div>
     </div>

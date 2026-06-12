@@ -56,7 +56,7 @@ export default function ChildcareEducationHub() {
                 <p className="text-xs text-muted-foreground leading-relaxed">{r.desc}</p>
                 <Badge variant="outline" className="text-[9px]">{r.stats}</Badge>
                 <Button variant="outline" size="sm" className="w-full h-7 text-xs" asChild>
-                  <a href={r.url} target="_blank" rel="noopener">
+                  <a href={r.url} target="_blank" rel="noopener noreferrer">
                     {r.source} <ExternalLink className="ml-1 h-3 w-3" />
                   </a>
                 </Button>

@@ -52,7 +52,7 @@ describe("DualEligibleExposurePage", () => {
     ).toBeInTheDocument();
   });
 
-  it("displays all 83 Michigan counties in the table — single-pass filter", () => {
+  it("displays all 83 Michigan counties in the table  -  single-pass filter", () => {
     renderPage();
     const allLinks = screen.getAllByRole("link");
     const countyLinks = allLinks.filter(
@@ -88,7 +88,7 @@ describe("DualEligibleExposurePage", () => {
     expect(rows[0].textContent).toBe("Wayne");
   });
 
-  it("clicking County header sorts alphabetically — Alcona first", () => {
+  it("clicking County header sorts alphabetically  -  Alcona first", () => {
     renderPage();
     const countyBtn = screen.getByRole("button", { name: /county/i });
     fireEvent.click(countyBtn);

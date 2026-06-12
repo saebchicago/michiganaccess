@@ -313,7 +313,7 @@ export default function FinancialHelpPage() {
                                     </a>
                                   )}
                                   {prog.application_url && (
-                                    <a href={prog.application_url} target="_blank" rel="noopener" className="flex items-center gap-1.5 text-sm text-primary hover:underline">
+                                    <a href={prog.application_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-sm text-primary hover:underline">
                                       <ExternalLink className="h-3.5 w-3.5" /> Apply Online
                                     </a>
                                   )}

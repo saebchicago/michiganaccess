@@ -249,7 +249,7 @@ export default function ClinicalTrialsPage() {
                       </div>
 
                       <div className="mt-3 flex gap-2 flex-wrap">
-                        <a href={`https://clinicaltrials.gov/study/${trial.nctId}`} target="_blank" rel="noopener">
+                        <a href={`https://clinicaltrials.gov/study/${trial.nctId}`} target="_blank" rel="noopener noreferrer">
                           <Button size="sm" variant="outline" className="text-xs h-7">
                             <ExternalLink className="mr-1 h-3 w-3" />ClinicalTrials.gov
                           </Button>
@@ -288,7 +288,7 @@ export default function ClinicalTrialsPage() {
                     <p className="text-sm font-semibold text-foreground">{inst.name}</p>
                     <p className="text-xs text-muted-foreground"><MapPin className="inline h-3 w-3 mr-1" />{inst.loc} · {inst.trials}</p>
                   </div>
-                  <a href={inst.url} target="_blank" rel="noopener" aria-label={`Open ${inst.name ?? "trial site"} in new tab`}><Button size="icon" variant="ghost" className="h-8 w-8" tabIndex={-1} aria-hidden="true"><ExternalLink className="h-4 w-4" /></Button></a>
+                  <a href={inst.url} target="_blank" rel="noopener noreferrer" aria-label={`Open ${inst.name ?? "trial site"} in new tab`}><Button size="icon" variant="ghost" className="h-8 w-8" tabIndex={-1} aria-hidden="true"><ExternalLink className="h-4 w-4" /></Button></a>
                 </CardContent>
               </Card>
             ))}

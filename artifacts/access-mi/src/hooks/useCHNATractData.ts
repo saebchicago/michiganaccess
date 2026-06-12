@@ -24,7 +24,7 @@ async function fetchCHNA<T>(
 }
 
 // ---------------------------------------------------------------------------
-// EJScreen tracts (EPA EJScreen 2.32)  integrity: MODELED
+// EJScreen tracts (EPA EJScreen v2.3)  integrity: MODELED
 // ---------------------------------------------------------------------------
 
 export interface EJScreenTract {
@@ -81,7 +81,7 @@ export const EJSCREEN_META: {
   vintage: string;
 } = {
   integrityLabel: "MODELED",
-  source: "EJScreen 2.32 (EPA)",
+  source: "EJScreen v2.3 (EPA)",
   vintage: "2023",
 };
 
@@ -248,29 +248,10 @@ export interface CSOOutfall {
   waterBody?: string;
 }
 
-const CSO_FALLBACK: CSOOutfall[] = [
-  {
-    id: "cso-001",
-    name: "Detroit River Outfall A",
-    lat: 42.3314,
-    lng: -83.0458,
-    waterBody: "Detroit River",
-  },
-  {
-    id: "cso-002",
-    name: "Rouge River Outfall B",
-    lat: 42.2731,
-    lng: -83.1454,
-    waterBody: "Rouge River",
-  },
-  {
-    id: "cso-003",
-    name: "Clinton River Outfall C",
-    lat: 42.5803,
-    lng: -82.9177,
-    waterBody: "Clinton River",
-  },
-];
+// Empty fallback: Wayne-county-only sample data was previously used here and
+// incorrectly appeared for all other counties. Show no markers in fallback
+// mode; the legend badge already indicates data could not be loaded.
+const CSO_FALLBACK: CSOOutfall[] = [];
 
 export const CSO_META: {
   integrityLabel: IntegrityLabel;

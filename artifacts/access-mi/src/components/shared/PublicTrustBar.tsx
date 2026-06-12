@@ -12,11 +12,11 @@ export default function PublicTrustBar() {
     },
     {
       icon: Lock,
-      label: "No tracking or ads",
+      label: "No personal data collected",
     },
     {
       icon: Globe,
-      label: "Free for all Michigan residents",
+      label: "All 83 Michigan counties",
     },
   ];
 

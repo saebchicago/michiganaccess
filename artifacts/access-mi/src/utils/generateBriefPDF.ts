@@ -41,7 +41,7 @@ export async function generateBriefPDF(input: BriefPDFInput): Promise<void> {
   doc.text(`${input.countyName} County Brief`, 14, 13);
   doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
-  doc.text("AccessMI — Independent Civic Data Project — accessmi.org", 14, 20);
+  doc.text("AccessMI  -  Independent Civic Data Project  -  accessmi.org", 14, 20);
   doc.text(`Generated ${input.retrievedDate}`, 202, 20, { align: "right" });
 
   // ── Independence disclosure ──
@@ -130,7 +130,7 @@ export async function generateBriefPDF(input: BriefPDFInput): Promise<void> {
     14,
     276,
   );
-  doc.text("accessmi.org/methodology — accessmi.org/data-sources", 14, 280);
+  doc.text("accessmi.org/methodology  -  accessmi.org/data-sources", 14, 280);
   doc.text(`Page 1 of 1 · Generated ${input.retrievedDate}`, 202, 280, {
     align: "right",
   });

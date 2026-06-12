@@ -14,7 +14,7 @@ const FCC_LINKS = [
     label: "Coverage and availability by location",
   },
   {
-    body: "NTIA BEAD Program — Michigan",
+    body: "NTIA BEAD Program  -  Michigan",
     url: "https://www.ntia.gov/broadband/grants/bead",
     label: "BEAD allocation and grant details",
   },
@@ -45,7 +45,7 @@ export default function BroadbandDashboard() {
               <a
                 href={item.url}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-sm text-primary hover:underline shrink-0"
               >
                 {item.label} <ExternalLink className="h-3 w-3" />

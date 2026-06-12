@@ -52,7 +52,7 @@ describe("DualEligibleExposureMethodology", () => {
     expect(screen.getByRole("heading", { name: /^Sources$/i })).toBeInTheDocument();
   });
 
-  // Source block a — MACPAC
+  // Source block a  -  MACPAC
   it("renders MACPAC source link", () => {
     renderPage();
     const macpacLinks = screen.getAllByRole("link").filter(
@@ -61,7 +61,7 @@ describe("DualEligibleExposureMethodology", () => {
     expect(macpacLinks.length).toBeGreaterThan(0);
   });
 
-  // Source block b — KFF dual-eligible state facts
+  // Source block b  -  KFF dual-eligible state facts
   it("renders KFF dual-eligible state facts source link", () => {
     renderPage();
     const kffLinks = screen.getAllByRole("link").filter(
@@ -70,7 +70,7 @@ describe("DualEligibleExposureMethodology", () => {
     expect(kffLinks.length).toBeGreaterThan(0);
   });
 
-  // Source block c — ACS B27010
+  // Source block c  -  ACS B27010
   it("renders ACS B27010 census source link", () => {
     renderPage();
     const censusLinks = screen.getAllByRole("link").filter(
@@ -79,7 +79,7 @@ describe("DualEligibleExposureMethodology", () => {
     expect(censusLinks.length).toBeGreaterThan(0);
   });
 
-  // Source block d — Justice in Aging
+  // Source block d  -  Justice in Aging
   it("renders Justice in Aging source link", () => {
     renderPage();
     const jiaLinks = screen.getAllByRole("link").filter(
@@ -88,7 +88,7 @@ describe("DualEligibleExposureMethodology", () => {
     expect(jiaLinks.length).toBeGreaterThan(0);
   });
 
-  // Source block e — CBO pub. 61570
+  // Source block e  -  CBO pub. 61570
   it("renders CBO source link", () => {
     renderPage();
     const cboLinks = screen.getAllByRole("link").filter(
@@ -97,7 +97,7 @@ describe("DualEligibleExposureMethodology", () => {
     expect(cboLinks.length).toBeGreaterThan(0);
   });
 
-  // Source block f — KFF MSP/LIS
+  // Source block f  -  KFF MSP/LIS
   it("renders KFF MSP/LIS source link (second KFF link)", () => {
     renderPage();
     const kffLinks = screen.getAllByRole("link").filter(
@@ -107,7 +107,7 @@ describe("DualEligibleExposureMethodology", () => {
     expect(kffLinks.length).toBeGreaterThanOrEqual(2);
   });
 
-  // Source block g — MACPAC enrollment pathways (second MACPAC link)
+  // Source block g  -  MACPAC enrollment pathways (second MACPAC link)
   it("renders MACPAC enrollment pathways source link (second MACPAC link)", () => {
     renderPage();
     const macpacLinks = screen.getAllByRole("link").filter(
@@ -118,7 +118,7 @@ describe("DualEligibleExposureMethodology", () => {
 
   it("renders Technical steps section", () => {
     renderPage();
-    // Use getAllByRole — "Technical steps" appears as both section h2 and subsection h3
+    // Use getAllByRole  -  "Technical steps" appears as both section h2 and subsection h3
     const headings = screen.getAllByRole("heading", { name: /Technical steps/i });
     expect(headings.length).toBeGreaterThanOrEqual(1);
   });

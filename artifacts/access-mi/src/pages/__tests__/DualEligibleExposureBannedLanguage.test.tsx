@@ -15,23 +15,23 @@
  *     "Trump's cuts" / "Trump cuts"
  *     "victims"
  *
- *   BANNED FRAMING — specific to dual-eligible feature:
- *     "compounding exposure" — explicitly rejected framing
+ *   BANNED FRAMING  -  specific to dual-eligible feature:
+ *     "compounding exposure"  -  explicitly rejected framing
  *     "compounding risk"
- *     "will lose Medicare" — dual-eligibles are not losing Medicare under P.L. 119-21 work requirements
- *     "will lose Medicaid" — dual-eligibles are exempt from work requirements
- *     "at risk of losing" — present-tense active claim; not supported for dual-eligibles
+ *     "will lose Medicare"  -  dual-eligibles are not losing Medicare under P.L. 119-21 work requirements
+ *     "will lose Medicaid"  -  dual-eligibles are exempt from work requirements
+ *     "at risk of losing"  -  present-tense active claim; not supported for dual-eligibles
  *
  *   BANNED PAYER/INSURER NAMES:
  *     Blue Cross, BCBSM, Corewell, Priority Health, Molina, Meridian,
  *     United, Humana, Aetna, Cigna, Kaiser (as insurer)
  *
- *   REQUIRED PHRASES — must appear verbatim:
- *     "Dual-eligible residents are exempt from P.L. 119-21 work requirements" — anchor phrase
- *     "MACPAC" — primary source
- *     "ACS B27010" — county allocation source
- *     "§71119" — exemption provision
- *     "§71101" — MSP streamlining rule delay (methodology page)
+ *   REQUIRED PHRASES  -  must appear verbatim:
+ *     "Dual-eligible residents are exempt from P.L. 119-21 work requirements"  -  anchor phrase
+ *     "MACPAC"  -  primary source
+ *     "ACS B27010"  -  county allocation source
+ *     "§71119"  -  exemption provision
+ *     "§71101"  -  MSP streamlining rule delay (methodology page)
  */
 
 import { describe, it, expect } from "vitest";
@@ -65,7 +65,7 @@ function assertNotPresent(source: string, pattern: RegExp, file: string) {
 
 // ── Tests: banned advocacy language ──────────────────────────────────────────
 
-describe("DualEligibleExposure — civic neutrality: banned advocacy language", () => {
+describe("DualEligibleExposure  -  civic neutrality: banned advocacy language", () => {
   for (const relPath of FEATURE_FILES) {
     describe(relPath, () => {
       const src = readSourceFile(relPath);
@@ -119,7 +119,7 @@ describe("DualEligibleExposure — civic neutrality: banned advocacy language", 
 
 // ── Tests: banned dual-eligible-specific framing ──────────────────────────────
 
-describe("DualEligibleExposure — civic neutrality: banned dual-eligible framing", () => {
+describe("DualEligibleExposure  -  civic neutrality: banned dual-eligible framing", () => {
   for (const relPath of FEATURE_FILES) {
     describe(relPath, () => {
       const src = readSourceFile(relPath);
@@ -149,7 +149,7 @@ describe("DualEligibleExposure — civic neutrality: banned dual-eligible framin
 
 // ── Tests: banned payer/insurer names ─────────────────────────────────────────
 
-describe("DualEligibleExposure — civic neutrality: no payer or insurer names", () => {
+describe("DualEligibleExposure  -  civic neutrality: no payer or insurer names", () => {
   for (const relPath of FEATURE_FILES) {
     describe(relPath, () => {
       const src = readSourceFile(relPath);
@@ -195,10 +195,10 @@ describe("DualEligibleExposure — civic neutrality: no payer or insurer names",
 
 // ── Tests: required framing ───────────────────────────────────────────────────
 
-describe("DualEligibleExposure — civic neutrality: required framing", () => {
+describe("DualEligibleExposure  -  civic neutrality: required framing", () => {
   it("data page contains anchor phrase verbatim", () => {
     const src = readSourceFile("src/pages/DualEligibleExposurePage.tsx");
-    // Collapse JSX line breaks before matching — phrase may span multiple source lines
+    // Collapse JSX line breaks before matching  -  phrase may span multiple source lines
     const normalized = src.replace(/\s+/g, " ");
     expect(normalized).toContain(
       "Dual-eligible residents are exempt from P.L. 119-21 work requirements. This map shows where they live.",

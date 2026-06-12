@@ -45,7 +45,7 @@ export default function HazardRiskDashboard() {
               <a
                 href={item.url}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-sm text-primary hover:underline shrink-0"
               >
                 {item.label} <ExternalLink className="h-3 w-3" />

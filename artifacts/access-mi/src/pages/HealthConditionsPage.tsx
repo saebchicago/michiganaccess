@@ -421,7 +421,7 @@ export default function HealthConditionsPage() {
                                 <a
                                   href={f.website}
                                   target="_blank"
-                                  rel="noopener"
+                                  rel="noopener noreferrer"
                                 >
                                   <Button
                                     size="sm"

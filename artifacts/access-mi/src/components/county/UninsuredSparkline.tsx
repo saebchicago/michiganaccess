@@ -4,7 +4,7 @@ import { getCountyTrends, isUninsuredPending } from "@/data/trendSeries";
 
 interface Props {
   county: string;
-  // Legacy prop kept for callers that still pass it — not used for data
+  // Legacy prop kept for callers that still pass it  -  not used for data
   currentRate?: string;
 }
 
@@ -34,7 +34,7 @@ export default function UninsuredSparkline({ county }: Props) {
     );
   }
 
-  // Two-point display — NOT a continuous time series
+  // Two-point display  -  NOT a continuous time series
   const [p1, p2] = u.points;
   const delta = +(p2.value - p1.value).toFixed(1);
   const improving = delta < 0;
@@ -44,7 +44,7 @@ export default function UninsuredSparkline({ county }: Props) {
     <div className="space-y-2" data-trend-uninsured>
       <div className="flex items-center justify-between gap-2">
         <p className="text-[11px] font-medium text-muted-foreground">
-          Uninsured Rate — Vintage Comparison
+          Uninsured Rate  -  Vintage Comparison
         </p>
         <Badge
           variant="outline"
@@ -68,7 +68,7 @@ export default function UninsuredSparkline({ county }: Props) {
         </Badge>
       </div>
 
-      {/* Two-point dumbbell — reference line styled as comparison, not trend */}
+      {/* Two-point dumbbell  -  reference line styled as comparison, not trend */}
       <div className="flex items-center gap-2">
         {/* Point 1 */}
         <div className="flex flex-col items-center min-w-[56px]">

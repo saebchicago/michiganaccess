@@ -30,7 +30,7 @@ import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 
 // ── PopulationSparkline ───────────────────────────────────────────────────────
 
-describe("PopulationSparkline — Saginaw (full series)", () => {
+describe("PopulationSparkline  -  Saginaw (full series)", () => {
   it("renders without crashing", () => {
     expect(() =>
       render(<PopulationSparkline county="Saginaw" />),
@@ -76,7 +76,7 @@ describe("PopulationSparkline — Saginaw (full series)", () => {
   });
 });
 
-describe("PopulationSparkline — Keweenaw (small population, growing)", () => {
+describe("PopulationSparkline  -  Keweenaw (small population, growing)", () => {
   it("renders without crashing", () => {
     expect(() =>
       render(<PopulationSparkline county="Keweenaw" />),
@@ -89,7 +89,7 @@ describe("PopulationSparkline — Keweenaw (small population, growing)", () => {
   });
 });
 
-describe("PopulationSparkline — unknown county returns null", () => {
+describe("PopulationSparkline  -  unknown county returns null", () => {
   it("returns null for a county not in the dataset", () => {
     const { container } = render(
       <PopulationSparkline county="NotARealCounty" />,
@@ -100,7 +100,7 @@ describe("PopulationSparkline — unknown county returns null", () => {
 
 // ── UninsuredSparkline ────────────────────────────────────────────────────────
 
-describe("UninsuredSparkline — Saginaw (ACS pending-ci)", () => {
+describe("UninsuredSparkline  -  Saginaw (ACS pending-ci)", () => {
   it("renders without crashing", () => {
     expect(() => render(<UninsuredSparkline county="Saginaw" />)).not.toThrow();
   });
@@ -137,7 +137,7 @@ describe("UninsuredSparkline — Saginaw (ACS pending-ci)", () => {
   });
 });
 
-describe("UninsuredSparkline — Keweenaw (null path, ACS pending-ci)", () => {
+describe("UninsuredSparkline  -  Keweenaw (null path, ACS pending-ci)", () => {
   it("renders without crashing for small-population county", () => {
     expect(() =>
       render(<UninsuredSparkline county="Keweenaw" />),
@@ -146,17 +146,17 @@ describe("UninsuredSparkline — Keweenaw (null path, ACS pending-ci)", () => {
 
   it("shows pending message (not a null crash)", () => {
     render(<UninsuredSparkline county="Keweenaw" />);
-    // Either pending message or trend display — must render something
+    // Either pending message or trend display  -  must render something
     expect(screen.getByText(/Uninsured Rate/i)).toBeInTheDocument();
   });
 });
 
-describe("UninsuredSparkline — when ACS data is populated (future state)", () => {
+describe("UninsuredSparkline  -  when ACS data is populated (future state)", () => {
   it("does not render trend values for pending-ci entries", () => {
     // With current seed (pending-ci), we should see no value rows
     const { container } = render(<UninsuredSparkline county="Wayne" />);
     const dumbbellPoints = container.querySelectorAll("[data-trend-uninsured]");
-    // Either pending (no dumbbell) or populated (dumbbell present) — no crash
+    // Either pending (no dumbbell) or populated (dumbbell present)  -  no crash
     expect(container).toBeDefined();
     // If pending, no dumbbell points rendered with fabricated data
     if (dumbbellPoints.length === 0) {

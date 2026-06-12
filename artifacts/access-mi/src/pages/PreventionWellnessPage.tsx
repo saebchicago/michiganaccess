@@ -213,10 +213,10 @@ export default function PreventionWellnessPage() {
                 <h3 className="font-semibold text-foreground text-sm mb-2">Find Vaccination Sites Near You</h3>
                 <p className="text-sm text-muted-foreground mb-3">Michigan has 2,400+ vaccination locations including pharmacies, health departments, FQHCs, and clinics.</p>
                 <div className="flex gap-2 flex-wrap">
-                  <a href="https://www.vaccines.gov/" target="_blank" rel="noopener">
+                  <a href="https://www.vaccines.gov/" target="_blank" rel="noopener noreferrer">
                     <Button size="sm" variant="outline" className="text-xs"><ExternalLink className="mr-1 h-3 w-3" />Vaccines.gov</Button>
                   </a>
-                  <a href="https://www.michigan.gov/mdhhs" target="_blank" rel="noopener">
+                  <a href="https://www.michigan.gov/mdhhs" target="_blank" rel="noopener noreferrer">
                     <Button size="sm" variant="outline" className="text-xs"><ExternalLink className="mr-1 h-3 w-3" />MDHHS Immunization</Button>
                   </a>
                 </div>
