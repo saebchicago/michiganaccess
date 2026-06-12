@@ -217,7 +217,7 @@ export default function MichiganAtAGlance() {
               value: 200,
               suffix: "+",
               label: "PFAS sites monitored",
-              sub: "MPART interactive map, 8 ppt standard",
+              sub: "MPART map · Michigan MCL: PFOA 8 ppt, PFOS 16 ppt (2020)",
               color: "text-michigan-teal",
             },
             {

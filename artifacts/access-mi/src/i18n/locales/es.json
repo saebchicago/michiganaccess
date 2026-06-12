@@ -497,9 +497,7 @@
     "horizontalScaling": "Escalado Horizontal",
     "geoCDN": "CDN Geográfico",
     "whiteLabelReady": "Listo para Marca Blanca",
-    "interopTitle": "Estándares de Interoperabilidad Sanitaria",
-    "interopSubtitle": "Alineación con FHIR, HL7 y USCDI para integración con sistemas de salud",
-    "interopNote": "Arquitectura diseñada para futura integración con EHR/HIE. Los modelos de datos se mapean a recursos FHIR R4, permitiendo interoperabilidad fluida con los sistemas de Trinity Health, Corewell Health y HFHS."
+    "interopTitle": "Estándares de Interoperabilidad Sanitaria"
   },
   "home": {
     "exploreData": "Explorar Datos e Ideas",

@@ -22,9 +22,6 @@ import {
   BarChart3,
   Code,
   Cloud,
-  FileText,
-  Link2,
-  Share2,
 } from "lucide-react";
 
 const fade = {
@@ -116,27 +113,6 @@ const growthPlan = [
     titleKey: "whiteLabelReady",
     desc: "Replicable architecture for other states (Ohio, Indiana, Wisconsin)",
     icon: Layers,
-  },
-];
-
-const interopStandards = [
-  {
-    icon: Share2,
-    title: "FHIR R4 (Fast Healthcare Interoperability Resources)",
-    desc: "Data model aligned with HL7 FHIR R4 resource types. Provider directories map to Practitioner, PractitionerRole, Organization, and Location resources. Enables future integration with health system EHRs and HIEs.",
-    tags: ["HL7 FHIR R4", "RESTful API", "JSON"],
-  },
-  {
-    icon: FileText,
-    title: "USCDI v3 (US Core Data for Interoperability)",
-    desc: "Data elements mapped to ONC's USCDI standard for patient access and clinical data exchange. Supports CMS Interoperability & Patient Access final rule compliance for partner health systems.",
-    tags: ["ONC USCDI v3", "Patient Access API", "21st Century Cures"],
-  },
-  {
-    icon: Link2,
-    title: "HL7 CDA & ADT Integration-Ready",
-    desc: "Architecture supports ingestion of HL7 v2 ADT messages and CDA documents for real-time bed availability, ED wait times, and discharge planning - critical for ambulatory network optimization.",
-    tags: ["HL7 v2", "CDA R2", "ADT Messages"],
   },
 ];
 
@@ -273,82 +249,6 @@ export default function TechnicalPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        <Separator />
-
-        {/* Healthcare Interoperability Standards - NEW */}
-        <section>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fade}
-            custom={0}
-          >
-            <div className="flex items-center gap-3 mb-8">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
-                <Share2 className="h-5 w-5 text-michigan-coral" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
-                  {t("technicalPage.interopTitle")}
-                </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("technicalPage.interopSubtitle")}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          <div className="space-y-4">
-            {interopStandards.map((std, i) => (
-              <motion.div
-                key={std.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fade}
-                custom={i}
-              >
-                <Card className="hover-lift">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-michigan-coral/10">
-                        <std.icon className="h-5 w-5 text-michigan-coral" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="mb-1 text-sm font-bold text-foreground">
-                          {std.title}
-                        </h4>
-                        <p className="mb-3 text-xs text-muted-foreground leading-relaxed">
-                          {std.desc}
-                        </p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {std.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="rounded-full bg-michigan-coral/10 px-2.5 py-0.5 text-[10px] font-semibold text-michigan-coral"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-6 rounded-lg border border-border bg-muted/50 p-4">
-            <p className="text-xs text-muted-foreground">
-              <span className="font-semibold text-foreground">
-                {t("technicalPage.interopNote")}
-              </span>
-            </p>
           </div>
         </section>
 

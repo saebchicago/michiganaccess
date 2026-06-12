@@ -192,10 +192,11 @@ export default function CountyLeaderboard() {
           <div>
             <CardTitle className="text-lg flex items-center gap-2">
               <Trophy className="h-5 w-5 text-yellow-500" />
-              83-County Leaderboard
+              County Leaderboard
             </CardTitle>
             <p className="text-xs text-muted-foreground mt-1">
-              Ranked by {metricDef.label}. Top 3 lead, bottom 5 need attention.
+              Ranked by {metricDef.label} among {ranked.length} counties with
+              current data.
             </p>
           </div>
           <Button size="sm" variant="outline" onClick={exportCSV}>

@@ -498,9 +498,7 @@
     "horizontalScaling": "Horizontal Scaling",
     "geoCDN": "Geographic CDN",
     "whiteLabelReady": "White-Label Ready",
-    "interopTitle": "Healthcare Interoperability Standards",
-    "interopSubtitle": "FHIR, HL7, and USCDI alignment for health system integration",
-    "interopNote": "Architecture designed for future EHR/HIE integration. Data models map to FHIR R4 resources, enabling seamless interoperability with Trinity Health Epic, Corewell Health, and HFHS systems."
+    "interopTitle": "Healthcare Interoperability Standards"
   },
   "home": {
     "exploreData": "Explore Data & Insights",
