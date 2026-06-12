@@ -75,6 +75,9 @@ onlyBuiltDependencies:
   - unrs-resolver
 
 overrides:
+  # CVE: shell-quote <=1.8.3 does not escape newlines (GHSA-w7jw-789q-3m8p).
+  # dev-only chain: access-mi-mobile > expo > react-native > react-devtools-core > shell-quote
+  shell-quote: ">=1.8.4"
   # replit uses linux-x64 only, we can exclude all other platforms
   "esbuild>@esbuild/darwin-arm64": "-"
   "esbuild>@esbuild/darwin-x64": "-"
