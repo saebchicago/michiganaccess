@@ -163,7 +163,7 @@ function buildPopupContent(facility: Facility): string {
               )}${facility.services.length > 5 ? `<span style="color:#64748b;font-size:10px;">+${facility.services.length - 5} more</span>` : ""}</div>`
           : ""
       }
-      ${facility.website ? `<div style="margin-top:8px;"><a href="${facility.website}" target="_blank" rel="noopener" style="color:#0A4C95;font-size:12px;font-weight:600;text-decoration:none;">Visit Website →</a></div>` : ""}
+      ${facility.website ? `<div style="margin-top:8px;"><a href="${facility.website}" target="_blank" rel="noopener noreferrer" style="color:#0A4C95;font-size:12px;font-weight:600;text-decoration:none;">Visit Website →</a></div>` : ""}
       <div style="margin-top:6px;padding-top:4px;font-size:9px;color:#94a3b8;">
         ${facility.county ? `<a href="/county/${countyToSlug(facility.county)}" style="color:#0A4C95;">View ${facility.county} County →</a> · ` : ""}
         Quality data sourced from CMS & Leapfrog.

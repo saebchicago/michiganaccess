@@ -91,7 +91,7 @@ export default function FoodAccessMap() {
           {/* Actions */}
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
-              <a href="https://newmibridges.michigan.gov" target="_blank" rel="noopener">
+              <a href="https://newmibridges.michigan.gov" target="_blank" rel="noopener noreferrer">
                 Apply for SNAP via MI Bridges <ExternalLink className="ml-1 h-3 w-3" />
               </a>
             </Button>

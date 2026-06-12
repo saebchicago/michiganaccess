@@ -12,19 +12,38 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.08, duration: 0.4 } }),
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.08, duration: 0.4 },
+  }),
 };
 
 const CATEGORIES = [
   { value: "data_accuracy", label: "Data looks wrong or out of date" },
-  { value: "broken_link", label: "A link is broken or goes somewhere unexpected" },
-  { value: "accessibility", label: "Something isn't accessible (screen reader, keyboard, contrast)" },
-  { value: "neutrality_concern", label: "Language or framing could be more neutral" },
+  {
+    value: "broken_link",
+    label: "A link is broken or goes somewhere unexpected",
+  },
+  {
+    value: "accessibility",
+    label: "Something isn't accessible (screen reader, keyboard, contrast)",
+  },
+  {
+    value: "neutrality_concern",
+    label: "Language or framing could be more neutral",
+  },
   { value: "suggestion", label: "I have a suggestion or idea" },
   { value: "other", label: "Something else" },
 ];
@@ -56,7 +75,8 @@ function emptyForm(pagePath: string, initialCategory: string): FormState {
 export default function FeedbackPage() {
   usePageMeta({
     title: "Help us improve",
-    description: "Flag data errors, broken links, or suggest improvements to AccessMI. Your feedback shapes what we build.",
+    description:
+      "Flag data errors, broken links, or suggest improvements to AccessMI. Your feedback shapes what we build.",
     path: "/feedback",
   });
 
@@ -67,7 +87,9 @@ export default function FeedbackPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [optedIn, setOptedIn] = useState(false);
-  const [form, setForm] = useState<FormState>(() => emptyForm(fromPath, initialCategory));
+  const [form, setForm] = useState<FormState>(() =>
+    emptyForm(fromPath, initialCategory),
+  );
 
   const set = (field: keyof FormState, value: string | boolean) =>
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -93,12 +115,15 @@ export default function FeedbackPage() {
         category: form.category,
         element_reference: form.element_reference.trim().slice(0, 500) || null,
         description: form.description.trim().slice(0, 2000),
-        suggested_correction: form.suggested_correction.trim().slice(0, 2000) || null,
+        suggested_correction:
+          form.suggested_correction.trim().slice(0, 2000) || null,
         source_reference: form.source_reference.trim().slice(0, 500) || null,
         contact_opt_in: form.contact_opt_in,
         contact_email: form.contact_opt_in ? form.contact_email.trim() : null,
       };
-      const { error } = await (supabase as any).from("community_feedback").insert(payload);
+      const { error } = await (supabase as any)
+        .from("community_feedback")
+        .insert(payload);
       if (error) throw error;
       setSubmitted(true);
     } catch (err) {
@@ -121,7 +146,12 @@ export default function FeedbackPage() {
       <section className="bg-gradient-to-b from-primary/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
           <Breadcrumbs items={[{ label: "Help us improve" }]} />
-          <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            custom={0}
+          >
             <span className="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
               Community Feedback
             </span>
@@ -142,9 +172,10 @@ export default function FeedbackPage() {
             animate="visible"
             className="mx-auto max-w-2xl text-lg text-muted-foreground"
           >
-            AccessMI is built by and for fellow citizens. If you spot a data error, a broken link,
-            an accessibility issue, or something that just feels off, tell us. Every report is
-            reviewed. You don't need to give your name or email.
+            AccessMI is built by and for fellow citizens. If you spot a data
+            error, a broken link, an accessibility issue, or something that just
+            feels off, tell us. Every report is reviewed. You don't need to give
+            your name or email.
           </motion.p>
           <motion.p
             variants={fadeUp}
@@ -171,7 +202,10 @@ export default function FeedbackPage() {
             className="text-center py-16"
           >
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-michigan-forest/10">
-              <CheckCircle2 className="h-8 w-8 text-michigan-forest" aria-hidden="true" />
+              <CheckCircle2
+                className="h-8 w-8 text-michigan-forest"
+                aria-hidden="true"
+              />
             </div>
             <h2 className="text-2xl font-bold text-foreground mb-2">
               Thank you for helping improve AccessMI
@@ -179,7 +213,11 @@ export default function FeedbackPage() {
             <p className="text-muted-foreground max-w-md mx-auto">
               Your report has been recorded. We review every submission.
               {form.contact_opt_in && (
-                <> If you opted in for follow-up contact, we'll reach out within 5 business days.</>
+                <>
+                  {" "}
+                  If you opted in for follow-up contact, we'll reach out within
+                  5 business days.
+                </>
               )}
             </p>
             <div className="mt-8 flex items-center justify-center gap-3">
@@ -189,21 +227,32 @@ export default function FeedbackPage() {
                   Return home
                 </Link>
               </Button>
-              <Button variant="ghost" onClick={resetForm} aria-label="Report another issue">
+              <Button
+                variant="ghost"
+                onClick={resetForm}
+                aria-label="Report another issue"
+              >
                 <RotateCcw className="mr-2 h-4 w-4" aria-hidden="true" />
                 Report another issue
               </Button>
             </div>
           </motion.div>
         ) : (
-          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0}
+          >
             <Card>
               <CardContent className="pt-6">
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-
                   {/* 1. Page path */}
                   <div>
-                    <Label htmlFor="fb-page-path">Page you're reporting on <span aria-hidden="true">*</span></Label>
+                    <Label htmlFor="fb-page-path">
+                      Page you're reporting on <span aria-hidden="true">*</span>
+                    </Label>
                     <Input
                       id="fb-page-path"
                       placeholder="/county/wayne"
@@ -214,19 +263,29 @@ export default function FeedbackPage() {
                       className="mt-1.5"
                       aria-describedby="fb-page-path-hint"
                     />
-                    <p id="fb-page-path-hint" className="mt-1 text-xs text-muted-foreground">
-                      If you came from a specific page, we've filled it in for you. Edit if needed.
+                    <p
+                      id="fb-page-path-hint"
+                      className="mt-1 text-xs text-muted-foreground"
+                    >
+                      If you came from a specific page, we've filled it in for
+                      you. Edit if needed.
                     </p>
                   </div>
 
                   {/* 2. Category */}
                   <div>
-                    <Label htmlFor="fb-category">Type of feedback <span aria-hidden="true">*</span></Label>
+                    <Label htmlFor="fb-category">
+                      Type of feedback <span aria-hidden="true">*</span>
+                    </Label>
                     <Select
                       value={form.category}
                       onValueChange={(v) => set("category", v)}
                     >
-                      <SelectTrigger className="mt-1.5" id="fb-category" aria-required="true">
+                      <SelectTrigger
+                        className="mt-1.5"
+                        id="fb-category"
+                        aria-required="true"
+                      >
                         <SelectValue placeholder="Select the type of feedback" />
                       </SelectTrigger>
                       <SelectContent>
@@ -241,7 +300,9 @@ export default function FeedbackPage() {
 
                   {/* 3. Element reference (optional) */}
                   <div>
-                    <Label htmlFor="fb-element">Specific chart, stat, link, or section (optional)</Label>
+                    <Label htmlFor="fb-element">
+                      Specific chart, stat, link, or section (optional)
+                    </Label>
                     <Input
                       id="fb-element"
                       placeholder="e.g. 'The unemployment rate on the Wayne County page'"
@@ -251,15 +312,20 @@ export default function FeedbackPage() {
                       className="mt-1.5"
                       aria-describedby="fb-element-hint"
                     />
-                    <p id="fb-element-hint" className="mt-1 text-xs text-muted-foreground">
-                      Example: "The unemployment rate on the Wayne County page" or "The link to Michigan FOIA law."
+                    <p
+                      id="fb-element-hint"
+                      className="mt-1 text-xs text-muted-foreground"
+                    >
+                      Example: "The unemployment rate on the Wayne County page"
+                      or "The link to Michigan FOIA law."
                     </p>
                   </div>
 
                   {/* 4. Description (required, min 10) */}
                   <div>
                     <Label htmlFor="fb-description">
-                      What did you see, and why do you think it needs attention? <span aria-hidden="true">*</span>
+                      What did you see, and why do you think it needs attention?{" "}
+                      <span aria-hidden="true">*</span>
                     </Label>
                     <Textarea
                       id="fb-description"
@@ -272,32 +338,46 @@ export default function FeedbackPage() {
                       className="mt-1.5 resize-none"
                       aria-describedby="fb-description-hint"
                     />
-                    <p id="fb-description-hint" className="mt-1 text-xs text-muted-foreground">
-                      Please focus on what you observed, not who you think is responsible.
+                    <p
+                      id="fb-description-hint"
+                      className="mt-1 text-xs text-muted-foreground"
+                    >
+                      Please focus on what you observed, not who you think is
+                      responsible.
                     </p>
                   </div>
 
                   {/* 5. Suggested correction (optional) */}
                   <div>
-                    <Label htmlFor="fb-correction">Suggested correction (optional)</Label>
+                    <Label htmlFor="fb-correction">
+                      Suggested correction (optional)
+                    </Label>
                     <Textarea
                       id="fb-correction"
                       placeholder="What should it say instead?"
                       value={form.suggested_correction}
-                      onChange={(e) => set("suggested_correction", e.target.value)}
+                      onChange={(e) =>
+                        set("suggested_correction", e.target.value)
+                      }
                       maxLength={2000}
                       rows={3}
                       className="mt-1.5 resize-none"
                       aria-describedby="fb-correction-hint"
                     />
-                    <p id="fb-correction-hint" className="mt-1 text-xs text-muted-foreground">
-                      If you know what the correct information is, share it here.
+                    <p
+                      id="fb-correction-hint"
+                      className="mt-1 text-xs text-muted-foreground"
+                    >
+                      If you know what the correct information is, share it
+                      here.
                     </p>
                   </div>
 
                   {/* 6. Source reference (optional) */}
                   <div>
-                    <Label htmlFor="fb-source">Source we can verify against (optional)</Label>
+                    <Label htmlFor="fb-source">
+                      Source we can verify against (optional)
+                    </Label>
                     <Input
                       id="fb-source"
                       placeholder="https://... or 'CDC, 2024 BRFSS'"
@@ -307,8 +387,12 @@ export default function FeedbackPage() {
                       className="mt-1.5"
                       aria-describedby="fb-source-hint"
                     />
-                    <p id="fb-source-hint" className="mt-1 text-xs text-muted-foreground">
-                      Example: a CDC dataset, a state website, a published report. Paste a link or citation.
+                    <p
+                      id="fb-source-hint"
+                      className="mt-1 text-xs text-muted-foreground"
+                    >
+                      Example: a CDC dataset, a state website, a published
+                      report. Paste a link or citation.
                     </p>
                   </div>
 
@@ -326,8 +410,12 @@ export default function FeedbackPage() {
                         }}
                         aria-describedby="fb-opt-in-hint"
                       />
-                      <Label htmlFor="fb-opt-in" className="cursor-pointer font-normal leading-snug">
-                        Yes, I'm okay with AccessMI contacting me about this report.
+                      <Label
+                        htmlFor="fb-opt-in"
+                        className="cursor-pointer font-normal leading-snug"
+                      >
+                        Yes, I'm okay with AccessMI contacting me about this
+                        report.
                       </Label>
                     </div>
                     {optedIn && (
@@ -336,7 +424,9 @@ export default function FeedbackPage() {
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                       >
-                        <Label htmlFor="fb-email">Email address <span aria-hidden="true">*</span></Label>
+                        <Label htmlFor="fb-email">
+                          Email address <span aria-hidden="true">*</span>
+                        </Label>
                         <Input
                           id="fb-email"
                           type="email"
@@ -348,7 +438,10 @@ export default function FeedbackPage() {
                           className="mt-1.5"
                           aria-describedby="fb-email-hint"
                         />
-                        <p id="fb-email-hint" className="mt-1 text-xs text-muted-foreground">
+                        <p
+                          id="fb-email-hint"
+                          className="mt-1 text-xs text-muted-foreground"
+                        >
                           Only used for this report. Not added to any list.
                         </p>
                       </motion.div>
@@ -363,7 +456,10 @@ export default function FeedbackPage() {
                   >
                     {submitting ? (
                       <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+                        <Loader2
+                          className="mr-2 h-4 w-4 animate-spin"
+                          aria-hidden="true"
+                        />
                         Submitting…
                       </>
                     ) : (
@@ -374,7 +470,7 @@ export default function FeedbackPage() {
               </CardContent>
             </Card>
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              No personal data is collected unless you opt in above. No cookies, no tracking.
+              No personal data is collected unless you opt in above.
             </p>
           </motion.div>
         )}

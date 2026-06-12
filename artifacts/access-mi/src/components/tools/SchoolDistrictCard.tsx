@@ -163,7 +163,7 @@ export default function SchoolDistrictCard({ district, county }: SchoolDistrictC
             <a
               href="https://mischooldata.org"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="text-primary hover:underline"
             >
               MI School Data (mischooldata.org)

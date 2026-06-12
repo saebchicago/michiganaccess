@@ -123,7 +123,7 @@ describe("SnapCoverageAtRiskPage", () => {
 
   it("Wayne County appears first in default sort (highest projectedAffectedHigh)", () => {
     renderPage();
-    // Default sort is projectedAffectedHigh desc — Wayne should be first county link
+    // Default sort is projectedAffectedHigh desc  -  Wayne should be first county link
     const countyLinks = screen.getAllByRole("link").filter(
       (el) => el.getAttribute("href")?.startsWith("/county/")
     );

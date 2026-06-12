@@ -308,7 +308,7 @@ const CivicDataPage = () => {
                           <a
                             href="https://www.michigan.gov/budget"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="text-primary underline"
                           >
                             Michigan State Budget Office
@@ -389,7 +389,7 @@ const CivicDataPage = () => {
                         <a
                           href="https://www.michigan.gov/budget"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           State Budget Office{" "}
                           <ExternalLink className="ml-2 h-3 w-3" />
@@ -458,7 +458,7 @@ const CivicDataPage = () => {
                           <a
                             href="https://www.michigan.gov/treasury/local/foil"
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                             className="text-primary underline"
                           >
                             Michigan FOIA Resources →
@@ -552,7 +552,7 @@ const CivicDataPage = () => {
                   {[
                     {
                       title: "Register to Vote",
-                      desc: "Register online, by mail, or in person — including same-day registration at your local clerk's office.",
+                      desc: "Register online, by mail, or in person  -  including same-day registration at your local clerk's office.",
                       link: "https://mvic.sos.state.mi.us/registervoter",
                       icon: Users,
                     },
@@ -584,7 +584,7 @@ const CivicDataPage = () => {
                         <a
                           href={item.link}
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                           className="text-sm font-medium text-primary hover:underline"
                         >
                           Go to tool{" "}
@@ -639,7 +639,7 @@ const CivicDataPage = () => {
                               <a
                                 href={official.contact}
                                 target="_blank"
-                                rel="noopener"
+                                rel="noopener noreferrer"
                                 className="mt-2 inline-block text-xs text-primary hover:underline"
                               >
                                 Official website{" "}
@@ -680,7 +680,7 @@ const CivicDataPage = () => {
                         <a
                           href="https://www.legislature.mi.gov/legislators"
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                         >
                           Find Legislators{" "}
                           <ExternalLink className="ml-2 h-3 w-3" />
@@ -721,7 +721,7 @@ const CivicDataPage = () => {
                             <a
                               href={item.url}
                               target="_blank"
-                              rel="noopener"
+                              rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 text-sm text-primary hover:underline shrink-0"
                             >
                               Official calendar{" "}
@@ -782,7 +782,7 @@ const CivicDataPage = () => {
                   <p>
                     The <strong>Freedom of Information Act (FOIA)</strong> gives
                     anyone the right to request records from any Michigan public
-                    body — no reason needed.
+                    body - no reason needed.
                   </p>
                   <ol className="list-decimal space-y-1 pl-5">
                     <li>
@@ -808,7 +808,7 @@ const CivicDataPage = () => {
                     <a
                       href="https://www.michigan.gov/treasury/local/foil"
                       target="_blank"
-                      rel="noopener"
+                      rel="noopener noreferrer"
                       className="font-medium text-primary hover:underline"
                     >
                       Michigan FOIA Guide & Templates{" "}
@@ -835,7 +835,7 @@ const CivicDataPage = () => {
                       {
                         name: "Michigan Open Data Portal",
                         url: "https://data.michigan.gov",
-                        desc: "State government datasets — health, education, infrastructure, and more",
+                        desc: "State government datasets  -  health, education, infrastructure, and more",
                       },
                       {
                         name: "Data.gov",
@@ -862,7 +862,7 @@ const CivicDataPage = () => {
                         <a
                           href={r.url}
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                           className="font-medium text-primary hover:underline"
                         >
                           {r.name}{" "}
@@ -899,7 +899,7 @@ const CivicDataPage = () => {
                     <a
                       href="https://www.rcfp.org/open-government-guide/michigan/"
                       target="_blank"
-                      rel="noopener"
+                      rel="noopener noreferrer"
                     >
                       MI Open Gov Guide{" "}
                       <ExternalLink className="ml-2 h-3 w-3" />
@@ -945,7 +945,7 @@ const CivicDataPage = () => {
                     <a
                       href="https://michiganbroadbandmap.com/"
                       target="_blank"
-                      rel="noopener"
+                      rel="noopener noreferrer"
                     >
                       Broadband Map <ExternalLink className="ml-1 h-3 w-3" />
                     </a>
@@ -963,19 +963,19 @@ const CivicDataPage = () => {
                       <a
                         href="https://mi-psc.my.site.com/s/"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         className="text-primary hover:underline"
                       >
                         MPSC E-Dockets
                       </a>{" "}
-                      — Utility rate cases & orders
+                      - Utility rate cases & orders
                     </li>
                     <li>
                       •{" "}
                       <a
                         href="https://www.legislature.mi.gov/Bills"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         className="text-primary hover:underline"
                       >
                         MI Legislature Bill Search
@@ -986,12 +986,12 @@ const CivicDataPage = () => {
                       <a
                         href="https://openstates.org/mi/"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         className="text-primary hover:underline"
                       >
                         Open States Michigan
                       </a>{" "}
-                      — Votes & sponsors
+                      - Votes & sponsors
                     </li>
                     <li>
                       •{" "}
@@ -1017,7 +1017,7 @@ const CivicDataPage = () => {
         </div>
       </section>
 
-      {/* Legislative Tracker */}
+      {/* Legislative Resources */}
       <section className="py-8">
         <div className="container max-w-5xl">
           <LegislativeTracker />
@@ -1074,7 +1074,7 @@ const CivicDataPage = () => {
             <a
               href="https://election.lab.ufl.edu/voter-turnout/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               UF Election Lab (VEP Turnout)
@@ -1083,7 +1083,7 @@ const CivicDataPage = () => {
             <a
               href="https://www.michigan.gov/budget"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               Michigan State Budget Office
@@ -1092,7 +1092,7 @@ const CivicDataPage = () => {
             <a
               href="https://www.michigan.gov/sos"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               Secretary of State
@@ -1101,7 +1101,7 @@ const CivicDataPage = () => {
             <a
               href="https://www.legislature.mi.gov/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               Michigan Legislature
@@ -1110,7 +1110,7 @@ const CivicDataPage = () => {
             <a
               href="https://www.ntia.gov/broadband"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="underline hover:text-primary"
             >
               NTIA BEAD Program

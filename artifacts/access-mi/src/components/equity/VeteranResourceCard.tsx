@@ -27,10 +27,10 @@ export default function VeteranResourceCard() {
           <p className="text-xs text-muted-foreground">Every Michigan county has a Veterans Service Officer. VA healthcare, disability benefits, education (GI Bill), housing assistance, and employment programs available.</p>
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" size="sm" className="text-xs" asChild>
-              <a href="https://www.va.gov/find-locations/" target="_blank" rel="noopener">VA Facility Locator <ExternalLink className="ml-1 h-3 w-3" /></a>
+              <a href="https://www.va.gov/find-locations/" target="_blank" rel="noopener noreferrer">VA Facility Locator <ExternalLink className="ml-1 h-3 w-3" /></a>
             </Button>
             <Button variant="outline" size="sm" className="text-xs" asChild>
-              <a href="https://www.michigan.gov/mvaa" target="_blank" rel="noopener">MI Veterans Affairs <ExternalLink className="ml-1 h-3 w-3" /></a>
+              <a href="https://www.michigan.gov/mvaa" target="_blank" rel="noopener noreferrer">MI Veterans Affairs <ExternalLink className="ml-1 h-3 w-3" /></a>
             </Button>
           </div>
           <p className="text-[10px] text-muted-foreground">Source: VA State Summary Michigan FY2023, NCVAS</p>

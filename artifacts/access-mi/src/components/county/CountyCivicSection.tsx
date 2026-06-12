@@ -165,13 +165,13 @@ export default function CountyCivicSection({ county, countyType }: CountyCivicSe
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <a href={`https://mvic.sos.state.mi.us/`} target="_blank" rel="noopener">
+              <a href={`https://mvic.sos.state.mi.us/`} target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" size="sm" className="w-full text-xs">
                   <Vote className="mr-1.5 h-3 w-3" />
                   Check Voter Registration
                 </Button>
               </a>
-              <a href={`https://www.michigan.gov/sos/elections`} target="_blank" rel="noopener">
+              <a href={`https://www.michigan.gov/sos/elections`} target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" size="sm" className="w-full text-xs">
                   <FileText className="mr-1.5 h-3 w-3" />
                   Election Information

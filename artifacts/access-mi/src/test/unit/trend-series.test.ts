@@ -4,7 +4,7 @@ import rawData from "@/data/trendSeries.json";
 
 // ── delta math fixtures ───────────────────────────────────────────────────────
 
-describe("population delta math — fixed fixtures", () => {
+describe("population delta math  -  fixed fixtures", () => {
   it("Saginaw: 2024 pop minus 2020 pop equals expected delta", () => {
     const t = getCountyTrends("Saginaw");
     expect(t).not.toBeNull();

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Medicaid Coverage at Risk — V2 Feature 3", () => {
+test.describe("Medicaid Coverage at Risk  -  V2 Feature 3", () => {
   // T1: Page loads and county table renders
   test("data page renders h1, stat cards, and county table rows", async ({ page }) => {
     await page.goto("/data/medicaid-coverage-at-risk");
@@ -28,7 +28,7 @@ test.describe("Medicaid Coverage at Risk — V2 Feature 3", () => {
     await expect(page.getByTestId("medicaid-callout-heading")).toHaveText("Exposure is not disenrollment");
   });
 
-  // T4: Cross-feature navigation — Related analyses block links to SNAP page
+  // T4: Cross-feature navigation  -  Related analyses block links to SNAP page
   test("related analyses block links to SNAP coverage at risk", async ({ page }) => {
     await page.goto("/data/medicaid-coverage-at-risk");
     const snapLink = page.locator("a[href='/data/snap-coverage-at-risk']");
@@ -91,7 +91,7 @@ test.describe("Medicaid Coverage at Risk — V2 Feature 3", () => {
   });
 });
 
-test.describe("SNAP Coverage at Risk — V3 Feature cross-checks", () => {
+test.describe("SNAP Coverage at Risk  -  V3 Feature cross-checks", () => {
   // T-SNAP-1: CSV export on SNAP page
   test("SNAP CSV export button fires download", async ({ page }) => {
     await page.goto("/data/snap-coverage-at-risk");

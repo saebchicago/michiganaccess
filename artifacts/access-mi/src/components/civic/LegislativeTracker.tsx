@@ -26,11 +26,11 @@ export function LegislativeTracker() {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <Scale className="h-5 w-5 text-primary" />
-          Michigan Legislative Activity
+          Legislative Resources
         </CardTitle>
         <CardDescription>
-          Current bill status and legislative activity from the Michigan
-          Legislature and Open States.
+          Links to Michigan Legislature and Open States for bill text, votes,
+          and session activity.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -44,7 +44,7 @@ export function LegislativeTracker() {
               <a
                 href={item.url}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-sm text-primary hover:underline shrink-0"
               >
                 {item.label} <ExternalLink className="h-3 w-3" />

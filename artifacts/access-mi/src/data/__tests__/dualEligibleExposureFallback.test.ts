@@ -9,7 +9,7 @@ import {
 // ── Sanity checks ─────────────────────────────────────────────────────────────
 
 describe("DUAL_ELIGIBLE_EXPOSURE_FALLBACK", () => {
-  it("has exactly 83 entries — one per Michigan county", () => {
+  it("has exactly 83 entries  -  one per Michigan county", () => {
     expect(DUAL_ELIGIBLE_EXPOSURE_FALLBACK).toHaveLength(83);
   });
 

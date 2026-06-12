@@ -11,8 +11,8 @@ const cards = [
   },
   {
     icon: UserX,
-    title: "No account. No tracking.",
-    description: "No personal data collected. No cookies. No ads.",
+    title: "No account required",
+    description: "No personal data collected.",
   },
   {
     icon: Scale,

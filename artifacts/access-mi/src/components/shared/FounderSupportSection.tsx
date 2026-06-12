@@ -4,17 +4,24 @@ import { Button } from "@/components/ui/button";
 
 export default function FounderSupportSection() {
   return (
-    <section className="py-14 border-t border-border" aria-labelledby="support-heading">
+    <section
+      className="py-14 border-t border-border"
+      aria-labelledby="support-heading"
+    >
       <div className="container max-w-3xl">
         {/* Founder blurb */}
         <div className="text-center mb-8">
-          <h2 id="support-heading" className="text-xl font-bold text-foreground sm:text-2xl">
+          <h2
+            id="support-heading"
+            className="text-xl font-bold text-foreground sm:text-2xl"
+          >
             About This Project
           </h2>
           <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-xl mx-auto">
-            Access Michigan is built and maintained by a healthcare data professional who saw how hard
-            it is for ordinary people to find the services and information they need. This is an
-            independent, non-commercial civic project - no ads, no tracking, no paywalls, ever.
+            Access Michigan is built and maintained by a healthcare data
+            professional who saw how hard it is for ordinary people to find the
+            services and information they need. This is an independent,
+            non-commercial civic project with no paywalls, ever.
           </p>
         </div>
 
@@ -22,8 +29,8 @@ export default function FounderSupportSection() {
         <div className="flex flex-wrap justify-center gap-5 text-xs text-muted-foreground mb-8">
           {[
             { icon: Shield, text: "Independent - not a government agency" },
-            { icon: Lock, text: "No tracking, cookies, or ads" },
-            { icon: Globe, text: "Free for all Michigan residents" },
+            { icon: Lock, text: "No personal data collected" },
+            { icon: Globe, text: "All 83 Michigan counties" },
           ].map((item) => (
             <span key={item.text} className="flex items-center gap-1.5">
               <item.icon className="h-3.5 w-3.5" aria-hidden="true" />
@@ -39,10 +46,13 @@ export default function FounderSupportSection() {
               <Heart className="h-5 w-5 text-primary" aria-hidden="true" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-foreground">Support Access Michigan</p>
+              <p className="text-sm font-semibold text-foreground">
+                Support Access Michigan
+              </p>
               <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-                Your contribution helps cover hosting, data infrastructure, and development. Access is
-                always free - donations never affect what you can see or use.
+                Your contribution helps cover hosting, data infrastructure, and
+                development. Access is always free - donations never affect what
+                you can see or use.
               </p>
             </div>
             <a
@@ -50,7 +60,11 @@ export default function FounderSupportSection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button size="sm" variant="outline" className="gap-1.5 whitespace-nowrap border-primary/30 text-primary hover:bg-primary/5">
+              <Button
+                size="sm"
+                variant="outline"
+                className="gap-1.5 whitespace-nowrap border-primary/30 text-primary hover:bg-primary/5"
+              >
                 <Heart className="h-3.5 w-3.5" aria-hidden="true" />
                 Buy Me a Coffee
               </Button>
@@ -59,7 +73,8 @@ export default function FounderSupportSection() {
         </Card>
 
         <p className="text-[10px] text-muted-foreground text-center mt-3">
-          Access Michigan is not a registered charity. Contributions support infrastructure costs.
+          Access Michigan is not a registered charity. Contributions support
+          infrastructure costs.
         </p>
       </div>
     </section>

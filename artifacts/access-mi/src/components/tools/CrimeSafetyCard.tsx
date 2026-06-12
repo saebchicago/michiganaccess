@@ -112,7 +112,7 @@ export default function CrimeSafetyCard({ county }: CrimeSafetyCardProps) {
                   <a
                     href="https://michigan.gov/msp"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     michigan.gov/msp

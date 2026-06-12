@@ -92,7 +92,7 @@ function buildEJScreenGroup(tracts: EJScreenTract[]): L.LayerGroup {
         `Tract: ${t.tractFips}<br>` +
         `PM2.5 percentile: ${t.pm25Percentile ?? "-"}<br>` +
         `Air toxics cancer risk: ${t.airToxicsCancerRisk ?? "-"} per million<br>` +
-        `<em style="font-size:11px">Source: EJScreen 2.32 (EPA) · Modeled</em>`,
+        `<em style="font-size:11px">Source: EJScreen v2.3 (EPA) · Modeled</em>`,
     );
     group.addLayer(m);
   }
@@ -195,6 +195,7 @@ interface LayerEntry {
   visible: boolean;
   colorSwatch?: string;
   symbol?: string;
+  statewide?: boolean;
 }
 
 function CachedSampleBadge() {
@@ -206,6 +207,17 @@ function CachedSampleBadge() {
     >
       <AlertCircle className="h-2.5 w-2.5" aria-hidden="true" />
       cached sample
+    </span>
+  );
+}
+
+function StatewideBadge() {
+  return (
+    <span
+      className="inline-flex items-center gap-1 rounded border border-sky-200 bg-sky-50 px-1.5 py-0.5 text-[10px] font-medium text-sky-700"
+      title="This layer shows all known sites across Michigan, not filtered to this county"
+    >
+      Statewide layer
     </span>
   );
 }
@@ -243,6 +255,7 @@ function LegendEntry({
             {entry.label}
           </span>
           <IntegrityBadge label={entry.integrityLabel} />
+          {entry.statewide && <StatewideBadge />}
           {entry.dataMode === "fallback" && <CachedSampleBadge />}
         </div>
         <p className="text-[10px] text-muted-foreground leading-tight">
@@ -397,6 +410,7 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
       dataMode: cso.dataMode,
       visible: visible.cso ?? false,
       symbol: "C",
+      statewide: true,
     },
     showWater && {
       key: "pfas",
@@ -405,6 +419,7 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
       dataMode: pfas.dataMode,
       visible: visible.pfas ?? false,
       symbol: "P",
+      statewide: true,
     },
     (showWater || showAir) && {
       key: "nri",

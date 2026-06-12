@@ -2092,7 +2092,7 @@ export default function TransportationPage() {
               <a
                 href="https://www.michigan.gov/osa"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="text-primary underline"
               >
                 Area Agency on Aging

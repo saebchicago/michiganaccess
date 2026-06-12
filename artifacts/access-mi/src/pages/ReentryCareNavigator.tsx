@@ -144,7 +144,7 @@ export default function ReentryCareNavigator() {
           <CardContent className="p-5">
             <p className="text-sm text-foreground">
               <strong>For families:</strong> Nation Outside represents 2M+ Michigan families impacted by the criminal legal system.{" "}
-              <a href="https://nationoutside.org" target="_blank" rel="noopener" className="text-primary hover:underline">
+              <a href="https://nationoutside.org" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
                 nationoutside.org <ExternalLink className="inline h-3 w-3" />
               </a>
             </p>

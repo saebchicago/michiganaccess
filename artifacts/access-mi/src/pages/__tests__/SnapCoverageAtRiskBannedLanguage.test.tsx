@@ -4,11 +4,11 @@
  * Scans the source files for Feature 2 (SNAP Coverage at Risk) for phrases
  * that violate the editorial rules in V3_SOURCE_AUDIT.md and CLAUDE.md:
  *
- *   BANNED FIGURES — from the superseded House bill, not P.L. 119-21:
+ *   BANNED FIGURES  -  from the superseded House bill, not P.L. 119-21:
  *     "3–4 million" or "3-4 million"
  *     "$285 billion", "$295 billion"
  *
- *   BANNED ADVOCACY LANGUAGE — partisan / outcome-asserted framing:
+ *   BANNED ADVOCACY LANGUAGE  -  partisan / outcome-asserted framing:
  *     "devastating" / "devastate"
  *     "crisis"
  *     "Trump's cuts" / "Trump cuts"
@@ -17,7 +17,7 @@
  *     "slashed" (as in "benefits will be slashed")
  *
  * These tests read the compiled source files at import time. They do not
- * require rendering — the assertion is over raw text content.
+ * require rendering  -  the assertion is over raw text content.
  */
 
 import { describe, it, expect } from "vitest";
@@ -50,7 +50,7 @@ function assertNotPresent(source: string, pattern: RegExp, file: string) {
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
 
-describe("SnapCoverageAtRisk — civic neutrality: banned figures", () => {
+describe("SnapCoverageAtRisk  -  civic neutrality: banned figures", () => {
   for (const relPath of FEATURE2_FILES) {
     describe(relPath, () => {
       const src = readSourceFile(relPath);
@@ -70,7 +70,7 @@ describe("SnapCoverageAtRisk — civic neutrality: banned figures", () => {
   }
 });
 
-describe("SnapCoverageAtRisk — civic neutrality: banned advocacy language", () => {
+describe("SnapCoverageAtRisk  -  civic neutrality: banned advocacy language", () => {
   for (const relPath of FEATURE2_FILES) {
     describe(relPath, () => {
       const src = readSourceFile(relPath);
@@ -106,7 +106,7 @@ describe("SnapCoverageAtRisk — civic neutrality: banned advocacy language", ()
   }
 });
 
-describe("SnapCoverageAtRisk — civic neutrality: required framing", () => {
+describe("SnapCoverageAtRisk  -  civic neutrality: required framing", () => {
   it("SnapCoverageAtRiskPage contains 'Exposure does not equal loss'", () => {
     const src = readSourceFile("src/pages/SnapCoverageAtRiskPage.tsx");
     expect(src).toContain("Exposure does not equal loss");

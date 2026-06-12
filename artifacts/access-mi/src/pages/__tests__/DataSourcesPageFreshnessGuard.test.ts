@@ -8,7 +8,7 @@ function readSourceFile(rel: string) {
   return fs.readFileSync(path.join(ROOT, rel), "utf8");
 }
 
-describe("DataSourcesPage — machine-generated dates only", () => {
+describe("DataSourcesPage  -  machine-generated dates only", () => {
   it("DataSourcesPage.tsx contains no hard-coded date literals (YYYY-MM-DD)", () => {
     const src = readSourceFile("src/pages/DataSourcesPage.tsx");
     expect(src).not.toMatch(/20\d\d-\d\d-\d\d/);

@@ -80,7 +80,7 @@ const securityItems = [
   { icon: Lock, text: "No PII/PHI collection (public data only)" },
   { icon: Shield, text: "HTTPS everywhere, CSP headers" },
   { icon: Eye, text: "Public sector ready: 508 compliance, plain language" },
-  { icon: Globe, text: "No cookies, no tracking, privacy-first analytics" },
+  { icon: Globe, text: "Privacy-first, no user accounts" },
 ];
 
 const scalabilityMetrics = [

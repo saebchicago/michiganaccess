@@ -487,7 +487,7 @@ export default function CountyPage() {
                     )}
                     {bench && !hasNumericVal && (
                       <p className="text-[10px] text-muted-foreground">
-                        Comparison unavailable — no data reported.
+                        Comparison unavailable  -  no data reported.
                       </p>
                     )}
                     {isRatio && ratioSeverity && (
@@ -656,7 +656,7 @@ export default function CountyPage() {
                           <a
                             href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${f.address}, ${f.city}, ${f.state} ${f.zip}`)}`}
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
                           >
                             <Button
                               size="sm"
@@ -680,7 +680,7 @@ export default function CountyPage() {
                             </a>
                           )}
                           {f.website && (
-                            <a href={f.website} target="_blank" rel="noopener">
+                            <a href={f.website} target="_blank" rel="noopener noreferrer">
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -760,7 +760,7 @@ export default function CountyPage() {
               <a
                 href="https://www.epa.gov/toxics-release-inventory-tri-program"
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="text-primary hover:underline"
               >
                 EPA Toxics Release Inventory, 2022 reporting year
@@ -813,7 +813,7 @@ export default function CountyPage() {
                   <a
                     href="https://echo.epa.gov/"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     echo.epa.gov
@@ -828,7 +828,7 @@ export default function CountyPage() {
             <a
               href="https://echo.epa.gov/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="text-primary hover:underline"
             >
               EPA Enforcement and Compliance History Online (ECHO), live query

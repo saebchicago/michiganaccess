@@ -16,7 +16,7 @@ vi.mock("@/components/layout/Layout", () => ({
   default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
 }));
 
-// Mock the map — Leaflet requires real DOM APIs not available in jsdom
+// Mock the map  -  Leaflet requires real DOM APIs not available in jsdom
 vi.mock("@/components/closure/ClosureMap", () => ({
   default: () => <div data-testid="closure-map" />,
 }));

@@ -4,13 +4,13 @@
  * Scans the source files for V2 Feature 3 (Medicaid Coverage at Risk) for phrases
  * that violate editorial rules:
  *
- *   BANNED FIGURES — from the superseded House bill, not P.L. 119-21 (enacted):
+ *   BANNED FIGURES  -  from the superseded House bill, not P.L. 119-21 (enacted):
  *     "247,000" / "247K" (pre-enactment KFF state allocation low)
  *     "412,000" / "412K" (pre-enactment KFF state allocation high)
  *     "$19.3 billion" / "$32.1 billion" (pre-enactment KFF spending)
  *     "700,000" in context of "at risk" (pre-enactment MLPP figure, traces to House bill)
  *
- *   BANNED ADVOCACY LANGUAGE — partisan / outcome-asserted framing:
+ *   BANNED ADVOCACY LANGUAGE  -  partisan / outcome-asserted framing:
  *     "devastating" / "devastate"
  *     "crisis"
  *     "coverage cliff"
@@ -56,7 +56,7 @@ function assertNotPresent(source: string, pattern: RegExp, file: string) {
 
 // ── Tests: banned figures ─────────────────────────────────────────────────────
 
-describe("MedicaidCoverageAtRisk — civic neutrality: banned figures", () => {
+describe("MedicaidCoverageAtRisk  -  civic neutrality: banned figures", () => {
   for (const relPath of FEATURE3_FILES) {
     describe(relPath, () => {
       const src = readSourceFile(relPath);
@@ -82,7 +82,7 @@ describe("MedicaidCoverageAtRisk — civic neutrality: banned figures", () => {
 
 // ── Tests: banned advocacy language ──────────────────────────────────────────
 
-describe("MedicaidCoverageAtRisk — civic neutrality: banned advocacy language", () => {
+describe("MedicaidCoverageAtRisk  -  civic neutrality: banned advocacy language", () => {
   for (const relPath of FEATURE3_FILES) {
     describe(relPath, () => {
       const src = readSourceFile(relPath);
@@ -132,7 +132,7 @@ describe("MedicaidCoverageAtRisk — civic neutrality: banned advocacy language"
 
 // ── Tests: required framing ───────────────────────────────────────────────────
 
-describe("MedicaidCoverageAtRisk — civic neutrality: required framing", () => {
+describe("MedicaidCoverageAtRisk  -  civic neutrality: required framing", () => {
   it("data page contains 'Exposure is not disenrollment' verbatim", () => {
     const src = readSourceFile("src/pages/MedicaidCoverageAtRiskPage.tsx");
     expect(src).toContain("Exposure is not disenrollment");

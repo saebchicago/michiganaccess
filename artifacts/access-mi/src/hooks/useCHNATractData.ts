@@ -24,7 +24,7 @@ async function fetchCHNA<T>(
 }
 
 // ---------------------------------------------------------------------------
-// EJScreen tracts (EPA EJScreen 2.32)  integrity: MODELED
+// EJScreen tracts (EPA EJScreen v2.3)  integrity: MODELED
 // ---------------------------------------------------------------------------
 
 export interface EJScreenTract {
@@ -81,7 +81,7 @@ export const EJSCREEN_META: {
   vintage: string;
 } = {
   integrityLabel: "MODELED",
-  source: "EJScreen 2.32 (EPA)",
+  source: "EJScreen v2.3 (EPA)",
   vintage: "2023",
 };
 

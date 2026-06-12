@@ -100,7 +100,7 @@ const entries: ChangelogEntry[] = [
       "ZIP Finder: find ZIPs matching multiple health, economic, and environmental criteria",
       "Service Area Builder: aggregate data for custom county/ZIP combinations",
       "ZIP-to-ZIP comparison mode with radar chart overlay",
-      "6 data-driven Impact Stories with verified statistics",
+      "6 Impact Stories with verified statistics",
       "ZIP Score interpretation bands with actionable guidance",
     ],
   },
@@ -189,7 +189,7 @@ const entries: ChangelogEntry[] = [
       "Neighborhood Health Score: animated 0-100 gauge with letter grade for any Michigan ZIP",
       "Time trend analysis: 2023 vs 2024 CDC PLACES data comparison",
       "Community Report Card PDF: one-click printable health profile",
-      "'What's Near Me' resource finder with data-driven highlighting",
+      "'What's Near Me' resource finder with contextual highlighting",
       "5 interactive data stories: ALICE, PFAS, reentry, childcare, dental deserts",
     ],
   },
@@ -294,7 +294,7 @@ const entries: ChangelogEntry[] = [
       "Childcare hub linking to LARA (7,500 licensed providers), Great Start ratings, MI School Data",
       "8-year trend charts: uninsured rate dropped from 11% to 5.8% post-ACA. Opioid deaths peaked at 3,074 in 2022, down 7.5% in 2023.",
       "Accessibility: aria-live on search results, ARIA labels on charts, skip-to-content verified",
-      "All page copy rewritten. Removed 'evidence-based,' 'data-driven,' 'empowering,' and other AI tells.",
+      "All page copy rewritten. Removed 'evidence-based,' 'data-driven,' 'empowering,' and other AI tells.", // check-copy-ok
     ],
   },
   {

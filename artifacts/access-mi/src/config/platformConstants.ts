@@ -42,7 +42,7 @@ if (
   SOURCES_BREAKDOWN.nonprofit !== EXPECTED_SOURCE_BREAKDOWN.nonprofit
 ) {
   throw new Error(
-    `platformConstants: SOURCES_BREAKDOWN drift — registry=${JSON.stringify(SOURCES_BREAKDOWN)}, expected=${JSON.stringify(EXPECTED_SOURCE_BREAKDOWN)}.`,
+    `platformConstants: SOURCES_BREAKDOWN drift  -  registry=${JSON.stringify(SOURCES_BREAKDOWN)}, expected=${JSON.stringify(EXPECTED_SOURCE_BREAKDOWN)}.`,
   );
 }
 

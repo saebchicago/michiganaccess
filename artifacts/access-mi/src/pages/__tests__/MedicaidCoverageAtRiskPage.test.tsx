@@ -54,9 +54,9 @@ describe("MedicaidCoverageAtRiskPage", () => {
     ).toBeInTheDocument();
   });
 
-  it("displays all 83 Michigan counties in the table — single-pass filter", () => {
+  it("displays all 83 Michigan counties in the table  -  single-pass filter", () => {
     renderPage();
-    // Single pass: collect all county links, then check by Set lookup — O(n) not O(n²)
+    // Single pass: collect all county links, then check by Set lookup  -  O(n) not O(n²)
     const allLinks = screen.getAllByRole("link");
     const countyLinks = allLinks.filter((el) =>
       el.getAttribute("aria-label")?.includes("County data"),
@@ -93,7 +93,7 @@ describe("MedicaidCoverageAtRiskPage", () => {
     expect(rows[0].textContent).toBe("Wayne");
   });
 
-  it("clicking County header sorts alphabetically — Alcona first", () => {
+  it("clicking County header sorts alphabetically  -  Alcona first", () => {
     renderPage();
     const countyBtn = screen.getByRole("button", { name: /county/i });
     fireEvent.click(countyBtn);

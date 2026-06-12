@@ -137,7 +137,7 @@ export default function PhysicianCompare() {
           <a
             href="https://data.cms.gov/provider-data/dataset/mj5m-pzi6"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="text-primary hover:underline inline-flex items-center gap-0.5"
           >
             CMS Physician Compare <ExternalLink className="h-2.5 w-2.5" />

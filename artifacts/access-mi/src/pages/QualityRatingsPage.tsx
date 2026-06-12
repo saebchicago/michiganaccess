@@ -697,7 +697,7 @@ export default function QualityRatingsPage() {
                         <a
                           href={src.url}
                           target="_blank"
-                          rel="noopener"
+                          rel="noopener noreferrer"
                           className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline"
                         >
                           <ExternalLink className="h-3 w-3" /> View source

@@ -17,7 +17,7 @@ function extractPaths(): string[] {
   let m: RegExpExecArray | null;
   while ((m = re.exec(text)) !== null) {
     const p = m[1];
-    // Skip dynamic params for this smoke sweep — they need fixtures
+    // Skip dynamic params for this smoke sweep  -  they need fixtures
     if (p.includes(':')) continue;
     paths.add(p);
   }

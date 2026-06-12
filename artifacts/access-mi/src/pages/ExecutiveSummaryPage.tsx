@@ -116,11 +116,11 @@ const quadrants = [
         source: "15+ sources",
       },
       {
-        text: "Privacy-first: no accounts, no cookies, no tracking, no ads",
+        text: "Privacy-first: no accounts, no cookies",
         source: "Privacy policy",
       },
       {
-        text: "Open civic infrastructure - free for all Michigan residents",
+        text: "Open civic infrastructure - all 83 Michigan counties",
         source: "Platform policy",
       },
       {
@@ -245,8 +245,8 @@ const ExecutiveSummaryPage = () => {
                   {[
                     "Quality-ranked (not pay-to-play)",
                     "Equity-adjusted scoring",
-                    "Privacy-first (no tracking)",
-                    "Free & no login required",
+                    "Privacy-first",
+                    "No login required",
                   ].map((t) => (
                     <span key={t} className="flex items-center gap-1">
                       <span className="h-1.5 w-1.5 rounded-full bg-primary inline-block" />

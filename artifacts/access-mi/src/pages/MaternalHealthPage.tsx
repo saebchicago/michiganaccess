@@ -180,7 +180,7 @@ export default function MaternalHealthPage() {
             <Link to="/health-equity-atlas">View on Health Equity Atlas <ArrowRight className="ml-2 h-3 w-3" /></Link>
           </Button>
           <Button variant="outline" asChild>
-            <a href="https://www.marchofdimes.org/peristats/data?reg=99&top=11&lev=1&slev=4&obj=1" target="_blank" rel="noopener">
+            <a href="https://www.marchofdimes.org/peristats/data?reg=99&top=11&lev=1&slev=4&obj=1" target="_blank" rel="noopener noreferrer">
               March of Dimes PeriStats <ExternalLink className="ml-2 h-3 w-3" />
             </a>
           </Button>

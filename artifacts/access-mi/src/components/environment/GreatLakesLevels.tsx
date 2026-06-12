@@ -131,7 +131,7 @@ export default function GreatLakesLevels() {
 
           <div className="flex items-center justify-between">
             <p className="text-[9px] text-muted-foreground">Source: NOAA CO-OPS, Great Lakes Dashboard</p>
-            <a href="https://tidesandcurrents.noaa.gov/great_lakes/landing.html" target="_blank" rel="noopener" className="text-[9px] text-primary hover:underline flex items-center gap-0.5">
+            <a href="https://tidesandcurrents.noaa.gov/great_lakes/landing.html" target="_blank" rel="noopener noreferrer" className="text-[9px] text-primary hover:underline flex items-center gap-0.5">
               NOAA <ExternalLink className="h-2 w-2" />
             </a>
           </div>

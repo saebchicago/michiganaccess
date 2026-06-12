@@ -29,7 +29,7 @@ function SiteRow({ site }: { site: WaterSite }) {
         <a
           href={`https://waterdata.usgs.gov/nwis/uv?site_no=${site.siteNumber}`}
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           className="text-sm font-medium text-foreground hover:text-primary hover:underline transition-colors"
         >
           {site.siteName}
@@ -121,7 +121,7 @@ export default function WaterMonitorWidget() {
             <a
               href="https://waterdata.usgs.gov/state/michigan/"
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="text-primary hover:underline inline-flex items-center gap-0.5"
             >
               USGS National Water Information System <ExternalLink className="h-2.5 w-2.5" />
@@ -129,7 +129,7 @@ export default function WaterMonitorWidget() {
             - updated every 15 minutes
           </p>
           <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
-            <a href="https://waterdata.usgs.gov/state/michigan/" target="_blank" rel="noopener">
+            <a href="https://waterdata.usgs.gov/state/michigan/" target="_blank" rel="noopener noreferrer">
               Full Data <ExternalLink className="ml-1 h-3 w-3" />
             </a>
           </Button>

@@ -444,7 +444,6 @@ const HeroSection = () => {
             className="mt-3 text-sm text-primary-foreground/75 md:text-base max-w-xl mx-auto leading-relaxed"
           >
             ZIP-level health, economic & housing data across all 83 counties.
-            Free, forever.
           </motion.p>
 
           {/* Key Michigan health signals - compact inline strip (above fold) */}

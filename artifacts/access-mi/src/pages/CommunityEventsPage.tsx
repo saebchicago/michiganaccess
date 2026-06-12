@@ -133,7 +133,7 @@ function EventCard({ event }: { event: CommunityEvent }) {
                 <a
                   href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${event.address}, ${event.city}, MI ${event.zip || ""}`)}`}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                 >
                   <MapPin className="h-3 w-3" /> Get Directions
                 </a>

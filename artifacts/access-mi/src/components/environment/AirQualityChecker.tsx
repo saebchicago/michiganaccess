@@ -147,7 +147,7 @@ export default function AirQualityChecker() {
           <a
             href="https://www.airnow.gov/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="text-primary hover:underline inline-flex items-center gap-0.5"
           >
             AirNow.gov <ExternalLink className="h-2.5 w-2.5" />

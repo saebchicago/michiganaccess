@@ -8,7 +8,7 @@ import { SNAP_COUNTY_FALLBACK } from "../snapMichiganFallback";
 // ── Sanity checks ─────────────────────────────────────────────────────────────
 
 describe("SNAP_COVERAGE_AT_RISK_FALLBACK", () => {
-  it("has exactly 83 entries — one per Michigan county", () => {
+  it("has exactly 83 entries  -  one per Michigan county", () => {
     expect(SNAP_COVERAGE_AT_RISK_FALLBACK).toHaveLength(83);
   });
 
@@ -42,7 +42,7 @@ describe("SNAP_COVERAGE_AT_RISK_FALLBACK", () => {
     for (const entry of SNAP_COVERAGE_AT_RISK_FALLBACK) {
       if (entry.projectedAffectedLow === 0) continue;
       const ratio = entry.projectedAffectedHigh / entry.projectedAffectedLow;
-      // Expected ratio: 1.40/0.60 ≈ 2.333 — allow rounding to 2 integer places
+      // Expected ratio: 1.40/0.60 ≈ 2.333  -  allow rounding to 2 integer places
       expect(ratio).toBeGreaterThan(2.0);
       expect(ratio).toBeLessThan(2.7);
     }
@@ -78,7 +78,7 @@ describe("SNAP_COVERAGE_AT_RISK_FALLBACK", () => {
       (sum, e) => sum + e.projectedAffectedHigh,
       0
     );
-    // Rounding across 83 counties — allow ±200 tolerance
+    // Rounding across 83 counties  -  allow ±200 tolerance
     expect(stateHigh).toBeGreaterThan(103_400);
     expect(stateHigh).toBeLessThan(103_800);
   });

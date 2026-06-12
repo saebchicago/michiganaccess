@@ -316,7 +316,7 @@ export default function DataValidationPage() {
                     <a
                       href={src.url}
                       target="_blank"
-                      rel="noopener"
+                      rel="noopener noreferrer"
                       className="text-[11px] text-primary hover:underline inline-flex items-center gap-1"
                     >
                       <ExternalLink className="h-3 w-3" /> {src.url}

@@ -135,7 +135,7 @@ export default function FloodInsuranceGapCard({ county }: FloodInsuranceGapCardP
                   <a
                     href="https://www.fema.gov/openfema"
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
                     fema.gov/openfema

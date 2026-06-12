@@ -2,7 +2,7 @@
 //   Vintage 2024 (POPESTIMATE2024). One vintage, one source, file-wide.
 //   Refreshed via scripts/refresh-county-population.mjs from the public
 //   co-est2024-alldata.csv release at census.gov. Do not edit individual
-//   values by hand — re-run the script.
+//   values by hand  -  re-run the script.
 // Cities: largest municipalities per county.
 // Health data: County Health Rankings & Roadmaps 2025 edition, USDA Food Environment Atlas
 // https://www.countyhealthrankings.org/health-data/michigan

@@ -38,7 +38,7 @@ export default function TribalHealthSection() {
           </div>
 
           <Button variant="outline" size="sm" className="text-xs" asChild>
-            <a href="https://www.ihs.gov/findhealthcare/" target="_blank" rel="noopener">
+            <a href="https://www.ihs.gov/findhealthcare/" target="_blank" rel="noopener noreferrer">
               Find IHS Facilities <ExternalLink className="ml-1 h-3 w-3" />
             </a>
           </Button>

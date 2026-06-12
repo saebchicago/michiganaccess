@@ -99,7 +99,7 @@ export default function FDARecallFeed() {
         )}
         <div className="flex items-center justify-between">
           <p className="text-[10px] text-muted-foreground">Source: FDA openFDA - Michigan food enforcement</p>
-          <a href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts" target="_blank" rel="noopener" className="text-[10px] text-primary hover:underline flex items-center gap-0.5">
+          <a href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts" target="_blank" rel="noopener noreferrer" className="text-[10px] text-primary hover:underline flex items-center gap-0.5">
             All Recalls <ExternalLink className="h-2.5 w-2.5" />
           </a>
         </div>
