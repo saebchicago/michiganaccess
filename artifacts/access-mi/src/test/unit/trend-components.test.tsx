@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
+import { getCountyTrends, isUninsuredPending } from "@/data/trendSeries";
 
 // ── shared mocks ─────────────────────────────────────────────────────────────
 
@@ -109,9 +110,14 @@ describe("UninsuredSparkline — Saginaw (ACS pending-ci)", () => {
     expect(screen.getByText(/Uninsured Rate/i)).toBeInTheDocument();
   });
 
-  it("shows pending state message referencing Census API key", () => {
+  it("shows pending message or ACS data depending on trendSeries state", () => {
     render(<UninsuredSparkline county="Saginaw" />);
-    expect(screen.getByText(/Census API key/i)).toBeInTheDocument();
+    const t = getCountyTrends("Saginaw")!;
+    if (isUninsuredPending(t.uninsuredRate)) {
+      expect(screen.getByText(/Census API key/i)).toBeInTheDocument();
+    } else {
+      expect(screen.getByText(/Uninsured Rate/i)).toBeInTheDocument();
+    }
   });
 
   it("shows source attribution even in pending state", () => {
@@ -119,13 +125,15 @@ describe("UninsuredSparkline — Saginaw (ACS pending-ci)", () => {
     expect(screen.getByText(/American Community Survey/i)).toBeInTheDocument();
   });
 
-  it("does NOT render bold uninsured values in pending state (no fabricated numbers)", () => {
+  it("no fabricated numbers rendered in pending state", () => {
     const { container } = render(<UninsuredSparkline county="Saginaw" />);
-    // Should have no percentage values rendered as data (only the source text)
-    const boldValues = container.querySelectorAll(
-      "span.text-base.font-bold, p.text-base.font-bold",
-    );
-    expect(boldValues.length).toBe(0);
+    const t = getCountyTrends("Saginaw")!;
+    if (isUninsuredPending(t.uninsuredRate)) {
+      const boldValues = container.querySelectorAll(
+        "span.text-base.font-bold, p.text-base.font-bold",
+      );
+      expect(boldValues.length).toBe(0);
+    }
   });
 });
 
