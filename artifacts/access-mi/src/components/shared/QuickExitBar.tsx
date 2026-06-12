@@ -16,7 +16,13 @@ export default function QuickExitBar() {
     window.location.replace("https://www.weather.com");
   }, []);
 
-  // Quick Exit is button-only - Escape key closes modals/dropdowns, not Quick Exit
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") triggerExit();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [triggerExit]);
 
   return (
     <div
@@ -37,7 +43,9 @@ export default function QuickExitBar() {
             ESC
           </kbd>
         </button>
-        <span className="text-[10px] text-destructive-foreground/90 pb-0.5">Press ESC to quickly leave this page</span>
+        <span className="text-[10px] text-destructive-foreground/90 pb-0.5">
+          Press ESC to quickly leave this page
+        </span>
       </div>
     </div>
   );

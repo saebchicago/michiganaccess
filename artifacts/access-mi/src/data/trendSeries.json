@@ -1,9 +1,8 @@
 {
   "$schema": "trendSeries.v1",
   "provenance": {
-    "generatedAt": "2026-06-11T02:47:19.365Z",
-    "buildScript": "artifacts/access-mi/scripts/seed-trend-series.mjs",
-    "note": "Seed file: PEP verified, ACS pending CI run with CENSUS_API_KEY",
+    "generatedAt": "2026-06-12T18:58:05.707Z",
+    "buildScript": "artifacts/access-mi/scripts/build-trend-series.mjs",
     "validityRules": [
       "ACS pair gap must be >= 5 years (non-overlapping 5-year windows)",
       "All 83 Michigan counties required for every metric and vintage",
@@ -39,7 +38,7 @@
       },
       "uninsuredRate": {
         "description": "Percent civilian noninstitutionalized population uninsured, ACS 5-year",
-        "variable": "S2701_C03_001E",
+        "variable": "S2701_C05_001E",
         "vintages": [
           2018,
           2023
@@ -47,8 +46,7 @@
         "overlapGapYears": 5,
         "acsWindowV1": "2014–2018",
         "acsWindowV2": "2019–2023",
-        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "status": "pending-ci"
+        "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701"
       }
     }
   },
@@ -82,16 +80,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Alger": {
@@ -123,16 +128,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.2
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Allegan": {
@@ -164,16 +176,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4.6
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Alpena": {
@@ -205,16 +224,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.3
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Antrim": {
@@ -246,16 +272,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.1
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Arenac": {
@@ -287,16 +320,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Baraga": {
@@ -328,16 +368,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.2
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Barry": {
@@ -369,16 +416,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4.6
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Bay": {
@@ -410,16 +464,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.5
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.7
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Benzie": {
@@ -451,16 +512,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.8
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Berrien": {
@@ -492,16 +560,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Branch": {
@@ -533,16 +608,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 11.1
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 10.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Calhoun": {
@@ -574,16 +656,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Cass": {
@@ -615,16 +704,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.5
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Charlevoix": {
@@ -656,16 +752,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Cheboygan": {
@@ -697,16 +800,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Chippewa": {
@@ -738,16 +848,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Clare": {
@@ -779,16 +896,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 11.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 11.7
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Clinton": {
@@ -820,16 +944,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 3.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3.4
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Crawford": {
@@ -861,16 +992,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Delta": {
@@ -902,16 +1040,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.1
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.7
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Dickinson": {
@@ -943,16 +1088,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4.6
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Eaton": {
@@ -984,16 +1136,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Emmet": {
@@ -1025,16 +1184,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.3
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Genesee": {
@@ -1066,16 +1232,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.6
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.8
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Gladwin": {
@@ -1107,16 +1280,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.5
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 8.3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Gogebic": {
@@ -1148,16 +1328,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Grand Traverse": {
@@ -1189,16 +1376,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Gratiot": {
@@ -1230,16 +1424,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Hillsdale": {
@@ -1271,16 +1472,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.7
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 7
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Houghton": {
@@ -1312,16 +1520,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.3
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Huron": {
@@ -1353,16 +1568,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.3
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Ingham": {
@@ -1394,16 +1616,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Ionia": {
@@ -1435,16 +1664,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.2
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Iosco": {
@@ -1476,16 +1712,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.2
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Iron": {
@@ -1517,16 +1760,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.1
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.7
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Isabella": {
@@ -1558,16 +1808,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 7.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Jackson": {
@@ -1599,16 +1856,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Kalamazoo": {
@@ -1640,16 +1904,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.7
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Kalkaska": {
@@ -1681,16 +1952,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 9.5
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Kent": {
@@ -1722,16 +2000,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.5
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Keweenaw": {
@@ -1763,16 +2048,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 7.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Lake": {
@@ -1804,16 +2096,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.5
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 8
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Lapeer": {
@@ -1845,16 +2144,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.4
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Leelanau": {
@@ -1886,16 +2192,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.5
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Lenawee": {
@@ -1927,16 +2240,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Livingston": {
@@ -1968,16 +2288,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Luce": {
@@ -2009,16 +2336,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.7
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Mackinac": {
@@ -2050,16 +2384,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 10.6
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 10.3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Macomb": {
@@ -2091,16 +2432,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.7
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Manistee": {
@@ -2132,16 +2480,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Marquette": {
@@ -2173,16 +2528,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.3
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3.7
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Mason": {
@@ -2214,16 +2576,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Mecosta": {
@@ -2255,16 +2624,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.5
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 7.8
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Menominee": {
@@ -2296,16 +2672,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4.7
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Midland": {
@@ -2337,16 +2720,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3.8
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Missaukee": {
@@ -2378,16 +2768,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 9.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Monroe": {
@@ -2419,16 +2816,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4.7
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Montcalm": {
@@ -2460,16 +2864,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.1
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 8.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Montmorency": {
@@ -2501,16 +2912,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Muskegon": {
@@ -2542,16 +2960,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.3
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.8
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Newaygo": {
@@ -2583,16 +3008,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Oakland": {
@@ -2624,16 +3056,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3.9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Oceana": {
@@ -2665,16 +3104,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 9.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 8.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Ogemaw": {
@@ -2706,16 +3152,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Ontonagon": {
@@ -2747,16 +3200,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Osceola": {
@@ -2788,16 +3248,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 10.1
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 9
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Oscoda": {
@@ -2829,16 +3296,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 13.2
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 13.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Otsego": {
@@ -2870,16 +3344,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.8
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Ottawa": {
@@ -2911,16 +3392,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 4.2
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Presque Isle": {
@@ -2952,16 +3440,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Roscommon": {
@@ -2993,16 +3488,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.6
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Saginaw": {
@@ -3034,16 +3536,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.3
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "St. Clair": {
@@ -3075,16 +3584,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.6
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.8
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "St. Joseph": {
@@ -3116,16 +3632,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.1
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 9.6
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Sanilac": {
@@ -3157,16 +3680,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 10.1
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 8.1
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Schoolcraft": {
@@ -3198,16 +3728,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 6.7
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 7.2
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Shiawassee": {
@@ -3239,16 +3776,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.7
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Tuscola": {
@@ -3280,16 +3824,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 5.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 4.8
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Van Buren": {
@@ -3321,16 +3872,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.4
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 7.4
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Washtenaw": {
@@ -3362,16 +3920,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 3.9
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 3.3
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Wayne": {
@@ -3403,16 +3968,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 7.2
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 5.7
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     },
     "Wexford": {
@@ -3444,16 +4016,23 @@
         "sourceUrl": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2024/counties/totals/co-est2024-alldata.csv"
       },
       "uninsuredRate": {
-        "status": "pending-ci",
-        "pendingReason": "Requires CENSUS_API_KEY. Run build-trend-series.mjs in CI to populate.",
-        "vintages": [
-          2018,
-          2023
+        "points": [
+          {
+            "vintageYear": 2018,
+            "vintageLabel": "2018 ACS 5-yr (2014–2018)",
+            "value": 8.2
+          },
+          {
+            "vintageYear": 2023,
+            "vintageLabel": "2023 ACS 5-yr (2019–2023)",
+            "value": 6.5
+          }
         ],
         "label": "VERIFIED",
         "source": "U.S. Census Bureau American Community Survey 5-year (S2701)",
         "sourceUrl": "https://data.census.gov/table/ACSST5Y2023.S2701",
-        "overlapGapYears": 5
+        "overlapGapYears": 5,
+        "marginOfErrorNote": "Small-population counties (e.g. Keweenaw) have high margins of error; treat point estimates with caution."
       }
     }
   }

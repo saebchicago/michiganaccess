@@ -38,13 +38,22 @@ describe("population delta math — fixed fixtures", () => {
   });
 });
 
-// ── ACS pending state ─────────────────────────────────────────────────────────
+// ── ACS state (pending-ci or populated) ──────────────────────────────────────
 
 describe("ACS uninsured pending-ci state", () => {
-  it("Saginaw uninsuredRate is in pending-ci status (no key available)", () => {
+  it("Saginaw uninsuredRate is properly structured (pending or populated)", () => {
     const t = getCountyTrends("Saginaw");
     expect(t).not.toBeNull();
-    expect(isUninsuredPending(t!.uninsuredRate)).toBe(true);
+    const u = t!.uninsuredRate;
+    if (isUninsuredPending(u)) {
+      expect(u.status).toBe("pending-ci");
+    } else {
+      expect(u.points).toHaveLength(2);
+      for (const p of u.points) {
+        expect(p.value).toBeGreaterThanOrEqual(0);
+        expect(p.value).toBeLessThanOrEqual(50);
+      }
+    }
   });
 
   it("pending-ci entry has a pendingReason string", () => {

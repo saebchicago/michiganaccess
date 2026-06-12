@@ -2,7 +2,7 @@
 /**
  * Build trendSeries.json — county-level vintage series for:
  *   (a) population: Census PEP annual 2020-2024 (5 points, no key needed)
- *   (b) uninsuredRate: ACS 5-year S2701_C03_001E, 2018 + 2023 non-overlapping
+ *   (b) uninsuredRate: ACS 5-year S2701_C05_001E, 2018 + 2023 non-overlapping
  *       pair (requires CENSUS_API_KEY)
  *
  * Validation enforced before any write:
@@ -127,7 +127,7 @@ async function fetchAcs(year) {
 
   const url =
     `${ACS_BASE}/${year}/acs/acs5/subject` +
-    `?get=NAME,S2701_C03_001E&for=county:*&in=state:26&key=${CENSUS_API_KEY}`;
+    `?get=NAME,S2701_C05_001E&for=county:*&in=state:26&key=${CENSUS_API_KEY}`;
 
   console.log(`→ Fetching ACS ${year} (S2701 uninsured)…`);
   const res = await fetch(url, { headers: { "user-agent": "accessmi-trend-build" } });
@@ -263,7 +263,7 @@ async function main() {
         },
         uninsuredRate: {
           description: "Percent civilian noninstitutionalized population uninsured, ACS 5-year",
-          variable: "S2701_C03_001E",
+          variable: "S2701_C05_001E",
           vintages: [ACS_V1, ACS_V2],
           overlapGapYears: gap,
           acsWindowV1: `${ACS_V1 - 4}–${ACS_V1}`,
