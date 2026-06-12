@@ -13,19 +13,19 @@
       {
         "name": "HRSA Health Center Service Delivery and Look-Alike Sites",
         "url": "https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv",
-        "mi_rows": 431,
+        "mi_rows": 441,
         "filter": "Site State Abbreviation == MI AND Site Status Description == Active AND Health Center Type Description in ('Service Delivery Site','Administrative/Service Delivery Site')",
         "dedupe_key": "FQHC Site NPI Number (preferred); BHCMIS Org # + Site Address + Site Name (fallback when NPI missing)"
       }
     ],
-    "fetched_at": "2026-06-10T03:02:37.106Z",
+    "fetched_at": "2026-06-12T18:58:04.982Z",
     "transform_script": "scripts/build-facility-dataset.mjs",
     "counties_covered": 82,
     "counties_total": 83,
     "expected_zero_counties": [
       "Keweenaw"
     ],
-    "mi_total": 579,
+    "mi_total": 589,
     "note": "Per-county counts derived from the same extract as verifiedHealthFacilities.json. The build-time guard (scripts/check-county-facilities.mjs) fails if the seed file drops below these counts."
   },
   "counts": {
@@ -39,12 +39,12 @@
     "Barry": 2,
     "Bay": 7,
     "Benzie": 3,
-    "Berrien": 6,
+    "Berrien": 7,
     "Branch": 1,
     "Calhoun": 23,
     "Cass": 5,
     "Charlevoix": 2,
-    "Cheboygan": 8,
+    "Cheboygan": 9,
     "Chippewa": 9,
     "Clare": 3,
     "Clinton": 2,
@@ -52,7 +52,7 @@
     "Delta": 1,
     "Dickinson": 2,
     "Eaton": 2,
-    "Emmet": 8,
+    "Emmet": 9,
     "Genesee": 13,
     "Gladwin": 3,
     "Gogebic": 1,
@@ -61,7 +61,7 @@
     "Hillsdale": 1,
     "Houghton": 8,
     "Huron": 5,
-    "Ingham": 16,
+    "Ingham": 17,
     "Ionia": 2,
     "Iosco": 6,
     "Iron": 1,
@@ -91,7 +91,7 @@
     "Montmorency": 6,
     "Muskegon": 25,
     "Newaygo": 6,
-    "Oakland": 36,
+    "Oakland": 37,
     "Oceana": 3,
     "Ogemaw": 6,
     "Ontonagon": 1,
@@ -101,8 +101,8 @@
     "Ottawa": 5,
     "Presque Isle": 5,
     "Roscommon": 5,
-    "Saginaw": 22,
-    "St. Clair": 4,
+    "Saginaw": 24,
+    "St. Clair": 5,
     "St. Joseph": 4,
     "Sanilac": 3,
     "Schoolcraft": 1,
@@ -110,7 +110,7 @@
     "Tuscola": 3,
     "Van Buren": 4,
     "Washtenaw": 14,
-    "Wayne": 85,
+    "Wayne": 87,
     "Wexford": 3
   }
 }
