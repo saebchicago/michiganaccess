@@ -42,10 +42,9 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/",
     title: "Access Michigan: Health, Housing & Energy Assistance",
     description:
-      "Michigan health, housing, energy, and benefits data for all 83 counties. Verified from 41 federal and public sources. Free, no account required.",
+      "Michigan health, housing, energy, and benefits data for all 83 counties. Verified from 41 federal and public sources.",
     h1: "Michigan's public data, organized for action",
-    summary:
-      "ZIP-level health, economic, and housing data across 83 counties. Free. Forever.",
+    summary: "ZIP-level health, economic, and housing data across 83 counties.",
   },
   {
     path: "/methodology",
@@ -211,10 +210,10 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/legal-aid",
     title: "Legal Aid | Access Michigan",
     description:
-      "Michigan civil legal aid for housing, benefits, family, immigration, and reentry. Free attorney referrals, MichLegalHelp resources, and self-help tools.",
+      "Michigan civil legal aid for housing, benefits, family, immigration, and reentry. Attorney referrals, MichLegalHelp resources, and self-help tools.",
     h1: "Legal aid in Michigan",
     summary:
-      "Free civil legal help for housing, benefits, family, and immigration matters.",
+      "Civil legal help for housing, benefits, family, and immigration matters.",
   },
   {
     path: "/civic-data",
@@ -238,7 +237,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/resources",
     title: "Community Resources | Access Michigan",
     description:
-      "Michigan community resources by county: food pantries, shelters, mental health crisis centers, free clinics, immigration help, and reentry services.",
+      "Michigan community resources by county: food pantries, shelters, mental health crisis centers, charitable clinics, immigration help, and reentry services.",
     h1: "Community Resources",
     summary:
       "Food, shelter, health, legal, and reentry resources by Michigan county.",
@@ -284,7 +283,7 @@ export const ROUTE_META: RouteMeta[] = [
       "Citation-grade county brief: population, facilities, uninsured rate, food insecurity, and primary care ratio. Each statistic sourced and labeled.",
     h1: "Michigan County Brief",
     summary:
-      "One-page sourced county brief for health departments, journalists, and grant writers. Free.",
+      "One-page sourced county brief for health departments, journalists, and grant writers.",
   },
 ];
 

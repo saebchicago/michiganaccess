@@ -18,7 +18,7 @@ const STORIES: Story[] = [
     name: "Maria",
     county: "Wayne County",
     narrative:
-      "After losing her insurance, Maria used Access Michigan to find a sliding-scale clinic 2 miles from her home in Southwest Detroit. The platform showed her that Wayne County has the highest density of FQHCs in the state - 23 clinics serving 180,000+ patients. She enrolled in the Healthy Michigan Plan within a week.",
+      "After losing her insurance, Maria used Access Michigan to find a sliding-scale clinic 2 miles from her home in Southwest Detroit. She enrolled in the Healthy Michigan Plan within a week.",
     connections: [
       { label: "Find Care → FQHC filter", href: "/find-care" },
       { label: "Medicaid enrollment", href: "/insurance-coverage" },
@@ -30,7 +30,7 @@ const STORIES: Story[] = [
     name: "James",
     county: "Genesee County",
     narrative:
-      "As a veteran managing diabetes and PTSD in Flint, James needed both VA care and community support. Access Michigan's county profile showed that Genesee County has a 13.8% diabetes rate - 1.5× the state average - and connected him to three peer support groups and a CHW navigator.",
+      "As a veteran managing diabetes and PTSD in Flint, James needed both VA care and community support. Access Michigan's county profile connected him to peer support groups and a CHW navigator.",
     connections: [
       { label: "County health profile", href: "/brief?county=Genesee" },
       { label: "Community resources", href: "/resources" },
