@@ -17,10 +17,11 @@
 
 import { createClient } from "@supabase/supabase-js";
 import { readFileSync } from "fs";
+import { CANONICAL_INFANT_MORTALITY_VINTAGE } from "@/lib/data-layers";
 
 const supabase = createClient(
   process.env.SUPABASE_URL || "",
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ""
+  process.env.SUPABASE_SERVICE_ROLE_KEY || "",
 );
 
 async function seed(csvPath: string) {
@@ -28,31 +29,44 @@ async function seed(csvPath: string) {
   const lines = raw.split("\n").filter(Boolean);
   const headers = lines[0].split(",").map((h) => h.trim().replace(/"/g, ""));
 
-  const rows = lines.slice(1).map((line) => {
-    const values = line.split(",").map((v) => v.trim().replace(/"/g, ""));
-    const row: Record<string, string> = {};
-    headers.forEach((h, i) => (row[h] = values[i] || ""));
+  const rows = lines
+    .slice(1)
+    .map((line) => {
+      const values = line.split(",").map((v) => v.trim().replace(/"/g, ""));
+      const row: Record<string, string> = {};
+      headers.forEach((h, i) => (row[h] = values[i] || ""));
 
-    const parseOrNull = (v: string) => {
-      if (!v || v === "" || v === "suppressed" || v === "N/A" || v === "*") return null;
-      const n = parseFloat(v);
-      return isNaN(n) ? null : n;
-    };
+      const parseOrNull = (v: string) => {
+        if (!v || v === "" || v === "suppressed" || v === "N/A" || v === "*")
+          return null;
+        const n = parseFloat(v);
+        return isNaN(n) ? null : n;
+      };
 
-    return {
-      county: row.county || row.County || "",
-      infant_mortality_rate: parseOrNull(row.imr || row.infant_mortality_rate),
-      infant_mortality_rate_black: parseOrNull(row.imr_black),
-      infant_mortality_rate_white: parseOrNull(row.imr_white),
-      preterm_birth_rate: parseOrNull(row.preterm || row.preterm_birth_rate),
-      low_birth_weight_rate: parseOrNull(row.lbw || row.low_birth_weight_rate),
-      prenatal_care_first_trimester: parseOrNull(row.prenatal_1st || row.prenatal_care_first_trimester),
-      teen_birth_rate: parseOrNull(row.teen || row.teen_birth_rate),
-      birthing_hospitals: parseOrNull(row.birthing_hospitals) as number | null,
-      ob_gyn_per_10k: parseOrNull(row.obgyn || row.ob_gyn_per_10k),
-      midwives_per_10k: parseOrNull(row.midwives || row.midwives_per_10k),
-    };
-  }).filter((r) => r.county);
+      return {
+        county: row.county || row.County || "",
+        data_years: CANONICAL_INFANT_MORTALITY_VINTAGE,
+        infant_mortality_rate: parseOrNull(
+          row.imr || row.infant_mortality_rate,
+        ),
+        infant_mortality_rate_black: parseOrNull(row.imr_black),
+        infant_mortality_rate_white: parseOrNull(row.imr_white),
+        preterm_birth_rate: parseOrNull(row.preterm || row.preterm_birth_rate),
+        low_birth_weight_rate: parseOrNull(
+          row.lbw || row.low_birth_weight_rate,
+        ),
+        prenatal_care_first_trimester: parseOrNull(
+          row.prenatal_1st || row.prenatal_care_first_trimester,
+        ),
+        teen_birth_rate: parseOrNull(row.teen || row.teen_birth_rate),
+        birthing_hospitals: parseOrNull(row.birthing_hospitals) as
+          | number
+          | null,
+        ob_gyn_per_10k: parseOrNull(row.obgyn || row.ob_gyn_per_10k),
+        midwives_per_10k: parseOrNull(row.midwives || row.midwives_per_10k),
+      };
+    })
+    .filter((r) => r.county);
 
   console.log(`Parsed ${rows.length} county records`);
 
@@ -64,5 +78,8 @@ async function seed(csvPath: string) {
 }
 
 const csvPath = process.argv[2];
-if (!csvPath) { console.error("Usage: npx tsx seed-maternal-health.ts <csv>"); process.exit(1); }
+if (!csvPath) {
+  console.error("Usage: npx tsx seed-maternal-health.ts <csv>");
+  process.exit(1);
+}
 seed(csvPath);
