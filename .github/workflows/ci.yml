@@ -32,3 +32,24 @@ jobs:
       - name: A11y gate
         working-directory: artifacts/access-mi
         run: pnpm test:a11y
+      - name: Provenance gate
+        working-directory: artifacts/access-mi
+        run: pnpm check:provenance
+      - name: Allowlist shrink-only check
+        working-directory: artifacts/access-mi
+        run: |
+          git fetch origin main --depth=1 --quiet 2>/dev/null || true
+          ALLOWLIST="provenance-allowlist.json"
+          if git show "origin/main:artifacts/access-mi/${ALLOWLIST}" > /dev/null 2>&1; then
+            BASE_COUNT=$(git show "origin/main:artifacts/access-mi/${ALLOWLIST}" \
+              | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{ try{ console.log(JSON.parse(d).violations?.length??0); }catch{ console.log(0); } })")
+            PR_COUNT=$(node -e "const {readFileSync}=require('fs'); console.log(JSON.parse(readFileSync('${ALLOWLIST}','utf8')).violations?.length??0);")
+            echo "Allowlist: base=${BASE_COUNT} this-branch=${PR_COUNT}"
+            if [ "$PR_COUNT" -gt "$BASE_COUNT" ]; then
+              echo "ERROR: ${ALLOWLIST} grew from ${BASE_COUNT} to ${PR_COUNT} entries."
+              echo "The allowlist is shrink-only. Fix proxy patterns rather than adding allowlist entries."
+              exit 1
+            fi
+          else
+            echo "${ALLOWLIST} not yet on origin/main - skipping shrink-only check (initial introduction)"
+          fi
