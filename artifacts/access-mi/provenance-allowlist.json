@@ -1,0 +1,4 @@
+{
+  "description": "Atlas provenance allowlist. Fully strict: zero exemptions. All 27 countyType-proxy violations introduced before PR #78 were removed by fix/atlas-data-integrity and are no longer present in the codebase. Any future proxy pattern that check-provenance.mjs detects must be fixed at source, not added here. The allowlist is shrink-only; CI blocks any PR that adds entries.",
+  "violations": []
+}
