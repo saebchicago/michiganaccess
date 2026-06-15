@@ -17,9 +17,7 @@ import {
 } from "@/config/platformConstants";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { getALICEByCounty } from "@/data/aliceData";
-import { MICHIGAN_FEMA_NRI } from "@/data/environmentalData";
 import { MICHIGAN_ENERGY_BURDEN } from "@/data/environmentalData";
-import { MICHIGAN_FOOD_ACCESS } from "@/hooks/useFoodAccess";
 import { MICHIGAN_BROADBAND_SEED } from "@/hooks/useBroadbandData";
 import { computeCompoundDeficit } from "@/utils/compoundDeficit";
 import { getInfantMortalityAtlas } from "@/lib/data-layers";
@@ -104,22 +102,10 @@ export default function HealthEquityAtlasPage() {
     return m;
   }, []);
 
-  const foodLookup = useMemo(() => {
-    const m: Record<string, number> = {};
-    for (const f of MICHIGAN_FOOD_ACCESS) m[f.county] = f.lowAccessPct;
-    return m;
-  }, []);
-
   const broadbandLookup = useMemo(() => {
     const m: Record<string, number> = {};
     for (const b of MICHIGAN_BROADBAND_SEED)
       m[b.county] = 100 - b.pct_25_3_covered; // unserved %
-    return m;
-  }, []);
-
-  const nriLookup = useMemo(() => {
-    const m: Record<string, number> = {};
-    for (const n of MICHIGAN_FEMA_NRI) m[n.county] = n.compositeRisk;
     return m;
   }, []);
 
@@ -137,9 +123,12 @@ export default function HealthEquityAtlasPage() {
           result[name] = parseFloat(h[0]?.value || "0");
           break;
         case "poverty":
+          // Guard 3: food insecurity != ACS poverty rate; pending ACS ingestion
+          result[name] = null;
+          break;
         case "food_desert":
-          // USDA Food Access Research Atlas 2019 - 7/83 counties; null elsewhere
-          result[name] = foodLookup[name] ?? null;
+          // Guard 3: food insecurity != food desert tracts; pending USDA tract ingestion
+          result[name] = null;
           break;
         case "compound":
           // Access Michigan Index formula - derived from verified inputs
@@ -160,9 +149,8 @@ export default function HealthEquityAtlasPage() {
           result[name] = broadbandLookup[name] ?? null;
           break;
         case "ej_index":
-          // Guard 3: FEMA NRI compositeRisk != EPA EJScreen index (source mismatch).
-          // Pending correct EPA EJScreen tract data ingestion.
-          result[name] = nriLookup[name] ?? null;
+          // Guard 3: FEMA NRI compositeRisk != EPA EJScreen index (source mismatch)
+          result[name] = null;
           break;
         case "alice":
           // United Way ALICE Report Michigan 2025 - 7/83 counties; null elsewhere
@@ -175,15 +163,7 @@ export default function HealthEquityAtlasPage() {
       }
     }
     return result;
-  }, [
-    activeLayer,
-    aliceLookup,
-    energyLookup,
-    foodLookup,
-    broadbandLookup,
-    nriLookup,
-    imrLookup,
-  ]);
+  }, [activeLayer, aliceLookup, energyLookup, broadbandLookup, imrLookup]);
 
   usePageMeta({
     title: "Michigan Health Equity | Access Michigan",
