@@ -37,6 +37,11 @@ const BANNED = [
   { pattern: "strictest in the US",         reason: "removed stale PFAS superlative" },
   { pattern: "strictest in the nation",     reason: "removed stale PFAS superlative" },
   { pattern: "Case Study Highlight",        reason: "removed fabricated case study section" },
+  // Guard 1: atlas layer proxy anti-patterns. These comments mark countyType
+  // switches standing in for sourced metrics. If re-introduced the build fails.
+  { pattern: "use known state rate as proxy", reason: "atlas proxy pattern - infant mortality must use MDHHS data-layers.ts resolver" },
+  { pattern: "proxy with food insecurity",    reason: "atlas proxy pattern - food_desert layer must use USDA tract data" },
+  { pattern: "proxy: rural counties tend",    reason: "atlas proxy pattern - energy_burden layer must use ACEEE data-layers.ts resolver" },
 ];
 
 /** Henry Ford check: flag any file NOT in the allowlist that contains "Henry Ford". */

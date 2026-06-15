@@ -57,9 +57,18 @@ async function loadRoutePaths() {
   return paths;
 }
 
+// Normalize to trailing-slash so sitemap loc matches the URL Netlify serves.
+// Query-string paths (e.g. /brief?county=wayne) are left unchanged because
+// Netlify Pretty URLs only adds slashes to directory-style paths.
+function trailingSlash(loc) {
+  if (loc === "/" || loc.includes("?")) return loc;
+  return loc.endsWith("/") ? loc : `${loc}/`;
+}
+
 function url(loc, { priority = "0.7", changefreq = "monthly", lastmod = null } = {}) {
+  const normalized = trailingSlash(loc);
   const lastmodTag = lastmod ? `<lastmod>${lastmod}</lastmod>` : "";
-  return `  <url><loc>${SITE_URL}${loc}</loc>${lastmodTag}<changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+  return `  <url><loc>${SITE_URL}${normalized}</loc>${lastmodTag}<changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
 }
 
 async function main() {

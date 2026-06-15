@@ -1,3 +1,12 @@
+export interface MetricValue {
+  value: number | null;
+  ci_lower?: number | null;
+  ci_upper?: number | null;
+  source: string;
+  vintage: string;
+  label: "VERIFIED" | "MODELED" | "PROJECTED";
+}
+
 export interface FoodAccessTract {
   id: string;
   census_tract_id: string;

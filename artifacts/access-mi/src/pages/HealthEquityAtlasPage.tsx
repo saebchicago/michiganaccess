@@ -1,4 +1,4 @@
-import { useState, useMemo, lazy, Suspense } from "react";
+import { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { Globe, Loader2, ExternalLink } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -17,11 +17,10 @@ import {
 } from "@/config/platformConstants";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { getALICEByCounty } from "@/data/aliceData";
-import { MICHIGAN_FEMA_NRI } from "@/data/environmentalData";
 import { MICHIGAN_ENERGY_BURDEN } from "@/data/environmentalData";
-import { MICHIGAN_FOOD_ACCESS } from "@/hooks/useFoodAccess";
 import { MICHIGAN_BROADBAND_SEED } from "@/hooks/useBroadbandData";
 import { computeCompoundDeficit } from "@/utils/compoundDeficit";
+import { getInfantMortalityAtlas } from "@/lib/data-layers";
 
 const MichiganHeatGrid = lazy(
   () => import("@/components/atlas/MichiganHeatGrid"),
@@ -43,7 +42,15 @@ const CountyLeaderboard = lazy(
   () => import("@/components/tools/CountyLeaderboard"),
 );
 
-function getCountyData(county: string) {
+// Guard 3: only return values with a verified source. Omitted fields render
+// "Data unavailable" in CountyDetailPanel.MetricRow. Remediation PRs are
+// tracked per-layer in scripts/atlas-provenance-status.json.
+function getCountyData(
+  county: string,
+  imrLookup: Record<string, number | null>,
+  broadbandLookup: Record<string, number>,
+  energyLookup: Record<string, number>,
+) {
   const p = COUNTY_PROFILES[county];
   if (!p) return null;
   const h = p.healthHighlights;
@@ -53,14 +60,14 @@ function getCountyData(county: string) {
     uninsured: parseFloat(h[0]?.value || "0"),
     poverty: parseFloat(h[2]?.value || "0"),
     compound: computeCompoundDeficit(p).compound,
-    food_desert_tracts: Math.round(parseFloat(h[2]?.value || "0") * 2),
-    broadband_unserved:
-      p.countyType === "rural" ? 28 : p.countyType === "suburban" ? 8 : 5,
-    infant_mortality:
-      p.countyType === "urban" ? 7.2 : p.countyType === "rural" ? 6.8 : 5.4,
-    ej_max: p.countyType === "urban" ? 65 : p.countyType === "rural" ? 35 : 45,
-    energy_burden:
-      p.countyType === "rural" ? 8.5 : p.countyType === "suburban" ? 5.2 : 6.8,
+    // FCC BDC 2024: real value for 10/83 counties, undefined elsewhere
+    broadband_unserved: broadbandLookup[county] as number | undefined,
+    // MDHHS: null until 2019-2023 five-year CSV seeded via seed-maternal-health.ts
+    infant_mortality: imrLookup[county] ?? null,
+    // ACEEE LEAD 2023: real value for 7/83 counties, undefined elsewhere
+    energy_burden: energyLookup[county] as number | undefined,
+    // food_desert_tracts: Guard 3 - formula was fabricated; pending USDA tract data
+    // ej_max: Guard 3 - FEMA NRI compositeRisk != EPA EJScreen index
   };
 }
 
@@ -68,6 +75,15 @@ export default function HealthEquityAtlasPage() {
   const [activeLayer, setActiveLayer] = useState<AtlasLayer>("compound");
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const isMobile = useIsMobile();
+
+  // MDHHS 2019-2023 infant mortality - loaded async from Supabase.
+  // Empty until maternal_infant_health table is seeded; all counties show null.
+  const [imrLookup, setImrLookup] = useState<Record<string, number | null>>({});
+  useEffect(() => {
+    getInfantMortalityAtlas()
+      .then(setImrLookup)
+      .catch(() => {});
+  }, []);
 
   // Build map data from county profiles for active layer
   // Build verified data lookups for real county-level data
@@ -86,12 +102,6 @@ export default function HealthEquityAtlasPage() {
     return m;
   }, []);
 
-  const foodLookup = useMemo(() => {
-    const m: Record<string, number> = {};
-    for (const f of MICHIGAN_FOOD_ACCESS) m[f.county] = f.lowAccessPct;
-    return m;
-  }, []);
-
   const broadbandLookup = useMemo(() => {
     const m: Record<string, number> = {};
     for (const b of MICHIGAN_BROADBAND_SEED)
@@ -99,95 +109,61 @@ export default function HealthEquityAtlasPage() {
     return m;
   }, []);
 
-  const nriLookup = useMemo(() => {
-    const m: Record<string, number> = {};
-    for (const n of MICHIGAN_FEMA_NRI) m[n.county] = n.compositeRisk;
-    return m;
-  }, []);
-
+  // Guard 3: layers without a verified source return null for every county.
+  // null renders as gray fill on the map and "Data unavailable" in the detail
+  // panel. No proxy values are used. Per-layer status tracked in
+  // scripts/atlas-provenance-status.json.
   const mapData = useMemo(() => {
-    const result: Record<string, number> = {};
+    const result: Record<string, number | null> = {};
     for (const [name, profile] of Object.entries(COUNTY_PROFILES)) {
       const h = profile.healthHighlights;
       switch (activeLayer) {
         case "uninsured":
+          // ACS via County Health Rankings 2025 - all 83 counties
           result[name] = parseFloat(h[0]?.value || "0");
           break;
         case "poverty":
+          // Guard 3: food insecurity != ACS poverty rate; pending ACS ingestion
+          result[name] = null;
+          break;
         case "food_desert":
-          // Use verified USDA data if available, fallback to profile
-          result[name] = foodLookup[name] ?? parseFloat(h[2]?.value || "0");
+          // Guard 3: food insecurity != food desert tracts; pending USDA tract ingestion
+          result[name] = null;
           break;
         case "compound":
+          // Access Michigan Index formula - derived from verified inputs
           result[name] = computeCompoundDeficit(profile).compound;
           break;
         case "energy_burden":
-          // Use verified ACEEE LEAD data if available
-          result[name] =
-            energyLookup[name] ??
-            (profile.countyType === "rural"
-              ? 8.5
-              : profile.countyType === "suburban"
-                ? 5.2
-                : 6.8);
+          // ACEEE LEAD Tool 2023 - 7/83 counties; null elsewhere
+          result[name] = energyLookup[name] ?? null;
           break;
         case "infant_mortality":
-          result[name] =
-            profile.countyType === "urban"
-              ? 7.2
-              : profile.countyType === "rural"
-                ? 6.8
-                : 5.4;
+          // MDHHS Division for Vital Records 2019-2023 five-year average.
+          // null until maternal_infant_health Supabase table is seeded.
+          // Suppressed counties (< 6 events) also null per MDHHS policy.
+          result[name] = imrLookup[name] ?? null;
           break;
         case "broadband":
-          // Use verified FCC data if available
-          result[name] =
-            broadbandLookup[name] ??
-            (profile.countyType === "rural"
-              ? 28
-              : profile.countyType === "suburban"
-                ? 8
-                : 5);
+          // FCC National Broadband Map 2024 - 10/83 counties; null elsewhere
+          result[name] = broadbandLookup[name] ?? null;
           break;
         case "ej_index":
-          // Use FEMA NRI risk score as proxy if available
-          result[name] =
-            nriLookup[name] ??
-            (profile.countyType === "urban"
-              ? 65
-              : profile.countyType === "rural"
-                ? 35
-                : 45);
+          // Guard 3: FEMA NRI compositeRisk != EPA EJScreen index (source mismatch)
+          result[name] = null;
           break;
         case "alice":
-          // Use verified United Way ALICE data if available
-          result[name] =
-            aliceLookup[name] ??
-            (profile.countyType === "rural"
-              ? 48
-              : profile.countyType === "urban"
-                ? 43
-                : 36);
+          // United Way ALICE Report Michigan 2025 - 7/83 counties; null elsewhere
+          result[name] = aliceLookup[name] ?? null;
           break;
         case "pharmacy":
-          result[name] =
-            profile.countyType === "rural"
-              ? 70
-              : profile.countyType === "suburban"
-                ? 30
-                : 10;
+          // Guard 3: no verified county-level source exists; pending NCPDP ingestion
+          result[name] = null;
           break;
       }
     }
     return result;
-  }, [
-    activeLayer,
-    aliceLookup,
-    energyLookup,
-    foodLookup,
-    broadbandLookup,
-    nriLookup,
-  ]);
+  }, [activeLayer, aliceLookup, energyLookup, broadbandLookup, imrLookup]);
 
   usePageMeta({
     title: "Michigan Health Equity | Access Michigan",
@@ -195,7 +171,18 @@ export default function HealthEquityAtlasPage() {
     path: "/health-equity-atlas",
   });
 
-  const countyData = selectedCounty ? getCountyData(selectedCounty) : null;
+  const countyData = useMemo(
+    () =>
+      selectedCounty
+        ? getCountyData(
+            selectedCounty,
+            imrLookup,
+            broadbandLookup,
+            energyLookup,
+          )
+        : null,
+    [selectedCounty, imrLookup, broadbandLookup, energyLookup],
+  );
 
   return (
     <Layout>
