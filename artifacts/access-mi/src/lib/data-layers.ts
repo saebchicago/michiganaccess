@@ -133,17 +133,32 @@ export async function getCompoundIndexByTier(
   return (data || []) as CompoundAccessIndex[];
 }
 
+// Canonical data_years value that the seed CSV must carry for the verified
+// MDHHS 2019-2023 five-year average dataset. The guard below matches on this
+// exact string; rows with any other data_years resolve to null regardless of
+// their rate value. The seed script must set data_years = CANONICAL_INFANT_MORTALITY_VINTAGE
+// exactly or the guard will suppress every row.
+export const CANONICAL_INFANT_MORTALITY_VINTAGE = "2019-2023";
+
 // Returns MDHHS 2019-2023 five-year average infant mortality rates keyed by
-// county name. Values are null where MDHHS suppresses counts (< 6 events).
-// Returns an empty map until the maternal_infant_health table is seeded via
-// scripts/seed-maternal-health.ts with the verified MDHHS county CSV.
+// county name. A county resolves to a number only when its row carries
+// data_years === CANONICAL_INFANT_MORTALITY_VINTAGE AND a non-null rate.
+// All other rows (wrong vintage, null rate, absent county) resolve to null,
+// which the atlas renders as "data unavailable." Returns an empty map until
+// the maternal_infant_health table is seeded via scripts/seed-maternal-health.ts.
 export async function getInfantMortalityAtlas(): Promise<
   Record<string, number | null>
 > {
   const rows = await getMaternalHealth();
   const lookup: Record<string, number | null> = {};
   for (const r of rows) {
-    if (r.county) lookup[r.county] = r.infant_mortality_rate;
+    if (
+      r.county &&
+      r.data_years === CANONICAL_INFANT_MORTALITY_VINTAGE &&
+      r.infant_mortality_rate != null
+    ) {
+      lookup[r.county] = r.infant_mortality_rate;
+    }
   }
   return lookup;
 }
