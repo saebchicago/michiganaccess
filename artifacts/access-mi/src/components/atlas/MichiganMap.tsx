@@ -7,7 +7,7 @@ import { FIPS_TO_COUNTY, isMichiganCounty } from "@/data/michigan-topojson";
 import { Loader2 } from "lucide-react";
 
 interface Props {
-  data: Record<string, number>;
+  data: Record<string, number | null>;
   metric: string;
   colorScale?: "red-green" | "blue" | "orange";
   unit?: string;
@@ -57,7 +57,7 @@ export default function MichiganMap({
         const miCounties = {
           type: "FeatureCollection" as const,
           features: counties.features.filter((f: any) =>
-            isMichiganCounty(String(f.id).padStart(5, "0"))
+            isMichiganCounty(String(f.id).padStart(5, "0")),
           ),
         };
 
@@ -67,18 +67,24 @@ export default function MichiganMap({
           features: states.features.filter((f: any) => String(f.id) === "26"),
         };
 
-        const projection = d3.geoMercator().fitSize([width, height], miState as any);
+        const projection = d3
+          .geoMercator()
+          .fitSize([width, height], miState as any);
         const path = d3.geoPath().projection(projection);
 
-        const values = Object.values(dataRef.current).filter((v) => v != null && !isNaN(v));
+        const values = Object.values(dataRef.current).filter(
+          (v): v is number => v != null && !isNaN(v),
+        );
         const extent = d3.extent(values) as [number, number];
 
         const color =
           colorScale === "red-green"
-            ? d3.scaleSequential(d3.interpolateRdYlGn).domain([extent[1], extent[0]])
+            ? d3
+                .scaleSequential(d3.interpolateRdYlGn)
+                .domain([extent[1], extent[0]])
             : colorScale === "blue"
-            ? d3.scaleSequential(d3.interpolateBlues).domain(extent)
-            : d3.scaleSequential(d3.interpolateOranges).domain(extent);
+              ? d3.scaleSequential(d3.interpolateBlues).domain(extent)
+              : d3.scaleSequential(d3.interpolateOranges).domain(extent);
 
         svg
           .append("g")
@@ -96,7 +102,10 @@ export default function MichiganMap({
           .attr("stroke-width", 0.5)
           .attr("cursor", "pointer")
           .on("mouseenter", function (event: MouseEvent, d: any) {
-            d3.select(this).attr("stroke", "#0A4C95").attr("stroke-width", 2).raise();
+            d3.select(this)
+              .attr("stroke", "#0A4C95")
+              .attr("stroke-width", 2)
+              .raise();
             const fips = String(d.id).padStart(5, "0");
             const name = FIPS_TO_COUNTY[fips] || "Unknown";
             const val = dataRef.current[name];
@@ -131,7 +140,14 @@ export default function MichiganMap({
         // State border
         svg
           .append("path")
-          .datum(topojson.mesh(us, us.objects.states, (a: any, b: any) => String(a.id) === "26" || String(b.id) === "26"))
+          .datum(
+            topojson.mesh(
+              us,
+              us.objects.states,
+              (a: any, b: any) =>
+                String(a.id) === "26" || String(b.id) === "26",
+            ),
+          )
           .attr("fill", "none")
           .attr("stroke", "#0A4C95")
           .attr("stroke-width", 1.5)
@@ -144,12 +160,25 @@ export default function MichiganMap({
         setError(true);
         setLoading(false);
       });
-  }, [colorScale, height, metric, unit, navigate, onCountyClick, onCountyHover]);
+  }, [
+    colorScale,
+    height,
+    metric,
+    unit,
+    navigate,
+    onCountyClick,
+    onCountyHover,
+  ]);
 
   if (error) {
     return (
-      <div className={`flex items-center justify-center bg-muted/30 rounded-xl ${className}`} style={{ height }}>
-        <p className="text-xs text-muted-foreground">Map unavailable - showing data in table view</p>
+      <div
+        className={`flex items-center justify-center bg-muted/30 rounded-xl ${className}`}
+        style={{ height }}
+      >
+        <p className="text-xs text-muted-foreground">
+          Map unavailable - showing data in table view
+        </p>
       </div>
     );
   }
@@ -166,7 +195,12 @@ export default function MichiganMap({
           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
         </div>
       )}
-      <svg ref={svgRef} width="100%" height={height} className="overflow-visible" />
+      <svg
+        ref={svgRef}
+        width="100%"
+        height={height}
+        className="overflow-visible"
+      />
       <div
         ref={tooltipRef}
         className="absolute hidden pointer-events-none z-50 rounded-lg bg-popover border border-border shadow-lg px-3 py-1.5 text-xs"

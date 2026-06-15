@@ -7,7 +7,10 @@ import type {
   MaternalInfantHealth,
   EjScreen,
   CompoundAccessIndex,
+  MetricValue,
 } from "@/types/data-layers";
+
+export type { MetricValue };
 
 // These tables exist in the database but are not yet reflected in the
 // auto-generated Supabase types. We cast through `unknown` so the runtime
@@ -18,46 +21,73 @@ const sb = supabase as unknown as {
   };
 };
 
-export async function getFoodDesertsByCounty(county: string): Promise<FoodAccessTract[]> {
+export async function getFoodDesertsByCounty(
+  county: string,
+): Promise<FoodAccessTract[]> {
   const { data, error } = await sb
     .from("food_access_tracts")
     .select("*")
     .ilike("county", county)
     .order("food_desert_flag", { ascending: false });
-  if (error) { console.warn("getFoodDesertsByCounty:", error.message); return []; }
+  if (error) {
+    console.warn("getFoodDesertsByCounty:", error.message);
+    return [];
+  }
   return (data || []) as FoodAccessTract[];
 }
 
-export async function getSnapRetailers(county?: string, limit = 200): Promise<SnapRetailer[]> {
+export async function getSnapRetailers(
+  county?: string,
+  limit = 200,
+): Promise<SnapRetailer[]> {
   let query = sb.from("snap_retailers").select("*").limit(limit);
   if (county) query = query.ilike("county", county);
   const { data, error } = await query;
-  if (error) { console.warn("getSnapRetailers:", error.message); return []; }
+  if (error) {
+    console.warn("getSnapRetailers:", error.message);
+    return [];
+  }
   return (data || []) as SnapRetailer[];
 }
 
-export async function getBroadbandByCounty(county: string): Promise<BroadbandAccess[]> {
+export async function getBroadbandByCounty(
+  county: string,
+): Promise<BroadbandAccess[]> {
   const { data, error } = await sb
     .from("broadband_access")
     .select("*")
     .ilike("county", county);
-  if (error) { console.warn("getBroadbandByCounty:", error.message); return []; }
+  if (error) {
+    console.warn("getBroadbandByCounty:", error.message);
+    return [];
+  }
   return (data || []) as BroadbandAccess[];
 }
 
-export async function getTransitStops(agency?: string, limit = 500): Promise<TransitStop[]> {
+export async function getTransitStops(
+  agency?: string,
+  limit = 500,
+): Promise<TransitStop[]> {
   let query = sb.from("transit_stops").select("*").limit(limit);
   if (agency) query = query.eq("agency", agency);
   const { data, error } = await query;
-  if (error) { console.warn("getTransitStops:", error.message); return []; }
+  if (error) {
+    console.warn("getTransitStops:", error.message);
+    return [];
+  }
   return (data || []) as TransitStop[];
 }
 
-export async function getMaternalHealth(county?: string): Promise<MaternalInfantHealth[]> {
+export async function getMaternalHealth(
+  county?: string,
+): Promise<MaternalInfantHealth[]> {
   let query = sb.from("maternal_infant_health").select("*");
   if (county) query = query.ilike("county", county);
   const { data, error } = await query.order("county");
-  if (error) { console.warn("getMaternalHealth:", error.message); return []; }
+  if (error) {
+    console.warn("getMaternalHealth:", error.message);
+    return [];
+  }
   return (data || []) as MaternalInfantHealth[];
 }
 
@@ -66,24 +96,54 @@ export async function getEjScreenByTract(tractId: string): Promise<EjScreen[]> {
     .from("ej_screen")
     .select("*")
     .eq("census_tract_id", tractId);
-  if (error) { console.warn("getEjScreenByTract:", error.message); return []; }
+  if (error) {
+    console.warn("getEjScreenByTract:", error.message);
+    return [];
+  }
   return (data || []) as EjScreen[];
 }
 
-export async function getCompoundIndex(county?: string): Promise<CompoundAccessIndex[]> {
+export async function getCompoundIndex(
+  county?: string,
+): Promise<CompoundAccessIndex[]> {
   let query = sb.from("compound_access_index").select("*");
   if (county) query = query.ilike("county", county);
-  const { data, error } = await query.order("compound_deficit_index", { ascending: false });
-  if (error) { console.warn("getCompoundIndex:", error.message); return []; }
+  const { data, error } = await query.order("compound_deficit_index", {
+    ascending: false,
+  });
+  if (error) {
+    console.warn("getCompoundIndex:", error.message);
+    return [];
+  }
   return (data || []) as CompoundAccessIndex[];
 }
 
-export async function getCompoundIndexByTier(tier: string): Promise<CompoundAccessIndex[]> {
+export async function getCompoundIndexByTier(
+  tier: string,
+): Promise<CompoundAccessIndex[]> {
   const { data, error } = await sb
     .from("compound_access_index")
     .select("*")
     .eq("deficit_tier", tier)
     .order("compound_deficit_index", { ascending: false });
-  if (error) { console.warn("getCompoundIndexByTier:", error.message); return []; }
+  if (error) {
+    console.warn("getCompoundIndexByTier:", error.message);
+    return [];
+  }
   return (data || []) as CompoundAccessIndex[];
+}
+
+// Returns MDHHS 2019-2023 five-year average infant mortality rates keyed by
+// county name. Values are null where MDHHS suppresses counts (< 6 events).
+// Returns an empty map until the maternal_infant_health table is seeded via
+// scripts/seed-maternal-health.ts with the verified MDHHS county CSV.
+export async function getInfantMortalityAtlas(): Promise<
+  Record<string, number | null>
+> {
+  const rows = await getMaternalHealth();
+  const lookup: Record<string, number | null> = {};
+  for (const r of rows) {
+    if (r.county) lookup[r.county] = r.infant_mortality_rate;
+  }
+  return lookup;
 }

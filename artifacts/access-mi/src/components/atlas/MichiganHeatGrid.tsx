@@ -6,7 +6,7 @@ import { computeCompoundDeficit } from "@/utils/compoundDeficit";
 
 interface CountyMetrics {
   county: string;
-  value: number;
+  value: number | null;
   population: number;
 }
 
@@ -16,69 +16,70 @@ interface Props {
   selectedCounty: string | null;
 }
 
+// Guard 3: all cases without a verified source return null.
+// null renders as gray cell with "N/A" - no proxy values used.
+// Per-layer status tracked in scripts/atlas-provenance-status.json.
 function getLayerData(layer: AtlasLayer): CountyMetrics[] {
   const counties = Object.entries(COUNTY_PROFILES);
   return counties
     .map(([name, profile]) => {
       const h = profile.healthHighlights;
-      let value = 0;
+      let value: number | null = null;
 
       switch (layer) {
         case "uninsured":
+          // ACS via County Health Rankings 2025 - all 83 counties
           value = parseFloat(h[0]?.value || "0");
           break;
         case "poverty":
-          value = parseFloat(h[2]?.value || "0");
+          // Guard 3: food insecurity (h[2]) != ACS poverty rate; pending ACS ingestion
+          value = null;
           break;
         case "compound":
-          // Use the shared CADI formula so this grid agrees with the map and the ranking table.
           value = computeCompoundDeficit(profile).compound;
           break;
         case "food_desert":
-          value = parseFloat(h[2]?.value || "0"); // proxy with food insecurity
+          // Guard 3: food insecurity != food desert tracts; pending USDA tract ingestion
+          value = null;
           break;
         case "energy_burden":
-          // proxy: rural counties tend to have higher burden
-          value =
-            profile.countyType === "rural"
-              ? 8.5
-              : profile.countyType === "suburban"
-                ? 5.2
-                : 6.8;
+          // Guard 3: proxy removed; partial ACEEE data (7/83) not wired to mobile grid
+          value = null;
           break;
         case "infant_mortality":
-          // use known state rate as proxy, adjusted by county type
-          value =
-            profile.countyType === "urban"
-              ? 7.2
-              : profile.countyType === "rural"
-                ? 6.8
-                : 5.4;
+          // Guard 3: data unavailable until MDHHS 2019-2023 CSV seeded
+          value = null;
           break;
         case "broadband":
-          value =
-            profile.countyType === "rural"
-              ? 28
-              : profile.countyType === "suburban"
-                ? 8
-                : 5;
+          // Guard 3: proxy removed; partial FCC data (10/83) not wired to mobile grid
+          value = null;
           break;
         case "ej_index":
-          value =
-            profile.countyType === "urban"
-              ? 65
-              : profile.countyType === "rural"
-                ? 35
-                : 45;
+          // Guard 3: FEMA NRI compositeRisk != EPA EJScreen index (source mismatch)
+          value = null;
+          break;
+        case "alice":
+          // Guard 3: proxy removed; partial ALICE data (7/83) not wired to mobile grid
+          value = null;
+          break;
+        case "pharmacy":
+          // Guard 3: no verified county-level source exists
+          value = null;
           break;
       }
 
       return { county: name, value, population: profile.population };
     })
-    .sort((a, b) => b.value - a.value);
+    .sort((a, b) => {
+      if (a.value === null && b.value === null) return 0;
+      if (a.value === null) return 1;
+      if (b.value === null) return -1;
+      return b.value - a.value;
+    });
 }
 
-function cellColor(value: number, max: number): string {
+function cellColor(value: number | null, max: number): string {
+  if (value === null) return "bg-muted";
   const ratio = max > 0 ? value / max : 0;
   if (ratio > 0.75) return "bg-red-600";
   if (ratio > 0.5) return "bg-orange-500";
@@ -86,7 +87,8 @@ function cellColor(value: number, max: number): string {
   return "bg-green-600";
 }
 
-function cellTextColor(value: number, max: number): string {
+function cellTextColor(value: number | null, max: number): string {
+  if (value === null) return "text-muted-foreground";
   const ratio = max > 0 ? value / max : 0;
   return ratio > 0.25 && ratio <= 0.5 ? "text-black" : "text-white";
 }
@@ -97,7 +99,7 @@ export default function MichiganHeatGrid({
   selectedCounty,
 }: Props) {
   const data = useMemo(() => getLayerData(layer), [layer]);
-  const max = data.length > 0 ? data[0].value : 1;
+  const max = data.find((d) => d.value !== null)?.value ?? 1;
 
   return (
     <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-1">
@@ -113,14 +115,14 @@ export default function MichiganHeatGrid({
             ${cellColor(d.value, max)} ${cellTextColor(d.value, max)}
             ${selectedCounty === d.county ? "ring-2 ring-primary ring-offset-2 ring-offset-background scale-110 z-10" : "hover:scale-105"}
           `}
-          title={`${d.county}: ${d.value.toFixed(1)}`}
-          aria-label={`${d.county} County: ${d.value.toFixed(1)}`}
+          title={`${d.county}: ${d.value !== null ? d.value.toFixed(1) : "Data unavailable"}`}
+          aria-label={`${d.county} County: ${d.value !== null ? d.value.toFixed(1) : "Data unavailable"}`}
         >
           <span className="text-[7px] font-bold leading-none text-center truncate w-full px-0.5">
             {d.county.length > 6 ? d.county.substring(0, 5) + "…" : d.county}
           </span>
           <span className="text-[8px] font-mono leading-none mt-0.5">
-            {d.value.toFixed(1)}
+            {d.value !== null ? d.value.toFixed(1) : "N/A"}
           </span>
         </motion.button>
       ))}

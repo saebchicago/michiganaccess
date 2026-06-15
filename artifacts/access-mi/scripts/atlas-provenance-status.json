@@ -1,0 +1,143 @@
+{
+  "_comment": "Per-layer provenance status for the Health Equity Atlas. Layers with status=pending_data show 'data unavailable' via Guard 3. Each entry tracks the declared source, current data coverage, and the remediation PR scope. Update when a layer is wired to a real source.",
+  "layers": [
+    {
+      "key": "compound",
+      "label": "Compound Access Deficit",
+      "status": "verified",
+      "declared_source": "Access Michigan Index",
+      "actual_source": "Access Michigan Index formula - derived from verified inputs (CHR, USDA, FCC)",
+      "coverage": "83/83 counties",
+      "remediation_pr": null
+    },
+    {
+      "key": "uninsured",
+      "label": "Uninsured Rate",
+      "status": "verified",
+      "declared_source": "ACS",
+      "actual_source": "County Health Rankings 2025 (ACS-derived uninsured rate) via michigan-county-profiles.ts:h[0]",
+      "coverage": "83/83 counties",
+      "remediation_pr": null
+    },
+    {
+      "key": "infant_mortality",
+      "label": "Infant Mortality Rate",
+      "status": "pending_seed",
+      "declared_source": "MDHHS",
+      "actual_source": "MDHHS Division for Vital Records and Health Statistics, 2019-2023 five-year average",
+      "coverage": "0/83 until maternal_infant_health Supabase table seeded via seed-maternal-health.ts",
+      "guard": 3,
+      "suppression_policy": "Counties with fewer than 6 events render null per MDHHS policy",
+      "vintage": "2019-2023",
+      "ci_fields": "infant_mortality_rate_ci_lower, infant_mortality_rate_ci_upper (pending schema migration)",
+      "remediation_pr": "this PR - wiring complete, awaiting CSV seed",
+      "files": [
+        "src/pages/HealthEquityAtlasPage.tsx:152-157",
+        "src/components/atlas/MichiganHeatGrid.tsx:49-51",
+        "src/lib/data-layers.ts:getInfantMortalityAtlas"
+      ]
+    },
+    {
+      "key": "food_desert",
+      "label": "Food Desert Tracts",
+      "status": "pending_data",
+      "declared_source": "USDA",
+      "actual_source": "USDA Food Access Research Atlas 2019 via useFoodAccess.ts (lowAccessPct)",
+      "coverage": "7/83 counties with real USDA data; 76/83 null (Guard 3)",
+      "issue": "Metric rendered is low-access % not food desert tract count. Label mismatch.",
+      "guard": 3,
+      "remediation_pr": "separate - wire USDA tract-level data for all 83 counties; fix metric label",
+      "files": [
+        "src/pages/HealthEquityAtlasPage.tsx:134-137",
+        "src/components/atlas/MichiganHeatGrid.tsx:37-40"
+      ]
+    },
+    {
+      "key": "poverty",
+      "label": "Poverty Rate",
+      "status": "pending_data",
+      "declared_source": "ACS",
+      "actual_source": "None - h[2] is food insecurity rate not ACS poverty; same data as food_desert layer",
+      "coverage": "0/83 counties with correct ACS poverty data (Guard 3 on mobile; desktop also null now)",
+      "issue": "Metric and source both wrong. Poverty layer renders same data as food_desert.",
+      "guard": 3,
+      "remediation_pr": "separate - wire ACS B17001 poverty rate for all 83 counties",
+      "files": [
+        "src/pages/HealthEquityAtlasPage.tsx:134",
+        "src/components/atlas/MichiganHeatGrid.tsx:31-33"
+      ]
+    },
+    {
+      "key": "broadband",
+      "label": "Broadband % Unserved",
+      "status": "partial",
+      "declared_source": "FCC",
+      "actual_source": "FCC National Broadband Map 2024 via useBroadbandData.ts",
+      "coverage": "10/83 counties on desktop map; 0/83 on mobile (Guard 3)",
+      "guard": 3,
+      "remediation_pr": "separate - ingest FCC BDC 2024 for all 83 counties; wire to mobile grid",
+      "files": [
+        "src/pages/HealthEquityAtlasPage.tsx:160-163",
+        "src/components/atlas/MichiganHeatGrid.tsx:53-55"
+      ]
+    },
+    {
+      "key": "energy_burden",
+      "label": "Energy Burden %",
+      "status": "partial",
+      "declared_source": "ACEEE/DOE",
+      "actual_source": "ACEEE LEAD Tool 2023 via environmentalData.ts",
+      "coverage": "7/83 counties on desktop map; 0/83 on mobile (Guard 3)",
+      "guard": 3,
+      "remediation_pr": "separate - ingest ACEEE LEAD 2023 for all 83 counties; wire to mobile grid",
+      "files": [
+        "src/pages/HealthEquityAtlasPage.tsx:142-145",
+        "src/components/atlas/MichiganHeatGrid.tsx:40-47"
+      ]
+    },
+    {
+      "key": "ej_index",
+      "label": "EJ Index (max)",
+      "status": "pending_data",
+      "declared_source": "EPA EJScreen",
+      "actual_source": "FEMA National Risk Index 2023 compositeRisk (WRONG SOURCE - not EPA EJScreen)",
+      "coverage": "7/83 counties with FEMA NRI data; all null (Guard 3) due to source mismatch",
+      "issue": "Source mismatch: FEMA NRI compositeRisk != EPA EJScreen percentile. Different metrics.",
+      "guard": 3,
+      "remediation_pr": "separate - ingest EPA EJScreen county-level percentiles; fix declared source",
+      "files": [
+        "src/pages/HealthEquityAtlasPage.tsx:167-170",
+        "src/components/atlas/MichiganHeatGrid.tsx:57-59"
+      ]
+    },
+    {
+      "key": "alice",
+      "label": "ALICE Rate (Below Threshold)",
+      "status": "partial",
+      "declared_source": "United For ALICE",
+      "actual_source": "United Way ALICE Report Michigan 2025 via aliceData.ts",
+      "coverage": "7/83 counties on desktop map; 0/83 on mobile (Guard 3 - case was missing from switch)",
+      "guard": 3,
+      "remediation_pr": "separate - ingest United For ALICE 2025 for all 83 counties; wire to mobile grid",
+      "files": [
+        "src/pages/HealthEquityAtlasPage.tsx:173-176",
+        "src/components/atlas/MichiganHeatGrid.tsx:61-63"
+      ]
+    },
+    {
+      "key": "pharmacy",
+      "label": "Pharmacy Access Risk",
+      "status": "pending_data",
+      "declared_source": "NCPDP 2024",
+      "actual_source": "None - was pure countyType proxy (rural 70 / suburban 30 / urban 10); no NCPDP data ingested",
+      "coverage": "0/83 counties (Guard 3)",
+      "issue": "No verified source wired. Proxy was fabricated categorical values.",
+      "guard": 3,
+      "remediation_pr": "separate - ingest NCPDP 2024 pharmacy desert data for all 83 counties",
+      "files": [
+        "src/pages/HealthEquityAtlasPage.tsx:178-180",
+        "src/components/atlas/MichiganHeatGrid.tsx:65-67"
+      ]
+    }
+  ]
+}
