@@ -31,7 +31,7 @@ export interface DataSource {
   shortTitle?: string; // used in the citation string, e.g. 'ACS 5-Year'
   datasetId?: string; // machine key, e.g. 'B27010'
   datasetLabel?: string; // display, e.g. 'Table B27010'
-  vintage: string; // '2023' or '2019-2023'
+  vintage: string; // '2023' or '2020-2024'
   url: string; // canonical link to the table or series
   license: License;
   accessedAt: string; // ISO date the data was pulled

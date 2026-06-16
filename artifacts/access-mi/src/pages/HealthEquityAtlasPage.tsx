@@ -62,7 +62,7 @@ function getCountyData(
     compound: computeCompoundDeficit(p).compound,
     // FCC BDC 2024: real value for 10/83 counties, undefined elsewhere
     broadband_unserved: broadbandLookup[county] as number | undefined,
-    // MDHHS: null until 2019-2023 five-year CSV seeded via seed-maternal-health.ts
+    // MDHHS: null until 2020-2024 five-year CSV seeded via seed-maternal-health.ts
     infant_mortality: imrLookup[county] ?? null,
     // ACEEE LEAD 2023: real value for 7/83 counties, undefined elsewhere
     energy_burden: energyLookup[county] as number | undefined,
@@ -76,7 +76,7 @@ export default function HealthEquityAtlasPage() {
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
   const isMobile = useIsMobile();
 
-  // MDHHS 2019-2023 infant mortality - loaded async from Supabase.
+  // MDHHS 2020-2024 infant mortality - loaded async from Supabase.
   // Empty until maternal_infant_health table is seeded; all counties show null.
   const [imrLookup, setImrLookup] = useState<Record<string, number | null>>({});
   useEffect(() => {
@@ -139,7 +139,7 @@ export default function HealthEquityAtlasPage() {
           result[name] = energyLookup[name] ?? null;
           break;
         case "infant_mortality":
-          // MDHHS Division for Vital Records 2019-2023 five-year average.
+          // MDHHS Division for Vital Records 2020-2024 five-year average.
           // null until maternal_infant_health Supabase table is seeded.
           // Suppressed counties (< 6 events) also null per MDHHS policy.
           result[name] = imrLookup[name] ?? null;
