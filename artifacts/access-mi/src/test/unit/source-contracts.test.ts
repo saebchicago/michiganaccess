@@ -251,13 +251,13 @@ describe("MetricValue type - structural contract", () => {
       ci_lower: 5.8,
       ci_upper: 6.9,
       source: "MDHHS Vital Stats",
-      vintage: "2019-2023",
+      vintage: "2020-2024",
       label: "VERIFIED",
     },
     {
       value: null,
       source: "MDHHS Vital Stats",
-      vintage: "2019-2023",
+      vintage: "2020-2024",
       label: "VERIFIED",
     },
     {
@@ -303,7 +303,7 @@ describe("MetricValue type - structural contract", () => {
     const suppressed: MetricValue = {
       value: null,
       source: "MDHHS Vital Stats",
-      vintage: "2019-2023",
+      vintage: "2020-2024",
       label: "VERIFIED",
     };
     expect(contract.allow_null).toBe(true);

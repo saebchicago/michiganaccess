@@ -45,7 +45,7 @@ describe("seed-maternal-health row builder", () => {
   it("sets data_years to CANONICAL_INFANT_MORTALITY_VINTAGE on every row", () => {
     const row = buildRow({ county: "Wayne", imr: "8.4" });
     expect(row.data_years).toBe(CANONICAL_INFANT_MORTALITY_VINTAGE);
-    expect(row.data_years).toBe("2019-2023");
+    expect(row.data_years).toBe("2020-2024");
   });
 
   it("maps a blank IMR to null (not 0)", () => {
@@ -73,7 +73,7 @@ describe("seed-maternal-health row builder", () => {
     expect(row.infant_mortality_rate).toBe(9.2);
   });
 
-  it("CANONICAL_INFANT_MORTALITY_VINTAGE is the literal '2019-2023'", () => {
-    expect(CANONICAL_INFANT_MORTALITY_VINTAGE).toBe("2019-2023");
+  it("CANONICAL_INFANT_MORTALITY_VINTAGE is the literal '2020-2024'", () => {
+    expect(CANONICAL_INFANT_MORTALITY_VINTAGE).toBe("2020-2024");
   });
 });

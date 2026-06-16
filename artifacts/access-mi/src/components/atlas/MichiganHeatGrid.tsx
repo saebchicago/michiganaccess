@@ -47,7 +47,7 @@ function getLayerData(layer: AtlasLayer): CountyMetrics[] {
           value = null;
           break;
         case "infant_mortality":
-          // Guard 3: data unavailable until MDHHS 2019-2023 CSV seeded
+          // Guard 3: data unavailable until MDHHS 2020-2024 CSV seeded
           value = null;
           break;
         case "broadband":

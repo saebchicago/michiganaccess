@@ -2,7 +2,7 @@
  * Unit tests for getInfantMortalityAtlas() vintage guard.
  *
  * The resolver must surface a rate only for rows where:
- *   - data_years === CANONICAL_INFANT_MORTALITY_VINTAGE ('2019-2023')
+ *   - data_years === CANONICAL_INFANT_MORTALITY_VINTAGE ('2020-2024')
  *   - infant_mortality_rate is non-null
  *
  * Any other row resolves to null (suppressed, wrong vintage, absent county).
@@ -43,8 +43,8 @@ function stubRows(rows: Partial<MaternalInfantHealth>[]) {
 }
 
 describe("CANONICAL_INFANT_MORTALITY_VINTAGE", () => {
-  it("is the literal string '2019-2023'", () => {
-    expect(CANONICAL_INFANT_MORTALITY_VINTAGE).toBe("2019-2023");
+  it("is the literal string '2020-2024'", () => {
+    expect(CANONICAL_INFANT_MORTALITY_VINTAGE).toBe("2020-2024");
   });
 });
 
@@ -56,7 +56,7 @@ describe("getInfantMortalityAtlas() vintage guard", () => {
   });
 
   it("surfaces a rate for a row at the canonical vintage with a non-null rate", async () => {
-    stubRows([makeRow("Wayne", "2019-2023", 8.4)]);
+    stubRows([makeRow("Wayne", "2020-2024", 8.4)]);
     const result = await getInfantMortalityAtlas();
     expect(result["Wayne"]).toBe(8.4);
   });
@@ -68,23 +68,23 @@ describe("getInfantMortalityAtlas() vintage guard", () => {
   });
 
   it("resolves null for a row at the canonical vintage with a null rate (MDHHS suppression)", async () => {
-    stubRows([makeRow("Keweenaw", "2019-2023", null)]);
+    stubRows([makeRow("Keweenaw", "2020-2024", null)]);
     const result = await getInfantMortalityAtlas();
     expect(result["Keweenaw"]).toBeUndefined();
   });
 
   it("resolves null for an absent county", async () => {
-    stubRows([makeRow("Wayne", "2019-2023", 8.4)]);
+    stubRows([makeRow("Wayne", "2020-2024", 8.4)]);
     const result = await getInfantMortalityAtlas();
     expect(result["Luce"]).toBeUndefined();
   });
 
   it("handles mixed rows - surfaces only canonical vintage with non-null rate", async () => {
     stubRows([
-      makeRow("Wayne", "2019-2023", 8.4), // surfaced
+      makeRow("Wayne", "2020-2024", 8.4), // surfaced
       makeRow("Genesee", "2023", 7.1), // wrong vintage - suppressed
-      makeRow("Keweenaw", "2019-2023", null), // null rate - suppressed
-      makeRow("Saginaw", "2019-2023", 9.2), // surfaced
+      makeRow("Keweenaw", "2020-2024", null), // null rate - suppressed
+      makeRow("Saginaw", "2020-2024", 9.2), // surfaced
       makeRow("Oakland", "2018-2022", 4.8), // wrong vintage - suppressed
     ]);
     const result = await getInfantMortalityAtlas();

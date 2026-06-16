@@ -134,13 +134,13 @@ export async function getCompoundIndexByTier(
 }
 
 // Canonical data_years value that the seed CSV must carry for the verified
-// MDHHS 2019-2023 five-year average dataset. The guard below matches on this
+// MDHHS 2020-2024 five-year average dataset. The guard below matches on this
 // exact string; rows with any other data_years resolve to null regardless of
 // their rate value. The seed script must set data_years = CANONICAL_INFANT_MORTALITY_VINTAGE
 // exactly or the guard will suppress every row.
-export const CANONICAL_INFANT_MORTALITY_VINTAGE = "2019-2023";
+export const CANONICAL_INFANT_MORTALITY_VINTAGE = "2020-2024";
 
-// Returns MDHHS 2019-2023 five-year average infant mortality rates keyed by
+// Returns MDHHS 2020-2024 five-year average infant mortality rates keyed by
 // county name. A county resolves to a number only when its row carries
 // data_years === CANONICAL_INFANT_MORTALITY_VINTAGE AND a non-null rate.
 // All other rows (wrong vintage, null rate, absent county) resolve to null,
