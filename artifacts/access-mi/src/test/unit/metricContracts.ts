@@ -12,7 +12,7 @@ export interface MetricContract {
 }
 
 export const METRIC_CONTRACTS: Record<string, MetricContract> = {
-  // ALICE combined hardship % — United Way ALICE Michigan 2025 (2023 data)
+  // ALICE combined hardship % - United Way ALICE Michigan 2025 (2023 data)
   // Ratified range: 20-65. MI county seed data spans 25.6-47.0 (statewide 41%).
   // Tightened from 10-80 per owner ratification 2026-06-15.
   alice_combined_hardship_pct: {
@@ -24,7 +24,7 @@ export const METRIC_CONTRACTS: Record<string, MetricContract> = {
     allow_null: false,
   },
 
-  // Energy burden (low-income) — ACEEE LEAD Tool 2023 / DOE
+  // Energy burden (low-income) - ACEEE LEAD Tool 2023 / DOE
   // Low-income households pay 3-17% of income on energy in MI
   energy_low_income_burden_pct: {
     name: "Low-income energy burden %",
@@ -35,7 +35,7 @@ export const METRIC_CONTRACTS: Record<string, MetricContract> = {
     allow_null: false,
   },
 
-  // Food access: low-access tract % — USDA FARA 2019
+  // Food access: low-access tract % - USDA FARA 2019
   // Ranges from ~5% (suburban) to 100% (fully rural)
   food_low_access_pct: {
     name: "Low-access census tract %",
@@ -46,7 +46,7 @@ export const METRIC_CONTRACTS: Record<string, MetricContract> = {
     allow_null: false,
   },
 
-  // Broadband: % locations covered at 25/3 Mbps — FCC BDC 2024
+  // Broadband: % locations covered at 25/3 Mbps - FCC BDC 2024
   // UP counties as low as ~38%; metro counties near 98%
   broadband_pct_25_3_covered: {
     name: "Broadband coverage at 25/3 Mbps %",
@@ -57,7 +57,7 @@ export const METRIC_CONTRACTS: Record<string, MetricContract> = {
     allow_null: false,
   },
 
-  // Infant mortality rate per 1,000 live births — MDHHS Vital Stats
+  // Infant mortality rate per 1,000 live births - MDHHS Vital Stats
   // Michigan statewide: ~6.3/1K; county range 2-25; suppressed when <6 events
   infant_mortality_per_1k: {
     name: "Infant mortality rate per 1,000 births",
@@ -68,7 +68,7 @@ export const METRIC_CONTRACTS: Record<string, MetricContract> = {
     allow_null: true,
   },
 
-  // NRI composite risk score — FEMA NRI 2023
+  // NRI composite risk score - FEMA NRI 2023
   // Scores are index values 0-100 (percentile within the US)
   fema_nri_composite_risk: {
     name: "FEMA NRI composite risk score",

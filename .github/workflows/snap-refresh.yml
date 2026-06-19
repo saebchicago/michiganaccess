@@ -1,0 +1,111 @@
+name: snap-refresh
+# Refreshes the Michigan SNAP county participation dataset
+# (src/data/snapCountyGenerated.json) from the USDA FNS-388A release.
+#
+# The transform is fail-safe: it writes nothing unless all 83 counties parse and
+# validate, so a bad or unreachable upstream release degrades to the last good
+# data. When the upstream parse does not yet succeed, this workflow records a
+# warning instead of failing red - inspect the run log and adjust the parse
+# assumptions in scripts/build-snap-county-dataset.mjs.
+#
+# Manual run:
+#   gh workflow run snap-refresh.yml --ref main
+on:
+  schedule:
+    - cron: "0 12 1 * *"    # 1st of each month, 12:00 UTC
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Refresh SNAP county dataset (fail-safe)
+        id: refresh
+        run: |
+          if node artifacts/access-mi/scripts/build-snap-county-dataset.mjs; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::FNS-388A refresh produced no valid dataset; existing data left untouched. Verify parse assumptions in scripts/build-snap-county-dataset.mjs."
+          fi
+      - name: Check for drift
+        id: drift
+        if: steps.refresh.outputs.ok == 'true'
+        run: |
+          if git diff --quiet artifacts/access-mi/src/data/snapCountyGenerated.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No SNAP county drift - skipping PR."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run full gate on updated data
+        if: steps.drift.outputs.changed == 'true'
+        working-directory: artifacts/access-mi
+        run: pnpm build && pnpm check:tests
+      - name: Capture diff summary
+        if: steps.drift.outputs.changed == 'true'
+        id: summary
+        run: |
+          node - <<'EOF'
+          const fs = require("fs");
+          const cp = require("child_process");
+          const path = "artifacts/access-mi/src/data/snapCountyGenerated.json";
+          const before = JSON.parse(cp.execSync(`git show HEAD:${path}`).toString());
+          const after = JSON.parse(fs.readFileSync(path, "utf8"));
+          const wayneBefore = before.counties.find((c) => c.county === "Wayne") || {};
+          const wayneAfter = after.counties.find((c) => c.county === "Wayne") || {};
+          const out = process.env.GITHUB_OUTPUT;
+          const append = (k, v) => fs.appendFileSync(out, `${k}=${v}\n`);
+          append("old_vintage", before.provenance.vintage);
+          append("new_vintage", after.provenance.vintage);
+          append("old_wayne", wayneBefore.enrollmentTotal);
+          append("new_wayne", wayneAfter.enrollmentTotal);
+          append("new_date", after.provenance.fetched_at);
+          EOF
+      - name: Create PR
+        if: steps.drift.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OLD_VINTAGE: ${{ steps.summary.outputs.old_vintage }}
+          NEW_VINTAGE: ${{ steps.summary.outputs.new_vintage }}
+          OLD_WAYNE: ${{ steps.summary.outputs.old_wayne }}
+          NEW_WAYNE: ${{ steps.summary.outputs.new_wayne }}
+          NEW_DATE: ${{ steps.summary.outputs.new_date }}
+        run: |
+          BRANCH="data/snap-refresh-$(date -u +%Y%m%d-%H%M)"
+          git config user.name "snap-refresh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add artifacts/access-mi/src/data/snapCountyGenerated.json
+          git commit -m "data: SNAP county dataset refresh $(date -u +%Y-%m-%d)"
+          git push origin "$BRANCH"
+          {
+            echo "## SNAP County Dataset Drift Detected"
+            echo ""
+            echo "| Metric | Previous | New |"
+            echo "|--------|----------|-----|"
+            echo "| Vintage | $OLD_VINTAGE | $NEW_VINTAGE |"
+            echo "| Wayne County participants | $OLD_WAYNE | $NEW_WAYNE |"
+            echo "| Fetched at (UTC) | - | $NEW_DATE |"
+            echo ""
+            echo "Source: USDA FNS-388A project-area / county participation release."
+            echo ""
+            echo "Full gate passed (check-snap-county-dataset + the rest of the build chain, vite build, prerender, vitest)."
+          } > /tmp/pr-body.md
+          gh pr create \
+            --title "data: SNAP county dataset refresh $(date -u +%Y-%m-%d)" \
+            --body-file /tmp/pr-body.md
