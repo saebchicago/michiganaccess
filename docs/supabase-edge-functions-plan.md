@@ -166,6 +166,17 @@ across the app boundary.
 
 ### 2.2 `snap-coverage-at-risk`  (Feature 2 - projected/modeled)
 
+> **Status (2026-06-19): effectively satisfied - no separate function needed.**
+> Feature 1 (`usda-snap-county`) was built as a scheduled ingest script that
+> commits `snapCountyGenerated.json`, and `SNAP_COUNTY_FALLBACK` now flows from
+> that file. `snapCoverageAtRiskFallback.ts` imports `SNAP_COUNTY_FALLBACK` and
+> recomputes the MLPP/GAO projection at module load, so it **auto-derives from
+> the refreshed county baseline** every build - which is exactly what an edge
+> function here would do ("re-run the same arithmetic on fresher county shares").
+> A dedicated `snap-coverage-at-risk` edge function would be redundant under this
+> architecture. Build one only if you need the projection to update *between*
+> data refreshes without a redeploy.
+
 - **Hook:** `artifacts/access-mi/src/hooks/useSnapCoverageAtRisk.ts` (TODO line 13). Note: this hook has **no** `initialData` (only `staleTime`), unlike the medicaid/dual hooks.
 - **Fallback:** `artifacts/access-mi/src/data/snapCoverageAtRiskFallback.ts`.
 - **Return interface** (`SnapCoverageRangeEntry`, fallback lines 25-36): `county, fips, currentSnapEnrollment, currentSnapAsOf, projectedAffectedLow, projectedAffectedHigh, projectionSourceName, methodologyUrl, projectionAsOf, caveat` -> array.

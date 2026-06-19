@@ -455,7 +455,27 @@ async function main() {
   );
 }
 
-main().catch((err) => {
-  console.error("[build-snap-county] failed:", err.message);
-  process.exit(1);
-});
+// Pure helpers are exported so they can be unit-tested without running the
+// CLI (which fetches the network). See src/test/unit/snap-county-parser.test.ts.
+export {
+  MI_COUNTY_FIPS,
+  normCountyKey,
+  canonicalCounty,
+  isMichigan,
+  parseCount,
+  detectVintage,
+  unzip,
+  parseSharedStrings,
+  colToIndex,
+  parseSheet,
+  readWorkbook,
+  extractMichigan,
+};
+
+// Only run the CLI when invoked directly (`node scripts/...`), not on import.
+if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
+  main().catch((err) => {
+    console.error("[build-snap-county] failed:", err.message);
+    process.exit(1);
+  });
+}

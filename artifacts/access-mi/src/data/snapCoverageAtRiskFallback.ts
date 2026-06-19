@@ -20,6 +20,11 @@
 //     (from snapMichiganFallback.ts - Feature 1 data layer)
 //   - Uncertainty multipliers: 0.60 (low), 1.40 (high) - GAO-19-56
 
+// SNAP_COUNTY_FALLBACK is sourced from snapCountyGenerated.json (refreshed by
+// scripts/build-snap-county-dataset.mjs). Because the projection below is
+// recomputed from it at module load, this feature auto-derives from each county
+// data refresh - no separate snap-coverage-at-risk edge function is needed.
+// See docs/supabase-edge-functions-plan.md section 2.2.
 import { SNAP_COUNTY_FALLBACK } from "./snapMichiganFallback";
 
 export interface SnapCoverageRangeEntry {
