@@ -155,3 +155,43 @@ the false ESC copy requires an explicit named exception in a future sprint promp
 - AI privacy claims (no conversation logging, no PHI storage after response): these
   are server-side behavioral claims that cannot be verified from client code alone.
   Verification requires Supabase/Netlify function review.
+
+---
+
+## Dependency security remediation (2026-06-18)
+
+Resolved the advisories reported by `pnpm audit` that reach a deployed or
+test/codegen surface. Fixes are pinned as `overrides` in `pnpm-workspace.yaml`
+(canonical, used by CI `pnpm install --frozen-lockfile`) and mirrored into the
+root `package.json` `overrides` block for the bun lockfile.
+
+| Package | Was | Now | Advisory | Surface |
+|---|---|---|---|---|
+| `dompurify` (via `jspdf`) | 3.4.3 | >=3.4.11 | GHSA-76mc-f452-cxcm + related XSS | access-mi PDF export (production) |
+| `qs` (via `express` 5) | 6.15.1 | >=6.15.2 | GHSA-q8mj-m7cp-5q26 (stringify DoS) | api-server (production) |
+| `vite` (catalog) | ^7.3.2 (7.3.3) | ^7.3.5 | `server.fs.deny` bypass + launch-editor NTLM leak | access-mi dev server |
+| `ws` (jsdom, @mistralai SDK, expo) | 8.20.1 / 7.5.10 / 6.2.3 | 8.21.0 / 7.5.11 / 6.2.4 | GHSA-96hv-2xvq-fx4p (memory DoS) | test env + access-mi + mobile toolchain |
+| `markdown-it` (via `orval`>`typedoc`) | <14.2.0 | >=14.2.0 | quadratic-complexity DoS | lib/api-spec codegen (dev) |
+
+The `ws` override uses same-major version-range selectors with EXACT-version
+replacements (`ws@>=8.0.0 <8.21.0` -> `8.21.0`, `ws@>=7.0.0 <7.5.11` -> `7.5.11`,
+`ws@>=6.0.0 <6.2.4` -> `6.2.4`) so each consumer keeps an API-compatible patch
+release. An open-ended `>=x` replacement would let pnpm collapse the
+expo/react-native ws@6/7 consumers up to ws@8 and risk breaking the mobile
+toolchain, so exact pins are required. Result: all `high`-severity findings
+cleared; production web app, the express runtime, the vitest environment, and
+the api-spec codegen are clean.
+
+Verified after the bumps: `pnpm install --frozen-lockfile` (CI parity),
+`pnpm typecheck` (workspace), `pnpm check:tests` (674 passed), api-server
+`pnpm build`, and the full access-mi `pnpm build` with all data-integrity guards.
+
+### Deferred (dev-only, non-deployed)
+
+The remaining `pnpm audit` findings are all inside the `access-mi-mobile` Expo
+toolchain (`@babel/core`, and `@expo/cli`'s transitive `postcss` / `js-yaml` /
+`uuid` / `tar`) and `api-server`'s build-time `esbuild` (pinned at 0.27.3 by a
+deliberate workspace override). Each needs a major-version bump of an
+expo-/build-pinned transitive dependency that would risk breaking those
+toolchains; none reach the deployed web bundle or the running server, so they
+are tracked here rather than force-overridden.

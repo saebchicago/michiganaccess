@@ -29,7 +29,7 @@ minimumReleaseAge: 1440
 
 minimumReleaseAgeExclude:
   # Exclude @replit scoped packages from the minimum release age check.
-  # These are published by Replit and trusted — the supply-chain attack vector
+  # These are published by Replit and trusted - the supply-chain attack vector
   # this setting guards against does not apply to our own packages.
   - '@replit/*'
   - stripe-replit-sync
@@ -62,7 +62,7 @@ catalog:
   tailwind-merge: ^3.3.1
   tailwindcss: ^4.1.14
   tsx: ^4.21.0
-  vite: ^7.3.2
+  vite: ^7.3.5
   wouter: ^3.3.5
   zod: ^3.25.76
 
@@ -162,3 +162,23 @@ overrides:
   "@esbuild-kit/esm-loader": "npm:tsx@^4.21.0"
   esbuild: "0.27.3"
   rollup: "4.59.1"
+  # CVE: dompurify <3.4.11 has multiple XSS/prototype-pollution advisories
+  # (GHSA-76mc-f452-cxcm and related). Pulled in transitively by jspdf for the
+  # access-mi PDF export path, so this is a production-facing fix.
+  dompurify: ">=3.4.11"
+  # CVE: qs 6.11.1-6.15.1 has a remotely triggerable DoS in qs.stringify
+  # (GHSA-q8mj-m7cp-5q26). Reaches the api-server via express 5.
+  "express>qs": ">=6.15.2"
+  # CVE: ws memory-exhaustion DoS (GHSA-96hv-2xvq-fx4p / GHSA-3h5v-q93c-6h6q).
+  # Bump every vulnerable ws to the nearest patched release within the SAME
+  # major so each consumer keeps its expected API: jsdom (test) + @mistralai
+  # SDK (access-mi) use 8.x; @expo/cli uses 7.x; react-native/metro uses 6.x.
+  # Exact pins (not open ranges) so a matched ws is bumped to the patched
+  # release of its OWN major - an unbounded ">=x" would let pnpm collapse the
+  # expo/react-native ws@6/7 consumers up to ws@8 and break the mobile toolchain.
+  "ws@>=8.0.0 <8.21.0": "8.21.0"
+  "ws@>=7.0.0 <7.5.11": "7.5.11"
+  "ws@>=6.0.0 <6.2.4": "6.2.4"
+  # CVE: markdown-it <14.2.0 quadratic-complexity DoS (GHSA in smartquotes).
+  # Dev-only: pulled in by orval>typedoc for API client codegen in lib/api-spec.
+  markdown-it: ">=14.2.0"
