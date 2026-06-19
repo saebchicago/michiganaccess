@@ -1,11 +1,15 @@
-// @ts-nocheck
 // src/components/investment/MoneyFlowSankey.tsx
 // Animated Sankey diagram showing federal money flow
 // Source: USASpending.gov FY2024
 
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { sankey as d3Sankey, sankeyLinkHorizontal } from "d3-sankey";
+import {
+  sankey as d3Sankey,
+  sankeyLinkHorizontal,
+  type SankeyNode,
+  type SankeyLink,
+} from "d3-sankey";
 
 interface NodeExtra {
   name: string;
@@ -14,6 +18,11 @@ interface NodeExtra {
 interface LinkExtra {
   value: number;
 }
+
+// Node/link types after the layout has run carry the computed geometry
+// (x0/x1/y0/y1, width) and resolve link.source/target to node objects.
+type SNode = SankeyNode<NodeExtra, LinkExtra>;
+type SLink = SankeyLink<NodeExtra, LinkExtra>;
 
 interface SankeyData {
   nodes: NodeExtra[];
@@ -129,25 +138,25 @@ export default function MoneyFlowSankey() {
       links: SANKEY_DATA.links.map((d) => ({ ...d })),
     });
 
+    const linkPath = sankeyLinkHorizontal<NodeExtra, LinkExtra>();
+
     // Draw links
     const link = svg
       .append("g")
       .attr("fill", "none")
-      .selectAll("g")
+      .selectAll<SVGGElement, SLink>("g")
       .data(graph.links)
       .join("g")
       .style("mix-blend-mode", "multiply");
 
     link
       .append("path")
-      .attr("d", sankeyLinkHorizontal())
+      .attr("d", linkPath)
       .attr("stroke", (d) => {
-        const sourceNode = d.source as unknown as NodeExtra & { x0: number };
+        const sourceNode = d.source as SNode;
         return CATEGORY_COLORS[sourceNode.category] || "#94a3b8";
       })
-      .attr("stroke-width", (d) =>
-        Math.max(1, (d as unknown as { width: number }).width ?? 1),
-      )
+      .attr("stroke-width", (d) => Math.max(1, d.width ?? 1))
       .attr("opacity", 0.4)
       .on("mouseover", function () {
         d3.select(this).attr("opacity", 0.8);
@@ -157,31 +166,25 @@ export default function MoneyFlowSankey() {
       })
       .append("title")
       .text((d) => {
-        const s = d.source as unknown as NodeExtra;
-        const t = d.target as unknown as NodeExtra;
-        return `${s.name} → ${t.name}: $${((d.value as number) / 1000).toFixed(1)}B`;
+        const s = d.source as SNode;
+        const t = d.target as SNode;
+        return `${s.name} → ${t.name}: $${(d.value / 1000).toFixed(1)}B`;
       });
 
     // Draw nodes
-    const node = svg.append("g").selectAll("g").data(graph.nodes).join("g");
+    const node = svg
+      .append("g")
+      .selectAll<SVGGElement, SNode>("g")
+      .data(graph.nodes)
+      .join("g");
 
     node
       .append("rect")
-      .attr("x", (d) => (d as unknown as { x0: number }).x0 ?? 0)
-      .attr("y", (d) => (d as unknown as { y0: number }).y0 ?? 0)
-      .attr("height", (d) => {
-        const n = d as unknown as { y0: number; y1: number };
-        return (n.y1 ?? 0) - (n.y0 ?? 0);
-      })
-      .attr("width", (d) => {
-        const n = d as unknown as { x0: number; x1: number };
-        return (n.x1 ?? 0) - (n.x0 ?? 0);
-      })
-      .attr(
-        "fill",
-        (d) =>
-          CATEGORY_COLORS[(d as unknown as NodeExtra).category] || "#64748b",
-      )
+      .attr("x", (d) => d.x0 ?? 0)
+      .attr("y", (d) => d.y0 ?? 0)
+      .attr("height", (d) => (d.y1 ?? 0) - (d.y0 ?? 0))
+      .attr("width", (d) => (d.x1 ?? 0) - (d.x0 ?? 0))
+      .attr("fill", (d) => CATEGORY_COLORS[d.category] || "#64748b")
       .attr("rx", 3)
       .on("mouseover", function () {
         d3.select(this).attr("opacity", 0.8);
@@ -190,28 +193,21 @@ export default function MoneyFlowSankey() {
         d3.select(this).attr("opacity", 1);
       })
       .append("title")
-      .text((d) => (d as unknown as NodeExtra).name);
+      .text((d) => d.name);
 
     // Node labels
     node
       .append("text")
-      .attr("x", (d) => {
-        const n = d as unknown as { x0: number; x1: number };
-        return (n.x0 ?? 0) < width / 2 ? (n.x1 ?? 0) + 6 : (n.x0 ?? 0) - 6;
-      })
-      .attr("y", (d) => {
-        const n = d as unknown as { y0: number; y1: number };
-        return ((n.y1 ?? 0) + (n.y0 ?? 0)) / 2;
-      })
+      .attr("x", (d) =>
+        (d.x0 ?? 0) < width / 2 ? (d.x1 ?? 0) + 6 : (d.x0 ?? 0) - 6,
+      )
+      .attr("y", (d) => ((d.y1 ?? 0) + (d.y0 ?? 0)) / 2)
       .attr("dy", "0.35em")
-      .attr("text-anchor", (d) => {
-        const n = d as unknown as { x0: number };
-        return (n.x0 ?? 0) < width / 2 ? "start" : "end";
-      })
+      .attr("text-anchor", (d) => ((d.x0 ?? 0) < width / 2 ? "start" : "end"))
       .style("font-size", "10px")
       .style("font-family", "system-ui")
       .style("fill", "currentColor")
-      .text((d) => (d as unknown as NodeExtra).name);
+      .text((d) => d.name);
   }, []);
 
   return (
