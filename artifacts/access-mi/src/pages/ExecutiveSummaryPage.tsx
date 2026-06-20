@@ -116,7 +116,7 @@ const quadrants = [
         source: "15+ sources",
       },
       {
-        text: "Privacy-first: no accounts, no cookies",
+        text: "No accounts required; aggregated analytics only",
         source: "Privacy policy",
       },
       {
@@ -245,7 +245,7 @@ const ExecutiveSummaryPage = () => {
                   {[
                     "Quality-ranked (not pay-to-play)",
                     "Equity-adjusted scoring",
-                    "Privacy-first",
+                    "Aggregated analytics",
                     "No login required",
                   ].map((t) => (
                     <span key={t} className="flex items-center gap-1">

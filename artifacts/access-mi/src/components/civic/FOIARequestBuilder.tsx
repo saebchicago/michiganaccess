@@ -1,27 +1,68 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FileText, Copy, Mail, ExternalLink, CheckCircle2, Building2, Landmark, Globe, ChevronRight, Shield, AlertTriangle } from "lucide-react";
+import {
+  FileText,
+  Copy,
+  Mail,
+  ExternalLink,
+  CheckCircle2,
+  Building2,
+  Landmark,
+  Globe,
+  ChevronRight,
+  Shield,
+  AlertTriangle,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { toast } from "sonner";
 import { useCounty } from "@/contexts/CountyContext";
 
 const FOIA_LEVELS = [
-  { id: "municipal", label: "Municipal", icon: Building2, description: "City, township, or village records", law: "Michigan FOIA (MCL 15.231–15.246)" },
-  { id: "county", label: "County", icon: Landmark, description: "County government records", law: "Michigan FOIA (MCL 15.231–15.246)" },
-  { id: "federal", label: "Federal", icon: Globe, description: "Federal agency records", law: "Federal FOIA (5 U.S.C. § 552)" },
+  {
+    id: "municipal",
+    label: "Municipal",
+    icon: Building2,
+    description: "City, township, or village records",
+    law: "Michigan FOIA (MCL 15.231–15.246)",
+  },
+  {
+    id: "county",
+    label: "County",
+    icon: Landmark,
+    description: "County government records",
+    law: "Michigan FOIA (MCL 15.231–15.246)",
+  },
+  {
+    id: "federal",
+    label: "Federal",
+    icon: Globe,
+    description: "Federal agency records",
+    law: "Federal FOIA (5 U.S.C. § 552)",
+  },
 ] as const;
 
-type FoiaLevel = typeof FOIA_LEVELS[number]["id"];
+type FoiaLevel = (typeof FOIA_LEVELS)[number]["id"];
 
 const COMMON_REQUESTS = [
   { label: "Public meeting minutes", category: "Governance" },
@@ -34,7 +75,14 @@ const COMMON_REQUESTS = [
   { label: "Road maintenance records", category: "Infrastructure" },
 ];
 
-function generateMichiganFOIA(fields: { name: string; address: string; email: string; agency: string; records: string; dateRange: string }) {
+function generateMichiganFOIA(fields: {
+  name: string;
+  address: string;
+  email: string;
+  agency: string;
+  records: string;
+  dateRange: string;
+}) {
   return `${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
 
 ${fields.agency}
@@ -66,7 +114,14 @@ ${fields.address}
 ${fields.email}`;
 }
 
-function generateFederalFOIA(fields: { name: string; address: string; email: string; agency: string; records: string; dateRange: string }) {
+function generateFederalFOIA(fields: {
+  name: string;
+  address: string;
+  email: string;
+  agency: string;
+  records: string;
+  dateRange: string;
+}) {
   return `${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
 
 ${fields.agency}
@@ -108,12 +163,17 @@ export default function FOIARequestBuilder() {
 
   const handleGenerate = () => {
     if (!name.trim() || !records.trim()) {
-      toast.error("Please fill in your name and the records you're requesting.");
+      toast.error(
+        "Please fill in your name and the records you're requesting.",
+      );
       return;
     }
 
     const fields = { name, address, email, agency, records, dateRange };
-    const letter = level === "federal" ? generateFederalFOIA(fields) : generateMichiganFOIA(fields);
+    const letter =
+      level === "federal"
+        ? generateFederalFOIA(fields)
+        : generateMichiganFOIA(fields);
     setGenerated(letter);
     toast.success("FOIA request letter generated!");
   };
@@ -126,7 +186,7 @@ export default function FOIARequestBuilder() {
   };
 
   const handleQuickFill = (label: string) => {
-    setRecords((prev) => prev ? `${prev}\n- ${label}` : `- ${label}`);
+    setRecords((prev) => (prev ? `${prev}\n- ${label}` : `- ${label}`));
   };
 
   return (
@@ -137,11 +197,17 @@ export default function FOIARequestBuilder() {
           FOIA Request Builder
         </CardTitle>
         <p className="text-sm text-muted-foreground">
-          Generate professional public records requests for Michigan municipal, county, or federal agencies.
-          Based on the{" "}
-          <a href="https://www.michigan.gov/ag/about/foia" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80">
+          Generate professional public records requests for Michigan municipal,
+          county, or federal agencies. Based on the{" "}
+          <a
+            href="https://www.michigan.gov/ag/about/foia"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-primary hover:text-primary/80"
+          >
             Michigan Attorney General's FOIA Handbook
-          </a>.
+          </a>
+          .
         </p>
       </CardHeader>
       <CardContent className="pt-4 space-y-5">
@@ -158,8 +224,12 @@ export default function FOIARequestBuilder() {
           {FOIA_LEVELS.map((l) => (
             <TabsContent key={l.id} value={l.id}>
               <div className="flex items-center gap-2 mt-2">
-                <Badge variant="outline" className="text-[10px]">{l.law}</Badge>
-                <span className="text-xs text-muted-foreground">{l.description}</span>
+                <Badge variant="outline" className="text-[10px]">
+                  {l.law}
+                </Badge>
+                <span className="text-xs text-muted-foreground">
+                  {l.description}
+                </span>
               </div>
             </TabsContent>
           ))}
@@ -167,7 +237,9 @@ export default function FOIARequestBuilder() {
 
         {/* Quick fill */}
         <div>
-          <Label className="text-xs font-medium text-muted-foreground mb-2 block">Quick-fill common requests:</Label>
+          <Label className="text-xs font-medium text-muted-foreground mb-2 block">
+            Quick-fill common requests:
+          </Label>
           <div className="flex flex-wrap gap-1.5">
             {COMMON_REQUESTS.map((cr) => (
               <Button
@@ -189,25 +261,60 @@ export default function FOIARequestBuilder() {
         {/* Form */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label htmlFor="foia-name" className="text-xs">Your Full Name *</Label>
-            <Input id="foia-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Doe" />
+            <Label htmlFor="foia-name" className="text-xs">
+              Your Full Name *
+            </Label>
+            <Input
+              id="foia-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Jane Doe"
+            />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="foia-email" className="text-xs">Email Address</Label>
-            <Input id="foia-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="jane@example.com" />
+            <Label htmlFor="foia-email" className="text-xs">
+              Email Address
+            </Label>
+            <Input
+              id="foia-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="jane@example.com"
+            />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="foia-address" className="text-xs">Mailing Address</Label>
-            <Input id="foia-address" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Main St, City, MI 48XXX" />
+            <Label htmlFor="foia-address" className="text-xs">
+              Mailing Address
+            </Label>
+            <Input
+              id="foia-address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="123 Main St, City, MI 48XXX"
+            />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="foia-agency" className="text-xs">Agency / Department *</Label>
-            <Input id="foia-agency" value={agency} onChange={(e) => setAgency(e.target.value)} placeholder={level === "federal" ? "e.g., EPA Region 5" : `e.g., ${county || "Washtenaw"} County Clerk`} />
+            <Label htmlFor="foia-agency" className="text-xs">
+              Agency / Department *
+            </Label>
+            <Input
+              id="foia-agency"
+              value={agency}
+              onChange={(e) => setAgency(e.target.value)}
+              placeholder={
+                level === "federal"
+                  ? "e.g., EPA Region 5"
+                  : `e.g., ${county || "Washtenaw"} County Clerk`
+              }
+            />
           </div>
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="foia-records" className="text-xs">Records Requested *</Label>
+          <Label htmlFor="foia-records" className="text-xs">
+            Records Requested *
+          </Label>
           <Textarea
             id="foia-records"
             value={records}
@@ -218,35 +325,69 @@ export default function FOIARequestBuilder() {
         </div>
 
         <div className="space-y-1.5">
-          <Label htmlFor="foia-dates" className="text-xs">Date Range (optional)</Label>
-          <Input id="foia-dates" value={dateRange} onChange={(e) => setDateRange(e.target.value)} placeholder="e.g., January 2024 – December 2024" />
+          <Label htmlFor="foia-dates" className="text-xs">
+            Date Range (optional)
+          </Label>
+          <Input
+            id="foia-dates"
+            value={dateRange}
+            onChange={(e) => setDateRange(e.target.value)}
+            placeholder="e.g., January 2024 – December 2024"
+          />
         </div>
 
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <Shield className="h-3.5 w-3.5 flex-shrink-0" />
-          <span>100% browser-only · No data stored or transmitted · Privacy-first</span>
+          <span>
+            100% browser-only · Letter contents not stored or transmitted
+          </span>
         </div>
 
-        <Button onClick={handleGenerate} className="w-full bg-gradient-michigan hover:opacity-90 gap-1.5">
+        <Button
+          onClick={handleGenerate}
+          className="w-full bg-gradient-michigan hover:opacity-90 gap-1.5"
+        >
           <FileText className="h-4 w-4" />
           Generate FOIA Request Letter
         </Button>
 
         {/* Generated letter */}
         {generated && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-3"
+          >
             <Separator />
             <div className="rounded-lg border border-border bg-muted/30 p-4">
-              <pre className="whitespace-pre-wrap text-xs text-foreground font-mono leading-relaxed">{generated}</pre>
+              <pre className="whitespace-pre-wrap text-xs text-foreground font-mono leading-relaxed">
+                {generated}
+              </pre>
             </div>
             <div className="flex flex-wrap gap-2">
-              <Button onClick={handleCopy} variant="outline" size="sm" className="gap-1.5 text-xs">
-                {copied ? <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+              <Button
+                onClick={handleCopy}
+                variant="outline"
+                size="sm"
+                className="gap-1.5 text-xs"
+              >
+                {copied ? (
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5" />
+                )}
                 {copied ? "Copied!" : "Copy to Clipboard"}
               </Button>
               {email && (
-                <Button variant="outline" size="sm" className="gap-1.5 text-xs" asChild>
-                  <a href={`mailto:${agency}?subject=FOIA Request&body=${encodeURIComponent(generated)}`}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-1.5 text-xs"
+                  asChild
+                >
+                  <a
+                    href={`mailto:${agency}?subject=FOIA Request&body=${encodeURIComponent(generated)}`}
+                  >
                     <Mail className="h-3.5 w-3.5" />
                     Open in Email
                   </a>
@@ -255,7 +396,10 @@ export default function FOIARequestBuilder() {
             </div>
             <p className="text-xs text-muted-foreground mt-2">
               Did something about the FOIA tool not work as expected?{" "}
-              <Link to="/feedback?initial_category=suggestion" className="text-primary hover:underline">
+              <Link
+                to="/feedback?initial_category=suggestion"
+                className="text-primary hover:underline"
+              >
                 Let us know at /feedback
               </Link>
               .
@@ -273,19 +417,55 @@ export default function FOIARequestBuilder() {
               </span>
             </AccordionTrigger>
             <AccordionContent className="text-xs text-muted-foreground space-y-2">
-              <p><strong>Michigan FOIA response deadline:</strong> 5 business days (MCL 15.235). Agencies may extend by 10 days with written notice.</p>
-              <p><strong>Fee limits:</strong> Labor costs capped at the lowest-paid employee capable of retrieving records. First $20 for indigent requesters is free.</p>
-              <p><strong>Exemptions:</strong> 13 categories (MCL 15.243) including law enforcement investigations, trade secrets, and personal privacy.</p>
-              <p><strong>Appeals:</strong> You may appeal a denial to the agency head within 180 days, or file in Circuit Court.</p>
-              <p><strong>Federal FOIA:</strong> 20 business-day response deadline. Fee waivers available for public interest requests.</p>
+              <p>
+                <strong>Michigan FOIA response deadline:</strong> 5 business
+                days (MCL 15.235). Agencies may extend by 10 days with written
+                notice.
+              </p>
+              <p>
+                <strong>Fee limits:</strong> Labor costs capped at the
+                lowest-paid employee capable of retrieving records. First $20
+                for indigent requesters is free.
+              </p>
+              <p>
+                <strong>Exemptions:</strong> 13 categories (MCL 15.243)
+                including law enforcement investigations, trade secrets, and
+                personal privacy.
+              </p>
+              <p>
+                <strong>Appeals:</strong> You may appeal a denial to the agency
+                head within 180 days, or file in Circuit Court.
+              </p>
+              <p>
+                <strong>Federal FOIA:</strong> 20 business-day response
+                deadline. Fee waivers available for public interest requests.
+              </p>
               <div className="flex flex-wrap gap-2 pt-2">
-                <Button variant="outline" size="sm" className="text-[10px] h-6 gap-1" asChild>
-                  <a href="https://www.michigan.gov/ag/about/foia" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-[10px] h-6 gap-1"
+                  asChild
+                >
+                  <a
+                    href="https://www.michigan.gov/ag/about/foia"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <ExternalLink className="h-3 w-3" /> MI AG FOIA Guide
                   </a>
                 </Button>
-                <Button variant="outline" size="sm" className="text-[10px] h-6 gap-1" asChild>
-                  <a href="https://www.foia.gov/how-to.html" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-[10px] h-6 gap-1"
+                  asChild
+                >
+                  <a
+                    href="https://www.foia.gov/how-to.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <ExternalLink className="h-3 w-3" /> FOIA.gov Guide
                   </a>
                 </Button>
@@ -294,7 +474,12 @@ export default function FOIARequestBuilder() {
           </AccordionItem>
         </Accordion>
         <p className="text-[10px] text-muted-foreground mt-3 leading-relaxed">
-          This tool helps you draft a FOIA request based on Michigan's Freedom of Information Act (MCL 15.231–15.246) and the federal FOIA (5 U.S.C. § 552). Templates are provided for convenience - adapt them to your specific situation. Submitting a request does not guarantee records will be released; exemptions may apply. For legal advice, consult an attorney.
+          This tool helps you draft a FOIA request based on Michigan's Freedom
+          of Information Act (MCL 15.231–15.246) and the federal FOIA (5 U.S.C.
+          § 552). Templates are provided for convenience - adapt them to your
+          specific situation. Submitting a request does not guarantee records
+          will be released; exemptions may apply. For legal advice, consult an
+          attorney.
         </p>
       </CardContent>
     </Card>

@@ -8,17 +8,20 @@ const METRICS_FEATURES = [
   {
     icon: BarChart3,
     title: "Aggregated Usage Metrics",
-    description: "Page-level satisfaction rates, resource category utilization, and county-level engagement - fully anonymized.",
+    description:
+      "Page-level satisfaction rates, resource category utilization, and county-level engagement - fully anonymized.",
   },
   {
     icon: Shield,
-    title: "Privacy-First Design",
-    description: "No individual user tracking, no cookies, no PII. All metrics are aggregated at the page or county level.",
+    title: "Aggregated, Non-Identifying Design",
+    description:
+      "No individual user attribution. All metrics are aggregated at the page or county level.",
   },
   {
     icon: FileText,
     title: "CHNA-Ready Reports",
-    description: "Export feedback data in formats compatible with Community Health Needs Assessments and IRS Schedule H reporting.",
+    description:
+      "Export feedback data in formats compatible with Community Health Needs Assessments and IRS Schedule H reporting.",
   },
 ];
 
@@ -27,11 +30,15 @@ export default function MetricsAPI() {
     try {
       const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/feedback-export`;
       const resp = await fetch(url, {
-        headers: { Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}` },
+        headers: {
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
       });
       if (!resp.ok) throw new Error("Export failed");
       const data = await resp.json();
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json",
+      });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = `michigan-access-metrics-${new Date().toISOString().slice(0, 10)}.json`;
@@ -53,7 +60,9 @@ export default function MetricsAPI() {
           Share Impact Without Sharing Data
         </h2>
         <p className="mt-2 text-muted-foreground max-w-2xl mx-auto text-sm">
-          Access aggregated, non-identifiable platform metrics for community benefit reporting, grant applications, and population health benchmarking.
+          Access aggregated, non-identifiable platform metrics for community
+          benefit reporting, grant applications, and population health
+          benchmarking.
         </p>
       </div>
 
@@ -79,7 +88,8 @@ export default function MetricsAPI() {
           Download Sample Metrics Report
         </Button>
         <p className="mt-2 text-xs text-muted-foreground">
-          JSON format · Aggregated satisfaction rates · No personal data included
+          JSON format · Aggregated satisfaction rates · No personal data
+          included
         </p>
       </div>
     </section>

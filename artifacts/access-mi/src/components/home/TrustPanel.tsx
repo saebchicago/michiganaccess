@@ -12,7 +12,7 @@ const cards = [
   {
     icon: UserX,
     title: "No account required",
-    description: "No personal data collected.",
+    description: "Aggregated analytics only; see Privacy Policy.",
   },
   {
     icon: Scale,

@@ -41,12 +41,11 @@ describe("Claims anchor guard  -  VERIFIED rows", () => {
     expect(src).toContain("chat-mistral");
   });
 
-  // V-4: GA removed from index.html  -  no gtag script tag
-  it("V-4: index.html does not contain active gtag script", () => {
+  // V-4: GA4 (G-367X8MQ1F6) loaded in index.html
+  it("V-4: index.html loads GA4 with the canonical measurement ID", () => {
     const src = read("index.html");
-    // The GA comment-out block is present; the actual gtag script is not
-    expect(src).not.toMatch(/<script[^>]*gtag[^>]*>/);
-    expect(src).not.toMatch(/googletagmanager\.com\/gtag\/js/);
+    expect(src).toMatch(/googletagmanager\.com\/gtag\/js\?id=G-367X8MQ1F6/);
+    expect(src).toContain('gtag("config", "G-367X8MQ1F6")');
   });
 
   // V-5: No ad network scripts in index.html

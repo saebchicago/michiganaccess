@@ -369,7 +369,7 @@ const PartnersPage = () => {
             <p className="mt-2 text-muted-foreground max-w-2xl mx-auto text-sm">
               Download anonymized, aggregated platform data formatted for IRS
               Schedule H reporting and CHNA documentation. No personal data is
-              ever collected or shared.
+              included in these exports.
             </p>
           </div>
           <div className="grid gap-4 md:grid-cols-3">

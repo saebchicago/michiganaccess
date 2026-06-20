@@ -138,7 +138,7 @@
     "independent": "Iniciativa Independiente y No Comercial",
     "dataFrom": "Datos de CMS, HRSA, CDC, Michigan DHHS",
     "noAds": "Sin Publicidad · Sin Venta de Datos",
-    "privacyFirst": "Sin Cookies · Sin Recolección de Datos Personales",
+    "privacyFirst": "Análisis Agregados · Sin Publicidad · Sin Venta de Datos",
     "builtToServe": "Creado para Servir a los Residentes de Michigan"
   },
   "footer": {
@@ -160,7 +160,7 @@
     "brandDescription": "Un recurso cívico independiente que organiza los servicios públicos de Michigan en una interfaz estructurada y accesible.",
     "independentBadge": "✓ Independiente · No Comercial",
     "dataSourcedFrom": "Datos obtenidos de",
-    "privacyStatement": "Sin cookies, sin rastreo, sin datos personales recopilados.",
+    "privacyStatement": "Análisis agregados vía Google Analytics 4 (cookies, IP). Sin publicidad, sin venta de datos. Ver Privacidad.",
     "dataAttribution": "Datos: CMS · HRSA · CDC · Michigan DHHS · Leapfrog"
   },
   "accessibility": {

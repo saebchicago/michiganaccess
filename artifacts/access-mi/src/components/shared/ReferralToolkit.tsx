@@ -184,7 +184,7 @@ export default function ReferralToolkit({
       <p class="url">${currentUrl.replace(/[?&].*/, "")}</p>
       <div class="footer">
         <p>Access Michigan - Independent, non-commercial civic resource</p>
-        <p>No personal data collected</p>
+        <p>Independent civic resource</p>
         <p>Printed ${new Date().toLocaleDateString()}</p>
       </div>
       </body></html>`);

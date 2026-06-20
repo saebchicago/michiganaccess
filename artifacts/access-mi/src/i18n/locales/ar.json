@@ -138,7 +138,7 @@
     "independent": "مبادرة مستقلة وغير تجارية",
     "dataFrom": "بيانات من CMS وHRSA وCDC وMichigan DHHS",
     "noAds": "بدون إعلانات · بدون بيع بيانات",
-    "privacyFirst": "بدون ملفات تعريف ارتباط · بدون جمع بيانات شخصية",
+    "privacyFirst": "تحليلات مجمعة · بدون إعلانات · بدون بيع بيانات",
     "builtToServe": "مصمم لخدمة سكان ميشيغان"
   },
   "footer": {
@@ -160,7 +160,7 @@
     "brandDescription": "مورد مدني مستقل ينظم الخدمات العامة في ميشيغان في واجهة منظمة وسهلة الوصول.",
     "independentBadge": "✓ مستقل · غير تجاري",
     "dataSourcedFrom": "البيانات مصدرها",
-    "privacyStatement": "بدون ملفات تعريف ارتباط، بدون تتبع، بدون جمع بيانات شخصية.",
+    "privacyStatement": "تحليلات مجمعة عبر Google Analytics 4 (ملفات تعريف ارتباط، عنوان IP). بدون إعلانات، بدون بيع بيانات. راجع سياسة الخصوصية.",
     "dataAttribution": "البيانات: CMS · HRSA · CDC · Michigan DHHS · Leapfrog"
   },
   "accessibility": {

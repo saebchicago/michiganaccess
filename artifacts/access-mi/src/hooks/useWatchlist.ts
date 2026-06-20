@@ -14,14 +14,16 @@ function load(): WatchlistItem[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
+  } catch {
+    return [];
+  }
 }
 
 function save(items: WatchlistItem[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
 }
 
-/** Privacy-first localStorage watchlist for starring resources/counties */
+/** localStorage-only watchlist for starring resources/counties */
 export function useWatchlist() {
   const [items, setItems] = useState<WatchlistItem[]>(load);
 
@@ -35,17 +37,20 @@ export function useWatchlist() {
   }, []);
 
   const toggle = useCallback((item: Omit<WatchlistItem, "addedAt">) => {
-    setItems(prev => {
-      const exists = prev.find(i => i.id === item.id);
+    setItems((prev) => {
+      const exists = prev.find((i) => i.id === item.id);
       const next = exists
-        ? prev.filter(i => i.id !== item.id)
+        ? prev.filter((i) => i.id !== item.id)
         : [...prev, { ...item, addedAt: Date.now() }];
       save(next);
       return next;
     });
   }, []);
 
-  const isStarred = useCallback((id: string) => items.some(i => i.id === id), [items]);
+  const isStarred = useCallback(
+    (id: string) => items.some((i) => i.id === id),
+    [items],
+  );
 
   const clear = useCallback(() => {
     setItems([]);

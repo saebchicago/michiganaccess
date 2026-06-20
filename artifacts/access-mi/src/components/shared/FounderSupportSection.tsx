@@ -29,7 +29,7 @@ export default function FounderSupportSection() {
         <div className="flex flex-wrap justify-center gap-5 text-xs text-muted-foreground mb-8">
           {[
             { icon: Shield, text: "Independent - not a government agency" },
-            { icon: Lock, text: "No personal data collected" },
+            { icon: Lock, text: "Aggregated analytics only" },
             { icon: Globe, text: "All 83 Michigan counties" },
           ].map((item) => (
             <span key={item.text} className="flex items-center gap-1.5">

@@ -67,8 +67,9 @@ export default function PrivacyPage() {
             animate="visible"
             className="mx-auto max-w-2xl text-lg text-muted-foreground"
           >
-            Access Michigan is designed to be useful without tracking you. This
-            policy explains what we collect, what we don't, and your rights.
+            Access Michigan uses minimal aggregated analytics to understand
+            usage. This policy explains what we collect, what we don't, and your
+            rights.
           </motion.p>
           <motion.p
             variants={fade}
@@ -124,12 +125,17 @@ export default function PrivacyPage() {
               identifying information.
             </li>
             <li>
-              <strong>No tracking cookies</strong> - We do not use cookies for
-              analytics, advertising, or behavioral profiling.
+              <strong>No advertising or profiling cookies</strong> - We use
+              Google Analytics 4 first-party cookies (_ga, _ga_*) only for
+              aggregate page-view measurement, described in Section 3b. We do
+              not use cookies for advertising, behavioral profiling, or
+              cross-site tracking.
             </li>
             <li>
               <strong>No attempt to identify individuals</strong> - We do not
               fingerprint browsers, track across sites, or build user profiles.
+              Google Signals and User-ID features are disabled in our GA4
+              configuration.
             </li>
             <li>
               <strong>No storage of Protected Health Information (PHI)</strong>{" "}
@@ -170,13 +176,27 @@ export default function PrivacyPage() {
           </p>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
-            3b. Aggregated Usage Analytics
+            3b. Google Analytics 4
           </h3>
           <p>
-            If analytics are enabled, we collect{" "}
-            <strong>aggregated, non-identifying</strong> page-view counts and
-            search terms to understand which resources are most useful. This
-            data cannot be traced to individual visitors.
+            We use <strong>Google Analytics 4</strong> (measurement ID{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+              G-367X8MQ1F6
+            </code>
+            ) to collect aggregated, non-identifying page-view counts, referring
+            URLs, and device/browser type to understand which resources are most
+            useful. GA4 sets first-party cookies (
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">_ga</code>,{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+              _ga_*
+            </code>
+            ) to distinguish unique sessions, and processes IP addresses
+            (truncated by Google before storage) to derive approximate
+            geographic region. We do not enable Google Signals, advertising
+            features, or User-ID identification, and this data is never used for
+            advertising or to identify individual visitors. You can opt out by
+            enabling Do Not Track, using a browser extension that blocks GA, or
+            installing the Google Analytics Opt-out Browser Add-on.
           </p>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">

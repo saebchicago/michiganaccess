@@ -84,7 +84,7 @@ const SystemsExplainer = forwardRef<HTMLElement>(
             transition={{ delay: 0.3, duration: 0.5 }}
             className="mt-6 text-center text-sm font-semibold text-muted-foreground"
           >
-            Nonpartisan · Independent · No personal data collected
+            Nonpartisan · Independent · Aggregated analytics only
           </motion.p>
 
           <motion.div

@@ -12,7 +12,7 @@ export default function PublicTrustBar() {
     },
     {
       icon: Lock,
-      label: "No personal data collected",
+      label: "Aggregated analytics only",
     },
     {
       icon: Globe,

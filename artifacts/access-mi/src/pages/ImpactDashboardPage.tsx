@@ -301,12 +301,16 @@ export default function ImpactDashboardPage() {
           <Info className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
           <p className="text-xs text-muted-foreground">
             Access Michigan is a nonpartisan, citizen-built open data gateway.
-            All platform statistics reflect current data. No personal data is
-            collected or stored. See{" "}
+            All platform statistics reflect current data. The site uses Google
+            Analytics 4 for aggregated usage measurement; see{" "}
+            <Link to="/privacy" className="text-primary hover:underline">
+              Privacy
+            </Link>{" "}
+            and{" "}
             <Link to="/about" className="text-primary hover:underline">
               About
-            </Link>{" "}
-            for project information.
+            </Link>
+            .
           </p>
         </div>
       </div>

@@ -4,7 +4,7 @@ export const PLATFORM_HEALTH = {
   openSource: { status: "green", label: "GitHub repository" },
   funding: { status: "amber", label: "Self-funded portfolio project" },
   conflicts: { status: "green", label: "Zero advertiser relationships" },
-  dataSold: { status: "green", label: "Never - no PII collected" },
+  dataSold: { status: "green", label: "Never sold or shared" },
   errorsReported: { status: "green", label: "0 open | 2 resolved this month" },
   lastAudit: "March 2026",
 };

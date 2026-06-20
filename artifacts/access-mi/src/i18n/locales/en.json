@@ -139,7 +139,7 @@
     "independent": "Independent, Non-Commercial Initiative",
     "dataFrom": "Data from CMS, HRSA, CDC, Michigan DHHS",
     "noAds": "No Advertising · No Data Selling",
-    "privacyFirst": "No Cookies · No Personal Data Collection",
+    "privacyFirst": "Aggregated Analytics · No Ads · No Data Selling",
     "builtToServe": "Built to Serve Michigan Residents"
   },
   "footer": {
@@ -147,7 +147,7 @@
     "envCivic": "Environment & Civic",
     "learnConnect": "Learn & Connect",
     "about": "About",
-    "disclaimer": "Independent. No cookies. No ads. No personal data collected.",
+    "disclaimer": "Independent. No ads. Aggregated analytics for usage measurement.",
     "noAds": "No advertising · No data selling",
     "prototype": "Open Civic Infrastructure",
     "ethicalNote": "Non-commercial. Public benefit over profit.",
@@ -161,7 +161,7 @@
     "brandDescription": "An independent civic resource organizing Michigan's public services into one structured, accessible interface.",
     "independentBadge": "✓ Independent · Non-Commercial",
     "dataSourcedFrom": "Data sourced from",
-    "privacyStatement": "No cookies, no tracking, no personal data collected.",
+    "privacyStatement": "Aggregated analytics via Google Analytics 4 (cookies, IP). No ads, no data selling. See Privacy.",
     "dataAttribution": "Data: CMS · HRSA · CDC · MDHHS · Leapfrog · EPA · NHTSA · EIA"
   },
   "accessibility": {

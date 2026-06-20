@@ -487,7 +487,7 @@ export default function CountyPage() {
                     )}
                     {bench && !hasNumericVal && (
                       <p className="text-[10px] text-muted-foreground">
-                        Comparison unavailable  -  no data reported.
+                        Comparison unavailable - no data reported.
                       </p>
                     )}
                     {isRatio && ratioSeverity && (
@@ -680,7 +680,11 @@ export default function CountyPage() {
                             </a>
                           )}
                           {f.website && (
-                            <a href={f.website} target="_blank" rel="noopener noreferrer">
+                            <a
+                              href={f.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               <Button
                                 size="sm"
                                 variant="outline"
@@ -1077,11 +1081,12 @@ export default function CountyPage() {
               · Data from CMS, HRSA, CDC, MDHHS
             </p>
             <p className="text-xs text-muted-foreground">
-              🔒 Access Michigan does not collect personal data. All information
-              shown is from public sources. No cookies or tracking.{" "}
-              <Link to="/accessibility" className="text-primary underline">
-                Learn more
+              🔒 All information shown is from public sources. Site uses Google
+              Analytics 4 for aggregate usage measurement; see{" "}
+              <Link to="/privacy" className="text-primary underline">
+                Privacy Policy
               </Link>
+              .
             </p>
           </CardContent>
         </Card>

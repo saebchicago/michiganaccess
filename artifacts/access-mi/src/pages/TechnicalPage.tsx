@@ -77,10 +77,10 @@ const archLayers = [
 ];
 
 const securityItems = [
-  { icon: Lock, text: "No PII/PHI collection (public data only)" },
+  { icon: Lock, text: "No PII/PHI in published datasets (public data only)" },
   { icon: Shield, text: "HTTPS everywhere, CSP headers" },
   { icon: Eye, text: "Public sector ready: 508 compliance, plain language" },
-  { icon: Globe, text: "Privacy-first, no user accounts" },
+  { icon: Globe, text: "No user accounts; aggregated analytics only" },
 ];
 
 const scalabilityMetrics = [
