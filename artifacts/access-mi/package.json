@@ -15,6 +15,7 @@
     "check:county-facilities": "node scripts/check-county-facilities.mjs",
     "check:trend-series": "node scripts/check-trend-series.mjs",
     "check:snap-county": "node scripts/check-snap-county-dataset.mjs",
+    "check:sheps-closures": "node scripts/check-sheps-closures.mjs",
     "check:tests": "vitest run",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit",

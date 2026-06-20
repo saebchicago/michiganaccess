@@ -249,10 +249,11 @@ across the app boundary.
 - **Upstream source:** Cecil G. Sheps Center Rural Hospital Closures - **Excel (.xlsx) download only, no API** (fallback lines 4-10). Secondary corroboration is human-curated news (Bridge MI, Becker's, etc.).
 - **API key needed:** **No** - but there is **no machine-readable feed**, so a scheduled JSON fetch is impossible.
 - **Model summary:** No proportional model. This is a curated, two-source-verified dataset. An edge function would have to (a) download the Sheps XLSX, (b) filter Michigan rows, (c) parse + geocode (lat/lon are hand-entered in the fallback), and (d) satisfy the two-source rule - which the Sheps file alone cannot (it is one source). The two-source verification is inherently a human editorial step.
-- **Files to add/change:** **Defer.** If/when built: `supabase/functions/sheps-closures/index.ts` as an XLSX ingest, plus a scheduled workflow; the geocoding + second-source steps likely remain a script-assisted human pipeline rather than a pure function. Hook already has the swap-in comment ready (lines 17-21).
+- **Files to add/change:** **Defer the edge function.** If/when built: `supabase/functions/sheps-closures/index.ts` as an XLSX ingest, plus a scheduled workflow; the geocoding + second-source steps likely remain a script-assisted human pipeline rather than a pure function. Hook already has the swap-in comment ready (lines 17-21).
 - **Provenance/manifest updates:** Sheps + the news outlets already exist in `sourcesRegistry.ts` scope; closure-specific anchors (e.g. Sturgis REH date, "17+ OB closures") are already in `sourceManifest.ts` (lines 29-30). No new badge type.
-- **Testing approach:** N/A until unblocked. If an XLSX ingest is built: fixture-based parser test + assertion that every emitted `verified` entry has `sources.length >= 2`.
-- **Complexity: L (and blocked).** XLSX-only source, no API, lat/lon geocoding, and an editorial two-source rule that cannot be fully automated.
+- **Complexity: L (and blocked for full automation).** XLSX-only source, no API, lat/lon geocoding, and an editorial two-source rule that cannot be fully automated.
+
+- **SHIPPED - freshness watcher (the tractable slice of the value):** `scripts/check-sheps-closures.mjs` + `src/test/unit/sheps-closures-freshness.test.ts` + `.github/workflows/sheps-closures-watch.yml`. Rather than generate data it can't verify, this downloads the Sheps workbook (reusing the SNAP ingest's audited OOXML reader), filters Michigan rows, and diffs them against the curated fallback's facility/city pairs - classifying each as `tracked`, `review` (same city, different facility), or `new`. The monthly workflow runs it `--strict` and opens / refreshes a curation **issue** on drift (not a PR - the second-source + geocode + summary remain human steps). This removes the "did we miss a closure?" risk while leaving the editorial contract intact. Run `pnpm check:sheps-closures --file <downloaded.xlsx>` locally; the Sheps `.xlsx` link has no stable filename, so set `SHEPS_XLSX_URL` (repo variable or `--file`).
 
 ---
 
@@ -287,12 +288,18 @@ Dependencies:
 
 ## 4. Blockers / open questions
 
-1. **`sheps-closures` has no machine-readable source (HARD BLOCKER).** Sheps
-   Center is XLSX-only; the two-source verification + lat/lon geocoding are
-   editorial. Confirmed by both the hook docstring (`useClosureWatch.ts` lines
-   6-10) and the fallback header (`closureWatchFallback.ts` lines 4-10). Decision
-   needed: build an XLSX->Supabase ingest with a human second-source step, or
-   leave on curated fallback indefinitely.
+1. **`sheps-closures` has no machine-readable source (full automation BLOCKED;
+   freshness watcher SHIPPED).** Sheps Center is XLSX-only; the two-source
+   verification + lat/lon geocoding are editorial. Confirmed by both the hook
+   docstring (`useClosureWatch.ts` lines 6-10) and the fallback header
+   (`closureWatchFallback.ts` lines 4-10). **Resolved the tractable part:** rather
+   than an ingest that emits unverifiable rows, `scripts/check-sheps-closures.mjs`
+   + the `sheps-closures-watch` workflow now diff Sheps's Michigan rows against
+   the curated fallback monthly and file a curation issue on drift (see 2.5). The
+   one remaining input is operational, not architectural: the Sheps `.xlsx` link
+   has no stable filename, so a maintainer sets `SHEPS_XLSX_URL` (repo variable).
+   A full XLSX->Supabase ingest with an automated second source remains out of
+   scope and is not recommended.
 
 2. **XLSX parsing in Deno for `usda-snap-county`.** The USDA FNS county file is
    Excel. Need a Deno-compatible parser (e.g. SheetJS via esm.sh) and a stable

@@ -1,0 +1,81 @@
+name: sheps-closures-watch
+# Advisory freshness check for Closure Watch (src/data/closureWatchFallback.ts).
+#
+# The Sheps Center Rural Hospital Closures workbook is the upstream source for
+# Michigan hospital / service-line closures, but it cannot auto-generate the
+# curated list: the two-source verification, lat/lon geocoding and narrative
+# summaries are editorial (see docs/supabase-edge-functions-plan.md section 2.5).
+# So instead of opening a data PR, this job diffs the Sheps Michigan rows against
+# the curated fallback and, on drift, opens / refreshes a tracking ISSUE for a
+# human to curate. It writes no data and never touches the build.
+#
+# The Sheps page has no API and no stable filename, so the .xlsx link must be
+# supplied (it is not hard-coded). Set it as the repo variable SHEPS_XLSX_URL
+# (Settings -> Secrets and variables -> Actions -> Variables) or pass it to a
+# manual run:
+#   gh workflow run sheps-closures-watch.yml --ref main -f sheps_xlsx_url=https://...
+on:
+  schedule:
+    - cron: "0 12 1 * *"   # 12:00 UTC on the 1st of each month (closures are rare)
+  workflow_dispatch:
+    inputs:
+      sheps_xlsx_url:
+        description: "Direct .xlsx link from the Sheps Rural Hospital Closures page"
+        type: string
+        required: false
+      since_year:
+        description: "Earliest closure year to consider"
+        type: string
+        default: "2020"
+permissions:
+  contents: read
+  issues: write
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Diff Sheps Michigan closures against Closure Watch
+        id: check
+        working-directory: artifacts/access-mi
+        env:
+          SHEPS_XLSX_URL: ${{ inputs.sheps_xlsx_url || vars.SHEPS_XLSX_URL }}
+        run: |
+          set +e
+          OUT=$(node scripts/check-sheps-closures.mjs --strict --since "${{ inputs.since_year || '2020' }}" 2>&1)
+          CODE=$?
+          set -e
+          echo "$OUT"
+          {
+            echo "report<<REPORT_EOF"
+            echo "$OUT"
+            echo "REPORT_EOF"
+            echo "drift=$([ $CODE -ne 0 ] && echo true || echo false)"
+          } >> "$GITHUB_OUTPUT"
+      - name: Open or refresh the curation issue
+        if: steps.check.outputs.drift == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPORT: ${{ steps.check.outputs.report }}
+        run: |
+          TITLE="Closure Watch: Sheps lists Michigan closures not yet curated"
+          BODY=$(printf '%s\n\n```\n%s\n```\n\n%s\n' \
+            "The monthly Sheps freshness check found Michigan rows in the Rural Hospital Closures database that are not yet in \`src/data/closureWatchFallback.ts\`. Each needs the editorial step: a second independent source, lat/lon, and a summary, then promotion to a verified entry." \
+            "$REPORT" \
+            "_Auto-filed by .github/workflows/sheps-closures-watch.yml. Re-run after curating to close._")
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+            echo "Updated existing issue #$EXISTING"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" --label "data,closure-watch"
+          fi
