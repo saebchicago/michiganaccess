@@ -282,25 +282,25 @@ export default function MichiganEnvBurdenMap({
                     label="EJ Index"
                     value={ejData.ej_index}
                     unit="th pct"
-                    color="#0A4C95"
+                    color="hsl(var(--color-navy))"
                   />
                   <MetricCard
                     label="PM2.5"
                     value={ejData.pm25_percentile}
                     unit="th pct"
-                    color="#00A3A1"
+                    color="hsl(var(--color-teal))"
                   />
                   <MetricCard
                     label="Ozone"
                     value={ejData.ozone_percentile}
                     unit="th pct"
-                    color="#2D5F3F"
+                    color="hsl(var(--color-teal-bright))"
                   />
                   <MetricCard
                     label="Traffic Proximity"
                     value={ejData.traffic_percentile}
                     unit="th pct"
-                    color="#0A4C95"
+                    color="hsl(var(--color-navy))"
                   />
                 </div>
 
@@ -309,12 +309,12 @@ export default function MichiganEnvBurdenMap({
                   <BarIndicator
                     label="Wastewater Discharge"
                     value={ejData.wastewater_percentile}
-                    color="#0A4C95"
+                    color="hsl(var(--color-navy))"
                   />
                   <BarIndicator
                     label="RMP Facility Proximity"
                     value={ejData.rmp_percentile}
-                    color="#00A3A1"
+                    color="hsl(var(--color-teal))"
                   />
                 </div>
 
@@ -356,7 +356,7 @@ export default function MichiganEnvBurdenMap({
           <div className="rounded-lg border border-border bg-card px-4 py-3 text-sm">
             <Link
               to={`/county/${slug}`}
-              className="text-[#0A4C95] hover:underline font-medium"
+              className="text-primary hover:underline font-medium"
             >
               View full {countyName} County profile →
             </Link>

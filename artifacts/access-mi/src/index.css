@@ -1,80 +1,116 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+/* Self-hosted brand fonts. Latin subset, variable woff2 covers all
+   weights used by the app (Inter 400-700, Fraunces 600-700). No
+   external font CDN. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/fraunces-latin.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* ── Access Michigan Civic Design System ──────────────────── */
-    /* Primary: #3f51b5 → hsl(231 44% 48%) */
-    --background: 0 0% 98%;
-    --foreground: 0 0% 13%;
+    /* ── Access Michigan brand palette (single source of truth) ─────
+       Named tokens - hex literals shown alongside HSL for reviewer
+       convenience. UI tokens below alias these. */
+    --color-navy: 211 67% 17%; /* #0E2A47 */
+    --color-navy-dark: 210 70% 11%; /* #081B2E */
+    --color-teal: 197 68% 34%; /* #1C7293 */
+    --color-teal-bright: 174 76% 34%; /* #159A8C */
+    --color-amber: 37 72% 56%; /* #E0A33E */
+    --color-ink: 217 33% 17%; /* #1E293B */
+    --color-muted: 215 16% 47%; /* #64748B */
+    --color-cloud: 207 36% 95%; /* #EEF3F7 */
+
+    /* ── UI tokens (alias the brand palette) ─────────────────────── */
+    --background: 0 0% 100%;
+    --foreground: var(--color-ink);
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
+    --card-foreground: var(--color-ink);
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    --popover-foreground: var(--color-ink);
 
-    --primary: 231 44% 48%;
+    --primary: var(--color-navy);
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: #ffca28 → hsl(45 100% 58%) */
-    --secondary: 45 100% 58%;
-    --secondary-foreground: 0 0% 13%;
+    --secondary: var(--color-amber);
+    --secondary-foreground: var(--color-ink);
 
-    --muted: 220 14% 95%;
-    --muted-foreground: 0 0% 33%;
+    --muted: var(--color-cloud);
+    --muted-foreground: var(--color-muted);
 
-    /* Accent / tertiary: #558b2f → hsl(93 51% 36%) */
-    --accent: 93 51% 36%;
+    --accent: var(--color-teal-bright);
     --accent-foreground: 0 0% 100%;
 
-    /* Error: #c62828 → hsl(0 66% 47%) */
+    /* Error: kept as-is - destructive semantics shouldn't shift with a
+       visual refresh. */
     --destructive: 0 66% 47%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Warning: #ff9800 → hsl(36 100% 50%) */
-    --warning: 36 100% 50%;
-    --warning-foreground: 0 0% 13%;
+    /* Warning: re-tuned amber-orange for AA on its foreground. */
+    --warning: 36 100% 42%;
+    --warning-foreground: 0 0% 100%;
 
-    /* Info: #5c6bc0 → hsl(232 36% 56%) */
-    --info: 232 36% 56%;
+    --info: var(--color-teal);
     --info-foreground: 0 0% 100%;
 
-    --border: 0 0% 88%;
-    --input: 0 0% 88%;
-    --ring: 231 44% 48%;
+    --border: 210 24% 88%;
+    --input: 210 24% 88%;
+    --ring: var(--color-navy);
 
     --radius: 0.5rem;
 
-    /* Extended civic palette - lightness values tuned to meet WCAG AA 4.5:1
-       against white text (for bg usage) and against white background (for
-       text usage). See PERF_BASELINE.md and A11Y_VIOLATIONS.md for history. */
-    --michigan-blue: 231 44% 48%;
-    --forest-green: 93 56% 25%;
-    --teal: 186 50% 28%;
-    --sky-blue: 210 65% 38%;
-    --warm-gold: 45 100% 26%;
+    /* Extended civic palette - remapped to the new brand. Lightness
+       choices preserve the WCAG AA tuning recorded in A11Y_VIOLATIONS.md
+       for text-on-white and white-on-fill usages. */
+    --michigan-blue: var(--color-navy);
+    --forest-green: var(--color-teal-bright);
+    --teal: var(--color-teal);
+    --sky-blue: 197 68% 28%;
+    --warm-gold: 37 72% 38%; /* darkened amber for text-on-white AA */
     --coral: 4 72% 45%;
-    --navy: 231 50% 22%;
-    --slate: 220 12% 35%;
+    --navy: var(--color-navy-dark);
+    --slate: var(--color-muted);
 
     /* Sidebar */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 20%;
-    --sidebar-primary: 231 44% 48%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: var(--color-ink);
+    --sidebar-primary: var(--color-navy);
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 93 51% 36%;
+    --sidebar-accent: var(--color-teal-bright);
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 88%;
-    --sidebar-ring: 231 44% 48%;
+    --sidebar-border: 210 24% 88%;
+    --sidebar-ring: var(--color-navy);
 
-    /* Chart colors */
-    --chart-1: 231 44% 48%;
-    --chart-2: 93 51% 36%;
-    --chart-3: 186 50% 36%;
-    --chart-4: 45 100% 58%;
+    /* Chart colors - harmonised with the brand. Order preserved so
+       existing series keep their slots. */
+    --chart-1: var(--color-navy);
+    --chart-2: var(--color-teal-bright);
+    --chart-3: var(--color-teal);
+    --chart-4: var(--color-amber);
     --chart-5: 0 66% 47%;
 
     --bottom-nav-h: 3.5rem;
@@ -99,16 +135,27 @@
     --popover: 0 0% 10%;
     --popover-foreground: 0 0% 93%;
 
-    --primary: 232 55% 62%;
+    /* Dark-mode brand palette - same hues, lifted lightness for AA on
+       dark backgrounds. */
+    --color-navy: 211 60% 62%;
+    --color-navy-dark: 210 55% 50%;
+    --color-teal: 197 60% 56%;
+    --color-teal-bright: 174 60% 50%;
+    --color-amber: 37 80% 62%;
+    --color-ink: 217 25% 88%;
+    --color-muted: 215 12% 68%;
+    --color-cloud: 217 25% 18%;
+
+    --primary: var(--color-navy);
     --primary-foreground: 0 0% 7%;
 
-    --secondary: 45 80% 52%;
+    --secondary: var(--color-amber);
     --secondary-foreground: 0 0% 7%;
 
-    --muted: 0 0% 16%;
-    --muted-foreground: 0 0% 68%;
+    --muted: var(--color-cloud);
+    --muted-foreground: var(--color-muted);
 
-    --accent: 93 40% 45%;
+    --accent: var(--color-teal-bright);
     --accent-foreground: 0 0% 7%;
 
     --destructive: 0 55% 40%;
@@ -117,35 +164,35 @@
     --warning: 36 80% 45%;
     --warning-foreground: 0 0% 93%;
 
-    --info: 232 40% 60%;
-    --info-foreground: 0 0% 93%;
+    --info: var(--color-teal);
+    --info-foreground: 0 0% 7%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 232 55% 62%;
+    --border: 217 20% 24%;
+    --input: 217 20% 24%;
+    --ring: var(--color-navy);
 
-    --michigan-blue: 232 55% 62%;
-    --forest-green: 93 40% 45%;
-    --teal: 186 45% 45%;
-    --sky-blue: 210 55% 62%;
-    --warm-gold: 45 80% 62%;
+    --michigan-blue: var(--color-navy);
+    --forest-green: var(--color-teal-bright);
+    --teal: var(--color-teal);
+    --sky-blue: 197 60% 50%;
+    --warm-gold: var(--color-amber);
     --coral: 8 70% 65%;
-    --navy: 231 45% 30%;
-    --slate: 220 10% 55%;
+    --navy: var(--color-navy-dark);
+    --slate: var(--color-muted);
 
     --sidebar-background: 0 0% 8%;
-    --sidebar-foreground: 0 0% 93%;
-    --sidebar-primary: 232 55% 62%;
+    --sidebar-foreground: var(--color-ink);
+    --sidebar-primary: var(--color-navy);
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 93 40% 45%;
+    --sidebar-accent: var(--color-teal-bright);
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 232 55% 62%;
+    --sidebar-border: 217 20% 24%;
+    --sidebar-ring: var(--color-navy);
 
-    --chart-1: 232 55% 62%;
-    --chart-2: 93 40% 45%;
-    --chart-3: 186 45% 45%;
-    --chart-4: 45 80% 52%;
+    --chart-1: var(--color-navy);
+    --chart-2: var(--color-teal-bright);
+    --chart-3: var(--color-teal);
+    --chart-4: var(--color-amber);
     --chart-5: 0 55% 50%;
     --radius: 0.5rem;
     --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.2);
@@ -154,23 +201,32 @@
     --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.3);
   }
 
-  /* High Contrast Mode */
+  /* High Contrast Mode - same brand hues, pushed for max contrast. */
   .high-contrast {
+    --color-navy: 211 80% 12%;
+    --color-navy-dark: 211 80% 8%;
+    --color-teal: 197 80% 22%;
+    --color-teal-bright: 174 85% 22%;
+    --color-amber: 37 80% 42%;
+    --color-ink: 0 0% 0%;
+    --color-muted: 217 25% 22%;
+    --color-cloud: 0 0% 90%;
+
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
-    --primary: 231 60% 35%;
+    --primary: var(--color-navy);
     --primary-foreground: 0 0% 100%;
-    --secondary: 45 100% 42%;
+    --secondary: var(--color-amber);
     --secondary-foreground: 0 0% 0%;
-    --muted: 0 0% 90%;
-    --muted-foreground: 0 0% 20%;
-    --accent: 93 60% 28%;
+    --muted: var(--color-cloud);
+    --muted-foreground: var(--color-muted);
+    --accent: var(--color-teal-bright);
     --accent-foreground: 0 0% 100%;
     --border: 0 0% 30%;
     --input: 0 0% 30%;
-    --ring: 231 60% 35%;
+    --ring: var(--color-navy);
   }
 }
 
@@ -268,9 +324,9 @@
   .bg-gradient-hero {
     background-image: linear-gradient(
       160deg,
-      hsl(210 90% 12%),
-      hsl(210 80% 25%),
-      hsl(174 100% 30% / 0.9)
+      hsl(var(--color-navy-dark)),
+      hsl(var(--color-navy)),
+      hsl(var(--color-teal-bright) / 0.92)
     );
   }
 
@@ -298,14 +354,19 @@
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(
       135deg,
-      hsl(var(--michigan-blue)),
-      hsl(var(--michigan-teal))
+      hsl(var(--color-navy)),
+      hsl(var(--color-teal))
     );
   }
 
-  /* Nav accent line */
+  /* Nav accent line - token-driven so the bar follows the brand. */
   .nav-accent {
-    background: linear-gradient(90deg, #0a4c95, #00a3a1, #2d5f3f);
+    background: linear-gradient(
+      90deg,
+      hsl(var(--color-navy)),
+      hsl(var(--color-teal)),
+      hsl(var(--color-teal-bright))
+    );
     height: 2px;
     position: sticky;
     top: 64px;
@@ -476,7 +537,7 @@
     margin-top: 0.5rem;
     font-size: 9px;
   }
-  /* Brief stat blocks — keep grid in print, force 2-col */
+  /* Brief stat blocks - keep grid in print, force 2-col */
   [data-brief-stat] {
     break-inside: avoid;
     border: 1px solid #ccc !important;
