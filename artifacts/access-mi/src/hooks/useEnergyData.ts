@@ -50,20 +50,9 @@ export function useEnergyData() {
     queryKey: ["eia-energy-prices"],
     queryFn: async () => {
       try {
-        const apiKey = import.meta.env.VITE_EIA_API_KEY;
-        if (!apiKey) return FALLBACK;
-
-        const base = "https://api.eia.gov/v2/electricity/retail-sales/data";
-        const common = `api_key=${apiKey}&data[]=price&facets[sectorid][]=RES&frequency=monthly&sort[0][column]=period&sort[0][direction]=desc&length=12`;
-
-        const [miRes, usRes] = await Promise.all([
-          fetch(`${base}?${common}&facets[stateid][]=MI`),
-          fetch(`${base}?${common}&facets[stateid][]=US`),
-        ]);
-
-        if (!miRes.ok || !usRes.ok) return FALLBACK;
-
-        const [miJson, usJson] = await Promise.all([miRes.json(), usRes.json()]);
+        const res = await fetch("/.netlify/functions/eia-retail-prices");
+        if (!res.ok) return FALLBACK;
+        const { mi: miJson, us: usJson } = await res.json();
 
         const parse = (raw: any[]): EIADataPoint[] =>
           (raw || [])
