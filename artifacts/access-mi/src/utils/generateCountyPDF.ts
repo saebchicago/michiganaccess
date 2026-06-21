@@ -1,6 +1,12 @@
 // Generate a branded 1-page county health brief PDF
 // Uses jsPDF (already installed)
 
+// Brand RGB equivalents of the CSS palette. jsPDF can't read CSS
+// custom properties at runtime, so the palette is duplicated here.
+// Keep in sync with --color-navy / --color-teal in src/index.css.
+const BRAND_NAVY_RGB = [14, 42, 71] as const; // #0E2A47
+const BRAND_TEAL_RGB = [28, 114, 147] as const; // #1C7293
+
 interface CountyPDFData {
   countyName: string;
   population?: number;
@@ -15,10 +21,14 @@ interface CountyPDFData {
 
 export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
   const { default: jsPDF } = await import("jspdf");
-  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "letter" });
+  const doc = new jsPDF({
+    orientation: "portrait",
+    unit: "mm",
+    format: "letter",
+  });
 
   // ── Header ──
-  doc.setFillColor(10, 76, 149); // #0A4C95
+  doc.setFillColor(...BRAND_NAVY_RGB);
   doc.rect(0, 0, 216, 28, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(18);
@@ -27,7 +37,12 @@ export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
   doc.text("accessmi.org \u2014 Michigan Civic Intelligence Platform", 14, 23);
-  doc.text(new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }), 200, 23, { align: "right" });
+  doc.text(
+    new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+    200,
+    23,
+    { align: "right" },
+  );
 
   // ── Population ──
   doc.setTextColor(30, 30, 30);
@@ -46,12 +61,41 @@ export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
   y += 6;
 
   const metrics = [
-    { label: "ALICE Hardship", value: data.combinedHardshipPct != null ? `${data.combinedHardshipPct}%` : "N/A", source: "United For ALICE 2023" },
-    { label: "Uninsured Rate", value: data.uninsuredPct != null ? `${data.uninsuredPct}%` : "~4% (state avg)", source: "ACS 5-Year Estimates" },
-    { label: "Food Insecurity", value: data.foodInsecurityPct != null ? `${data.foodInsecurityPct}%` : "N/A", source: "Feeding America 2024" },
-    { label: "Healthcare Facilities", value: data.facilityCount != null ? String(data.facilityCount) : "N/A", source: "HRSA / Supabase" },
-    { label: "Maternity Care Access", value: data.maternalAccess || "N/A", source: "March of Dimes 2024" },
-    { label: "Broadband Coverage", value: data.broadbandPct != null ? `${data.broadbandPct}%` : "N/A", source: "FCC BDC 2024" },
+    {
+      label: "ALICE Hardship",
+      value:
+        data.combinedHardshipPct != null
+          ? `${data.combinedHardshipPct}%`
+          : "N/A",
+      source: "United For ALICE 2023",
+    },
+    {
+      label: "Uninsured Rate",
+      value:
+        data.uninsuredPct != null ? `${data.uninsuredPct}%` : "~4% (state avg)",
+      source: "ACS 5-Year Estimates",
+    },
+    {
+      label: "Food Insecurity",
+      value:
+        data.foodInsecurityPct != null ? `${data.foodInsecurityPct}%` : "N/A",
+      source: "Feeding America 2024",
+    },
+    {
+      label: "Healthcare Facilities",
+      value: data.facilityCount != null ? String(data.facilityCount) : "N/A",
+      source: "HRSA / Supabase",
+    },
+    {
+      label: "Maternity Care Access",
+      value: data.maternalAccess || "N/A",
+      source: "March of Dimes 2024",
+    },
+    {
+      label: "Broadband Coverage",
+      value: data.broadbandPct != null ? `${data.broadbandPct}%` : "N/A",
+      source: "FCC BDC 2024",
+    },
   ];
 
   const colW = 92;
@@ -70,7 +114,7 @@ export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
     // Value
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.setTextColor(10, 76, 149);
+    doc.setTextColor(...BRAND_NAVY_RGB);
     doc.text(metrics[i].value, x + 4, boxY + 8);
 
     // Label
@@ -105,7 +149,7 @@ export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   for (let i = 0; i < needs.length; i++) {
-    doc.setTextColor(10, 76, 149);
+    doc.setTextColor(...BRAND_NAVY_RGB);
     doc.text(`${i + 1}.`, 16, y + i * 6);
     doc.setTextColor(30, 30, 30);
     doc.text(needs[i], 22, y + i * 6);
@@ -113,22 +157,31 @@ export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
   y += needs.length * 6 + 8;
 
   // ── Teal accent bar ──
-  doc.setFillColor(0, 163, 161); // #00A3A1
+  doc.setFillColor(...BRAND_TEAL_RGB);
   doc.rect(14, y, 188, 0.5, "F");
   y += 6;
 
   // ── Source attribution ──
   doc.setFontSize(7);
   doc.setTextColor(120, 120, 120);
-  const sources = "Sources: HRSA, CDC PLACES, Census ACS, Feeding America, March of Dimes, United For ALICE, FCC BDC, MDHHS";
+  const sources =
+    "Sources: HRSA, CDC PLACES, Census ACS, Feeding America, March of Dimes, United For ALICE, FCC BDC, MDHHS";
   doc.text(sources, 14, y);
   y += 4;
-  doc.text("All data from public records. Estimates labeled where applicable. Visit accessmi.org/methodology for details.", 14, y);
+  doc.text(
+    "All data from public records. Estimates labeled where applicable. Visit accessmi.org/methodology for details.",
+    14,
+    y,
+  );
 
   // ── Footer ──
   doc.setFontSize(7);
   doc.setTextColor(150, 150, 150);
-  doc.text(`Generated by accessmi.org \u2014 ${new Date().toLocaleDateString()} \u2014 Page 1 of 1`, 14, 268);
+  doc.text(
+    `Generated by accessmi.org \u2014 ${new Date().toLocaleDateString()} \u2014 Page 1 of 1`,
+    14,
+    268,
+  );
 
   doc.save(`${data.countyName}_County_Health_Brief.pdf`);
 }
