@@ -32,6 +32,14 @@
   [headers.values]
     Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
 
+# Self-hosted brand fonts. The filenames are stable across deploys, so
+# they can be cached aggressively at the edge and in the browser. If
+# a font is ever replaced, change the filename to bust the cache.
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # Renamed routes — declared as <Navigate> inside the SPA. Mirror them
 # at the edge so crawlers and direct nav skip the SPA round-trip and
 # get the canonical URL via a 301. Order MUST stay above the SPA
