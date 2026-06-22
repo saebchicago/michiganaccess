@@ -65,23 +65,17 @@ export function useAirQualityByZip(zipCode: string) {
       if (!zipCode || zipCode.length !== 5) return FALLBACK;
 
       try {
-        const apiKey = import.meta.env.VITE_AIRNOW_API_KEY;
-        if (!apiKey) {
-          console.warn("AirNow API key not configured, using fallback");
-          return FALLBACK;
-        }
-
         const res = await fetch(
-          `https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=${zipCode}&API_KEY=${apiKey}`
+          `/.netlify/functions/airnow-by-zip?zip=${zipCode}`,
         );
 
         if (!res.ok) {
-          console.warn(`AirNow returned ${res.status}`);
+          console.warn(`AirNow proxy returned ${res.status}`);
           return FALLBACK;
         }
 
         const data = await res.json();
-        return data.length > 0 ? data : FALLBACK;
+        return Array.isArray(data) && data.length > 0 ? data : FALLBACK;
       } catch (err) {
         console.warn("AirNow fetch failed:", err);
         return FALLBACK;
