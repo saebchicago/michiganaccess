@@ -53,26 +53,43 @@ export const HEALTH_DATASETS: PillarDataset[] = [
     name: "Health Facilities (Hospitals, Clinics, FQHCs)",
     pillar: "health",
     geographyLevel: "county",
-    keyMetrics: ["facility_type", "county", "latitude", "longitude", "specialties", "walk_in", "telehealth_available"],
+    keyMetrics: [
+      "facility_type",
+      "county",
+      "latitude",
+      "longitude",
+      "specialties",
+      "walk_in",
+      "telehealth_available",
+    ],
     sourceUrl: "https://data.michigan.gov",
     refreshCadence: "Quarterly",
     ingestionMethod: "supabase-table",
     ingestionTarget: "facilities",
     status: "live",
-    description: "Licensed health facilities across Michigan including hospitals, clinics, FQHCs, and specialty centers. Sourced from state licensing data.",
+    description:
+      "Licensed health facilities across Michigan including hospitals, clinics, FQHCs, and specialty centers. Sourced from state licensing data.",
   },
   {
     id: "health-community-resources",
     name: "Community Health Resources (SUD, Mental Health, Services)",
     pillar: "health",
     geographyLevel: "county",
-    keyMetrics: ["resource_type", "county", "is_free", "walk_in_available", "is_24_7", "on_bus_line"],
+    keyMetrics: [
+      "resource_type",
+      "county",
+      "is_free",
+      "walk_in_available",
+      "is_24_7",
+      "on_bus_line",
+    ],
     sourceUrl: "https://www.michigan.gov/mdhhs",
     refreshCadence: "Monthly",
     ingestionMethod: "supabase-table",
     ingestionTarget: "community_resources",
     status: "live",
-    description: "Verified community resources including substance use disorder care, mental health services, food assistance, and housing support.",
+    description:
+      "Verified community resources including substance use disorder care, mental health services, food assistance, and housing support.",
   },
   {
     id: "health-county-demographics",
@@ -85,7 +102,8 @@ export const HEALTH_DATASETS: PillarDataset[] = [
     ingestionMethod: "census-acs",
     ingestionTarget: "census-acs-proxy",
     status: "live",
-    description: "Total population, median household income, and insurance coverage from the American Community Survey.",
+    description:
+      "Total population, median household income, and insurance coverage from the American Community Survey.",
   },
   {
     id: "health-county-profiles",
@@ -98,7 +116,8 @@ export const HEALTH_DATASETS: PillarDataset[] = [
     ingestionMethod: "supabase-table",
     ingestionTarget: "county_profiles_static",
     status: "live",
-    description: "County Health Rankings & Roadmaps data covering uninsured rates, primary care provider ratios, and food insecurity rates for all 83 Michigan counties.",
+    description:
+      "County Health Rankings & Roadmaps data covering uninsured rates, primary care provider ratios, and food insecurity rates for all 83 Michigan counties.",
   },
 ];
 
@@ -116,7 +135,8 @@ export const ENVIRONMENT_DATASETS: PillarDataset[] = [
     ingestionMethod: "arcgis-proxy",
     ingestionTarget: "pfas-sites",
     status: "live",
-    description: "EGLE PFAS Areas of Interest - active investigation and response sites across Michigan.",
+    description:
+      "EGLE PFAS Areas of Interest - active investigation and response sites across Michigan.",
   },
   {
     id: "env-air-quality",
@@ -129,7 +149,8 @@ export const ENVIRONMENT_DATASETS: PillarDataset[] = [
     ingestionMethod: "arcgis-proxy",
     ingestionTarget: "egle-air",
     status: "live",
-    description: "EPA-registered air quality monitoring stations operated by EGLE across Michigan.",
+    description:
+      "EPA-registered air quality monitoring stations operated by EGLE across Michigan.",
   },
   {
     id: "env-ejscreen",
@@ -142,7 +163,8 @@ export const ENVIRONMENT_DATASETS: PillarDataset[] = [
     ingestionMethod: "arcgis-direct",
     ingestionTarget: "https://ejscreen.epa.gov/mapper/ejscreenRESTbroker1.aspx",
     status: "pending",
-    description: "EPA Environmental Justice screening indices by census tract. Pending direct API integration.",
+    description:
+      "EPA Environmental Justice screening indices by census tract. Pending direct API integration.",
   },
 ];
 
@@ -160,20 +182,28 @@ export const MOBILITY_DATASETS: PillarDataset[] = [
     ingestionMethod: "arcgis-proxy",
     ingestionTarget: "mdot-workzones",
     status: "live",
-    description: "Active MDOT road construction and work zones affecting travel across Michigan.",
+    description:
+      "Active MDOT road construction and work zones affecting travel across Michigan.",
   },
   {
     id: "mobility-ev-stations",
     name: "EV Charging Stations (NREL AFDC)",
     pillar: "mobility",
     geographyLevel: "state",
-    keyMetrics: ["Station_Name", "City", "EV_Level2_EVSE_Num", "EV_DC_Fast_Count", "EV_Network"],
+    keyMetrics: [
+      "Station_Name",
+      "City",
+      "EV_Level2_EVSE_Num",
+      "EV_DC_Fast_Count",
+      "EV_Network",
+    ],
     sourceUrl: "https://afdc.energy.gov/stations",
     refreshCadence: "Weekly",
     ingestionMethod: "arcgis-proxy",
     ingestionTarget: "ev-stations",
     status: "live",
-    description: "Electric vehicle charging station locations in Michigan from the DOE Alternative Fuels Data Center.",
+    description:
+      "Electric vehicle charging station locations in Michigan from the DOE Alternative Fuels Data Center.",
   },
   {
     id: "mobility-ddot-routes",
@@ -186,7 +216,8 @@ export const MOBILITY_DATASETS: PillarDataset[] = [
     ingestionMethod: "arcgis-proxy",
     ingestionTarget: "ddot-routes",
     status: "live",
-    description: "Detroit Department of Transportation (DDOT) fixed-route bus network.",
+    description:
+      "Detroit Department of Transportation (DDOT) fixed-route bus network.",
   },
 ];
 
@@ -204,46 +235,59 @@ export const ECONOMIC_DATASETS: PillarDataset[] = [
     ingestionMethod: "census-acs",
     ingestionTarget: "census-acs-proxy",
     status: "live",
-    description: "Poverty status, unemployment, and median household income from the American Community Survey for all Michigan counties.",
+    description:
+      "Poverty status, unemployment, and median household income from the American Community Survey for all Michigan counties.",
   },
   {
     id: "econ-det-blight",
     name: "Detroit Blight Violations",
     pillar: "economic",
     geographyLevel: "county",
-    keyMetrics: ["violation_address", "violation_date", "violation_description"],
-    sourceUrl: "https://data.detroitmi.gov/datasets/blight-violations",
+    keyMetrics: ["address", "ticket_issued_date", "ordinance_description"],
+    sourceUrl:
+      "https://data-detroitmi.hub.arcgis.com/datasets/detroitmi::blight-tickets",
     refreshCadence: "Weekly",
-    ingestionMethod: "socrata",
-    ingestionTarget: "https://data.detroitmi.gov/resource/ti6p-wcg4.json",
+    ingestionMethod: "arcgis-direct",
+    ingestionTarget:
+      "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/blight_tickets/FeatureServer/0",
     status: "live",
-    description: "Active blight violation records in the City of Detroit indicating property conditions and neighborhood stress.",
+    description:
+      "Blight violation tickets issued by the City of Detroit, indicating property conditions and neighborhood stress. Source: City of Detroit Open Data (ArcGIS Hub).",
   },
   {
     id: "econ-det-demolitions",
     name: "Detroit Demolition Activity",
     pillar: "economic",
     geographyLevel: "county",
-    keyMetrics: ["address", "demolition_date", "contractor_name"],
-    sourceUrl: "https://data.detroitmi.gov/datasets/demolitions",
+    keyMetrics: ["address", "demolition_date", "demolition_contractor"],
+    sourceUrl:
+      "https://data-detroitmi.hub.arcgis.com/datasets/detroitmi::completed-demolitions",
     refreshCadence: "Monthly",
-    ingestionMethod: "socrata",
-    ingestionTarget: "https://data.detroitmi.gov/resource/rv44-e9di.json",
+    ingestionMethod: "arcgis-direct",
+    ingestionTarget:
+      "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/city_completed_demolitions/FeatureServer/0",
     status: "live",
-    description: "Demolition records for blighted properties in Detroit as part of city renewal programs.",
+    description:
+      "Completed demolition records for blighted properties in Detroit as part of city renewal programs. Source: City of Detroit Open Data (ArcGIS Hub).",
   },
   {
     id: "econ-financial-programs",
     name: "Financial Assistance Programs",
     pillar: "economic",
     geographyLevel: "state",
-    keyMetrics: ["program_name", "program_type", "fpl_threshold", "coverage_area"],
+    keyMetrics: [
+      "program_name",
+      "program_type",
+      "fpl_threshold",
+      "coverage_area",
+    ],
     sourceUrl: "https://www.michigan.gov/mdhhs",
     refreshCadence: "Quarterly",
     ingestionMethod: "supabase-table",
     ingestionTarget: "financial_programs",
     status: "live",
-    description: "State and federal financial assistance programs available to Michigan residents.",
+    description:
+      "State and federal financial assistance programs available to Michigan residents.",
   },
 ];
 
@@ -264,25 +308,32 @@ export function getDatasetConfig(id: string): PillarDataset | undefined {
   return ALL_PILLAR_DATASETS.find((d) => d.id === id);
 }
 
-export const PILLAR_META: Record<Pillar, { label: string; description: string; color: string }> = {
+export const PILLAR_META: Record<
+  Pillar,
+  { label: string; description: string; color: string }
+> = {
   health: {
     label: "Health Access",
-    description: "Healthcare facilities, community resources, and population health outcomes.",
+    description:
+      "Healthcare facilities, community resources, and population health outcomes.",
     color: "text-red-600 dark:text-red-400",
   },
   environment: {
     label: "Environmental Risk",
-    description: "PFAS contamination, air quality, and environmental justice indicators.",
+    description:
+      "PFAS contamination, air quality, and environmental justice indicators.",
     color: "text-green-600 dark:text-green-400",
   },
   mobility: {
     label: "Mobility & Transit",
-    description: "Public transit coverage, road infrastructure, and EV charging access.",
+    description:
+      "Public transit coverage, road infrastructure, and EV charging access.",
     color: "text-blue-600 dark:text-blue-400",
   },
   economic: {
     label: "Economic Stress",
-    description: "Poverty, unemployment, housing blight, and financial assistance availability.",
+    description:
+      "Poverty, unemployment, housing blight, and financial assistance availability.",
     color: "text-amber-600 dark:text-amber-400",
   },
 };
