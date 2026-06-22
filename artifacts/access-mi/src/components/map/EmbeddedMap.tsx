@@ -7,9 +7,12 @@ import { COUNTY_CENTERS } from "@/utils/countyUtils";
 // Fix default icon
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+  iconRetinaUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+  iconUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
 });
 
 const MICHIGAN_CENTER: [number, number] = [44.3148, -85.6024];
@@ -32,7 +35,14 @@ function getMarkerColor(type: string): string {
 
 interface EmbeddedMapProps {
   facilities?: Facility[];
-  resources?: Array<{ latitude: number | null; longitude: number | null; resource_name: string; resource_type: string; address?: string | null; city: string }>;
+  resources?: Array<{
+    latitude: number | null;
+    longitude: number | null;
+    resource_name: string;
+    resource_type: string;
+    address?: string | null;
+    city: string;
+  }>;
   county?: string | null;
   height?: string;
   className?: string;
@@ -52,9 +62,10 @@ const EmbeddedMap = memo(function EmbeddedMap({
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
 
-    const center = county && COUNTY_CENTERS[county]
-      ? COUNTY_CENTERS[county]
-      : MICHIGAN_CENTER;
+    const center =
+      county && COUNTY_CENTERS[county]
+        ? COUNTY_CENTERS[county]
+        : MICHIGAN_CENTER;
     const zoom = county ? 10 : 7;
 
     const map = L.map(mapRef.current, {
@@ -64,11 +75,15 @@ const EmbeddedMap = memo(function EmbeddedMap({
       scrollWheelZoom: false,
     });
 
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/voyager/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
-      subdomains: "abcd",
-      maxZoom: 20,
-    }).addTo(map);
+    L.tileLayer(
+      "https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        crossOrigin: "anonymous",
+        maxZoom: 20,
+      },
+    ).addTo(map);
 
     mapInstanceRef.current = map;
 
@@ -82,9 +97,10 @@ const EmbeddedMap = memo(function EmbeddedMap({
   useEffect(() => {
     const map = mapInstanceRef.current;
     if (!map) return;
-    const center = county && COUNTY_CENTERS[county]
-      ? COUNTY_CENTERS[county]
-      : MICHIGAN_CENTER;
+    const center =
+      county && COUNTY_CENTERS[county]
+        ? COUNTY_CENTERS[county]
+        : MICHIGAN_CENTER;
     const zoom = county ? 10 : 7;
     map.setView(center, zoom, { animate: true });
   }, [county]);
