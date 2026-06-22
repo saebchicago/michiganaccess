@@ -67,58 +67,57 @@ export const STATEWIDE_DATASETS: CivicSource[] = [
   },
 ];
 
-// ── DETROIT - Socrata ───────────────────────────────────────────────────────
+// ── DETROIT - ArcGIS Hub ────────────────────────────────────────────────────
+// Detroit migrated all open data from Socrata (data.detroitmi.gov) to
+// ArcGIS Hub (data-detroitmi.hub.arcgis.com). Each entry below was verified
+// live via FeatureServer query returning expected fields.
+// Dataset "Neighborhood Indicators" (shfq-3gce) had no ArcGIS Hub equivalent
+// and was removed per owner policy (no fabricated fallback).
 
 export const DETROIT_DATASETS: CivicSource[] = [
   {
     id: "det-blight-violations",
     name: "Blight Violations",
-    provider: "Socrata",
-    endpoint: "https://data.detroitmi.gov/resource/ti6p-wcg4.json",
+    provider: "ArcGIS",
+    endpoint:
+      "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/blight_tickets/FeatureServer/0",
     geography: "city",
     category: "housing",
     description:
-      "Active blight violation records in the City of Detroit, including property conditions and enforcement actions.",
+      "Blight violation tickets issued by the City of Detroit, including property address, ordinance details, and payment status. Source: City of Detroit Open Data (data-detroitmi.hub.arcgis.com).",
   },
   {
     id: "det-building-permits",
     name: "Building Permits",
-    provider: "Socrata",
-    endpoint: "https://data.detroitmi.gov/resource/but4-ky7y.json",
+    provider: "ArcGIS",
+    endpoint:
+      "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/bseed_building_permits/FeatureServer/0",
     geography: "city",
     category: "housing",
     description:
-      "Building permits issued by the City of Detroit, indicating construction and renovation activity.",
+      "Building permits issued by the City of Detroit BSEED, indicating construction and renovation activity. Source: City of Detroit Open Data (data-detroitmi.hub.arcgis.com).",
   },
   {
     id: "det-police-incidents",
     name: "Police Incidents",
-    provider: "Socrata",
-    endpoint: "https://data.detroitmi.gov/resource/6gdg-y3kf.json",
+    provider: "ArcGIS",
+    endpoint:
+      "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/RMS_Crime_Incidents/FeatureServer/0",
     geography: "city",
     category: "safety",
     description:
-      "Reported police incidents in Detroit, used for safety trend analysis and community awareness.",
+      "RMS crime incident reports from Detroit Police Department, used for safety trend analysis and community awareness. Source: City of Detroit Open Data (data-detroitmi.hub.arcgis.com).",
   },
   {
     id: "det-demolition-activity",
     name: "Demolition Activity",
-    provider: "Socrata",
-    endpoint: "https://data.detroitmi.gov/resource/rv44-e9di.json",
+    provider: "ArcGIS",
+    endpoint:
+      "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/city_completed_demolitions/FeatureServer/0",
     geography: "city",
     category: "housing",
     description:
-      "Demolition records for blighted properties in Detroit as part of the city's renewal programs.",
-  },
-  {
-    id: "det-neighborhood-indicators",
-    name: "Neighborhood Indicators",
-    provider: "Socrata",
-    endpoint: "https://data.detroitmi.gov/resource/shfq-3gce.json",
-    geography: "city",
-    category: "civic",
-    description:
-      "Composite neighborhood health indicators covering education, safety, and economic metrics.",
+      "Completed demolition records for blighted properties in Detroit as part of city renewal programs. Source: City of Detroit Open Data (data-detroitmi.hub.arcgis.com).",
   },
 ];
 
