@@ -307,10 +307,11 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
     });
 
     L.tileLayer(
-      "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+      "https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png",
       {
         attribution:
           '&copy; <a href="https://carto.com">CARTO</a> &copy; OpenStreetMap contributors',
+        crossOrigin: "anonymous",
         maxZoom: 18,
       },
     ).addTo(map);
