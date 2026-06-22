@@ -4,7 +4,14 @@
  * - Rate-limit protection (back-off on 429)
  * - Optional app token support
  * - Lightweight in-memory caching (10 min TTL)
+ *
+ * Hosts in PROXY_HOSTS are routed through a Netlify Function because their
+ * upstream does not send a permissive Access-Control-Allow-Origin header.
+ * Other hosts are called directly.
  */
+
+// data.detroitmi.gov does not CORS-allow accessmi.org; route through proxy.
+const PROXY_HOSTS = new Set(["data.detroitmi.gov"]);
 
 interface SocrataQueryOptions {
   select?: string;
@@ -26,7 +33,7 @@ const CACHE_TTL = 10 * 60 * 1000;
 
 export async function querySocrata(
   endpoint: string,
-  options: SocrataQueryOptions = {}
+  options: SocrataQueryOptions = {},
 ): Promise<{ data: Record<string, unknown>[]; error: string | null }> {
   const cacheKey = `${endpoint}|${JSON.stringify(options)}`;
   const cached = cache.get(cacheKey);
@@ -59,7 +66,21 @@ export async function querySocrata(
       const headers: Record<string, string> = { Accept: "application/json" };
       if (appToken) headers["X-App-Token"] = appToken;
 
-      const res = await fetch(`${endpoint}?${params}`, {
+      let url: string;
+      try {
+        const host = new URL(endpoint).host;
+        if (PROXY_HOSTS.has(host)) {
+          const proxyParams = new URLSearchParams(params);
+          proxyParams.set("endpoint", endpoint);
+          url = `/.netlify/functions/socrata-proxy?${proxyParams}`;
+        } else {
+          url = `${endpoint}?${params}`;
+        }
+      } catch {
+        url = `${endpoint}?${params}`;
+      }
+
+      const res = await fetch(url, {
         headers,
         signal: AbortSignal.timeout(15000),
       });
@@ -83,6 +104,9 @@ export async function querySocrata(
     return { data: allRows, error: null };
   } catch (err) {
     console.warn("[socrataClient] fetch failed:", err);
-    return { data: [], error: err instanceof Error ? err.message : "Socrata fetch failed" };
+    return {
+      data: [],
+      error: err instanceof Error ? err.message : "Socrata fetch failed",
+    };
   }
 }

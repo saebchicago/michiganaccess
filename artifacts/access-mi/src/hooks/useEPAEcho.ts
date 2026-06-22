@@ -1,5 +1,7 @@
 // EPA ECHO - Enforcement and Compliance History Online
-// Public REST API - no key required
+// Routed through a Netlify Function proxy because echodata.epa.gov does not
+// set a permissive Access-Control-Allow-Origin header and direct browser
+// fetches are CORS-blocked. The upstream API itself remains public, no key.
 // Docs: echo.epa.gov/tools/web-services
 
 import { useQuery } from "@tanstack/react-query";
@@ -23,14 +25,13 @@ export interface ECHOFacility {
 
 export async function fetchECHOFacilities(
   county: string,
-  state: string = "MI"
+  state: string = "MI",
 ): Promise<ECHOFacility[]> {
   try {
-    const url = `https://echodata.epa.gov/echo/` +
-      `dfr_rest_services.get_facilities` +
-      `?output=JSON&p_st=${state}` +
-      `&p_county=${encodeURIComponent(county)}` +
-      `&p_act=Y&qcolumns=1,2,3,4,5,8,9,10,13,14,22,23`;
+    const url =
+      `/.netlify/functions/epa-echo-facilities` +
+      `?state=${encodeURIComponent(state)}` +
+      `&county=${encodeURIComponent(county)}`;
     const res = await fetch(url);
     if (!res.ok) return [];
     const data = await res.json();
@@ -64,9 +65,7 @@ export async function fetchECHOFacilities(
 export function useECHOFacilities(county: string | null) {
   return useQuery({
     queryKey: ["echo-facilities", county],
-    queryFn: () => county
-      ? fetchECHOFacilities(county)
-      : Promise.resolve([]),
+    queryFn: () => (county ? fetchECHOFacilities(county) : Promise.resolve([])),
     enabled: !!county,
     staleTime: 1000 * 60 * 60 * 12,
     retry: 1,
