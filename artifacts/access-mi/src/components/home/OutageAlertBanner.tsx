@@ -20,8 +20,13 @@ export default function OutageAlertBanner() {
 
   if (relevantZones.length === 0) return null;
 
-  const totalAffected = relevantZones.reduce((s, z) => s + z.customersAffected, 0);
-  const criticalCount = relevantZones.filter((z) => z.severity === "critical" || z.severity === "high").length;
+  const totalAffected = relevantZones.reduce(
+    (s, z) => s + z.customersAffected,
+    0,
+  );
+  const criticalCount = relevantZones.filter(
+    (z) => z.severity === "critical" || z.severity === "high",
+  ).length;
   const isCritical = criticalCount > 0;
 
   const label = county
@@ -38,14 +43,23 @@ export default function OutageAlertBanner() {
       <div className="container flex items-center justify-between gap-3 py-2.5">
         <div className="flex items-center gap-2 min-w-0 flex-1">
           {isCritical ? (
-            <AlertTriangle className="h-4 w-4 text-destructive shrink-0 animate-pulse" aria-hidden="true" />
+            <AlertTriangle
+              className="h-4 w-4 text-destructive shrink-0 animate-pulse"
+              aria-hidden="true"
+            />
           ) : (
-            <Zap className="h-4 w-4 text-amber-500 shrink-0" aria-hidden="true" />
+            <Zap
+              className="h-4 w-4 text-amber-500 shrink-0"
+              aria-hidden="true"
+            />
           )}
-          <p className={`text-xs font-medium truncate ${isCritical ? "text-destructive" : "text-amber-600 dark:text-amber-300"}`}>
+          <p
+            className={`text-xs font-medium truncate ${isCritical ? "text-destructive" : "text-amber-600 dark:text-amber-300"}`}
+          >
             <strong className="font-extrabold">{label}</strong>
             <span className="hidden sm:inline">
-              {" · "}{totalAffected.toLocaleString()} customers affected
+              {" · "}
+              {totalAffected.toLocaleString()} customers affected
             </span>
           </p>
         </div>
@@ -54,7 +68,7 @@ export default function OutageAlertBanner() {
             to="/outages"
             className={`inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
               isCritical
-                ? "bg-destructive/20 hover:bg-destructive/30 border border-destructive/30 text-destructive"
+                ? "bg-destructive hover:bg-destructive/90 text-destructive-foreground"
                 : "bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/30 text-amber-700 dark:text-amber-300"
             }`}
           >
