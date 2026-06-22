@@ -40,7 +40,7 @@
     --color-teal-bright: 174 76% 34%; /* #159A8C */
     --color-amber: 37 72% 56%; /* #E0A33E */
     --color-ink: 217 33% 17%; /* #1E293B */
-    --color-muted: 215 16% 47%; /* #64748B */
+    --color-muted: 215 19% 41%; /* darkened from L=47% to clear WCAG AA contrast against cloud + white backgrounds (axe color-contrast) */
     --color-cloud: 207 36% 95%; /* #EEF3F7 */
 
     /* ── UI tokens (alias the brand palette) ─────────────────────── */
@@ -90,7 +90,7 @@
     --forest-green: var(--color-teal-bright);
     --teal: var(--color-teal);
     --sky-blue: 197 68% 28%;
-    --warm-gold: 37 72% 38%; /* darkened amber for text-on-white AA */
+    --warm-gold: 37 72% 32%; /* darkened amber so white-on-warm-gold also clears AA (axe color-contrast) */
     --coral: 4 72% 45%;
     --navy: var(--color-navy-dark);
     --slate: var(--color-muted);
