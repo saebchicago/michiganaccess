@@ -174,8 +174,8 @@ function GapCallout({
     >
       <div className="w-1 h-8 bg-michigan-coral/60 rounded-full" />
       <div className="bg-michigan-coral/10 border border-michigan-coral/20 rounded-lg px-3 py-1.5">
-        <p className="text-xs text-michigan-coral font-semibold">{label}</p>
-        <p className="text-[10px] text-michigan-coral/70">{value}</p>
+        <p className="text-xs text-michigan-coral-deep font-semibold">{label}</p>
+        <p className="text-[10px] text-michigan-coral-deep/70">{value}</p>
       </div>
     </motion.div>
   );
@@ -410,11 +410,11 @@ export default function DetectionGapPage() {
             >
               <div className="rounded-xl border border-white/10 bg-white/5 p-5 space-y-4">
                 <h3 className="text-sm font-bold text-gray-200 flex items-center gap-2">
-                  <DollarSign className="h-4 w-4 text-michigan-gold" />
+                  <DollarSign className="h-4 w-4 text-michigan-gold-deep" />
                   Cost of Inaction
                   <Badge
                     variant="outline"
-                    className="text-[8px] border-michigan-gold/30 text-michigan-gold"
+                    className="text-[8px] border-michigan-gold/30 text-michigan-gold-deep"
                   >
                     Illustrative
                   </Badge>
@@ -422,10 +422,10 @@ export default function DetectionGapPage() {
 
                 <div className="space-y-3">
                   <div className="rounded-lg bg-michigan-coral/10 border border-michigan-coral/20 p-3">
-                    <p className="text-xl font-bold text-michigan-coral">
+                    <p className="text-xl font-bold text-michigan-coral-deep">
                       {fmtDollar(calc.unmetNeedsCost)}
                     </p>
-                    <p className="text-[10px] text-michigan-coral/70">
+                    <p className="text-[10px] text-michigan-coral-deep/70">
                       est. annual cost of unmet needs
                     </p>
                     <p className="text-[9px] text-gray-600 italic mt-1">
@@ -446,10 +446,10 @@ export default function DetectionGapPage() {
                   </div>
 
                   <div className="rounded-lg bg-michigan-gold/10 border border-michigan-gold/20 p-3">
-                    <p className="text-xl font-bold text-michigan-gold">
+                    <p className="text-xl font-bold text-michigan-gold-deep">
                       {fmtDollar(calc.gapCost)}
                     </p>
-                    <p className="text-[10px] text-michigan-gold/70">
+                    <p className="text-[10px] text-michigan-gold-deep/70">
                       preventable hospitalization cost
                     </p>
                     <p className="text-[9px] text-gray-600 italic mt-1">
@@ -458,10 +458,10 @@ export default function DetectionGapPage() {
                   </div>
 
                   <div className="rounded-lg bg-michigan-forest/10 border border-michigan-forest/20 p-3">
-                    <p className="text-xl font-bold text-michigan-forest">
+                    <p className="text-xl font-bold text-michigan-forest-deep">
                       {fmtDollar(calc.savings)}
                     </p>
-                    <p className="text-[10px] text-michigan-forest/70">
+                    <p className="text-[10px] text-michigan-forest-deep/70">
                       savings from connections made
                     </p>
                   </div>
@@ -469,7 +469,7 @@ export default function DetectionGapPage() {
               </div>
 
               <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-[10px] text-gray-500">
-                <AlertTriangle className="h-3 w-3 inline mr-1 text-michigan-gold" />
+                <AlertTriangle className="h-3 w-3 inline mr-1 text-michigan-gold-deep" />
                 All dollar calculations are{" "}
                 <strong className="text-gray-400">modeled estimates</strong>{" "}
                 based on published research averages. Actual costs vary by
@@ -488,7 +488,7 @@ export default function DetectionGapPage() {
           >
             <Card className="bg-michigan-forest/10 border-michigan-forest/20">
               <CardContent className="py-5 text-center">
-                <p className="text-3xl font-bold text-michigan-forest">
+                <p className="text-3xl font-bold text-michigan-forest-deep">
                   {fmt(calc.prevented)}
                 </p>
                 <p className="text-xs text-gray-400 mt-1">
@@ -508,7 +508,7 @@ export default function DetectionGapPage() {
             </Card>
             <Card className="bg-michigan-coral/10 border-michigan-coral/20">
               <CardContent className="py-5 text-center">
-                <p className="text-3xl font-bold text-michigan-coral">
+                <p className="text-3xl font-bold text-michigan-coral-deep">
                   {fmtDollar(calc.gapCost)}
                 </p>
                 <p className="text-xs text-gray-400 mt-1">lost to the gap</p>

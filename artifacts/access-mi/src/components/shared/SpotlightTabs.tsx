@@ -24,8 +24,8 @@ interface SearchableProgram {
 const CATEGORY_META: Record<string, { label: string; color: string }> = {
   Community: { label: "Community", color: "bg-primary/10 text-primary" },
   Transportation: { label: "Transportation", color: "bg-accent/10 text-accent-foreground" },
-  Energy: { label: "Energy", color: "bg-michigan-forest/10 text-michigan-forest" },
-  Environment: { label: "Environment", color: "bg-michigan-forest/10 text-michigan-forest" },
+  Energy: { label: "Energy", color: "bg-michigan-forest/10 text-michigan-forest-deep" },
+  Environment: { label: "Environment", color: "bg-michigan-forest/10 text-michigan-forest-deep" },
   Education: { label: "Education", color: "bg-primary/10 text-primary" },
   "Legal & Civic": { label: "Legal & Civic", color: "bg-accent/10 text-accent-foreground" },
   "Veterans & Seniors": { label: "Veterans & Seniors", color: "bg-primary/10 text-primary" },
@@ -214,7 +214,7 @@ function ProgramCard({ program }: { program: SearchableProgram }) {
           {/* Cost + Urgency row */}
           <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
             <span className="inline-flex items-center gap-0.5">
-              <span className="font-medium text-michigan-forest">$</span> {costLabel}
+              <span className="font-medium text-michigan-forest-deep">$</span> {costLabel}
             </span>
             <span className="text-border">·</span>
             <span>{urgency}</span>

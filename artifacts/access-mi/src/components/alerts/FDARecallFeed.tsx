@@ -85,7 +85,7 @@ export default function FDARecallFeed() {
           {hasRecalls ? (
             <AlertTriangle className="h-5 w-5 text-amber-500" />
           ) : (
-            <CheckCircle2 className="h-5 w-5 text-michigan-forest" />
+            <CheckCircle2 className="h-5 w-5 text-michigan-forest-deep" />
           )}
           Michigan Food Safety Recalls
         </h2>

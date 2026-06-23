@@ -144,9 +144,9 @@ export default function SearchTrendsPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid gap-4 grid-cols-2 md:grid-cols-4">
             {[
               { label: "Total Searches", value: data.totalSearches, icon: Search, color: "text-primary" },
-              { label: "Correction Rate", value: `${data.correctionRate}%`, icon: AlertCircle, color: "text-michigan-gold" },
+              { label: "Correction Rate", value: `${data.correctionRate}%`, icon: AlertCircle, color: "text-michigan-gold-deep" },
               { label: "Zero-Result Rate", value: `${data.zeroResultRate}%`, icon: TrendingUp, color: "text-destructive" },
-              { label: "Unique Terms", value: data.topTerms.length, icon: BarChart3, color: "text-michigan-teal" },
+              { label: "Unique Terms", value: data.topTerms.length, icon: BarChart3, color: "text-michigan-teal-deep" },
             ].map((stat, i) => (
               <motion.div key={stat.label} variants={fadeUp} custom={i}>
                 <Card>

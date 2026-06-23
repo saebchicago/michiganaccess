@@ -191,7 +191,7 @@ export default function SubstanceAbuseInsights() {
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
-          <AlertTriangle className="h-5 w-5 text-michigan-coral" />
+          <AlertTriangle className="h-5 w-5 text-michigan-coral-deep" />
         </div>
         <div>
           <h2 className="text-lg font-bold text-foreground">
@@ -205,18 +205,18 @@ export default function SubstanceAbuseInsights() {
 
       {/* Crisis strip */}
       <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 flex flex-wrap items-center gap-3 text-sm">
-        <Phone className="h-4 w-4 text-michigan-coral" />
+        <Phone className="h-4 w-4 text-michigan-coral-deep" />
         <span className="font-semibold">Need help now?</span>
         <a
           href="tel:988"
-          className="font-bold text-michigan-coral hover:underline"
+          className="font-bold text-michigan-coral-deep hover:underline"
         >
           988 Lifeline
         </a>
         <span className="text-muted-foreground">·</span>
         <a
           href="tel:18006624357"
-          className="font-bold text-michigan-coral hover:underline"
+          className="font-bold text-michigan-coral-deep hover:underline"
         >
           SAMHSA: 1-800-662-4357
         </a>
@@ -238,7 +238,7 @@ export default function SubstanceAbuseInsights() {
                 <CardContent className="p-4 flex flex-col gap-3 h-full">
                   <div className="flex items-start gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted shrink-0">
-                      <Pill className="h-5 w-5 text-michigan-coral" />
+                      <Pill className="h-5 w-5 text-michigan-coral-deep" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-sm text-foreground leading-tight">

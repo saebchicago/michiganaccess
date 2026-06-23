@@ -74,25 +74,25 @@ function Metric({
       </div>
       <div className="grid grid-cols-2 gap-2 text-center">
         <div
-          className={winner === "A" ? "text-michigan-forest font-semibold" : ""}
+          className={winner === "A" ? "text-michigan-forest-deep font-semibold" : ""}
         >
           <p className="text-sm">
             {typeof a === "number" ? a.toLocaleString() : a}
             {unit || ""}
           </p>
           {winner === "A" && (
-            <CheckCircle2 className="h-3 w-3 text-michigan-forest mx-auto" />
+            <CheckCircle2 className="h-3 w-3 text-michigan-forest-deep mx-auto" />
           )}
         </div>
         <div
-          className={winner === "B" ? "text-michigan-forest font-semibold" : ""}
+          className={winner === "B" ? "text-michigan-forest-deep font-semibold" : ""}
         >
           <p className="text-sm">
             {typeof b === "number" ? b.toLocaleString() : b}
             {unit || ""}
           </p>
           {winner === "B" && (
-            <CheckCircle2 className="h-3 w-3 text-michigan-forest mx-auto" />
+            <CheckCircle2 className="h-3 w-3 text-michigan-forest-deep mx-auto" />
           )}
         </div>
       </div>

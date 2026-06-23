@@ -31,7 +31,7 @@ export default function FoodAccessMap() {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Wheat className="h-5 w-5 text-michigan-gold" /> Food Access & Food Deserts
+            <Wheat className="h-5 w-5 text-michigan-gold-deep" /> Food Access & Food Deserts
           </CardTitle>
           <CardDescription>
             Where Michigan residents lack adequate access to affordable, nutritious food
@@ -41,7 +41,7 @@ export default function FoodAccessMap() {
           {/* Stats */}
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-border p-3 text-center">
-              <p className="text-2xl font-bold text-michigan-coral">{totalTracts}+</p>
+              <p className="text-2xl font-bold text-michigan-coral-deep">{totalTracts}+</p>
               <p className="text-xs text-muted-foreground">Food desert census tracts</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
@@ -49,14 +49,14 @@ export default function FoodAccessMap() {
               <p className="text-xs text-muted-foreground">Residents in food deserts</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
-              <p className="text-2xl font-bold text-michigan-gold">14.6%</p>
+              <p className="text-2xl font-bold text-michigan-gold-deep">14.6%</p>
               <p className="text-xs text-muted-foreground">Statewide food insecurity</p>
             </div>
           </div>
 
           {/* Insight */}
           <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 flex items-start gap-2">
-            <AlertTriangle className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />
+            <AlertTriangle className="h-4 w-4 text-michigan-coral-deep shrink-0 mt-0.5" />
             <p className="text-xs text-foreground">
               Rural counties like <strong>Lake (52%)</strong>, <strong>Oscoda (49%)</strong>, and <strong>Crawford (42%)</strong> have the highest % of population in food deserts - but <strong>Wayne County</strong> has the most food desert tracts (185) by total count.
             </p>
@@ -79,7 +79,7 @@ export default function FoodAccessMap() {
                     <td className="py-2 font-medium text-foreground">{d.county}</td>
                     <td className="py-2 text-right tabular-nums">{d.tracts}</td>
                     <td className="py-2 text-right">
-                      <span className={d.pctPop > 25 ? "text-michigan-coral font-semibold" : ""}>{d.pctPop}%</span>
+                      <span className={d.pctPop > 25 ? "text-michigan-coral-deep font-semibold" : ""}>{d.pctPop}%</span>
                     </td>
                     <td className="py-2 text-right tabular-nums">{d.snapRate}%</td>
                   </tr>

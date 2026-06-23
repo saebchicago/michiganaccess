@@ -15,7 +15,7 @@ function DeltaBadge({ value, stateAvg, direction }: { value: number; stateAvg: n
   if (pct < 5) return <Badge variant="secondary" className="text-[10px] gap-0.5 h-5"><Minus className="h-3 w-3" /> ≈ Michigan avg</Badge>;
   const isBetter = direction === "lower-is-better" ? diff < 0 : diff > 0;
   return (
-    <Badge variant={isBetter ? "outline" : "destructive"} className={`text-[10px] gap-0.5 h-5 ${isBetter ? "border-michigan-forest text-michigan-forest bg-michigan-forest/5" : ""}`}>
+    <Badge variant={isBetter ? "outline" : "destructive"} className={`text-[10px] gap-0.5 h-5 ${isBetter ? "border-michigan-forest text-michigan-forest-deep bg-michigan-forest/5" : ""}`}>
       {isBetter ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
       {isBetter ? "Better" : "Worse"} than MI avg
     </Badge>

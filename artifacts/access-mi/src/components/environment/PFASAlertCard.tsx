@@ -15,7 +15,7 @@ export default function PFASAlertCard() {
       <Card className="border-michigan-coral/20">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
-            <AlertTriangle className="h-5 w-5 text-michigan-coral" /> PFAS
+            <AlertTriangle className="h-5 w-5 text-michigan-coral-deep" /> PFAS
             Contamination
           </CardTitle>
         </CardHeader>
@@ -25,7 +25,7 @@ export default function PFASAlertCard() {
               <AnimatedCounter
                 value={250}
                 suffix="+"
-                className="text-2xl font-bold text-michigan-coral"
+                className="text-2xl font-bold text-michigan-coral-deep"
               />
               <p className="text-[10px] text-muted-foreground">
                 Active investigation sites

@@ -23,9 +23,9 @@ const MEDICAID_BENCHMARKS: Metric[] = [
 
 function getTrend(local: number, benchmark: number, lowerIsBetter: boolean) {
   const diff = lowerIsBetter ? benchmark - local : local - benchmark;
-  if (diff >= 0) return { icon: TrendingUp, color: "text-michigan-forest", label: "Meeting" };
-  if (Math.abs(diff) < (benchmark * 0.1)) return { icon: Minus, color: "text-michigan-gold", label: "Near" };
-  return { icon: TrendingDown, color: "text-michigan-coral", label: "Below" };
+  if (diff >= 0) return { icon: TrendingUp, color: "text-michigan-forest-deep", label: "Meeting" };
+  if (Math.abs(diff) < (benchmark * 0.1)) return { icon: Minus, color: "text-michigan-gold-deep", label: "Near" };
+  return { icon: TrendingDown, color: "text-michigan-coral-deep", label: "Below" };
 }
 
 export default function RegionalMetricCard() {

@@ -212,7 +212,7 @@ export default function TechnicalPage() {
                               key={item}
                               className="flex items-start gap-2 text-xs text-muted-foreground"
                             >
-                              <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" />
+                              <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest-deep" />
                               {item}
                             </li>
                           ))}
@@ -233,7 +233,7 @@ export default function TechnicalPage() {
           {/* Security */}
           <div className="mt-8 rounded-xl border-2 border-michigan-forest/20 bg-michigan-forest/5 p-6">
             <div className="flex items-center gap-2 mb-4">
-              <Shield className="h-5 w-5 text-michigan-forest" />
+              <Shield className="h-5 w-5 text-michigan-forest-deep" />
               <h3 className="text-sm font-bold text-foreground">
                 {t("technicalPage.securityTitle")}
               </h3>
@@ -244,7 +244,7 @@ export default function TechnicalPage() {
                   key={s.text}
                   className="flex items-start gap-2 text-xs text-muted-foreground"
                 >
-                  <s.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-michigan-forest" />
+                  <s.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-michigan-forest-deep" />
                   {s.text}
                 </div>
               ))}
@@ -265,7 +265,7 @@ export default function TechnicalPage() {
           >
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-                <Zap className="h-5 w-5 text-michigan-teal" />
+                <Zap className="h-5 w-5 text-michigan-teal-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">
@@ -315,7 +315,7 @@ export default function TechnicalPage() {
               >
                 <Card className="h-full hover-lift">
                   <CardContent className="pt-6">
-                    <g.icon className="mb-3 h-5 w-5 text-michigan-teal" />
+                    <g.icon className="mb-3 h-5 w-5 text-michigan-teal-deep" />
                     <h4 className="mb-1 text-sm font-bold text-foreground">
                       {t(`technicalPage.${g.titleKey}`)}
                     </h4>

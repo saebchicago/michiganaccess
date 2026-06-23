@@ -20,7 +20,7 @@ export default function VeteranResourceCard() {
               <p className="text-[10px] text-muted-foreground">Michigan veterans</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
-              <AnimatedCounter value={50.9} decimals={1} suffix="%" className="text-2xl font-bold text-michigan-gold" />
+              <AnimatedCounter value={50.9} decimals={1} suffix="%" className="text-2xl font-bold text-michigan-gold-deep" />
               <p className="text-[10px] text-muted-foreground">Aged 65+</p>
             </div>
           </div>

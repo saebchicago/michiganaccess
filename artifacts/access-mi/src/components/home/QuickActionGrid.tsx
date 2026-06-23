@@ -3,12 +3,12 @@ import { motion } from "framer-motion";
 import { Apple, ShieldCheck, FileWarning, Bus, Baby, Home, HeartPulse, Pill } from "lucide-react";
 
 const actions = [
-  { icon: Apple, label: "Find a Food Pantry", href: "/resources", color: "bg-michigan-forest/10 text-michigan-forest" },
+  { icon: Apple, label: "Find a Food Pantry", href: "/resources", color: "bg-michigan-forest/10 text-michigan-forest-deep" },
   { icon: ShieldCheck, label: "Renew Medicaid", href: "/financial-help", color: "bg-primary/10 text-primary" },
-  { icon: FileWarning, label: "Appeal a Denial", href: "/health/insurance-appeals", color: "bg-michigan-coral/10 text-michigan-coral" },
-  { icon: Bus, label: "Find a Bus Route", href: "/transportation", color: "bg-michigan-teal/10 text-michigan-teal" },
+  { icon: FileWarning, label: "Appeal a Denial", href: "/health/insurance-appeals", color: "bg-michigan-coral/10 text-michigan-coral-deep" },
+  { icon: Bus, label: "Find a Bus Route", href: "/transportation", color: "bg-michigan-teal/10 text-michigan-teal-deep" },
   { icon: HeartPulse, label: "Find Urgent Care", href: "/find-care", color: "bg-destructive/10 text-destructive" },
-  { icon: Pill, label: "Get Rx Help", href: "/financial-help", color: "bg-michigan-gold/10 text-michigan-gold" },
+  { icon: Pill, label: "Get Rx Help", href: "/financial-help", color: "bg-michigan-gold/10 text-michigan-gold-deep" },
   { icon: Home, label: "Find Housing", href: "/resources", color: "bg-michigan-navy/10 text-michigan-navy" },
   { icon: Baby, label: "Family Services", href: "/resources", color: "bg-michigan-sky/10 text-michigan-sky" },
 ];

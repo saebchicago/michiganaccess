@@ -43,11 +43,11 @@ export default function HealthCalculators() {
   // BMI calculations
   const bmi = ((bmiWeight / (bmiHeight * bmiHeight)) * 703).toFixed(1);
   const bmiCategory = parseFloat(bmi) < 18.5 ? "Underweight" : parseFloat(bmi) < 25 ? "Normal" : parseFloat(bmi) < 30 ? "Overweight" : "Obese";
-  const bmiColor = parseFloat(bmi) < 18.5 ? "text-michigan-gold" : parseFloat(bmi) < 25 ? "text-michigan-forest" : parseFloat(bmi) < 30 ? "text-michigan-gold" : "text-michigan-coral";
+  const bmiColor = parseFloat(bmi) < 18.5 ? "text-michigan-gold-deep" : parseFloat(bmi) < 25 ? "text-michigan-forest-deep" : parseFloat(bmi) < 30 ? "text-michigan-gold-deep" : "text-michigan-coral-deep";
 
   // Blood pressure calculations
   const bpCategory = systolic < 120 && diastolic < 80 ? "Normal" : systolic < 130 && diastolic < 80 ? "Elevated" : systolic < 140 || diastolic < 90 ? "High (Stage 1)" : "High (Stage 2)";
-  const bpColor = bpCategory === "Normal" ? "text-michigan-forest" : bpCategory === "Elevated" ? "text-michigan-gold" : "text-michigan-coral";
+  const bpColor = bpCategory === "Normal" ? "text-michigan-forest-deep" : bpCategory === "Elevated" ? "text-michigan-gold-deep" : "text-michigan-coral-deep";
 
   // Heart disease risk (Framingham-inspired)
   const hdRiskScore = (() => {
@@ -61,7 +61,7 @@ export default function HealthCalculators() {
     return Math.min(Math.max(Math.round(score), 1), 50);
   })();
   const hdRiskLabel = hdRiskScore < 10 ? "Low" : hdRiskScore < 20 ? "Moderate" : "High";
-  const hdRiskColor = hdRiskScore < 10 ? "text-michigan-forest" : hdRiskScore < 20 ? "text-michigan-gold" : "text-michigan-coral";
+  const hdRiskColor = hdRiskScore < 10 ? "text-michigan-forest-deep" : hdRiskScore < 20 ? "text-michigan-gold-deep" : "text-michigan-coral-deep";
 
   // Diabetes risk (ADA-inspired)
   const dbRiskScore = (() => {
@@ -75,14 +75,14 @@ export default function HealthCalculators() {
     return score;
   })();
   const dbRiskLabel = dbRiskScore <= 3 ? "Low" : dbRiskScore <= 6 ? "Moderate" : "High";
-  const dbRiskColor = dbRiskScore <= 3 ? "text-michigan-forest" : dbRiskScore <= 6 ? "text-michigan-gold" : "text-michigan-coral";
+  const dbRiskColor = dbRiskScore <= 3 ? "text-michigan-forest-deep" : dbRiskScore <= 6 ? "text-michigan-gold-deep" : "text-michigan-coral-deep";
 
   // Waist-to-hip ratio
   const whrRatio = (whrWaist / whrHip).toFixed(2);
   const whrRisk = whrGender === "male"
     ? (parseFloat(whrRatio) < 0.90 ? "Low" : parseFloat(whrRatio) < 1.0 ? "Moderate" : "High")
     : (parseFloat(whrRatio) < 0.80 ? "Low" : parseFloat(whrRatio) < 0.85 ? "Moderate" : "High");
-  const whrColor = whrRisk === "Low" ? "text-michigan-forest" : whrRisk === "Moderate" ? "text-michigan-gold" : "text-michigan-coral";
+  const whrColor = whrRisk === "Low" ? "text-michigan-forest-deep" : whrRisk === "Moderate" ? "text-michigan-gold-deep" : "text-michigan-coral-deep";
 
   // Target heart rate (Karvonen)
   const thrMax = 220 - thrAge;
@@ -101,7 +101,7 @@ export default function HealthCalculators() {
         <Card>
           <CardContent className="py-6">
             <div className="flex items-center gap-2 mb-4">
-              <Scale className="h-5 w-5 text-michigan-teal" />
+              <Scale className="h-5 w-5 text-michigan-teal-deep" />
               <h3 className="text-lg font-bold text-foreground">BMI Calculator</h3>
             </div>
             <div className="space-y-4">
@@ -120,7 +120,7 @@ export default function HealthCalculators() {
               </div>
               <div className="flex justify-between text-[10px] text-muted-foreground px-1">
                 <span>Underweight<br/>&lt;18.5</span>
-                <span className="text-michigan-forest">Normal<br/>18.5–24.9</span>
+                <span className="text-michigan-forest-deep">Normal<br/>18.5–24.9</span>
                 <span>Overweight<br/>25–29.9</span>
                 <span>Obese<br/>30+</span>
               </div>
@@ -132,7 +132,7 @@ export default function HealthCalculators() {
         <Card>
           <CardContent className="py-6">
             <div className="flex items-center gap-2 mb-4">
-              <HeartPulse className="h-5 w-5 text-michigan-coral" />
+              <HeartPulse className="h-5 w-5 text-michigan-coral-deep" />
               <h3 className="text-lg font-bold text-foreground">Blood Pressure Check</h3>
             </div>
             <div className="space-y-4">
@@ -150,10 +150,10 @@ export default function HealthCalculators() {
                 <p className={`text-sm font-semibold ${bpColor}`}>{bpCategory}</p>
               </div>
               <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
-                <p><strong className="text-michigan-forest">Normal:</strong> Below 120/80</p>
-                <p><strong className="text-michigan-gold">Elevated:</strong> 120-129 / below 80</p>
-                <p><strong className="text-michigan-coral">High Stage 1:</strong> 130-139 / 80-89</p>
-                <p><strong className="text-michigan-coral">High Stage 2:</strong> 140+ / 90+</p>
+                <p><strong className="text-michigan-forest-deep">Normal:</strong> Below 120/80</p>
+                <p><strong className="text-michigan-gold-deep">Elevated:</strong> 120-129 / below 80</p>
+                <p><strong className="text-michigan-coral-deep">High Stage 1:</strong> 130-139 / 80-89</p>
+                <p><strong className="text-michigan-coral-deep">High Stage 2:</strong> 140+ / 90+</p>
               </div>
             </div>
           </CardContent>
@@ -165,7 +165,7 @@ export default function HealthCalculators() {
         <Card>
           <CardContent className="py-6">
             <div className="flex items-center gap-2 mb-4">
-              <Heart className="h-5 w-5 text-michigan-coral" />
+              <Heart className="h-5 w-5 text-michigan-coral-deep" />
               <h3 className="text-lg font-bold text-foreground">Heart Disease Risk</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">Simplified 10-year cardiovascular risk estimate based on Framingham-style factors.</p>
@@ -202,9 +202,9 @@ export default function HealthCalculators() {
                 <p className={`text-sm font-semibold ${hdRiskColor}`}>10-Year Risk: {hdRiskLabel}</p>
               </div>
               <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
-                <p><strong className="text-michigan-forest">Low:</strong> Below 10%</p>
-                <p><strong className="text-michigan-gold">Moderate:</strong> 10–19%</p>
-                <p><strong className="text-michigan-coral">High:</strong> 20% or more</p>
+                <p><strong className="text-michigan-forest-deep">Low:</strong> Below 10%</p>
+                <p><strong className="text-michigan-gold-deep">Moderate:</strong> 10–19%</p>
+                <p><strong className="text-michigan-coral-deep">High:</strong> 20% or more</p>
               </div>
             </div>
           </CardContent>
@@ -214,7 +214,7 @@ export default function HealthCalculators() {
         <Card>
           <CardContent className="py-6">
             <div className="flex items-center gap-2 mb-4">
-              <Activity className="h-5 w-5 text-michigan-gold" />
+              <Activity className="h-5 w-5 text-michigan-gold-deep" />
               <h3 className="text-lg font-bold text-foreground">Diabetes Risk Assessment</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">Based on ADA risk factors for Type 2 diabetes. Higher scores suggest increased risk.</p>
@@ -251,9 +251,9 @@ export default function HealthCalculators() {
                 <p className={`text-sm font-semibold ${dbRiskColor}`}>Risk Level: {dbRiskLabel}</p>
               </div>
               <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
-                <p><strong className="text-michigan-forest">Low (0–3):</strong> Maintain healthy habits</p>
-                <p><strong className="text-michigan-gold">Moderate (4–6):</strong> Talk to your doctor about screening</p>
-                <p><strong className="text-michigan-coral">High (7+):</strong> Get tested - schedule an A1C test</p>
+                <p><strong className="text-michigan-forest-deep">Low (0–3):</strong> Maintain healthy habits</p>
+                <p><strong className="text-michigan-gold-deep">Moderate (4–6):</strong> Talk to your doctor about screening</p>
+                <p><strong className="text-michigan-coral-deep">High (7+):</strong> Get tested - schedule an A1C test</p>
               </div>
             </div>
           </CardContent>
@@ -265,7 +265,7 @@ export default function HealthCalculators() {
         <Card>
           <CardContent className="py-6">
             <div className="flex items-center gap-2 mb-4">
-              <Scale className="h-5 w-5 text-michigan-forest" />
+              <Scale className="h-5 w-5 text-michigan-forest-deep" />
               <h3 className="text-lg font-bold text-foreground">Waist-to-Hip Ratio</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">A key indicator of cardiovascular and metabolic risk. Measures fat distribution around your midsection.</p>
@@ -294,15 +294,15 @@ export default function HealthCalculators() {
               <div className="text-xs text-muted-foreground space-y-1 bg-muted/40 rounded-lg p-3">
                 {whrGender === "male" ? (
                   <>
-                    <p><strong className="text-michigan-forest">Low:</strong> Below 0.90</p>
-                    <p><strong className="text-michigan-gold">Moderate:</strong> 0.90–0.99</p>
-                    <p><strong className="text-michigan-coral">High:</strong> 1.00 or above</p>
+                    <p><strong className="text-michigan-forest-deep">Low:</strong> Below 0.90</p>
+                    <p><strong className="text-michigan-gold-deep">Moderate:</strong> 0.90–0.99</p>
+                    <p><strong className="text-michigan-coral-deep">High:</strong> 1.00 or above</p>
                   </>
                 ) : (
                   <>
-                    <p><strong className="text-michigan-forest">Low:</strong> Below 0.80</p>
-                    <p><strong className="text-michigan-gold">Moderate:</strong> 0.80–0.84</p>
-                    <p><strong className="text-michigan-coral">High:</strong> 0.85 or above</p>
+                    <p><strong className="text-michigan-forest-deep">Low:</strong> Below 0.80</p>
+                    <p><strong className="text-michigan-gold-deep">Moderate:</strong> 0.80–0.84</p>
+                    <p><strong className="text-michigan-coral-deep">High:</strong> 0.85 or above</p>
                   </>
                 )}
               </div>
@@ -314,7 +314,7 @@ export default function HealthCalculators() {
         <Card>
           <CardContent className="py-6">
             <div className="flex items-center gap-2 mb-4">
-              <HeartPulse className="h-5 w-5 text-michigan-coral" />
+              <HeartPulse className="h-5 w-5 text-michigan-coral-deep" />
               <h3 className="text-lg font-bold text-foreground">Target Heart Rate Zones</h3>
             </div>
             <p className="text-xs text-muted-foreground mb-4">Karvonen method - personalized training zones based on your age and resting heart rate.</p>
@@ -335,7 +335,7 @@ export default function HealthCalculators() {
               <div className="space-y-2 bg-muted/40 rounded-lg p-3">
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="text-sm font-semibold text-michigan-forest">Moderate Zone (50–70%)</p>
+                    <p className="text-sm font-semibold text-michigan-forest-deep">Moderate Zone (50–70%)</p>
                     <p className="text-xs text-muted-foreground">Walking, light jogging, cycling</p>
                   </div>
                   <p className="text-sm font-bold text-foreground">{thrModLow}–{thrModHigh} bpm</p>
@@ -343,7 +343,7 @@ export default function HealthCalculators() {
                 <Separator />
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="text-sm font-semibold text-michigan-coral">Vigorous Zone (70–85%)</p>
+                    <p className="text-sm font-semibold text-michigan-coral-deep">Vigorous Zone (70–85%)</p>
                     <p className="text-xs text-muted-foreground">Running, HIIT, swimming laps</p>
                   </div>
                   <p className="text-sm font-bold text-foreground">{thrVigLow}–{thrVigHigh} bpm</p>

@@ -111,7 +111,7 @@ export default function CityRanker() {
             <motion.div key={c.city} layout initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.02 }}>
               <Link to={`/county/${c.county.toLowerCase().replace(/\s+/g, "-")}`} className="flex items-center gap-2 rounded-lg border border-border p-2 min-h-[44px] hover:bg-muted/50 transition-colors">
                 <span className="text-xs font-bold text-muted-foreground w-5 text-right">#{i + 1}</span>
-                {i === 0 && <Trophy className="h-3 w-3 text-michigan-gold" />}
+                {i === 0 && <Trophy className="h-3 w-3 text-michigan-gold-deep" />}
                 <span className="text-xs font-medium text-foreground flex-1">
                   {c.city} <span className="text-muted-foreground font-normal">({c.county} Co.)</span>
                 </span>

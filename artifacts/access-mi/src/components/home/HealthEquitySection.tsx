@@ -56,7 +56,7 @@ export default function HealthEquitySection() {
         >
           <div className="flex items-center gap-2 mb-4">
             <h3 className="text-sm font-semibold text-foreground">Safety-Net Clinic Visibility: Before → After Platform</h3>
-            <Badge variant="outline" className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold">Illustrative</Badge>
+            <Badge variant="outline" className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold-deep">Illustrative</Badge>
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
             <div className="space-y-2">

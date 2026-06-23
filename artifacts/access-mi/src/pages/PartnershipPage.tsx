@@ -62,7 +62,7 @@ export default function PartnershipPage() {
         <Breadcrumbs items={[{ label: t("partnership.title") }]} />
         <section className="py-20">
           <div className="container max-w-lg text-center">
-            <CheckCircle2 className="mx-auto h-16 w-16 text-michigan-forest mb-4" />
+            <CheckCircle2 className="mx-auto h-16 w-16 text-michigan-forest-deep mb-4" />
             <h1 className="text-2xl font-bold mb-2">{t("partnership.success")}</h1>
             <p className="text-muted-foreground">We'll review your submission and reach out if we have questions.</p>
           </div>

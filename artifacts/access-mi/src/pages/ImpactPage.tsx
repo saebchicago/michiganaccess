@@ -91,7 +91,7 @@ const caseStudies = [
     icon: Brain,
     title: "Closing Mental Health Access Gaps",
     subtitle: "Exploratory Analysis - Northern Michigan",
-    color: "text-michigan-coral",
+    color: "text-michigan-coral-deep",
     bgColor: "bg-michigan-coral/5 border-michigan-coral/20",
     challenge:
       "Northern Michigan counties show 35% higher depression rates but 60% fewer mental health providers per capita than state average.",
@@ -130,7 +130,7 @@ const caseStudies = [
     icon: Bus,
     title: "Transportation as Health Infrastructure",
     subtitle: "Exploratory Analysis - Transit-Health Intersection",
-    color: "text-michigan-teal",
+    color: "text-michigan-teal-deep",
     bgColor: "bg-michigan-teal/5 border-michigan-teal/20",
     challenge:
       "An estimated 23% of missed medical appointments are attributed to transportation barriers nationally. Transit data remains siloed from health facility data in most Michigan communities.",
@@ -228,7 +228,7 @@ export default function ImpactPage() {
             animate="visible"
             variants={fade}
             custom={0}
-            className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest"
+            className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest-deep"
           >
             Impact & Technology
           </motion.span>
@@ -331,7 +331,7 @@ export default function ImpactPage() {
           className="rounded-xl border-2 border-michigan-gold/30 bg-michigan-gold/5 p-5"
         >
           <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
+            <AlertTriangle className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold-deep" />
             <div>
               <p className="text-sm font-semibold text-foreground mb-1">
                 Exploratory Case Studies
@@ -374,7 +374,7 @@ export default function ImpactPage() {
                   </h2>
                   <Badge
                     variant="outline"
-                    className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold"
+                    className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold-deep"
                   >
                     Illustrative
                   </Badge>
@@ -436,7 +436,7 @@ export default function ImpactPage() {
                     key={s}
                     className="flex items-start gap-2 text-xs text-muted-foreground"
                   >
-                    <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-michigan-forest" />{" "}
+                    <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-michigan-forest-deep" />{" "}
                     {s}
                   </li>
                 ))}
@@ -468,7 +468,7 @@ export default function ImpactPage() {
         >
           <div className="flex items-center gap-3 mb-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-              <Activity className="h-5 w-5 text-michigan-teal" />
+              <Activity className="h-5 w-5 text-michigan-teal-deep" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-foreground">
@@ -479,7 +479,7 @@ export default function ImpactPage() {
               </p>
             </div>
           </div>
-          <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">
+          <Badge className="bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20 text-[10px]">
             Cross-Sector Analysis
           </Badge>
         </motion.div>
@@ -496,7 +496,7 @@ export default function ImpactPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-3">
                   <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-michigan-coral" />
+                    <AlertTriangle className="h-4 w-4 text-michigan-coral-deep" />
                     The Connection
                   </h4>
                   <p className="text-xs text-muted-foreground leading-relaxed">
@@ -513,7 +513,7 @@ export default function ImpactPage() {
                 </div>
                 <div className="space-y-3">
                   <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
-                    <Target className="h-4 w-4 text-michigan-teal" />
+                    <Target className="h-4 w-4 text-michigan-teal-deep" />
                     What Access Michigan Can Now Overlay
                   </h4>
                   <ul className="space-y-1.5">
@@ -527,7 +527,7 @@ export default function ImpactPage() {
                         key={item}
                         className="flex items-start gap-2 text-xs text-muted-foreground"
                       >
-                        <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" />
+                        <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest-deep" />
                         {item}
                       </li>
                     ))}
@@ -543,7 +543,7 @@ export default function ImpactPage() {
 
               <div className="space-y-3">
                 <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
-                  <Lightbulb className="h-4 w-4 text-michigan-gold" />
+                  <Lightbulb className="h-4 w-4 text-michigan-gold-deep" />
                   The "Last 100 Feet" Problem
                 </h4>
                 <p className="text-xs text-muted-foreground leading-relaxed">
@@ -555,7 +555,7 @@ export default function ImpactPage() {
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-lg border border-michigan-teal/20 bg-background p-3">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-teal mb-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-teal-deep mb-1">
                       Wayne County (Has Sidewalk Data)
                     </p>
                     <ul className="text-[11px] text-muted-foreground space-y-1">
@@ -566,7 +566,7 @@ export default function ImpactPage() {
                     </ul>
                   </div>
                   <div className="rounded-lg border border-michigan-coral/20 bg-background p-3">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-coral mb-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-coral-deep mb-1">
                       Rural County (Zero Data)
                     </p>
                     <ul className="text-[11px] text-muted-foreground space-y-1">

@@ -51,7 +51,7 @@ export default function EnergyPriceTracker() {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
-          <Zap className="h-5 w-5 text-michigan-gold" />
+          <Zap className="h-5 w-5 text-michigan-gold-deep" />
           Live Electricity Prices - Michigan vs. National
         </CardTitle>
         <CardDescription>
@@ -75,8 +75,8 @@ export default function EnergyPriceTracker() {
           </div>
           <div className="rounded-lg border border-border p-3 text-center">
             <div className="flex items-center justify-center gap-1">
-              {isAbove && <TrendingUp className="h-4 w-4 text-michigan-coral" />}
-              <p className={`text-2xl font-bold ${isAbove ? "text-michigan-coral" : "text-michigan-forest"}`}>
+              {isAbove && <TrendingUp className="h-4 w-4 text-michigan-coral-deep" />}
+              <p className={`text-2xl font-bold ${isAbove ? "text-michigan-coral-deep" : "text-michigan-forest-deep"}`}>
                 {isAbove ? "+" : ""}{diff}¢
               </p>
             </div>
@@ -87,7 +87,7 @@ export default function EnergyPriceTracker() {
         </div>
 
         {isAbove && (
-          <Badge variant="outline" className="text-[10px] border-michigan-coral/30 text-michigan-coral">
+          <Badge variant="outline" className="text-[10px] border-michigan-coral/30 text-michigan-coral-deep">
             Michigan residential rates are {diff}¢/kWh above the national average
           </Badge>
         )}

@@ -663,7 +663,7 @@ export default function DataAndInsightsPage() {
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Heart className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />{" "}
+                      <Heart className="h-4 w-4 text-michigan-coral-deep shrink-0 mt-0.5" />{" "}
                       <span>
                         <strong>Equity metrics</strong> - infant mortality
                         disparities, rural vs. urban gaps, shortage area
@@ -671,14 +671,14 @@ export default function DataAndInsightsPage() {
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <MapPin className="h-4 w-4 text-michigan-teal shrink-0 mt-0.5" />{" "}
+                      <MapPin className="h-4 w-4 text-michigan-teal-deep shrink-0 mt-0.5" />{" "}
                       <span>
                         <strong>Facility data</strong> - hospitals, clinics,
                         FQHCs, provider counts by county and specialty
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <FileText className="h-4 w-4 text-michigan-gold shrink-0 mt-0.5" />{" "}
+                      <FileText className="h-4 w-4 text-michigan-gold-deep shrink-0 mt-0.5" />{" "}
                       <span>
                         <strong>Community programs</strong>:{" "}
                         {RESOURCE_COUNT_DISPLAY} verified resources across 10+

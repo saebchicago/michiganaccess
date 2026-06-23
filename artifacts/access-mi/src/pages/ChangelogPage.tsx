@@ -33,8 +33,8 @@ interface ChangelogEntry {
 
 const TAG_STYLES: Record<string, string> = {
   feature: "bg-primary/10 text-primary border-primary/20",
-  data: "bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20",
-  improvement: "bg-michigan-gold/10 text-michigan-gold border-michigan-gold/20",
+  data: "bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20",
+  improvement: "bg-michigan-gold/10 text-michigan-gold-deep border-michigan-gold/20",
 };
 
 const entries: ChangelogEntry[] = [

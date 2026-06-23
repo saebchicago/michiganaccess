@@ -96,7 +96,7 @@ const EnergySpotlights = () => {
                 <Card className="h-full hover-lift">
                   <CardContent className="p-5 space-y-3 flex flex-col h-full">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10 text-michigan-forest shrink-0">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10 text-michigan-forest-deep shrink-0">
                         {program.icon}
                       </div>
                       <h3 className="font-semibold text-sm text-foreground leading-snug">{program.title}</h3>

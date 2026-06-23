@@ -8,7 +8,7 @@ const TransportationCallout = () => (
     <CardContent className="py-4">
       <div className="flex items-start gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10 flex-shrink-0">
-          <Bus className="h-5 w-5 text-michigan-teal" />
+          <Bus className="h-5 w-5 text-michigan-teal-deep" />
         </div>
         <div className="flex-1">
           <h3 className="text-sm font-semibold text-foreground">Need Transportation?</h3>

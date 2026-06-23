@@ -67,7 +67,7 @@ const InstallPage = () => {
         {/* Install button (Android/Desktop) */}
         {installed ? (
           <div className="mb-10 flex items-center justify-center gap-2 rounded-xl border border-border bg-card p-5 text-center">
-            <CheckCircle2 className="h-6 w-6 text-michigan-forest" />
+            <CheckCircle2 className="h-6 w-6 text-michigan-forest-deep" />
             <span className="font-semibold text-foreground">Access Michigan is installed on this device!</span>
           </div>
         ) : deferredPrompt ? (

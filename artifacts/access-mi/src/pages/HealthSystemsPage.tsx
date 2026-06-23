@@ -122,7 +122,7 @@ function HealthSystemContactForm() {
     return (
       <Card className="border-michigan-teal/20 bg-michigan-teal/5">
         <CardContent className="py-12 text-center space-y-3">
-          <CheckCircle2 className="mx-auto h-12 w-12 text-michigan-teal" />
+          <CheckCircle2 className="mx-auto h-12 w-12 text-michigan-teal-deep" />
           <h3 className="text-xl font-bold text-foreground">
             Inquiry Received
           </h3>
@@ -139,7 +139,7 @@ function HealthSystemContactForm() {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Building2 className="h-5 w-5 text-michigan-teal" />
+          <Building2 className="h-5 w-5 text-michigan-teal-deep" />
           Schedule a Partnership Discussion
         </CardTitle>
         <p className="text-sm text-muted-foreground">
@@ -276,7 +276,7 @@ export default function HealthSystemsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center space-y-4 max-w-3xl mx-auto"
         >
-          <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20">
+          <Badge className="bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20">
             <Heart className="h-3 w-3 mr-1" />
             For Healthcare Organizations
           </Badge>
@@ -322,7 +322,7 @@ export default function HealthSystemsPage() {
             >
               <Card className="h-full hover-lift border-michigan-teal/10">
                 <CardContent className="pt-6 space-y-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10 text-michigan-teal">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10 text-michigan-teal-deep">
                     <item.icon className="h-5 w-5" />
                   </div>
                   <h3 className="font-semibold text-foreground">
@@ -370,10 +370,10 @@ export default function HealthSystemsPage() {
                 >
                   <Card className="h-full text-center border-michigan-teal/10 bg-background">
                     <CardContent className="pt-6 space-y-3">
-                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-michigan-teal/10 text-michigan-teal font-bold text-lg">
+                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-michigan-teal/10 text-michigan-teal-deep font-bold text-lg">
                         {ws.step}
                       </div>
-                      <ws.icon className="mx-auto h-5 w-5 text-michigan-teal/70" />
+                      <ws.icon className="mx-auto h-5 w-5 text-michigan-teal-deep/70" />
                       <h3 className="font-semibold text-sm text-foreground">
                         {ws.title}
                       </h3>
@@ -396,7 +396,7 @@ export default function HealthSystemsPage() {
               "Open Methodology",
             ].map((std) => (
               <Badge key={std} variant="outline" className="text-xs">
-                <Shield className="h-3 w-3 mr-1 text-michigan-teal" />
+                <Shield className="h-3 w-3 mr-1 text-michigan-teal-deep" />
                 {std}
               </Badge>
             ))}

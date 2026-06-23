@@ -37,7 +37,7 @@ export default function DrugRecallAlerts() {
           {hasRecalls ? (
             <AlertTriangle className="h-5 w-5 text-red-600" />
           ) : (
-            <CheckCircle2 className="h-5 w-5 text-michigan-forest" />
+            <CheckCircle2 className="h-5 w-5 text-michigan-forest-deep" />
           )}
           {hasRecalls ? `${data!.length} Active Class I Drug Recall${data!.length > 1 ? "s" : ""}` : "No active Class I drug recalls. Class I = risk of death or serious injury."}
         </CardTitle>

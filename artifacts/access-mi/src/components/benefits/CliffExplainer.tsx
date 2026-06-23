@@ -33,7 +33,7 @@ export function CliffExplainer() {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
           <TrendingUp
-            className="h-5 w-5 text-michigan-gold"
+            className="h-5 w-5 text-michigan-gold-deep"
             aria-hidden="true"
           />
           Will a raise help?
@@ -113,7 +113,7 @@ export function CliffExplainer() {
           <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-3">
             <div className="flex items-start gap-3 flex-wrap">
               <BarChart3
-                className="mt-0.5 h-5 w-5 shrink-0 text-michigan-teal"
+                className="mt-0.5 h-5 w-5 shrink-0 text-michigan-teal-deep"
                 aria-hidden="true"
               />
               <div className="flex-1 min-w-0 space-y-1">
@@ -162,7 +162,7 @@ export function CliffExplainer() {
             className="flex items-center gap-2 text-sm font-semibold text-foreground"
           >
             <AlertCircle
-              className="h-4 w-4 text-michigan-gold"
+              className="h-4 w-4 text-michigan-gold-deep"
               aria-hidden="true"
             />
             Disclaimer

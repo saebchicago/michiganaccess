@@ -133,7 +133,7 @@ const CommunityProgramSpotlights = () => {
                 <CarouselItem key={program.title} className="md:basis-1/2 lg:basis-1/3">
                   <Card className="h-full hover-lift relative">
                     {recent && (
-                      <Badge className="absolute top-2 right-2 bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px] px-1.5 py-0">
+                      <Badge className="absolute top-2 right-2 bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px] px-1.5 py-0">
                         <CheckCircle2 className="h-3 w-3 mr-0.5" />
                         Updated recently
                       </Badge>

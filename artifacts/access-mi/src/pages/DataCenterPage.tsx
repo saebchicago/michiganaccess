@@ -167,14 +167,14 @@ const energyDemandSplit = [
 ];
 
 const statusColors: Record<string, string> = {
-  "MPSC approved": "bg-michigan-forest/10 text-michigan-forest",
-  "Conditional approval": "bg-michigan-gold/10 text-michigan-gold",
-  "Preliminary approved": "bg-michigan-teal/10 text-michigan-teal",
-  Approved: "bg-michigan-forest/10 text-michigan-forest",
+  "MPSC approved": "bg-michigan-forest/10 text-michigan-forest-deep",
+  "Conditional approval": "bg-michigan-gold/10 text-michigan-gold-deep",
+  "Preliminary approved": "bg-michigan-teal/10 text-michigan-teal-deep",
+  Approved: "bg-michigan-forest/10 text-michigan-forest-deep",
   "Phase 3": "bg-primary/10 text-primary",
-  Rezoning: "bg-michigan-gold/10 text-michigan-gold",
+  Rezoning: "bg-michigan-gold/10 text-michigan-gold-deep",
   Planning: "bg-muted text-muted-foreground",
-  "Construction Q1 2026": "bg-michigan-coral/10 text-michigan-coral",
+  "Construction Q1 2026": "bg-michigan-coral/10 text-michigan-coral-deep",
 };
 
 /* ── Component ───────────────────────────────────────────────────────── */
@@ -374,7 +374,7 @@ const DataCenterPage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <Zap className="h-5 w-5 text-michigan-gold" /> Capacity by
+                  <Zap className="h-5 w-5 text-michigan-gold-deep" /> Capacity by
                   Project (GW)
                 </CardTitle>
                 <CardDescription>
@@ -414,7 +414,7 @@ const DataCenterPage = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <TrendingUp className="h-5 w-5 text-michigan-coral" />{" "}
+                  <TrendingUp className="h-5 w-5 text-michigan-coral-deep" />{" "}
                   Projected Energy Demand Split
                 </CardTitle>
                 <CardDescription>
@@ -456,7 +456,7 @@ const DataCenterPage = () => {
           custom={0}
         >
           <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-            <Zap className="h-5 w-5 text-michigan-gold" /> Energy Demand
+            <Zap className="h-5 w-5 text-michigan-gold-deep" /> Energy Demand
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -568,7 +568,7 @@ const DataCenterPage = () => {
           <Card className="border-michigan-coral/20 bg-michigan-coral/5">
             <CardContent className="p-6">
               <div className="flex items-start gap-3 mb-4">
-                <AlertTriangle className="h-6 w-6 shrink-0 text-michigan-coral mt-0.5" />
+                <AlertTriangle className="h-6 w-6 shrink-0 text-michigan-coral-deep mt-0.5" />
                 <div>
                   <h2 className="text-lg font-bold text-foreground">
                     Environmental Concerns
@@ -581,7 +581,7 @@ const DataCenterPage = () => {
               </div>
               <div className="grid gap-4 sm:grid-cols-3">
                 <div className="rounded-lg bg-background border border-border p-4">
-                  <Droplets className="h-5 w-5 text-michigan-teal mb-2" />
+                  <Droplets className="h-5 w-5 text-michigan-teal-deep mb-2" />
                   <h3 className="font-semibold text-sm text-foreground mb-1">
                     Water Usage
                   </h3>
@@ -592,7 +592,7 @@ const DataCenterPage = () => {
                   </p>
                 </div>
                 <div className="rounded-lg bg-background border border-border p-4">
-                  <Zap className="h-5 w-5 text-michigan-gold mb-2" />
+                  <Zap className="h-5 w-5 text-michigan-gold-deep mb-2" />
                   <h3 className="font-semibold text-sm text-foreground mb-1">
                     Grid Impact
                   </h3>
@@ -602,7 +602,7 @@ const DataCenterPage = () => {
                   </p>
                 </div>
                 <div className="rounded-lg bg-background border border-border p-4">
-                  <MapPin className="h-5 w-5 text-michigan-forest mb-2" />
+                  <MapPin className="h-5 w-5 text-michigan-forest-deep mb-2" />
                   <h3 className="font-semibold text-sm text-foreground mb-1">
                     Land Use
                   </h3>

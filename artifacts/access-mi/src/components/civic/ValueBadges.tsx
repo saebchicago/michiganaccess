@@ -27,7 +27,7 @@ export default function ValueBadges({ specialty, boardCertified, yearsExperience
       label: "Sepsis Follow-Up",
       tooltip: "MVC PY 2026-2027: 14-day post-sepsis follow-up rate (value metric, 4pts total). Covers BCBSM PPO, BCN, Medicare FFS, MI Medicaid.",
       icon: HeartPulse,
-      color: "bg-michigan-coral/10 text-michigan-coral border-michigan-coral/20",
+      color: "bg-michigan-coral/10 text-michigan-coral-deep border-michigan-coral/20",
     });
   }
 
@@ -37,7 +37,7 @@ export default function ValueBadges({ specialty, boardCertified, yearsExperience
       label: "Cardiac Rehab",
       tooltip: "MVC PY 2026-2027: Cardiac rehabilitation participation rate (value metric, 4pts total). Covers BCBSM PPO, BCN, Medicare FFS, MI Medicaid.",
       icon: Activity,
-      color: "bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20",
+      color: "bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20",
     });
   }
 
@@ -47,7 +47,7 @@ export default function ValueBadges({ specialty, boardCertified, yearsExperience
       label: "Health Equity",
       tooltip: "MVC PY 2026-2027: NEW health equity measure (1pt). Addresses disparities in care quality across demographic groups.",
       icon: Scale,
-      color: "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20",
+      color: "bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20",
     });
   }
 
@@ -57,7 +57,7 @@ export default function ValueBadges({ specialty, boardCertified, yearsExperience
       label: "VBC Leader",
       tooltip: "Value-based care excellence: Board-certified, 10+ years experience. MVC 10-point scoring: spending (3pts) + value (4pts) + equity (1pt) + engagement (2pts).",
       icon: Award,
-      color: "bg-michigan-gold/10 text-michigan-gold border-michigan-gold/20",
+      color: "bg-michigan-gold/10 text-michigan-gold-deep border-michigan-gold/20",
     });
   }
 

@@ -412,7 +412,7 @@ export default function FOIARequestBuilder() {
           <AccordionItem value="tips">
             <AccordionTrigger className="text-sm">
               <span className="flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-michigan-gold" />
+                <AlertTriangle className="h-4 w-4 text-michigan-gold-deep" />
                 FOIA Tips & Your Rights
               </span>
             </AccordionTrigger>

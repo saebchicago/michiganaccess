@@ -18,7 +18,7 @@ export default function TransportationSafetyCallout() {
             <CardContent className="py-5">
               <div className="flex items-start gap-4">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-michigan-teal/10">
-                  <ShieldCheck className="h-6 w-6 text-michigan-teal" />
+                  <ShieldCheck className="h-6 w-6 text-michigan-teal-deep" />
                 </div>
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center gap-2">

@@ -31,7 +31,7 @@ export default function RentAffordabilityCard({ zip }: RentAffordabilityCardProp
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Home className="h-5 w-5 text-michigan-teal" />
+            <Home className="h-5 w-5 text-michigan-teal-deep" />
             Rental Affordability - {zip}
           </CardTitle>
         </CardHeader>

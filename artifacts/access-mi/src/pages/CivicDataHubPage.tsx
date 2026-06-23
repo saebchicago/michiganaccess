@@ -54,10 +54,10 @@ const DATA_CATALOG: CatalogEntry[] = [
 
 const DOMAIN_COLORS: Record<string, string> = {
   Health: "bg-primary/10 text-primary",
-  Social: "bg-michigan-gold/10 text-michigan-gold",
-  Environment: "bg-michigan-forest/10 text-michigan-forest",
-  Safety: "bg-michigan-coral/10 text-michigan-coral",
-  Infrastructure: "bg-michigan-teal/10 text-michigan-teal",
+  Social: "bg-michigan-gold/10 text-michigan-gold-deep",
+  Environment: "bg-michigan-forest/10 text-michigan-forest-deep",
+  Safety: "bg-michigan-coral/10 text-michigan-coral-deep",
+  Infrastructure: "bg-michigan-teal/10 text-michigan-teal-deep",
   Civic: "bg-michigan-navy/10 text-michigan-navy",
 };
 

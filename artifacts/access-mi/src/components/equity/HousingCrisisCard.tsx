@@ -9,13 +9,13 @@ export default function HousingCrisisCard() {
       <Card className="border-michigan-coral/20">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Home className="h-5 w-5 text-michigan-coral" /> Housing Crisis
+            <Home className="h-5 w-5 text-michigan-coral-deep" /> Housing Crisis
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-border p-3 text-center">
-              <AnimatedCounter value={31211} className="text-2xl font-bold text-michigan-coral" />
+              <AnimatedCounter value={31211} className="text-2xl font-bold text-michigan-coral-deep" />
               <p className="text-[10px] text-muted-foreground">Experienced homelessness (2024)</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
@@ -23,7 +23,7 @@ export default function HousingCrisisCard() {
               <p className="text-[10px] text-muted-foreground">Black households more likely</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
-              <AnimatedCounter value={127895} suffix="+" className="text-2xl font-bold text-michigan-gold" />
+              <AnimatedCounter value={127895} suffix="+" className="text-2xl font-bold text-michigan-gold-deep" />
               <p className="text-[10px] text-muted-foreground">Affordable rental units short</p>
             </div>
           </div>

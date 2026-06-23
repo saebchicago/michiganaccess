@@ -243,7 +243,7 @@ export default function WaterSafetyPage() {
         <Card>
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
-              <Shield className="h-4 w-4 text-michigan-forest" />
+              <Shield className="h-4 w-4 text-michigan-forest-deep" />
               Michigan PFAS Standards vs. Federal
             </CardTitle>
             <p className="text-xs text-muted-foreground">Michigan set the nation's most protective PFAS groundwater standards on Aug 3, 2020. Federal MCLs established April 2024.</p>
@@ -262,7 +262,7 @@ export default function WaterSafetyPage() {
                 {PFAS_STANDARDS.map(s => (
                   <tr key={s.contaminant} className="border-b border-border/40">
                     <td className="py-2 pr-4 font-medium">{s.contaminant}</td>
-                    <td className="py-2 pr-4 tabular-nums font-semibold text-michigan-forest">{s.michigan}</td>
+                    <td className="py-2 pr-4 tabular-nums font-semibold text-michigan-forest-deep">{s.michigan}</td>
                     <td className="py-2 pr-4 tabular-nums">{s.federal}</td>
                     <td className="py-2 text-[10px] text-muted-foreground">{s.source}</td>
                   </tr>

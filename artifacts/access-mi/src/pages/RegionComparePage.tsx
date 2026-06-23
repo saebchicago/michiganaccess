@@ -327,7 +327,7 @@ export default function RegionComparePage() {
                                   const diff = m ? m.numericAvg - benchVal : null;
                                   return (
                                     <td key={region.id} className="py-2.5 text-center">
-                                      <span className={`text-xs font-semibold ${diff && diff > 0 ? "text-destructive" : "text-michigan-forest"}`}>
+                                      <span className={`text-xs font-semibold ${diff && diff > 0 ? "text-destructive" : "text-michigan-forest-deep"}`}>
                                         {diff !== null ? `${diff > 0 ? "+" : ""}${diff.toFixed(1)} pts` : "-"}
                                       </span>
                                     </td>
@@ -370,10 +370,10 @@ export default function RegionComparePage() {
                                 const isMax = count === max && count > 0;
                                 return (
                                   <td key={region.id} className="py-2.5 text-center">
-                                    <span className={`text-xs font-semibold ${isMax ? "text-michigan-forest" : count === 0 ? "text-muted-foreground" : "text-foreground"}`}>
+                                    <span className={`text-xs font-semibold ${isMax ? "text-michigan-forest-deep" : count === 0 ? "text-muted-foreground" : "text-foreground"}`}>
                                       {count}
                                     </span>
-                                    {isMax && count > 0 && <span className="text-[9px] text-michigan-forest ml-1">★</span>}
+                                    {isMax && count > 0 && <span className="text-[9px] text-michigan-forest-deep ml-1">★</span>}
                                   </td>
                                 );
                               })}

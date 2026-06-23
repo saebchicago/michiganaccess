@@ -562,7 +562,7 @@ export default function NarcanLocator() {
     >
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-michigan-coral/10">
-          <Pill className="h-5 w-5 text-michigan-coral" />
+          <Pill className="h-5 w-5 text-michigan-coral-deep" />
         </div>
         <div>
           <h2 className="text-xl font-bold text-foreground">
@@ -579,7 +579,7 @@ export default function NarcanLocator() {
       <Card className="border-michigan-coral/20 bg-michigan-coral/5">
         <CardContent className="py-3">
           <div className="flex items-start gap-2">
-            <AlertTriangle className="h-4 w-4 text-michigan-coral mt-0.5 flex-shrink-0" />
+            <AlertTriangle className="h-4 w-4 text-michigan-coral-deep mt-0.5 flex-shrink-0" />
             <p className="text-sm text-foreground leading-relaxed">
               <strong>Michigan Standing Order:</strong> Under Michigan law,
               naloxone (Narcan) is available at any pharmacy without a personal
@@ -609,7 +609,7 @@ export default function NarcanLocator() {
           <motion.div key={s.label} variants={fadeUp} custom={i + 1}>
             <Card>
               <CardContent className="py-3 text-center">
-                <s.icon className="h-4 w-4 mx-auto mb-1 text-michigan-teal" />
+                <s.icon className="h-4 w-4 mx-auto mb-1 text-michigan-teal-deep" />
                 <p className="text-xl font-bold text-foreground">{s.value}</p>
                 <p className="text-xs text-muted-foreground">{s.label}</p>
               </CardContent>
@@ -716,7 +716,7 @@ export default function NarcanLocator() {
                     <CardContent className="py-3">
                       <div className="flex items-start gap-3">
                         <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg bg-michigan-teal/10 flex-shrink-0 mt-0.5">
-                          <Pill className="h-4 w-4 text-michigan-teal" />
+                          <Pill className="h-4 w-4 text-michigan-teal-deep" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -729,7 +729,7 @@ export default function NarcanLocator() {
                               {typeStyle.label}
                             </Badge>
                             {loc.isFree && (
-                              <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">
+                              <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">
                                 Free
                               </Badge>
                             )}

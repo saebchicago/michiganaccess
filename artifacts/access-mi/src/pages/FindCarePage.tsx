@@ -111,19 +111,19 @@ const QUICK_LINKS: {
     label: "Mental Health",
     value: "mental-health",
     icon: Brain,
-    color: "bg-michigan-teal/10 text-michigan-teal",
+    color: "bg-michigan-teal/10 text-michigan-teal-deep",
   },
   {
     label: "Food Assistance",
     value: "food",
     icon: Heart,
-    color: "bg-michigan-coral/10 text-michigan-coral",
+    color: "bg-michigan-coral/10 text-michigan-coral-deep",
   },
   {
     label: "Help Paying Bills",
     value: "financial",
     icon: DollarSign,
-    color: "bg-michigan-gold/10 text-michigan-gold",
+    color: "bg-michigan-gold/10 text-michigan-gold-deep",
   },
 ];
 

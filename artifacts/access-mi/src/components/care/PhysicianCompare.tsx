@@ -18,7 +18,7 @@ function PhysicianCard({ doc }: { doc: PhysicianData }) {
           <p className="text-xs text-primary">{doc.specialty}</p>
         </div>
         {doc.acceptsMedicare && (
-          <Badge variant="outline" className="text-[9px] border-michigan-forest/30 text-michigan-forest shrink-0">
+          <Badge variant="outline" className="text-[9px] border-michigan-forest/30 text-michigan-forest-deep shrink-0">
             <CheckCircle2 className="h-2.5 w-2.5 mr-0.5" /> Medicare
           </Badge>
         )}

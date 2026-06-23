@@ -100,9 +100,9 @@ const conditionOptions = ["All Conditions", "Cancer", "Diabetes", "Heart Disease
 const phaseOptions = ["All Phases", "Phase I/II", "Phase II", "Phase III", "N/A (Behavioral)"];
 
 const phaseColors: Record<string, string> = {
-  "Phase I/II": "bg-michigan-gold/10 text-michigan-gold border-michigan-gold/20",
-  "Phase II": "bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20",
-  "Phase III": "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20",
+  "Phase I/II": "bg-michigan-gold/10 text-michigan-gold-deep border-michigan-gold/20",
+  "Phase II": "bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20",
+  "Phase III": "bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20",
   "N/A (Behavioral)": "bg-michigan-sky/10 text-michigan-sky border-michigan-sky/20",
 };
 
@@ -142,7 +142,7 @@ export default function ClinicalTrialsPage() {
       <section className="bg-gradient-to-b from-michigan-forest/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <span className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest">
+            <span className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest-deep">
               Clinical Trials Finder
             </span>
           </motion.div>
@@ -163,8 +163,8 @@ export default function ClinicalTrialsPage() {
         <div className="grid gap-4 sm:grid-cols-3">
           {[
             { label: "Active Trials Listed", value: trials.length.toString(), icon: FlaskConical, color: "text-primary" },
-            { label: "Currently Recruiting", value: recruitingCount.toString(), icon: Users, color: "text-michigan-forest" },
-            { label: "Research Institutions", value: "5", icon: Building2, color: "text-michigan-teal" },
+            { label: "Currently Recruiting", value: recruitingCount.toString(), icon: Users, color: "text-michigan-forest-deep" },
+            { label: "Research Institutions", value: "5", icon: Building2, color: "text-michigan-teal-deep" },
           ].map((stat, i) => (
             <motion.div key={stat.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
               <Card>
@@ -214,13 +214,13 @@ export default function ClinicalTrialsPage() {
                 <CardContent className="py-5">
                   <div className="flex items-start gap-4">
                     <div className="hidden sm:flex h-11 w-11 items-center justify-center rounded-xl bg-michigan-forest/10 flex-shrink-0">
-                      <Microscope className="h-5 w-5 text-michigan-forest" />
+                      <Microscope className="h-5 w-5 text-michigan-forest-deep" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <Badge className={phaseColors[trial.phase] || ""}>{trial.phase}</Badge>
                         {trial.enrolling ? (
-                          <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">
+                          <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">
                             <CheckCircle2 className="mr-1 h-3 w-3" />Recruiting
                           </Badge>
                         ) : (

@@ -14,7 +14,7 @@ export default function DVSafetyInterstitial() {
       <CardContent className="py-6 space-y-4">
         <div className="flex items-start gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-michigan-coral/10">
-            <ShieldAlert className="h-5 w-5 text-michigan-coral" />
+            <ShieldAlert className="h-5 w-5 text-michigan-coral-deep" />
           </div>
           <div>
             <h3 className="text-lg font-bold text-foreground">Your safety comes first.</h3>

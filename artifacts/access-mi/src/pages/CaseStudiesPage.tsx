@@ -163,7 +163,7 @@ const CaseStudiesPage = () => {
             className="rounded-xl border-2 border-michigan-gold/30 bg-michigan-gold/5 p-5 mb-10"
           >
             <div className="flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
+              <AlertTriangle className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold-deep" />
               <div>
                 <p className="text-sm font-semibold text-foreground mb-1">
                   Illustrative Scenarios - Not Measured Outcomes
@@ -208,7 +208,7 @@ const CaseStudiesPage = () => {
                           </Badge>
                           <Badge
                             variant="outline"
-                            className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold"
+                            className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold-deep"
                           >
                             Illustrative
                           </Badge>

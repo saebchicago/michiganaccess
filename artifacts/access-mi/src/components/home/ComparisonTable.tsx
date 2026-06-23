@@ -72,11 +72,11 @@ const features: Feature[] = [
 const CellIcon = ({ value }: { value: CellValue }) => {
   switch (value) {
     case "yes":
-      return <Check className="h-4 w-4 text-michigan-forest mx-auto" />;
+      return <Check className="h-4 w-4 text-michigan-forest-deep mx-auto" />;
     case "no":
       return <X className="h-4 w-4 text-destructive/60 mx-auto" />;
     case "partial":
-      return <Minus className="h-4 w-4 text-michigan-gold mx-auto" />;
+      return <Minus className="h-4 w-4 text-michigan-gold-deep mx-auto" />;
   }
 };
 

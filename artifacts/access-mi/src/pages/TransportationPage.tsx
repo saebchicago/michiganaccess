@@ -264,7 +264,7 @@ const sections: Section[] = [
     key: "school",
     label: "School Transportation & Bus Info",
     icon: GraduationCap,
-    color: "text-michigan-forest",
+    color: "text-michigan-forest-deep",
     description:
       "Find your school district's bus routes, track your child's bus, and understand Michigan's pupil-transportation rules and safety standards.",
     resources: [
@@ -314,7 +314,7 @@ const sections: Section[] = [
     key: "safety",
     label: "School Bus Safety & Enforcement",
     icon: ShieldCheck,
-    color: "text-michigan-coral",
+    color: "text-michigan-coral-deep",
     description:
       "Learn how AI-powered stop-arm cameras protect students, what Michigan law requires of drivers near school buses, and how to report unsafe behavior.",
     resources: [
@@ -364,7 +364,7 @@ const sections: Section[] = [
     key: "accessibility",
     label: "Accessibility & Senior Transportation",
     icon: Accessibility,
-    color: "text-michigan-teal",
+    color: "text-michigan-teal-deep",
     description:
       "Specialized transportation services for seniors, people with disabilities, and those needing door-to-door assistance or travel training.",
     resources: [
@@ -515,19 +515,19 @@ function StatsCards() {
       value: "540+",
       label: "School districts served",
       icon: GraduationCap,
-      color: "text-michigan-forest",
+      color: "text-michigan-forest-deep",
     },
     {
       value: "71%",
       label: "Violation reduction (Dearborn)",
       icon: ShieldCheck,
-      color: "text-michigan-coral",
+      color: "text-michigan-coral-deep",
     },
     {
       value: String(COUNTIES_COVERED),
       label: "Counties with transit service",
       icon: MapPin,
-      color: "text-michigan-teal",
+      color: "text-michigan-teal-deep",
     },
   ];
   return (
@@ -574,7 +574,7 @@ function DataChartsTab() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-michigan-coral" />
+              <AlertTriangle className="h-4 w-4 text-michigan-coral-deep" />
               Michigan Traffic Fatalities by Type (NHTSA FARS)
             </CardTitle>
             <p className="text-xs text-muted-foreground">
@@ -736,7 +736,7 @@ function DataChartsTab() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
-              <Camera className="h-4 w-4 text-michigan-coral" />
+              <Camera className="h-4 w-4 text-michigan-coral-deep" />
               School Bus Stop-Arm Violations by County
             </CardTitle>
             <p className="text-xs text-muted-foreground">
@@ -801,7 +801,7 @@ function DataChartsTab() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
-              <Accessibility className="h-4 w-4 text-michigan-teal" />
+              <Accessibility className="h-4 w-4 text-michigan-teal-deep" />
               Senior Transportation Access Gaps by Region
             </CardTitle>
             <p className="text-xs text-muted-foreground">
@@ -872,7 +872,7 @@ function StopArmCameraExplainer() {
       <Card className="border-michigan-coral/20 bg-michigan-coral/5">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-lg">
-            <Camera className="h-5 w-5 text-michigan-coral" />
+            <Camera className="h-5 w-5 text-michigan-coral-deep" />
             How AI Stop-Arm Cameras Protect Students
           </CardTitle>
         </CardHeader>
@@ -881,7 +881,7 @@ function StopArmCameraExplainer() {
             <AccordionItem value="tech" className="border rounded-lg px-4">
               <AccordionTrigger className="text-sm font-semibold">
                 <span className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-michigan-coral" />
+                  <Zap className="h-4 w-4 text-michigan-coral-deep" />
                   Technology Overview
                 </span>
               </AccordionTrigger>
@@ -911,7 +911,7 @@ function StopArmCameraExplainer() {
             <AccordionItem value="privacy" className="border rounded-lg px-4">
               <AccordionTrigger className="text-sm font-semibold">
                 <span className="flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-michigan-teal" />
+                  <Lock className="h-4 w-4 text-michigan-teal-deep" />
                   Privacy Protections
                 </span>
               </AccordionTrigger>
@@ -948,7 +948,7 @@ function StopArmCameraExplainer() {
             <AccordionItem value="legal" className="border rounded-lg px-4">
               <AccordionTrigger className="text-sm font-semibold">
                 <span className="flex items-center gap-2">
-                  <Scale className="h-4 w-4 text-michigan-forest" />
+                  <Scale className="h-4 w-4 text-michigan-forest-deep" />
                   Michigan Legal Framework (MCL 257.682)
                 </span>
               </AccordionTrigger>
@@ -977,7 +977,7 @@ function StopArmCameraExplainer() {
             <AccordionItem value="dearborn" className="border rounded-lg px-4">
               <AccordionTrigger className="text-sm font-semibold">
                 <span className="flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4 text-michigan-coral" />
+                  <ShieldCheck className="h-4 w-4 text-michigan-coral-deep" />
                   Dearborn Case Study: AI Enforcement Success
                 </span>
               </AccordionTrigger>
@@ -990,7 +990,7 @@ function StopArmCameraExplainer() {
                 </p>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div className="rounded-lg border border-michigan-coral/20 bg-background p-3">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-coral mb-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-coral-deep mb-1">
                       Before AI Deployment
                     </p>
                     <ul className="text-xs space-y-1">
@@ -1003,7 +1003,7 @@ function StopArmCameraExplainer() {
                     </ul>
                   </div>
                   <div className="rounded-lg border border-michigan-forest/20 bg-background p-3">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-forest mb-1">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-michigan-forest-deep mb-1">
                       After AI Deployment
                     </p>
                     <ul className="text-xs space-y-1">
@@ -1159,7 +1159,7 @@ function ActiveTransportationTab() {
             <h2 className="text-xl font-bold text-foreground">
               Pedestrian, Bike & Accessibility Infrastructure
             </h2>
-            <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">
+            <Badge className="bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20 text-[10px]">
               NEW - Federally Backed Open Standard
             </Badge>
           </div>
@@ -1179,7 +1179,7 @@ function ActiveTransportationTab() {
             description:
               "Michigan has no unified statewide sidewalk inventory. SEMCOG covers 7 SE Michigan counties. The other 76 counties have no publicly available pedestrian infrastructure data. This is the gap GATIS was designed to fill.",
             icon: AlertTriangle,
-            color: "text-michigan-coral",
+            color: "text-michigan-coral-deep",
             bgColor: "bg-michigan-coral/10",
           },
           {
@@ -1195,7 +1195,7 @@ function ActiveTransportationTab() {
             description:
               "The federal Bureau of Transportation Statistics released the first national standard for pedestrian, bike, and accessibility infrastructure data. Public domain, open source. Access Michigan is among the first civic platforms to integrate it.",
             icon: CheckCircle2,
-            color: "text-michigan-forest",
+            color: "text-michigan-forest-deep",
             bgColor: "bg-michigan-forest/10",
           },
           {
@@ -1203,7 +1203,7 @@ function ActiveTransportationTab() {
             description:
               "For seniors, people with disabilities, and NEMT users, knowing whether a sidewalk exists and whether a curb ramp is ADA-compliant is more critical than knowing a bus route exists. 40% of Michigan's pedestrian fatalities occur in areas with no sidewalk coverage.",
             icon: Accessibility,
-            color: "text-michigan-teal",
+            color: "text-michigan-teal-deep",
             bgColor: "bg-michigan-teal/10",
           },
         ].map((stat, i) => (
@@ -1247,7 +1247,7 @@ function ActiveTransportationTab() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-base flex items-center gap-2">
-              <Layers className="h-4 w-4 text-michigan-teal" />
+              <Layers className="h-4 w-4 text-michigan-teal-deep" />
               What GATIS Covers
             </CardTitle>
             <p className="text-xs text-muted-foreground">
@@ -1260,7 +1260,7 @@ function ActiveTransportationTab() {
               <AccordionItem value="edges" className="border rounded-lg px-4">
                 <AccordionTrigger className="text-sm font-semibold">
                   <span className="flex items-center gap-2">
-                    <Footprints className="h-4 w-4 text-michigan-teal" />
+                    <Footprints className="h-4 w-4 text-michigan-teal-deep" />
                     Edges (Linear Features)
                   </span>
                 </AccordionTrigger>
@@ -1273,7 +1273,7 @@ function ActiveTransportationTab() {
               <AccordionItem value="nodes" className="border rounded-lg px-4">
                 <AccordionTrigger className="text-sm font-semibold">
                   <span className="flex items-center gap-2">
-                    <Construction className="h-4 w-4 text-michigan-coral" />
+                    <Construction className="h-4 w-4 text-michigan-coral-deep" />
                     Nodes (Connection Points)
                   </span>
                 </AccordionTrigger>
@@ -1297,7 +1297,7 @@ function ActiveTransportationTab() {
               <AccordionItem value="zones" className="border rounded-lg px-4">
                 <AccordionTrigger className="text-sm font-semibold">
                   <span className="flex items-center gap-2">
-                    <Layers className="h-4 w-4 text-michigan-forest" />
+                    <Layers className="h-4 w-4 text-michigan-forest-deep" />
                     Zones (Area Features)
                   </span>
                 </AccordionTrigger>
@@ -1448,7 +1448,7 @@ function ActiveTransportationTab() {
               "The full open-standard specification from the Bureau of Transportation Statistics.",
             link: "https://dotbts.github.io/BPA/",
             icon: BookOpen,
-            color: "text-michigan-forest",
+            color: "text-michigan-forest-deep",
           },
           {
             title: "Join NC-BPAID",
@@ -1456,7 +1456,7 @@ function ActiveTransportationTab() {
               "Help advocate for Michigan-wide pedestrian infrastructure data collection and standardization.",
             link: "https://forms.office.com/g/34975BEAkF",
             icon: Users,
-            color: "text-michigan-teal",
+            color: "text-michigan-teal-deep",
           },
         ].map((cta, i) => (
           <motion.div
@@ -1548,7 +1548,7 @@ function ActiveTransportationTab() {
                     key={item}
                     className="flex items-start gap-2 text-xs text-muted-foreground"
                   >
-                    <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" />
+                    <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest-deep" />
                     {item}
                   </li>
                 ))}
@@ -1798,7 +1798,7 @@ export default function TransportationPage() {
                   <Card>
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-lg">
-                        <CheckCircle2 className="h-5 w-5 text-michigan-forest" />
+                        <CheckCircle2 className="h-5 w-5 text-michigan-forest-deep" />
                         Parent & Caregiver Bus Safety Checklist
                       </CardTitle>
                     </CardHeader>
@@ -1815,7 +1815,7 @@ export default function TransportationPage() {
                             className="flex gap-3 items-start"
                           >
                             <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-michigan-forest/10">
-                              <item.icon className="h-3.5 w-3.5 text-michigan-forest" />
+                              <item.icon className="h-3.5 w-3.5 text-michigan-forest-deep" />
                             </div>
                             <p className="text-sm text-muted-foreground leading-relaxed">
                               {item.text}
@@ -1838,7 +1838,7 @@ export default function TransportationPage() {
                   <Card className="border-michigan-coral/20">
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-lg">
-                        <ShieldCheck className="h-5 w-5 text-michigan-coral" />
+                        <ShieldCheck className="h-5 w-5 text-michigan-coral-deep" />
                         Transportation Safety
                       </CardTitle>
                       <p className="text-xs text-muted-foreground">
@@ -1850,7 +1850,7 @@ export default function TransportationPage() {
                       {/* MDOT School Bus Safety Tips */}
                       <div>
                         <h4 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
-                          <GraduationCap className="h-4 w-4 text-michigan-forest" />
+                          <GraduationCap className="h-4 w-4 text-michigan-forest-deep" />
                           MDOT School Bus Safety Tips
                         </h4>
                         <div className="grid gap-3 sm:grid-cols-2">
@@ -1890,7 +1890,7 @@ export default function TransportationPage() {
                               className="flex gap-2.5 items-start rounded-lg border border-border p-3 bg-muted/20"
                             >
                               <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded bg-michigan-forest/10">
-                                <item.icon className="h-3 w-3 text-michigan-forest" />
+                                <item.icon className="h-3 w-3 text-michigan-forest-deep" />
                               </div>
                               <p className="text-xs text-muted-foreground leading-relaxed">
                                 {item.tip}
@@ -1923,7 +1923,7 @@ export default function TransportationPage() {
                       {/* BusPatrol Integration for Partners */}
                       <div className="border-t border-border pt-5">
                         <h4 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-3">
-                          <Camera className="h-4 w-4 text-michigan-coral" />
+                          <Camera className="h-4 w-4 text-michigan-coral-deep" />
                           BusPatrol Integration - Partner Guidance
                         </h4>
                         <div className="rounded-lg border border-michigan-coral/15 bg-michigan-coral/5 p-4 space-y-3">

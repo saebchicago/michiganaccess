@@ -56,7 +56,7 @@ const pathways: Pathway[] = [
     key: "diabetes",
     label: "Diabetes Care",
     icon: Activity,
-    color: "text-michigan-teal",
+    color: "text-michigan-teal-deep",
     bgColor: "bg-michigan-teal/10",
     description:
       "Find endocrinologists, diabetes education, nutrition counseling, and community support near you.",
@@ -77,7 +77,7 @@ const pathways: Pathway[] = [
     key: "cancer",
     label: "Cancer Care",
     icon: Ribbon,
-    color: "text-michigan-coral",
+    color: "text-michigan-coral-deep",
     bgColor: "bg-michigan-coral/10",
     description:
       "Access oncology centers, treatment facilities, support groups, and financial assistance for cancer care.",
@@ -105,7 +105,7 @@ const pathways: Pathway[] = [
     key: "pregnancy",
     label: "Pregnancy & Maternity",
     icon: Baby,
-    color: "text-michigan-gold",
+    color: "text-michigan-gold-deep",
     bgColor: "bg-michigan-gold/10",
     description:
       "Find OB/GYN providers, birthing centers, prenatal care, and postpartum support services.",
@@ -348,7 +348,7 @@ export default function HealthConditionsPage() {
                                 {f.name}
                               </h3>
                               {f.leapfrog_grade === "A" && (
-                                <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">
+                                <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">
                                   ⭐ Leapfrog A
                                 </Badge>
                               )}
@@ -482,8 +482,8 @@ export default function HealthConditionsPage() {
                               </div>
                               {p.patient_rating && (
                                 <div className="flex items-center gap-1 rounded-md bg-michigan-gold/10 px-2 py-0.5">
-                                  <Star className="h-3 w-3 text-michigan-gold fill-michigan-gold" />
-                                  <span className="text-xs font-bold text-michigan-gold">
+                                  <Star className="h-3 w-3 text-michigan-gold-deep fill-michigan-gold" />
+                                  <span className="text-xs font-bold text-michigan-gold-deep">
                                     {Number(p.patient_rating).toFixed(1)}
                                   </span>
                                 </div>
@@ -491,7 +491,7 @@ export default function HealthConditionsPage() {
                             </div>
                             <div className="flex flex-wrap gap-1">
                               {p.board_certified && (
-                                <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">
+                                <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">
                                   Board Certified
                                 </Badge>
                               )}
@@ -501,7 +501,7 @@ export default function HealthConditionsPage() {
                                 </Badge>
                               )}
                               {p.telehealth_available && (
-                                <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">
+                                <Badge className="bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20 text-[10px]">
                                   Telehealth
                                 </Badge>
                               )}

@@ -193,7 +193,7 @@ export default function ZipPlacePage() {
               <MapPin className="h-5 w-5 text-primary" />
               <Badge variant="outline" className="text-xs">{place.parentCounty} County</Badge>
               {place.city && <Badge variant="secondary" className="text-xs">{place.city}</Badge>}
-              <Badge variant="outline" className="text-xs bg-michigan-gold/10 text-michigan-gold border-michigan-gold/30">
+              <Badge variant="outline" className="text-xs bg-michigan-gold/10 text-michigan-gold-deep border-michigan-gold/30">
                 County Avg Comparison
               </Badge>
             </div>
@@ -294,7 +294,7 @@ export default function ZipPlacePage() {
         {/* Resources */}
         <section id="programs">
           <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-            <Heart className="h-5 w-5 text-michigan-coral" /> Resources for ZIP {place.slug}
+            <Heart className="h-5 w-5 text-michigan-coral-deep" /> Resources for ZIP {place.slug}
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[

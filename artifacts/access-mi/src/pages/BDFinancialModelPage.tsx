@@ -295,7 +295,7 @@ function KPI({
         {label}
       </p>
       <p
-        className={`text-2xl font-semibold ${good ? "text-michigan-teal" : "text-foreground"}`}
+        className={`text-2xl font-semibold ${good ? "text-michigan-teal-deep" : "text-foreground"}`}
       >
         {value}
       </p>
@@ -565,7 +565,7 @@ function ServiceLineTab({ sl, onSl }: ServiceLineTabProps) {
               <span
                 className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
                   payerTotal === 100
-                    ? "bg-michigan-teal/10 text-michigan-teal"
+                    ? "bg-michigan-teal/10 text-michigan-teal-deep"
                     : "bg-destructive/10 text-destructive"
                 }`}
               >
@@ -1221,7 +1221,7 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
       {result.roi3 >= 2 && (
         <div className="rounded-lg bg-michigan-teal/10 border border-michigan-teal/20 px-5 py-3 flex flex-wrap items-center gap-4 mb-4">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-michigan-teal shrink-0" />
+            <CheckCircle2 className="h-4 w-4 text-michigan-teal-deep shrink-0" />
             <span className="text-sm font-medium text-foreground">
               VBC contract positive
             </span>
@@ -1230,7 +1230,7 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
             {result.roi3.toFixed(1)}× 3-year ROI exceeds typical shared savings
             threshold for MSSP ACO and BCBSM Blueprint arrangements
           </span>
-          <span className="ml-auto text-xs font-medium text-michigan-teal">
+          <span className="ml-auto text-xs font-medium text-michigan-teal-deep">
             Qualifies for shared savings ✓
           </span>
         </div>
@@ -1290,7 +1290,7 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
                       rr: p.rr,
                     });
                   }}
-                  className="text-xs px-3 py-1.5 rounded-md border border-michigan-teal text-michigan-teal hover:bg-michigan-teal/10 transition-colors font-medium"
+                  className="text-xs px-3 py-1.5 rounded-md border border-michigan-teal text-michigan-teal-deep hover:bg-michigan-teal/10 transition-colors font-medium"
                 >
                   {label}
                 </button>
@@ -1424,12 +1424,12 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
               {
                 label: "Screening rate",
                 impact: "highest lever",
-                color: "text-michigan-teal",
+                color: "text-michigan-teal-deep",
               },
               {
                 label: "Navigation rate",
                 impact: "2nd highest",
-                color: "text-michigan-teal",
+                color: "text-michigan-teal-deep",
               },
               {
                 label: "Readmit reduction",
@@ -1648,21 +1648,21 @@ function ExportShareTab({ slState, sdohState }: ExportShareTabProps) {
           [
             {
               id: "link" as const,
-              icon: <Share2 className="h-6 w-6 text-michigan-teal" />,
+              icon: <Share2 className="h-6 w-6 text-michigan-teal-deep" />,
               title: "Copy Shareable Link",
               desc: "URL-encodes all current slider values",
               action: handleCopyLink,
             },
             {
               id: "summary" as const,
-              icon: <Copy className="h-6 w-6 text-michigan-teal" />,
+              icon: <Copy className="h-6 w-6 text-michigan-teal-deep" />,
               title: "Copy Scenario Summary",
               desc: "Plain-text executive brief",
               action: handleCopySummary,
             },
             {
               id: null,
-              icon: <Printer className="h-6 w-6 text-michigan-teal" />,
+              icon: <Printer className="h-6 w-6 text-michigan-teal-deep" />,
               title: "Print / Export PDF",
               desc: "Uses browser print dialog",
               action: () => window.print(),
@@ -1682,7 +1682,7 @@ function ExportShareTab({ slState, sdohState }: ExportShareTabProps) {
               <p className="text-xs text-muted-foreground mt-1">{card.desc}</p>
             </div>
             {card.id !== null && copied === card.id && (
-              <span className="text-xs text-michigan-teal font-medium">
+              <span className="text-xs text-michigan-teal-deep font-medium">
                 ✓ Copied!
               </span>
             )}
@@ -1725,7 +1725,7 @@ function ExportShareTab({ slState, sdohState }: ExportShareTabProps) {
             </p>
             <p className="text-muted-foreground font-medium mt-1">
               5-yr NPV:{" "}
-              <span className="text-michigan-teal">
+              <span className="text-michigan-teal-deep">
                 {fmtM(calcNPV(slState))}
               </span>
             </p>
@@ -1923,7 +1923,7 @@ export default function BDFinancialModelPage() {
             💾 <strong>Restored your last scenario</strong> from this browser.{" "}
             <button
               onClick={resetAll}
-              className="underline text-michigan-teal hover:text-michigan-teal/80 text-sm"
+              className="underline text-michigan-teal-deep hover:text-michigan-teal-deep/80 text-sm"
             >
               Reset to defaults
             </button>

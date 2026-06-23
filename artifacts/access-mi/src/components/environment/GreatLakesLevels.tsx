@@ -59,7 +59,7 @@ export default function GreatLakesLevels() {
       <Card>
         <CardHeader className="pb-2">
           <h2 className="text-base font-semibold leading-none tracking-tight flex items-center gap-2">
-            <Waves className="h-5 w-5 text-michigan-teal" /> Great Lakes Water
+            <Waves className="h-5 w-5 text-michigan-teal-deep" /> Great Lakes Water
             Levels
           </h2>
         </CardHeader>
@@ -93,7 +93,7 @@ export default function GreatLakesLevels() {
                     </p>
                     {data[0]?.currentFt != null && (
                       <span
-                        className={`text-[10px] ${data[0].currentFt - data[0].avgFt > 0.5 ? "text-michigan-teal" : data[0].currentFt - data[0].avgFt < -0.5 ? "text-michigan-coral" : "text-muted-foreground"}`}
+                        className={`text-[10px] ${data[0].currentFt - data[0].avgFt > 0.5 ? "text-michigan-teal-deep" : data[0].currentFt - data[0].avgFt < -0.5 ? "text-michigan-coral-deep" : "text-muted-foreground"}`}
                       >
                         {data[0].currentFt - data[0].avgFt > 0 ? "+" : ""}
                         {(data[0].currentFt - data[0].avgFt).toFixed(1)} ft vs
@@ -145,7 +145,7 @@ export default function GreatLakesLevels() {
                             {diff != null && (
                               <Badge
                                 variant="outline"
-                                className={`text-[8px] ${diff > 0.5 ? "text-michigan-teal" : diff < -0.5 ? "text-michigan-coral" : "text-muted-foreground"}`}
+                                className={`text-[8px] ${diff > 0.5 ? "text-michigan-teal-deep" : diff < -0.5 ? "text-michigan-coral-deep" : "text-muted-foreground"}`}
                               >
                                 {diff > 0 ? "+" : ""}
                                 {diff.toFixed(1)} ft vs avg

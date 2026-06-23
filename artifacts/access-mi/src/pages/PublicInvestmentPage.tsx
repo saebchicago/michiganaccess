@@ -74,10 +74,10 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 const BOND_CATEGORY_STYLES: Record<string, string> = {
-  healthcare: "bg-michigan-teal/10 text-michigan-teal",
+  healthcare: "bg-michigan-teal/10 text-michigan-teal-deep",
   infrastructure: "bg-primary/10 text-primary",
-  education: "bg-michigan-gold/10 text-michigan-gold",
-  housing: "bg-michigan-coral/10 text-michigan-coral",
+  education: "bg-michigan-gold/10 text-michigan-gold-deep",
+  housing: "bg-michigan-coral/10 text-michigan-coral-deep",
   water: "bg-michigan-sky/10 text-michigan-sky",
   general: "bg-muted text-muted-foreground",
 };
@@ -516,7 +516,7 @@ function FiscalVulnerabilityTab() {
       <Card className="border-michigan-coral/30 bg-michigan-coral/5">
         <CardContent className="py-6">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-michigan-coral shrink-0 mt-0.5" />
+            <AlertTriangle className="h-5 w-5 text-michigan-coral-deep shrink-0 mt-0.5" />
             <div>
               <h3 className="text-sm font-bold text-foreground mb-1">
                 Understanding Fiscal Vulnerability

@@ -19,7 +19,7 @@ export default function ToxicReleaseCard({ county }: Props) {
     <Card className="border-michigan-coral/20">
       <CardContent className="p-4 space-y-3">
         <div className="flex items-center gap-2">
-          <Factory className="h-4 w-4 text-michigan-coral" />
+          <Factory className="h-4 w-4 text-michigan-coral-deep" />
           <h4 className="text-sm font-semibold text-foreground">Toxic Release Inventory</h4>
           {hasCarcinogens && (
             <Badge variant="destructive" className="text-[9px] gap-1 ml-auto">
@@ -39,7 +39,7 @@ export default function ToxicReleaseCard({ county }: Props) {
                 <p className="font-medium text-foreground truncate">{f.name}</p>
                 <p className="text-[10px] text-muted-foreground">
                   {f.industry} · Top chemical: {f.topChemical}
-                  {f.carcinogensReleased && <span className="text-michigan-coral ml-1">(carcinogen)</span>}
+                  {f.carcinogensReleased && <span className="text-michigan-coral-deep ml-1">(carcinogen)</span>}
                 </p>
               </div>
               <span className="text-muted-foreground whitespace-nowrap">

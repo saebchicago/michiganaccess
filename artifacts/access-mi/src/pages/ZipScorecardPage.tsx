@@ -785,7 +785,7 @@ export default function ZipScorecardPage() {
           primary.cdcData.length === 0 && (
             <Card className="border-michigan-gold/30 bg-michigan-gold/5">
               <CardContent className="py-8 text-center space-y-3">
-                <AlertCircle className="h-8 w-8 text-michigan-gold mx-auto" />
+                <AlertCircle className="h-8 w-8 text-michigan-gold-deep mx-auto" />
                 <h2 className="text-lg font-bold text-foreground">
                   ZIP Code Not Found
                 </h2>
@@ -845,7 +845,7 @@ export default function ZipScorecardPage() {
               <div className="md:col-span-3 grid gap-4 sm:grid-cols-3">
                 <Card>
                   <CardContent className="py-5 flex flex-col items-center gap-1">
-                    <Heart className="h-4 w-4 text-michigan-coral mb-1" />
+                    <Heart className="h-4 w-4 text-michigan-coral-deep mb-1" />
                     <ScoreGauge
                       score={primary.healthResult.score}
                       color={primary.healthResult.color}
@@ -858,7 +858,7 @@ export default function ZipScorecardPage() {
                 </Card>
                 <Card>
                   <CardContent className="py-5 flex flex-col items-center gap-1">
-                    <DollarSign className="h-4 w-4 text-michigan-gold mb-1" />
+                    <DollarSign className="h-4 w-4 text-michigan-gold-deep mb-1" />
                     <ScoreGauge
                       score={primary.econScore}
                       color={scoreColor(primary.econScore)}
@@ -871,7 +871,7 @@ export default function ZipScorecardPage() {
                 </Card>
                 <Card>
                   <CardContent className="py-5 flex flex-col items-center gap-1">
-                    <Leaf className="h-4 w-4 text-michigan-forest mb-1" />
+                    <Leaf className="h-4 w-4 text-michigan-forest-deep mb-1" />
                     <ScoreGauge
                       score={primary.envScore}
                       color={scoreColor(primary.envScore)}
@@ -943,7 +943,7 @@ export default function ZipScorecardPage() {
                       <th className="text-right py-2 text-xs font-semibold text-primary">
                         {zip}
                       </th>
-                      <th className="text-right py-2 text-xs font-semibold text-michigan-teal">
+                      <th className="text-right py-2 text-xs font-semibold text-michigan-teal-deep">
                         {compareZip}
                       </th>
                       <th className="text-right py-2 text-xs font-semibold text-muted-foreground">
@@ -961,7 +961,7 @@ export default function ZipScorecardPage() {
                         <td className="py-2 text-right font-mono font-semibold tabular-nums text-primary">
                           {fmtVal(row.zip1, row.unit)}
                         </td>
-                        <td className="py-2 text-right font-mono font-semibold tabular-nums text-michigan-teal">
+                        <td className="py-2 text-right font-mono font-semibold tabular-nums text-michigan-teal-deep">
                           {fmtVal(row.zip2, row.unit)}
                         </td>
                         <td className="py-2 text-right font-mono text-muted-foreground tabular-nums">
@@ -1642,7 +1642,7 @@ export default function ZipScorecardPage() {
                     <Card className="sm:col-span-2 lg:col-span-3">
                       <CardContent className="py-4">
                         <h3 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
-                          <Leaf className="h-4 w-4 text-michigan-forest" /> EPA
+                          <Leaf className="h-4 w-4 text-michigan-forest-deep" /> EPA
                           EJSCREEN Environmental Justice
                         </h3>
                         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">

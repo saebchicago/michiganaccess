@@ -11,7 +11,7 @@ export default function TribalHealthSection() {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
-            <MapPin className="h-5 w-5 text-michigan-forest" /> Michigan Tribal Health Facilities
+            <MapPin className="h-5 w-5 text-michigan-forest-deep" /> Michigan Tribal Health Facilities
           </CardTitle>
           <CardDescription>
             12 federally recognized tribal nations operate independent health systems

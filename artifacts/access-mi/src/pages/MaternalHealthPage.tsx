@@ -95,8 +95,8 @@ export default function MaternalHealthPage() {
               custom={0}
               className="mb-4 inline-flex items-center gap-2 rounded-full bg-michigan-coral/10 px-4 py-1.5"
             >
-              <Baby className="h-4 w-4 text-michigan-coral" />
-              <span className="text-sm font-medium text-michigan-coral">
+              <Baby className="h-4 w-4 text-michigan-coral-deep" />
+              <span className="text-sm font-medium text-michigan-coral-deep">
                 Maternal & Infant Health
               </span>
             </motion.div>
@@ -153,7 +153,7 @@ export default function MaternalHealthPage() {
             <Card key={m.label}>
               <CardContent className="py-4 text-center">
                 <p
-                  className={`text-2xl font-bold ${m.warn ? "text-michigan-coral" : "text-foreground"}`}
+                  className={`text-2xl font-bold ${m.warn ? "text-michigan-coral-deep" : "text-foreground"}`}
                 >
                   {m.value}
                 </p>
@@ -170,7 +170,7 @@ export default function MaternalHealthPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2 text-base">
-              <AlertTriangle className="h-5 w-5 text-michigan-coral" />
+              <AlertTriangle className="h-5 w-5 text-michigan-coral-deep" />
               Infant Mortality: Racial Disparity by County
             </CardTitle>
             <CardDescription>

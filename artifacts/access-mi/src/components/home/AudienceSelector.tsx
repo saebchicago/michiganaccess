@@ -85,7 +85,7 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
                 <a.icon className="h-3.5 w-3.5" aria-hidden="true" />
                 {a.label}
                 {a.badge && (
-                  <span className="ml-1 rounded-full bg-michigan-gold/20 text-michigan-gold px-1.5 py-px text-[9px] font-bold uppercase leading-none">
+                  <span className="ml-1 rounded-full bg-michigan-gold/20 text-michigan-gold-deep px-1.5 py-px text-[9px] font-bold uppercase leading-none">
                     {a.badge}
                   </span>
                 )}

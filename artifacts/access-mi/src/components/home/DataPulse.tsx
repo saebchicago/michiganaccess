@@ -4,11 +4,11 @@ import { Database, MapPin, Zap, Heart, Activity } from "lucide-react";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 
 const PULSES = [
-  { icon: Heart, value: 4200, suffix: "+", label: "healthcare facilities indexed", color: "text-michigan-coral" },
+  { icon: Heart, value: 4200, suffix: "+", label: "healthcare facilities indexed", color: "text-michigan-coral-deep" },
   { icon: MapPin, value: 83, suffix: "", label: "counties covered", color: "text-primary" },
-  { icon: Database, value: 35, suffix: "+", label: "public data sources integrated", color: "text-michigan-teal" },
-  { icon: Zap, value: 183, suffix: "M", label: "in energy assistance tracked", prefix: "$", color: "text-michigan-gold" },
-  { icon: Activity, value: 15, suffix: "", label: "live API feeds", color: "text-michigan-forest" },
+  { icon: Database, value: 35, suffix: "+", label: "public data sources integrated", color: "text-michigan-teal-deep" },
+  { icon: Zap, value: 183, suffix: "M", label: "in energy assistance tracked", prefix: "$", color: "text-michigan-gold-deep" },
+  { icon: Activity, value: 15, suffix: "", label: "live API feeds", color: "text-michigan-forest-deep" },
 ];
 
 export default function DataPulse() {

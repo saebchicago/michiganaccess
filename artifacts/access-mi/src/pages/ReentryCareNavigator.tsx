@@ -154,7 +154,7 @@ export default function ReentryCareNavigator() {
         {/* 211 CTA */}
         <Card className="border-michigan-teal/20 bg-michigan-teal/5">
           <CardContent className="p-5 text-center">
-            <Phone className="h-6 w-6 text-michigan-teal mx-auto mb-2" />
+            <Phone className="h-6 w-6 text-michigan-teal-deep mx-auto mb-2" />
             <p className="text-sm font-semibold text-foreground">Not sure where to start?</p>
             <p className="text-xs text-muted-foreground mb-3">Call 211 - they can connect you to local reentry services.</p>
             <Button variant="outline" size="sm" asChild>

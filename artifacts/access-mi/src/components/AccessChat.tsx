@@ -288,7 +288,7 @@ export function AccessChat() {
                     </div>
                     {m.role === "user" && (
                       <div className="h-6 w-6 rounded-full bg-michigan-gold/20 flex items-center justify-center flex-shrink-0 mt-1">
-                        <User className="h-3.5 w-3.5 text-michigan-gold" />
+                        <User className="h-3.5 w-3.5 text-michigan-gold-deep" />
                       </div>
                     )}
                   </motion.div>

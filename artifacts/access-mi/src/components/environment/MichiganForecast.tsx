@@ -5,12 +5,12 @@ import { useForecast, MI_CITIES, type ForecastPeriod } from "@/hooks/useForecast
 
 function weatherIcon(forecast: string, isDaytime: boolean) {
   const f = forecast.toLowerCase();
-  if (f.includes("thunder") || f.includes("lightning")) return <CloudLightning className="h-6 w-6 text-michigan-gold" />;
+  if (f.includes("thunder") || f.includes("lightning")) return <CloudLightning className="h-6 w-6 text-michigan-gold-deep" />;
   if (f.includes("snow") || f.includes("flurr") || f.includes("blizzard")) return <Snowflake className="h-6 w-6 text-michigan-sky" />;
-  if (f.includes("rain") || f.includes("shower") || f.includes("drizzle")) return <CloudRain className="h-6 w-6 text-michigan-teal" />;
+  if (f.includes("rain") || f.includes("shower") || f.includes("drizzle")) return <CloudRain className="h-6 w-6 text-michigan-teal-deep" />;
   if (f.includes("cloud") || f.includes("overcast") || f.includes("fog")) return <Cloud className="h-6 w-6 text-muted-foreground" />;
   if (f.includes("wind")) return <Wind className="h-6 w-6 text-muted-foreground" />;
-  if (isDaytime) return <Sun className="h-6 w-6 text-michigan-gold" />;
+  if (isDaytime) return <Sun className="h-6 w-6 text-michigan-gold-deep" />;
   return <Cloud className="h-6 w-6 text-muted-foreground" />;
 }
 
@@ -36,7 +36,7 @@ export default function MichiganForecast() {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Sun className="h-5 w-5 text-michigan-gold" />
+            <Sun className="h-5 w-5 text-michigan-gold-deep" />
             Michigan Forecast
           </CardTitle>
           <a

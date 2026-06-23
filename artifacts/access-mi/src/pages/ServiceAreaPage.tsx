@@ -295,7 +295,7 @@ export default function ServiceAreaPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-full bg-michigan-gold/10 flex items-center justify-center">
-                      <BarChart3 className="h-5 w-5 text-michigan-gold" />
+                      <BarChart3 className="h-5 w-5 text-michigan-gold-deep" />
                     </div>
                     <div>
                       <p className="text-lg font-bold">{stats.avgEitcRate.toFixed(1)}%</p>
@@ -304,7 +304,7 @@ export default function ServiceAreaPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-full bg-michigan-teal/10 flex items-center justify-center">
-                      <Stethoscope className="h-5 w-5 text-michigan-teal" />
+                      <Stethoscope className="h-5 w-5 text-michigan-teal-deep" />
                     </div>
                     <div>
                       <p className="text-lg font-bold">{stats.totalUnservedLowIncome.toLocaleString()}</p>

@@ -120,10 +120,10 @@ export default function HealthDataDashboardPage() {
         {/* Key indicators */}
         <div className="grid gap-4 sm:grid-cols-4">
           {[
-            { label: "Insurance Rate", value: "96.0%", change: "+2.8% since 2020", icon: Shield, color: "text-michigan-forest", up: true },
-            { label: "Life Expectancy", value: "77.4 yrs", change: "-0.3 from 2019", icon: Heart, color: "text-michigan-coral", up: false },
+            { label: "Insurance Rate", value: "96.0%", change: "+2.8% since 2020", icon: Shield, color: "text-michigan-forest-deep", up: true },
+            { label: "Life Expectancy", value: "77.4 yrs", change: "-0.3 from 2019", icon: Heart, color: "text-michigan-coral-deep", up: false },
             { label: "PCP per 100k", value: "83", change: "+5 since 2020", icon: Stethoscope, color: "text-primary", up: true },
-            { label: "Obesity Rate", value: "36.2%", change: "+2.1% since 2020", icon: Activity, color: "text-michigan-gold", up: false },
+            { label: "Obesity Rate", value: "36.2%", change: "+2.1% since 2020", icon: Activity, color: "text-michigan-gold-deep", up: false },
           ].map((stat, i) => (
             <motion.div key={stat.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
               <Card>
@@ -133,7 +133,7 @@ export default function HealthDataDashboardPage() {
                     <span className="text-xs text-muted-foreground">{stat.label}</span>
                   </div>
                   <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                  <p className={`text-xs mt-1 flex items-center gap-1 ${stat.up ? "text-michigan-forest" : "text-michigan-coral"}`}>
+                  <p className={`text-xs mt-1 flex items-center gap-1 ${stat.up ? "text-michigan-forest-deep" : "text-michigan-coral-deep"}`}>
                     {stat.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
                     {stat.change}
                   </p>
@@ -164,7 +164,7 @@ export default function HealthDataDashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-base flex items-center gap-2">
-                  <Activity className="h-4 w-4 text-michigan-coral" />
+                  <Activity className="h-4 w-4 text-michigan-coral-deep" />
                   Chronic Disease Prevalence: Michigan vs. National Average
                 </CardTitle>
               </CardHeader>
@@ -192,7 +192,7 @@ export default function HealthDataDashboardPage() {
                       <span className="text-xs text-muted-foreground">MI</span>
                       <span className="text-xs text-muted-foreground">vs {d.national}% national</span>
                     </div>
-                    <Badge variant="outline" className={`mt-1 text-[10px] ${d.trend === "rising" ? "text-michigan-coral" : "text-michigan-forest"}`}>
+                    <Badge variant="outline" className={`mt-1 text-[10px] ${d.trend === "rising" ? "text-michigan-coral-deep" : "text-michigan-forest-deep"}`}>
                       {d.trend === "rising" ? "↑ Rising" : "→ Stable"}
                     </Badge>
                   </CardContent>
@@ -205,7 +205,7 @@ export default function HealthDataDashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-base flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-michigan-forest" />
+                  <TrendingUp className="h-4 w-4 text-michigan-forest-deep" />
                   Healthcare Access Trends (2020–2025)
                 </CardTitle>
               </CardHeader>
@@ -247,7 +247,7 @@ export default function HealthDataDashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-base flex items-center gap-2">
-                  <Users className="h-4 w-4 text-michigan-teal" />
+                  <Users className="h-4 w-4 text-michigan-teal-deep" />
                   Health Equity Indicators by Race/Ethnicity
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">Disparities in health outcomes highlight systemic inequities requiring targeted intervention</p>
@@ -274,11 +274,11 @@ export default function HealthDataDashboardPage() {
                         <tr key={row.metric} className="border-b border-border/50">
                           <td className="py-2 text-sm font-medium text-foreground">{row.metric}</td>
                           <td className="py-2 text-right text-sm text-foreground">{row.white}</td>
-                          <td className={`py-2 text-right text-sm font-semibold ${isHighBad && row.black === max ? "text-michigan-coral" : "text-foreground"}`}>{row.black}</td>
+                          <td className={`py-2 text-right text-sm font-semibold ${isHighBad && row.black === max ? "text-michigan-coral-deep" : "text-foreground"}`}>{row.black}</td>
                           <td className="py-2 text-right text-sm text-foreground">{row.hispanic}</td>
                           <td className="py-2 text-right text-sm text-foreground">{row.asian}</td>
                           <td className="py-2 text-right">
-                            <Badge className="bg-michigan-coral/10 text-michigan-coral border-michigan-coral/20 text-[10px]">
+                            <Badge className="bg-michigan-coral/10 text-michigan-coral-deep border-michigan-coral/20 text-[10px]">
                               {isHighBad ? `${(max / min).toFixed(1)}x` : `${(max - min).toFixed(1)} gap`}
                             </Badge>
                           </td>
@@ -442,7 +442,7 @@ export default function HealthDataDashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-base flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-michigan-gold" />
+                  <Zap className="h-4 w-4 text-michigan-gold-deep" />
                   Michigan Residential Electricity Price vs. U.S. Average
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">Cents per kWh, 1990–2023. As of 2023, Source: EIA State Energy Data System (SEDS), last updated Oct 2024.</p>
@@ -635,7 +635,7 @@ export default function HealthDataDashboardPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
-                <Pill className="h-5 w-5 text-michigan-coral" />
+                <Pill className="h-5 w-5 text-michigan-coral-deep" />
                 Opioid & Substance Use Surveillance
               </CardTitle>
             </CardHeader>

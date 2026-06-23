@@ -210,7 +210,7 @@ export default function MichiganAtAGlance() {
               suffix: "+",
               label: "Healthcare providers tracked",
               sub: "CMS, HRSA, Leapfrog quality data",
-              color: "text-michigan-coral",
+              color: "text-michigan-coral-deep",
             },
             {
               icon: Droplets,
@@ -218,7 +218,7 @@ export default function MichiganAtAGlance() {
               suffix: "+",
               label: "PFAS sites monitored",
               sub: "MPART map · Michigan MCL: PFOA 8 ppt, PFOS 16 ppt (2020)",
-              color: "text-michigan-teal",
+              color: "text-michigan-teal-deep",
             },
             {
               icon: Users,

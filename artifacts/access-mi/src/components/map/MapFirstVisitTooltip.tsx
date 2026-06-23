@@ -54,7 +54,7 @@ export default function MapFirstVisitTooltip({
           </button>
           <div className="flex items-start gap-3">
             <div className="rounded-full bg-michigan-gold/15 p-1.5">
-              <Lightbulb className="h-4 w-4 text-michigan-gold" />
+              <Lightbulb className="h-4 w-4 text-michigan-gold-deep" />
             </div>
             <div>
               <p className="text-sm font-semibold text-foreground">

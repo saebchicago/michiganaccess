@@ -136,7 +136,7 @@ export default function ComplexCarePage() {
       <section className="bg-gradient-to-b from-michigan-coral/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
           <Breadcrumbs items={[{ label: "Find Care", href: "/find-care" }, { label: "Complex Care Navigation" }]} />
-          <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-michigan-coral/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-coral">
+          <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-michigan-coral/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-coral-deep">
             Complex Care Navigation
           </motion.span>
           <motion.h1 variants={fade} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
@@ -152,7 +152,7 @@ export default function ComplexCarePage() {
         {/* Isolation callout */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0} className="rounded-xl border-2 border-michigan-coral/20 bg-michigan-coral/5 p-6">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-michigan-coral" />
+            <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-michigan-coral-deep" />
             <div>
               <h3 className="text-sm font-bold text-foreground mb-1">Navigating Isolation</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
@@ -166,7 +166,7 @@ export default function ComplexCarePage() {
         <section>
           <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
-              <Dna className="h-5 w-5 text-michigan-coral" />
+              <Dna className="h-5 w-5 text-michigan-coral-deep" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-foreground">Condition Directory</h2>
@@ -191,7 +191,7 @@ export default function ComplexCarePage() {
                   <CardContent className="pt-6">
                     <div className="flex items-start gap-3 mb-3">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-michigan-coral/10">
-                        <c.icon className="h-4 w-4 text-michigan-coral" />
+                        <c.icon className="h-4 w-4 text-michigan-coral-deep" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-sm font-bold text-foreground">{c.name}</h3>
@@ -208,7 +208,7 @@ export default function ComplexCarePage() {
                     </div>
                     <div className="rounded-md bg-muted/50 p-2 border border-border">
                       <p className="text-[11px] text-muted-foreground">
-                        <HandHeart className="mr-1 inline h-3 w-3 text-michigan-coral" />
+                        <HandHeart className="mr-1 inline h-3 w-3 text-michigan-coral-deep" />
                         <span className="font-semibold text-foreground">Support:</span> {c.support}
                       </p>
                     </div>

@@ -42,7 +42,7 @@ export default function MichiganTrends() {
                       {latest.value.toLocaleString()}{trend.unit}
                     </p>
                   </div>
-                  <div className={`flex items-center gap-1 text-xs font-medium ${changed ? "text-michigan-forest" : "text-michigan-coral"}`}>
+                  <div className={`flex items-center gap-1 text-xs font-medium ${changed ? "text-michigan-forest-deep" : "text-michigan-coral-deep"}`}>
                     {changed ? <TrendingDown className="h-3 w-3" /> : <TrendingUp className="h-3 w-3" />}
                     {changed ? "Improving" : "Worsening"}
                   </div>

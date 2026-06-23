@@ -124,7 +124,7 @@ export default function ContactPage() {
             className="text-center py-16"
           >
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-michigan-forest/10">
-              <CheckCircle2 className="h-8 w-8 text-michigan-forest" />
+              <CheckCircle2 className="h-8 w-8 text-michigan-forest-deep" />
             </div>
             <h2 className="text-2xl font-bold text-foreground mb-2">
               Message Sent!

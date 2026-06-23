@@ -234,10 +234,10 @@ export default function EquityScorecardPage() {
         {/* Stat strip */}
         <div className="flex flex-wrap items-center justify-center gap-4 mb-6 text-center">
           {[
-            { stat: "41%", label: "below ALICE", color: "text-michigan-coral" },
-            { stat: "59/83", label: "dental HPSAs", color: "text-michigan-gold" },
-            { stat: "102", label: "PFAS water bodies", color: "text-michigan-coral" },
-            { stat: "31K", label: "homeless 2024", color: "text-michigan-coral" },
+            { stat: "41%", label: "below ALICE", color: "text-michigan-coral-deep" },
+            { stat: "59/83", label: "dental HPSAs", color: "text-michigan-gold-deep" },
+            { stat: "102", label: "PFAS water bodies", color: "text-michigan-coral-deep" },
+            { stat: "31K", label: "homeless 2024", color: "text-michigan-coral-deep" },
             { stat: "298K", label: "Spanish speakers", color: "text-primary" },
           ].map((s) => (
             <div key={s.label} className="px-3">

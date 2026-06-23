@@ -41,7 +41,7 @@ export const TruncatedResourceList = ({
       <div className="flex items-start justify-between gap-3 mb-2">
         <h3 className="font-semibold text-foreground">{item.name}</h3>
         {item.cost && (
-          <span className="text-xs font-medium text-michigan-teal whitespace-nowrap">
+          <span className="text-xs font-medium text-michigan-teal-deep whitespace-nowrap">
             {item.cost === "Free" ? "💰 Free" : `💰 ${item.cost}`}
           </span>
         )}

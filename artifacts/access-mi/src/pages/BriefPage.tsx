@@ -95,7 +95,7 @@ const trendIcon = (t?: "up" | "down" | "stable") => {
   if (t === "up")
     return <TrendingUp className="h-3.5 w-3.5 text-destructive" />;
   if (t === "down")
-    return <TrendingDown className="h-3.5 w-3.5 text-michigan-forest" />;
+    return <TrendingDown className="h-3.5 w-3.5 text-michigan-forest-deep" />;
   return <Minus className="h-3.5 w-3.5 text-muted-foreground" />;
 };
 
@@ -747,7 +747,7 @@ export default function BriefPage() {
                 onClick={handleCopy}
               >
                 {copied ? (
-                  <Check className="h-3 w-3 text-michigan-forest" />
+                  <Check className="h-3 w-3 text-michigan-forest-deep" />
                 ) : (
                   <Copy className="h-3 w-3" />
                 )}
@@ -774,7 +774,7 @@ export default function BriefPage() {
             {/* Independence + methodology footer  -  always visible, screen and print */}
             <div className="rounded-lg border border-border bg-muted/20 px-4 py-3 flex items-start gap-2">
               <ShieldCheck
-                className="h-3.5 w-3.5 text-michigan-forest mt-0.5 shrink-0"
+                className="h-3.5 w-3.5 text-michigan-forest-deep mt-0.5 shrink-0"
                 aria-hidden="true"
               />
               <p className="text-[11px] text-muted-foreground leading-relaxed">

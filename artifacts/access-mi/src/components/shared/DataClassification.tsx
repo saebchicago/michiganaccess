@@ -6,17 +6,17 @@ const CONFIG = {
     label: "verified - measured directly from a primary public source",
     icon: CheckCircle2,
     className:
-      "text-michigan-forest bg-michigan-forest/8 border-michigan-forest/20",
+      "text-michigan-forest-deep bg-michigan-forest/8 border-michigan-forest/20",
   },
   modeled: {
     label: "modeled - derived or estimated from public datasets",
     icon: FlaskConical,
-    className: "text-michigan-teal bg-michigan-teal/8 border-michigan-teal/20",
+    className: "text-michigan-teal-deep bg-michigan-teal/8 border-michigan-teal/20",
   },
   projected: {
     label: "projected - forward-looking platform target",
     icon: Lightbulb,
-    className: "text-michigan-gold bg-michigan-gold/8 border-michigan-gold/20",
+    className: "text-michigan-gold-deep bg-michigan-gold/8 border-michigan-gold/20",
   },
   pending: {
     label: "pending - data not yet available for this county",

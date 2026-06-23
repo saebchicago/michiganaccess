@@ -266,7 +266,7 @@ const ExecutiveSummaryPage = () => {
             className="rounded-xl border-2 border-michigan-gold/30 bg-michigan-gold/5 p-5 mb-10"
           >
             <div className="flex items-start gap-3">
-              <Info className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
+              <Info className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold-deep" />
               <p className="text-xs text-muted-foreground">
                 <strong className="text-foreground">Public Beta:</strong> Access
                 Michigan is a new civic resource. Statistics below reflect

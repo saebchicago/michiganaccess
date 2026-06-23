@@ -9,13 +9,13 @@ export default function DentalDesertCard() {
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Smile className="h-5 w-5 text-michigan-gold" /> Dental Health Deserts
+            <Smile className="h-5 w-5 text-michigan-gold-deep" /> Dental Health Deserts
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 text-center">
-              <span className="text-2xl font-bold text-michigan-coral">59 of 83</span>
+              <span className="text-2xl font-bold text-michigan-coral-deep">59 of 83</span>
               <p className="text-[10px] text-muted-foreground">Counties with dental HPSAs</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">

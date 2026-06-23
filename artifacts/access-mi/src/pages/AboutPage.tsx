@@ -138,7 +138,7 @@ const rankingFactors = [
     factor: "Quality & Safety Scores",
     weight: 30,
     icon: Shield,
-    color: "text-michigan-forest",
+    color: "text-michigan-forest-deep",
     description:
       "Independent ratings from Leapfrog (hospital safety), CMS (clinical quality), Blue Distinction Centers (specialty excellence), and ANCC Magnet Recognition (nursing quality). Higher objective ratings rank higher.",
   },
@@ -146,7 +146,7 @@ const rankingFactors = [
     factor: "Digital Access",
     weight: 15,
     icon: BarChart3,
-    color: "text-michigan-teal",
+    color: "text-michigan-teal-deep",
     description:
       "Online scheduling, patient portal, telehealth, electronic records, and prescription refills. Digital access reduces barriers, especially for working families and rural residents.",
   },
@@ -366,7 +366,7 @@ export default function AboutPage() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
-                <Target className="h-5 w-5 text-michigan-forest" />
+                <Target className="h-5 w-5 text-michigan-forest-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">
@@ -443,7 +443,7 @@ export default function AboutPage() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-                <Lightbulb className="h-5 w-5 text-michigan-teal" />
+                <Lightbulb className="h-5 w-5 text-michigan-teal-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">
@@ -488,7 +488,7 @@ export default function AboutPage() {
                 custom={i}
                 className="flex gap-3"
               >
-                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-michigan-forest" />
+                <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-michigan-forest-deep" />
                 <div>
                   <h3 className="text-sm font-semibold text-foreground">
                     {item.title}
@@ -513,7 +513,7 @@ export default function AboutPage() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
-                <Heart className="h-5 w-5 text-michigan-coral" />
+                <Heart className="h-5 w-5 text-michigan-coral-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">
@@ -569,7 +569,7 @@ export default function AboutPage() {
               >
                 <Card className="h-full hover-lift">
                   <CardContent className="pt-6">
-                    <item.icon className="mb-3 h-5 w-5 text-michigan-coral" />
+                    <item.icon className="mb-3 h-5 w-5 text-michigan-coral-deep" />
                     <h3 className="mb-1 text-sm font-semibold text-foreground">
                       {item.title}
                     </h3>
@@ -863,7 +863,7 @@ export default function AboutPage() {
             <Card className="border-michigan-forest/20 bg-michigan-forest/[0.03]">
               <CardContent className="pt-6 space-y-4">
                 <div className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-michigan-forest" />
+                  <Shield className="h-5 w-5 text-michigan-forest-deep" />
                   <h2 className="text-lg font-bold text-foreground">
                     How we keep this honest
                   </h2>
@@ -879,7 +879,7 @@ export default function AboutPage() {
                       key={bullet}
                       className="flex items-start gap-2 text-sm text-muted-foreground"
                     >
-                      <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-michigan-forest" />
+                      <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-michigan-forest-deep" />
                       {bullet}
                     </li>
                   ))}
@@ -944,7 +944,7 @@ export default function AboutPage() {
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
-                <Activity className="h-5 w-5 text-michigan-forest" />
+                <Activity className="h-5 w-5 text-michigan-forest-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">

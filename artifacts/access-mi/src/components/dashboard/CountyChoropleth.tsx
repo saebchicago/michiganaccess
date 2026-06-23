@@ -192,7 +192,7 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
       <CardContent className={compact ? "pt-0" : ""}>
         {/* Color Legend */}
         <div className="flex items-center gap-1 mb-4">
-          <span className="text-[10px] text-michigan-forest font-medium">Best</span>
+          <span className="text-[10px] text-michigan-forest-deep font-medium">Best</span>
           <div className="flex flex-1 h-3 rounded-full overflow-hidden">
             {legendLabels.map((l, i) => (
               <Tooltip key={i}>
@@ -203,7 +203,7 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
               </Tooltip>
             ))}
           </div>
-          <span className="text-[10px] text-michigan-coral font-medium">Critical</span>
+          <span className="text-[10px] text-michigan-coral-deep font-medium">Critical</span>
         </div>
 
         {/* Heatmap Grid */}
@@ -263,7 +263,7 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
         {!compact && (
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <p className="text-xs font-semibold text-michigan-coral mb-2 flex items-center gap-1">
+              <p className="text-xs font-semibold text-michigan-coral-deep mb-2 flex items-center gap-1">
                 <Info className="h-3 w-3" /> Highest {metricConfig.label} (Most Need)
               </p>
               <div className="space-y-1">
@@ -271,17 +271,17 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
                   <Link key={d.name} to={`/county/${d.name.toLowerCase().replace(/[.\s]+/g, "-")}`}
                     className="flex items-center justify-between px-2 py-1.5 rounded-md bg-michigan-coral/5 hover:bg-michigan-coral/10 transition-colors text-xs group">
                     <span className="flex items-center gap-2">
-                      <span className="font-bold text-michigan-coral w-4">{i + 1}</span>
-                      <span className="text-foreground group-hover:text-michigan-coral transition-colors">{d.name}</span>
+                      <span className="font-bold text-michigan-coral-deep w-4">{i + 1}</span>
+                      <span className="text-foreground group-hover:text-michigan-coral-deep transition-colors">{d.name}</span>
                       <Badge variant="outline" className="text-[9px] h-4">{d.profile.countyType}</Badge>
                     </span>
-                    <span className="font-semibold text-michigan-coral">{formatValue(d.value!, metric)}</span>
+                    <span className="font-semibold text-michigan-coral-deep">{formatValue(d.value!, metric)}</span>
                   </Link>
                 ))}
               </div>
             </div>
             <div>
-              <p className="text-xs font-semibold text-michigan-forest mb-2 flex items-center gap-1">
+              <p className="text-xs font-semibold text-michigan-forest-deep mb-2 flex items-center gap-1">
                 <Info className="h-3 w-3" /> Lowest {metricConfig.label} (Best Outcomes)
               </p>
               <div className="space-y-1">
@@ -289,11 +289,11 @@ export default function CountyChoropleth({ compact = false, highlightCounty }: {
                   <Link key={d.name} to={`/county/${d.name.toLowerCase().replace(/[.\s]+/g, "-")}`}
                     className="flex items-center justify-between px-2 py-1.5 rounded-md bg-michigan-forest/5 hover:bg-michigan-forest/10 transition-colors text-xs group">
                     <span className="flex items-center gap-2">
-                      <span className="font-bold text-michigan-forest w-4">{i + 1}</span>
-                      <span className="text-foreground group-hover:text-michigan-forest transition-colors">{d.name}</span>
+                      <span className="font-bold text-michigan-forest-deep w-4">{i + 1}</span>
+                      <span className="text-foreground group-hover:text-michigan-forest-deep transition-colors">{d.name}</span>
                       <Badge variant="outline" className="text-[9px] h-4">{d.profile.countyType}</Badge>
                     </span>
-                    <span className="font-semibold text-michigan-forest">{formatValue(d.value!, metric)}</span>
+                    <span className="font-semibold text-michigan-forest-deep">{formatValue(d.value!, metric)}</span>
                   </Link>
                 ))}
               </div>

@@ -37,7 +37,7 @@ export default function ComparisonShareCard({ salary, cityA, cityB, taxA, taxB, 
         <div><p className="text-xs text-muted-foreground">Keep</p><p className="text-sm font-bold text-primary">${keepA.toLocaleString()}</p></div>
         <div><p className="text-xs text-muted-foreground">Keep</p><p className="text-sm font-bold text-primary">${keepB.toLocaleString()}</p></div>
       </div>
-      <p className="text-xs font-semibold text-michigan-forest">Save ${diff.toLocaleString()}/yr in {winner}</p>
+      <p className="text-xs font-semibold text-michigan-forest-deep">Save ${diff.toLocaleString()}/yr in {winner}</p>
       <Button variant="outline" size="sm" className="text-xs gap-1 w-full" onClick={handleCopy}>
         {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
         {copied ? "Copied!" : "Copy to share"}

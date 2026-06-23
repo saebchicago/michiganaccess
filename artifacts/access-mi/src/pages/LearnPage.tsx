@@ -140,7 +140,7 @@ export default function LearnPage() {
       <section className="bg-gradient-to-b from-michigan-teal/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <span className="mb-4 inline-block rounded-full bg-michigan-teal/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-teal">
+            <span className="mb-4 inline-block rounded-full bg-michigan-teal/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-teal-deep">
               Health Education Library
             </span>
           </motion.div>
@@ -178,7 +178,7 @@ export default function LearnPage() {
                     >
                       <CardContent className="py-4 text-center">
                         <div className={`mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl ${isSelected ? "bg-primary text-primary-foreground" : "bg-michigan-teal/10"}`}>
-                          <Icon className={`h-5 w-5 ${isSelected ? "" : "text-michigan-teal"}`} />
+                          <Icon className={`h-5 w-5 ${isSelected ? "" : "text-michigan-teal-deep"}`} />
                         </div>
                         <h3 className="text-sm font-semibold text-foreground">{region.label}</h3>
                       </CardContent>
@@ -202,7 +202,7 @@ export default function LearnPage() {
                         <ul className="space-y-1.5">
                           {selectedBody.symptoms.map(s => (
                             <li key={s} className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <ChevronRight className="h-3 w-3 text-michigan-teal flex-shrink-0" />{s}
+                              <ChevronRight className="h-3 w-3 text-michigan-teal-deep flex-shrink-0" />{s}
                             </li>
                           ))}
                         </ul>
@@ -242,7 +242,7 @@ export default function LearnPage() {
                     <AccordionTrigger className="hover:no-underline py-3 px-3">
                       <div className="flex items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-michigan-teal/10 flex-shrink-0">
-                          <StageIcon className="h-4 w-4 text-michigan-teal" />
+                          <StageIcon className="h-4 w-4 text-michigan-teal-deep" />
                         </div>
                         <div className="text-left">
                           <span className="font-semibold text-foreground text-sm">{stage.label}</span>
@@ -310,7 +310,7 @@ export default function LearnPage() {
           <TabsContent value="visit-prep" className="space-y-8 mt-6">
             <div>
               <h2 className="text-xl font-bold text-foreground mb-1 flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-michigan-gold" />Prepare for Your Visit
+                <Lightbulb className="h-5 w-5 text-michigan-gold-deep" />Prepare for Your Visit
               </h2>
               <p className="text-sm text-muted-foreground">Getting ready before your appointment helps you and your doctor make the most of your time together.</p>
             </div>
@@ -321,7 +321,7 @@ export default function LearnPage() {
                   <Card className="hover-lift h-full">
                     <CardContent className="py-4">
                       <div className="flex items-start gap-2">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-michigan-teal/10 text-xs font-bold text-michigan-teal flex-shrink-0">{i + 1}</span>
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-michigan-teal/10 text-xs font-bold text-michigan-teal-deep flex-shrink-0">{i + 1}</span>
                         <div>
                           <h3 className="text-sm font-semibold text-foreground">{tip.title}</h3>
                           <p className="text-sm text-muted-foreground mt-0.5">{tip.desc}</p>

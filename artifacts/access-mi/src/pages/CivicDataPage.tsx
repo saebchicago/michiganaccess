@@ -134,14 +134,14 @@ const getQuickStats = (t: (key: string) => string) => [
     icon: Vote,
     label: t("civic.voterTurnout"),
     value: "74.6%",
-    color: "text-michigan-forest",
+    color: "text-michigan-forest-deep",
     source: "UF Election Lab, Nov 2024 [VERIFIED]",
   },
   {
     icon: DollarSign,
     label: "FY2025 Budget (All Funds)",
     value: "$82.5B",
-    color: "text-michigan-gold",
+    color: "text-michigan-gold-deep",
     source: "MI House Fiscal Agency, FY2025 enacted [VERIFIED]",
   },
   {
@@ -295,7 +295,7 @@ const CivicDataPage = () => {
                     <CardContent className="py-4">
                       <p className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
                         <Info
-                          className="h-4 w-4 text-michigan-gold flex-shrink-0 mt-0.5"
+                          className="h-4 w-4 text-michigan-gold-deep flex-shrink-0 mt-0.5"
                           aria-hidden="true"
                         />
                         <span>
@@ -327,7 +327,7 @@ const CivicDataPage = () => {
                   <Card>
                     <CardContent className="p-6">
                       <div className="flex items-center gap-3 mb-4">
-                        <DollarSign className="h-8 w-8 text-michigan-gold shrink-0" />
+                        <DollarSign className="h-8 w-8 text-michigan-gold-deep shrink-0" />
                         <div>
                           <p className="text-3xl font-bold text-foreground">
                             $82.52B
@@ -409,7 +409,7 @@ const CivicDataPage = () => {
                     <CardContent className="py-4">
                       <p className="text-xs text-muted-foreground leading-relaxed flex items-start gap-2">
                         <Info
-                          className="h-4 w-4 text-michigan-teal flex-shrink-0 mt-0.5"
+                          className="h-4 w-4 text-michigan-teal-deep flex-shrink-0 mt-0.5"
                           aria-hidden="true"
                         />
                         <span>
@@ -488,7 +488,7 @@ const CivicDataPage = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Vote className="h-5 w-5 text-michigan-forest" />
+                        <Vote className="h-5 w-5 text-michigan-forest-deep" />
                         {t("civic.voterTurnoutChart")}
                       </CardTitle>
                       <CardDescription>
@@ -574,7 +574,7 @@ const CivicDataPage = () => {
                       className="group hover:border-michigan-forest/30 transition-colors"
                     >
                       <CardContent className="p-6">
-                        <item.icon className="mb-3 h-8 w-8 text-michigan-forest" />
+                        <item.icon className="mb-3 h-8 w-8 text-michigan-forest-deep" />
                         <h3 className="mb-2 font-semibold text-foreground">
                           {item.title}
                         </h3>
@@ -699,7 +699,7 @@ const CivicDataPage = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Calendar className="h-5 w-5 text-michigan-gold" />
+                        <Calendar className="h-5 w-5 text-michigan-gold-deep" />
                         Public Meetings & Hearings
                       </CardTitle>
                       <CardDescription>
@@ -756,8 +756,8 @@ const CivicDataPage = () => {
           >
             <motion.div variants={fadeUp} className="mb-8 text-center">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-michigan-teal/10 px-4 py-1.5">
-                <Globe className="h-4 w-4 text-michigan-teal" />
-                <span className="text-sm font-medium text-michigan-teal">
+                <Globe className="h-4 w-4 text-michigan-teal-deep" />
+                <span className="text-sm font-medium text-michigan-teal-deep">
                   Open Data & Transparency
                 </span>
               </div>
@@ -774,7 +774,7 @@ const CivicDataPage = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-lg">
-                    <FileText className="h-5 w-5 text-michigan-teal" />
+                    <FileText className="h-5 w-5 text-michigan-teal-deep" />
                     Filing a FOIA Request
                   </CardTitle>
                 </CardHeader>
@@ -821,7 +821,7 @@ const CivicDataPage = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-lg">
-                    <Search className="h-5 w-5 text-michigan-teal" />
+                    <Search className="h-5 w-5 text-michigan-teal-deep" />
                     Already-Open Data Portals
                   </CardTitle>
                 </CardHeader>
@@ -879,7 +879,7 @@ const CivicDataPage = () => {
             <motion.div variants={fadeUp} className="mt-6">
               <Card className="border-michigan-teal/20 bg-michigan-teal/5">
                 <CardContent className="flex flex-col gap-4 p-6 md:flex-row md:items-center">
-                  <BookOpen className="h-8 w-8 shrink-0 text-michigan-teal" />
+                  <BookOpen className="h-8 w-8 shrink-0 text-michigan-teal-deep" />
                   <div className="flex-1">
                     <h3 className="font-semibold text-foreground">
                       Can't find the data you need?

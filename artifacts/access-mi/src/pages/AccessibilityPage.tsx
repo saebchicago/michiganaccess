@@ -129,7 +129,7 @@ export default function AccessibilityPage() {
                     <ul className="space-y-1.5">
                       {s.items.map((item) => (
                         <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground">
-                          <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" />
+                          <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest-deep" />
                           {item}
                         </li>
                       ))}
@@ -148,7 +148,7 @@ export default function AccessibilityPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
-                <CheckCircle2 className="h-5 w-5 text-michigan-forest" />
+                <CheckCircle2 className="h-5 w-5 text-michigan-forest-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">Testing Methodology</h2>
@@ -160,7 +160,7 @@ export default function AccessibilityPage() {
           <div className="space-y-3">
             {testingMethods.map((method, i) => (
               <motion.div key={method} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={i} className="flex items-start gap-3">
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-michigan-forest" />
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-michigan-forest-deep" />
                 <p className="text-sm text-muted-foreground">{method}</p>
               </motion.div>
             ))}
@@ -174,7 +174,7 @@ export default function AccessibilityPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
             <div className="flex items-center gap-3 mb-6">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
-                <Eye className="h-5 w-5 text-michigan-coral" />
+                <Eye className="h-5 w-5 text-michigan-coral-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">Known Limitations</h2>
@@ -202,7 +202,7 @@ export default function AccessibilityPage() {
         {/* Contact */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
           <div className="rounded-2xl border border-michigan-teal/20 bg-michigan-teal/5 p-8 lg:p-12 text-center">
-            <Mail className="mx-auto mb-4 h-8 w-8 text-michigan-teal" />
+            <Mail className="mx-auto mb-4 h-8 w-8 text-michigan-teal-deep" />
             <h2 className="text-2xl font-bold text-foreground mb-3">Report an Accessibility Barrier</h2>
             <p className="text-muted-foreground leading-relaxed max-w-xl mx-auto mb-6">
               If you encounter any accessibility barriers while using Access Michigan, we want to know. Your feedback helps us improve the platform for everyone.

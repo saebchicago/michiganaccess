@@ -126,7 +126,7 @@ const CivicPowerPage = () => {
             {
               icon: BookOpen, title: "Where to Serve",
               desc: "15 types of governing boards where Michigan residents can apply. Health, housing, transit, environment, education - with how-to-apply guides.",
-              href: "/civic-power/boards", color: "text-michigan-teal", badge: "New",
+              href: "/civic-power/boards", color: "text-michigan-teal-deep", badge: "New",
             },
             {
               icon: Vote, title: "Races That Need Candidates",
@@ -136,7 +136,7 @@ const CivicPowerPage = () => {
             {
               icon: Building2, title: "Federal Presence",
               desc: "7 major federal agencies, 140+ Michigan offices, and advisory committees with public nomination processes you may not know exist.",
-              href: "/civic-power/federal", color: "text-michigan-forest", badge: "New",
+              href: "/civic-power/federal", color: "text-michigan-forest-deep", badge: "New",
             },
           ].map((card, i) => (
             <motion.div
