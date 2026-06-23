@@ -44,11 +44,30 @@ const EDGES: ReadonlyArray<readonly [number, number]> = [
   [3, 5],
 ];
 
+// Compact variant nodes. Same coordinates as the favicon's two amber dots:
+// (25, 15) sits inside the UP body; (43, 42) sits in the central LP. Sized
+// to read at the 32px header render where the full-variant hairlines and
+// r=1.2 dots go sub-pixel. The cross-strait edge between them is drawn
+// without a clipPath so it visibly spans the water gap between peninsulas.
+const COMPACT_NODES: ReadonlyArray<readonly [number, number]> = [
+  [25, 15],
+  [43, 42],
+];
+
+export type AccessMILogoVariant = "full" | "compact";
+
 interface AccessMILogoProps {
   className?: string;
+  variant?: AccessMILogoVariant;
 }
 
-export function AccessMILogo({ className }: AccessMILogoProps) {
+export function AccessMILogo({
+  className,
+  variant = "full",
+}: AccessMILogoProps) {
+  if (variant === "compact") {
+    return <CompactAccessMILogo className={className} />;
+  }
   return (
     <svg
       viewBox="0 0 64 64"
@@ -96,6 +115,45 @@ export function AccessMILogo({ className }: AccessMILogoProps) {
           <circle key={`n${i}`} cx={x} cy={y} r="1.2" fill="#E0A33E" />
         ))}
       </g>
+    </svg>
+  );
+}
+
+function CompactAccessMILogo({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
+      className={cn("block", className)}
+    >
+      <defs>
+        <linearGradient
+          id="accessmi-gradient-compact"
+          x1="0.78"
+          y1="0.05"
+          x2="0.18"
+          y2="0.95"
+        >
+          <stop offset="0%" stopColor="#0E2A47" />
+          <stop offset="55%" stopColor="#1C7293" />
+          <stop offset="100%" stopColor="#159A8C" />
+        </linearGradient>
+      </defs>
+      <path d={ACCESSMI_SILHOUETTE_D} fill="url(#accessmi-gradient-compact)" />
+      <line
+        x1={COMPACT_NODES[0][0]}
+        y1={COMPACT_NODES[0][1]}
+        x2={COMPACT_NODES[1][0]}
+        y2={COMPACT_NODES[1][1]}
+        stroke="#E0A33E"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      {COMPACT_NODES.map(([x, y], i) => (
+        <circle key={`cn${i}`} cx={x} cy={y} r="2.75" fill="#E0A33E" />
+      ))}
     </svg>
   );
 }

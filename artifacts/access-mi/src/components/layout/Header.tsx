@@ -84,7 +84,7 @@ const Header = () => {
             className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg"
             aria-label="Access Michigan Home"
           >
-            <AccessMILogo className="h-8 w-8" />
+            <AccessMILogo className="h-8 w-8" variant="compact" />
             <div className="flex flex-col leading-tight">
               <span className="text-sm font-bold text-foreground">
                 Access Michigan
