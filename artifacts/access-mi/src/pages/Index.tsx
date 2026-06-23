@@ -8,7 +8,6 @@ import {
   Database,
   BarChart3,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
@@ -115,39 +114,16 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
   const [zip, setZip] = useState("");
 
   return (
-    <section className="relative border-b border-border/60 overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
-        style={{
-          backgroundImage:
-            "radial-gradient(60% 50% at 15% 0%, hsl(var(--michigan-blue) / 0.35), transparent 70%), radial-gradient(40% 40% at 95% 100%, hsl(var(--info) / 0.18), transparent 70%)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
-      />
-      <div className="relative container mx-auto px-4 pt-20 pb-16 md:pt-24 md:pb-20 max-w-4xl">
+    <section className="border-b border-border">
+      <div className="container mx-auto px-4 pt-16 pb-14 md:pt-20 md:pb-16 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="space-y-8"
+          className="space-y-7"
         >
-          <div className="flex items-center gap-3">
-            <span
-              aria-hidden="true"
-              className="h-px w-8 bg-accent"
-            />
-            <p className="text-caption text-accent">
-              Michigan civic data ledger
-            </p>
-          </div>
-
-          <h1 className="font-serif text-[2.5rem] sm:text-5xl md:text-6xl font-semibold leading-[1.02] tracking-[-0.02em] text-foreground">
-            Civic intelligence for every{" "}
-            <span className="italic text-accent">Michigan</span> county.
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.05] tracking-[-0.02em] text-foreground">
+            Civic intelligence for every Michigan county.
           </h1>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
@@ -161,7 +137,6 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
               e.preventDefault();
               if (zip.trim().length === 5) onZipSubmit(zip.trim());
             }}
-            className="pt-2"
             aria-label="Find data for your ZIP code"
           >
             <label
@@ -179,37 +154,27 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
                 placeholder="e.g. 48104"
                 value={zip}
                 onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
-                className="h-12 bg-card/70 text-foreground text-base tracking-[0.15em] border-border/80 placeholder:text-muted-foreground/60 placeholder:tracking-normal focus-visible:border-accent focus-visible:ring-accent"
+                className="h-12 bg-card text-foreground text-base border-border placeholder:text-muted-foreground focus-visible:ring-accent"
                 data-numeric
                 aria-label="ZIP code"
               />
               <Button
                 type="submit"
                 disabled={zip.trim().length !== 5}
-                className="h-12 px-5 group"
+                className="h-12 px-5"
               >
                 Look up
-                <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-0.5" />
+                <ArrowRight className="w-4 h-4 ml-1.5" />
               </Button>
             </div>
           </form>
 
-          <div className="pt-2">
+          <div>
             <Link
               to="/methodology"
-              className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors group"
+              className="text-sm text-muted-foreground hover:text-foreground hover:underline underline-offset-4 transition-colors"
             >
-              <Sparkles
-                className="w-3.5 h-3.5 text-accent"
-                aria-hidden="true"
-              />
-              <span className="underline-offset-4 group-hover:underline">
-                Every number carries its source and label - see the methodology
-              </span>
-              <ArrowRight
-                className="w-3 h-3 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0"
-                aria-hidden="true"
-              />
+              Every number carries its source and label - see the methodology
             </Link>
           </div>
         </motion.div>
@@ -350,24 +315,10 @@ function ClusterCard({
   return (
     <article
       id={cluster.id}
-      className="group relative flex flex-col overflow-hidden rounded-lg border border-border/70 bg-card/80 p-6 transition-all duration-300 hover:border-border hover:bg-card hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-20px_hsl(var(--michigan-blue)/0.45)] focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-background"
+      className="flex flex-col rounded-lg border border-border bg-card p-6 focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-background"
     >
-      <span
-        aria-hidden="true"
-        className={`absolute left-0 top-0 h-full w-[3px] ${cluster.rule} opacity-80 transition-opacity group-hover:opacity-100`}
-      />
-      <div className="flex items-start justify-between mb-5">
-        <div
-          className={`flex h-10 w-10 items-center justify-center rounded-md border border-border/60 bg-background/60 ${cluster.iconClass}`}
-        >
-          <Icon className="h-5 w-5" aria-hidden="true" />
-        </div>
-        <span
-          className="font-serif text-xs tracking-[0.2em] text-muted-foreground/70"
-          aria-hidden="true"
-        >
-          {String(index + 1).padStart(2, "0")}
-        </span>
+      <div className="mb-4">
+        <Icon className={`h-5 w-5 ${cluster.iconClass}`} aria-hidden="true" />
       </div>
       <h2 className="font-serif text-xl font-semibold leading-tight tracking-tight text-foreground mb-2">
         {cluster.label}
@@ -375,16 +326,16 @@ function ClusterCard({
       <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
         {cluster.purpose}
       </p>
-      <ul className="space-y-0.5 border-t border-border/50 pt-3">
+      <ul className="space-y-1">
         {cluster.tools.map((tool) => (
           <li key={tool.href}>
             <Link
               to={tool.href}
-              className="flex items-center justify-between gap-2 -mx-2 px-2 py-1.5 rounded text-sm text-foreground/90 hover:text-foreground hover:bg-muted/40 focus-visible:outline-none focus-visible:bg-muted/60 transition-colors group/row"
+              className="flex items-center gap-2 rounded px-2 py-1.5 -mx-2 text-sm text-foreground/90 hover:text-foreground hover:bg-muted/40 focus-visible:outline-none focus-visible:bg-muted/60 transition-colors"
             >
               <span>{tool.label}</span>
               <ArrowRight
-                className="h-3.5 w-3.5 text-muted-foreground/60 -translate-x-1 opacity-0 transition-all group-hover/row:opacity-100 group-hover/row:translate-x-0 group-hover/row:text-accent"
+                className="h-3.5 w-3.5 text-muted-foreground/60"
                 aria-hidden="true"
               />
             </Link>
@@ -404,22 +355,10 @@ function RecentlyAddedCard() {
   return (
     <article
       id="recently-added"
-      className="group relative flex flex-col overflow-hidden rounded-lg border border-dashed border-border/70 bg-muted/30 p-6 transition-all duration-300 hover:border-accent/60 hover:bg-muted/50"
+      className="flex flex-col rounded-lg border border-border bg-card p-6"
     >
-      <span
-        aria-hidden="true"
-        className="absolute left-0 top-0 h-full w-[3px] bg-michigan-teal opacity-80"
-      />
-      <div className="flex items-start justify-between mb-5">
-        <div className="flex h-10 w-10 items-center justify-center rounded-md border border-border/60 bg-background/60 text-michigan-teal">
-          <Database className="h-5 w-5" aria-hidden="true" />
-        </div>
-        <span
-          className="font-serif text-xs tracking-[0.2em] text-muted-foreground/70"
-          aria-hidden="true"
-        >
-          LOG
-        </span>
+      <div className="mb-4">
+        <Database className="h-5 w-5 text-michigan-teal" aria-hidden="true" />
       </div>
       <h2 className="font-serif text-xl font-semibold leading-tight tracking-tight text-foreground mb-2">
         Recently added
@@ -429,10 +368,10 @@ function RecentlyAddedCard() {
       </p>
       <Link
         to="/changelog"
-        className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:gap-2 transition-all group/link"
+        className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-4"
       >
         See the systems history
-        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
+        <ArrowRight className="h-3.5 w-3.5" />
       </Link>
     </article>
   );
@@ -442,13 +381,9 @@ function Layer2ClusterGrid() {
   return (
     <section
       aria-label="Choose a path"
-      className="container mx-auto px-4 py-16 md:py-20 max-w-5xl"
+      className="container mx-auto px-4 py-12 md:py-16 max-w-5xl"
     >
-      <div className="flex flex-col gap-3 mb-10 max-w-2xl">
-        <div className="flex items-center gap-3">
-          <span aria-hidden="true" className="h-px w-8 bg-accent" />
-          <p className="text-caption text-accent">Pick a path</p>
-        </div>
+      <div className="flex flex-col gap-2 mb-8 max-w-2xl">
         <h2 className="font-serif text-3xl md:text-4xl font-semibold tracking-[-0.015em] text-foreground">
           Choose where to begin.
         </h2>
