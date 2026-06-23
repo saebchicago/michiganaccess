@@ -11,22 +11,27 @@ const HealthSafetyCallout = () => (
           <Heart className="h-5 w-5 text-michigan-coral" />
         </div>
         <div className="flex-1">
-          <h3 className="text-sm font-semibold text-foreground">Health & Safety Resources</h3>
+          <h3 className="text-sm font-semibold text-foreground">
+            Health & Safety Resources
+          </h3>
           <p className="text-xs text-muted-foreground mt-1">
-            <strong>In crisis?</strong> Call <strong>988</strong> (Suicide & Crisis Lifeline) · Text HOME to 741741.
-            Find support groups, mental health services, and wellness resources.
+            <strong>In crisis?</strong> Call <strong>988</strong> (Suicide &
+            Crisis Lifeline) · Text HOME to 741741. Find support groups, mental
+            health services, and wellness resources.
           </p>
           <div className="flex gap-2 mt-2 flex-wrap">
-            <Link to="/support">
-              <Button size="sm" variant="outline" className="h-7 text-xs">
-                <ArrowRight className="mr-1 h-3 w-3" />Support Groups
-              </Button>
-            </Link>
-            <Link to="/wellness">
-              <Button size="sm" variant="outline" className="h-7 text-xs">
-                <ArrowRight className="mr-1 h-3 w-3" />Prevention & Wellness
-              </Button>
-            </Link>
+            <Button asChild size="sm" variant="outline" className="h-7 text-xs">
+              <Link to="/support">
+                <ArrowRight className="mr-1 h-3 w-3" />
+                Support Groups
+              </Link>
+            </Button>
+            <Button asChild size="sm" variant="outline" className="h-7 text-xs">
+              <Link to="/wellness">
+                <ArrowRight className="mr-1 h-3 w-3" />
+                Prevention & Wellness
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

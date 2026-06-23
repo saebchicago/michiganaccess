@@ -11,16 +11,20 @@ const CivicDataCallout = () => (
           <Landmark className="h-5 w-5 text-primary" />
         </div>
         <div className="flex-1">
-          <h3 className="text-sm font-semibold text-foreground">Civic Data & Open Government</h3>
+          <h3 className="text-sm font-semibold text-foreground">
+            Civic Data & Open Government
+          </h3>
           <p className="text-xs text-muted-foreground mt-1">
-            Explore Michigan's budget transparency, FOIA tracking, voter engagement data, elected officials, and public meeting schedules.
+            Explore Michigan's budget transparency, FOIA tracking, voter
+            engagement data, elected officials, and public meeting schedules.
           </p>
           <div className="flex gap-2 mt-2 flex-wrap">
-            <Link to="/civic-data">
-              <Button size="sm" variant="outline" className="h-7 text-xs">
-                <ArrowRight className="mr-1 h-3 w-3" />Open Government Hub
-              </Button>
-            </Link>
+            <Button asChild size="sm" variant="outline" className="h-7 text-xs">
+              <Link to="/civic-data">
+                <ArrowRight className="mr-1 h-3 w-3" />
+                Open Government Hub
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

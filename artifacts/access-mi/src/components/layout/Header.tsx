@@ -95,7 +95,10 @@ const Header = () => {
               <span className="text-sm font-bold text-foreground">
                 Access Michigan
               </span>
-              <span className="text-[9px] text-muted-foreground">
+              <span
+                className="text-[9px] text-muted-foreground"
+                aria-hidden="true"
+              >
                 Independent civic data
               </span>
             </div>
