@@ -71,15 +71,15 @@ describe("sitemap.xml", () => {
   it("includes /county/wayne and /county/keweenaw", () => {
     xml ??= readFileSync(sitemapPath, "utf8");
     locs ??= [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-    expect(locs).toContain("https://accessmi.org/county/wayne");
-    expect(locs).toContain("https://accessmi.org/county/keweenaw");
+    expect(locs).toContain("https://accessmi.org/county/wayne/");
+    expect(locs).toContain("https://accessmi.org/county/keweenaw/");
   });
 
   it("includes /county/grand-traverse and /county/st-clair (multi-word slugs)", () => {
     xml ??= readFileSync(sitemapPath, "utf8");
     locs ??= [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-    expect(locs).toContain("https://accessmi.org/county/grand-traverse");
-    expect(locs).toContain("https://accessmi.org/county/st-clair");
+    expect(locs).toContain("https://accessmi.org/county/grand-traverse/");
+    expect(locs).toContain("https://accessmi.org/county/st-clair/");
   });
 });
 
