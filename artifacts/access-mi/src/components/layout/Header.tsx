@@ -3,13 +3,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
-  Heart,
   ChevronDown,
   Download,
   Sparkles,
   Search,
   BarChart2,
 } from "lucide-react";
+import { AccessMILogo } from "@/components/branding/AccessMILogo";
 import MySettingsDrawer from "@/components/shared/MySettingsDrawer";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -84,13 +84,7 @@ const Header = () => {
             className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg"
             aria-label="Access Michigan Home"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-michigan">
-              <Heart
-                className="h-4 w-4 text-primary-foreground"
-                fill="currentColor"
-                aria-hidden="true"
-              />
-            </div>
+            <AccessMILogo className="h-8 w-8" />
             <div className="flex flex-col leading-tight">
               <span className="text-sm font-bold text-foreground">
                 Access Michigan
