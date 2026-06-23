@@ -1,12 +1,30 @@
 import { useState, useEffect, useMemo } from "react";
-import { MapPin, Clock, HelpCircle, ArrowRight, ChevronDown, User, DollarSign, X, Users } from "lucide-react";
+import {
+  MapPin,
+  Clock,
+  HelpCircle,
+  ArrowRight,
+  ChevronDown,
+  User,
+  DollarSign,
+  X,
+  Users,
+} from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
 import { Link } from "react-router-dom";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Badge } from "@/components/ui/badge";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -34,7 +52,9 @@ function computeFPL(householdSize: number, annualIncome: number): number {
 function EligibilityPopover() {
   const { eligibility, setEligibility, clearEligibility } = useCounty();
   const [open, setOpen] = useState(false);
-  const [hhSize, setHhSize] = useState(eligibility.householdSize?.toString() ?? "1");
+  const [hhSize, setHhSize] = useState(
+    eligibility.householdSize?.toString() ?? "1",
+  );
   const [income, setIncome] = useState(eligibility.annualIncome ?? 30000);
 
   const hhNum = Math.max(1, parseInt(hhSize) || 1);
@@ -67,15 +87,25 @@ function EligibilityPopover() {
       <PopoverTrigger asChild>
         <button className="inline-flex items-center gap-1 text-[10px] text-primary hover:underline">
           <Users className="h-2.5 w-2.5" />
-          {eligibility.fplPercent ? `${eligibility.fplPercent}% FPL` : "Set income"}
+          {eligibility.fplPercent
+            ? `${eligibility.fplPercent}% FPL`
+            : "Set income"}
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-72 p-4 space-y-4" side="bottom" align="start">
-        <p className="text-xs font-semibold text-foreground">Eligibility Quick-Set</p>
+      <PopoverContent
+        className="w-72 p-4 space-y-4"
+        side="bottom"
+        align="start"
+      >
+        <p className="text-xs font-semibold text-foreground">
+          Eligibility Quick-Set
+        </p>
 
         {/* Household size */}
         <div className="space-y-1">
-          <Label htmlFor="hh-size" className="text-[10px]">Household size</Label>
+          <Label htmlFor="hh-size" className="text-[10px]">
+            Household size
+          </Label>
           <Input
             id="hh-size"
             type="number"
@@ -91,8 +121,12 @@ function EligibilityPopover() {
         {/* Income slider */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="income-slider" className="text-[10px]">Annual income</Label>
-            <span className="text-xs font-semibold text-foreground">${income.toLocaleString()}</span>
+            <Label htmlFor="income-slider" className="text-[10px]">
+              Annual income
+            </Label>
+            <span className="text-xs font-semibold text-foreground">
+              ${income.toLocaleString()}
+            </span>
           </div>
           <Slider
             id="income-slider"
@@ -114,20 +148,35 @@ function EligibilityPopover() {
         {/* FPL preview */}
         <div className="rounded-md bg-muted/50 border border-border p-2 text-center">
           <p className="text-[10px] text-muted-foreground">Estimated FPL</p>
-          <p className={`text-lg font-bold ${fplPreview <= 138 ? "text-michigan-forest" : fplPreview <= 250 ? "text-michigan-gold" : "text-foreground"}`}>
+          <p
+            className={`text-lg font-bold ${fplPreview <= 138 ? "text-michigan-forest" : fplPreview <= 250 ? "text-michigan-gold" : "text-foreground"}`}
+          >
             {fplPreview}%
           </p>
           <p className="text-[9px] text-muted-foreground mt-0.5">
-            {fplPreview <= 138 ? "Likely Medicaid eligible" : fplPreview <= 250 ? "May qualify for subsidies" : "Above subsidy threshold"}
+            {fplPreview <= 138
+              ? "Likely Medicaid eligible"
+              : fplPreview <= 250
+                ? "May qualify for subsidies"
+                : "Above subsidy threshold"}
           </p>
         </div>
 
         <div className="flex gap-2">
-          <Button size="sm" className="flex-1 h-7 text-[10px]" onClick={handleSave}>
+          <Button
+            size="sm"
+            className="flex-1 h-7 text-[10px]"
+            onClick={handleSave}
+          >
             Apply
           </Button>
           {eligibility.fplPercent && (
-            <Button variant="ghost" size="sm" className="h-7 text-[10px]" onClick={handleClear}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 text-[10px]"
+              onClick={handleClear}
+            >
               Clear
             </Button>
           )}
@@ -137,7 +186,19 @@ function EligibilityPopover() {
   );
 }
 export default function ContextBar() {
-  const { filterLabel, county, setCounty, region, setRegion, audience, setAudience, subPersonas, toggleSubPersona, eligibility, clearEligibility } = useCounty();
+  const {
+    filterLabel,
+    county,
+    setCounty,
+    region,
+    setRegion,
+    audience,
+    setAudience,
+    subPersonas,
+    toggleSubPersona,
+    eligibility,
+    clearEligibility,
+  } = useCounty();
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState(false);
   const isMobile = useIsMobile();
@@ -160,13 +221,26 @@ export default function ContextBar() {
           const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
           const display = dbDate >= currentMonth ? dbDate : now;
           setLastUpdated(
-            display.toLocaleDateString("en-US", { month: "short", year: "numeric" })
+            display.toLocaleDateString("en-US", {
+              month: "short",
+              year: "numeric",
+            }),
           );
         } else {
-          setLastUpdated(new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" }));
+          setLastUpdated(
+            new Date().toLocaleDateString("en-US", {
+              month: "short",
+              year: "numeric",
+            }),
+          );
         }
       } catch {
-        setLastUpdated(new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" }));
+        setLastUpdated(
+          new Date().toLocaleDateString("en-US", {
+            month: "short",
+            year: "numeric",
+          }),
+        );
       }
     })();
   }, []);
@@ -179,41 +253,74 @@ export default function ContextBar() {
   const hasFilters = !!(county || region || audience || eligibility.fplPercent);
 
   const audienceChip = audience ? (
-    <Badge variant="secondary" className="text-[10px] gap-1 py-0 h-5 font-normal">
+    <Badge
+      variant="secondary"
+      className="text-[10px] gap-1 py-0 h-5 font-normal"
+    >
       <User className="h-2.5 w-2.5" aria-hidden="true" />
       {AUDIENCE_LABELS[audience]}
-      <button onClick={() => setAudience(null)} aria-label="Clear persona filter" className="ml-0.5 hover:text-destructive">
+      <button
+        onClick={() => setAudience(null)}
+        aria-label="Clear persona filter"
+        className="ml-0.5 hover:text-destructive"
+      >
         <X className="h-2 w-2" />
       </button>
     </Badge>
   ) : null;
 
   const eligibilityChip = eligibility.fplPercent ? (
-    <Badge variant="secondary" className="text-[10px] gap-1 py-0 h-5 font-normal">
+    <Badge
+      variant="secondary"
+      className="text-[10px] gap-1 py-0 h-5 font-normal"
+    >
       <DollarSign className="h-2.5 w-2.5" aria-hidden="true" />
       {eligibility.fplPercent}% FPL
-      <button onClick={clearEligibility} aria-label="Clear eligibility filter" className="ml-0.5 hover:text-destructive">
+      <button
+        onClick={clearEligibility}
+        aria-label="Clear eligibility filter"
+        className="ml-0.5 hover:text-destructive"
+      >
         <X className="h-2 w-2" />
       </button>
     </Badge>
   ) : null;
 
-  const subPersonaChips = subPersonas.length > 0 ? subPersonas.map((sp) => (
-    <Badge key={sp} variant="secondary" className="text-[10px] gap-1 py-0 h-5 font-normal">
-      {SUB_PERSONA_LABELS[sp]}
-      <button onClick={() => toggleSubPersona(sp)} aria-label={`Remove ${SUB_PERSONA_LABELS[sp]} filter`} className="ml-0.5 hover:text-destructive">
-        <X className="h-2 w-2" />
-      </button>
-    </Badge>
-  )) : null;
+  const subPersonaChips =
+    subPersonas.length > 0
+      ? subPersonas.map((sp) => (
+          <Badge
+            key={sp}
+            variant="secondary"
+            className="text-[10px] gap-1 py-0 h-5 font-normal"
+          >
+            {SUB_PERSONA_LABELS[sp]}
+            <button
+              onClick={() => toggleSubPersona(sp)}
+              aria-label={`Remove ${SUB_PERSONA_LABELS[sp]} filter`}
+              className="ml-0.5 hover:text-destructive"
+            >
+              <X className="h-2 w-2" />
+            </button>
+          </Badge>
+        ))
+      : null;
 
   // Aria-live announcement
   const announcement = [
-    county ? `${county} County` : region ? `${region.name} region` : "All Michigan",
+    county
+      ? `${county} County`
+      : region
+        ? `${region.name} region`
+        : "All Michigan",
     audience ? `for ${AUDIENCE_LABELS[audience]}s` : "",
-    subPersonas.length > 0 ? `as ${subPersonas.map(sp => SUB_PERSONA_LABELS[sp]).join(", ")}` : "",
+    subPersonas.length > 0
+      ? `as ${subPersonas.map((sp) => SUB_PERSONA_LABELS[sp]).join(", ")}`
+      : "",
     eligibility.fplPercent ? `at ${eligibility.fplPercent}% FPL` : "",
-  ].filter(Boolean).join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   // Mobile: collapsed pill
   if (isMobile) {
@@ -228,10 +335,11 @@ export default function ContextBar() {
             onClick={() => setMobileExpanded(true)}
             className="container flex items-center gap-2 h-8 text-[11px] text-muted-foreground w-full"
             aria-expanded={false}
-            aria-label="Expand location bar"
           >
             <MapPin className="h-3 w-3 shrink-0" aria-hidden="true" />
-            <span className="font-medium text-foreground truncate">{filterLabel}</span>
+            <span className="font-medium text-foreground truncate">
+              {filterLabel}
+            </span>
             {audienceChip}
             {subPersonaChips}
             {eligibilityChip}
@@ -244,7 +352,10 @@ export default function ContextBar() {
               <MapPin className="h-3 w-3" aria-hidden="true" />
               <span className="font-medium text-foreground">{filterLabel}</span>
               {(county || region) && (
-                <button onClick={handleClear} className="text-primary hover:underline ml-1 inline-flex items-center gap-0.5">
+                <button
+                  onClick={handleClear}
+                  className="text-primary hover:underline ml-1 inline-flex items-center gap-0.5"
+                >
                   Change <ArrowRight className="h-2.5 w-2.5" />
                 </button>
               )}
@@ -253,7 +364,11 @@ export default function ContextBar() {
                   to="/#"
                   onClick={(e) => {
                     e.preventDefault();
-                    document.querySelector<HTMLButtonElement>('[aria-label="Select county"]')?.click();
+                    document
+                      .querySelector<HTMLButtonElement>(
+                        '[aria-label="Select county"]',
+                      )
+                      ?.click();
                   }}
                   className="text-primary hover:underline ml-1 inline-flex items-center gap-0.5"
                 >
@@ -290,11 +405,13 @@ export default function ContextBar() {
 
   // Desktop: full bar
   return (
-    <div className={`sticky top-16 z-40 border-b backdrop-blur-md transition-colors ${
-      hasNoLocation
-        ? "border-amber-200 dark:border-amber-800/40 bg-amber-50/90 dark:bg-amber-950/30"
-        : "border-border/50 bg-background/95"
-    }`}>
+    <div
+      className={`sticky top-16 z-40 border-b backdrop-blur-md transition-colors ${
+        hasNoLocation
+          ? "border-amber-200 dark:border-amber-800/40 bg-amber-50/90 dark:bg-amber-950/30"
+          : "border-border/50 bg-background/95"
+      }`}
+    >
       <div aria-live="polite" className="sr-only">
         Now showing {announcement} data and services.
       </div>
@@ -305,12 +422,20 @@ export default function ContextBar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <span className="flex items-center gap-1">
-                <MapPin className={`h-3 w-3 ${hasNoLocation ? "text-amber-600 dark:text-amber-400" : ""}`} aria-hidden="true" />
-                <span className={`font-medium ${hasNoLocation ? "text-amber-800 dark:text-amber-300" : "text-foreground"}`}>{filterLabel}</span>
+                <MapPin
+                  className={`h-3 w-3 ${hasNoLocation ? "text-amber-600 dark:text-amber-400" : ""}`}
+                  aria-hidden="true"
+                />
+                <span
+                  className={`font-medium ${hasNoLocation ? "text-amber-800 dark:text-amber-300" : "text-foreground"}`}
+                >
+                  {filterLabel}
+                </span>
               </span>
             </TooltipTrigger>
             <TooltipContent side="bottom" className="text-xs max-w-xs">
-              Set your ZIP to see resources, alerts, and data for your exact area.
+              Set your ZIP to see resources, alerts, and data for your exact
+              area.
             </TooltipContent>
           </Tooltip>
           {(county || region) && (
@@ -326,7 +451,11 @@ export default function ContextBar() {
               to="/#"
               onClick={(e) => {
                 e.preventDefault();
-                document.querySelector<HTMLButtonElement>('[aria-label="Select county"]')?.click();
+                document
+                  .querySelector<HTMLButtonElement>(
+                    '[aria-label="Select county"]',
+                  )
+                  ?.click();
               }}
               className="text-amber-700 dark:text-amber-400 hover:underline ml-1 inline-flex items-center gap-0.5 font-semibold"
             >
@@ -362,8 +491,9 @@ export default function ContextBar() {
             </button>
           </TooltipTrigger>
           <TooltipContent side="bottom" className="max-w-xs text-xs">
-            This bar shows your active filters - location, persona, and eligibility - which
-            control all data and recommendations across the site.{" "}
+            This bar shows your active filters - location, persona, and
+            eligibility - which control all data and recommendations across the
+            site.{" "}
             <Link to="/data-validation" className="text-primary underline">
               Learn more
             </Link>

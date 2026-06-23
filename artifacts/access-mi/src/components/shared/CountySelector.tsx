@@ -8,7 +8,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { useCounty, MICHIGAN_COUNTIES, type MichiganCounty } from "@/contexts/CountyContext";
+import {
+  useCounty,
+  MICHIGAN_COUNTIES,
+  type MichiganCounty,
+} from "@/contexts/CountyContext";
 import { MICHIGAN_REGIONS, type MichiganRegion } from "@/data/michigan-regions";
 import { cn } from "@/lib/utils";
 
@@ -63,9 +67,9 @@ const CountySelector = ({ variant = "header" }: CountySelectorProps) => {
           className={cn(
             "gap-1.5 font-medium",
             variant === "header" && "h-9 text-xs",
-            hasSelection && "border-primary/30 bg-primary/5 text-primary"
+            hasSelection && "border-primary/30 bg-primary/5 text-primary",
           )}
-          aria-label={t("county.selectCounty")}
+          aria-label={`${filterLabel} - ${t("county.selectCounty")}`}
         >
           <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
           <span className="truncate max-w-[140px]">{filterLabel}</span>
@@ -92,7 +96,7 @@ const CountySelector = ({ variant = "header" }: CountySelectorProps) => {
             onClick={handleClear}
             className={cn(
               "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted",
-              !hasSelection && "bg-primary/10 text-primary font-medium"
+              !hasSelection && "bg-primary/10 text-primary font-medium",
             )}
           >
             <Check className={cn("h-3.5 w-3.5", hasSelection && "opacity-0")} />
@@ -112,12 +116,20 @@ const CountySelector = ({ variant = "header" }: CountySelectorProps) => {
                   onClick={() => handleSelectRegion(r)}
                   className={cn(
                     "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted",
-                    region?.id === r.id && "bg-primary/10 text-primary font-medium"
+                    region?.id === r.id &&
+                      "bg-primary/10 text-primary font-medium",
                   )}
                 >
-                  <Check className={cn("h-3.5 w-3.5", region?.id !== r.id && "opacity-0")} />
+                  <Check
+                    className={cn(
+                      "h-3.5 w-3.5",
+                      region?.id !== r.id && "opacity-0",
+                    )}
+                  />
                   <span className="truncate">{r.name}</span>
-                  <span className="ml-auto text-[10px] text-muted-foreground">{r.counties.length} counties</span>
+                  <span className="ml-auto text-[10px] text-muted-foreground">
+                    {r.counties.length} counties
+                  </span>
                 </button>
               ))}
             </>
@@ -136,10 +148,12 @@ const CountySelector = ({ variant = "header" }: CountySelectorProps) => {
                   onClick={() => handleSelectCounty(c)}
                   className={cn(
                     "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted",
-                    county === c && "bg-primary/10 text-primary font-medium"
+                    county === c && "bg-primary/10 text-primary font-medium",
                   )}
                 >
-                  <Check className={cn("h-3.5 w-3.5", county !== c && "opacity-0")} />
+                  <Check
+                    className={cn("h-3.5 w-3.5", county !== c && "opacity-0")}
+                  />
                   {c}
                 </button>
               ))}

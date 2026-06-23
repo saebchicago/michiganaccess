@@ -19,7 +19,12 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
 
   // Filter out any "Home" item that duplicates the auto-prepended Home link
   const filteredItems = items.filter(
-    (item, i) => !(i === 0 && item.label.toLowerCase() === "home" && (!item.href || item.href === "/"))
+    (item, i) =>
+      !(
+        i === 0 &&
+        item.label.toLowerCase() === "home" &&
+        (!item.href || item.href === "/")
+      ),
   );
 
   // Inject BreadcrumbList JSON-LD
@@ -39,7 +44,9 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
         "@type": "ListItem",
         position: i + 2,
         name: item.label,
-        ...(item.href ? { item: `${BASE_URL}${item.href}` } : { item: `${BASE_URL}${pathname}` }),
+        ...(item.href
+          ? { item: `${BASE_URL}${item.href}` }
+          : { item: `${BASE_URL}${pathname}` }),
       })),
     ];
 
@@ -56,18 +63,31 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
   }, [filteredItems, pathname]);
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-1.5 text-xs text-muted-foreground overflow-hidden max-w-full">
-      <Link to="/" className="flex items-center gap-1 hover:text-primary transition-colors shrink-0">
+    <nav
+      aria-label="Breadcrumb"
+      className="mb-6 flex items-center gap-1.5 text-xs text-muted-foreground overflow-hidden max-w-full"
+    >
+      <Link
+        to="/"
+        className="inline-flex items-center gap-1 min-h-[24px] hover:text-primary transition-colors shrink-0"
+      >
         <Home className="h-3 w-3" />
-        <span>{t('breadcrumbs.home', 'Home')}</span>
+        <span>{t("breadcrumbs.home", "Home")}</span>
       </Link>
       {filteredItems.map((item, i) => (
         <span key={i} className="flex items-center gap-1.5 min-w-0">
           <ChevronRight className="h-3 w-3 shrink-0" />
           {item.href ? (
-            <Link to={item.href} className="hover:text-primary transition-colors truncate">{item.label}</Link>
+            <Link
+              to={item.href}
+              className="inline-flex items-center min-h-[24px] hover:text-primary transition-colors truncate"
+            >
+              {item.label}
+            </Link>
           ) : (
-            <span className="font-medium text-foreground truncate">{item.label}</span>
+            <span className="font-medium text-foreground truncate">
+              {item.label}
+            </span>
           )}
         </span>
       ))}

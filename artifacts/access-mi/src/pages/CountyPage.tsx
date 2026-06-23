@@ -1040,28 +1040,30 @@ export default function CountyPage() {
                     latest information.
                   </p>
                   <div className="flex flex-wrap gap-2 mt-2">
-                    <Link to="/civic-data">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="h-7 text-xs"
-                      >
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="h-7 text-xs"
+                    >
+                      <Link to="/civic-data">
                         <FileQuestion className="mr-1 h-3 w-3" />
                         FOIA Request Builder
-                      </Button>
-                    </Link>
-                    <a
-                      href={`mailto:?subject=Data Request for ${county} County&body=I am writing to request public health and services data for ${county} County, Michigan.`}
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="h-7 text-xs"
                     >
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="h-7 text-xs"
+                      <a
+                        href={`mailto:?subject=Data Request for ${county} County&body=I am writing to request public health and services data for ${county} County, Michigan.`}
                       >
                         <Mail className="mr-1 h-3 w-3" />
                         Contact Officials
-                      </Button>
-                    </a>
+                      </a>
+                    </Button>
                   </div>
                 </div>
               </div>
