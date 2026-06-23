@@ -115,19 +115,42 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
   const [zip, setZip] = useState("");
 
   return (
-    <section className="border-b border-border/60">
-      <div className="container mx-auto px-4 pt-16 pb-14 max-w-4xl">
+    <section className="relative border-b border-border/60 overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage:
+            "radial-gradient(60% 50% at 15% 0%, hsl(var(--michigan-blue) / 0.35), transparent 70%), radial-gradient(40% 40% at 95% 100%, hsl(var(--info) / 0.18), transparent 70%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+      />
+      <div className="relative container mx-auto px-4 pt-20 pb-16 md:pt-24 md:pb-20 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="space-y-6"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="space-y-8"
         >
-          <p className="text-caption">Michigan civic data ledger</p>
-          <h1 className="font-serif text-4xl md:text-5xl font-semibold leading-[1.1] tracking-tight text-foreground">
-            Civic intelligence for every Michigan county.
+          <div className="flex items-center gap-3">
+            <span
+              aria-hidden="true"
+              className="h-px w-8 bg-accent"
+            />
+            <p className="text-caption text-accent">
+              Michigan civic data ledger
+            </p>
+          </div>
+
+          <h1 className="font-serif text-[2.5rem] sm:text-5xl md:text-6xl font-semibold leading-[1.02] tracking-[-0.02em] text-foreground">
+            Civic intelligence for every{" "}
+            <span className="italic text-accent">Michigan</span> county.
           </h1>
-          <p className="text-base text-muted-foreground max-w-2xl leading-relaxed">
+
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
             Independent data, federal sources, and the methodology behind every
             number - organized so you can find what affects you, your patients,
             or your community.
@@ -138,35 +161,57 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
               e.preventDefault();
               if (zip.trim().length === 5) onZipSubmit(zip.trim());
             }}
-            className="flex gap-2 max-w-md"
+            className="pt-2"
             aria-label="Find data for your ZIP code"
           >
-            <Input
-              inputMode="numeric"
-              pattern="[0-9]{5}"
-              maxLength={5}
-              placeholder="Enter your ZIP code"
-              value={zip}
-              onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
-              className="bg-card text-foreground border-border placeholder:text-muted-foreground"
-              data-numeric
-              aria-label="ZIP code"
-            />
-            <Button type="submit" disabled={zip.trim().length !== 5}>
-              Look up
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
+            <label
+              htmlFor="hero-zip"
+              className="text-caption mb-2 inline-block"
+            >
+              Start with your ZIP
+            </label>
+            <div className="flex flex-col sm:flex-row gap-2 max-w-md">
+              <Input
+                id="hero-zip"
+                inputMode="numeric"
+                pattern="[0-9]{5}"
+                maxLength={5}
+                placeholder="e.g. 48104"
+                value={zip}
+                onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
+                className="h-12 bg-card/70 text-foreground text-base tracking-[0.15em] border-border/80 placeholder:text-muted-foreground/60 placeholder:tracking-normal focus-visible:border-accent focus-visible:ring-accent"
+                data-numeric
+                aria-label="ZIP code"
+              />
+              <Button
+                type="submit"
+                disabled={zip.trim().length !== 5}
+                className="h-12 px-5 group"
+              >
+                Look up
+                <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-0.5" />
+              </Button>
+            </div>
           </form>
 
-          <p className="text-xs text-muted-foreground">
+          <div className="pt-2">
             <Link
               to="/methodology"
-              className="inline-flex items-center gap-1 underline-offset-2 hover:underline"
+              className="inline-flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors group"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              Every number carries its source and label - see the methodology
+              <Sparkles
+                className="w-3.5 h-3.5 text-accent"
+                aria-hidden="true"
+              />
+              <span className="underline-offset-4 group-hover:underline">
+                Every number carries its source and label - see the methodology
+              </span>
+              <ArrowRight
+                className="w-3 h-3 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0"
+                aria-hidden="true"
+              />
             </Link>
-          </p>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -293,36 +338,55 @@ function CountySelector() {
 
 // ─── Layer 2: cluster cards + Recently added ─────────────────────────────────
 
-function ClusterCard({ cluster }: { cluster: Cluster }) {
+function ClusterCard({
+  cluster,
+  index,
+}: {
+  cluster: Cluster;
+  index: number;
+}) {
   const Icon = cluster.icon;
   const isBenefits = cluster.id === "learn-benefits";
   return (
     <article
       id={cluster.id}
-      className="relative overflow-hidden rounded-md border border-border/70 bg-card p-5 transition-colors hover:bg-muted/40"
+      className="group relative flex flex-col overflow-hidden rounded-lg border border-border/70 bg-card/80 p-6 transition-all duration-300 hover:border-border hover:bg-card hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-20px_hsl(var(--michigan-blue)/0.45)] focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-background"
     >
       <span
         aria-hidden="true"
-        className={`absolute left-0 top-0 h-full w-[3px] ${cluster.rule}`}
+        className={`absolute left-0 top-0 h-full w-[3px] ${cluster.rule} opacity-80 transition-opacity group-hover:opacity-100`}
       />
-      <div className="flex items-center gap-2 mb-2">
-        <Icon className={`h-5 w-5 ${cluster.iconClass}`} aria-hidden="true" />
-        <h2 className="font-serif text-lg font-semibold text-foreground">
-          {cluster.label}
-        </h2>
+      <div className="flex items-start justify-between mb-5">
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-md border border-border/60 bg-background/60 ${cluster.iconClass}`}
+        >
+          <Icon className="h-5 w-5" aria-hidden="true" />
+        </div>
+        <span
+          className="font-serif text-xs tracking-[0.2em] text-muted-foreground/70"
+          aria-hidden="true"
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
       </div>
-      <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
+      <h2 className="font-serif text-xl font-semibold leading-tight tracking-tight text-foreground mb-2">
+        {cluster.label}
+      </h2>
+      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
         {cluster.purpose}
       </p>
-      <ul className="space-y-1.5">
+      <ul className="space-y-0.5 border-t border-border/50 pt-3">
         {cluster.tools.map((tool) => (
           <li key={tool.href}>
             <Link
               to={tool.href}
-              className="inline-flex items-center gap-1.5 text-sm text-foreground hover:text-info group"
+              className="flex items-center justify-between gap-2 -mx-2 px-2 py-1.5 rounded text-sm text-foreground/90 hover:text-foreground hover:bg-muted/40 focus-visible:outline-none focus-visible:bg-muted/60 transition-colors group/row"
             >
-              <ArrowRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-info transition-colors" />
-              <span className="group-hover:underline">{tool.label}</span>
+              <span>{tool.label}</span>
+              <ArrowRight
+                className="h-3.5 w-3.5 text-muted-foreground/60 -translate-x-1 opacity-0 transition-all group-hover/row:opacity-100 group-hover/row:translate-x-0 group-hover/row:text-accent"
+                aria-hidden="true"
+              />
             </Link>
           </li>
         ))}
@@ -340,27 +404,35 @@ function RecentlyAddedCard() {
   return (
     <article
       id="recently-added"
-      className="relative overflow-hidden rounded-md border border-border/70 bg-muted/40 p-5"
+      className="group relative flex flex-col overflow-hidden rounded-lg border border-dashed border-border/70 bg-muted/30 p-6 transition-all duration-300 hover:border-accent/60 hover:bg-muted/50"
     >
       <span
         aria-hidden="true"
-        className="absolute left-0 top-0 h-full w-[3px] bg-michigan-teal"
+        className="absolute left-0 top-0 h-full w-[3px] bg-michigan-teal opacity-80"
       />
-      <div className="flex items-center gap-2 mb-2">
-        <Database className="h-5 w-5 text-michigan-teal" aria-hidden="true" />
-        <h2 className="font-serif text-lg font-semibold text-foreground">
-          Recently added
-        </h2>
+      <div className="flex items-start justify-between mb-5">
+        <div className="flex h-10 w-10 items-center justify-center rounded-md border border-border/60 bg-background/60 text-michigan-teal">
+          <Database className="h-5 w-5" aria-hidden="true" />
+        </div>
+        <span
+          className="font-serif text-xs tracking-[0.2em] text-muted-foreground/70"
+          aria-hidden="true"
+        >
+          LOG
+        </span>
       </div>
-      <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
+      <h2 className="font-serif text-xl font-semibold leading-tight tracking-tight text-foreground mb-2">
+        Recently added
+      </h2>
+      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
         New tools, datasets, and methodology updates land here.
       </p>
       <Link
         to="/changelog"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-info hover:underline"
+        className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:gap-2 transition-all group/link"
       >
         See the systems history
-        <ArrowRight className="h-3.5 w-3.5" />
+        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
       </Link>
     </article>
   );
@@ -370,17 +442,24 @@ function Layer2ClusterGrid() {
   return (
     <section
       aria-label="Choose a path"
-      className="container mx-auto px-4 py-14 max-w-5xl"
+      className="container mx-auto px-4 py-16 md:py-20 max-w-5xl"
     >
-      <div className="flex flex-col gap-2 mb-6">
-        <p className="text-caption">Pick a path</p>
-        <h2 className="font-serif text-2xl font-semibold text-foreground">
+      <div className="flex flex-col gap-3 mb-10 max-w-2xl">
+        <div className="flex items-center gap-3">
+          <span aria-hidden="true" className="h-px w-8 bg-accent" />
+          <p className="text-caption text-accent">Pick a path</p>
+        </div>
+        <h2 className="font-serif text-3xl md:text-4xl font-semibold tracking-[-0.015em] text-foreground">
           Choose where to begin.
         </h2>
+        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+          Four entry points into the ledger. Every link leads to a destination
+          tool with sourced numbers and integrity labels intact.
+        </p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {CLUSTERS.map((c) => (
-          <ClusterCard key={c.id} cluster={c} />
+        {CLUSTERS.map((c, i) => (
+          <ClusterCard key={c.id} cluster={c} index={i} />
         ))}
         <RecentlyAddedCard />
       </div>
