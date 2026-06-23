@@ -39,7 +39,10 @@ export default function QuickExitBar() {
         >
           <LogOut className="h-4 w-4" aria-hidden="true" />
           <span>Quick Exit</span>
-          <kbd className="ml-1 rounded border border-destructive-foreground/30 bg-destructive-foreground/10 px-1.5 py-0.5 font-mono text-[10px]">
+          <kbd
+            aria-hidden="true"
+            className="ml-1 rounded border border-destructive-foreground/30 bg-destructive-foreground/10 px-1.5 py-0.5 font-mono text-[10px]"
+          >
             ESC
           </kbd>
         </button>
