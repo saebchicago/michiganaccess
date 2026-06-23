@@ -4,14 +4,7 @@
  * - Rate-limit protection (back-off on 429)
  * - Optional app token support
  * - Lightweight in-memory caching (10 min TTL)
- *
- * Hosts in PROXY_HOSTS are routed through a Netlify Function because their
- * upstream does not send a permissive Access-Control-Allow-Origin header.
- * Other hosts are called directly.
  */
-
-// data.detroitmi.gov does not CORS-allow accessmi.org; route through proxy.
-const PROXY_HOSTS = new Set(["data.detroitmi.gov"]);
 
 interface SocrataQueryOptions {
   select?: string;
@@ -66,21 +59,7 @@ export async function querySocrata(
       const headers: Record<string, string> = { Accept: "application/json" };
       if (appToken) headers["X-App-Token"] = appToken;
 
-      let url: string;
-      try {
-        const host = new URL(endpoint).host;
-        if (PROXY_HOSTS.has(host)) {
-          const proxyParams = new URLSearchParams(params);
-          proxyParams.set("endpoint", endpoint);
-          url = `/.netlify/functions/socrata-proxy?${proxyParams}`;
-        } else {
-          url = `${endpoint}?${params}`;
-        }
-      } catch {
-        url = `${endpoint}?${params}`;
-      }
-
-      const res = await fetch(url, {
+      const res = await fetch(`${endpoint}?${params}`, {
         headers,
         signal: AbortSignal.timeout(15000),
       });
