@@ -106,6 +106,29 @@ export default defineConfig({
           ) {
             return "vendor-i18n";
           }
+          // Charts: recharts + d3 transitive deps. ~340 KB; only used on
+          // dashboard/data routes, so keeping it out of the main chunk
+          // means /find-care and friends don't pay for it.
+          if (
+            id.includes("node_modules/recharts/") ||
+            id.includes("node_modules/d3-") ||
+            id.includes("node_modules/victory-vendor/")
+          ) {
+            return "vendor-charts";
+          }
+          // PDF export (Download Local Insights). ~390 KB; only loaded
+          // when the user actually clicks export.
+          if (id.includes("node_modules/jspdf")) {
+            return "vendor-pdf";
+          }
+          // Screenshot capture for the same export path. ~200 KB.
+          if (id.includes("node_modules/html2canvas")) {
+            return "vendor-html2canvas";
+          }
+          // Map runtime - cached across every page that renders a map.
+          if (id.includes("node_modules/leaflet/")) {
+            return "vendor-leaflet";
+          }
         },
       },
     },
