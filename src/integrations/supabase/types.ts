@@ -578,6 +578,54 @@ export type Database = {
         }
         Relationships: []
       }
+      maternal_infant_health: {
+        Row: {
+          birthing_hospitals: number | null
+          county: string
+          data_years: string
+          id: string
+          infant_mortality_rate: number | null
+          infant_mortality_rate_black: number | null
+          infant_mortality_rate_white: number | null
+          low_birth_weight_rate: number | null
+          midwives_per_10k: number | null
+          ob_gyn_per_10k: number | null
+          prenatal_care_first_trimester: number | null
+          preterm_birth_rate: number | null
+          teen_birth_rate: number | null
+        }
+        Insert: {
+          birthing_hospitals?: number | null
+          county: string
+          data_years: string
+          id?: string
+          infant_mortality_rate?: number | null
+          infant_mortality_rate_black?: number | null
+          infant_mortality_rate_white?: number | null
+          low_birth_weight_rate?: number | null
+          midwives_per_10k?: number | null
+          ob_gyn_per_10k?: number | null
+          prenatal_care_first_trimester?: number | null
+          preterm_birth_rate?: number | null
+          teen_birth_rate?: number | null
+        }
+        Update: {
+          birthing_hospitals?: number | null
+          county?: string
+          data_years?: string
+          id?: string
+          infant_mortality_rate?: number | null
+          infant_mortality_rate_black?: number | null
+          infant_mortality_rate_white?: number | null
+          low_birth_weight_rate?: number | null
+          midwives_per_10k?: number | null
+          ob_gyn_per_10k?: number | null
+          prenatal_care_first_trimester?: number | null
+          preterm_birth_rate?: number | null
+          teen_birth_rate?: number | null
+        }
+        Relationships: []
+      }
       municipalities: {
         Row: {
           council_agenda_url: string | null
