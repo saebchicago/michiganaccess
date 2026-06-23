@@ -189,15 +189,15 @@ const PROGRAMS: EnergyProgram[] = [
 const TYPE_LABELS: Record<string, { label: string; color: string }> = {
   electric: {
     label: "Electric",
-    color: "bg-michigan-gold/15 text-michigan-gold border-michigan-gold/25",
+    color: "bg-michigan-gold/15 text-michigan-gold-deep border-michigan-gold/25",
   },
   gas: {
     label: "Gas/Heating",
-    color: "bg-michigan-coral/15 text-michigan-coral border-michigan-coral/25",
+    color: "bg-michigan-coral/15 text-michigan-coral-deep border-michigan-coral/25",
   },
   weatherization: {
     label: "Weatherization",
-    color: "bg-michigan-teal/15 text-michigan-teal border-michigan-teal/25",
+    color: "bg-michigan-teal/15 text-michigan-teal-deep border-michigan-teal/25",
   },
   crisis: {
     label: "Crisis/Emergency",
@@ -239,7 +239,7 @@ export default function EnergyAssistanceFinder({ compact = false }: Props) {
     <Card>
       <CardHeader className={compact ? "pb-2" : ""}>
         <CardTitle className="text-base flex items-center gap-2">
-          <Zap className="h-4 w-4 text-michigan-gold" />
+          <Zap className="h-4 w-4 text-michigan-gold-deep" />
           Energy Assistance Program Finder
         </CardTitle>
         <p className="text-xs text-muted-foreground">
@@ -273,7 +273,7 @@ export default function EnergyAssistanceFinder({ compact = false }: Props) {
             <label className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider mb-1 block">
               Income Level: {effectiveFPL}% FPL
               {eligibility.fplPercent && (
-                <span className="text-michigan-teal ml-1">(from profile)</span>
+                <span className="text-michigan-teal-deep ml-1">(from profile)</span>
               )}
             </label>
             {!eligibility.fplPercent && (
@@ -320,7 +320,7 @@ export default function EnergyAssistanceFinder({ compact = false }: Props) {
             programs whose rules match this profile
           </p>
           {effectiveFPL <= 150 && (
-            <Badge className="bg-michigan-teal/15 text-michigan-teal border-michigan-teal/25 text-[10px]">
+            <Badge className="bg-michigan-teal/15 text-michigan-teal-deep border-michigan-teal/25 text-[10px]">
               Likely eligible for most programs
             </Badge>
           )}
@@ -336,7 +336,7 @@ export default function EnergyAssistanceFinder({ compact = false }: Props) {
             >
               <div className="rounded-lg border border-border bg-card hover:bg-muted/30 transition-colors">
                 <CollapsibleTrigger className="w-full p-3 flex items-start gap-3 text-left">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-michigan-gold/10 text-michigan-gold flex-shrink-0 mt-0.5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-michigan-gold/10 text-michigan-gold-deep flex-shrink-0 mt-0.5">
                     <p.icon className="h-4 w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -383,7 +383,7 @@ export default function EnergyAssistanceFinder({ compact = false }: Props) {
                     </p>
                     <div className="rounded-md bg-michigan-gold/5 p-2">
                       <p className="text-xs font-medium text-foreground flex items-center gap-1.5">
-                        <DollarSign className="h-3 w-3 text-michigan-gold" />
+                        <DollarSign className="h-3 w-3 text-michigan-gold-deep" />
                         {p.benefit}
                       </p>
                     </div>

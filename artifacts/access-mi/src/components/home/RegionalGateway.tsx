@@ -444,7 +444,7 @@ style={{ opacity: hovered === region.id ? 1 : 0.9, transition: "opacity 0.2s eas
                             <p className="text-[9px] text-muted-foreground">Uninsured</p>
                           </div>
                           <div className="rounded-lg bg-michigan-gold/10 p-2.5 text-center">
-                            <Zap className="h-4 w-4 text-michigan-gold mx-auto mb-1" aria-hidden="true" />
+                            <Zap className="h-4 w-4 text-michigan-gold-deep mx-auto mb-1" aria-hidden="true" />
                             <p className="text-xs font-bold text-foreground">
                               {REGION_VITALS[hoveredRegion.id].energyBurden}
                             </p>

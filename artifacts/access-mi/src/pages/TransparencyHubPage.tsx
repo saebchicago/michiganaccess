@@ -157,7 +157,7 @@ export default function TransparencyHubPage() {
               title: "Public Officials",
               desc: "Michigan Legislature, federal workforce data, state salary classifications, and nonprofit grant recipients.",
               href: "/transparency/officials",
-              color: "text-michigan-forest",
+              color: "text-michigan-forest-deep",
               badge: "New",
             },
           ].map((card, i) => (

@@ -85,13 +85,13 @@ export default function MichiganQuiz() {
           {q.options.map((opt, i) => (
             <button key={i} onClick={() => handleSelect(i)} disabled={showAnswer}
               className={`text-left rounded-lg border p-3 text-sm transition-colors ${
-                showAnswer && i === q.answer ? "border-michigan-forest bg-michigan-forest/10 text-michigan-forest font-semibold" :
-                showAnswer && i === selected && i !== q.answer ? "border-michigan-coral bg-michigan-coral/10 text-michigan-coral" :
+                showAnswer && i === q.answer ? "border-michigan-forest bg-michigan-forest/10 text-michigan-forest-deep font-semibold" :
+                showAnswer && i === selected && i !== q.answer ? "border-michigan-coral bg-michigan-coral/10 text-michigan-coral-deep" :
                 selected === i ? "border-primary bg-primary/5" : "border-border hover:bg-muted/50"
               }`}>
               <div className="flex items-center gap-2">
-                {showAnswer && i === q.answer && <CheckCircle2 className="h-4 w-4 text-michigan-forest" />}
-                {showAnswer && i === selected && i !== q.answer && <XCircle className="h-4 w-4 text-michigan-coral" />}
+                {showAnswer && i === q.answer && <CheckCircle2 className="h-4 w-4 text-michigan-forest-deep" />}
+                {showAnswer && i === selected && i !== q.answer && <XCircle className="h-4 w-4 text-michigan-coral-deep" />}
                 {opt}
               </div>
             </button>

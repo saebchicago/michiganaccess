@@ -35,16 +35,16 @@ const fadeUp = {
 };
 
 const categories = [
-  { key: "food", aliases: ["food", "food_nutrition"], label: "Food & Nutrition", icon: Apple, color: "text-michigan-forest" },
+  { key: "food", aliases: ["food", "food_nutrition"], label: "Food & Nutrition", icon: Apple, color: "text-michigan-forest-deep" },
   { key: "housing", aliases: ["housing", "housing_shelter"], label: "Housing & Shelter", icon: Home, color: "text-primary" },
-  { key: "transportation", aliases: ["transportation"], label: "Transportation", icon: Bus, color: "text-michigan-teal" },
-  { key: "mental_health", aliases: ["mental_health", "substance_abuse"], label: "Mental Health", icon: Brain, color: "text-michigan-coral" },
-  { key: "veterans_seniors", aliases: ["veterans_seniors"], label: "Veterans & Seniors", icon: Shield, color: "text-michigan-gold" },
+  { key: "transportation", aliases: ["transportation"], label: "Transportation", icon: Bus, color: "text-michigan-teal-deep" },
+  { key: "mental_health", aliases: ["mental_health", "substance_abuse"], label: "Mental Health", icon: Brain, color: "text-michigan-coral-deep" },
+  { key: "veterans_seniors", aliases: ["veterans_seniors"], label: "Veterans & Seniors", icon: Shield, color: "text-michigan-gold-deep" },
   { key: "education", aliases: ["education"], label: "Education & Training", icon: Globe, color: "text-michigan-sky" },
   { key: "disaster_prep", aliases: ["disaster_prep"], label: "Disaster Prep", icon: Heart, color: "text-destructive" },
-  { key: "youth_family", aliases: ["youth_family", "domestic_violence"], label: "Youth & Family", icon: Users, color: "text-michigan-forest" },
+  { key: "youth_family", aliases: ["youth_family", "domestic_violence"], label: "Youth & Family", icon: Users, color: "text-michigan-forest-deep" },
   { key: "info_referral", aliases: ["information_referral", "health_services", "health_insurance", "employment"], label: "Info & Referral", icon: Phone, color: "text-muted-foreground" },
-  { key: "environment", aliases: ["environment"], label: "Environment", icon: Map, color: "text-michigan-teal" },
+  { key: "environment", aliases: ["environment"], label: "Environment", icon: Map, color: "text-michigan-teal-deep" },
 ];
 
 // Counties list is now dynamically derived from loaded resources
@@ -65,8 +65,8 @@ function ResourceCard({ r, i }: { r: CommunityResource; i: number }) {
               {r.organization && <p className="text-xs text-muted-foreground">{r.organization}</p>}
             </div>
             <div className="flex gap-1.5 flex-shrink-0 flex-wrap justify-end">
-              {r.is_free && <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">Free</Badge>}
-              {r.walk_in_available && <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]">Walk-ins Welcome</Badge>}
+              {r.is_free && <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">Free</Badge>}
+              {r.walk_in_available && <Badge className="bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20 text-[10px]">Walk-ins Welcome</Badge>}
               {r.languages && r.languages.length > 1 && <Badge className="bg-michigan-sky/10 text-michigan-sky border-michigan-sky/20 text-[10px]">Bilingual Staff</Badge>}
               {r.accepts_insurance && <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">Takes Insurance</Badge>}
             </div>

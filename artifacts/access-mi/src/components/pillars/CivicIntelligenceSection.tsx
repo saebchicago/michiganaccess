@@ -35,7 +35,7 @@ const PILLARS = [
     id: "environment",
     label: "Environmental Risk",
     icon: Leaf,
-    color: "text-michigan-forest",
+    color: "text-michigan-forest-deep",
     bgColor: "bg-michigan-forest/5 border-michigan-forest/15 hover:border-michigan-forest/30",
     desc: "PFAS sites, air quality, environmental justice",
   },
@@ -43,7 +43,7 @@ const PILLARS = [
     id: "mobility",
     label: "Mobility & Transit",
     icon: Bus,
-    color: "text-michigan-teal",
+    color: "text-michigan-teal-deep",
     bgColor: "bg-michigan-teal/5 border-michigan-teal/15 hover:border-michigan-teal/30",
     desc: "Work zones, EV infrastructure, transit routes",
   },
@@ -51,7 +51,7 @@ const PILLARS = [
     id: "economic",
     label: "Economic Stress",
     icon: DollarSign,
-    color: "text-michigan-gold",
+    color: "text-michigan-gold-deep",
     bgColor: "bg-michigan-gold/5 border-michigan-gold/15 hover:border-michigan-gold/30",
     desc: "Food insecurity, housing stress, financial programs",
   },
@@ -119,7 +119,7 @@ export default function CivicIntelligenceSection({ countyName }: CivicIntelligen
       <SectionErrorBoundary title="Environment data couldn't load.">
         <div className="space-y-3">
           <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-            <Leaf className="h-4 w-4 text-michigan-forest" /> Environmental Risk
+            <Leaf className="h-4 w-4 text-michigan-forest-deep" /> Environmental Risk
           </h3>
           <EnvironmentRiskCards countyName={countyName} />
         </div>
@@ -129,7 +129,7 @@ export default function CivicIntelligenceSection({ countyName }: CivicIntelligen
       <SectionErrorBoundary title="Mobility data couldn't load.">
         <div className="space-y-3">
           <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-            <Bus className="h-4 w-4 text-michigan-teal" /> Mobility & Transit
+            <Bus className="h-4 w-4 text-michigan-teal-deep" /> Mobility & Transit
           </h3>
           <MobilityAccessCards countyName={countyName} />
         </div>
@@ -139,7 +139,7 @@ export default function CivicIntelligenceSection({ countyName }: CivicIntelligen
       <SectionErrorBoundary title="Economic data couldn't load.">
         <div className="space-y-3">
           <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-            <DollarSign className="h-4 w-4 text-michigan-gold" /> Economic Stress
+            <DollarSign className="h-4 w-4 text-michigan-gold-deep" /> Economic Stress
           </h3>
           <EconomicStressCards countyName={countyName} />
         </div>

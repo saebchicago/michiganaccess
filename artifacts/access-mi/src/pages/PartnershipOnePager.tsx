@@ -50,7 +50,7 @@ export default function PartnershipOnePager() {
         <div className="space-y-8">
           {/* Header */}
           <div className="text-center border-b border-michigan-teal/20 pb-6">
-            <p className="text-xs uppercase tracking-widest text-michigan-teal font-semibold mb-2">
+            <p className="text-xs uppercase tracking-widest text-michigan-teal-deep font-semibold mb-2">
               Partnership Capabilities
             </p>
             <h1 className="text-3xl font-bold text-foreground">
@@ -141,7 +141,7 @@ export default function PartnershipOnePager() {
                     </span>
                   </div>
                   {i < 4 && (
-                    <span className="text-michigan-teal/40 text-lg">→</span>
+                    <span className="text-michigan-teal-deep/40 text-lg">→</span>
                   )}
                 </div>
               ))}
@@ -154,7 +154,7 @@ export default function PartnershipOnePager() {
               Geographic Coverage
             </h2>
             <div className="rounded-lg border border-border p-4 text-center">
-              <p className="text-3xl font-bold text-michigan-teal">
+              <p className="text-3xl font-bold text-michigan-teal-deep">
                 {COUNTIES_COVERED}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
@@ -193,7 +193,7 @@ export default function PartnershipOnePager() {
             <p className="text-xs text-muted-foreground mb-3">
               Saeb Ahsan, founder, responds within 2 business days.
             </p>
-            <p className="text-sm text-michigan-teal font-medium">
+            <p className="text-sm text-michigan-teal-deep font-medium">
               accessmi.org/partnerships/health-systems
             </p>
           </section>

@@ -16,7 +16,7 @@ export interface WeatherAlert {
 export const SEVERITY_COLORS: Record<string, string> = {
   Extreme: "bg-red-900 text-white",
   Severe: "bg-red-600 text-white",
-  Moderate: "bg-orange-500 text-white",
+  Moderate: "bg-orange-700 text-white",
   Minor: "bg-yellow-400 text-black",
   Unknown: "bg-gray-400 text-white",
 };
@@ -36,12 +36,15 @@ export function useWeatherAlerts() {
     queryKey: ["nws-weather-alerts-mi"],
     queryFn: async () => {
       try {
-        const res = await fetch("https://api.weather.gov/alerts/active?area=MI", {
-          headers: {
-            Accept: "application/geo+json",
-            "User-Agent": "(accessmi.org, civic-platform)",
+        const res = await fetch(
+          "https://api.weather.gov/alerts/active?area=MI",
+          {
+            headers: {
+              Accept: "application/geo+json",
+              "User-Agent": "(accessmi.org, civic-platform)",
+            },
           },
-        });
+        );
         if (!res.ok) return FALLBACK;
         const data = await res.json();
         const features = data?.features || [];

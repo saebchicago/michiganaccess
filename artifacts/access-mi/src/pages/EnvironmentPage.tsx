@@ -295,19 +295,19 @@ const getQuickStats = (t: (key: string) => string) => [
     icon: Droplets,
     label: t("environment.waterSystems"),
     value: "1,400+",
-    color: "text-michigan-teal",
+    color: "text-michigan-teal-deep",
   },
   {
     icon: Recycle,
     label: t("environment.recyclingRate"),
     value: "19%",
-    color: "text-michigan-forest",
+    color: "text-michigan-forest-deep",
   },
   {
     icon: Zap,
     label: t("environment.renewableShare"),
     value: "13.2%",
-    color: "text-michigan-gold",
+    color: "text-michigan-gold-deep",
   },
 ];
 
@@ -380,8 +380,8 @@ const EnvironmentPage = () => {
               variants={fadeUp}
               className="mb-4 inline-flex items-center gap-2 rounded-full bg-michigan-forest/10 px-4 py-1.5"
             >
-              <Leaf className="h-4 w-4 text-michigan-forest" />
-              <span className="text-sm font-medium text-michigan-forest">
+              <Leaf className="h-4 w-4 text-michigan-forest-deep" />
+              <span className="text-sm font-medium text-michigan-forest-deep">
                 {t("environment.badge")}
               </span>
             </motion.div>
@@ -563,7 +563,7 @@ const EnvironmentPage = () => {
                         {isLiveData ? (
                           <Badge
                             variant="outline"
-                            className="border-michigan-forest/30 text-michigan-forest"
+                            className="border-michigan-forest/30 text-michigan-forest-deep"
                           >
                             ✓ Live data from CDC PLACES · Updated{" "}
                             {cdcData?.cached_at
@@ -574,26 +574,26 @@ const EnvironmentPage = () => {
                           <>
                             <Badge
                               variant="outline"
-                              className="border-michigan-forest/30 text-michigan-forest"
+                              className="border-michigan-forest/30 text-michigan-forest-deep"
                             >
                               0-50: Good
                             </Badge>
                             <Badge
                               variant="outline"
-                              className="border-michigan-gold/30 text-michigan-gold"
+                              className="border-michigan-gold/30 text-michigan-gold-deep"
                             >
                               51-100: Moderate
                             </Badge>
                             <Badge
                               variant="outline"
-                              className="border-michigan-coral/30 text-michigan-coral"
+                              className="border-michigan-coral/30 text-michigan-coral-deep"
                             >
                               101+: Unhealthy
                             </Badge>
                             {cdcError && (
                               <Badge
                                 variant="outline"
-                                className="border-michigan-coral/30 text-michigan-coral"
+                                className="border-michigan-coral/30 text-michigan-coral-deep"
                               >
                                 ⚠ Data loading… using cached values
                               </Badge>
@@ -610,7 +610,7 @@ const EnvironmentPage = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Droplets className="h-5 w-5 text-michigan-teal" />
+                        <Droplets className="h-5 w-5 text-michigan-teal-deep" />
                         {t("environment.waterViolations")}
                       </CardTitle>
                       <CardDescription>
@@ -664,7 +664,7 @@ const EnvironmentPage = () => {
               >
                 <Card className="border-michigan-gold/30 bg-michigan-gold/5">
                   <CardContent className="flex flex-col gap-4 p-6 md:flex-row md:items-center">
-                    <AlertTriangle className="h-10 w-10 shrink-0 text-michigan-gold" />
+                    <AlertTriangle className="h-10 w-10 shrink-0 text-michigan-gold-deep" />
                     <div className="flex-1">
                       <h3 className="font-semibold text-foreground">
                         {t("environment.activeAdvisories")}
@@ -729,7 +729,7 @@ const EnvironmentPage = () => {
                 </Card>
                 <Card className="hover:border-michigan-teal/30 transition-colors">
                   <CardContent className="p-6">
-                    <Droplets className="mb-3 h-8 w-8 text-michigan-teal" />
+                    <Droplets className="mb-3 h-8 w-8 text-michigan-teal-deep" />
                     <h3 className="mb-2 font-semibold text-foreground">
                       Great Lakes & Water Monitoring
                     </h3>
@@ -784,7 +784,7 @@ const EnvironmentPage = () => {
                   className="rounded-xl border border-michigan-teal/20 bg-michigan-teal/5 p-6"
                 >
                   <div className="flex items-start gap-4">
-                    <Droplets className="h-8 w-8 shrink-0 text-michigan-teal" />
+                    <Droplets className="h-8 w-8 shrink-0 text-michigan-teal-deep" />
                     <div>
                       <h2 className="text-xl font-bold text-foreground">
                         Water Safety & Contamination
@@ -804,7 +804,7 @@ const EnvironmentPage = () => {
                     <Card className="h-full">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-base">
-                          <AlertTriangle className="h-4 w-4 text-michigan-coral" />{" "}
+                          <AlertTriangle className="h-4 w-4 text-michigan-coral-deep" />{" "}
                           PFAS Contamination
                         </CardTitle>
                       </CardHeader>
@@ -864,7 +864,7 @@ const EnvironmentPage = () => {
                     <Card className="h-full">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-base">
-                          <Shield className="h-4 w-4 text-michigan-gold" /> Lead
+                          <Shield className="h-4 w-4 text-michigan-gold-deep" /> Lead
                           Service Lines
                         </CardTitle>
                       </CardHeader>
@@ -977,7 +977,7 @@ const EnvironmentPage = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Zap className="h-5 w-5 text-michigan-gold" />
+                        <Zap className="h-5 w-5 text-michigan-gold-deep" />
                         {t("environment.renewableGrowth")}
                       </CardTitle>
                       <CardDescription>
@@ -1032,7 +1032,7 @@ const EnvironmentPage = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <TrendingUp className="h-5 w-5 text-michigan-coral" />
+                        <TrendingUp className="h-5 w-5 text-michigan-coral-deep" />
                         Residential Electricity Prices: Michigan vs. National
                       </CardTitle>
                       <CardDescription>
@@ -1086,7 +1086,7 @@ const EnvironmentPage = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Zap className="h-5 w-5 text-michigan-teal" />
+                        <Zap className="h-5 w-5 text-michigan-teal-deep" />
                         Per-Capita Energy Consumption: Michigan vs. National
                       </CardTitle>
                       <CardDescription>
@@ -1163,7 +1163,7 @@ const EnvironmentPage = () => {
                       className="group hover:border-michigan-gold/30 transition-colors"
                     >
                       <CardContent className="p-6">
-                        <Zap className="mb-3 h-8 w-8 text-michigan-gold" />
+                        <Zap className="mb-3 h-8 w-8 text-michigan-gold-deep" />
                         <h3 className="mb-2 font-semibold text-foreground">
                           {item.title}
                         </h3>
@@ -1210,7 +1210,7 @@ const EnvironmentPage = () => {
                 {/* LIHEAP */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-michigan-coral" /> Energy
+                    <Shield className="h-5 w-5 text-michigan-coral-deep" /> Energy
                     Bill Assistance
                   </h2>
                   <div className="grid gap-6 sm:grid-cols-2">
@@ -1295,7 +1295,7 @@ const EnvironmentPage = () => {
                 {/* Residential Rebates */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <Zap className="h-5 w-5 text-michigan-gold" /> Residential
+                    <Zap className="h-5 w-5 text-michigan-gold-deep" /> Residential
                     Rebates - MiHER ($211M from IRA)
                   </h2>
                   <p className="text-sm text-muted-foreground mb-4">
@@ -1382,7 +1382,7 @@ const EnvironmentPage = () => {
                   <Card className="border-michigan-coral/30 bg-michigan-coral/5">
                     <CardContent className="p-6">
                       <div className="flex items-start gap-3">
-                        <AlertTriangle className="h-6 w-6 shrink-0 text-michigan-coral mt-0.5" />
+                        <AlertTriangle className="h-6 w-6 shrink-0 text-michigan-coral-deep mt-0.5" />
                         <div>
                           <h3 className="font-semibold text-foreground mb-2">
                             IRA Tax Credit Update
@@ -1413,7 +1413,7 @@ const EnvironmentPage = () => {
                 {/* Clean Financing */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-michigan-teal" /> Clean
+                    <TrendingUp className="h-5 w-5 text-michigan-teal-deep" /> Clean
                     Financing
                   </h2>
                   <Card className="hover:border-michigan-teal/30 transition-colors">
@@ -1462,7 +1462,7 @@ const EnvironmentPage = () => {
                 {/* Utility Programs */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <Leaf className="h-5 w-5 text-michigan-forest" /> Utility
+                    <Leaf className="h-5 w-5 text-michigan-forest-deep" /> Utility
                     Programs
                   </h2>
                   <div className="grid gap-6 sm:grid-cols-2">
@@ -1605,7 +1605,7 @@ const EnvironmentPage = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
-                        <Recycle className="h-5 w-5 text-michigan-forest" />
+                        <Recycle className="h-5 w-5 text-michigan-forest-deep" />
                         Michigan Recycling Composition
                       </CardTitle>
                       <CardDescription>
@@ -1648,7 +1648,7 @@ const EnvironmentPage = () => {
                     <CardContent>
                       <div className="space-y-4">
                         <div className="rounded-lg bg-michigan-forest/10 p-4">
-                          <p className="text-3xl font-bold text-michigan-forest">
+                          <p className="text-3xl font-bold text-michigan-forest-deep">
                             89%
                           </p>
                           <p className="text-sm text-muted-foreground">
@@ -1656,7 +1656,7 @@ const EnvironmentPage = () => {
                           </p>
                         </div>
                         <div className="rounded-lg bg-michigan-teal/10 p-4">
-                          <p className="text-3xl font-bold text-michigan-teal">
+                          <p className="text-3xl font-bold text-michigan-teal-deep">
                             $1.2B+
                           </p>
                           <p className="text-sm text-muted-foreground">
@@ -1711,7 +1711,7 @@ const EnvironmentPage = () => {
                   className="mb-8 rounded-xl border border-michigan-teal/20 bg-gradient-to-br from-michigan-teal/5 to-michigan-sky/5 p-8"
                 >
                   <div className="flex items-start gap-4">
-                    <Fish className="h-10 w-10 shrink-0 text-michigan-teal" />
+                    <Fish className="h-10 w-10 shrink-0 text-michigan-teal-deep" />
                     <div>
                       <h2 className="mb-2 text-2xl font-bold text-foreground">
                         Great Lakes Conservation
@@ -1836,7 +1836,7 @@ const EnvironmentPage = () => {
                   className="mb-8 rounded-xl border border-michigan-coral/20 bg-michigan-coral/5 p-6"
                 >
                   <div className="flex items-start gap-4">
-                    <Shield className="h-8 w-8 shrink-0 text-michigan-coral" />
+                    <Shield className="h-8 w-8 shrink-0 text-michigan-coral-deep" />
                     <div>
                       <h2 className="text-xl font-bold text-foreground">
                         Environmental Justice in Michigan
@@ -1925,7 +1925,7 @@ const EnvironmentPage = () => {
                 >
                   <Card>
                     <CardContent className="p-6">
-                      <Globe className="mb-3 h-8 w-8 text-michigan-teal" />
+                      <Globe className="mb-3 h-8 w-8 text-michigan-teal-deep" />
                       <h3 className="mb-2 font-semibold">
                         Michigan EJ Screen Tool
                       </h3>
@@ -1949,7 +1949,7 @@ const EnvironmentPage = () => {
                   </Card>
                   <Card>
                     <CardContent className="p-6">
-                      <MapPin className="mb-3 h-8 w-8 text-michigan-forest" />
+                      <MapPin className="mb-3 h-8 w-8 text-michigan-forest-deep" />
                       <h3 className="mb-2 font-semibold">
                         Report an Environmental Concern
                       </h3>
@@ -2124,7 +2124,7 @@ const EnvironmentPage = () => {
             <CardContent className="py-4">
               <div className="flex items-start gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10 flex-shrink-0">
-                  <Footprints className="h-5 w-5 text-michigan-forest" />
+                  <Footprints className="h-5 w-5 text-michigan-forest-deep" />
                 </div>
                 <div className="flex-1">
                   <h3 className="text-sm font-semibold text-foreground">

@@ -92,7 +92,7 @@ function SystemImpactCalculator() {
           </h3>
           <Badge
             variant="outline"
-            className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold ml-1"
+            className="text-[9px] uppercase tracking-wider border-michigan-gold/40 text-michigan-gold-deep ml-1"
           >
             Modeled
           </Badge>
@@ -228,7 +228,7 @@ const ForHealthSystemsPage = () => {
             className="rounded-xl border-2 border-michigan-gold/30 bg-michigan-gold/5 p-5 mb-10"
           >
             <div className="flex items-start gap-3">
-              <Info className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold" />
+              <Info className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold-deep" />
               <p className="text-xs text-muted-foreground">
                 <strong className="text-foreground">
                   Exploratory Framework:

@@ -45,7 +45,7 @@ export function getCountyUtilityStressSummary(countyId: string): CountyUtilitySt
 
 export function stressLevelColor(level: UtilityStressLevel): string {
   switch (level) {
-    case "low": return "text-michigan-forest";
+    case "low": return "text-michigan-forest-deep";
     case "medium": return "text-amber-600";
     case "high": return "text-destructive";
     default: return "text-muted-foreground";

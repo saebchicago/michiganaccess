@@ -213,7 +213,7 @@ export default function ReferralToolkit({
         {/* Invite a Friend */}
         <div>
           <h4 className="text-sm font-semibold text-foreground flex items-center gap-1.5 mb-2">
-            <Users className="h-3.5 w-3.5 text-michigan-teal" />
+            <Users className="h-3.5 w-3.5 text-michigan-teal-deep" />
             Invite Someone
           </h4>
           <div className="flex gap-2">
@@ -261,7 +261,7 @@ export default function ReferralToolkit({
         {/* Print for Someone */}
         <div>
           <h4 className="text-sm font-semibold text-foreground flex items-center gap-1.5 mb-2">
-            <Printer className="h-3.5 w-3.5 text-michigan-forest" />
+            <Printer className="h-3.5 w-3.5 text-michigan-forest-deep" />
             Print for Someone
           </h4>
           <p className="text-xs text-muted-foreground mb-2">
@@ -283,7 +283,7 @@ export default function ReferralToolkit({
         {/* QR Code Generator */}
         <div>
           <h4 className="text-sm font-semibold text-foreground flex items-center gap-1.5 mb-2">
-            <QrCode className="h-3.5 w-3.5 text-michigan-coral" />
+            <QrCode className="h-3.5 w-3.5 text-michigan-coral-deep" />
             QR Code for Physical Locations
           </h4>
           <p className="text-xs text-muted-foreground mb-2">

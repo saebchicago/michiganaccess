@@ -27,7 +27,7 @@ export default function InsightOfWeek() {
     <section className="py-8 border-y border-border/30">
       <div className="container max-w-3xl">
         <div className="flex items-center gap-2 mb-4">
-          <Lightbulb className="h-5 w-5 text-michigan-gold" />
+          <Lightbulb className="h-5 w-5 text-michigan-gold-deep" />
           <h2 className="text-lg font-bold text-foreground">Insight of the Week</h2>
         </div>
 

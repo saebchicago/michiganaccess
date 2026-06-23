@@ -40,8 +40,8 @@ const CivicBoardsPage = () => {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-michigan-teal/10 px-4 py-1.5">
-              <Landmark className="h-4 w-4 text-michigan-teal" />
-              <span className="text-sm font-medium text-michigan-teal">Where Michigan Residents Can Serve</span>
+              <Landmark className="h-4 w-4 text-michigan-teal-deep" />
+              <span className="text-sm font-medium text-michigan-teal-deep">Where Michigan Residents Can Serve</span>
             </div>
             <h1 className="mb-3 text-3xl font-bold text-foreground md:text-4xl">
               ~50,000 Governing Board Seats

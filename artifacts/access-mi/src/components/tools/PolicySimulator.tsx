@@ -142,7 +142,7 @@ export default function PolicySimulator() {
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <CardTitle className="text-lg flex items-center gap-2">
-              <Calculator className="h-5 w-5 text-michigan-teal" />
+              <Calculator className="h-5 w-5 text-michigan-teal-deep" />
               Policy Impact Simulator
               <Badge variant="outline" className="text-[10px]">Illustrative</Badge>
             </CardTitle>
@@ -216,7 +216,7 @@ export default function PolicySimulator() {
             transition={{ delay: 0.05 }}
             className="rounded-xl bg-michigan-teal/10 border border-michigan-teal/20 p-4 text-center"
           >
-            <p className="text-2xl font-bold text-michigan-teal">{fmtDollar(impact.annualCost)}</p>
+            <p className="text-2xl font-bold text-michigan-teal-deep">{fmtDollar(impact.annualCost)}</p>
             <p className="text-[10px] text-muted-foreground">est. annual investment</p>
             <p className="text-[9px] text-muted-foreground italic">Illustrative</p>
           </motion.div>
@@ -227,7 +227,7 @@ export default function PolicySimulator() {
             transition={{ delay: 0.1 }}
             className="rounded-xl bg-michigan-gold/10 border border-michigan-gold/20 p-4 text-center"
           >
-            <p className="text-2xl font-bold text-michigan-gold">
+            <p className="text-2xl font-bold text-michigan-gold-deep">
               +{(impact.gapPct * 100).toFixed(0)}pp
             </p>
             <p className="text-[10px] text-muted-foreground">coverage increase</p>

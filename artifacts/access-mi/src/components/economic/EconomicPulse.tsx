@@ -123,7 +123,7 @@ export default function EconomicPulse() {
                   className="text-3xl font-bold text-foreground"
                 />
                 <div
-                  className={`flex items-center gap-0.5 text-xs ${trending === "down" ? "text-michigan-forest" : "text-michigan-coral"}`}
+                  className={`flex items-center gap-0.5 text-xs ${trending === "down" ? "text-michigan-forest-deep" : "text-michigan-coral-deep"}`}
                 >
                   {trending === "down" ? (
                     <TrendingDown className="h-3 w-3" />

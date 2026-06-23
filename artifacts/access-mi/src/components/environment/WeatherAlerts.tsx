@@ -83,9 +83,9 @@ export default function WeatherAlerts() {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             {hasAlerts ? (
-              <CloudLightning className="h-5 w-5 text-michigan-coral" />
+              <CloudLightning className="h-5 w-5 text-michigan-coral-deep" />
             ) : (
-              <CheckCircle2 className="h-5 w-5 text-michigan-forest" />
+              <CheckCircle2 className="h-5 w-5 text-michigan-forest-deep" />
             )}
             <span className="text-sm font-semibold text-foreground">
               {hasAlerts

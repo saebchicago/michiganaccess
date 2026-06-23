@@ -17,7 +17,7 @@ export default function PharmacyDesertCard() {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Pill className="h-5 w-5 text-michigan-coral" /> Pharmacy Access Risk
+            <Pill className="h-5 w-5 text-michigan-coral-deep" /> Pharmacy Access Risk
           </CardTitle>
           <CardDescription>Estimated based on county type and reported chain closures - not precise pharmacy counts</CardDescription>
         </CardHeader>
@@ -28,17 +28,17 @@ export default function PharmacyDesertCard() {
               <p className="text-[10px] text-muted-foreground">Total pharmacies</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
-              <span className="text-2xl font-bold text-michigan-coral">{MI_PHARMACY_STATS.chainDecline5yr}%</span>
+              <span className="text-2xl font-bold text-michigan-coral-deep">{MI_PHARMACY_STATS.chainDecline5yr}%</span>
               <p className="text-[10px] text-muted-foreground">Chain decline (5yr)</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
-              <span className="text-2xl font-bold text-michigan-forest">+{MI_PHARMACY_STATS.independentGrowth5yr}%</span>
+              <span className="text-2xl font-bold text-michigan-forest-deep">+{MI_PHARMACY_STATS.independentGrowth5yr}%</span>
               <p className="text-[10px] text-muted-foreground">Independent growth (5yr)</p>
             </div>
           </div>
 
           <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 flex items-start gap-2">
-            <AlertTriangle className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />
+            <AlertTriangle className="h-4 w-4 text-michigan-coral-deep shrink-0 mt-0.5" />
             <div>
               <p className="text-xs font-semibold text-foreground">{highRisk.length} counties at high pharmacy access risk</p>
               <p className="text-[10px] text-muted-foreground mt-0.5">

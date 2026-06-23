@@ -27,7 +27,7 @@ export default function TaxComparisonPage() {
       <section className="bg-gradient-to-b from-michigan-gold/5 to-background py-12">
         <div className="container max-w-3xl text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <Badge variant="outline" className="mb-3 text-xs uppercase tracking-wider border-michigan-gold/30 text-michigan-gold">
+            <Badge variant="outline" className="mb-3 text-xs uppercase tracking-wider border-michigan-gold/30 text-michigan-gold-deep">
               <DollarSign className="h-3 w-3 mr-1" /> Interactive Calculator
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight text-foreground">

@@ -242,7 +242,7 @@ const PartnersPage = () => {
         {/* For Health Systems */}
         <section aria-labelledby="health-systems-heading" className="py-4">
           <div className="text-center mb-8">
-            <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 mb-3">
+            <Badge className="bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20 mb-3">
               <Heart className="h-3 w-3 mr-1" />
               For Healthcare Organizations
             </Badge>
@@ -304,7 +304,7 @@ const PartnersPage = () => {
               >
                 <Card className="h-full hover-lift border-michigan-teal/10">
                   <CardHeader className="pb-2">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10 text-michigan-teal mb-2">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10 text-michigan-teal-deep mb-2">
                       <feature.icon className="h-5 w-5" />
                     </div>
                     <CardTitle className="text-base">{feature.title}</CardTitle>
@@ -356,7 +356,7 @@ const PartnersPage = () => {
         {/* CHNA Data Export */}
         <section aria-labelledby="chna-heading" className="py-4">
           <div className="text-center mb-6">
-            <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 mb-3">
+            <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 mb-3">
               <FileText className="h-3 w-3 mr-1" />
               CHNA-Ready Data
             </Badge>

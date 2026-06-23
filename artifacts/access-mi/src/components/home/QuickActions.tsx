@@ -34,7 +34,7 @@ const QuickActions = () => {
       description: t("quickActions.environmentDesc"),
       href: "/environment",
       bgClass: "bg-michigan-forest/10",
-      iconClass: "text-michigan-forest",
+      iconClass: "text-michigan-forest-deep",
     },
     {
       icon: Bus,
@@ -42,7 +42,7 @@ const QuickActions = () => {
       description: t("quickActions.transportationDesc"),
       href: "/transportation",
       bgClass: "bg-michigan-coral/10",
-      iconClass: "text-michigan-coral",
+      iconClass: "text-michigan-coral-deep",
     },
     {
       icon: DollarSign,
@@ -50,7 +50,7 @@ const QuickActions = () => {
       description: t("quickActions.financialHelpDesc"),
       href: "/financial-help",
       bgClass: "bg-michigan-gold/10",
-      iconClass: "text-michigan-gold",
+      iconClass: "text-michigan-gold-deep",
     },
     {
       icon: Users,

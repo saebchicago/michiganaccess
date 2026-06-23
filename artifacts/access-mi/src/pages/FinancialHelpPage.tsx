@@ -34,10 +34,10 @@ const FPL_2024: Record<number, number> = {
 };
 
 const programTypeLabels: Record<string, { label: string; icon: typeof Heart; color: string }> = {
-  charity_care: { label: "Charity Care / Hospital Financial Assistance", icon: Heart, color: "text-michigan-coral" },
+  charity_care: { label: "Charity Care / Hospital Financial Assistance", icon: Heart, color: "text-michigan-coral-deep" },
   insurance: { label: "Insurance Programs", icon: Shield, color: "text-michigan-blue" },
-  prescription: { label: "Prescription Assistance", icon: Pill, color: "text-michigan-forest" },
-  social_services: { label: "Social Services & SDOH", icon: Users, color: "text-michigan-teal" },
+  prescription: { label: "Prescription Assistance", icon: Pill, color: "text-michigan-forest-deep" },
+  social_services: { label: "Social Services & SDOH", icon: Users, color: "text-michigan-teal-deep" },
 };
 
 type IncomeUnit = "annual" | "monthly" | "hourly";
@@ -108,7 +108,7 @@ export default function FinancialHelpPage() {
       <section className="bg-gradient-to-b from-michigan-coral/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <span className="mb-4 inline-block rounded-full bg-michigan-coral/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-coral">
+            <span className="mb-4 inline-block rounded-full bg-michigan-coral/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-coral-deep">
               {t('financial.badge')}
             </span>
           </motion.div>
@@ -125,7 +125,7 @@ export default function FinancialHelpPage() {
         {/* Featured Energy Assistance Programs */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
           <div className="flex items-center gap-3 mb-4">
-            <DollarSign className="h-5 w-5 text-michigan-gold" />
+            <DollarSign className="h-5 w-5 text-michigan-gold-deep" />
             <h2 className="text-xl font-bold text-foreground">Energy Assistance Highlights</h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -207,7 +207,7 @@ export default function FinancialHelpPage() {
                   {fplPercent !== null && (
                     <div className="rounded-lg bg-background border border-border px-4 py-2.5 text-center">
                       <p className="text-xs text-muted-foreground">{t('financial.yourFPL')}</p>
-                      <p className={`text-xl font-bold ${fplPercent <= 138 ? "text-michigan-forest" : fplPercent <= 250 ? "text-michigan-teal" : fplPercent <= 400 ? "text-michigan-gold" : "text-muted-foreground"}`}>
+                      <p className={`text-xl font-bold ${fplPercent <= 138 ? "text-michigan-forest-deep" : fplPercent <= 250 ? "text-michigan-teal-deep" : fplPercent <= 400 ? "text-michigan-gold-deep" : "text-muted-foreground"}`}>
                         {fplPercent}%
                       </p>
                     </div>
@@ -272,7 +272,7 @@ export default function FinancialHelpPage() {
                                     </Badge>
                                   )}
                                   {fplPercent !== null && prog.fpl_threshold && fplPercent <= prog.fpl_threshold && (
-                                    <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">
+                                    <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">
                                       <CheckCircle2 className="mr-1 h-3 w-3" /> You may qualify
                                     </Badge>
                                   )}
@@ -338,15 +338,15 @@ export default function FinancialHelpPage() {
               <h3 className="mb-3 text-lg font-bold text-foreground">{t('financial.needImmediateHelp')}</h3>
               <div className="grid gap-3 sm:grid-cols-3">
                 <div className="rounded-lg bg-background border border-border p-3 text-center">
-                  <p className="text-2xl font-bold text-michigan-coral">2-1-1</p>
+                  <p className="text-2xl font-bold text-michigan-coral-deep">2-1-1</p>
                   <p className="text-xs text-muted-foreground">United Way resource line</p>
                 </div>
                 <div className="rounded-lg bg-background border border-border p-3 text-center">
-                  <p className="text-2xl font-bold text-michigan-coral">988</p>
+                  <p className="text-2xl font-bold text-michigan-coral-deep">988</p>
                   <p className="text-xs text-muted-foreground">Suicide & Crisis Lifeline</p>
                 </div>
                 <div className="rounded-lg bg-background border border-border p-3 text-center">
-                  <p className="text-2xl font-bold text-michigan-coral">844-799-9876</p>
+                  <p className="text-2xl font-bold text-michigan-coral-deep">844-799-9876</p>
                   <p className="text-xs text-muted-foreground">Healthy Michigan Plan</p>
                 </div>
               </div>

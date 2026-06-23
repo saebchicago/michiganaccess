@@ -70,7 +70,7 @@ export default function CrimeSafetyCard({ county }: CrimeSafetyCardProps) {
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
-            <ShieldCheck className="h-5 w-5 text-michigan-teal" />
+            <ShieldCheck className="h-5 w-5 text-michigan-teal-deep" />
             {data.county} County Crime Safety
           </CardTitle>
         </CardHeader>

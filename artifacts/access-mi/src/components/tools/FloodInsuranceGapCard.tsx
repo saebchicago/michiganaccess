@@ -33,7 +33,7 @@ export default function FloodInsuranceGapCard({ county }: FloodInsuranceGapCardP
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Droplets className="h-5 w-5 text-michigan-teal" />
+            <Droplets className="h-5 w-5 text-michigan-teal-deep" />
             Flood Insurance Gap - {data.county} County
           </CardTitle>
         </CardHeader>

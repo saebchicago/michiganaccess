@@ -46,7 +46,7 @@ function AnimatedMetric({
       <span className="text-[10px] text-muted-foreground leading-tight">
         {label}
       </span>
-      <CheckCircle2 className="h-3 w-3 text-michigan-forest" />
+      <CheckCircle2 className="h-3 w-3 text-michigan-forest-deep" />
     </div>
   );
 }

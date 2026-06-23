@@ -50,7 +50,7 @@ export default function UninsuredSparkline({ county }: Props) {
           variant="outline"
           className={`text-[10px] px-1.5 py-0 gap-1 flex-shrink-0 ${
             improving
-              ? "border-michigan-forest/30 text-michigan-forest"
+              ? "border-michigan-forest/30 text-michigan-forest-deep"
               : delta > 0
                 ? "border-destructive/30 text-destructive"
                 : "border-muted-foreground/30 text-muted-foreground"
@@ -90,7 +90,7 @@ export default function UninsuredSparkline({ county }: Props) {
           <span
             className={`text-[10px] font-semibold flex-shrink-0 ${
               improving
-                ? "text-michigan-forest"
+                ? "text-michigan-forest-deep"
                 : delta > 0
                   ? "text-destructive"
                   : "text-muted-foreground"

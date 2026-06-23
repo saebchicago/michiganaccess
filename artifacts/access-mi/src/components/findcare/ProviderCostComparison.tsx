@@ -118,7 +118,7 @@ export default function ProviderCostComparison({ providers, facilityMap }: Props
     <Card className="mt-6">
       <CardHeader className="pb-3">
         <CardTitle className="text-base flex items-center gap-2">
-          <DollarSign className="h-4 w-4 text-michigan-gold" />
+          <DollarSign className="h-4 w-4 text-michigan-gold-deep" />
           Cost Comparison Tool
           <TooltipProvider>
             <Tooltip>
@@ -241,11 +241,11 @@ export default function ProviderCostComparison({ providers, facilityMap }: Props
                           )}
                         </TableCell>
                         <TableCell className="text-right">
-                          <span className={`text-xs font-bold ${isCheapest ? "text-michigan-forest" : "text-destructive"}`}>
+                          <span className={`text-xs font-bold ${isCheapest ? "text-michigan-forest-deep" : "text-destructive"}`}>
                             ${costs?.uninsured ?? "-"}
                           </span>
                           {isCheapest && (
-                            <Badge className="ml-1 bg-michigan-forest/10 text-michigan-forest text-[9px] px-1">Lowest</Badge>
+                            <Badge className="ml-1 bg-michigan-forest/10 text-michigan-forest-deep text-[9px] px-1">Lowest</Badge>
                           )}
                           {costs && <p className="text-[9px] text-muted-foreground">/{costs.unit}</p>}
                         </TableCell>
@@ -288,8 +288,8 @@ export default function ProviderCostComparison({ providers, facilityMap }: Props
                 const savings = Math.max(...costs) - Math.min(...costs);
                 return savings > 0 ? (
                   <div className="mt-3 rounded-lg bg-michigan-forest/5 border border-michigan-forest/15 p-3 text-sm">
-                    <DollarSign className="inline h-4 w-4 text-michigan-forest mr-1" />
-                    <span className="font-semibold text-michigan-forest">Potential savings:</span>{" "}
+                    <DollarSign className="inline h-4 w-4 text-michigan-forest-deep mr-1" />
+                    <span className="font-semibold text-michigan-forest-deep">Potential savings:</span>{" "}
                     <span className="text-foreground">
                       Up to <strong>${savings}</strong> per visit by choosing the lowest-cost provider for this specialty.
                     </span>

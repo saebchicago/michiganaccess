@@ -157,7 +157,7 @@ export default function SupportGroupsPage() {
         <div className="container max-w-4xl text-center">
           <Breadcrumbs items={[{ label: "Support Groups" }]} />
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <span className="mb-4 inline-block rounded-full bg-michigan-teal/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-teal">
+            <span className="mb-4 inline-block rounded-full bg-michigan-teal/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-teal-deep">
               Support & Community
             </span>
           </motion.div>
@@ -209,13 +209,13 @@ export default function SupportGroupsPage() {
                   <CardContent className="py-4">
                     <div className="flex items-start gap-4">
                       <div className="hidden sm:flex h-11 w-11 items-center justify-center rounded-xl bg-michigan-teal/10 flex-shrink-0">
-                        <Icon className="h-5 w-5 text-michigan-teal" />
+                        <Icon className="h-5 w-5 text-michigan-teal-deep" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap mb-1">
                           <h3 className="font-semibold text-foreground text-sm">{group.name}</h3>
                           <Badge variant="outline" className="text-[10px] capitalize">{group.format}</Badge>
-                          {group.isFree && <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">Free</Badge>}
+                          {group.isFree && <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">Free</Badge>}
                         </div>
                         <p className="text-xs text-muted-foreground mb-1">{group.organization}</p>
                         <p className="text-sm text-muted-foreground leading-relaxed">{group.description}</p>
@@ -243,7 +243,7 @@ export default function SupportGroupsPage() {
 
         {/* Caregiver resources */}
         <motion.section initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={0}>
-          <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2"><Heart className="h-5 w-5 text-michigan-coral" />Caregiver Resources</h2>
+          <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2"><Heart className="h-5 w-5 text-michigan-coral-deep" />Caregiver Resources</h2>
           <div className="grid gap-3 sm:grid-cols-2">
             {[
               { title: "Area Agency on Aging", desc: "Respite care, in-home services, meals, and caregiver support for those caring for older adults.", phone: "833-711-1927" },

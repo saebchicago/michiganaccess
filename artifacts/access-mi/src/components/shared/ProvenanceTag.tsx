@@ -15,17 +15,19 @@ const STYLES: Record<
 > = {
   VERIFIED: {
     classes:
-      "border-michigan-forest/30 bg-michigan-forest/10 text-michigan-forest",
+      "border-michigan-forest/30 bg-michigan-forest/10 text-michigan-forest-deep",
     Icon: CheckCircle2,
     description: "Confirmed from a primary federal source.",
   },
   MODELED: {
-    classes: "border-michigan-teal/30 bg-michigan-teal/10 text-michigan-teal",
+    classes:
+      "border-michigan-teal/30 bg-michigan-teal/10 text-michigan-teal-deep",
     Icon: Calculator,
     description: "Derived or calculated from verified inputs.",
   },
   PROJECTED: {
-    classes: "border-michigan-gold/30 bg-michigan-gold/10 text-michigan-gold",
+    classes:
+      "border-michigan-gold/30 bg-michigan-gold/10 text-michigan-gold-deep",
     Icon: TrendingUp,
     description: "Forward-looking estimate.",
   },

@@ -55,7 +55,7 @@ const flowSteps = [
   {
     icon: Shield,
     titleKey: "qualityAssurance",
-    color: "bg-michigan-forest/10 text-michigan-forest",
+    color: "bg-michigan-forest/10 text-michigan-forest-deep",
     items: [
       "Automated validation checks",
       "Cross-source verification",
@@ -65,7 +65,7 @@ const flowSteps = [
   {
     icon: Users,
     titleKey: "userCentered",
-    color: "bg-michigan-teal/10 text-michigan-teal",
+    color: "bg-michigan-teal/10 text-michigan-teal-deep",
     items: [
       "Plain language (8th-grade level)",
       "Mobile-first responsive design",
@@ -76,7 +76,7 @@ const flowSteps = [
   {
     icon: Heart,
     titleKey: "communityOutcomes",
-    color: "bg-michigan-coral/10 text-michigan-coral",
+    color: "bg-michigan-coral/10 text-michigan-coral-deep",
     items: [
       "Reduced barriers to care",
       "Informed civic participation",
@@ -240,7 +240,7 @@ export default function MethodologyPage() {
                           key={item}
                           className="flex items-start gap-1.5 text-xs text-muted-foreground"
                         >
-                          <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" />
+                          <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest-deep" />
                           {item}
                         </li>
                       ))}
@@ -268,7 +268,7 @@ export default function MethodologyPage() {
           >
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
-                <Heart className="h-5 w-5 text-michigan-coral" />
+                <Heart className="h-5 w-5 text-michigan-coral-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">
@@ -293,7 +293,7 @@ export default function MethodologyPage() {
               >
                 <Card className="h-full hover-lift">
                   <CardContent className="pt-6">
-                    <p.icon className="mb-3 h-5 w-5 text-michigan-coral" />
+                    <p.icon className="mb-3 h-5 w-5 text-michigan-coral-deep" />
                     <h3 className="mb-1 text-sm font-bold text-foreground">
                       {p.title}
                     </h3>
@@ -328,7 +328,7 @@ export default function MethodologyPage() {
           >
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-                <Layers className="h-5 w-5 text-michigan-teal" />
+                <Layers className="h-5 w-5 text-michigan-teal-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">
@@ -692,7 +692,7 @@ export default function MethodologyPage() {
           >
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
-                <BarChart3 className="h-5 w-5 text-michigan-forest" />
+                <BarChart3 className="h-5 w-5 text-michigan-forest-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">
@@ -713,9 +713,9 @@ export default function MethodologyPage() {
             <p className="font-mono text-sm text-foreground leading-relaxed">
               COMPOSITE = <span className="text-primary font-bold">40%</span>{" "}
               Geographic Access +{" "}
-              <span className="text-michigan-forest font-bold">30%</span>{" "}
+              <span className="text-michigan-forest-deep font-bold">30%</span>{" "}
               Clinical Quality +{" "}
-              <span className="text-michigan-teal font-bold">15%</span> Service
+              <span className="text-michigan-teal-deep font-bold">15%</span> Service
               Comprehensiveness +{" "}
               <span className="text-michigan-sky font-bold">15%</span> Digital
               Accessibility
@@ -758,7 +758,7 @@ export default function MethodologyPage() {
           {/* Equity Override */}
           <div className="rounded-xl border-2 border-michigan-coral/30 bg-michigan-coral/5 p-6">
             <div className="flex items-center gap-2 mb-3">
-              <Shield className="h-5 w-5 text-michigan-coral" />
+              <Shield className="h-5 w-5 text-michigan-coral-deep" />
               <h3 className="text-sm font-bold text-foreground">
                 {t("methodologyPage.equityOverrideTitle")}
               </h3>
@@ -773,7 +773,7 @@ export default function MethodologyPage() {
                   key={rule}
                   className="flex items-start gap-2 text-xs text-muted-foreground"
                 >
-                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-michigan-coral" />
+                  <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-michigan-coral-deep" />
                   {rule}
                 </li>
               ))}
@@ -813,18 +813,18 @@ export default function MethodologyPage() {
             </Card>
             <Card className="border-michigan-forest/20">
               <CardContent className="pt-6">
-                <h4 className="mb-3 text-sm font-bold text-michigan-forest">
+                <h4 className="mb-3 text-sm font-bold text-michigan-forest-deep">
                   {t("methodologyPage.equityRanking")}
                 </h4>
                 <ol className="space-y-2 text-xs text-muted-foreground">
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">1.</span> Large
                     Health System - 2.1 mi{" "}
-                    <span className="text-michigan-forest">· Quality: A</span>
+                    <span className="text-michigan-forest-deep">· Quality: A</span>
                   </li>
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">2.</span>{" "}
-                    <span className="font-semibold text-michigan-forest">
+                    <span className="font-semibold text-michigan-forest-deep">
                       FQHC - 5.8 mi · "No one turned away"
                     </span>
                   </li>
@@ -837,7 +837,7 @@ export default function MethodologyPage() {
                     Private Clinic - 4.0 mi
                   </li>
                 </ol>
-                <p className="mt-3 text-[11px] text-michigan-forest">
+                <p className="mt-3 text-[11px] text-michigan-forest-deep">
                   ✅ Safety-net clinic elevated with equity boost for vulnerable
                   populations
                 </p>
@@ -1040,7 +1040,7 @@ export default function MethodologyPage() {
         <section>
           <div className="flex items-center gap-3 mb-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
-              <Shield className="h-5 w-5 text-michigan-forest" />
+              <Shield className="h-5 w-5 text-michigan-forest-deep" />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-foreground">
@@ -1062,7 +1062,7 @@ export default function MethodologyPage() {
                 key={bullet}
                 className="flex items-start gap-2 text-sm text-muted-foreground"
               >
-                <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-michigan-forest" />
+                <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-michigan-forest-deep" />
                 {bullet}
               </div>
             ))}
@@ -1127,7 +1127,7 @@ export default function MethodologyPage() {
                 key={i}
                 className="flex gap-3 rounded-lg border border-border p-3"
               >
-                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-michigan-forest" />
+                <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-michigan-forest-deep" />
                 <div>
                   <p className="text-sm text-muted-foreground">{entry.fix}</p>
                   <p className="text-[10px] text-muted-foreground mt-1">

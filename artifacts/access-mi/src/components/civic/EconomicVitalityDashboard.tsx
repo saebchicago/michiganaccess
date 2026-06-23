@@ -57,7 +57,7 @@ export default function EconomicVitalityDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2 text-base">
-                <DollarSign className="h-5 w-5 text-michigan-gold" /> Economic Vitality by County
+                <DollarSign className="h-5 w-5 text-michigan-gold-deep" /> Economic Vitality by County
               </CardTitle>
               <CardDescription>Income, poverty, employment, and housing costs across Michigan</CardDescription>
             </div>
@@ -104,10 +104,10 @@ export default function EconomicVitalityDashboard() {
                     <td className="py-2 font-medium text-foreground">{d.county}</td>
                     <td className="py-2 text-right tabular-nums">{fmt(d.medianIncome)}</td>
                     <td className="py-2 text-right tabular-nums">
-                      <span className={d.povertyRate > 18 ? "text-michigan-coral font-semibold" : ""}>{d.povertyRate}%</span>
+                      <span className={d.povertyRate > 18 ? "text-michigan-coral-deep font-semibold" : ""}>{d.povertyRate}%</span>
                     </td>
                     <td className="py-2 text-right tabular-nums">
-                      <span className={d.unemploymentRate > 7 ? "text-michigan-coral font-semibold" : ""}>{d.unemploymentRate}%</span>
+                      <span className={d.unemploymentRate > 7 ? "text-michigan-coral-deep font-semibold" : ""}>{d.unemploymentRate}%</span>
                     </td>
                     <td className="py-2 text-right tabular-nums">{fmt(d.medianHomeValue)}</td>
                     <td className="py-2 text-right tabular-nums">${d.medianRent}</td>

@@ -197,7 +197,7 @@ export default function QuickCompare() {
                   <AnimatedCounter
                     value={metricsB!.civicScore}
                     suffix="/100"
-                    className="text-2xl font-bold text-michigan-teal"
+                    className="text-2xl font-bold text-michigan-teal-deep"
                   />
                   <p className="text-[9px] text-muted-foreground mt-0.5">
                     Civic Score

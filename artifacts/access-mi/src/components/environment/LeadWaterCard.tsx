@@ -9,7 +9,7 @@ export default function LeadWaterCard() {
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Droplets className="h-5 w-5 text-michigan-teal" /> Lead Service Lines
+            <Droplets className="h-5 w-5 text-michigan-teal-deep" /> Lead Service Lines
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">

@@ -119,7 +119,7 @@ export default function SDOHPriorityHeat({ county }: { county: string }) {
               <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden">
                 <div className={`h-full rounded-full transition-all ${INTENSITY_COLORS[d.intensity]} ${INTENSITY_WIDTH[d.intensity]}`} />
               </div>
-              <span className={`text-[10px] font-medium w-12 text-right ${d.intensity === "high" ? "text-destructive" : d.intensity === "medium" ? "text-michigan-gold" : "text-michigan-forest"}`}>
+              <span className={`text-[10px] font-medium w-12 text-right ${d.intensity === "high" ? "text-destructive" : d.intensity === "medium" ? "text-michigan-gold-deep" : "text-michigan-forest-deep"}`}>
                 {INTENSITY_LABELS[d.intensity]}
               </span>
             </div>

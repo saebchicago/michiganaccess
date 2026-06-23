@@ -104,9 +104,9 @@ const fadeUp = {
 
 const TrendIcon = ({ trend }: { trend?: "up" | "down" | "stable" }) => {
   if (trend === "up")
-    return <TrendingUp className="h-3 w-3 text-michigan-coral" />;
+    return <TrendingUp className="h-3 w-3 text-michigan-coral-deep" />;
   if (trend === "down")
-    return <TrendingDown className="h-3 w-3 text-michigan-forest" />;
+    return <TrendingDown className="h-3 w-3 text-michigan-forest-deep" />;
   return <Minus className="h-3 w-3 text-muted-foreground" />;
 };
 
@@ -356,19 +356,19 @@ export default function CountyPage() {
                 label: "Community Resources",
                 value: safeR.length,
                 icon: Heart,
-                color: "text-michigan-teal",
+                color: "text-michigan-teal-deep",
               },
               {
                 label: "Upcoming Events",
                 value: safeE.length,
                 icon: Calendar,
-                color: "text-michigan-gold",
+                color: "text-michigan-gold-deep",
               },
               {
                 label: "Population",
                 value: profile.population.toLocaleString(),
                 icon: Users,
-                color: "text-michigan-forest",
+                color: "text-michigan-forest-deep",
               },
             ].map((stat, i) => (
               <motion.div key={stat.label} variants={fadeUp} custom={i}>
@@ -464,7 +464,7 @@ export default function CountyPage() {
                             variant={
                               isBetterState ? "secondary" : "destructive"
                             }
-                            className={`text-[10px] px-1.5 py-0 ${isBetterState ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
+                            className={`text-[10px] px-1.5 py-0 ${isBetterState ? "bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20" : ""}`}
                           >
                             {isBetterState ? "Below" : "Above"} state avg
                           </Badge>
@@ -475,7 +475,7 @@ export default function CountyPage() {
                         <div className="flex items-center gap-1.5 flex-wrap">
                           <Badge
                             variant={isBetterUS ? "secondary" : "destructive"}
-                            className={`text-[10px] px-1.5 py-0 ${isBetterUS ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
+                            className={`text-[10px] px-1.5 py-0 ${isBetterUS ? "bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20" : ""}`}
                           >
                             {isBetterUS ? "Below" : "Above"} US avg
                           </Badge>
@@ -494,7 +494,7 @@ export default function CountyPage() {
                       <div>
                         <Badge
                           variant="outline"
-                          className={`text-[10px] px-1.5 py-0 ${ratioSeverity === "high" ? "border-destructive/30 text-destructive" : ratioSeverity === "moderate" ? "border-michigan-gold/30 text-michigan-gold" : "border-michigan-forest/30 text-michigan-forest"}`}
+                          className={`text-[10px] px-1.5 py-0 ${ratioSeverity === "high" ? "border-destructive/30 text-destructive" : ratioSeverity === "moderate" ? "border-michigan-gold/30 text-michigan-gold-deep" : "border-michigan-forest/30 text-michigan-forest-deep"}`}
                         >
                           {ratioSeverity === "high"
                             ? "Shortage area"
@@ -629,7 +629,7 @@ export default function CountyPage() {
                               </Badge>
                             )}
                             {f.joint_commission && (
-                              <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[9px] px-1 py-0">
+                              <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[9px] px-1 py-0">
                                 ✓ Verified
                               </Badge>
                             )}
@@ -1028,7 +1028,7 @@ export default function CountyPage() {
           <Card className="border-michigan-gold/30 bg-michigan-gold/5">
             <CardContent className="py-4 space-y-2">
               <div className="flex items-start gap-3">
-                <FileQuestion className="h-5 w-5 text-michigan-gold flex-shrink-0 mt-0.5" />
+                <FileQuestion className="h-5 w-5 text-michigan-gold-deep flex-shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold text-sm text-foreground">
                     Missing local data?

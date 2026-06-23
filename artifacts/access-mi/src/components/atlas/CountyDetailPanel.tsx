@@ -47,7 +47,7 @@ function MetricRow({
     <div className="flex justify-between py-1.5 border-b border-border/30">
       <span className="text-xs text-muted-foreground">{label}</span>
       <span
-        className={`text-xs font-semibold ${warn ? "text-michigan-coral" : "text-foreground"}`}
+        className={`text-xs font-semibold ${warn ? "text-michigan-coral-deep" : "text-foreground"}`}
       >
         {typeof value === "number" ? value.toLocaleString() : value}
         {unit || ""}

@@ -260,7 +260,7 @@ export default function PlacePage() {
         <section id="programs">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-              <Heart className="h-5 w-5 text-michigan-coral" /> Top Programs for Residents
+              <Heart className="h-5 w-5 text-michigan-coral-deep" /> Top Programs for Residents
             </h2>
             <Link to="/resources" className="text-sm font-medium text-primary hover:underline flex items-center gap-1">
               Browse all <ArrowRight className="h-3.5 w-3.5" />

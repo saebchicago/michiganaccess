@@ -790,7 +790,7 @@ export default function ComparePlacesPage() {
                 className="text-xs cursor-pointer flex items-center gap-1"
               >
                 <ShieldAlert
-                  className="h-3.5 w-3.5 text-michigan-coral"
+                  className="h-3.5 w-3.5 text-michigan-coral-deep"
                   aria-hidden="true"
                 />
                 Equity Lens
@@ -940,7 +940,7 @@ export default function ComparePlacesPage() {
             <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
               <CardHeader className="pb-2">
                 <CardTitle className="text-base flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-michigan-gold" />
+                  <Sparkles className="h-4 w-4 text-michigan-gold-deep" />
                   Civic Insight Score
                 </CardTitle>
                 <p className="text-xs text-muted-foreground">
@@ -1221,7 +1221,7 @@ export default function ComparePlacesPage() {
                                     {metric.label}
                                   </span>
                                   {equityLens && metric.equityFlagged && (
-                                    <ShieldAlert className="inline ml-1 h-3 w-3 text-michigan-coral" />
+                                    <ShieldAlert className="inline ml-1 h-3 w-3 text-michigan-coral-deep" />
                                   )}
                                 </td>
                                 {values.map((val, i) => {
@@ -1402,7 +1402,7 @@ export default function ComparePlacesPage() {
               <Card className="border-michigan-gold/20 bg-michigan-gold/[0.04]">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-base flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4 text-michigan-gold" />
+                    <MessageSquare className="h-4 w-4 text-michigan-gold-deep" />
                     Community Voice
                     <Badge variant="outline" className="text-[10px] ml-1">
                       Anonymized
@@ -1441,7 +1441,7 @@ export default function ComparePlacesPage() {
                               {[1, 2, 3, 4, 5].map((s) => (
                                 <Star
                                   key={s}
-                                  className={`h-4 w-4 ${s <= fullStars ? "fill-michigan-gold text-michigan-gold" : s === fullStars + 1 && hasHalf ? "text-michigan-gold" : "text-border"}`}
+                                  className={`h-4 w-4 ${s <= fullStars ? "fill-michigan-gold text-michigan-gold-deep" : s === fullStars + 1 && hasHalf ? "text-michigan-gold-deep" : "text-border"}`}
                                 />
                               ))}
                             </div>

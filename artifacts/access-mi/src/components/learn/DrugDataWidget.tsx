@@ -126,7 +126,7 @@ function getTimelineStatus(
   if (monthsLeft < 12)
     return {
       label: "Expiring Soon",
-      color: "bg-michigan-gold/20 text-michigan-gold",
+      color: "bg-michigan-gold/20 text-michigan-gold-deep",
     };
   return {
     label: "Active",

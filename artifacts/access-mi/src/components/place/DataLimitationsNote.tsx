@@ -30,7 +30,7 @@ export default function DataLimitationsNote({ place }: { place: Place }) {
           </p>
           <p>
             When local data isn't available, we show the county average and clearly label it with a
-            <span className="inline-flex items-center mx-1 px-1.5 py-0.5 rounded bg-michigan-gold/10 text-michigan-gold text-[10px] font-semibold border border-michigan-gold/20">County Avg</span>
+            <span className="inline-flex items-center mx-1 px-1.5 py-0.5 rounded bg-michigan-gold/10 text-michigan-gold-deep text-[10px] font-semibold border border-michigan-gold/20">County Avg</span>
             badge. This ensures you always see relevant context rather than nothing.
           </p>
           <p>

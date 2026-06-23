@@ -41,7 +41,7 @@ const CoreAccessGrid = () => {
       description: t("access.healthDesc"),
       href: "/find-care",
       iconBg: "bg-michigan-forest/8",
-      iconColor: "text-michigan-forest",
+      iconColor: "text-michigan-forest-deep",
     },
     {
       icon: Shield,

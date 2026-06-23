@@ -6,31 +6,31 @@ import { Separator } from "@/components/ui/separator";
 
 const HEALTH_OVERLAYS = [
   { id: "county-boundaries", label: "County Boundaries", icon: Construction, defaultOn: true, color: "text-primary" },
-  { id: "energy-burden", label: "Energy Burden Choropleth", icon: Zap, defaultOn: false, color: "text-michigan-gold", badge: "ACEEE" },
+  { id: "energy-burden", label: "Energy Burden Choropleth", icon: Zap, defaultOn: false, color: "text-michigan-gold-deep", badge: "ACEEE" },
   { id: "utility-outages", label: "Utility Outages", icon: Zap, defaultOn: false, color: "text-destructive", badge: "Live" },
-  { id: "aqi-stations", label: "EPA AQI Index", icon: CloudSun, defaultOn: false, color: "text-michigan-forest", badge: "Real-time" },
+  { id: "aqi-stations", label: "EPA AQI Index", icon: CloudSun, defaultOn: false, color: "text-michigan-forest-deep", badge: "Real-time" },
   { id: "egle-air", label: "EGLE Air Monitors", icon: Wind, defaultOn: false, color: "text-michigan-sky" },
 ];
 
 const TRANSPORT_OVERLAYS = [
-  { id: "semcog-sidewalks", label: "Sidewalks & Crosswalks (SEMCOG)", icon: Footprints, defaultOn: false, color: "text-michigan-teal", badge: "GATIS" },
-  { id: "mdot-workzones", label: "MDOT Work Zones", icon: Construction, defaultOn: false, color: "text-michigan-coral" },
-  { id: "ddot-routes", label: "DDOT Bus Routes", icon: Bus, defaultOn: false, color: "text-michigan-coral" },
-  { id: "cata-routes", label: "CATA Bus Routes", icon: Train, defaultOn: false, color: "text-michigan-teal" },
-  { id: "ev-stations", label: "EV Charging", icon: Zap, defaultOn: false, color: "text-michigan-gold" },
+  { id: "semcog-sidewalks", label: "Sidewalks & Crosswalks (SEMCOG)", icon: Footprints, defaultOn: false, color: "text-michigan-teal-deep", badge: "GATIS" },
+  { id: "mdot-workzones", label: "MDOT Work Zones", icon: Construction, defaultOn: false, color: "text-michigan-coral-deep" },
+  { id: "ddot-routes", label: "DDOT Bus Routes", icon: Bus, defaultOn: false, color: "text-michigan-coral-deep" },
+  { id: "cata-routes", label: "CATA Bus Routes", icon: Train, defaultOn: false, color: "text-michigan-teal-deep" },
+  { id: "ev-stations", label: "EV Charging", icon: Zap, defaultOn: false, color: "text-michigan-gold-deep" },
 ];
 
 const SAFETY_OVERLAYS = [
   { id: "buspatrol-safety", label: "School Zone Safety", icon: ShieldAlert, defaultOn: false, color: "text-destructive" },
-  { id: "pedestrian-risk", label: "Pedestrian Risk Zones", icon: Footprints, defaultOn: false, color: "text-michigan-coral", badge: "MTCF" },
+  { id: "pedestrian-risk", label: "Pedestrian Risk Zones", icon: Footprints, defaultOn: false, color: "text-michigan-coral-deep", badge: "MTCF" },
 ];
 
 // Re-export combined for backward compat
 export const SECTOR_OVERLAYS = [...HEALTH_OVERLAYS, ...TRANSPORT_OVERLAYS, ...SAFETY_OVERLAYS] as const;
 
 export const REALTIME_OVERLAYS = [
-  { id: "ddot-live", label: "DDOT Live Buses", icon: Radio, defaultOn: false, color: "text-michigan-coral" },
-  { id: "theride-live", label: "TheRide Live (A2)", icon: Radio, defaultOn: false, color: "text-michigan-teal" },
+  { id: "ddot-live", label: "DDOT Live Buses", icon: Radio, defaultOn: false, color: "text-michigan-coral-deep" },
+  { id: "theride-live", label: "TheRide Live (A2)", icon: Radio, defaultOn: false, color: "text-michigan-teal-deep" },
 ] as const;
 
 interface SectorOverlayControlsProps {
@@ -61,7 +61,7 @@ function OverlayGroup({
         <TitleIcon className={`h-3.5 w-3.5 ${iconColor}`} />
         {title}
         {partnerBadge && (
-          <Badge variant="outline" className="ml-auto text-[8px] px-1 py-0 border-michigan-gold/40 text-michigan-gold">
+          <Badge variant="outline" className="ml-auto text-[8px] px-1 py-0 border-michigan-gold/40 text-michigan-gold-deep">
             {partnerBadge}
           </Badge>
         )}
@@ -117,7 +117,7 @@ export default function SectorOverlayControls({ activeOverlays, onToggleOverlay 
         <OverlayGroup
           title="Transportation"
           icon={Bus}
-          iconColor="text-michigan-coral"
+          iconColor="text-michigan-coral-deep"
           overlays={TRANSPORT_OVERLAYS}
           activeOverlays={activeOverlays}
           onToggleOverlay={onToggleOverlay}
@@ -136,7 +136,7 @@ export default function SectorOverlayControls({ activeOverlays, onToggleOverlay 
       <Separator className="my-3" />
 
       <h3 className="mb-2 text-sm font-semibold text-foreground flex items-center gap-1.5">
-        <Radio className="h-3.5 w-3.5 text-michigan-coral" />
+        <Radio className="h-3.5 w-3.5 text-michigan-coral-deep" />
         Real-Time Tracking
       </h3>
       <div className="flex flex-col gap-2.5">

@@ -376,7 +376,7 @@ export default function DataValidationPage() {
         {/* Limitations */}
         <section className="mb-8">
           <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-michigan-gold" /> Limitations
+            <AlertTriangle className="h-4 w-4 text-michigan-gold-deep" /> Limitations
             & Disclaimers
           </h2>
           <Card className="border-michigan-gold/20">

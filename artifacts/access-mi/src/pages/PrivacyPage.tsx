@@ -377,7 +377,7 @@ export default function PrivacyPage() {
         <Section icon={AlertTriangle} title="7. HIPAA Disclaimer" index={6}>
           <div className="rounded-xl border-2 border-michigan-coral/30 bg-michigan-coral/5 p-6">
             <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-michigan-coral" />
+              <AlertTriangle className="h-5 w-5 text-michigan-coral-deep" />
               Important Health Information Disclaimer
             </h3>
             <div className="space-y-3 text-sm text-muted-foreground">

@@ -71,7 +71,7 @@ const SystemsExplainer = forwardRef<HTMLElement>(
                 key={f}
                 className="flex items-start gap-3 text-sm text-foreground"
               >
-                <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-michigan-teal" />
+                <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-michigan-teal-deep" />
                 <span>{f}</span>
               </li>
             ))}
@@ -100,7 +100,7 @@ const SystemsExplainer = forwardRef<HTMLElement>(
                 to={s.href}
                 className="group rounded-lg border border-border bg-card p-4 text-center transition-all duration-300 hover:shadow-md hover:-translate-y-1"
               >
-                <p className="text-xs font-bold uppercase tracking-wide text-michigan-teal">
+                <p className="text-xs font-bold uppercase tracking-wide text-michigan-teal-deep">
                   {s.label}
                 </p>
                 <p className="mt-1.5 text-sm text-muted-foreground">{s.desc}</p>

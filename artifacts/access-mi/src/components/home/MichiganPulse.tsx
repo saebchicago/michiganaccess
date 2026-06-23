@@ -5,10 +5,10 @@ import { TrendingUp, TrendingDown, AlertTriangle, ArrowRight, Activity } from "l
 import { SIGNALS_2026_03, type Signal } from "@/data/monthly-signals";
 
 const DIRECTION_CONFIG: Record<Signal["direction"], { icon: typeof TrendingUp; color: string }> = {
-  up: { icon: TrendingUp, color: "text-michigan-coral" },
-  down: { icon: TrendingDown, color: "text-michigan-forest" },
-  alert: { icon: AlertTriangle, color: "text-michigan-gold" },
-  stable: { icon: ArrowRight, color: "text-michigan-teal" },
+  up: { icon: TrendingUp, color: "text-michigan-coral-deep" },
+  down: { icon: TrendingDown, color: "text-michigan-forest-deep" },
+  alert: { icon: AlertTriangle, color: "text-michigan-gold-deep" },
+  stable: { icon: ArrowRight, color: "text-michigan-teal-deep" },
 };
 
 const CATEGORY_BORDER: Record<Signal["category"], string> = {

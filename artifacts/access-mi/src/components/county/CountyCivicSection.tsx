@@ -135,7 +135,7 @@ export default function CountyCivicSection({ county, countyType }: CountyCivicSe
           <Card className="h-full">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2 text-sm">
-                <Building2 className="h-4 w-4 text-michigan-teal" />
+                <Building2 className="h-4 w-4 text-michigan-teal-deep" />
                 County Services
               </CardTitle>
             </CardHeader>
@@ -160,7 +160,7 @@ export default function CountyCivicSection({ county, countyType }: CountyCivicSe
           <Card className="h-full">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2 text-sm">
-                <Vote className="h-4 w-4 text-michigan-forest" />
+                <Vote className="h-4 w-4 text-michigan-forest-deep" />
                 Civic Engagement
               </CardTitle>
             </CardHeader>

@@ -68,7 +68,7 @@ export default function CityPlacePage() {
               <MapPin className="h-5 w-5 text-primary" />
               <Badge variant="outline" className="text-xs">{place.parentCounty} County</Badge>
               <Badge variant="secondary" className="text-xs capitalize">{place.countyProfile.countyType}</Badge>
-              <Badge variant="outline" className="text-xs bg-michigan-gold/10 text-michigan-gold border-michigan-gold/30">
+              <Badge variant="outline" className="text-xs bg-michigan-gold/10 text-michigan-gold-deep border-michigan-gold/30">
                 {place.confidence === "moderate" ? "County Avg" : "Estimated"}
               </Badge>
             </div>
@@ -115,7 +115,7 @@ export default function CityPlacePage() {
         {/* Quick Links */}
         <section id="programs">
           <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-            <Heart className="h-5 w-5 text-michigan-coral" /> Help Available Near {place.name}
+            <Heart className="h-5 w-5 text-michigan-coral-deep" /> Help Available Near {place.name}
           </h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[

@@ -32,10 +32,10 @@ const DATA_SOURCES: DataSource[] = [
 ];
 
 const STATUS_CONFIG: Record<SourceStatus, { icon: typeof CheckCircle2; color: string; dotColor: string; label: string }> = {
-  live: { icon: Zap, color: "text-michigan-teal", dotColor: "bg-michigan-teal", label: "Live" },
-  fresh: { icon: CheckCircle2, color: "text-michigan-forest", dotColor: "bg-michigan-forest", label: "Fresh" },
-  aging: { icon: Clock, color: "text-michigan-gold", dotColor: "bg-michigan-gold", label: "Aging" },
-  stale: { icon: AlertCircle, color: "text-michigan-coral", dotColor: "bg-michigan-coral", label: "Stale" },
+  live: { icon: Zap, color: "text-michigan-teal-deep", dotColor: "bg-michigan-teal", label: "Live" },
+  fresh: { icon: CheckCircle2, color: "text-michigan-forest-deep", dotColor: "bg-michigan-forest", label: "Fresh" },
+  aging: { icon: Clock, color: "text-michigan-gold-deep", dotColor: "bg-michigan-gold", label: "Aging" },
+  stale: { icon: AlertCircle, color: "text-michigan-coral-deep", dotColor: "bg-michigan-coral", label: "Stale" },
 };
 
 export default function DataFreshnessDashboard() {
@@ -59,7 +59,7 @@ export default function DataFreshnessDashboard() {
     >
       <div className="flex items-center gap-3 mb-2">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-          <Database className="h-5 w-5 text-michigan-teal" />
+          <Database className="h-5 w-5 text-michigan-teal-deep" />
         </div>
         <div>
           <h2 className="text-2xl font-bold text-foreground">Data Freshness</h2>
@@ -71,7 +71,7 @@ export default function DataFreshnessDashboard() {
       <div className="grid gap-4 sm:grid-cols-5">
         <Card className="sm:col-span-2 border-michigan-teal/20 bg-michigan-teal/5">
           <CardContent className="py-6 text-center">
-            <p className="text-5xl font-bold text-michigan-teal">{freshnessScore}%</p>
+            <p className="text-5xl font-bold text-michigan-teal-deep">{freshnessScore}%</p>
             <p className="text-sm text-muted-foreground mt-1">Data Freshness Score</p>
             <p className="text-[10px] text-muted-foreground mt-2">
               {DATA_SOURCES.length} sources tracked · {statusCounts.live} live · {statusCounts.fresh} fresh

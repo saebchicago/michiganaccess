@@ -72,7 +72,7 @@ const categoryIcon = (cat: string) => {
     case "popular":
       return <TrendingUp className="h-4 w-4 text-muted-foreground" />;
     case "zip":
-      return <Hash className="h-4 w-4 text-michigan-teal" />;
+      return <Hash className="h-4 w-4 text-michigan-teal-deep" />;
     case "city":
       return <MapPin className="h-4 w-4 text-forest-green" />;
     case "provider":

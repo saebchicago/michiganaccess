@@ -30,7 +30,7 @@ export default function PortfolioPage() {
         <div className="container max-w-5xl text-center">
           <Breadcrumbs items={[{ label: "Portfolio" }]} />
           <motion.div initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4">
-            <Badge className="rounded-full bg-michigan-teal/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-teal border-michigan-teal/20">
+            <Badge className="rounded-full bg-michigan-teal/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-teal-deep border-michigan-teal/20">
               Civic Intelligence Portfolio
             </Badge>
           </motion.div>
@@ -61,7 +61,7 @@ export default function PortfolioPage() {
               <CardContent className="pt-6 pb-6">
                 <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
                   <div>
-                    <Badge variant="outline" className="mb-2 text-xs border-michigan-teal/30 text-michigan-teal">
+                    <Badge variant="outline" className="mb-2 text-xs border-michigan-teal/30 text-michigan-teal-deep">
                       Population Health Infrastructure
                     </Badge>
                     <h2 className="text-xl font-bold text-foreground">Access Michigan</h2>
@@ -69,7 +69,7 @@ export default function PortfolioPage() {
                       href="https://accessmi.org"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-michigan-teal hover:underline"
+                      className="text-xs text-michigan-teal-deep hover:underline"
                     >
                       accessmi.org
                     </a>
@@ -90,7 +90,7 @@ export default function PortfolioPage() {
                     "SDOH financial impact modeling anchored to Henry Ford Health and Trinity Health published outcomes",
                   ].map((point) => (
                     <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-michigan-teal" />
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-michigan-teal-deep" />
                       {point}
                     </li>
                   ))}
@@ -230,7 +230,7 @@ export default function PortfolioPage() {
                   <CardContent className="pt-6 pb-5">
                     <div className="flex justify-center mb-3">
                       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-                        <col.icon className="h-5 w-5 text-michigan-teal" />
+                        <col.icon className="h-5 w-5 text-michigan-teal-deep" />
                       </div>
                     </div>
                     <h3 className="text-sm font-bold text-foreground mb-2">{col.title}</h3>

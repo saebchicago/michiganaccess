@@ -21,7 +21,7 @@ const MOMENTS = [
             <p className="text-[10px] text-muted-foreground mt-0.5">
               Concerns: Diabetes (14.2%), Obesity (38.1%)
             </p>
-            <p className="text-[10px] text-michigan-forest">
+            <p className="text-[10px] text-michigan-forest-deep">
               Strength: Smoking below state avg
             </p>
           </div>
@@ -57,7 +57,7 @@ const MOMENTS = [
           </div>
           <span className="text-[9px] text-muted-foreground w-10">11.8%</span>
         </div>
-        <p className="text-[10px] text-michigan-coral">
+        <p className="text-[10px] text-michigan-coral-deep">
           2.4-point gap between neighboring ZIPs
         </p>
       </div>
@@ -80,7 +80,7 @@ const MOMENTS = [
           <Badge
             key={p}
             variant="outline"
-            className="text-[9px] border-michigan-forest/30 text-michigan-forest"
+            className="text-[9px] border-michigan-forest/30 text-michigan-forest-deep"
           >
             {p}
           </Badge>

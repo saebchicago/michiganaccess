@@ -6,9 +6,9 @@ import { useWaterData, type WaterSite } from "@/hooks/useWaterData";
 
 function flowStatus(cfs: number | null): { label: string; className: string } {
   if (cfs === null) return { label: "-", className: "text-muted-foreground" };
-  if (cfs > 5000) return { label: "High", className: "text-michigan-coral font-semibold" };
-  if (cfs > 1000) return { label: "Above Normal", className: "text-michigan-gold font-semibold" };
-  return { label: "Normal", className: "text-michigan-forest" };
+  if (cfs > 5000) return { label: "High", className: "text-michigan-coral-deep font-semibold" };
+  if (cfs > 1000) return { label: "Above Normal", className: "text-michigan-gold-deep font-semibold" };
+  return { label: "Normal", className: "text-michigan-forest-deep" };
 }
 
 function formatTime(iso: string) {
@@ -75,7 +75,7 @@ export default function WaterMonitorWidget() {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
-          <Droplets className="h-5 w-5 text-michigan-teal" />
+          <Droplets className="h-5 w-5 text-michigan-teal-deep" />
           Live Michigan Stream & River Monitoring
         </CardTitle>
         <CardDescription>

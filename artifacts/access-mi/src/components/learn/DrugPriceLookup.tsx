@@ -278,7 +278,7 @@ export default function DrugPriceLookup() {
               {results.length > 0 && (
                 <div className="space-y-3">
                   <h4 className="text-sm font-semibold text-foreground flex items-center gap-1.5">
-                    <DollarSign className="h-4 w-4 text-michigan-forest" />
+                    <DollarSign className="h-4 w-4 text-michigan-forest-deep" />
                     Pricing Estimates (CMS NADAC Average)
                   </h4>
                   {results.map((r, i) => (
@@ -318,7 +318,7 @@ export default function DrugPriceLookup() {
                         </div>
                         <div className="text-right shrink-0">
                           {r.nadacPrice && (
-                            <p className="text-lg font-bold text-michigan-forest">
+                            <p className="text-lg font-bold text-michigan-forest-deep">
                               ${r.nadacPrice.toFixed(2)}
                             </p>
                           )}

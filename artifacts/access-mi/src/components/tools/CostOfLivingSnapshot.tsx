@@ -21,7 +21,7 @@ export default function CostOfLivingSnapshot() {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
-            <DollarSign className="h-5 w-5 text-michigan-gold" />
+            <DollarSign className="h-5 w-5 text-michigan-gold-deep" />
             Michigan vs. National Cost of Living
           </CardTitle>
           <CardDescription>Based on statewide averages. Your county may vary.</CardDescription>
@@ -59,7 +59,7 @@ export default function CostOfLivingSnapshot() {
                       <item.icon className="h-3 w-3 text-muted-foreground" />
                       <span className="text-xs text-foreground">{item.label}</span>
                     </div>
-                    <Badge variant="outline" className={`text-[8px] ${cheaper ? "text-michigan-forest border-michigan-forest/30" : "text-michigan-coral border-michigan-coral/30"}`}>
+                    <Badge variant="outline" className={`text-[8px] ${cheaper ? "text-michigan-forest-deep border-michigan-forest/30" : "text-michigan-coral-deep border-michigan-coral/30"}`}>
                       {cheaper ? `${Math.abs(+diff)}% lower` : `${diff}% higher`}
                     </Badge>
                   </div>

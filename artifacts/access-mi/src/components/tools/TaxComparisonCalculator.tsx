@@ -53,7 +53,7 @@ function DiffCell({ a, b }: { a: number; b: number }) {
   return (
     <span
       className={
-        diff < 0 ? "text-michigan-forest font-semibold" : "text-michigan-coral"
+        diff < 0 ? "text-michigan-forest-deep font-semibold" : "text-michigan-coral-deep"
       }
     >
       {diff < 0 ? "-" : "+"}${Math.abs(diff).toLocaleString()}
@@ -257,7 +257,7 @@ export default function TaxComparisonCalculator() {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
-            <DollarSign className="h-5 w-5 text-michigan-gold" /> Michigan Tax
+            <DollarSign className="h-5 w-5 text-michigan-gold-deep" /> Michigan Tax
             Comparison
           </CardTitle>
           <CardDescription>
@@ -439,7 +439,7 @@ export default function TaxComparisonCalculator() {
               >
                 <p className="text-xs text-muted-foreground">Difference</p>
                 <p
-                  className={`text-xl font-bold ${totalDiff > 0 ? "text-michigan-forest" : "text-michigan-coral"}`}
+                  className={`text-xl font-bold ${totalDiff > 0 ? "text-michigan-forest-deep" : "text-michigan-coral-deep"}`}
                 >
                   {totalDiff > 0 ? "-" : "+"}$
                   {Math.abs(totalDiff).toLocaleString()}/yr

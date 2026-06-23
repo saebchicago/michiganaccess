@@ -25,7 +25,7 @@ export default function HazardRiskDashboard() {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
-          <AlertTriangle className="h-5 w-5 text-michigan-coral" />
+          <AlertTriangle className="h-5 w-5 text-michigan-coral-deep" />
           Michigan County Hazard Risk
         </CardTitle>
         <CardDescription>

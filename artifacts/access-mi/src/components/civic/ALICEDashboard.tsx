@@ -55,7 +55,7 @@ export default function ALICEDashboard() {
       <Card className="border-michigan-coral/20 bg-michigan-coral/5">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Users className="h-5 w-5 text-michigan-coral" />
+            <Users className="h-5 w-5 text-michigan-coral-deep" />
             ALICE: Asset Limited, Income Constrained, Employed
           </CardTitle>
           <CardDescription>
@@ -66,7 +66,7 @@ export default function ALICEDashboard() {
           {/* Headline */}
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-3xl font-bold text-michigan-coral">41%</p>
+              <p className="text-3xl font-bold text-michigan-coral-deep">41%</p>
               <p className="text-xs text-muted-foreground">of MI households below ALICE Threshold (14% poverty + 27% ALICE) · United For ALICE 2025 report, 2023 data</p>
             </div>
             <div className="rounded-lg border border-border bg-background p-3 text-center">
@@ -74,7 +74,7 @@ export default function ALICEDashboard() {
               <p className="text-xs text-muted-foreground">households struggling to afford basics</p>
             </div>
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-3xl font-bold text-michigan-gold">$73K</p>
+              <p className="text-3xl font-bold text-michigan-gold-deep">$73K</p>
               <p className="text-xs text-muted-foreground">Survival Budget (family of 4)</p>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function ALICEDashboard() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-michigan-gold" />
+              <DollarSign className="h-4 w-4 text-michigan-gold-deep" />
               ALICE Survival Budget (Family of 4, MI)
             </CardTitle>
             <CardDescription>Monthly cost to meet basic needs - not thrive, just survive</CardDescription>

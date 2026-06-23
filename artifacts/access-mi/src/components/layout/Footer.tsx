@@ -291,7 +291,7 @@ const Footer = () => {
                   {m.label}
                 </span>
                 <CheckCircle2
-                  className="h-2.5 w-2.5 text-michigan-forest"
+                  className="h-2.5 w-2.5 text-michigan-forest-deep"
                   aria-hidden="true"
                 />
               </div>
@@ -391,7 +391,7 @@ const Footer = () => {
         {/* Trust statement */}
         <div className="border-t border-border pt-4 mt-4">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Shield className="h-3 w-3 text-michigan-forest" />
+            <Shield className="h-3 w-3 text-michigan-forest-deep" />
             <Link
               to="/methodology#trust-log"
               className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"

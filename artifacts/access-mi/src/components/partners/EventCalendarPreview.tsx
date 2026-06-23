@@ -27,7 +27,7 @@ export default function EventCalendarPreview() {
   return (
     <section aria-labelledby="events-heading">
       <div className="text-center mb-8">
-        <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 mb-3">
+        <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 mb-3">
           <Calendar className="h-3 w-3 mr-1" />
           Community Events
         </Badge>
@@ -51,7 +51,7 @@ export default function EventCalendarPreview() {
                     {evt.event_type.replace(/_/g, " ")}
                   </Badge>
                   {evt.is_free && (
-                    <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">
+                    <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">
                       Free
                     </Badge>
                   )}

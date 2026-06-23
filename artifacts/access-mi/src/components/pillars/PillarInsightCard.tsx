@@ -13,7 +13,13 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertCircle, TrendingUp, TrendingDown, Minus, MapPin } from "lucide-react";
+import {
+  AlertCircle,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+  MapPin,
+} from "lucide-react";
 import type { GeoDimension } from "@/models/GeoDimension";
 import { ratePer, percentileRank } from "@/models/GeoDimension";
 
@@ -51,16 +57,44 @@ export interface PillarInsightCardProps {
   icon?: React.ComponentType<{ className?: string }>;
 }
 
-function TrendIndicator({ current, compare }: { current: number; compare: number }) {
-  if (current > compare) return <TrendingUp className="h-3.5 w-3.5 text-red-500" aria-label="Above average" />;
-  if (current < compare) return <TrendingDown className="h-3.5 w-3.5 text-green-500" aria-label="Below average" />;
-  return <Minus className="h-3.5 w-3.5 text-muted-foreground" aria-label="At average" />;
+function TrendIndicator({
+  current,
+  compare,
+}: {
+  current: number;
+  compare: number;
+}) {
+  if (current > compare)
+    return (
+      <TrendingUp
+        className="h-3.5 w-3.5 text-red-500"
+        aria-label="Above average"
+      />
+    );
+  if (current < compare)
+    return (
+      <TrendingDown
+        className="h-3.5 w-3.5 text-green-500"
+        aria-label="Below average"
+      />
+    );
+  return (
+    <Minus
+      className="h-3.5 w-3.5 text-muted-foreground"
+      aria-label="At average"
+    />
+  );
 }
 
 function DataUnavailable({ reason }: { reason: string }) {
   return (
-    <div className="flex flex-col items-center gap-2 py-6 rounded-xl border-2 border-dashed border-muted-foreground/30 bg-muted/20 text-center" role="status">
-      <span className="text-xl" role="img" aria-hidden>📊</span>
+    <div
+      className="flex flex-col items-center gap-2 py-6 rounded-xl border-2 border-dashed border-muted-foreground/30 bg-muted/20 text-center"
+      role="status"
+    >
+      <span className="text-xl" role="img" aria-hidden>
+        📊
+      </span>
       <span className="text-sm text-muted-foreground">{reason}</span>
     </div>
   );
@@ -86,9 +120,15 @@ export default function PillarInsightCard({
     return (
       <Card>
         <CardContent className="p-5">
-          <h3 className="font-semibold text-sm text-foreground mb-1">{title}</h3>
+          <h3 className="font-semibold text-sm text-foreground mb-1">
+            {title}
+          </h3>
           <DataUnavailable reason="Data not yet available - dataset registered but ingestion pending." />
-          {source && <p className="text-[10px] text-muted-foreground mt-2">Source: {source}</p>}
+          {source && (
+            <p className="text-[10px] text-muted-foreground mt-2">
+              Source: {source}
+            </p>
+          )}
         </CardContent>
       </Card>
     );
@@ -98,7 +138,9 @@ export default function PillarInsightCard({
     return (
       <Card>
         <CardContent className="p-5">
-          <h3 className="font-semibold text-sm text-foreground mb-1">{title}</h3>
+          <h3 className="font-semibold text-sm text-foreground mb-1">
+            {title}
+          </h3>
           <DataUnavailable reason="Unable to load data. Please try again later." />
         </CardContent>
       </Card>
@@ -109,9 +151,17 @@ export default function PillarInsightCard({
     return (
       <Card>
         <CardContent className="p-5">
-          <h3 className="font-semibold text-sm text-foreground mb-1">{title}</h3>
-          <DataUnavailable reason={`No data available for ${geography.countyName ?? "this area"}.`} />
-          {source && <p className="text-[10px] text-muted-foreground mt-2">Source: {source}</p>}
+          <h3 className="font-semibold text-sm text-foreground mb-1">
+            {title}
+          </h3>
+          <DataUnavailable
+            reason={`No data available for ${geography.countyName ?? "this area"}.`}
+          />
+          {source && (
+            <p className="text-[10px] text-muted-foreground mt-2">
+              Source: {source}
+            </p>
+          )}
         </CardContent>
       </Card>
     );
@@ -121,7 +171,11 @@ export default function PillarInsightCard({
   let displayValue: string = String(value);
   let percentile: number | null = null;
 
-  if (pattern === "rate-per-population" && typeof value === "number" && geography.population) {
+  if (
+    pattern === "rate-per-population" &&
+    typeof value === "number" &&
+    geography.population
+  ) {
     const rate = ratePer(value, geography.population, perPopulation);
     displayValue = `${rate}`;
     unit = unit || `per ${perPopulation.toLocaleString()}`;
@@ -141,10 +195,15 @@ export default function PillarInsightCard({
                 <Icon className="h-4 w-4 text-primary" aria-hidden="true" />
               </div>
             )}
-            <h3 className="font-semibold text-sm text-foreground leading-tight">{title}</h3>
+            <h3 className="font-semibold text-sm text-foreground leading-tight">
+              {title}
+            </h3>
           </div>
           {status === "live" && (
-            <Badge variant="outline" className="text-[10px] shrink-0 text-green-600 border-green-300">
+            <Badge
+              variant="outline"
+              className="text-[10px] shrink-0 text-green-700 border-green-400"
+            >
               Live
             </Badge>
           )}
@@ -152,8 +211,12 @@ export default function PillarInsightCard({
 
         {/* Main metric */}
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-foreground">{displayValue}</span>
-          {unit && <span className="text-xs text-muted-foreground">{unit}</span>}
+          <span className="text-2xl font-bold text-foreground">
+            {displayValue}
+          </span>
+          {unit && (
+            <span className="text-xs text-muted-foreground">{unit}</span>
+          )}
         </div>
 
         {/* Percentile bar */}
@@ -163,7 +226,13 @@ export default function PillarInsightCard({
               <span>State percentile</span>
               <span className="font-medium">{percentile}th</span>
             </div>
-            <div className="h-1.5 rounded-full bg-muted overflow-hidden" role="progressbar" aria-valuenow={percentile} aria-valuemin={0} aria-valuemax={100}>
+            <div
+              className="h-1.5 rounded-full bg-muted overflow-hidden"
+              role="progressbar"
+              aria-valuenow={percentile}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
               <div
                 className={`h-full rounded-full transition-all ${percentile > 75 ? "bg-red-500" : percentile > 50 ? "bg-amber-500" : "bg-green-500"}`}
                 style={{ width: `${percentile}%` }}
@@ -173,45 +242,68 @@ export default function PillarInsightCard({
         )}
 
         {/* Comparison */}
-        {pattern === "comparison" && compareValue !== null && compareValue !== undefined && (
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            {typeof value === "number" && typeof compareValue === "number" && (
-              <TrendIndicator current={value} compare={compareValue} />
-            )}
-            <span>{compareLabel ?? "State average"}: {String(compareValue)}{unit ? ` ${unit}` : ""}</span>
-          </div>
-        )}
+        {pattern === "comparison" &&
+          compareValue !== null &&
+          compareValue !== undefined && (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+              {typeof value === "number" &&
+                typeof compareValue === "number" && (
+                  <TrendIndicator current={value} compare={compareValue} />
+                )}
+              <span>
+                {compareLabel ?? "State average"}: {String(compareValue)}
+                {unit ? ` ${unit}` : ""}
+              </span>
+            </div>
+          )}
 
         {/* Need vs capacity */}
-        {pattern === "need-vs-capacity" && compareValue !== null && compareValue !== undefined && (
-          <div className="text-xs space-y-1">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Need (outcome metric)</span>
-              <span className="font-medium text-foreground">{String(value)}</span>
+        {pattern === "need-vs-capacity" &&
+          compareValue !== null &&
+          compareValue !== undefined && (
+            <div className="text-xs space-y-1">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">
+                  Need (outcome metric)
+                </span>
+                <span className="font-medium text-foreground">
+                  {String(value)}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">
+                  Capacity (providers)
+                </span>
+                <span className="font-medium text-foreground">
+                  {String(compareValue)}
+                </span>
+              </div>
+              {typeof value === "number" &&
+                typeof compareValue === "number" &&
+                value > 0 &&
+                compareValue < value && (
+                  <p className="text-amber-700 dark:text-amber-300 font-medium mt-1">
+                    ⚠ Capacity gap detected - need exceeds available resources.
+                  </p>
+                )}
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Capacity (providers)</span>
-              <span className="font-medium text-foreground">{String(compareValue)}</span>
-            </div>
-            {typeof value === "number" && typeof compareValue === "number" && value > 0 && compareValue < value && (
-              <p className="text-amber-600 dark:text-amber-400 font-medium mt-1">
-                ⚠ Capacity gap detected - need exceeds available resources.
-              </p>
-            )}
-          </div>
-        )}
+          )}
 
         {/* Proximity */}
         {pattern === "proximity" && (
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <MapPin className="h-3 w-3" aria-hidden="true" />
-            <span>Nearest: {displayValue} {unit}</span>
+            <span>
+              Nearest: {displayValue} {unit}
+            </span>
           </div>
         )}
 
         {/* Description */}
         {description && (
-          <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            {description}
+          </p>
         )}
 
         {/* Source */}

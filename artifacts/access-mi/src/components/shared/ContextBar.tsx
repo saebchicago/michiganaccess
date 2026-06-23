@@ -149,7 +149,7 @@ function EligibilityPopover() {
         <div className="rounded-md bg-muted/50 border border-border p-2 text-center">
           <p className="text-[10px] text-muted-foreground">Estimated FPL</p>
           <p
-            className={`text-lg font-bold ${fplPreview <= 138 ? "text-michigan-forest" : fplPreview <= 250 ? "text-michigan-gold" : "text-foreground"}`}
+            className={`text-lg font-bold ${fplPreview <= 138 ? "text-michigan-forest-deep" : fplPreview <= 250 ? "text-michigan-gold-deep" : "text-foreground"}`}
           >
             {fplPreview}%
           </p>

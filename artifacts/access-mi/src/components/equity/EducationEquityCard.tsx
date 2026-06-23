@@ -16,14 +16,14 @@ export default function EducationEquityCard() {
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 text-center">
-              <AnimatedCounter value={27.9} decimals={1} suffix="%" className="text-2xl font-bold text-michigan-coral" />
+              <AnimatedCounter value={27.9} decimals={1} suffix="%" className="text-2xl font-bold text-michigan-coral-deep" />
               <p className="text-[10px] text-muted-foreground">Chronic absenteeism statewide</p>
-              <p className="text-[9px] text-michigan-coral mt-0.5">38.6% for economically disadvantaged</p>
+              <p className="text-[9px] text-michigan-coral-deep mt-0.5">38.6% for economically disadvantaged</p>
             </div>
             <div className="rounded-lg border border-michigan-forest/20 bg-michigan-forest/5 p-3 text-center">
-              <AnimatedCounter value={84} suffix="%" className="text-2xl font-bold text-michigan-forest" />
+              <AnimatedCounter value={84} suffix="%" className="text-2xl font-bold text-michigan-forest-deep" />
               <p className="text-[10px] text-muted-foreground">Graduation rate (record high)</p>
-              <Badge variant="outline" className="text-[8px] mt-1 border-michigan-forest/30 text-michigan-forest">2024-25</Badge>
+              <Badge variant="outline" className="text-[8px] mt-1 border-michigan-forest/30 text-michigan-forest-deep">2024-25</Badge>
             </div>
           </div>
           <p className="text-xs text-muted-foreground">196 school-based health centers serve 37,000+ children across 52% of Michigan counties. Detroit DPSCD: 60.9% chronic absenteeism - highest in state.</p>

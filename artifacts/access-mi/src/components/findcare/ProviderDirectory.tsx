@@ -190,21 +190,21 @@ export default function ProviderDirectory({ facilities }: Props) {
                       </div>
                       {p.patient_rating && (
                         <div className="flex items-center gap-1 rounded-md bg-michigan-gold/10 px-2 py-0.5">
-                          <Star className="h-3 w-3 text-michigan-gold fill-michigan-gold" />
-                          <span className="text-xs font-bold text-michigan-gold">{Number(p.patient_rating).toFixed(1)}</span>
+                          <Star className="h-3 w-3 text-michigan-gold-deep fill-michigan-gold" />
+                          <span className="text-xs font-bold text-michigan-gold-deep">{Number(p.patient_rating).toFixed(1)}</span>
                         </div>
                       )}
                     </div>
 
                     {/* Status badges */}
                     <div className="flex flex-wrap gap-1.5">
-                      {p.board_certified && <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]"><Award className="mr-0.5 h-2.5 w-2.5" />Board Certified</Badge>}
+                      {p.board_certified && <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]"><Award className="mr-0.5 h-2.5 w-2.5" />Board Certified</Badge>}
                       {p.accepting_new_patients ? (
                         <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]"><UserCheck className="mr-0.5 h-2.5 w-2.5" />Accepting</Badge>
                       ) : (
                         <Badge variant="outline" className="text-muted-foreground text-[10px]"><UserX className="mr-0.5 h-2.5 w-2.5" />Not Accepting</Badge>
                       )}
-                      {p.telehealth_available && <Badge className="bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20 text-[10px]"><Wifi className="mr-0.5 h-2.5 w-2.5" />Telehealth</Badge>}
+                      {p.telehealth_available && <Badge className="bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20 text-[10px]"><Wifi className="mr-0.5 h-2.5 w-2.5" />Telehealth</Badge>}
                     </div>
 
                     {/* Insurance accepted */}
@@ -230,7 +230,7 @@ export default function ProviderDirectory({ facilities }: Props) {
                     {costRange && (
                       <div className="rounded-md bg-michigan-gold/5 border border-michigan-gold/15 p-1.5">
                         <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                          <DollarSign className="h-2.5 w-2.5 text-michigan-gold" />
+                          <DollarSign className="h-2.5 w-2.5 text-michigan-gold-deep" />
                           <span className="font-medium text-foreground">
                             ${costRange.low}–${costRange.high}
                           </span>

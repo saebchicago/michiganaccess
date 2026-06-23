@@ -71,7 +71,7 @@ export default function DataConfidenceCard({ data }: { data: DataConfidence | nu
       ? "hsl(var(--michigan-gold))"
       : "hsl(var(--destructive))";
   const textColor =
-    data.score >= 80 ? "text-michigan-forest" : data.score >= 50 ? "text-michigan-gold" : "text-destructive";
+    data.score >= 80 ? "text-michigan-forest-deep" : data.score >= 50 ? "text-michigan-gold-deep" : "text-destructive";
 
   return (
     <Card className="border-muted">
@@ -99,7 +99,7 @@ export default function DataConfidenceCard({ data }: { data: DataConfidence | nu
               key={s.id}
               variant="outline"
               className={`text-[10px] gap-1 ${
-                s.present ? "border-michigan-forest/30 text-michigan-forest" : "border-muted-foreground/20 text-muted-foreground"
+                s.present ? "border-michigan-forest/30 text-michigan-forest-deep" : "border-muted-foreground/20 text-muted-foreground"
               }`}
             >
               {s.present ? <Check className="h-2.5 w-2.5" /> : <X className="h-2.5 w-2.5" />}

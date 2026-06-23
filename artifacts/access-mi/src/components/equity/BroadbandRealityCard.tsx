@@ -16,11 +16,11 @@ export default function BroadbandRealityCard() {
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 text-center">
-              <AnimatedCounter value={492} suffix="K" className="text-2xl font-bold text-michigan-coral" />
+              <AnimatedCounter value={492} suffix="K" className="text-2xl font-bold text-michigan-coral-deep" />
               <p className="text-[10px] text-muted-foreground">Unserved/underserved (infrastructure)</p>
             </div>
             <div className="rounded-lg border border-michigan-gold/20 bg-michigan-gold/5 p-3 text-center">
-              <AnimatedCounter value={730} suffix="K" className="text-2xl font-bold text-michigan-gold" />
+              <AnimatedCounter value={730} suffix="K" className="text-2xl font-bold text-michigan-gold-deep" />
               <p className="text-[10px] text-muted-foreground">Facing adoption barriers</p>
             </div>
           </div>

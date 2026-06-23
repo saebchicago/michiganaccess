@@ -31,7 +31,7 @@ const TrustIndicators = () => {
               transition={{ delay: i * 0.1 }}
               className="flex items-center gap-2"
             >
-              <ind.icon className="h-4 w-4 text-michigan-forest" />
+              <ind.icon className="h-4 w-4 text-michigan-forest-deep" />
               <span className="text-xs font-medium text-muted-foreground">{ind.label}</span>
             </motion.div>
           ))}

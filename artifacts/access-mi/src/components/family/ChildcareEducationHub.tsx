@@ -12,7 +12,7 @@ const RESOURCES = [
     stats: "~7,500 licensed providers statewide",
     url: "https://childcaresearch.apps.lara.state.mi.us/",
     source: "LARA (Licensing & Regulatory Affairs)",
-    color: "text-michigan-coral",
+    color: "text-michigan-coral-deep",
   },
   {
     icon: Star,
@@ -21,7 +21,7 @@ const RESOURCES = [
     stats: "Only 24% of eligible children enrolled in preschool",
     url: "https://www.greatstarttoquality.org/",
     source: "Great Start to Quality",
-    color: "text-michigan-gold",
+    color: "text-michigan-gold-deep",
   },
   {
     icon: GraduationCap,
@@ -40,7 +40,7 @@ export default function ChildcareEducationHub() {
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
-            <Baby className="h-5 w-5 text-michigan-coral" />
+            <Baby className="h-5 w-5 text-michigan-coral-deep" />
             Childcare & Education Access
           </CardTitle>
           <CardDescription>

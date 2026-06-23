@@ -16,7 +16,7 @@ export default function WatchlistPanel() {
       <div className="rounded-xl border border-michigan-gold/30 bg-michigan-gold/5 p-5">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-bold text-foreground flex items-center gap-1.5">
-            <Star className="h-4 w-4 fill-michigan-gold text-michigan-gold" />
+            <Star className="h-4 w-4 fill-michigan-gold text-michigan-gold-deep" />
             Your Saved Items
             <Badge variant="secondary" className="text-[10px] ml-1">{count}</Badge>
           </h2>
@@ -34,7 +34,7 @@ export default function WatchlistPanel() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 group"
               >
-                <Star className="h-3 w-3 fill-michigan-gold text-michigan-gold shrink-0" />
+                <Star className="h-3 w-3 fill-michigan-gold text-michigan-gold-deep shrink-0" />
                 <Link to={item.href} className="flex-1 text-xs font-medium text-foreground hover:text-primary truncate">
                   {item.label}
                 </Link>

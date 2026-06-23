@@ -25,7 +25,7 @@ const sectors = [
     title: "Housing & Legal",
     description: "Shelter, rental assistance, legal aid, eviction prevention, and FOIA.",
     href: "/resources",
-    color: "text-michigan-forest",
+    color: "text-michigan-forest-deep",
     bg: "bg-michigan-forest/10",
   },
   {

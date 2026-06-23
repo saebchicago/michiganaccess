@@ -118,7 +118,7 @@ export default function ResourceGapAnalysis({ region, regionResources, allResour
                   </p>
                 )}
                 {item.isStrong && (
-                  <p className="text-[10px] text-michigan-forest font-medium flex items-center gap-1">
+                  <p className="text-[10px] text-michigan-forest-deep font-medium flex items-center gap-1">
                     <CheckCircle className="h-2.5 w-2.5" /> Strong coverage in this category
                   </p>
                 )}

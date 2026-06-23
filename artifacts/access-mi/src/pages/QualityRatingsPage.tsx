@@ -71,10 +71,10 @@ const CHART_COLORS = [
 ];
 
 const gradeColors: Record<string, string> = {
-  A: "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20",
-  B: "bg-michigan-teal/10 text-michigan-teal border-michigan-teal/20",
-  C: "bg-michigan-gold/10 text-michigan-gold border-michigan-gold/20",
-  D: "bg-michigan-coral/10 text-michigan-coral border-michigan-coral/20",
+  A: "bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20",
+  B: "bg-michigan-teal/10 text-michigan-teal-deep border-michigan-teal/20",
+  C: "bg-michigan-gold/10 text-michigan-gold-deep border-michigan-gold/20",
+  D: "bg-michigan-coral/10 text-michigan-coral-deep border-michigan-coral/20",
   F: "bg-destructive/10 text-destructive border-destructive/20",
   "Not Rated": "bg-muted text-muted-foreground border-border",
 };
@@ -248,7 +248,7 @@ export default function QualityRatingsPage() {
             variants={fadeUp}
             custom={0}
           >
-            <span className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest">
+            <span className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest-deep">
               Quality & Safety
             </span>
           </motion.div>
@@ -311,13 +311,13 @@ export default function QualityRatingsPage() {
               label: "Leapfrog A Grades",
               value: hospitals.filter((h) => h.leapfrog_grade === "A").length,
               icon: Shield,
-              color: "text-michigan-forest",
+              color: "text-michigan-forest-deep",
             },
             {
               label: "Magnet Recognized",
               value: hospitals.filter((h) => h.is_magnet).length,
               icon: Award,
-              color: "text-michigan-gold",
+              color: "text-michigan-gold-deep",
             },
             {
               label: "Blue Distinction",
@@ -362,7 +362,7 @@ export default function QualityRatingsPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-michigan-forest" />
+                <BarChart3 className="h-5 w-5 text-michigan-forest-deep" />
                 Leapfrog Safety Grade Distribution
               </CardTitle>
             </CardHeader>

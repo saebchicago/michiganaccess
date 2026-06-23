@@ -50,7 +50,7 @@ export default function NotificationPrompt({ className = "" }: { className?: str
       <CardContent className="py-3">
         <div className="flex items-start gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-michigan-teal/10 flex-shrink-0">
-            <Bell className="h-4 w-4 text-michigan-teal" />
+            <Bell className="h-4 w-4 text-michigan-teal-deep" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">

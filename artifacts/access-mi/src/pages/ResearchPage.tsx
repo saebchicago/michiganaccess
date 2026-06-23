@@ -33,7 +33,7 @@ const personas = [
       "Trust signals: community partnership acknowledgments",
     ],
     color: "border-michigan-coral/30 bg-michigan-coral/5",
-    accent: "text-michigan-coral",
+    accent: "text-michigan-coral-deep",
   },
   {
     name: "Dorothy, 72",
@@ -87,10 +87,10 @@ const journeys = [
 
 const usabilityFindings = [
   { finding: "Users didn't trust data without .gov badges", impact: "Critical", impactColor: "text-destructive", response: "Added source citations with .gov/.edu links on every page" },
-  { finding: '"Affordable" was too vague', impact: "High", impactColor: "text-michigan-gold", response: 'Replaced with "$20–50 sliding scale based on income"' },
-  { finding: "Maps hard to navigate one-handed on mobile", impact: "Medium", impactColor: "text-michigan-gold", response: "Increased tap targets to 44px, added list view toggle" },
+  { finding: '"Affordable" was too vague', impact: "High", impactColor: "text-michigan-gold-deep", response: 'Replaced with "$20–50 sliding scale based on income"' },
+  { finding: "Maps hard to navigate one-handed on mobile", impact: "Medium", impactColor: "text-michigan-gold-deep", response: "Increased tap targets to 44px, added list view toggle" },
   { finding: "Crisis resources overlooked in footer", impact: "Critical", impactColor: "text-destructive", response: "Moved 988/2-1-1 to persistent top banner" },
-  { finding: "Print feature hidden", impact: "Low", impactColor: "text-michigan-forest", response: 'Added "Print this page" button to resource pages' },
+  { finding: "Print feature hidden", impact: "Low", impactColor: "text-michigan-forest-deep", response: 'Added "Print this page" button to resource pages' },
 ];
 
 export default function ResearchPage() {
@@ -102,7 +102,7 @@ export default function ResearchPage() {
       <section className="bg-gradient-to-b from-michigan-coral/5 to-background py-16 lg:py-24">
         <div className="container max-w-4xl text-center">
           <Breadcrumbs items={[{ label: t("researchPage.badge") }]} />
-          <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-michigan-coral/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-coral">
+          <motion.span initial="hidden" animate="visible" variants={fade} custom={0} className="mb-4 inline-block rounded-full bg-michigan-coral/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-coral-deep">
             {t("researchPage.badge")}
           </motion.span>
           <motion.h1 variants={fade} custom={1} initial="hidden" animate="visible" className="mb-4 text-3xl font-bold text-foreground lg:text-5xl">
@@ -165,7 +165,7 @@ export default function ResearchPage() {
                           <ul className="space-y-1.5">
                             {p.implications.map((impl) => (
                               <li key={impl} className="flex items-start gap-2 text-xs text-muted-foreground">
-                                <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest" /> {impl}
+                                <CheckCircle2 className="mt-0.5 h-3 w-3 shrink-0 text-michigan-forest-deep" /> {impl}
                               </li>
                             ))}
                           </ul>
@@ -186,7 +186,7 @@ export default function ResearchPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-                <ArrowRight className="h-5 w-5 text-michigan-teal" />
+                <ArrowRight className="h-5 w-5 text-michigan-teal-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">{t("researchPage.journeysTitle")}</h2>
@@ -232,7 +232,7 @@ export default function ResearchPage() {
           <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fade} custom={0}>
             <div className="flex items-center gap-3 mb-8">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
-                <Search className="h-5 w-5 text-michigan-forest" />
+                <Search className="h-5 w-5 text-michigan-forest-deep" />
               </div>
               <div>
                 <h2 className="text-2xl font-bold text-foreground">{t("researchPage.usabilityTitle")}</h2>

@@ -8,7 +8,7 @@ const updates = [
     date: "2026-02-14",
     version: "1.4.0",
     icon: Database,
-    color: "text-michigan-teal",
+    color: "text-michigan-teal-deep",
     title: "Live API Integration - HRSA & CDC",
     items: [
       "Added HRSA health center proxy for live Federally Qualified Health Center data",
@@ -32,7 +32,7 @@ const updates = [
     date: "2026-02-14",
     version: "1.2.0",
     icon: Shield,
-    color: "text-michigan-forest",
+    color: "text-michigan-forest-deep",
     title: "Partnership Portal & i18n",
     items: [
       "Partnership submission form with moderation queue (Supabase-backed)",
@@ -45,7 +45,7 @@ const updates = [
     date: "2026-02-13",
     version: "1.1.0",
     icon: Zap,
-    color: "text-michigan-gold",
+    color: "text-michigan-gold-deep",
     title: "Core Platform Launch",
     items: [
       "Interactive health map with Leaflet.js and facility markers",

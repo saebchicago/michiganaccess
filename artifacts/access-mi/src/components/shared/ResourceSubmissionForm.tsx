@@ -100,7 +100,7 @@ export default function ResourceSubmissionForm() {
     return (
       <Card className="border-michigan-forest/20 bg-michigan-forest/5">
         <CardContent className="py-8 text-center space-y-3">
-          <CheckCircle className="h-12 w-12 text-michigan-forest mx-auto" />
+          <CheckCircle className="h-12 w-12 text-michigan-forest-deep mx-auto" />
           <h3 className="text-lg font-semibold text-foreground">Submission Received</h3>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
             Thank you for helping expand Michigan's resource directory. Our team will review your

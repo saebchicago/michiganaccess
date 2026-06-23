@@ -156,7 +156,7 @@ export default function RegionPage() {
                       <div className="flex items-center gap-1.5">
                         <Badge
                           variant={gap.worse ? "destructive" : "secondary"}
-                          className={`text-[10px] px-1.5 py-0 ${!gap.worse ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" : ""}`}
+                          className={`text-[10px] px-1.5 py-0 ${!gap.worse ? "bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20" : ""}`}
                         >
                           {gap.worse ? "Above" : "Below"} state avg
                         </Badge>
@@ -167,7 +167,7 @@ export default function RegionPage() {
                       </div>
                     </div>
                     {gap.worse && (
-                      <p className="text-[10px] text-michigan-coral font-medium">
+                      <p className="text-[10px] text-michigan-coral-deep font-medium">
                         ⚠ Access gap: {Math.abs(gap.diff).toFixed(1)} pts above state average
                       </p>
                     )}

@@ -247,7 +247,7 @@ export default function ZipIntelligenceBuilder({
           </form>
           {activeZip && <ZipQuickStats zip={activeZip} />}
           {isFetched && zipData && zipData.length === 0 && activeZip && (
-            <p className="text-sm text-michigan-coral mt-2">
+            <p className="text-sm text-michigan-coral-deep mt-2">
               No data found for ZIP {activeZip}. Try a different Michigan ZIP
               code.
             </p>
@@ -511,7 +511,7 @@ export default function ZipIntelligenceBuilder({
                   {view === "radar" && (
                     <>
                       {filteredData.length > 8 && (
-                        <p className="text-[10px] text-michigan-gold mb-2">
+                        <p className="text-[10px] text-michigan-gold-deep mb-2">
                           Radar works best with 5-8 measures. Consider switching
                           to bar chart.
                         </p>
@@ -617,7 +617,7 @@ export default function ZipIntelligenceBuilder({
                                   %
                                 </td>
                                 <td
-                                  className={`py-2 text-xs text-right font-semibold ${diff > 2 ? "text-michigan-coral" : diff < -2 ? "text-michigan-forest" : "text-muted-foreground"}`}
+                                  className={`py-2 text-xs text-right font-semibold ${diff > 2 ? "text-michigan-coral-deep" : diff < -2 ? "text-michigan-forest-deep" : "text-muted-foreground"}`}
                                 >
                                   {diff > 0 ? "+" : ""}
                                   {diff.toFixed(1)}
@@ -680,7 +680,7 @@ export default function ZipIntelligenceBuilder({
                                       {curr.toFixed(1)}%
                                     </td>
                                     <td
-                                      className={`py-2 text-xs text-right font-semibold ${change != null && change > 0.5 ? "text-michigan-coral" : change != null && change < -0.5 ? "text-michigan-forest" : "text-muted-foreground"}`}
+                                      className={`py-2 text-xs text-right font-semibold ${change != null && change > 0.5 ? "text-michigan-coral-deep" : change != null && change < -0.5 ? "text-michigan-forest-deep" : "text-muted-foreground"}`}
                                     >
                                       {change != null
                                         ? `${change > 0 ? "+" : ""}${change.toFixed(1)}`
@@ -718,9 +718,9 @@ export default function ZipIntelligenceBuilder({
                     }`}
                   >
                     {insight.type === "warning" ? (
-                      <AlertTriangle className="h-4 w-4 text-michigan-coral shrink-0 mt-0.5" />
+                      <AlertTriangle className="h-4 w-4 text-michigan-coral-deep shrink-0 mt-0.5" />
                     ) : insight.type === "good" ? (
-                      <CheckCircle2 className="h-4 w-4 text-michigan-forest shrink-0 mt-0.5" />
+                      <CheckCircle2 className="h-4 w-4 text-michigan-forest-deep shrink-0 mt-0.5" />
                     ) : (
                       <Sparkles className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                     )}

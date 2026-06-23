@@ -171,14 +171,14 @@ export default function ResilienceScoreCard({ county }: Props) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
             {result.strengths.length > 0 && (
               <div>
-                <p className="text-[10px] font-semibold text-michigan-forest flex items-center gap-1 mb-1">
+                <p className="text-[10px] font-semibold text-michigan-forest-deep flex items-center gap-1 mb-1">
                   <CheckCircle2 className="h-3 w-3" /> Strengths
                 </p>
                 {result.strengths.map((s) => (
                   <Badge
                     key={s}
                     variant="outline"
-                    className="text-[9px] mr-1 mb-1 border-michigan-forest/30 text-michigan-forest"
+                    className="text-[9px] mr-1 mb-1 border-michigan-forest/30 text-michigan-forest-deep"
                   >
                     {s}
                   </Badge>
@@ -187,14 +187,14 @@ export default function ResilienceScoreCard({ county }: Props) {
             )}
             {result.vulnerabilities.length > 0 && (
               <div>
-                <p className="text-[10px] font-semibold text-michigan-coral flex items-center gap-1 mb-1">
+                <p className="text-[10px] font-semibold text-michigan-coral-deep flex items-center gap-1 mb-1">
                   <AlertTriangle className="h-3 w-3" /> Vulnerabilities
                 </p>
                 {result.vulnerabilities.map((v) => (
                   <Badge
                     key={v}
                     variant="outline"
-                    className="text-[9px] mr-1 mb-1 border-michigan-coral/30 text-michigan-coral"
+                    className="text-[9px] mr-1 mb-1 border-michigan-coral/30 text-michigan-coral-deep"
                   >
                     {v}
                   </Badge>

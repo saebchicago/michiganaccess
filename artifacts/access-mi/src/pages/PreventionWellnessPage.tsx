@@ -66,11 +66,11 @@ const vaccineSchedule = [
 ];
 
 const wellnessTips = [
-  { title: "Move 150 Minutes Per Week", desc: "Moderate aerobic activity reduces heart disease, diabetes, and depression risk by 30-50%. Walking counts!", icon: Dumbbell, color: "text-michigan-teal" },
-  { title: "Eat 5+ Servings of Fruits & Vegetables", desc: "Michigan grows 300+ varieties of crops. Farmers markets operate in all 83 counties May–October.", icon: Apple, color: "text-michigan-forest" },
-  { title: "Prioritize Sleep (7-9 Hours)", desc: "Poor sleep increases risk of obesity, diabetes, cardiovascular disease, and depression.", icon: Sun, color: "text-michigan-gold" },
+  { title: "Move 150 Minutes Per Week", desc: "Moderate aerobic activity reduces heart disease, diabetes, and depression risk by 30-50%. Walking counts!", icon: Dumbbell, color: "text-michigan-teal-deep" },
+  { title: "Eat 5+ Servings of Fruits & Vegetables", desc: "Michigan grows 300+ varieties of crops. Farmers markets operate in all 83 counties May–October.", icon: Apple, color: "text-michigan-forest-deep" },
+  { title: "Prioritize Sleep (7-9 Hours)", desc: "Poor sleep increases risk of obesity, diabetes, cardiovascular disease, and depression.", icon: Sun, color: "text-michigan-gold-deep" },
   { title: "Manage Stress & Mental Health", desc: "1 in 5 Michigan adults reports frequent mental distress. Free resources: 988 Lifeline, NAMI Michigan.", icon: Brain, color: "text-michigan-sky" },
-  { title: "Know Your Numbers", desc: "Blood pressure, cholesterol, A1C, BMI. These 4 numbers predict 80% of cardiovascular risk.", icon: Activity, color: "text-michigan-coral" },
+  { title: "Know Your Numbers", desc: "Blood pressure, cholesterol, A1C, BMI. These 4 numbers predict 80% of cardiovascular risk.", icon: Activity, color: "text-michigan-coral-deep" },
   { title: "Build Social Connections", desc: "Social isolation increases mortality risk by 26%. Join community groups, volunteer, or attend support groups.", icon: Users, color: "text-primary" },
 ];
 
@@ -102,7 +102,7 @@ export default function PreventionWellnessPage() {
         <div className="container max-w-4xl text-center">
           <Breadcrumbs items={[{ label: "Prevention & Wellness" }]} />
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <span className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest">
+            <span className="mb-4 inline-block rounded-full bg-michigan-forest/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-forest-deep">
               Prevention & Wellness
             </span>
           </motion.div>
@@ -163,8 +163,8 @@ export default function PreventionWellnessPage() {
                         <div className="text-right flex-shrink-0">
                           <p className="text-xs font-medium text-foreground">{s.frequency}</p>
                           <Badge className={`mt-1 text-[10px] capitalize ${
-                            s.priority === "essential" ? "bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20" :
-                            s.priority === "recommended" ? "bg-michigan-gold/10 text-michigan-gold border-michigan-gold/20" :
+                            s.priority === "essential" ? "bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20" :
+                            s.priority === "recommended" ? "bg-michigan-gold/10 text-michigan-gold-deep border-michigan-gold/20" :
                             "bg-michigan-sky/10 text-michigan-sky border-michigan-sky/20"
                           }`}>{s.priority}</Badge>
                         </div>
@@ -192,7 +192,7 @@ export default function PreventionWellnessPage() {
                   <Card className="hover-lift">
                     <CardContent className="py-4 flex items-start gap-4">
                       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10 flex-shrink-0">
-                        <Syringe className="h-5 w-5 text-michigan-teal" />
+                        <Syringe className="h-5 w-5 text-michigan-teal-deep" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">

@@ -29,7 +29,7 @@ export function formatLoadTime(ms: number): string {
 /** Returns a CSS class for load time color-coding */
 export function loadTimeColor(ms: number | null): string {
   if (ms === null) return "text-muted-foreground";
-  if (ms < 500) return "text-michigan-forest";
+  if (ms < 500) return "text-michigan-forest-deep";
   if (ms <= 1500) return "text-amber-700 dark:text-amber-400";
   return "text-destructive";
 }

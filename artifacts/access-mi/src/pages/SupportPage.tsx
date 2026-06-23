@@ -53,7 +53,7 @@ export default function SupportPage() {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText("https://accessmi.org");
-      toast.success("Link copied to clipboard!", { icon: <CheckCircle2 className="h-4 w-4 text-michigan-forest" /> });
+      toast.success("Link copied to clipboard!", { icon: <CheckCircle2 className="h-4 w-4 text-michigan-forest-deep" /> });
     } catch {
       toast.error("Could not copy link.");
     }

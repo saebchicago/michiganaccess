@@ -30,8 +30,8 @@ const CivicFederalPage = () => {
         <div className="container">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-michigan-forest/10 px-4 py-1.5">
-              <Building2 className="h-4 w-4 text-michigan-forest" />
-              <span className="text-sm font-medium text-michigan-forest">Federal Presence in Michigan</span>
+              <Building2 className="h-4 w-4 text-michigan-forest-deep" />
+              <span className="text-sm font-medium text-michigan-forest-deep">Federal Presence in Michigan</span>
             </div>
             <h1 className="mb-3 text-3xl font-bold text-foreground md:text-4xl">
               The Federal Government in Your County

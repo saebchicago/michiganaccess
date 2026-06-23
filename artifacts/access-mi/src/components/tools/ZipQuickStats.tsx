@@ -29,7 +29,7 @@ export default function ZipQuickStats({ zip }: Props) {
         {data.cityTax !== "0%" && (
           <>
             <span className="h-3 w-px bg-border" />
-            <span className="text-michigan-coral font-medium">City Tax: {data.cityTax}</span>
+            <span className="text-michigan-coral-deep font-medium">City Tax: {data.cityTax}</span>
           </>
         )}
       </div>

@@ -38,7 +38,7 @@ export default function LiveTrialSearch() {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-base">
-          <FlaskConical className="h-5 w-5 text-michigan-teal" />
+          <FlaskConical className="h-5 w-5 text-michigan-teal-deep" />
           Search Live Clinical Trials in Michigan
         </CardTitle>
         <CardDescription>

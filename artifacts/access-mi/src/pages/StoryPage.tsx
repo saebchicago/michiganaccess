@@ -91,7 +91,7 @@ export default function StoryPage() {
           >
             10 million residents. 83 counties.
             <br />
-            <span className="text-michigan-teal">
+            <span className="text-michigan-teal-deep">
               Who falls through the gaps?
             </span>
           </motion.h1>
@@ -231,7 +231,7 @@ export default function StoryPage() {
             {/* Source: SAMHSA/MDHHS 988 Performance */}
             <p className="text-base text-foreground">
               But Michigan answers 988 crisis calls in{" "}
-              <strong className="text-michigan-teal">13 seconds</strong> - best
+              <strong className="text-michigan-teal-deep">13 seconds</strong> - best
               among high-volume states.
             </p>
             <p className="text-xs text-muted-foreground mt-1">

@@ -33,7 +33,7 @@ export default function WatchlistStar({ item, size = "sm" }: Props) {
     >
       <Star
         className={`${size === "sm" ? "h-3.5 w-3.5" : "h-4 w-4"} transition-colors ${
-          starred ? "fill-michigan-gold text-michigan-gold" : "text-muted-foreground"
+          starred ? "fill-michigan-gold text-michigan-gold-deep" : "text-muted-foreground"
         }`}
       />
     </Button>

@@ -150,7 +150,7 @@ export default function CostTransparencyPage() {
       <section className="bg-gradient-to-b from-michigan-gold/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
-            <span className="mb-4 inline-block rounded-full bg-michigan-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-gold">
+            <span className="mb-4 inline-block rounded-full bg-michigan-gold/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-michigan-gold-deep">
               Cost Transparency
             </span>
           </motion.div>
@@ -167,9 +167,9 @@ export default function CostTransparencyPage() {
         {/* Key stats */}
         <div className="grid gap-4 sm:grid-cols-3">
           {[
-            { label: "Avg Potential Savings", value: `$${savingsFromLowest.toLocaleString()}`, desc: "On selected procedure", icon: TrendingDown, color: "text-michigan-forest" },
+            { label: "Avg Potential Savings", value: `$${savingsFromLowest.toLocaleString()}`, desc: "On selected procedure", icon: TrendingDown, color: "text-michigan-forest-deep" },
             { label: "Procedures Compared", value: procedures.length.toString(), desc: "Common procedures", icon: BarChart3, color: "text-primary" },
-            { label: "Rx Savings Available", value: "Up to 85%", desc: "With discount programs", icon: Pill, color: "text-michigan-teal" },
+            { label: "Rx Savings Available", value: "Up to 85%", desc: "With discount programs", icon: Pill, color: "text-michigan-teal-deep" },
           ].map((stat, i) => (
             <motion.div key={stat.label} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i}>
               <Card>
@@ -227,7 +227,7 @@ export default function CostTransparencyPage() {
               <Card className="border-michigan-forest/20">
                 <CardContent className="py-3 text-center">
                   <p className="text-xs text-muted-foreground">Lowest in Michigan</p>
-                  <p className="text-2xl font-bold text-michigan-forest">${(insuranceType === "insured" ? procedure.insuredAvg * 0.6 : procedure.lowCost).toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-michigan-forest-deep">${(insuranceType === "insured" ? procedure.insuredAvg * 0.6 : procedure.lowCost).toLocaleString()}</p>
                 </CardContent>
               </Card>
               <Card>
@@ -239,7 +239,7 @@ export default function CostTransparencyPage() {
               <Card className="border-michigan-coral/20">
                 <CardContent className="py-3 text-center">
                   <p className="text-xs text-muted-foreground">Highest in Michigan</p>
-                  <p className="text-2xl font-bold text-michigan-coral">${(insuranceType === "insured" ? procedure.insuredAvg * 1.8 : procedure.highCost).toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-michigan-coral-deep">${(insuranceType === "insured" ? procedure.insuredAvg * 1.8 : procedure.highCost).toLocaleString()}</p>
                 </CardContent>
               </Card>
               <Card className="border-border/50 bg-muted/30">
@@ -293,7 +293,7 @@ export default function CostTransparencyPage() {
                         <td className="py-2 text-sm font-medium text-foreground">{f.name}</td>
                         <td className="py-2 text-sm text-muted-foreground"><MapPin className="inline h-3 w-3 mr-1" />{f.city}</td>
                         <td className="py-2 text-right text-sm font-semibold">
-                          <span className={i === 0 ? "text-michigan-forest" : "text-foreground"}>
+                          <span className={i === 0 ? "text-michigan-forest-deep" : "text-foreground"}>
                             ${(insuranceType === "insured" ? Math.round(f.cost * 0.25) : f.cost).toLocaleString()}
                           </span>
                         </td>
@@ -312,7 +312,7 @@ export default function CostTransparencyPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Pill className="h-5 w-5 text-michigan-teal" />
+                  <Pill className="h-5 w-5 text-michigan-teal-deep" />
                   Prescription Drug Price Comparison
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">Compare prices across discount programs for common medications</p>
@@ -342,9 +342,9 @@ export default function CostTransparencyPage() {
                           <td className="py-2 text-right text-sm text-muted-foreground line-through">${rx.retailPrice.toFixed(2)}</td>
                           <td className="py-2 text-right text-sm text-foreground">${rx.goodRxPrice.toFixed(2)}</td>
                           <td className="py-2 text-right text-sm text-foreground">${rx.costcoPrice.toFixed(2)}</td>
-                          <td className="py-2 text-right text-sm font-semibold text-michigan-forest">${rx.markCuban.toFixed(2)}</td>
+                          <td className="py-2 text-right text-sm font-semibold text-michigan-forest-deep">${rx.markCuban.toFixed(2)}</td>
                           <td className="py-2 text-right">
-                            <Badge className="bg-michigan-forest/10 text-michigan-forest border-michigan-forest/20 text-[10px]">
+                            <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[10px]">
                               Save {savings}%
                             </Badge>
                           </td>
@@ -369,7 +369,7 @@ export default function CostTransparencyPage() {
                 <Card className="hover-lift">
                   <CardContent className="py-4 flex items-start gap-4">
                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-gold/10 flex-shrink-0">
-                      <tip.icon className="h-5 w-5 text-michigan-gold" />
+                      <tip.icon className="h-5 w-5 text-michigan-gold-deep" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground text-sm">{tip.title}</h3>

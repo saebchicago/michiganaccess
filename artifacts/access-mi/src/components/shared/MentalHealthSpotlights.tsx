@@ -20,7 +20,7 @@ const PROGRAMS: Program[] = [
     description: "Free 24/7 crisis support by phone, text, or chat. Call or text 988 for immediate help.",
     tags: ["crisis", "free", "24/7"],
     url: "https://988lifeline.org",
-    icon: <Phone className="h-5 w-5 text-michigan-coral" />,
+    icon: <Phone className="h-5 w-5 text-michigan-coral-deep" />,
     phone: "988",
   },
   {
@@ -36,7 +36,7 @@ const PROGRAMS: Program[] = [
     description: "Free peer-led support groups, Family-to-Family education, and mental health advocacy statewide.",
     tags: ["support groups", "free", "advocacy"],
     url: "https://namimi.org",
-    icon: <Users className="h-5 w-5 text-michigan-forest" />,
+    icon: <Users className="h-5 w-5 text-michigan-forest-deep" />,
     phone: "517-485-4049",
   },
   {
@@ -44,7 +44,7 @@ const PROGRAMS: Program[] = [
     description: "Outpatient and residential therapy, substance use treatment, and rehabilitation across West Michigan.",
     tags: ["therapy", "substance use", "residential"],
     url: "https://hopenetwork.org/behavioral-health",
-    icon: <Heart className="h-5 w-5 text-michigan-coral" />,
+    icon: <Heart className="h-5 w-5 text-michigan-coral-deep" />,
     phone: "800-695-7273",
   },
   {
@@ -52,14 +52,14 @@ const PROGRAMS: Program[] = [
     description: "Comprehensive psychiatric care including mood disorders, PTSD, and child & adolescent programs.",
     tags: ["specialized", "academic", "telehealth"],
     url: "https://www.uofmhealth.org/conditions-treatments/mental-health",
-    icon: <Brain className="h-5 w-5 text-michigan-teal" />,
+    icon: <Brain className="h-5 w-5 text-michigan-teal-deep" />,
   },
   {
     title: "Mental Health Association in MI",
     description: "Statewide advocacy, crisis hotline referrals, and mental health education to reduce stigma.",
     tags: ["advocacy", "hotline", "education"],
     url: "https://www.mha-mi.com",
-    icon: <MessageCircle className="h-5 w-5 text-michigan-gold" />,
+    icon: <MessageCircle className="h-5 w-5 text-michigan-gold-deep" />,
     phone: "248-647-1711",
   },
   {
@@ -85,7 +85,7 @@ const MentalHealthSpotlights = () => (
   <section className="space-y-4">
     <div className="flex items-center gap-3">
       <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-        <Brain className="h-5 w-5 text-michigan-teal" />
+        <Brain className="h-5 w-5 text-michigan-teal-deep" />
       </div>
       <div>
         <h2 className="text-lg font-bold text-foreground">Mental Health Resources</h2>
@@ -95,13 +95,13 @@ const MentalHealthSpotlights = () => (
 
     {/* Quick crisis strip */}
     <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 flex flex-wrap items-center gap-3 text-sm">
-      <Phone className="h-4 w-4 text-michigan-coral" />
+      <Phone className="h-4 w-4 text-michigan-coral-deep" />
       <span className="font-semibold">In crisis?</span>
-      <a href="tel:988" className="font-bold text-michigan-coral hover:underline">Call/Text 988</a>
+      <a href="tel:988" className="font-bold text-michigan-coral-deep hover:underline">Call/Text 988</a>
       <span className="text-muted-foreground">·</span>
       <span className="text-muted-foreground">Text HOME to 741741</span>
       <span className="text-muted-foreground">·</span>
-      <a href="tel:211" className="font-bold text-michigan-coral hover:underline">2-1-1</a>
+      <a href="tel:211" className="font-bold text-michigan-coral-deep hover:underline">2-1-1</a>
       <span className="text-muted-foreground">(resources)</span>
     </div>
 

@@ -65,7 +65,7 @@ const StatsBar = () => {
               transition={{ delay: i * 0.1, duration: 0.5 }}
               className="flex flex-col items-center text-center gap-1"
             >
-              <stat.icon className="mb-1 h-5 w-5 text-michigan-gold" />
+              <stat.icon className="mb-1 h-5 w-5 text-michigan-gold-deep" />
               <AnimatedStat value={stat.value} suffix={stat.suffix} />
               <span className="text-[11px] font-medium uppercase tracking-widest text-primary-foreground/60">
                 {stat.label}

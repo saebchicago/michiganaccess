@@ -21,8 +21,8 @@ export default function TribalNationsPage() {
         <div className="container max-w-3xl text-center">
           <motion.div initial="hidden" animate="visible">
             <motion.div variants={fadeUp} custom={0} className="mb-4 inline-flex items-center gap-2 rounded-full bg-michigan-forest/10 px-4 py-1.5">
-              <Shield className="h-4 w-4 text-michigan-forest" />
-              <span className="text-sm font-medium text-michigan-forest">Michigan Tribal Nations</span>
+              <Shield className="h-4 w-4 text-michigan-forest-deep" />
+              <span className="text-sm font-medium text-michigan-forest-deep">Michigan Tribal Nations</span>
             </motion.div>
             <motion.h1 variants={fadeUp} custom={1} className="mb-4 text-3xl font-bold text-foreground md:text-4xl">12 Sovereign Nations</motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-base text-muted-foreground">

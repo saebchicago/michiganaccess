@@ -29,7 +29,7 @@ const severityConfig = {
   warning: {
     icon: AlertTriangle,
     bg: "bg-michigan-gold/10 border-michigan-gold/30",
-    text: "text-michigan-gold",
+    text: "text-michigan-gold-deep",
     badge: "bg-michigan-gold text-white",
   },
   info: {

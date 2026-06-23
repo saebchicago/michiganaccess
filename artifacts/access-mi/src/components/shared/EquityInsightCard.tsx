@@ -20,22 +20,22 @@ const colorMap = {
   teal: {
     bg: "bg-michigan-teal/5",
     border: "border-michigan-teal/30",
-    icon: "text-michigan-teal",
-    stat: "text-michigan-teal",
+    icon: "text-michigan-teal-deep",
+    stat: "text-michigan-teal-deep",
     accent: "bg-michigan-teal/10",
   },
   gold: {
     bg: "bg-michigan-gold/5",
     border: "border-michigan-gold/30",
-    icon: "text-michigan-gold",
-    stat: "text-michigan-gold",
+    icon: "text-michigan-gold-deep",
+    stat: "text-michigan-gold-deep",
     accent: "bg-michigan-gold/10",
   },
   coral: {
     bg: "bg-michigan-coral/5",
     border: "border-michigan-coral/30",
-    icon: "text-michigan-coral",
-    stat: "text-michigan-coral",
+    icon: "text-michigan-coral-deep",
+    stat: "text-michigan-coral-deep",
     accent: "bg-michigan-coral/10",
   },
   sky: {
@@ -48,8 +48,8 @@ const colorMap = {
   forest: {
     bg: "bg-michigan-forest/5",
     border: "border-michigan-forest/30",
-    icon: "text-michigan-forest",
-    stat: "text-michigan-forest",
+    icon: "text-michigan-forest-deep",
+    stat: "text-michigan-forest-deep",
     accent: "bg-michigan-forest/10",
   },
 };

@@ -75,7 +75,7 @@ function TaxSparkline({ rate, stateAvg }: { rate: number; stateAvg: number }) {
     <div className="space-y-1">
       <div className="flex items-center justify-between text-[10px]">
         <span className="text-muted-foreground">Property Tax (mills)</span>
-        <span className={`font-semibold ${isBetter ? "text-michigan-forest" : "text-michigan-coral"}`}>
+        <span className={`font-semibold ${isBetter ? "text-michigan-forest-deep" : "text-michigan-coral-deep"}`}>
           {rate.toFixed(1)}
         </span>
       </div>
@@ -107,7 +107,7 @@ function ResponseSparkline({ avg, stateAvg }: { avg: number; stateAvg: number })
     <div className="space-y-1">
       <div className="flex items-center justify-between text-[10px]">
         <span className="text-muted-foreground">Safety Response (min)</span>
-        <span className={`font-semibold ${isBetter ? "text-michigan-forest" : "text-michigan-coral"}`}>
+        <span className={`font-semibold ${isBetter ? "text-michigan-forest-deep" : "text-michigan-coral-deep"}`}>
           {avg.toFixed(1)}
         </span>
       </div>
@@ -225,7 +225,7 @@ function MunicipalityCard({ municipality, index }: { municipality: Municipality;
           {municipality.meeting_schedule && (
             <div className="space-y-1.5">
               <p className="text-[10px] font-medium text-foreground flex items-center gap-1">
-                <Calendar className="h-3 w-3 text-michigan-teal" />
+                <Calendar className="h-3 w-3 text-michigan-teal-deep" />
                 Public Meetings
               </p>
               <p className="text-[10px] text-muted-foreground">{municipality.meeting_schedule}</p>

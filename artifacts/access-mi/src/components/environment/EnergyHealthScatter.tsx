@@ -62,7 +62,7 @@ export default function EnergyHealthScatter() {
       className="space-y-6"
     >
       <div className="flex items-start gap-3">
-        <AlertTriangle className="h-6 w-6 shrink-0 text-michigan-coral mt-0.5" />
+        <AlertTriangle className="h-6 w-6 shrink-0 text-michigan-coral-deep mt-0.5" />
         <div>
           <h2 className="text-xl font-bold text-foreground">When Energy Bills Become a Health Crisis</h2>
           <p className="text-sm text-muted-foreground mt-1">
@@ -75,7 +75,7 @@ export default function EnergyHealthScatter() {
       <Card>
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
-            <Zap className="h-4 w-4 text-michigan-gold" />
+            <Zap className="h-4 w-4 text-michigan-gold-deep" />
             Energy Burden vs. Diabetes Prevalence by County
           </CardTitle>
           <CardDescription>

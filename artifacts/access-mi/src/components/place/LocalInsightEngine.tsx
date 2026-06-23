@@ -144,7 +144,7 @@ export default function LocalInsightEngine({ place }: { place: Place }) {
       {place.isFallback && (
         <div className="rounded-lg border border-michigan-gold/20 bg-michigan-gold/5 px-4 py-3">
           <p className="text-xs text-muted-foreground flex items-start gap-1.5">
-            <Info className="h-3.5 w-3.5 mt-0.5 shrink-0 text-michigan-gold" />
+            <Info className="h-3.5 w-3.5 mt-0.5 shrink-0 text-michigan-gold-deep" />
             <span>
               <strong>Data grain:</strong> {place.geoGrainLabel}.
               {place.fallbackLabel && <> Showing <strong>{place.fallbackLabel}</strong>.</>}
