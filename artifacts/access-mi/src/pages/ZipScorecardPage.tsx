@@ -1044,31 +1044,21 @@ export default function ZipScorecardPage() {
         {/* ── Signals from the Ground ── */}
         {(() => {
           const eviction = getEvictionData(primary.county ?? "");
-          const depScore = getFederalDependencyScore(primary.county ?? "");
           const signals = [
             {
               label: "Eviction Filing Rate",
-              value: eviction ? `${eviction.eviction_filing_rate}%` : "-",
+              value: eviction
+                ? `${eviction.eviction_filing_rate}%`
+                : "Data unavailable",
               context: eviction
                 ? `${eviction.evictions.toLocaleString()} filings/yr`
-                : "Data unavailable",
+                : null,
               source: "Eviction Lab, Princeton 2023",
               severity:
                 eviction && eviction.eviction_filing_rate > 8
                   ? ("high" as const)
                   : ("moderate" as const),
               icon: "\u{1F3E0}",
-            },
-            {
-              label: "Federal Dependency",
-              value: depScore ? `${depScore}%` : "-",
-              context: "Of county public revenue from federal sources",
-              source: "USASpending.gov FY2024 - Illustrative composite",
-              severity:
-                (depScore ?? 0) > 40
-                  ? ("high" as const)
-                  : ("moderate" as const),
-              icon: "\u{1F4B5}",
             },
             {
               label: "211 Calls/1k Residents",
@@ -1080,8 +1070,7 @@ export default function ZipScorecardPage() {
             },
           ];
 
-          const hasData = eviction || depScore;
-          if (!hasData) return null;
+          if (!eviction) return null;
 
           return (
             <Card className="border-primary/10 bg-gradient-to-r from-primary/[0.03] to-transparent">
@@ -1115,81 +1104,6 @@ export default function ZipScorecardPage() {
                       </p>
                     </div>
                   ))}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })()}
-
-        {/* ── Civic Power Snapshot ── */}
-        {(() => {
-          const regionData = MICHIGAN_RACE_DATA.find((r) =>
-            r.counties.includes(primary.county ?? ""),
-          );
-          const healthBoardCount = MICHIGAN_BOARDS.filter(
-            (b) => b.category === "health",
-          ).length;
-          if (!primary.county) return null;
-          return (
-            <Card className="border-primary/10 bg-gradient-to-r from-primary/[0.02] to-transparent">
-              <CardContent className="py-4">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Civic Power Snapshot
-                  </p>
-                  <Link
-                    to="/civic-power"
-                    className="text-[10px] text-primary hover:underline"
-                  >
-                    Full Civic Power Map →
-                  </Link>
-                </div>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  <div>
-                    <p
-                      className={`text-xl font-bold tabular-nums ${regionData ? "text-red-600" : "text-foreground"}`}
-                    >
-                      {regionData
-                        ? `${regionData.uncontestedPct.toFixed(1)}%`
-                        : "79.7%"}
-                    </p>
-                    <p className="text-[10px] font-medium text-foreground">
-                      Races Uncontested
-                    </p>
-                    <p className="text-[9px] text-muted-foreground">
-                      {regionData?.region ?? "Michigan"} · Ballotpedia 2024
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-foreground tabular-nums">
-                      {healthBoardCount}
-                    </p>
-                    <p className="text-[10px] font-medium text-foreground">
-                      Health Board Types
-                    </p>
-                    <p className="text-[9px] text-muted-foreground">
-                      You can apply for in {primary.county}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-foreground tabular-nums">
-                      ~$75
-                    </p>
-                    <p className="text-[10px] font-medium text-foreground">
-                      Per Diem (CMH Boards)
-                    </p>
-                    <p className="text-[9px] text-muted-foreground">
-                      Mandated by Michigan statute
-                    </p>
-                  </div>
-                  <div className="flex items-center">
-                    <Link
-                      to="/civic-power/boards"
-                      className="w-full rounded-lg bg-primary text-primary-foreground text-[10px] font-semibold px-3 py-2 text-center hover:bg-primary/90 transition-colors"
-                    >
-                      Find Board Seats →
-                    </Link>
-                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -1280,63 +1194,6 @@ export default function ZipScorecardPage() {
                       className="w-full rounded-lg bg-michigan-teal text-white text-[10px] font-semibold px-3 py-2 text-center hover:bg-michigan-teal/90 transition-colors"
                     >
                       Check Water Safety →
-                    </Link>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })()}
-
-        {/* ── Transparency Snapshot ── */}
-        {(() => {
-          const federalData = MICHIGAN_FEDERAL_SPENDING.find(
-            (r) => r.county === (primary.county ?? ""),
-          );
-          if (!federalData) return null;
-          return (
-            <Card className="border-amber-200/20 dark:border-amber-900/20 bg-amber-50/30 dark:bg-amber-950/10">
-              <CardContent className="py-4">
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Transparency Snapshot
-                  </p>
-                  <Link
-                    to="/transparency"
-                    className="text-[10px] text-primary hover:underline"
-                  >
-                    Full Transparency Dashboard →
-                  </Link>
-                </div>
-                <div className="grid grid-cols-3 gap-3">
-                  <div>
-                    <p className="text-xl font-bold text-amber-600 tabular-nums">
-                      ${federalData.total_awards_millions.toLocaleString()}M
-                    </p>
-                    <p className="text-[10px] font-medium text-foreground">
-                      Federal Contracts
-                    </p>
-                    <p className="text-[9px] text-muted-foreground">
-                      {federalData.county} County FY2024
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-xl font-bold text-foreground tabular-nums">
-                      148
-                    </p>
-                    <p className="text-[10px] font-medium text-foreground">
-                      State Legislators
-                    </p>
-                    <p className="text-[9px] text-muted-foreground">
-                      Michigan Legislature
-                    </p>
-                  </div>
-                  <div className="flex items-center">
-                    <Link
-                      to="/transparency/contractors"
-                      className="w-full rounded-lg bg-amber-800 text-white text-[11px] font-semibold px-3 py-2 text-center hover:bg-amber-700 transition-colors"
-                    >
-                      See Contractors →
                     </Link>
                   </div>
                 </div>
@@ -1446,7 +1303,6 @@ export default function ZipScorecardPage() {
                     label="Median Household Income"
                     value={primary.quickStats.medianIncome}
                     format="$"
-                    benchmark={`MI avg: $63,202`}
                     source="Census ACS 2022"
                   />
                   <EconCard
@@ -1471,7 +1327,6 @@ export default function ZipScorecardPage() {
                   <EconCard
                     label="Graduation Rate"
                     value={`${primary.quickStats.gradRate}%`}
-                    benchmark="MI avg: ~82%"
                     source="MI School Data"
                   />
                 </>
@@ -1531,55 +1386,6 @@ export default function ZipScorecardPage() {
                   />
                 </>
               )}
-              {/* Federal Funding Context */}
-              {(() => {
-                const federalData = MICHIGAN_FEDERAL_SPENDING.find(
-                  (r) => r.county === primary.county,
-                );
-                const dependencyScore = primary.county
-                  ? getFederalDependencyScore(primary.county)
-                  : null;
-                if (!federalData) return null;
-                return (
-                  <Card className="sm:col-span-2 lg:col-span-3">
-                    <CardContent className="py-4">
-                      <h3 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
-                        <Landmark className="h-4 w-4 text-primary" /> Federal
-                        Funding Context
-                      </h3>
-                      <p className="text-xs text-muted-foreground mb-3">
-                        Source: USASpending.gov FY2024
-                      </p>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        <div>
-                          <p className="text-2xl font-bold text-foreground tabular-nums">
-                            $
-                            {federalData.total_awards_millions.toLocaleString()}
-                            M
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            Total federal awards to {federalData.county} County
-                            (FY2024)
-                          </p>
-                        </div>
-                        {dependencyScore != null && (
-                          <div>
-                            <p className="text-2xl font-bold text-foreground tabular-nums">
-                              {dependencyScore}%
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              Federal dependency score
-                              <span className="text-muted-foreground/60 ml-1">
-                                (Illustrative composite)
-                              </span>
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })()}
               {!primary.quickStats &&
                 !primary.irsData &&
                 !primary.fmrData &&
@@ -1642,8 +1448,8 @@ export default function ZipScorecardPage() {
                     <Card className="sm:col-span-2 lg:col-span-3">
                       <CardContent className="py-4">
                         <h3 className="text-sm font-bold text-foreground mb-2 flex items-center gap-2">
-                          <Leaf className="h-4 w-4 text-michigan-forest-deep" /> EPA
-                          EJSCREEN Environmental Justice
+                          <Leaf className="h-4 w-4 text-michigan-forest-deep" />{" "}
+                          EPA EJSCREEN Environmental Justice
                         </h3>
                         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                           <div className="flex justify-between py-1.5 border-b border-border/40">
@@ -1956,7 +1762,6 @@ export default function ZipScorecardPage() {
                     <EconCard
                       label="Broadband (25/3 Mbps)"
                       value={`${bb.pct_25_3_covered}%`}
-                      benchmark="MI avg: ~94%"
                       source="FCC Broadband Map 2024"
                     />
                     <EconCard

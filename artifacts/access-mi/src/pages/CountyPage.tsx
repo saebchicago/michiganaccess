@@ -31,7 +31,12 @@ import {
   getCountyLinks,
   countyToSlug,
 } from "@/utils/countyUtils";
-import { getCountyProfile } from "@/data/michigan-county-profiles";
+import {
+  getCountyProfile,
+  COUNTY_UNINSURED_SOURCE,
+  COUNTY_PCP_SOURCE,
+  COUNTY_FOOD_INSECURITY_SOURCE,
+} from "@/data/michigan-county-profiles";
 import { getRegionForCounty } from "@/data/michigan-regions";
 import { useCounty, type MichiganCounty } from "@/contexts/CountyContext";
 import { useFacilities } from "@/hooks/useFacilities";
@@ -421,6 +426,15 @@ export default function CountyPage() {
               const isBetterUS =
                 usVal !== undefined ? numericVal < usVal : undefined;
 
+              const sourceLabel =
+                h.label === "Uninsured rate"
+                  ? COUNTY_UNINSURED_SOURCE
+                  : h.label === "Primary care ratio"
+                    ? COUNTY_PCP_SOURCE
+                    : h.label === "Food insecurity"
+                      ? COUNTY_FOOD_INSECURITY_SOURCE
+                      : null;
+
               const actionLink =
                 h.label === "Uninsured rate"
                   ? { href: "/financial-help", text: "Find coverage options →" }
@@ -454,9 +468,15 @@ export default function CountyPage() {
                       <p className="text-xs text-muted-foreground">{h.label}</p>
                       <TrendIcon trend={h.trend} />
                     </div>
-                    <p className="text-xl font-bold text-foreground">
-                      {h.value}
-                    </p>
+                    {hasNumericVal ? (
+                      <p className="text-xl font-bold text-foreground">
+                        {h.value}
+                      </p>
+                    ) : (
+                      <p className="text-sm italic text-muted-foreground">
+                        Data unavailable
+                      </p>
+                    )}
                     {bench && hasNumericVal && (
                       <div className="space-y-1">
                         <div className="flex items-center gap-1.5 flex-wrap">
@@ -514,6 +534,11 @@ export default function CountyPage() {
                         {h.trend === "down"
                           ? "📉 Improving over prior year"
                           : "📈 Increased from prior year"}
+                      </p>
+                    )}
+                    {sourceLabel && (
+                      <p className="text-[10px] text-muted-foreground/70 pt-1">
+                        Source: {sourceLabel}
                       </p>
                     )}
                     <Link
