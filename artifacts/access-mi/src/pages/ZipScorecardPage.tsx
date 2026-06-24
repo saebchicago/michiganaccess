@@ -1060,14 +1060,6 @@ export default function ZipScorecardPage() {
                   : ("moderate" as const),
               icon: "\u{1F3E0}",
             },
-            {
-              label: "211 Calls/1k Residents",
-              value: "7.5",
-              context: "Michigan average - county data pending",
-              source: "Michigan 211 Annual Report 2024",
-              severity: "moderate" as const,
-              icon: "\u{1F4DE}",
-            },
           ];
 
           if (!eviction) return null;
@@ -1078,7 +1070,7 @@ export default function ZipScorecardPage() {
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-3">
                   Signals from the Ground
                 </p>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {signals.map((sig) => (
                     <div key={sig.label} className="space-y-1">
                       <div className="flex items-center gap-1.5">

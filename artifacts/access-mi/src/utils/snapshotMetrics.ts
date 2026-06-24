@@ -13,6 +13,14 @@ function parseRatio(val: string): number {
   return parseInt(val.split(":")[0].replace(/[^0-9]/g, ""), 10) || 0;
 }
 
+// True when the source string carries a real numeric reading. A literal
+// "-" or any other non-numeric placeholder collapses to NaN here, which
+// lets the snapshot tile show "Data unavailable" instead of a false
+// percentile derived from parseRate / parseRatio's 0 fallback.
+function isNumericValue(val: string): boolean {
+  return Number.isFinite(parseFloat(val.replace(/[^0-9.]/g, "")));
+}
+
 /** Percentile: lower uninsured = better, so invert. For ratio, lower = better */
 function uninsuredPercentile(rate: number): number {
   // MI range roughly 3.9–11.2%. Map to 0–100 where lower = higher percentile
@@ -136,30 +144,36 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
 
   const hh = p.healthHighlights;
   if (hh[0]) {
-    const rate = parseRate(hh[0].value);
+    const numeric = isNumericValue(hh[0].value);
     metrics.push({
       id: "uninsured",
       label: "Uninsured Rate",
-      value: hh[0].value,
-      percentile: uninsuredPercentile(rate),
+      value: numeric ? hh[0].value : "Data unavailable",
+      percentile: numeric
+        ? uninsuredPercentile(parseRate(hh[0].value))
+        : undefined,
     });
   }
   if (hh[1]) {
-    const ratio = parseRatio(hh[1].value);
+    const numeric = isNumericValue(hh[1].value);
     metrics.push({
       id: "pc-ratio",
       label: "Primary Care Ratio",
-      value: hh[1].value,
-      percentile: ratioPercentile(ratio),
+      value: numeric ? hh[1].value : "Data unavailable",
+      percentile: numeric
+        ? ratioPercentile(parseRatio(hh[1].value))
+        : undefined,
     });
   }
   if (hh[2]) {
-    const food = parseRate(hh[2].value);
+    const numeric = isNumericValue(hh[2].value);
     metrics.push({
       id: "food-insecurity",
       label: "Food Insecurity",
-      value: hh[2].value,
-      percentile: uninsuredPercentile(food),
+      value: numeric ? hh[2].value : "Data unavailable",
+      percentile: numeric
+        ? uninsuredPercentile(parseRate(hh[2].value))
+        : undefined,
     });
   }
   metrics.push({
