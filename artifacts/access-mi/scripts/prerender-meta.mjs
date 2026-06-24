@@ -148,8 +148,10 @@ function rewriteHead(html, meta) {
     );
   }
 
-  // Canonical
-  const canonical = `${SITE_URL}${meta.path === "/" ? "" : meta.path}`;
+  // Canonical. Home route keeps an explicit trailing slash so og:url and
+  // the canonical link match the form indexers and link unfurlers expect
+  // for the site root.
+  const canonical = `${SITE_URL}${meta.path === "/" ? "/" : meta.path}`;
   if (/<link\s+rel=["']canonical["'][^>]*>/i.test(out)) {
     out = out.replace(
       /<link\s+rel=["']canonical["'][^>]*>/i,

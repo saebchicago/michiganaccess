@@ -40,9 +40,9 @@ export interface RouteMeta {
 export const ROUTE_META: RouteMeta[] = [
   {
     path: "/",
-    title: "Access Michigan: Health, Housing & Energy Assistance",
+    title: "Access Michigan: civic intelligence, county by county.",
     description:
-      "Michigan health, housing, energy, and benefits data for all 83 counties. Verified from 41 federal and public sources.",
+      "Independent civic data for all 83 Michigan counties. Every figure is traced to a primary federal source and labeled verified, modeled, or projected.",
     h1: "Michigan's public data, organized for action",
     summary: "ZIP-level health, economic, and housing data across 83 counties.",
   },
