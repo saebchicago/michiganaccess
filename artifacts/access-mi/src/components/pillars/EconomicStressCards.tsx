@@ -21,7 +21,9 @@ interface EconomicStressCardsProps {
   countyName: string;
 }
 
-export default function EconomicStressCards({ countyName }: EconomicStressCardsProps) {
+export default function EconomicStressCards({
+  countyName,
+}: EconomicStressCardsProps) {
   const geo = resolveGeoDimension({ countyName });
   const profile = COUNTY_PROFILES[countyName];
 
@@ -30,17 +32,23 @@ export default function EconomicStressCards({ countyName }: EconomicStressCardsP
   const { data: blightData, status: blightStatus } = usePillarData(
     "econ-det-blight",
     undefined,
-    isWayne
+    isWayne,
   );
 
   // Financial programs
-  const { data: programsData, status: programsStatus } = usePillarData("econ-financial-programs");
+  const { data: programsData, status: programsStatus } = usePillarData(
+    "econ-financial-programs",
+  );
 
   const programCount = programsData?.length ?? 0;
 
   // Extract uninsured as economic stress proxy
-  const uninsured = profile?.healthHighlights.find((h) => h.label === "Uninsured rate")?.value ?? null;
-  const foodInsecurity = profile?.healthHighlights.find((h) => h.label === "Food insecurity")?.value ?? null;
+  const uninsured =
+    profile?.healthHighlights.find((h) => h.label === "Uninsured rate")
+      ?.value ?? null;
+  const foodInsecurity =
+    profile?.healthHighlights.find((h) => h.label === "Food insecurity")
+      ?.value ?? null;
 
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -52,7 +60,7 @@ export default function EconomicStressCards({ countyName }: EconomicStressCardsP
         value={profile?.population ?? null}
         unit="residents"
         icon={Briefcase}
-        source="U.S. Census 2023 Estimates"
+        source="U.S. Census Bureau Population Estimates Program, Vintage 2024"
         status={profile ? "live" : "empty"}
         description={
           profile

@@ -1,15 +1,9 @@
 import type { SnapshotMetric } from "@/components/shared/SnapshotCard";
-import { getCountyProfile, COUNTY_PROFILES } from "@/data/michigan-county-profiles";
+import {
+  getCountyProfile,
+  COUNTY_PROFILES,
+} from "@/data/michigan-county-profiles";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
-
-/** Generate synthetic 5-year trend from a current rate value */
-function syntheticTrend(current: number): { trend: number[]; years: number[] } {
-  const offsets = [2.1, 1.6, 0.9, 0.4, 0];
-  return {
-    trend: offsets.map((o) => +(current + o).toFixed(1)),
-    years: [2019, 2020, 2021, 2022, 2023],
-  };
-}
 
 function parseRate(val: string): number {
   return parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
@@ -22,28 +16,37 @@ function parseRatio(val: string): number {
 /** Percentile: lower uninsured = better, so invert. For ratio, lower = better */
 function uninsuredPercentile(rate: number): number {
   // MI range roughly 3.9–11.2%. Map to 0–100 where lower = higher percentile
-  const min = 3.5, max = 11.5;
-  return Math.round(Math.max(0, Math.min(100, ((max - rate) / (max - min)) * 100)));
+  const min = 3.5,
+    max = 11.5;
+  return Math.round(
+    Math.max(0, Math.min(100, ((max - rate) / (max - min)) * 100)),
+  );
 }
 
 function ratioPercentile(ratio: number): number {
   // MI range roughly 620–9330. Lower = better
-  const min = 600, max = 5000;
-  return Math.round(Math.max(0, Math.min(100, ((max - ratio) / (max - min)) * 100)));
+  const min = 600,
+    max = 5000;
+  return Math.round(
+    Math.max(0, Math.min(100, ((max - ratio) / (max - min)) * 100)),
+  );
 }
 
 export function buildStateSnapshotMetrics(): SnapshotMetric[] {
   // Aggregate all county profiles
   const counties = Object.values(COUNTY_PROFILES);
-  const uninsuredRates = counties.map((c) => parseRate(c.healthHighlights[0]?.value || "0"));
-  const avgUninsured = +(uninsuredRates.reduce((a, b) => a + b, 0) / uninsuredRates.length).toFixed(1);
+  const uninsuredRates = counties.map((c) =>
+    parseRate(c.healthHighlights[0]?.value || "0"),
+  );
+  const avgUninsured = +(
+    uninsuredRates.reduce((a, b) => a + b, 0) / uninsuredRates.length
+  ).toFixed(1);
 
   return [
     {
       id: "uninsured",
       label: "Uninsured Rate",
       value: `${avgUninsured}%`,
-      ...syntheticTrend(avgUninsured),
       percentile: 50,
     },
     {
@@ -76,7 +79,10 @@ export function buildRegionSnapshotMetrics(regionId: string): SnapshotMetric[] {
   if (!region) return [];
 
   let totalPop = 0;
-  let sumUninsured = 0, sumRatio = 0, sumFood = 0, count = 0;
+  let sumUninsured = 0,
+    sumRatio = 0,
+    sumFood = 0,
+    count = 0;
 
   region.counties.forEach((c) => {
     const p = getCountyProfile(c);
@@ -84,7 +90,12 @@ export function buildRegionSnapshotMetrics(regionId: string): SnapshotMetric[] {
     const unins = parseRate(p.healthHighlights[0]?.value || "0");
     const ratio = parseRatio(p.healthHighlights[1]?.value || "0");
     const food = parseRate(p.healthHighlights[2]?.value || "0");
-    if (unins > 0) { sumUninsured += unins; sumRatio += ratio; sumFood += food; count++; }
+    if (unins > 0) {
+      sumUninsured += unins;
+      sumRatio += ratio;
+      sumFood += food;
+      count++;
+    }
   });
 
   if (count === 0) return [];
@@ -97,7 +108,6 @@ export function buildRegionSnapshotMetrics(regionId: string): SnapshotMetric[] {
       id: "uninsured",
       label: "Avg Uninsured Rate",
       value: `${avgU}%`,
-      ...syntheticTrend(avgU),
       percentile: uninsuredPercentile(avgU),
     },
     {
@@ -131,7 +141,6 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
       id: "uninsured",
       label: "Uninsured Rate",
       value: hh[0].value,
-      ...syntheticTrend(rate),
       percentile: uninsuredPercentile(rate),
     });
   }
