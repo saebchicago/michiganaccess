@@ -17,6 +17,7 @@ import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import { OfficialChannelNotice } from "@/components/shared/OfficialChannelNotice";
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import AudienceSelector from "@/components/home/AudienceSelector";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
@@ -421,6 +422,7 @@ const Index = () => {
 
       <div className="dark bg-background text-foreground">
         <Layer1Hero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
+        <AudienceSelector />
         <ProvenanceLegend />
         <CountySelector />
         <Layer2ClusterGrid />
