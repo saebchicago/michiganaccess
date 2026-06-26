@@ -41,13 +41,22 @@ const fadeUp = {
   }),
 };
 
-// Verified data anchors - NEVER estimated
+// Verified data anchors. Each value is paired with a primary-source label
+// and vintage rendered on the tile. Updated to the most recent MDHHS Vital
+// Statistics release (Summary of 2024 Infant Death Statistics, Nov 2025).
 const STATE_METRICS = {
   maternalMortality: 19.1, // per 100K, NCHS 2018-2023
-  infantMortality: 6.1, // per 1K, 2023
+  infantMortality: 6.3, // per 1K, MDHHS 2024 (Vital Records, Nov 2025 release)
   pretermBirth: 10.7, // %, 2024 March of Dimes
   severeMorbidity: 88.9, // per 10K delivery hospitalizations
 };
+
+// MDHHS 2024 Black:White infant mortality ratio. The source page is the
+// Summary of 2024 Infant Death Statistics (https://www.mdch.state.mi.us/osr/InDxMain/Infsum05.asp):
+// Black IMR 14.0/1K, White IMR 4.3/1K, ratio approximately 3.3:1.
+// Used in the cross-page disparity copy so the same number appears
+// everywhere on the platform.
+const STATE_DISPARITY_RATIO = 3.3;
 
 // County-level IMR from MDHHS (where published, NULL where suppressed)
 const COUNTY_IMR = [
@@ -78,7 +87,7 @@ export default function MaternalHealthPage() {
   usePageMeta({
     title: "Maternal & Infant Health - Access Michigan",
     description:
-      "Michigan maternal mortality: 19.1/100K. Infant mortality: 6.1/1K. County-level data with racial disparity breakdowns from MDHHS and March of Dimes.",
+      "Michigan maternal mortality: 19.1/100K. Infant mortality: 6.3/1K (MDHHS 2024). County-level data with racial disparity breakdowns from MDHHS and March of Dimes.",
     path: "/maternal-health",
   });
 
@@ -113,9 +122,10 @@ export default function MaternalHealthPage() {
               className="text-muted-foreground max-w-2xl mx-auto"
             >
               Maternal mortality: <strong>19.1</strong> per 100K live births.
-              Infant mortality: <strong>6.1</strong> per 1,000. Racial
-              disparities persist - Black infant mortality is 2-3× the white
-              rate in most counties where data is available.
+              Infant mortality: <strong>{STATE_METRICS.infantMortality}</strong>{" "}
+              per 1,000 (MDHHS 2024). Statewide, Black infants die at{" "}
+              <strong>{STATE_DISPARITY_RATIO}×</strong> the rate of white
+              infants (MDHHS 2024).
             </motion.p>
           </motion.div>
         </div>
@@ -134,7 +144,7 @@ export default function MaternalHealthPage() {
             {
               label: "Infant Mortality",
               value: `${STATE_METRICS.infantMortality}/1K`,
-              source: "MDHHS 2023",
+              source: "MDHHS 2024",
               warn: true,
             },
             {
@@ -212,10 +222,10 @@ export default function MaternalHealthPage() {
             </ResponsiveContainer>
             <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 mt-3">
               <p className="text-xs text-foreground">
-                <strong>Wayne County:</strong> Black infant mortality (14.1/1K)
-                is <strong>2.9×</strong> the white rate (4.8/1K). This disparity
-                is consistent across all Michigan urban counties where racial
-                data is available.
+                <strong>Statewide:</strong> Black infant mortality (14.0/1K) is{" "}
+                <strong>{STATE_DISPARITY_RATIO}×</strong> the white rate
+                (4.3/1K) in MDHHS 2024 data. The disparity is consistent across
+                urban counties where racial breakdowns are published.
               </p>
             </div>
             <p className="text-[10px] text-muted-foreground mt-2">

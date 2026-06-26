@@ -185,30 +185,37 @@ export default function CountyPage() {
   const safeE = events ?? [];
   const isStatsLoading = loadingFacilities || loadingResources || loadingEvents;
 
-  const MAJOR_SYSTEMS = [
-    "Corewell Health",
-    "Beaumont",
-    "Henry Ford",
-    "Ascension",
-    "Trinity Health",
-    "Spectrum Health",
-    "Michigan Medicine",
-    "University of Michigan",
-    "McLaren",
-    "Munson",
-  ];
+  // Neutral sort: by geographic proximity to the county centroid, where the
+  // centroid is the mean of the facilities' own lat/lon. Replaces a prior
+  // hand-curated "major systems first" allowlist that lifted certain large
+  // health systems (including the maintainer's employer) above smaller
+  // independent clinics, FQHCs, and rural hospitals regardless of objective
+  // quality - a credibility risk on a neutrality-claiming civic platform.
+  const facilityCentroid = (() => {
+    if (safeF.length === 0) return null;
+    let sumLat = 0;
+    let sumLon = 0;
+    for (const f of safeF) {
+      sumLat += f.latitude;
+      sumLon += f.longitude;
+    }
+    return { lat: sumLat / safeF.length, lon: sumLon / safeF.length };
+  })();
 
-  const sortedFacilities = [...safeF].sort((a, b) => {
-    const aIsMajor = MAJOR_SYSTEMS.some(
-      (s) => a.system_affiliation?.includes(s) || a.name.includes(s),
-    );
-    const bIsMajor = MAJOR_SYSTEMS.some(
-      (s) => b.system_affiliation?.includes(s) || b.name.includes(s),
-    );
-    if (aIsMajor && !bIsMajor) return -1;
-    if (!aIsMajor && bIsMajor) return 1;
-    return (b.quality_score ?? 0) - (a.quality_score ?? 0);
-  });
+  // Squared great-circle proxy (Haversine without the sqrt or trig calls -
+  // sufficient for ordering, since the ordering is preserved under monotone
+  // transforms of distance). Latitude and longitude treated as a flat 2D
+  // grid is fine inside a single state's bounding box.
+  const distSq = (lat: number, lon: number) => {
+    if (!facilityCentroid) return 0;
+    const dLat = lat - facilityCentroid.lat;
+    const dLon = lon - facilityCentroid.lon;
+    return dLat * dLat + dLon * dLon;
+  };
+
+  const sortedFacilities = [...safeF].sort(
+    (a, b) => distSq(a.latitude, a.longitude) - distSq(b.latitude, b.longitude),
+  );
 
   const facilityCounts = safeF.reduce(
     (acc, f) => {
@@ -225,11 +232,11 @@ export default function CountyPage() {
     resourceCount: safeR.length,
     highlightCount: profile.healthHighlights.length,
     eventCount: safeE.length,
-    hasMajorSystem: sortedFacilities.some((f) =>
-      MAJOR_SYSTEMS.some(
-        (s) => f.system_affiliation?.includes(s) || f.name.includes(s),
-      ),
-    ),
+    // Data confidence intentionally no longer rewards counties for hosting a
+    // pre-named "major" health system. That signal was hand-curated and lifted
+    // the maintainer's employer; on a neutrality-claiming platform it does
+    // not earn a confidence credit.
+    hasMajorSystem: false,
     hasPopulation: profile.population > 0,
   });
 
@@ -608,12 +615,12 @@ export default function CountyPage() {
           </section>
         )}
 
-        {/* Top Facilities */}
+        {/* Facilities (sorted by proximity to county center) */}
         {sortedFacilities.length > 0 && (
           <section>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-2">
               <ResultHeader
-                label={`Top Facilities in ${county} County`}
+                label={`Facilities in ${county} County`}
                 count={safeF.length}
               />
               <Link
@@ -624,12 +631,12 @@ export default function CountyPage() {
                 </Button>
               </Link>
             </div>
+            <p className="text-[11px] text-muted-foreground mb-4">
+              Sorted by distance from the average facility location in {county}{" "}
+              County. No quality or system ranking is applied.
+            </p>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {sortedFacilities.slice(0, 6).map((f, i) => {
-                const isMajorSystem = MAJOR_SYSTEMS.some(
-                  (s) =>
-                    f.system_affiliation?.includes(s) || f.name.includes(s),
-                );
                 return (
                   <motion.div
                     key={f.id}
@@ -639,20 +646,13 @@ export default function CountyPage() {
                     variants={fadeUp}
                     custom={i}
                   >
-                    <Card
-                      className={`h-full hover-lift ${isMajorSystem ? "border-primary/20 bg-primary/[0.02]" : ""}`}
-                    >
+                    <Card className="h-full hover-lift">
                       <CardContent className="py-4 space-y-2">
                         <div className="flex items-start justify-between">
                           <h3 className="font-semibold text-sm text-foreground">
                             {f.name}
                           </h3>
                           <div className="flex items-center gap-1 flex-shrink-0">
-                            {isMajorSystem && (
-                              <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] px-1 py-0">
-                                ★ Major System
-                              </Badge>
-                            )}
                             {f.joint_commission && (
                               <Badge className="bg-michigan-forest/10 text-michigan-forest-deep border-michigan-forest/20 text-[9px] px-1 py-0">
                                 ✓ Verified

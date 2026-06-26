@@ -12,11 +12,19 @@ import PublicTrustBar from "@/components/shared/PublicTrustBar";
 
 // Deferred: non-critical widgets that don't affect initial render
 const AIChatWidget = lazy(() => import("@/components/shared/AIChatWidget"));
-const WeatherAlertBanner = lazy(() => import("@/components/alerts/WeatherAlertBanner"));
-const OfflineAccessBanner = lazy(() => import("@/components/shared/OfflineAccessBanner"));
+const WeatherAlertBanner = lazy(
+  () => import("@/components/alerts/WeatherAlertBanner"),
+);
+const OfflineAccessBanner = lazy(
+  () => import("@/components/shared/OfflineAccessBanner"),
+);
 const PrintButton = lazy(() => import("@/components/shared/PrintButton"));
-const PWAInstallBanner = lazy(() => import("@/components/shared/PWAInstallBanner"));
-const MobileBottomNav = lazy(() => import("@/components/shared/MobileBottomNav"));
+const PWAInstallBanner = lazy(
+  () => import("@/components/shared/PWAInstallBanner"),
+);
+const MobileBottomNav = lazy(
+  () => import("@/components/shared/MobileBottomNav"),
+);
 const QuickExitBar = lazy(() => import("@/components/shared/QuickExitBar"));
 
 const OnboardingTour = lazy(() => import("@/components/shared/OnboardingTour"));
@@ -32,8 +40,12 @@ const Layout = ({ children }: LayoutProps) => (
     <SkipToContent />
     <CrisisBar />
     <Header />
-    <Suspense fallback={null}><WeatherAlertBanner /></Suspense>
-    <Suspense fallback={null}><OfflineAccessBanner /></Suspense>
+    <Suspense fallback={null}>
+      <WeatherAlertBanner />
+    </Suspense>
+    <Suspense fallback={null}>
+      <OfflineAccessBanner />
+    </Suspense>
     <ContextBar />
     <RouteAnnouncer />
     <ErrorBoundary>
@@ -55,9 +67,15 @@ const Layout = ({ children }: LayoutProps) => (
       <PrintButton />
       <PWAInstallBanner />
       <MobileBottomNav />
-      <AIChatWidget />
+      {/* AI chat widget is gated by VITE_ENABLE_AI_CHAT, default off. The
+          widget streams raw model output without grounding to AccessMI's
+          sourced data and has no fetch timeout, so on flaky venue wifi it
+          can show a stuck spinner or generate unsourced claims. Set the
+          env var to "true" in Netlify / .env.local once the widget is
+          hardened. */}
+      {import.meta.env.VITE_ENABLE_AI_CHAT === "true" && <AIChatWidget />}
       <QuickExitBar />
-      
+
       <OnboardingTour />
       <GuidedTour />
     </Suspense>

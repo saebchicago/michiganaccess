@@ -1,7 +1,11 @@
 import { User, Building2, Heart, Globe, Accessibility } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useCounty, type Audience, type SubPersona } from "@/contexts/CountyContext";
+import {
+  useCounty,
+  type Audience,
+  type SubPersona,
+} from "@/contexts/CountyContext";
 import { cn } from "@/lib/utils";
 import type { PersonaView } from "@/pages/Index";
 
@@ -27,8 +31,8 @@ const audienceIds: {
   {
     id: "health-system",
     icon: Building2,
-    label: "Organizations",
-    desc: "Tools for navigation, planning, and equity dashboards",
+    label: "Analyst",
+    desc: "Deeper view: integrity tiers, source ledger, methodology links, raw provenance",
     scrollTarget: "#for-organizations",
     personaView: "professional",
   },
@@ -49,14 +53,21 @@ interface AudienceSelectorProps {
   onPersonaChange?: (view: PersonaView) => void;
 }
 
-export default function AudienceSelector({ onPersonaChange }: AudienceSelectorProps) {
+export default function AudienceSelector({
+  onPersonaChange,
+}: AudienceSelectorProps) {
   const { audience, setAudience, subPersonas, toggleSubPersona } = useCounty();
   const isResident = audience === "resident";
 
   return (
-    <section className="py-5 border-b border-border/40" aria-label="Showing resources for">
+    <section
+      className="py-6 border-b border-border/40 bg-muted/20"
+      aria-label="View AccessMI as"
+    >
       <div className="container">
-        <p className="text-xs text-muted-foreground text-center mb-3 font-medium">Showing resources for:</p>
+        <p className="text-[11px] uppercase tracking-widest text-muted-foreground text-center mb-3 font-semibold">
+          View AccessMI as
+        </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {audienceIds.map((a) => {
             const active = audience === a.id;
@@ -67,7 +78,7 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
                 size="sm"
                 className={cn(
                   "gap-1.5 text-xs transition-all min-h-[44px]",
-                  active ? "shadow-md" : "hover:border-primary/40"
+                  active ? "shadow-md" : "hover:border-primary/40",
                 )}
                 onClick={() => {
                   setAudience(active ? null : a.id);
@@ -97,7 +108,9 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
         {/* Sub-persona tags - visible when Resident is selected */}
         {isResident && (
           <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2.5">
-            <span className="text-[10px] text-muted-foreground mr-1">I'm also a:</span>
+            <span className="text-[10px] text-muted-foreground mr-1">
+              I'm also a:
+            </span>
             {SUB_PERSONAS.map((sp) => {
               const active = subPersonas.includes(sp.id);
               return (
@@ -108,7 +121,7 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
                     "cursor-pointer gap-1 text-[10px] py-1 px-2.5 min-h-[32px] transition-all select-none",
                     active
                       ? "bg-primary text-primary-foreground shadow-sm"
-                      : "hover:border-primary/40 hover:bg-primary/5"
+                      : "hover:border-primary/40 hover:bg-primary/5",
                   )}
                   onClick={() => toggleSubPersona(sp.id)}
                   role="checkbox"
@@ -127,6 +140,19 @@ export default function AudienceSelector({ onPersonaChange }: AudienceSelectorPr
               );
             })}
           </div>
+        )}
+
+        {/* Analyst-mode banner: reinforces that the view is now deeper, so the
+            switch feels load-bearing rather than ornamental during a demo. */}
+        {audience === "health-system" && (
+          <p
+            className="mt-3 text-center text-[11px] text-muted-foreground italic"
+            role="status"
+            aria-live="polite"
+          >
+            Analyst view: integrity tiers, source ledger, and methodology
+            surfaces are emphasized below.
+          </p>
         )}
       </div>
     </section>
