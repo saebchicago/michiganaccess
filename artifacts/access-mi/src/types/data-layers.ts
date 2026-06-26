@@ -1,3 +1,35 @@
+/**
+ * Geographic resolution at which a figure is natively reported.
+ *
+ * Separate from the integrity tier (VERIFIED / MODELED / PROJECTED).
+ * Both can co-occur on the same metric: a value can be VERIFIED at the
+ * county level, or MODELED at the ZIP level. Resolution describes the
+ * spatial grain; the integrity tier describes how the number was
+ * produced.
+ *
+ *   county         - county FIPS, the level most federal civic
+ *                    datasets are keyed to
+ *   zcta           - ZIP Code Tabulation Area, the Census Bureau's
+ *                    approximation of a USPS ZIP code
+ *   tract          - census tract (or block group, the next-finer
+ *                    Census geography; both render under this label)
+ *   point          - a specific site such as a clinic, FQHC, or
+ *                    monitoring station
+ *   modeled_to_zip - apportioned or imputed down from a larger area
+ *                    to a ZIP. Always paired with MODELED in the
+ *                    integrity tier
+ *   unverified     - native resolution not confirmed against the
+ *                    upstream source. Never guess; pick this rather
+ *                    than asserting a resolution that may be wrong
+ */
+export type GeoResolution =
+  | "county"
+  | "zcta"
+  | "tract"
+  | "point"
+  | "modeled_to_zip"
+  | "unverified";
+
 export interface MetricValue {
   value: number | null;
   ci_lower?: number | null;
@@ -5,6 +37,7 @@ export interface MetricValue {
   source: string;
   vintage: string;
   label: "VERIFIED" | "MODELED" | "PROJECTED";
+  geoResolution?: GeoResolution;
 }
 
 export interface FoodAccessTract {

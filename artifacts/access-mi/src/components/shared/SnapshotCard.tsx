@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import { MapPin, Globe, Building2 } from "lucide-react";
+import type { GeoResolution } from "@/types/data-layers";
 
 export type SnapshotMetric = {
   id: string;
@@ -12,6 +13,9 @@ export type SnapshotMetric = {
   trend?: number[];
   years?: number[];
   percentile?: number; // 0–100 vs Michigan benchmark
+  geoResolution?: GeoResolution;
+  /** Name of the county the value reflects, used for the ZIP-context note. */
+  countyName?: string;
 };
 
 export type SnapshotCardProps = {
@@ -28,7 +32,11 @@ const GEO_LABELS: Record<string, { label: string; icon: typeof Globe }> = {
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.05, duration: 0.25 } }),
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.05, duration: 0.25 },
+  }),
 };
 
 function Sparkline({ data, years }: { data: number[]; years?: number[] }) {
@@ -42,7 +50,11 @@ function Sparkline({ data, years }: { data: number[]; years?: number[] }) {
           <Line
             type="monotone"
             dataKey="v"
-            stroke={improving ? "hsl(var(--michigan-forest))" : "hsl(var(--michigan-coral))"}
+            stroke={
+              improving
+                ? "hsl(var(--michigan-forest))"
+                : "hsl(var(--michigan-coral))"
+            }
             strokeWidth={1.5}
             dot={{ r: 1.5, fill: "hsl(var(--background))", strokeWidth: 1 }}
           />
@@ -54,7 +66,11 @@ function Sparkline({ data, years }: { data: number[]; years?: number[] }) {
 
 function PercentileBar({ value }: { value: number }) {
   const color =
-    value >= 75 ? "bg-michigan-forest" : value >= 40 ? "bg-michigan-gold" : "bg-destructive";
+    value >= 75
+      ? "bg-michigan-forest"
+      : value >= 40
+        ? "bg-michigan-gold"
+        : "bg-destructive";
   return (
     <div className="mt-1.5 space-y-0.5">
       <div className="relative h-1.5 w-full rounded-full bg-muted overflow-hidden">
@@ -64,12 +80,18 @@ function PercentileBar({ value }: { value: number }) {
           style={{ left: `calc(${Math.min(value, 100)}% - 6px)` }}
         />
       </div>
-      <p className="text-[9px] text-muted-foreground text-right">{value}th percentile</p>
+      <p className="text-[9px] text-muted-foreground text-right">
+        {value}th percentile
+      </p>
     </div>
   );
 }
 
-export default function SnapshotCard({ title, geographyType, metrics }: SnapshotCardProps) {
+export default function SnapshotCard({
+  title,
+  geographyType,
+  metrics,
+}: SnapshotCardProps) {
   const geo = GEO_LABELS[geographyType];
   const Icon = geo.icon;
 
@@ -78,7 +100,10 @@ export default function SnapshotCard({ title, geographyType, metrics }: Snapshot
       <div className="flex items-center gap-2">
         <Icon className="h-4 w-4 text-primary" />
         <h2 className="text-lg font-bold text-foreground">{title}</h2>
-        <Badge variant="outline" className="text-[10px] uppercase tracking-wider ml-auto">
+        <Badge
+          variant="outline"
+          className="text-[10px] uppercase tracking-wider ml-auto"
+        >
           {geo.label}
         </Badge>
       </div>
@@ -94,15 +119,23 @@ export default function SnapshotCard({ title, geographyType, metrics }: Snapshot
           >
             <Card className="h-full hover-lift">
               <CardContent className="py-3 space-y-1">
-                <p className="text-[11px] text-muted-foreground font-medium">{m.label}</p>
+                <p className="text-[11px] text-muted-foreground font-medium">
+                  {m.label}
+                </p>
                 <p className="text-xl font-bold text-foreground">
                   {m.value}
-                  {m.unit && <span className="text-sm font-normal text-muted-foreground ml-0.5">{m.unit}</span>}
+                  {m.unit && (
+                    <span className="text-sm font-normal text-muted-foreground ml-0.5">
+                      {m.unit}
+                    </span>
+                  )}
                 </p>
                 {m.trend && m.trend.length >= 2 && (
                   <Sparkline data={m.trend} years={m.years} />
                 )}
-                {m.percentile !== undefined && <PercentileBar value={m.percentile} />}
+                {m.percentile !== undefined && (
+                  <PercentileBar value={m.percentile} />
+                )}
               </CardContent>
             </Card>
           </motion.div>

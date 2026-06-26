@@ -56,6 +56,7 @@ export function buildStateSnapshotMetrics(): SnapshotMetric[] {
       label: "Uninsured Rate",
       value: `${avgUninsured}%`,
       percentile: 50,
+      geoResolution: "county",
     },
     {
       id: "insurance-coverage",
@@ -64,12 +65,14 @@ export function buildStateSnapshotMetrics(): SnapshotMetric[] {
       unit: "%",
       trend: [93.2, 93.8, 94.5, 95.1, 95.6, 96.0],
       years: [2020, 2021, 2022, 2023, 2024, 2025],
+      geoResolution: "unverified",
     },
     {
       id: "life-expectancy",
       label: "Life Expectancy",
       value: "77.4",
       unit: "yrs",
+      geoResolution: "unverified",
     },
     {
       id: "telehealth",
@@ -78,6 +81,7 @@ export function buildStateSnapshotMetrics(): SnapshotMetric[] {
       unit: "%",
       trend: [12, 38, 32, 35, 42, 48],
       years: [2020, 2021, 2022, 2023, 2024, 2025],
+      geoResolution: "unverified",
     },
   ];
 }
@@ -117,23 +121,27 @@ export function buildRegionSnapshotMetrics(regionId: string): SnapshotMetric[] {
       label: "Avg Uninsured Rate",
       value: `${avgU}%`,
       percentile: uninsuredPercentile(avgU),
+      geoResolution: "county",
     },
     {
       id: "pc-ratio",
       label: "Primary Care Ratio",
       value: `${avgR.toLocaleString()}:1`,
       percentile: ratioPercentile(avgR),
+      geoResolution: "county",
     },
     {
       id: "food-insecurity",
       label: "Food Insecurity",
       value: `${avgF}%`,
       percentile: uninsuredPercentile(avgF),
+      geoResolution: "county",
     },
     {
       id: "population",
       label: "Population",
       value: totalPop.toLocaleString(),
+      geoResolution: "county",
     },
   ];
 }
@@ -152,6 +160,8 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
       percentile: numeric
         ? uninsuredPercentile(parseRate(hh[0].value))
         : undefined,
+      geoResolution: "county",
+      countyName: county,
     });
   }
   if (hh[1]) {
@@ -163,6 +173,8 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
       percentile: numeric
         ? ratioPercentile(parseRatio(hh[1].value))
         : undefined,
+      geoResolution: "county",
+      countyName: county,
     });
   }
   if (hh[2]) {
@@ -174,12 +186,16 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
       percentile: numeric
         ? uninsuredPercentile(parseRate(hh[2].value))
         : undefined,
+      geoResolution: "county",
+      countyName: county,
     });
   }
   metrics.push({
     id: "population",
     label: "Population",
     value: p.population.toLocaleString(),
+    geoResolution: "county",
+    countyName: county,
   });
 
   return metrics;
