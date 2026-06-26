@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -13,13 +13,21 @@ import {
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { AccessChat } from "@/components/AccessChat";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import { OfficialChannelNotice } from "@/components/shared/OfficialChannelNotice";
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
+
+// Lazy-loaded so the 346-line chat bundle and its Supabase client are not in
+// the critical path for the homepage's first paint. Also gated by the
+// VITE_ENABLE_AI_CHAT env var: the chat is hidden by default for the demo
+// because its responses are not grounded in AccessMI's sourced data and it
+// has no fetch timeout on flaky venue wifi.
+const AccessChat = lazy(() =>
+  import("@/components/AccessChat").then((m) => ({ default: m.AccessChat })),
+);
 
 // Preserved for back-compat with consumers like AudienceSelector that still
 // import this type from the home page.
@@ -303,13 +311,7 @@ function CountySelector() {
 
 // ─── Layer 2: cluster cards + Recently added ─────────────────────────────────
 
-function ClusterCard({
-  cluster,
-  index,
-}: {
-  cluster: Cluster;
-  index: number;
-}) {
+function ClusterCard({ cluster, index }: { cluster: Cluster; index: number }) {
   const Icon = cluster.icon;
   const isBenefits = cluster.id === "learn-benefits";
   return (
@@ -424,7 +426,11 @@ const Index = () => {
         <Layer2ClusterGrid />
       </div>
 
-      <AccessChat />
+      {import.meta.env.VITE_ENABLE_AI_CHAT === "true" && (
+        <Suspense fallback={null}>
+          <AccessChat />
+        </Suspense>
+      )}
     </Layout>
   );
 };
