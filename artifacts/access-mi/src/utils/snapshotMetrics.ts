@@ -57,31 +57,40 @@ export function buildStateSnapshotMetrics(): SnapshotMetric[] {
       value: `${avgUninsured}%`,
       percentile: 50,
       geoResolution: "county",
+      source: "County Health Rankings 2025 (SAHIE 2022)",
+      vintage: "SAHIE 2022",
     },
-    {
-      id: "insurance-coverage",
-      label: "Insurance Coverage",
-      value: "96.0",
-      unit: "%",
-      trend: [93.2, 93.8, 94.5, 95.1, 95.6, 96.0],
-      years: [2020, 2021, 2022, 2023, 2024, 2025],
-      geoResolution: "unverified",
-    },
+    // PENDING re-enable: insurance-coverage tile needs a primary source.
+    // Previously rendered "96.0%" with an unsourced 2020-2025 trend. Removed
+    // 2026-06; re-add only when wired to a verified series (SAHIE statewide or
+    // ACS table B27001) with a real source + vintage. Scaffold kept here so
+    // the structure is obvious when re-enabling.
+    // {
+    //   id: "insurance-coverage",
+    //   label: "Insurance Coverage",
+    //   value: <SOURCED VALUE>,
+    //   unit: "%",
+    //   geoResolution: "state",
+    //   source: <PRIMARY SOURCE LABEL>,
+    //   vintage: <VINTAGE LABEL>,
+    // },
     {
       id: "life-expectancy",
       label: "Life Expectancy",
-      value: "77.4",
+      value: "76.8",
       unit: "yrs",
-      geoResolution: "unverified",
+      geoResolution: "state",
+      source: "CDC NCHS Stats of the States",
+      vintage: "2022",
     },
     {
       id: "telehealth",
-      label: "Telehealth Adoption",
-      value: "48",
+      label: "Telehealth (past 4 weeks)",
+      value: "19.1",
       unit: "%",
-      trend: [12, 38, 32, 35, 42, 48],
-      years: [2020, 2021, 2022, 2023, 2024, 2025],
-      geoResolution: "unverified",
+      geoResolution: "state",
+      source: "CDC Household Pulse Survey",
+      vintage: "Wave 48 (Aug 2022) - survey ended",
     },
   ];
 }

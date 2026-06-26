@@ -17,6 +17,10 @@ export type SnapshotMetric = {
   geoResolution?: GeoResolution;
   /** Name of the county the value reflects, used for the ZIP-context note. */
   countyName?: string;
+  /** Primary-source label (publisher + dataset). Required on tiles whose value is a literal. */
+  source?: string;
+  /** Vintage of the underlying data (e.g. "2022", "HPS Wave 48 (Aug 2022)"). */
+  vintage?: string;
 };
 
 export type SnapshotCardProps = {
@@ -151,6 +155,13 @@ export default function SnapshotCard({
                   <p className="pt-1 text-[10px] leading-snug text-muted-foreground italic">
                     Reflects {m.countyName} County, which contains ZIP{" "}
                     {zipContext.zip}. Not specific to the ZIP.
+                  </p>
+                )}
+                {(m.source || m.vintage) && (
+                  <p className="pt-1 text-[10px] leading-snug text-muted-foreground/80">
+                    {m.source}
+                    {m.source && m.vintage ? " - " : ""}
+                    {m.vintage}
                   </p>
                 )}
                 {m.trend && m.trend.length >= 2 && (

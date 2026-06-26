@@ -1,5 +1,6 @@
 import {
   Building2,
+  Globe,
   MapPin,
   Grid3x3,
   Crosshair,
@@ -24,6 +25,14 @@ interface ResolutionConfig {
 }
 
 const RESOLUTION_CONFIG: Record<GeoResolution, ResolutionConfig> = {
+  state: {
+    label: "State",
+    icon: Globe,
+    tooltipBase:
+      "Reported for the entire state. Typical sources: statewide vital statistics, federal household surveys aggregated to state.",
+    className:
+      "bg-indigo-100 text-indigo-900 border-indigo-300 dark:bg-indigo-950/30 dark:text-indigo-100 dark:border-indigo-800/60",
+  },
   county: {
     label: "County",
     icon: Building2,

@@ -7,6 +7,8 @@
  * spatial grain; the integrity tier describes how the number was
  * produced.
  *
+ *   state          - the entire state (e.g. Michigan statewide
+ *                    survey or vital-statistics aggregate)
  *   county         - county FIPS, the level most federal civic
  *                    datasets are keyed to
  *   zcta           - ZIP Code Tabulation Area, the Census Bureau's
@@ -23,6 +25,7 @@
  *                    than asserting a resolution that may be wrong
  */
 export type GeoResolution =
+  | "state"
   | "county"
   | "zcta"
   | "tract"
