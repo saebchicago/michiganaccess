@@ -220,6 +220,34 @@ export default function AboutPage() {
             happen at official government portals.
           </motion.p>
 
+          <motion.div
+            variants={fadeUp}
+            custom={2.7}
+            initial="hidden"
+            animate="visible"
+            className="mx-auto max-w-2xl mt-4 text-left text-sm text-muted-foreground border border-border rounded-lg px-5 py-4 bg-background"
+            aria-label="Maintainer"
+          >
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-foreground mb-2">
+              Maintainer
+            </p>
+            <p>
+              AccessMI is built and maintained by Saeb Ahsan, a Michigan-based
+              public policy and data professional (University of Chicago Harris
+              MPP). AccessMI is an independent educational project and is not
+              affiliated with, endorsed by, or representing any employer,
+              government agency, or health system. More background:{" "}
+              <a
+                href="https://michigans.me"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                michigans.me
+              </a>
+            </p>
+          </motion.div>
+
           {/* Problem → Solution → Mission */}
           <motion.div
             variants={fadeUp}
