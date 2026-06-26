@@ -86,7 +86,7 @@ describe("Footer  -  D1 independence disclosure", () => {
     );
     expect(
       screen.getByText(
-        /AccessMI is an independent civic data and education project\. It is not affiliated with the State of Michigan or any government agency\./i,
+        /AccessMI is an independent civic data and education project\. It is not affiliated with the State of Michigan, any government agency, employer, or health system\./i,
       ),
     ).toBeInTheDocument();
   });

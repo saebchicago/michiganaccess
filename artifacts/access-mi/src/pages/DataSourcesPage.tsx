@@ -49,11 +49,7 @@ export default function DataSourcesPage() {
               Transparency
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              <AnimatedCounter
-                value={totalSources}
-                suffix="+"
-                className="text-primary"
-              />{" "}
+              <AnimatedCounter value={totalSources} className="text-primary" />{" "}
               Verified Data Sources
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">

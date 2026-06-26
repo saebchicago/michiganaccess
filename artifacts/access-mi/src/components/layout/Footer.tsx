@@ -272,7 +272,8 @@ const Footer = () => {
               {
                 icon: Database,
                 value: String(stats.dataFeeds),
-                label: "Data Feeds",
+                label: "Live API feeds",
+                title: `${stats.dataFeeds} uptime-monitored API endpoints. Distinct from the ${DATA_SOURCE_DISPLAY} public source organizations behind the platform's data.`,
                 colorClass: "text-foreground",
               },
               {
@@ -282,7 +283,11 @@ const Footer = () => {
                 colorClass: "text-foreground",
               },
             ].map((m) => (
-              <div key={m.label} className="flex items-center gap-1.5">
+              <div
+                key={m.label}
+                className="flex items-center gap-1.5"
+                title={"title" in m ? (m.title as string) : undefined}
+              >
                 <m.icon className="h-3 w-3 text-primary" aria-hidden="true" />
                 <span className={`text-xs font-bold ${m.colorClass}`}>
                   {m.value}
@@ -299,7 +304,8 @@ const Footer = () => {
           </div>
           <p className="text-center text-[11px] text-muted-foreground mt-3 max-w-xl mx-auto">
             AccessMI is an independent civic data and education project. It is
-            not affiliated with the State of Michigan or any government agency.
+            not affiliated with the State of Michigan, any government agency,
+            employer, or health system.
           </p>
           <p className="text-center text-[10px] text-muted-foreground mt-2">
             Site updated{" "}
@@ -314,7 +320,7 @@ const Footer = () => {
         {/* Data Sources */}
         <div className="mt-6 border-t border-border pt-6">
           <p className="text-center text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-            Public Data Sources
+            Including data from
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {[
@@ -338,8 +344,8 @@ const Footer = () => {
             ))}
           </div>
           <p className="mt-2 text-center text-[10px] text-muted-foreground">
-            <Link to="/methodology" className="hover:underline text-primary">
-              View full data sources & methodology →
+            <Link to="/data-sources" className="hover:underline text-primary">
+              View all {DATA_SOURCE_DISPLAY} public sources →
             </Link>
           </p>
         </div>
