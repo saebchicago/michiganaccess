@@ -110,6 +110,110 @@ for (const filePath of allFiles) {
   }
 }
 
+// ── Snapshot-metric provenance guard ──────────────────────────────────────────
+// Inside src/utils/snapshotMetrics.ts, every metric object literal whose
+// `value:` is a literal (string with backticks/quotes containing no expression,
+// or a bare number) must also declare a `source:` field in the same literal.
+// Computed values (function calls, identifier references, template strings
+// with interpolation) are allowed without a source - they derive provenance
+// from the upstream data their function reads.
+//
+// This guard catches the class of regression where a contributor adds a
+// hand-typed "X%" or "Y.Z" value to the homepage snapshot with no upstream
+// source. The platform's "no fabricated values" rule is enforced
+// structurally here, not by reviewer attention.
+function checkSnapshotMetricProvenance() {
+  const target = join(SRC, "utils/snapshotMetrics.ts");
+  let content;
+  try {
+    content = readFileSync(target, "utf8");
+  } catch {
+    return; // file missing - nothing to guard
+  }
+
+  const text = content;
+  // Walk every object literal opened by `{`. For each, find its matching `}`
+  // and inspect the slice. We only care about literals that contain an `id:`
+  // field (the SnapshotMetric shape).
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] !== "{") continue;
+    let depth = 0;
+    let end = -1;
+    let inString = null; // current string delimiter, or null
+    for (let j = i; j < text.length; j++) {
+      const ch = text[j];
+      const prev = j > 0 ? text[j - 1] : "";
+      if (inString) {
+        if (ch === inString && prev !== "\\") inString = null;
+        continue;
+      }
+      if (ch === '"' || ch === "'" || ch === "`") {
+        inString = ch;
+        continue;
+      }
+      if (ch === "{") depth++;
+      else if (ch === "}") {
+        depth--;
+        if (depth === 0) { end = j; break; }
+      }
+    }
+    if (end < 0) continue;
+    const body = text.slice(i + 1, end);
+
+    // Only SnapshotMetric literals have an `id:` field (and a `value:`).
+    if (!/\bid\s*:/.test(body) || !/\bvalue\s*:/.test(body)) continue;
+
+    // Extract the `value:` expression up to the next comma (top-level) or end.
+    const vIdx = body.search(/\bvalue\s*:/);
+    if (vIdx < 0) continue;
+    const after = body.slice(vIdx + body.slice(vIdx).indexOf(":") + 1);
+    // Walk forward to the next top-level comma, respecting strings and nested
+    // braces/brackets/parens.
+    let k = 0;
+    let nest = 0;
+    let inStr = null;
+    while (k < after.length) {
+      const ch = after[k];
+      const prev = k > 0 ? after[k - 1] : "";
+      if (inStr) {
+        if (ch === inStr && prev !== "\\") inStr = null;
+      } else if (ch === '"' || ch === "'" || ch === "`") {
+        inStr = ch;
+      } else if (ch === "(" || ch === "[" || ch === "{") nest++;
+      else if (ch === ")" || ch === "]" || ch === "}") nest--;
+      else if (ch === "," && nest === 0) break;
+      k++;
+    }
+    const valueExpr = after.slice(0, k).trim();
+
+    // A "literal value" is a plain string or a bare number with no
+    // interpolation or function call. Anything else is computed.
+    const isPlainStringDouble = /^"[^"\\]*"$/.test(valueExpr);
+    const isPlainStringSingle = /^'[^'\\]*'$/.test(valueExpr);
+    const isPlainTemplate = /^`[^`${]*`$/.test(valueExpr);
+    const isBareNumber = /^-?\d+(\.\d+)?$/.test(valueExpr);
+    const isLiteral =
+      isPlainStringDouble || isPlainStringSingle || isPlainTemplate || isBareNumber;
+    if (!isLiteral) continue;
+
+    // "Data unavailable" is the canonical suppression sentinel; skip it.
+    if (/"Data unavailable"|'Data unavailable'/.test(valueExpr)) continue;
+
+    // Now require a `source:` field somewhere in the same object body.
+    if (!/\bsource\s*:/.test(body)) {
+      // Locate the line for a useful error message.
+      const before = text.slice(0, i + 1);
+      const lineNum = before.split("\n").length;
+      console.error(
+        `[check-fabrication] FAIL src/utils/snapshotMetrics.ts:${lineNum} — SnapshotMetric literal with hardcoded value ${valueExpr} is missing a "source" field. Either suppress to "Data unavailable" or add a primary-source label.`,
+      );
+      failures++;
+    }
+  }
+}
+
+checkSnapshotMetricProvenance();
+
 if (failures > 0) {
   console.error(`[check-fabrication] ${failures} violation(s) found. Fix before building.`);
   process.exit(1);
