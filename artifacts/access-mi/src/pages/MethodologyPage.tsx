@@ -116,6 +116,8 @@ const equityPrinciples = [
   },
 ];
 
+const EVIDENCE_ACT_NAME = "Foundations for Evidence-Based Policymaking Act"; // check-copy-ok: official US federal law name
+
 const scoringWeights = [
   {
     label: "Geographic Access",
@@ -715,8 +717,8 @@ export default function MethodologyPage() {
               Geographic Access +{" "}
               <span className="text-michigan-forest-deep font-bold">30%</span>{" "}
               Clinical Quality +{" "}
-              <span className="text-michigan-teal-deep font-bold">15%</span> Service
-              Comprehensiveness +{" "}
+              <span className="text-michigan-teal-deep font-bold">15%</span>{" "}
+              Service Comprehensiveness +{" "}
               <span className="text-michigan-sky font-bold">15%</span> Digital
               Accessibility
             </p>
@@ -820,7 +822,9 @@ export default function MethodologyPage() {
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">1.</span> Large
                     Health System - 2.1 mi{" "}
-                    <span className="text-michigan-forest-deep">· Quality: A</span>
+                    <span className="text-michigan-forest-deep">
+                      · Quality: A
+                    </span>
                   </li>
                   <li className="flex gap-2">
                     <span className="font-bold text-foreground">2.</span>{" "}
@@ -1167,6 +1171,165 @@ export default function MethodologyPage() {
                 This feature is not yet implemented. When it is, we will
                 document its privacy architecture, data handling practices, and
                 user consent flows on this page.
+              </p>
+            </CardContent>
+          </Card>
+        </section>
+
+        <Separator />
+
+        {/* Standards and the open-data ecosystem */}
+        <section id="open-data-ecosystem">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Globe className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">
+                Standards and the open-data ecosystem
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                The civic-data lineage AccessMI follows
+              </p>
+            </div>
+          </div>
+
+          <Card>
+            <CardContent className="p-6 space-y-4">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                AccessMI does not originate data. It organizes public federal
+                and state data into a county and ZIP view, following open-data
+                and provenance norms developed over the past two decades.
+                AccessMI is independent and is not affiliated with or endorsed
+                by any of the organizations below.
+              </p>
+
+              <ul className="space-y-4">
+                <li className="text-sm text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">
+                    Sunlight Foundation (2006 to 2020).
+                  </strong>{" "}
+                  A nonpartisan open-government nonprofit that authored widely
+                  adopted open data policy guidelines: publish open by default,
+                  in machine-readable formats, with data inventories, and
+                  connect open data to public accountability. The organization
+                  ceased operations in September 2020. Its guidance remains an
+                  archived reference that shaped open-data policy in more than
+                  100 US cities. Link:{" "}
+                  <a
+                    href="https://sunlightfoundation.com/opendataguidelines/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline break-words"
+                  >
+                    https://sunlightfoundation.com/opendataguidelines/
+                  </a>
+                </li>
+
+                <li className="text-sm text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">
+                    Data Foundation (founded 2016).
+                  </strong>{" "}
+                  A Washington, DC nonpartisan think tank whose research and
+                  advocacy contributed to major federal data laws, including the
+                  OPEN Government Data Act and the {EVIDENCE_ACT_NAME} (the
+                  Evidence Act), which established open by default as the
+                  standard for federal data. Link:{" "}
+                  <a
+                    href="https://datafoundation.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline break-words"
+                  >
+                    https://datafoundation.org/
+                  </a>
+                </li>
+
+                <li className="text-sm text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">
+                    Open Knowledge Foundation and CKAN.
+                  </strong>{" "}
+                  CKAN is the leading open-source platform for government data
+                  portals, first built in 2005 to 2006 and held in trust by the
+                  Open Knowledge Foundation. It powers national catalogs
+                  including the United States' Data.gov and the United Kingdom's
+                  data.gov.uk, and was recognized as a Digital Public Good in
+                  2023. Links:{" "}
+                  <a
+                    href="https://ckan.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline break-words"
+                  >
+                    https://ckan.org/
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="https://okfn.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline break-words"
+                  >
+                    https://okfn.org/
+                  </a>
+                </li>
+
+                <li className="text-sm text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">
+                    Digital Public Goods Alliance.
+                  </strong>{" "}
+                  A global initiative that defines digital public goods as
+                  open-source software, open data, open standards, open content,
+                  and open AI systems that follow privacy and other best
+                  practices, do no harm, and advance the United Nations
+                  Sustainable Development Goals. Link:{" "}
+                  <a
+                    href="https://digitalpublicgoods.net/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline break-words"
+                  >
+                    https://digitalpublicgoods.net/
+                  </a>
+                </li>
+
+                <li className="text-sm text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">
+                    Federal open data.
+                  </strong>{" "}
+                  The OPEN Government Data Act and the Evidence Act direct
+                  federal agencies to publish non-sensitive data openly and in
+                  machine-readable form, with the Office of Management and
+                  Budget issuing implementation guidance. Data.gov is the
+                  federal open-data catalog. For health, the Department of
+                  Health and Human Services operates HealthData.gov, the home of
+                  HHS Open Data, which published a Living HHS Open Data Plan
+                  (version 1.0) in July 2025. Links:{" "}
+                  <a
+                    href="https://data.gov/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline break-words"
+                  >
+                    https://data.gov/
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="https://healthdata.gov/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline break-words"
+                  >
+                    https://healthdata.gov/
+                  </a>
+                </li>
+              </ul>
+
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                AccessMI consumes this kind of primary public data and labels
+                every figure by integrity tier (verified, modeled, or projected)
+                and, where relevant, by geographic resolution, so users can
+                trace each number to its source.
               </p>
             </CardContent>
           </Card>
