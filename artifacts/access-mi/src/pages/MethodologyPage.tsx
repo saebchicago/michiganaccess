@@ -116,6 +116,8 @@ const equityPrinciples = [
   },
 ];
 
+const EVIDENCE_ACT_NAME = "Foundations for Evidence-Based Policymaking Act"; // check-copy-ok: official US federal law name
+
 const scoringWeights = [
   {
     label: "Geographic Access",
@@ -1230,10 +1232,9 @@ export default function MethodologyPage() {
                   </strong>{" "}
                   A Washington, DC nonpartisan think tank whose research and
                   advocacy contributed to major federal data laws, including the
-                  OPEN Government Data Act and the Foundations for
-                  Evidence-Based Policymaking Act (the Evidence Act), which
-                  established open by default as the standard for federal data.
-                  Link:{" "}
+                  OPEN Government Data Act and the {EVIDENCE_ACT_NAME} (the
+                  Evidence Act), which established open by default as the
+                  standard for federal data. Link:{" "}
                   <a
                     href="https://datafoundation.org/"
                     target="_blank"
