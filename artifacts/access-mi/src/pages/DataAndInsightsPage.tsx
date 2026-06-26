@@ -104,10 +104,10 @@ const equityInsights = [
   {
     icon: Heart,
     title: "Black Infant Mortality",
-    stat: "2.4x higher",
+    stat: "3.3x higher",
     description:
-      "Black infants in Michigan face 2.4 times higher mortality rates than white infants.",
-    source: "MDHHS / CDC WONDER, 2022",
+      "Black infants in Michigan face 3.3 times higher mortality rates than white infants.",
+    source: "MDHHS Vital Records, Summary of 2024 Infant Death Statistics",
     color: "coral" as const,
     trend: "up" as const,
   },
