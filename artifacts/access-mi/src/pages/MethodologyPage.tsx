@@ -1360,7 +1360,9 @@ export default function MethodologyPage() {
                   Geographic resolution.
                 </strong>{" "}
                 AccessMI labels each figure by the geographic level at which it
-                is actually reported, separate from its integrity tier. County
+                is actually reported, separate from its integrity tier. State
+                figures come from statewide vital-statistics aggregates or
+                federal household surveys aggregated to the state. County
                 figures come from federal county-level sources keyed to FIPS
                 codes. ZCTA figures are reported at the ZIP Code Tabulation Area
                 level, the Census Bureau's approximation of USPS ZIP codes.
@@ -1380,6 +1382,11 @@ export default function MethodologyPage() {
                   Badge labels
                 </p>
                 <ul className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
+                  <li>
+                    <strong className="text-foreground">State</strong> - the
+                    entire state, from statewide vital statistics or a federal
+                    survey aggregated to the state.
+                  </li>
                   <li>
                     <strong className="text-foreground">County</strong> -
                     reported at the county FIPS level.
