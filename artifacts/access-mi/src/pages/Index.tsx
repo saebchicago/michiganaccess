@@ -267,44 +267,104 @@ function countySlug(name: string): string {
 }
 
 function CountySelector() {
+  const [query, setQuery] = useState("");
+  const [expanded, setExpanded] = useState(false);
+  const filtered = query.trim()
+    ? COUNTY_NAMES.filter((n) =>
+        n.toLowerCase().startsWith(query.trim().toLowerCase()),
+      )
+    : COUNTY_NAMES;
+
   return (
     <section
       aria-labelledby="counties-heading"
       className="border-b border-border/60"
     >
-      <div className="container mx-auto px-4 py-12 max-w-5xl">
-        <div className="flex flex-col gap-2 mb-6">
-          <p className="text-caption">All counties</p>
+      <div className="container mx-auto px-4 py-12 max-w-3xl">
+        <div className="flex flex-col gap-2 mb-5">
+          <p className="text-caption">Counties</p>
           <h2
             id="counties-heading"
             className="font-serif text-2xl font-semibold text-foreground"
           >
-            Browse by county.
+            Pick a county.
           </h2>
-          <p className="text-sm text-muted-foreground max-w-2xl">
-            Open the civic profile for any of the {COUNTY_NAMES.length} counties
-            in Michigan.
+          <p className="text-sm text-muted-foreground">
+            Type a name to jump straight in, or browse all {COUNTY_NAMES.length}
+            .
           </p>
         </div>
-        <ul
-          role="list"
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-px bg-border/60 border border-border/60 rounded-md overflow-hidden"
+        <label htmlFor="county-search" className="sr-only">
+          Search Michigan counties
+        </label>
+        <Input
+          id="county-search"
+          type="search"
+          placeholder="e.g. Wayne, Kent, Marquette"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="h-11 max-w-md mb-3 bg-card text-foreground"
+        />
+        {query.trim() && filtered.length > 0 && (
+          <ul
+            role="list"
+            className="mb-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1 max-w-md"
+          >
+            {filtered.slice(0, 9).map((name) => (
+              <li key={name}>
+                <Link
+                  to={`/county/${countySlug(name)}`}
+                  className="flex items-center justify-between gap-1 rounded border border-border bg-card px-3 py-2 text-xs text-foreground hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-info transition-colors"
+                >
+                  <span className="truncate">{name}</span>
+                  <ArrowRight
+                    className="h-3 w-3 shrink-0 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        {query.trim() && filtered.length === 0 && (
+          <p className="text-xs text-muted-foreground mb-3">
+            No counties match. Check the spelling, or browse the full list
+            below.
+          </p>
+        )}
+        <button
+          type="button"
+          onClick={() => setExpanded((e) => !e)}
+          className="text-xs text-muted-foreground hover:text-foreground hover:underline underline-offset-4 transition-colors"
+          aria-expanded={expanded}
+          aria-controls="all-counties-grid"
         >
-          {COUNTY_NAMES.map((name) => (
-            <li key={name}>
-              <Link
-                to={`/county/${countySlug(name)}`}
-                className="flex h-full items-center justify-between gap-1 bg-card px-3 py-2.5 text-xs text-foreground hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-info focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:relative focus-visible:z-10 transition-colors"
-              >
-                <span className="truncate">{name}</span>
-                <ArrowRight
-                  className="h-3 w-3 shrink-0 text-muted-foreground"
-                  aria-hidden="true"
-                />
-              </Link>
-            </li>
-          ))}
-        </ul>
+          {expanded
+            ? "Hide full list"
+            : `Browse all ${COUNTY_NAMES.length} counties`}
+        </button>
+        {expanded && (
+          <ul
+            id="all-counties-grid"
+            role="list"
+            className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-px bg-border/60 border border-border/60 rounded-md overflow-hidden"
+          >
+            {COUNTY_NAMES.map((name) => (
+              <li key={name}>
+                <Link
+                  to={`/county/${countySlug(name)}`}
+                  className="flex h-full items-center justify-between gap-1 bg-card px-3 py-2.5 text-xs text-foreground hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-info focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:relative focus-visible:z-10 transition-colors"
+                >
+                  <span className="truncate">{name}</span>
+                  <ArrowRight
+                    className="h-3 w-3 shrink-0 text-muted-foreground"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );
@@ -315,6 +375,8 @@ function CountySelector() {
 function ClusterCard({ cluster, index }: { cluster: Cluster; index: number }) {
   const Icon = cluster.icon;
   const isBenefits = cluster.id === "learn-benefits";
+  const [expanded, setExpanded] = useState(false);
+  const [primary, ...rest] = cluster.tools;
   return (
     <article
       id={cluster.id}
@@ -326,25 +388,54 @@ function ClusterCard({ cluster, index }: { cluster: Cluster; index: number }) {
       <h2 className="font-serif text-xl font-semibold leading-tight tracking-tight text-foreground mb-2">
         {cluster.label}
       </h2>
-      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
         {cluster.purpose}
       </p>
-      <ul className="space-y-1">
-        {cluster.tools.map((tool) => (
-          <li key={tool.href}>
-            <Link
-              to={tool.href}
-              className="flex items-center gap-2 rounded px-2 py-1.5 -mx-2 text-sm text-foreground/90 hover:text-foreground hover:bg-muted/40 focus-visible:outline-none focus-visible:bg-muted/60 transition-colors"
+      {primary && (
+        <Link
+          to={primary.href}
+          className="inline-flex items-center gap-1.5 self-start text-sm font-medium text-primary hover:underline underline-offset-4"
+        >
+          {primary.label}
+          <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+        </Link>
+      )}
+      {rest.length > 0 && (
+        <>
+          <button
+            type="button"
+            onClick={() => setExpanded((e) => !e)}
+            className="mt-4 self-start text-xs text-muted-foreground hover:text-foreground hover:underline underline-offset-4 transition-colors"
+            aria-expanded={expanded}
+            aria-controls={`${cluster.id}-more`}
+          >
+            {expanded
+              ? "Show fewer"
+              : `+ ${rest.length} more tool${rest.length === 1 ? "" : "s"}`}
+          </button>
+          {expanded && (
+            <ul
+              id={`${cluster.id}-more`}
+              className="mt-3 space-y-1 border-t border-border/60 pt-3"
             >
-              <span>{tool.label}</span>
-              <ArrowRight
-                className="h-3.5 w-3.5 text-muted-foreground/60"
-                aria-hidden="true"
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
+              {rest.map((tool) => (
+                <li key={tool.href}>
+                  <Link
+                    to={tool.href}
+                    className="flex items-center gap-2 rounded px-2 py-1.5 -mx-2 text-sm text-foreground/90 hover:text-foreground hover:bg-muted/40 focus-visible:outline-none focus-visible:bg-muted/60 transition-colors"
+                  >
+                    <span>{tool.label}</span>
+                    <ArrowRight
+                      className="h-3.5 w-3.5 text-muted-foreground/60"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
+      )}
       {isBenefits && (
         <div className="mt-4">
           <OfficialChannelNotice variant="compact" />
