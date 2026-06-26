@@ -1337,6 +1337,85 @@ export default function MethodologyPage() {
 
         <Separator />
 
+        {/* Geographic resolution */}
+        <section id="geographic-resolution">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Globe className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground">
+                Geographic resolution
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                How county, ZIP, tract, and point figures are labeled
+              </p>
+            </div>
+          </div>
+
+          <Card>
+            <CardContent className="p-6 space-y-4">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                <strong className="text-foreground">
+                  Geographic resolution.
+                </strong>{" "}
+                AccessMI labels each figure by the geographic level at which it
+                is actually reported, separate from its integrity tier. County
+                figures come from federal county-level sources keyed to FIPS
+                codes. ZCTA figures are reported at the ZIP Code Tabulation Area
+                level, the Census Bureau's approximation of USPS ZIP codes.
+                Tract figures come from census tracts. Point figures describe a
+                specific site, such as a clinic or a monitoring station. When
+                you enter a ZIP code, some figures shown are county-level and
+                reflect the whole county that contains your ZIP, not your ZIP
+                alone. ZCTAs do not align perfectly with ZIP codes and can cross
+                county lines, so a single ZIP can fall within more than one
+                county. Where a county-level value is shown in a ZIP context,
+                AccessMI says so. Where a value has been apportioned from a
+                larger area down to a ZIP, it is labeled modeled.
+              </p>
+
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-foreground mb-2">
+                  Badge labels
+                </p>
+                <ul className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
+                  <li>
+                    <strong className="text-foreground">County</strong> -
+                    reported at the county FIPS level.
+                  </li>
+                  <li>
+                    <strong className="text-foreground">ZCTA</strong> - the
+                    Census ZIP Code Tabulation Area approximating a USPS ZIP.
+                  </li>
+                  <li>
+                    <strong className="text-foreground">Tract</strong> - census
+                    tract or block group.
+                  </li>
+                  <li>
+                    <strong className="text-foreground">Point</strong> - a
+                    specific site (clinic, FQHC, monitoring station).
+                  </li>
+                  <li>
+                    <strong className="text-foreground">Modeled to ZIP</strong>{" "}
+                    - apportioned from a larger area; paired with the MODELED
+                    integrity tier.
+                  </li>
+                  <li>
+                    <strong className="text-foreground">
+                      Resolution unverified
+                    </strong>{" "}
+                    - native resolution not yet confirmed against the upstream
+                    source.
+                  </li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        <Separator />
+
         {/* Citation registry (system of record) */}
         <SourcesRegistry />
       </div>
