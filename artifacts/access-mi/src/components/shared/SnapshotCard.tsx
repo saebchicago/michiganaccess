@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import { MapPin, Globe, Building2 } from "lucide-react";
+import { GeoResolutionBadge } from "@/components/shared/GeoResolutionBadge";
 import type { GeoResolution } from "@/types/data-layers";
 
 export type SnapshotMetric = {
@@ -22,6 +23,12 @@ export type SnapshotCardProps = {
   title: string;
   geographyType: "state" | "region" | "county";
   metrics: SnapshotMetric[];
+  /**
+   * Set when this card renders inside a ZIP page. When true, county-level
+   * tiles render an extra inline note so visitors know the figure reflects
+   * the containing county rather than the ZIP alone.
+   */
+  zipContext?: { zip: string };
 };
 
 const GEO_LABELS: Record<string, { label: string; icon: typeof Globe }> = {
@@ -91,6 +98,7 @@ export default function SnapshotCard({
   title,
   geographyType,
   metrics,
+  zipContext,
 }: SnapshotCardProps) {
   const geo = GEO_LABELS[geographyType];
   const Icon = geo.icon;
@@ -130,6 +138,21 @@ export default function SnapshotCard({
                     </span>
                   )}
                 </p>
+                {m.geoResolution && (
+                  <div className="pt-1">
+                    <GeoResolutionBadge
+                      resolution={m.geoResolution}
+                      countyName={m.countyName}
+                      zip={zipContext?.zip}
+                    />
+                  </div>
+                )}
+                {zipContext && m.geoResolution === "county" && m.countyName && (
+                  <p className="pt-1 text-[10px] leading-snug text-muted-foreground italic">
+                    Reflects {m.countyName} County, which contains ZIP{" "}
+                    {zipContext.zip}. Not specific to the ZIP.
+                  </p>
+                )}
                 {m.trend && m.trend.length >= 2 && (
                   <Sparkline data={m.trend} years={m.years} />
                 )}
