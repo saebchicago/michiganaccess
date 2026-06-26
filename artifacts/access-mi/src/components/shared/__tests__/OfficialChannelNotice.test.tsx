@@ -8,7 +8,7 @@ describe("OfficialChannelNotice", () => {
     render(<OfficialChannelNotice variant="full" />);
     expect(
       screen.getByText(
-        /AccessMI is an independent educational resource\. It is not affiliated with the State of Michigan and cannot enroll you in any program\./i,
+        /AccessMI is an independent educational resource\. It is not affiliated with the State of Michigan, any government agency, employer, or health system, and it cannot enroll you in any program\./i,
       ),
     ).toBeInTheDocument();
   });

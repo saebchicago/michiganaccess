@@ -24,8 +24,9 @@ export function OfficialChannelNotice({
       />
       <p>
         AccessMI is an independent educational resource. It is not affiliated
-        with the State of Michigan and cannot enroll you in any program. To
-        apply for benefits, use Michigan's official portal:{" "}
+        with the State of Michigan, any government agency, employer, or health
+        system, and it cannot enroll you in any program. To apply for benefits,
+        use Michigan's official portal:{" "}
         <a
           href="https://newmibridges.michigan.gov"
           target="_blank"
