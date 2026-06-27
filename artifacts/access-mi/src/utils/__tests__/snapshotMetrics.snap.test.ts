@@ -109,21 +109,22 @@ describe("buildCountySnapshotMetrics: snap-retailers tile", () => {
   });
 });
 
-describe("source-count bump: 42 -> 43, federal 24 -> 25", () => {
-  it("SOURCES_TOTAL is 43", () => {
-    expect(SOURCES_TOTAL).toBe(43);
-    expect(SOURCES_REGISTRY.length).toBe(43);
+describe("USDA SNAP registry entry", () => {
+  // The absolute SOURCES_TOTAL number is guarded by the claims-anchor
+  // V-1 test against platformConstants. This file's contract is narrower:
+  // USDA SNAP must remain a federal entry, and the count must stay
+  // consistent across REGISTRY length, SOURCES_TOTAL, and the breakdown
+  // sum. Future source additions update V-1, not this file.
+  it("SOURCES_TOTAL matches the flat registry length and the category sum", () => {
+    expect(SOURCES_REGISTRY.length).toBe(SOURCES_TOTAL);
+    expect(
+      SOURCES_BREAKDOWN.federal +
+        SOURCES_BREAKDOWN.state +
+        SOURCES_BREAKDOWN.nonprofit,
+    ).toBe(SOURCES_TOTAL);
   });
 
-  it("federal=25, state=9, nonprofit=9", () => {
-    expect(SOURCES_BREAKDOWN).toEqual({
-      federal: 25,
-      state: 9,
-      nonprofit: 9,
-    });
-  });
-
-  it("USDA SNAP Retailer Locator is the new federal entry", () => {
+  it("USDA SNAP Retailer Locator is in the Federal Agencies category", () => {
     const snap = SOURCES_BY_CATEGORY["Federal Agencies"].find(
       (s) => s.name === "USDA SNAP Retailer Locator",
     );
