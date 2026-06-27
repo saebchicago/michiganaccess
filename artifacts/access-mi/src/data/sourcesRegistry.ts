@@ -193,6 +193,13 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       powers: "County-level traffic fatality records (5-yr window, per-100k)",
       frequency: "Annual",
     },
+    {
+      name: "USDA SNAP Retailer Locator",
+      org: "USDA-FNS",
+      url: "https://www.fns.usda.gov/snap/retailer/data",
+      powers: "County-level SNAP-authorized food retailer counts (per-10k)",
+      frequency: "Annual",
+    },
   ],
   "Michigan State Agencies": [
     {

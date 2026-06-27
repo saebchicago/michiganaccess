@@ -20,15 +20,15 @@ function read(rel: string) {
 }
 
 describe("Claims anchor guard  -  VERIFIED rows", () => {
-  // V-1: 42 sources build assertion (was 41 before NHTSA FARS integration).
-  it("V-1: platformConstants.ts asserts SOURCES_TOTAL === 42", () => {
+  // V-1: 43 sources build assertion (42 before USDA SNAP integration).
+  it("V-1: platformConstants.ts asserts SOURCES_TOTAL === 43", () => {
     const src = read("src/config/platformConstants.ts");
-    expect(src).toContain("EXPECTED_SOURCE_COUNT = 42");
+    expect(src).toContain("EXPECTED_SOURCE_COUNT = 43");
     expect(src).toContain("SOURCES_TOTAL !== EXPECTED_SOURCE_COUNT");
   });
 
   // V-2: DATA_SOURCE_DISPLAY used in AboutPage
-  it("V-2: AboutPage uses DATA_SOURCE_DISPLAY in '42 verified sources' copy", () => {
+  it("V-2: AboutPage uses DATA_SOURCE_DISPLAY in '43 verified sources' copy", () => {
     const src = read("src/pages/AboutPage.tsx");
     expect(src).toContain("DATA_SOURCE_DISPLAY");
     expect(src).toContain("verified sources. Structured for action.");
