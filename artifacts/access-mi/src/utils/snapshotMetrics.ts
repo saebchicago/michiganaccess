@@ -4,6 +4,12 @@ import {
   COUNTY_PROFILES,
 } from "@/data/michigan-county-profiles";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
+import {
+  COUNTY_TRAFFIC_FATALITIES,
+  FARS_SOURCE,
+  FARS_VINTAGE,
+  FARS_SUPPRESSION_THRESHOLD,
+} from "@/data/county-traffic-fatalities";
 
 function parseRate(val: string): number {
   return parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
@@ -207,5 +213,39 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
     countyName: county,
   });
 
+  // Traffic fatalities (NHTSA FARS, 5-year window). Counties with fewer
+  // than FARS_SUPPRESSION_THRESHOLD events over the window render the raw
+  // count and explicitly label the rate as suppressed, rather than
+  // showing a noisy per-100k figure derived from small numerators.
+  const fars = COUNTY_TRAFFIC_FATALITIES[county];
+  if (fars) {
+    if (fars.suppressed || fars.ratePer100k === null) {
+      metrics.push({
+        id: "traffic-fatalities",
+        label: "Traffic Fatalities (5-yr)",
+        value: `${fars.fiveYearCount}`,
+        unit: "in 5 yrs (rate suppressed)",
+        geoResolution: "county",
+        countyName: county,
+        source: FARS_SOURCE,
+        vintage: `${FARS_VINTAGE} - too few events for a stable rate`,
+      });
+    } else {
+      metrics.push({
+        id: "traffic-fatalities",
+        label: "Traffic Fatalities (5-yr avg)",
+        value: fars.ratePer100k.toFixed(1),
+        unit: "per 100k/yr",
+        geoResolution: "county",
+        countyName: county,
+        source: FARS_SOURCE,
+        vintage: `${FARS_VINTAGE} (avg of 5 case yrs)`,
+      });
+    }
+  }
+
   return metrics;
 }
+
+/** Re-exported for tests and methodology copy. */
+export const FARS_SUPPRESSION_THRESHOLD_DISPLAY = FARS_SUPPRESSION_THRESHOLD;
