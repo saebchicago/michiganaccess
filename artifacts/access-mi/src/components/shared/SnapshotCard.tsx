@@ -13,7 +13,9 @@ export type SnapshotMetric = {
   unit?: string;
   trend?: number[];
   years?: number[];
-  percentile?: number; // 0–100 vs Michigan benchmark
+  /** 0-100 rank against the MI distribution for this metric.
+   *  Convention: HIGHER percentile = BETTER outcome. */
+  percentile?: number;
   geoResolution?: GeoResolution;
   /** Name of the county the value reflects, used for the ZIP-context note. */
   countyName?: string;
@@ -75,6 +77,22 @@ function Sparkline({ data, years }: { data: number[]; years?: number[] }) {
   );
 }
 
+function ordinalSuffix(n: number): string {
+  const abs = Math.abs(Math.trunc(n));
+  const lastTwo = abs % 100;
+  if (lastTwo >= 11 && lastTwo <= 13) return "th";
+  switch (abs % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+}
+
 function PercentileBar({ value }: { value: number }) {
   const color =
     value >= 75
@@ -92,7 +110,8 @@ function PercentileBar({ value }: { value: number }) {
         />
       </div>
       <p className="text-[9px] text-muted-foreground text-right">
-        {value}th percentile
+        {value}
+        {ordinalSuffix(value)} percentile
       </p>
     </div>
   );
