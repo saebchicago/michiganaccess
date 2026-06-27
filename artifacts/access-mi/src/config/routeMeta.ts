@@ -121,8 +121,8 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/data-sources",
     title: "Data Sources | Access Michigan",
     description:
-      "41 verified public source organizations (23 federal, 9 state, 9 nonprofit) powering Michigan's civic intelligence platform. Every organization credited.",
-    h1: "41 Verified Data Sources",
+      "42 verified public source organizations (24 federal, 9 state, 9 nonprofit) powering Michigan's civic intelligence platform. Every organization credited.",
+    h1: "42 Verified Data Sources",
     summary:
       "Federal, state, and nonprofit data sources behind every metric on the platform.",
   },
@@ -228,7 +228,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/impact",
     title: "Platform Impact | Access Michigan",
     description:
-      "Access Michigan platform impact metrics: 83 counties, 15,000+ records, 41 data sources, 4 languages, zero cost.",
+      "Access Michigan platform impact metrics: 83 counties, 15,000+ records, 42 data sources, 4 languages, zero cost.",
     h1: "Building infrastructure for health equity",
     summary:
       "Platform metrics, release timeline, and how Access Michigan helps Michiganders.",
