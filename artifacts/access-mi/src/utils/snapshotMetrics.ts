@@ -32,24 +32,86 @@ function isNumericValue(val: string): boolean {
   return Number.isFinite(parseFloat(val.replace(/[^0-9.]/g, "")));
 }
 
-/** Percentile: lower uninsured = better, so invert. For ratio, lower = better */
+// Rank-based percentile against the 83-county MI distribution for the
+// specific metric being measured.
+//
+// Direction convention: HIGHER percentile = BETTER outcome. For the
+// "lower-is-better" metrics on this snapshot tile (uninsured rate, food
+// insecurity, primary-care ratio), a county at the LOWEST value reads as
+// 100th and a county at the HIGHEST value reads as 0th. The displayed
+// percentile is the share of MI counties with a strictly worse outcome
+// than this one.
+//
+// Replaces the previous hand-tuned linear maps (min/max constants per
+// metric). Those maps reused the uninsured-rate ceiling (11.5%) for food
+// insecurity, whose actual MI range is roughly 10-21%, so every
+// food-insecurity reading above 11.5 clamped to 0. Same defect on the
+// primary-care ratio (real max ~12k vs. hardcoded 5k ceiling).
+function rankPercentile(
+  value: number,
+  distribution: number[],
+  lowerIsBetter: boolean,
+): number {
+  if (!Number.isFinite(value) || distribution.length === 0) return 0;
+  let worseCount = 0;
+  for (const v of distribution) {
+    if (lowerIsBetter ? v > value : v < value) worseCount++;
+  }
+  return Math.round((worseCount / distribution.length) * 100);
+}
+
+// Pre-computed distributions across all 83-county profiles, once at
+// module load. Each array holds the parsed numeric value for every
+// county whose source string is a real reading (not "-" / "Data
+// unavailable"). The "value > 0" filter mirrors what isNumericValue
+// admits and what the percentile call sites would have used.
+function collectDistribution(
+  pick: (county: ReturnType<typeof getCountyProfile>) => number | null,
+): number[] {
+  const out: number[] = [];
+  for (const profile of Object.values(COUNTY_PROFILES)) {
+    const v = pick(profile);
+    if (v !== null && Number.isFinite(v) && v > 0) out.push(v);
+  }
+  return out;
+}
+
+const UNINSURED_DISTRIBUTION = collectDistribution((p) => {
+  const v = p.healthHighlights[0]?.value;
+  return v && isNumericValue(v) ? parseRate(v) : null;
+});
+
+const PC_RATIO_DISTRIBUTION = collectDistribution((p) => {
+  const v = p.healthHighlights[1]?.value;
+  return v && isNumericValue(v) ? parseRatio(v) : null;
+});
+
+const FOOD_INSECURITY_DISTRIBUTION = collectDistribution((p) => {
+  const v = p.healthHighlights[2]?.value;
+  return v && isNumericValue(v) ? parseRate(v) : null;
+});
+
 function uninsuredPercentile(rate: number): number {
-  // MI range roughly 3.9–11.2%. Map to 0–100 where lower = higher percentile
-  const min = 3.5,
-    max = 11.5;
-  return Math.round(
-    Math.max(0, Math.min(100, ((max - rate) / (max - min)) * 100)),
-  );
+  return rankPercentile(rate, UNINSURED_DISTRIBUTION, true);
 }
 
 function ratioPercentile(ratio: number): number {
-  // MI range roughly 620–9330. Lower = better
-  const min = 600,
-    max = 5000;
-  return Math.round(
-    Math.max(0, Math.min(100, ((max - ratio) / (max - min)) * 100)),
-  );
+  return rankPercentile(ratio, PC_RATIO_DISTRIBUTION, true);
 }
+
+function foodInsecurityPercentile(rate: number): number {
+  return rankPercentile(rate, FOOD_INSECURITY_DISTRIBUTION, true);
+}
+
+export const __TEST_ONLY__ = {
+  rankPercentile,
+  UNINSURED_DISTRIBUTION,
+  PC_RATIO_DISTRIBUTION,
+  FOOD_INSECURITY_DISTRIBUTION,
+  uninsuredPercentile,
+  ratioPercentile,
+  foodInsecurityPercentile,
+};
 
 export function buildStateSnapshotMetrics(): SnapshotMetric[] {
   // Aggregate all county profiles
@@ -154,7 +216,7 @@ export function buildRegionSnapshotMetrics(regionId: string): SnapshotMetric[] {
       id: "food-insecurity",
       label: "Food Insecurity",
       value: `${avgF}%`,
-      percentile: uninsuredPercentile(avgF),
+      percentile: foodInsecurityPercentile(avgF),
       geoResolution: "county",
     },
     {
@@ -204,7 +266,7 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
       label: "Food Insecurity",
       value: numeric ? hh[2].value : "Data unavailable",
       percentile: numeric
-        ? uninsuredPercentile(parseRate(hh[2].value))
+        ? foodInsecurityPercentile(parseRate(hh[2].value))
         : undefined,
       geoResolution: "county",
       countyName: county,
