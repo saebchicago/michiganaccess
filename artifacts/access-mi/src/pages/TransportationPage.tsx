@@ -108,7 +108,15 @@ const seniorAccess = [
   { region: "SW Michigan", gap: 38, available: 62 },
 ];
 
-// NHTSA FARS - Michigan traffic fatalities by crash type (2018–2023)
+// TODO(fars): This array claims "Source: NHTSA FARS" but is hardcoded, with
+// no refresh script behind it. The new scripts/refresh-fars.mjs pulls the
+// 5 most recent FARS case years (2020-2024) into county-traffic-fatalities.ts
+// for the county-snapshot tile. A follow-up PR should either (a) regenerate
+// this annual-by-crash-type breakdown from FARS person.csv (PER_TYP +
+// PBPTYPE for pedestrian / cyclist splits) and source it the same way, or
+// (b) replace this chart with a sourced alternative. Until then, the
+// figures below pre-date this work and may not match current FARS.
+// NHTSA FARS - Michigan traffic fatalities by crash type (2018-2023)
 const nhtsaFatalities = [
   { year: "2018", pedestrian: 161, cyclist: 30, motorVehicle: 785, total: 976 },
   { year: "2019", pedestrian: 158, cyclist: 27, motorVehicle: 800, total: 985 },
@@ -142,6 +150,12 @@ const nhtsaFatalities = [
   },
 ];
 
+// TODO(fars): Hardcoded county-level fatalities labeled "NHTSA FARS /
+// Michigan State Police, 2023." Same follow-up as nhtsaFatalities above:
+// replace with src/data/county-traffic-fatalities.ts (per-county sums
+// already exist there) or a sourced alternative. Population labels here
+// also use stale rounded figures; the canonical population vintage is
+// PEP V2024 in src/data/michigan-county-profiles.ts.
 // NHTSA - Michigan fatalities by county (top 10)
 const crashesByCounty = [
   { county: "Wayne", fatalities: 245, population: "1.75M" },

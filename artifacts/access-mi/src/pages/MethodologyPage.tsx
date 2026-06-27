@@ -449,6 +449,12 @@ export default function MethodologyPage() {
                 url: "https://dotbts.github.io/BPA/",
               },
               {
+                source: "NHTSA FARS (Fatality Analysis Reporting System)",
+                desc: "Persons killed in fatal motor-vehicle crashes (accident.csv FATALS column), summed by Michigan county across the 5 most recent published case years (2020-2024). County rate = (5-year count / (5 × population)) × 100,000, using PEP V2024 as the single named population vintage. Suppression rule: counties with fewer than 6 fatal events across the window render the raw 5-year count rather than a noisy per-100k rate (mirrors the MDHHS infant-mortality small-cell threshold). Pulled from NHTSA's bulk CSV release; no API key.",
+                frequency: "Annual release; 5-year rolling window in app",
+                url: "https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars",
+              },
+              {
                 source: "SEMCOG Sidewalks & Crosswalks FeatureServer",
                 desc: "AI-digitized sidewalk and crosswalk inventory for 7 SE Michigan counties. Attributes include presence, geometry, and surface type. Created from 2019 aerial imagery.",
                 frequency: "Quarterly refresh",

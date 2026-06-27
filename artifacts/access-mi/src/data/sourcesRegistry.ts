@@ -186,6 +186,13 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       powers: "Flood claims and policy data by county",
       frequency: "Monthly",
     },
+    {
+      name: "NHTSA FARS",
+      org: "NHTSA",
+      url: "https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars",
+      powers: "County-level traffic fatality records (5-yr window, per-100k)",
+      frequency: "Annual",
+    },
   ],
   "Michigan State Agencies": [
     {
