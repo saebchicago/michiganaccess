@@ -24,9 +24,9 @@ import { ATLAS_LAYERS } from "@/config/atlasLayers";
  * Rule: count unique source organizations by publisher entity, not API
  * endpoints or downstream tables.
  */
-const EXPECTED_SOURCE_COUNT = 42;
+const EXPECTED_SOURCE_COUNT = 43;
 const EXPECTED_SOURCE_BREAKDOWN = {
-  federal: 24,
+  federal: 25,
   state: 9,
   nonprofit: 9,
 } as const;

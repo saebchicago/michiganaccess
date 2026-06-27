@@ -10,6 +10,11 @@ import {
   FARS_VINTAGE,
   FARS_SUPPRESSION_THRESHOLD,
 } from "@/data/county-traffic-fatalities";
+import {
+  COUNTY_SNAP_RETAILERS,
+  SNAP_SOURCE,
+  SNAP_VINTAGE,
+} from "@/data/county-snap-retailers";
 
 function parseRate(val: string): number {
   return parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
@@ -242,6 +247,24 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
         vintage: `${FARS_VINTAGE} (avg of 5 case yrs)`,
       });
     }
+  }
+
+  // SNAP-authorized food retailers (USDA-FNS, current snapshot). Count of
+  // currently authorized retailers per 10,000 residents. No suppression:
+  // this is a count of businesses, not a rare event. Counties with zero
+  // retailers render 0 rather than blank.
+  const snap = COUNTY_SNAP_RETAILERS[county];
+  if (snap) {
+    metrics.push({
+      id: "snap-retailers",
+      label: "SNAP Retailers (per 10k)",
+      value: snap.ratePer10k.toFixed(2),
+      unit: "per 10k residents",
+      geoResolution: "county",
+      countyName: county,
+      source: SNAP_SOURCE,
+      vintage: `${SNAP_VINTAGE} (current authorizations)`,
+    });
   }
 
   return metrics;

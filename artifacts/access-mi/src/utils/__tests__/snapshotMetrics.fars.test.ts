@@ -93,21 +93,22 @@ describe("buildCountySnapshotMetrics: traffic-fatalities tile", () => {
   });
 });
 
-describe("source-count bump: 41 -> 42, federal 23 -> 24", () => {
-  it("SOURCES_TOTAL is 42", () => {
-    expect(SOURCES_TOTAL).toBe(42);
-    expect(SOURCES_REGISTRY.length).toBe(42);
+describe("NHTSA FARS registry entry", () => {
+  // The absolute SOURCES_TOTAL number is guarded by the claims-anchor
+  // V-1 test against platformConstants. This file's contract is narrower:
+  // NHTSA FARS must remain a federal entry, and the count must stay
+  // consistent across REGISTRY length, SOURCES_TOTAL, and the breakdown
+  // sum. Future source additions update V-1, not this file.
+  it("SOURCES_TOTAL matches the flat registry length and the category sum", () => {
+    expect(SOURCES_REGISTRY.length).toBe(SOURCES_TOTAL);
+    expect(
+      SOURCES_BREAKDOWN.federal +
+        SOURCES_BREAKDOWN.state +
+        SOURCES_BREAKDOWN.nonprofit,
+    ).toBe(SOURCES_TOTAL);
   });
 
-  it("federal=24, state=9, nonprofit=9", () => {
-    expect(SOURCES_BREAKDOWN).toEqual({
-      federal: 24,
-      state: 9,
-      nonprofit: 9,
-    });
-  });
-
-  it("NHTSA FARS is the new federal entry", () => {
+  it("NHTSA FARS is in the Federal Agencies category", () => {
     const fars = SOURCES_BY_CATEGORY["Federal Agencies"].find(
       (s) => s.name === "NHTSA FARS",
     );
