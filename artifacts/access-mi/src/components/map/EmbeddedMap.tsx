@@ -17,6 +17,26 @@ L.Icon.Default.mergeOptions({
 
 const MICHIGAN_CENTER: [number, number] = [44.3148, -85.6024];
 
+// Inset the visible bounds so basemap city labels at the viewport edge
+// have safe space and do not get clipped against the container.
+function fitWithPadding(
+  map: L.Map,
+  center: [number, number],
+  zoom: number,
+  animate: boolean,
+) {
+  const size = map.getSize();
+  if (size.x === 0 || size.y === 0) {
+    map.setView(center, zoom, { animate });
+    return;
+  }
+  const centerPx = map.project(L.latLng(center), zoom);
+  const half = size.divideBy(2);
+  const sw = map.unproject(centerPx.subtract(half), zoom);
+  const ne = map.unproject(centerPx.add(half), zoom);
+  map.fitBounds(L.latLngBounds(sw, ne), { padding: [40, 40], animate });
+}
+
 function getMarkerColor(type: string): string {
   const colors: Record<string, string> = {
     hospital: "#003B5C",
@@ -85,6 +105,8 @@ const EmbeddedMap = memo(function EmbeddedMap({
       },
     ).addTo(map);
 
+    fitWithPadding(map, center, zoom, false);
+
     mapInstanceRef.current = map;
 
     return () => {
@@ -102,7 +124,7 @@ const EmbeddedMap = memo(function EmbeddedMap({
         ? COUNTY_CENTERS[county]
         : MICHIGAN_CENTER;
     const zoom = county ? 10 : 7;
-    map.setView(center, zoom, { animate: true });
+    fitWithPadding(map, center, zoom, true);
   }, [county]);
 
   // Add markers

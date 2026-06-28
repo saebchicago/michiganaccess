@@ -130,6 +130,7 @@ export default function PopulationSparkline({ county }: Props) {
               tickLine={false}
               axisLine={false}
               interval={0}
+              padding={{ left: 14, right: 14 }}
             />
             <YAxis domain={["dataMin - 500", "dataMax + 500"]} hide />
             <Tooltip

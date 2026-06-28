@@ -1,5 +1,5 @@
 // Federal contractor data for Michigan
-// Sources: USASpending.gov (live, no key) + SAM.gov Entity API (free key)
+// Source: USASpending.gov (live, no key). SAM.gov Entity API planned, not wired.
 
 import { useQuery } from "@tanstack/react-query";
 
@@ -20,21 +20,29 @@ export interface FederalContractor {
 
 export async function fetchTopMichiganContractors(
   county?: string,
-  limit: number = 20
+  limit: number = 20,
 ): Promise<FederalContractor[]> {
   try {
     const body: Record<string, unknown> = {
       filters: {
         time_period: [{ start_date: "2023-10-01", end_date: "2024-09-30" }],
         place_of_performance_locations: [
-          { country: "USA", state: "MI", ...(county ? { county: county.toUpperCase() } : {}) },
+          {
+            country: "USA",
+            state: "MI",
+            ...(county ? { county: county.toUpperCase() } : {}),
+          },
         ],
         award_type_codes: ["A", "B", "C", "D"],
       },
       fields: [
-        "recipient_name", "recipient_unique_id",
-        "recipient_location_city_name", "recipient_location_county_name",
-        "naics_code", "naics_description", "awarding_agency_name",
+        "recipient_name",
+        "recipient_unique_id",
+        "recipient_location_city_name",
+        "recipient_location_county_name",
+        "naics_code",
+        "naics_description",
+        "awarding_agency_name",
         "total_obligated_amount",
       ],
       sort: "total_obligated_amount",
@@ -45,7 +53,11 @@ export async function fetchTopMichiganContractors(
 
     const res = await fetch(
       "https://api.usaspending.gov/api/v2/search/spending_by_award/",
-      { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      },
     );
     if (!res.ok) return [];
     const data = await res.json();
