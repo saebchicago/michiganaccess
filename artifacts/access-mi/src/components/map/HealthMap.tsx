@@ -183,6 +183,26 @@ interface HealthMapProps {
 const MICHIGAN_CENTER: [number, number] = [44.3148, -85.6024];
 const MICHIGAN_ZOOM = 7;
 
+// Inset the visible bounds so basemap city labels at the viewport edge
+// have safe space and do not get clipped against the container.
+function fitWithPadding(
+  map: L.Map,
+  center: [number, number],
+  zoom: number,
+  animate: boolean,
+) {
+  const size = map.getSize();
+  if (size.x === 0 || size.y === 0) {
+    map.setView(center, zoom, { animate });
+    return;
+  }
+  const centerPx = map.project(L.latLng(center), zoom);
+  const half = size.divideBy(2);
+  const sw = map.unproject(centerPx.subtract(half), zoom);
+  const ne = map.unproject(centerPx.add(half), zoom);
+  map.fitBounds(L.latLngBounds(sw, ne), { padding: [40, 40], animate });
+}
+
 export default function HealthMap({
   facilities,
   activeLayers,
@@ -248,6 +268,8 @@ export default function HealthMap({
       },
     ).addTo(map);
 
+    fitWithPadding(map, MICHIGAN_CENTER, MICHIGAN_ZOOM, false);
+
     mapInstanceRef.current = map;
 
     return () => {
@@ -262,9 +284,9 @@ export default function HealthMap({
     const map = mapInstanceRef.current;
     if (!map) return;
     if (county && COUNTY_CENTERS[county]) {
-      map.setView(COUNTY_CENTERS[county], 10, { animate: true });
+      fitWithPadding(map, COUNTY_CENTERS[county], 10, true);
     } else {
-      map.setView(MICHIGAN_CENTER, MICHIGAN_ZOOM, { animate: true });
+      fitWithPadding(map, MICHIGAN_CENTER, MICHIGAN_ZOOM, true);
     }
   }, [county]);
 
