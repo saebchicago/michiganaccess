@@ -37,7 +37,7 @@ export async function fetchTopMichiganContractors(
       },
       fields: [
         "recipient_name",
-        "recipient_unique_id",
+        "Recipient UEI",
         "recipient_location_city_name",
         "recipient_location_county_name",
         "naics_code",
@@ -63,7 +63,7 @@ export async function fetchTopMichiganContractors(
     const data = await res.json();
 
     return (data.results || []).map((r: Record<string, unknown>) => ({
-      uei: (r.recipient_unique_id as string) || "",
+      uei: (r["Recipient UEI"] as string) || "",
       name: (r.recipient_name as string) || "",
       city: (r.recipient_location_city_name as string) || "",
       county: (r.recipient_location_county_name as string) || county || "",
