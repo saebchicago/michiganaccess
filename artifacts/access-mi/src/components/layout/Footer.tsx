@@ -28,7 +28,6 @@ import {
 import { replayTour } from "@/components/shared/OnboardingTour";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { DATA_SOURCE_DISPLAY } from "@/config/platformConstants";
-// toast import removed - no longer needed
 
 function FooterSection({
   title,
