@@ -459,35 +459,40 @@ const EnvironmentPage = () => {
       <section className="py-12 md:py-16">
         <div className="container">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="mb-8 inline-flex w-max min-w-full sm:w-auto sm:min-w-0 gap-1">
-              <TabsTrigger value="air-water" className="text-xs sm:text-sm">
-                {t("environment.airWater")}
-              </TabsTrigger>
-              <TabsTrigger value="water-safety" className="text-xs sm:text-sm">
-                Water Safety
-              </TabsTrigger>
-              <TabsTrigger value="energy" className="text-xs sm:text-sm">
-                {t("environment.cleanEnergy")}
-              </TabsTrigger>
-              <TabsTrigger value="programs" className="text-xs sm:text-sm">
-                Programs & Rebates
-              </TabsTrigger>
-              <TabsTrigger value="recycling" className="text-xs sm:text-sm">
-                {t("environment.recycling")}
-              </TabsTrigger>
-              <TabsTrigger value="great-lakes" className="text-xs sm:text-sm">
-                {t("environment.greatLakes")}
-              </TabsTrigger>
-              <TabsTrigger value="justice" className="text-xs sm:text-sm">
-                {t("environment.envJustice")}
-              </TabsTrigger>
-              <TabsTrigger
-                value="food-access"
-                className="text-xs sm:text-sm whitespace-nowrap"
-              >
-                Food Access
-              </TabsTrigger>
-            </TabsList>
+            <div className="mb-8 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+              <TabsList className="inline-flex w-max min-w-full sm:w-auto sm:min-w-0 gap-1">
+                <TabsTrigger value="air-water" className="text-xs sm:text-sm">
+                  {t("environment.airWater")}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="water-safety"
+                  className="text-xs sm:text-sm"
+                >
+                  Water Safety
+                </TabsTrigger>
+                <TabsTrigger value="energy" className="text-xs sm:text-sm">
+                  {t("environment.cleanEnergy")}
+                </TabsTrigger>
+                <TabsTrigger value="programs" className="text-xs sm:text-sm">
+                  Programs & Rebates
+                </TabsTrigger>
+                <TabsTrigger value="recycling" className="text-xs sm:text-sm">
+                  {t("environment.recycling")}
+                </TabsTrigger>
+                <TabsTrigger value="great-lakes" className="text-xs sm:text-sm">
+                  {t("environment.greatLakes")}
+                </TabsTrigger>
+                <TabsTrigger value="justice" className="text-xs sm:text-sm">
+                  {t("environment.envJustice")}
+                </TabsTrigger>
+                <TabsTrigger
+                  value="food-access"
+                  className="text-xs sm:text-sm whitespace-nowrap"
+                >
+                  Food Access
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
             {/* Air & Water Quality */}
             <TabsContent value="air-water">
@@ -864,8 +869,8 @@ const EnvironmentPage = () => {
                     <Card className="h-full">
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-base">
-                          <Shield className="h-4 w-4 text-michigan-gold-deep" /> Lead
-                          Service Lines
+                          <Shield className="h-4 w-4 text-michigan-gold-deep" />{" "}
+                          Lead Service Lines
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
@@ -1210,8 +1215,8 @@ const EnvironmentPage = () => {
                 {/* LIHEAP */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-michigan-coral-deep" /> Energy
-                    Bill Assistance
+                    <Shield className="h-5 w-5 text-michigan-coral-deep" />{" "}
+                    Energy Bill Assistance
                   </h2>
                   <div className="grid gap-6 sm:grid-cols-2">
                     <Card className="hover:border-michigan-coral/30 transition-colors">
@@ -1295,8 +1300,8 @@ const EnvironmentPage = () => {
                 {/* Residential Rebates */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <Zap className="h-5 w-5 text-michigan-gold-deep" /> Residential
-                    Rebates - MiHER ($211M from IRA)
+                    <Zap className="h-5 w-5 text-michigan-gold-deep" />{" "}
+                    Residential Rebates - MiHER ($211M from IRA)
                   </h2>
                   <p className="text-sm text-muted-foreground mb-4">
                     Michigan Home Energy Rebate program launched statewide April
@@ -1413,8 +1418,8 @@ const EnvironmentPage = () => {
                 {/* Clean Financing */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-michigan-teal-deep" /> Clean
-                    Financing
+                    <TrendingUp className="h-5 w-5 text-michigan-teal-deep" />{" "}
+                    Clean Financing
                   </h2>
                   <Card className="hover:border-michigan-teal/30 transition-colors">
                     <CardContent className="p-6">
@@ -1462,8 +1467,8 @@ const EnvironmentPage = () => {
                 {/* Utility Programs */}
                 <motion.div variants={fadeUp}>
                   <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-                    <Leaf className="h-5 w-5 text-michigan-forest-deep" /> Utility
-                    Programs
+                    <Leaf className="h-5 w-5 text-michigan-forest-deep" />{" "}
+                    Utility Programs
                   </h2>
                   <div className="grid gap-6 sm:grid-cols-2">
                     <Card className="hover:border-michigan-forest/30 transition-colors">
