@@ -233,10 +233,10 @@ export default function TransparencyHubPage() {
               <Info className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
               <p className="text-xs text-muted-foreground leading-relaxed">
                 All data on this page is from public records: USASpending.gov,
-                SAM.gov, Michigan MiTN, Open States, OPM FedScope, ProPublica
-                Nonprofit Explorer. This platform does not endorse or critique
-                any individual, organization, or party. All parties and
-                contractors are shown equally.
+                Michigan MiTN, Open States, OPM FedScope, ProPublica Nonprofit
+                Explorer. This platform does not endorse or critique any
+                individual, organization, or party. All parties and contractors
+                are shown equally.
               </p>
             </div>
           </CardContent>
