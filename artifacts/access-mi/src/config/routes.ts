@@ -201,6 +201,21 @@ const pages = {
   EnvironmentalMethodology: lazy(
     () => import("@/pages/methodology/EnvironmentalMethodology"),
   ),
+  EnvironmentalJusticePage: lazy(
+    () => import("@/pages/EnvironmentalJusticePage"),
+  ),
+  CohortBuilderPage: lazy(() => import("@/pages/CohortBuilderPage")),
+  ClimateVulnerabilityPage: lazy(
+    () => import("@/pages/ClimateVulnerabilityPage"),
+  ),
+  ScenarioStudioPage: lazy(() => import("@/pages/ScenarioStudioPage")),
+  SdohRiskStratificationPage: lazy(
+    () => import("@/pages/SdohRiskStratificationPage"),
+  ),
+  InvestmentImpactPage: lazy(() => import("@/pages/InvestmentImpactPage")),
+  AnalystCommandCenterPage: lazy(
+    () => import("@/pages/AnalystCommandCenterPage"),
+  ),
 };
 
 // ── Route Table ─────────────────────────────────────────────────────────────
@@ -756,6 +771,41 @@ export const APP_ROUTES: RouteEntry[] = [
     label: "Air Quality",
   },
   {
+    path: "/environment/justice",
+    component: pages.EnvironmentalJusticePage,
+    label: "Environmental Justice Pathways",
+  },
+  {
+    path: "/environment/climate",
+    component: pages.ClimateVulnerabilityPage,
+    label: "Climate Vulnerability",
+  },
+  {
+    path: "/cohort-builder",
+    component: pages.CohortBuilderPage,
+    label: "Cohort Builder",
+  },
+  {
+    path: "/scenario-studio",
+    component: pages.ScenarioStudioPage,
+    label: "Scenario Studio",
+  },
+  {
+    path: "/sdoh-risk",
+    component: pages.SdohRiskStratificationPage,
+    label: "SDOH Risk Stratification",
+  },
+  {
+    path: "/investment-impact",
+    component: pages.InvestmentImpactPage,
+    label: "Investment Impact",
+  },
+  {
+    path: "/analyst",
+    component: pages.AnalystCommandCenterPage,
+    label: "Analyst Command Center",
+  },
+  {
     path: "/map/layers",
     component: pages.DeepMapPage,
     label: "Deep Map - GIS Intelligence",
@@ -893,6 +943,13 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Detection Gap", href: "/detection-gap", badge: "Research" },
       { label: "ZIP Finder", href: "/zip-finder", badge: "New" },
       { label: "Service Area Builder", href: "/service-area", badge: "New" },
+      { label: "Analyst Command Center", href: "/analyst", badge: "New" },
+      { label: "Cohort Builder", href: "/cohort-builder", badge: "New" },
+      { label: "EJ Pathways", href: "/environment/justice", badge: "New" },
+      { label: "Climate Vulnerability", href: "/environment/climate", badge: "New" },
+      { label: "Scenario Studio", href: "/scenario-studio", badge: "New" },
+      { label: "SDOH Risk Engine", href: "/sdoh-risk", badge: "New" },
+      { label: "Investment Impact", href: "/investment-impact", badge: "New" },
       { label: "Public Investment", href: "/public-investment", badge: "New" },
       { label: "Deep Map (GIS)", href: "/map/layers", badge: "New" },
       { label: "Decision Science", href: "/decision-science", badge: "New" },
@@ -916,6 +973,11 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
     label: "Environment",
     children: [
       { label: "Environment Overview", href: "/environment" },
+      {
+        label: "Environmental Justice Pathways",
+        href: "/environment/justice",
+        badge: "New",
+      },
       {
         label: "Water Safety & PFAS",
         href: "/environment/water",
@@ -1032,6 +1094,13 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       },
       { label: "ZIP Finder", href: "/zip-finder", badge: "New" },
       { label: "Service Area Builder", href: "/service-area", badge: "New" },
+      { label: "Analyst Command Center", href: "/analyst", badge: "New" },
+      { label: "Cohort Builder", href: "/cohort-builder", badge: "New" },
+      { label: "EJ Pathways", href: "/environment/justice", badge: "New" },
+      { label: "Climate Vulnerability", href: "/environment/climate", badge: "New" },
+      { label: "Scenario Studio", href: "/scenario-studio", badge: "New" },
+      { label: "SDOH Risk Engine", href: "/sdoh-risk", badge: "New" },
+      { label: "Investment Impact", href: "/investment-impact", badge: "New" },
       { label: "Public Investment", href: "/public-investment", badge: "New" },
       {
         label: "Water Safety & PFAS",

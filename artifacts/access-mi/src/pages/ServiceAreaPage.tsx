@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { MapPin, Plus, X, Download, Share2, Users, Heart, Stethoscope, BarChart3 } from "lucide-react";
+import { MapPin, Plus, X, Download, Share2, Users, Stethoscope, BarChart3, Layers, FileText, Globe } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -15,6 +15,8 @@ import { IRS_ZIP_DATA } from "@/data/irs-zip-income";
 import { MICHIGAN_GEOCARE } from "@/data/geocare";
 import { ZIP_TO_COUNTY } from "@/data/michiganZips";
 import { toast } from "sonner";
+import { SERVICE_AREA_TEMPLATES } from "@/data/serviceAreaTemplates";
+import { downloadServiceAreaDataPack } from "@/utils/generateServiceAreaDataPack";
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -84,6 +86,15 @@ export default function ServiceAreaPage() {
 
   const clearAll = useCallback(() => setSelectedZips(new Set()), []);
 
+  const loadTemplate = useCallback((counties: string[], label: string) => {
+    const zips = new Set<string>();
+    counties.forEach((county) => {
+      zipsForCounty(county).forEach((z) => zips.add(z));
+    });
+    setSelectedZips(zips);
+    toast.success(`Loaded ${label} template (${zips.size} ZIPs)`);
+  }, []);
+
   // Search suggestions
   const suggestions = useMemo(() => {
     if (!searchTerm || searchTerm.length < 2) return [];
@@ -143,6 +154,12 @@ export default function ServiceAreaPage() {
     navigator.clipboard.writeText(url).then(() => toast.success("Link copied to clipboard"));
   }, []);
 
+  const handleDownloadDataPack = useCallback(() => {
+    const zips = Array.from(selectedZips).sort();
+    downloadServiceAreaDataPack({ zips, label: "Service area selection" });
+    toast.success("CHNA data pack downloaded");
+  }, [selectedZips]);
+
   const handleDownloadCsv = useCallback(() => {
     const zips = Array.from(selectedZips).sort();
     const headers = ["ZIP", "City", "County", "Population", "Median Income", "EITC %", "FQHC Penetration %"];
@@ -194,6 +211,28 @@ export default function ServiceAreaPage() {
       </section>
 
       <div className="container py-8 space-y-6">
+        <Card>
+          <CardContent className="py-5 space-y-3">
+            <h2 className="text-sm font-bold text-foreground">Geographic templates</h2>
+            <p className="text-xs text-muted-foreground">
+              Load a predefined Michigan region. Templates use county geography only.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {SERVICE_AREA_TEMPLATES.map((template) => (
+                <Button
+                  key={template.id}
+                  variant="outline"
+                  size="sm"
+                  className="text-xs"
+                  onClick={() => loadTemplate(template.counties, template.label)}
+                >
+                  {template.label}
+                </Button>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Search / Add */}
         <Card>
           <CardContent className="py-5 space-y-4">
@@ -269,7 +308,10 @@ export default function ServiceAreaPage() {
                       <Share2 className="h-3 w-3" /> Share
                     </Button>
                     <Button variant="outline" size="sm" onClick={handleDownloadCsv} className="gap-1">
-                      <Download className="h-3 w-3" /> Download CSV
+                      <Download className="h-3 w-3" /> CSV
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={handleDownloadDataPack} className="gap-1">
+                      <FileText className="h-3 w-3" /> CHNA Pack
                     </Button>
                   </div>
                 </div>
@@ -321,6 +363,41 @@ export default function ServiceAreaPage() {
               </CardContent>
             </Card>
           </motion.div>
+        )}
+
+        {selectedZips.size > 0 && (
+          <Card>
+            <CardContent className="py-5">
+              <h2 className="text-sm font-bold text-foreground mb-3">Related tools</h2>
+              <div className="flex flex-wrap gap-2">
+                <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
+                  <Link to="/map/layers">
+                    <Layers className="h-3 w-3" /> Deep Map
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
+                  <Link to="/chna-explorer">
+                    <FileText className="h-3 w-3" /> CHNA Explorer
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
+                  <Link to="/health-equity-atlas">
+                    <Globe className="h-3 w-3" /> Equity Atlas
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
+                  <Link to="/environment/justice">
+                    <MapPin className="h-3 w-3" /> EJ Pathways
+                  </Link>
+                </Button>
+                <Button variant="outline" size="sm" asChild className="gap-1 text-xs">
+                  <Link to="/cohort-builder">
+                    <BarChart3 className="h-3 w-3" /> Cohort Builder
+                  </Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         )}
 
         {/* ZIP detail table */}

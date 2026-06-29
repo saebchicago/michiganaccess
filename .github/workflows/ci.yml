@@ -23,6 +23,8 @@ jobs:
           run_install: false
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Secret hygiene gate
+        run: node scripts/check-secrets.mjs
       - name: Typecheck
         working-directory: artifacts/access-mi
         run: pnpm typecheck

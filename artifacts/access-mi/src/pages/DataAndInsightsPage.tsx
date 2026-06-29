@@ -28,6 +28,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { EquityInsightCard } from "@/components/shared/EquityInsightCard";
 import DataProvenance from "@/components/shared/DataProvenance";
+import AnalystToolGrid from "@/components/analyst/AnalystToolGrid";
+import { ANALYST_DASHBOARDS } from "@/data/analystDashboardRegistry";
 import { toast } from "sonner";
 import { RESOURCE_COUNT_DISPLAY } from "@/config/platformConstants";
 
@@ -217,12 +219,17 @@ export default function DataAndInsightsPage() {
               professionals, researchers, journalists, planners, and civic
               organizations.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 items-center">
               <Badge className="bg-michigan-navy text-white">
                 Real-time Data
               </Badge>
               <Badge variant="outline">Free & Open</Badge>
               <Badge variant="outline">83 Counties</Badge>
+              <Link to="/analyst">
+                <Button size="sm" className="gap-1.5 text-xs h-8">
+                  Analyst Command Center <ArrowRight className="h-3 w-3" />
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -364,6 +371,18 @@ export default function DataAndInsightsPage() {
                   </CardContent>
                 </Card>
               </Link>
+            </div>
+
+            <div>
+              <h3 className="text-base font-semibold text-foreground mb-3">
+                Analyst & Scenario Dashboards
+              </h3>
+              <AnalystToolGrid
+                tools={ANALYST_DASHBOARDS.filter((d) =>
+                  ["cohort-builder", "climate-vulnerability", "scenario-studio", "sdoh-risk"].includes(d.id),
+                )}
+                columns={2}
+              />
             </div>
 
             {/* ── Policy Impact Projections ── */}
@@ -635,15 +654,24 @@ export default function DataAndInsightsPage() {
 
           {/* Tab 4: For Analysts & Journalists */}
           <TabsContent value="analysts" className="space-y-8">
-            <div>
-              <h2 className="text-2xl font-bold text-foreground mb-2">
-                For Analysts & Journalists
-              </h2>
-              <p className="text-muted-foreground mb-6">
-                Use Access Michigan data in your reporting, research, or policy
-                work.
-              </p>
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground mb-2">
+                  For Analysts & Journalists
+                </h2>
+                <p className="text-muted-foreground mb-2 max-w-2xl">
+                  Cohort builder, climate scenarios, SDOH risk models, and investment
+                  attribution - with integrity labels on every metric.
+                </p>
+              </div>
+              <Link to="/analyst">
+                <Button className="gap-2 shrink-0">
+                  Open Command Center <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
             </div>
+
+            <AnalystToolGrid tools={ANALYST_DASHBOARDS} columns={3} />
 
             <div className="grid gap-6 md:grid-cols-2">
               <Card>

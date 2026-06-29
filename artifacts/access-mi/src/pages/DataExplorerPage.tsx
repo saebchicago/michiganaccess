@@ -3,6 +3,7 @@
  * Browse ACS tables by topic, select geography, visualize + compare.
  */
 import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Search, BarChart3, Download, Users, DollarSign, Home,
@@ -256,6 +257,22 @@ export default function DataExplorerPage() {
         <p className="text-[10px] text-muted-foreground text-center">
           Data from the U.S. Census Bureau American Community Survey via the Census Bureau API. All data is public domain.
         </p>
+
+        <Card className="border-primary/20 bg-primary/[0.03]">
+          <CardContent className="py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold text-foreground">Need multi-filter ZIP cohorts?</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Combine Census context with EJ, access, and SDOH filters in the Analyst Command Center.
+              </p>
+            </div>
+            <Link to="/analyst">
+              <Button size="sm" variant="outline" className="text-xs gap-1">
+                Analyst hub <ChevronRight className="h-3 w-3" />
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
       </div>
     </Layout>
   );

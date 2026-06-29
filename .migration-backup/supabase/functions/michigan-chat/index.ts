@@ -85,7 +85,7 @@ serve(async (req) => {
     // Trim to last 20 messages to keep context manageable
     const trimmedMessages = messages.slice(-20);
 
-    const MISTRAL_API_KEY = Deno.env.get("MISTRAL_API_KEY") || Deno.env.get("VITE_MISTRAL_API_KEY");
+    const MISTRAL_API_KEY = Deno.env.get("MISTRAL_API_KEY");
     if (!MISTRAL_API_KEY) throw new Error("MISTRAL_API_KEY is not configured");
 
     const response = await fetch(

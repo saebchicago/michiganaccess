@@ -252,6 +252,26 @@ export default function ImpactPage() {
             counties to surface actionable insights for residents, health
             systems, and community organizations.
           </motion.p>
+          <motion.div
+            variants={fade}
+            custom={3}
+            initial="hidden"
+            animate="visible"
+            className="mt-6 flex flex-wrap justify-center gap-3"
+          >
+            <Link
+              to="/investment-impact"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+            >
+              Investment impact tracking
+            </Link>
+            <Link
+              to="/analyst"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-border px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted transition-colors"
+            >
+              Analyst command center
+            </Link>
+          </motion.div>
         </div>
       </section>
 

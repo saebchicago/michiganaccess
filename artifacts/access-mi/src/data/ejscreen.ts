@@ -29,7 +29,9 @@ export interface EjscreenRecord {
   data_year: number;
 }
 
-export const MICHIGAN_EJSCREEN: Record<string, EjscreenRecord> = {
+import { MICHIGAN_EJSCREEN_GENERATED } from "./ejscreen.generated";
+
+const HAND_CURATED_EJSCREEN: Record<string, EjscreenRecord> = {
   // Urban - Detroit core (high EJ burden)
   "48201": { zcta: "48201", ej_index: 82, pm25_percentile: 78, ozone_percentile: 72, traffic_percentile: 88, wastewater_percentile: 75, rmp_percentile: 80, pct_low_income: 42.1, pct_minority: 82.4, pct_less_hs: 18.3, data_year: 2023 },
   // Wayne - Dearborn (moderate-high, industrial corridor)
@@ -60,6 +62,12 @@ export const MICHIGAN_EJSCREEN: Record<string, EjscreenRecord> = {
   "48067": { zcta: "48067", ej_index: 26, pm25_percentile: 50, ozone_percentile: 48, traffic_percentile: 52, wastewater_percentile: 28, rmp_percentile: 24, pct_low_income: 9.8, pct_minority: 14.2, pct_less_hs: 3.6, data_year: 2023 },
   // Macomb - Sterling Heights (suburban, low-moderate)
   "48310": { zcta: "48310", ej_index: 34, pm25_percentile: 58, ozone_percentile: 54, traffic_percentile: 60, wastewater_percentile: 38, rmp_percentile: 35, pct_low_income: 10.2, pct_minority: 22.8, pct_less_hs: 6.8, data_year: 2023 },
+};
+
+/** Hand-curated seed extended by ejscreen.generated.ts when ingest scripts run. */
+export const MICHIGAN_EJSCREEN: Record<string, EjscreenRecord> = {
+  ...MICHIGAN_EJSCREEN_GENERATED,
+  ...HAND_CURATED_EJSCREEN,
 };
 
 export const EPA_EJSCREEN_SOURCE = "EPA EJSCREEN v2.3, ZCTA-level aggregation";

@@ -1,11 +1,18 @@
 // src/components/AccessChat.tsx
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
+import { Send, Bot, User, Sparkles, Loader2, Filter } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
+import {
+  searchVerifiedClaims,
+  formatVerifiedClaimsContext,
+  EXAMPLE_ACCESSMI_QUERIES,
+} from "@/utils/verifiedClaimsRag";
+import { resolveCohortFromNaturalLanguage } from "@/utils/cohortNlResolver";
 
 const MI_COUNTIES = [
   "Alcona",
@@ -144,6 +151,8 @@ async function fetchContextForCounty(county: string): Promise<string> {
 type ChatMessage = {
   role: "user" | "assistant";
   content: string;
+  cohortLink?: string;
+  cohortSummary?: string;
 };
 
 export function AccessChat() {
@@ -177,20 +186,33 @@ export function AccessChat() {
     const historySlice = nextMessages.slice(-20);
 
     try {
-      // RAG: detect county in user message, fetch Supabase context
       const detectedCounty = detectCounty(trimmed);
-      let dataContext:
-        | { county: string; data: Record<string, unknown> }
-        | undefined;
+      const cohortNl = resolveCohortFromNaturalLanguage(trimmed);
+      const ragMatches = searchVerifiedClaims(trimmed, 8);
+      const verifiedBlock = formatVerifiedClaimsContext(ragMatches);
+
+      const dataPayload: Record<string, unknown> = {};
+      if (cohortNl.matched) {
+        dataPayload.cohortBuilderLink = cohortNl.href;
+        dataPayload.cohortCriteriaSummary = cohortNl.summary;
+      }
+      if (verifiedBlock) {
+        dataPayload.verifiedClaims = verifiedBlock;
+        dataPayload.verifiedClaimCount = ragMatches.length;
+      }
+
       if (detectedCounty) {
         const contextStr = await fetchContextForCounty(detectedCounty);
-        if (contextStr) {
-          dataContext = {
-            county: detectedCounty,
-            data: { resources: contextStr },
-          };
-        }
+        if (contextStr) dataPayload.countyResources = contextStr;
       }
+
+      const dataContext =
+        Object.keys(dataPayload).length > 0
+          ? {
+              county: detectedCounty ?? "Michigan",
+              data: dataPayload,
+            }
+          : undefined;
 
       const res = await fetch("/.netlify/functions/chat-mistral", {
         method: "POST",
@@ -200,10 +222,13 @@ export function AccessChat() {
             {
               role: "system",
               content:
-                "You are an assistant for Access Michigan (accessmi.org), a civic platform for all 83 Michigan counties. " +
-                "Only reference resources and programs from the CONTEXT provided. " +
-                "If you don't have specific information, say: 'I don't have that specific data - please call Michigan 211 by dialing 2-1-1 for personalized help.' " +
-                "Never invent facility names, addresses, or phone numbers. Be clear, concise, and helpful.",
+                "You are an assistant for Access Michigan (accessmi.org), an independent civic platform for all 83 Michigan counties. " +
+                "Ground every numeric claim in the VERIFIED CLAIMS CONTEXT when provided. " +
+                "Label unverified or modeled figures clearly. " +
+                "Only reference facilities and programs from the county resources context when provided. " +
+                "If you lack verified data, say: 'I do not have verified data for that - see /data-sources or call Michigan 211 (dial 2-1-1).' " +
+                "Never invent facility names, addresses, phone numbers, or statistics. Be clear, concise, and helpful. " +
+                "When cohortBuilderLink is provided in data context, mention the Cohort Builder deep link for ZIP filtering.",
             },
             ...historySlice,
           ],
@@ -217,6 +242,8 @@ export function AccessChat() {
       const assistantMessage: ChatMessage = {
         role: "assistant",
         content: data.reply || "",
+        cohortLink: cohortNl.matched ? cohortNl.href : undefined,
+        cohortSummary: cohortNl.matched ? cohortNl.summary : undefined,
       };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (err: any) {
@@ -245,8 +272,8 @@ export function AccessChat() {
               <CardTitle className="text-lg">Ask Access Michigan</CardTitle>
             </div>
             <p className="text-sm text-muted-foreground">
-              Questions about Michigan services, benefits, or MI-Access
-              assessments.
+              Questions about Michigan services, benefits, or verified public
+              data. Answers cite the source manifest when available.
             </p>
           </CardHeader>
           <CardContent className="p-0">
@@ -285,6 +312,18 @@ export function AccessChat() {
                       }`}
                     >
                       {m.content}
+                      {m.cohortLink && (
+                        <div className="mt-2 pt-2 border-t border-border/50">
+                          <Link
+                            to={m.cohortLink}
+                            className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-medium"
+                          >
+                            <Filter className="h-3 w-3" />
+                            Open Cohort Builder
+                            {m.cohortSummary ? ` (${m.cohortSummary})` : ""}
+                          </Link>
+                        </div>
+                      )}
                     </div>
                     {m.role === "user" && (
                       <div className="h-6 w-6 rounded-full bg-michigan-gold/20 flex items-center justify-center flex-shrink-0 mt-1">
@@ -329,9 +368,22 @@ export function AccessChat() {
                   <Send className="h-4 w-4" />
                 </Button>
               </div>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {EXAMPLE_ACCESSMI_QUERIES.map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    className="text-[10px] rounded-full border px-2 py-0.5 text-muted-foreground hover:bg-muted/60 transition-colors"
+                    onClick={() => setInput(q)}
+                    disabled={loading}
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
               <p className="mt-1.5 text-[9px] text-muted-foreground">
-                This assistant explains Michigan services and public data. It
-                cannot provide medical or legal advice.
+                Grounded in verified claims when possible. Not medical or legal
+                advice.
               </p>
             </form>
 

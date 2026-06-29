@@ -770,6 +770,14 @@ const PublicInvestmentPage = () => {
               How federal and municipal capital flows through Michigan's 83
               counties - tracking funding, bonds, and fiscal vulnerability.
             </motion.p>
+            <motion.div variants={fadeUp} custom={3} className="mt-6 flex flex-wrap justify-center gap-2">
+              <Button size="sm" variant="secondary" asChild className="text-xs">
+                <Link to="/investment-impact">Investment impact timeline</Link>
+              </Button>
+              <Button size="sm" variant="outline" asChild className="text-xs">
+                <Link to="/analyst">Analyst command center</Link>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </section>

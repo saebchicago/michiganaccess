@@ -14,6 +14,109 @@ export type Database = {
   }
   public: {
     Tables: {
+      analyst_cohort_comments: {
+        Row: {
+          comment_id: string
+          share_id: string
+          author_label: string
+          body: string
+          created_at: string
+        }
+        Insert: {
+          comment_id?: string
+          share_id: string
+          author_label: string
+          body: string
+          created_at?: string
+        }
+        Update: {
+          comment_id?: string
+          share_id?: string
+          author_label?: string
+          body?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analyst_cohort_comments_share_id_fkey"
+            columns: ["share_id"]
+            isOneToOne: false
+            referencedRelation: "analyst_cohorts"
+            referencedColumns: ["share_id"]
+          },
+        ]
+      }
+      analyst_cohort_versions: {
+        Row: {
+          version_id: string
+          share_id: string
+          version_number: number
+          criteria: Json
+          enabled: Json
+          result_count: number
+          change_note: string | null
+          created_at: string
+        }
+        Insert: {
+          version_id?: string
+          share_id: string
+          version_number: number
+          criteria: Json
+          enabled?: Json
+          result_count?: number
+          change_note?: string | null
+          created_at?: string
+        }
+        Update: {
+          version_id?: string
+          share_id?: string
+          version_number?: number
+          criteria?: Json
+          enabled?: Json
+          result_count?: number
+          change_note?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analyst_cohort_versions_share_id_fkey"
+            columns: ["share_id"]
+            isOneToOne: false
+            referencedRelation: "analyst_cohorts"
+            referencedColumns: ["share_id"]
+          },
+        ]
+      }
+      analyst_cohorts: {
+        Row: {
+          share_id: string
+          name: string
+          criteria: Json
+          enabled: Json
+          result_count: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          share_id?: string
+          name: string
+          criteria: Json
+          enabled?: Json
+          result_count?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          share_id?: string
+          name?: string
+          criteria?: Json
+          enabled?: Json
+          result_count?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       appeal_outcomes: {
         Row: {
           appeal_type: string
@@ -982,7 +1085,40 @@ export type Database = {
       }
     }
     Functions: {
-      [_ in never]: never
+      add_analyst_cohort_comment: {
+        Args: {
+          p_share_id: string
+          p_author_label: string
+          p_body: string
+        }
+        Returns: string
+      }
+      add_analyst_cohort_version: {
+        Args: {
+          p_share_id: string
+          p_criteria: Json
+          p_enabled: Json
+          p_result_count: number
+          p_change_note?: string | null
+        }
+        Returns: string
+      }
+      get_analyst_cohort: {
+        Args: { p_share_id: string }
+        Returns: {
+          share_id: string
+          name: string
+          criteria: Json
+          enabled: Json
+          result_count: number
+          created_at: string
+          updated_at: string
+        }[]
+      }
+      get_analyst_cohort_workspace: {
+        Args: { p_share_id: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

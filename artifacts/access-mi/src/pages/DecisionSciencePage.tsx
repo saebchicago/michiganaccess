@@ -72,7 +72,17 @@ export default function DecisionSciencePage() {
           </TabsContent>
         </Tabs>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link to="/scenario-studio"
+            className="inline-flex items-center gap-1.5 text-sm text-primary font-medium hover:underline">
+            Compare climate scenarios in Scenario Studio →
+          </Link>
+          <Link to="/analyst"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors">
+            Analyst Command Center
+          </Link>
+        </div>
+        <div className="mt-4 text-center">
           <a href="https://decisionplay.app" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-sm text-primary font-medium hover:underline"
             aria-label="DecisionPlay full engine, opens in new window">

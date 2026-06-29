@@ -1,6 +1,11 @@
 // Centralized AI Service - All Mistral calls go through Netlify function
 // API key is server-side only; data context is fetched and injected per call
 
+import {
+  searchVerifiedClaims,
+  formatVerifiedClaimsContext,
+} from "@/utils/verifiedClaimsRag";
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 export interface Message {
   role: "user" | "assistant" | "system";
@@ -88,9 +93,21 @@ Keep responses concise, plain-language, and actionable.`;
     { role: "user", content: userMessage },
   ];
 
-  const dataContext: MichiganDataContext | undefined = county
-    ? { county, data: await fetchMichiganData(county, "health") }
-    : undefined;
+  const ragMatches = searchVerifiedClaims(userMessage, 6);
+  const verifiedBlock = formatVerifiedClaimsContext(ragMatches);
+
+  const data: Record<string, unknown> = {};
+  if (verifiedBlock) {
+    data.verifiedClaims = verifiedBlock;
+  }
+  if (county) {
+    Object.assign(data, await fetchMichiganData(county, "health"));
+  }
+
+  const dataContext: MichiganDataContext | undefined =
+    Object.keys(data).length > 0
+      ? { county: county ?? "Michigan", data }
+      : undefined;
 
   return callMistral(messages, dataContext);
 }

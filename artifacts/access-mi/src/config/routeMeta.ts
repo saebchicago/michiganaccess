@@ -172,6 +172,65 @@ export const ROUTE_META: RouteMeta[] = [
       "PFAS, water infrastructure, environmental justice, and disaster risk by county.",
   },
   {
+    path: "/environment/justice",
+    title: "Environmental Justice Pathways | Access Michigan",
+    description:
+      "Verified pathways linking environmental burdens, social determinants, and health access across Michigan with confidence scoring and full source provenance.",
+    h1: "Environmental justice pathways",
+    summary:
+      "Exposure-to-outcome pathways with verified sources and confidence scores.",
+  },
+  {
+    path: "/environment/climate",
+    title: "Climate and Health Vulnerability | Access Michigan",
+    description:
+      "Stress-test Michigan counties under heat, air quality, and compound climate scenarios with projected utilization bands and health facility overlays.",
+    h1: "Climate and health vulnerability",
+    summary:
+      "Scenario planning for heat, air quality, and compound events with confidence bands.",
+  },
+  {
+    path: "/cohort-builder",
+    title: "Cohort Builder | Access Michigan",
+    description:
+      "Filter Michigan ZIP codes by environmental burden, health access, and SDOH criteria. Shareable URLs and CSV export with integrity labels on every metric.",
+    h1: "Cohort builder",
+    summary:
+      "Multi-criteria ZIP filtering with provenance and shareable cohort URLs.",
+  },
+  {
+    path: "/scenario-studio",
+    title: "Scenario Planning Studio | Access Michigan",
+    description:
+      "Compare climate and health scenarios side by side with sensitivity analysis and shareable comparison URLs.",
+    h1: "Scenario planning studio",
+    summary: "Unified what-if modeling with side-by-side scenario comparison.",
+  },
+  {
+    path: "/sdoh-risk",
+    title: "SDOH Risk Stratification | Access Michigan",
+    description:
+      "County-level SDOH composite risk index with adjustable dimension weights and exportable rankings.",
+    h1: "SDOH risk stratification",
+    summary: "Custom-weight SDOH risk engine for all 83 Michigan counties.",
+  },
+  {
+    path: "/investment-impact",
+    title: "Investment and Impact Tracking | Access Michigan",
+    description:
+      "Timeline views linking federal investment flows to SDOH outcome proxies with traceable methodology.",
+    h1: "Investment and impact tracking",
+    summary: "Federal investment milestones paired with outcome trend proxies.",
+  },
+  {
+    path: "/analyst",
+    title: "Analyst Command Center | Access Michigan",
+    description:
+      "Unified hub for cohort builder, climate scenarios, SDOH risk, investment attribution, and service area dashboards.",
+    h1: "Analyst command center",
+    summary: "Launchpad for analyst self-service and scenario planning tools.",
+  },
+  {
     path: "/health",
     title: "Health | Access Michigan",
     description:

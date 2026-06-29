@@ -109,7 +109,7 @@ serve(async (req) => {
 
     const { denialType, carrier, serviceDescription, denialReason, appealType } = parsed.data;
 
-    const MISTRAL_API_KEY = Deno.env.get("MISTRAL_API_KEY") || Deno.env.get("VITE_MISTRAL_API_KEY");
+    const MISTRAL_API_KEY = Deno.env.get("MISTRAL_API_KEY");
     if (!MISTRAL_API_KEY) throw new Error("MISTRAL_API_KEY is not configured");
 
     const userPrompt = `Generate a ${appealType} appeal letter for the following denial:

@@ -1853,6 +1853,29 @@ const EnvironmentPage = () => {
                         the Environmental Justice Public Advocate works to
                         address these disparities.
                       </p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <Button size="sm" asChild>
+                          <Link to="/environment/justice">
+                            Verified EJ pathways
+                            <ArrowRight className="ml-1 h-3 w-3" />
+                          </Link>
+                        </Button>
+                        <Button size="sm" variant="outline" asChild>
+                          <Link to="/environment/climate">Climate vulnerability</Link>
+                        </Button>
+                        <Button size="sm" variant="outline" asChild>
+                          <Link to="/cohort-builder">Cohort builder</Link>
+                        </Button>
+                        <Button size="sm" variant="outline" asChild>
+                          <Link to="/scenario-studio">Scenario studio</Link>
+                        </Button>
+                        <Button size="sm" variant="outline" asChild>
+                          <Link to="/sdoh-risk">SDOH risk engine</Link>
+                        </Button>
+                        <Button size="sm" variant="ghost" asChild>
+                          <Link to="/analyst">Analyst hub</Link>
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </motion.div>

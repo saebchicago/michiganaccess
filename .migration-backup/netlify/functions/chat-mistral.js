@@ -46,8 +46,7 @@ export async function handler(event) {
     return { statusCode: 405, headers: getCors(event), body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  // Support both MISTRAL_API_KEY (server-side convention) and VITE_MISTRAL_API_KEY
-  const apiKey = process.env.MISTRAL_API_KEY || process.env.VITE_MISTRAL_API_KEY;
+  const apiKey = process.env.MISTRAL_API_KEY;
   if (!apiKey) {
     return { statusCode: 500, headers: getCors(event), body: JSON.stringify({ error: 'MISTRAL_API_KEY not configured on server' }) };
   }

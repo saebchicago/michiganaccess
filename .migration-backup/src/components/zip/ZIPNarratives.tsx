@@ -31,21 +31,21 @@ export default function ZIPNarratives({
   };
 
   const generateNarratives = async () => {
-    const apiKey = import.meta.env.VITE_MISTRAL_API_KEY;
-    if (!apiKey) return;
     setLoading(true);
     try {
       const results: Record<NarrativeRole, string> = { resident: "", strategist: "" };
       for (const role of ["resident", "strategist"] as NarrativeRole[]) {
         try {
-          const res = await fetch("https://api.mistral.ai/v1/chat/completions", {
+          const res = await fetch("/.netlify/functions/chat-mistral", {
             method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-            body: JSON.stringify({ model: "mistral-small-latest", max_tokens: 250, messages: [{ role: "user", content: PROMPTS[role] }] }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              messages: [{ role: "user", content: PROMPTS[role] }],
+            }),
           });
           if (res.ok) {
             const data = await res.json();
-            results[role] = data.choices?.[0]?.message?.content || "";
+            results[role] = data.reply || "";
           }
         } catch { /* skip failed role */ }
       }
@@ -61,7 +61,7 @@ export default function ZIPNarratives({
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-bold text-foreground">Community Narrative</h3>
         {!generated && (
-          <button onClick={generateNarratives} disabled={loading || !import.meta.env.VITE_MISTRAL_API_KEY}
+          <button onClick={generateNarratives} disabled={loading}
             className="text-xs bg-primary text-primary-foreground px-3 py-1.5 rounded-lg hover:bg-primary/90 disabled:opacity-50 transition-colors inline-flex items-center gap-1.5">
             {loading ? <><Loader2 className="h-3 w-3 animate-spin" /> Generating...</> : "Generate Narrative"}
           </button>
