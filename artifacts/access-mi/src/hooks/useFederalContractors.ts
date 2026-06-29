@@ -1,5 +1,6 @@
 // Federal contractor data for Michigan
-// Source: USASpending.gov (live, no key). SAM.gov Entity API planned, not wired.
+// Source: USASpending.gov FY2024 awards (live, no key).
+// SAM.gov v4 Exclusions feeds the debarment flag separately via src/lib/exclusions.ts (build-time, key required).
 
 import { useQuery } from "@tanstack/react-query";
 
