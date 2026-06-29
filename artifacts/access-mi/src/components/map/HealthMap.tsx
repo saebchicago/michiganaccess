@@ -256,6 +256,7 @@ export default function HealthMap({
       zoom: MICHIGAN_ZOOM,
       zoomControl: true,
       scrollWheelZoom: true,
+      zoomSnap: 0,
     });
 
     L.tileLayer(

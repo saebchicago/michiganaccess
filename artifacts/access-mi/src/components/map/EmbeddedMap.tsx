@@ -93,6 +93,7 @@ const EmbeddedMap = memo(function EmbeddedMap({
       zoom,
       zoomControl: true,
       scrollWheelZoom: false,
+      zoomSnap: 0,
     });
 
     L.tileLayer(
