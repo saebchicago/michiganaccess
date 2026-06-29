@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/select";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useMichiganContractors } from "@/hooks/useFederalContractors";
+import { useExclusions, getExclusion } from "@/lib/exclusions";
+import ExclusionBadge from "@/components/ExclusionBadge";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -54,6 +56,7 @@ export default function ContractorsPage() {
 
   const [county, setCounty] = useState<string | undefined>(undefined);
   const { data: contractors, isLoading } = useMichiganContractors(county);
+  const { map: exclusionMap, generatedAt: exclusionsDate } = useExclusions();
 
   const totalAwarded =
     contractors?.reduce((s, c) => s + c.totalAwardsFY2024, 0) ?? 0;
@@ -199,6 +202,9 @@ export default function ContractorsPage() {
                         <th className="py-2 text-xs font-semibold text-muted-foreground">
                           Industry
                         </th>
+                        <th className="py-2 text-xs font-semibold text-muted-foreground">
+                          Status
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -224,6 +230,18 @@ export default function ContractorsPage() {
                           </td>
                           <td className="py-2 text-[10px] text-muted-foreground max-w-[150px] truncate">
                             {c.naicsDescription || c.naicsCode}
+                          </td>
+                          <td className="py-2">
+                            {c.uei &&
+                              (() => {
+                                const excl = getExclusion(exclusionMap, c.uei);
+                                return excl ? (
+                                  <ExclusionBadge
+                                    record={excl}
+                                    generatedAt={exclusionsDate}
+                                  />
+                                ) : null;
+                              })()}
                           </td>
                         </tr>
                       ))}
