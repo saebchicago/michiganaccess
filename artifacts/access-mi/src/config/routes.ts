@@ -116,6 +116,7 @@ const pages = {
   ZipPlacePage: lazy(() => import("@/pages/ZipPlacePage")),
   DataAndInsightsPage: lazy(() => import("@/pages/DataAndInsightsPage")),
   DataExplorerPage: lazy(() => import("@/pages/DataExplorerPage")),
+  FoodAccessExplorerPage: lazy(() => import("@/pages/FoodAccessExplorerPage")),
   ComparePlacesPage: lazy(() => import("@/pages/ComparePlacesPage")),
   DatasetExplorerPage: lazy(() => import("@/pages/DatasetExplorerPage")),
   BriefPage: lazy(() => import("@/pages/BriefPage")),
@@ -326,6 +327,11 @@ export const APP_ROUTES: RouteEntry[] = [
     path: "/data-explorer",
     component: pages.DataExplorerPage,
     label: "Data Explorer",
+  },
+  {
+    path: "/food-access",
+    component: pages.FoodAccessExplorerPage,
+    label: "Food Access Explorer",
   },
   {
     path: "/compare",
