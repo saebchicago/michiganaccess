@@ -13,9 +13,14 @@
 //
 // State-level enrollment and benefit issuance are not part of the county
 // (388A) release, so they stay defined here:
-//   Source: USDA FNS State Data Tables (January 2026, most recent monthly total)
+//   Source: USDA FNS State Data Tables (snap-persons-6.xlsx, snap-households-6.xlsx
+//     on fna.usda.gov, "Data as of June 12, 2026", February 2026 Preliminary column -
+//     newest common month with US National for which the file's TOTAL row is a
+//     clean integer, i.e. no imputation)
 //   URL: https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap
-// Retailer counts: USDA SNAP Retailer Locator, December 2025
+//   Preliminary: yes. USDA flags February 2026 figures as preliminary and
+//     subject to significant revision.
+// Retailer counts: USDA SNAP Retailer Locator, December 31, 2025
 //   County-level retailer counts not available pending CSV parse - marked null.
 //   Statewide total (9,200+) is from V3_SOURCE_AUDIT.md.
 // MDHHS Green Book extractor (specced in V3_DESIGN.md) would reduce county lag to ~6 weeks.
@@ -23,15 +28,15 @@
 import snapCountyData from "./snapCountyGenerated.json";
 
 export interface SnapCountyData {
-  county: string;               // matches michigan-county-profiles keys (no " County" suffix)
-  fips: string;                 // 5-digit FIPS, e.g. "26163" for Wayne
-  enrollmentTotal: number | null;      // FY2022 avg monthly participants
+  county: string; // matches michigan-county-profiles keys (no " County" suffix)
+  fips: string; // 5-digit FIPS, e.g. "26163" for Wayne
+  enrollmentTotal: number | null; // FY2022 avg monthly participants
   enrollmentHouseholds: number | null; // FY2022 avg monthly certified households
-  enrollmentAsOf: string;       // "FY2022"
+  enrollmentAsOf: string; // "FY2022"
   sourceName: string;
   sourceUrl: string;
   retailerCount: number | null; // from USDA SNAP Retailer Locator; null until CSV parsed
-  retailerAsOf: string | null;  // "December 2025" or null
+  retailerAsOf: string | null; // "December 2025" or null
   retailerSourceUrl: string | null;
 }
 
@@ -48,8 +53,10 @@ export interface SnapCountyProvenance {
 }
 
 export interface SnapStateData {
-  stateTotal: number;            // current monthly state enrollment
-  stateAsOf: string;             // "January 2026"
+  stateTotal: number; // persons participating, most recent published month
+  stateAsOf: string; // e.g. "February 2026 (Preliminary)"
+  stateHouseholds: number; // households participating, same month as stateTotal
+  stateHouseholdsAsOf: string; // same vintage string as stateAsOf
   stateSourceUrl: string;
   benefitIssuanceMonthly: number; // state-level monthly benefit dollars
   benefitAsOf: string;
@@ -72,9 +79,15 @@ export const SNAP_COUNTY_PROVENANCE: SnapCountyProvenance =
   countyPayload.provenance;
 
 export const SNAP_STATE_FALLBACK: SnapStateData = {
-  // Michigan statewide monthly enrollment - USDA FNS state tables, January 2026
-  stateTotal: 1_370_000,
-  stateAsOf: "January 2026",
+  // Michigan statewide monthly enrollment - USDA FNS state tables.
+  // Read from snap-persons-6.xlsx (row "Michigan", column "February 2026 Preliminary")
+  // and snap-households-6.xlsx (same row/column), both "Data as of June 12, 2026".
+  // Preliminary flag: the file's own footer marks February 2026 figures as
+  // "preliminary and subject to significant revision".
+  stateTotal: 1_400_731,
+  stateAsOf: "February 2026 (Preliminary)",
+  stateHouseholds: 743_752,
+  stateHouseholdsAsOf: "February 2026 (Preliminary)",
   stateSourceUrl: FNS_SOURCE_URL,
   // Monthly issuance: Michigan FY2025 monthly average benefit issuance
   // USDA FNS state issuance tables - most current available
