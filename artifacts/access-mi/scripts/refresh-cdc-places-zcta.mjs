@@ -345,6 +345,67 @@ async function main() {
     );
   }
 
+  // --- Sanity gates. Fail loud rather than write silent garbage. Bands
+  //     chosen from the current MI baseline (992 registry / 983 published /
+  //     9 suppressed; diabetes non-null on every published row) with
+  //     generous headroom for legitimate year-over-year drift.
+
+  // Gate 1: ZCTA count band. The registry is static (Census 2020) until
+  // 2030, so a 900-1100 band is very generous. Anything outside is either
+  // a registry-load failure or a schema break.
+  if (rows.length < 900 || rows.length > 1100) {
+    throw new Error(
+      `Sanity: ingested row count ${rows.length} is outside the expected 900-1100 band. Registry drift or load failure suspected.`,
+    );
+  }
+
+  // Gate 2: source-side suppression fraction. PLACES has suppressed ~1% of
+  // MI ZCTAs historically (tiny UP + island denominators). If more than 20%
+  // come back with no source row, the Socrata query returned garbage or
+  // was rate-limited into partial pages.
+  const publishedFraction = 1 - suppressedZctas / rows.length;
+  if (publishedFraction < 0.8) {
+    throw new Error(
+      `Sanity: only ${(publishedFraction * 100).toFixed(1)}% of MI ZCTAs got source data (expected >= 80%). Likely a paging failure or Socrata rate limit; retry.`,
+    );
+  }
+
+  // Gate 3: schema-drift bellwether. Diabetes prevalence is a universal
+  // adult measure - if PLACES renamed the field or the parser broke, this
+  // count collapses. Assert that at least 90% of the published rows have
+  // a non-null diabetes value.
+  const publishedRows = rows.filter((_, i) => sourceRows.has(rows[i].zcta5));
+  const diabetesPresent = publishedRows.filter(
+    (r) => r.measures.diabetes.crudePrevalence !== null,
+  ).length;
+  if (
+    publishedRows.length === 0 ||
+    diabetesPresent / publishedRows.length < 0.9
+  ) {
+    throw new Error(
+      `Sanity: only ${diabetesPresent}/${publishedRows.length} published rows carry a non-null diabetes value. PLACES may have renamed the field or the parser broke.`,
+    );
+  }
+
+  // Gate 4: value-range sanity. Every non-null crude prevalence must lie
+  // in [0, 100] (the source publishes percent). A value outside that band
+  // means the parser or the source moved.
+  for (const r of rows) {
+    for (const id in r.measures) {
+      const v = r.measures[id].crudePrevalence;
+      if (v === null) continue;
+      if (!Number.isFinite(v) || v < 0 || v > 100) {
+        throw new Error(
+          `Sanity: crudePrevalence ${v} for ${id} at ${r.zcta5} is outside [0, 100].`,
+        );
+      }
+    }
+  }
+
+  console.log(
+    `[refresh-cdc-places-zcta] sanity gates passed (${diabetesPresent}/${publishedRows.length} rows with diabetes; ${(publishedFraction * 100).toFixed(1)}% published overall).`,
+  );
+
   const ingestedAt = new Date().toISOString();
   const payload = buildJsonPayload(meta, ingestedAt, rows, suppressedZctas);
   const shim = buildTsShim();
