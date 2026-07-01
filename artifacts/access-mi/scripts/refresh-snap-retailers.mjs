@@ -21,9 +21,9 @@
  *   Locator Data 2005-2025
  *   https://www.fns.usda.gov/snap/retailer/data
  *
- * Vintage: 2025-12. USDA publishes the dataset "as of December 31, 2025";
- *   the most recent Authorization Date in the current set is 2025-09-09.
- *   The label reflects the data's as-of date, not the pull date.
+ * Vintage: December 31, 2025 (USDA's stated currency for the CSV). The
+ *   most recent Authorization Date in the current set is 2025-09-09. The
+ *   label reflects the data's as-of date, not the pull date.
  *
  * Run with --apply to write the generated file in place; run without
  * (default) to print the planned content without touching the file.
@@ -47,7 +47,7 @@ const outPath = path.join(projectRoot, "src/data/county-snap-retailers.ts");
 const APPLY = process.argv.includes("--apply");
 
 const MI_STATE = "MI";
-const VINTAGE = "2025-12";
+const VINTAGE = "December 31, 2025";
 const SOURCE_LABEL = "USDA SNAP Retailer Locator";
 const ZIP_URL =
   "https://www.fna.usda.gov/sites/default/files/resource-files/snap-retailer-locator-data2005-2025.zip";
@@ -338,7 +338,7 @@ function buildFileContent(rows, totals) {
  *   per 10,000 residents against PEP V2024 population
  *   (see src/data/michigan-county-profiles.ts).
  *
- * Vintage: ${VINTAGE}. USDA's publication "as of December 31, 2025"; most
+ * Vintage: ${VINTAGE}. USDA's stated currency for the CSV; most
  *   recent Authorization Date in the current set is 2025-09-09. The label
  *   reflects the data's as-of date, not when the script was run.
  *

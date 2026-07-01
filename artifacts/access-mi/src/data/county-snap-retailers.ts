@@ -11,7 +11,7 @@
  *   per 10,000 residents against PEP V2024 population
  *   (see src/data/michigan-county-profiles.ts).
  *
- * Vintage: 2025-12. USDA's publication "as of December 31, 2025"; most
+ * Vintage: December 31, 2025. USDA's stated currency for the CSV; most
  *   recent Authorization Date in the current set is 2025-09-09. The label
  *   reflects the data's as-of date, not when the script was run.
  *
@@ -32,7 +32,7 @@
  *   Dropped (unmatched county string): 0
  */
 
-export const SNAP_VINTAGE = "2025-12";
+export const SNAP_VINTAGE = "December 31, 2025";
 export const SNAP_SOURCE = "USDA SNAP Retailer Locator";
 
 export interface CountySnapRetailers {
@@ -48,7 +48,7 @@ export interface CountySnapRetailers {
 
 export const COUNTY_SNAP_RETAILERS: Record<string, CountySnapRetailers> = {
   Alcona: { retailerCount: 13, ratePer10k: 12.24 },
-  Alger: { retailerCount: 12, ratePer10k: 13.80 },
+  Alger: { retailerCount: 12, ratePer10k: 13.8 },
   Allegan: { retailerCount: 88, ratePer10k: 7.19 },
   Alpena: { retailerCount: 30, ratePer10k: 10.38 },
   Antrim: { retailerCount: 19, ratePer10k: 7.74 },
@@ -68,14 +68,14 @@ export const COUNTY_SNAP_RETAILERS: Record<string, CountySnapRetailers> = {
   Clinton: { retailerCount: 45, ratePer10k: 5.62 },
   Crawford: { retailerCount: 22, ratePer10k: 16.18 },
   Delta: { retailerCount: 36, ratePer10k: 9.81 },
-  Dickinson: { retailerCount: 26, ratePer10k: 10.00 },
+  Dickinson: { retailerCount: 26, ratePer10k: 10.0 },
   Eaton: { retailerCount: 97, ratePer10k: 8.86 },
   Emmet: { retailerCount: 34, ratePer10k: 10.02 },
   Genesee: { retailerCount: 418, ratePer10k: 10.39 },
   Gladwin: { retailerCount: 36, ratePer10k: 13.85 },
   Gogebic: { retailerCount: 22, ratePer10k: 15.47 },
   "Grand Traverse": { retailerCount: 75, ratePer10k: 7.76 },
-  Gratiot: { retailerCount: 36, ratePer10k: 8.70 },
+  Gratiot: { retailerCount: 36, ratePer10k: 8.7 },
   Hillsdale: { retailerCount: 46, ratePer10k: 10.09 },
   Houghton: { retailerCount: 42, ratePer10k: 11.04 },
   Huron: { retailerCount: 39, ratePer10k: 12.67 },
@@ -92,13 +92,13 @@ export const COUNTY_SNAP_RETAILERS: Record<string, CountySnapRetailers> = {
   Lake: { retailerCount: 19, ratePer10k: 14.61 },
   Lapeer: { retailerCount: 73, ratePer10k: 8.19 },
   Leelanau: { retailerCount: 14, ratePer10k: 6.12 },
-  Lenawee: { retailerCount: 86, ratePer10k: 8.80 },
+  Lenawee: { retailerCount: 86, ratePer10k: 8.8 },
   Livingston: { retailerCount: 87, ratePer10k: 4.42 },
-  Luce: { retailerCount: 10, ratePer10k: 15.80 },
+  Luce: { retailerCount: 10, ratePer10k: 15.8 },
   Mackinac: { retailerCount: 13, ratePer10k: 11.67 },
   Macomb: { retailerCount: 742, ratePer10k: 8.37 },
   Manistee: { retailerCount: 28, ratePer10k: 10.97 },
-  Marquette: { retailerCount: 53, ratePer10k: 7.80 },
+  Marquette: { retailerCount: 53, ratePer10k: 7.8 },
   Mason: { retailerCount: 36, ratePer10k: 12.37 },
   Mecosta: { retailerCount: 50, ratePer10k: 11.92 },
   Menominee: { retailerCount: 24, ratePer10k: 10.41 },
@@ -111,7 +111,7 @@ export const COUNTY_SNAP_RETAILERS: Record<string, CountySnapRetailers> = {
   Newaygo: { retailerCount: 57, ratePer10k: 11.07 },
   Oakland: { retailerCount: 861, ratePer10k: 6.64 },
   Oceana: { retailerCount: 36, ratePer10k: 13.33 },
-  Ogemaw: { retailerCount: 34, ratePer10k: 16.20 },
+  Ogemaw: { retailerCount: 34, ratePer10k: 16.2 },
   Ontonagon: { retailerCount: 10, ratePer10k: 17.17 },
   Osceola: { retailerCount: 30, ratePer10k: 12.77 },
   Oscoda: { retailerCount: 12, ratePer10k: 13.96 },
@@ -119,7 +119,7 @@ export const COUNTY_SNAP_RETAILERS: Record<string, CountySnapRetailers> = {
   Ottawa: { retailerCount: 154, ratePer10k: 5.03 },
   "Presque Isle": { retailerCount: 14, ratePer10k: 10.58 },
   Roscommon: { retailerCount: 36, ratePer10k: 15.04 },
-  Saginaw: { retailerCount: 199, ratePer10k: 10.60 },
+  Saginaw: { retailerCount: 199, ratePer10k: 10.6 },
   Sanilac: { retailerCount: 55, ratePer10k: 13.65 },
   Schoolcraft: { retailerCount: 7, ratePer10k: 8.56 },
   Shiawassee: { retailerCount: 58, ratePer10k: 8.53 },

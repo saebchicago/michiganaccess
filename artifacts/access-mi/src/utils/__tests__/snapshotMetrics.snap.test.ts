@@ -38,8 +38,8 @@ describe("SNAP retailer county dataset", () => {
     }
   });
 
-  it("declares 2025-12 as the vintage and the canonical source label", () => {
-    expect(SNAP_VINTAGE).toBe("2025-12");
+  it("declares December 31, 2025 as the vintage and the canonical source label", () => {
+    expect(SNAP_VINTAGE).toBe("December 31, 2025");
     expect(SNAP_SOURCE).toBe("USDA SNAP Retailer Locator");
   });
 
@@ -61,7 +61,7 @@ describe("SNAP retailer county dataset", () => {
     }
   });
 
-  it("conserves rows: sum of per-county counts equals 9,225 (current set as of 2025-12)", () => {
+  it("conserves rows: sum of per-county counts equals 9,225 (current set as of December 31, 2025)", () => {
     const total = Object.values(COUNTY_SNAP_RETAILERS).reduce(
       (s, r) => s + r.retailerCount,
       0,
@@ -89,7 +89,7 @@ describe("buildCountySnapshotMetrics: snap-retailers tile", () => {
     expect(tile!.label).toBe("SNAP Retailers (per 10k)");
     expect(tile!.unit).toBe("per 10k residents");
     expect(tile!.source).toBe("USDA SNAP Retailer Locator");
-    expect(tile!.vintage).toMatch(/^2025-12 \(current authorizations\)$/);
+    expect(tile!.vintage).toBe("December 31, 2025 (current authorizations)");
     expect(tile!.geoResolution).toBe("county");
     // Value is a numeric-looking string with 2 decimal places
     expect(typeof tile!.value).toBe("string");

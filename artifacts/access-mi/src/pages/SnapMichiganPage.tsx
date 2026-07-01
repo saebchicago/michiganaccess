@@ -1,6 +1,15 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpDown, ChevronDown, ChevronUp, ExternalLink, Users, Store, Building2, TrendingDown } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  Users,
+  Store,
+  Building2,
+  TrendingDown,
+} from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,24 +29,89 @@ type SortDir = "asc" | "desc";
 // Michigan county populations (ACS 2022 5-year estimates, approximate)
 // Used only to compute enrollment % of population - does not affect source-cited figures.
 const COUNTY_POP: Record<string, number> = {
-  Alcona: 10_600, Alger: 9_100, Allegan: 120_800, Alpena: 28_200, Antrim: 23_800,
-  Arenac: 14_800, Baraga: 8_300, Barry: 62_300, Bay: 103_200, Benzie: 17_900,
-  Berrien: 150_700, Branch: 43_600, Calhoun: 133_000, Cass: 51_400, Charlevoix: 26_900,
-  Cheboygan: 25_500, Chippewa: 37_500, Clare: 31_000, Clinton: 79_900, Crawford: 13_900,
-  Delta: 36_000, Dickinson: 25_100, Eaton: 110_300, Emmet: 33_400, Genesee: 404_900,
-  Gladwin: 25_300, Gogebic: 14_800, "Grand Traverse": 96_200, Gratiot: 39_400,
-  Hillsdale: 45_800, Houghton: 36_000, Huron: 31_700, Ingham: 292_400, Ionia: 64_900,
-  Iosco: 25_200, Iron: 11_200, Isabella: 70_200, Jackson: 158_100, Kalamazoo: 265_900,
-  Kalkaska: 17_900, Kent: 665_400, Keweenaw: 2_100, Lake: 12_000, Lapeer: 88_300,
-  Leelanau: 21_900, Lenawee: 97_800, Livingston: 199_600, Luce: 6_400, Mackinac: 10_700,
-  Macomb: 882_900, Manistee: 24_300, Marquette: 66_300, Mason: 29_300, Mecosta: 43_100,
-  Menominee: 22_700, Midland: 82_700, Missaukee: 14_800, Monroe: 150_600,
-  Montcalm: 63_900, Montmorency: 9_500, Muskegon: 175_100, Newaygo: 48_300,
-  Oakland: 1_263_000, Oceana: 26_200, Ogemaw: 21_400, Ontonagon: 5_900, Osceola: 23_200,
-  Oscoda: 8_100, Otsego: 24_600, Ottawa: 298_200, "Presque Isle": 12_600,
-  Roscommon: 24_200, Saginaw: 188_900, Sanilac: 40_700, Schoolcraft: 8_100,
-  Shiawassee: 68_600, "St. Clair": 159_600, "St. Joseph": 60_400, Tuscola: 53_100,
-  "Van Buren": 75_200, Washtenaw: 373_200, Wayne: 1_780_700, Wexford: 33_300,
+  Alcona: 10_600,
+  Alger: 9_100,
+  Allegan: 120_800,
+  Alpena: 28_200,
+  Antrim: 23_800,
+  Arenac: 14_800,
+  Baraga: 8_300,
+  Barry: 62_300,
+  Bay: 103_200,
+  Benzie: 17_900,
+  Berrien: 150_700,
+  Branch: 43_600,
+  Calhoun: 133_000,
+  Cass: 51_400,
+  Charlevoix: 26_900,
+  Cheboygan: 25_500,
+  Chippewa: 37_500,
+  Clare: 31_000,
+  Clinton: 79_900,
+  Crawford: 13_900,
+  Delta: 36_000,
+  Dickinson: 25_100,
+  Eaton: 110_300,
+  Emmet: 33_400,
+  Genesee: 404_900,
+  Gladwin: 25_300,
+  Gogebic: 14_800,
+  "Grand Traverse": 96_200,
+  Gratiot: 39_400,
+  Hillsdale: 45_800,
+  Houghton: 36_000,
+  Huron: 31_700,
+  Ingham: 292_400,
+  Ionia: 64_900,
+  Iosco: 25_200,
+  Iron: 11_200,
+  Isabella: 70_200,
+  Jackson: 158_100,
+  Kalamazoo: 265_900,
+  Kalkaska: 17_900,
+  Kent: 665_400,
+  Keweenaw: 2_100,
+  Lake: 12_000,
+  Lapeer: 88_300,
+  Leelanau: 21_900,
+  Lenawee: 97_800,
+  Livingston: 199_600,
+  Luce: 6_400,
+  Mackinac: 10_700,
+  Macomb: 882_900,
+  Manistee: 24_300,
+  Marquette: 66_300,
+  Mason: 29_300,
+  Mecosta: 43_100,
+  Menominee: 22_700,
+  Midland: 82_700,
+  Missaukee: 14_800,
+  Monroe: 150_600,
+  Montcalm: 63_900,
+  Montmorency: 9_500,
+  Muskegon: 175_100,
+  Newaygo: 48_300,
+  Oakland: 1_263_000,
+  Oceana: 26_200,
+  Ogemaw: 21_400,
+  Ontonagon: 5_900,
+  Osceola: 23_200,
+  Oscoda: 8_100,
+  Otsego: 24_600,
+  Ottawa: 298_200,
+  "Presque Isle": 12_600,
+  Roscommon: 24_200,
+  Saginaw: 188_900,
+  Sanilac: 40_700,
+  Schoolcraft: 8_100,
+  Shiawassee: 68_600,
+  "St. Clair": 159_600,
+  "St. Joseph": 60_400,
+  Tuscola: 53_100,
+  "Van Buren": 75_200,
+  Washtenaw: 373_200,
+  Wayne: 1_780_700,
+  Wexford: 33_300,
 };
 
 // ── Stat card ─────────────────────────────────────────────────────────────────
@@ -59,8 +133,12 @@ function StatCard({
         <div className="flex items-start gap-3">
           <div className="mt-0.5 text-primary">{icon}</div>
           <div className="flex-1 min-w-0">
-            <p className="text-2xl font-bold text-foreground tabular-nums">{value}</p>
-            <p className="text-xs text-muted-foreground leading-tight">{label}</p>
+            <p className="text-2xl font-bold text-foreground tabular-nums">
+              {value}
+            </p>
+            <p className="text-xs text-muted-foreground leading-tight">
+              {label}
+            </p>
             <div className="mt-1">{provenance}</div>
           </div>
         </div>
@@ -89,7 +167,9 @@ function SortButton({
     <button
       onClick={() => onSort(col)}
       className={`flex items-center gap-1 text-left text-xs font-medium hover:text-primary transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
-      aria-sort={active ? (sortDir === "asc" ? "ascending" : "descending") : "none"}
+      aria-sort={
+        active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
+      }
     >
       {label}
       <ArrowUpDown className="h-3 w-3 shrink-0" />
@@ -190,20 +270,25 @@ export default function SnapMichiganPage() {
         {/* ── Hero ── */}
         <section>
           <div className="flex items-start gap-3 mb-3">
-            <Badge variant="outline" className="mt-1 shrink-0">V3</Badge>
+            <Badge variant="outline" className="mt-1 shrink-0">
+              V3
+            </Badge>
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">SNAP in Michigan</h1>
+              <h1 className="text-3xl font-bold tracking-tight">
+                SNAP in Michigan
+              </h1>
               <p className="text-muted-foreground mt-1">
-                Food assistance enrollment and retailer access across all 83 Michigan counties,
-                sourced from the most current public data.
+                Food assistance enrollment and retailer access across all 83
+                Michigan counties, sourced from the most current public data.
               </p>
             </div>
           </div>
           <ProvenanceDisclaimer />
           <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
-            SNAP enrollment: county-level data is annual from USDA FNS (most recent: FY2022).
-            Statewide monthly totals are current within ~2 months. Where county monthly data is
-            available from MDHHS extraction, it is labeled separately with its report date.
+            SNAP enrollment: county-level data is annual from USDA FNS (most
+            recent: FY2022). Statewide monthly totals are current within ~2
+            months. Where county monthly data is available from MDHHS
+            extraction, it is labeled separately with its report date.
           </p>
         </section>
 
@@ -213,13 +298,21 @@ export default function SnapMichiganPage() {
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <StatCard
               icon={<Users className="h-5 w-5" />}
-              value={isLoading ? "…" : stateData ? (stateData.stateTotal / 1_000_000).toFixed(1) + "M" : "-"}
+              value={
+                isLoading
+                  ? "…"
+                  : stateData
+                    ? (stateData.stateTotal / 1_000_000).toFixed(1) + "M"
+                    : "-"
+              }
               label="Michigan residents receiving SNAP (statewide, current month)"
               provenance={
                 <DataProvenance
                   sourceName="USDA FNS SNAP Data Tables"
                   sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
-                  asOfDate={stateData?.stateAsOf ?? "January 2026"}
+                  asOfDate={
+                    stateData?.stateAsOf ?? "February 2026 (Preliminary)"
+                  }
                   cadence="Monthly"
                   dataKind="measured"
                   compact
@@ -228,7 +321,17 @@ export default function SnapMichiganPage() {
             />
             <StatCard
               icon={<TrendingDown className="h-5 w-5" />}
-              value={isLoading ? "…" : stateData ? "$" + (stateData.benefitIssuanceMonthly / 1_000_000).toFixed(0) + "M" : "-"}
+              value={
+                isLoading
+                  ? "…"
+                  : stateData
+                    ? "$" +
+                      (stateData.benefitIssuanceMonthly / 1_000_000).toFixed(
+                        0,
+                      ) +
+                      "M"
+                    : "-"
+              }
               label="Estimated monthly benefit issuance (statewide)"
               provenance={
                 <DataProvenance
@@ -279,25 +382,54 @@ export default function SnapMichiganPage() {
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold">All 83 Michigan Counties</h2>
             <span className="text-[11px] text-muted-foreground">
-              SNAP enrollment data: USDA FNS FY2022 (most recent annual county file)
+              SNAP enrollment data: USDA FNS FY2022 (most recent annual county
+              file)
             </span>
           </div>
 
           <div className="overflow-x-auto rounded-lg border border-border">
-            <table className="w-full text-sm" role="grid" aria-label="Michigan county SNAP enrollment">
+            <table
+              className="w-full text-sm"
+              role="grid"
+              aria-label="Michigan county SNAP enrollment"
+            >
               <thead>
                 <tr className="border-b border-border bg-muted/40">
                   <th className="px-4 py-2.5 text-left font-medium">
-                    <SortButton col="county" label="County" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                    <SortButton
+                      col="county"
+                      label="County"
+                      sortKey={sortKey}
+                      sortDir={sortDir}
+                      onSort={handleSort}
+                    />
                   </th>
                   <th className="px-4 py-2.5 text-right font-medium">
-                    <SortButton col="enrollmentTotal" label="SNAP Persons" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                    <SortButton
+                      col="enrollmentTotal"
+                      label="SNAP Persons"
+                      sortKey={sortKey}
+                      sortDir={sortDir}
+                      onSort={handleSort}
+                    />
                   </th>
                   <th className="px-4 py-2.5 text-right font-medium">
-                    <SortButton col="enrollmentPct" label="% of Pop." sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                    <SortButton
+                      col="enrollmentPct"
+                      label="% of Pop."
+                      sortKey={sortKey}
+                      sortDir={sortDir}
+                      onSort={handleSort}
+                    />
                   </th>
                   <th className="px-4 py-2.5 text-right font-medium">
-                    <SortButton col="retailerCount" label="Retailers" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+                    <SortButton
+                      col="retailerCount"
+                      label="Retailers"
+                      sortKey={sortKey}
+                      sortDir={sortDir}
+                      onSort={handleSort}
+                    />
                   </th>
                   <th className="px-4 py-2.5 text-right font-medium text-muted-foreground text-xs">
                     Data as of
@@ -351,8 +483,9 @@ export default function SnapMichiganPage() {
           </div>
 
           <p className="text-[11px] text-muted-foreground mt-2">
-            % of population derived from ACS 2022 5-year estimates. Retailer counts pending
-            USDA SNAP Retailer Locator CSV parse - county-level data not yet extracted.{" "}
+            % of population derived from ACS 2022 5-year estimates. Retailer
+            counts pending USDA SNAP Retailer Locator CSV parse - county-level
+            data not yet extracted.{" "}
             <a
               href="https://www.fns.usda.gov/snap/retailer-locator/data"
               target="_blank"
@@ -371,7 +504,9 @@ export default function SnapMichiganPage() {
             className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-muted/30 transition-colors rounded-lg"
             aria-expanded={methodologyOpen}
           >
-            <span className="font-semibold text-sm">How we source SNAP data</span>
+            <span className="font-semibold text-sm">
+              How we source SNAP data
+            </span>
             {methodologyOpen ? (
               <ChevronUp className="h-4 w-4 text-muted-foreground" />
             ) : (
@@ -381,40 +516,56 @@ export default function SnapMichiganPage() {
           {methodologyOpen && (
             <div className="px-5 pb-5 pt-1 space-y-3 text-sm text-muted-foreground border-t border-border/50">
               <p>
-                <strong className="text-foreground">Two-tier freshness model.</strong> USDA FNS
-                publishes statewide SNAP participation monthly, typically with a ~2-month lag.
-                County-level data is published annually; the most recent county file available
-                as of April 2026 is FY2022 (October 2021–September 2022). This means county
+                <strong className="text-foreground">
+                  Two-tier freshness model.
+                </strong>{" "}
+                USDA FNS publishes statewide SNAP participation monthly,
+                typically with a ~2-month lag. County-level data is published
+                annually; the most recent county file available as of April 2026
+                is FY2022 (October 2021–September 2022). This means county
                 figures shown here are approximately 2–3 years old.
               </p>
               <p>
-                <strong className="text-foreground">Planned improvement.</strong> MDHHS publishes
-                a "Green Book" monthly that includes county-level SNAP enrollment with a ~6-week
-                lag. Automated extraction of this PDF is specced in our{" "}
-                <Link to="/methodology" className="underline hover:text-primary">
+                <strong className="text-foreground">
+                  Planned improvement.
+                </strong>{" "}
+                MDHHS publishes a "Green Book" monthly that includes
+                county-level SNAP enrollment with a ~6-week lag. Automated
+                extraction of this PDF is specced in our{" "}
+                <Link
+                  to="/methodology"
+                  className="underline hover:text-primary"
+                >
                   methodology documentation
                 </Link>{" "}
-                and planned for a future update. When extraction is live, county data will be
-                labeled with the MDHHS report month rather than the FY2022 vintage.
+                and planned for a future update. When extraction is live, county
+                data will be labeled with the MDHHS report month rather than the
+                FY2022 vintage.
               </p>
               <p>
-                <strong className="text-foreground">Retailer counts.</strong> The USDA SNAP
-                Retailer Locator publishes an authorized-retailer CSV quarterly. County-level
-                aggregation requires geocoding ZIP codes to counties. This is planned for a
-                future update; currently only the statewide total (9,200+, December 2025) is shown.
+                <strong className="text-foreground">Retailer counts.</strong>{" "}
+                The USDA SNAP Retailer Locator publishes an authorized-retailer
+                CSV quarterly. County-level aggregation requires geocoding ZIP
+                codes to counties. This is planned for a future update;
+                currently only the statewide total (9,200+, December 31, 2025)
+                is shown.
               </p>
               <p>
-                <strong className="text-foreground">Enrollment % of population.</strong> Derived
-                by dividing SNAP enrollment by ACS 2022 5-year county population estimates. This
-                is a rough indicator of relative participation - not an eligibility rate or
-                coverage rate.
+                <strong className="text-foreground">
+                  Enrollment % of population.
+                </strong>{" "}
+                Derived by dividing SNAP enrollment by ACS 2022 5-year county
+                population estimates. This is a rough indicator of relative
+                participation - not an eligibility rate or coverage rate.
               </p>
               <div className="mt-2 space-y-1.5">
-                <p className="font-medium text-foreground text-xs uppercase tracking-wide">Sources</p>
+                <p className="font-medium text-foreground text-xs uppercase tracking-wide">
+                  Sources
+                </p>
                 <DataProvenance
                   sourceName="USDA FNS SNAP Data Tables"
                   sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
-                  asOfDate="FY2022 (county) / January 2026 (state)"
+                  asOfDate="FY2022 (county) / February 2026 (state, Preliminary)"
                   cadence="Annual (county) · Monthly (state)"
                   dataKind="measured"
                 />
@@ -434,7 +585,7 @@ export default function SnapMichiganPage() {
         <DataProvenance
           sourceName="USDA FNS SNAP Data Tables · USDA SNAP Retailer Locator"
           sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
-          asOfDate="FY2022 (county) · January 2026 (state) · December 2025 (retailers)"
+          asOfDate="FY2022 (county) · February 2026 (state, Preliminary) · December 31, 2025 (retailers)"
           cadence="Annual (county) · Monthly (state) · Quarterly (retailers)"
           dataKind="measured"
         />
