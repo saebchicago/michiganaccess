@@ -29,7 +29,8 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "CDC PLACES / BRFSS",
       org: "CDC",
       url: "https://www.cdc.gov/places/",
-      powers: "County/tract health metrics",
+      powers:
+        "County (22 measures) + ZCTA (17) adult health prevalence, MRP-modeled",
       frequency: "Annual",
     },
     {
@@ -50,7 +51,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "HRSA Data Warehouse",
       org: "HRSA",
       url: "https://data.hrsa.gov/",
-      powers: "HPSA designations, FQHCs",
+      powers: "HPSA county rollup (Primary Care, Dental, Mental Health), FQHCs",
       frequency: "Quarterly",
     },
     {
@@ -99,7 +100,8 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "Census ACS API",
       org: "Census",
       url: "https://api.census.gov/",
-      powers: "Economic, demographic data",
+      powers:
+        "Economic, demographic data; county broadband subscription (B28002)",
       frequency: "Annual",
     },
     {
@@ -120,7 +122,8 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "FRED / BLS",
       org: "Federal Reserve",
       url: "https://fred.stlouisfed.org/",
-      powers: "Unemployment, CPI",
+      powers:
+        "Unemployment, CPI; county LAUS unemployment rate (BLS Public API)",
       frequency: "Monthly",
     },
     {

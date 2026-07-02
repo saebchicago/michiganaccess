@@ -1,0 +1,2535 @@
+{
+  "provenance": {
+    "source_name": "HRSA HPSA facility detail files (Primary Care, Dental Health, Mental Health)",
+    "source_url": "https://data.hrsa.gov/data/download?data=SHORT",
+    "download_base_url": "https://data.hrsa.gov/DataDownload/DD_Files",
+    "per_discipline": [
+      {
+        "disciplineId": "primaryCare",
+        "label": "Primary Care",
+        "file": "BCD_HPSA_FCT_DET_PC.csv",
+        "dwCreateDate": "06/30/2026",
+        "miDesignatedHpsas": 605,
+        "miWithdrawnHpsas": 2031,
+        "miOtherStatusHpsas": 439
+      },
+      {
+        "disciplineId": "dental",
+        "label": "Dental Health",
+        "file": "BCD_HPSA_FCT_DET_DH.csv",
+        "dwCreateDate": "06/30/2026",
+        "miDesignatedHpsas": 551,
+        "miWithdrawnHpsas": 1067,
+        "miOtherStatusHpsas": 359
+      },
+      {
+        "disciplineId": "mental",
+        "label": "Mental Health",
+        "file": "BCD_HPSA_FCT_DET_MH.csv",
+        "dwCreateDate": "06/30/2026",
+        "miDesignatedHpsas": 601,
+        "miWithdrawnHpsas": 830,
+        "miOtherStatusHpsas": 410
+      }
+    ],
+    "ingested_at": "2026-07-02T13:47:04.989Z",
+    "ingest_script": "scripts/refresh-hrsa-hpsa-county.mjs",
+    "michigan_county_registry": "src/data/census-geographies.ts",
+    "michigan_county_registry_size": 83,
+    "value_label": "MODELED",
+    "rollup_method": "Filter each HRSA discipline CSV to Common State Abbreviation='MI' and HPSA Status='Designated', then group by Common State County FIPS Code. Per (county, discipline): designatedHpsas=count of designations; maxHpsaScore=max HPSA Score across designations; designationPopulation=sum of HPSA Designation Population; estimatedUnderservedPopulation=sum of HPSA Estimated Underserved Population; providerFte=sum of HPSA FTE; shortageFte=sum of HPSA Shortage. Counties with zero designated HPSAs render as 0/null, not missing.",
+    "notes": "HRSA HPSAs are typically sub-county (census tract, population group, or facility). HRSA does not publish a county summary as a separate artifact, so this rollup is a MODELED aggregation from designation records. HPSA Score is 0-25 for Primary Care and Dental (0-26 for Mental Health); higher = more severe shortage. providerFte + shortageFte together approximate the local supply gap."
+  },
+  "counties": [
+    {
+      "countyFips": "26001",
+      "countyName": "Alcona",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 13,
+          "designationPopulation": 3517,
+          "estimatedUnderservedPopulation": 1660,
+          "providerFte": 0.6,
+          "shortageFte": 0.6
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 3517,
+          "estimatedUnderservedPopulation": 3517,
+          "providerFte": 0,
+          "shortageFte": 0.9
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 14,
+          "designationPopulation": 10198,
+          "estimatedUnderservedPopulation": 10198,
+          "providerFte": 0,
+          "shortageFte": 0.5
+        }
+      }
+    },
+    {
+      "countyFips": "26003",
+      "countyName": "Alger",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 14,
+          "designationPopulation": 2457,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0.8
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 16,
+          "designationPopulation": 5463,
+          "estimatedUnderservedPopulation": 1803,
+          "providerFte": 0.6,
+          "shortageFte": 0.5
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 18,
+          "designationPopulation": 10809,
+          "estimatedUnderservedPopulation": 7765,
+          "providerFte": 0,
+          "shortageFte": 0.8
+        }
+      }
+    },
+    {
+      "countyFips": "26005",
+      "countyName": "Allegan",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 18,
+          "designationPopulation": 19578,
+          "estimatedUnderservedPopulation": 4021,
+          "providerFte": 0,
+          "shortageFte": 1.3
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 20,
+          "designationPopulation": 21711,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 17,
+          "designationPopulation": 21711,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26007",
+      "countyName": "Alpena",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 17,
+          "designationPopulation": 56838,
+          "estimatedUnderservedPopulation": 6624,
+          "providerFte": 1.5,
+          "shortageFte": 2.2
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 21,
+          "designationPopulation": 62172,
+          "estimatedUnderservedPopulation": 10071,
+          "providerFte": 0.3,
+          "shortageFte": 2.5
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 13,
+          "designationPopulation": 51056,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26009",
+      "countyName": "Antrim",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 10,
+          "designationPopulation": 151649,
+          "estimatedUnderservedPopulation": 18149,
+          "providerFte": 4.5,
+          "shortageFte": 3.1
+        }
+      }
+    },
+    {
+      "countyFips": "26011",
+      "countyName": "Arenac",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 18,
+          "designationPopulation": 90319,
+          "estimatedUnderservedPopulation": 9884,
+          "providerFte": 1,
+          "shortageFte": 3.3
+        },
+        "dental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 17,
+          "designationPopulation": 179231,
+          "estimatedUnderservedPopulation": 3978,
+          "providerFte": 0.3,
+          "shortageFte": 1
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 19,
+          "designationPopulation": 291354,
+          "estimatedUnderservedPopulation": 20721,
+          "providerFte": 4.8,
+          "shortageFte": 3
+        }
+      }
+    },
+    {
+      "countyFips": "26013",
+      "countyName": "Baraga",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 15,
+          "designationPopulation": 13970,
+          "estimatedUnderservedPopulation": 2570,
+          "providerFte": 0,
+          "shortageFte": 1.5
+        },
+        "dental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 16,
+          "designationPopulation": 20124,
+          "estimatedUnderservedPopulation": 1914,
+          "providerFte": 0.2,
+          "shortageFte": 0.9
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 18,
+          "designationPopulation": 24755,
+          "estimatedUnderservedPopulation": 7201,
+          "providerFte": 0,
+          "shortageFte": 0.7
+        }
+      }
+    },
+    {
+      "countyFips": "26015",
+      "countyName": "Barry",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 14,
+          "designationPopulation": 479440,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 15,
+          "designationPopulation": 1009634,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 10,
+          "designationPopulation": 1009634,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26017",
+      "countyName": "Bay",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 14,
+          "designationPopulation": 31809,
+          "estimatedUnderservedPopulation": 20003,
+          "providerFte": 3.9,
+          "shortageFte": 6.7
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 31809,
+          "estimatedUnderservedPopulation": 23071,
+          "providerFte": 2.2,
+          "shortageFte": 5.8
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 8,
+          "designationPopulation": 117221,
+          "estimatedUnderservedPopulation": 20721,
+          "providerFte": 4.8,
+          "shortageFte": 3
+        }
+      }
+    },
+    {
+      "countyFips": "26019",
+      "countyName": "Benzie",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 12,
+          "designationPopulation": 5678,
+          "estimatedUnderservedPopulation": 1980,
+          "providerFte": 1.2,
+          "shortageFte": 0.7
+        },
+        "dental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 13,
+          "designationPopulation": 41820,
+          "estimatedUnderservedPopulation": 21820,
+          "providerFte": 1,
+          "shortageFte": 1.8
+        }
+      }
+    },
+    {
+      "countyFips": "26021",
+      "countyName": "Berrien",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 19,
+          "designationPopulation": 377967,
+          "estimatedUnderservedPopulation": 38270,
+          "providerFte": 4,
+          "shortageFte": 12.8
+        },
+        "dental": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 19,
+          "designationPopulation": 641597,
+          "estimatedUnderservedPopulation": 36422,
+          "providerFte": 3.5,
+          "shortageFte": 9.1
+        },
+        "mental": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 18,
+          "designationPopulation": 641597,
+          "estimatedUnderservedPopulation": 29225,
+          "providerFte": 1.1,
+          "shortageFte": 2.3
+        }
+      }
+    },
+    {
+      "countyFips": "26023",
+      "countyName": "Branch",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 15,
+          "designationPopulation": 17562,
+          "estimatedUnderservedPopulation": 8238,
+          "providerFte": 3.2,
+          "shortageFte": 3.6
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 18,
+          "designationPopulation": 17507,
+          "estimatedUnderservedPopulation": 10226,
+          "providerFte": 1.5,
+          "shortageFte": 3.5
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 18,
+          "designationPopulation": 1454,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0.7
+        }
+      }
+    },
+    {
+      "countyFips": "26025",
+      "countyName": "Calhoun",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 19,
+          "designationPopulation": 86127,
+          "estimatedUnderservedPopulation": 27948,
+          "providerFte": 6.3,
+          "shortageFte": 9.3
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 21,
+          "designationPopulation": 91458,
+          "estimatedUnderservedPopulation": 19751,
+          "providerFte": 6.7,
+          "shortageFte": 4.9
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 21,
+          "designationPopulation": 91458,
+          "estimatedUnderservedPopulation": 39322,
+          "providerFte": 0.4,
+          "shortageFte": 2.7
+        }
+      }
+    },
+    {
+      "countyFips": "26027",
+      "countyName": "Cass",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 19,
+          "designationPopulation": 141403,
+          "estimatedUnderservedPopulation": 13413,
+          "providerFte": 0.7,
+          "shortageFte": 4.5
+        },
+        "dental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 21,
+          "designationPopulation": 280705,
+          "estimatedUnderservedPopulation": 16345,
+          "providerFte": 0.7,
+          "shortageFte": 4.1
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 19,
+          "designationPopulation": 312684,
+          "estimatedUnderservedPopulation": 33186,
+          "providerFte": 0.6,
+          "shortageFte": 2
+        }
+      }
+    },
+    {
+      "countyFips": "26029",
+      "countyName": "Charlevoix",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 8,
+          "designationPopulation": 6250,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 17,
+          "designationPopulation": 6250,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 14,
+          "designationPopulation": 157899,
+          "estimatedUnderservedPopulation": 18149,
+          "providerFte": 4.5,
+          "shortageFte": 3.1
+        }
+      }
+    },
+    {
+      "countyFips": "26031",
+      "countyName": "Cheboygan",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 19,
+          "designationPopulation": 8869,
+          "estimatedUnderservedPopulation": 6948,
+          "providerFte": 0.6,
+          "shortageFte": 2.3
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 15,
+          "designationPopulation": 8869,
+          "estimatedUnderservedPopulation": 5496,
+          "providerFte": 0.8,
+          "shortageFte": 1.4
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 10,
+          "designationPopulation": 151649,
+          "estimatedUnderservedPopulation": 18149,
+          "providerFte": 4.5,
+          "shortageFte": 3.1
+        }
+      }
+    },
+    {
+      "countyFips": "26033",
+      "countyName": "Chippewa",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 18,
+          "designationPopulation": 36942,
+          "estimatedUnderservedPopulation": 9593,
+          "providerFte": 1.4,
+          "shortageFte": 5.4
+        },
+        "dental": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 21,
+          "designationPopulation": 39423,
+          "estimatedUnderservedPopulation": 10205,
+          "providerFte": 0.5,
+          "shortageFte": 4.3
+        },
+        "mental": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 21,
+          "designationPopulation": 39715,
+          "estimatedUnderservedPopulation": 6969,
+          "providerFte": 0.4,
+          "shortageFte": 2
+        }
+      }
+    },
+    {
+      "countyFips": "26035",
+      "countyName": "Clare",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 17,
+          "designationPopulation": 475446,
+          "estimatedUnderservedPopulation": 9869,
+          "providerFte": 7,
+          "shortageFte": 3.3
+        },
+        "dental": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 20,
+          "designationPopulation": 718876,
+          "estimatedUnderservedPopulation": 8741,
+          "providerFte": 1.1,
+          "shortageFte": 2.2
+        },
+        "mental": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 19,
+          "designationPopulation": 798012,
+          "estimatedUnderservedPopulation": 61739,
+          "providerFte": 1.5,
+          "shortageFte": 4.6
+        }
+      }
+    },
+    {
+      "countyFips": "26037",
+      "countyName": "Clinton",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26039",
+      "countyName": "Crawford",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 13,
+          "designationPopulation": 11720,
+          "estimatedUnderservedPopulation": 7561,
+          "providerFte": 1.4,
+          "shortageFte": 2.5
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 15,
+          "designationPopulation": 4957,
+          "estimatedUnderservedPopulation": 3491,
+          "providerFte": 0.4,
+          "shortageFte": 0.9
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 84725,
+          "estimatedUnderservedPopulation": 84725,
+          "providerFte": 0,
+          "shortageFte": 4.2
+        }
+      }
+    },
+    {
+      "countyFips": "26041",
+      "countyName": "Delta",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 15,
+          "designationPopulation": 46005,
+          "estimatedUnderservedPopulation": 8975,
+          "providerFte": 1.1,
+          "shortageFte": 3
+        },
+        "dental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 18,
+          "designationPopulation": 54161,
+          "estimatedUnderservedPopulation": 10377,
+          "providerFte": 0.5,
+          "shortageFte": 2.6
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 16,
+          "designationPopulation": 78083,
+          "estimatedUnderservedPopulation": 30233,
+          "providerFte": 0.2,
+          "shortageFte": 1.6
+        }
+      }
+    },
+    {
+      "countyFips": "26043",
+      "countyName": "Dickinson",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 15,
+          "designationPopulation": 104429,
+          "estimatedUnderservedPopulation": 5508,
+          "providerFte": 0.8,
+          "shortageFte": 1.8
+        },
+        "dental": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 15,
+          "designationPopulation": 133957,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 16,
+          "designationPopulation": 170816,
+          "estimatedUnderservedPopulation": 18859,
+          "providerFte": 0.6,
+          "shortageFte": 1.2
+        }
+      }
+    },
+    {
+      "countyFips": "26045",
+      "countyName": "Eaton",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 22,
+          "maxHpsaScore": 14,
+          "designationPopulation": 2360006,
+          "estimatedUnderservedPopulation": 1080970,
+          "providerFte": 426.3,
+          "shortageFte": 360.4
+        },
+        "dental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26047",
+      "countyName": "Emmet",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 18,
+          "designationPopulation": 23367,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 20,
+          "designationPopulation": 31460,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 16,
+          "designationPopulation": 183109,
+          "estimatedUnderservedPopulation": 18149,
+          "providerFte": 4.5,
+          "shortageFte": 3.1
+        }
+      }
+    },
+    {
+      "countyFips": "26049",
+      "countyName": "Genesee",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 17,
+          "designationPopulation": 321000,
+          "estimatedUnderservedPopulation": 11683,
+          "providerFte": 42.6,
+          "shortageFte": 3.9
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 24,
+          "designationPopulation": 321000,
+          "estimatedUnderservedPopulation": 74479,
+          "providerFte": 16.2,
+          "shortageFte": 18.6
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 20,
+          "designationPopulation": 321000,
+          "estimatedUnderservedPopulation": 89978,
+          "providerFte": 2.5,
+          "shortageFte": 6.8
+        }
+      }
+    },
+    {
+      "countyFips": "26051",
+      "countyName": "Gladwin",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 16,
+          "designationPopulation": 68182,
+          "estimatedUnderservedPopulation": 8224,
+          "providerFte": 4.9,
+          "shortageFte": 2.3
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 16,
+          "designationPopulation": 90205,
+          "estimatedUnderservedPopulation": 8415,
+          "providerFte": 0.3,
+          "shortageFte": 2.1
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 172859,
+          "estimatedUnderservedPopulation": 61739,
+          "providerFte": 1.5,
+          "shortageFte": 4.6
+        }
+      }
+    },
+    {
+      "countyFips": "26053",
+      "countyName": "Gogebic",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 15,
+          "designationPopulation": 16802,
+          "estimatedUnderservedPopulation": 5060,
+          "providerFte": 0.2,
+          "shortageFte": 1.7
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 15,
+          "designationPopulation": 18459,
+          "estimatedUnderservedPopulation": 2811,
+          "providerFte": 0.7,
+          "shortageFte": 0.7
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 16,
+          "designationPopulation": 26803,
+          "estimatedUnderservedPopulation": 5045,
+          "providerFte": 0.5,
+          "shortageFte": 0.5
+        }
+      }
+    },
+    {
+      "countyFips": "26055",
+      "countyName": "Grand Traverse",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 6,
+          "designationPopulation": 20040,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 15,
+          "designationPopulation": 20040,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 13,
+          "designationPopulation": 20040,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26057",
+      "countyName": "Gratiot",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 15,
+          "designationPopulation": 414803,
+          "estimatedUnderservedPopulation": 5217,
+          "providerFte": 2.5,
+          "shortageFte": 2.6
+        },
+        "dental": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 17,
+          "designationPopulation": 765454,
+          "estimatedUnderservedPopulation": 10857,
+          "providerFte": 0.3,
+          "shortageFte": 3.4
+        },
+        "mental": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 16,
+          "designationPopulation": 765469,
+          "estimatedUnderservedPopulation": 2109,
+          "providerFte": 0.5,
+          "shortageFte": 0.9
+        }
+      }
+    },
+    {
+      "countyFips": "26059",
+      "countyName": "Hillsdale",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 15,
+          "designationPopulation": 61417,
+          "estimatedUnderservedPopulation": 8067,
+          "providerFte": 2.9,
+          "shortageFte": 2.7
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 17,
+          "designationPopulation": 114256,
+          "estimatedUnderservedPopulation": 14227,
+          "providerFte": 0.6,
+          "shortageFte": 3.6
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 12,
+          "designationPopulation": 158256,
+          "estimatedUnderservedPopulation": 8773,
+          "providerFte": 2.6,
+          "shortageFte": 1.5
+        }
+      }
+    },
+    {
+      "countyFips": "26061",
+      "countyName": "Houghton",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 14,
+          "designationPopulation": 53888,
+          "estimatedUnderservedPopulation": 5804,
+          "providerFte": 2.4,
+          "shortageFte": 1.9
+        },
+        "dental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 18,
+          "designationPopulation": 58147,
+          "estimatedUnderservedPopulation": 8403,
+          "providerFte": 1,
+          "shortageFte": 2.1
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 17,
+          "designationPopulation": 81266,
+          "estimatedUnderservedPopulation": 35536,
+          "providerFte": 0,
+          "shortageFte": 2.4
+        }
+      }
+    },
+    {
+      "countyFips": "26063",
+      "countyName": "Huron",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 14,
+          "designationPopulation": 135708,
+          "estimatedUnderservedPopulation": 5657,
+          "providerFte": 1.5,
+          "shortageFte": 1.9
+        },
+        "dental": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 16,
+          "designationPopulation": 211953,
+          "estimatedUnderservedPopulation": 7499,
+          "providerFte": 0.7,
+          "shortageFte": 1.9
+        },
+        "mental": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 18,
+          "designationPopulation": 232625,
+          "estimatedUnderservedPopulation": 30908,
+          "providerFte": 0,
+          "shortageFte": 2.1
+        }
+      }
+    },
+    {
+      "countyFips": "26065",
+      "countyName": "Ingham",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 14,
+          "maxHpsaScore": 17,
+          "designationPopulation": 1496045,
+          "estimatedUnderservedPopulation": 589620,
+          "providerFte": 232.6,
+          "shortageFte": 196.6
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 23,
+          "designationPopulation": 290059,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 14,
+          "designationPopulation": 290059,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26067",
+      "countyName": "Ionia",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 11,
+          "maxHpsaScore": 14,
+          "designationPopulation": 551740,
+          "estimatedUnderservedPopulation": 18408,
+          "providerFte": 2.6,
+          "shortageFte": 8.6
+        },
+        "dental": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 15,
+          "designationPopulation": 1565561,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0.6,
+          "shortageFte": 0.9
+        },
+        "mental": {
+          "designatedHpsas": 10,
+          "maxHpsaScore": 21,
+          "designationPopulation": 1582933,
+          "estimatedUnderservedPopulation": 12760,
+          "providerFte": 0.4,
+          "shortageFte": 2.5
+        }
+      }
+    },
+    {
+      "countyFips": "26069",
+      "countyName": "Iosco",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 17,
+          "designationPopulation": 101030,
+          "estimatedUnderservedPopulation": 8757,
+          "providerFte": 0.6,
+          "shortageFte": 2.9
+        },
+        "dental": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 17,
+          "designationPopulation": 146491,
+          "estimatedUnderservedPopulation": 9255,
+          "providerFte": 0.3,
+          "shortageFte": 2.3
+        },
+        "mental": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 17,
+          "designationPopulation": 189696,
+          "estimatedUnderservedPopulation": 45272,
+          "providerFte": 0.4,
+          "shortageFte": 3.2
+        }
+      }
+    },
+    {
+      "countyFips": "26071",
+      "countyName": "Iron",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 18,
+          "designationPopulation": 9951,
+          "estimatedUnderservedPopulation": 3985,
+          "providerFte": 0,
+          "shortageFte": 1.3
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 18,
+          "designationPopulation": 15018,
+          "estimatedUnderservedPopulation": 2853,
+          "providerFte": 0.3,
+          "shortageFte": 0.7
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 16,
+          "designationPopulation": 47892,
+          "estimatedUnderservedPopulation": 18859,
+          "providerFte": 0.6,
+          "shortageFte": 1.2
+        }
+      }
+    },
+    {
+      "countyFips": "26073",
+      "countyName": "Isabella",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 9,
+          "maxHpsaScore": 16,
+          "designationPopulation": 443012,
+          "estimatedUnderservedPopulation": 12460,
+          "providerFte": 4.3,
+          "shortageFte": 4.1
+        },
+        "dental": {
+          "designatedHpsas": 9,
+          "maxHpsaScore": 20,
+          "designationPopulation": 614372,
+          "estimatedUnderservedPopulation": 22229,
+          "providerFte": 0.7,
+          "shortageFte": 5.6
+        },
+        "mental": {
+          "designatedHpsas": 9,
+          "maxHpsaScore": 19,
+          "designationPopulation": 681364,
+          "estimatedUnderservedPopulation": 61739,
+          "providerFte": 1.5,
+          "shortageFte": 4.6
+        }
+      }
+    },
+    {
+      "countyFips": "26075",
+      "countyName": "Jackson",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 19,
+          "designationPopulation": 99900,
+          "estimatedUnderservedPopulation": 44069,
+          "providerFte": 5.8,
+          "shortageFte": 18.7
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 17,
+          "designationPopulation": 41381,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 2.1,
+          "shortageFte": 0.9
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 14,
+          "designationPopulation": 103208,
+          "estimatedUnderservedPopulation": 8773,
+          "providerFte": 3.4,
+          "shortageFte": 3.5
+        }
+      }
+    },
+    {
+      "countyFips": "26077",
+      "countyName": "Kalamazoo",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 137649,
+          "estimatedUnderservedPopulation": 44159,
+          "providerFte": 11.3,
+          "shortageFte": 14.7
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 25,
+          "designationPopulation": 59706,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 17,
+          "designationPopulation": 137649,
+          "estimatedUnderservedPopulation": 38745,
+          "providerFte": 2,
+          "shortageFte": 3.2
+        }
+      }
+    },
+    {
+      "countyFips": "26079",
+      "countyName": "Kalkaska",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 13,
+          "designationPopulation": 6639,
+          "estimatedUnderservedPopulation": 3623,
+          "providerFte": 1,
+          "shortageFte": 1.2
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 6639,
+          "estimatedUnderservedPopulation": 5913,
+          "providerFte": 0.2,
+          "shortageFte": 1.5
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 10,
+          "designationPopulation": 151649,
+          "estimatedUnderservedPopulation": 18149,
+          "providerFte": 4.5,
+          "shortageFte": 3.1
+        }
+      }
+    },
+    {
+      "countyFips": "26081",
+      "countyName": "Kent",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 18,
+          "designationPopulation": 377957,
+          "estimatedUnderservedPopulation": 33356,
+          "providerFte": 38.7,
+          "shortageFte": 11.1
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 23,
+          "designationPopulation": 234550,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 16,
+          "designationPopulation": 383858,
+          "estimatedUnderservedPopulation": 19804,
+          "providerFte": 6.5,
+          "shortageFte": 3.5
+        }
+      }
+    },
+    {
+      "countyFips": "26083",
+      "countyName": "Keweenaw",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 14,
+          "designationPopulation": 13011,
+          "estimatedUnderservedPopulation": 5804,
+          "providerFte": 2.4,
+          "shortageFte": 1.9
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 12,
+          "designationPopulation": 2103,
+          "estimatedUnderservedPopulation": 2103,
+          "providerFte": 0,
+          "shortageFte": 0.4
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 17,
+          "designationPopulation": 35536,
+          "estimatedUnderservedPopulation": 35536,
+          "providerFte": 0,
+          "shortageFte": 2.4
+        }
+      }
+    },
+    {
+      "countyFips": "26085",
+      "countyName": "Lake",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 20,
+          "designationPopulation": 49120,
+          "estimatedUnderservedPopulation": 4660,
+          "providerFte": 0.3,
+          "shortageFte": 1.5
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 24,
+          "designationPopulation": 57614,
+          "estimatedUnderservedPopulation": 11033,
+          "providerFte": 0.8,
+          "shortageFte": 2.8
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 22,
+          "designationPopulation": 55544,
+          "estimatedUnderservedPopulation": 12079,
+          "providerFte": 0,
+          "shortageFte": 0.8
+        }
+      }
+    },
+    {
+      "countyFips": "26087",
+      "countyName": "Lapeer",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 3,
+          "designationPopulation": 1002,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0.6,
+          "shortageFte": 0.4
+        },
+        "dental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 12,
+          "designationPopulation": 1002,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0.5
+        }
+      }
+    },
+    {
+      "countyFips": "26089",
+      "countyName": "Leelanau",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 15,
+          "designationPopulation": 41409,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 42363,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 13,
+          "designationPopulation": 42363,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26091",
+      "countyName": "Lenawee",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 14,
+          "designationPopulation": 29971,
+          "estimatedUnderservedPopulation": 18830,
+          "providerFte": 3.6,
+          "shortageFte": 7.1
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 16,
+          "designationPopulation": 29844,
+          "estimatedUnderservedPopulation": 20158,
+          "providerFte": 2.2,
+          "shortageFte": 5.6
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 12,
+          "designationPopulation": 28926,
+          "estimatedUnderservedPopulation": 8452,
+          "providerFte": 1,
+          "shortageFte": 0.9
+        }
+      }
+    },
+    {
+      "countyFips": "26093",
+      "countyName": "Livingston",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 6,
+          "designationPopulation": 358,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0.2
+        },
+        "mental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26095",
+      "countyName": "Luce",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 18,
+          "designationPopulation": 10637,
+          "estimatedUnderservedPopulation": 2155,
+          "providerFte": 0,
+          "shortageFte": 0.7
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 20,
+          "designationPopulation": 15187,
+          "estimatedUnderservedPopulation": 1228,
+          "providerFte": 0.2,
+          "shortageFte": 0.3
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 14,
+          "designationPopulation": 18323,
+          "estimatedUnderservedPopulation": 5291,
+          "providerFte": 0,
+          "shortageFte": 0.4
+        }
+      }
+    },
+    {
+      "countyFips": "26097",
+      "countyName": "Mackinac",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 18,
+          "designationPopulation": 47182,
+          "estimatedUnderservedPopulation": 4155,
+          "providerFte": 0,
+          "shortageFte": 1.4
+        },
+        "dental": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 20,
+          "designationPopulation": 92077,
+          "estimatedUnderservedPopulation": 4155,
+          "providerFte": 0,
+          "shortageFte": 1
+        },
+        "mental": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 17,
+          "designationPopulation": 98603,
+          "estimatedUnderservedPopulation": 10681,
+          "providerFte": 0,
+          "shortageFte": 0.7
+        }
+      }
+    },
+    {
+      "countyFips": "26099",
+      "countyName": "Macomb",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 22,
+          "designationPopulation": 131894,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0.6,
+          "shortageFte": 0.7
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 25,
+          "designationPopulation": 131894,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0.6,
+          "shortageFte": 0.2
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 18,
+          "designationPopulation": 131894,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0.4,
+          "shortageFte": 0.3
+        }
+      }
+    },
+    {
+      "countyFips": "26101",
+      "countyName": "Manistee",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 15,
+          "designationPopulation": 10269,
+          "estimatedUnderservedPopulation": 5998,
+          "providerFte": 0.9,
+          "shortageFte": 2.6
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 16,
+          "designationPopulation": 3194,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0.7
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 13,
+          "designationPopulation": 44000,
+          "estimatedUnderservedPopulation": 21820,
+          "providerFte": 1,
+          "shortageFte": 1.8
+        }
+      }
+    },
+    {
+      "countyFips": "26103",
+      "countyName": "Marquette",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 13,
+          "designationPopulation": 30452,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0.8
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 13,
+          "designationPopulation": 30635,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0.2,
+          "shortageFte": 0.3
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 29873,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26105",
+      "countyName": "Mason",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 16,
+          "designationPopulation": 99710,
+          "estimatedUnderservedPopulation": 5954,
+          "providerFte": 1.2,
+          "shortageFte": 2
+        },
+        "dental": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 15,
+          "designationPopulation": 159547,
+          "estimatedUnderservedPopulation": 7895,
+          "providerFte": 0.4,
+          "shortageFte": 2
+        },
+        "mental": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 16,
+          "designationPopulation": 178715,
+          "estimatedUnderservedPopulation": 28828,
+          "providerFte": 0,
+          "shortageFte": 1.4
+        }
+      }
+    },
+    {
+      "countyFips": "26107",
+      "countyName": "Mecosta",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 17,
+          "designationPopulation": 169085,
+          "estimatedUnderservedPopulation": 15546,
+          "providerFte": 2.9,
+          "shortageFte": 5.2
+        },
+        "dental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 18,
+          "designationPopulation": 272772,
+          "estimatedUnderservedPopulation": 13604,
+          "providerFte": 0.5,
+          "shortageFte": 3.4
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 19,
+          "designationPopulation": 349311,
+          "estimatedUnderservedPopulation": 61739,
+          "providerFte": 1.5,
+          "shortageFte": 4.6
+        }
+      }
+    },
+    {
+      "countyFips": "26109",
+      "countyName": "Menominee",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 16,
+          "designationPopulation": 11594,
+          "estimatedUnderservedPopulation": 7490,
+          "providerFte": 0,
+          "shortageFte": 2.5
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 20,
+          "designationPopulation": 12812,
+          "estimatedUnderservedPopulation": 5758,
+          "providerFte": 0.4,
+          "shortageFte": 1.4
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 16,
+          "designationPopulation": 28186,
+          "estimatedUnderservedPopulation": 22864,
+          "providerFte": 0,
+          "shortageFte": 1.1
+        }
+      }
+    },
+    {
+      "countyFips": "26111",
+      "countyName": "Midland",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 19,
+          "designationPopulation": 92205,
+          "estimatedUnderservedPopulation": 61739,
+          "providerFte": 1.5,
+          "shortageFte": 4.6
+        }
+      }
+    },
+    {
+      "countyFips": "26113",
+      "countyName": "Missaukee",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 15,
+          "designationPopulation": 5026,
+          "estimatedUnderservedPopulation": 5026,
+          "providerFte": 0,
+          "shortageFte": 1.7
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 15,
+          "designationPopulation": 5026,
+          "estimatedUnderservedPopulation": 3994,
+          "providerFte": 0.3,
+          "shortageFte": 1
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 84725,
+          "estimatedUnderservedPopulation": 84725,
+          "providerFte": 0,
+          "shortageFte": 4.2
+        }
+      }
+    },
+    {
+      "countyFips": "26115",
+      "countyName": "Monroe",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 18,
+          "designationPopulation": 66308,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 23,
+          "designationPopulation": 66308,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 14,
+          "designationPopulation": 66308,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26117",
+      "countyName": "Montcalm",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 10,
+          "maxHpsaScore": 16,
+          "designationPopulation": 495587,
+          "estimatedUnderservedPopulation": 14847,
+          "providerFte": 3,
+          "shortageFte": 5.3
+        },
+        "dental": {
+          "designatedHpsas": 10,
+          "maxHpsaScore": 15,
+          "designationPopulation": 1053675,
+          "estimatedUnderservedPopulation": 9281,
+          "providerFte": 3,
+          "shortageFte": 3.1
+        },
+        "mental": {
+          "designatedHpsas": 10,
+          "maxHpsaScore": 14,
+          "designationPopulation": 1096640,
+          "estimatedUnderservedPopulation": 443,
+          "providerFte": 3.7,
+          "shortageFte": 1.2
+        }
+      }
+    },
+    {
+      "countyFips": "26119",
+      "countyName": "Montmorency",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 27189,
+          "estimatedUnderservedPopulation": 3514,
+          "providerFte": 0,
+          "shortageFte": 1.2
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 27189,
+          "estimatedUnderservedPopulation": 1393,
+          "providerFte": 0.5,
+          "shortageFte": 0.3
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 14,
+          "designationPopulation": 32925,
+          "estimatedUnderservedPopulation": 9250,
+          "providerFte": 0,
+          "shortageFte": 0.5
+        }
+      }
+    },
+    {
+      "countyFips": "26121",
+      "countyName": "Muskegon",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 21,
+          "designationPopulation": 230271,
+          "estimatedUnderservedPopulation": 21591,
+          "providerFte": 12.5,
+          "shortageFte": 9.6
+        },
+        "dental": {
+          "designatedHpsas": 5,
+          "maxHpsaScore": 19,
+          "designationPopulation": 204251,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0.7,
+          "shortageFte": 1
+        },
+        "mental": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 23,
+          "designationPopulation": 262848,
+          "estimatedUnderservedPopulation": 53605,
+          "providerFte": 0.4,
+          "shortageFte": 4.7
+        }
+      }
+    },
+    {
+      "countyFips": "26123",
+      "countyName": "Newaygo",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 16,
+          "designationPopulation": 383357,
+          "estimatedUnderservedPopulation": 14939,
+          "providerFte": 1,
+          "shortageFte": 5
+        },
+        "dental": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 15,
+          "designationPopulation": 838402,
+          "estimatedUnderservedPopulation": 12918,
+          "providerFte": 1.2,
+          "shortageFte": 3.2
+        },
+        "mental": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 16,
+          "designationPopulation": 870318,
+          "estimatedUnderservedPopulation": 49829,
+          "providerFte": 0,
+          "shortageFte": 2.5
+        }
+      }
+    },
+    {
+      "countyFips": "26125",
+      "countyName": "Oakland",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 86915,
+          "estimatedUnderservedPopulation": 17848,
+          "providerFte": 4.1,
+          "shortageFte": 6
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 25,
+          "designationPopulation": 56742,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 20,
+          "designationPopulation": 86915,
+          "estimatedUnderservedPopulation": 30173,
+          "providerFte": 0,
+          "shortageFte": 2
+        }
+      }
+    },
+    {
+      "countyFips": "26127",
+      "countyName": "Oceana",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 16,
+          "designationPopulation": 145857,
+          "estimatedUnderservedPopulation": 9390,
+          "providerFte": 0,
+          "shortageFte": 3.1
+        },
+        "dental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 16,
+          "designationPopulation": 288180,
+          "estimatedUnderservedPopulation": 6724,
+          "providerFte": 0.7,
+          "shortageFte": 1.7
+        },
+        "mental": {
+          "designatedHpsas": 4,
+          "maxHpsaScore": 16,
+          "designationPopulation": 305139,
+          "estimatedUnderservedPopulation": 26349,
+          "providerFte": 0,
+          "shortageFte": 1.8
+        }
+      }
+    },
+    {
+      "countyFips": "26129",
+      "countyName": "Ogemaw",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 17,
+          "designationPopulation": 49309,
+          "estimatedUnderservedPopulation": 9884,
+          "providerFte": 1,
+          "shortageFte": 3.3
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 15,
+          "designationPopulation": 66100,
+          "estimatedUnderservedPopulation": 537,
+          "providerFte": 1.8,
+          "shortageFte": 0.1
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 17,
+          "designationPopulation": 111967,
+          "estimatedUnderservedPopulation": 45272,
+          "providerFte": 0.4,
+          "shortageFte": 3.2
+        }
+      }
+    },
+    {
+      "countyFips": "26131",
+      "countyName": "Ontonagon",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 17,
+          "designationPopulation": 2032,
+          "estimatedUnderservedPopulation": 2032,
+          "providerFte": 0,
+          "shortageFte": 0.7
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 2032,
+          "estimatedUnderservedPopulation": 1474,
+          "providerFte": 0.1,
+          "shortageFte": 0.4
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 11,
+          "designationPopulation": 5819,
+          "estimatedUnderservedPopulation": 5819,
+          "providerFte": 0,
+          "shortageFte": 0.3
+        }
+      }
+    },
+    {
+      "countyFips": "26133",
+      "countyName": "Osceola",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 17,
+          "designationPopulation": 119990,
+          "estimatedUnderservedPopulation": 15546,
+          "providerFte": 2.9,
+          "shortageFte": 5.2
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 18,
+          "designationPopulation": 175458,
+          "estimatedUnderservedPopulation": 11033,
+          "providerFte": 0.8,
+          "shortageFte": 2.8
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 19,
+          "designationPopulation": 253514,
+          "estimatedUnderservedPopulation": 61739,
+          "providerFte": 1.5,
+          "shortageFte": 4.6
+        }
+      }
+    },
+    {
+      "countyFips": "26135",
+      "countyName": "Oscoda",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 8258,
+          "estimatedUnderservedPopulation": 8258,
+          "providerFte": 0,
+          "shortageFte": 2.4
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 18,
+          "designationPopulation": 3602,
+          "estimatedUnderservedPopulation": 3151,
+          "providerFte": 0.1,
+          "shortageFte": 0.8
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 17,
+          "designationPopulation": 53772,
+          "estimatedUnderservedPopulation": 45272,
+          "providerFte": 0.4,
+          "shortageFte": 3.2
+        }
+      }
+    },
+    {
+      "countyFips": "26137",
+      "countyName": "Otsego",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 13,
+          "designationPopulation": 11720,
+          "estimatedUnderservedPopulation": 7561,
+          "providerFte": 1.4,
+          "shortageFte": 2.5
+        },
+        "dental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 10,
+          "designationPopulation": 151649,
+          "estimatedUnderservedPopulation": 18149,
+          "providerFte": 4.5,
+          "shortageFte": 3.1
+        }
+      }
+    },
+    {
+      "countyFips": "26139",
+      "countyName": "Ottawa",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 15,
+          "designationPopulation": 4021,
+          "estimatedUnderservedPopulation": 4021,
+          "providerFte": 0,
+          "shortageFte": 1.3
+        },
+        "dental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        },
+        "mental": {
+          "designatedHpsas": 0,
+          "maxHpsaScore": null,
+          "designationPopulation": 0,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26141",
+      "countyName": "Presque Isle",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 13,
+          "designationPopulation": 13034,
+          "estimatedUnderservedPopulation": 6996,
+          "providerFte": 1.7,
+          "shortageFte": 2
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 15,
+          "designationPopulation": 4458,
+          "estimatedUnderservedPopulation": 3986,
+          "providerFte": 0.1,
+          "shortageFte": 1
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 14,
+          "designationPopulation": 4458,
+          "estimatedUnderservedPopulation": 2278,
+          "providerFte": 0.1,
+          "shortageFte": 0.2
+        }
+      }
+    },
+    {
+      "countyFips": "26143",
+      "countyName": "Roscommon",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 17,
+          "designationPopulation": 26237,
+          "estimatedUnderservedPopulation": 7302,
+          "providerFte": 0.3,
+          "shortageFte": 2.4
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 20,
+          "designationPopulation": 26237,
+          "estimatedUnderservedPopulation": 6929,
+          "providerFte": 0.3,
+          "shortageFte": 1.7
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 21,
+          "designationPopulation": 102699,
+          "estimatedUnderservedPopulation": 84725,
+          "providerFte": 0,
+          "shortageFte": 4.2
+        }
+      }
+    },
+    {
+      "countyFips": "26145",
+      "countyName": "Saginaw",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 20,
+          "designationPopulation": 176341,
+          "estimatedUnderservedPopulation": 45426,
+          "providerFte": 8.2,
+          "shortageFte": 16.2
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 26,
+          "designationPopulation": 176214,
+          "estimatedUnderservedPopulation": 37456,
+          "providerFte": 7.8,
+          "shortageFte": 10.2
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 19,
+          "designationPopulation": 176341,
+          "estimatedUnderservedPopulation": 61834,
+          "providerFte": 0.3,
+          "shortageFte": 5
+        }
+      }
+    },
+    {
+      "countyFips": "26147",
+      "countyName": "St. Clair",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 113064,
+          "estimatedUnderservedPopulation": 21729,
+          "providerFte": 9,
+          "shortageFte": 7.2
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 25,
+          "designationPopulation": 113064,
+          "estimatedUnderservedPopulation": 38896,
+          "providerFte": 2.5,
+          "shortageFte": 9.7
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 14,
+          "designationPopulation": 108708,
+          "estimatedUnderservedPopulation": 11971,
+          "providerFte": 1.6,
+          "shortageFte": 1.3
+        }
+      }
+    },
+    {
+      "countyFips": "26149",
+      "countyName": "St. Joseph",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 21,
+          "designationPopulation": 34882,
+          "estimatedUnderservedPopulation": 16226,
+          "providerFte": 0.9,
+          "shortageFte": 5.4
+        },
+        "dental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 25,
+          "designationPopulation": 34882,
+          "estimatedUnderservedPopulation": 15573,
+          "providerFte": 0.8,
+          "shortageFte": 3.9
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 19,
+          "designationPopulation": 34882,
+          "estimatedUnderservedPopulation": 16424,
+          "providerFte": 0.1,
+          "shortageFte": 1.1
+        }
+      }
+    },
+    {
+      "countyFips": "26151",
+      "countyName": "Sanilac",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 15,
+          "designationPopulation": 181637,
+          "estimatedUnderservedPopulation": 10678,
+          "providerFte": 1.1,
+          "shortageFte": 3.6
+        },
+        "dental": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 15,
+          "designationPopulation": 298448,
+          "estimatedUnderservedPopulation": 10242,
+          "providerFte": 0.9,
+          "shortageFte": 2.6
+        },
+        "mental": {
+          "designatedHpsas": 6,
+          "maxHpsaScore": 14,
+          "designationPopulation": 324533,
+          "estimatedUnderservedPopulation": 1507,
+          "providerFte": 1.9,
+          "shortageFte": 0.7
+        }
+      }
+    },
+    {
+      "countyFips": "26153",
+      "countyName": "Schoolcraft",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 16,
+          "designationPopulation": 9187,
+          "estimatedUnderservedPopulation": 2828,
+          "providerFte": 0,
+          "shortageFte": 0.9
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 16,
+          "designationPopulation": 17918,
+          "estimatedUnderservedPopulation": 2828,
+          "providerFte": 0,
+          "shortageFte": 0.7
+        },
+        "mental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 16,
+          "designationPopulation": 23063,
+          "estimatedUnderservedPopulation": 7973,
+          "providerFte": 0,
+          "shortageFte": 0.5
+        }
+      }
+    },
+    {
+      "countyFips": "26155",
+      "countyName": "Shiawassee",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 14,
+          "designationPopulation": 20848,
+          "estimatedUnderservedPopulation": 10447,
+          "providerFte": 3.5,
+          "shortageFte": 3.5
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 20848,
+          "estimatedUnderservedPopulation": 15613,
+          "providerFte": 1.3,
+          "shortageFte": 3.9
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 11,
+          "designationPopulation": 67193,
+          "estimatedUnderservedPopulation": 15693,
+          "providerFte": 2.6,
+          "shortageFte": 1.9
+        }
+      }
+    },
+    {
+      "countyFips": "26157",
+      "countyName": "Tuscola",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 9,
+          "maxHpsaScore": 14,
+          "designationPopulation": 305419,
+          "estimatedUnderservedPopulation": 7178,
+          "providerFte": 3.6,
+          "shortageFte": 2.4
+        },
+        "dental": {
+          "designatedHpsas": 9,
+          "maxHpsaScore": 17,
+          "designationPopulation": 620767,
+          "estimatedUnderservedPopulation": 16379,
+          "providerFte": 0.4,
+          "shortageFte": 4.1
+        },
+        "mental": {
+          "designatedHpsas": 9,
+          "maxHpsaScore": 16,
+          "designationPopulation": 655170,
+          "estimatedUnderservedPopulation": 17882,
+          "providerFte": 1.2,
+          "shortageFte": 1.5
+        }
+      }
+    },
+    {
+      "countyFips": "26159",
+      "countyName": "Van Buren",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 19,
+          "designationPopulation": 706988,
+          "estimatedUnderservedPopulation": 20768,
+          "providerFte": 1.3,
+          "shortageFte": 6.9
+        },
+        "dental": {
+          "designatedHpsas": 8,
+          "maxHpsaScore": 26,
+          "designationPopulation": 1166305,
+          "estimatedUnderservedPopulation": 22450,
+          "providerFte": 0.6,
+          "shortageFte": 5.6
+        },
+        "mental": {
+          "designatedHpsas": 7,
+          "maxHpsaScore": 21,
+          "designationPopulation": 1141588,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 0
+        }
+      }
+    },
+    {
+      "countyFips": "26161",
+      "countyName": "Washtenaw",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 17,
+          "designationPopulation": 69199,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 1.4
+        },
+        "dental": {
+          "designatedHpsas": 3,
+          "maxHpsaScore": 21,
+          "designationPopulation": 71297,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 1.5,
+          "shortageFte": 0.8
+        },
+        "mental": {
+          "designatedHpsas": 2,
+          "maxHpsaScore": 14,
+          "designationPopulation": 70209,
+          "estimatedUnderservedPopulation": 0,
+          "providerFte": 0,
+          "shortageFte": 1.2
+        }
+      }
+    },
+    {
+      "countyFips": "26163",
+      "countyName": "Wayne",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 310,
+          "maxHpsaScore": 24,
+          "designationPopulation": 32678471,
+          "estimatedUnderservedPopulation": 21847933,
+          "providerFte": 2747,
+          "shortageFte": 7283.3
+        },
+        "dental": {
+          "designatedHpsas": 305,
+          "maxHpsaScore": 25,
+          "designationPopulation": 32264786,
+          "estimatedUnderservedPopulation": 27193320,
+          "providerFte": 626.6,
+          "shortageFte": 6798.2
+        },
+        "mental": {
+          "designatedHpsas": 342,
+          "maxHpsaScore": 22,
+          "designationPopulation": 33895384,
+          "estimatedUnderservedPopulation": 20437647,
+          "providerFte": 544.6,
+          "shortageFte": 1544.5
+        }
+      }
+    },
+    {
+      "countyFips": "26165",
+      "countyName": "Wexford",
+      "disciplines": {
+        "primaryCare": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 14,
+          "designationPopulation": 12589,
+          "estimatedUnderservedPopulation": 7421,
+          "providerFte": 1.7,
+          "shortageFte": 2.5
+        },
+        "dental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 12589,
+          "estimatedUnderservedPopulation": 8122,
+          "providerFte": 1.1,
+          "shortageFte": 2
+        },
+        "mental": {
+          "designatedHpsas": 1,
+          "maxHpsaScore": 16,
+          "designationPopulation": 84725,
+          "estimatedUnderservedPopulation": 84725,
+          "providerFte": 0,
+          "shortageFte": 4.2
+        }
+      }
+    }
+  ]
+}
