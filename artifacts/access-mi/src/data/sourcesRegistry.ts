@@ -100,7 +100,8 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "Census ACS API",
       org: "Census",
       url: "https://api.census.gov/",
-      powers: "Economic, demographic data",
+      powers:
+        "Economic, demographic data; county broadband subscription (B28002)",
       frequency: "Annual",
     },
     {

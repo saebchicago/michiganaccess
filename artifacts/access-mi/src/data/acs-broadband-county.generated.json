@@ -1,0 +1,770 @@
+{
+  "provenance": {
+    "source_name": "U.S. Census Bureau ACS 5-Year (2019-2023), table B28002",
+    "source_url": "https://www.census.gov/programs-surveys/acs/data.html",
+    "acs_table_url": "https://data.census.gov/table/ACSDT5Y2023.B28002",
+    "api_base": "https://api.census.gov/data",
+    "dataset": "2023/acs/acs5",
+    "vintage_window": "2019-2023",
+    "numerator_variable": "B28002_007E",
+    "numerator_label": "Households with a broadband Internet subscription (any type)",
+    "universe_variable": "B28002_001E",
+    "universe_label": "Households (universe)",
+    "ingested_at": "2026-07-02T14:10:05.385Z",
+    "ingest_script": "scripts/refresh-acs-broadband-county.mjs",
+    "michigan_county_registry": "src/data/census-geographies.ts",
+    "michigan_county_registry_size": 83,
+    "value_label": "VERIFIED",
+    "populated": false,
+    "notes": "Numerator is broadband subscription in the household (adoption). This is NOT the FCC BDC availability metric (which measures whether service reaches a location). ACS 5-Year has full 83-county coverage in Michigan and does not suppress at county level for this table. When populated, values are direct Census tabulations; when status = 'pending-ci', the ingest environment lacked CENSUS_API_KEY and the file must be re-run in CI to populate."
+  },
+  "counties": [
+    {
+      "countyFips": "26001",
+      "countyName": "Alcona",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26003",
+      "countyName": "Alger",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26005",
+      "countyName": "Allegan",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26007",
+      "countyName": "Alpena",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26009",
+      "countyName": "Antrim",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26011",
+      "countyName": "Arenac",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26013",
+      "countyName": "Baraga",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26015",
+      "countyName": "Barry",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26017",
+      "countyName": "Bay",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26019",
+      "countyName": "Benzie",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26021",
+      "countyName": "Berrien",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26023",
+      "countyName": "Branch",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26025",
+      "countyName": "Calhoun",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26027",
+      "countyName": "Cass",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26029",
+      "countyName": "Charlevoix",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26031",
+      "countyName": "Cheboygan",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26033",
+      "countyName": "Chippewa",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26035",
+      "countyName": "Clare",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26037",
+      "countyName": "Clinton",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26039",
+      "countyName": "Crawford",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26041",
+      "countyName": "Delta",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26043",
+      "countyName": "Dickinson",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26045",
+      "countyName": "Eaton",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26047",
+      "countyName": "Emmet",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26049",
+      "countyName": "Genesee",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26051",
+      "countyName": "Gladwin",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26053",
+      "countyName": "Gogebic",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26055",
+      "countyName": "Grand Traverse",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26057",
+      "countyName": "Gratiot",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26059",
+      "countyName": "Hillsdale",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26061",
+      "countyName": "Houghton",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26063",
+      "countyName": "Huron",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26065",
+      "countyName": "Ingham",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26067",
+      "countyName": "Ionia",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26069",
+      "countyName": "Iosco",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26071",
+      "countyName": "Iron",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26073",
+      "countyName": "Isabella",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26075",
+      "countyName": "Jackson",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26077",
+      "countyName": "Kalamazoo",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26079",
+      "countyName": "Kalkaska",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26081",
+      "countyName": "Kent",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26083",
+      "countyName": "Keweenaw",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26085",
+      "countyName": "Lake",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26087",
+      "countyName": "Lapeer",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26089",
+      "countyName": "Leelanau",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26091",
+      "countyName": "Lenawee",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26093",
+      "countyName": "Livingston",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26095",
+      "countyName": "Luce",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26097",
+      "countyName": "Mackinac",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26099",
+      "countyName": "Macomb",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26101",
+      "countyName": "Manistee",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26103",
+      "countyName": "Marquette",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26105",
+      "countyName": "Mason",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26107",
+      "countyName": "Mecosta",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26109",
+      "countyName": "Menominee",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26111",
+      "countyName": "Midland",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26113",
+      "countyName": "Missaukee",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26115",
+      "countyName": "Monroe",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26117",
+      "countyName": "Montcalm",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26119",
+      "countyName": "Montmorency",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26121",
+      "countyName": "Muskegon",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26123",
+      "countyName": "Newaygo",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26125",
+      "countyName": "Oakland",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26127",
+      "countyName": "Oceana",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26129",
+      "countyName": "Ogemaw",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26131",
+      "countyName": "Ontonagon",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26133",
+      "countyName": "Osceola",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26135",
+      "countyName": "Oscoda",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26137",
+      "countyName": "Otsego",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26139",
+      "countyName": "Ottawa",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26141",
+      "countyName": "Presque Isle",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26143",
+      "countyName": "Roscommon",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26145",
+      "countyName": "Saginaw",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26147",
+      "countyName": "St. Clair",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26149",
+      "countyName": "St. Joseph",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26151",
+      "countyName": "Sanilac",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26153",
+      "countyName": "Schoolcraft",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26155",
+      "countyName": "Shiawassee",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26157",
+      "countyName": "Tuscola",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26159",
+      "countyName": "Van Buren",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26161",
+      "countyName": "Washtenaw",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26163",
+      "countyName": "Wayne",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    },
+    {
+      "countyFips": "26165",
+      "countyName": "Wexford",
+      "status": "pending-ci",
+      "households": null,
+      "householdsWithBroadband": null,
+      "broadbandSubscriptionRate": null,
+      "pendingReason": "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values."
+    }
+  ]
+}
