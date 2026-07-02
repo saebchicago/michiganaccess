@@ -122,7 +122,8 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "FRED / BLS",
       org: "Federal Reserve",
       url: "https://fred.stlouisfed.org/",
-      powers: "Unemployment, CPI",
+      powers:
+        "Unemployment, CPI; county LAUS unemployment rate (BLS Public API)",
       frequency: "Monthly",
     },
     {
