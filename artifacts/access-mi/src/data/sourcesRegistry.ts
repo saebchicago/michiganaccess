@@ -29,7 +29,8 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "CDC PLACES / BRFSS",
       org: "CDC",
       url: "https://www.cdc.gov/places/",
-      powers: "County/tract health metrics",
+      powers:
+        "County + ZCTA adult health prevalence (17 measures, MRP-modeled)",
       frequency: "Annual",
     },
     {
