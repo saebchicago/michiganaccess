@@ -51,7 +51,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "HRSA Data Warehouse",
       org: "HRSA",
       url: "https://data.hrsa.gov/",
-      powers: "HPSA designations, FQHCs",
+      powers: "HPSA county rollup (Primary Care, Dental, Mental Health), FQHCs",
       frequency: "Quarterly",
     },
     {
