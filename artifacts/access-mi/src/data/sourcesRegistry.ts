@@ -30,7 +30,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       org: "CDC",
       url: "https://www.cdc.gov/places/",
       powers:
-        "County + ZCTA adult health prevalence (17 measures, MRP-modeled)",
+        "County (22 measures) + ZCTA (17) adult health prevalence, MRP-modeled",
       frequency: "Annual",
     },
     {

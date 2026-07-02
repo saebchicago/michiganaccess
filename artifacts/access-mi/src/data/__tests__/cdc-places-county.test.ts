@@ -25,9 +25,10 @@ describe("cdc-places-county", () => {
     }
   });
 
-  it("carries the 17 platform-stable measure ids", () => {
-    expect(CDC_PLACES_COUNTY_MEASURES).toHaveLength(17);
+  it("carries 22 platform-stable measure ids (17 ZCTA-shared + 5 county-only)", () => {
+    expect(CDC_PLACES_COUNTY_MEASURES).toHaveLength(22);
     const ids = new Set(CDC_PLACES_COUNTY_MEASURES.map((m) => m.id));
+    // 17 shared with the ZCTA shim
     for (const expected of [
       "diabetes",
       "obesity",
@@ -47,7 +48,21 @@ describe("cdc-places-county", () => {
       "physicalHealthNotGood",
       "generalHealthFairPoor",
     ]) {
-      expect(ids.has(expected), `missing measure ${expected}`).toBe(true);
+      expect(ids.has(expected), `missing shared measure ${expected}`).toBe(
+        true,
+      );
+    }
+    // 5 county-only (PLACES does not publish these at ZCTA)
+    for (const expected of [
+      "stroke",
+      "arthritis",
+      "anyDisability",
+      "hearingDisability",
+      "selfCareDisability",
+    ]) {
+      expect(ids.has(expected), `missing county-only measure ${expected}`).toBe(
+        true,
+      );
     }
   });
 

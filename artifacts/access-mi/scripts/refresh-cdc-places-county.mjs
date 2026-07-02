@@ -47,11 +47,13 @@ const SOURCE_LANDING =
   "https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-2025-release/swc5-untb";
 
 /**
- * Measure catalog. The 17 measures match the ZCTA ingest exactly so a
- * county view and a ZCTA view share the same platform-stable measure ids
- * and can be joined on either geography. `measureid` is the county
- * dataset's own identifier (uppercase PLACES short code); `id` is the
- * platform's stable slug (same as the ZCTA shim).
+ * Measure catalog. The first 17 measure ids match the ZCTA ingest exactly
+ * so a county view and a ZCTA view share the same platform-stable ids and
+ * can be joined on either geography. The next 5 (STROKE, ARTHRITIS,
+ * DISABILITY, HEARING, SELFCARE) are county-only: PLACES publishes them
+ * at county level but not at ZCTA. `measureid` is the county dataset's
+ * own identifier (uppercase PLACES short code); `id` is the platform's
+ * stable slug.
  */
 const MEASURES = [
   { measureid: "DIABETES",     id: "diabetes",            category: "chronic",    label: "Diagnosed diabetes among adults 18+" },
@@ -74,6 +76,12 @@ const MEASURES = [
   { measureid: "MHLTH",        id: "mentalHealthNotGood", category: "status",     label: "Mental health not good >=14 days, adults 18+" },
   { measureid: "PHLTH",        id: "physicalHealthNotGood", category: "status",   label: "Physical health not good >=14 days, adults 18+" },
   { measureid: "GHLTH",        id: "generalHealthFairPoor", category: "status",   label: "General health fair or poor, adults 18+" },
+
+  { measureid: "STROKE",       id: "stroke",              category: "chronic",    label: "Stroke among adults 18+" },
+  { measureid: "ARTHRITIS",    id: "arthritis",           category: "chronic",    label: "Arthritis among adults 18+" },
+  { measureid: "DISABILITY",   id: "anyDisability",       category: "status",     label: "Any disability among adults 18+" },
+  { measureid: "HEARING",      id: "hearingDisability",   category: "status",     label: "Hearing disability among adults 18+" },
+  { measureid: "SELFCARE",     id: "selfCareDisability",  category: "status",     label: "Self-care disability among adults 18+" },
 ];
 
 const MEASURE_BY_ID = new Map(MEASURES.map((m) => [m.measureid, m]));
@@ -349,7 +357,7 @@ async function main() {
   console.log(`[refresh-cdc-places-county] fetching MI rows (Crude only)...`);
   const rawRows = await fetchMiRows();
   console.log(
-    `[refresh-cdc-places-county] source rows fetched (MI x 17 measures, Crude): ${rawRows.length}`,
+    `[refresh-cdc-places-county] source rows fetched (MI x ${MEASURES.length} measures, Crude): ${rawRows.length}`,
   );
 
   // Group by FIPS.

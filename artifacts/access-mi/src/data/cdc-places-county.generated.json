@@ -7,11 +7,11 @@
     "socrata_rows_updated_at": "2025-12-04T10:35:06.000Z",
     "release_label": "PLACES: Local Data for Better Health, County Data, 2025 release",
     "release_description": "This dataset contains model-based county estimates. PLACES covers the entire United States—50 states and the District of Columbia—at county, place, census tract, and ZIP Code Tabulation Area levels. It provides information uniformly on this large scale for local areas at four geographic levels. Estimates were provided by the Centers for Disease Control and Prevention (CDC), Division of Population Health, Epidemiology and Surveillance Branch. PLACES was funded by the Robert Wood Johnson Foundation in conjunction with the CDC Foundation. This dataset includes estimates for 40 measures: 12 for he",
-    "ingested_at": "2026-07-02T13:19:34.364Z",
+    "ingested_at": "2026-07-02T13:39:10.985Z",
     "ingest_script": "scripts/refresh-cdc-places-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
-    "measure_count": 17,
+    "measure_count": 22,
     "value_units": "crude prevalence, percent (0-100)",
     "value_label": "MODELED",
     "weighting": "individual estimates; no post-hoc weighting applied here",
@@ -135,6 +135,41 @@
       "category": "status",
       "label": "General health fair or poor, adults 18+",
       "places_measureid": "GHLTH",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "stroke",
+      "category": "chronic",
+      "label": "Stroke among adults 18+",
+      "places_measureid": "STROKE",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "arthritis",
+      "category": "chronic",
+      "label": "Arthritis among adults 18+",
+      "places_measureid": "ARTHRITIS",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "anyDisability",
+      "category": "status",
+      "label": "Any disability among adults 18+",
+      "places_measureid": "DISABILITY",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "hearingDisability",
+      "category": "status",
+      "label": "Hearing disability among adults 18+",
+      "places_measureid": "HEARING",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "selfCareDisability",
+      "category": "status",
+      "label": "Self-care disability among adults 18+",
+      "places_measureid": "SELFCARE",
       "value_label": "MODELED"
     }
   ],
@@ -263,6 +298,41 @@
             "low": 18.4,
             "high": 26.5
           }
+        },
+        "stroke": {
+          "crudePrevalence": 5.2,
+          "ci95": {
+            "low": 4.5,
+            "high": 6.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 40.5,
+          "ci95": {
+            "low": 36,
+            "high": 44.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 37.2,
+          "ci95": {
+            "low": 31.7,
+            "high": 42.8
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 11.5,
+          "ci95": {
+            "low": 10,
+            "high": 13.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.7,
+          "ci95": {
+            "low": 4,
+            "high": 5.7
+          }
         }
       }
     },
@@ -389,6 +459,41 @@
           "ci95": {
             "low": 17,
             "high": 24.3
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 33.7,
+          "ci95": {
+            "low": 29.7,
+            "high": 37.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 33.9,
+          "ci95": {
+            "low": 28.9,
+            "high": 39.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.3,
+          "ci95": {
+            "low": 8.1,
+            "high": 10.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4,
+          "ci95": {
+            "low": 3.4,
+            "high": 4.7
           }
         }
       }
@@ -517,6 +622,41 @@
             "low": 15.5,
             "high": 22.2
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.5,
+          "ci95": {
+            "low": 3,
+            "high": 4
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 29.6,
+          "ci95": {
+            "low": 26.2,
+            "high": 33.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 31.2,
+          "ci95": {
+            "low": 26.7,
+            "high": 36.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.7,
+          "ci95": {
+            "low": 6.8,
+            "high": 8.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.6,
+          "ci95": {
+            "low": 3,
+            "high": 4.2
+          }
         }
       }
     },
@@ -643,6 +783,41 @@
           "ci95": {
             "low": 18.9,
             "high": 26.2
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.6,
+          "ci95": {
+            "low": 4,
+            "high": 5.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 36.2,
+          "ci95": {
+            "low": 32.4,
+            "high": 40
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 37,
+          "ci95": {
+            "low": 31.9,
+            "high": 42.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10,
+          "ci95": {
+            "low": 8.8,
+            "high": 11.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.7,
+          "ci95": {
+            "low": 4,
+            "high": 5.5
           }
         }
       }
@@ -771,6 +946,41 @@
             "low": 14.4,
             "high": 22
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4,
+          "ci95": {
+            "low": 3.4,
+            "high": 4.7
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 34.8,
+          "ci95": {
+            "low": 30.5,
+            "high": 38.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 31.5,
+          "ci95": {
+            "low": 25.9,
+            "high": 37.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.1,
+          "ci95": {
+            "low": 7.8,
+            "high": 10.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.6,
+          "ci95": {
+            "low": 2.9,
+            "high": 4.3
+          }
         }
       }
     },
@@ -897,6 +1107,41 @@
           "ci95": {
             "low": 19.2,
             "high": 26.9
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.7,
+          "ci95": {
+            "low": 4.1,
+            "high": 5.4
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 36.7,
+          "ci95": {
+            "low": 32.9,
+            "high": 40.8
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 37.1,
+          "ci95": {
+            "low": 32.2,
+            "high": 42.5
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.3,
+          "ci95": {
+            "low": 9,
+            "high": 11.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.7,
+          "ci95": {
+            "low": 4,
+            "high": 5.5
           }
         }
       }
@@ -1025,6 +1270,41 @@
             "low": 20.2,
             "high": 27.1
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.6,
+          "ci95": {
+            "low": 4.1,
+            "high": 5.2
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 33.5,
+          "ci95": {
+            "low": 29.6,
+            "high": 37.2
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 37.3,
+          "ci95": {
+            "low": 32,
+            "high": 42.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.7,
+          "ci95": {
+            "low": 8.5,
+            "high": 10.9
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.8,
+          "ci95": {
+            "low": 4.2,
+            "high": 5.4
+          }
         }
       }
     },
@@ -1151,6 +1431,41 @@
           "ci95": {
             "low": 15.1,
             "high": 21.6
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.5,
+          "ci95": {
+            "low": 3.1,
+            "high": 4
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 31,
+          "ci95": {
+            "low": 27.6,
+            "high": 34.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 31.5,
+          "ci95": {
+            "low": 26.7,
+            "high": 36.1
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.9,
+          "ci95": {
+            "low": 6.9,
+            "high": 8.9
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.5,
+          "ci95": {
+            "low": 2.9,
+            "high": 4.1
           }
         }
       }
@@ -1279,6 +1594,41 @@
             "low": 16.4,
             "high": 23.3
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.9,
+          "ci95": {
+            "low": 3.4,
+            "high": 4.5
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.4,
+          "ci95": {
+            "low": 29.1,
+            "high": 36
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 32.3,
+          "ci95": {
+            "low": 27.7,
+            "high": 37.4
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.5,
+          "ci95": {
+            "low": 7.4,
+            "high": 9.6
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4,
+          "ci95": {
+            "low": 3.4,
+            "high": 4.6
+          }
         }
       }
     },
@@ -1405,6 +1755,41 @@
           "ci95": {
             "low": 14.8,
             "high": 21.9
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.1,
+          "ci95": {
+            "low": 3.5,
+            "high": 4.7
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 35.2,
+          "ci95": {
+            "low": 31.3,
+            "high": 39.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 32.4,
+          "ci95": {
+            "low": 27.1,
+            "high": 37.5
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.2,
+          "ci95": {
+            "low": 7.9,
+            "high": 10.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.7,
+          "ci95": {
+            "low": 3,
+            "high": 4.4
           }
         }
       }
@@ -1533,6 +1918,41 @@
             "low": 17.7,
             "high": 24.4
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.7
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.5,
+          "ci95": {
+            "low": 29.3,
+            "high": 35.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.4,
+          "ci95": {
+            "low": 29.9,
+            "high": 39.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.4,
+          "ci95": {
+            "low": 7.4,
+            "high": 9.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 5
+          }
         }
       }
     },
@@ -1659,6 +2079,41 @@
           "ci95": {
             "low": 18.8,
             "high": 26.3
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.8
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.2,
+          "ci95": {
+            "low": 28.8,
+            "high": 36
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.8,
+          "ci95": {
+            "low": 31.9,
+            "high": 42.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9,
+          "ci95": {
+            "low": 7.9,
+            "high": 10.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.5,
+          "ci95": {
+            "low": 3.9,
+            "high": 5.3
           }
         }
       }
@@ -1787,6 +2242,41 @@
             "low": 17.9,
             "high": 24.2
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4,
+          "ci95": {
+            "low": 3.5,
+            "high": 4.5
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 31.4,
+          "ci95": {
+            "low": 28.4,
+            "high": 34.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.9,
+          "ci95": {
+            "low": 30.6,
+            "high": 39.8
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.1,
+          "ci95": {
+            "low": 7.1,
+            "high": 9.1
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.9
+          }
         }
       }
     },
@@ -1913,6 +2403,41 @@
           "ci95": {
             "low": 17.5,
             "high": 24.7
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.8
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 33.1,
+          "ci95": {
+            "low": 29.5,
+            "high": 36.8
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.2,
+          "ci95": {
+            "low": 29.2,
+            "high": 39.4
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.8,
+          "ci95": {
+            "low": 7.7,
+            "high": 10
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.9
           }
         }
       }
@@ -2041,6 +2566,41 @@
             "low": 14,
             "high": 20.9
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.9,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 34.4,
+          "ci95": {
+            "low": 30.7,
+            "high": 38.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 31.2,
+          "ci95": {
+            "low": 26,
+            "high": 36.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.9,
+          "ci95": {
+            "low": 7.7,
+            "high": 10.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.5,
+          "ci95": {
+            "low": 2.9,
+            "high": 4.2
+          }
         }
       }
     },
@@ -2167,6 +2727,41 @@
           "ci95": {
             "low": 18.2,
             "high": 25.8
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.6,
+          "ci95": {
+            "low": 4,
+            "high": 5.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 36.3,
+          "ci95": {
+            "low": 32.5,
+            "high": 40.2
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.8,
+          "ci95": {
+            "low": 30.7,
+            "high": 41.1
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10,
+          "ci95": {
+            "low": 8.7,
+            "high": 11.4
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.5,
+          "ci95": {
+            "low": 3.8,
+            "high": 5.4
           }
         }
       }
@@ -2295,6 +2890,41 @@
             "low": 18.4,
             "high": 25
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.5
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 30.3,
+          "ci95": {
+            "low": 27.2,
+            "high": 33.8
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.1,
+          "ci95": {
+            "low": 30.5,
+            "high": 40.4
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.6,
+          "ci95": {
+            "low": 7.6,
+            "high": 9.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.8
+          }
         }
       }
     },
@@ -2421,6 +3051,41 @@
           "ci95": {
             "low": 21,
             "high": 29.4
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 5.1,
+          "ci95": {
+            "low": 4.4,
+            "high": 5.8
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 37.4,
+          "ci95": {
+            "low": 33.3,
+            "high": 41.2
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 38.6,
+          "ci95": {
+            "low": 33,
+            "high": 44
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.5,
+          "ci95": {
+            "low": 9.2,
+            "high": 11.9
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 5.4,
+          "ci95": {
+            "low": 4.5,
+            "high": 6.4
           }
         }
       }
@@ -2549,6 +3214,41 @@
             "low": 13.5,
             "high": 19.5
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.2,
+          "ci95": {
+            "low": 2.8,
+            "high": 3.7
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 30,
+          "ci95": {
+            "low": 26.5,
+            "high": 33.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 28.5,
+          "ci95": {
+            "low": 23.8,
+            "high": 33.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.2,
+          "ci95": {
+            "low": 6.2,
+            "high": 8.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.2,
+          "ci95": {
+            "low": 2.7,
+            "high": 3.7
+          }
         }
       }
     },
@@ -2675,6 +3375,41 @@
           "ci95": {
             "low": 18.8,
             "high": 27.3
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.8,
+          "ci95": {
+            "low": 4.2,
+            "high": 5.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 36.9,
+          "ci95": {
+            "low": 33.1,
+            "high": 41
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.8,
+          "ci95": {
+            "low": 31.3,
+            "high": 42.4
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.4,
+          "ci95": {
+            "low": 9,
+            "high": 11.9
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.8,
+          "ci95": {
+            "low": 4.1,
+            "high": 5.7
           }
         }
       }
@@ -2803,6 +3538,41 @@
             "low": 17.4,
             "high": 24.8
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 3.8,
+            "high": 5.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 35.5,
+          "ci95": {
+            "low": 31.5,
+            "high": 39.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.5,
+          "ci95": {
+            "low": 31.1,
+            "high": 41.9
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.8,
+          "ci95": {
+            "low": 8.5,
+            "high": 11.1
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 5
+          }
         }
       }
     },
@@ -2929,6 +3699,41 @@
           "ci95": {
             "low": 15.9,
             "high": 22.7
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4,
+          "ci95": {
+            "low": 3.5,
+            "high": 4.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 33.8,
+          "ci95": {
+            "low": 30.1,
+            "high": 37.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 33.9,
+          "ci95": {
+            "low": 29.1,
+            "high": 39.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9,
+          "ci95": {
+            "low": 7.9,
+            "high": 10.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.2,
+            "high": 4.4
           }
         }
       }
@@ -3057,6 +3862,41 @@
             "low": 14.8,
             "high": 20.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.4,
+          "ci95": {
+            "low": 2.9,
+            "high": 3.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 29.8,
+          "ci95": {
+            "low": 26.7,
+            "high": 33.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 30,
+          "ci95": {
+            "low": 25.9,
+            "high": 34.8
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.3,
+          "ci95": {
+            "low": 6.4,
+            "high": 8.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.3,
+          "ci95": {
+            "low": 2.8,
+            "high": 3.9
+          }
         }
       }
     },
@@ -3183,6 +4023,41 @@
           "ci95": {
             "low": 13.7,
             "high": 19.8
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.6,
+          "ci95": {
+            "low": 3.1,
+            "high": 4.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 31.7,
+          "ci95": {
+            "low": 28.3,
+            "high": 35.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 29.5,
+          "ci95": {
+            "low": 25,
+            "high": 34.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.2,
+          "ci95": {
+            "low": 7.1,
+            "high": 9.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.2,
+          "ci95": {
+            "low": 2.7,
+            "high": 3.9
           }
         }
       }
@@ -3311,6 +4186,41 @@
             "low": 19.1,
             "high": 25.4
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.7
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.2,
+          "ci95": {
+            "low": 29.3,
+            "high": 35
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.7,
+          "ci95": {
+            "low": 31.6,
+            "high": 39.6
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.6,
+          "ci95": {
+            "low": 6.7,
+            "high": 8.6
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.6,
+          "ci95": {
+            "low": 3.9,
+            "high": 5.3
+          }
         }
       }
     },
@@ -3437,6 +4347,41 @@
           "ci95": {
             "low": 19.4,
             "high": 27.4
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.9,
+          "ci95": {
+            "low": 4.2,
+            "high": 5.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 37.3,
+          "ci95": {
+            "low": 33.5,
+            "high": 41.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.2,
+          "ci95": {
+            "low": 30.9,
+            "high": 41.5
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.4,
+          "ci95": {
+            "low": 9.1,
+            "high": 11.8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.9,
+          "ci95": {
+            "low": 4.1,
+            "high": 5.8
           }
         }
       }
@@ -3565,6 +4510,41 @@
             "low": 18.9,
             "high": 26.1
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.9,
+          "ci95": {
+            "low": 4.3,
+            "high": 5.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 37.2,
+          "ci95": {
+            "low": 33.2,
+            "high": 41.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.6,
+          "ci95": {
+            "low": 31.6,
+            "high": 41.9
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.8,
+          "ci95": {
+            "low": 9.4,
+            "high": 12.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.8,
+          "ci95": {
+            "low": 4.1,
+            "high": 5.5
+          }
         }
       }
     },
@@ -3691,6 +4671,41 @@
           "ci95": {
             "low": 13.7,
             "high": 20.3
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.3,
+          "ci95": {
+            "low": 2.8,
+            "high": 3.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 30.2,
+          "ci95": {
+            "low": 26.8,
+            "high": 33.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 30.1,
+          "ci95": {
+            "low": 25.4,
+            "high": 34.9
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.6,
+          "ci95": {
+            "low": 6.5,
+            "high": 8.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.1,
+          "ci95": {
+            "low": 2.6,
+            "high": 3.8
           }
         }
       }
@@ -3819,6 +4834,41 @@
             "low": 17.5,
             "high": 24.5
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.7,
+          "ci95": {
+            "low": 3.2,
+            "high": 4.2
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 29.1,
+          "ci95": {
+            "low": 25.9,
+            "high": 32.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 33.5,
+          "ci95": {
+            "low": 28.7,
+            "high": 38.8
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.9,
+          "ci95": {
+            "low": 7,
+            "high": 9.1
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4,
+          "ci95": {
+            "low": 3.4,
+            "high": 4.6
+          }
         }
       }
     },
@@ -3945,6 +4995,41 @@
           "ci95": {
             "low": 18.5,
             "high": 26.1
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.8
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 33,
+          "ci95": {
+            "low": 29.7,
+            "high": 36.3
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36,
+          "ci95": {
+            "low": 31.1,
+            "high": 41
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9,
+          "ci95": {
+            "low": 7.9,
+            "high": 10.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 3.7,
+            "high": 5.2
           }
         }
       }
@@ -4073,6 +5158,41 @@
             "low": 14.1,
             "high": 20.9
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.2,
+          "ci95": {
+            "low": 2.7,
+            "high": 3.7
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 26,
+          "ci95": {
+            "low": 22.9,
+            "high": 28.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 31.8,
+          "ci95": {
+            "low": 26.6,
+            "high": 37.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.6,
+          "ci95": {
+            "low": 6.5,
+            "high": 8.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.2,
+          "ci95": {
+            "low": 2.7,
+            "high": 3.8
+          }
         }
       }
     },
@@ -4199,6 +5319,41 @@
           "ci95": {
             "low": 18,
             "high": 25.7
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.6,
+          "ci95": {
+            "low": 4,
+            "high": 5.2
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 35.8,
+          "ci95": {
+            "low": 31.9,
+            "high": 39.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.3,
+          "ci95": {
+            "low": 31.2,
+            "high": 41.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10,
+          "ci95": {
+            "low": 8.8,
+            "high": 11.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 3.7,
+            "high": 5.2
           }
         }
       }
@@ -4327,6 +5482,41 @@
             "low": 14.6,
             "high": 20.2
           }
+        },
+        "stroke": {
+          "crudePrevalence": 2.9,
+          "ci95": {
+            "low": 2.6,
+            "high": 3.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 25,
+          "ci95": {
+            "low": 22.6,
+            "high": 27.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 29.8,
+          "ci95": {
+            "low": 25.9,
+            "high": 34.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 6.2,
+          "ci95": {
+            "low": 5.4,
+            "high": 7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.2,
+          "ci95": {
+            "low": 2.8,
+            "high": 3.6
+          }
         }
       }
     },
@@ -4453,6 +5643,41 @@
           "ci95": {
             "low": 16.2,
             "high": 22.6
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.4,
+          "ci95": {
+            "low": 2.9,
+            "high": 3.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 28.4,
+          "ci95": {
+            "low": 25.2,
+            "high": 31.6
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 31.2,
+          "ci95": {
+            "low": 26.8,
+            "high": 35.9
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.3,
+          "ci95": {
+            "low": 6.4,
+            "high": 8.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.6,
+          "ci95": {
+            "low": 3.1,
+            "high": 4.2
           }
         }
       }
@@ -4581,6 +5806,41 @@
             "low": 20.3,
             "high": 28.5
           }
+        },
+        "stroke": {
+          "crudePrevalence": 5.3,
+          "ci95": {
+            "low": 4.5,
+            "high": 6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 38.5,
+          "ci95": {
+            "low": 34.3,
+            "high": 42.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 39,
+          "ci95": {
+            "low": 33.6,
+            "high": 44.4
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 11.2,
+          "ci95": {
+            "low": 9.8,
+            "high": 12.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 5.2,
+          "ci95": {
+            "low": 4.3,
+            "high": 6.2
+          }
         }
       }
     },
@@ -4707,6 +5967,41 @@
           "ci95": {
             "low": 18.5,
             "high": 26.5
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 5,
+          "ci95": {
+            "low": 4.2,
+            "high": 5.8
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 38.3,
+          "ci95": {
+            "low": 34.1,
+            "high": 42.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 37.6,
+          "ci95": {
+            "low": 32.3,
+            "high": 43.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 11,
+          "ci95": {
+            "low": 9.4,
+            "high": 12.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.7,
+          "ci95": {
+            "low": 3.9,
+            "high": 5.5
           }
         }
       }
@@ -4835,6 +6130,41 @@
             "low": 16.9,
             "high": 23.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.2,
+          "ci95": {
+            "low": 2.8,
+            "high": 3.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 25.1,
+          "ci95": {
+            "low": 22.4,
+            "high": 28.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.3,
+          "ci95": {
+            "low": 29.3,
+            "high": 39.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.1,
+          "ci95": {
+            "low": 6.3,
+            "high": 8.1
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.4
+          }
         }
       }
     },
@@ -4961,6 +6291,41 @@
           "ci95": {
             "low": 18.2,
             "high": 24.7
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.7,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.2
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.3,
+          "ci95": {
+            "low": 29.3,
+            "high": 35.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.9,
+          "ci95": {
+            "low": 30.4,
+            "high": 39.5
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.9,
+          "ci95": {
+            "low": 6.9,
+            "high": 8.9
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.9,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.5
           }
         }
       }
@@ -5089,6 +6454,41 @@
             "low": 14,
             "high": 19.6
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.1,
+          "ci95": {
+            "low": 2.7,
+            "high": 3.5
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 25.3,
+          "ci95": {
+            "low": 22.9,
+            "high": 27.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 28.9,
+          "ci95": {
+            "low": 25,
+            "high": 32.8
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 6.7,
+          "ci95": {
+            "low": 5.9,
+            "high": 7.6
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.2,
+          "ci95": {
+            "low": 2.7,
+            "high": 3.7
+          }
         }
       }
     },
@@ -5215,6 +6615,41 @@
           "ci95": {
             "low": 18.7,
             "high": 25.9
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 34.2,
+          "ci95": {
+            "low": 30.5,
+            "high": 38.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.1,
+          "ci95": {
+            "low": 30,
+            "high": 40.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.2,
+          "ci95": {
+            "low": 8.1,
+            "high": 10.4
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.5,
+          "ci95": {
+            "low": 3.8,
+            "high": 5.3
           }
         }
       }
@@ -5343,6 +6778,41 @@
             "low": 14.2,
             "high": 19.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 2.9,
+          "ci95": {
+            "low": 2.6,
+            "high": 3.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 25.1,
+          "ci95": {
+            "low": 22.6,
+            "high": 27.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 27.5,
+          "ci95": {
+            "low": 23.9,
+            "high": 31.5
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 6.4,
+          "ci95": {
+            "low": 5.6,
+            "high": 7.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.1,
+          "ci95": {
+            "low": 2.7,
+            "high": 3.6
+          }
         }
       }
     },
@@ -5469,6 +6939,41 @@
           "ci95": {
             "low": 14.1,
             "high": 21.6
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.6,
+            "high": 5.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 37.2,
+          "ci95": {
+            "low": 33.1,
+            "high": 41.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 32.1,
+          "ci95": {
+            "low": 26.9,
+            "high": 37.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.2,
+          "ci95": {
+            "low": 8.8,
+            "high": 11.8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.5,
+          "ci95": {
+            "low": 2.8,
+            "high": 4.3
           }
         }
       }
@@ -5597,6 +7102,41 @@
             "low": 23.9,
             "high": 32.1
           }
+        },
+        "stroke": {
+          "crudePrevalence": 5.6,
+          "ci95": {
+            "low": 4.9,
+            "high": 6.2
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 37.9,
+          "ci95": {
+            "low": 34,
+            "high": 41.8
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 40.4,
+          "ci95": {
+            "low": 35.1,
+            "high": 45.4
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.8,
+          "ci95": {
+            "low": 9.5,
+            "high": 12
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 6.2,
+          "ci95": {
+            "low": 5.3,
+            "high": 7.2
+          }
         }
       }
     },
@@ -5723,6 +7263,41 @@
           "ci95": {
             "low": 16.3,
             "high": 22.9
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.7,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 31.6,
+          "ci95": {
+            "low": 27.8,
+            "high": 35.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 32,
+          "ci95": {
+            "low": 27.3,
+            "high": 37.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.1,
+          "ci95": {
+            "low": 7,
+            "high": 9.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.2,
+            "high": 4.5
           }
         }
       }
@@ -5851,6 +7426,41 @@
             "low": 12.7,
             "high": 19.5
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.2,
+            "high": 4.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 35.2,
+          "ci95": {
+            "low": 31.1,
+            "high": 39.5
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 29.3,
+          "ci95": {
+            "low": 24.5,
+            "high": 34.6
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9,
+          "ci95": {
+            "low": 7.8,
+            "high": 10.4
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.1,
+          "ci95": {
+            "low": 2.5,
+            "high": 3.8
+          }
         }
       }
     },
@@ -5977,6 +7587,41 @@
           "ci95": {
             "low": 16.8,
             "high": 23.7
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.2,
+            "high": 4.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 29.8,
+          "ci95": {
+            "low": 26.4,
+            "high": 33.3
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 33.1,
+          "ci95": {
+            "low": 28.4,
+            "high": 38.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.2,
+          "ci95": {
+            "low": 7.1,
+            "high": 9.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.9,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.5
           }
         }
       }
@@ -6105,6 +7750,41 @@
             "low": 11.9,
             "high": 17.4
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3,
+          "ci95": {
+            "low": 2.6,
+            "high": 3.5
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 28.4,
+          "ci95": {
+            "low": 25.6,
+            "high": 31.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 25.6,
+          "ci95": {
+            "low": 21.8,
+            "high": 29.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7,
+          "ci95": {
+            "low": 6,
+            "high": 8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 2.8,
+          "ci95": {
+            "low": 2.3,
+            "high": 3.4
+          }
         }
       }
     },
@@ -6231,6 +7911,41 @@
           "ci95": {
             "low": 19.6,
             "high": 26.8
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.5,
+          "ci95": {
+            "low": 3.9,
+            "high": 5.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.2,
+          "ci95": {
+            "low": 28.5,
+            "high": 35.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.4,
+          "ci95": {
+            "low": 31.5,
+            "high": 41.9
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.5,
+          "ci95": {
+            "low": 8.4,
+            "high": 10.8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.6,
+          "ci95": {
+            "low": 4,
+            "high": 5.4
           }
         }
       }
@@ -6359,6 +8074,41 @@
             "low": 20.3,
             "high": 28.2
           }
+        },
+        "stroke": {
+          "crudePrevalence": 5.2,
+          "ci95": {
+            "low": 4.5,
+            "high": 5.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 37.9,
+          "ci95": {
+            "low": 33.8,
+            "high": 41.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 38.8,
+          "ci95": {
+            "low": 33.4,
+            "high": 44.1
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 11.1,
+          "ci95": {
+            "low": 9.7,
+            "high": 12.4
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 5.1,
+          "ci95": {
+            "low": 4.3,
+            "high": 6
+          }
         }
       }
     },
@@ -6485,6 +8235,41 @@
           "ci95": {
             "low": 16.8,
             "high": 23.2
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.5,
+          "ci95": {
+            "low": 3.1,
+            "high": 4
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 30,
+          "ci95": {
+            "low": 27,
+            "high": 32.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 32,
+          "ci95": {
+            "low": 27.8,
+            "high": 36.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7,
+          "ci95": {
+            "low": 6,
+            "high": 7.9
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.7,
+          "ci95": {
+            "low": 3.1,
+            "high": 4.2
           }
         }
       }
@@ -6613,6 +8398,41 @@
             "low": 17.5,
             "high": 24.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 3.8,
+            "high": 5.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 35.1,
+          "ci95": {
+            "low": 31.4,
+            "high": 39
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35,
+          "ci95": {
+            "low": 29.7,
+            "high": 40.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.7,
+          "ci95": {
+            "low": 8.4,
+            "high": 11.1
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.5,
+            "high": 5.1
+          }
         }
       }
     },
@@ -6739,6 +8559,41 @@
           "ci95": {
             "low": 14,
             "high": 20.2
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.3,
+          "ci95": {
+            "low": 2.9,
+            "high": 3.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 28.1,
+          "ci95": {
+            "low": 25,
+            "high": 31.3
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 30.7,
+          "ci95": {
+            "low": 25.6,
+            "high": 35.5
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.6,
+          "ci95": {
+            "low": 6.6,
+            "high": 8.6
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.3,
+          "ci95": {
+            "low": 2.8,
+            "high": 3.9
           }
         }
       }
@@ -6867,6 +8722,41 @@
             "low": 17.2,
             "high": 24.3
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 3.7,
+            "high": 5
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 35.9,
+          "ci95": {
+            "low": 31.9,
+            "high": 39.6
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35,
+          "ci95": {
+            "low": 29.8,
+            "high": 40.1
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.5,
+          "ci95": {
+            "low": 8.2,
+            "high": 10.6
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.5,
+            "high": 5
+          }
         }
       }
     },
@@ -6993,6 +8883,41 @@
           "ci95": {
             "low": 18.3,
             "high": 25.3
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.1,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 31.5,
+          "ci95": {
+            "low": 28,
+            "high": 34.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.1,
+          "ci95": {
+            "low": 31,
+            "high": 41.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.7,
+          "ci95": {
+            "low": 7.7,
+            "high": 9.8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 5.1
           }
         }
       }
@@ -7121,6 +9046,41 @@
             "low": 18.1,
             "high": 25.2
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.5,
+          "ci95": {
+            "low": 3.9,
+            "high": 5.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 35.9,
+          "ci95": {
+            "low": 32,
+            "high": 39.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.5,
+          "ci95": {
+            "low": 31.3,
+            "high": 41.6
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.9,
+          "ci95": {
+            "low": 8.7,
+            "high": 11.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 5.1
+          }
         }
       }
     },
@@ -7247,6 +9207,41 @@
           "ci95": {
             "low": 14,
             "high": 20.6
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.4,
+          "ci95": {
+            "low": 2.9,
+            "high": 4
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 30.6,
+          "ci95": {
+            "low": 27.3,
+            "high": 34
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 29,
+          "ci95": {
+            "low": 24.4,
+            "high": 34.1
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.6,
+          "ci95": {
+            "low": 6.6,
+            "high": 8.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.3,
+          "ci95": {
+            "low": 2.7,
+            "high": 3.9
           }
         }
       }
@@ -7375,6 +9370,41 @@
             "low": 18.3,
             "high": 25.6
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.8
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 34.1,
+          "ci95": {
+            "low": 30.7,
+            "high": 38
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.1,
+          "ci95": {
+            "low": 30.3,
+            "high": 40.4
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.2,
+          "ci95": {
+            "low": 8.1,
+            "high": 10.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.6,
+            "high": 5.1
+          }
         }
       }
     },
@@ -7501,6 +9531,41 @@
           "ci95": {
             "low": 16.1,
             "high": 22.7
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.6,
+          "ci95": {
+            "low": 3.2,
+            "high": 4.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.7,
+          "ci95": {
+            "low": 29.3,
+            "high": 36.2
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 32.4,
+          "ci95": {
+            "low": 27.8,
+            "high": 37.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8,
+          "ci95": {
+            "low": 7,
+            "high": 9.1
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.7,
+          "ci95": {
+            "low": 3.1,
+            "high": 4.3
           }
         }
       }
@@ -7629,6 +9694,41 @@
             "low": 18,
             "high": 25.2
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 30.5,
+          "ci95": {
+            "low": 27.2,
+            "high": 34.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.5,
+          "ci95": {
+            "low": 29.8,
+            "high": 39.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.2,
+          "ci95": {
+            "low": 7.1,
+            "high": 9.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.9
+          }
         }
       }
     },
@@ -7755,6 +9855,41 @@
           "ci95": {
             "low": 20.7,
             "high": 29.2
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 5.4,
+          "ci95": {
+            "low": 4.7,
+            "high": 6.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 39.8,
+          "ci95": {
+            "low": 35.7,
+            "high": 44.3
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 38.6,
+          "ci95": {
+            "low": 33.5,
+            "high": 44.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 11.5,
+          "ci95": {
+            "low": 10.1,
+            "high": 13.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 5.3,
+          "ci95": {
+            "low": 4.5,
+            "high": 6.3
           }
         }
       }
@@ -7883,6 +10018,41 @@
             "low": 18.3,
             "high": 24.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.9,
+          "ci95": {
+            "low": 3.4,
+            "high": 4.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 30.6,
+          "ci95": {
+            "low": 27.4,
+            "high": 33.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 33.6,
+          "ci95": {
+            "low": 29.3,
+            "high": 37.9
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 7.7,
+          "ci95": {
+            "low": 6.8,
+            "high": 8.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.8
+          }
         }
       }
     },
@@ -8009,6 +10179,41 @@
           "ci95": {
             "low": 18.6,
             "high": 26
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.8
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 33.6,
+          "ci95": {
+            "low": 29.9,
+            "high": 37.2
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.2,
+          "ci95": {
+            "low": 30.3,
+            "high": 40.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9,
+          "ci95": {
+            "low": 7.9,
+            "high": 10.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 3.8,
+            "high": 5.2
           }
         }
       }
@@ -8137,6 +10342,41 @@
             "low": 12.4,
             "high": 17
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3,
+          "ci95": {
+            "low": 2.6,
+            "high": 3.4
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 24.8,
+          "ci95": {
+            "low": 22.5,
+            "high": 27
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 23.3,
+          "ci95": {
+            "low": 20.2,
+            "high": 26.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 6,
+          "ci95": {
+            "low": 5.2,
+            "high": 6.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 2.8,
+          "ci95": {
+            "low": 2.4,
+            "high": 3.3
+          }
         }
       }
     },
@@ -8263,6 +10503,41 @@
           "ci95": {
             "low": 18.9,
             "high": 26.3
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 4.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 33.4,
+          "ci95": {
+            "low": 29.7,
+            "high": 37.3
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.5,
+          "ci95": {
+            "low": 30.4,
+            "high": 40.8
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.4,
+          "ci95": {
+            "low": 8.2,
+            "high": 10.6
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.5,
+          "ci95": {
+            "low": 3.8,
+            "high": 5.3
           }
         }
       }
@@ -8391,6 +10666,41 @@
             "low": 20.1,
             "high": 28.1
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.9,
+          "ci95": {
+            "low": 4.3,
+            "high": 5.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 38.2,
+          "ci95": {
+            "low": 34.2,
+            "high": 42.3
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 38.2,
+          "ci95": {
+            "low": 32.9,
+            "high": 44
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.6,
+          "ci95": {
+            "low": 9.2,
+            "high": 12
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 5,
+          "ci95": {
+            "low": 4.2,
+            "high": 5.9
+          }
         }
       }
     },
@@ -8517,6 +10827,41 @@
           "ci95": {
             "low": 19.2,
             "high": 26.9
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 5.5,
+          "ci95": {
+            "low": 4.8,
+            "high": 6.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 41.5,
+          "ci95": {
+            "low": 37.2,
+            "high": 45.6
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 38.3,
+          "ci95": {
+            "low": 32.8,
+            "high": 43.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 12.1,
+          "ci95": {
+            "low": 10.6,
+            "high": 13.8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.9,
+          "ci95": {
+            "low": 4.2,
+            "high": 5.8
           }
         }
       }
@@ -8645,6 +10990,41 @@
             "low": 19.1,
             "high": 26.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 3.9,
+            "high": 5.1
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 34.8,
+          "ci95": {
+            "low": 31.1,
+            "high": 38.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 37.1,
+          "ci95": {
+            "low": 32,
+            "high": 42.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.6,
+          "ci95": {
+            "low": 8.4,
+            "high": 10.8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.6,
+          "ci95": {
+            "low": 3.9,
+            "high": 5.4
+          }
         }
       }
     },
@@ -8771,6 +11151,41 @@
           "ci95": {
             "low": 21.8,
             "high": 30.4
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 5.5,
+          "ci95": {
+            "low": 4.7,
+            "high": 6.2
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 39,
+          "ci95": {
+            "low": 35.1,
+            "high": 43.2
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 40,
+          "ci95": {
+            "low": 34.9,
+            "high": 45.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 11.4,
+          "ci95": {
+            "low": 10,
+            "high": 12.9
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 5.6,
+          "ci95": {
+            "low": 4.7,
+            "high": 6.6
           }
         }
       }
@@ -8899,6 +11314,41 @@
             "low": 15.8,
             "high": 22.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.4
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.4,
+          "ci95": {
+            "low": 28.6,
+            "high": 35.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 33,
+          "ci95": {
+            "low": 28.1,
+            "high": 38.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.4,
+          "ci95": {
+            "low": 7.3,
+            "high": 9.6
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.7,
+          "ci95": {
+            "low": 3.1,
+            "high": 4.4
+          }
         }
       }
     },
@@ -9025,6 +11475,41 @@
           "ci95": {
             "low": 12.5,
             "high": 17.8
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 2.9,
+          "ci95": {
+            "low": 2.5,
+            "high": 3.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 24.9,
+          "ci95": {
+            "low": 22.2,
+            "high": 27.8
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 28.5,
+          "ci95": {
+            "low": 24.4,
+            "high": 33
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 6.6,
+          "ci95": {
+            "low": 5.8,
+            "high": 7.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 2.8,
+          "ci95": {
+            "low": 2.4,
+            "high": 3.3
           }
         }
       }
@@ -9153,6 +11638,41 @@
             "low": 18.7,
             "high": 26.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 5.1,
+          "ci95": {
+            "low": 4.4,
+            "high": 5.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 39.8,
+          "ci95": {
+            "low": 35.8,
+            "high": 44.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 37.3,
+          "ci95": {
+            "low": 31.9,
+            "high": 42.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 11.3,
+          "ci95": {
+            "low": 9.8,
+            "high": 12.8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.8,
+          "ci95": {
+            "low": 4,
+            "high": 5.7
+          }
         }
       }
     },
@@ -9279,6 +11799,41 @@
           "ci95": {
             "low": 18.7,
             "high": 27.1
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 5.1,
+          "ci95": {
+            "low": 4.4,
+            "high": 5.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 38.6,
+          "ci95": {
+            "low": 34.5,
+            "high": 42.8
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.4,
+          "ci95": {
+            "low": 31.1,
+            "high": 42.1
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 11,
+          "ci95": {
+            "low": 9.5,
+            "high": 12.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.8,
+          "ci95": {
+            "low": 4,
+            "high": 5.7
           }
         }
       }
@@ -9407,6 +11962,41 @@
             "low": 20.2,
             "high": 26.8
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.8,
+            "high": 4.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 31.9,
+          "ci95": {
+            "low": 28.7,
+            "high": 35.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.5,
+          "ci95": {
+            "low": 31.2,
+            "high": 40.3
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.2,
+          "ci95": {
+            "low": 7.2,
+            "high": 9.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.6,
+          "ci95": {
+            "low": 4,
+            "high": 5.4
+          }
         }
       }
     },
@@ -9533,6 +12123,41 @@
           "ci95": {
             "low": 16.7,
             "high": 23.7
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32,
+          "ci95": {
+            "low": 28.6,
+            "high": 35.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 33.9,
+          "ci95": {
+            "low": 29.1,
+            "high": 39
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.2,
+          "ci95": {
+            "low": 7.1,
+            "high": 9.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.9,
+          "ci95": {
+            "low": 3.2,
+            "high": 4.6
           }
         }
       }
@@ -9661,6 +12286,41 @@
             "low": 18.3,
             "high": 25.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 3.9,
+          "ci95": {
+            "low": 3.4,
+            "high": 4.5
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 31.3,
+          "ci95": {
+            "low": 27.9,
+            "high": 35
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.7,
+          "ci95": {
+            "low": 29.9,
+            "high": 40.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.3,
+          "ci95": {
+            "low": 7.3,
+            "high": 9.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.5,
+            "high": 4.9
+          }
         }
       }
     },
@@ -9787,6 +12447,41 @@
           "ci95": {
             "low": 18.5,
             "high": 25.8
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 3.8,
+            "high": 5
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 34.2,
+          "ci95": {
+            "low": 30.3,
+            "high": 37.9
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 36.4,
+          "ci95": {
+            "low": 31.2,
+            "high": 41.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9.5,
+          "ci95": {
+            "low": 8.3,
+            "high": 10.8
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.5,
+          "ci95": {
+            "low": 3.8,
+            "high": 5.2
           }
         }
       }
@@ -9915,6 +12610,41 @@
             "low": 20,
             "high": 28
           }
+        },
+        "stroke": {
+          "crudePrevalence": 5.1,
+          "ci95": {
+            "low": 4.4,
+            "high": 5.8
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 38.3,
+          "ci95": {
+            "low": 34.4,
+            "high": 42.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 37.7,
+          "ci95": {
+            "low": 32.5,
+            "high": 43
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 10.8,
+          "ci95": {
+            "low": 9.4,
+            "high": 12.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 5,
+          "ci95": {
+            "low": 4.2,
+            "high": 5.9
+          }
         }
       }
     },
@@ -10041,6 +12771,41 @@
           "ci95": {
             "low": 17.3,
             "high": 24
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 3.8,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.3,
+          "ci95": {
+            "low": 28.6,
+            "high": 35.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 32.9,
+          "ci95": {
+            "low": 28.2,
+            "high": 37.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.2,
+          "ci95": {
+            "low": 7.2,
+            "high": 9.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 3.9,
+          "ci95": {
+            "low": 3.3,
+            "high": 4.6
           }
         }
       }
@@ -10169,6 +12934,41 @@
             "low": 18.3,
             "high": 25.4
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.2,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.7
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 33.5,
+          "ci95": {
+            "low": 29.9,
+            "high": 37.4
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.6,
+          "ci95": {
+            "low": 29.8,
+            "high": 40
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9,
+          "ci95": {
+            "low": 7.9,
+            "high": 10.2
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 5
+          }
         }
       }
     },
@@ -10295,6 +13095,41 @@
           "ci95": {
             "low": 18.2,
             "high": 25.3
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4,
+          "ci95": {
+            "low": 3.5,
+            "high": 4.6
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.7,
+          "ci95": {
+            "low": 29.1,
+            "high": 36.1
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.5,
+          "ci95": {
+            "low": 29.6,
+            "high": 39.2
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 8.5,
+          "ci95": {
+            "low": 7.4,
+            "high": 9.5
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.6,
+            "high": 5.1
           }
         }
       }
@@ -10423,6 +13258,41 @@
             "low": 11.2,
             "high": 15.7
           }
+        },
+        "stroke": {
+          "crudePrevalence": 2.7,
+          "ci95": {
+            "low": 2.3,
+            "high": 3
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 22.1,
+          "ci95": {
+            "low": 20,
+            "high": 24.3
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 24.1,
+          "ci95": {
+            "low": 20.8,
+            "high": 27.5
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 5.8,
+          "ci95": {
+            "low": 5.1,
+            "high": 6.6
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 2.7,
+          "ci95": {
+            "low": 2.3,
+            "high": 3.1
+          }
         }
       }
     },
@@ -10550,6 +13420,41 @@
             "low": 21.3,
             "high": 27.2
           }
+        },
+        "stroke": {
+          "crudePrevalence": 4.4,
+          "ci95": {
+            "low": 4,
+            "high": 4.9
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 29.7,
+          "ci95": {
+            "low": 27.5,
+            "high": 32
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 34.1,
+          "ci95": {
+            "low": 30.6,
+            "high": 37.7
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 6.9,
+          "ci95": {
+            "low": 6.1,
+            "high": 7.7
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 5.1,
+          "ci95": {
+            "low": 4.5,
+            "high": 5.8
+          }
         }
       }
     },
@@ -10676,6 +13581,41 @@
           "ci95": {
             "low": 18,
             "high": 25.5
+          }
+        },
+        "stroke": {
+          "crudePrevalence": 4.1,
+          "ci95": {
+            "low": 3.6,
+            "high": 4.7
+          }
+        },
+        "arthritis": {
+          "crudePrevalence": 32.9,
+          "ci95": {
+            "low": 29.1,
+            "high": 36.7
+          }
+        },
+        "anyDisability": {
+          "crudePrevalence": 35.1,
+          "ci95": {
+            "low": 30,
+            "high": 40.5
+          }
+        },
+        "hearingDisability": {
+          "crudePrevalence": 9,
+          "ci95": {
+            "low": 7.9,
+            "high": 10.3
+          }
+        },
+        "selfCareDisability": {
+          "crudePrevalence": 4.3,
+          "ci95": {
+            "low": 3.7,
+            "high": 5.1
           }
         }
       }
