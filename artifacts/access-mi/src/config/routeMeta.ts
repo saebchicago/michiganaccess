@@ -198,6 +198,15 @@ export const ROUTE_META: RouteMeta[] = [
       "SNAP, WIC, food deserts, and emergency food assistance by county.",
   },
   {
+    path: "/food-access",
+    title: "Food Access Explorer | Access Michigan",
+    description:
+      "Multi-variable view of USDA SNAP enrollment and retailer access across all 83 Michigan counties, with primary-source provenance and transparent benchmark math.",
+    h1: "Food Access Explorer",
+    summary:
+      "USDA SNAP enrollment, retailer access, and coverage state for every Michigan county.",
+  },
+  {
     path: "/energy",
     title: "Energy | Access Michigan",
     description:
