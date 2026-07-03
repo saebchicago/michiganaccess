@@ -51,3 +51,47 @@ datasets:
     api_endpoint: "https://data.michigan.gov/resource/{dataset_id}.json"
     freshness_sla_days: 90
     integrity_default: VERIFIED
+
+  acs_uninsured_county:
+    label: "ACS S2701 Uninsured Rate by County (5-year, non-overlapping vintages)"
+    source_org: "U.S. Census Bureau"
+    source_url: "https://data.census.gov/table/ACSST5Y2023.S2701"
+    access: public_api
+    api_endpoint: "https://api.census.gov/data/{year}/acs/acs5/subject"
+    freshness_sla_days: 400
+    integrity_default: VERIFIED
+    grain: county
+    key: [county_fips, vintage]
+
+  acs_uninsured_trend:
+    label: "ACS S2701 Uninsured Rate - Per-County Trend Classification"
+    source_org: "U.S. Census Bureau"
+    source_url: "https://data.census.gov/table/ACSST5Y2023.S2701"
+    access: public_api
+    api_endpoint: "https://api.census.gov/data/{year}/acs/acs5/subject"
+    freshness_sla_days: 400
+    integrity_default: VERIFIED
+    grain: county
+    key: [county_fips]
+
+  chr_county:
+    label: "County Health Rankings - Michigan Curated Panel (SDOH / Housing / Environment / Health)"
+    source_org: "UW Population Health Institute, County Health Rankings"
+    source_url: "https://www.countyhealthrankings.org/health-data"
+    access: download
+    api_endpoint: "https://www.countyhealthrankings.org/sites/default/files/media/document/analytic_data{year}.csv"
+    freshness_sla_days: 400
+    integrity_default: VERIFIED
+    grain: county
+    key: [county_fips, vintage, metric_id]
+
+  chr_county_trend:
+    label: "County Health Rankings - Per-County Trend Classification (Michigan)"
+    source_org: "UW Population Health Institute, County Health Rankings"
+    source_url: "https://www.countyhealthrankings.org/health-data"
+    access: download
+    api_endpoint: "https://www.countyhealthrankings.org/sites/default/files/media/document/analytic_data{year}.csv"
+    freshness_sla_days: 400
+    integrity_default: VERIFIED
+    grain: county
+    key: [county_fips, metric_id]
