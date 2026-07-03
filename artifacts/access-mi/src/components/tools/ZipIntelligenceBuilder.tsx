@@ -692,8 +692,8 @@ export default function ZipIntelligenceBuilder({
                             </tbody>
                           </table>
                           <p className="text-[9px] text-muted-foreground mt-2">
-                            Comparing CDC PLACES 2024 vs 2023 releases. Source:
-                            CDC, RWJF, CDC Foundation.
+                            Comparing CDC PLACES 2024 vs 2023 releases
+                            (ZCTA-level). Source: CDC, RWJF, CDC Foundation.
                           </p>
                         </div>
                       )}
@@ -747,8 +747,9 @@ export default function ZipIntelligenceBuilder({
 
             {/* Source */}
             <p className="text-[9px] text-muted-foreground text-center">
-              Source: CDC PLACES 2024 · Robert Wood Johnson Foundation · CDC
-              Foundation · Small area estimates from BRFSS 2022
+              Source: CDC PLACES 2024 (ZCTA-level) · Robert Wood Johnson
+              Foundation · CDC Foundation · Small area estimates from BRFSS
+              2022
             </p>
           </motion.div>
         )}

@@ -1416,7 +1416,9 @@ export default function MethodologyPage() {
                     specific site (clinic, FQHC, monitoring station).
                   </li>
                   <li>
-                    <strong className="text-foreground">Modeled to ZIP</strong>{" "}
+                    <strong className="text-foreground">
+                      Modeled to ZCTA
+                    </strong>{" "}
                     - apportioned from a larger area; paired with the MODELED
                     integrity tier.
                   </li>

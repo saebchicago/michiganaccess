@@ -1275,8 +1275,8 @@ export default function ZipScorecardPage() {
             )}
             {primary.cdcData.length > 0 && (
               <p className="text-[10px] text-muted-foreground">
-                Source: CDC PLACES 2024 (BRFSS model-based estimates). These are
-                modeled estimates, not clinical data.
+                Source: CDC PLACES 2024, ZCTA-level (BRFSS model-based
+                estimates). These are modeled estimates, not clinical data.
               </p>
             )}
           </TabsContent>
@@ -1426,7 +1426,7 @@ export default function ZipScorecardPage() {
                         />
                       ))}
                     <p className="text-[9px] text-muted-foreground mt-2">
-                      Source: CDC PLACES 2024
+                      Source: CDC PLACES 2024, ZCTA-level
                     </p>
                   </CardContent>
                 </Card>

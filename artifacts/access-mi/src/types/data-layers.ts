@@ -3,7 +3,7 @@
  *
  * Separate from the integrity tier (VERIFIED / MODELED / PROJECTED).
  * Both can co-occur on the same metric: a value can be VERIFIED at the
- * county level, or MODELED at the ZIP level. Resolution describes the
+ * county level, or MODELED at the ZCTA level. Resolution describes the
  * spatial grain; the integrity tier describes how the number was
  * produced.
  *
@@ -18,7 +18,7 @@
  *   point          - a specific site such as a clinic, FQHC, or
  *                    monitoring station
  *   modeled_to_zip - apportioned or imputed down from a larger area
- *                    to a ZIP. Always paired with MODELED in the
+ *                    to a ZCTA. Always paired with MODELED in the
  *                    integrity tier
  *   unverified     - native resolution not confirmed against the
  *                    upstream source. Never guess; pick this rather
