@@ -21,19 +21,53 @@ const InsuranceAppealsPage = () => {
     path: "/health/insurance-appeals",
     jsonLd: {
       "@type": "HowTo",
-      "name": "How to Appeal a Health Insurance Denial in Michigan",
-      "description": "Step-by-step guide to fighting insurance denials using Michigan's internal appeal and DIFS external review processes.",
-      "url": "https://accessmi.org/health/insurance-appeals",
-      "totalTime": "PT30M",
-      "step": [
-        { "@type": "HowToStep", "name": "Review your denial letter", "text": "Identify the reason for denial and gather supporting documentation." },
-        { "@type": "HowToStep", "name": "File internal appeal", "text": "Submit a formal appeal to your insurance company within 180 days." },
-        { "@type": "HowToStep", "name": "Request DIFS external review", "text": "If denied again, file for external review with Michigan DIFS." },
+      name: "How to Appeal a Health Insurance Denial in Michigan",
+      description:
+        "Step-by-step guide to fighting insurance denials using Michigan's internal appeal and DIFS external review processes.",
+      url: "https://accessmi.org/health/insurance-appeals",
+      totalTime: "PT30M",
+      step: [
+        {
+          "@type": "HowToStep",
+          name: "Review your denial letter",
+          text: "Identify the reason for denial and gather supporting documentation.",
+        },
+        {
+          "@type": "HowToStep",
+          name: "File internal appeal",
+          text: "Submit a formal appeal to your insurance company within 180 days.",
+        },
+        {
+          "@type": "HowToStep",
+          name: "Request DIFS external review",
+          text: "If denied again, file for external review with Michigan DIFS.",
+        },
       ],
-      "mainEntity": [
-        { "@type": "Question", "name": "How long do I have to appeal a health insurance denial in Michigan?", "acceptedAnswer": { "@type": "Answer", "text": "You have 180 days from the date of denial to file an internal appeal with your insurance company." } },
-        { "@type": "Question", "name": "Can I appeal a health insurance denial?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Michigan law gives you the right to an internal appeal with your insurer and, if denied again, an external review through DIFS." } },
-        { "@type": "Question", "name": "Does Access Michigan store my health information?", "acceptedAnswer": { "@type": "Answer", "text": "No. Access Michigan does not store any personal health information. All appeal letter generation happens locally." } },
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How long do I have to appeal a health insurance denial in Michigan?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "You have 180 days from the date of denial to file an internal appeal with your insurance company.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I appeal a health insurance denial?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Michigan law gives you the right to an internal appeal with your insurer and, if denied again, an external review through DIFS.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does Access Michigan store my health information?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Access Michigan does not store any personal health information. All appeal letter generation happens locally.",
+          },
+        },
       ],
     },
   });
@@ -41,7 +75,12 @@ const InsuranceAppealsPage = () => {
   return (
     <Layout>
       <div className="container pt-6">
-        <Breadcrumbs items={[{ label: "Find Help", href: "/find-care" }, { label: "Insurance Appeals" }]} />
+        <Breadcrumbs
+          items={[
+            { label: "Find Help", href: "/find-care" },
+            { label: "Insurance Appeals" },
+          ]}
+        />
       </div>
       {/* Hero */}
       <section className="relative bg-gradient-hero py-16 md:py-24 text-primary-foreground overflow-hidden">
@@ -64,23 +103,27 @@ const InsuranceAppealsPage = () => {
               </span>
             </h1>
             <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
-              Michigan law guarantees your right to appeal. Access Michigan gives you free tools
-              to build your case - no sign-up, no data stored.
+              Michigan law guarantees your right to appeal. Free tools. No
+              sign-up. Nothing stored.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" variant="secondary" asChild>
-                <a href="#ai-generator">
-                  Generate Appeal Letter
-                </a>
+                <a href="#ai-generator">Generate Appeal Letter</a>
               </Button>
-              <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-white/30 text-white hover:bg-white/10"
+                asChild
+              >
                 <a href="#flowchart">
                   See the Process <ArrowDown className="h-4 w-4" />
                 </a>
               </Button>
             </div>
             <p className="text-xs text-primary-foreground/60">
-              No personal health information stored · No account required · 100% free
+              No personal health information stored · No account required · 100%
+              free
             </p>
           </motion.div>
         </div>

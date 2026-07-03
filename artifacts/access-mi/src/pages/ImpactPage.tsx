@@ -239,7 +239,7 @@ export default function ImpactPage() {
             animate="visible"
             className="mb-4 text-3xl font-bold text-foreground lg:text-5xl"
           >
-            Building Infrastructure for Health Equity
+            Infrastructure for health equity.
           </motion.h1>
           <motion.p
             variants={fade}
@@ -248,9 +248,8 @@ export default function ImpactPage() {
             animate="visible"
             className="mx-auto max-w-2xl text-lg text-muted-foreground"
           >
-            Access Michigan aggregates 15+ public datasets across all 83
-            counties to surface actionable insights for residents, health
-            systems, and community organizations.
+            15+ public datasets, statewide. Actionable insights for residents,
+            health systems, and communities.
           </motion.p>
         </div>
       </section>
@@ -338,9 +337,9 @@ export default function ImpactPage() {
               </p>
               <p className="text-xs text-muted-foreground">
                 The following case studies are{" "}
-                <strong>modeled scenarios</strong> that demonstrate how
-                Access Michigan's data infrastructure could support health
-                equity analysis. They use real public data sources but present{" "}
+                <strong>modeled scenarios</strong> that demonstrate how Access
+                Michigan's data infrastructure could support health equity
+                analysis. They use real public data sources but present{" "}
                 <strong>projected methodologies, not measured outcomes</strong>.
                 No endorsement by or partnership with named agencies is implied.
               </p>

@@ -729,7 +729,7 @@ const PublicInvestmentPage = () => {
   usePageMeta({
     title: "Public Investment Intelligence - Access Michigan",
     description:
-      "How federal and municipal capital flows through Michigan's 83 counties. Federal funding, municipal bonds, and fiscal vulnerability analysis.",
+      "Where the money actually lands in Michigan. Federal funding, municipal bonds, and fiscal vulnerability analysis. Statewide.",
     path: "/public-investment",
   });
 
@@ -760,15 +760,14 @@ const PublicInvestmentPage = () => {
               custom={1}
               className="mb-4 text-4xl font-bold text-foreground md:text-5xl"
             >
-              Public Investment Intelligence
+              Where the money actually lands.
             </motion.h1>
             <motion.p
               variants={fadeUp}
               custom={2}
               className="text-lg text-muted-foreground"
             >
-              How federal and municipal capital flows through Michigan's 83
-              counties - tracking funding, bonds, and fiscal vulnerability.
+              Federal awards. Municipal bonds. Fiscal exposure. Statewide.
             </motion.p>
           </motion.div>
         </div>

@@ -1,6 +1,14 @@
 import { lazy, Suspense, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Building2, AlertTriangle, MapPin, Calendar, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Building2,
+  AlertTriangle,
+  MapPin,
+  Calendar,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -19,15 +27,15 @@ const ClosureMap = lazy(() => import("@/components/closure/ClosureMap"));
 const TYPE_LABELS: Record<ClosureEntry["closureType"], string> = {
   "full-closure": "Full Closure",
   "service-line-elimination": "Service Line Eliminated",
-  "merger": "Merger / Transfer",
-  "conversion": "Conversion",
+  merger: "Merger / Transfer",
+  conversion: "Conversion",
 };
 
 const TYPE_COLORS: Record<ClosureEntry["closureType"], string> = {
   "full-closure": "destructive",
   "service-line-elimination": "default",
-  "merger": "secondary",
-  "conversion": "outline",
+  merger: "secondary",
+  conversion: "outline",
 };
 
 // ── Helper ───────────────────────────────────────────────────────────────────
@@ -38,12 +46,21 @@ function getYear(isoDate: string): string {
 
 function formatDate(isoDate: string): string {
   const d = new Date(isoDate + "T00:00:00");
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 // ── Stat card ────────────────────────────────────────────────────────────────
 
-function StatCard({ icon, value, label, provenance }: {
+function StatCard({
+  icon,
+  value,
+  label,
+  provenance,
+}: {
   icon: React.ReactNode;
   value: string | number;
   label: string;
@@ -55,8 +72,12 @@ function StatCard({ icon, value, label, provenance }: {
         <div className="flex items-start gap-3">
           <div className="mt-0.5 text-primary">{icon}</div>
           <div className="flex-1 min-w-0">
-            <p className="text-2xl font-bold text-foreground tabular-nums">{value}</p>
-            <p className="text-xs text-muted-foreground leading-tight">{label}</p>
+            <p className="text-2xl font-bold text-foreground tabular-nums">
+              {value}
+            </p>
+            <p className="text-xs text-muted-foreground leading-tight">
+              {label}
+            </p>
             <div className="mt-1">{provenance}</div>
           </div>
         </div>
@@ -76,16 +97,29 @@ function EntryRow({ entry }: { entry: ClosureEntry }) {
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <p className="font-semibold text-foreground text-sm leading-snug">{entry.facilityName}</p>
+          <p className="font-semibold text-foreground text-sm leading-snug">
+            {entry.facilityName}
+          </p>
           <div className="flex flex-wrap items-center gap-1.5 mt-1 text-xs text-muted-foreground">
             <MapPin className="h-3 w-3 shrink-0" />
-            <span>{entry.city}, {entry.county} County</span>
+            <span>
+              {entry.city}, {entry.county} County
+            </span>
             <span>·</span>
             <Calendar className="h-3 w-3 shrink-0" />
             <span>{formatDate(entry.closureDate)}</span>
           </div>
         </div>
-        <Badge variant={TYPE_COLORS[entry.closureType] as "destructive" | "default" | "secondary" | "outline"} className="text-[10px] shrink-0">
+        <Badge
+          variant={
+            TYPE_COLORS[entry.closureType] as
+              | "destructive"
+              | "default"
+              | "secondary"
+              | "outline"
+          }
+          className="text-[10px] shrink-0"
+        >
           {TYPE_LABELS[entry.closureType]}
         </Badge>
       </div>
@@ -96,7 +130,9 @@ function EntryRow({ entry }: { entry: ClosureEntry }) {
         </p>
       )}
 
-      <p className="text-xs text-muted-foreground leading-relaxed">{entry.summary}</p>
+      <p className="text-xs text-muted-foreground leading-relaxed">
+        {entry.summary}
+      </p>
 
       <div className="flex flex-wrap gap-3 pt-1">
         {entry.sources.map((source, i) => (
@@ -129,24 +165,49 @@ function MethodologySection() {
         aria-expanded={open}
       >
         <span>How we verify closures</span>
-        {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        {open ? (
+          <ChevronUp className="h-4 w-4" />
+        ) : (
+          <ChevronDown className="h-4 w-4" />
+        )}
       </button>
       {open && (
         <div className="mt-3 space-y-2 text-xs text-muted-foreground leading-relaxed">
           <p>
-            <strong className="text-foreground">Two-source rule.</strong> Every entry displayed on this page carries at least two independent source citations. Acceptable sources include: the Sheps Center Rural Hospital Closures Database, AHA Hospital Closure Tracker, MDHHS licensure actions, Becker's Hospital Review, Bridge Michigan, Crain's Detroit Business, Modern Healthcare, and Fierce Healthcare.
+            <strong className="text-foreground">Two-source rule.</strong> Every
+            entry displayed on this page carries at least two independent source
+            citations. Acceptable sources include: the Sheps Center Rural
+            Hospital Closures Database, AHA Hospital Closure Tracker, MDHHS
+            licensure actions, Becker's Hospital Review, Bridge Michigan,
+            Crain's Detroit Business, Modern Healthcare, and Fierce Healthcare.
           </p>
           <p>
-            <strong className="text-foreground">Neutrality.</strong> Entry copy describes what happened and cites sources. This tracker does not characterize closures as good or bad and does not use editorializing language.
+            <strong className="text-foreground">Neutrality.</strong> Entry copy
+            describes what happened and cites sources. This tracker does not
+            characterize closures as good or bad and does not use editorializing
+            language.
           </p>
           <p>
-            <strong className="text-foreground">Scope.</strong> Entries cover full hospital closures, service-line eliminations (including OB/L&D units, emergency departments, and inpatient acute care), system mergers and ownership transfers, and Rural Emergency Hospital (REH) conversions. FQHC site changes are included when verifiable with two named sources.
+            <strong className="text-foreground">Scope.</strong> Entries cover
+            full hospital closures, service-line eliminations (including OB/L&D
+            units, emergency departments, and inpatient acute care), system
+            mergers and ownership transfers, and Rural Emergency Hospital (REH)
+            conversions. FQHC site changes are included when verifiable with two
+            named sources.
           </p>
           <p>
-            <strong className="text-foreground">Pending entries.</strong> Candidates with only one confirmed source are held in a non-displayed research queue until a second independent source is located. Entries with a future projected date are displayed with the announcement date and a note that the closure has not yet occurred.
+            <strong className="text-foreground">Pending entries.</strong>{" "}
+            Candidates with only one confirmed source are held in a
+            non-displayed research queue until a second independent source is
+            located. Entries with a future projected date are displayed with the
+            announcement date and a note that the closure has not yet occurred.
           </p>
           <p>
-            <strong className="text-foreground">Data currency.</strong> The Sheps Center publishes its rural hospital closure database as an Excel download (not a machine-readable feed); this tracker is manually updated when Sheps, AHA, or major health news sources report a new Michigan closure.
+            <strong className="text-foreground">Data currency.</strong> The
+            Sheps Center publishes its rural hospital closure database as an
+            Excel download (not a machine-readable feed); this tracker is
+            manually updated when Sheps, AHA, or major health news sources
+            report a new Michigan closure.
           </p>
         </div>
       )}
@@ -177,21 +238,24 @@ export default function ClosureWatchPage() {
   const [filterCounty, setFilterCounty] = useState<string>("all");
 
   // ── Derived data ──────────────────────────────────────────────────────────
-  const verified = useMemo(() => entries.filter((e) => e.status === "verified"), [entries]);
+  const verified = useMemo(
+    () => entries.filter((e) => e.status === "verified"),
+    [entries],
+  );
 
   const obLost = useMemo(
     () =>
       verified.filter(
         (e) =>
           e.closureType === "service-line-elimination" &&
-          e.serviceLineAffected?.toLowerCase().includes("obstetric")
+          e.serviceLineAffected?.toLowerCase().includes("obstetric"),
       ).length,
-    [verified]
+    [verified],
   );
 
   const countiesAffected = useMemo(
     () => new Set(verified.map((e) => e.county)).size,
-    [verified]
+    [verified],
   );
 
   const mostRecentAsOf = useMemo(() => {
@@ -201,7 +265,9 @@ export default function ClosureWatchPage() {
   }, [verified]);
 
   const years = useMemo(() => {
-    const ys = [...new Set(verified.map((e) => getYear(e.closureDate)))].sort().reverse();
+    const ys = [...new Set(verified.map((e) => getYear(e.closureDate)))]
+      .sort()
+      .reverse();
     return ys;
   }, [verified]);
 
@@ -212,7 +278,8 @@ export default function ClosureWatchPage() {
   const filtered = useMemo(() => {
     return verified.filter((e) => {
       if (filterType !== "all" && e.closureType !== filterType) return false;
-      if (filterYear !== "all" && getYear(e.closureDate) !== filterYear) return false;
+      if (filterYear !== "all" && getYear(e.closureDate) !== filterYear)
+        return false;
       if (filterCounty !== "all" && e.county !== filterCounty) return false;
       return true;
     });
@@ -232,17 +299,31 @@ export default function ClosureWatchPage() {
   return (
     <Layout>
       <div className="container max-w-4xl py-8 space-y-8">
-        <Breadcrumbs items={[{ label: "Data & Insights", href: "/data-and-insights" }, { label: "Closure Watch" }]} />
+        <Breadcrumbs
+          items={[
+            { label: "Data & Insights", href: "/data-and-insights" },
+            { label: "Closure Watch" },
+          ]}
+        />
 
         {/* Hero */}
         <section className="space-y-3">
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
-            <Badge variant="outline" className="mb-2 text-xs uppercase tracking-wider border-primary/30 text-primary">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Badge
+              variant="outline"
+              className="mb-2 text-xs uppercase tracking-wider border-primary/30 text-primary"
+            >
               V2 · Civic Intelligence
             </Badge>
-            <h1 className="text-3xl font-bold text-foreground">Michigan Closure Watch</h1>
+            <h1 className="text-3xl font-bold text-foreground">
+              What's closing, and when it closed.
+            </h1>
             <p className="text-muted-foreground mt-1">
-              Hospital, service line, and FQHC closures in Michigan since 2020, two-source verified.
+              Hospitals, service lines, and FQHCs since 2020. Two sources per
+              entry.
             </p>
           </motion.div>
           <ProvenanceDisclaimer />
@@ -330,13 +411,20 @@ export default function ClosureWatchPage() {
             <ClosureMap entries={verified} height="420px" />
           </Suspense>
           <p className="mt-2 text-[10px] text-muted-foreground">
-            Click any marker for facility details and source citations. Legend: red = full closure, orange = service line eliminated, blue = merger/transfer, purple = conversion.
+            Click any marker for facility details and source citations. Legend:
+            red = full closure, orange = service line eliminated, blue =
+            merger/transfer, purple = conversion.
           </p>
         </section>
 
         {/* Filter bar */}
-        <section aria-label="Filter closures" className="flex flex-wrap gap-2 items-center">
-          <span className="text-xs font-medium text-muted-foreground mr-1">Filter:</span>
+        <section
+          aria-label="Filter closures"
+          className="flex flex-wrap gap-2 items-center"
+        >
+          <span className="text-xs font-medium text-muted-foreground mr-1">
+            Filter:
+          </span>
 
           <select
             value={filterType}
@@ -346,7 +434,9 @@ export default function ClosureWatchPage() {
           >
             <option value="all">All types</option>
             {Object.entries(TYPE_LABELS).map(([val, label]) => (
-              <option key={val} value={val}>{label}</option>
+              <option key={val} value={val}>
+                {label}
+              </option>
             ))}
           </select>
 
@@ -358,7 +448,9 @@ export default function ClosureWatchPage() {
           >
             <option value="all">All years</option>
             {years.map((yr) => (
-              <option key={yr} value={yr}>{yr}</option>
+              <option key={yr} value={yr}>
+                {yr}
+              </option>
             ))}
           </select>
 
@@ -370,16 +462,24 @@ export default function ClosureWatchPage() {
           >
             <option value="all">All counties</option>
             {counties.map((c) => (
-              <option key={c} value={c}>{c}</option>
+              <option key={c} value={c}>
+                {c}
+              </option>
             ))}
           </select>
 
-          {(filterType !== "all" || filterYear !== "all" || filterCounty !== "all") && (
+          {(filterType !== "all" ||
+            filterYear !== "all" ||
+            filterCounty !== "all") && (
             <Button
               variant="ghost"
               size="sm"
               className="h-7 text-xs"
-              onClick={() => { setFilterType("all"); setFilterYear("all"); setFilterCounty("all"); }}
+              onClick={() => {
+                setFilterType("all");
+                setFilterYear("all");
+                setFilterCounty("all");
+              }}
             >
               Clear filters
             </Button>
@@ -393,13 +493,17 @@ export default function ClosureWatchPage() {
         {/* Year-grouped list */}
         <section aria-label="Closure entries" className="space-y-8">
           {grouped.length === 0 && (
-            <p className="text-sm text-muted-foreground">No entries match the current filters.</p>
+            <p className="text-sm text-muted-foreground">
+              No entries match the current filters.
+            </p>
           )}
           {grouped.map(([year, yearEntries]) => (
             <div key={year}>
               <h2 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
                 {year}
-                <Badge variant="outline" className="text-[10px]">{yearEntries.length}</Badge>
+                <Badge variant="outline" className="text-[10px]">
+                  {yearEntries.length}
+                </Badge>
               </h2>
               <div className="space-y-3">
                 {yearEntries

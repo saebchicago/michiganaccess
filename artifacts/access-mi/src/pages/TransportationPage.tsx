@@ -1668,7 +1668,7 @@ export default function TransportationPage() {
             transition={{ delay: 0.1 }}
             className="mb-3 text-3xl font-bold text-foreground lg:text-5xl"
           >
-            Transportation & School Safety
+            Get where you need to go.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -1676,8 +1676,7 @@ export default function TransportationPage() {
             transition={{ delay: 0.2 }}
             className="mx-auto max-w-2xl text-lg text-muted-foreground"
           >
-            Plan your ride, find your child's bus, learn about AI stop-arm
-            camera programs, and access transportation for seniors and people
+            Plan a ride. Track your kid's bus. Find NEMT for seniors and people
             with disabilities.
           </motion.p>
           <motion.div

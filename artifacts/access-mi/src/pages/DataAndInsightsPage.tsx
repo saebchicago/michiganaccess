@@ -210,12 +210,11 @@ export default function DataAndInsightsPage() {
             className="max-w-2xl"
           >
             <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl mb-4">
-              Data & Insights
+              Live data. Real signals.
             </h1>
             <p className="text-lg text-muted-foreground mb-6">
-              Real-time dashboards, equity metrics, and open data for health
-              professionals, researchers, journalists, planners, and civic
-              organizations.
+              Dashboards, equity metrics, and open data. For clinicians,
+              researchers, journalists, and planners.
             </p>
             <div className="flex flex-wrap gap-3">
               <Badge className="bg-michigan-navy text-white">

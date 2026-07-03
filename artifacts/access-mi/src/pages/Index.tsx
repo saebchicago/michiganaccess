@@ -55,7 +55,7 @@ const CLUSTERS: Cluster[] = [
   {
     id: "policy-investment",
     label: "Policy and investment",
-    purpose: "Federal investment, equity atlas, briefs, and full data exports.",
+    purpose: "Follow the funding. See who gets what, and where the gaps live.",
     icon: BarChart3,
     rule: "bg-michigan-gold",
     iconClass: "text-michigan-gold",
@@ -70,7 +70,7 @@ const CLUSTERS: Cluster[] = [
   {
     id: "health-coverage",
     label: "Health and coverage",
-    purpose: "Coverage at risk, access gaps, and closure tracking.",
+    purpose: "Track what's closing. See who's about to lose coverage.",
     icon: ShieldCheck,
     rule: "bg-michigan-coral",
     iconClass: "text-michigan-coral",
@@ -88,7 +88,7 @@ const CLUSTERS: Cluster[] = [
   {
     id: "explore-area",
     label: "Explore your area",
-    purpose: "County and ZIP-level signals, comparisons, and cost of living.",
+    purpose: "Look up your ZIP. Compare your county. See how you rank.",
     icon: MapPin,
     rule: "bg-michigan-teal",
     iconClass: "text-michigan-teal",
@@ -103,7 +103,7 @@ const CLUSTERS: Cluster[] = [
   {
     id: "learn-benefits",
     label: "Learn about benefits",
-    purpose: "How Michigan benefit programs and eligibility rules work.",
+    purpose: "See what you qualify for. No account. No stored data.",
     icon: Heart,
     rule: "bg-michigan-blue",
     iconClass: "text-michigan-blue",
@@ -132,13 +132,11 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
           className="space-y-7"
         >
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.05] tracking-[-0.02em] text-foreground">
-            Civic intelligence for every Michigan county.
+            See what Michigan owes you, and where it's falling short.
           </h1>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Independent data, federal sources, and the methodology behind every
-            number - organized so you can find what affects you, your patients,
-            or your community.
+            Benefits, care, closures, and community risk. Traced to the source.
           </p>
 
           <form
@@ -152,7 +150,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
               htmlFor="hero-zip"
               className="text-caption mb-2 inline-block"
             >
-              Start with your ZIP
+              Enter your ZIP
             </label>
             <div className="flex flex-col sm:flex-row gap-2 max-w-md">
               <Input
@@ -160,7 +158,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
                 inputMode="numeric"
                 pattern="[0-9]{5}"
                 maxLength={5}
-                placeholder="e.g. 48104"
+                placeholder="48104"
                 value={zip}
                 onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
                 className="h-12 bg-card text-foreground text-base border-border placeholder:text-muted-foreground focus-visible:ring-accent"
@@ -172,7 +170,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
                 disabled={zip.trim().length !== 5}
                 className="h-12 px-5"
               >
-                Look up
+                Show my area
                 <ArrowRight className="w-4 h-4 ml-1.5" />
               </Button>
             </div>
@@ -183,7 +181,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
               to="/methodology"
               className="text-sm text-muted-foreground hover:text-foreground hover:underline underline-offset-4 transition-colors"
             >
-              Every number carries its source and label - see the methodology
+              Every number sourced. VERIFIED · MODELED · PROJECTED.
             </Link>
           </div>
         </motion.div>
@@ -204,11 +202,11 @@ const LEGEND: { label: "VERIFIED" | "MODELED" | "PROJECTED"; gloss: string }[] =
   [
     {
       label: "VERIFIED",
-      gloss: "Measured directly from a primary federal or state source.",
+      gloss: "Primary source. What is.",
     },
     {
       label: "MODELED",
-      gloss: "Derived or calculated from verified inputs.",
+      gloss: "Calculated from verified inputs.",
     },
     {
       label: "PROJECTED",
@@ -224,12 +222,11 @@ function ProvenanceLegend() {
     >
       <div className="container mx-auto px-4 py-12 max-w-5xl">
         <div className="flex flex-col gap-2 mb-6">
-          <p className="text-caption">Integrity labels</p>
           <h2
             id="legend-heading"
             className="font-serif text-2xl font-semibold text-foreground"
           >
-            How every number is labeled.
+            Every number carries a label.
           </h2>
         </div>
         <dl className="grid gap-4 sm:grid-cols-3">
@@ -282,17 +279,12 @@ function CountySelector() {
     >
       <div className="container mx-auto px-4 py-12 max-w-3xl">
         <div className="flex flex-col gap-2 mb-5">
-          <p className="text-caption">Counties</p>
           <h2
             id="counties-heading"
             className="font-serif text-2xl font-semibold text-foreground"
           >
-            Pick a county.
+            Or pick a county.
           </h2>
-          <p className="text-sm text-muted-foreground">
-            Type a name to jump straight in, or browse all {COUNTY_NAMES.length}
-            .
-          </p>
         </div>
         <label htmlFor="county-search" className="sr-only">
           Search Michigan counties
@@ -300,7 +292,7 @@ function CountySelector() {
         <Input
           id="county-search"
           type="search"
-          placeholder="e.g. Wayne, Kent, Marquette"
+          placeholder="Wayne, Kent, Marquette…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="h-11 max-w-md mb-3 bg-card text-foreground"
@@ -328,8 +320,7 @@ function CountySelector() {
         )}
         {query.trim() && filtered.length === 0 && (
           <p className="text-xs text-muted-foreground mb-3">
-            No counties match. Check the spelling, or browse the full list
-            below.
+            No match. Try a nearby county.
           </p>
         )}
         <button
@@ -339,9 +330,7 @@ function CountySelector() {
           aria-expanded={expanded}
           aria-controls="all-counties-grid"
         >
-          {expanded
-            ? "Hide full list"
-            : `Browse all ${COUNTY_NAMES.length} counties`}
+          {expanded ? "Hide the list" : "Browse every county"}
         </button>
         {expanded && (
           <ul
@@ -455,16 +444,13 @@ function RecentlyAddedCard() {
         <Database className="h-5 w-5 text-michigan-teal" aria-hidden="true" />
       </div>
       <h2 className="font-serif text-xl font-semibold leading-tight tracking-tight text-foreground mb-2">
-        Recently added
+        What's new
       </h2>
-      <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
-        New tools, datasets, and methodology updates land here.
-      </p>
       <Link
         to="/changelog"
         className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-4"
       >
-        See the systems history
+        Full changelog
         <ArrowRight className="h-3.5 w-3.5" />
       </Link>
     </article>
@@ -479,12 +465,8 @@ function Layer2ClusterGrid() {
     >
       <div className="flex flex-col gap-2 mb-8 max-w-2xl">
         <h2 className="font-serif text-3xl md:text-4xl font-semibold tracking-[-0.015em] text-foreground">
-          Choose where to begin.
+          Where do you want to start?
         </h2>
-        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-          Four entry points into the ledger. Every link leads to a destination
-          tool with sourced numbers and integrity labels intact.
-        </p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {CLUSTERS.map((c, i) => (
@@ -501,9 +483,9 @@ function Layer2ClusterGrid() {
 const Index = () => {
   const navigate = useNavigate();
   usePageMeta({
-    title: "AccessMI  -  Civic intelligence for Michigan",
+    title: "AccessMI - See what Michigan owes you",
     description:
-      "Explore Michigan policy and investment data, health coverage trends, county and ZIP-level signals, and educational explainers of how benefit programs work  -  all sourced from primary federal records.",
+      "Benefits, care, closures, and community risk across Michigan. Every number traced to a primary federal or state source.",
   });
 
   return (

@@ -681,11 +681,11 @@ export default function ComparePlacesPage() {
               </Badge>
             </div>
             <h1 className="text-3xl font-bold text-foreground md:text-4xl mb-3">
-              Compare Places
+              Compare places, side by side.
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Side-by-side comparison of up to 4 Michigan counties <em>or</em>{" "}
-              ZIP codes with live Census ACS data, equity lens, and PDF export.
+              Up to 4 counties <em>or</em> ZIPs. Live Census ACS. Equity lens.
+              PDF export.
             </p>
           </motion.div>
         </div>

@@ -1,13 +1,27 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { IdCard, Home, Heart, Briefcase, Scale, Phone, ExternalLink, ChevronDown } from "lucide-react";
+import {
+  IdCard,
+  Home,
+  Heart,
+  Briefcase,
+  Scale,
+  Phone,
+  ExternalLink,
+  ChevronDown,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const SECTIONS = [
   {
@@ -75,8 +89,10 @@ const SECTIONS = [
 
 export default function ReentryCareNavigator() {
   usePageMeta({
-    title: "Coming Home to Michigan | Reentry Resources for Housing, Healthcare, Employment | accessmi.org",
-    description: "Housing, healthcare, ID, employment, and legal help for returning citizens and their families across 83 Michigan counties.",
+    title:
+      "Coming Home to Michigan | Reentry Resources for Housing, Healthcare, Employment | accessmi.org",
+    description:
+      "Housing, healthcare, ID, employment, and legal help for returning citizens and their families across 83 Michigan counties.",
     path: "/reentry",
   });
 
@@ -86,15 +102,22 @@ export default function ReentryCareNavigator() {
 
       <section className="bg-gradient-to-b from-primary/5 to-background py-14">
         <div className="container max-w-3xl text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <Badge variant="outline" className="mb-3 text-xs uppercase tracking-wider border-primary/30 text-primary">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Badge
+              variant="outline"
+              className="mb-3 text-xs uppercase tracking-wider border-primary/30 text-primary"
+            >
               Reentry Support
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              Coming Home to Michigan
+              Coming home to Michigan.
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Resources for returning citizens and their families - housing, healthcare, ID, employment, and legal help across 83 counties.
+              Housing, healthcare, ID, jobs, legal help. Statewide. For
+              returning citizens and their families.
             </p>
           </motion.div>
         </div>
@@ -110,19 +133,27 @@ export default function ReentryCareNavigator() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
             >
-              <AccordionItem value={section.id} className="border rounded-xl mb-3 px-2">
+              <AccordionItem
+                value={section.id}
+                className="border rounded-xl mb-3 px-2"
+              >
                 <AccordionTrigger className="py-4 hover:no-underline">
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
                       <section.icon className="h-5 w-5 text-primary" />
                     </div>
-                    <span className="text-sm font-semibold text-foreground">{section.title}</span>
+                    <span className="text-sm font-semibold text-foreground">
+                      {section.title}
+                    </span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="pb-4 px-2">
                   <ul className="space-y-2">
                     {section.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <li
+                        key={item}
+                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                      >
                         <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
                         {item}
                       </li>
@@ -143,8 +174,14 @@ export default function ReentryCareNavigator() {
         <Card className="border-primary/20 bg-primary/5">
           <CardContent className="p-5">
             <p className="text-sm text-foreground">
-              <strong>For families:</strong> Nation Outside represents 2M+ Michigan families impacted by the criminal legal system.{" "}
-              <a href="https://nationoutside.org" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              <strong>For families:</strong> Nation Outside represents 2M+
+              Michigan families impacted by the criminal legal system.{" "}
+              <a
+                href="https://nationoutside.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
                 nationoutside.org <ExternalLink className="inline h-3 w-3" />
               </a>
             </p>
@@ -155,8 +192,12 @@ export default function ReentryCareNavigator() {
         <Card className="border-michigan-teal/20 bg-michigan-teal/5">
           <CardContent className="p-5 text-center">
             <Phone className="h-6 w-6 text-michigan-teal-deep mx-auto mb-2" />
-            <p className="text-sm font-semibold text-foreground">Not sure where to start?</p>
-            <p className="text-xs text-muted-foreground mb-3">Call 211 - they can connect you to local reentry services.</p>
+            <p className="text-sm font-semibold text-foreground">
+              Not sure where to start?
+            </p>
+            <p className="text-xs text-muted-foreground mb-3">
+              Call 211 - they can connect you to local reentry services.
+            </p>
             <Button variant="outline" size="sm" asChild>
               <a href="tel:211">Call 2-1-1 (Free, 24/7)</a>
             </Button>
@@ -164,8 +205,9 @@ export default function ReentryCareNavigator() {
         </Card>
 
         <p className="text-[10px] text-muted-foreground text-center">
-          Sources: MDOC Offender Success, Michigan Works!, MiCRI, Michigan Legal Help, MSHDA, MDHHS.
-          Access Michigan is not affiliated with MDOC or any government agency.
+          Sources: MDOC Offender Success, Michigan Works!, MiCRI, Michigan Legal
+          Help, MSHDA, MDHHS. Access Michigan is not affiliated with MDOC or any
+          government agency.
         </p>
       </div>
     </Layout>

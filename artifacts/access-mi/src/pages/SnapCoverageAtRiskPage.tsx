@@ -195,13 +195,11 @@ export default function SnapCoverageAtRiskPage() {
             </Badge>
             <div>
               <h1 className="text-3xl font-bold tracking-tight">
-                SNAP Coverage at Risk
+                Who could lose SNAP.
               </h1>
               <p className="text-muted-foreground mt-1">
-                Michigan county-level estimates of SNAP participants in
-                categories affected by P.L. 119-21 work requirement provisions.
-                All figures are modeled ranges - not point estimates. Exposure
-                does not equal loss.
+                County-level exposure to P.L. 119-21 ABAWD rules. MODELED
+                ranges. ±40% GAO uncertainty band.
               </p>
             </div>
           </div>
@@ -220,13 +218,9 @@ export default function SnapCoverageAtRiskPage() {
                 Exposure does not equal loss
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                These figures identify Michigan SNAP participants who fall into
-                categories that CBO, MLPP, and CBPP project may be affected by
-                P.L. 119-21. Individual outcomes depend on state implementation,
-                work requirement compliance pathways, employment status, and
-                administrative factors. The ranges describe populations at
-                elevated exposure - they do not predict who will or will not
-                retain SNAP enrollment.{" "}
+                These are people in affected categories, per CBO, MLPP, and
+                CBPP. Not a forecast of who loses SNAP. Outcomes depend on state
+                rules, compliance paths, employment, and admin factors.{" "}
                 <Link
                   to={METHODOLOGY_URL}
                   className="underline hover:text-primary"
@@ -276,13 +270,13 @@ export default function SnapCoverageAtRiskPage() {
               testId="snap-stat-counties"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : String(COUNTIES_COVERED)}
-              label={`Michigan counties - complete statewide coverage (all ${COUNTIES_COVERED})`}
+              label="Statewide coverage. Every Michigan county."
               provenance={
                 <DataProvenance
                   sourceName="Michigan county count (fixed)"
                   sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate="FY2022"
-                  cadence="Static - 83 Michigan counties"
+                  cadence="Static - statewide"
                   dataKind="measured"
                   compact
                 />

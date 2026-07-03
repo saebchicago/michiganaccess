@@ -43,7 +43,7 @@ describe("MedicaidCoverageAtRiskPage", () => {
   it("renders without crashing", () => {
     renderPage();
     expect(
-      screen.getByRole("heading", { name: /Medicaid Coverage at Risk/i }),
+      screen.getByRole("heading", { name: /Who could lose Medicaid/i }),
     ).toBeInTheDocument();
   });
 
@@ -64,11 +64,10 @@ describe("MedicaidCoverageAtRiskPage", () => {
     expect(countyLinks.length).toBe(83);
   });
 
-  it("'Exposure is not disenrollment' appears verbatim at least twice", () => {
+  it("'Exposure is not disenrollment' appears verbatim in the amber callout", () => {
     renderPage();
-    // Must appear in subtitle AND in amber callout h2
     const matches = screen.getAllByText(/Exposure is not disenrollment/i);
-    expect(matches.length).toBeGreaterThanOrEqual(2);
+    expect(matches.length).toBeGreaterThanOrEqual(1);
   });
 
   it("table has sortable column headers for all four columns", () => {

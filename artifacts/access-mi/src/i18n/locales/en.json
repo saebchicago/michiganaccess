@@ -32,7 +32,7 @@
   },
   "hero": {
     "title": "Access Michigan Services, Simplified",
-    "subtitle": "One structured gateway to health, housing, food, and family services across all 83 counties.",
+    "subtitle": "One gateway to health, housing, food, and family services. Statewide.",
     "ctaFindServices": "Find Services Near You",
     "ctaExplore": "Discover What's Available",
     "tagline": "A Citizen-Driven Initiative",
@@ -46,7 +46,7 @@
   },
   "access": {
     "sectionTitle": "Where do you want to start?",
-    "sectionSubtitle": "Three pathways to the services Michigan residents need most.",
+    "sectionSubtitle": "Three paths to what Michigan residents need most.",
     "housingTitle": "Housing & Stability",
     "housingDesc": "Emergency shelter, rental assistance, utility programs, and pathways to stable housing across Michigan.",
     "foodTitle": "Food & Essential Support",
@@ -56,8 +56,8 @@
     "cta": "Get Started"
   },
   "systems": {
-    "title": "What Is Access Michigan?",
-    "description": "Independent. Non-commercial. Organizes public data from {{sourceCount}} sources so Michigan residents can find services without navigating 12 different agency websites."
+    "title": "What is Access Michigan?",
+    "description": "Independent. Non-commercial. {{sourceCount}} public sources. One place, so you don't chase 12 agency sites."
   },
   "crisis": {
     "title": "Need Immediate Help?",
@@ -71,8 +71,8 @@
   },
   "getHelp": "Get Help Now",
   "prototype": {
-    "title": "Live Platform:",
-    "description": "{{sourceCount}} public data sources. Updated continuously from CMS, CDC, HRSA, NWS, USGS, FDA, and FEMA.",
+    "title": "Live platform:",
+    "description": "{{sourceCount}} public sources. Continuous updates from CMS, CDC, HRSA, NWS, USGS, FDA, FEMA.",
     "viewMethodology": "View our data methodology",
     "and": "and",
     "viewTechnical": "technical architecture"
@@ -110,8 +110,8 @@
     "updatedWeekly": "15 live API feeds. Data refreshes hourly to annually depending on source."
   },
   "howItHelps": {
-    "title": "What You Can Do Here",
-    "subtitle": "Free. No login required. {{sourceCount}} public data sources across all {{countyCount}} counties.",
+    "title": "What you can do here.",
+    "subtitle": "Free. No login. {{sourceCount}} public data sources. Statewide.",
     "findQualityCare": "Search 2,400+ Providers by Quality Score",
     "findQualityCareDesc": "CMS star ratings, patient safety grades, and Medicaid acceptance - for hospitals, clinics, and individual doctors. Not advertising. Not sponsored listings.",
     "navigateSystems": "Check What You Qualify For",
@@ -124,7 +124,7 @@
     "subtitle": "Stay informed about what matters most to Michigan families",
     "seasonalHealth": "Seasonal Health",
     "fluTitle": "Flu Season: Where to Get Vaccinated",
-    "fluDesc": "Find vaccination sites near you. Walk-in and appointment options across all 83 counties.",
+    "fluDesc": "Find vaccination sites near you. Walk-in and appointment options statewide.",
     "heartHealth": "Heart Health",
     "heartTitle": "Heart Disease: Prevention & Treatment",
     "heartDesc": "Michigan's #1 cause of death. Prevention resources and top-rated cardiac care.",
@@ -158,7 +158,7 @@
     "research": "Research",
     "impact": "Impact",
     "technical": "Technical",
-    "brandDescription": "An independent civic resource organizing Michigan's public services into one structured, accessible interface.",
+    "brandDescription": "Independent civic project. Michigan's public services, one place, sourced.",
     "independentBadge": "✓ Independent · Non-Commercial",
     "dataSourcedFrom": "Data sourced from",
     "privacyStatement": "Aggregated analytics via Google Analytics 4 (cookies, IP). No ads, no data selling. See Privacy.",
@@ -325,9 +325,9 @@
     "educationLeads": "Education leads"
   },
   "financial": {
-    "badge": "Financial Assistance Hub",
-    "title": "Help Paying for Healthcare",
-    "subtitle": "Find free and reduced-cost care, insurance options, prescription savings, and social services available to Michigan residents.",
+    "badge": "Financial Help",
+    "title": "Help paying for care.",
+    "subtitle": "Free care, insurance, prescription savings, and social services.",
     "eligibilityScreener": "Quick Eligibility Screener",
     "eligibilityDesc": "See which programs you may qualify for based on household size and income",
     "householdSize": "Household Size",
@@ -354,8 +354,8 @@
   },
   "conditions": {
     "badge": "Care Pathways",
-    "title": "Health Condition Guides",
-    "subtitle": "Find the best care for your condition - facilities, specialists, and support services ranked by quality and accessibility.",
+    "title": "Care for your condition.",
+    "subtitle": "Facilities, specialists, and support - ranked by quality and access.",
     "topFacilities": "Top Facilities",
     "specialists": "Specialists",
     "supportServices": "Support Services",
@@ -372,9 +372,9 @@
     "availableThrough": "Available through participating facilities"
   },
   "resources": {
-    "badge": "Community Support",
-    "title": "Community Resources",
-    "subtitle": "Health goes beyond the doctor's office. Find food, housing, transportation, and mental health support near you.",
+    "badge": "Community",
+    "title": "Real help, close to home.",
+    "subtitle": "Food, housing, transportation, and mental health support near you.",
     "searchPlaceholder": "Search resources, services, or organizations...",
     "foodNutrition": "Food & Nutrition",
     "housingShelter": "Housing & Shelter",
@@ -391,11 +391,11 @@
     "eligibility": "Eligibility"
   },
   "aboutPage": {
-    "badge": "About Access Michigan",
-    "title": "Helping Michigan Families Navigate Health, Safety & Transportation",
-    "subtitle": "An independent civic resource organizing public health, safety, and transportation data for all Michigan residents - regardless of income, insurance status, or background.",
-    "missionTitle": "Our Mission",
-    "missionDesc": "Access Michigan exists to help Michigan residents navigate healthcare, energy, transportation, safety, and public services - finding quality resources, accessing financial assistance, and making informed decisions. We believe everyone deserves access to trustworthy information, regardless of income, insurance status, or background.",
+    "badge": "About",
+    "title": "Built to help Michigan navigate its own systems.",
+    "subtitle": "Health, safety, and transportation - traced to the source. For every resident.",
+    "missionTitle": "Our mission",
+    "missionDesc": "Help Michigan residents find care, financial help, and information they can trust. No account. No pay wall. Regardless of income, insurance, or background.",
     "independentTitle": "Independent & Objective",
     "independentDesc": "No advertising, no paid placements. Rankings based on publicly available, third-party quality data.",
     "residentFirstTitle": "Resident-First",
@@ -424,9 +424,9 @@
     "portfolioDesc": "Designed to be replicated. {{sourceCount}} public data sources. Any state can build this."
   },
   "methodologyPage": {
-    "badge": "Data Methodology",
-    "title": "How We Transform Public Data Into Community Impact",
-    "subtitle": "A replicable framework for integrating fragmented public datasets into accessible, SVI-weighted civic infrastructure.",
+    "badge": "Methodology",
+    "title": "How we know what we know.",
+    "subtitle": "Sources, math, and the label on every number.",
     "frameworkTitle": "Data Integration Framework",
     "frameworkSubtitle": "From raw public data to actionable community resource",
     "publicDataSources": "Public Data Sources",

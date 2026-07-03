@@ -8,7 +8,9 @@ import { SNAP_COVERAGE_AT_RISK_FALLBACK } from "@/data/snapCoverageAtRiskFallbac
 
 // Mock Layout to avoid Header/ContextBar/CountySelector context cascade
 vi.mock("@/components/layout/Layout", () => ({
-  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 // Mock usePageMeta (no DOM side-effects needed in tests)
@@ -29,7 +31,7 @@ function renderPage() {
       <MemoryRouter>
         <SnapCoverageAtRiskPage />
       </MemoryRouter>
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 }
 
@@ -41,38 +43,41 @@ describe("SnapCoverageAtRiskPage", () => {
   it("renders without crashing", () => {
     renderPage();
     expect(
-      screen.getByRole("heading", { name: /SNAP Coverage at Risk/i })
+      screen.getByRole("heading", { name: /Who could lose SNAP/i }),
     ).toBeInTheDocument();
   });
 
   it("renders ProvenanceDisclaimer", () => {
     renderPage();
     expect(
-      screen.getByText(/combines measured public data with projections/i)
+      screen.getByText(/combines measured public data with projections/i),
     ).toBeInTheDocument();
   });
 
   it("renders 'Exposure does not equal loss' callout", () => {
     renderPage();
     expect(
-      screen.getByRole("heading", { name: /Exposure does not equal loss/i })
+      screen.getByRole("heading", { name: /Exposure does not equal loss/i }),
     ).toBeInTheDocument();
   });
 
   it("renders link to full methodology page", () => {
     renderPage();
-    const links = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href") === "/methodology/snap-coverage-at-risk"
-    );
+    const links = screen
+      .getAllByRole("link")
+      .filter(
+        (el) =>
+          el.getAttribute("href") === "/methodology/snap-coverage-at-risk",
+      );
     expect(links.length).toBeGreaterThan(0);
   });
 
   it("renders all 83 Michigan county names in the table", () => {
     renderPage();
     // Collect all county-route link text in one pass
-    const countyLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.startsWith("/county/")
-    );
+    const countyLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("href")?.startsWith("/county/"));
     const renderedNames = new Set(countyLinks.map((el) => el.textContent));
     for (const entry of SNAP_COVERAGE_AT_RISK_FALLBACK) {
       expect(renderedNames.has(entry.county)).toBe(true);
@@ -83,26 +88,26 @@ describe("SnapCoverageAtRiskPage", () => {
   it("county links route to /county/:slug", () => {
     renderPage();
     // Wayne → /county/wayne
-    const wayneLinks = screen.getAllByRole("link").filter(
-      (el) => el.textContent === "Wayne"
-    );
+    const wayneLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.textContent === "Wayne");
     expect(wayneLinks[0].getAttribute("href")).toBe("/county/wayne");
   });
 
   it("St. Clair county link uses correct slug (no dot)", () => {
     renderPage();
-    const link = screen.getAllByRole("link").find(
-      (el) => el.textContent === "St. Clair"
-    );
+    const link = screen
+      .getAllByRole("link")
+      .find((el) => el.textContent === "St. Clair");
     expect(link).toBeDefined();
     expect(link!.getAttribute("href")).toBe("/county/st-clair");
   });
 
   it("Grand Traverse county link has hyphenated slug", () => {
     renderPage();
-    const link = screen.getAllByRole("link").find(
-      (el) => el.textContent === "Grand Traverse"
-    );
+    const link = screen
+      .getAllByRole("link")
+      .find((el) => el.textContent === "Grand Traverse");
     expect(link).toBeDefined();
     expect(link!.getAttribute("href")).toBe("/county/grand-traverse");
   });
@@ -111,22 +116,22 @@ describe("SnapCoverageAtRiskPage", () => {
     renderPage();
     expect(screen.getByRole("button", { name: /county/i })).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /current snap enrollment/i })
+      screen.getByRole("button", { name: /current snap enrollment/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /at-risk low/i })
+      screen.getByRole("button", { name: /at-risk low/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /at-risk high/i })
+      screen.getByRole("button", { name: /at-risk high/i }),
     ).toBeInTheDocument();
   });
 
   it("Wayne County appears first in default sort (highest projectedAffectedHigh)", () => {
     renderPage();
     // Default sort is projectedAffectedHigh desc  -  Wayne should be first county link
-    const countyLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.startsWith("/county/")
-    );
+    const countyLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("href")?.startsWith("/county/"));
     expect(countyLinks[0].textContent).toBe("Wayne");
   });
 
@@ -134,9 +139,9 @@ describe("SnapCoverageAtRiskPage", () => {
     renderPage();
     const countyBtn = screen.getByRole("button", { name: /county/i });
     fireEvent.click(countyBtn);
-    const countyLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.startsWith("/county/")
-    );
+    const countyLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("href")?.startsWith("/county/"));
     expect(countyLinks[0].textContent).toBe("Alcona");
   });
 
@@ -158,9 +163,9 @@ describe("SnapCoverageAtRiskPage", () => {
 
   it("MLPP source link is present", () => {
     renderPage();
-    const mlppLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.includes("mlpp.org")
-    );
+    const mlppLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("href")?.includes("mlpp.org"));
     expect(mlppLinks.length).toBeGreaterThan(0);
   });
 });

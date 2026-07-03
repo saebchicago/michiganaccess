@@ -61,15 +61,15 @@ export default function TransparencyHubPage() {
               custom={1}
               className="mb-4 text-4xl font-bold text-white md:text-5xl"
             >
-              Michigan Transparency Intelligence
+              Michigan, in the open.
             </motion.h1>
             <motion.p
               variants={fadeUp}
               custom={2}
               className="text-lg text-slate-300"
             >
-              Public money. Public contracts. Public officials. All of it, from
-              primary sources, in one place.
+              Public money. Public contracts. Public officials. One place.
+              Primary sources.
             </motion.p>
           </motion.div>
 

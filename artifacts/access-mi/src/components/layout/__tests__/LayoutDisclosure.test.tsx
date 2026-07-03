@@ -86,7 +86,7 @@ describe("Footer  -  D1 independence disclosure", () => {
     );
     expect(
       screen.getByText(
-        /AccessMI is an independent civic data and education project\. It is not affiliated with the State of Michigan, any government agency, employer, or health system\./i,
+        /Independent civic project\. Not affiliated with any agency, employer, or health system\./i,
       ),
     ).toBeInTheDocument();
   });
@@ -98,7 +98,7 @@ describe("Footer  -  D1 independence disclosure", () => {
       </MemoryRouter>,
     );
     const el = screen.getByText(
-      /AccessMI is an independent civic data and education project\./i,
+      /Independent civic project\. Not affiliated with any agency, employer, or health system\./i,
     );
     // Must be visible  -  not hidden by details/summary or aria-hidden
     expect(el).toBeVisible();

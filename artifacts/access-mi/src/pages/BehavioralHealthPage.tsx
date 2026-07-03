@@ -213,17 +213,14 @@ export default function BehavioralHealthPage() {
               custom={1}
               className="mb-4 text-3xl font-bold text-foreground md:text-4xl"
             >
-              Behavioral Health Crisis Dashboard
+              Michigan's behavioral health gap.
             </motion.h1>
             <motion.p
               variants={fadeUp}
               custom={2}
               className="text-base text-muted-foreground"
             >
-              1,945 psychiatric beds for 10 million people. Michigan ranks 47th
-              nationally in psychiatric bed availability (Treatment Advocacy
-              Center). 155+ patients boarding in ERs on any given day. 20
-              counties with zero addiction treatment providers.
+              Beds, crisis lines, and treatment access. In one view.
             </motion.p>
             <motion.p
               variants={fadeUp}
@@ -586,8 +583,8 @@ export default function BehavioralHealthPage() {
               <CardContent className="py-4">
                 <p className="text-xs text-muted-foreground">
                   <AlertTriangle className="h-3.5 w-3.5 inline mr-1 text-amber-600" />
-                  Zero CCBHC coverage in the Upper Peninsula. 54 of 83 counties
-                  have no CCBHC. $
+                  Zero CCBHC coverage in the Upper Peninsula. 54 Michigan
+                  counties have no CCBHC. $
                   {(CCBHC_DATA.proposedExpansion / 1e6).toFixed(1)}M expansion
                   proposed FY2025. Source: MDHHS CCBHC Program / SAMHSA
                 </p>

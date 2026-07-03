@@ -114,7 +114,7 @@ export default function MaternalHealthPage() {
               custom={1}
               className="mb-3 text-3xl font-bold text-foreground md:text-4xl"
             >
-              Michigan Maternal & Infant Health
+              Care from prenatal to postpartum.
             </motion.h1>
             <motion.p
               variants={fadeUp}

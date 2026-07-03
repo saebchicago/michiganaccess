@@ -357,12 +357,11 @@ export default function CompareZipsPage() {
               ZIP Comparison
             </div>
             <h1 className="text-2xl font-bold text-foreground sm:text-3xl lg:text-4xl">
-              Compare ZIP codes - clearly and fairly
+              Compare ZIPs, side by side.
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto text-sm sm:text-base">
-              See how Michigan ZIP codes line up on health, coverage, housing,
-              utilities, transportation, and environment - with context, not
-              blame.
+              Health, coverage, housing, utilities, transit, environment. With
+              context, not blame.
             </p>
             <p className="text-xs text-muted-foreground/70 mt-2 flex items-center justify-center gap-1.5">
               <Shield className="h-3 w-3" aria-hidden="true" />
