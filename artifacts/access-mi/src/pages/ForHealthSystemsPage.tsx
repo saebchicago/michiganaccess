@@ -213,11 +213,10 @@ const ForHealthSystemsPage = () => {
               For Operations & Engineering Leaders
             </Badge>
             <h1 className="text-3xl font-bold text-foreground lg:text-4xl mb-3">
-              Strategic Value for Health Systems
+              Built for your ops team.
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Population health infrastructure designed for management
-              engineers, IE/OR professionals, and ambulatory operations leaders.
+              Ambulatory optimization. ROI modeling. Referral leakage.
             </p>
           </motion.div>
 
@@ -230,14 +229,9 @@ const ForHealthSystemsPage = () => {
             <div className="flex items-start gap-3">
               <Info className="h-5 w-5 mt-0.5 shrink-0 text-michigan-gold-deep" />
               <p className="text-xs text-muted-foreground">
-                <strong className="text-foreground">
-                  Exploratory Framework:
-                </strong>{" "}
-                Access Michigan is in Public Beta. The value propositions and
-                calculator below present{" "}
-                <strong>projected analytical capabilities</strong> based on the
-                platform's data infrastructure and published benchmarks - not
-                measured outcomes. See{" "}
+                <strong className="text-foreground">Public Beta.</strong> Below
+                are <strong>PROJECTED capabilities</strong>. Modeled
+                projections, not measured outcomes. See{" "}
                 <a
                   href="/lean-healthcare"
                   className="text-primary hover:underline"

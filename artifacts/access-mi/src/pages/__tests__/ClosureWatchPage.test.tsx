@@ -13,7 +13,9 @@ vi.mock("@/hooks/useClosureWatch", () => ({
 
 // Mock Layout to avoid Header/ContextBar/CountySelector context cascade
 vi.mock("@/components/layout/Layout", () => ({
-  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 // Mock the map  -  Leaflet requires real DOM APIs not available in jsdom
@@ -31,7 +33,7 @@ function renderPage() {
       <MemoryRouter>
         <ClosureWatchPage />
       </MemoryRouter>
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 }
 
@@ -42,26 +44,36 @@ describe("ClosureWatchPage", () => {
 
   it("renders without crashing with fallback data", () => {
     renderPage();
-    expect(screen.getByRole("heading", { name: /Michigan Closure Watch/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: /What's closing, and when it closed/i,
+      }),
+    ).toBeInTheDocument();
   });
 
   it("renders ProvenanceDisclaimer", () => {
     renderPage();
     expect(
-      screen.getByText(/combines measured public data with projections/i)
+      screen.getByText(/combines measured public data with projections/i),
     ).toBeInTheDocument();
   });
 
   it("only displays verified entries by default", () => {
     renderPage();
-    const verifiedCount = CLOSURE_WATCH_FALLBACK.filter((e) => e.status === "verified").length;
+    const verifiedCount = CLOSURE_WATCH_FALLBACK.filter(
+      (e) => e.status === "verified",
+    ).length;
     // At minimum the count/summary shows verified number (may appear in multiple places)
-    expect(screen.getAllByText(String(verifiedCount)).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(String(verifiedCount)).length).toBeGreaterThan(
+      0,
+    );
   });
 
   it("does not show pending-second-source entries", () => {
     renderPage();
-    const pending = CLOSURE_WATCH_FALLBACK.filter((e) => e.status === "pending-second-source");
+    const pending = CLOSURE_WATCH_FALLBACK.filter(
+      (e) => e.status === "pending-second-source",
+    );
     for (const entry of pending) {
       expect(screen.queryByText(entry.facilityName)).not.toBeInTheDocument();
     }
@@ -69,23 +81,32 @@ describe("ClosureWatchPage", () => {
 
   it("shows the correct total verified count in stats", () => {
     renderPage();
-    const verified = CLOSURE_WATCH_FALLBACK.filter((e) => e.status === "verified");
-    expect(screen.getAllByText(String(verified.length)).length).toBeGreaterThan(0);
+    const verified = CLOSURE_WATCH_FALLBACK.filter(
+      (e) => e.status === "verified",
+    );
+    expect(screen.getAllByText(String(verified.length)).length).toBeGreaterThan(
+      0,
+    );
   });
 
   it("each verified entry shows at least two source links", () => {
     renderPage();
-    const verified = CLOSURE_WATCH_FALLBACK.filter((e) => e.status === "verified");
+    const verified = CLOSURE_WATCH_FALLBACK.filter(
+      (e) => e.status === "verified",
+    );
     for (const entry of verified) {
       // Find the facility name text, then check its card has source links
       const nameEl = screen.queryAllByText((content) =>
-        content.includes(entry.facilityName.slice(0, 20))
+        content.includes(entry.facilityName.slice(0, 20)),
       )[0];
       if (nameEl) {
         const card = nameEl.closest("[class*='rounded-lg']");
         if (card) {
           const links = within(card as HTMLElement).queryAllByRole("link");
-          expect(links.length, `Entry ${entry.id} should have source links`).toBeGreaterThanOrEqual(1);
+          expect(
+            links.length,
+            `Entry ${entry.id} should have source links`,
+          ).toBeGreaterThanOrEqual(1);
         }
       }
     }
@@ -93,10 +114,14 @@ describe("ClosureWatchPage", () => {
 
   it("filters by year: selecting a year hides entries from other years", () => {
     renderPage();
-    const yearSelect = screen.getByRole("combobox", { name: /filter by year/i });
+    const yearSelect = screen.getByRole("combobox", {
+      name: /filter by year/i,
+    });
 
     // Get a year that has entries
-    const verified = CLOSURE_WATCH_FALLBACK.filter((e) => e.status === "verified");
+    const verified = CLOSURE_WATCH_FALLBACK.filter(
+      (e) => e.status === "verified",
+    );
     const years2024 = verified.filter((e) => e.closureDate.startsWith("2024"));
     const years2023 = verified.filter((e) => e.closureDate.startsWith("2023"));
 
@@ -105,51 +130,69 @@ describe("ClosureWatchPage", () => {
 
       // A 2023-only entry should not appear
       const entry2023Only = years2023.find(
-        (e) => !years2024.some((e24) => e24.facilityName === e.facilityName)
+        (e) => !years2024.some((e24) => e24.facilityName === e.facilityName),
       );
       if (entry2023Only) {
-        expect(screen.queryByText(entry2023Only.facilityName)).not.toBeInTheDocument();
+        expect(
+          screen.queryByText(entry2023Only.facilityName),
+        ).not.toBeInTheDocument();
       }
     }
   });
 
   it("filters by closureType: selecting a type hides other types", () => {
     renderPage();
-    const typeSelect = screen.getByRole("combobox", { name: /filter by closure type/i });
+    const typeSelect = screen.getByRole("combobox", {
+      name: /filter by closure type/i,
+    });
 
-    const verified = CLOSURE_WATCH_FALLBACK.filter((e) => e.status === "verified");
+    const verified = CLOSURE_WATCH_FALLBACK.filter(
+      (e) => e.status === "verified",
+    );
     const mergers = verified.filter((e) => e.closureType === "merger");
-    const fullClosures = verified.filter((e) => e.closureType === "full-closure");
+    const fullClosures = verified.filter(
+      (e) => e.closureType === "full-closure",
+    );
 
     if (mergers.length > 0 && fullClosures.length > 0) {
       fireEvent.change(typeSelect, { target: { value: "merger" } });
 
       // A full-closure-only entry should not appear
       const fullClosureOnly = fullClosures.find(
-        (e) => !mergers.some((m) => m.facilityName === e.facilityName)
+        (e) => !mergers.some((m) => m.facilityName === e.facilityName),
       );
       if (fullClosureOnly) {
-        expect(screen.queryByText(fullClosureOnly.facilityName)).not.toBeInTheDocument();
+        expect(
+          screen.queryByText(fullClosureOnly.facilityName),
+        ).not.toBeInTheDocument();
       }
     }
   });
 
   it("clear filters button resets to all entries", () => {
     renderPage();
-    const typeSelect = screen.getByRole("combobox", { name: /filter by closure type/i });
+    const typeSelect = screen.getByRole("combobox", {
+      name: /filter by closure type/i,
+    });
     fireEvent.change(typeSelect, { target: { value: "merger" } });
 
     const clearBtn = screen.getByRole("button", { name: /clear filters/i });
     fireEvent.click(clearBtn);
 
     // After clearing, all verified entries should be visible again
-    const verified = CLOSURE_WATCH_FALLBACK.filter((e) => e.status === "verified");
-    expect(screen.getAllByText(String(verified.length)).length).toBeGreaterThan(0);
+    const verified = CLOSURE_WATCH_FALLBACK.filter(
+      (e) => e.status === "verified",
+    );
+    expect(screen.getAllByText(String(verified.length)).length).toBeGreaterThan(
+      0,
+    );
   });
 
   it("methodology section toggles open", () => {
     renderPage();
-    const methodBtn = screen.getByRole("button", { name: /how we verify closures/i });
+    const methodBtn = screen.getByRole("button", {
+      name: /how we verify closures/i,
+    });
     expect(screen.queryByText(/Two-source rule/i)).not.toBeInTheDocument();
     fireEvent.click(methodBtn);
     expect(screen.getByText(/Two-source rule/i)).toBeInTheDocument();

@@ -23,23 +23,21 @@ interface HubTool {
 const TOOLS: HubTool[] = [
   {
     id: "map",
-    title: "Life-stage benefits map",
-    blurb:
-      "What unlocks when. Pregnancy, a new baby, job loss, turning 65, aging or disability. Every entry sourced.",
+    title: "When benefits unlock",
+    blurb: "Pregnancy, new baby, job loss, turning 65, disability. Sourced.",
     icon: MapIcon,
   },
   {
     id: "screener",
-    title: "How eligibility rules work",
+    title: "Check your income band",
     blurb:
-      "See what 2026 federal and Michigan income rules indicate for a household like yours. Informational only - the program decides eligibility.",
+      "2026 federal and Michigan rules. Informational only. The program decides.",
     icon: ShieldCheck,
   },
   {
     id: "cliff",
-    title: "Will a raise help?",
-    blurb:
-      "Plain-language explanation of benefits cliffs, with a link to the Atlanta Fed's CLIFF calculator.",
+    title: "Will a raise cost you benefits?",
+    blurb: "The cliff explained, with the Atlanta Fed's CLIFF calculator.",
     icon: TrendingUp,
   },
 ];
@@ -74,12 +72,11 @@ export default function BenefitsHubPage() {
               Benefits Education
             </Badge>
             <h1 className="text-3xl font-bold text-foreground md:text-4xl">
-              How Michigan benefit programs work
+              See what you qualify for.
             </h1>
             <p className="mt-3 max-w-2xl mx-auto text-sm text-muted-foreground">
-              Three educational tools, one page. Every income limit is sourced
-              to a federal or state primary source. Nothing here is a
-              determination, and nothing is stored.
+              No account. No stored answers. Not a decision. Every income limit
+              VERIFIED to a primary source.
             </p>
           </motion.div>
         </div>

@@ -57,7 +57,9 @@ describe("Claims anchor guard  -  VERIFIED rows", () => {
   // V-9: Independence claim in Footer
   it("V-9: Footer renders independence and non-affiliation disclaimer", () => {
     const src = read("src/components/layout/Footer.tsx");
-    expect(src).toContain("not affiliated with the State of Michigan");
+    expect(src).toContain("Independent civic project.");
+    expect(src).toContain("Not affiliated with any agency");
+    expect(src).toContain("or health system");
   });
 
   // V-10: 83-county FIPS registry has exactly 83 entries

@@ -161,9 +161,9 @@ const MODE_TABS: {
 /* ── Main page ────────────────────────────────── */
 export default function FindCarePage() {
   usePageMeta({
-    title: "Find Help - Access Michigan",
+    title: "Find help near you - Access Michigan",
     description:
-      "Find care, health centers, food assistance, housing help, and more - all across Michigan. Free. Private. No account needed.",
+      "Care, food, housing, mental health. Free. Private. No account. Statewide.",
     path: "/find-care",
     jsonLd: {
       "@type": "MedicalWebPage",
@@ -488,7 +488,7 @@ export default function FindCarePage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-2 text-3xl font-bold text-foreground lg:text-4xl text-center"
           >
-            Find Help
+            Find help near you.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -496,8 +496,7 @@ export default function FindCarePage() {
             transition={{ delay: 0.1 }}
             className="mx-auto max-w-xl text-center text-muted-foreground mb-6"
           >
-            Find care, health centers, food assistance, housing help, and more -
-            all across Michigan. Free. Private. No account needed.
+            Care, food, housing, mental health. Free. Private. No account.
           </motion.p>
 
           {/* ── Mode Selector Tabs ── */}

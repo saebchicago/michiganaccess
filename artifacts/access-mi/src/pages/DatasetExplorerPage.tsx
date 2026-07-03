@@ -7,7 +7,9 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { useCounty } from "@/contexts/CountyContext";
 import type { Pillar } from "@/data/pillarRegistry";
 
-const DatasetExplorer = lazy(() => import("@/components/pillars/DatasetExplorer"));
+const DatasetExplorer = lazy(
+  () => import("@/components/pillars/DatasetExplorer"),
+);
 
 const SectionFallback = () => (
   <div className="py-8 flex justify-center">
@@ -43,14 +45,16 @@ const DatasetExplorerPage = () => {
         <div className="container max-w-3xl text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5">
             <Database className="h-4 w-4 text-primary" aria-hidden="true" />
-            <span className="text-sm font-medium text-primary">Civic Intelligence</span>
+            <span className="text-sm font-medium text-primary">
+              Civic Intelligence
+            </span>
           </div>
           <h1 className="mb-3 text-3xl font-bold text-foreground md:text-4xl">
-            Michigan Dataset Explorer
+            Browse every dataset.
           </h1>
           <p className="text-muted-foreground">
-            Browse datasets across four civic pillars - health access, environmental risk,
-            mobility, and economic stress. All data sourced from authoritative public agencies.
+            Health access, environmental risk, mobility, economic stress. All
+            VERIFIED to public agencies.
           </p>
         </div>
       </section>

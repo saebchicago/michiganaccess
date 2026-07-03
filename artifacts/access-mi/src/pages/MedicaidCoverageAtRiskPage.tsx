@@ -200,13 +200,11 @@ export default function MedicaidCoverageAtRiskPage() {
             </Badge>
             <div>
               <h1 className="text-3xl font-bold tracking-tight">
-                Medicaid Coverage at Risk
+                Who could lose Medicaid.
               </h1>
               <p className="text-muted-foreground mt-1">
-                Michigan county-level estimates of Medicaid enrollees in
-                categories affected by P.L. 119-21 work requirement provisions
-                (Urban Institute, March 2026). All figures are modeled ranges -
-                not point estimates. Exposure is not disenrollment.
+                County-level exposure to P.L. 119-21 work requirements. MODELED
+                ranges. Urban Institute, March 2026.
               </p>
             </div>
           </div>
@@ -225,15 +223,10 @@ export default function MedicaidCoverageAtRiskPage() {
                 Exposure is not disenrollment
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                These figures identify Michigan Medicaid enrollees who fall into
-                categories that Urban Institute, CBO, and CBPP project may be
-                affected by P.L. 119-21 work requirement provisions. Being in an
-                affected category is not the same as losing coverage. Individual
-                outcomes depend on state implementation decisions, work
-                requirement compliance pathways, income and employment changes,
-                and administrative factors. The ranges describe populations at
-                elevated exposure - they do not predict who will or will not
-                retain Medicaid enrollment.{" "}
+                These are people in affected categories, per Urban Institute,
+                CBO, and CBPP. Not a forecast of who loses coverage. Outcomes
+                depend on state rules, compliance paths, income, and admin
+                factors.{" "}
                 <Link
                   to={METHODOLOGY_URL}
                   className="underline hover:text-primary"
@@ -289,14 +282,14 @@ export default function MedicaidCoverageAtRiskPage() {
               testId="medicaid-stat-counties"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : String(COUNTIES_COVERED)}
-              label={`Michigan counties - complete statewide coverage (all ${COUNTIES_COVERED})`}
+              label="Statewide coverage. Every Michigan county."
               scope="Statewide coverage"
               provenance={
                 <DataProvenance
                   sourceName="U.S. Census Bureau county list"
                   sourceUrl="https://www.census.gov/library/reference/code-lists/ansi.html"
                   asOfDate="2026"
-                  cadence="Static - 83 Michigan counties"
+                  cadence="Static - statewide"
                   dataKind="measured"
                   compact
                 />

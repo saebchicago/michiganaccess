@@ -23,8 +23,8 @@ const audienceIds: {
   {
     id: "resident",
     icon: User,
-    label: "Residents",
-    desc: "Find programs, care, and services for you and your family",
+    label: "Resident",
+    desc: "Find help for me or my family.",
     scrollTarget: "#for-residents",
     personaView: "resident",
   },
@@ -32,7 +32,7 @@ const audienceIds: {
     id: "health-system",
     icon: Building2,
     label: "Analyst",
-    desc: "Deeper view: integrity tiers, source ledger, methodology links, raw provenance",
+    desc: "Show provenance and methodology.",
     scrollTarget: "#for-organizations",
     personaView: "professional",
   },
@@ -40,8 +40,8 @@ const audienceIds: {
 
 const SUB_PERSONAS: { id: SubPersona; label: string; icon: typeof Heart }[] = [
   { id: "caregiver", label: "Caregiver", icon: Heart },
-  { id: "immigrant", label: "Immigrant / Refugee", icon: Globe },
-  { id: "disabled", label: "Disability Services", icon: Accessibility },
+  { id: "immigrant", label: "Newcomer", icon: Globe },
+  { id: "disabled", label: "Disability services", icon: Accessibility },
 ];
 
 function scrollTo(selector: string) {
@@ -62,11 +62,11 @@ export default function AudienceSelector({
   return (
     <section
       className="py-6 border-b border-border/40 bg-muted/20"
-      aria-label="View AccessMI as"
+      aria-label="I'm here as"
     >
       <div className="container">
         <p className="text-[11px] uppercase tracking-widest text-muted-foreground text-center mb-3 font-semibold">
-          View AccessMI as
+          I'm here as
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           {audienceIds.map((a) => {
@@ -109,7 +109,7 @@ export default function AudienceSelector({
         {isResident && (
           <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2.5">
             <span className="text-[10px] text-muted-foreground mr-1">
-              I'm also a:
+              Also…
             </span>
             {SUB_PERSONAS.map((sp) => {
               const active = subPersonas.includes(sp.id);
@@ -150,8 +150,7 @@ export default function AudienceSelector({
             role="status"
             aria-live="polite"
           >
-            Analyst view: integrity tiers, source ledger, and methodology
-            surfaces are emphasized below.
+            Analyst view on. Provenance and methodology emphasized below.
           </p>
         )}
       </div>

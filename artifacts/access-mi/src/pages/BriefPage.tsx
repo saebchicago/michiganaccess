@@ -377,11 +377,12 @@ export default function BriefPage() {
             Beta
           </Badge>
           <h1 className="text-2xl font-bold text-foreground lg:text-4xl mb-2">
-            {county ? `${county} County Brief` : "Generate Your County Brief"}
+            {county
+              ? `${county} County, at a glance.`
+              : "Your county, at a glance."}
           </h1>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            A quick civic snapshot - key health, economic, and access metrics at
-            a glance.
+            Health, economy, and access - one snapshot.
           </p>
         </div>
       </section>
@@ -418,7 +419,7 @@ export default function BriefPage() {
             {/* Print-only header */}
             <div className="hidden print-header print:block text-center border-b border-border pb-3 mb-4">
               <p className="text-lg font-bold">
-                AccessMI  -  {county} County Brief
+                AccessMI - {county} County Brief
               </p>
               <p className="text-xs text-muted-foreground">
                 Generated {retrievedDate} · accessmi.org/brief?county=
@@ -684,7 +685,7 @@ export default function BriefPage() {
             {/* Citation-grade stat blocks */}
             <div>
               <h3 className="text-sm font-semibold text-foreground mb-3">
-                Key Indicators  -  sourced, labeled, citable
+                Key Indicators - sourced, labeled, citable
               </h3>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {briefStats.map((stat) => (
@@ -712,7 +713,7 @@ export default function BriefPage() {
             {/* Trend Lines */}
             <div className="rounded-lg border border-border bg-muted/20 p-4 space-y-4">
               <h3 className="text-sm font-semibold text-foreground">
-                Trend Lines  -  vintage series, zero interpolation
+                Trend Lines - vintage series, zero interpolation
               </h3>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="bg-background rounded-lg border border-border p-3">
@@ -720,7 +721,7 @@ export default function BriefPage() {
                 </div>
                 <div className="bg-background rounded-lg border border-border p-3">
                   <p className="text-[11px] font-medium text-muted-foreground mb-2">
-                    Uninsured Rate  -  Vintage Comparison
+                    Uninsured Rate - Vintage Comparison
                   </p>
                   <UninsuredSparkline county={county} />
                 </div>

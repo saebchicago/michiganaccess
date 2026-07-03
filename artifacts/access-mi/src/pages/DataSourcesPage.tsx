@@ -53,8 +53,7 @@ export default function DataSourcesPage() {
               Verified Data Sources
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Every data point on this platform comes from a public source. No
-              contribution influences rankings, visibility, or content.
+              Every number, a public source. No contribution changes rankings.
             </p>
           </motion.div>
         </div>

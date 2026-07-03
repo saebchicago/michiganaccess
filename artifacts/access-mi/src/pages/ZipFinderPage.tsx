@@ -101,7 +101,7 @@ const ALL_ZIPS = Array.from(
     ...Object.keys(MICHIGAN_EJSCREEN),
     ...Object.keys(MICHIGAN_GEOCARE),
     ...Object.keys(MICHIGAN_SAFMR),
-  ])
+  ]),
 ).sort();
 
 let nextId = 1;
@@ -109,7 +109,8 @@ let nextId = 1;
 export default function ZipFinderPage() {
   usePageMeta({
     title: "ZIP Finder - Multi-Criteria Filter",
-    description: "Find Michigan ZIP codes by filtering on health, economic, and environmental metrics.",
+    description:
+      "Find Michigan ZIP codes by filtering on health, economic, and environmental metrics.",
     path: "/zip-finder",
   });
 
@@ -119,16 +120,24 @@ export default function ZipFinderPage() {
 
   const addCondition = useCallback(() => {
     if (conditions.length >= 4) return;
-    setConditions((prev) => [...prev, { id: nextId++, metricKey: "ej_index", operator: "above", value: "50" }]);
+    setConditions((prev) => [
+      ...prev,
+      { id: nextId++, metricKey: "ej_index", operator: "above", value: "50" },
+    ]);
   }, [conditions.length]);
 
   const removeCondition = useCallback((id: number) => {
     setConditions((prev) => prev.filter((c) => c.id !== id));
   }, []);
 
-  const updateCondition = useCallback((id: number, field: keyof FilterCondition, val: string) => {
-    setConditions((prev) => prev.map((c) => (c.id === id ? { ...c, [field]: val } : c)));
-  }, []);
+  const updateCondition = useCallback(
+    (id: number, field: keyof FilterCondition, val: string) => {
+      setConditions((prev) =>
+        prev.map((c) => (c.id === id ? { ...c, [field]: val } : c)),
+      );
+    },
+    [],
+  );
 
   const results = useMemo(() => {
     return ALL_ZIPS.filter((zip) => {
@@ -150,7 +159,12 @@ export default function ZipFinderPage() {
       const lookup = ZIP_TO_COUNTY[zip] ?? ZIP_QUICKSTATS[zip];
       const city = (lookup as { city?: string })?.city ?? "";
       const county = (lookup as { county?: string })?.county ?? "";
-      return [zip, city, county, ...METRICS.map((m) => m.getter(zip)?.toString() ?? "")].join(",");
+      return [
+        zip,
+        city,
+        county,
+        ...METRICS.map((m) => m.getter(zip)?.toString() ?? ""),
+      ].join(",");
     });
     const csv = [headers.join(","), ...rows].join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
@@ -164,21 +178,31 @@ export default function ZipFinderPage() {
 
   return (
     <Layout>
-      <Breadcrumbs items={[
-        { label: "Data & Insights", href: "/data-and-insights" },
-        { label: "ZIP Finder" },
-      ]} />
+      <Breadcrumbs
+        items={[
+          { label: "Data & Insights", href: "/data-and-insights" },
+          { label: "ZIP Finder" },
+        ]}
+      />
 
       <section className="bg-gradient-to-br from-primary/8 via-background to-accent/5 py-10 md:py-14">
         <div className="container">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-2xl"
+          >
             <div className="flex items-center gap-2 mb-3">
               <Filter className="h-5 w-5 text-primary" />
-              <Badge variant="outline" className="text-xs">Multi-Criteria</Badge>
+              <Badge variant="outline" className="text-xs">
+                Multi-Criteria
+              </Badge>
             </div>
-            <h1 className="text-3xl font-bold text-foreground md:text-4xl mb-2">ZIP Finder</h1>
+            <h1 className="text-3xl font-bold text-foreground md:text-4xl mb-2">
+              Find ZIPs that match.
+            </h1>
             <p className="text-muted-foreground">
-              Filter Michigan ZIP codes by combining up to 4 conditions. Find communities matching specific health, economic, and environmental thresholds.
+              Layer up to 4 conditions. Health, economic, environmental.
             </p>
           </motion.div>
         </div>
@@ -193,20 +217,29 @@ export default function ZipFinderPage() {
             </h2>
             <div className="space-y-3">
               {conditions.map((cond) => (
-                <div key={cond.id} className="flex flex-wrap items-center gap-2">
+                <div
+                  key={cond.id}
+                  className="flex flex-wrap items-center gap-2"
+                >
                   <select
                     className="text-sm border rounded-md px-3 py-1.5 bg-background"
                     value={cond.metricKey}
-                    onChange={(e) => updateCondition(cond.id, "metricKey", e.target.value)}
+                    onChange={(e) =>
+                      updateCondition(cond.id, "metricKey", e.target.value)
+                    }
                   >
                     {METRICS.map((m) => (
-                      <option key={m.key} value={m.key}>{m.label}</option>
+                      <option key={m.key} value={m.key}>
+                        {m.label}
+                      </option>
                     ))}
                   </select>
                   <select
                     className="text-sm border rounded-md px-3 py-1.5 bg-background"
                     value={cond.operator}
-                    onChange={(e) => updateCondition(cond.id, "operator", e.target.value)}
+                    onChange={(e) =>
+                      updateCondition(cond.id, "operator", e.target.value)
+                    }
                   >
                     <option value="above">above</option>
                     <option value="below">below</option>
@@ -215,13 +248,18 @@ export default function ZipFinderPage() {
                     type="number"
                     className="text-sm border rounded-md px-3 py-1.5 w-24 bg-background tabular-nums"
                     value={cond.value}
-                    onChange={(e) => updateCondition(cond.id, "value", e.target.value)}
+                    onChange={(e) =>
+                      updateCondition(cond.id, "value", e.target.value)
+                    }
                   />
                   <span className="text-[10px] text-muted-foreground">
                     {METRICS.find((m) => m.key === cond.metricKey)?.unit}
                   </span>
                   {conditions.length > 1 && (
-                    <button onClick={() => removeCondition(cond.id)} className="text-muted-foreground hover:text-destructive">
+                    <button
+                      onClick={() => removeCondition(cond.id)}
+                      className="text-muted-foreground hover:text-destructive"
+                    >
                       <X className="h-4 w-4" />
                     </button>
                   )}
@@ -229,7 +267,12 @@ export default function ZipFinderPage() {
               ))}
             </div>
             {conditions.length < 4 && (
-              <Button variant="outline" size="sm" onClick={addCondition} className="gap-1">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={addCondition}
+                className="gap-1"
+              >
                 <Plus className="h-3 w-3" /> Add Condition
               </Button>
             )}
@@ -241,7 +284,13 @@ export default function ZipFinderPage() {
           <h2 className="text-sm font-bold text-foreground">
             {results.length} matching ZIP{results.length !== 1 ? "s" : ""}
           </h2>
-          <Button variant="outline" size="sm" onClick={downloadCsv} disabled={results.length === 0} className="gap-1">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={downloadCsv}
+            disabled={results.length === 0}
+            className="gap-1"
+          >
             <Download className="h-3 w-3" /> Download CSV
           </Button>
         </div>
@@ -253,12 +302,25 @@ export default function ZipFinderPage() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b">
-                      <th className="py-2 px-2 text-left font-semibold text-xs">ZIP</th>
-                      <th className="py-2 px-2 text-left font-semibold text-xs">City</th>
-                      <th className="py-2 px-2 text-left font-semibold text-xs">County</th>
+                      <th className="py-2 px-2 text-left font-semibold text-xs">
+                        ZIP
+                      </th>
+                      <th className="py-2 px-2 text-left font-semibold text-xs">
+                        City
+                      </th>
+                      <th className="py-2 px-2 text-left font-semibold text-xs">
+                        County
+                      </th>
                       {conditions.map((c) => {
                         const m = METRICS.find((x) => x.key === c.metricKey);
-                        return <th key={c.id} className="py-2 px-2 text-right font-semibold text-xs">{m?.label}</th>;
+                        return (
+                          <th
+                            key={c.id}
+                            className="py-2 px-2 text-right font-semibold text-xs"
+                          >
+                            {m?.label}
+                          </th>
+                        );
                       })}
                     </tr>
                   </thead>
@@ -266,22 +328,38 @@ export default function ZipFinderPage() {
                     {results.slice(0, 50).map((zip) => {
                       const lookup = ZIP_TO_COUNTY[zip] ?? ZIP_QUICKSTATS[zip];
                       const city = (lookup as { city?: string })?.city ?? "";
-                      const county = (lookup as { county?: string })?.county ?? "";
+                      const county =
+                        (lookup as { county?: string })?.county ?? "";
                       return (
-                        <tr key={zip} className="border-b border-border/30 hover:bg-muted/30">
+                        <tr
+                          key={zip}
+                          className="border-b border-border/30 hover:bg-muted/30"
+                        >
                           <td className="py-1.5 px-2">
-                            <Link to={`/zip/${zip}`} className="text-primary hover:underline font-mono flex items-center gap-1">
+                            <Link
+                              to={`/zip/${zip}`}
+                              className="text-primary hover:underline font-mono flex items-center gap-1"
+                            >
                               <MapPin className="h-3 w-3" /> {zip}
                             </Link>
                           </td>
                           <td className="py-1.5 px-2 text-xs">{city}</td>
                           <td className="py-1.5 px-2 text-xs">{county}</td>
                           {conditions.map((c) => {
-                            const metric = METRICS.find((x) => x.key === c.metricKey);
+                            const metric = METRICS.find(
+                              (x) => x.key === c.metricKey,
+                            );
                             const val = metric?.getter(zip);
                             return (
-                              <td key={c.id} className="py-1.5 px-2 text-right font-mono text-xs tabular-nums">
-                                {val != null ? (metric?.unit === "$" ? `$${val.toLocaleString()}` : `${val}${metric?.unit}`) : "-"}
+                              <td
+                                key={c.id}
+                                className="py-1.5 px-2 text-right font-mono text-xs tabular-nums"
+                              >
+                                {val != null
+                                  ? metric?.unit === "$"
+                                    ? `$${val.toLocaleString()}`
+                                    : `${val}${metric?.unit}`
+                                  : "-"}
                               </td>
                             );
                           })}
@@ -293,7 +371,8 @@ export default function ZipFinderPage() {
               </div>
               {results.length > 50 && (
                 <p className="text-[10px] text-muted-foreground py-2 text-center">
-                  Showing first 50 of {results.length} results. Download CSV for all.
+                  Showing first 50 of {results.length} results. Download CSV for
+                  all.
                 </p>
               )}
             </CardContent>
@@ -301,7 +380,9 @@ export default function ZipFinderPage() {
         ) : (
           <Card>
             <CardContent className="py-8 text-center">
-              <p className="text-sm text-muted-foreground">No ZIPs match all conditions. Try adjusting your filters.</p>
+              <p className="text-sm text-muted-foreground">
+                No ZIPs match all conditions. Try adjusting your filters.
+              </p>
             </CardContent>
           </Card>
         )}

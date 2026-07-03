@@ -17,14 +17,12 @@ export default function FoodAccessExplorerPage() {
             Data Explorer / Vertical Slice
           </p>
           <h1 className="font-display text-3xl sm:text-4xl tracking-tight text-foreground">
-            Food Access Explorer
+            Where food access breaks.
           </h1>
           <p className="max-w-2xl text-sm text-muted-foreground">
-            A polished, multi-variable view of one metric family - USDA SNAP
-            enrollment and retailer access for all 83 Michigan counties. Every
-            figure traces to a primary federal source. Every benchmark shows its
-            math. Counties without a value show distinct coverage states rather
-            than disappearing.
+            USDA SNAP enrollment and retailer access. Statewide. Every figure
+            VERIFIED to a primary federal source. Missing values show as
+            distinct coverage states, not gaps.
           </p>
         </div>
         <FoodAccessExplorer />

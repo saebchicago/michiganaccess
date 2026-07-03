@@ -251,34 +251,34 @@ const Footer = () => {
           <div className="flex items-center justify-center gap-2 mb-3">
             <div className="h-1.5 w-1.5 rounded-full bg-michigan-forest animate-pulse" />
             <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-              System Status - All Services Operational
+              All systems normal
             </span>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
             {[
               {
                 icon: MapPin,
-                value: `${stats.countyCount}/${stats.countyCount}`,
-                label: "Counties",
+                value: "✓",
+                label: "Statewide coverage",
                 colorClass: "text-foreground",
               },
               {
                 icon: Shield,
                 value: "✓",
-                label: "Verified",
+                label: "Verified feeds",
                 colorClass: "text-foreground",
               },
               {
                 icon: Database,
                 value: String(stats.dataFeeds),
-                label: "Live API feeds",
+                label: "Live sources",
                 title: `${stats.dataFeeds} uptime-monitored API endpoints. Distinct from the ${DATA_SOURCE_DISPLAY} public source organizations behind the platform's data.`,
                 colorClass: "text-foreground",
               },
               {
                 icon: FileText,
                 value: stats.resourceCount,
-                label: "Resources",
+                label: "Community resources",
                 colorClass: "text-foreground",
               },
             ].map((m) => (
@@ -302,9 +302,8 @@ const Footer = () => {
             ))}
           </div>
           <p className="text-center text-[11px] text-muted-foreground mt-3 max-w-xl mx-auto">
-            AccessMI is an independent civic data and education project. It is
-            not affiliated with the State of Michigan, any government agency,
-            employer, or health system.
+            Independent civic project. Not affiliated with any agency, employer,
+            or health system.
           </p>
           <p className="text-center text-[10px] text-muted-foreground mt-2">
             Site updated{" "}
@@ -354,17 +353,16 @@ const Footer = () => {
           <div className="mx-auto max-w-xl rounded-lg border border-primary/20 bg-primary/[0.06] px-4 py-3 text-center">
             <p className="flex items-center justify-center gap-1.5 text-xs text-foreground">
               <Sparkles className="h-3.5 w-3.5 text-primary" />
-              <span className="font-semibold">Access Michigan</span> - founded
-              as a citizen initiative by Michigan residents, continuously
-              improving with community feedback.
+              <span className="font-semibold">Access Michigan</span> - built by
+              residents, improved by feedback.
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Have a suggestion?{" "}
+              Suggestion?{" "}
               <Link
                 to="/contact"
                 className="font-medium text-primary hover:underline"
               >
-                We'd love to hear from you.
+                Tell us.
               </Link>
             </p>
             {!isHelpPage && (
@@ -405,17 +403,14 @@ const Footer = () => {
             </Link>
           </div>
           <p className="text-center text-[10px] text-muted-foreground mb-3">
-            Access Michigan organizes verified public datasets and clearly
-            labels modeled estimates.{" "}
+            Verified datasets. Modeled estimates clearly labeled.{" "}
             <Link to="/methodology" className="text-primary hover:underline">
-              Learn more →
+              See how →
             </Link>
           </p>
           <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto mb-3">
-            Independent civic project using data from MDHHS, Michigan 2-1-1,
-            CMS, and other public sources. Not run by any government agency. We
-            organize public data to help residents find services and communities
-            understand their needs. For live help, call{" "}
+            Independent · Not a government agency · Data from MDHHS, CMS, HRSA,
+            CDC, EPA, and more. For live help, call{" "}
             <a
               href="tel:211"
               className="font-semibold text-foreground hover:underline"

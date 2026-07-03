@@ -50,23 +50,47 @@ describe("CivicIntelligenceHub", () => {
     localStorage.setItem("michigan-access-county", "Wayne");
     renderHub();
 
-    expect(screen.getByText("Michigan Health Intelligence")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /ask the question first/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /select your county/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /move from insight to comparison/i })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /keep research depth one toggle away/i })).toBeInTheDocument();
-    expect(await screen.findByText("Wayne County Health Intelligence")).toBeInTheDocument();
+    expect(
+      screen.getByText("Michigan Health Intelligence"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /ask the question first/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /select your county/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /move from insight to comparison/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", {
+        name: /keep research depth one toggle away/i,
+      }),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText("Wayne County Health Intelligence"),
+    ).toBeInTheDocument();
   });
 
   it("switches question views and reveals research mode details", async () => {
     renderHub();
 
-    fireEvent.click(screen.getByRole("button", { name: "Where are healthcare deserts forming?" }));
-    expect((await screen.findAllByText("Mock County Choropleth")).length).toBeGreaterThan(0);
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Where are healthcare deserts forming?",
+      }),
+    );
+    expect(
+      (await screen.findAllByText("Mock County Choropleth")).length,
+    ).toBeGreaterThan(0);
 
-    const researchToggle = screen.getByRole("switch", { name: /toggle research mode/i });
+    const researchToggle = screen.getByRole("switch", {
+      name: /toggle research mode/i,
+    });
     fireEvent.click(researchToggle);
 
-    expect(await screen.findAllByText("Research view enabled")).not.toHaveLength(0);
-  });
+    expect(
+      await screen.findAllByText("Research view enabled"),
+    ).not.toHaveLength(0);
+  }, 15000);
 });

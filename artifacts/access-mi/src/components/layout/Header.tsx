@@ -172,7 +172,7 @@ const Header = () => {
                 }
               >
                 <Sparkles className="h-3.5 w-3.5" />
-                Learn about benefits
+                Check benefits
               </Link>
             </Button>
             <Button
@@ -276,8 +276,8 @@ const Header = () => {
 function DesktopSearchTrigger() {
   const { county } = useCounty();
   const placeholder = county
-    ? `Search services near ${county}…`
-    : "Search services…";
+    ? `Search near ${county}…`
+    : "Search services, care, benefits…";
 
   return (
     <div className="hidden lg:flex items-center">
