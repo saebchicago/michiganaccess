@@ -127,7 +127,7 @@ async function fetchAcs(year) {
 
   const url =
     `${ACS_BASE}/${year}/acs/acs5/subject` +
-    `?get=NAME,S2701_C05_001E&for=county:*&in=state:26&key=${CENSUS_API_KEY}`;
+    `?get=NAME,S2701_C05_001E,S2701_C05_001M&for=county:*&in=state:26&key=${CENSUS_API_KEY}`;
 
   console.log(`→ Fetching ACS ${year} (S2701 uninsured)…`);
   const res = await fetch(url, { headers: { "user-agent": "accessmi-trend-build" } });
@@ -136,12 +136,13 @@ async function fetchAcs(year) {
   if (!res.ok) fail(`ACS ${year} HTTP ${res.status}: ${text.slice(0, 200)}`);
 
   const rows = JSON.parse(text);
-  // rows[0] is header: [NAME, S2701_C03_001E, state, county]
+  // rows[0] is header: [NAME, S2701_C05_001E, S2701_C05_001M, state, county]
   const byFips = new Map();
   for (const r of rows.slice(1)) {
-    const fips = r[2] + r[3]; // state + county
+    const fips = r[3] + r[4]; // state + county
     const pct = parseFloat(r[1]);
-    byFips.set(fips, pct);
+    const moe = parseFloat(r[2]);
+    byFips.set(fips, { pct, moe: Number.isFinite(moe) ? moe : null });
   }
   return byFips;
 }
@@ -195,12 +196,12 @@ async function main() {
     const v2 = acsV2Data.get(fips);
     if (v1 == null) acsErrors.push(`ACS ${ACS_V1} missing for ${county} (${fips})`);
     if (v2 == null) acsErrors.push(`ACS ${ACS_V2} missing for ${county} (${fips})`);
-    if (v1 != null && (v1 < 0 || v1 > 50)) acsErrors.push(`ACS ${ACS_V1} implausible ${v1}% for ${county}`);
-    if (v2 != null && (v2 < 0 || v2 > 50)) acsErrors.push(`ACS ${ACS_V2} implausible ${v2}% for ${county}`);
+    if (v1 != null && (v1.pct < 0 || v1.pct > 50)) acsErrors.push(`ACS ${ACS_V1} implausible ${v1.pct}% for ${county}`);
+    if (v2 != null && (v2.pct < 0 || v2.pct > 50)) acsErrors.push(`ACS ${ACS_V2} implausible ${v2.pct}% for ${county}`);
     if (v1 != null && v2 != null) {
       acsByCounty.set(county, [
-        { vintageYear: ACS_V1, vintageLabel: `${ACS_V1} ACS 5-yr (${ACS_V1 - 4}–${ACS_V1})`, value: v1 },
-        { vintageYear: ACS_V2, vintageLabel: `${ACS_V2} ACS 5-yr (${ACS_V2 - 4}–${ACS_V2})`, value: v2 },
+        { vintageYear: ACS_V1, vintageLabel: `${ACS_V1} ACS 5-yr (${ACS_V1 - 4}–${ACS_V1})`, value: v1.pct, moe: v1.moe },
+        { vintageYear: ACS_V2, vintageLabel: `${ACS_V2} ACS 5-yr (${ACS_V2 - 4}–${ACS_V2})`, value: v2.pct, moe: v2.moe },
       ]);
     }
   }

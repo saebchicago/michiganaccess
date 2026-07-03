@@ -9,6 +9,9 @@ export interface AcsPoint {
   vintageYear: number;
   vintageLabel: string;
   value: number;
+  /** ACS margin of error (90% confidence), percentage points, or null if
+   * the upstream response omitted it. */
+  moe: number | null;
 }
 
 export interface PopulationTrend {
