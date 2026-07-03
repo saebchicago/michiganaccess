@@ -45,7 +45,7 @@ const RESOLUTION_CONFIG: Record<GeoResolution, ResolutionConfig> = {
     label: "ZCTA",
     icon: MapPin,
     tooltipBase:
-      "Reported at the ZIP Code Tabulation Area level, the Census Bureau's approximation of a USPS ZIP code.",
+      "ZCTA (ZIP Code Tabulation Area) is the Census Bureau approximation of ZIP code areas. ZCTAs are not identical to USPS ZIP codes.",
     className:
       "bg-sky-100 text-sky-900 border-sky-300 dark:bg-sky-950/30 dark:text-sky-100 dark:border-sky-800/60",
   },
@@ -66,10 +66,10 @@ const RESOLUTION_CONFIG: Record<GeoResolution, ResolutionConfig> = {
       "bg-emerald-100 text-emerald-900 border-emerald-300 dark:bg-emerald-950/30 dark:text-emerald-100 dark:border-emerald-800/60",
   },
   modeled_to_zip: {
-    label: "Modeled to ZIP",
+    label: "Modeled to ZCTA",
     icon: Sigma,
     tooltipBase:
-      "Apportioned or imputed from a larger area down to a ZIP. Always paired with a MODELED integrity tier.",
+      "Apportioned or imputed from a larger area down to a ZCTA. Always paired with a MODELED integrity tier.",
     className:
       "bg-orange-100 text-orange-900 border-orange-300 dark:bg-orange-950/30 dark:text-orange-100 dark:border-orange-800/60",
   },
