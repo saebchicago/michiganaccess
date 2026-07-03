@@ -56,6 +56,8 @@ const ACS_BASE = "https://api.census.gov/data";
 const ACS_TABLE = "B28002";
 const ACS_NUMERATOR = "B28002_007E";
 const ACS_UNIVERSE = "B28002_001E";
+const ACS_NUMERATOR_MOE = "B28002_007M";
+const ACS_UNIVERSE_MOE = "B28002_001M";
 const ACS_TABLE_URL = `https://data.census.gov/table/ACSDT5Y${ACS_VINTAGE}.B28002`;
 const SOURCE_LANDING =
   "https://www.census.gov/programs-surveys/acs/data.html";
@@ -80,7 +82,7 @@ async function loadMiCountyFips() {
 
 async function fetchAcs(miFips) {
   const params = new URLSearchParams({
-    get: `NAME,${ACS_UNIVERSE},${ACS_NUMERATOR}`,
+    get: `NAME,${ACS_UNIVERSE},${ACS_NUMERATOR},${ACS_UNIVERSE_MOE},${ACS_NUMERATOR_MOE}`,
     for: "county:*",
     in: "state:26",
     key: CENSUS_API_KEY,
@@ -100,7 +102,15 @@ async function fetchAcs(miFips) {
   }
   const header = rows[0];
   const idx = Object.fromEntries(header.map((h, i) => [h, i]));
-  const need = ["NAME", ACS_UNIVERSE, ACS_NUMERATOR, "state", "county"];
+  const need = [
+    "NAME",
+    ACS_UNIVERSE,
+    ACS_NUMERATOR,
+    ACS_UNIVERSE_MOE,
+    ACS_NUMERATOR_MOE,
+    "state",
+    "county",
+  ];
   for (const c of need) {
     if (idx[c] === undefined) {
       throw new Error(`Schema drift: ACS response missing "${c}" column`);
@@ -112,6 +122,8 @@ async function fetchAcs(miFips) {
     byFips.set(fips, {
       universe: Number(r[idx[ACS_UNIVERSE]]),
       broadband: Number(r[idx[ACS_NUMERATOR]]),
+      universeMoe: Number(r[idx[ACS_UNIVERSE_MOE]]),
+      broadbandMoe: Number(r[idx[ACS_NUMERATOR_MOE]]),
     });
   }
   return byFips;
@@ -127,6 +139,8 @@ function buildStubCounties(miFips) {
       households: null,
       householdsWithBroadband: null,
       broadbandSubscriptionRate: null,
+      householdsMoe: null,
+      householdsWithBroadbandMoe: null,
       pendingReason:
         "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values.",
     });
@@ -148,6 +162,8 @@ function buildPopulatedCounties(miFips, byFips) {
         households: null,
         householdsWithBroadband: null,
         broadbandSubscriptionRate: null,
+        householdsMoe: null,
+        householdsWithBroadbandMoe: null,
         pendingReason: "ACS returned no or zero-universe row for this county.",
       });
       continue;
@@ -161,6 +177,10 @@ function buildPopulatedCounties(miFips, byFips) {
       households: row.universe,
       householdsWithBroadband: row.broadband,
       broadbandSubscriptionRate: rate,
+      householdsMoe: Number.isFinite(row.universeMoe) ? row.universeMoe : null,
+      householdsWithBroadbandMoe: Number.isFinite(row.broadbandMoe)
+        ? row.broadbandMoe
+        : null,
       pendingReason: null,
     });
   }
@@ -180,6 +200,8 @@ function buildProvenance(ingestedAt, populated) {
       "Households with a broadband Internet subscription (any type)",
     universe_variable: ACS_UNIVERSE,
     universe_label: "Households (universe)",
+    numerator_moe_variable: ACS_NUMERATOR_MOE,
+    universe_moe_variable: ACS_UNIVERSE_MOE,
     ingested_at: ingestedAt,
     ingest_script: "scripts/refresh-acs-broadband-county.mjs",
     michigan_county_registry: "src/data/census-geographies.ts",
@@ -187,7 +209,7 @@ function buildProvenance(ingestedAt, populated) {
     value_label: "VERIFIED",
     populated,
     notes:
-      "Numerator is broadband subscription in the household (adoption). This is NOT the FCC BDC availability metric (which measures whether service reaches a location). ACS 5-Year has full 83-county coverage in Michigan and does not suppress at county level for this table. When populated, values are direct Census tabulations; when status = 'pending-ci', the ingest environment lacked CENSUS_API_KEY and the file must be re-run in CI to populate.",
+      "Numerator is broadband subscription in the household (adoption). This is NOT the FCC BDC availability metric (which measures whether service reaches a location). ACS 5-Year has full 83-county coverage in Michigan and does not suppress at county level for this table. When populated, values are direct Census tabulations; when status = 'pending-ci', the ingest environment lacked CENSUS_API_KEY and the file must be re-run in CI to populate. householdsMoe / householdsWithBroadbandMoe are the ACS margins of error for the corresponding estimates, at the same 90% confidence level Census publishes them at; this script stores them raw and does not compute a reliability flag.",
   };
 }
 
@@ -218,6 +240,10 @@ export interface AcsBroadbandCountyRecord {
   householdsWithBroadband: number | null;
   /** Percent, 2 decimals, computed as broadband / households * 100, or null. */
   broadbandSubscriptionRate: number | null;
+  /** ACS B28002_001M - margin of error for households (90% confidence), or null. */
+  householdsMoe: number | null;
+  /** ACS B28002_007M - margin of error for broadband households (90% confidence), or null. */
+  householdsWithBroadbandMoe: number | null;
   /** Human-readable reason when the record is not populated. */
   pendingReason: string | null;
 }
@@ -233,6 +259,8 @@ export interface AcsBroadbandCountyProvenance {
   numerator_label: string;
   universe_variable: string;
   universe_label: string;
+  numerator_moe_variable: string;
+  universe_moe_variable: string;
   ingested_at: string;
   ingest_script: string;
   michigan_county_registry: string;
