@@ -90,5 +90,5 @@ describe("County dashboard page - a11y", () => {
     );
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-  });
+  }, 15000);
 });

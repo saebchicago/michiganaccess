@@ -1,0 +1,53 @@
+version: 1
+
+datasets:
+
+  egle_pfas_sites:
+    label: "EGLE MPART PFAS Sites and Areas of Interest"
+    source_org: "EGLE"
+    source_url: "https://www.michigan.gov/pfasresponse"
+    access: public_api
+    api_endpoint: "https://services1.arcgis.com/FNjlrOFR0aGJ71Tg/ArcGIS/rest/services/Michigan_PFAS_Sites_and_Areas_of_Interest_PUBLIC_view/FeatureServer/1/query"
+    freshness_sla_days: 60
+    integrity_default: VERIFIED
+    grain: point
+    key: [object_id]
+
+  mshda_cost_burden:
+    label: "MSHDA Housing Cost Burden by County"
+    source_org: "MSHDA"
+    source_url: "https://mihousingdata.org/"
+    access: download
+    freshness_sla_days: 400
+    integrity_default: VERIFIED
+    grain: county
+    key: [county_fips, year]
+
+  mdhhs_respiratory:
+    label: "MDHHS Respiratory Virus Surveillance"
+    source_org: "MDHHS"
+    source_url: "https://www.michigan.gov/mdhhs/inside-mdhhs/newsroom/2022/09/28/respiratory-virus-dashboard"
+    access: download
+    freshness_sla_days: 14
+    integrity_default: MODELED
+    grain: mdhhs_region
+    key: [mdhhs_region, mmwr_week, pathogen]
+
+  mde_absenteeism:
+    label: "MDE Chronic Absenteeism"
+    source_org: "MDE"
+    source_url: "https://www.mischooldata.org/"
+    access: download
+    freshness_sla_days: 400
+    integrity_default: VERIFIED
+    grain: district
+    key: [district_code, school_year]
+
+  socrata_generic:
+    label: "data.michigan.gov Socrata client"
+    source_org: "State of MI"
+    source_url: "https://data.michigan.gov/"
+    access: public_api
+    api_endpoint: "https://data.michigan.gov/resource/{dataset_id}.json"
+    freshness_sla_days: 90
+    integrity_default: VERIFIED
