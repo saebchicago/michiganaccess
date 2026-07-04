@@ -3,8 +3,8 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { DataProvenance } from "../DataProvenance";
 
 const BASE_MEASURED = {
-  sourceName: "USDA FNS",
-  sourceUrl: "https://www.fns.usda.gov",
+  sourceName: "USDA FNA",
+  sourceUrl: "https://www.fna.usda.gov",
   asOfDate: "FY2022",
   cadence: "Annual",
   dataKind: "measured" as const,
@@ -21,7 +21,7 @@ describe("DataProvenance", () => {
     render(<DataProvenance {...BASE_MEASURED} />);
 
     expect(screen.getByText(/Most current public data/i)).toBeInTheDocument();
-    expect(screen.getByText("USDA FNS")).toBeInTheDocument();
+    expect(screen.getByText("USDA FNA")).toBeInTheDocument();
     expect(screen.queryByText(/Methodology/i)).not.toBeInTheDocument();
     // no projected label
     expect(screen.queryByText("(Projected)")).not.toBeInTheDocument();
@@ -33,7 +33,10 @@ describe("DataProvenance", () => {
     expect(screen.getByText(/Most current public data/i)).toBeInTheDocument();
     expect(screen.getByText("(Projected)")).toBeInTheDocument();
     const methodologyLink = screen.getByRole("link", { name: /Methodology/i });
-    expect(methodologyLink).toHaveAttribute("href", "https://example.com/methodology");
+    expect(methodologyLink).toHaveAttribute(
+      "href",
+      "https://example.com/methodology",
+    );
   });
 
   it("renders modeled variant with methodology link", () => {
@@ -42,23 +45,27 @@ describe("DataProvenance", () => {
         {...BASE_MEASURED}
         dataKind="modeled"
         methodologyUrl="https://example.com/methodology"
-      />
+      />,
     );
 
     expect(screen.getByText("(Modeled estimate)")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Methodology/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /Methodology/i }),
+    ).toBeInTheDocument();
   });
 
   it("returns null and logs error when projected without methodologyUrl", () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     const { container } = render(
-      <DataProvenance {...BASE_MEASURED} dataKind="projected" />
+      <DataProvenance {...BASE_MEASURED} dataKind="projected" />,
     );
 
     expect(container.firstChild).toBeNull();
     expect(consoleSpy).toHaveBeenCalledWith(
-      expect.stringContaining("methodologyUrl required for projected data (USDA FNS)")
+      expect.stringContaining(
+        "methodologyUrl required for projected data (USDA FNA)",
+      ),
     );
 
     consoleSpy.mockRestore();
@@ -68,12 +75,14 @@ describe("DataProvenance", () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     const { container } = render(
-      <DataProvenance {...BASE_MEASURED} dataKind="modeled" />
+      <DataProvenance {...BASE_MEASURED} dataKind="modeled" />,
     );
 
     expect(container.firstChild).toBeNull();
     expect(consoleSpy).toHaveBeenCalledWith(
-      expect.stringContaining("methodologyUrl required for modeled data (USDA FNS)")
+      expect.stringContaining(
+        "methodologyUrl required for modeled data (USDA FNA)",
+      ),
     );
 
     consoleSpy.mockRestore();
@@ -85,14 +94,18 @@ describe("DataProvenance", () => {
     // compact uses <p> not <div>
     const el = screen.getByText(/Most current public data/i).closest("p");
     expect(el).toBeInTheDocument();
-    expect(screen.getByText("USDA FNS")).toBeInTheDocument();
+    expect(screen.getByText("USDA FNA")).toBeInTheDocument();
   });
 
   it("always renders 'Most current public data' string", () => {
     const variants = [
       BASE_MEASURED,
       BASE_PROJECTED,
-      { ...BASE_MEASURED, dataKind: "modeled" as const, methodologyUrl: "https://example.com/m" },
+      {
+        ...BASE_MEASURED,
+        dataKind: "modeled" as const,
+        methodologyUrl: "https://example.com/m",
+      },
     ];
 
     for (const props of variants) {
@@ -104,8 +117,8 @@ describe("DataProvenance", () => {
 
   it("source link points to sourceUrl", () => {
     render(<DataProvenance {...BASE_MEASURED} />);
-    const link = screen.getByRole("link", { name: /USDA FNS/i });
-    expect(link).toHaveAttribute("href", "https://www.fns.usda.gov");
+    const link = screen.getByRole("link", { name: /USDA FNA/i });
+    expect(link).toHaveAttribute("href", "https://www.fna.usda.gov");
     expect(link).toHaveAttribute("target", "_blank");
   });
 });

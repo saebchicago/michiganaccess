@@ -1,7 +1,7 @@
 // SNAP Coverage at Risk - projection fallback data
 // Computed: 2026-04-09
 // Method: Apply MLPP Michigan state estimate (74,000 adults at risk) to counties
-//         proportionally by county SNAP enrollment share (USDA FNS FY2022 county data).
+//         proportionally by county SNAP enrollment share (USDA FNA (formerly FNS) FY2022 county data).
 //         Straight enrollment share is used as proxy for adult ABAWD-eligible share -
 //         this simplification is documented at /methodology/snap-coverage-at-risk.
 // Uncertainty band: GAO-19-56 historical range → low = midpoint × 0.60, high = midpoint × 1.40
@@ -16,7 +16,7 @@
 //     Source: https://mlpp.org/the-cost-of-the-federal-megabill-food-assistance/
 //   - CBO national figure: 2.4 million/month (August 2025, pub. 61367-SNAP.pdf)
 //     Source: https://www.cbo.gov/system/files/2025-08/61367-SNAP.pdf
-//   - County SNAP enrollment baseline: USDA FNS FY2022 county data
+//   - County SNAP enrollment baseline: USDA FNA (formerly FNS) FY2022 county data
 //     (from snapMichiganFallback.ts - Feature 1 data layer)
 //   - Uncertainty multipliers: 0.60 (low), 1.40 (high) - GAO-19-56
 
@@ -30,13 +30,13 @@ import { SNAP_COUNTY_FALLBACK } from "./snapMichiganFallback";
 export interface SnapCoverageRangeEntry {
   county: string;
   fips: string;
-  currentSnapEnrollment: number;        // from Feature 1 data
-  currentSnapAsOf: string;              // honest about FY2022 lag
-  projectedAffectedLow: number;         // lower bound of range
-  projectedAffectedHigh: number;        // upper bound of range
+  currentSnapEnrollment: number; // from Feature 1 data
+  currentSnapAsOf: string; // honest about FY2022 lag
+  projectedAffectedLow: number; // lower bound of range
+  projectedAffectedHigh: number; // upper bound of range
   projectionSourceName: string;
   methodologyUrl: string;
-  projectionAsOf: string;               // "2026-04" - when computed
+  projectionAsOf: string; // "2026-04" - when computed
   caveat: string;
 }
 
@@ -47,17 +47,18 @@ export interface SnapCoverageRangeEntry {
 const MLPP_MICHIGAN_STATE_ESTIMATE = 74_000;
 
 // GAO-19-56 uncertainty band multipliers
-const GAO_LOW_MULTIPLIER = 0.60;
-const GAO_HIGH_MULTIPLIER = 1.40;
+const GAO_LOW_MULTIPLIER = 0.6;
+const GAO_HIGH_MULTIPLIER = 1.4;
 
-const PROJECTION_SOURCE_NAME = "Modeled from MLPP/CBO P.L. 119-21 SNAP score (county-allocated)";
+const PROJECTION_SOURCE_NAME =
+  "Modeled from MLPP/CBO P.L. 119-21 SNAP score (county-allocated)";
 const METHODOLOGY_URL = "/methodology/snap-coverage-at-risk";
 const PROJECTION_AS_OF = "2026-04";
 
 // Sum of all non-null county enrollments - allocation denominator
 const COUNTY_ENROLLMENT_TOTAL = SNAP_COUNTY_FALLBACK.reduce(
   (sum, c) => sum + (c.enrollmentTotal ?? 0),
-  0
+  0,
 );
 
 // ── Computed fallback ─────────────────────────────────────────────────────────

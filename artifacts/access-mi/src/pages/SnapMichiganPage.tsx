@@ -183,7 +183,7 @@ export default function SnapMichiganPage() {
   usePageMeta({
     title: "SNAP in Michigan | accessmi.org",
     description:
-      "Food assistance enrollment and retailer access across all 83 Michigan counties, sourced from USDA FNS and the SNAP Retailer Locator.",
+      "Food assistance enrollment and retailer access across all 83 Michigan counties, sourced from USDA Food and Nutrition Administration (FNA) and the SNAP Retailer Locator.",
     path: "/data/snap-michigan",
   });
 
@@ -285,7 +285,7 @@ export default function SnapMichiganPage() {
           </div>
           <ProvenanceDisclaimer />
           <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
-            SNAP enrollment: county-level data is annual from USDA FNS (most
+            SNAP enrollment: county-level data is annual from USDA FNA (most
             recent: FY2022). Statewide monthly totals are current within ~2
             months. Where county monthly data is available from MDHHS
             extraction, it is labeled separately with its report date.
@@ -308,8 +308,8 @@ export default function SnapMichiganPage() {
               label="Michigan residents receiving SNAP (statewide, current month)"
               provenance={
                 <DataProvenance
-                  sourceName="USDA FNS SNAP Data Tables"
-                  sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
+                  sourceName="USDA FNA SNAP Data Tables"
+                  sourceUrl="https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate={
                     stateData?.stateAsOf ?? "February 2026 (Preliminary)"
                   }
@@ -335,8 +335,8 @@ export default function SnapMichiganPage() {
               label="Estimated monthly benefit issuance (statewide)"
               provenance={
                 <DataProvenance
-                  sourceName="USDA FNS SNAP Data Tables"
-                  sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
+                  sourceName="USDA FNA SNAP Data Tables"
+                  sourceUrl="https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate={stateData?.benefitAsOf ?? "January 2026"}
                   cadence="Monthly"
                   dataKind="measured"
@@ -351,7 +351,7 @@ export default function SnapMichiganPage() {
               provenance={
                 <DataProvenance
                   sourceName="USDA SNAP Retailer Locator"
-                  sourceUrl="https://www.fns.usda.gov/snap/retailer-locator/data"
+                  sourceUrl="https://www.fna.usda.gov/snap/retailer-locator/data"
                   asOfDate="Dec 31, 2025"
                   cadence="Quarterly"
                   dataKind="measured"
@@ -365,8 +365,8 @@ export default function SnapMichiganPage() {
               label="Counties where SNAP enrollment exceeds 20% of population (FY2022)"
               provenance={
                 <DataProvenance
-                  sourceName="USDA FNS · ACS 2022 population estimates"
-                  sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
+                  sourceName="USDA FNA · ACS 2022 population estimates"
+                  sourceUrl="https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate="FY2022 / ACS 2022"
                   cadence="Annual"
                   dataKind="measured"
@@ -382,8 +382,8 @@ export default function SnapMichiganPage() {
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-semibold">All 83 Michigan Counties</h2>
             <span className="text-[11px] text-muted-foreground">
-              SNAP enrollment data: USDA FNS FY2022 (most recent annual county
-              file)
+              SNAP enrollment data: USDA FNA (formerly FNS) FY2022 (most recent
+              annual county file)
             </span>
           </div>
 
@@ -470,8 +470,8 @@ export default function SnapMichiganPage() {
                 <tr className="border-t border-border bg-muted/20">
                   <td colSpan={5} className="px-4 py-2.5">
                     <DataProvenance
-                      sourceName="USDA FNS SNAP Data Tables"
-                      sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
+                      sourceName="USDA FNA SNAP Data Tables"
+                      sourceUrl="https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                       asOfDate="FY2022 (most recent annual county file)"
                       cadence="Annual"
                       dataKind="measured"
@@ -487,7 +487,7 @@ export default function SnapMichiganPage() {
             counts pending USDA SNAP Retailer Locator CSV parse - county-level
             data not yet extracted.{" "}
             <a
-              href="https://www.fns.usda.gov/snap/retailer-locator/data"
+              href="https://www.fna.usda.gov/snap/retailer-locator/data"
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-primary inline-flex items-center gap-0.5"
@@ -519,7 +519,7 @@ export default function SnapMichiganPage() {
                 <strong className="text-foreground">
                   Two-tier freshness model.
                 </strong>{" "}
-                USDA FNS publishes statewide SNAP participation monthly,
+                USDA FNA publishes statewide SNAP participation monthly,
                 typically with a ~2-month lag. County-level data is published
                 annually; the most recent county file available as of April 2026
                 is FY2022 (October 2021–September 2022). This means county
@@ -563,15 +563,15 @@ export default function SnapMichiganPage() {
                   Sources
                 </p>
                 <DataProvenance
-                  sourceName="USDA FNS SNAP Data Tables"
-                  sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
+                  sourceName="USDA FNA SNAP Data Tables"
+                  sourceUrl="https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate="FY2022 (county) / February 2026 (state, Preliminary)"
                   cadence="Annual (county) · Monthly (state)"
                   dataKind="measured"
                 />
                 <DataProvenance
                   sourceName="USDA SNAP Retailer Locator"
-                  sourceUrl="https://www.fns.usda.gov/snap/retailer-locator/data"
+                  sourceUrl="https://www.fna.usda.gov/snap/retailer-locator/data"
                   asOfDate="Dec 31, 2025"
                   cadence="Quarterly"
                   dataKind="measured"
@@ -583,8 +583,8 @@ export default function SnapMichiganPage() {
 
         {/* ── Page-level provenance ── */}
         <DataProvenance
-          sourceName="USDA FNS SNAP Data Tables · USDA SNAP Retailer Locator"
-          sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
+          sourceName="USDA FNA SNAP Data Tables · USDA SNAP Retailer Locator"
+          sourceUrl="https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
           asOfDate="FY2022 (county) · February 2026 (state, Preliminary) · December 31, 2025 (retailers)"
           cadence="Annual (county) · Monthly (state) · Quarterly (retailers)"
           dataKind="measured"

@@ -52,9 +52,9 @@ const STAGES: LifeStageNode[] = [
         name: "WIC",
         blurb:
           "Nutrition support and food package during pregnancy and through the postpartum year. Income limit is 185% FPL.",
-        sourceName: "USDA FNS - WIC Income Eligibility Guidelines",
+        sourceName: "USDA FNA - WIC Income Eligibility Guidelines",
         sourceUrl:
-          "https://www.fns.usda.gov/wic/income-eligibility-guidelines-2025-26",
+          "https://www.fna.usda.gov/wic/income-eligibility-guidelines-2025-26",
         applyUrl: OFFICIAL_WIC_URL,
       },
     ],
@@ -70,9 +70,9 @@ const STAGES: LifeStageNode[] = [
         name: "WIC (children under 5)",
         blurb:
           "Continues for the child through age 5 if household income stays at or under 185% FPL.",
-        sourceName: "USDA FNS - WIC Income Eligibility Guidelines",
+        sourceName: "USDA FNA - WIC Income Eligibility Guidelines",
         sourceUrl:
-          "https://www.fns.usda.gov/wic/income-eligibility-guidelines-2025-26",
+          "https://www.fna.usda.gov/wic/income-eligibility-guidelines-2025-26",
         applyUrl: OFFICIAL_WIC_URL,
       },
       {
@@ -105,8 +105,8 @@ const STAGES: LifeStageNode[] = [
         name: "SNAP (Bridge Card)",
         blurb:
           "Monthly food assistance. Federal baseline rule is 130% FPL gross income.",
-        sourceName: "USDA FNS - FY2026 SNAP Cost-of-Living Adjustments",
-        sourceUrl: "https://www.fns.usda.gov/snap/allotment/cola/fy26",
+        sourceName: "USDA FNA - FY2026 SNAP Cost-of-Living Adjustments",
+        sourceUrl: "https://www.fna.usda.gov/snap/allotment/cola/fy26",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
       },
       {
@@ -182,8 +182,8 @@ const STAGES: LifeStageNode[] = [
         name: "SNAP (Bridge Card)",
         blurb:
           "Federal baseline rule is 130% FPL gross income. Michigan's categorical eligibility raises the effective gross income test for some households.",
-        sourceName: "USDA FNS - SNAP Eligibility",
-        sourceUrl: "https://www.fns.usda.gov/snap/recipient/eligibility",
+        sourceName: "USDA FNA - SNAP Eligibility",
+        sourceUrl: "https://www.fna.usda.gov/snap/recipient/eligibility",
         applyUrl: OFFICIAL_MI_BRIDGES_URL,
       },
     ],

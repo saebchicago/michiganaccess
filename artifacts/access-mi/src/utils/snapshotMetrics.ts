@@ -311,7 +311,7 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
     }
   }
 
-  // SNAP-authorized food retailers (USDA-FNS, current snapshot). Count of
+  // SNAP-authorized food retailers (USDA-FNA, current snapshot). Count of
   // currently authorized retailers per 10,000 residents. No suppression:
   // this is a count of businesses, not a rare event. Counties with zero
   // retailers render 0 rather than blank.

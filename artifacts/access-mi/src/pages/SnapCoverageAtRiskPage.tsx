@@ -274,7 +274,7 @@ export default function SnapCoverageAtRiskPage() {
               provenance={
                 <DataProvenance
                   sourceName="Michigan county count (fixed)"
-                  sourceUrl="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
+                  sourceUrl="https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
                   asOfDate="FY2022"
                   cadence="Static - statewide"
                   dataKind="measured"
@@ -399,10 +399,10 @@ export default function SnapCoverageAtRiskPage() {
                   <td colSpan={4} className="px-4 py-3">
                     <DataProvenance {...modeled_provenance_props} compact />
                     <p className="text-[10px] text-muted-foreground mt-1">
-                      County enrollment: USDA FNS FY2022 (annual average monthly
-                      participants). At-risk range: MLPP 74,000 × county
-                      enrollment share, ±40% GAO-19-56 uncertainty band. Low =
-                      midpoint × 0.60, High = midpoint × 1.40.
+                      County enrollment: USDA FNA (formerly FNS) FY2022 (annual
+                      average monthly participants). At-risk range: MLPP 74,000
+                      × county enrollment share, ±40% GAO-19-56 uncertainty
+                      band. Low = midpoint × 0.60, High = midpoint × 1.40.
                     </p>
                   </td>
                 </tr>

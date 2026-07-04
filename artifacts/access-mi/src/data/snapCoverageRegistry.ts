@@ -77,8 +77,8 @@ export const SNAP_NOT_INGESTED: Array<{
     label: "Monthly SNAP participation (per county, per month)",
     nativeResolution: "county",
     source: {
-      name: "USDA FNS-388A monthly tables",
-      url: "https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap",
+      name: "USDA FNA FNS-388A monthly tables",
+      url: "https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap",
     },
     reason:
       "Pipeline currently ingests the FY2022 annual average only. Monthly county tables are published but not yet parsed.",

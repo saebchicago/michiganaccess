@@ -7,7 +7,9 @@ import SnapCoverageAtRiskMethodology from "../SnapCoverageAtRiskMethodology";
 
 // Mock Layout to avoid Header/ContextBar/CountySelector context cascade
 vi.mock("@/components/layout/Layout", () => ({
-  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 // Mock usePageMeta (no DOM side-effects needed in tests)
@@ -20,7 +22,7 @@ function renderPage() {
       <MemoryRouter>
         <SnapCoverageAtRiskMethodology />
       </MemoryRouter>
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 }
 
@@ -32,87 +34,95 @@ describe("SnapCoverageAtRiskMethodology", () => {
   it("renders without crashing", () => {
     renderPage();
     expect(
-      screen.getByRole("heading", { name: /Methodology: SNAP Coverage at Risk/i })
+      screen.getByRole("heading", {
+        name: /Methodology: SNAP Coverage at Risk/i,
+      }),
     ).toBeInTheDocument();
   });
 
   it("renders 'Exposure does not equal loss' as the first section heading", () => {
     renderPage();
     expect(
-      screen.getByRole("heading", { name: /Exposure does not equal loss/i })
+      screen.getByRole("heading", { name: /Exposure does not equal loss/i }),
     ).toBeInTheDocument();
   });
 
   it("renders Sources section", () => {
     renderPage();
-    expect(screen.getByRole("heading", { name: /^Sources$/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /^Sources$/i }),
+    ).toBeInTheDocument();
   });
 
   it("renders CBO source link", () => {
     renderPage();
-    const cboLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.includes("cbo.gov")
-    );
+    const cboLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("href")?.includes("cbo.gov"));
     expect(cboLinks.length).toBeGreaterThan(0);
   });
 
   it("renders MLPP source link", () => {
     renderPage();
-    const mlppLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.includes("mlpp.org")
-    );
+    const mlppLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("href")?.includes("mlpp.org"));
     expect(mlppLinks.length).toBeGreaterThan(0);
   });
 
   it("renders GAO-19-56 source link", () => {
     renderPage();
-    const gaoLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.includes("gao.gov")
-    );
+    const gaoLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("href")?.includes("gao.gov"));
     expect(gaoLinks.length).toBeGreaterThan(0);
   });
 
-  it("renders USDA FNS E&T source link", () => {
+  it("renders USDA FNA E&T source link", () => {
     renderPage();
-    const fnsLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.includes("fns.usda.gov/snap-et")
-    );
-    expect(fnsLinks.length).toBeGreaterThan(0);
+    const fnaLinks = screen
+      .getAllByRole("link")
+      .filter((el) =>
+        el.getAttribute("href")?.includes("fna.usda.gov/snap-et"),
+      );
+    expect(fnaLinks.length).toBeGreaterThan(0);
   });
 
   it("renders Projection methodology section", () => {
     renderPage();
     expect(
-      screen.getByRole("heading", { name: /Projection methodology/i })
+      screen.getByRole("heading", { name: /Projection methodology/i }),
     ).toBeInTheDocument();
   });
 
   it("renders 'What this does not do' section", () => {
     renderPage();
     expect(
-      screen.getByRole("heading", { name: /What this does not do/i })
+      screen.getByRole("heading", { name: /What this does not do/i }),
     ).toBeInTheDocument();
   });
 
   it("renders 'Why we publish this' section", () => {
     renderPage();
     expect(
-      screen.getByRole("heading", { name: /Why we publish this/i })
+      screen.getByRole("heading", { name: /Why we publish this/i }),
     ).toBeInTheDocument();
   });
 
   it("renders Change log section with 2026-04-09 entries", () => {
     renderPage();
-    expect(screen.getByRole("heading", { name: /Change log/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /Change log/i }),
+    ).toBeInTheDocument();
     const dateCells = screen.getAllByText("2026-04-09");
     expect(dateCells.length).toBeGreaterThanOrEqual(1);
   });
 
   it("renders back link to /data/snap-coverage-at-risk", () => {
     renderPage();
-    const backLink = screen.getAllByRole("link").find(
-      (el) => el.getAttribute("href") === "/data/snap-coverage-at-risk"
-    );
+    const backLink = screen
+      .getAllByRole("link")
+      .find((el) => el.getAttribute("href") === "/data/snap-coverage-at-risk");
     expect(backLink).toBeDefined();
   });
 

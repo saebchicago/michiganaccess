@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Data-integrity guard for src/data/snapCountyGenerated.json (the USDA FNS-388A
- * SNAP county participation dataset consumed by src/data/snapMichiganFallback.ts).
+ * Data-integrity guard for src/data/snapCountyGenerated.json (the USDA FNA
+ * (formerly FNS) FNS-388A SNAP county participation dataset consumed by
+ * src/data/snapMichiganFallback.ts).
  *
  * Fails the build if the generated dataset is structurally wrong:
  *   - not exactly 83 Michigan counties, or any unknown / duplicate county

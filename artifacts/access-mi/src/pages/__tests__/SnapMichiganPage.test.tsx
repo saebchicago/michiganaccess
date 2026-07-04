@@ -4,11 +4,16 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SnapMichiganPage from "../SnapMichiganPage";
-import { SNAP_COUNTY_FALLBACK, SNAP_STATE_FALLBACK } from "@/data/snapMichiganFallback";
+import {
+  SNAP_COUNTY_FALLBACK,
+  SNAP_STATE_FALLBACK,
+} from "@/data/snapMichiganFallback";
 
 // Mock Layout to avoid Header/ContextBar/CountySelector context cascade
 vi.mock("@/components/layout/Layout", () => ({
-  default: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
 }));
 
 // Mock usePageMeta (no DOM side-effects needed in tests)
@@ -29,7 +34,7 @@ function renderPage() {
       <MemoryRouter>
         <SnapMichiganPage />
       </MemoryRouter>
-    </QueryClientProvider>
+    </QueryClientProvider>,
   );
 }
 
@@ -40,32 +45,34 @@ describe("SnapMichiganPage", () => {
 
   it("renders without crashing", () => {
     renderPage();
-    expect(screen.getByRole("heading", { name: /SNAP in Michigan/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /SNAP in Michigan/i }),
+    ).toBeInTheDocument();
   });
 
   it("renders ProvenanceDisclaimer", () => {
     renderPage();
     expect(
-      screen.getByText(/combines measured public data with projections/i)
+      screen.getByText(/combines measured public data with projections/i),
     ).toBeInTheDocument();
   });
 
   it("displays all 83 Michigan counties in the table", () => {
     renderPage();
     // Table has 83 data rows (each county is a link)
-    const countyLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("aria-label")?.includes("County data")
-    );
+    const countyLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("aria-label")?.includes("County data"));
     expect(countyLinks.length).toBe(83);
   });
 
   it("every stat card has a source link (DataProvenance)", () => {
     renderPage();
-    // DataProvenance compact renders links to FNS and Retailer Locator
-    const fnsLinks = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("href")?.includes("fns.usda.gov")
-    );
-    expect(fnsLinks.length).toBeGreaterThanOrEqual(4);
+    // DataProvenance compact renders links to FNA (formerly FNS) and Retailer Locator
+    const fnaLinks = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("href")?.includes("fna.usda.gov"));
+    expect(fnaLinks.length).toBeGreaterThanOrEqual(4);
   });
 
   it("table has sortable column headers", () => {
@@ -83,9 +90,9 @@ describe("SnapMichiganPage", () => {
     const countyBtn = screen.getByRole("button", { name: /county/i });
     fireEvent.click(countyBtn);
     // After clicking, first row should be Alcona (alphabetically first)
-    const rows = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("aria-label")?.includes("County data")
-    );
+    const rows = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("aria-label")?.includes("County data"));
     expect(rows[0].textContent).toBe("Alcona");
   });
 
@@ -103,7 +110,9 @@ describe("SnapMichiganPage", () => {
 
   it("Grand Traverse county link has hyphenated slug", () => {
     renderPage();
-    const link = screen.getByRole("link", { name: /Grand Traverse County data/i });
+    const link = screen.getByRole("link", {
+      name: /Grand Traverse County data/i,
+    });
     expect(link.getAttribute("href")).toBe("/county/grand-traverse");
   });
 
@@ -117,8 +126,12 @@ describe("SnapMichiganPage", () => {
 
   it("methodology section toggles open", () => {
     renderPage();
-    const methodBtn = screen.getByRole("button", { name: /how we source snap data/i });
-    expect(screen.queryByText(/Two-tier freshness model/i)).not.toBeInTheDocument();
+    const methodBtn = screen.getByRole("button", {
+      name: /how we source snap data/i,
+    });
+    expect(
+      screen.queryByText(/Two-tier freshness model/i),
+    ).not.toBeInTheDocument();
     fireEvent.click(methodBtn);
     expect(screen.getByText(/Two-tier freshness model/i)).toBeInTheDocument();
   });
@@ -126,9 +139,9 @@ describe("SnapMichiganPage", () => {
   it("Wayne County has the highest enrollment in default sort", () => {
     renderPage();
     // Default sort is enrollmentTotal desc  -  Wayne should be first link
-    const rows = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("aria-label")?.includes("County data")
-    );
+    const rows = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("aria-label")?.includes("County data"));
     expect(rows[0].textContent).toBe("Wayne");
   });
 
@@ -137,9 +150,9 @@ describe("SnapMichiganPage", () => {
     const pctBtn = screen.getByRole("button", { name: /% of pop/i });
     fireEvent.click(pctBtn);
     // After click (default desc for this column), the first county should have high enrollment rate
-    const rows = screen.getAllByRole("link").filter(
-      (el) => el.getAttribute("aria-label")?.includes("County data")
-    );
+    const rows = screen
+      .getAllByRole("link")
+      .filter((el) => el.getAttribute("aria-label")?.includes("County data"));
     // The first result should be a county with high enrollment relative to population
     expect(rows.length).toBe(83);
   });

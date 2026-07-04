@@ -6,7 +6,7 @@
  *   1. State (Michigan). Retailer benchmarks: MI-wide currently-authorized
  *      retailer count from USDA SNAP Retailer Locator (December 31, 2025)
  *      over MI PEP V2024 population. Enrollment benchmarks: MI monthly
- *      persons + households from USDA FNS state tables (snap-persons-6.xlsx,
+ *      persons + households from USDA FNA state tables (snap-persons-6.xlsx,
  *      snap-households-6.xlsx on fna.usda.gov), newest month with clean-
  *      integer US TOTAL row = February 2026 (Preliminary). Preliminary flag
  *      carried in provenance. All state tiers render MODELED per the
@@ -27,7 +27,7 @@
  *      jurisdictions (50 states + DC); Guam (260 rows) and USVI (88 rows)
  *      are excluded from the numerator to keep numerator geography ==
  *      denominator geography. Enrollment: US TOTAL row from the same USDA
- *      FNS xlsx as MI state, same month = February 2026 (Preliminary),
+ *      FNA xlsx as MI state, same month = February 2026 (Preliminary),
  *      preliminary flag carried. All national tiers render MODELED.
  *
  * All benchmark records carry: value (or null), label (VERIFIED / MODELED
@@ -88,21 +88,21 @@ const PEP_V2024_SOURCE = {
   vintage: "July 1, 2024",
 };
 
-const USDA_FNS_STATE_TABLES = {
-  name: "USDA FNS State Data Tables",
-  url: "https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap",
+const USDA_FNA_STATE_TABLES = {
+  name: "USDA FNA State Data Tables",
+  url: "https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap",
   vintage: "February 2026 (Preliminary)",
 };
 
 const USDA_RETAILER_LOCATOR = {
   name: "USDA SNAP Retailer Locator",
-  url: "https://www.fns.usda.gov/snap/retailer/data",
+  url: "https://www.fna.usda.gov/snap/retailer/data",
   vintage: "December 31, 2025",
 };
 
-const USDA_FNS_NATIONAL_TABLES = {
-  name: "USDA FNS National Data Tables",
-  url: "https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap",
+const USDA_FNA_NATIONAL_TABLES = {
+  name: "USDA FNA National Data Tables",
+  url: "https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap",
   vintage: "February 2026 (Preliminary)",
 };
 
@@ -222,10 +222,10 @@ function buildStateBenchmark(metric: SnapMetricDef): BenchmarkRecord {
         value,
         label: resolveCompositeLabel(["VERIFIED"], { isAggregated: true }),
         state: "present",
-        sources: [USDA_FNS_STATE_TABLES, PEP_V2024_SOURCE],
+        sources: [USDA_FNA_STATE_TABLES, PEP_V2024_SOURCE],
         numerator,
         denominator,
-        formula: `Michigan statewide monthly SNAP persons participating reported by USDA FNS, ${USDA_FNS_STATE_TABLES.vintage}. ${PRELIMINARY_NOTE} Denominator (PEP V2024 statewide population) is shown for context; the rendered benchmark is the raw state total.`,
+        formula: `Michigan statewide monthly SNAP persons participating reported by USDA FNA, ${USDA_FNA_STATE_TABLES.vintage}. ${PRELIMINARY_NOTE} Denominator (PEP V2024 statewide population) is shown for context; the rendered benchmark is the raw state total.`,
       };
     }
     case "enrollmentHouseholds": {
@@ -238,10 +238,10 @@ function buildStateBenchmark(metric: SnapMetricDef): BenchmarkRecord {
         value: numerator,
         label: resolveCompositeLabel(["VERIFIED"], { isAggregated: true }),
         state: "present",
-        sources: [USDA_FNS_STATE_TABLES, PEP_V2024_SOURCE],
+        sources: [USDA_FNA_STATE_TABLES, PEP_V2024_SOURCE],
         numerator,
         denominator,
-        formula: `Michigan statewide monthly SNAP households participating reported by USDA FNS, ${USDA_FNS_STATE_TABLES.vintage}. ${PRELIMINARY_NOTE} Denominator (PEP V2024 statewide population) is shown for context; the rendered benchmark is the raw state total.`,
+        formula: `Michigan statewide monthly SNAP households participating reported by USDA FNA, ${USDA_FNA_STATE_TABLES.vintage}. ${PRELIMINARY_NOTE} Denominator (PEP V2024 statewide population) is shown for context; the rendered benchmark is the raw state total.`,
       };
     }
     case "retailerCount": {
@@ -298,7 +298,7 @@ function buildRegionalBenchmarks(metric: SnapMetricDef): BenchmarkRecord[] {
       value: null,
       label: null,
       state: "not-ingested",
-      sources: [USDA_FNS_STATE_TABLES],
+      sources: [USDA_FNA_STATE_TABLES],
       numerator: null,
       denominator: null,
       formula: `Regional ${metric.label} deliberately not aggregated: ${REGIONAL_ENROLLMENT_NOT_INGESTED_REASON}`,
@@ -375,10 +375,10 @@ function buildNationalBenchmark(metric: SnapMetricDef): BenchmarkRecord {
         value: numerator,
         label: resolveCompositeLabel(["VERIFIED"], { isAggregated: true }),
         state: "present",
-        sources: [USDA_FNS_NATIONAL_TABLES, PEP_V2024_SOURCE],
+        sources: [USDA_FNA_NATIONAL_TABLES, PEP_V2024_SOURCE],
         numerator,
         denominator,
-        formula: `U.S. national monthly SNAP persons participating from the USDA FNS xlsx TOTAL row, ${USDA_FNS_NATIONAL_TABLES.vintage}. ${PRELIMINARY_NOTE} Denominator (PEP V2024 U.S. population, sum of 51 state-level rows in co-est2024-alldata.csv) is shown for context; the rendered benchmark is the raw national total.`,
+        formula: `U.S. national monthly SNAP persons participating from the USDA FNA xlsx TOTAL row, ${USDA_FNA_NATIONAL_TABLES.vintage}. ${PRELIMINARY_NOTE} Denominator (PEP V2024 U.S. population, sum of 51 state-level rows in co-est2024-alldata.csv) is shown for context; the rendered benchmark is the raw national total.`,
       };
     }
     case "enrollmentHouseholds": {
@@ -391,10 +391,10 @@ function buildNationalBenchmark(metric: SnapMetricDef): BenchmarkRecord {
         value: numerator,
         label: resolveCompositeLabel(["VERIFIED"], { isAggregated: true }),
         state: "present",
-        sources: [USDA_FNS_NATIONAL_TABLES, PEP_V2024_SOURCE],
+        sources: [USDA_FNA_NATIONAL_TABLES, PEP_V2024_SOURCE],
         numerator,
         denominator,
-        formula: `U.S. national monthly SNAP households participating from the USDA FNS xlsx TOTAL row, ${USDA_FNS_NATIONAL_TABLES.vintage}. ${PRELIMINARY_NOTE} Denominator (PEP V2024 U.S. population) is shown for context; the rendered benchmark is the raw national total.`,
+        formula: `U.S. national monthly SNAP households participating from the USDA FNA xlsx TOTAL row, ${USDA_FNA_NATIONAL_TABLES.vintage}. ${PRELIMINARY_NOTE} Denominator (PEP V2024 U.S. population) is shown for context; the rendered benchmark is the raw national total.`,
       };
     }
     case "retailerCount": {
