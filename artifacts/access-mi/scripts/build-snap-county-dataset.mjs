@@ -43,6 +43,7 @@ import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import zlib from "node:zlib";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -58,6 +59,9 @@ const SOURCE_PAGE =
 const DRY_RUN = process.argv.includes("--dry-run");
 const fileArgIdx = process.argv.indexOf("--file");
 const LOCAL_FILE = fileArgIdx !== -1 ? process.argv[fileArgIdx + 1] : null;
+
+const manifestEntries = [];
+const BUILD_ID = `build-snap-county-dataset-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 
 // 3-digit FIPS within state 26. Mirror of src/data/census-geographies.ts
 // (MI_COUNTY_FIPS) - that registry is sacrosanct and not importable from a
@@ -320,11 +324,14 @@ async function loadZip() {
     return readFile(abs);
   }
   console.log(`[build-snap-county] fetching ${SOURCE_URL}`);
-  const res = await fetch(SOURCE_URL, {
+  return fetchAndRecord({
+    sourceId: "usda-fns-388a-snap-county",
+    url: SOURCE_URL,
     headers: { "user-agent": "accessmi-data-bot/1.0 (+https://accessmi.org)" },
+    minBytes: 1024,
+    binary: true,
+    entries: manifestEntries,
   });
-  if (!res.ok) throw new Error(`fetch failed: HTTP ${res.status} ${res.statusText}`);
-  return Buffer.from(await res.arrayBuffer());
 }
 
 async function loadPriorCounties() {
@@ -441,6 +448,15 @@ async function main() {
     counties,
   };
 
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[build-snap-county] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (DRY_RUN) {
     console.log(`[build-snap-county] --dry-run OK: ${counties.length} counties, vintage ${vintage}`);
     const wayne = counties.find((c) => c.county === "Wayne");
@@ -474,8 +490,22 @@ export {
 
 // Only run the CLI when invoked directly (`node scripts/...`), not on import.
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
-  main().catch((err) => {
+  main().catch(async (err) => {
     console.error("[build-snap-county] failed:", err.message);
+    if (manifestEntries.length > 0) {
+      try {
+        const manifestPath = await writeManifest({
+          projectRoot,
+          buildId: BUILD_ID,
+          entries: manifestEntries,
+        });
+        console.error(
+          `[build-snap-county] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+        );
+      } catch (manifestErr) {
+        console.error("[build-snap-county] also failed to write archival manifest:", manifestErr.message);
+      }
+    }
     process.exit(1);
   });
 }

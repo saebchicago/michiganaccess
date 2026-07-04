@@ -26,9 +26,12 @@
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
+const manifestEntries = [];
+const BUILD_ID = `refresh-cdc-places-zcta-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 const registryPath = path.join(projectRoot, "src/data/mi-zctas.ts");
 const outJsonPath = path.join(
   projectRoot,
@@ -88,16 +91,19 @@ async function loadMiZctaSet() {
   return keys;
 }
 
-async function fetchJson(url) {
-  const res = await fetch(url, {
+async function fetchJson(url, sourceId) {
+  const text = await fetchAndRecord({
+    sourceId,
+    url,
     headers: { "user-agent": "accessmi-data-refresh", accept: "application/json" },
+    minBytes: 2,
+    entries: manifestEntries,
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
-  return await res.json();
+  return JSON.parse(text);
 }
 
 async function fetchMetadata() {
-  const meta = await fetchJson(SOCRATA_METADATA_URL);
+  const meta = await fetchJson(SOCRATA_METADATA_URL, "cdc-places-zcta-metadata");
   const rowsUpdatedAtIso = new Date(
     Number(meta.rowsUpdatedAt) * 1000,
   ).toISOString();
@@ -134,7 +140,8 @@ async function fetchMiRows(miZctaSet) {
       `${SOCRATA_ROWS_URL}?$select=${encodeURIComponent(select)}` +
       `&$where=${encodeURIComponent(`zcta5 in(${inClause})`)}` +
       `&$limit=${CHUNK * 2}`;
-    const rows = await fetchJson(url);
+    const chunkIndex = Math.floor(i / CHUNK);
+    const rows = await fetchJson(url, `cdc-places-zcta-chunk-${chunkIndex}`);
     for (const r of rows) {
       results.set(r.zcta5, r);
     }
@@ -410,6 +417,15 @@ async function main() {
   const payload = buildJsonPayload(meta, ingestedAt, rows, suppressedZctas);
   const shim = buildTsShim();
 
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[refresh-cdc-places-zcta] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (!APPLY) {
     console.log(
       `\n[refresh-cdc-places-zcta] dry-run. Re-run with --apply to write ${path.relative(projectRoot, outJsonPath)} + ${path.relative(projectRoot, outTsPath)}.`,
@@ -423,7 +439,21 @@ async function main() {
   );
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-cdc-places-zcta] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-cdc-places-zcta] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-cdc-places-zcta] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

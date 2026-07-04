@@ -148,6 +148,8 @@ export async function fetchAndRecord({
   sourceId,
   url,
   headers,
+  method,
+  body,
   vintage,
   minBytes = 1,
   binary = false,
@@ -158,7 +160,7 @@ export async function fetchAndRecord({
       `[ingest-manifest] fetchAndRecord(${sourceId}): 'entries' array is required`,
     );
   }
-  const res = await fetch(url, { headers });
+  const res = await fetch(url, { headers, method, body });
   const status = res.status;
   const contentType = res.headers.get("content-type");
   const payload = binary

@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect, afterEach, vi } from "vitest";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -9,6 +9,7 @@ import {
   createManifestEntry,
   writeManifest,
   summarizeSourceHealth,
+  fetchAndRecord,
   PAYLOAD_CAP_BYTES,
 } from "../../../scripts/lib/ingest-manifest.mjs";
 
@@ -151,6 +152,67 @@ describe("createManifestEntry", () => {
     });
     // Internal field is non-enumerable; JSON.stringify must not see it.
     expect(JSON.stringify(entry)).not.toContain("_payloadBuffer");
+  });
+});
+
+describe("fetchAndRecord", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("defaults to a plain GET with no method/body when neither is passed", async () => {
+    const fetchSpy = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      headers: new Map([["content-type", "application/json"]]),
+      text: async () => JSON.stringify({ ok: true, rows: [1, 2, 3] }),
+    });
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const entries: unknown[] = [];
+    await fetchAndRecord({
+      sourceId: "test-get",
+      url: "https://example.com/data",
+      headers: { accept: "application/json" },
+      minBytes: 1,
+      entries,
+    });
+
+    expect(fetchSpy).toHaveBeenCalledWith("https://example.com/data", {
+      headers: { accept: "application/json" },
+      method: undefined,
+      body: undefined,
+    });
+  });
+
+  it("passes method and body through to fetch for a POST request", async () => {
+    const fetchSpy = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      headers: new Map([["content-type", "application/json"]]),
+      text: async () => JSON.stringify({ status: "REQUEST_SUCCEEDED", data: [] }),
+    });
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const entries: unknown[] = [];
+    const requestBody = JSON.stringify({ seriesid: ["ABC123"] });
+    await fetchAndRecord({
+      sourceId: "test-post",
+      url: "https://example.com/api",
+      headers: { "content-type": "application/json" },
+      method: "POST",
+      body: requestBody,
+      minBytes: 1,
+      entries,
+    });
+
+    expect(fetchSpy).toHaveBeenCalledWith("https://example.com/api", {
+      headers: { "content-type": "application/json" },
+      method: "POST",
+      body: requestBody,
+    });
+    expect(entries).toHaveLength(1);
+    expect((entries[0] as { valid: boolean }).valid).toBe(true);
   });
 });
 
