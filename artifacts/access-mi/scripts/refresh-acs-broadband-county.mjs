@@ -37,6 +37,7 @@
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -80,7 +81,7 @@ async function loadMiCountyFips() {
   return fips;
 }
 
-async function fetchAcs(miFips) {
+async function fetchAcs(miFips, manifestEntries) {
   const params = new URLSearchParams({
     get: `NAME,${ACS_UNIVERSE},${ACS_NUMERATOR},${ACS_UNIVERSE_MOE},${ACS_NUMERATOR_MOE}`,
     for: "county:*",
@@ -88,15 +89,18 @@ async function fetchAcs(miFips) {
     key: CENSUS_API_KEY,
   });
   const url = `${ACS_BASE}/${ACS_VINTAGE}/acs/acs5?${params}`;
-  const res = await fetch(url, {
+  const text = await fetchAndRecord({
+    sourceId: "census-acs5-b28002-broadband-county",
+    url,
     headers: {
       "user-agent": "accessmi-data-refresh",
       accept: "application/json",
     },
-    redirect: "follow",
+    vintage: ACS_WINDOW,
+    minBytes: 500,
+    entries: manifestEntries,
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ACS`);
-  const rows = await res.json();
+  const rows = JSON.parse(text);
   if (!Array.isArray(rows) || rows.length < 2) {
     throw new Error("ACS returned no rows (schema drift or key rejected)");
   }
@@ -308,6 +312,9 @@ export const ACS_BROADBAND_IS_POPULATED = ${populated};
 `;
 }
 
+const manifestEntries = [];
+const BUILD_ID = `refresh-acs-broadband-county-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+
 async function main() {
   const miFips = await loadMiCountyFips();
   console.log(
@@ -326,7 +333,7 @@ async function main() {
     console.log(
       `[refresh-acs-broadband-county] fetching ACS 5-Year ${ACS_WINDOW} B28002 for MI counties...`,
     );
-    const byFips = await fetchAcs(miFips);
+    const byFips = await fetchAcs(miFips, manifestEntries);
     console.log(
       `[refresh-acs-broadband-county] ACS returned rows for ${byFips.size} MI counties`,
     );
@@ -390,9 +397,32 @@ async function main() {
   console.log(
     `\n[refresh-acs-broadband-county] wrote ${path.relative(projectRoot, outJsonPath)} (${records.length} counties, populated=${populated}) and ${path.relative(projectRoot, outTsPath)}.`,
   );
+
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`  archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-acs-broadband-county] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-acs-broadband-county] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-acs-broadband-county] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });
