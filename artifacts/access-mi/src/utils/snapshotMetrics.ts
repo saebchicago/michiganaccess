@@ -9,6 +9,7 @@ import {
   FARS_SOURCE,
   FARS_VINTAGE,
   FARS_SUPPRESSION_THRESHOLD,
+  FARS_YEARS_INCLUDED,
 } from "@/data/county-traffic-fatalities";
 import {
   COUNTY_SNAP_RETAILERS,
@@ -286,6 +287,10 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
   // showing a noisy per-100k figure derived from small numerators.
   const fars = COUNTY_TRAFFIC_FATALITIES[county];
   if (fars) {
+    // sourceId names the ingest-manifest source_id for the most recent
+    // year in the FARS_YEARS_INCLUDED window (see refresh-fars.mjs),
+    // the freshest signal for whether this 5-year figure is up to date.
+    const farsSourceId = `nhtsa-fars-${FARS_YEARS_INCLUDED[FARS_YEARS_INCLUDED.length - 1]}`;
     if (fars.suppressed || fars.ratePer100k === null) {
       metrics.push({
         id: "traffic-fatalities",
@@ -296,6 +301,7 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
         countyName: county,
         source: FARS_SOURCE,
         vintage: `${FARS_VINTAGE} - too few events for a stable rate`,
+        sourceId: farsSourceId,
       });
     } else {
       metrics.push({
@@ -307,6 +313,7 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
         countyName: county,
         source: FARS_SOURCE,
         vintage: `${FARS_VINTAGE} (avg of 5 case yrs)`,
+        sourceId: farsSourceId,
       });
     }
   }
