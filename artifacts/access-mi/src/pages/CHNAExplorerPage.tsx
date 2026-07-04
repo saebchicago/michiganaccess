@@ -31,11 +31,15 @@ import {
   Map,
   Share2,
   Download,
+  FileSpreadsheet,
 } from "lucide-react";
 import PrintButton from "@/components/shared/PrintButton";
 import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 import { CHNATractMap } from "@/components/chna/CHNATractMap";
-import { generateCHNABriefPDF } from "@/utils/generateCHNABrief";
+import {
+  generateCHNABriefPDF,
+  generateCHNABriefCSV,
+} from "@/utils/generateCHNABrief";
 import {
   HFH_SYSTEM,
   CHNA_SYSTEM_OPTIONS,
@@ -718,6 +722,15 @@ function PrioritiesTab() {
             >
               <Download className="h-3.5 w-3.5" aria-hidden="true" />
               {downloading ? "Generating..." : "Download PDF"}
+            </button>
+            <button
+              onClick={() =>
+                generateCHNABriefCSV(selectedPriority, systemData)
+              }
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors"
+            >
+              <FileSpreadsheet className="h-3.5 w-3.5" aria-hidden="true" />
+              Download CSV
             </button>
           </div>
         </div>

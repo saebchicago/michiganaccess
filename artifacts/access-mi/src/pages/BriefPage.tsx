@@ -35,6 +35,7 @@ import {
 import {
   Printer,
   FileDown,
+  FileSpreadsheet,
   TrendingUp,
   TrendingDown,
   Minus,
@@ -61,6 +62,7 @@ import GetToCarePanel from "@/components/brief/GetToCarePanel";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
 import { generateBriefPDF } from "@/utils/generateBriefPDF";
 import type { BriefStat } from "@/utils/generateBriefPDF";
+import { generateBriefCSV } from "@/utils/generateBriefCSV";
 import PopulationSparkline from "@/components/county/PopulationSparkline";
 import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 
@@ -360,6 +362,17 @@ export default function BriefPage() {
     }
   }, [county, profile, score, briefStats, citeText, countySlug, retrievedDate]);
 
+  const handleDownloadCSV = useCallback(() => {
+    if (!county || !profile || score === null) return;
+    generateBriefCSV({
+      countyName: county,
+      countySlug,
+      stats: briefStats,
+      citeText,
+      retrievedDate,
+    });
+  }, [county, profile, score, briefStats, citeText, countySlug, retrievedDate]);
+
   const handleCopy = useCallback(() => {
     if (!citeText) return;
     navigator.clipboard.writeText(citeText).then(() => {
@@ -463,6 +476,15 @@ export default function BriefPage() {
                   >
                     <FileDown className="h-3.5 w-3.5" />
                     {pdfLoading ? "Generating…" : "Download PDF"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="gap-1.5"
+                    onClick={handleDownloadCSV}
+                  >
+                    <FileSpreadsheet className="h-3.5 w-3.5" />
+                    Download CSV
                   </Button>
                   <Button
                     variant="outline"

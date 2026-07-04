@@ -4,6 +4,7 @@ import {
   CHNA_METRICS,
   PRIORITY_DRIVER_MAP,
 } from "@/data/chnaSeed";
+import { buildCsv, triggerDownload } from "@/lib/csv-export";
 
 const DOMAIN_LABELS: Record<CHNADomain, string> = {
   workforce: "Workforce and Economic Stability",
@@ -215,4 +216,85 @@ export async function generateCHNABriefPDF(
   }
 
   doc.save(`chna-brief-${priority.id}-${system.vintage}.pdf`);
+}
+
+/** Pure string-building half of generateCHNABriefCSV, kept separate
+ * from the download trigger so it is testable without a DOM/Blob. Uses
+ * the same priority/domain/driver filter as generateCHNABriefPDF, so
+ * the CSV and PDF for a given priority+system can never drift. */
+export function buildChnaBriefCsvContent(
+  priority: CHNAPriority,
+  system: CHNASystem,
+): string {
+  const date = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  const scope =
+    priority.scope === "enterprise"
+      ? "Enterprise priority"
+      : `Hospital-specific: ${priority.hospitals?.join(", ")}`;
+  const meta = [
+    `accessmi.org - CHNA Priority Brief`,
+    `${system.label} - Community Health Needs Assessment ${system.vintage}`,
+    `Generated: ${date}`,
+    `Priority: ${priority.label} (${scope})`,
+    `Service area: ${system.counties.join(", ")} counties${system.cities ? `; ${system.cities.join(", ")}` : ""}`,
+    `Data integrity: VERIFIED = directly measured from a primary federal or state source. MODELED = derived from verified inputs via an EPA or FEMA analytical model. PROJECTED = forward-looking estimate.`,
+    `Source: ${system.label} CHNA (${system.vintage}), citing BRFSS, MDHHS, CDC, MDEQ.`,
+  ];
+
+  const domains = PRIORITY_DRIVER_MAP[priority.id] ?? [];
+  const rows: Array<{
+    domain: string;
+    label: string;
+    value: string | number;
+    unit: string;
+    geography: string;
+    integrity_label: string;
+    source: string;
+    vintage: string;
+  }> = [];
+  for (const domain of domains) {
+    const driver = CHNA_DRIVERS.find((d) => d.domain === domain);
+    if (!driver) continue;
+    const metrics = CHNA_METRICS.filter(
+      (m) => m.priorityId === priority.id && m.driverId === driver.id,
+    );
+    for (const m of metrics) {
+      rows.push({
+        domain: DOMAIN_LABELS[domain],
+        label: m.label,
+        value: m.value,
+        unit: m.unit,
+        geography: geoLabel(m.geography, m.note ?? null),
+        integrity_label: m.integrityLabel,
+        source: m.source,
+        vintage: m.vintage,
+      });
+    }
+  }
+
+  const headers = [
+    "domain",
+    "label",
+    "value",
+    "unit",
+    "geography",
+    "integrity_label",
+    "source",
+    "vintage",
+  ];
+  return buildCsv(headers, rows, meta);
+}
+
+export function generateCHNABriefCSV(
+  priority: CHNAPriority,
+  system: CHNASystem,
+): void {
+  triggerDownload(
+    buildChnaBriefCsvContent(priority, system),
+    `chna-brief-${priority.id}-${system.vintage}.csv`,
+  );
 }
