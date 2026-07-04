@@ -379,16 +379,6 @@ export const APP_ROUTES: RouteEntry[] = [
     component: pages.DomainDashboardPage,
     label: "Food Security Intelligence",
   },
-  {
-    path: "/energy",
-    component: pages.DomainDashboardPage,
-    label: "Energy Intelligence",
-  },
-  {
-    path: "/legal-aid",
-    component: pages.DomainDashboardPage,
-    label: "Legal Aid Intelligence",
-  },
   { path: "/civic-data", component: pages.CivicDataPage, label: "Civic Data" },
   {
     path: "/civic-data-hub",

@@ -23,12 +23,8 @@ import {
   type CountyProfile,
 } from "@/data/michigan-county-profiles";
 import { COUNTY_CROSS_DOMAIN } from "@/data/cross-domain-indicators";
-import {
-  COUNTY_INTELLIGENCE_KPIS,
-  MICHIGAN_AVERAGES,
-} from "@/data/michigan-intelligence";
 
-type MetricKey = "overall" | "uninsured" | "pcp" | "chronic" | "economic";
+type MetricKey = "uninsured" | "pcp" | "chronic" | "economic";
 type FilterKey = "all" | "urban" | "rural";
 
 interface MetricDef {
@@ -41,13 +37,6 @@ interface MetricDef {
 }
 
 const METRICS: MetricDef[] = [
-  {
-    key: "overall",
-    label: "Overall Health",
-    unit: "years",
-    higherIsBetter: true,
-    extract: (c) => COUNTY_INTELLIGENCE_KPIS[c]?.lifeExpectancy ?? null,
-  },
   {
     key: "uninsured",
     label: "Uninsured Rate",
@@ -96,7 +85,7 @@ const METRICS: MetricDef[] = [
 const MEDAL_COLORS = ["text-yellow-400", "text-gray-300", "text-amber-600"];
 
 export default function CountyLeaderboard() {
-  const [metric, setMetric] = useState<MetricKey>("overall");
+  const [metric, setMetric] = useState<MetricKey>("uninsured");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [expandedCounty, setExpandedCounty] = useState<string | null>(null);
 
@@ -410,8 +399,9 @@ export default function CountyLeaderboard() {
         </div>
 
         <p className="text-[10px] text-muted-foreground text-center">
-          Data: County Health Rankings & Roadmaps, 2025 edition, ACS 2022, BLS
-          2024. Life expectancy from IHME/CHR estimates.
+          Data: County Health Rankings & Roadmaps, 2025 edition (uninsured
+          rate, primary care access, food insecurity); ACS 5-Year 2022
+          (poverty rate).
         </p>
       </CardContent>
     </Card>

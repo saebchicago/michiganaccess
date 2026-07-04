@@ -28,42 +28,9 @@ const CHART_X_STEP = 35;
 const CHART_FALLBACK_PATH = `M${CHART_START_X} ${CHART_BASELINE_Y} L${CHART_START_X + CHART_X_STEP * 4} ${CHART_BASELINE_Y}`;
 
 const PERCENT_METRICS = new Set([
-  "diabetes_prevalence",
   "uninsured_rate",
-  "mental_health_access",
-  "obesity_rate",
   "renter_burden_rate",
-  "substandard_housing_pct",
-  "housing_cost_growth",
-  "vacancy_rate",
   "food_insecurity_rate",
-  "snap_participation",
-  "food_desert_pct",
-  "wic_participation",
-  "school_meal_access",
-  "child_food_insecurity_rate",
-  "energy_burden_rate",
-  "denial_rate",
-  "medicaid_churn_rate",
-  "childcare_subsidy_uptake",
-  "vehicle_availability_rate",
-  "tree_canopy_pct",
-  "drinking_water_compliance",
-  "disability_rate",
-  "employment_rate_disabled",
-  "accessible_housing_pct",
-]);
-
-const CURRENCY_METRICS = new Set([
-  "median_home_price",
-  "snap_benefit_avg",
-  "average_monthly_bill",
-]);
-
-const MINUTES_METRICS = new Set([
-  "benefits_processing_time",
-  "average_commute_minutes",
-  "emergency_response_time",
 ]);
 
 function formatMetricValue(metric: string, value: number | null) {
@@ -73,14 +40,6 @@ function formatMetricValue(metric: string, value: number | null) {
 
   if (PERCENT_METRICS.has(metric)) {
     return `${value.toLocaleString()}%`;
-  }
-
-  if (CURRENCY_METRICS.has(metric)) {
-    return `$${value.toLocaleString()}`;
-  }
-
-  if (MINUTES_METRICS.has(metric)) {
-    return `${value.toLocaleString()} min`;
   }
 
   return value.toLocaleString();

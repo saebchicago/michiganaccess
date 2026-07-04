@@ -233,3 +233,84 @@ counties instead of hand-typed constants.
 `COUNTY_INTELLIGENCE_KPIS` (life expectancy, insurance rate, and others for
 13 counties) appears to be a second instance of the same fabrication pattern
 and should be audited/fixed or removed in a future sprint.
+
+---
+
+## michigan-intelligence.ts fabrication audit and fix (2026-07-04)
+
+Follow-up to the entry above. Full audit found the problem was worse and
+wider than a single dead tab - two **live, nav-linked pages** rendered
+fabricated numbers under false, specific agency citations:
+
+- `/health-equity-atlas`'s County Leaderboard ranked 14 counties by a
+  "life expectancy" field pulled from `COUNTY_INTELLIGENCE_KPIS` (14
+  counties, no source comment at all in the source file), captioned
+  "Life expectancy from IHME/CHR estimates." No CHR or IHME ingest script
+  or dataset exists anywhere in this repo.
+- `/domain-dashboard` (+ `/health`, `/housing`, `/food-security`, `/energy`,
+  `/legal-aid`) rendered 10 "intelligence domains," most metrics computed as
+  `realCrossDomainField * ESTIMATED_..._RATIO` - 40+ uncited multiplier
+  constants (`src/data/michigan-counties-intelligence.ts`, e.g.
+  `ESTIMATED_INCARCERATION_FROM_VIOLENT_CRIME_RATIO = 1.6`), with the
+  source's own comment admitting they are "Placeholder calibration ratios
+  ... until domain-specific source feeds replace these generated values" -
+  an admission never surfaced to users. Each domain instead rendered a
+  specific, unsupported agency citation (e.g. "HUD / County Assessors" for
+  Housing, "MSP / FBI UCR" for Public Safety) under the invented numbers.
+  Separately discovered: 5 of the 10 domain slugs (benefits, transportation,
+  environment, public-safety, disability-access) were **never actually
+  reachable** as a Domain Dashboard view in production - their routes point
+  at unrelated, already-built, real pages (`BenefitsHubPage`,
+  `TransportationPage`, `EnvironmentPage`, `PublicSafetyPage`,
+  `DisabilityAccessPage`), not this dashboard.
+- 4 more components (`CivicIntelligenceHub`, `InsightSummary`,
+  `TrendExplorer`, `HealthDataSnapshot`) plus a fifth
+  (`DataActionBanners`, its own separate uncited 14-county hardcoded
+  dataset) formed an isolated subtree never mounted by any route - dead
+  code, but still shipping fabricated numbers to anyone who read the
+  source.
+
+Fix, in order of what was kept vs. removed:
+
+1. Deleted the entirely-unreachable subtree: `CivicIntelligenceHub.tsx` (+
+   its test), `InsightSummary.tsx`, `TrendExplorer.tsx`,
+   `HealthDataSnapshot.tsx`, `DataActionBanners.tsx`.
+2. `CountyLeaderboard.tsx`: removed the "Overall Health" (life expectancy)
+   ranking metric and the false IHME/CHR citation entirely - no real
+   all-83-county life-expectancy source exists anywhere. Its other metrics
+   (uninsured rate, primary care access, food insecurity, poverty) were
+   already real and are unaffected.
+3. `michigan-counties-intelligence.ts` + `intelligence-domains.ts`: of the
+   5 domain slugs actually routed to `DomainDashboard.tsx` (health, housing,
+   food-security, energy, legal-aid), energy and legal-aid had **zero**
+   fields backed by real data for any county and were removed entirely
+   (including their `/energy` and `/legal-aid` routes). Health, housing,
+   and food-security were stripped to only the fields that are a direct
+   pass-through of an already-real, already-ingested value - no invented
+   multiplier, no fabricated KPI:
+   - Health: `uninsured_rate`, `primary_care_access` (from `COUNTY_PROFILES`
+     - County Health Rankings 2025). Dropped: `life_expectancy`,
+     `mental_health_access` (fabricated KPIs), `diabetes_prevalence`,
+     `opioid_crisis_deaths`, `maternal_mortality`, `obesity_rate`,
+     `cancer_mortality` (all `ESTIMATED_*_RATIO`-derived).
+   - Housing: `renter_burden_rate` (from `COUNTY_CROSS_DOMAIN` directly).
+     Dropped the other 7 (all ratio/arbitrary-formula-derived).
+   - Food Security: `food_insecurity_rate` (from `COUNTY_PROFILES`). Dropped
+     the other 7.
+   - The 5 domain slugs that were never actually reachable (benefits,
+     transportation, environment, public-safety, disability-access) were
+     removed from the scaffold entirely rather than fixed in place, since
+     fixing data nobody can ever see serves no purpose.
+   - All 40+ `ESTIMATED_*_RATIO` constants deleted.
+4. `michigan-intelligence.ts` itself (the file `COUNTY_INTELLIGENCE_KPIS`,
+   `MICHIGAN_AVERAGES`, `MICHIGAN_INTELLIGENCE_SIGNALS`,
+   `MICHIGAN_INTELLIGENCE_FEED`, `TREND_EXPLORER_SERIES`, and an
+   entirely-hardcoded, non-derived 3-county diabetes "watchlist" all lived)
+   had no remaining consumer after steps 1-3 and was deleted outright.
+
+Net effect: the Domain Dashboard is now 3 domains (health, housing,
+food-security) with 1-2 real metrics each, all 83 counties honestly
+partitioned into "has a real value" (7 priority counties) vs. "Data
+pending" (the other 76) - the same pattern already used elsewhere in this
+codebase, rather than a state-average fallback silently presented as a
+county-specific figure (the previous `getCountyIntelligence()` behavior).
