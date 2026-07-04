@@ -3,8 +3,11 @@ import { INTELLIGENCE_DOMAINS } from '@/data/intelligence-domains';
 import { MICHIGAN_COUNTY_PROFILES, MI_AVERAGE } from '@/data/michigan-county-profiles';
 
 describe('Intelligence Domains', () => {
-  it('has exactly 10 domains', () => {
-    expect(INTELLIGENCE_DOMAINS).toHaveLength(10);
+  // Reduced from 10 to 3 - see FIXLOG.md. The other 7 either had no field
+  // traceable to a real source, or (for 5 of them) were never actually
+  // reachable as a Domain Dashboard route in the first place.
+  it('has exactly 3 domains', () => {
+    expect(INTELLIGENCE_DOMAINS).toHaveLength(3);
   });
 
   it('every domain has required fields', () => {
