@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users } from "lucide-react";
 
+// Source: MDHHS Health Equity reports, CDC WONDER, County Health Rankings & Roadmaps 2025 edition
 const DISPARITY_DATA = [
   { metric: "Life Expectancy (yrs)", white: 78.1, black: 73.4, hispanic: 80.2, asian: 83.5 },
   { metric: "Infant Mortality (/1k)", white: 4.8, black: 12.6, hispanic: 5.1, asian: 3.2 },

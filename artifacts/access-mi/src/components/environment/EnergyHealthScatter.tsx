@@ -9,7 +9,7 @@ import {
 } from "recharts";
 
 // County-level data: energy burden (%) × diabetes prevalence (%)
-// Sources: DOE LEAD Tool (energy burden), CDC PLACES (diabetes), Census (population)
+// Source: DOE LEAD Tool (energy burden), CDC PLACES (diabetes), Census (population)
 const COUNTY_DATA = [
   { county: "Wayne", energyBurden: 8.1, diabetes: 14.2, pop: 1793561, svi: 0.78 },
   { county: "Oakland", energyBurden: 4.2, diabetes: 9.8, pop: 1274395, svi: 0.32 },

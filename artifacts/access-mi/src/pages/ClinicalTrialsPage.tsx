@@ -58,6 +58,7 @@ interface Trial {
   participants: number;
 }
 
+// Source: ClinicalTrials.gov (U.S. National Library of Medicine)
 const trials: Trial[] = [
   {
     id: "1",

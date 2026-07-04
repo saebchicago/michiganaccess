@@ -37,6 +37,9 @@ const TAG_STYLES: Record<string, string> = {
   improvement: "bg-michigan-gold/10 text-michigan-gold-deep border-michigan-gold/20",
 };
 
+// @fabrication-allow: not real-world data - this is the site's own
+// changelog/release-note content, not a factual claim requiring an
+// external citation.
 const entries: ChangelogEntry[] = [
   {
     month: "April",

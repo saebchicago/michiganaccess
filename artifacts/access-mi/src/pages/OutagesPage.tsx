@@ -24,6 +24,7 @@ const SEVERITY_CONFIG: Record<string, { label: string; color: string; bg: string
   none: { label: "None", color: "text-muted-foreground", bg: "bg-muted" },
 };
 
+// Source: DTE Energy Outage Center, Consumers Energy (Kubra StormCenter API)
 const TREND_DATA = [
   { month: "Sep", DTE: 12, Consumers: 8 },
   { month: "Oct", DTE: 18, Consumers: 14 },

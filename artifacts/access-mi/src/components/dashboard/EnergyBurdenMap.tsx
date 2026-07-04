@@ -115,6 +115,7 @@ const METRICS = [
 ];
 
 // EIA SEDS time-series data - Michigan vs National (residential electricity ¢/kWh & per-capita BTU)
+// Source: EIA State Energy Data System (SEDS), 2010-2023
 const EIA_SEDS_PRICE: { year: number; michigan: number; national: number }[] = [
   { year: 2010, michigan: 11.9, national: 11.5 },
   { year: 2012, michigan: 13.5, national: 11.9 },
@@ -128,6 +129,7 @@ const EIA_SEDS_PRICE: { year: number; michigan: number; national: number }[] = [
   { year: 2023, michigan: 19.2, national: 15.4 },
 ];
 
+// Source: EIA State Energy Data System (SEDS), 2010-2023
 const EIA_SEDS_CONSUMPTION: { year: number; michigan: number; national: number }[] = [
   { year: 2010, michigan: 238, national: 312 },
   { year: 2012, michigan: 230, national: 298 },

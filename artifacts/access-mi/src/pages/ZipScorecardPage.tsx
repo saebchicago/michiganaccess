@@ -73,6 +73,9 @@ import { getFoodAccessByCounty } from "@/hooks/useFoodAccess";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import { useZIPDemographics } from "@/hooks/useCensusDemographics";
+import { getReliability } from "@/lib/reliability";
+import MoEBadge from "@/components/shared/MoEBadge";
+import { SuppressedEstimate, MoeUnavailableNote } from "@/components/shared/ReliabilityNote";
 import { lazy, Suspense } from "react";
 const ZIPNarratives = lazy(() => import("@/components/zip/ZIPNarratives"));
 const CHNAExport = lazy(() => import("@/components/zip/CHNAExport"));
@@ -259,30 +262,52 @@ function EconCard({
   benchmark,
   format,
   source,
+  estimate,
+  moe,
 }: {
   label: string;
   value: string | number;
   benchmark?: string;
   format?: string;
   source: string;
+  /** ACS estimate/moe pair, same unit as each other, for reliability
+   * classification. Optional - most EconCard callers are non-ACS sources
+   * with no MOE concept. */
+  estimate?: number | null;
+  moe?: number | null;
 }) {
+  const reliability =
+    estimate !== undefined ? getReliability(estimate, moe ?? null) : null;
+  const suppressed = reliability?.status === "suppressed";
   return (
     <Card>
       <CardContent className="py-4 space-y-1">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-          {label}
-        </p>
-        <p className="text-xl font-bold text-foreground tabular-nums">
-          {typeof value === "number"
-            ? format === "$"
-              ? `$${value.toLocaleString()}`
-              : `${value}%`
-            : value}
-        </p>
-        {benchmark && (
-          <p className="text-[10px] text-muted-foreground">{benchmark}</p>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+            {label}
+          </p>
+          {reliability && <MoEBadge estimate={estimate ?? null} moe={moe ?? null} />}
+        </div>
+        {suppressed ? (
+          <SuppressedEstimate source={source} />
+        ) : (
+          <>
+            <div className="flex items-baseline gap-1.5">
+              <p className="text-xl font-bold text-foreground tabular-nums">
+                {typeof value === "number"
+                  ? format === "$"
+                    ? `$${value.toLocaleString()}`
+                    : `${value}%`
+                  : value}
+              </p>
+              {reliability?.status === "unavailable" && <MoeUnavailableNote />}
+            </div>
+            {benchmark && (
+              <p className="text-[10px] text-muted-foreground">{benchmark}</p>
+            )}
+            <p className="text-[9px] text-muted-foreground/60">{source}</p>
+          </>
         )}
-        <p className="text-[9px] text-muted-foreground/60">{source}</p>
       </CardContent>
     </Card>
   );
@@ -1601,25 +1626,41 @@ export default function ZipScorecardPage() {
                         White {demographics.white_alone_pct.toFixed(1)}%{" "}
                         <span className="text-muted-foreground">
                           (MI: {demographics.miStateWhitePct}%)
-                        </span>
+                        </span>{" "}
+                        <MoEBadge
+                          estimate={(demographics.white_alone_pct / 100) * demographics.totalPop}
+                          moe={demographics.moe["B02001_002E"] ?? null}
+                        />
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#f59e0b] mr-1" />
                         Black {demographics.black_alone_pct.toFixed(1)}%{" "}
                         <span className="text-muted-foreground">
                           (MI: {demographics.miStateBlackPct}%)
-                        </span>
+                        </span>{" "}
+                        <MoEBadge
+                          estimate={(demographics.black_alone_pct / 100) * demographics.totalPop}
+                          moe={demographics.moe["B02001_003E"] ?? null}
+                        />
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#10b981] mr-1" />
                         Hispanic {demographics.hispanic_pct.toFixed(1)}%{" "}
                         <span className="text-muted-foreground">
                           (MI: {demographics.miStateHispanicPct}%)
-                        </span>
+                        </span>{" "}
+                        <MoEBadge
+                          estimate={(demographics.hispanic_pct / 100) * demographics.totalPop}
+                          moe={demographics.moe["B03003_003E"] ?? null}
+                        />
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#8b5cf6] mr-1" />
-                        Asian {demographics.asian_alone_pct.toFixed(1)}%
+                        Asian {demographics.asian_alone_pct.toFixed(1)}%{" "}
+                        <MoEBadge
+                          estimate={(demographics.asian_alone_pct / 100) * demographics.totalPop}
+                          moe={demographics.moe["B02001_005E"] ?? null}
+                        />
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#94a3b8] mr-1" />

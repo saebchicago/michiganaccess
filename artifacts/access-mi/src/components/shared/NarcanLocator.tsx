@@ -59,6 +59,7 @@ interface NarcanLocation {
 }
 
 // Michigan standing order naloxone distribution points - curated dataset
+// Source: Michigan DHHS Standing Order, county health departments, pharmacy chains
 const NARCAN_LOCATIONS: NarcanLocation[] = [
   {
     name: "CVS Pharmacy - Detroit",

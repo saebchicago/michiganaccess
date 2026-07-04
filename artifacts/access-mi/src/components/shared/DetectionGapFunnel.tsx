@@ -44,6 +44,9 @@ const FUNNEL_CURRENT = [
   },
 ];
 
+// Source: HMA March 2025 baseline (see FUNNEL_CURRENT above) with an
+// "Access Michigan" scenario applied to the referral/resolution stages;
+// those two rows are explicitly labeled "Projected" per-row below.
 const FUNNEL_WITH_AM = [
   {
     stage: "Medicaid MCO Beneficiaries",

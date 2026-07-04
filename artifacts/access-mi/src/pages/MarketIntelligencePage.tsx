@@ -45,6 +45,7 @@ interface Region {
   systems: string[];
 }
 
+// Source: CDC SVI 2022, County Health Rankings 2025, HRSA HPSA, Access Michigan facility database
 const REGIONS: Region[] = [
   {
     id: "southeast",

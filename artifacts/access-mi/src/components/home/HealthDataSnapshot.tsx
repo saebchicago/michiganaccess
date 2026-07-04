@@ -96,6 +96,7 @@ const fadeUp = {
   }),
 };
 
+// Source: CDC BRFSS
 const chronicData = [
   { name: "Heart Disease", mi: 11.2, us: 10.6 },
   { name: "Diabetes", mi: 11.8, us: 10.5 },
@@ -104,6 +105,7 @@ const chronicData = [
   { name: "Hypertension", mi: 34.5, us: 32.1 },
 ];
 
+// Source: CMS, MDHHS
 const accessTrends = [
   { yr: "'20", insured: 93.2, telehealth: 12 },
   { yr: "'21", insured: 93.8, telehealth: 38 },
