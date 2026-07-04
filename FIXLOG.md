@@ -195,3 +195,41 @@ deliberate workspace override). Each needs a major-version bump of an
 expo-/build-pinned transitive dependency that would risk breaking those
 toolchains; none reach the deployed web bundle or the running server, so they
 are tracked here rather than force-overridden.
+
+---
+
+## CHNA Explorer "County Compare" tab: real-data rebuild (2026-07-04)
+
+`CHNAExplorerPage.tsx`'s County Compare tab carried a hardcoded 12-county
+array (`COUNTIES`) attributed to a blanket source comment ("CDC SVI 2022,
+County Health Rankings 2025, CMS Hospital Compare, HRSA HPSA, CDC PLACES and
+BRFSS, MDHHS"). An audit for this fix found:
+
+- 5 of 14 fields (health rank #1-83, SVI score, life expectancy, depression
+  rate, child poverty rate) have **no real source anywhere in the codebase**,
+  for any county. A second, independent, unsourced 13-county dataset
+  (`michigan-intelligence.ts`'s `COUNTY_INTELLIGENCE_KPIS`) carries different
+  life-expectancy/insurance numbers for the same counties, confirming both
+  were invented rather than transcribed from a real release.
+- The `facilities` field used numbers (e.g. Wayne=347) inconsistent with the
+  app's own real facility dataset (`verifiedHealthFacilities.ts`, statewide
+  total 589) by roughly an order of magnitude.
+- `energyBurden` has real data (ACEEE LEAD Tool 2023) for only 7 of 83
+  counties.
+
+Fix: rebuilt the tab on `COUNTIES: CountyCompareRecord[]`, computed at module
+load from real, already-ingested all-83-county sources - `COUNTY_PROFILES`
+(Census PEP Vintage 2024 / County Health Rankings 2025) for population,
+insured rate, and PCP ratio; `cdc-places-county.ts` (CDC PLACES 2025,
+MODELED) for obesity and diabetes; `verifiedHealthFacilities.ts` (CMS +
+HRSA) for facility counts. The 5 unbackable fields were dropped rather than
+shown with invented numbers or a fabricated "no data" placeholder for a
+metric that was never real to begin with. `energyBurden` was dropped from
+this tab (real for only 7/83 counties - not enough for an 83-county
+comparison table). `MI_AVG` is now a real unweighted mean over all 83
+counties instead of hand-typed constants.
+
+**Follow-up not addressed here:** `michigan-intelligence.ts`'s
+`COUNTY_INTELLIGENCE_KPIS` (life expectancy, insurance rate, and others for
+13 counties) appears to be a second instance of the same fabrication pattern
+and should be audited/fixed or removed in a future sprint.
