@@ -156,7 +156,6 @@ const pages = {
   DetectionGapPage: lazy(() => import("@/pages/DetectionGapPage")),
   EquityScorecardPage: lazy(() => import("@/pages/EquityScorecardPage")),
   MarketIntelligencePage: lazy(() => import("@/pages/MarketIntelligencePage")),
-  QualityComparisonPage: lazy(() => import("@/pages/QualityComparisonPage")),
   EnergyBurdenPage: lazy(() => import("@/pages/EnergyBurdenPage")),
   ImpactDashboardPage: lazy(() => import("@/pages/ImpactDashboardPage")),
   DomainDashboardPage: lazy(() => import("@/pages/DomainDashboard")),
@@ -701,11 +700,6 @@ export const APP_ROUTES: RouteEntry[] = [
   },
   { path: "/portfolio", component: pages.PortfolioPage, label: "Portfolio" },
   {
-    path: "/quality/compare",
-    component: pages.QualityComparisonPage,
-    label: "Quality Comparison",
-  },
-  {
     path: "/energy-burden",
     component: pages.EnergyBurdenPage,
     label: "Energy Burden",
@@ -986,11 +980,6 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Health Conditions Pathways", href: "/conditions" },
       { label: "Clinical Trials", href: "/clinical-trials" },
       { label: "Quality Ratings", href: "/quality" },
-      {
-        label: "Quality Comparison",
-        href: "/quality/compare",
-        badge: "Interactive",
-      },
       { label: "Cost Transparency", href: "/costs" },
       { label: "Prevention & Wellness", href: "/wellness" },
       { label: "Health News", href: "/news" },

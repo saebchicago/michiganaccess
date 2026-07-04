@@ -58,6 +58,7 @@ interface PipelineProject {
   status: string;
 }
 
+// Source: MPSC Case U-21990, DTE IRP filings, Union of Concerned Scientists (UCS), Michigan Legislature (PA 207-208 of 2024), local township meeting minutes, published project announcements
 const pipelineProjects: PipelineProject[] = [
   {
     project: "Stargate",
@@ -145,6 +146,7 @@ const tbdProjectCount = pipelineProjects.filter(
 ).length;
 const investmentDisplay = `$${disclosedInvestmentBillions.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2 })} billion`;
 
+// Source: MPSC Case U-21990, DTE IRP filings, UCS, Michigan Legislature (PA 207-208 of 2024), published project announcements (mirrors pipelineProjects above)
 const capacityChart = [
   { name: "Stargate", gw: 1.4, fill: "hsl(209, 86%, 31%)" },
   { name: "Cannoli", gw: 1.0, fill: "hsl(180, 100%, 32%)" },

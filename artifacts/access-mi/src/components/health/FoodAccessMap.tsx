@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+// Source: USDA Economic Research Service, Food Access Research Atlas. SNAP rates from ACS 2023.
 const FOOD_DESERT_DATA = [
   { county: "Wayne", tracts: 185, pctPop: 38.2, snapRate: 32.1 },
   { county: "Genesee", tracts: 48, pctPop: 35.8, snapRate: 28.4 },

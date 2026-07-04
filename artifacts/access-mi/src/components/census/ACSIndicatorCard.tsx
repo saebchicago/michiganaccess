@@ -9,6 +9,8 @@ import { useCensusACS, getCensusValue, getCensusMOE } from "@/hooks/useCensusACS
 import { getCountyFips } from "@/data/census-geographies";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { getReliability } from "@/lib/reliability";
+import { SuppressedEstimate, MoeUnavailableNote } from "@/components/shared/ReliabilityNote";
 
 interface Props {
   countyName: string;
@@ -103,6 +105,8 @@ export default function ACSIndicatorCard({
   const isBetter = diff !== null ? (direction === "lower-is-better" ? diff < 0 : diff > 0) : null;
   const isNeutral = diff !== null ? Math.abs(diff / (stateVal || 1)) < 0.05 : true;
   const soWhat = getSoWhat(label, numericVal, stateVal, unit);
+  const reliability = getReliability(rawValue, moe);
+  const suppressed = reliability.status === "suppressed";
 
   return (
     <Card className="hover:shadow-sm transition-shadow">
@@ -120,13 +124,18 @@ export default function ACSIndicatorCard({
             </Tooltip>
           )}
         </div>
-        <div className="flex items-baseline gap-2">
-          <span className="text-xl font-bold text-foreground">{displayValue}</span>
-          {moe !== null && moe > 0 && (
-            <span className="text-[10px] text-muted-foreground">±{moe.toLocaleString()}</span>
-          )}
-        </div>
-        {diff !== null && (
+        {suppressed ? (
+          <SuppressedEstimate />
+        ) : (
+          <div className="flex items-baseline gap-2">
+            <span className="text-xl font-bold text-foreground">{displayValue}</span>
+            {moe !== null && moe > 0 && (
+              <span className="text-[10px] text-muted-foreground">±{moe.toLocaleString()}</span>
+            )}
+            {reliability.status === "unavailable" && <MoeUnavailableNote />}
+          </div>
+        )}
+        {!suppressed && diff !== null && (
           <div className="flex items-center gap-1.5">
             {isNeutral ? (
               <Badge variant="secondary" className="text-[10px] gap-0.5 h-5">

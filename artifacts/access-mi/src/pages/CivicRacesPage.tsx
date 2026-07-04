@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { MICHIGAN_RACE_DATA, STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
 
+// Source: Michigan 2024, estimated by office type - Ballotpedia / Michigan SOS
 const OFFICE_TYPE_DATA = [
   { office: "Constable", pct: 97, fill: "#dc2626" },
   { office: "Judge (local)", pct: 89, fill: "#dc2626" },

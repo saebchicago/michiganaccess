@@ -94,6 +94,7 @@ const COLORS = [
 ];
 
 // Chronic disease prevalence
+// Source: CDC WONDER, BRFSS, CMS Hospital Compare, MDHHS, HRSA (see page DataProvenance footer)
 const chronicData = [
   {
     condition: "Heart Disease",
@@ -114,6 +115,7 @@ const chronicData = [
 ];
 
 // Healthcare access trends
+// Source: CDC WONDER, BRFSS, CMS Hospital Compare, MDHHS, HRSA (see page DataProvenance footer)
 const accessTrends = [
   { year: "2020", insured: 93.2, pcpRatio: 78, erVisits: 460, telehealth: 12 },
   { year: "2021", insured: 93.8, pcpRatio: 79, erVisits: 425, telehealth: 38 },
@@ -124,6 +126,7 @@ const accessTrends = [
 ];
 
 // Health equity indicators
+// Source: CDC WONDER, BRFSS, CMS Hospital Compare, MDHHS, HRSA (see page DataProvenance footer)
 const equityData = [
   {
     metric: "Life Expectancy",
@@ -156,6 +159,7 @@ const equityData = [
 ];
 
 // County comparison data
+// Source: CDC WONDER, BRFSS, CMS Hospital Compare, MDHHS, HRSA (see page DataProvenance footer)
 const counties = [
   {
     name: "Washtenaw",
@@ -215,6 +219,7 @@ const counties = [
   },
 ];
 
+// Source: CDC WONDER, BRFSS, CMS Hospital Compare, MDHHS, HRSA (see page DataProvenance footer)
 const leadingCauses = [
   { cause: "Heart Disease", deaths: 25800, pct: 24.1 },
   { cause: "Cancer", deaths: 21200, pct: 19.8 },

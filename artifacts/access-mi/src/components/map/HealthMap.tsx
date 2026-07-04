@@ -510,6 +510,7 @@ export default function HealthMap({
     }
 
     // School Zone Safety (Michigan school zones)
+    // Source: Michigan school zone enforcement data
     if (showBusPatrol) {
       const lg = L.layerGroup();
       const schoolZones = [
@@ -616,6 +617,7 @@ export default function HealthMap({
     }
 
     // Pedestrian Risk Zones (MTCF data)
+    // Source: Michigan Traffic Crash Facts (MTCF)
     if (showPedestrian) {
       const lg = L.layerGroup();
       const hotspots = [

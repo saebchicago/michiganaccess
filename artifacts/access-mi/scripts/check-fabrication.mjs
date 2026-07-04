@@ -214,6 +214,128 @@ function checkSnapshotMetricProvenance() {
 
 checkSnapshotMetricProvenance();
 
+// ── Hardcoded numeric array guard ─────────────────────────────────────────
+// Page/component files sometimes ship a hand-typed `const NAME = [...]`
+// array of per-place or per-entity numbers (health scores, benchmarks,
+// county breakdowns) with no source attribution - a fabrication vector
+// that has ridden squash merges before, since check-fabrication previously
+// only scanned src/utils/snapshotMetrics.ts. This guard flags any array
+// literal in src/pages/**/*.tsx or src/components/**/*.tsx with
+// ARRAY_SIZE_THRESHOLD or more entries where at least one entry has a
+// bare numeric literal field, UNLESS the declaration is preceded by a
+// recognized provenance comment:
+//   // Source: <name or URL>            - real data, cites where it's from
+//   // @fabrication-allow: <reason>     - not real-world data (illustrative
+//                                         example, config, mislabeled by
+//                                         this heuristic) - explain why
+//
+// This is a heuristic scanner (bracket-matching + regex), same style as
+// checkSnapshotMetricProvenance above - not a full parser. False negatives
+// are possible; false positives should be resolved by adding one of the
+// two comments above, not by weakening this function.
+const ARRAY_SIZE_THRESHOLD = 5;
+const PROVENANCE_COMMENT = /\/\/\s*(Source:|@fabrication-allow:)/;
+
+function findMatchingBracket(text, openIdx, openCh, closeCh) {
+  let depth = 0;
+  let inString = null;
+  for (let j = openIdx; j < text.length; j++) {
+    const ch = text[j];
+    const prev = j > 0 ? text[j - 1] : "";
+    if (inString) {
+      if (ch === inString && prev !== "\\") inString = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'" || ch === "`") {
+      inString = ch;
+      continue;
+    }
+    if (ch === openCh) depth++;
+    else if (ch === closeCh) {
+      depth--;
+      if (depth === 0) return j;
+    }
+  }
+  return -1;
+}
+
+/** Count top-level (nesting-depth-0) entries in an array body, splitting
+ * on top-level commas and respecting strings/nested brackets. */
+function countTopLevelEntries(body) {
+  if (body.trim() === "") return 0;
+  let count = 1;
+  let nest = 0;
+  let inStr = null;
+  for (let k = 0; k < body.length; k++) {
+    const ch = body[k];
+    const prev = k > 0 ? body[k - 1] : "";
+    if (inStr) {
+      if (ch === inStr && prev !== "\\") inStr = null;
+    } else if (ch === '"' || ch === "'" || ch === "`") {
+      inStr = ch;
+    } else if (ch === "(" || ch === "[" || ch === "{") nest++;
+    else if (ch === ")" || ch === "]" || ch === "}") nest--;
+    else if (ch === "," && nest === 0) count++;
+  }
+  return count;
+}
+
+const NUMERIC_FIELD = /:\s*-?\d+(\.\d+)?\s*[,\n}]/;
+const ARRAY_DECL = /\bconst\s+[A-Za-z_$][\w$]*\s*(?::\s*[^=]+)?=\s*\[/g;
+
+function checkHardcodedArrayProvenance() {
+  for (const filePath of allFiles) {
+    const rel = relative(ROOT, filePath);
+    if (!/^src[\\/](pages|components)[\\/]/.test(rel)) continue;
+    if (!/\.tsx$/.test(rel)) continue;
+    if (shouldSkip(filePath)) continue;
+
+    let content;
+    try {
+      content = readFileSync(filePath, "utf8");
+    } catch {
+      continue;
+    }
+
+    ARRAY_DECL.lastIndex = 0;
+    let match;
+    while ((match = ARRAY_DECL.exec(content)) !== null) {
+      // The regex is anchored to end on the array's own opening "[", so
+      // it is the last character of the match - NOT content.indexOf("[",
+      // match.index), which would find a type annotation's own bracket
+      // first for typed declarations like `const X: Foo[] = [...]`.
+      const openBracket = match.index + match[0].length - 1;
+      const closeBracket = findMatchingBracket(content, openBracket, "[", "]");
+      if (closeBracket < 0) continue;
+
+      const body = content.slice(openBracket + 1, closeBracket);
+      const entryCount = countTopLevelEntries(body);
+      if (entryCount < ARRAY_SIZE_THRESHOLD) continue;
+      if (!NUMERIC_FIELD.test(body)) continue;
+
+      // Structured per-entry provenance (a `source:` or `sourceNote:`
+      // field inside the array's own objects, rendered on-page) is
+      // stronger evidence than a single top comment - same precedent as
+      // checkSnapshotMetricProvenance's `source:` field requirement above.
+      if (/\b(source|sourceNote)\s*:/.test(body)) continue;
+
+      const before = content.slice(0, match.index);
+      const lineNum = before.split("\n").length;
+      // Look back far enough to cover a multi-line comment block, not
+      // just a single-line one immediately above the declaration.
+      const precedingLines = before.split("\n").slice(-9, -1).join("\n");
+      if (PROVENANCE_COMMENT.test(precedingLines)) continue;
+
+      console.error(
+        `[check-fabrication] FAIL ${rel}:${lineNum} — hardcoded numeric array (${entryCount} entries) with no "// Source:" or "// @fabrication-allow:" comment above it.`,
+      );
+      failures++;
+    }
+  }
+}
+
+checkHardcodedArrayProvenance();
+
 if (failures > 0) {
   console.error(`[check-fabrication] ${failures} violation(s) found. Fix before building.`);
   process.exit(1);

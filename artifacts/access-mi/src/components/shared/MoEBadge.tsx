@@ -1,5 +1,9 @@
 /**
- * MoEBadge - Shows a data quality warning when margin of error exceeds 20% of the estimate.
+ * MoEBadge - Shows a data quality warning when the MOE-to-estimate ratio
+ * exceeds the "flagged" reliability threshold (see src/lib/reliability.ts,
+ * the single source of truth for the ratio math and thresholds - this
+ * badge renders the "flagged" tier; the ReliableValue wrapper in the same
+ * lib directory handles the "suppressed" tier by hiding the value).
  */
 import { AlertTriangle } from "lucide-react";
 import {
@@ -8,6 +12,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getReliability } from "@/lib/reliability";
 
 interface MoEBadgeProps {
   estimate: number | null;
@@ -15,19 +20,23 @@ interface MoEBadgeProps {
   className?: string;
 }
 
-/** Returns MoE as a percentage of the estimate, or null if insufficient data */
+/** Returns MoE as a percentage of the estimate, or null if insufficient data.
+ * @deprecated use getReliability from @/lib/reliability, which also
+ * distinguishes "unavailable" (missing MOE) from "reliable" (present and
+ * low). Kept for existing call sites during migration. */
 export function getMoEPercent(estimate: number | null, moe: number | null): number | null {
   if (estimate === null || moe === null || estimate === 0) return null;
   return Math.abs(moe / estimate) * 100;
 }
 
 export default function MoEBadge({ estimate, moe, className = "" }: MoEBadgeProps) {
-  const pct = getMoEPercent(estimate, moe);
-  if (pct === null || pct <= 20) return null;
+  const { status, ratio } = getReliability(estimate, moe);
+  if (status !== "flagged" && status !== "suppressed") return null;
+  const pct = ratio !== null ? ratio * 100 : null;
 
-  const level = pct > 50 ? "Unreliable" : "High Margin of Error";
+  const level = status === "suppressed" ? "Unreliable" : "High Margin of Error";
   const color =
-    pct > 50
+    status === "suppressed"
       ? "bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border-red-200 dark:border-red-800"
       : "bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800";
 
@@ -43,11 +52,13 @@ export default function MoEBadge({ estimate, moe, className = "" }: MoEBadgeProp
           </span>
         </TooltipTrigger>
         <TooltipContent className="max-w-[240px] text-xs">
-          <p className="font-medium mb-1">Margin of Error: ±{Math.round(pct)}%</p>
+          <p className="font-medium mb-1">
+            {pct !== null ? `Margin of Error: ±${Math.round(pct)}%` : "Margin of Error unavailable"}
+          </p>
           <p className="text-muted-foreground">
-            {pct > 50
+            {status === "suppressed"
               ? "This estimate is statistically unreliable due to small sample size. Use with extreme caution."
-              : "This estimate has a high margin of error (>20%). Consider county-level data for more reliable figures."}
+              : "This estimate has a high margin of error (>30%). Consider county-level data for more reliable figures."}
           </p>
         </TooltipContent>
       </Tooltip>

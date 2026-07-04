@@ -31,6 +31,7 @@ interface CountyEnergy {
   medianCost: number;
 }
 
+// Source: ACEEE LEAD Tool, U.S. Department of Energy, EIA RECS
 const DATA: CountyEnergy[] = [
   { county: "Wayne", burden: 8.2, severity: "High", medianCost: 2450 },
   { county: "Genesee", burden: 9.1, severity: "High", medianCost: 2280 },

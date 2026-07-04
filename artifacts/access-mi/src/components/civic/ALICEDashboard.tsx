@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
+// Source: United for ALICE, 2023 data
 const ALICE_COUNTIES = [
   { county: "Lake", aliceThreshold: 64, poverty: 28.6, alice: 35.4 },
   { county: "Oscoda", aliceThreshold: 61, poverty: 24.8, alice: 36.2 },
@@ -29,6 +30,7 @@ const ALICE_COUNTIES = [
   { county: "Oakland", aliceThreshold: 28, poverty: 8.1, alice: 19.9 },
 ];
 
+// Source: United for ALICE, 2023 data (Survival Budget)
 const BUDGET = [
   { category: "Housing", monthly: 828, pct: 27 },
   { category: "Childcare", monthly: 726, pct: 24 },

@@ -35,6 +35,7 @@ const fadeUp = {
 // machine-readable files each hospital is required to publish; the page now
 // directs visitors to the official CMS search instead.
 
+// Source: CMS Hospital Price Transparency, GoodRx, Cost Plus Drugs
 const prescriptions = [
   {
     name: "Metformin 500mg (30-day)",

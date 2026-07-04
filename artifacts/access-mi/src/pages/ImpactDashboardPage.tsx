@@ -40,6 +40,11 @@ const fade = {
   }),
 };
 
+// @fabrication-allow: not external data - values are imported from the
+// governed src/config/platformConstants.ts (COUNTIES_COVERED,
+// RESOURCE_COUNT, DATA_SOURCE_COUNT, LANGUAGES_SUPPORTED); the two bare
+// 0 literals ("Personal Data Collected", "Cost to Users") are platform
+// policy statements, not empirical claims.
 const STATS = [
   {
     icon: MapPin,

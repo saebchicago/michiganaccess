@@ -47,6 +47,7 @@ interface EnergyProgram {
   icon: typeof Zap;
 }
 
+// Source: MDHHS, DTE Energy, Consumers Energy, THAW Fund, US DOE (see page footer)
 const PROGRAMS: EnergyProgram[] = [
   {
     id: "liheap",

@@ -118,6 +118,9 @@ const equityPrinciples = [
 
 const EVIDENCE_ACT_NAME = "Foundations for Evidence-Based Policymaking Act"; // check-copy-ok: official US federal law name
 
+// @fabrication-allow: not external data - this is the platform's own
+// disclosed composite-score weighting methodology, not a claim about an
+// external fact.
 const scoringWeights = [
   {
     label: "Geographic Access",

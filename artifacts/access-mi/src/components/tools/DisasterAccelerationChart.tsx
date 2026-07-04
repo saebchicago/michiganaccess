@@ -17,6 +17,11 @@ interface Props {
   disasters: FEMADisaster[];
 }
 
+// @fabrication-allow: chart annotation labels for well-known, publicly
+// documented Michigan disaster events (year + proper name), not a
+// numeric dataset in its own right - the chart's underlying disaster
+// data is FEMA OpenFEMA (see page citation), this array only places
+// reference markers on it.
 const KEY_EVENTS: { year: number; label: string }[] = [
   { year: 1986, label: "1986 Grand Rapids Flood" },
   { year: 2014, label: "2014 SE Michigan Flooding" },

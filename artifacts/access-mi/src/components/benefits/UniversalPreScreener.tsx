@@ -67,6 +67,7 @@ interface Program {
   category: "health" | "food" | "energy" | "family";
 }
 
+// Source: 2026 MDHHS eligibility standards (see file header)
 const PROGRAMS: Program[] = [
   {
     id: "snap",

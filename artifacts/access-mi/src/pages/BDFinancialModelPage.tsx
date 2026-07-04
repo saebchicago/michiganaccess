@@ -84,6 +84,7 @@ const fadeUp = {
 };
 
 // ─── County opportunity data ──────────────────────────────────────────────────
+// Source: CDC Social Vulnerability Index 2022, HRSA Health Professional Shortage Area data, County Health Rankings 2025
 const COUNTIES: County[] = [
   { name: "Missaukee", opp: 91, shortage: 4.2, svi: 0.88, pop: 15000 },
   { name: "Oscoda", opp: 89, shortage: 4.5, svi: 0.85, pop: 8400 },

@@ -79,6 +79,7 @@ interface County {
   facilities: number;
 }
 
+// Source: CDC SVI 2022, County Health Rankings 2025, CMS Hospital Compare, HRSA HPSA, CDC PLACES and BRFSS, MDHHS
 const COUNTIES: County[] = [
   {
     name: "Washtenaw",

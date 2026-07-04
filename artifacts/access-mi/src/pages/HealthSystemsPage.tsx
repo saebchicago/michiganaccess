@@ -35,6 +35,8 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 
 /* ── CHNA Workflow Steps ── */
+// @fabrication-allow: not real-world data - describes the platform's own
+// data-workflow steps (UI copy), not an external factual claim.
 const WORKFLOW_STEPS = [
   {
     step: 1,

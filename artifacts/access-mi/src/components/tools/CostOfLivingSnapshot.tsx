@@ -4,6 +4,7 @@ import { DollarSign, Home, Fuel, Zap, ShoppingCart, Heart } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
+// Source: Census ACS 2023 (rent/mortgage), AAA (gas), EIA (electricity), BLS CPI (groceries), KFF (health premiums)
 const COST_DATA = [
   { label: "Median Rent", icon: Home, mi: 1058, nat: 1163, unit: "/mo" },
   { label: "Median Mortgage", icon: Home, mi: 1339, nat: 1672, unit: "/mo" },
