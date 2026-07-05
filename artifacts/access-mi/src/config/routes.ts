@@ -172,6 +172,7 @@ const pages = {
   PublicInvestmentPage: lazy(() => import("@/pages/PublicInvestmentPage")),
   WaterSafetyPage: lazy(() => import("@/pages/WaterSafetyPage")),
   DisasterPage: lazy(() => import("@/pages/DisasterPage")),
+  CivicAskPage: lazy(() => import("@/pages/CivicAskPage")),
   EnergyDeepDivePage: lazy(() => import("@/pages/EnergyDeepDivePage")),
   AirQualityPage: lazy(() => import("@/pages/AirQualityPage")),
   DeepMapPage: lazy(() => import("@/pages/DeepMapPage")),
@@ -593,6 +594,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/terms", component: pages.TermsPage, label: "Terms of Use" },
   { path: "/zoning", component: pages.ZoningPage, label: "Zoning & Land Use" },
   { path: "/brief", component: pages.BriefPage, label: "County Brief" },
+  { path: "/ask", component: pages.CivicAskPage, label: "Civic Intelligence" },
   {
     path: "/housing-options",
     component: pages.HousingOptionsPage,

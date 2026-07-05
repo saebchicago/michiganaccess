@@ -18,6 +18,10 @@ import {
   MI_STATE_AVERAGES,
 } from "@/data/cross-domain-indicators";
 import { getALICEByCounty } from "@/data/aliceData";
+import { getBlsLausForCountyName } from "@/data/bls-laus-county";
+import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
+import { getPlacesForCountyName } from "@/data/cdc-places-county";
+import { getAcsBroadbandForCountyName } from "@/data/acs-broadband-county";
 import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -343,6 +347,56 @@ export default function BriefPage() {
             source: "AccessMI derived",
             vintage: "Computed from verified inputs",
           },
+          (() => {
+            const bls = getBlsLausForCountyName(county);
+            const hasVal =
+              bls?.status === "populated" && bls.unemploymentRate !== null;
+            return {
+              label: `Unemployment Rate${bls?.preliminary ? " (Prelim.)" : ""}`,
+              value: hasVal ? `${bls!.unemploymentRate}%` : "no data",
+              badge: hasVal ? "VERIFIED" : "no data",
+              source: "BLS Local Area Unemployment Statistics",
+              vintage: bls?.latestPeriod ?? "May 2026",
+            };
+          })(),
+          (() => {
+            const hpsa = getHpsaForCountyName(county);
+            const pc = hpsa?.disciplines?.primaryCare;
+            const hasVal = pc && pc.designatedHpsas > 0;
+            return {
+              label: "Primary Care Shortage (FTE needed)",
+              value: hasVal ? pc!.shortageFte.toFixed(1) : "no data",
+              badge: hasVal ? "MODELED" : "no data",
+              source: "HRSA HPSA Primary Care (Jun 2026)",
+              vintage: "2026",
+            };
+          })(),
+          (() => {
+            const places = getPlacesForCountyName(county);
+            const diabetes = places?.measures?.diabetes?.crudePrevalence;
+            return {
+              label: "Diabetes Prevalence (adults 18+)",
+              value: diabetes != null ? `${diabetes}%` : "no data",
+              badge: diabetes != null ? "MODELED" : "no data",
+              source: "CDC PLACES 2025 (BRFSS MRP)",
+              vintage: "2023",
+            };
+          })(),
+          (() => {
+            const bb = getAcsBroadbandForCountyName(county);
+            const hasVal =
+              bb?.status === "populated" &&
+              bb.broadbandSubscriptionRate !== null;
+            return {
+              label: "Broadband Subscription Rate",
+              value: hasVal
+                ? `${bb!.broadbandSubscriptionRate!.toFixed(1)}%`
+                : "Pending CI",
+              badge: hasVal ? "VERIFIED" : "no data",
+              source: "ACS 5-Year 2019-2023 (B28002)",
+              vintage: "2019-2023",
+            };
+          })(),
         ]
       : [];
 
