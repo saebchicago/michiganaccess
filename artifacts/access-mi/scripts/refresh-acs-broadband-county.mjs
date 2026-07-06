@@ -210,7 +210,7 @@ function buildProvenance(ingestedAt, populated) {
     ingest_script: "scripts/refresh-acs-broadband-county.mjs",
     michigan_county_registry: "src/data/census-geographies.ts",
     michigan_county_registry_size: 83,
-    value_label: "VERIFIED",
+    value_label: populated ? "VERIFIED" : "PENDING",
     populated,
     notes:
       "Numerator is broadband subscription in the household (adoption). This is NOT the FCC BDC availability metric (which measures whether service reaches a location). ACS 5-Year has full 83-county coverage in Michigan and does not suppress at county level for this table. When populated, values are direct Census tabulations; when status = 'pending-ci', the ingest environment lacked CENSUS_API_KEY and the file must be re-run in CI to populate. householdsMoe / householdsWithBroadbandMoe are the ACS margins of error for the corresponding estimates, at the same 90% confidence level Census publishes them at; this script stores them raw and does not compute a reliability flag.",

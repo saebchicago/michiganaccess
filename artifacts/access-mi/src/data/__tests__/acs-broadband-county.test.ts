@@ -32,10 +32,13 @@ describe("acs-broadband-county", () => {
     }
   });
 
-  it("carries the VERIFIED label at the provenance level", () => {
-    // The record VALUES may still be null in a pending-ci ship, but the
-    // provenance label is fixed at the dataset level.
-    expect(ACS_BROADBAND_COUNTY_PROVENANCE.value_label).toBe("VERIFIED");
+  it("carries a value_label consistent with the populated flag", () => {
+    // VERIFIED only when populated=true; PENDING when populated=false.
+    if (ACS_BROADBAND_IS_POPULATED) {
+      expect(ACS_BROADBAND_COUNTY_PROVENANCE.value_label).toBe("VERIFIED");
+    } else {
+      expect(ACS_BROADBAND_COUNTY_PROVENANCE.value_label).toBe("PENDING");
+    }
   });
 
   it("provenance names Census ACS and cites the exact ACS table URL", () => {
