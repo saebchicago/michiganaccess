@@ -166,10 +166,6 @@ async function main() {
   }
 
   // --- Subset counts: FRESHNESS_TRACKED_COUNT and LIVE_MONITORED_COUNT ---
-  // These constants must match the actual hardcoded array lengths in their
-  // respective source files. We read FRESHNESS_TRACKED_COUNT and
-  // LIVE_MONITORED_COUNT directly from platformConstants.ts rather than
-  // importing it (Node ESM can't resolve @/ aliases), so we parse the value.
   const platformConstantsPath = path.join(srcDir, "config/platformConstants.ts");
   const platformSrc = await readFile(platformConstantsPath, "utf8");
 
@@ -183,7 +179,6 @@ async function main() {
   const freshnessTrackedCount = extractConstant(platformSrc, "FRESHNESS_TRACKED_COUNT");
   const liveMonitoredCount = extractConstant(platformSrc, "LIVE_MONITORED_COUNT");
 
-  // Count DATA_SOURCES entries in DataFreshnessDashboard.tsx
   const dashboardPath = path.join(srcDir, "components/shared/DataFreshnessDashboard.tsx");
   const actualFreshnessCount = await countArrayEntries(dashboardPath, "DATA_SOURCES", `\\bname:\\s*"`);
 
@@ -193,7 +188,6 @@ async function main() {
     );
   }
 
-  // Count ENDPOINTS entries in health-check.ts
   const healthCheckPath = path.join(srcDir, "lib/health-check.ts");
   const actualLiveCount = await countArrayEntries(healthCheckPath, "ENDPOINTS", `\\bname:\\s*"`);
 
@@ -203,7 +197,6 @@ async function main() {
     );
   }
 
-  // Sanity check: subsets must be smaller than the total registry
   if (freshnessTrackedCount >= sourcesTotal) {
     issues.push(
       `FRESHNESS_TRACKED_COUNT=${freshnessTrackedCount} must be less than SOURCES_TOTAL=${sourcesTotal}.`,
@@ -213,6 +206,18 @@ async function main() {
     issues.push(
       `LIVE_MONITORED_COUNT=${liveMonitoredCount} must be less than SOURCES_TOTAL=${sourcesTotal}.`,
     );
+  }
+
+  // Assert catalog entry count matches registry
+  const catalogPath = new URL("../src/data/source-catalog.generated.json", import.meta.url);
+  try {
+    const catalog = JSON.parse(await readFile(catalogPath, "utf8"));
+    const catalogCount = catalog.sources?.length ?? 0;
+    if (catalogCount !== sourcesTotal) {
+      issues.push(`source-catalog.generated.json has ${catalogCount} entries but registry has ${sourcesTotal}`);
+    }
+  } catch (e) {
+    issues.push(`Could not read source-catalog.generated.json: ${e.message}. Run generate-source-catalog.mjs first.`);
   }
 
   if (issues.length === 0) {
