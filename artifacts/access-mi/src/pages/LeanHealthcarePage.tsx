@@ -206,7 +206,7 @@ const verifiedOutcomes: {
     ],
     source:
       "Trinity Health Community Impact Report (Jan 2026) / FindHelp case study. Not independently verified or peer-reviewed.",
-    integrityLabel: "MODELED",
+    integrityLabel: "PROJECTED",
     vintage: "FY2025, system-reported",
   },
   {

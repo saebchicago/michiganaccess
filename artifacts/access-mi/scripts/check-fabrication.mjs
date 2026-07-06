@@ -336,6 +336,30 @@ function checkHardcodedArrayProvenance() {
 
 checkHardcodedArrayProvenance();
 
+// Heuristic: page files with bold numeric claims (<strong>~N%</strong>) should
+// import IntegrityBadge. Files in this list have reviewed badges adjacent to
+// the figure and are explicitly allowed.
+const BOLD_NUMERIC_ALLOWLIST = new Set([
+  "ForHealthSystemsPage.tsx",
+  "LeanHealthcarePage.tsx",
+]);
+
+function checkBoldNumericLabels() {
+  const pagesDir = join(ROOT, "src/pages");
+  const pages = readdirSync(pagesDir).filter((f) => f.endsWith(".tsx"));
+  for (const file of pages) {
+    if (BOLD_NUMERIC_ALLOWLIST.has(file)) continue;
+    const content = readFileSync(join(pagesDir, file), "utf8");
+    if (!/<strong[^>]*>~?\d+%/.test(content)) continue;
+    if (/IntegrityBadge/.test(content)) continue;
+    console.warn(
+      `[check-fabrication] WARN: bold numeric in src/pages/${file} has no IntegrityBadge import`,
+    );
+  }
+}
+
+checkBoldNumericLabels();
+
 if (failures > 0) {
   console.error(`[check-fabrication] ${failures} violation(s) found. Fix before building.`);
   process.exit(1);

@@ -344,7 +344,12 @@ const ForHealthSystemsPage = () => {
                     <li>• 1M+ screened for SDOH; 27.4% reported unmet need</li>
                     <li>
                       • System-reported{" "}
-                      <strong className="text-foreground">~16% decrease</strong>{" "}
+                      <strong className="text-foreground">~16% decrease</strong>
+                      <IntegrityBadge
+                        label="PROJECTED"
+                        source="Trinity Health (system-reported, not independently verified)"
+                        className="ml-1 align-middle"
+                      />{" "}
                       in preventable hospitalizations (not independently
                       verified)
                     </li>
