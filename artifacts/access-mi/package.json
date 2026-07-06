@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "build": "node scripts/generate-sitemap.mjs && node scripts/check-links.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && node scripts/check-snap-county-dataset.mjs && node scripts/check-fabrication.mjs && node scripts/check-copy.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs",
+    "build": "node scripts/generate-sitemap.mjs && node scripts/check-links.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && node scripts/check-snap-county-dataset.mjs && node scripts/check-fabrication.mjs && node scripts/check-copy.mjs && node scripts/check-provenance.mjs && node scripts/check-dataset-labels.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs",
     "check:fabrication": "node scripts/check-fabrication.mjs",
     "check:provenance": "node scripts/check-provenance.mjs",
+    "check:dataset-labels": "node scripts/check-dataset-labels.mjs",
     "check:copy": "node scripts/check-copy.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:counts": "node scripts/check-counts.mjs",
