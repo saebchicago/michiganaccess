@@ -40,7 +40,7 @@ export interface RouteMeta {
 export const ROUTE_META: RouteMeta[] = [
   {
     path: "/",
-    title: "Access Michigan: civic intelligence, county by county.",
+    title: "Access Michigan: Independent Michigan civic intelligence platform.",
     description:
       "Independent civic data for all 83 Michigan counties. Every figure is traced to a primary federal source and labeled verified, modeled, or projected.",
     h1: "Michigan's public data, organized for action",
@@ -121,7 +121,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/data-sources",
     title: "Data Sources | Access Michigan",
     description:
-      "43 verified public source organizations (25 federal, 9 state, 9 nonprofit) powering Michigan's civic intelligence platform. Every organization credited.",
+      "43 verified public source organizations (25 federal, 9 state, 9 nonprofit) powering the Independent Michigan civic intelligence platform. Every organization credited.",
     h1: "43 Verified Data Sources",
     summary:
       "Federal, state, and nonprofit data sources behind every metric on the platform.",

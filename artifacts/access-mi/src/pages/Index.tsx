@@ -132,7 +132,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
           className="space-y-7"
         >
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.05] tracking-[-0.02em] text-foreground">
-            See what Michigan owes you, and where it's falling short.
+            Civic intelligence for every Michigan community.
           </h1>
 
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl leading-relaxed">
@@ -181,7 +181,7 @@ function Layer1Hero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
               to="/methodology"
               className="text-sm text-muted-foreground hover:text-foreground hover:underline underline-offset-4 transition-colors"
             >
-              Every number sourced. VERIFIED · MODELED · PROJECTED.
+              Every number labeled: VERIFIED, MODELED, or PROJECTED.
             </Link>
           </div>
         </motion.div>
@@ -202,7 +202,7 @@ const LEGEND: { label: "VERIFIED" | "MODELED" | "PROJECTED"; gloss: string }[] =
   [
     {
       label: "VERIFIED",
-      gloss: "Primary source. What is.",
+      gloss: "Direct tabulation from a named primary source.",
     },
     {
       label: "MODELED",
@@ -483,7 +483,7 @@ function Layer2ClusterGrid() {
 const Index = () => {
   const navigate = useNavigate();
   usePageMeta({
-    title: "AccessMI - See what Michigan owes you",
+    title: "AccessMI - Civic intelligence for every Michigan community",
     description:
       "Benefits, care, closures, and community risk across Michigan. Every number traced to a primary federal or state source.",
   });

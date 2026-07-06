@@ -177,7 +177,7 @@ const Footer = () => {
         { label: "Community Organizations", href: "/partnerships" },
         { label: "Government & Policy", href: "/impact" },
         { label: "For Health Systems", href: "/for-health-systems" },
-        { label: "Case Studies", href: "/case-studies" },
+        { label: "Illustrative Scenarios", href: "/case-studies" },
       ],
     },
   ];
@@ -410,14 +410,24 @@ const Footer = () => {
           </p>
           <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto mb-3">
             Independent · Not a government agency · Data from MDHHS, CMS, HRSA,
-            CDC, EPA, and more. For live help, call{" "}
+            CDC, EPA, and more.
+          </p>
+          <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto mb-3">
+            Crisis support:{" "}
+            <a
+              href="tel:988"
+              className="font-semibold text-foreground hover:underline"
+            >
+              988
+            </a>{" "}
+            (Suicide &amp; Crisis Lifeline) -{" "}
             <a
               href="tel:211"
               className="font-semibold text-foreground hover:underline"
             >
-              2-1-1
-            </a>
-            .
+              211
+            </a>{" "}
+            (Local Resources)
           </p>
           <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">

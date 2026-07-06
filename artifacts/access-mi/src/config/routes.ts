@@ -574,7 +574,7 @@ export const APP_ROUTES: RouteEntry[] = [
   {
     path: "/case-studies",
     component: pages.CaseStudiesPage,
-    label: "Case Studies",
+    label: "Illustrative Scenarios",
   },
   { path: "/changelog", component: pages.ChangelogPage, label: "Changelog" },
   { path: "/press", component: pages.PressPage, label: "Press" },
@@ -1113,7 +1113,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       },
       { label: "One-Pager", href: "/partnerships/health-systems/one-pager" },
       { label: "Executive Summary", href: "/executive-summary" },
-      { label: "Case Studies", href: "/case-studies" },
+      { label: "Illustrative Scenarios", href: "/case-studies" },
       { label: "Lean Healthcare", href: "/lean-healthcare" },
       { label: "Platform Impact", href: "/impact" },
     ],
