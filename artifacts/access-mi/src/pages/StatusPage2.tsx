@@ -7,8 +7,9 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import {
-  LIVE_MONITORED_COUNT,
+  DATA_SOURCE_COUNT,
   DATA_SOURCE_DISPLAY,
+  LIVE_MONITORED_COUNT,
 } from "@/config/platformConstants";
 
 const statusIcon = (s: string) =>
@@ -68,7 +69,7 @@ export default function StatusPage2() {
             {loading
               ? "Checking..."
               : allOk
-                ? "All Systems Operational"
+                ? "Live endpoint checks passing"
                 : anyDown
                   ? "Service Disruption"
                   : "Partial Degradation"}
@@ -132,12 +133,45 @@ export default function StatusPage2() {
           </CardContent>
         </Card>
 
+        <p className="text-sm text-muted-foreground text-center">
+          {DATA_SOURCE_COUNT - LIVE_MONITORED_COUNT} additional sources in the
+          registry are not yet monitored with live checks.{" "}
+          <a href="/data-sources" className="underline hover:text-foreground">
+            See all sources
+          </a>
+        </p>
+
         <p className="text-[10px] text-muted-foreground text-center">
           These are external government APIs. Access Michigan does not control
           their availability.
           {results.length > 0 &&
             ` Last checked: ${new Date(results[0].lastChecked).toLocaleString()}`}
         </p>
+
+        <details className="text-sm text-muted-foreground border border-border rounded-md p-4">
+          <summary className="cursor-pointer font-medium text-foreground">
+            Status term definitions
+          </summary>
+          <dl className="mt-3 space-y-2">
+            <div>
+              <dt className="font-medium text-foreground">Operational</dt>
+              <dd>Live HTTP check returned 2xx in the last check window.</dd>
+            </div>
+            <div>
+              <dt className="font-medium text-foreground">Manual snapshot</dt>
+              <dd>
+                Data verified manually as of the date shown; not continuously
+                monitored.
+              </dd>
+            </div>
+            <div>
+              <dt className="font-medium text-foreground">Not yet monitored</dt>
+              <dd>
+                Source is in the registry but has no automated check configured.
+              </dd>
+            </div>
+          </dl>
+        </details>
       </div>
     </Layout>
   );
