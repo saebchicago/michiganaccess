@@ -84,6 +84,9 @@ export const ATLAS_LAYER_COUNT = ATLAS_LAYERS.length;
  * provider directories (NPPES, HRSA), Michigan 211 service records,
  * facility-level rows (EPA TRI, EPA ECHO), and curated resource entries.
  * Surfaced as a marketing display only; never used in arithmetic.
+ *
+ * @remarks Approximate aggregate record count across all 43 source datasets.
+ * MODELED - not a direct tabulation.
  */
 export const RESOURCE_COUNT_DISPLAY = "15,000+";
 

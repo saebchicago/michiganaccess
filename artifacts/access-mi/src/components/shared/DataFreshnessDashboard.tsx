@@ -192,7 +192,15 @@ export default function DataFreshnessDashboard() {
               {freshnessScore}%
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              Data Freshness Score
+              Data Freshness Snapshot
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              As manually verified on{" "}
+              {new Date("2026-03-15").toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
             </p>
             <p className="text-[10px] text-muted-foreground mt-2">
               {DATA_SOURCES.length} sources tracked · {statusCounts.live} live ·{" "}
