@@ -117,7 +117,7 @@ ${recs.length ? `<h2>Recommendations</h2><div class="recs"><ol style="margin:0;p
 <h2>Data Sources</h2>
 <p style="font-size:10px;color:#6b7280">CDC PLACES 2024 (ZCTA-level) · BRFSS 2022 · Robert Wood Johnson Foundation · CDC Foundation · Census ACS</p>
 <div class="footer">
-<p>Access Michigan · accessmi.org · Independent civic intelligence platform</p>
+<p>Access Michigan · accessmi.org · Independent Michigan civic intelligence platform.</p>
 <p>Modeled estimates - see accessmi.org/methodology for documentation.</p>
 </div></body></html>`);
     w.document.close();

@@ -93,7 +93,7 @@ const Header = () => {
                 className="text-[9px] text-muted-foreground"
                 aria-hidden="true"
               >
-                Independent civic data
+                Independent Michigan civic intelligence platform.
               </span>
             </div>
           </Link>

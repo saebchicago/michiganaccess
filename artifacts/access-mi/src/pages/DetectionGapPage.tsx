@@ -174,7 +174,9 @@ function GapCallout({
     >
       <div className="w-1 h-8 bg-michigan-coral/60 rounded-full" />
       <div className="bg-michigan-coral/10 border border-michigan-coral/20 rounded-lg px-3 py-1.5">
-        <p className="text-xs text-michigan-coral-deep font-semibold">{label}</p>
+        <p className="text-xs text-michigan-coral-deep font-semibold">
+          {label}
+        </p>
         <p className="text-[10px] text-michigan-coral-deep/70">{value}</p>
       </div>
     </motion.div>
@@ -273,7 +275,7 @@ export default function DetectionGapPage() {
           <div className="max-w-5xl mx-auto px-6 py-12 relative">
             <Breadcrumbs
               items={[
-                { label: "Partners", href: "/partners" },
+                { label: "Data & Insights", href: "/data" },
                 { label: "Detection Gap" },
               ]}
             />
