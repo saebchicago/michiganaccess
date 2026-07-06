@@ -44,7 +44,8 @@ export const ROUTE_META: RouteMeta[] = [
     description:
       "Independent civic data for all 83 Michigan counties. Every figure is traced to a primary federal source and labeled verified, modeled, or projected.",
     h1: "Michigan's public data, organized for action",
-    summary: "ZIP-level health, economic, and housing data across 83 counties.",
+    summary:
+      "ZCTA-level health, economic, and housing data across 83 counties.",
   },
   {
     path: "/methodology",
