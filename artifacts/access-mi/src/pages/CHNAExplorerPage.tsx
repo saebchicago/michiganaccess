@@ -31,11 +31,15 @@ import {
   Map,
   Share2,
   Download,
+  FileSpreadsheet,
 } from "lucide-react";
 import PrintButton from "@/components/shared/PrintButton";
 import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 import { CHNATractMap } from "@/components/chna/CHNATractMap";
-import { generateCHNABriefPDF } from "@/utils/generateCHNABrief";
+import {
+  generateCHNABriefPDF,
+  generateCHNABriefCSV,
+} from "@/utils/generateCHNABrief";
 import {
   HFH_SYSTEM,
   CHNA_SYSTEM_OPTIONS,
@@ -44,6 +48,21 @@ import {
   CHNA_METRICS,
   PRIORITY_DRIVER_MAP,
 } from "@/data/chnaSeed";
+import { MI_COUNTY_FIPS } from "@/data/census-geographies";
+import {
+  COUNTY_PROFILES,
+  COUNTY_UNINSURED_SOURCE,
+  COUNTY_PCP_SOURCE,
+  COUNTY_FOOD_INSECURITY_SOURCE,
+} from "@/data/michigan-county-profiles";
+import {
+  getPlacesForCountyName,
+  CDC_PLACES_COUNTY_PROVENANCE,
+} from "@/data/cdc-places-county";
+import {
+  countFacilitiesForCounty,
+  VERIFIED_FACILITY_SOURCE_LABEL,
+} from "@/data/verifiedHealthFacilities";
 import type {
   CHNAPriority,
   CHNADomain,
@@ -61,302 +80,135 @@ const fade = {
   }),
 };
 
-// County compare data (existing functionality, absorbed as a tab)
-interface County {
+// County compare data (existing functionality, absorbed as a tab).
+// Every field is pulled from a real, already-ingested all-83-county
+// source at module load - see the per-field comments below. Fields with
+// no real all-83-county source anywhere in the codebase (health rank,
+// SVI, life expectancy, depression rate, child poverty, energy burden)
+// were dropped rather than shown as invented numbers; see FIXLOG.md.
+interface CountyCompareRecord {
   name: string;
-  pop: number;
-  life: number;
-  insured: number;
-  pcp: number;
-  obesity: number;
-  rank: number;
-  svi: number;
-  diabetes: number;
-  depression: number;
-  foodInsec: number;
-  childPov: number;
-  energyBurden: number;
+  population: number;
+  insuredRate: number;
+  pcpPer100k: number;
+  foodInsecurityRate: number;
+  obesityRate: number;
+  diabetesRate: number;
   facilities: number;
 }
 
-const COUNTIES: County[] = [
-  {
-    name: "Washtenaw",
-    pop: 372258,
-    life: 81.2,
-    insured: 97.1,
-    pcp: 128,
-    obesity: 26.1,
-    rank: 1,
-    svi: 0.28,
-    diabetes: 8.8,
-    depression: 19.2,
-    foodInsec: 11.2,
-    childPov: 14.1,
-    energyBurden: 4.2,
-    facilities: 142,
-  },
-  {
-    name: "Ottawa",
-    pop: 296200,
-    life: 80.8,
-    insured: 95.8,
-    pcp: 68,
-    obesity: 28.5,
-    rank: 2,
-    svi: 0.22,
-    diabetes: 9.2,
-    depression: 18.5,
-    foodInsec: 10.8,
-    childPov: 10.5,
-    energyBurden: 4.5,
-    facilities: 78,
-  },
-  {
-    name: "Oakland",
-    pop: 1274395,
-    life: 79.8,
-    insured: 96.2,
-    pcp: 110,
-    obesity: 29.5,
-    rank: 5,
-    svi: 0.35,
-    diabetes: 9.8,
-    depression: 19.8,
-    foodInsec: 12.1,
-    childPov: 12.8,
-    energyBurden: 4.8,
-    facilities: 285,
-  },
-  {
-    name: "Kent",
-    pop: 657974,
-    life: 79.5,
-    insured: 94.2,
-    pcp: 95,
-    obesity: 31.2,
-    rank: 8,
-    svi: 0.42,
-    diabetes: 10.5,
-    depression: 20.4,
-    foodInsec: 13.5,
-    childPov: 16.2,
-    energyBurden: 5.8,
-    facilities: 198,
-  },
-  {
-    name: "Ingham",
-    pop: 284900,
-    life: 78.2,
-    insured: 94.5,
-    pcp: 115,
-    obesity: 30.8,
-    rank: 15,
-    svi: 0.48,
-    diabetes: 10.8,
-    depression: 21.2,
-    foodInsec: 15.1,
-    childPov: 22.5,
-    energyBurden: 6.1,
-    facilities: 112,
-  },
-  {
-    name: "Kalamazoo",
-    pop: 261670,
-    life: 78.8,
-    insured: 93.8,
-    pcp: 98,
-    obesity: 31.5,
-    rank: 12,
-    svi: 0.45,
-    diabetes: 10.2,
-    depression: 21.8,
-    foodInsec: 14.8,
-    childPov: 20.1,
-    energyBurden: 5.5,
-    facilities: 95,
-  },
-  {
-    name: "Macomb",
-    pop: 881217,
-    life: 77.2,
-    insured: 94.4,
-    pcp: 72,
-    obesity: 33.8,
-    rank: 28,
-    svi: 0.52,
-    diabetes: 11.5,
-    depression: 21.5,
-    foodInsec: 14.2,
-    childPov: 16.8,
-    energyBurden: 5.9,
-    facilities: 178,
-  },
-  {
-    name: "Mackinac",
-    pop: 10834,
-    life: 76.2,
-    insured: 91.5,
-    pcp: 42,
-    obesity: 34.1,
-    rank: 55,
-    svi: 0.62,
-    diabetes: 12.1,
-    depression: 22.8,
-    foodInsec: 16.5,
-    childPov: 24.2,
-    energyBurden: 10.8,
-    facilities: 8,
-  },
-  {
-    name: "Saginaw",
-    pop: 190539,
-    life: 75.8,
-    insured: 93.5,
-    pcp: 78,
-    obesity: 36.2,
-    rank: 68,
-    svi: 0.72,
-    diabetes: 12.8,
-    depression: 22.5,
-    foodInsec: 17.2,
-    childPov: 28.5,
-    energyBurden: 8.7,
-    facilities: 62,
-  },
-  {
-    name: "Wayne",
-    pop: 1793561,
-    life: 75.1,
-    insured: 92.8,
-    pcp: 112,
-    obesity: 38.5,
-    rank: 72,
-    svi: 0.82,
-    diabetes: 13.2,
-    depression: 22.1,
-    foodInsec: 17.8,
-    childPov: 32.4,
-    energyBurden: 8.2,
-    facilities: 347,
-  },
-  {
-    name: "Genesee",
-    pop: 406892,
-    life: 74.8,
-    insured: 93.1,
-    pcp: 85,
-    obesity: 37.8,
-    rank: 75,
-    svi: 0.78,
-    diabetes: 13.5,
-    depression: 23.1,
-    foodInsec: 18.2,
-    childPov: 30.8,
-    energyBurden: 9.1,
-    facilities: 98,
-  },
-  {
-    name: "Lake",
-    pop: 11853,
-    life: 73.5,
-    insured: 89.2,
-    pcp: 18,
-    obesity: 39.8,
-    rank: 82,
-    svi: 0.91,
-    diabetes: 14.8,
-    depression: 25.2,
-    foodInsec: 21.5,
-    childPov: 38.2,
-    energyBurden: 11.3,
-    facilities: 4,
-  },
-];
+/** Reads a labeled value out of a CountyProfile's healthHighlights list
+ * by substring match on the label, mirroring BriefPage.tsx's getVal(). */
+function getHealthValue(
+  hh: { label: string; value: string }[],
+  search: string,
+): string {
+  return (
+    hh.find((h) => h.label.toLowerCase().includes(search.toLowerCase()))
+      ?.value ?? ""
+  );
+}
 
+function parsePercent(value: string): number {
+  const n = parseFloat(value.replace(/[^0-9.]/g, ""));
+  return Number.isFinite(n) ? n : 0;
+}
+
+/** CountyProfile stores primary-care access as a population-per-1-PCP
+ * ratio string (e.g. "1,426:1"); convert to PCPs per 100,000 residents. */
+function parseRatioToPer100k(value: string): number {
+  const n = parseInt(value.split(":")[0].replace(/[^0-9]/g, ""), 10);
+  return Number.isFinite(n) && n > 0 ? Math.round(100000 / n) : 0;
+}
+
+function average(values: number[]): number {
+  return values.reduce((s, v) => s + v, 0) / values.length;
+}
+
+// Built once at module load from real, already-ingested all-83-county
+// sources (see the DATA_SOURCES box in CountyCompareTab for citations):
+//   - population, insured rate, PCP ratio, food insecurity: COUNTY_PROFILES
+//     (Census PEP Vintage 2024 / County Health Rankings 2025)
+//   - obesity, diabetes: CDC PLACES County 2025 release (MODELED, MRP-based)
+//   - facilities: CMS Hospital General Information + HRSA Health Center Sites
+const COUNTIES: CountyCompareRecord[] = Object.keys(MI_COUNTY_FIPS)
+  .sort((a, b) => a.localeCompare(b))
+  .map((name) => {
+    const profile = COUNTY_PROFILES[name];
+    const uninsuredPct = parsePercent(
+      getHealthValue(profile.healthHighlights, "uninsured"),
+    );
+    const pcpRatio = getHealthValue(profile.healthHighlights, "primary care");
+    const places = getPlacesForCountyName(name);
+    return {
+      name,
+      population: profile.population,
+      insuredRate: Math.round((100 - uninsuredPct) * 10) / 10,
+      pcpPer100k: parseRatioToPer100k(pcpRatio),
+      foodInsecurityRate: parsePercent(
+        getHealthValue(profile.healthHighlights, "food"),
+      ),
+      obesityRate: places?.measures.obesity.crudePrevalence ?? 0,
+      diabetesRate: places?.measures.diabetes.crudePrevalence ?? 0,
+      facilities: countFacilitiesForCounty(name),
+    };
+  });
+
+// Unweighted mean across all 83 counties (each county counts once,
+// regardless of population) - matches the convention already used by
+// buildStateSnapshotMetrics() in snapshotMetrics.ts.
 const MI_AVG = {
-  life: 77.4,
-  insured: 95.0,
-  pcp: 83,
-  obesity: 33.0,
-  svi: 0.5,
-  diabetes: 11.4,
-  depression: 20.1,
-  foodInsec: 14.2,
-  childPov: 19.8,
-  energyBurden: 6.5,
+  insuredRate: Math.round(average(COUNTIES.map((c) => c.insuredRate)) * 10) / 10,
+  pcpPer100k: Math.round(average(COUNTIES.map((c) => c.pcpPer100k))),
+  foodInsecurityRate:
+    Math.round(average(COUNTIES.map((c) => c.foodInsecurityRate)) * 10) / 10,
+  obesityRate: Math.round(average(COUNTIES.map((c) => c.obesityRate)) * 10) / 10,
+  diabetesRate: Math.round(average(COUNTIES.map((c) => c.diabetesRate)) * 10) / 10,
+  facilities: Math.round(average(COUNTIES.map((c) => c.facilities))),
 };
 
 const COMPARE_METRICS = [
   {
-    key: "life" as const,
-    label: "Life Expectancy",
-    unit: "yrs",
-    avg: MI_AVG.life,
-    higherBetter: true,
-  },
-  {
-    key: "insured" as const,
+    key: "insuredRate" as const,
     label: "Insured Rate",
     unit: "%",
-    avg: MI_AVG.insured,
+    avg: MI_AVG.insuredRate,
     higherBetter: true,
   },
   {
-    key: "pcp" as const,
+    key: "pcpPer100k" as const,
     label: "PCPs per 100K",
     unit: "",
-    avg: MI_AVG.pcp,
+    avg: MI_AVG.pcpPer100k,
     higherBetter: true,
   },
   {
-    key: "obesity" as const,
-    label: "Obesity Rate",
-    unit: "%",
-    avg: MI_AVG.obesity,
-    higherBetter: false,
-  },
-  {
-    key: "diabetes" as const,
-    label: "Diabetes",
-    unit: "%",
-    avg: MI_AVG.diabetes,
-    higherBetter: false,
-  },
-  {
-    key: "depression" as const,
-    label: "Depression",
-    unit: "%",
-    avg: MI_AVG.depression,
-    higherBetter: false,
-  },
-  {
-    key: "foodInsec" as const,
+    key: "foodInsecurityRate" as const,
     label: "Food Insecurity",
     unit: "%",
-    avg: MI_AVG.foodInsec,
+    avg: MI_AVG.foodInsecurityRate,
     higherBetter: false,
   },
   {
-    key: "childPov" as const,
-    label: "Child Poverty",
+    key: "obesityRate" as const,
+    label: "Obesity Rate (modeled)",
     unit: "%",
-    avg: MI_AVG.childPov,
+    avg: MI_AVG.obesityRate,
     higherBetter: false,
   },
   {
-    key: "energyBurden" as const,
-    label: "Energy Burden",
+    key: "diabetesRate" as const,
+    label: "Diabetes (modeled)",
     unit: "%",
-    avg: MI_AVG.energyBurden,
+    avg: MI_AVG.diabetesRate,
     higherBetter: false,
   },
   {
-    key: "svi" as const,
-    label: "SVI Score",
+    key: "facilities" as const,
+    label: "Facilities",
     unit: "",
-    avg: MI_AVG.svi,
-    higherBetter: false,
+    avg: MI_AVG.facilities,
+    higherBetter: true,
   },
 ];
 
@@ -718,6 +570,15 @@ function PrioritiesTab() {
               <Download className="h-3.5 w-3.5" aria-hidden="true" />
               {downloading ? "Generating..." : "Download PDF"}
             </button>
+            <button
+              onClick={() =>
+                generateCHNABriefCSV(selectedPriority, systemData)
+              }
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground hover:bg-muted transition-colors"
+            >
+              <FileSpreadsheet className="h-3.5 w-3.5" aria-hidden="true" />
+              Download CSV
+            </button>
           </div>
         </div>
 
@@ -804,13 +665,16 @@ function BarViz({
   county,
   metric,
 }: {
-  county: County;
+  county: CountyCompareRecord;
   metric: (typeof COMPARE_METRICS)[number];
 }) {
-  const val = county[metric.key as keyof County] as number;
+  const val = county[metric.key as keyof CountyCompareRecord] as number;
   const max =
-    Math.max(...COUNTIES.map((c) => c[metric.key as keyof County] as number)) *
-    1.1;
+    Math.max(
+      ...COUNTIES.map(
+        (c) => c[metric.key as keyof CountyCompareRecord] as number,
+      ),
+    ) * 1.1;
   const pct = (val / max) * 100;
   const avgPct = (metric.avg / max) * 100;
   return (
@@ -840,34 +704,19 @@ function CountyCompareTab() {
 
   const county = COUNTIES.find((c) => c.name === selectedCounty)!;
   const compare = COUNTIES.find((c) => c.name === compareCounty)!;
-  const sorted = useMemo(
-    () => [...COUNTIES].sort((a, b) => a.name.localeCompare(b.name)),
-    [],
-  );
-  const sviText =
-    county.svi >= 0.75 ? "Critical" : county.svi >= 0.5 ? "High" : "Moderate";
-  const sviVariant: "default" | "secondary" | "destructive" =
-    county.svi >= 0.75
-      ? "destructive"
-      : county.svi >= 0.5
-        ? "secondary"
-        : "default";
 
   const findings = useMemo(
     () =>
       [
-        county.svi >= 0.7 &&
-          `High social vulnerability (SVI ${county.svi}), top quartile statewide`,
-        county.obesity > MI_AVG.obesity * 1.1 &&
-          `Obesity rate ${((county.obesity / MI_AVG.obesity - 1) * 100).toFixed(0)}% above state average`,
-        county.foodInsec > MI_AVG.foodInsec * 1.1 &&
-          `Food insecurity ${((county.foodInsec / MI_AVG.foodInsec - 1) * 100).toFixed(0)}% above state average`,
-        county.pcp < MI_AVG.pcp * 0.8 &&
-          `Primary care physician shortage: ${county.pcp} per 100K vs. ${MI_AVG.pcp} state average`,
-        county.energyBurden > 6 &&
-          `Energy burden ${county.energyBurden}%, above the DOE high-burden threshold of 6%`,
-        county.childPov > MI_AVG.childPov * 1.2 &&
-          `Child poverty rate ${county.childPov}%, significantly above state average`,
+        county.obesityRate > MI_AVG.obesityRate * 1.1 &&
+          `Obesity rate ${((county.obesityRate / MI_AVG.obesityRate - 1) * 100).toFixed(0)}% above state average (modeled, CDC PLACES)`,
+        county.diabetesRate > MI_AVG.diabetesRate * 1.1 &&
+          `Diabetes prevalence ${((county.diabetesRate / MI_AVG.diabetesRate - 1) * 100).toFixed(0)}% above state average (modeled, CDC PLACES)`,
+        county.foodInsecurityRate > MI_AVG.foodInsecurityRate * 1.1 &&
+          `Food insecurity ${((county.foodInsecurityRate / MI_AVG.foodInsecurityRate - 1) * 100).toFixed(0)}% above state average`,
+        county.pcpPer100k > 0 &&
+          county.pcpPer100k < MI_AVG.pcpPer100k * 0.8 &&
+          `Primary care physician shortage: ${county.pcpPer100k} per 100K vs. ${MI_AVG.pcpPer100k} state average`,
       ].filter(Boolean) as string[],
     [county],
   );
@@ -885,9 +734,9 @@ function CountyCompareTab() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {sorted.map((c) => (
+              {COUNTIES.map((c) => (
                 <SelectItem key={c.name} value={c.name}>
-                  {c.name} County (Rank #{c.rank})
+                  {c.name} County
                 </SelectItem>
               ))}
             </SelectContent>
@@ -902,7 +751,7 @@ function CountyCompareTab() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {sorted.map((c) => (
+              {COUNTIES.map((c) => (
                 <SelectItem key={c.name} value={c.name}>
                   {c.name} County
                 </SelectItem>
@@ -922,49 +771,39 @@ function CountyCompareTab() {
         <TabsContent value="overview" className="space-y-6">
           <Card>
             <CardHeader className="pb-2">
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <div>
-                  <CardTitle className="text-xl">
-                    {county.name} County
-                  </CardTitle>
-                  <p className="text-sm text-muted-foreground">
-                    Population: {county.pop.toLocaleString()} · Health Rank: #
-                    {county.rank} of 83
-                  </p>
-                </div>
-                <Badge variant={sviVariant}>
-                  {sviText} (SVI {county.svi})
-                </Badge>
-              </div>
+              <CardTitle className="text-xl">{county.name} County</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Population: {county.population.toLocaleString()}
+              </p>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <StatCard
-                  label="Life Expectancy"
-                  value={county.life}
-                  unit=" yrs"
-                  avg={MI_AVG.life}
-                  higherBetter
-                />
-                <StatCard
                   label="Insured Rate"
-                  value={county.insured}
+                  value={county.insuredRate}
                   unit="%"
-                  avg={MI_AVG.insured}
+                  avg={MI_AVG.insuredRate}
                   higherBetter
                 />
                 <StatCard
                   label="PCPs per 100K"
-                  value={county.pcp}
+                  value={county.pcpPer100k}
                   unit=""
-                  avg={MI_AVG.pcp}
+                  avg={MI_AVG.pcpPer100k}
                   higherBetter
+                />
+                <StatCard
+                  label="Food Insecurity"
+                  value={county.foodInsecurityRate}
+                  unit="%"
+                  avg={MI_AVG.foodInsecurityRate}
+                  higherBetter={false}
                 />
                 <StatCard
                   label="Facilities"
                   value={county.facilities}
                   unit=""
-                  avg={120}
+                  avg={MI_AVG.facilities}
                   higherBetter
                 />
               </div>
@@ -977,13 +816,14 @@ function CountyCompareTab() {
                 Health Indicators vs. Michigan Average
               </CardTitle>
               <p className="text-xs text-muted-foreground">
-                Red line = Michigan state average
+                Red line = Michigan state average (unweighted mean across all
+                83 counties)
               </p>
             </CardHeader>
             <CardContent className="space-y-3">
               {COMPARE_METRICS.map((m) => (
                 <div key={m.key} className="flex items-center gap-4">
-                  <span className="text-xs font-medium text-muted-foreground w-28 shrink-0 text-right">
+                  <span className="text-xs font-medium text-muted-foreground w-32 shrink-0 text-right">
                     {m.label}
                   </span>
                   <div className="flex-1">
@@ -1033,33 +873,18 @@ function CountyCompareTab() {
                 <TableBody>
                   {[
                     {
-                      label: "Health Rank",
-                      a: `#${county.rank}`,
-                      b: `#${compare.rank}`,
-                    },
-                    {
                       label: "Population",
-                      a: county.pop.toLocaleString(),
-                      b: compare.pop.toLocaleString(),
-                    },
-                    {
-                      label: "SVI Score",
-                      a: String(county.svi),
-                      b: String(compare.svi),
+                      a: county.population.toLocaleString(),
+                      b: compare.population.toLocaleString(),
                     },
                     ...COMPARE_METRICS.map((m) => ({
                       label: m.label,
-                      a: `${county[m.key as keyof County]}${m.unit}`,
-                      b: `${compare[m.key as keyof County]}${m.unit}`,
+                      a: `${county[m.key as keyof CountyCompareRecord]}${m.unit}`,
+                      b: `${compare[m.key as keyof CountyCompareRecord]}${m.unit}`,
                       higherBetter: m.higherBetter,
-                      numA: county[m.key as keyof County] as number,
-                      numB: compare[m.key as keyof County] as number,
+                      numA: county[m.key as keyof CountyCompareRecord] as number,
+                      numB: compare[m.key as keyof CountyCompareRecord] as number,
                     })),
-                    {
-                      label: "Facilities",
-                      a: String(county.facilities),
-                      b: String(compare.facilities),
-                    },
                   ].map((row, i) => {
                     const numRow = row as {
                       numA?: number;
@@ -1108,8 +933,8 @@ function CountyCompareTab() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>County</TableHead>
-                    <TableHead className="text-center">Rank</TableHead>
-                    {COMPARE_METRICS.slice(0, 7).map((m) => (
+                    <TableHead className="text-center">Population</TableHead>
+                    {COMPARE_METRICS.map((m) => (
                       <TableHead
                         key={m.key}
                         className="text-center whitespace-nowrap"
@@ -1120,24 +945,24 @@ function CountyCompareTab() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {[...COUNTIES]
-                    .sort((a, b) => a.rank - b.rank)
-                    .map((c) => (
-                      <TableRow
-                        key={c.name}
-                        className={`cursor-pointer ${c.name === selectedCounty ? "bg-primary/5 font-semibold" : "hover:bg-muted/50"}`}
-                        onClick={() => setSelectedCounty(c.name)}
-                      >
-                        <TableCell className="font-medium">{c.name}</TableCell>
-                        <TableCell className="text-center">#{c.rank}</TableCell>
-                        {COMPARE_METRICS.slice(0, 7).map((m) => (
-                          <TableCell key={m.key} className="text-center">
-                            {c[m.key as keyof County]}
-                            {m.unit}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))}
+                  {COUNTIES.map((c) => (
+                    <TableRow
+                      key={c.name}
+                      className={`cursor-pointer ${c.name === selectedCounty ? "bg-primary/5 font-semibold" : "hover:bg-muted/50"}`}
+                      onClick={() => setSelectedCounty(c.name)}
+                    >
+                      <TableCell className="font-medium">{c.name}</TableCell>
+                      <TableCell className="text-center">
+                        {c.population.toLocaleString()}
+                      </TableCell>
+                      {COMPARE_METRICS.map((m) => (
+                        <TableCell key={m.key} className="text-center">
+                          {c[m.key as keyof CountyCompareRecord]}
+                          {m.unit}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </CardContent>
@@ -1151,11 +976,12 @@ function CountyCompareTab() {
           aria-hidden="true"
         />
         <p className="text-xs text-muted-foreground">
-          <strong>Data Sources:</strong> CDC SVI 2022, County Health Rankings
-          2025, CMS Hospital Compare, HRSA HPSA, CDC PLACES and BRFSS, MDHHS
-          Health Equity Data, ACEEE LEAD Tool. Data reflects most recent
-          available reporting periods (2023–2025). Facility counts from Access
-          Michigan platform database. See{" "}
+          <strong>Data Sources:</strong> {COUNTY_UNINSURED_SOURCE} (insured
+          rate); {COUNTY_PCP_SOURCE} (PCPs per 100K); {COUNTY_FOOD_INSECURITY_SOURCE};{" "}
+          {CDC_PLACES_COUNTY_PROVENANCE.source_name} (obesity, diabetes -
+          modeled county-level estimates, not directly measured);{" "}
+          {VERIFIED_FACILITY_SOURCE_LABEL} (facilities). All 83 Michigan
+          counties. See{" "}
           <a href="/methodology" className="text-primary hover:underline">
             Methodology
           </a>{" "}

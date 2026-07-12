@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import { MapPin, Globe, Building2 } from "lucide-react";
 import { GeoResolutionBadge } from "@/components/shared/GeoResolutionBadge";
+import { UpstreamUnavailableBanner } from "@/components/shared/UpstreamUnavailableBanner";
 import type { GeoResolution } from "@/types/data-layers";
 
 export type SnapshotMetric = {
@@ -23,6 +24,10 @@ export type SnapshotMetric = {
   source?: string;
   /** Vintage of the underlying data (e.g. "2022", "HPS Wave 48 (Aug 2022)"). */
   vintage?: string;
+  /** ingest-manifest source_id for this metric's most recent refresh
+   * attempt. When set and that source's latest attempt failed, the
+   * tile renders an UpstreamUnavailableBanner beneath it. */
+  sourceId?: string;
 };
 
 export type SnapshotCardProps = {
@@ -189,6 +194,7 @@ export default function SnapshotCard({
                 {m.percentile !== undefined && (
                   <PercentileBar value={m.percentile} />
                 )}
+                <UpstreamUnavailableBanner sourceId={m.sourceId} compact />
               </CardContent>
             </Card>
           </motion.div>

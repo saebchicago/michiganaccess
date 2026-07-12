@@ -82,6 +82,41 @@ function escapeRegExp(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+async function countArrayEntries(filePath, arrayName, itemPattern) {
+  const src = await readFile(filePath, "utf8");
+  // Find the array declaration and count occurrences of the item pattern within it.
+  // We look for `= [` after the const declaration to skip any type annotation brackets
+  // (e.g. `const FOO: Bar[] = [` - the `[]` in `Bar[]` must not be matched).
+  const declarationStart = src.indexOf(`const ${arrayName}`);
+  if (declarationStart < 0) {
+    throw new Error(`check-counts: '${arrayName}' not found in ${filePath}`);
+  }
+  // Find the `= [` assignment (may have whitespace between `=` and `[`)
+  const assignRe = /=\s*\[/;
+  const tail = src.slice(declarationStart);
+  const assignMatch = assignRe.exec(tail);
+  if (!assignMatch) {
+    throw new Error(`check-counts: '= [' assignment not found for '${arrayName}' in ${filePath}`);
+  }
+  const open = declarationStart + assignMatch.index + assignMatch[0].lastIndexOf("[");
+  // Walk to matching close bracket
+  let depth = 0;
+  let end = -1;
+  for (let i = open; i < src.length; i++) {
+    if (src[i] === "[") depth++;
+    else if (src[i] === "]") {
+      depth--;
+      if (depth === 0) { end = i; break; }
+    }
+  }
+  if (end < 0) {
+    throw new Error(`check-counts: unmatched '[' for '${arrayName}' in ${filePath}`);
+  }
+  const body = src.slice(open, end);
+  const re = new RegExp(itemPattern, "g");
+  return (body.match(re) ?? []).length;
+}
+
 async function main() {
   const sourcesPath = path.join(srcDir, "data/sourcesRegistry.ts");
   const atlasPath = path.join(srcDir, "config/atlasLayers.ts");
@@ -130,9 +165,64 @@ async function main() {
     }
   }
 
+  // --- Subset counts: FRESHNESS_TRACKED_COUNT and LIVE_MONITORED_COUNT ---
+  const platformConstantsPath = path.join(srcDir, "config/platformConstants.ts");
+  const platformSrc = await readFile(platformConstantsPath, "utf8");
+
+  function extractConstant(src, name) {
+    const re = new RegExp(`export\\s+const\\s+${name}\\s*=\\s*(\\d+)`);
+    const m = src.match(re);
+    if (!m) throw new Error(`check-counts: '${name}' not found in platformConstants.ts`);
+    return Number(m[1]);
+  }
+
+  const freshnessTrackedCount = extractConstant(platformSrc, "FRESHNESS_TRACKED_COUNT");
+  const liveMonitoredCount = extractConstant(platformSrc, "LIVE_MONITORED_COUNT");
+
+  const dashboardPath = path.join(srcDir, "components/shared/DataFreshnessDashboard.tsx");
+  const actualFreshnessCount = await countArrayEntries(dashboardPath, "DATA_SOURCES", `\\bname:\\s*"`);
+
+  if (actualFreshnessCount !== freshnessTrackedCount) {
+    issues.push(
+      `FRESHNESS_TRACKED_COUNT=${freshnessTrackedCount} in platformConstants.ts does not match DATA_SOURCES.length=${actualFreshnessCount} in DataFreshnessDashboard.tsx. Update the constant or the array so they match.`,
+    );
+  }
+
+  const healthCheckPath = path.join(srcDir, "lib/health-check.ts");
+  const actualLiveCount = await countArrayEntries(healthCheckPath, "ENDPOINTS", `\\bname:\\s*"`);
+
+  if (actualLiveCount !== liveMonitoredCount) {
+    issues.push(
+      `LIVE_MONITORED_COUNT=${liveMonitoredCount} in platformConstants.ts does not match ENDPOINTS.length=${actualLiveCount} in health-check.ts. Update the constant or the array so they match.`,
+    );
+  }
+
+  if (freshnessTrackedCount >= sourcesTotal) {
+    issues.push(
+      `FRESHNESS_TRACKED_COUNT=${freshnessTrackedCount} must be less than SOURCES_TOTAL=${sourcesTotal}.`,
+    );
+  }
+  if (liveMonitoredCount >= sourcesTotal) {
+    issues.push(
+      `LIVE_MONITORED_COUNT=${liveMonitoredCount} must be less than SOURCES_TOTAL=${sourcesTotal}.`,
+    );
+  }
+
+  // Assert catalog entry count matches registry
+  const catalogPath = new URL("../src/data/source-catalog.generated.json", import.meta.url);
+  try {
+    const catalog = JSON.parse(await readFile(catalogPath, "utf8"));
+    const catalogCount = catalog.sources?.length ?? 0;
+    if (catalogCount !== sourcesTotal) {
+      issues.push(`source-catalog.generated.json has ${catalogCount} entries but registry has ${sourcesTotal}`);
+    }
+  } catch (e) {
+    issues.push(`Could not read source-catalog.generated.json: ${e.message}. Run generate-source-catalog.mjs first.`);
+  }
+
   if (issues.length === 0) {
     console.log(
-      `[check-counts] ok — sources=${sourcesTotal} (federal=${sourcesBreakdown.federal} state=${sourcesBreakdown.state} nonprofit=${sourcesBreakdown.nonprofit}), atlas layers=${atlasLayers}, counties=${countyCount}; routeMeta literals match.`,
+      `[check-counts] ok — sources=${sourcesTotal} (federal=${sourcesBreakdown.federal} state=${sourcesBreakdown.state} nonprofit=${sourcesBreakdown.nonprofit}), atlas layers=${atlasLayers}, counties=${countyCount}; freshness-tracked=${freshnessTrackedCount}/${sourcesTotal}, live-monitored=${liveMonitoredCount}/${sourcesTotal}; routeMeta literals match.`,
     );
     return;
   }

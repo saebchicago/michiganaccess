@@ -115,7 +115,7 @@ const STATIC_PAGES = [
     href: "/for-health-systems",
     category: "page",
   },
-  { label: "Case Studies", href: "/case-studies", category: "page" },
+  { label: "Illustrative Scenarios", href: "/case-studies", category: "page" },
   { label: "Impact Dashboard", href: "/impact", category: "page" },
   { label: "Life Navigator", href: "/life-navigator", category: "page" },
   { label: "Regions", href: "/regions", category: "page" },

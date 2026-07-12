@@ -33,6 +33,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import http from "node:http";
 import https from "node:https";
+import { createManifestEntry, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -44,6 +45,11 @@ const MI_STATE_FIPS = "26";
 const REL_URL =
   "https://www2.census.gov/geo/docs/maps-data/data/rel2020/zcta520/tab20_zcta520_county20_natl.txt";
 const VINTAGE = "2020 Census ZCTA5-County Relationship File";
+// Distinct source_id from refresh-zcta-county-crosswalk.mjs even though
+// both scripts fetch this same URL - see that script's comment for why.
+const ZCTA_REGISTRY_SOURCE_ID = "census-zcta-county-relationship-2020";
+const manifestEntries = [];
+const BUILD_ID = `refresh-mi-zcta-registry-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 
 function fetchText(url, redirectsLeft = 5) {
   return new Promise((resolve, reject) => {
@@ -274,9 +280,42 @@ export function isMiZcta(zcta5: string): boolean {
 `;
 }
 
+async function fetchTextWithManifest() {
+  try {
+    const text = await fetchText(REL_URL);
+    manifestEntries.push(
+      createManifestEntry({
+        sourceId: ZCTA_REGISTRY_SOURCE_ID,
+        url: REL_URL,
+        status: 200,
+        contentType: "text/plain",
+        payload: text,
+        vintage: VINTAGE,
+        valid: true,
+      }),
+    );
+    return text;
+  } catch (err) {
+    const statusMatch = /^HTTP (\d+)/.exec(err.message);
+    manifestEntries.push(
+      createManifestEntry({
+        sourceId: ZCTA_REGISTRY_SOURCE_ID,
+        url: REL_URL,
+        status: statusMatch ? Number(statusMatch[1]) : null,
+        contentType: null,
+        payload: "",
+        vintage: VINTAGE,
+        valid: false,
+        invalidReason: err.message,
+      }),
+    );
+    throw err;
+  }
+}
+
 async function main() {
   console.log(`[refresh-mi-zcta-registry] fetching ${REL_URL}...`);
-  const text = await fetchText(REL_URL);
+  const text = await fetchTextWithManifest();
   console.log(
     `[refresh-mi-zcta-registry] got ${(text.length / 1024 / 1024).toFixed(1)} MB text`,
   );
@@ -302,6 +341,16 @@ async function main() {
   }
 
   const content = buildFile(rows);
+
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[refresh-mi-zcta-registry] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (!APPLY) {
     console.log(
       `\n[refresh-mi-zcta-registry] dry-run. Re-run with --apply to write ${path.relative(projectRoot, outPath)}.`,
@@ -314,7 +363,21 @@ async function main() {
   );
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-mi-zcta-registry] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-mi-zcta-registry] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-mi-zcta-registry] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

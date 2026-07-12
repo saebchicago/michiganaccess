@@ -63,7 +63,7 @@ export default function ZipIntelligencePage() {
           >
             Access Michigan
           </a>{" "}
-          · CDC PLACES 2024
+          · CDC PLACES 2024 (ZCTA-level)
         </p>
       </div>
     );
@@ -93,8 +93,8 @@ export default function ZipIntelligencePage() {
               Compare to Michigan and national averages.
             </p>
             <p className="text-[10px] text-muted-foreground mt-1">
-              Powered by CDC PLACES - the most granular public health data in
-              America.
+              Powered by CDC PLACES (ZCTA-level) - the most granular public
+              health data in America.
             </p>
           </motion.div>
         </div>

@@ -25,16 +25,24 @@ export interface ZIPDemographics {
   miStateDisabilityPct: number;
   miStateLEPPct: number;
   source: string;
+  /** Raw ACS margins of error (90% confidence) for the underlying
+   * estimate variables, keyed by variable code (e.g. "B19013_001E").
+   * These are the numerator/denominator MOEs Census publishes directly;
+   * combining them into a MOE for a computed percentage requires the
+   * ACS ratio-MOE formula, which is not applied here. */
+  moe: Record<string, number>;
 }
 
 export async function fetchZIPDemographics(zip: string): Promise<ZIPDemographics | null> {
   try {
-    const vars = [
+    const estimateVars = [
       "B01003_001E", "B02001_002E", "B02001_003E", "B02001_005E",
       "B03003_003E", "B16001_001E", "B16001_004E", "B16001_024E",
       "B18101_001E", "B18101_004E", "B19013_001E",
       "B25003_001E", "B25003_002E", "B25003_003E",
-    ].join(",");
+    ];
+    const moeVars = estimateVars.map((v) => v.replace(/E$/, "M"));
+    const vars = [...estimateVars, ...moeVars].join(",");
 
     const url = `https://api.census.gov/data/2022/acs/acs5?get=${vars}&for=zip%20code%20tabulation%20area:${zip}`;
     const res = await fetch(url);
@@ -59,6 +67,12 @@ export async function fetchZIPDemographics(zip: string): Promise<ZIPDemographics
     const sp = (r["B16001_004E"] / speakers) * 100;
     const ar = (r["B16001_024E"] / speakers) * 100;
 
+    const moe: Record<string, number> = {};
+    for (const v of estimateVars) {
+      const moeCode = v.replace(/E$/, "M");
+      if (moeCode in r) moe[v] = r[moeCode];
+    }
+
     return {
       zip, totalPop: pop,
       white_alone_pct: w, black_alone_pct: b, asian_alone_pct: a,
@@ -72,6 +86,7 @@ export async function fetchZIPDemographics(zip: string): Promise<ZIPDemographics
       miStateWhitePct: 78.8, miStateBlackPct: 13.9,
       miStateHispanicPct: 5.6, miStateDisabilityPct: 15.2, miStateLEPPct: 5.8,
       source: "Census ACS 5-Year Estimates 2022",
+      moe,
     };
   } catch {
     return null;

@@ -29,9 +29,12 @@
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
+const manifestEntries = [];
+const BUILD_ID = `refresh-cdc-places-county-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 const registryPath = path.join(projectRoot, "src/data/census-geographies.ts");
 const outJsonPath = path.join(
   projectRoot,
@@ -118,16 +121,19 @@ async function loadMiCountyFips() {
   return fips;
 }
 
-async function fetchJson(url) {
-  const res = await fetch(url, {
+async function fetchJson(url, sourceId) {
+  const text = await fetchAndRecord({
+    sourceId,
+    url,
     headers: { "user-agent": "accessmi-data-refresh", accept: "application/json" },
+    minBytes: 2,
+    entries: manifestEntries,
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
-  return await res.json();
+  return JSON.parse(text);
 }
 
 async function fetchMetadata() {
-  const meta = await fetchJson(SOCRATA_METADATA_URL);
+  const meta = await fetchJson(SOCRATA_METADATA_URL, "cdc-places-county-metadata");
   const rowsUpdatedAtIso = new Date(
     Number(meta.rowsUpdatedAt) * 1000,
   ).toISOString();
@@ -164,7 +170,7 @@ async function fetchMiRows() {
     `${SOCRATA_ROWS_URL}?$select=${encodeURIComponent(select)}` +
     `&$where=${encodeURIComponent(where)}` +
     `&$limit=5000`;
-  return await fetchJson(url);
+  return await fetchJson(url, "cdc-places-county-rows");
 }
 
 function toNumber(x) {
@@ -442,6 +448,15 @@ async function main() {
   const payload = buildJsonPayload(meta, ingestedAt, records);
   const shim = buildTsShim();
 
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[refresh-cdc-places-county] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (!APPLY) {
     console.log(
       `\n[refresh-cdc-places-county] dry-run. Re-run with --apply to write ${path.relative(projectRoot, outJsonPath)} + ${path.relative(projectRoot, outTsPath)}.`,
@@ -455,7 +470,21 @@ async function main() {
   );
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-cdc-places-county] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-cdc-places-county] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-cdc-places-county] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

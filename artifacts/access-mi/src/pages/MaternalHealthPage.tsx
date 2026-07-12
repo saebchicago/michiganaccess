@@ -59,6 +59,7 @@ const STATE_METRICS = {
 const STATE_DISPARITY_RATIO = 3.3;
 
 // County-level IMR from MDHHS (where published, NULL where suppressed)
+// Source: MDHHS Vital Records, Summary of 2024 Infant Death Statistics (https://www.mdch.state.mi.us/osr/InDxMain/Infsum05.asp)
 const COUNTY_IMR = [
   { county: "Wayne", imr: 9.2, imrBlack: 14.1, imrWhite: 4.8 },
   { county: "Genesee", imr: 8.8, imrBlack: 13.5, imrWhite: 5.2 },

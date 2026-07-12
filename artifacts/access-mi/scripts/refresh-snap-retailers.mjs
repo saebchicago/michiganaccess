@@ -34,9 +34,13 @@ import { fileURLToPath } from "node:url";
 import zlib from "node:zlib";
 import http from "node:http";
 import https from "node:https";
+import { createManifestEntry, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
+const manifestEntries = [];
+const BUILD_ID = `refresh-snap-retailers-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+const SNAP_RETAILERS_SOURCE_ID = "usda-snap-retailer-locator";
 const profilesPath = path.join(
   projectRoot,
   "src/data/michigan-county-profiles.ts",
@@ -381,9 +385,42 @@ ${entries.join("\n")}
 
 // --- Main ------------------------------------------------------------------
 
+async function fetchZipWithManifest() {
+  try {
+    const buf = await fetchHttp11(ZIP_URL);
+    manifestEntries.push(
+      createManifestEntry({
+        sourceId: SNAP_RETAILERS_SOURCE_ID,
+        url: ZIP_URL,
+        status: 200,
+        contentType: "application/zip",
+        payload: buf,
+        vintage: VINTAGE,
+        valid: true,
+      }),
+    );
+    return buf;
+  } catch (err) {
+    const statusMatch = /^HTTP (\d+)/.exec(err.message);
+    manifestEntries.push(
+      createManifestEntry({
+        sourceId: SNAP_RETAILERS_SOURCE_ID,
+        url: ZIP_URL,
+        status: statusMatch ? Number(statusMatch[1]) : null,
+        contentType: null,
+        payload: Buffer.alloc(0),
+        vintage: VINTAGE,
+        valid: false,
+        invalidReason: err.message,
+      }),
+    );
+    throw err;
+  }
+}
+
 async function main() {
   console.log(`[refresh-snap-retailers] fetching ${ZIP_URL}...`);
-  const zipBuf = await fetchHttp11(ZIP_URL);
+  const zipBuf = await fetchZipWithManifest();
   console.log(
     `[refresh-snap-retailers] got ${(zipBuf.length / 1024 / 1024).toFixed(1)} MB zip`,
   );
@@ -476,6 +513,15 @@ async function main() {
 
   const content = buildFileContent(rows, agg);
 
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[refresh-snap-retailers] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (!APPLY) {
     console.log(
       `\n[refresh-snap-retailers] dry-run (default). Re-run with --apply to write ${path.relative(projectRoot, outPath)}.`,
@@ -489,7 +535,21 @@ async function main() {
   );
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-snap-retailers] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-snap-retailers] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-snap-retailers] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

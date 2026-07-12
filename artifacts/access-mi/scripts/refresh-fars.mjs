@@ -22,6 +22,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import zlib from "node:zlib";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -86,17 +87,16 @@ function unzipEntries(buf) {
 
 // --- FARS fetch + parse ----------------------------------------------------
 
-async function fetchYearZip(year) {
-  const res = await fetch(ZIP_URL(year), {
+async function fetchYearZip(year, manifestEntries) {
+  const buf = await fetchAndRecord({
+    sourceId: `nhtsa-fars-${year}`,
+    url: ZIP_URL(year),
     headers: { "user-agent": "accessmi-data-refresh" },
+    vintage: String(year),
+    minBytes: 1024,
+    binary: true,
+    entries: manifestEntries,
   });
-  if (!res.ok) {
-    throw new Error(`FARS ${year} fetch failed: HTTP ${res.status}`);
-  }
-  const buf = Buffer.from(await res.arrayBuffer());
-  if (buf.length < 1024) {
-    throw new Error(`FARS ${year} payload too small (${buf.length} bytes); refusing to parse`);
-  }
   return buf;
 }
 
@@ -314,6 +314,9 @@ ${entries.join("\n")}
 
 // --- Main ------------------------------------------------------------------
 
+const manifestEntries = [];
+const BUILD_ID = `refresh-fars-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+
 async function main() {
   console.log(`[refresh-fars] case years: ${YEARS.join(", ")}`);
   const { nameToFips, fipsToName } = await loadFipsMap();
@@ -325,7 +328,7 @@ async function main() {
 
   for (const year of YEARS) {
     console.log(`[refresh-fars] fetching FARS ${year}...`);
-    const zipBuf = await fetchYearZip(year);
+    const zipBuf = await fetchYearZip(year, manifestEntries);
     const entries = unzipEntries(zipBuf);
     const accCsv = findAccidentEntry(entries, year);
     const { byCounty, miRows, miFatals, totalRows } =
@@ -395,9 +398,30 @@ async function main() {
 
   await writeFile(outPath, content, "utf8");
   console.log(`\n[refresh-fars] wrote ${path.relative(projectRoot, outPath)} (${rows.size} counties).`);
+
+  const manifestPath = await writeManifest({
+    projectRoot,
+    buildId: BUILD_ID,
+    entries: manifestEntries,
+  });
+  console.log(`  archival manifest: ${path.relative(projectRoot, manifestPath)}`);
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-fars] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-fars] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-fars] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

@@ -37,6 +37,7 @@
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -57,6 +58,8 @@ const ACS_BASE = "https://api.census.gov/data";
 const ACS_TABLE = "B28002";
 const ACS_NUMERATOR = "B28002_007E";
 const ACS_UNIVERSE = "B28002_001E";
+const ACS_NUMERATOR_MOE = "B28002_007M";
+const ACS_UNIVERSE_MOE = "B28002_001M";
 const ACS_TABLE_URL = `https://data.census.gov/table/ACSDT5Y${ACS_VINTAGE}.B28002`;
 const SOURCE_LANDING =
   "https://www.census.gov/programs-surveys/acs/data.html";
@@ -79,20 +82,24 @@ async function loadMiCountyFips() {
   return fips;
 }
 
-async function fetchAcs(miFips) {
+async function fetchAcs(miFips, manifestEntries) {
   const params = new URLSearchParams({
-    get: `NAME,${ACS_UNIVERSE},${ACS_NUMERATOR}`,
+    get: `NAME,${ACS_UNIVERSE},${ACS_NUMERATOR},${ACS_UNIVERSE_MOE},${ACS_NUMERATOR_MOE}`,
     for: "county:*",
     in: "state:26",
     key: CENSUS_API_KEY,
   });
   const url = `${ACS_BASE}/${ACS_VINTAGE}/acs/acs5?${params}`;
-  const res = await fetch(url, {
+  const text = await fetchAndRecord({
+    sourceId: "census-acs5-b28002-broadband-county",
+    url,
     headers: {
       "user-agent": "accessmi-data-refresh",
       accept: "application/json",
     },
-    redirect: "follow",
+    vintage: ACS_WINDOW,
+    minBytes: 500,
+    entries: manifestEntries,
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} fetching ACS`);
   // Census returns HTTP 200 with an HTML error page when CENSUS_API_KEY is
@@ -118,12 +125,21 @@ async function fetchAcs(miFips) {
   } catch (err) {
     throw new Error(`ACS response was not valid JSON: ${err.message}`);
   }
+  const rows = JSON.parse(text);
   if (!Array.isArray(rows) || rows.length < 2) {
     throw new Error("ACS returned no rows (schema drift or key rejected)");
   }
   const header = rows[0];
   const idx = Object.fromEntries(header.map((h, i) => [h, i]));
-  const need = ["NAME", ACS_UNIVERSE, ACS_NUMERATOR, "state", "county"];
+  const need = [
+    "NAME",
+    ACS_UNIVERSE,
+    ACS_NUMERATOR,
+    ACS_UNIVERSE_MOE,
+    ACS_NUMERATOR_MOE,
+    "state",
+    "county",
+  ];
   for (const c of need) {
     if (idx[c] === undefined) {
       throw new Error(`Schema drift: ACS response missing "${c}" column`);
@@ -135,6 +151,8 @@ async function fetchAcs(miFips) {
     byFips.set(fips, {
       universe: Number(r[idx[ACS_UNIVERSE]]),
       broadband: Number(r[idx[ACS_NUMERATOR]]),
+      universeMoe: Number(r[idx[ACS_UNIVERSE_MOE]]),
+      broadbandMoe: Number(r[idx[ACS_NUMERATOR_MOE]]),
     });
   }
   return byFips;
@@ -150,6 +168,8 @@ function buildStubCounties(miFips) {
       households: null,
       householdsWithBroadband: null,
       broadbandSubscriptionRate: null,
+      householdsMoe: null,
+      householdsWithBroadbandMoe: null,
       pendingReason:
         "Requires CENSUS_API_KEY. Run refresh-acs-broadband-county.mjs in CI with the key set to populate real values.",
     });
@@ -171,6 +191,8 @@ function buildPopulatedCounties(miFips, byFips) {
         households: null,
         householdsWithBroadband: null,
         broadbandSubscriptionRate: null,
+        householdsMoe: null,
+        householdsWithBroadbandMoe: null,
         pendingReason: "ACS returned no or zero-universe row for this county.",
       });
       continue;
@@ -184,6 +206,10 @@ function buildPopulatedCounties(miFips, byFips) {
       households: row.universe,
       householdsWithBroadband: row.broadband,
       broadbandSubscriptionRate: rate,
+      householdsMoe: Number.isFinite(row.universeMoe) ? row.universeMoe : null,
+      householdsWithBroadbandMoe: Number.isFinite(row.broadbandMoe)
+        ? row.broadbandMoe
+        : null,
       pendingReason: null,
     });
   }
@@ -203,14 +229,16 @@ function buildProvenance(ingestedAt, populated) {
       "Households with a broadband Internet subscription (any type)",
     universe_variable: ACS_UNIVERSE,
     universe_label: "Households (universe)",
+    numerator_moe_variable: ACS_NUMERATOR_MOE,
+    universe_moe_variable: ACS_UNIVERSE_MOE,
     ingested_at: ingestedAt,
     ingest_script: "scripts/refresh-acs-broadband-county.mjs",
     michigan_county_registry: "src/data/census-geographies.ts",
     michigan_county_registry_size: 83,
-    value_label: "VERIFIED",
+    value_label: populated ? "VERIFIED" : "PENDING",
     populated,
     notes:
-      "Numerator is broadband subscription in the household (adoption). This is NOT the FCC BDC availability metric (which measures whether service reaches a location). ACS 5-Year has full 83-county coverage in Michigan and does not suppress at county level for this table. When populated, values are direct Census tabulations; when status = 'pending-ci', the ingest environment lacked CENSUS_API_KEY and the file must be re-run in CI to populate.",
+      "Numerator is broadband subscription in the household (adoption). This is NOT the FCC BDC availability metric (which measures whether service reaches a location). ACS 5-Year has full 83-county coverage in Michigan and does not suppress at county level for this table. When populated, values are direct Census tabulations; when status = 'pending-ci', the ingest environment lacked CENSUS_API_KEY and the file must be re-run in CI to populate. householdsMoe / householdsWithBroadbandMoe are the ACS margins of error for the corresponding estimates, at the same 90% confidence level Census publishes them at; this script stores them raw and does not compute a reliability flag.",
   };
 }
 
@@ -241,6 +269,10 @@ export interface AcsBroadbandCountyRecord {
   householdsWithBroadband: number | null;
   /** Percent, 2 decimals, computed as broadband / households * 100, or null. */
   broadbandSubscriptionRate: number | null;
+  /** ACS B28002_001M - margin of error for households (90% confidence), or null. */
+  householdsMoe: number | null;
+  /** ACS B28002_007M - margin of error for broadband households (90% confidence), or null. */
+  householdsWithBroadbandMoe: number | null;
   /** Human-readable reason when the record is not populated. */
   pendingReason: string | null;
 }
@@ -256,6 +288,8 @@ export interface AcsBroadbandCountyProvenance {
   numerator_label: string;
   universe_variable: string;
   universe_label: string;
+  numerator_moe_variable: string;
+  universe_moe_variable: string;
   ingested_at: string;
   ingest_script: string;
   michigan_county_registry: string;
@@ -303,6 +337,9 @@ export const ACS_BROADBAND_IS_POPULATED = ${populated};
 `;
 }
 
+const manifestEntries = [];
+const BUILD_ID = `refresh-acs-broadband-county-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+
 async function main() {
   const miFips = await loadMiCountyFips();
   console.log(
@@ -327,7 +364,7 @@ async function main() {
     console.log(
       `[refresh-acs-broadband-county] fetching ACS 5-Year ${ACS_WINDOW} B28002 for MI counties...`,
     );
-    const byFips = await fetchAcs(miFips);
+    const byFips = await fetchAcs(miFips, manifestEntries);
     console.log(
       `[refresh-acs-broadband-county] ACS returned rows for ${byFips.size} MI counties`,
     );
@@ -391,9 +428,32 @@ async function main() {
   console.log(
     `\n[refresh-acs-broadband-county] wrote ${path.relative(projectRoot, outJsonPath)} (${records.length} counties, populated=${populated}) and ${path.relative(projectRoot, outTsPath)}.`,
   );
+
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`  archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-acs-broadband-county] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-acs-broadband-county] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-acs-broadband-county] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

@@ -1,8 +1,18 @@
 import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, Clock, AlertCircle, Zap, Database } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  FRESHNESS_TRACKED_COUNT,
+  DATA_SOURCE_DISPLAY,
+} from "@/config/platformConstants";
 
 type SourceStatus = "live" | "fresh" | "aging" | "stale";
 
@@ -14,33 +24,133 @@ interface DataSource {
 }
 
 const DATA_SOURCES: DataSource[] = [
-  { name: "CDC PLACES", lastRefresh: "2025-12-07", frequency: "Annual", status: "fresh" },
-  { name: "CMS Hospital Compare", lastRefresh: "2026-01-15", frequency: "Quarterly", status: "fresh" },
-  { name: "HRSA HPSA", lastRefresh: "2025-09-15", frequency: "Quarterly", status: "fresh" },
-  { name: "AirNow AQI", lastRefresh: "Live", frequency: "Hourly", status: "live" },
-  { name: "USGS Water", lastRefresh: "Live", frequency: "15 minutes", status: "live" },
-  { name: "EIA Electricity", lastRefresh: "2026-01-01", frequency: "Monthly", status: "fresh" },
-  { name: "County Health Rankings", lastRefresh: "2025-03-15", frequency: "Annual (Mar)", status: "fresh" },
-  { name: "SEMCOG Sidewalks", lastRefresh: "2025-12-01", frequency: "Quarterly", status: "fresh" },
-  { name: "MPART PFAS", lastRefresh: "Ongoing", frequency: "As investigated", status: "live" },
-  { name: "Michigan 211 (HSDS)", lastRefresh: "Continuous", frequency: "Daily", status: "live" },
-  { name: "NPPES NPI Registry", lastRefresh: "Live", frequency: "Real-time", status: "live" },
-  { name: "GATIS Specification", lastRefresh: "2026-02-27", frequency: "Annual", status: "fresh" },
-  { name: "Leapfrog Safety Grades", lastRefresh: "2025-10-01", frequency: "Biannual", status: "fresh" },
-  { name: "U.S. Census ACS", lastRefresh: "2025-09-01", frequency: "Annual (Sep)", status: "fresh" },
-  { name: "MDHHS Vital Records", lastRefresh: "2025-06-01", frequency: "Annual", status: "fresh" },
+  {
+    name: "CDC PLACES",
+    lastRefresh: "2025-12-07",
+    frequency: "Annual",
+    status: "fresh",
+  },
+  {
+    name: "CMS Hospital Compare",
+    lastRefresh: "2026-01-15",
+    frequency: "Quarterly",
+    status: "fresh",
+  },
+  {
+    name: "HRSA HPSA",
+    lastRefresh: "2025-09-15",
+    frequency: "Quarterly",
+    status: "fresh",
+  },
+  {
+    name: "AirNow AQI",
+    lastRefresh: "Live",
+    frequency: "Hourly",
+    status: "live",
+  },
+  {
+    name: "USGS Water",
+    lastRefresh: "Live",
+    frequency: "15 minutes",
+    status: "live",
+  },
+  {
+    name: "EIA Electricity",
+    lastRefresh: "2026-01-01",
+    frequency: "Monthly",
+    status: "fresh",
+  },
+  {
+    name: "County Health Rankings",
+    lastRefresh: "2025-03-15",
+    frequency: "Annual (Mar)",
+    status: "fresh",
+  },
+  {
+    name: "SEMCOG Sidewalks",
+    lastRefresh: "2025-12-01",
+    frequency: "Quarterly",
+    status: "fresh",
+  },
+  {
+    name: "MPART PFAS",
+    lastRefresh: "Ongoing",
+    frequency: "As investigated",
+    status: "live",
+  },
+  {
+    name: "Michigan 211 (HSDS)",
+    lastRefresh: "Continuous",
+    frequency: "Daily",
+    status: "live",
+  },
+  {
+    name: "NPPES NPI Registry",
+    lastRefresh: "Live",
+    frequency: "Real-time",
+    status: "live",
+  },
+  {
+    name: "GATIS Specification",
+    lastRefresh: "2026-02-27",
+    frequency: "Annual",
+    status: "fresh",
+  },
+  {
+    name: "Leapfrog Safety Grades",
+    lastRefresh: "2025-10-01",
+    frequency: "Biannual",
+    status: "fresh",
+  },
+  {
+    name: "U.S. Census ACS",
+    lastRefresh: "2025-09-01",
+    frequency: "Annual (Sep)",
+    status: "fresh",
+  },
+  {
+    name: "MDHHS Vital Records",
+    lastRefresh: "2025-06-01",
+    frequency: "Annual",
+    status: "fresh",
+  },
 ];
 
-const STATUS_CONFIG: Record<SourceStatus, { icon: typeof CheckCircle2; color: string; dotColor: string; label: string }> = {
-  live: { icon: Zap, color: "text-michigan-teal-deep", dotColor: "bg-michigan-teal", label: "Live" },
-  fresh: { icon: CheckCircle2, color: "text-michigan-forest-deep", dotColor: "bg-michigan-forest", label: "Fresh" },
-  aging: { icon: Clock, color: "text-michigan-gold-deep", dotColor: "bg-michigan-gold", label: "Aging" },
-  stale: { icon: AlertCircle, color: "text-michigan-coral-deep", dotColor: "bg-michigan-coral", label: "Stale" },
+const STATUS_CONFIG: Record<
+  SourceStatus,
+  { icon: typeof CheckCircle2; color: string; dotColor: string; label: string }
+> = {
+  live: {
+    icon: Zap,
+    color: "text-michigan-teal-deep",
+    dotColor: "bg-michigan-teal",
+    label: "Live",
+  },
+  fresh: {
+    icon: CheckCircle2,
+    color: "text-michigan-forest-deep",
+    dotColor: "bg-michigan-forest",
+    label: "Fresh",
+  },
+  aging: {
+    icon: Clock,
+    color: "text-michigan-gold-deep",
+    dotColor: "bg-michigan-gold",
+    label: "Aging",
+  },
+  stale: {
+    icon: AlertCircle,
+    color: "text-michigan-coral-deep",
+    dotColor: "bg-michigan-coral",
+    label: "Stale",
+  },
 };
 
 export default function DataFreshnessDashboard() {
   const freshnessScore = useMemo(() => {
-    const good = DATA_SOURCES.filter((s) => s.status === "live" || s.status === "fresh").length;
+    const good = DATA_SOURCES.filter(
+      (s) => s.status === "live" || s.status === "fresh",
+    ).length;
     return Math.round((good / DATA_SOURCES.length) * 100);
   }, []);
 
@@ -63,7 +173,14 @@ export default function DataFreshnessDashboard() {
         </div>
         <div>
           <h2 className="text-2xl font-bold text-foreground">Data Freshness</h2>
-          <p className="text-sm text-muted-foreground">When each source was last updated and whether the data is still current</p>
+          <p className="text-sm text-muted-foreground">
+            When each source was last updated and whether the data is still
+            current
+          </p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Monitoring {FRESHNESS_TRACKED_COUNT} of {DATA_SOURCE_DISPLAY}{" "}
+            sources with freshness snapshots
+          </p>
         </div>
       </div>
 
@@ -71,26 +188,50 @@ export default function DataFreshnessDashboard() {
       <div className="grid gap-4 sm:grid-cols-5">
         <Card className="sm:col-span-2 border-michigan-teal/20 bg-michigan-teal/5">
           <CardContent className="py-6 text-center">
-            <p className="text-5xl font-bold text-michigan-teal-deep">{freshnessScore}%</p>
-            <p className="text-sm text-muted-foreground mt-1">Data Freshness Score</p>
+            <p className="text-5xl font-bold text-michigan-teal-deep">
+              {freshnessScore}%
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              Data Freshness Snapshot
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              As manually verified on{" "}
+              {new Date("2026-03-15").toLocaleDateString("en-US", {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </p>
             <p className="text-[10px] text-muted-foreground mt-2">
-              {DATA_SOURCES.length} sources tracked · {statusCounts.live} live · {statusCounts.fresh} fresh
+              {DATA_SOURCES.length} sources tracked · {statusCounts.live} live ·{" "}
+              {statusCounts.fresh} fresh
             </p>
           </CardContent>
         </Card>
         <div className="sm:col-span-3 grid grid-cols-2 gap-3">
-          {(["live", "fresh", "aging", "stale"] as SourceStatus[]).map((status) => {
-            const config = STATUS_CONFIG[status];
-            return (
-              <div key={status} className="flex items-center gap-2 rounded-lg border border-border p-3">
-                <div className={`h-2.5 w-2.5 rounded-full ${config.dotColor} ${status === "live" ? "animate-pulse" : ""}`} />
-                <div>
-                  <p className="text-lg font-bold text-foreground">{statusCounts[status]}</p>
-                  <p className="text-[10px] text-muted-foreground">{config.label}</p>
+          {(["live", "fresh", "aging", "stale"] as SourceStatus[]).map(
+            (status) => {
+              const config = STATUS_CONFIG[status];
+              return (
+                <div
+                  key={status}
+                  className="flex items-center gap-2 rounded-lg border border-border p-3"
+                >
+                  <div
+                    className={`h-2.5 w-2.5 rounded-full ${config.dotColor} ${status === "live" ? "animate-pulse" : ""}`}
+                  />
+                  <div>
+                    <p className="text-lg font-bold text-foreground">
+                      {statusCounts[status]}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground">
+                      {config.label}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            },
+          )}
         </div>
       </div>
 
@@ -108,12 +249,21 @@ export default function DataFreshnessDashboard() {
               transition={{ delay: i * 0.03 }}
               className="flex items-center gap-3 rounded-lg border border-border p-3 hover:bg-muted/50 transition-colors"
             >
-              <div className={`h-2 w-2 rounded-full shrink-0 ${config.dotColor} ${source.status === "live" ? "animate-pulse" : ""}`} />
+              <div
+                className={`h-2 w-2 rounded-full shrink-0 ${config.dotColor} ${source.status === "live" ? "animate-pulse" : ""}`}
+              />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">{source.name}</p>
-                <p className="text-[10px] text-muted-foreground">{source.lastRefresh} · {source.frequency}</p>
+                <p className="text-sm font-medium text-foreground truncate">
+                  {source.name}
+                </p>
+                <p className="text-[10px] text-muted-foreground">
+                  {source.lastRefresh} · {source.frequency}
+                </p>
               </div>
-              <Badge variant="outline" className={`text-[9px] shrink-0 ${config.color}`}>
+              <Badge
+                variant="outline"
+                className={`text-[9px] shrink-0 ${config.color}`}
+              >
                 {config.label}
               </Badge>
             </motion.div>
@@ -122,8 +272,9 @@ export default function DataFreshnessDashboard() {
       </div>
 
       <p className="text-[10px] text-muted-foreground">
-        Freshness status reflects expected refresh cadence vs. last known update. "Live" sources provide real-time or continuous data.
-        Status is manually verified - not automatically monitored.
+        Freshness status reflects expected refresh cadence vs. last known
+        update. "Live" sources provide real-time or continuous data. Status is
+        manually verified - not automatically monitored.
       </p>
     </motion.div>
   );

@@ -37,6 +37,7 @@
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -128,22 +129,28 @@ function parseCsv(text) {
   return rows;
 }
 
-async function fetchCsv(url) {
-  const res = await fetch(url, {
+const manifestEntries = [];
+const BUILD_ID = `refresh-hrsa-hpsa-county-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+
+async function fetchCsv(url, sourceId) {
+  return fetchAndRecord({
+    sourceId,
+    url,
     headers: {
       "user-agent":
         "Mozilla/5.0 (compatible; accessmi-data-refresh; +https://accessmi.org)",
       accept: "text/csv,application/octet-stream,*/*",
     },
+    minBytes: 500,
+    entries: manifestEntries,
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
-  return await res.text();
 }
 
 /** Load one discipline and reduce to MI Designated rows grouped by county FIPS. */
 async function loadDiscipline(discipline, miFipsSet) {
   const url = `${HRSA_DOWNLOAD_BASE}/${discipline.file}`;
-  const text = await fetchCsv(url);
+  const sourceId = `hrsa-hpsa-${discipline.id.toLowerCase()}-county`;
+  const text = await fetchCsv(url, sourceId);
   const rows = parseCsv(text);
   if (rows.length < 2) throw new Error(`Empty CSV: ${url}`);
   const header = rows[0];
@@ -468,6 +475,15 @@ async function main() {
   const payload = buildJsonPayload(ingestedAt, records, disciplines);
   const shim = buildTsShim();
 
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[refresh-hrsa-hpsa-county] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (!APPLY) {
     console.log(
       `\n[refresh-hrsa-hpsa-county] dry-run. Re-run with --apply to write ${path.relative(projectRoot, outJsonPath)} + ${path.relative(projectRoot, outTsPath)}.`,
@@ -481,7 +497,21 @@ async function main() {
   );
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-hrsa-hpsa-county] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-hrsa-hpsa-county] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-hrsa-hpsa-county] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

@@ -84,6 +84,9 @@ export const ATLAS_LAYER_COUNT = ATLAS_LAYERS.length;
  * provider directories (NPPES, HRSA), Michigan 211 service records,
  * facility-level rows (EPA TRI, EPA ECHO), and curated resource entries.
  * Surfaced as a marketing display only; never used in arithmetic.
+ *
+ * @remarks Approximate aggregate record count across all 43 source datasets.
+ * MODELED - not a direct tabulation.
  */
 export const RESOURCE_COUNT_DISPLAY = "15,000+";
 
@@ -125,12 +128,32 @@ export const MICHIGAN_POLITICAL_PARTY_COUNT = 7;
  * "monitored feeds", "verified feeds", or similar so the number on
  * the page and the number /status actually pings cannot diverge.
  *
- * Note: this is NOT the same as DATA_SOURCE_COUNT (41 publisher
- * organizations). Most of the 41 publishers ship as static data
+ * Note: this is NOT the same as DATA_SOURCE_COUNT (43 publisher
+ * organizations). Most of the 43 publishers ship as static data
  * imports, not live API calls; the four here are the ones with
  * always-on uptime checks.
  */
 export const MONITORED_API_FEEDS_COUNT = 4;
+
+/**
+ * Number of sources tracked with manual freshness snapshots in
+ * DataFreshnessDashboard (the DATA_SOURCES array in that component).
+ *
+ * This is a monitored subset of the full registry. Most registry
+ * sources are static imports with no periodic freshness snapshot;
+ * these 15 are the ones for which we maintain last-refresh timestamps
+ * and status labels. Must equal the length of DATA_SOURCES in
+ * src/components/shared/DataFreshnessDashboard.tsx.
+ */
+export const FRESHNESS_TRACKED_COUNT = 15;
+
+/**
+ * Number of sources with live endpoint health checks on the /status page.
+ *
+ * This is a monitored subset of the full registry. Must equal the
+ * length of ENDPOINTS in src/lib/health-check.ts.
+ */
+export const LIVE_MONITORED_COUNT = 4;
 
 /**
  * Canonical platform release timeline.

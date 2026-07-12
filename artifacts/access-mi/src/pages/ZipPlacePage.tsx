@@ -16,6 +16,8 @@ import { countyToSlug } from "@/utils/countyUtils";
 import DataProvenance from "@/components/shared/DataProvenance";
 import DeltaChip from "@/components/shared/DeltaChip";
 import MoEBadge from "@/components/shared/MoEBadge";
+import { SuppressedEstimate, MoeUnavailableNote } from "@/components/shared/ReliabilityNote";
+import { getReliability } from "@/lib/reliability";
 import LocalInsightEngine from "@/components/place/LocalInsightEngine";
 import DomainJumpNav from "@/components/place/DomainJumpNav";
 import ReportIssue from "@/components/shared/ReportIssue";
@@ -47,7 +49,7 @@ const MI_STATE_BENCHMARKS = {
 /* DeltaChip is now imported from @/components/shared/DeltaChip */
 
 /** Mirror card: shows a metric with county and state baselines */
-function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, higherIsBetter, soWhat, estimate, moe }: {
+function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, higherIsBetter, soWhat, estimate, moe, source }: {
   label: string;
   zipValue: number | null;
   countyValue: number | null;
@@ -57,6 +59,7 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
   soWhat: string;
   estimate?: number | null;
   moe?: number | null;
+  source?: string;
 }) {
   const noData = zipValue === null && countyValue === null;
 
@@ -75,6 +78,9 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
     );
   }
 
+  const reliability = getReliability(estimate ?? zipValue, moe ?? null);
+  const suppressed = reliability.status === "suppressed";
+
   return (
     <Card className="h-full">
       <CardContent className="py-4 space-y-3">
@@ -82,13 +88,22 @@ function MirrorMetricCard({ label, zipValue, countyValue, stateValue, format, hi
           <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider truncate max-w-[200px]">{label}</p>
           <MoEBadge estimate={estimate ?? zipValue} moe={moe ?? null} />
         </div>
-        <p className="text-2xl font-bold text-foreground tabular-nums">{format(zipValue)}</p>
-        <div className="flex flex-col sm:flex-row flex-wrap gap-2">
-          {countyValue !== null && (
-            <DeltaChip value={zipValue} benchmark={countyValue} higherIsBetter={higherIsBetter} label="County" />
-          )}
-          <DeltaChip value={zipValue} benchmark={stateValue} higherIsBetter={higherIsBetter} label="MI Avg" />
-        </div>
+        {suppressed ? (
+          <SuppressedEstimate source={source} />
+        ) : (
+          <>
+            <div className="flex items-center gap-2">
+              <p className="text-2xl font-bold text-foreground tabular-nums">{format(zipValue)}</p>
+              {reliability.status === "unavailable" && <MoeUnavailableNote />}
+            </div>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-2">
+              {countyValue !== null && (
+                <DeltaChip value={zipValue} benchmark={countyValue} higherIsBetter={higherIsBetter} label="County" />
+              )}
+              <DeltaChip value={zipValue} benchmark={stateValue} higherIsBetter={higherIsBetter} label="MI Avg" />
+            </div>
+          </>
+        )}
         <div className="flex flex-col gap-4 pt-2 border-t border-border/40">
           <div className="text-[11px] text-muted-foreground space-y-1">
             <p className="break-words">County Avg: <span className="font-mono font-medium text-foreground tabular-nums">{format(countyValue)}</span></p>
@@ -243,6 +258,7 @@ export default function ZipPlacePage() {
               soWhat="Higher income generally means more local spending power and tax base."
               estimate={zipIncome}
               moe={zipIncomeMoE}
+              source="U.S. Census Bureau ACS 5-Year"
             />
             <MirrorMetricCard
               label="Poverty Rate"
@@ -254,6 +270,7 @@ export default function ZipPlacePage() {
               soWhat="Lower poverty rates indicate broader economic stability in this area."
               estimate={zipPovNum}
               moe={zipPovMoE}
+              source="U.S. Census Bureau ACS 5-Year"
             />
             <MirrorMetricCard
               label="Bachelor's Degree or Higher"
@@ -265,6 +282,7 @@ export default function ZipPlacePage() {
               soWhat="Education attainment correlates with health outcomes and earning potential."
               estimate={zipBachNum}
               moe={zipBachMoE}
+              source="U.S. Census Bureau ACS 5-Year"
             />
           </div>
         </section>

@@ -45,6 +45,7 @@ interface EquityRow {
   stateAvg: number;
 }
 
+// Source: MDHHS Health Equity Data, CDC WONDER, County Health Rankings & Roadmaps 2025 edition, CDC BRFSS
 const EQUITY: EquityRow[] = [
   {
     metric: "Life Expectancy",

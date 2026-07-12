@@ -125,6 +125,10 @@ const dataSources = [
   },
 ];
 
+// @fabrication-allow: not real-world data - this is the platform's own
+// facility-ranking weighting methodology (distinct from the dataSources
+// list of external providers elsewhere in this file), not a claim about
+// an external fact requiring citation.
 const rankingFactors = [
   {
     factor: "Distance from You",

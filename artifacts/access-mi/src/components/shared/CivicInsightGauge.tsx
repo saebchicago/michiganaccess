@@ -10,7 +10,15 @@
  */
 import { useRef, useState, useEffect } from "react";
 
-export function CivicInsightGauge({ score, color, showClassification = false }: { score: number; color: string; showClassification?: boolean }) {
+export function CivicInsightGauge({
+  score,
+  color,
+  showClassification = false,
+}: {
+  score: number;
+  color: string;
+  showClassification?: boolean;
+}) {
   const r = 40;
   const circumference = Math.PI * r; // semicircle arc length
 
@@ -23,7 +31,9 @@ export function CivicInsightGauge({ score, color, showClassification = false }: 
     const el = ref.current;
     if (!el) return;
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -44,7 +54,7 @@ export function CivicInsightGauge({ score, color, showClassification = false }: 
           requestAnimationFrame(animate);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -91,19 +101,24 @@ export function CivicInsightGauge({ score, color, showClassification = false }: 
           fontWeight="800"
           fill="currentColor"
         >
-          {displayScore}
+          {score}
         </text>
       </svg>
       <span className="text-[10px] font-semibold" style={{ color: tierColor }}>
         {tier}
       </span>
-      <span className="text-[9px] text-muted-foreground">Civic Insight Score</span>
+      <span className="text-[9px] text-muted-foreground">
+        Civic Insight Score
+      </span>
       {showClassification && (
         <span className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] leading-tight font-medium text-michigan-teal-deep bg-michigan-teal/8 border-michigan-teal/20 mt-0.5">
           Modeled estimate
         </span>
       )}
-      <a href="/methodology" className="text-[9px] text-primary hover:underline mt-0.5">
+      <a
+        href="/methodology"
+        className="text-[9px] text-primary hover:underline mt-0.5"
+      >
         How we build these scores →
       </a>
     </div>

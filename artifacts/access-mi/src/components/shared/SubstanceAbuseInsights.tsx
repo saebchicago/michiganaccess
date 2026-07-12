@@ -50,6 +50,7 @@ import {
 import { toast } from "sonner";
 
 /* ── Modeled overdose trend data (Michigan MODA / CDC WONDER) ── */
+// Source: Michigan MODA, CDC WONDER, Monitoring the Future
 const OVERDOSE_TRENDS = [
   { year: "2017", total: 2729, opioid: 2033, stimulant: 384, alcohol: 312 },
   { year: "2018", total: 2599, opioid: 1941, stimulant: 423, alcohol: 235 },
@@ -60,6 +61,7 @@ const OVERDOSE_TRENDS = [
   { year: "2023", total: 3040, opioid: 2215, stimulant: 870, alcohol: 0 },
 ];
 
+// Source: Michigan MODA Dashboard, MI-SUDDR, CDC
 const COUNTY_OVERDOSE = [
   { county: "Wayne", deaths: 842, rate: 48.3 },
   { county: "Oakland", deaths: 298, rate: 23.7 },
@@ -73,6 +75,7 @@ const COUNTY_OVERDOSE = [
   { county: "Muskegon", deaths: 52, rate: 29.9 },
 ];
 
+// Source: Monitoring the Future 2024 (see citation link below the chart)
 const YOUTH_USE = [
   { substance: "Alcohol", grade8: 15.2, grade10: 29.1, grade12: 46.4 },
   { substance: "Marijuana", grade8: 6.6, grade10: 17.3, grade12: 29.0 },
@@ -85,6 +88,7 @@ const YOUTH_USE = [
   { substance: "Rx Misuse", grade8: 2.1, grade10: 3.8, grade12: 4.4 },
 ];
 
+// Source: MI-SUDDR, University of Michigan Opioid Surveillance (see citation links below the chart)
 const TREATMENT_PIE = [
   { name: "Opioids", value: 38, color: "hsl(var(--michigan-coral))" },
   { name: "Alcohol", value: 28, color: "hsl(var(--primary))" },

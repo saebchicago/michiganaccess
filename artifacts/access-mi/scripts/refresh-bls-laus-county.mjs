@@ -31,9 +31,12 @@
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
+const manifestEntries = [];
+const BUILD_ID = `refresh-bls-laus-county-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 const registryPath = path.join(projectRoot, "src/data/census-geographies.ts");
 const outJsonPath = path.join(
   projectRoot,
@@ -74,8 +77,10 @@ function seriesIdForFips(fips) {
   return `LAUCN${fips}00000000${MEASURE_CODE}`;
 }
 
-async function fetchBatch(seriesIds, startYear, endYear) {
-  const res = await fetch(BLS_API, {
+async function fetchBatch(seriesIds, startYear, endYear, batchIndex) {
+  const text = await fetchAndRecord({
+    sourceId: `bls-laus-county-batch-${batchIndex}`,
+    url: BLS_API,
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -86,9 +91,10 @@ async function fetchBatch(seriesIds, startYear, endYear) {
       startyear: String(startYear),
       endyear: String(endYear),
     }),
+    minBytes: 10,
+    entries: manifestEntries,
   });
-  if (!res.ok) throw new Error(`BLS HTTP ${res.status}`);
-  const body = await res.json();
+  const body = JSON.parse(text);
   if (body.status !== "REQUEST_SUCCEEDED") {
     throw new Error(
       `BLS API status ${body.status}: ${(body.message ?? []).join("; ")}`,
@@ -317,7 +323,7 @@ async function main() {
   for (let b = 0; b < batches.length; b++) {
     const seriesIds = batches[b].map(seriesIdForFips);
     try {
-      const seriesArr = await fetchBatch(seriesIds, startYear, endYear);
+      const seriesArr = await fetchBatch(seriesIds, startYear, endYear, b);
       console.log(
         `  batch ${b + 1}/${batches.length}: ${seriesArr.length} series returned`,
       );
@@ -403,6 +409,15 @@ async function main() {
   };
   const shim = buildTsShim(populated ? "true" : "false");
 
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[refresh-bls-laus-county] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (!APPLY) {
     console.log(
       `\n[refresh-bls-laus-county] dry-run. Re-run with --apply to write ${path.relative(projectRoot, outJsonPath)} + ${path.relative(projectRoot, outTsPath)}.`,
@@ -416,7 +431,21 @@ async function main() {
   );
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-bls-laus-county] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-bls-laus-county] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-bls-laus-county] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

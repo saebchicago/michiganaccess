@@ -156,7 +156,6 @@ const pages = {
   DetectionGapPage: lazy(() => import("@/pages/DetectionGapPage")),
   EquityScorecardPage: lazy(() => import("@/pages/EquityScorecardPage")),
   MarketIntelligencePage: lazy(() => import("@/pages/MarketIntelligencePage")),
-  QualityComparisonPage: lazy(() => import("@/pages/QualityComparisonPage")),
   EnergyBurdenPage: lazy(() => import("@/pages/EnergyBurdenPage")),
   ImpactDashboardPage: lazy(() => import("@/pages/ImpactDashboardPage")),
   DomainDashboardPage: lazy(() => import("@/pages/DomainDashboard")),
@@ -173,6 +172,7 @@ const pages = {
   PublicInvestmentPage: lazy(() => import("@/pages/PublicInvestmentPage")),
   WaterSafetyPage: lazy(() => import("@/pages/WaterSafetyPage")),
   DisasterPage: lazy(() => import("@/pages/DisasterPage")),
+  CivicAskPage: lazy(() => import("@/pages/CivicAskPage")),
   EnergyDeepDivePage: lazy(() => import("@/pages/EnergyDeepDivePage")),
   AirQualityPage: lazy(() => import("@/pages/AirQualityPage")),
   DeepMapPage: lazy(() => import("@/pages/DeepMapPage")),
@@ -380,16 +380,6 @@ export const APP_ROUTES: RouteEntry[] = [
     component: pages.DomainDashboardPage,
     label: "Food Security Intelligence",
   },
-  {
-    path: "/energy",
-    component: pages.DomainDashboardPage,
-    label: "Energy Intelligence",
-  },
-  {
-    path: "/legal-aid",
-    component: pages.DomainDashboardPage,
-    label: "Legal Aid Intelligence",
-  },
   { path: "/civic-data", component: pages.CivicDataPage, label: "Civic Data" },
   {
     path: "/civic-data-hub",
@@ -584,7 +574,7 @@ export const APP_ROUTES: RouteEntry[] = [
   {
     path: "/case-studies",
     component: pages.CaseStudiesPage,
-    label: "Case Studies",
+    label: "Illustrative Scenarios",
   },
   { path: "/changelog", component: pages.ChangelogPage, label: "Changelog" },
   { path: "/press", component: pages.PressPage, label: "Press" },
@@ -604,6 +594,7 @@ export const APP_ROUTES: RouteEntry[] = [
   { path: "/terms", component: pages.TermsPage, label: "Terms of Use" },
   { path: "/zoning", component: pages.ZoningPage, label: "Zoning & Land Use" },
   { path: "/brief", component: pages.BriefPage, label: "County Brief" },
+  { path: "/ask", component: pages.CivicAskPage, label: "Civic Intelligence" },
   {
     path: "/housing-options",
     component: pages.HousingOptionsPage,
@@ -700,11 +691,6 @@ export const APP_ROUTES: RouteEntry[] = [
     label: "BD Financial Model",
   },
   { path: "/portfolio", component: pages.PortfolioPage, label: "Portfolio" },
-  {
-    path: "/quality/compare",
-    component: pages.QualityComparisonPage,
-    label: "Quality Comparison",
-  },
   {
     path: "/energy-burden",
     component: pages.EnergyBurdenPage,
@@ -986,11 +972,6 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Health Conditions Pathways", href: "/conditions" },
       { label: "Clinical Trials", href: "/clinical-trials" },
       { label: "Quality Ratings", href: "/quality" },
-      {
-        label: "Quality Comparison",
-        href: "/quality/compare",
-        badge: "Interactive",
-      },
       { label: "Cost Transparency", href: "/costs" },
       { label: "Prevention & Wellness", href: "/wellness" },
       { label: "Health News", href: "/news" },
@@ -1132,7 +1113,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       },
       { label: "One-Pager", href: "/partnerships/health-systems/one-pager" },
       { label: "Executive Summary", href: "/executive-summary" },
-      { label: "Case Studies", href: "/case-studies" },
+      { label: "Illustrative Scenarios", href: "/case-studies" },
       { label: "Lean Healthcare", href: "/lean-healthcare" },
       { label: "Platform Impact", href: "/impact" },
     ],

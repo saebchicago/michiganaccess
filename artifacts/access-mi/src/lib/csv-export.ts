@@ -7,7 +7,7 @@ interface CsvRow {
   [key: string]: CellValue;
 }
 
-function escapeCsv(v: CellValue): string {
+export function escapeCsv(v: CellValue): string {
   const s = v == null ? "" : String(v);
   return s.includes(",") || s.includes('"') || s.includes("\n")
     ? `"${s.replace(/"/g, '""')}"`
@@ -19,6 +19,7 @@ function buildCsv(
   rows: CsvRow[],
   metaLines: string[],
 ): string {
+export function buildCsv(headers: string[], rows: CsvRow[], metaLines: string[]): string {
   const lines: string[] = [
     ...metaLines.map((m) => `# ${m}`),
     headers.join(","),
@@ -27,7 +28,7 @@ function buildCsv(
   return lines.join("\n");
 }
 
-function triggerDownload(content: string, filename: string): void {
+export function triggerDownload(content: string, filename: string): void {
   const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");

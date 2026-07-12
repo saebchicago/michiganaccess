@@ -81,7 +81,9 @@ const stagger = {
   show: { transition: { staggerChildren: 0.1 } },
 };
 
-// Fallback data used when CDC API is unavailable
+// @fabrication-allow: explicit fallback path, used only when the live CDC
+// API is unavailable - not primary data. Fallback data used when CDC API
+// is unavailable.
 const fallbackAQI = [
   {
     city: "Detroit",
@@ -127,26 +129,9 @@ const fallbackAQI = [
   },
 ];
 
-const waterQualityTrend = [
-  { year: "2019", violations: 142, resolved: 98 },
-  { year: "2020", violations: 128, resolved: 110 },
-  { year: "2021", violations: 115, resolved: 105 },
-  { year: "2022", violations: 98, resolved: 92 },
-  { year: "2023", violations: 82, resolved: 78 },
-  { year: "2024", violations: 71, resolved: 69 },
-];
-
-const renewableGrowth = [
-  { year: "2018", solar: 2.1, wind: 5.8, hydro: 1.9 },
-  { year: "2019", solar: 3.2, wind: 6.4, hydro: 1.9 },
-  { year: "2020", solar: 4.8, wind: 7.1, hydro: 2.0 },
-  { year: "2021", solar: 6.5, wind: 8.3, hydro: 2.0 },
-  { year: "2022", solar: 8.9, wind: 9.7, hydro: 2.1 },
-  { year: "2023", solar: 12.1, wind: 11.2, hydro: 2.1 },
-  { year: "2024", solar: 15.8, wind: 12.9, hydro: 2.2 },
-];
 
 // EIA SEDS - Michigan vs National residential electricity price & consumption (1990–2023)
+// Source: EIA State Energy Data System (SEDS), 1990-2023
 const eiaSEDS = [
   {
     year: "1990",
@@ -220,6 +205,7 @@ const eiaSEDS = [
   },
 ];
 
+// Source: Michigan EGLE (see card description at point of use)
 const recyclingBreakdown = [
   { name: "Paper/Cardboard", value: 34, color: "hsl(27, 87%, 67%)" },
   { name: "Plastics", value: 18, color: "hsl(209, 86%, 31%)" },
@@ -610,53 +596,6 @@ const EnvironmentPage = () => {
                   </Card>
                 </motion.div>
 
-                {/* Water Quality Trend */}
-                <motion.div variants={fadeUp}>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Droplets className="h-5 w-5 text-michigan-teal-deep" />
-                        {t("environment.waterViolations")}
-                      </CardTitle>
-                      <CardDescription>
-                        {t("environment.waterViolationsDesc")}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={waterQualityTrend}>
-                          <CartesianGrid
-                            strokeDasharray="3 3"
-                            stroke="hsl(214, 20%, 90%)"
-                          />
-                          <XAxis dataKey="year" />
-                          <YAxis />
-                          <Tooltip />
-                          <Line
-                            type="monotone"
-                            dataKey="violations"
-                            stroke="hsl(0, 100%, 71%)"
-                            strokeWidth={2}
-                            name="Violations"
-                            dot={{ r: 4 }}
-                          />
-                          <Line
-                            type="monotone"
-                            dataKey="resolved"
-                            stroke="hsl(145, 32%, 30%)"
-                            strokeWidth={2}
-                            name="Resolved"
-                            dot={{ r: 4 }}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                      <p className="mt-4 text-sm text-muted-foreground">
-                        <strong>{t("environment.improvingTrend")}</strong>{" "}
-                        {t("environment.improvingTrendDesc")}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
               </motion.div>
 
               {/* Water Safety Advisories */}
@@ -977,59 +916,6 @@ const EnvironmentPage = () => {
               >
                 <motion.div variants={fadeUp}>
                   <EnergyPriceTracker />
-                </motion.div>
-                <motion.div variants={fadeUp}>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
-                        <Zap className="h-5 w-5 text-michigan-gold-deep" />
-                        {t("environment.renewableGrowth")}
-                      </CardTitle>
-                      <CardDescription>
-                        {t("environment.renewableGrowthDesc")}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ResponsiveContainer width="100%" height={350}>
-                        <AreaChart data={renewableGrowth}>
-                          <CartesianGrid
-                            strokeDasharray="3 3"
-                            stroke="hsl(214, 20%, 90%)"
-                          />
-                          <XAxis dataKey="year" />
-                          <YAxis unit="%" />
-                          <Tooltip formatter={(v: number) => `${v}%`} />
-                          <Area
-                            type="monotone"
-                            dataKey="solar"
-                            stackId="1"
-                            stroke="hsl(27, 87%, 67%)"
-                            fill="hsl(27, 87%, 67%)"
-                            fillOpacity={0.6}
-                            name="Solar"
-                          />
-                          <Area
-                            type="monotone"
-                            dataKey="wind"
-                            stackId="1"
-                            stroke="hsl(209, 86%, 31%)"
-                            fill="hsl(209, 86%, 31%)"
-                            fillOpacity={0.6}
-                            name="Wind"
-                          />
-                          <Area
-                            type="monotone"
-                            dataKey="hydro"
-                            stackId="1"
-                            stroke="hsl(180, 100%, 32%)"
-                            fill="hsl(180, 100%, 32%)"
-                            fillOpacity={0.6}
-                            name="Hydroelectric"
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </CardContent>
-                  </Card>
                 </motion.div>
 
                 {/* EIA SEDS - Electricity Price Comparison */}

@@ -88,7 +88,7 @@ export const DATA_SOURCES: Record<string, DataSource> = {
   },
   "cdc-places-access": {
     id: "cdc-places-access",
-    label: "VERIFIED",
+    label: "MODELED",
     tier: "primary-federal",
     provider: "Centers for Disease Control and Prevention",
     title: "PLACES: Local Data for Better Health, County Data",
@@ -97,6 +97,7 @@ export const DATA_SOURCES: Record<string, DataSource> = {
     datasetLabel: "Measure ACCESS2",
     vintage: "2023",
     url: "https://www.cdc.gov/places/",
+    methodologyUrl: "https://www.cdc.gov/places/methodology/index.html",
     license: PUBLIC_DOMAIN_FEDERAL,
     accessedAt: "2026-06-08",
     lastVerifiedAt: "2026-06-08",

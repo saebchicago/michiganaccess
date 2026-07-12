@@ -28,6 +28,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -66,15 +67,21 @@ const MEASURES = {
   },
 };
 
-async function fetchMeasure(measureId) {
+const manifestEntries = [];
+const BUILD_ID = `refresh-county-health-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+
+async function fetchMeasure(key) {
+  const measureId = MEASURES[key].id;
   const url = `https://api.countyhealthrankings.org/measures/${RELEASE_YEAR}/${STATE_FIPS}/000/${measureId}`;
-  const res = await fetch(url, {
+  const text = await fetchAndRecord({
+    sourceId: `chr-county-health-${key}-${RELEASE_YEAR}`,
+    url,
     headers: { "user-agent": "accessmi-data-refresh" },
+    vintage: MEASURES[key].expectedSourceYears,
+    minBytes: 100,
+    entries: manifestEntries,
   });
-  if (!res.ok) {
-    throw new Error(`CHR fetch failed for measure ${measureId}: HTTP ${res.status}`);
-  }
-  return await res.json();
+  return JSON.parse(text);
 }
 
 function rowsByFips(measureJson) {
@@ -222,9 +229,9 @@ function ensureNoEmDash(s) {
 async function main() {
   console.log("[refresh-county-health] fetching CHR 2025 original release...");
   const [uJson, pJson, fJson] = await Promise.all([
-    fetchMeasure(MEASURES.uninsured.id),
-    fetchMeasure(MEASURES.pcp.id),
-    fetchMeasure(MEASURES.food.id),
+    fetchMeasure("uninsured"),
+    fetchMeasure("pcp"),
+    fetchMeasure("food"),
   ]);
   assertDatasource(uJson, "uninsured");
   assertDatasource(pJson, "pcp");
@@ -419,6 +426,15 @@ async function main() {
     `\n[refresh-county-health] ${changedCount} of 83 counties have at least one value change.`,
   );
 
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[refresh-county-health] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (!APPLY) {
     console.log(
       "\n[refresh-county-health] dry-run (default). Re-run with --apply to write the file.",
@@ -430,7 +446,21 @@ async function main() {
   console.log(`\n[refresh-county-health] wrote ${profilesPath}.`);
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-county-health] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-county-health] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-county-health] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

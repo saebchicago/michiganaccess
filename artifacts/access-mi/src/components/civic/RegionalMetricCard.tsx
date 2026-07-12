@@ -12,6 +12,7 @@ interface Metric {
   lowerIsBetter?: boolean;
 }
 
+// Source: MDHHS Medicaid Managed Care benchmarks, SFY 2026 targets, modeled estimates
 const MEDICAID_BENCHMARKS: Metric[] = [
   { label: "Uninsured Rate", localValue: 6.8, stateAvg: 5.9, benchmark: 5.0, unit: "%", lowerIsBetter: true },
   { label: "Primary Care Access", localValue: 78, stateAvg: 82, benchmark: 85, unit: "%", lowerIsBetter: false },

@@ -115,9 +115,9 @@ ${score.strengths.length ? `<p style="font-size:12px"><strong style="color:#22c5
 ${score.concerns.length ? `<p style="font-size:12px"><strong style="color:#DC2626">Concerns:</strong> ${score.concerns.join(", ")}</p>` : ""}
 ${recs.length ? `<h2>Recommendations</h2><div class="recs"><ol style="margin:0;padding-left:16px">${recs.map((r) => `<li>${r}</li>`).join("")}</ol><p style="font-size:9px;color:#6b7280;margin-top:8px">Population-level suggestions based on data. Not clinical recommendations.</p></div>` : ""}
 <h2>Data Sources</h2>
-<p style="font-size:10px;color:#6b7280">CDC PLACES 2024 · BRFSS 2022 · Robert Wood Johnson Foundation · CDC Foundation · Census ACS</p>
+<p style="font-size:10px;color:#6b7280">CDC PLACES 2024 (ZCTA-level) · BRFSS 2022 · Robert Wood Johnson Foundation · CDC Foundation · Census ACS</p>
 <div class="footer">
-<p>Access Michigan · accessmi.org · Independent civic intelligence platform</p>
+<p>Access Michigan · accessmi.org · Independent Michigan civic intelligence platform.</p>
 <p>Modeled estimates - see accessmi.org/methodology for documentation.</p>
 </div></body></html>`);
     w.document.close();

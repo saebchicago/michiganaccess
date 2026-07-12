@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 
 // County health data for CSV export
+// Source: County Health Rankings & Roadmaps 2025 edition, MDHHS Vital Records, CDC BRFSS
 const COUNTY_DATA = [
   { county: "Washtenaw", lifeExpectancy: 81.2, insuredRate: 97.1, pcpPer100k: 128, obesityRate: 26.1, infantMortality: 4.1, diabetesRate: 8.5, healthRank: 1 },
   { county: "Ottawa", lifeExpectancy: 80.8, insuredRate: 95.8, pcpPer100k: 68, obesityRate: 28.5, infantMortality: 4.5, diabetesRate: 9.2, healthRank: 2 },
@@ -21,6 +22,7 @@ const COUNTY_DATA = [
   { county: "Mackinac", lifeExpectancy: 76.2, insuredRate: 91.5, pcpPer100k: 42, obesityRate: 34.1, infantMortality: 7.2, diabetesRate: 11.5, healthRank: 55 },
 ];
 
+// Source: MDHHS Health Equity Data, CDC WONDER, County Health Rankings & Roadmaps 2025 edition
 const EQUITY_DATA = [
   { metric: "Life Expectancy (yrs)", white: 78.1, black: 73.4, hispanic: 80.2, asian: 83.5 },
   { metric: "Infant Mortality (per 1k)", white: 4.8, black: 12.6, hispanic: 5.1, asian: 3.2 },

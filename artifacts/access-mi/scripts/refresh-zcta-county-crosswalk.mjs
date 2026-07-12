@@ -24,6 +24,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import http from "node:http";
 import https from "node:https";
+import { createManifestEntry, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -36,6 +37,14 @@ const MI_STATE_FIPS = "26";
 const REL_URL =
   "https://www2.census.gov/geo/docs/maps-data/data/rel2020/zcta520/tab20_zcta520_county20_natl.txt";
 const VINTAGE = "2020 Census ZCTA5-County Relationship File";
+// Distinct source_id from refresh-mi-zcta-registry.mjs even though both
+// scripts fetch this same URL - they are two independent ingest runs
+// producing two different output artifacts, and summarizeSourceHealth()
+// keys strictly by source_id, so sharing an id here would let one
+// script's failure mask the other's health status.
+const CROSSWALK_SOURCE_ID = "census-zcta-county-crosswalk-2020";
+const manifestEntries = [];
+const BUILD_ID = `refresh-zcta-county-crosswalk-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 
 function fetchText(url, redirectsLeft = 5) {
   return new Promise((resolve, reject) => {
@@ -238,6 +247,39 @@ export function getPrimaryCountyForZcta(
 `;
 }
 
+async function fetchTextWithManifest() {
+  try {
+    const text = await fetchText(REL_URL);
+    manifestEntries.push(
+      createManifestEntry({
+        sourceId: CROSSWALK_SOURCE_ID,
+        url: REL_URL,
+        status: 200,
+        contentType: "text/plain",
+        payload: text,
+        vintage: VINTAGE,
+        valid: true,
+      }),
+    );
+    return text;
+  } catch (err) {
+    const statusMatch = /^HTTP (\d+)/.exec(err.message);
+    manifestEntries.push(
+      createManifestEntry({
+        sourceId: CROSSWALK_SOURCE_ID,
+        url: REL_URL,
+        status: statusMatch ? Number(statusMatch[1]) : null,
+        contentType: null,
+        payload: "",
+        vintage: VINTAGE,
+        valid: false,
+        invalidReason: err.message,
+      }),
+    );
+    throw err;
+  }
+}
+
 async function main() {
   const countyByFips = await loadCountyLookup();
   const miZctas = await loadMiZctaSet();
@@ -245,7 +287,7 @@ async function main() {
     `[refresh-zcta-county-crosswalk] loaded ${miZctas.size} MI ZCTAs from registry`,
   );
   console.log(`[refresh-zcta-county-crosswalk] fetching ${REL_URL}...`);
-  const text = await fetchText(REL_URL);
+  const text = await fetchTextWithManifest();
   console.log(
     `[refresh-zcta-county-crosswalk] got ${(text.length / 1024 / 1024).toFixed(1)} MB text`,
   );
@@ -277,6 +319,16 @@ async function main() {
   }
 
   const content = buildFile(rows);
+
+  if (manifestEntries.length > 0) {
+    const manifestPath = await writeManifest({
+      projectRoot,
+      buildId: BUILD_ID,
+      entries: manifestEntries,
+    });
+    console.log(`[refresh-zcta-county-crosswalk] archival manifest: ${path.relative(projectRoot, manifestPath)}`);
+  }
+
   if (!APPLY) {
     console.log(
       `\n[refresh-zcta-county-crosswalk] dry-run. Re-run with --apply to write ${path.relative(projectRoot, outPath)}.`,
@@ -289,7 +341,21 @@ async function main() {
   );
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[refresh-zcta-county-crosswalk] failed:", err);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[refresh-zcta-county-crosswalk] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[refresh-zcta-county-crosswalk] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

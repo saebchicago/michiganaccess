@@ -64,8 +64,8 @@ const fadeUp = {
 };
 const stagger = { hidden: {}, show: { transition: { staggerChildren: 0.1 } } };
 
-// [VERIFIED] UF Election Lab VEP turnout - election.lab.ufl.edu/voter-turnout/
-// CSV files: Turnout_2016G_v1.0, Turnout_2018G_v1.1, Turnout_2020G_v1.2,
+// Source: UF Election Lab VEP turnout - election.lab.ufl.edu/voter-turnout/
+// [VERIFIED] CSV files: Turnout_2016G_v1.0, Turnout_2018G_v1.1, Turnout_2020G_v1.2,
 //            Turnout_2022G_v1.0, Turnout_2024G_v0.3 (as of March 2, 2026)
 const voterTurnout = [
   { year: "2016", turnout: 65.54, national: 60.12 },

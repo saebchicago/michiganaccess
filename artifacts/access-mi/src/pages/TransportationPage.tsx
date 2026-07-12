@@ -20,7 +20,6 @@ import {
   Train,
   Car,
   BarChart3,
-  TrendingUp,
   ChevronDown,
   ChevronUp,
   Lock,
@@ -52,19 +51,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-  Cell,
-} from "recharts";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -78,97 +64,6 @@ const fadeUp = {
 /* ------------------------------------------------------------------ */
 /*  CHART DATA                                                         */
 /* ------------------------------------------------------------------ */
-
-const ridership = [
-  { year: "2020", riders: 28.1 },
-  { year: "2021", riders: 34.7 },
-  { year: "2022", riders: 46.3 },
-  { year: "2023", riders: 55.2 },
-  { year: "2024", riders: 61.8 },
-  { year: "2025", riders: 67.4 },
-];
-
-const stopArmViolations = [
-  { county: "Wayne", violations: 4200, hasAICamera: false },
-  { county: "Oakland", violations: 2800, hasAICamera: false },
-  { county: "Macomb", violations: 2100, hasAICamera: false },
-  { county: "Kent", violations: 1400, hasAICamera: false },
-  { county: "Washtenaw", violations: 1100, hasAICamera: false },
-  { county: "Dearborn*", violations: 620, hasAICamera: true },
-  { county: "Genesee", violations: 950, hasAICamera: false },
-  { county: "Ingham", violations: 780, hasAICamera: false },
-];
-
-const seniorAccess = [
-  { region: "Upper Peninsula", gap: 68, available: 32 },
-  { region: "Northern Lower", gap: 52, available: 48 },
-  { region: "West Michigan", gap: 28, available: 72 },
-  { region: "Mid-Michigan", gap: 45, available: 55 },
-  { region: "SE Michigan", gap: 15, available: 85 },
-  { region: "SW Michigan", gap: 38, available: 62 },
-];
-
-// TODO(fars): This array claims "Source: NHTSA FARS" but is hardcoded, with
-// no refresh script behind it. The new scripts/refresh-fars.mjs pulls the
-// 5 most recent FARS case years (2020-2024) into county-traffic-fatalities.ts
-// for the county-snapshot tile. A follow-up PR should either (a) regenerate
-// this annual-by-crash-type breakdown from FARS person.csv (PER_TYP +
-// PBPTYPE for pedestrian / cyclist splits) and source it the same way, or
-// (b) replace this chart with a sourced alternative. Until then, the
-// figures below pre-date this work and may not match current FARS.
-// NHTSA FARS - Michigan traffic fatalities by crash type (2018-2023)
-const nhtsaFatalities = [
-  { year: "2018", pedestrian: 161, cyclist: 30, motorVehicle: 785, total: 976 },
-  { year: "2019", pedestrian: 158, cyclist: 27, motorVehicle: 800, total: 985 },
-  {
-    year: "2020",
-    pedestrian: 174,
-    cyclist: 35,
-    motorVehicle: 839,
-    total: 1048,
-  },
-  {
-    year: "2021",
-    pedestrian: 198,
-    cyclist: 38,
-    motorVehicle: 919,
-    total: 1155,
-  },
-  {
-    year: "2022",
-    pedestrian: 188,
-    cyclist: 33,
-    motorVehicle: 883,
-    total: 1104,
-  },
-  {
-    year: "2023",
-    pedestrian: 175,
-    cyclist: 29,
-    motorVehicle: 841,
-    total: 1045,
-  },
-];
-
-// TODO(fars): Hardcoded county-level fatalities labeled "NHTSA FARS /
-// Michigan State Police, 2023." Same follow-up as nhtsaFatalities above:
-// replace with src/data/county-traffic-fatalities.ts (per-county sums
-// already exist there) or a sourced alternative. Population labels here
-// also use stale rounded figures; the canonical population vintage is
-// PEP V2024 in src/data/michigan-county-profiles.ts.
-// NHTSA - Michigan fatalities by county (top 10)
-const crashesByCounty = [
-  { county: "Wayne", fatalities: 245, population: "1.75M" },
-  { county: "Oakland", fatalities: 98, population: "1.27M" },
-  { county: "Kent", fatalities: 72, population: "664K" },
-  { county: "Macomb", fatalities: 68, population: "881K" },
-  { county: "Genesee", fatalities: 54, population: "406K" },
-  { county: "Washtenaw", fatalities: 38, population: "372K" },
-  { county: "Ingham", fatalities: 35, population: "284K" },
-  { county: "Kalamazoo", fatalities: 32, population: "265K" },
-  { county: "Saginaw", fatalities: 28, population: "191K" },
-  { county: "Muskegon", fatalities: 24, population: "175K" },
-];
 
 /* ------------------------------------------------------------------ */
 /*  RESOURCE DATA                                                      */
@@ -574,306 +469,6 @@ function StatsCards() {
   );
 }
 
-function DataChartsTab() {
-  return (
-    <div className="space-y-8">
-      {/* NHTSA FARS - Fatalities by Type */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        custom={0}
-      >
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-michigan-coral-deep" />
-              Michigan Traffic Fatalities by Type (NHTSA FARS)
-            </CardTitle>
-            <p className="text-xs text-muted-foreground">
-              Annual fatalities 2018–2023 · Source: NHTSA Fatality Analysis
-              Reporting System
-            </p>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={nhtsaFatalities}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="hsl(var(--border))"
-                />
-                <XAxis dataKey="year" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip />
-                <Legend />
-                <Bar
-                  dataKey="motorVehicle"
-                  name="Motor Vehicle"
-                  fill="hsl(209, 86%, 31%)"
-                  stackId="a"
-                  radius={[0, 0, 0, 0]}
-                />
-                <Bar
-                  dataKey="pedestrian"
-                  name="Pedestrian"
-                  fill="hsl(0, 100%, 71%)"
-                  stackId="a"
-                />
-                <Bar
-                  dataKey="cyclist"
-                  name="Cyclist"
-                  fill="hsl(27, 87%, 67%)"
-                  stackId="a"
-                  radius={[4, 4, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-muted-foreground mt-2">
-              <strong>Insight:</strong> Michigan traffic fatalities peaked at
-              1,155 in 2021 (+17% vs. 2019). Pedestrian deaths rose 25% during
-              the same period. Speed, distraction, and impairment remain the top
-              contributing factors.
-            </p>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* NHTSA - Fatalities by County */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        custom={1}
-      >
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-michigan-blue" />
-              Traffic Fatalities by County - Top 10 (NHTSA)
-            </CardTitle>
-            <p className="text-xs text-muted-foreground">
-              2023 data · Source: NHTSA FARS / Michigan State Police
-            </p>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={crashesByCounty} layout="vertical">
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="hsl(var(--border))"
-                />
-                <XAxis type="number" tick={{ fontSize: 12 }} />
-                <YAxis
-                  type="category"
-                  dataKey="county"
-                  width={100}
-                  tick={{ fontSize: 11 }}
-                />
-                <Tooltip formatter={(v: number) => [v, "Fatalities"]} />
-                <Bar
-                  dataKey="fatalities"
-                  fill="hsl(0, 100%, 71%)"
-                  radius={[0, 4, 4, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-muted-foreground mt-2">
-              <strong>Insight:</strong> Wayne County accounts for ~23% of all
-              Michigan traffic fatalities despite having ~17% of the population.
-              Urban areas have higher pedestrian fatality rates, while rural
-              counties see more severe single-vehicle crashes.
-            </p>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Ridership Trends */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        custom={2}
-      >
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-michigan-blue" />
-              Michigan Public Transit Ridership (2020–2025)
-            </CardTitle>
-            <p className="text-xs text-muted-foreground">
-              Millions of annual rides - recovery trend post-pandemic
-            </p>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={260}>
-              <LineChart data={ridership}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="hsl(var(--border))"
-                />
-                <XAxis dataKey="year" tick={{ fontSize: 12 }} />
-                <YAxis tick={{ fontSize: 12 }} unit="M" />
-                <Tooltip
-                  formatter={(v: number) => [`${v}M rides`, "Ridership"]}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="riders"
-                  stroke="hsl(209, 86%, 31%)"
-                  strokeWidth={3}
-                  dot={{ r: 5 }}
-                  activeDot={{ r: 7 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-muted-foreground mt-2">
-              <strong>Insight:</strong> Michigan transit ridership has rebounded
-              140% from the 2020 pandemic low, but remains ~15% below 2019
-              levels. Investment in BRT (Bus Rapid Transit) corridors in Grand
-              Rapids and Detroit is driving growth.
-            </p>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Stop-Arm Violations */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        custom={3}
-      >
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base flex items-center gap-2">
-              <Camera className="h-4 w-4 text-michigan-coral-deep" />
-              School Bus Stop-Arm Violations by County
-            </CardTitle>
-            <p className="text-xs text-muted-foreground">
-              Annual estimated violations - Dearborn* shows impact of AI camera
-              enforcement
-            </p>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={280}>
-              <BarChart data={stopArmViolations}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="hsl(var(--border))"
-                />
-                <XAxis dataKey="county" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip
-                  formatter={(v: number) => [v.toLocaleString(), "Violations"]}
-                />
-                <Bar dataKey="violations" radius={[4, 4, 0, 0]}>
-                  {stopArmViolations.map((entry, index) => (
-                    <Cell
-                      key={index}
-                      fill={
-                        entry.hasAICamera
-                          ? "hsl(145, 32%, 30%)"
-                          : "hsl(0, 100%, 71%)"
-                      }
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-            <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <span className="h-2.5 w-2.5 rounded-sm bg-michigan-coral" /> No
-                AI cameras
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="h-2.5 w-2.5 rounded-sm bg-michigan-forest" />{" "}
-                AI camera deployed
-              </span>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              <strong>Insight:</strong> Dearborn - a leader in AI-powered
-              stop-arm enforcement - shows 71% fewer violations per bus compared
-              to similar-sized districts. AI-enforced accountability deters
-              illegal passing before it happens.
-            </p>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Senior Access Gaps */}
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeUp}
-        custom={4}
-      >
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base flex items-center gap-2">
-              <Accessibility className="h-4 w-4 text-michigan-teal-deep" />
-              Senior Transportation Access Gaps by Region
-            </CardTitle>
-            <p className="text-xs text-muted-foreground">
-              Percentage of seniors 65+ with adequate transportation access vs.
-              gaps
-            </p>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={260}>
-              <BarChart data={seniorAccess} layout="vertical">
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  stroke="hsl(var(--border))"
-                />
-                <XAxis
-                  type="number"
-                  tick={{ fontSize: 12 }}
-                  unit="%"
-                  domain={[0, 100]}
-                />
-                <YAxis
-                  type="category"
-                  dataKey="region"
-                  tick={{ fontSize: 11 }}
-                  width={110}
-                />
-                <Tooltip formatter={(v: number) => [`${v}%`]} />
-                <Legend />
-                <Bar
-                  dataKey="available"
-                  name="Adequate Access"
-                  stackId="a"
-                  fill="hsl(180, 100%, 32%)"
-                  radius={[0, 0, 0, 0]}
-                />
-                <Bar
-                  dataKey="gap"
-                  name="Access Gap"
-                  stackId="a"
-                  fill="hsl(27, 87%, 67%)"
-                  radius={[0, 4, 4, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-muted-foreground mt-2">
-              <strong>Insight:</strong> The Upper Peninsula and Northern Lower
-              Michigan face the most severe senior transportation gaps, with
-              52–68% of seniors lacking reliable access. NEMT (Non-Emergency
-              Medical Transportation) and volunteer driver programs are critical
-              lifelines.
-            </p>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </div>
-  );
-}
-
 function StopArmCameraExplainer() {
   return (
     <motion.div
@@ -1127,6 +722,7 @@ const michiganDataLandscape = [
   },
 ];
 
+// Source: GATIS v1.0 (national open standard for active transportation data), Bureau of Transportation Statistics, ratified March 2026
 const gatisTiers = [
   {
     tier: 1,
@@ -1710,7 +1306,6 @@ export default function TransportationPage() {
             <TabsTrigger value="active-transport">
               Walking, Biking & Accessibility
             </TabsTrigger>
-            <TabsTrigger value="data">Data & Trends</TabsTrigger>
             <TabsTrigger value="stoparm">AI Stop-Arm Cameras</TabsTrigger>
           </TabsList>
 
@@ -2057,11 +1652,6 @@ export default function TransportationPage() {
           {/* ACTIVE TRANSPORTATION TAB */}
           <TabsContent value="active-transport">
             <ActiveTransportationTab />
-          </TabsContent>
-
-          {/* DATA & TRENDS TAB */}
-          <TabsContent value="data">
-            <DataChartsTab />
           </TabsContent>
 
           {/* AI STOP-ARM CAMERAS TAB */}

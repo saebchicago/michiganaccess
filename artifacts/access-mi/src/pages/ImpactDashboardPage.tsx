@@ -1,3 +1,4 @@
+import React from "react";
 import { motion } from "framer-motion";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -30,6 +31,7 @@ import {
 import EmbedShowcase from "@/components/partners/EmbedShowcase";
 import PrintButton from "@/components/shared/PrintButton";
 import { Link } from "react-router-dom";
+import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -40,6 +42,11 @@ const fade = {
   }),
 };
 
+// @fabrication-allow: not external data - values are imported from the
+// governed src/config/platformConstants.ts (COUNTIES_COVERED,
+// RESOURCE_COUNT, DATA_SOURCE_COUNT, LANGUAGES_SUPPORTED); the two bare
+// 0 literals ("Personal Data Collected", "Cost to Users") are platform
+// policy statements, not empirical claims.
 const STATS = [
   {
     icon: MapPin,
@@ -52,6 +59,12 @@ const STATS = [
     value: RESOURCE_COUNT,
     label: "Total Records (facilities + resources + programs)",
     suffix: "+",
+    badge: (
+      <IntegrityBadge
+        label="MODELED"
+        source="Aggregated across 43 public datasets"
+      />
+    ),
   },
   {
     icon: Activity,
@@ -109,11 +122,13 @@ function AnimatedStat({
   suffix,
   label,
   icon: Icon,
+  badge,
 }: {
   value: number;
   suffix: string;
   label: string;
   icon: typeof MapPin;
+  badge?: React.ReactNode;
 }) {
   const { value: count, ref } = useCountUp<HTMLDivElement>(value, 2000);
   // SSR/prerender + first-paint fallback: useCountUp starts at 0 until its
@@ -131,6 +146,7 @@ function AnimatedStat({
           {suffix}
         </p>
         <p className="text-xs font-semibold text-foreground mt-1">{label}</p>
+        {badge && <div className="mt-2 flex justify-center">{badge}</div>}
       </CardContent>
     </Card>
   );

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Build trendSeries.json — county-level vintage series for:
+ * Build trendSeries.json - county-level vintage series for:
  *   (a) population: Census PEP annual 2020-2024 (5 points, no key needed)
  *   (b) uninsuredRate: ACS 5-year S2701_C05_001E, 2018 + 2023 non-overlapping
  *       pair (requires CENSUS_API_KEY)
@@ -22,6 +22,7 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -60,22 +61,23 @@ function fail(msg) {
   process.exit(1);
 }
 
-function assertNotHtml(text, label) {
-  const head = text.slice(0, 300).trimStart().toLowerCase();
-  if (head.startsWith("<!doctype") || head.startsWith("<html") || head.startsWith("<")) {
-    fail(
-      `HTML response (200-masked error) from ${label}.\n  First 300 chars: ${text.slice(0, 300)}`
-    );
-  }
-}
+// Collected across this run so the manifest reflects every fetch attempt,
+// including ones a later validation step causes the build to fail on.
+const manifestEntries = [];
+const BUILD_ID = `build-trend-series-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 
 // ── PEP fetch ────────────────────────────────────────────────────────────────
 
-async function fetchPep() {
+async function fetchPep(manifestEntries) {
   console.log("→ Fetching Census PEP CSV…");
-  const res = await fetch(PEP_URL, { headers: { "user-agent": "accessmi-trend-build" } });
-  if (!res.ok) fail(`PEP fetch HTTP ${res.status}`);
-  const csv = await res.text();
+  const csv = await fetchAndRecord({
+    sourceId: "census-pep-counties",
+    url: PEP_URL,
+    headers: { "user-agent": "accessmi-trend-build" },
+    vintage: "2024",
+    minBytes: 10_000,
+    entries: manifestEntries,
+  });
   const lines = csv.split(/\r?\n/);
   const hdr = lines[0].split(",");
   const col = (n) => {
@@ -116,7 +118,7 @@ async function fetchPep() {
 
 // ── ACS fetch ────────────────────────────────────────────────────────────────
 
-async function fetchAcs(year) {
+async function fetchAcs(year, manifestEntries) {
   if (!CENSUS_API_KEY) {
     fail(
       `CENSUS_API_KEY is not set. ACS data requires an API key.\n` +
@@ -127,21 +129,26 @@ async function fetchAcs(year) {
 
   const url =
     `${ACS_BASE}/${year}/acs/acs5/subject` +
-    `?get=NAME,S2701_C05_001E&for=county:*&in=state:26&key=${CENSUS_API_KEY}`;
+    `?get=NAME,S2701_C05_001E,S2701_C05_001M&for=county:*&in=state:26&key=${CENSUS_API_KEY}`;
 
   console.log(`→ Fetching ACS ${year} (S2701 uninsured)…`);
-  const res = await fetch(url, { headers: { "user-agent": "accessmi-trend-build" } });
-  const text = await res.text();
-  assertNotHtml(text, `ACS ${year}`);
-  if (!res.ok) fail(`ACS ${year} HTTP ${res.status}: ${text.slice(0, 200)}`);
+  const text = await fetchAndRecord({
+    sourceId: `census-acs5-s2701-${year}`,
+    url,
+    headers: { "user-agent": "accessmi-trend-build" },
+    vintage: String(year),
+    minBytes: 1_000,
+    entries: manifestEntries,
+  });
 
   const rows = JSON.parse(text);
-  // rows[0] is header: [NAME, S2701_C03_001E, state, county]
+  // rows[0] is header: [NAME, S2701_C05_001E, S2701_C05_001M, state, county]
   const byFips = new Map();
   for (const r of rows.slice(1)) {
-    const fips = r[2] + r[3]; // state + county
+    const fips = r[3] + r[4]; // state + county
     const pct = parseFloat(r[1]);
-    byFips.set(fips, pct);
+    const moe = parseFloat(r[2]);
+    byFips.set(fips, { pct, moe: Number.isFinite(moe) ? moe : null });
   }
   return byFips;
 }
@@ -180,9 +187,9 @@ async function main() {
   console.log(`ACS pair: ${ACS_V1} (${ACS_V1 - 4}–${ACS_V1}) vs ${ACS_V2} (${ACS_V2 - 4}–${ACS_V2}), gap=${gap} years ✓`);
 
   const [pepData, acsV1Data, acsV2Data] = await Promise.all([
-    fetchPep(),
-    fetchAcs(ACS_V1),
-    fetchAcs(ACS_V2),
+    fetchPep(manifestEntries),
+    fetchAcs(ACS_V1, manifestEntries),
+    fetchAcs(ACS_V2, manifestEntries),
   ]);
 
   // Build per-county ACS map + validate coverage
@@ -195,12 +202,12 @@ async function main() {
     const v2 = acsV2Data.get(fips);
     if (v1 == null) acsErrors.push(`ACS ${ACS_V1} missing for ${county} (${fips})`);
     if (v2 == null) acsErrors.push(`ACS ${ACS_V2} missing for ${county} (${fips})`);
-    if (v1 != null && (v1 < 0 || v1 > 50)) acsErrors.push(`ACS ${ACS_V1} implausible ${v1}% for ${county}`);
-    if (v2 != null && (v2 < 0 || v2 > 50)) acsErrors.push(`ACS ${ACS_V2} implausible ${v2}% for ${county}`);
+    if (v1 != null && (v1.pct < 0 || v1.pct > 50)) acsErrors.push(`ACS ${ACS_V1} implausible ${v1.pct}% for ${county}`);
+    if (v2 != null && (v2.pct < 0 || v2.pct > 50)) acsErrors.push(`ACS ${ACS_V2} implausible ${v2.pct}% for ${county}`);
     if (v1 != null && v2 != null) {
       acsByCounty.set(county, [
-        { vintageYear: ACS_V1, vintageLabel: `${ACS_V1} ACS 5-yr (${ACS_V1 - 4}–${ACS_V1})`, value: v1 },
-        { vintageYear: ACS_V2, vintageLabel: `${ACS_V2} ACS 5-yr (${ACS_V2 - 4}–${ACS_V2})`, value: v2 },
+        { vintageYear: ACS_V1, vintageLabel: `${ACS_V1} ACS 5-yr (${ACS_V1 - 4}–${ACS_V1})`, value: v1.pct, moe: v1.moe },
+        { vintageYear: ACS_V2, vintageLabel: `${ACS_V2} ACS 5-yr (${ACS_V2 - 4}–${ACS_V2})`, value: v2.pct, moe: v2.moe },
       ]);
     }
   }
@@ -297,9 +304,30 @@ async function main() {
   await writeFile(OUT_PATH, JSON.stringify(payload, null, 2) + "\n", "utf8");
   console.log(`\n✓ wrote ${path.relative(projectRoot, OUT_PATH)}`);
   console.log(`  ${MI_COUNTIES_83.length} counties × 2 metrics`);
+
+  const manifestPath = await writeManifest({
+    projectRoot,
+    buildId: BUILD_ID,
+    entries: manifestEntries,
+  });
+  console.log(`  archival manifest: ${path.relative(projectRoot, manifestPath)}`);
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("[build-trend-series] failed:", err.message);
+  if (manifestEntries.length > 0) {
+    try {
+      const manifestPath = await writeManifest({
+        projectRoot,
+        buildId: BUILD_ID,
+        entries: manifestEntries,
+      });
+      console.error(
+        `[build-trend-series] archival manifest written despite failure: ${path.relative(projectRoot, manifestPath)}`,
+      );
+    } catch (manifestErr) {
+      console.error("[build-trend-series] also failed to write archival manifest:", manifestErr.message);
+    }
+  }
   process.exit(1);
 });

@@ -5,7 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { computeHealthScore } from "@/lib/health-score";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
-import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
+import { GeoResolutionBadge } from "@/components/shared/GeoResolutionBadge";
 import type { PlacesMeasure } from "@/lib/places-client";
 
 function ScoreGauge({ score, color }: { score: number; color: string }) {
@@ -74,6 +75,14 @@ export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
               Neighborhood Health Score
             </p>
             <p className="text-sm text-foreground font-medium">ZIP {zipCode}</p>
+            <div className="mt-1.5 flex items-center justify-center gap-1.5">
+              <IntegrityBadge
+                label="MODELED"
+                source="CDC PLACES 2024 (BRFSS 2022)"
+                vintage="2024"
+              />
+              <GeoResolutionBadge resolution="zcta" zip={zipCode} />
+            </div>
           </div>
 
           <ScoreGauge score={result.score} color={result.color} />
@@ -132,7 +141,7 @@ export default function NeighborhoodHealthScore({ zipCode, data }: Props) {
               Composite of 12 CDC PLACES measures weighted by health impact.
               Each measure scores 0-100 based on distance from Michigan state
               average. This is a modeled composite, not a clinical assessment.
-              Source: CDC PLACES 2024, BRFSS 2022.
+              Source: CDC PLACES 2024, BRFSS 2022, ZCTA-level.
             </p>
           </details>
 

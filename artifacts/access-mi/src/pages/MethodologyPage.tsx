@@ -118,6 +118,9 @@ const equityPrinciples = [
 
 const EVIDENCE_ACT_NAME = "Foundations for Evidence-Based Policymaking Act"; // check-copy-ok: official US federal law name
 
+// @fabrication-allow: not external data - this is the platform's own
+// disclosed composite-score weighting methodology, not a claim about an
+// external fact.
 const scoringWeights = [
   {
     label: "Geographic Access",
@@ -682,6 +685,15 @@ export default function MethodologyPage() {
               age-adjusted rates; year-over-year comparisons should account for
               methodology changes. All data has inherent lag (typically 1–2
               years from collection to publication).
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              <a
+                href="/data/source-catalog.json"
+                className="text-primary underline text-sm"
+                download
+              >
+                Download machine-readable source catalog (JSON)
+              </a>
             </p>
           </div>
         </section>
@@ -1416,7 +1428,7 @@ export default function MethodologyPage() {
                     specific site (clinic, FQHC, monitoring station).
                   </li>
                   <li>
-                    <strong className="text-foreground">Modeled to ZIP</strong>{" "}
+                    <strong className="text-foreground">Modeled to ZCTA</strong>{" "}
                     - apportioned from a larger area; paired with the MODELED
                     integrity tier.
                   </li>

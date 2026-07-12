@@ -124,9 +124,9 @@ const studies = [
 
 const CaseStudiesPage = () => {
   usePageMeta({
-    title: "Case Studies - Access Michigan",
+    title: "Illustrative Scenarios - Access Michigan",
     description:
-      "Exploratory case studies demonstrating how public data infrastructure can support ambulatory gap analysis, insurance appeal access, and SDOH navigation in Michigan.",
+      "Illustrative scenarios demonstrating how public data infrastructure can support ambulatory gap analysis, insurance appeal access, and SDOH navigation in Michigan.",
     path: "/case-studies",
   });
 
@@ -143,7 +143,7 @@ const CaseStudiesPage = () => {
               variant="outline"
               className="mb-3 uppercase tracking-wider text-xs border-primary/30 text-primary"
             >
-              Case Studies
+              Illustrative Scenarios
             </Badge>
             <h1 className="text-3xl font-bold text-foreground lg:text-4xl mb-3">
               Exploratory Impact Scenarios
@@ -169,7 +169,7 @@ const CaseStudiesPage = () => {
                   Illustrative Scenarios - Not Measured Outcomes
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  These case studies present{" "}
+                  These scenarios present{" "}
                   <strong>
                     projected methodologies and potential applications
                   </strong>{" "}
@@ -306,7 +306,7 @@ const CaseStudiesPage = () => {
 
           <div className="mt-10 text-center">
             <ShareButton
-              title="Access Michigan - Exploratory Case Studies"
+              title="Access Michigan - Illustrative Scenarios"
               description="Illustrative scenarios: ambulatory gap analysis, insurance appeal automation, and SDOH navigation across Michigan."
             />
           </div>
