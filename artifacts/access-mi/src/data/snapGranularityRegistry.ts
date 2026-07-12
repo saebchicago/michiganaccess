@@ -8,8 +8,8 @@
  * provenance panel reads its denominator + source + vintage from here; the
  * granularity gate (renderer-side) reads nativeResolution from here.
  *
- * This is NOT a new source declaration. The sources (USDA FNS-388A, USDA
- * SNAP Retailer Locator, Census PEP) are already in the platform's
+ * This is NOT a new source declaration. The sources (USDA FNA FNS-388A,
+ * USDA SNAP Retailer Locator, Census PEP) are already in the platform's
  * sourcesRegistry. This file only declares which fields of the family's
  * existing data files (snapCountyGenerated.json, county-snap-retailers.ts,
  * snapMichiganFallback.ts) correspond to renderable metrics.
@@ -68,10 +68,10 @@ export interface SnapMetricDef {
   isRate: boolean;
 }
 
-const USDA_FNS_SNAP_DATA_PAGE =
-  "https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap";
+const USDA_FNA_SNAP_DATA_PAGE =
+  "https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap";
 
-const USDA_RETAILER_DATA_PAGE = "https://www.fns.usda.gov/snap/retailer/data";
+const USDA_RETAILER_DATA_PAGE = "https://www.fna.usda.gov/snap/retailer/data";
 
 /**
  * The slice's 4 core metrics. All four are county-native, all four are
@@ -97,7 +97,7 @@ export const SNAP_FAMILY_METRICS: SnapMetricDef[] = [
     vintage: SNAP_COUNTY_PROVENANCE.vintage,
     denominator: "raw count (no denominator)",
     computation:
-      "Average monthly participants reported by USDA FNS-388A for each county, fiscal year 2022.",
+      "Average monthly participants reported by USDA FNA (formerly FNS) FNS-388A for each county, fiscal year 2022.",
     isRate: false,
   },
   {
@@ -116,7 +116,7 @@ export const SNAP_FAMILY_METRICS: SnapMetricDef[] = [
     vintage: SNAP_COUNTY_PROVENANCE.vintage,
     denominator: "raw count (no denominator)",
     computation:
-      "Average monthly certified households reported by USDA FNS-388A for each county, fiscal year 2022.",
+      "Average monthly certified households reported by USDA FNA (formerly FNS) FNS-388A for each county, fiscal year 2022.",
     isRate: false,
   },
   {
@@ -161,8 +161,8 @@ export const SNAP_FAMILY = {
   description:
     "USDA Supplemental Nutrition Assistance Program participation and retail-access metrics for Michigan counties.",
   primarySource: {
-    name: "USDA Food and Nutrition Service",
-    url: USDA_FNS_SNAP_DATA_PAGE,
+    name: "USDA Food and Nutrition Administration (FNA)",
+    url: USDA_FNA_SNAP_DATA_PAGE,
   },
   // Native resolution of the family as a whole. The slice does not mix
   // resolutions; the granularity gate applies only when cross-overlaying

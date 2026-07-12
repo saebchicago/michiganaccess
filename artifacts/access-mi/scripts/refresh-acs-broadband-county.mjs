@@ -49,6 +49,7 @@ const outJsonPath = path.join(
 const outTsPath = path.join(projectRoot, "src/data/acs-broadband-county.ts");
 
 const APPLY = process.argv.includes("--apply");
+const REQUIRE_LIVE = process.argv.includes("--require-live");
 const CENSUS_API_KEY = process.env.CENSUS_API_KEY ?? "";
 
 const ACS_VINTAGE = 2023; // most recent ACS 5-Year stable release
@@ -100,6 +101,30 @@ async function fetchAcs(miFips, manifestEntries) {
     minBytes: 500,
     entries: manifestEntries,
   });
+  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ACS`);
+  // Census returns HTTP 200 with an HTML error page when CENSUS_API_KEY is
+  // missing or invalid, so we must sniff the body before trusting .json().
+  const bodyText = await res.text();
+  const contentType = res.headers.get("content-type") ?? "";
+  const trimmed = bodyText.trimStart();
+  if (
+    contentType.includes("text/html") ||
+    trimmed.startsWith("<") ||
+    !contentType.toLowerCase().includes("json")
+  ) {
+    const preview = bodyText.slice(0, 240).replace(/\s+/g, " ").trim();
+    throw new Error(
+      `ACS returned non-JSON response (content-type "${contentType}"). ` +
+        `Census returns HTTP 200 with an HTML error page when CENSUS_API_KEY ` +
+        `is missing or invalid. Body preview: ${preview}`,
+    );
+  }
+  let rows;
+  try {
+    rows = JSON.parse(bodyText);
+  } catch (err) {
+    throw new Error(`ACS response was not valid JSON: ${err.message}`);
+  }
   const rows = JSON.parse(text);
   if (!Array.isArray(rows) || rows.length < 2) {
     throw new Error("ACS returned no rows (schema drift or key rejected)");
@@ -325,6 +350,12 @@ async function main() {
   console.log(
     `[refresh-acs-broadband-county] CENSUS_API_KEY: ${hasKey ? "set" : "NOT set (will write pending-ci stub)"}`,
   );
+  if (REQUIRE_LIVE && !hasKey) {
+    throw new Error(
+      "CENSUS_API_KEY is empty and --require-live was passed. " +
+        "Refusing to write pending-ci stub in CI mode.",
+    );
+  }
 
   let records;
   let populated;

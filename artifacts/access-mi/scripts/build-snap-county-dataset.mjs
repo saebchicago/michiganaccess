@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Build the Michigan SNAP county participation dataset from the USDA FNS-388A
- * release (project-area / county-level average monthly participation).
+ * Build the Michigan SNAP county participation dataset from the USDA Food and
+ * Nutrition Administration (FNA, formerly FNS) FNS-388A release (project-area /
+ * county-level average monthly participation).
  *
  * Output:
  *   src/data/snapCountyGenerated.json   - { $schema, provenance, counties[] }
@@ -50,11 +51,11 @@ const projectRoot = path.resolve(here, "..");
 const outFile = path.join(projectRoot, "src/data/snapCountyGenerated.json");
 
 const DEFAULT_URL =
-  "https://www.fns.usda.gov/sites/default/files/resource-files/snap-zip-fns388a-2.zip";
+  "https://www.fna.usda.gov/sites/default/files/resource-files/snap-zip-fns388a-2.zip";
 const SOURCE_URL = process.env.SNAP_388A_URL || DEFAULT_URL;
-const SOURCE_NAME = "USDA FNS SNAP Data Tables";
+const SOURCE_NAME = "USDA FNA SNAP Data Tables";
 const SOURCE_PAGE =
-  "https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap";
+  "https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap";
 
 const DRY_RUN = process.argv.includes("--dry-run");
 const fileArgIdx = process.argv.indexOf("--file");
@@ -432,7 +433,7 @@ async function main() {
   const payload = {
     $schema: "snapCountyGenerated.v1",
     provenance: {
-      dataset: "USDA FNS-388A SNAP project-area / county participation",
+      dataset: "USDA FNA FNS-388A SNAP project-area / county participation",
       vintage,
       source_name: SOURCE_NAME,
       source_url: SOURCE_PAGE,

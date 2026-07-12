@@ -150,15 +150,15 @@ across the app boundary.
   // SnapStateData: lines 31-38
   //   stateTotal, stateAsOf, stateSourceUrl, benefitIssuanceMonthly, benefitAsOf, benefitSourceUrl
   ```
-- **Upstream source:** USDA FNS SNAP Data Tables (county annual Excel + state monthly tables). See V3_DESIGN.md lines 124-130, 183-184. URLs already in fallback (`snapMichiganFallback.ts` lines 41-44).
-- **API key needed:** **No** (USDA FNS files are public). No env var.
+- **Upstream source:** USDA FNA (formerly FNS) SNAP Data Tables (county annual Excel + state monthly tables). See V3_DESIGN.md lines 124-130, 183-184. URLs already in fallback (`snapMichiganFallback.ts` lines 41-44).
+- **API key needed:** **No** (USDA FNA files are public). No env var.
 - **Model summary:** This is **measured data, not a proportional model** - the function transcribes USDA county rows and state totals into the interface. County annual is FY2022-vintage Excel; state is current-month-minus-2 monthly table.
 - **Files to add/change:**
   - Add `supabase/functions/usda-snap-county/index.ts`.
   - Edit `useSnapMichigan.ts` queryFn (lines 22-27) to invoke + fallback.
   - Register in `supabase/config.toml` (add `[functions.usda-snap-county]` if per-function config is adopted).
   - Add a refresh workflow analogous to `.github/workflows/build-data.yml`.
-- **Provenance/manifest updates:** `sourceName`/`sourceUrl` are emitted inside each row, so no `IntegrityBadge` change. Confirm USDA FNS is present in `artifacts/access-mi/src/data/sourcesRegistry.ts`; add the SNAP retailer / state-issuance entries to `sourceManifest.ts` if any rendered numeric figure (e.g. `9,200+` retailers, `1.4M` recipients) is not already anchored (the manifest already has `1,544,250` food-insecure and `$1.70` SNAP multiplier; verify the recipient/retailer counts).
+- **Provenance/manifest updates:** `sourceName`/`sourceUrl` are emitted inside each row, so no `IntegrityBadge` change. Confirm USDA FNA is present in `artifacts/access-mi/src/data/sourcesRegistry.ts`; add the SNAP retailer / state-issuance entries to `sourceManifest.ts` if any rendered numeric figure (e.g. `9,200+` retailers, `1.4M` recipients) is not already anchored (the manifest already has `1,544,250` food-insecure and `$1.70` SNAP multiplier; verify the recipient/retailer counts).
 - **Testing approach:** Unit test the row parser against a fixture USDA Excel slice (Michigan rows only) asserting 83 counties + FIPS validity + `persons >= 0`; assert returned shape deep-equals `SnapMichiganData`; assert state monthly fields populate. Run through `pnpm check:tests`, `pnpm typecheck`, `check-counts.mjs` / `check-provenance.mjs`.
 - **Complexity: M.** XLSX parsing in Deno is the main lift (needs a Deno-compatible xlsx lib, e.g. `sheetjs` via esm.sh); two upstream artifacts (annual + monthly) to merge.
 
@@ -301,12 +301,12 @@ Dependencies:
    A full XLSX->Supabase ingest with an automated second source remains out of
    scope and is not recommended.
 
-2. **XLSX parsing in Deno for `usda-snap-county`.** The USDA FNS county file is
+2. **XLSX parsing in Deno for `usda-snap-county`.** The USDA FNA county file is
    Excel. Need a Deno-compatible parser (e.g. SheetJS via esm.sh) and a stable
    URL for the "latest available" county Excel - V3_DESIGN.md says "Azure CDN"
    (line 126) but no concrete URL is in the repo. **Open: the exact download URL
-   for the FNS annual county Excel and the state monthly table.** The fallback
-   only cites the FNS landing page, not a direct file URL.
+   for the FNA annual county Excel and the state monthly table.** The fallback
+   only cites the FNA landing page, not a direct file URL.
 
 3. **`CENSUS_API_KEY` availability.** #3 and #4 require it. It is already
    required by `census-acs-proxy`, so presumably configured in the Supabase

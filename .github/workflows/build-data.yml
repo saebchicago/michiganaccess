@@ -31,6 +31,7 @@ jobs:
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
 
       - name: Populate ACS broadband county data
+        run: node artifacts/access-mi/scripts/refresh-acs-broadband-county.mjs --apply --require-live
         run: node scripts/refresh-acs-broadband-county.mjs --apply
         working-directory: artifacts/access-mi
         env:
@@ -40,6 +41,9 @@ jobs:
         run: |
           git config user.name "data-bot"
           git config user.email "actions@users.noreply.github.com"
+          git add artifacts/access-mi/public/data
+          git add artifacts/access-mi/src/data/acs-broadband-county.generated.json
+          git add artifacts/access-mi/src/data/acs-broadband-county.ts
           git add artifacts/access-mi/public/data artifacts/access-mi/src/data/acs-broadband-county.generated.json artifacts/access-mi/src/data/acs-broadband-county.ts
           if git diff --staged --quiet; then
             echo "No data changes."

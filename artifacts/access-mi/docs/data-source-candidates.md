@@ -782,15 +782,15 @@ Compare, MI School Data / MDE.
 4. **Michigan coverage:** confirmed (state-by-state CSV download).
 5. **Latest vintage:** Rolling current; historical files updated.
 6. **Update cadence:** monthly (rolling refresh).
-7. **Access method:** bulk CSV per state; also USDA-FNS ArcGIS Hub feature
+7. **Access method:** bulk CSV per state; also USDA-FNA ArcGIS Hub feature
    service.
-8. **Proposed provenance tier:** VERIFIED. USDA-FNS primary authorization
+8. **Proposed provenance tier:** VERIFIED. USDA-FNA primary authorization
    register.
 9. **Relation to existing 41:** net-new (food-access surface).
 10. **Effort:** S. State CSV download, fits the pattern.
 11. **Disposition:** GO. Direct food-access civic value, low effort.
 12. **Source URL(s):**
-    - https://www.fns.usda.gov/snap/retailer/historical-data
+    - https://www.fna.usda.gov/snap/retailer-locator/data
     - https://usda-snap-retailers-usda-fns.hub.arcgis.com/datasets/USDA-FNS::snap-retailer-location-data/
 
 #### FCC National Broadband Map (BDC)

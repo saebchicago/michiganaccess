@@ -14,6 +14,11 @@ export function escapeCsv(v: CellValue): string {
     : s;
 }
 
+function buildCsv(
+  headers: string[],
+  rows: CsvRow[],
+  metaLines: string[],
+): string {
 export function buildCsv(headers: string[], rows: CsvRow[], metaLines: string[]): string {
   const lines: string[] = [
     ...metaLines.map((m) => `# ${m}`),
@@ -40,7 +45,7 @@ export function exportMedicaidCoverageAtRiskCsv(
     currentEnrollment: number;
     projectedLossLow: number;
     projectedLossHigh: number;
-  }>
+  }>,
 ): void {
   const date = new Date().toISOString().slice(0, 10);
   const meta = [
@@ -66,7 +71,10 @@ export function exportMedicaidCoverageAtRiskCsv(
     projected_loss_low: e.projectedLossLow,
     projected_loss_high: e.projectedLossHigh,
   }));
-  triggerDownload(buildCsv(headers, rows, meta), `michigan-medicaid-coverage-at-risk-${date}.csv`);
+  triggerDownload(
+    buildCsv(headers, rows, meta),
+    `michigan-medicaid-coverage-at-risk-${date}.csv`,
+  );
 }
 
 export function exportDualEligibleExposureCsv(
@@ -76,7 +84,7 @@ export function exportDualEligibleExposureCsv(
     acsDualEstimate: number;
     allocatedLow: number;
     allocatedHigh: number;
-  }>
+  }>,
 ): void {
   const date = new Date().toISOString().slice(0, 10);
   const meta = [
@@ -104,7 +112,10 @@ export function exportDualEligibleExposureCsv(
     allocated_low: e.allocatedLow,
     allocated_high: e.allocatedHigh,
   }));
-  triggerDownload(buildCsv(headers, rows, meta), `michigan-dual-eligible-exposure-${date}.csv`);
+  triggerDownload(
+    buildCsv(headers, rows, meta),
+    `michigan-dual-eligible-exposure-${date}.csv`,
+  );
 }
 
 export function exportSnapCoverageAtRiskCsv(
@@ -114,13 +125,13 @@ export function exportSnapCoverageAtRiskCsv(
     currentSnapEnrollment: number;
     projectedAffectedLow: number;
     projectedAffectedHigh: number;
-  }>
+  }>,
 ): void {
   const date = new Date().toISOString().slice(0, 10);
   const meta = [
     `accessmi.org - Michigan SNAP Coverage at Risk`,
     `Generated: ${date}`,
-    `Source: MLPP Michigan estimate (74,000) × USDA FNS FY2022 county enrollment share`,
+    `Source: MLPP Michigan estimate (74,000) × USDA FNA (formerly FNS) FY2022 county enrollment share`,
     `Uncertainty band: ±40% (GAO-19-56 historical range). Low = midpoint × 0.60, High = midpoint × 1.40.`,
     `Methodology: https://accessmi.org/methodology/snap-coverage-at-risk`,
     `IMPORTANT: These are modeled ranges, not point estimates. Exposure does not equal loss.`,
@@ -139,5 +150,8 @@ export function exportSnapCoverageAtRiskCsv(
     projected_affected_low: e.projectedAffectedLow,
     projected_affected_high: e.projectedAffectedHigh,
   }));
-  triggerDownload(buildCsv(headers, rows, meta), `michigan-snap-coverage-at-risk-${date}.csv`);
+  triggerDownload(
+    buildCsv(headers, rows, meta),
+    `michigan-snap-coverage-at-risk-${date}.csv`,
+  );
 }

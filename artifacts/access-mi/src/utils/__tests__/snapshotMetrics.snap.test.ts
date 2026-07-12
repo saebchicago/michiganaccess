@@ -129,7 +129,7 @@ describe("USDA SNAP registry entry", () => {
       (s) => s.name === "USDA SNAP Retailer Locator",
     );
     expect(snap).toBeDefined();
-    expect(snap!.org).toBe("USDA-FNS");
-    expect(snap!.url).toContain("fns.usda.gov/snap/retailer");
+    expect(snap!.org).toBe("USDA-FNA");
+    expect(snap!.url).toContain("fna.usda.gov/snap/retailer");
   });
 });

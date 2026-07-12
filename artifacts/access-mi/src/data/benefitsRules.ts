@@ -163,8 +163,9 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     fplMultiplier: 1.3,
     ruleLabel: "130% FPL gross income test (federal baseline)",
     effectiveYear: 2026,
-    sourceUrl: "https://www.fns.usda.gov/snap/allotment/cola/fy26",
-    sourceName: "USDA FNS - FY2026 SNAP Cost-of-Living Adjustments",
+    sourceUrl: "https://www.fna.usda.gov/snap/allotment/cola/fy26",
+    sourceName:
+      "USDA Food and Nutrition Administration (FNA) - FY2026 SNAP Cost-of-Living Adjustments",
     provenance: "VERIFIED",
     learnMoreHref: "/financial-help",
   },
@@ -178,8 +179,8 @@ export const BENEFITS_PROGRAMS: BenefitsProgram[] = [
     requiredAny: ["pregnant", "child_under_5"],
     effectiveYear: 2026,
     sourceUrl:
-      "https://www.fns.usda.gov/wic/income-eligibility-guidelines-2025-26",
-    sourceName: "USDA FNS - WIC Income Eligibility Guidelines",
+      "https://www.fna.usda.gov/wic/income-eligibility-guidelines-2025-26",
+    sourceName: "USDA FNA - WIC Income Eligibility Guidelines",
     provenance: "VERIFIED",
     learnMoreHref: "/financial-help",
   },

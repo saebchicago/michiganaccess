@@ -209,10 +209,10 @@ describe("buildBenchmarks", () => {
     for (const id of ["enrollmentTotal", "enrollmentHouseholds"]) {
       const b = buildBenchmarks(id);
       const stateSrc = b!.state.sources.find((s) =>
-        s.name.includes("USDA FNS"),
+        s.name.includes("USDA FNA"),
       );
       const nationalSrc = b!.national.sources.find((s) =>
-        s.name.includes("USDA FNS"),
+        s.name.includes("USDA FNA"),
       );
       expect(stateSrc?.vintage).toBe("February 2026 (Preliminary)");
       expect(nationalSrc?.vintage).toBe("February 2026 (Preliminary)");
