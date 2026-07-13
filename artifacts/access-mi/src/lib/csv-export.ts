@@ -14,12 +14,11 @@ export function escapeCsv(v: CellValue): string {
     : s;
 }
 
-function buildCsv(
+export function buildCsv(
   headers: string[],
   rows: CsvRow[],
   metaLines: string[],
 ): string {
-export function buildCsv(headers: string[], rows: CsvRow[], metaLines: string[]): string {
   const lines: string[] = [
     ...metaLines.map((m) => `# ${m}`),
     headers.join(","),
