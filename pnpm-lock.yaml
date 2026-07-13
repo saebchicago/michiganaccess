@@ -220,7 +220,7 @@ importers:
         specifier: ^1.5.3
         version: 1.5.3(leaflet@1.9.4)
       mi-federal-data:
-        specifier: git+https://github.com/saebchicago/mi-federal-data.git
+        specifier: git+https://github.com/saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742
         version: https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742
       react-i18next:
         specifier: ^17.0.8
