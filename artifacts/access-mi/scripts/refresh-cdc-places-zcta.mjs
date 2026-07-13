@@ -13,8 +13,8 @@
  * with all measures null.
  *
  * The measure catalog, row parsing, provenance shape, and sanity gates
- * live in the `mi-federal-data` shared package (lib/mi-federal-data),
- * consumed here as a workspace dependency and also by ourintel.org's
+ * live in the `mi-federal-data` shared package (saebchicago/mi-federal-data),
+ * consumed here as a git dependency and also by ourintel.org's
  * Michigan ingest path -- one canonical source instead of two independently
  * maintained (and drift-prone) copies. This script keeps its own fetch loop
  * (routed through fetchAndRecord for archival) and its own file-writing /
