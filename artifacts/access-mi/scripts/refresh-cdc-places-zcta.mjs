@@ -4,13 +4,21 @@
  * `src/data/cdc-places-zcta.ts` (typed shim) from the CDC PLACES ZCTA
  * release.
  *
- * Extracts 17 model-based adult-prevalence measures for the 992 Michigan
+ * Extracts 40 model-based adult-prevalence measures for the 992 Michigan
  * ZCTAs in src/data/mi-zctas.ts. Every value is MODELED (small-area
  * BRFSS-based estimates), carries the 95% confidence interval as a
  * "low_high" pair, and rounds to one decimal place (the source's own
  * precision). Missing values in the source render as null (suppressed);
  * ZCTAs missing entirely from the source (small denominator) are recorded
  * with all measures null.
+ *
+ * The measure catalog, row parsing, provenance shape, and sanity gates
+ * live in the `mi-federal-data` shared package (lib/mi-federal-data),
+ * consumed here as a workspace dependency and also by ourintel.org's
+ * Michigan ingest path -- one canonical source instead of two independently
+ * maintained (and drift-prone) copies. This script keeps its own fetch loop
+ * (routed through fetchAndRecord for archival) and its own file-writing /
+ * TS-shim generation, since those are specific to this app.
  *
  * Source: CDC, PLACES: ZCTA Data (GIS Friendly Format), 2025 release
  *   https://data.cdc.gov/500-Cities-Places/PLACES-ZCTA-Data-GIS-Friendly-Format-2025-release/kee5-23sr
@@ -27,6 +35,14 @@ import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
+import {
+  MEASURES,
+  SOCRATA_METADATA_URL,
+  SOCRATA_ROWS_URL,
+  extractZctaRow,
+  buildProvenance,
+  runSanityGates,
+} from "mi-federal-data";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
@@ -40,42 +56,6 @@ const outJsonPath = path.join(
 const outTsPath = path.join(projectRoot, "src/data/cdc-places-zcta.ts");
 
 const APPLY = process.argv.includes("--apply");
-
-const SOCRATA_METADATA_URL = "https://data.cdc.gov/api/views/kee5-23sr.json";
-const SOCRATA_ROWS_URL = "https://data.cdc.gov/resource/kee5-23sr.json";
-const SOURCE_LANDING =
-  "https://data.cdc.gov/500-Cities-Places/PLACES-ZCTA-Data-GIS-Friendly-Format-2025-release/kee5-23sr";
-
-/**
- * Measure catalog. Each entry: PLACES field prefix -> the platform's
- * stable id, label, and category. The 17 measures are the exact set
- * agreed in the PR discovery (chronic outcomes + behavioral risk +
- * preventive services + mental/general status; flu vaccine substituted
- * with cholesterol screening because PLACES does not publish fluvax at
- * ZCTA).
- */
-const MEASURES = [
-  { field: "diabetes",     id: "diabetes",           category: "chronic",     label: "Diagnosed diabetes among adults 18+" },
-  { field: "obesity",      id: "obesity",            category: "chronic",     label: "Obesity among adults 18+ (BMI >= 30)" },
-  { field: "bphigh",       id: "highBloodPressure",  category: "chronic",     label: "High blood pressure among adults 18+" },
-  { field: "copd",         id: "copd",               category: "chronic",     label: "COPD among adults 18+" },
-  { field: "chd",          id: "coronaryHeartDisease", category: "chronic",   label: "Coronary heart disease among adults 18+" },
-
-  { field: "csmoking",     id: "currentSmoking",     category: "behavioral",  label: "Current cigarette smoking among adults 18+" },
-  { field: "binge",        id: "bingeDrinking",      category: "behavioral",  label: "Binge drinking among adults 18+" },
-  { field: "lpa",          id: "noLeisurePA",        category: "behavioral",  label: "No leisure-time physical activity among adults 18+" },
-  { field: "sleep",        id: "shortSleep",         category: "behavioral",  label: "Short sleep (<7 hours) among adults 18+" },
-
-  { field: "checkup",      id: "routineCheckup",     category: "preventive",  label: "Routine checkup in past year, adults 18+" },
-  { field: "dental",       id: "dentalVisit",        category: "preventive",  label: "Dental visit in past year, adults 18+" },
-  { field: "mammouse",     id: "mammogram",          category: "preventive",  label: "Mammography in past 2 years, women 50-74" },
-  { field: "colon_screen", id: "colonScreening",     category: "preventive",  label: "Colorectal cancer screening, adults 50-75" },
-  { field: "cholscreen",   id: "cholesterolScreen",  category: "preventive",  label: "Cholesterol screening in past 5 years, adults 18+" },
-
-  { field: "mhlth",        id: "mentalHealthNotGood", category: "status",     label: "Mental health not good >=14 days, adults 18+" },
-  { field: "phlth",        id: "physicalHealthNotGood", category: "status",   label: "Physical health not good >=14 days, adults 18+" },
-  { field: "ghlth",        id: "generalHealthFairPoor", category: "status",   label: "General health fair or poor, adults 18+" },
-];
 
 async function loadMiZctaSet() {
   const src = await readFile(registryPath, "utf8");
@@ -119,23 +99,23 @@ async function fetchMetadata() {
  * Page through the Socrata resource using $limit + $offset until all
  * matching rows are returned. Filter to MI ZCTAs via a `zcta5 in (...)`
  * clause; batch the ZCTA list so the URL doesn't grow beyond the SoQL
- * limit (Socrata rejects overly long WHERE clauses).
+ * limit (Socrata rejects overly long WHERE clauses). Mirrors
+ * mi-federal-data's fetchZctaRows, but routed through fetchAndRecord so
+ * every batch is archived in this app's ingest manifest -- the one piece
+ * of behavior that stays local rather than moving into the shared package.
  */
 async function fetchMiRows(miZctaSet) {
   const codes = [...miZctaSet];
   const CHUNK = 200;
   const results = new Map();
+  const select = [
+    "zcta5",
+    "totalpopulation",
+    ...MEASURES.flatMap((m) => [`${m.field}_crudeprev`, `${m.field}_crude95ci`]),
+  ].join(",");
   for (let i = 0; i < codes.length; i += CHUNK) {
     const chunk = codes.slice(i, i + CHUNK);
     const inClause = chunk.map((c) => `'${c}'`).join(",");
-    const select = [
-      "zcta5",
-      "totalpopulation",
-      ...MEASURES.flatMap((m) => [
-        `${m.field}_crudeprev`,
-        `${m.field}_crude95ci`,
-      ]),
-    ].join(",");
     const url =
       `${SOCRATA_ROWS_URL}?$select=${encodeURIComponent(select)}` +
       `&$where=${encodeURIComponent(`zcta5 in(${inClause})`)}` +
@@ -149,67 +129,16 @@ async function fetchMiRows(miZctaSet) {
   return results;
 }
 
-function parseCiInterval(text) {
-  if (!text) return null;
-  const m = /^\s*\(?\s*([\d.]+)\s*[,-]\s*([\d.]+)\s*\)?\s*$/.exec(text);
-  if (!m) return null;
-  const low = Number(m[1]);
-  const high = Number(m[2]);
-  if (!Number.isFinite(low) || !Number.isFinite(high)) return null;
-  return { low, high };
-}
-
-function extractZctaRow(zcta, sourceRow) {
-  const measures = {};
-  for (const m of MEASURES) {
-    if (!sourceRow) {
-      measures[m.id] = { crudePrevalence: null, ci95: null };
-      continue;
-    }
-    const rawPrev = sourceRow[`${m.field}_crudeprev`];
-    const rawCi = sourceRow[`${m.field}_crude95ci`];
-    const prev = rawPrev === undefined || rawPrev === null || rawPrev === ""
-      ? null
-      : Number(rawPrev);
-    measures[m.id] = {
-      crudePrevalence: Number.isFinite(prev) ? Math.round(prev * 10) / 10 : null,
-      ci95: parseCiInterval(rawCi),
-    };
-  }
-  const rawPop = sourceRow?.totalpopulation;
-  const totalPopulation =
-    rawPop === undefined || rawPop === null || rawPop === ""
-      ? null
-      : Number(rawPop);
-  return {
-    zcta5: zcta,
-    totalPopulation: Number.isFinite(totalPopulation) ? totalPopulation : null,
-    measures,
-  };
-}
-
 function buildJsonPayload(meta, ingestedAt, rows, suppressedZctas) {
   return {
-    provenance: {
-      source_name: "CDC PLACES: ZCTA Data (GIS Friendly Format), 2025 release",
-      dataset_id: "kee5-23sr",
-      source_url: SOURCE_LANDING,
-      socrata_metadata_url: SOCRATA_METADATA_URL,
-      socrata_rows_updated_at: meta.rowsUpdatedAt,
-      release_label: meta.name,
-      release_description: meta.description.slice(0, 600),
-      ingested_at: ingestedAt,
-      ingest_script: "scripts/refresh-cdc-places-zcta.mjs",
-      michigan_zcta_registry: "src/data/mi-zctas.ts",
-      michigan_zcta_registry_size: rows.length,
-      michigan_zctas_suppressed_by_source: suppressedZctas,
-      measure_count: MEASURES.length,
-      value_units: "crude prevalence, percent (0-100)",
-      value_label: "MODELED",
-      weighting: "individual estimates; no post-hoc weighting applied here",
-      notes:
-        "PLACES publishes model-based adult prevalence estimates. Values are unadjusted (crude). CI is the source's own 95% credible interval, low_high. Prevalences are rounded to one decimal place, matching the source's precision. ZCTAs absent from the source are almost always small-population suppressions.",
-    },
+    provenance: buildProvenance({
+      meta,
+      ingestedAt,
+      rowCount: rows.length,
+      suppressedCount: suppressedZctas,
+      ingestScript: "scripts/refresh-cdc-places-zcta.mjs",
+      registryLabel: "src/data/mi-zctas.ts",
+    }),
     measures: MEASURES.map((m) => ({
       id: m.id,
       category: m.category,
@@ -240,10 +169,10 @@ export interface CdcPlacesMeasureValue {
   ci95: { low: number; high: number } | null;
 }
 
-/** All 17 measures for one ZCTA, keyed by the platform's stable measure id. */
+/** All 40 measures for one ZCTA, keyed by the platform's stable measure id. */
 export type CdcPlacesZctaMeasures = Record<string, CdcPlacesMeasureValue>;
 
-/** One MI ZCTA's PLACES snapshot: 18+ population and 17 measures. */
+/** One MI ZCTA's PLACES snapshot: 18+ population and 40 measures. */
 export interface CdcPlacesZctaRecord {
   zcta5: string;
   totalPopulation: number | null;
@@ -269,12 +198,13 @@ export interface CdcPlacesProvenance {
   value_label: "MODELED";
   weighting: string;
   notes: string;
+  shared_package: string;
 }
 
 /** Static description of one measure (stable id, category, PLACES field). */
 export interface CdcPlacesMeasureDef {
   id: string;
-  category: "chronic" | "behavioral" | "preventive" | "status";
+  category: "chronic" | "behavioral" | "preventive" | "status" | "access" | "disability" | "sdoh";
   label: string;
   places_field: string;
   value_label: "MODELED";
@@ -331,16 +261,7 @@ async function main() {
     `[refresh-cdc-places-zcta] source rows for MI ZCTAs: ${sourceRows.size}`,
   );
 
-  let suppressedZctas = 0;
-  const rows = [];
-  for (const zcta of [...miZctas].sort()) {
-    const raw = sourceRows.get(zcta);
-    if (!raw) suppressedZctas++;
-    rows.push(extractZctaRow(zcta, raw ?? null));
-  }
-  console.log(
-    `[refresh-cdc-places-zcta] MI ZCTAs suppressed by source: ${suppressedZctas}`,
-  );
+  const rows = [...miZctas].sort().map((zcta) => extractZctaRow(zcta, sourceRows.get(zcta)));
 
   console.log("[refresh-cdc-places-zcta] first 3 ZCTA snapshots:");
   for (const r of rows.slice(0, 3)) {
@@ -352,69 +273,17 @@ async function main() {
     );
   }
 
-  // --- Sanity gates. Fail loud rather than write silent garbage. Bands
-  //     chosen from the current MI baseline (992 registry / 983 published /
-  //     9 suppressed; diabetes non-null on every published row) with
-  //     generous headroom for legitimate year-over-year drift.
-
-  // Gate 1: ZCTA count band. The registry is static (Census 2020) until
-  // 2030, so a 900-1100 band is very generous. Anything outside is either
-  // a registry-load failure or a schema break.
-  if (rows.length < 900 || rows.length > 1100) {
-    throw new Error(
-      `Sanity: ingested row count ${rows.length} is outside the expected 900-1100 band. Registry drift or load failure suspected.`,
-    );
-  }
-
-  // Gate 2: source-side suppression fraction. PLACES has suppressed ~1% of
-  // MI ZCTAs historically (tiny UP + island denominators). If more than 20%
-  // come back with no source row, the Socrata query returned garbage or
-  // was rate-limited into partial pages.
-  const publishedFraction = 1 - suppressedZctas / rows.length;
-  if (publishedFraction < 0.8) {
-    throw new Error(
-      `Sanity: only ${(publishedFraction * 100).toFixed(1)}% of MI ZCTAs got source data (expected >= 80%). Likely a paging failure or Socrata rate limit; retry.`,
-    );
-  }
-
-  // Gate 3: schema-drift bellwether. Diabetes prevalence is a universal
-  // adult measure - if PLACES renamed the field or the parser broke, this
-  // count collapses. Assert that at least 90% of the published rows have
-  // a non-null diabetes value.
-  const publishedRows = rows.filter((_, i) => sourceRows.has(rows[i].zcta5));
-  const diabetesPresent = publishedRows.filter(
-    (r) => r.measures.diabetes.crudePrevalence !== null,
-  ).length;
-  if (
-    publishedRows.length === 0 ||
-    diabetesPresent / publishedRows.length < 0.9
-  ) {
-    throw new Error(
-      `Sanity: only ${diabetesPresent}/${publishedRows.length} published rows carry a non-null diabetes value. PLACES may have renamed the field or the parser broke.`,
-    );
-  }
-
-  // Gate 4: value-range sanity. Every non-null crude prevalence must lie
-  // in [0, 100] (the source publishes percent). A value outside that band
-  // means the parser or the source moved.
-  for (const r of rows) {
-    for (const id in r.measures) {
-      const v = r.measures[id].crudePrevalence;
-      if (v === null) continue;
-      if (!Number.isFinite(v) || v < 0 || v > 100) {
-        throw new Error(
-          `Sanity: crudePrevalence ${v} for ${id} at ${r.zcta5} is outside [0, 100].`,
-        );
-      }
-    }
-  }
-
+  // Sanity gates (row-count band, source-suppression fraction, diabetes
+  // schema-drift bellwether, value-range check) live in the shared package
+  // now, same thresholds as before. Fail loud rather than write silent
+  // garbage.
+  const gateResult = runSanityGates(rows, sourceRows);
   console.log(
-    `[refresh-cdc-places-zcta] sanity gates passed (${diabetesPresent}/${publishedRows.length} rows with diabetes; ${(publishedFraction * 100).toFixed(1)}% published overall).`,
+    `[refresh-cdc-places-zcta] sanity gates passed (${gateResult.diabetesPresent}/${gateResult.publishedCount} rows with diabetes; ${(gateResult.publishedFraction * 100).toFixed(1)}% published overall).`,
   );
 
   const ingestedAt = new Date().toISOString();
-  const payload = buildJsonPayload(meta, ingestedAt, rows, suppressedZctas);
+  const payload = buildJsonPayload(meta, ingestedAt, rows, gateResult.suppressedCount);
   const shim = buildTsShim();
 
   if (manifestEntries.length > 0) {
