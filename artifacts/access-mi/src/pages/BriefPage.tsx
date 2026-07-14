@@ -297,27 +297,36 @@ export default function BriefPage() {
             source: "CMS + HRSA",
             vintage: facilityFetched,
           },
-          {
-            label: "Uninsured Rate",
-            value: getVal(profile.healthHighlights, "uninsured"),
-            badge: "VERIFIED",
-            source: "County Health Rankings",
-            vintage: "2025 edition",
-          },
-          {
-            label: "Primary Care Ratio",
-            value: getVal(profile.healthHighlights, "primary care"),
-            badge: "VERIFIED",
-            source: "County Health Rankings",
-            vintage: "2025 edition",
-          },
-          {
-            label: "Food Insecurity",
-            value: getVal(profile.healthHighlights, "food"),
-            badge: "VERIFIED",
-            source: "County Health Rankings",
-            vintage: "2025 edition",
-          },
+          (() => {
+            const val = getVal(profile.healthHighlights, "uninsured");
+            return {
+              label: "Uninsured Rate",
+              value: val,
+              badge: val !== "-" ? "VERIFIED" : "no data",
+              source: "County Health Rankings",
+              vintage: "2025 edition",
+            };
+          })(),
+          (() => {
+            const val = getVal(profile.healthHighlights, "primary care");
+            return {
+              label: "Primary Care Ratio",
+              value: val,
+              badge: val !== "-" ? "VERIFIED" : "no data",
+              source: "County Health Rankings",
+              vintage: "2025 edition",
+            };
+          })(),
+          (() => {
+            const val = getVal(profile.healthHighlights, "food");
+            return {
+              label: "Food Insecurity",
+              value: val,
+              badge: val !== "-" ? "VERIFIED" : "no data",
+              source: "County Health Rankings",
+              vintage: "2025 edition",
+            };
+          })(),
           {
             label: "ALICE Economic Hardship",
             value: aliceData ? `${aliceData.combinedHardshipPct}%` : "no data",
@@ -376,7 +385,7 @@ export default function BriefPage() {
               label: "Broadband Subscription Rate",
               value: hasVal
                 ? `${bb!.broadbandSubscriptionRate!.toFixed(1)}%`
-                : "Pending CI",
+                : "no data",
               badge: hasVal ? "VERIFIED" : "no data",
               source: "ACS 5-Year 2019-2023 (B28002)",
               vintage: "2019-2023",
