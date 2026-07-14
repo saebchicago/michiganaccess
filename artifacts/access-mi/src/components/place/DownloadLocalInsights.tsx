@@ -254,7 +254,7 @@ ${standouts.length > 0 ? `<div class="section">
   <h2>Data Provenance</h2>
   <table><thead><tr><th>Source</th><th>Coverage</th><th>Year</th></tr></thead><tbody>
     <tr><td style="padding:6px 10px;font-size:12px;">County Health Rankings</td><td style="padding:6px 10px;font-size:12px;">Health outcomes & behaviors</td><td style="padding:6px 10px;font-size:12px;">2025</td></tr>
-    <tr><td style="padding:6px 10px;font-size:12px;">U.S. Census ACS 5-Year</td><td style="padding:6px 10px;font-size:12px;">Demographics, economics, housing</td><td style="padding:6px 10px;font-size:12px;">2024</td></tr>
+    <tr><td style="padding:6px 10px;font-size:12px;">U.S. Census ACS 5-Year</td><td style="padding:6px 10px;font-size:12px;">Demographics, economics, housing</td><td style="padding:6px 10px;font-size:12px;">2022</td></tr>
     <tr><td style="padding:6px 10px;font-size:12px;">MDHHS / BLS LAUS</td><td style="padding:6px 10px;font-size:12px;">Employment, workforce</td><td style="padding:6px 10px;font-size:12px;">2024</td></tr>
     <tr><td style="padding:6px 10px;font-size:12px;">DOE LEAD Tool</td><td style="padding:6px 10px;font-size:12px;">Energy burden estimates</td><td style="padding:6px 10px;font-size:12px;">2024</td></tr>
     <tr><td style="padding:6px 10px;font-size:12px;">EPA SDWIS / FBI UCR</td><td style="padding:6px 10px;font-size:12px;">Water quality, safety</td><td style="padding:6px 10px;font-size:12px;">2022–2024</td></tr>

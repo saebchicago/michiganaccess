@@ -115,7 +115,7 @@ function PlaceHero({ place, countyName, profile }: { place: Place; countyName: s
           </p>
 
           <div className="flex items-center gap-2 mb-4">
-            <DataFreshnessBadge source="Census ACS 5-Year" vintage="2023" freshness="Updated annually. County Health Rankings refreshed March 2025." />
+            <DataFreshnessBadge source="Census ACS 5-Year" vintage="2022" freshness="Updated annually. County Health Rankings refreshed March 2025." />
             <WatchlistStar item={{ id: `county-${countyName}`, type: "county", label: `${place.name}`, href: `/place/${countyToSlug(countyName)}-county` }} />
           </div>
           <div className="flex flex-wrap gap-3">
