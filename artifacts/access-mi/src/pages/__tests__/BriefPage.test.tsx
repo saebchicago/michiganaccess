@@ -138,12 +138,19 @@ describe("BriefPage  -  Saginaw (full data)", () => {
     expect(statBlocks.length).toBeGreaterThanOrEqual(5);
   });
 
-  it("every stat block has an integrity badge (aria-label starting with 'Data integrity')", () => {
+  it("every stat block with a value has an integrity badge; blocks with no data have none", () => {
     renderBrief("Saginaw");
     const statBlocks = document.querySelectorAll("[data-brief-stat]");
+    expect(statBlocks.length).toBeGreaterThan(0);
     statBlocks.forEach((block) => {
+      const hasNoData = /No data available/i.test(block.textContent ?? "");
       const badge = block.querySelector("[aria-label^='Data integrity']");
-      expect(badge).not.toBeNull();
+      if (hasNoData) {
+        // A missing value must never carry a false integrity stamp.
+        expect(badge).toBeNull();
+      } else {
+        expect(badge).not.toBeNull();
+      }
     });
   });
 
