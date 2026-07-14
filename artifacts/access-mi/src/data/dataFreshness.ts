@@ -36,7 +36,7 @@ export interface DataSource {
  * datasets. When you run a provenance audit, bump this and update any
  * per-dataset overrides below.
  */
-const PLATFORM_LAST_VERIFIED = "2026-03-15";
+const PLATFORM_LAST_VERIFIED = "2026-07-14";
 
 function entry(
   partial: Omit<DataSource, "lastPulled" | "sourceYear" | "lastVerified"> & {
@@ -62,7 +62,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "PLACES 2024 Release",
     nextExpectedUpdate: "2025-05-01",
     isLive: true,
-    freshnessStatus: "fresh",
+    freshnessStatus: "stale",
   }),
   entry({
     id: "census-acs",
@@ -74,7 +74,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2022 5-Year ACS",
     nextExpectedUpdate: "2024-12-01",
     isLive: true,
-    freshnessStatus: "aging",
+    freshnessStatus: "stale",
   }),
   entry({
     id: "hud-fmr",
@@ -86,7 +86,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "FY2025",
     nextExpectedUpdate: "2025-10-01",
     isLive: false,
-    freshnessStatus: "fresh",
+    freshnessStatus: "stale",
   }),
   entry({
     id: "egle-mpart",
@@ -98,7 +98,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "March 2026",
     nextExpectedUpdate: "Ongoing",
     isLive: false,
-    freshnessStatus: "fresh",
+    freshnessStatus: "aging",
   }),
   entry({
     id: "usaspending",
@@ -110,7 +110,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "FY2024",
     nextExpectedUpdate: "FY2025 Q4",
     isLive: true,
-    freshnessStatus: "fresh",
+    freshnessStatus: "stale",
   }),
   entry({
     id: "alice",
@@ -146,7 +146,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "Live API",
     nextExpectedUpdate: "Ongoing",
     isLive: true,
-    freshnessStatus: "fresh",
+    freshnessStatus: "aging",
   }),
   entry({
     id: "usda-fara",
@@ -170,7 +170,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "BDC 2024",
     nextExpectedUpdate: "2025-06-01",
     isLive: false,
-    freshnessStatus: "fresh",
+    freshnessStatus: "stale",
   }),
   entry({
     id: "epa-echo",
@@ -182,7 +182,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "Live API",
     nextExpectedUpdate: "Ongoing",
     isLive: true,
-    freshnessStatus: "fresh",
+    freshnessStatus: "aging",
   }),
   entry({
     id: "hmda",
@@ -194,7 +194,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2023 HMDA",
     nextExpectedUpdate: "2025-06-01",
     isLive: false,
-    freshnessStatus: "fresh",
+    freshnessStatus: "stale",
   }),
   entry({
     id: "lead-risk",
@@ -206,7 +206,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2023 data",
     nextExpectedUpdate: "2025-01-01",
     isLive: false,
-    freshnessStatus: "fresh",
+    freshnessStatus: "stale",
   }),
   entry({
     id: "eviction-lab",
@@ -218,7 +218,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2023 data",
     nextExpectedUpdate: "2025-01-01",
     isLive: false,
-    freshnessStatus: "fresh",
+    freshnessStatus: "stale",
   }),
   entry({
     id: "mitn-lobbying",
@@ -230,7 +230,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2024 reporting period",
     nextExpectedUpdate: "2025-06-01",
     isLive: false,
-    freshnessStatus: "fresh",
+    freshnessStatus: "stale",
   }),
 ];
 

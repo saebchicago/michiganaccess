@@ -96,7 +96,7 @@ export default function DemographicBreakdown({ place }: { place: Place }) {
     <div className="space-y-6">
       <div className="flex items-center gap-2 flex-wrap">
         <h3 className="text-lg font-bold text-foreground">Census Demographics</h3>
-        <Badge variant="outline" className="text-[10px]">ACS 5-Year 2023</Badge>
+        <Badge variant="outline" className="text-[10px]">ACS 5-Year 2022</Badge>
         <Badge variant="secondary" className="text-[10px]">U.S. Census Bureau</Badge>
       </div>
 
@@ -186,7 +186,7 @@ export default function DemographicBreakdown({ place }: { place: Place }) {
       </div>
 
       <p className="text-[10px] text-muted-foreground text-center">
-        Source: U.S. Census Bureau, American Community Survey 5-Year Estimates (2023). Margins of error apply.
+        Source: U.S. Census Bureau, American Community Survey 5-Year Estimates (2022). Margins of error apply.
       </p>
     </div>
   );

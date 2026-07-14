@@ -233,8 +233,8 @@ export interface FreshnessTriple {
  */
 export const PLATFORM_FRESHNESS: FreshnessTriple = {
   sourceYear: "Mixed (see /methodology for per-dataset vintage)",
-  lastPulled: "2026-03-01",
-  lastVerified: "2026-03-15",
+  lastPulled: "2026-07-12",
+  lastVerified: "2026-07-14",
 };
 
 /** Counts of fresh / aging / stale datasets, computed from the registry. */

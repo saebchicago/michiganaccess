@@ -152,7 +152,7 @@ export default function ACSIndicatorCard({
             )}
           </div>
         )}
-        <p className="text-[10px] text-muted-foreground">ACS 5-Year 2023</p>
+        <p className="text-[10px] text-muted-foreground">ACS 5-Year 2022</p>
       </CardContent>
     </Card>
   );
