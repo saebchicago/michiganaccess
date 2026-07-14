@@ -40,6 +40,7 @@ import {
 } from "recharts";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -554,7 +555,7 @@ export default function ZipScorecardPage() {
 
     return [
       {
-        label: "Composite Score",
+        label: "Composite Score *",
         zip1: primary.compositeScore,
         zip2: comp.compositeScore,
         mi: MI_AVG_METRICS.compositeScore,
@@ -863,6 +864,12 @@ export default function ZipScorecardPage() {
                     score={primary.compositeScore}
                     color={compositeColor}
                   />
+                  <IntegrityBadge
+                    label="MODELED"
+                    source="AccessMI derived - weighted blend of Health (45%), Economic (35%), Environment (20%) scores"
+                    vintage="Illustrative composite"
+                    className="mt-2"
+                  />
                 </CardContent>
               </Card>
 
@@ -876,9 +883,12 @@ export default function ZipScorecardPage() {
                       color={primary.healthResult.color}
                       label="Health Score"
                     />
-                    <p className="text-[9px] text-muted-foreground mt-1">
-                      CDC PLACES 2024
-                    </p>
+                    <IntegrityBadge
+                      label="MODELED"
+                      source="AccessMI derived - illustrative weighted composite of 12 CDC PLACES measures"
+                      vintage="CDC PLACES 2024"
+                      className="mt-1"
+                    />
                   </CardContent>
                 </Card>
                 <Card>
@@ -889,9 +899,12 @@ export default function ZipScorecardPage() {
                       color={scoreColor(primary.econScore)}
                       label="Economic Score"
                     />
-                    <p className="text-[9px] text-muted-foreground mt-1">
-                      IRS SOI + Census ACS
-                    </p>
+                    <IntegrityBadge
+                      label="MODELED"
+                      source="AccessMI derived - illustrative composite of IRS SOI AGI/EITC ratios and Census ACS median income vs. Michigan averages"
+                      vintage="IRS SOI + Census ACS"
+                      className="mt-1"
+                    />
                   </CardContent>
                 </Card>
                 <Card>
@@ -902,9 +915,12 @@ export default function ZipScorecardPage() {
                       color={scoreColor(primary.envScore)}
                       label="Environment Score"
                     />
-                    <p className="text-[9px] text-muted-foreground mt-1">
-                      CDC + EPA indicators
-                    </p>
+                    <IntegrityBadge
+                      label="MODELED"
+                      source="AccessMI derived - illustrative composite of CDC asthma/inactivity/sleep measures vs. Michigan averages"
+                      vintage="CDC + EPA indicators"
+                      className="mt-1"
+                    />
                   </CardContent>
                 </Card>
               </div>
@@ -996,6 +1012,10 @@ export default function ZipScorecardPage() {
                     ))}
                   </tbody>
                 </table>
+                <p className="text-[10px] text-muted-foreground mt-2">
+                  * Modeled - AccessMI-derived composite, not a directly
+                  sourced statistic.
+                </p>
               </CardContent>
             </Card>
 
@@ -1006,6 +1026,10 @@ export default function ZipScorecardPage() {
                   <h3 className="text-sm font-bold text-foreground mb-3">
                     Score Overlay
                   </h3>
+                  <p className="text-[10px] text-muted-foreground -mt-2 mb-3">
+                    All four axes are modeled composites, not directly
+                    sourced statistics.
+                  </p>
                   <ResponsiveContainer width="100%" height={320}>
                     <RadarChart
                       cx="50%"

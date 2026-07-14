@@ -14,7 +14,7 @@ import type { Place, PlaceIndicator } from "@/models/Place";
 import { buildFullIndicators, buildStandouts } from "@/models/Place";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
-import { MI_STATE_BENCHMARKS } from "@/data/state-benchmarks";
+import { computeCivicScore, CIVIC_SCORE_METHODOLOGY } from "@/lib/civic-score";
 
 interface Props {
   place: Place;
@@ -153,25 +153,18 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
   }).join("");
 
   // Civic Insight Score breakdown
-  const profile = COUNTY_PROFILES[place.parentCounty || place.name.replace(/ County$/, "")];
+  const countyKey = place.parentCounty || place.name.replace(/ County$/, "");
+  const profile = COUNTY_PROFILES[countyKey];
   let civicScoreSection = "";
   if (profile) {
-    const uninsured = parseFloat(profile.healthHighlights[0]?.value || "5");
-    const food = parseFloat(profile.healthHighlights[2]?.value || String(MI_STATE_BENCHMARKS.foodInsecurityRate));
+    const uninsured = parseFloat(profile.healthHighlights[0]?.value || "6");
+    const food = parseFloat(profile.healthHighlights[2]?.value || "13");
     const pcrRaw = profile.healthHighlights[1]?.value || "1500:1";
-    let baseScore = 60;
-    if (uninsured < 5) baseScore += 15;
-    else if (uninsured < 7) baseScore += 5;
-    else baseScore -= 5;
-    if (profile.countyType === "urban") baseScore += 5;
-    if (profile.countyType === "suburban") baseScore += 3;
-    if (food < 11) baseScore += 10;
-    else if (food > 15) baseScore -= 5;
-    const compositeScore = Math.max(10, Math.min(95, baseScore));
+    const compositeScore = computeCivicScore(countyKey);
 
     civicScoreSection = `
     <div class="section">
-      <h2>Civic Insight Score - Segmented Breakdown</h2>
+      <h2>Civic Insight Score - Segmented Breakdown <span style="font-size:10px;font-weight:600;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">(modeled)</span></h2>
       <table><thead><tr><th>Sub-Index</th><th>Weight</th><th>Components</th></tr></thead><tbody>
         <tr>
           <td style="padding:6px 10px;font-size:13px;font-weight:600;">Community Vulnerability</td>
@@ -189,7 +182,7 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
           <td style="padding:6px 10px;font-size:13px;font-weight:700;">${compositeScore}/100</td>
         </tr>
       </tbody></table>
-      <p style="font-size:10px;color:#6b7280;margin-top:8px;">Methodology: z-score normalization against MI statewide benchmarks. Sources: Census ACS 2024 5-year + real-time platform data.</p>
+      <p style="font-size:10px;color:#6b7280;margin-top:8px;">Modeled - AccessMI-derived composite, not a directly sourced statistic. Methodology: ${CIVIC_SCORE_METHODOLOGY} Inputs: Census ACS 2022 5-year + real-time platform data.</p>
     </div>`;
   }
 

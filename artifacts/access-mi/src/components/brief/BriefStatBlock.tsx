@@ -4,7 +4,8 @@ import type { IntegrityLabel } from "@/types/chna";
 interface BriefStatBlockProps {
   label: string;
   value: string | number | null;
-  badge: IntegrityLabel;
+  /** "no data" suppresses the integrity badge - there is nothing to certify. */
+  badge: IntegrityLabel | "no data";
   source: string;
   vintage: string;
   nullNote?: string;
@@ -40,12 +41,14 @@ export function BriefStatBlock({
           {typeof value === "number" ? value.toLocaleString() : value}
         </p>
       )}
-      <div className="flex flex-wrap items-center gap-1.5 mt-2">
-        <IntegrityBadge label={badge} source={source} vintage={vintage} />
-        <span className="text-[10px] text-muted-foreground">
-          {source} · {vintage}
-        </span>
-      </div>
+      {badge !== "no data" && (
+        <div className="flex flex-wrap items-center gap-1.5 mt-2">
+          <IntegrityBadge label={badge} source={source} vintage={vintage} />
+          <span className="text-[10px] text-muted-foreground">
+            {source} · {vintage}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

@@ -18,6 +18,7 @@ import {
   MI_STATE_AVERAGES,
 } from "@/data/cross-domain-indicators";
 import { getALICEByCounty } from "@/data/aliceData";
+import { computeCivicScore } from "@/lib/civic-score";
 import { getBlsLausForCountyName } from "@/data/bls-laus-county";
 import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
 import { getPlacesForCountyName } from "@/data/cdc-places-county";
@@ -69,22 +70,6 @@ import type { BriefStat } from "@/utils/generateBriefPDF";
 import { generateBriefCSV } from "@/utils/generateBriefCSV";
 import PopulationSparkline from "@/components/county/PopulationSparkline";
 import UninsuredSparkline from "@/components/county/UninsuredSparkline";
-
-function computeCivicScore(county: string): number {
-  const profile = COUNTY_PROFILES[county];
-  if (!profile) return 50;
-  let score = 60;
-  const uninsured = parseFloat(profile.healthHighlights[0]?.value || "6");
-  if (uninsured < 5) score += 15;
-  else if (uninsured < 7) score += 5;
-  else score -= 5;
-  if (profile.countyType === "urban") score += 5;
-  if (profile.countyType === "suburban") score += 3;
-  const foodIns = parseFloat(profile.healthHighlights[2]?.value || "13");
-  if (foodIns < 11) score += 10;
-  else if (foodIns > 15) score -= 5;
-  return Math.max(10, Math.min(95, score));
-}
 
 function getVal(
   hh: { label: string; value: string }[] | undefined,
@@ -769,7 +754,7 @@ export default function BriefPage() {
                     key={stat.label}
                     label={stat.label}
                     value={stat.value === "no data" ? null : stat.value}
-                    badge={stat.badge === "no data" ? "VERIFIED" : stat.badge}
+                    badge={stat.badge}
                     source={stat.source}
                     vintage={stat.vintage}
                     nullNote={

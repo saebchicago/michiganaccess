@@ -43,8 +43,8 @@ export default function CHNAExport({ zip, county, equityScore, equityTier, topCo
       pdf.setFontSize(10);
       pdf.setFont("helvetica", "normal");
       pdf.setTextColor(80, 80, 80);
-      pdf.text(`Equity Score \u2014 Tier ${equityTier} of 5`, 20, 103);
-      pdf.text("Source: accessmi.org composite \u2014 CDC PLACES, Census ACS, HUD", 20, 110);
+      pdf.text(`Equity Score (modeled) \u2014 Tier ${equityTier} of 5`, 20, 103);
+      pdf.text("Modeled composite, not a directly sourced statistic. Inputs: CDC PLACES, Census ACS, HUD", 20, 110);
 
       // Top concerns
       pdf.setFontSize(12);
