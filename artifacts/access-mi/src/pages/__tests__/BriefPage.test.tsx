@@ -138,28 +138,33 @@ describe("BriefPage  -  Saginaw (full data)", () => {
     expect(statBlocks.length).toBeGreaterThanOrEqual(5);
   });
 
-  it("every stat block has an integrity badge (aria-label starting with 'Data integrity')", () => {
+  it("every stat block with a value has an integrity badge; blocks with no data have none", () => {
     renderBrief("Saginaw");
     const statBlocks = document.querySelectorAll("[data-brief-stat]");
+    expect(statBlocks.length).toBeGreaterThan(0);
     statBlocks.forEach((block) => {
+      const hasNoData = /No data available/i.test(block.textContent ?? "");
       const badge = block.querySelector("[aria-label^='Data integrity']");
-      expect(badge).not.toBeNull();
+      if (hasNoData) {
+        // A missing value must never carry a false integrity stamp.
+        expect(badge).toBeNull();
+      } else {
+        expect(badge).not.toBeNull();
+      }
     });
   });
 
   it("shows ALICE rate for Saginaw (county is seeded)", () => {
     renderBrief("Saginaw");
-    expect(screen.getByText("ALICE Economic Hardship")).toBeInTheDocument();
-    // Value should NOT be "No data available for this county"
-    const aliceBlock = document
-      .querySelector("[data-brief-stat]")
-      ?.closest?.("div");
-    const noDataText = screen.queryByText(
-      /No data available for this county/i,
-      { selector: "[data-brief-stat] *" },
-    );
-    // ALICE is seeded for Saginaw, so at least one block should show a %
-    expect(screen.getByText(/ALICE Economic Hardship/)).toBeInTheDocument();
+    const aliceLabel = screen.getByText("ALICE Economic Hardship");
+    const aliceBlock = aliceLabel.closest("[data-brief-stat]");
+    expect(aliceBlock).not.toBeNull();
+    // ALICE is seeded for Saginaw - its block must show a real value, not the no-data note.
+    expect(
+      within(aliceBlock as HTMLElement).queryByText(
+        /No data available for this county/i,
+      ),
+    ).toBeNull();
   });
 
   it("cite-this block renders with county name", () => {
@@ -220,9 +225,13 @@ describe("BriefPage  -  Keweenaw (null handling)", () => {
 
   it("ALICE block shows no-data treatment for Keweenaw (not seeded)", () => {
     renderBrief("Keweenaw");
-    expect(screen.getByText("ALICE Economic Hardship")).toBeInTheDocument();
+    const aliceLabel = screen.getByText("ALICE Economic Hardship");
+    const aliceBlock = aliceLabel.closest("[data-brief-stat]");
+    expect(aliceBlock).not.toBeNull();
     expect(
-      screen.getByText(/No data available for this county/i),
+      within(aliceBlock as HTMLElement).getByText(
+        /No data available for this county/i,
+      ),
     ).toBeInTheDocument();
   });
 
