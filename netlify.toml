@@ -18,14 +18,24 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(self), interest-cohort=()"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    # script-src/style-src keep 'unsafe-inline': the build prerenders
+    # per-route JSON-LD (scripts/prerender-meta.mjs) and the app relies
+    # on inline style attributes throughout (Tailwind utility classes
+    # plus Framer Motion), so neither is a fixed, hashable set. connect-src
+    # and img-src stay broad because the app fetches directly from dozens
+    # of federal/state data APIs (CMS, HRSA, CDC, EPA, Census, NWS, etc.)
+    # client-side; object-src/base-uri/form-action are locked down since
+    # nothing on the site needs them.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-src 'self' https://vizhub.healthdata.org https://www.cdc.gov; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 
 # The /embed route exists so partners can iframe the widget on their
-# own domains. Drop X-Frame-Options for that path only so embedding
-# works; the rest of the site stays SAMEORIGIN.
+# own domains. Drop X-Frame-Options and relax frame-ancestors for that
+# path only so embedding works; the rest of the site stays SAMEORIGIN.
 [[headers]]
   for = "/embed*"
   [headers.values]
     X-Frame-Options = ""
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-src 'self' https://vizhub.healthdata.org https://www.cdc.gov; frame-ancestors *; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 
 [[headers]]
   for = "/data/*"

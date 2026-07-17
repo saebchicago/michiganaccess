@@ -337,11 +337,18 @@ function checkHardcodedArrayProvenance() {
 checkHardcodedArrayProvenance();
 
 // Heuristic: page files with bold numeric claims (<strong>~N%</strong>) should
-// import IntegrityBadge. Files in this list have reviewed badges adjacent to
-// the figure and are explicitly allowed.
+// import IntegrityBadge. Files in this list have been reviewed and carry a
+// named source for every flagged figure - either an IntegrityBadge adjacent
+// to it, or this codebase's inline "Source:" text citation convention - and
+// are explicitly allowed.
 const BOLD_NUMERIC_ALLOWLIST = new Set([
   "ForHealthSystemsPage.tsx",
   "LeanHealthcarePage.tsx",
+  // Reviewed 2026-07-17: every bold numeric on these two pages carries an
+  // adjacent named "Source:" citation (this page's own established pattern,
+  // predating IntegrityBadge) rather than the IntegrityBadge component.
+  "StoryPage.tsx",
+  "TransportationPage.tsx",
 ]);
 
 function checkBoldNumericLabels() {
