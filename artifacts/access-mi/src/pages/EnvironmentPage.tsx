@@ -17,7 +17,6 @@ import {
   ExternalLink,
   Shield,
   Loader2,
-  Footprints,
   ArrowRight,
 } from "lucide-react";
 import {
@@ -2033,36 +2032,6 @@ const EnvironmentPage = () => {
           <HealthSafetyCallout />
           <CivicDataCallout />
           <TransportationCallout />
-          <Card className="border-michigan-forest/20 bg-michigan-forest/5">
-            <CardContent className="py-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10 flex-shrink-0">
-                  <Footprints className="h-5 w-5 text-michigan-forest-deep" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-semibold text-foreground">
-                    Walkable Infrastructure Reduces Emissions
-                  </h3>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Walkable infrastructure reduces car trips and carbon
-                    emissions. See Michigan's pedestrian, bike, and
-                    accessibility infrastructure data powered by the federal
-                    GATIS standard.
-                  </p>
-                  <Link to="/transportation">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="mt-2 h-7 text-xs"
-                    >
-                      <ArrowRight className="mr-1 h-3 w-3" />
-                      Active Transportation Data
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
           <Card className="border-primary/20 bg-primary/5">
             <CardContent className="py-4">
               <div className="flex items-start gap-3">
@@ -2076,18 +2045,14 @@ const EnvironmentPage = () => {
                   <p className="text-xs text-muted-foreground mt-1">
                     Multibillion-dollar data center projects could
                     significantly increase Michigan's electricity demand.
-                    Track the Stargate project, energy pipeline, and
-                    community impact - figures sourced on that page.
                   </p>
-                  <Link to="/data-centers">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="mt-2 h-7 text-xs"
-                    >
-                      <ArrowRight className="mr-1 h-3 w-3" />
-                      Data Center Insights
-                    </Button>
+                  <Link
+                    to="/data-centers"
+                    className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                  >
+                    <ArrowRight className="h-3 w-3" />
+                    Track the Stargate project, energy pipeline, and
+                    community impact →
                   </Link>
                 </div>
               </div>
