@@ -216,28 +216,6 @@ const recyclingBreakdown = [
   { name: "Other", value: 7, color: "hsl(0, 100%, 71%)" },
 ];
 
-const greatLakesStats = [
-  {
-    lake: "Superior",
-    waterTemp: "42°F",
-    clarity: "Excellent",
-    invasiveRisk: "Low",
-  },
-  {
-    lake: "Michigan",
-    waterTemp: "54°F",
-    clarity: "Good",
-    invasiveRisk: "Moderate",
-  },
-  {
-    lake: "Huron",
-    waterTemp: "51°F",
-    clarity: "Good",
-    invasiveRisk: "Moderate",
-  },
-  { lake: "Erie", waterTemp: "58°F", clarity: "Fair", invasiveRisk: "High" },
-];
-
 const envJusticeAreas = [
   {
     area: "Southwest Detroit",
@@ -1061,6 +1039,21 @@ const EnvironmentPage = () => {
                         </h3>
                         <p className="mb-4 text-sm text-muted-foreground">
                           {item.desc}
+                          {item.title === "MI Healthy Climate Plan" && (
+                            <>
+                              {" "}
+                              <ProvenanceTag
+                                label="PROJECTED"
+                                source="Michigan EGLE (MI Healthy Climate Plan - carbon neutrality/GHG/clean energy targets are forward-looking policy goals)"
+                                className="align-middle"
+                              />{" "}
+                              <ProvenanceTag
+                                label="VERIFIED"
+                                source="Michigan EGLE / Governor's Office (IRA investment total and jobs figure)"
+                                className="align-middle"
+                              />
+                            </>
+                          )}
                         </p>
                         <a
                           href={item.link}
@@ -1405,7 +1398,13 @@ const EnvironmentPage = () => {
                           <strong>$73M</strong> (2025). EV Charging Forward:
                           $12.5M (2024), $5.1M (2025). All MI utilities
                           combined: <strong>$551+ million</strong> on energy
-                          waste reduction (2023). Every $1 returns ~$2.40–$3.18.
+                          waste reduction (2023).{" "}
+                          <ProvenanceTag
+                            label="VERIFIED"
+                            source="Michigan Public Service Commission (MPSC)"
+                            className="align-middle"
+                          />{" "}
+                          Every $1 returns ~$2.40–$3.18.
                         </p>
                         <Button variant="outline" size="sm" asChild>
                           <a
@@ -1426,6 +1425,11 @@ const EnvironmentPage = () => {
                         </h3>
                         <p className="text-sm text-muted-foreground mb-3">
                           2024–2025 plan: nearly <strong>$600 million</strong>{" "}
+                          <ProvenanceTag
+                            label="VERIFIED"
+                            source="Michigan Public Service Commission (MPSC)"
+                            className="align-middle"
+                          />{" "}
                           (MPSC-approved Feb 2024). Income-qualified electric:{" "}
                           <strong>$85.3M</strong> (29% increase).
                           Income-qualified gas: <strong>$113.1M</strong> (56%
@@ -1490,17 +1494,26 @@ const EnvironmentPage = () => {
                         Michigan High-Speed Internet Office (MIHI)
                       </h3>
                       <p className="text-sm text-muted-foreground mb-3">
-                        $5.3 billion in federal investment to connect every
-                        Michigan home and business with affordable high-speed
-                        internet. Check eligibility for the Affordable
-                        Connectivity Program (ACP) and local broadband grants.
+                        <strong>~$1.5 billion</strong>{" "}
+                        <ProvenanceTag
+                          label="VERIFIED"
+                          source="NTIA / Michigan LEO-MIHI"
+                          className="align-middle"
+                        />{" "}
+                        in federal BEAD investment to connect unserved and
+                        underserved Michigan homes and businesses with
+                        high-speed internet. The federal Affordable
+                        Connectivity Program (ACP) subsidy ended June 1, 2024
+                        and has not been renewed by Congress; the Lifeline
+                        program remains active for eligible households. Check
+                        local broadband grants through MIHI.
                       </p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         <Badge variant="outline" className="text-xs">
                           BEAD Program
                         </Badge>
                         <Badge variant="outline" className="text-xs">
-                          ACP Subsidy
+                          Lifeline
                         </Badge>
                         <Badge variant="outline" className="text-xs">
                           Rural Priority
@@ -1536,6 +1549,11 @@ const EnvironmentPage = () => {
                       <CardTitle className="flex items-center gap-2">
                         <Recycle className="h-5 w-5 text-michigan-forest-deep" />
                         Michigan Recycling Composition
+                        <ProvenanceTag
+                          label="VERIFIED"
+                          source="Michigan EGLE"
+                          className="align-middle"
+                        />
                       </CardTitle>
                       <CardDescription>
                         Breakdown of materials recovered through curbside and
@@ -1577,16 +1595,28 @@ const EnvironmentPage = () => {
                     <CardContent>
                       <div className="space-y-4">
                         <div className="rounded-lg bg-michigan-forest/10 p-4">
-                          <p className="text-3xl font-bold text-michigan-forest-deep">
-                            89%
+                          <p className="text-3xl font-bold text-michigan-forest-deep flex items-center gap-2">
+                            ~76%
+                            <ProvenanceTag
+                              label="VERIFIED"
+                              source="Bridge Michigan (state unclaimed-deposit reporting)"
+                              className="align-middle"
+                            />
                           </p>
                           <p className="text-sm text-muted-foreground">
-                            Container return rate - highest in the nation
+                            Container return rate - down from ~89% before the
+                            2020 pandemic pause, still among the nation's
+                            highest
                           </p>
                         </div>
                         <div className="rounded-lg bg-michigan-teal/10 p-4">
-                          <p className="text-3xl font-bold text-michigan-teal-deep">
+                          <p className="text-3xl font-bold text-michigan-teal-deep flex items-center gap-2">
                             $1.2B+
+                            <ProvenanceTag
+                              label="MODELED"
+                              source="Michigan Dept. of Treasury (Bottle Deposit Fund, cumulative estimate)"
+                              className="align-middle"
+                            />
                           </p>
                           <p className="text-sm text-muted-foreground">
                             In deposits returned to Michigan consumers since
@@ -1655,57 +1685,6 @@ const EnvironmentPage = () => {
                   </div>
                 </motion.div>
 
-                <motion.div
-                  variants={fadeUp}
-                  className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
-                >
-                  {greatLakesStats.map((lake) => (
-                    <Card
-                      key={lake.lake}
-                      className="group hover:border-michigan-teal/30 transition-colors"
-                    >
-                      <CardContent className="p-6">
-                        <h3 className="mb-3 text-lg font-bold text-foreground">
-                          Lake {lake.lake}
-                        </h3>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">
-                              Water Temp
-                            </span>
-                            <span className="font-medium">
-                              {lake.waterTemp}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">
-                              Clarity
-                            </span>
-                            <span className="font-medium">{lake.clarity}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">
-                              Invasive Risk
-                            </span>
-                            <Badge
-                              variant={
-                                lake.invasiveRisk === "Low"
-                                  ? "outline"
-                                  : lake.invasiveRisk === "Moderate"
-                                    ? "secondary"
-                                    : "destructive"
-                              }
-                              className="text-xs"
-                            >
-                              {lake.invasiveRisk}
-                            </Badge>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </motion.div>
-
                 <motion.div variants={fadeUp} className="mt-8">
                   <Accordion type="single" collapsible>
                     <AccordionItem value="invasive">
@@ -1714,10 +1693,15 @@ const EnvironmentPage = () => {
                       </AccordionTrigger>
                       <AccordionContent className="text-muted-foreground">
                         Zebra and quagga mussels, sea lamprey, and Asian carp
-                        remain the top invasive threats. Michigan invests $20M+
-                        annually in prevention barriers, monitoring, and
-                        rapid-response programs. Report sightings at Michigan
-                        DNR's{" "}
+                        remain the top invasive threats. Michigan invests
+                        tens of millions annually{" "}
+                        <ProvenanceTag
+                          label="MODELED"
+                          source="Michigan DNR (aggregated across state/federal prevention, monitoring, and GLRI grant programs)"
+                          className="align-middle"
+                        />{" "}
+                        in prevention barriers, monitoring, and rapid-response
+                        programs. Report sightings at Michigan DNR's{" "}
                         <a
                           href="https://www.michigan.gov/invasives"
                           target="_blank"
@@ -2090,9 +2074,10 @@ const EnvironmentPage = () => {
                     Data Centers & Michigan's Energy Future
                   </h3>
                   <p className="text-xs text-muted-foreground mt-1">
-                    $11.3B+ in data center projects could nearly double
-                    Michigan's electricity demand. Track the Stargate project,
-                    energy pipeline, and community impact.
+                    Multibillion-dollar data center projects could
+                    significantly increase Michigan's electricity demand.
+                    Track the Stargate project, energy pipeline, and
+                    community impact - figures sourced on that page.
                   </p>
                   <Link to="/data-centers">
                     <Button
