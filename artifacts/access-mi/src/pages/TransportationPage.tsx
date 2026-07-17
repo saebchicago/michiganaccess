@@ -650,7 +650,7 @@ function StopArmCameraExplainer() {
                     An estimated <strong>39.3 million</strong> illegal
                     passings of stopped school buses occur nationwide per
                     school year, projected from a one-day count of drivers
-                    reporting
+                    reporting how many vehicles passed their bus illegally
                   </li>
                   <li>
                     NHTSA crash data (2014-2023) show most school-bus-related
