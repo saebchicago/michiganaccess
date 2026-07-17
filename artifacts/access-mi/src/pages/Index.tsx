@@ -9,6 +9,7 @@ import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { AI_CHAT_ENABLED } from "@/config/aiChat";
 
 // Lazy chat, gated by env flag (unchanged behavior).
 const AccessChat = lazy(() =>
@@ -637,7 +638,7 @@ const Index = () => {
         </div>
       </div>
 
-      {import.meta.env.VITE_ENABLE_AI_CHAT === "true" && (
+      {AI_CHAT_ENABLED && (
         <Suspense fallback={null}>
           <AccessChat />
         </Suspense>

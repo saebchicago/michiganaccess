@@ -9,6 +9,7 @@ import ScrollToTop from "@/components/shared/ScrollToTop";
 import SkipToContent from "@/components/shared/SkipToContent";
 import RouteAnnouncer from "@/components/shared/RouteAnnouncer";
 import PublicTrustBar from "@/components/shared/PublicTrustBar";
+import { AI_CHAT_ENABLED } from "@/config/aiChat";
 
 // Deferred: non-critical widgets that don't affect initial render
 const AIChatWidget = lazy(() => import("@/components/shared/AIChatWidget"));
@@ -67,13 +68,9 @@ const Layout = ({ children }: LayoutProps) => (
       <PrintButton />
       <PWAInstallBanner />
       <MobileBottomNav />
-      {/* AI chat widget is gated by VITE_ENABLE_AI_CHAT, default off. The
-          widget streams raw model output without grounding to AccessMI's
-          sourced data and has no fetch timeout, so on flaky venue wifi it
-          can show a stuck spinner or generate unsourced claims. Set the
-          env var to "true" in Netlify / .env.local once the widget is
-          hardened. */}
-      {import.meta.env.VITE_ENABLE_AI_CHAT === "true" && <AIChatWidget />}
+      {/* AI chat widget: hard-disabled via AI_CHAT_ENABLED regardless of
+          the VITE_ENABLE_AI_CHAT env var - see src/config/aiChat.ts. */}
+      {AI_CHAT_ENABLED && <AIChatWidget />}
       <QuickExitBar />
 
       <OnboardingTour />
