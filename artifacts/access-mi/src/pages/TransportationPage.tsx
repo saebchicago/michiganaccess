@@ -647,23 +647,50 @@ function StopArmCameraExplainer() {
                 </p>
                 <ul className="list-disc pl-5 space-y-1">
                   <li>
-                    <strong>17 million</strong> stop-arm violations occur
-                    annually nationwide (NASDPTS estimate)
+                    An estimated <strong>39.3 million</strong> illegal
+                    passings of stopped school buses occur nationwide per
+                    school year, projected from a one-day count of drivers
+                    reporting
                   </li>
                   <li>
-                    <strong>95%</strong> of school-bus related fatalities happen
-                    outside the bus - in loading/unloading zones
+                    NHTSA crash data (2014-2023) show most school-bus-related
+                    fatalities are people outside the bus:{" "}
+                    <strong>71%</strong> were occupants of other vehicles and{" "}
+                    <strong>16%</strong> were pedestrians
                   </li>
                   <li>
-                    <strong>108,000+</strong> violations were recorded on a
-                    single survey day across participating states
+                    <strong>67,258</strong> illegal passes were reported by
+                    114,239 school bus drivers across 36 states and DC on a
+                    single survey day in 2025
                   </li>
                   <li>
-                    Districts with AI camera enforcement see{" "}
-                    <strong>50–80% reduction</strong> in violations within the
-                    first year
+                    Districts with stop-arm camera enforcement report an
+                    average <strong>30% reduction</strong> in violations
+                    year over year; individual programs have reported larger
+                    first-year drops (35% in Manassas, VA; 40% in Suffolk
+                    County, NY)
                   </li>
                 </ul>
+                <p className="text-[10px] text-muted-foreground/60 mt-2">
+                  Source:{" "}
+                  <a
+                    href="https://nasdpts.org/stop-arm-violations/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline"
+                  >
+                    NASDPTS National Stop-Arm Violation Count
+                  </a>{" "}
+                  ·{" "}
+                  <a
+                    href="https://crashstats.nhtsa.dot.gov/Api/Public/Publication/813600"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline"
+                  >
+                    NHTSA School-Transportation-Related Crashes
+                  </a>
+                </p>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -1541,10 +1568,34 @@ export default function TransportationPage() {
                             </strong>{" "}
                             provides AI-powered stop-arm camera systems that
                             automatically detect and cite drivers who illegally
-                            pass stopped school buses. Michigan districts like{" "}
-                            <strong>Dearborn</strong> have seen up to a{" "}
-                            <strong>71% reduction</strong> in stop-arm
-                            violations after deployment.
+                            pass stopped school buses. Dearborn is the first
+                            Michigan community to launch a citywide program
+                            (enforcement began January 2026); BusPatrol
+                            reports communities nationwide see an average{" "}
+                            <strong>30% reduction</strong> in violations year
+                            over year, with over{" "}
+                            <strong>90%</strong> of first-time violators not
+                            reoffending.
+                          </p>
+                          <p className="text-[10px] text-muted-foreground/60">
+                            Source:{" "}
+                            <a
+                              href="https://buspatrol.com/blog/education/can-automated-stop-arm-enforcement-change-driver-behavior/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary underline"
+                            >
+                              BusPatrol
+                            </a>{" "}
+                            ·{" "}
+                            <a
+                              href="https://www.michiganpublic.org/public-safety/2025-12-16/dearborn-becomes-first-in-michigan-to-launch-citywide-school-bus-stop-arm-cameras"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-primary underline"
+                            >
+                              Michigan Public
+                            </a>
                           </p>
                           <Accordion type="single" collapsible>
                             <AccordionItem value="integration">

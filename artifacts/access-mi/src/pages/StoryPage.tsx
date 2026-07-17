@@ -146,6 +146,11 @@ export default function StoryPage() {
               <strong className="text-red-600">11%</strong> get connected to
               help.
             </p>
+            <p className="text-[10px] text-muted-foreground/60 -mt-6 mb-8">
+              Source: HMA March 2025 (enrollment), Trinity Health reference
+              rate (27.4% screened), HealthAffairs national avg (~11%
+              resolution) - see funnel below for full breakdown
+            </p>
           </motion.div>
           <motion.div {...fadeIn} transition={{ duration: 0.6, delay: 0.2 }}>
             <Suspense
