@@ -1,0 +1,10 @@
+{
+  "schema": "sourceLinkHealth.v1",
+  "generated_at": null,
+  "checked": 0,
+  "dead": 0,
+  "timed_out": 0,
+  "redirected": 0,
+  "results": [],
+  "note": "Not yet populated - runs via .github/workflows/source-link-check.yml. A run of check-source-links.mjs from the dev sandbox reports every URL as dead (403) because the sandbox's own egress proxy blocks these hosts, not because the links are actually dead; do not commit sandbox-run output here."
+}
