@@ -30,6 +30,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
 import {
   Accordion,
   AccordionContent,
@@ -1112,11 +1113,16 @@ const EnvironmentPage = () => {
                         </h3>
                         <p className="text-sm text-muted-foreground mb-3">
                           FY2025 federal allocation:{" "}
-                          <strong>$183,334,313</strong> (including $5.85M IIJA).
-                          In FY2024, served <strong>434,124</strong> households
-                          (heating) and <strong>129,420</strong> (crisis).
-                          Benefits range $1–$2,205 (heating); up to $800
-                          (crisis).
+                          <strong>$183,334,313</strong>{" "}
+                          <ProvenanceTag
+                            label="VERIFIED"
+                            source="LIHEAP Clearinghouse"
+                            className="align-middle"
+                          />{" "}
+                          (including $5.85M IIJA). In FY2024, served{" "}
+                          <strong>434,124</strong> households (heating) and{" "}
+                          <strong>129,420</strong> (crisis). Benefits range
+                          $1–$2,205 (heating); up to $800 (crisis).
                         </p>
                         <div className="flex flex-wrap gap-2 mb-4">
                           <Badge variant="outline" className="text-xs">
@@ -1149,12 +1155,23 @@ const EnvironmentPage = () => {
                           MEAP (Michigan Energy Assistance)
                         </h3>
                         <p className="text-sm text-muted-foreground mb-3">
-                          2025 budget: ~<strong>$54.5 million</strong>. Served{" "}
-                          <strong>56,018</strong> households before October
-                          expansion. PA 168–170 of 2024 removes cap and raises
-                          factor to $1.25/meter (increasing to $2.00 max).
-                          Projected to reach{" "}
-                          <strong>$100 million by 2028</strong>.
+                          2025 budget: ~<strong>$54.5 million</strong>{" "}
+                          <ProvenanceTag
+                            label="VERIFIED"
+                            source="MDHHS"
+                            className="align-middle"
+                          />
+                          . Served <strong>56,018</strong> households before
+                          October expansion. PA 168–170 of 2024 removes cap
+                          and raises factor to $1.25/meter (increasing to
+                          $2.00 max). Projected to reach{" "}
+                          <strong>$100 million by 2028</strong>{" "}
+                          <ProvenanceTag
+                            label="PROJECTED"
+                            source="MDHHS"
+                            className="align-middle"
+                          />
+                          .
                         </p>
                         <div className="flex flex-wrap gap-2 mb-4">
                           <Badge variant="outline" className="text-xs">
@@ -1192,6 +1209,11 @@ const EnvironmentPage = () => {
                   <p className="text-sm text-muted-foreground mb-4">
                     Michigan Home Energy Rebate program launched statewide April
                     23, 2025. Total funding: <strong>$211 million</strong>{" "}
+                    <ProvenanceTag
+                      label="VERIFIED"
+                      source="EGLE"
+                      className="align-middle"
+                    />{" "}
                     (HOMES: $105.7M, HEAR: $105.3M). Target: up to{" "}
                     <strong>15,000 households</strong>. HOMES + HEAR combined
                     max: up to <strong>$34,000/household</strong>. Call center:
@@ -1204,8 +1226,13 @@ const EnvironmentPage = () => {
                           HOMES Rebate (MiHER)
                         </h3>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Up to <strong>$20,000/household</strong> for
-                          whole-home energy efficiency upgrades including
+                          Up to <strong>$20,000/household</strong>{" "}
+                          <ProvenanceTag
+                            label="VERIFIED"
+                            source="EGLE"
+                            className="align-middle"
+                          />{" "}
+                          for whole-home energy efficiency upgrades including
                           insulation, air sealing, and HVAC improvements. 100%
                           covered for households at 0–80% AMI.
                         </p>
@@ -1241,7 +1268,13 @@ const EnvironmentPage = () => {
                           <strong>$8,000</strong>; water heater $1,750; electric
                           stove $840; dryer $840; panel upgrade $4,000;
                           insulation $1,600. Combined up to{" "}
-                          <strong>$14,000+</strong>.
+                          <strong>$14,000+</strong>{" "}
+                          <ProvenanceTag
+                            label="VERIFIED"
+                            source="EGLE"
+                            className="align-middle"
+                          />
+                          .
                         </p>
                         <Badge variant="outline" className="mr-2 text-xs">
                           Low/Moderate Income
@@ -1314,13 +1347,18 @@ const EnvironmentPage = () => {
                       </h3>
                       <p className="text-sm text-muted-foreground mb-3">
                         In 2024: <strong>7,304 residential projects</strong> and{" "}
-                        <strong>$96.6 million</strong> financed ($108.1M total
-                        investment). Average savings: <strong>$347/year</strong>
-                        . Cumulative: 50,000+ customers,{" "}
-                        <strong>$500+ million</strong> financed, 207 GWh saved.
-                        Plus a $97M grant from EPA Greenhouse Gas Reduction
-                        Fund. Loan terms: $1,000–$75,000, from 6.49% APR, up to
-                        15 years.
+                        <strong>$96.6 million</strong>{" "}
+                        <ProvenanceTag
+                          label="VERIFIED"
+                          source="Michigan Saves"
+                          className="align-middle"
+                        />{" "}
+                        financed ($108.1M total investment). Average savings:{" "}
+                        <strong>$347/year</strong>. Cumulative: 50,000+
+                        customers, <strong>$500+ million</strong> financed,
+                        207 GWh saved. Plus a $97M grant from EPA Greenhouse
+                        Gas Reduction Fund. Loan terms: $1,000–$75,000, from
+                        6.49% APR, up to 15 years.
                       </p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         <Badge variant="outline" className="text-xs">
