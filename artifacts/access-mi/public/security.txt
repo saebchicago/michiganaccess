@@ -1,0 +1,12 @@
+Contact: https://accessmi.org/contact
+Expires: 2027-07-17T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://accessmi.org/.well-known/security.txt
+Policy: https://accessmi.org/terms
+
+# AccessMI is an independent, non-commercial civic data project.
+# It has no employer, government, or health system affiliation.
+# To report a security issue, use the contact link above and
+# describe the issue in the message field; we will follow up by
+# email. Please do not include personal or health information in
+# your report.

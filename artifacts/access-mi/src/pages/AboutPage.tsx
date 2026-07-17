@@ -236,11 +236,8 @@ export default function AboutPage() {
               Maintainer
             </p>
             <p>
-              AccessMI is built and maintained by Saeb Ahsan, a Michigan-based
-              public policy and data professional (University of Chicago Harris
-              MPP). AccessMI is an independent educational project and is not
-              affiliated with, endorsed by, or representing any employer,
-              government agency, or health system. More background:{" "}
+              Built and maintained by Saeb, a Michigan-based civic
+              technologist (MPP, University of Chicago Harris). More at{" "}
               <a
                 href="https://michigans.me"
                 target="_blank"
@@ -249,6 +246,7 @@ export default function AboutPage() {
               >
                 michigans.me
               </a>
+              .
             </p>
           </motion.div>
 

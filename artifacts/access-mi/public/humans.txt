@@ -1,0 +1,13 @@
+/* TEAM */
+Built and maintained by: Saeb, a Michigan-based civic technologist (MPP, University of Chicago Harris)
+Site: https://michigans.me
+Contact: https://accessmi.org/contact
+
+/* SITE */
+Last update: 2026-07-17
+Standards: HTML5, CSS3, ARIA
+Components: React 18, TypeScript, Tailwind CSS, Vite
+Software: pnpm, vitest
+
+AccessMI is an independent, non-commercial civic project. It has no
+employer, government, or health system affiliation.
