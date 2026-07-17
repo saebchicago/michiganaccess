@@ -160,6 +160,13 @@ function Masthead({
           >
             The Civic Intelligence Journal of Michigan
           </p>
+          <p
+            className="text-xs font-normal normal-case"
+            style={{ color: `${C.emeraldMid}99` }}
+          >
+            Independent civic project. No government or health system
+            affiliation.
+          </p>
         </div>
 
         <div
