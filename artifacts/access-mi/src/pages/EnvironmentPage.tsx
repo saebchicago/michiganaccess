@@ -1012,23 +1012,26 @@ const EnvironmentPage = () => {
                 >
                   {[
                     {
+                      id: "mi-healthy-climate-plan",
                       title: "MI Healthy Climate Plan",
                       desc: "100% carbon neutrality by 2050. 52% GHG reduction from 2005 levels by 2030. 100% clean energy standard by 2040. Currently ~15% below 2005 baseline. $27.8 billion in IRA-funded investment, 26,000+ jobs.",
                       link: "https://www.michigan.gov/egle/about/organization/climate-and-energy/mi-healthy-climate-plan",
                     },
                     {
+                      id: "25d-clean-energy-tax-credit",
                       title: "25D Clean Energy Tax Credit",
                       desc: "30% federal tax credit through 2032 for solar, wind, geothermal, and battery storage. Stackable with MiHER rebates and utility incentives. (Note: 25C credit expired Dec 31, 2025.)",
                       link: "https://www.michigan.gov/egle",
                     },
                     {
+                      id: "community-solar-programs",
                       title: "Community Solar Programs",
                       desc: "Subscribe to shared solar farms without installing panels on your roof. Multiple programs available across Michigan utilities.",
                       link: "https://www.michigan.gov/mpsc",
                     },
                   ].map((item) => (
                     <Card
-                      key={item.title}
+                      key={item.id}
                       className="group hover:border-michigan-gold/30 transition-colors"
                     >
                       <CardContent className="p-6">
@@ -1038,7 +1041,7 @@ const EnvironmentPage = () => {
                         </h3>
                         <p className="mb-4 text-sm text-muted-foreground">
                           {item.desc}
-                          {item.title === "MI Healthy Climate Plan" && (
+                          {item.id === "mi-healthy-climate-plan" && (
                             <>
                               {" "}
                               <ProvenanceTag
@@ -1105,16 +1108,16 @@ const EnvironmentPage = () => {
                         </h3>
                         <p className="text-sm text-muted-foreground mb-3">
                           FY2025 federal allocation:{" "}
-                          <strong>$183,334,313</strong>{" "}
-                          <ProvenanceTag
-                            label="VERIFIED"
-                            source="LIHEAP Clearinghouse"
-                            className="align-middle"
-                          />{" "}
-                          (including $5.85M IIJA). In FY2024, served{" "}
+                          <strong>$183,334,313</strong> (including $5.85M
+                          IIJA). In FY2024, served{" "}
                           <strong>434,124</strong> households (heating) and{" "}
                           <strong>129,420</strong> (crisis). Benefits range
-                          $1–$2,205 (heating); up to $800 (crisis).
+                          $1–$2,205 (heating); up to $800 (crisis).{" "}
+                          <ProvenanceTag
+                            label="VERIFIED"
+                            source="LIHEAP Clearinghouse (all figures this paragraph)"
+                            className="align-middle"
+                          />
                         </p>
                         <div className="flex flex-wrap gap-2 mb-4">
                           <Badge variant="outline" className="text-xs">
@@ -1147,16 +1150,16 @@ const EnvironmentPage = () => {
                           MEAP (Michigan Energy Assistance)
                         </h3>
                         <p className="text-sm text-muted-foreground mb-3">
-                          2025 budget: ~<strong>$54.5 million</strong>{" "}
+                          2025 budget: ~<strong>$54.5 million</strong>. Served{" "}
+                          <strong>56,018</strong> households before October
+                          expansion. PA 168–170 of 2024 removes cap and raises
+                          factor to $1.25/meter (increasing to $2.00 max).{" "}
                           <ProvenanceTag
                             label="VERIFIED"
-                            source="MDHHS"
+                            source="MDHHS (all figures this paragraph except the 2028 projection)"
                             className="align-middle"
-                          />
-                          . Served <strong>56,018</strong> households before
-                          October expansion. PA 168–170 of 2024 removes cap
-                          and raises factor to $1.25/meter (increasing to
-                          $2.00 max). Projected to reach{" "}
+                          />{" "}
+                          Projected to reach{" "}
                           <strong>$100 million by 2028</strong>{" "}
                           <ProvenanceTag
                             label="PROJECTED"
@@ -1598,7 +1601,7 @@ const EnvironmentPage = () => {
                             ~76%
                             <ProvenanceTag
                               label="VERIFIED"
-                              source="Bridge Michigan (state unclaimed-deposit reporting)"
+                              source="Bridge Michigan (state unclaimed-deposit reporting, current and pre-pandemic figures both)"
                               className="align-middle"
                             />
                           </p>
