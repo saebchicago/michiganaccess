@@ -1,6 +1,6 @@
 # Access Michigan
 
-> Michigan civic intelligence platform — county-level health, environmental, financial, and social data across all 83 counties. Built by and for Michigan residents, with no login required.
+> Michigan civic intelligence platform. County-level health, environmental, financial, and social data across all 83 counties. Built by and for Michigan residents, with no login required.
 
 Access Michigan helps residents find care, understand benefits, compare counties, and navigate public services using authoritative public datasets (CDC PLACES, SVI, ALICE, EJSCREEN, FEMA, FRED, and state agency feeds). Every metric links back to its source and cadence; no mock data.
 
