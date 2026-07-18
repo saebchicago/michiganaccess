@@ -8,7 +8,7 @@ const WIDGETS = [
   {
     name: "Care Finder Widget",
     description: "Embed a quick-search widget for healthcare, community resources, and support across Michigan.",
-    embedCode: `<iframe src="https://accessmi.org/embed" width="100%" height="280" frameborder="0" title="Access Michigan Care Finder"></iframe>`,
+    embedCode: `<iframe src="https://accessmi.org/embed" width="100%" height="360" frameborder="0" title="Access Michigan Care Finder"></iframe>`,
     previewUrl: "/embed",
   },
   {
