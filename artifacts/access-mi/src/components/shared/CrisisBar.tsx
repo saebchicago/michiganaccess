@@ -14,7 +14,7 @@ const CrisisBar = () => {
   return (
     <div
       id="crisis-bar"
-      className="sticky top-0 z-crisis-bar bg-michigan-coral backdrop-blur-sm border-b-2 border-michigan-coral/40 shadow-sm"
+      className="bg-michigan-coral backdrop-blur-sm border-b-2 border-michigan-coral/40 shadow-sm"
       role="region"
       aria-label="Crisis resources and safety options"
     >
