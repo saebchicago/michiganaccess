@@ -32,7 +32,6 @@ import {
 import { DataClassification } from "@/components/shared/DataClassification";
 import {
   COUNTIES_COVERED,
-  RESOURCE_COUNT_DISPLAY,
   LANGUAGES_SUPPORTED,
 } from "@/config/platformConstants";
 
@@ -52,12 +51,6 @@ const platformCapabilities = [
     value: String(COUNTIES_COVERED),
     label: "Counties Covered",
     source: "Michigan county data",
-  },
-  {
-    icon: FileText,
-    value: RESOURCE_COUNT_DISPLAY,
-    label: "Community Resources",
-    source: "Platform database",
   },
   {
     icon: Globe,

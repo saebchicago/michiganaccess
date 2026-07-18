@@ -8,7 +8,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
   MapPin,
-  FileText,
   Globe,
   Activity,
   Shield,
@@ -23,15 +22,12 @@ import { useCountUp } from "@/hooks/useCountUp";
 import {
   DATA_SOURCE_COUNT,
   DATA_SOURCE_DISPLAY,
-  RESOURCE_COUNT,
   LANGUAGES_SUPPORTED,
   COUNTIES_COVERED,
-  PLATFORM_RELEASES,
 } from "@/config/platformConstants";
 import EmbedShowcase from "@/components/partners/EmbedShowcase";
 import PrintButton from "@/components/shared/PrintButton";
 import { Link } from "react-router-dom";
-import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -44,7 +40,7 @@ const fade = {
 
 // @fabrication-allow: not external data - values are imported from the
 // governed src/config/platformConstants.ts (COUNTIES_COVERED,
-// RESOURCE_COUNT, DATA_SOURCE_COUNT, LANGUAGES_SUPPORTED); the two bare
+// DATA_SOURCE_COUNT, LANGUAGES_SUPPORTED); the two bare
 // 0 literals ("Personal Data Collected", "Cost to Users") are platform
 // policy statements, not empirical claims.
 const STATS = [
@@ -53,18 +49,6 @@ const STATS = [
     value: COUNTIES_COVERED,
     label: "Counties Covered",
     suffix: "",
-  },
-  {
-    icon: FileText,
-    value: RESOURCE_COUNT,
-    label: "Total Records (facilities + resources + programs)",
-    suffix: "+",
-    badge: (
-      <IntegrityBadge
-        label="MODELED"
-        source="Aggregated across 43 public datasets"
-      />
-    ),
   },
   {
     icon: Activity,
@@ -76,8 +60,6 @@ const STATS = [
   { icon: Shield, value: 0, label: "Personal Data Collected", suffix: "" },
   { icon: DollarSign, value: 0, label: "Cost to Users", suffix: "" },
 ];
-
-const TIMELINE = PLATFORM_RELEASES;
 
 const PERSONAS = [
   {
@@ -155,7 +137,7 @@ function AnimatedStat({
 export default function ImpactDashboardPage() {
   usePageMeta({
     title: "Platform Impact - Access Michigan",
-    description: `Access Michigan platform impact metrics: ${COUNTIES_COVERED} counties, 15,000+ resources, ${DATA_SOURCE_DISPLAY} data sources, ${LANGUAGES_SUPPORTED} languages, zero cost.`,
+    description: `Access Michigan platform impact metrics: ${COUNTIES_COVERED} counties, ${DATA_SOURCE_DISPLAY} data sources, ${LANGUAGES_SUPPORTED} languages, zero cost.`,
     path: "/impact",
   });
 
@@ -216,40 +198,26 @@ export default function ImpactDashboardPage() {
 
         <Separator />
 
-        {/* Timeline */}
+        {/* Platform evolution - links to the maintained changelog */}
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-6">
+          <h2 className="text-2xl font-bold text-foreground mb-4">
             Platform Evolution
           </h2>
-          <div className="space-y-4">
-            {TIMELINE.map((t, i) => (
-              <motion.div
-                key={t.version}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fade}
-                custom={i}
+          <Card>
+            <CardContent className="py-5">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Access Michigan launched in December 2024 and is updated
+                continuously. The complete, dated release history - every
+                feature, data source, and fix - is maintained on the changelog.
+              </p>
+              <Link
+                to="/changelog"
+                className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
               >
-                <Card>
-                  <CardContent className="py-4 flex flex-col sm:flex-row sm:items-center gap-3">
-                    <div className="flex items-center gap-3 shrink-0">
-                      <Badge variant="default">{t.version}</Badge>
-                      <span className="text-xs text-muted-foreground">
-                        {t.date}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-foreground">
-                        {t.title}
-                      </p>
-                      <p className="text-xs text-muted-foreground">{t.desc}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+                View the full changelog
+              </Link>
+            </CardContent>
+          </Card>
         </section>
 
         <Separator />

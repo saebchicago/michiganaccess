@@ -281,7 +281,12 @@ const Footer = () => {
                 label: "Community resources",
                 colorClass: "text-foreground",
               },
-            ].map((m) => (
+            ]
+              // Hide any stat whose value is not yet available (e.g. the live
+              // community-resource count before its query resolves) so no
+              // blank or unverified figure is shown.
+              .filter((m) => m.value != null && m.value !== "")
+              .map((m) => (
               <div
                 key={m.label}
                 className="flex items-center gap-1.5"

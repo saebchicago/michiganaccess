@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useCountUp } from "@/hooks/useCountUp";
 import {
-  RESOURCE_COUNT_DISPLAY,
   COUNTIES_COVERED,
 } from "@/config/platformConstants";
 
@@ -418,7 +417,7 @@ export default function StoryPage() {
               {
                 icon: Search,
                 title: "Connects",
-                desc: `${RESOURCE_COUNT_DISPLAY} resources across all ${COUNTIES_COVERED} counties, searchable by ZIP`,
+                desc: `Community resources across all ${COUNTIES_COVERED} counties, searchable by ZIP`,
               },
               {
                 icon: Shield,

@@ -29,7 +29,6 @@ import { Separator } from "@/components/ui/separator";
 import { EquityInsightCard } from "@/components/shared/EquityInsightCard";
 import DataProvenance from "@/components/shared/DataProvenance";
 import { toast } from "sonner";
-import { RESOURCE_COUNT_DISPLAY } from "@/config/platformConstants";
 
 const CountyChoropleth = lazy(
   () => import("@/components/dashboard/CountyChoropleth"),
@@ -679,9 +678,8 @@ export default function DataAndInsightsPage() {
                     <li className="flex items-start gap-2">
                       <FileText className="h-4 w-4 text-michigan-gold-deep shrink-0 mt-0.5" />{" "}
                       <span>
-                        <strong>Community programs</strong>:{" "}
-                        {RESOURCE_COUNT_DISPLAY} verified resources across 10+
-                        categories
+                        <strong>Community programs</strong>: verified community
+                        resources across 10+ categories
                       </span>
                     </li>
                   </ul>

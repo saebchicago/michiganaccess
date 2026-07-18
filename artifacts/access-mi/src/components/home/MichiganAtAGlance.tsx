@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { BarChart3, Droplets, Heart, ArrowRight, Users } from "lucide-react";
+import { BarChart3, Droplets, Heart, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { Badge } from "@/components/ui/badge";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
-import { RESOURCE_COUNT } from "@/config/platformConstants";
 
 type MetricKey = "uninsured" | "pcp" | "food";
 
@@ -219,14 +218,6 @@ export default function MichiganAtAGlance() {
               label: "PFAS sites monitored",
               sub: "MPART map · Michigan MCL: PFOA 8 ppt, PFOS 16 ppt (2020)",
               color: "text-michigan-teal-deep",
-            },
-            {
-              icon: Users,
-              value: RESOURCE_COUNT,
-              suffix: "+",
-              label: "Community resources indexed",
-              sub: "Food, housing, legal, utilities, health",
-              color: "text-primary",
             },
           ].map((item) => (
             <motion.div

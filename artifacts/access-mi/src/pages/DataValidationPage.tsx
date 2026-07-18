@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import {
   COUNTIES_COVERED,
-  RESOURCE_COUNT_DISPLAY,
 } from "@/config/platformConstants";
 
 interface DataSource {
@@ -338,12 +337,8 @@ export default function DataValidationPage() {
           <Card>
             <CardContent className="py-5 space-y-3 text-sm text-muted-foreground">
               <p>
-                The Access Michigan resource database currently indexes{" "}
-                <strong className="text-foreground">
-                  {RESOURCE_COUNT_DISPLAY} records
-                </strong>{" "}
-                across hospitals, providers, services, and facility rows,
-                including{" "}
+                The Access Michigan resource database indexes records across
+                hospitals, providers, services, and facility rows, including{" "}
                 <strong className="text-foreground">
                   88 healthcare facilities
                 </strong>{" "}

@@ -8,7 +8,6 @@ import { Mail, ExternalLink } from "lucide-react";
 import {
   DATA_SOURCE_DISPLAY,
   COUNTIES_COVERED,
-  RESOURCE_COUNT_DISPLAY,
 } from "@/config/platformConstants";
 
 const FACTS = [
@@ -16,7 +15,6 @@ const FACTS = [
     label: "Counties Covered",
     value: `${COUNTIES_COVERED} / ${COUNTIES_COVERED}`,
   },
-  { label: "Resources Indexed", value: RESOURCE_COUNT_DISPLAY },
   { label: "Live API Integrations", value: "18" },
   { label: "Data Sources", value: DATA_SOURCE_DISPLAY },
   { label: "Languages", value: "English, Spanish, Arabic, Bengali" },

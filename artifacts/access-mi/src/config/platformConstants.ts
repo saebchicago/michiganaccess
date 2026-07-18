@@ -77,24 +77,11 @@ export const DATA_SOURCE_DISPLAY = String(DATA_SOURCE_COUNT);
  */
 export const ATLAS_LAYER_COUNT = ATLAS_LAYERS.length;
 
-/**
- * Aggregated records across all integrated datasets and feeds.
- *
- * Rule: sum of records exposed across hospital quality (CMS),
- * provider directories (NPPES, HRSA), Michigan 211 service records,
- * facility-level rows (EPA TRI, EPA ECHO), and curated resource entries.
- * Surfaced as a marketing display only; never used in arithmetic.
- *
- * @remarks Approximate aggregate record count across all 43 source datasets.
- * MODELED - not a direct tabulation.
- */
-export const RESOURCE_COUNT_DISPLAY = "15,000+";
-
-/**
- * Numeric form of the resource count for animated counters and arithmetic.
- * Marketing copy should prefer RESOURCE_COUNT_DISPLAY ("15,000+").
- */
-export const RESOURCE_COUNT = 15000;
+// Resource-count constants removed: the platform now displays only the live
+// community_resources count (fetched at runtime in the footer via
+// useFooterStats). Earlier builds carried a hardcoded "15,000+" aggregate
+// that could not be verified against the live table and collided with it in
+// the UI. No hardcoded resource/record count is displayed anywhere else.
 
 /** Site-supported UI languages - matches src/i18n locales (en, es, ar, bn). */
 export const LANGUAGES_SUPPORTED = 4;
@@ -155,60 +142,11 @@ export const FRESHNESS_TRACKED_COUNT = 15;
  */
 export const LIVE_MONITORED_COUNT = 4;
 
-/**
- * Canonical platform release timeline.
- *
- * One log, not three. Older "v2.0 – v9.2" entries previously living in
- * ChangelogPage represented inflated version numbering for substantive
- * work; that content is renumbered as v1.5+ continuations of this
- * baseline. See PlatformChangelog for the full append-only release
- * notes; this array is the single source for landmark/milestone
- * releases referenced by the Impact page and About page.
- */
-export interface PlatformRelease {
-  version: string;
-  date: string;
-  title: string;
-  desc: string;
-}
-
-export const PLATFORM_RELEASES: PlatformRelease[] = [
-  {
-    version: "v1.0",
-    date: "Dec 2024",
-    title: "Foundation",
-    desc: "83-county coverage, Find Care, community resources, health map.",
-  },
-  {
-    version: "v1.1",
-    date: "Jan 2025",
-    title: "Data Layer",
-    desc: "Census ACS integration, county comparisons, data explorer.",
-  },
-  {
-    version: "v1.2",
-    date: "Feb 2025",
-    title: "Civic Access",
-    desc: "Elections, officials, transparency, public safety pages.",
-  },
-  {
-    version: "v1.3",
-    date: "Feb 2025",
-    title: "Intelligence Suite",
-    desc: "CHNA Explorer, equity scorecard, market intelligence.",
-  },
-  {
-    version: "v1.4",
-    date: "Mar 2025",
-    title: "Partner Tools",
-    desc: "Detection Gap, quality comparison, energy burden dashboard.",
-  },
-];
-
-/** Founding marker derived from the first release. */
-export const PLATFORM_LAUNCH = PLATFORM_RELEASES[0]!.date;
-export const CURRENT_VERSION =
-  PLATFORM_RELEASES[PLATFORM_RELEASES.length - 1]!.version;
+// The hardcoded PLATFORM_RELEASES version timeline was removed: it had frozen
+// at v1.4 (Mar 2025) while the maintained, append-only changelog on
+// ChangelogPage.tsx continued through 2026. The Impact dashboard now links to
+// that changelog as the single source of release history rather than
+// duplicating a stale, version-numbered list here.
 
 /**
  * Three-field freshness model - replaces single "Updated <month>" stamps.

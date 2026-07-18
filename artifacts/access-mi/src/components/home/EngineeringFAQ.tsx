@@ -14,7 +14,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { RESOURCE_COUNT_DISPLAY } from "@/config/platformConstants";
 
 const faqItems = [
   {
@@ -40,7 +39,7 @@ const faqItems = [
     icon: GitBranch,
     category: "Leakage Reduction",
     question: "How does centralizing SDOH resources reduce network leakage?",
-    answer: `Network leakage occurs when patients exit a coordinated care ecosystem due to unmet social needs - housing instability, food insecurity, or transportation barriers. By integrating ${RESOURCE_COUNT_DISPLAY} community resources (food banks, housing assistance, transit programs) into a single search interface alongside clinical providers, the platform keeps patients connected to wraparound services within their geographic network. This reduces out-of-network referrals and supports care continuity, directly aligning with managed care leakage reduction strategies.`,
+    answer: `Network leakage occurs when patients exit a coordinated care ecosystem due to unmet social needs - housing instability, food insecurity, or transportation barriers. By integrating community resources (food banks, housing assistance, transit programs) into a single search interface alongside clinical providers, the platform keeps patients connected to wraparound services within their geographic network. This reduces out-of-network referrals and supports care continuity, directly aligning with managed care leakage reduction strategies.`,
   },
   {
     id: "vbc",

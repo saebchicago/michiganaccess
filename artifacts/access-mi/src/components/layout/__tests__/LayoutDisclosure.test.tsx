@@ -16,7 +16,7 @@ vi.mock("@/hooks/useFooterStats", () => ({
   useFooterStats: () => ({
     countyCount: 83,
     dataFeeds: 41,
-    resourceCount: "15,000+",
+    resourceCount: "743+",
   }),
   formatLoadTime: () => "0ms",
   loadTimeColor: () => "text-green-500",
