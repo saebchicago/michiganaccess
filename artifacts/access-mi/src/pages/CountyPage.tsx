@@ -9,7 +9,6 @@ import {
   Building2,
   Phone,
   ExternalLink,
-  ArrowLeft,
   TrendingUp,
   TrendingDown,
   Minus,
@@ -20,6 +19,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import NotFound from "./NotFound";
 import { TruncatedResourceList } from "@/components/shared/TruncatedResourceList";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -146,25 +146,11 @@ export default function CountyPage() {
     if (county) setCounty(county);
   }, [county, setCounty]);
 
+  // Unrecognized slug is a genuine 404. Render the shared NotFound page
+  // (its own minimal chrome + recovery UI) rather than an in-shell
+  // "County Not Found" message buried below the full layout.
   if (!county) {
-    return (
-      <Layout>
-        <div className="container py-20 text-center">
-          <h1 className="text-2xl font-bold text-foreground">
-            County Not Found
-          </h1>
-          <p className="mt-2 text-muted-foreground">
-            The county "{slug}" was not recognized.
-          </p>
-          <Link to="/">
-            <Button className="mt-4">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Button>
-          </Link>
-        </div>
-      </Layout>
-    );
+    return <NotFound />;
   }
 
   const profile = getCountyProfile(county);
