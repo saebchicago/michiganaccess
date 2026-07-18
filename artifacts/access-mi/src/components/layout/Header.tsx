@@ -5,7 +5,6 @@ import {
   Menu,
   ChevronDown,
   Download,
-  Sparkles,
   Search,
   BarChart2,
 } from "lucide-react";
@@ -74,7 +73,7 @@ const Header = () => {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="sticky top-0 z-50 bg-background/95 backdrop-blur-md"
+        className="bg-background/95 backdrop-blur-md border-b border-border/60"
         role="banner"
       >
         <div className="container flex h-16 items-center justify-between">
@@ -160,21 +159,6 @@ const Header = () => {
             <CountySelector variant="header" />
             <MySettingsDrawer />
             <ThemeToggle />
-            <Button
-              asChild
-              size="sm"
-              className="hidden sm:flex bg-michigan-gold text-white hover:bg-michigan-gold/90 rounded-full px-3 gap-1.5 text-xs font-semibold shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            >
-              <Link
-                to="/benefits"
-                aria-current={
-                  location.pathname === "/benefits" ? "page" : undefined
-                }
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                Check benefits
-              </Link>
-            </Button>
             <Button
               size="sm"
               className="hidden sm:flex bg-gradient-michigan hover:opacity-90 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"

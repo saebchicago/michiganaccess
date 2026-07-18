@@ -39,8 +39,14 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => (
   <div className="flex min-h-screen flex-col">
     <SkipToContent />
-    <CrisisBar />
-    <Header />
+    {/* Unified sticky chrome: two bars only - the crisis/safety line and the
+        main header. Individual sticky positioning was removed from CrisisBar
+        and Header so they stack as one sticky unit instead of overlapping at
+        top-0. QuickExitBar remains a separate always-available affordance. */}
+    <div className="sticky top-0 z-header">
+      <CrisisBar />
+      <Header />
+    </div>
     <Suspense fallback={null}>
       <WeatherAlertBanner />
     </Suspense>

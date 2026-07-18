@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import { useCounty } from "@/contexts/CountyContext";
+import { useNerdMode } from "@/contexts/NerdModeContext";
 import { Link } from "react-router-dom";
 import {
   Tooltip,
@@ -202,6 +203,10 @@ export default function ContextBar() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState(false);
   const isMobile = useIsMobile();
+  // Persona, income (FPL), and the "What's this?" explainer are analyst-facing
+  // controls. The default resident view never shows them; they appear only
+  // when Data & Nerd (Analyst) mode is on.
+  const { nerdMode } = useNerdMode();
 
   useEffect(() => {
     (async () => {
@@ -325,7 +330,7 @@ export default function ContextBar() {
   // Mobile: collapsed pill
   if (isMobile) {
     return (
-      <div className="sticky top-16 z-40 border-b border-border/50 bg-background/95 backdrop-blur-md">
+      <div className="border-b border-border/50 bg-background/95 backdrop-blur-md">
         <div aria-live="polite" className="sr-only">
           Now showing {announcement} data and services.
         </div>
@@ -340,9 +345,13 @@ export default function ContextBar() {
             <span className="font-medium text-foreground truncate">
               {filterLabel}
             </span>
-            {audienceChip}
-            {subPersonaChips}
-            {eligibilityChip}
+            {nerdMode && (
+              <>
+                {audienceChip}
+                {subPersonaChips}
+                {eligibilityChip}
+              </>
+            )}
             <span className="text-primary text-[10px]">Change</span>
             <ChevronDown className="h-2.5 w-2.5 ml-auto" />
           </button>
@@ -376,10 +385,14 @@ export default function ContextBar() {
                 </Link>
               )}
             </div>
-            {audienceChip}
-            {subPersonaChips}
-            {eligibilityChip}
-            {!eligibility.fplPercent && <EligibilityPopover />}
+            {nerdMode && (
+              <>
+                {audienceChip}
+                {subPersonaChips}
+                {eligibilityChip}
+                {!eligibility.fplPercent && <EligibilityPopover />}
+              </>
+            )}
             {lastUpdated && (
               <>
                 <span className="text-muted-foreground/40">·</span>
@@ -406,7 +419,7 @@ export default function ContextBar() {
   // Desktop: full bar
   return (
     <div
-      className={`sticky top-16 z-40 border-b backdrop-blur-md transition-colors ${
+      className={`border-b backdrop-blur-md transition-colors ${
         hasNoLocation
           ? "border-amber-200 dark:border-amber-800/40 bg-amber-50/90 dark:bg-amber-950/30"
           : "border-border/50 bg-background/95"
@@ -464,13 +477,16 @@ export default function ContextBar() {
           )}
         </div>
 
-        {/* Persona, Sub-persona & Eligibility chips */}
-        {audienceChip}
-        {subPersonaChips}
-        {eligibilityChip}
-        {!eligibility.fplPercent && <EligibilityPopover />}
-
-        <span className="text-muted-foreground/40">·</span>
+        {/* Persona, Sub-persona & Eligibility chips - analyst view only */}
+        {nerdMode && (
+          <>
+            {audienceChip}
+            {subPersonaChips}
+            {eligibilityChip}
+            {!eligibility.fplPercent && <EligibilityPopover />}
+            <span className="text-muted-foreground/40">·</span>
+          </>
+        )}
 
         {/* Data freshness */}
         {lastUpdated && (
@@ -480,25 +496,28 @@ export default function ContextBar() {
           </div>
         )}
 
-        <span className="text-muted-foreground/40">·</span>
-
-        {/* What's this */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button className="flex items-center gap-0.5 hover:text-foreground transition-colors shrink-0">
-              <HelpCircle className="h-2.5 w-2.5" />
-              What's this?
-            </button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom" className="max-w-xs text-xs">
-            This bar shows your active filters - location, persona, and
-            eligibility - which control all data and recommendations across the
-            site.{" "}
-            <Link to="/data-validation" className="text-primary underline">
-              Learn more
-            </Link>
-          </TooltipContent>
-        </Tooltip>
+        {/* What's this - analyst view only */}
+        {nerdMode && (
+          <>
+            <span className="text-muted-foreground/40">·</span>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button className="flex items-center gap-0.5 hover:text-foreground transition-colors shrink-0">
+                  <HelpCircle className="h-2.5 w-2.5" />
+                  What's this?
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="max-w-xs text-xs">
+                This bar shows your active filters - location, persona, and
+                eligibility - which control all data and recommendations across
+                the site.{" "}
+                <Link to="/data-validation" className="text-primary underline">
+                  Learn more
+                </Link>
+              </TooltipContent>
+            </Tooltip>
+          </>
+        )}
       </div>
     </div>
   );
