@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { runHealthChecks, type HealthCheckResult } from "@/lib/health-check";
 import Layout from "@/components/layout/Layout";
+import ContentSkeleton from "@/components/shared/ContentSkeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -97,6 +98,13 @@ export default function StatusPage2() {
             </Button>
           </CardHeader>
           <CardContent className="space-y-3">
+            {loading && results.length === 0 && (
+              <ContentSkeleton
+                variant="rows"
+                count={4}
+                label="Checking system status"
+              />
+            )}
             {results.map((r) => (
               <div
                 key={r.name}

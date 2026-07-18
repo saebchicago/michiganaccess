@@ -4,6 +4,7 @@ import * as topojson from "topojson-client";
 import { isMichiganCounty, FIPS_TO_COUNTY } from "@/data/michigan-topojson";
 import { Link } from "react-router-dom";
 import { MICHIGAN_EJSCREEN, type EjscreenRecord } from "@/data/ejscreen";
+import ContentSkeleton from "@/components/shared/ContentSkeleton";
 
 const TOPO_URL = "/data/us-counties-10m.json";
 const NO_DATA_COLOR = "#E5E7EB";
@@ -184,10 +185,11 @@ export default function MichiganEnvBurdenMap({
           ref={containerRef}
         >
           {loading && (
-            <div className="absolute inset-0 flex items-center justify-center bg-background/60 z-10">
-              <span className="text-sm text-muted-foreground">
-                Loading map...
-              </span>
+            <div className="absolute inset-0 z-10 bg-background p-4">
+              <ContentSkeleton
+                variant="map"
+                label="Loading environmental burden map"
+              />
             </div>
           )}
           <svg ref={svgRef} className="w-full block" />

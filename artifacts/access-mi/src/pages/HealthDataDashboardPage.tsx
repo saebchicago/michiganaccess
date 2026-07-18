@@ -1,6 +1,7 @@
 import { useState, useMemo, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import DataProvenance from "@/components/shared/DataProvenance";
+import ContentSkeleton from "@/components/shared/ContentSkeleton";
 import { motion } from "framer-motion";
 import {
   BarChart3,
@@ -907,8 +908,8 @@ export default function HealthDataDashboardPage() {
           <TabsContent value="heatmap" className="mt-6 space-y-6">
             <Suspense
               fallback={
-                <div className="h-64 flex items-center justify-center">
-                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                <div className="h-64">
+                  <ContentSkeleton variant="map" label="Loading data visualization" />
                 </div>
               }
             >
@@ -919,8 +920,8 @@ export default function HealthDataDashboardPage() {
           <TabsContent value="energy" className="mt-6 space-y-6">
             <Suspense
               fallback={
-                <div className="h-64 flex items-center justify-center">
-                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                <div className="h-64">
+                  <ContentSkeleton variant="map" label="Loading data visualization" />
                 </div>
               }
             >
@@ -1043,8 +1044,8 @@ export default function HealthDataDashboardPage() {
           <TabsContent value="disparities" className="mt-6 space-y-6">
             <Suspense
               fallback={
-                <div className="h-64 flex items-center justify-center">
-                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                <div className="h-64">
+                  <ContentSkeleton variant="map" label="Loading data visualization" />
                 </div>
               }
             >
@@ -1057,8 +1058,8 @@ export default function HealthDataDashboardPage() {
           <TabsContent value="research" className="mt-6 space-y-6">
             <Suspense
               fallback={
-                <div className="h-64 flex items-center justify-center">
-                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                <div className="h-64">
+                  <ContentSkeleton variant="map" label="Loading data visualization" />
                 </div>
               }
             >
