@@ -4,6 +4,7 @@ import { usePageMeta } from "@/hooks/usePageMeta";
 import { MapPin, Layers, Info } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import Layout from "@/components/layout/Layout";
+import ContentSkeleton from "@/components/shared/ContentSkeleton";
 import MapLayerControls, { LAYERS } from "@/components/map/MapLayerControls";
 import MapLegend from "@/components/map/MapLegend";
 import SectorOverlayControls from "@/components/map/SectorOverlayControls";
@@ -163,8 +164,8 @@ export default function HealthMapPage() {
           )}
           <Suspense
             fallback={
-              <div className="flex h-full items-center justify-center bg-muted/30">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+              <div className="h-full bg-muted/30 p-4">
+                <ContentSkeleton variant="map" label="Loading health map" />
               </div>
             }
           >
