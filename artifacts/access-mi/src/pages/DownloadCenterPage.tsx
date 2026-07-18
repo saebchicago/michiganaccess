@@ -18,6 +18,8 @@ interface DownloadItem {
   icon: typeof FileText;
   action: "print" | "link";
   href?: string;
+  /** Overrides the default "Open & Print" button label. */
+  cta?: string;
 }
 
 const DOWNLOADS: { section: string; items: DownloadItem[] }[] = [
@@ -77,10 +79,11 @@ const DOWNLOADS: { section: string; items: DownloadItem[] }[] = [
       {
         title: "CSV Data Export",
         description:
-          "Download raw data tables for your own analysis from the Health Data Dashboard.",
+          "Download raw data tables as CSV files for your own analysis from the Health Data Dashboard.",
         icon: Database,
         action: "link",
         href: "/data",
+        cta: "Open Dashboard",
       },
       {
         title: `${DATA_SOURCE_DISPLAY} Data Sources Directory`,
@@ -147,7 +150,7 @@ export default function DownloadCenterPage() {
                         variant="outline"
                         className="gap-1.5 text-xs w-full"
                       >
-                        <ExternalLink className="h-3 w-3" /> Open & Print
+                        <ExternalLink className="h-3 w-3" /> {item.cta ?? "Open & Print"}
                       </Button>
                     </Link>
                   )}
