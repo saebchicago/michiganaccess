@@ -352,7 +352,7 @@ const entries: ChangelogEntry[] = [
     icon: Database,
     tag: "data",
     items: [
-      "Added 15,000+ indexed resources across all 83 counties",
+      "Expanded indexed community resources across all 83 counties",
       "Real-time GTFS transit feeds for DDOT, SMART, TheRide, KCATA",
       "EPA AirNow integration for real-time air quality data",
       "Community events calendar with county-level filtering",

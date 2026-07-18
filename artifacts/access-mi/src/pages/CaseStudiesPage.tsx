@@ -16,7 +16,6 @@ import ShareButton from "@/components/shared/ShareButton";
 import { Link } from "react-router-dom";
 import {
   COUNTIES_COVERED,
-  RESOURCE_COUNT_DISPLAY,
 } from "@/config/platformConstants";
 
 const fade = {
@@ -101,17 +100,12 @@ const studies = [
     challengeSource:
       "ASPE/HHS (2022); American Hospital Association SDOH reports",
     approach: [
-      `Unified resource directory indexing ${RESOURCE_COUNT_DISPLAY} Michigan records across ${COUNTIES_COVERED} counties`,
+      `Unified resource directory indexing Michigan records across ${COUNTIES_COVERED} counties`,
       "Eligibility pre-screening to reduce inappropriate referrals before handoff",
       "Direct-link navigation that eliminates search-and-find friction for residents",
       "Multi-language support (EN/ES/AR/BN) to remove access barriers for diverse populations",
     ],
     projectedOutcomes: [
-      {
-        label: "Records indexed",
-        value: RESOURCE_COUNT_DISPLAY,
-        basis: "Platform database",
-      },
       {
         label: "Counties covered",
         value: "83/83",

@@ -219,12 +219,12 @@ export default function CommunityResourcesPage() {
     return ["All Counties", ...Array.from(set).sort()];
   }, [resources]);
 
-  const filtered = useMemo(() => {
+  // Resources scoped by county, search, and segment filters - but NOT by the
+  // active category tab. Category counts and the results header both derive
+  // from this same scope so the numbers stay consistent (e.g. a Wayne header
+  // count matches the sum of the Wayne category cards on the same screen).
+  const scopedResources = useMemo(() => {
     let result = [...resources];
-    if (activeTab !== "all") {
-      const activeCat = categories.find(c => c.key === activeTab);
-      if (activeCat) result = result.filter((r) => activeCat.aliases.includes(r.resource_type));
-    }
     if (county !== "All Counties") result = result.filter((r) => r.county === county);
     if (search) {
       const q = search.toLowerCase();
@@ -235,7 +235,6 @@ export default function CommunityResourcesPage() {
         r.services_offered?.some((s) => s.toLowerCase().includes(q))
       );
     }
-    // Segment filters
     if (activeSegments.size > 0) {
       result = result.filter(r =>
         Array.from(activeSegments).every(key => {
@@ -245,13 +244,20 @@ export default function CommunityResourcesPage() {
       );
     }
     return result;
-  }, [resources, activeTab, county, search, activeSegments]);
+  }, [resources, county, search, activeSegments]);
+
+  const filtered = useMemo(() => {
+    if (activeTab === "all") return scopedResources;
+    const activeCat = categories.find(c => c.key === activeTab);
+    if (!activeCat) return scopedResources;
+    return scopedResources.filter((r) => activeCat.aliases.includes(r.resource_type));
+  }, [scopedResources, activeTab]);
 
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: resources.length };
-    categories.forEach((cat) => { c[cat.key] = resources.filter((r) => cat.aliases.includes(r.resource_type)).length; });
+    const c: Record<string, number> = { all: scopedResources.length };
+    categories.forEach((cat) => { c[cat.key] = scopedResources.filter((r) => cat.aliases.includes(r.resource_type)).length; });
     return c;
-  }, [resources]);
+  }, [scopedResources]);
 
   // Persona-driven category ordering
   const sortedCategories = useMemo(() => {

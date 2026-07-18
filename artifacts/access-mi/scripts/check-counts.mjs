@@ -14,7 +14,6 @@
  *   - routeMeta.ts mentions a source-count integer != SOURCES_REGISTRY.length
  *   - routeMeta.ts mentions an atlas-layer count != ATLAS_LAYERS.length
  *   - routeMeta.ts mentions a county count != 83
- *   - index.html JSON-LD resource count != RESOURCE_COUNT_DISPLAY
  */
 import { readFile } from "node:fs/promises";
 import path from "node:path";

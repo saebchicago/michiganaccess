@@ -35,13 +35,13 @@ const standards = [
     "Live regions for dynamic content updates (chat widget, loading states)",
   ]},
   { icon: Globe, title: "Language & Cultural Access", items: [
-    "Full multilingual support: English, Spanish, Arabic, and Bengali",
-    "RTL (right-to-left) layout mirroring for Arabic content",
-    "All content written at 8th-grade reading level for health literacy",
-    "Cultural sensitivity review for all user-facing terminology",
+    "Interface navigation and key controls translated into Spanish, Arabic, and Bengali, with full-page content translation in progress",
+    "Right-to-left (RTL) layout for Arabic",
+    "Plain-language writing aimed at broad health literacy",
+    "Cultural sensitivity review for user-facing terminology",
   ]},
   { icon: Monitor, title: "Device & Network Access", items: [
-    "Mobile-first responsive design tested across screen sizes 320px–1920px",
+    "Mobile-first responsive design that adapts from small phones (320px) to large desktop screens",
     "Progressive loading with skeleton states for slow connections",
     "Lazy-loaded images and code-split routes for performance",
     "Print-optimized stylesheets for resource pages",
@@ -55,12 +55,12 @@ const standards = [
 ];
 
 const testingMethods = [
-  "Automated testing with axe-core and Lighthouse accessibility audits",
-  "Manual keyboard-only navigation testing across all pages",
+  "Automated accessibility checks with axe-core that run in continuous integration on every change",
+  "Manual keyboard-only navigation testing",
   "Screen reader testing with NVDA (Windows) and VoiceOver (macOS/iOS)",
-  "Color contrast verification using WebAIM Contrast Checker",
-  "Tested with user personas representing cognitive disabilities, low vision, and motor impairments",
-  "Responsive design testing on physical devices (not just emulators)",
+  "Color contrast verification using the WebAIM Contrast Checker",
+  "Review against user needs representing cognitive disabilities, low vision, and motor impairments",
+  "Responsive layout checks across a range of screen sizes",
 ];
 
 export default function AccessibilityPage() {

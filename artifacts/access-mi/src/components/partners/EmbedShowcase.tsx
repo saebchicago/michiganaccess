@@ -19,7 +19,7 @@ const WIDGETS = [
   },
   {
     name: "Resource Directory Widget",
-    description: "Filterable community resource directory with 601+ entries. Ideal for 211 integrations and health system portals.",
+    description: "Filterable community resource directory. Ideal for 211 integrations and health system portals.",
     embedCode: `<iframe src="https://accessmi.org/resources" width="100%" height="700" frameborder="0" title="Access Michigan Resources"></iframe>`,
     previewUrl: "/resources",
   },

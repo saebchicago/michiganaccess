@@ -7,26 +7,12 @@ import {
   ExternalLink,
   Info,
 } from "lucide-react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import {
-  MICHIGAN_LOBBYING_BY_INDUSTRY,
-  MICHIGAN_LOBBYING_STATS,
-} from "@/data/lobbyingData";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -36,13 +22,6 @@ const fadeUp = {
     transition: { delay: i * 0.08, duration: 0.5 },
   }),
 };
-
-const lobbyChartData = MICHIGAN_LOBBYING_BY_INDUSTRY.sort(
-  (a, b) => b.totalExpenditures - a.totalExpenditures,
-).map((l) => ({
-  industry: l.industry.replace(" & ", " &\n"),
-  expenditures: l.totalExpenditures / 1e6,
-}));
 
 export default function FollowMoneyPage() {
   usePageMeta({
@@ -130,7 +109,8 @@ export default function FollowMoneyPage() {
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   Michigan requires lobbyists to register with the Secretary of
                   State within 15 days of becoming a lobbyist and file bi-annual
-                  expense reports. ~2,000+ registered lobbyists in Michigan.
+                  expense reports through the Michigan Transparency Network
+                  (MiTN).
                 </p>
                 <p className="text-[9px] text-muted-foreground/60 mt-2">
                   Source: Michigan Lobby Act, Act 472 of 1978 · Michigan MiTN
@@ -138,83 +118,29 @@ export default function FollowMoneyPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">
-                  Lobbying Expenditures by Industry
-                </CardTitle>
-                <p className="text-xs text-muted-foreground">
-                  Source: Michigan MiTN 2024 - Illustrative aggregate. Full data
-                  at mitn.michigan.gov
-                </p>
-              </CardHeader>
-              <CardContent>
-                <div className="h-[350px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={lobbyChartData}
-                      layout="vertical"
-                      margin={{ left: 180 }}
-                    >
-                      <CartesianGrid
-                        strokeDasharray="3 3"
-                        stroke="hsl(var(--border))"
-                      />
-                      <XAxis
-                        type="number"
-                        tick={{ fontSize: 11 }}
-                        tickFormatter={(v) => `$${v}M`}
-                      />
-                      <YAxis
-                        dataKey="industry"
-                        type="category"
-                        tick={{ fontSize: 10 }}
-                        width={170}
-                      />
-                      <Tooltip
-                        contentStyle={{ fontSize: 11, borderRadius: 8 }}
-                        formatter={(v: number) => `$${v.toFixed(1)}M`}
-                      />
-                      <Bar
-                        dataKey="expenditures"
-                        fill="#00A3A1"
-                        radius={[0, 4, 4, 0]}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
+            <Card className="border-dashed">
+              <CardContent className="py-6">
+                <div className="flex items-start gap-3">
+                  <Info
+                    className="h-5 w-5 text-muted-foreground shrink-0 mt-0.5"
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <h3 className="text-sm font-bold text-foreground mb-1">
+                      Real lobbying data integration pending
+                    </h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      We do not show lobbying expenditure or lobbyist-count
+                      figures until they can be sourced directly from the
+                      Michigan Transparency Network. No numbers are displayed
+                      here in the meantime. The full public record - including
+                      registered lobbyists, clients, and bi-annual expense
+                      reports - is searchable at mitn.michigan.gov.
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-
-            {/* Top clients per industry */}
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {MICHIGAN_LOBBYING_BY_INDUSTRY.slice(0, 6).map((l) => (
-                <Card key={l.industry} className="h-full">
-                  <CardContent className="py-4">
-                    <h4 className="text-sm font-bold text-foreground mb-1">
-                      {l.industry}
-                    </h4>
-                    <p className="text-xs text-amber-600 font-semibold tabular-nums mb-2">
-                      ${(l.totalExpenditures / 1e6).toFixed(1)}M ·{" "}
-                      {l.totalRegisteredLobbyists} lobbyists
-                    </p>
-                    <div className="space-y-1">
-                      {l.topClients.map((c) => (
-                        <p
-                          key={c}
-                          className="text-[10px] text-muted-foreground"
-                        >
-                          • {c}
-                        </p>
-                      ))}
-                    </div>
-                    <p className="text-[9px] text-muted-foreground/60 mt-2">
-                      {l.source}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
 
             <div className="flex gap-3">
               <a

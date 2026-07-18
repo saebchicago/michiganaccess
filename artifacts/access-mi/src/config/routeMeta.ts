@@ -238,7 +238,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/impact",
     title: "Platform Impact | Access Michigan",
     description:
-      "Access Michigan platform impact metrics: 83 counties, 15,000+ records, 43 data sources, 4 languages, zero cost.",
+      "Access Michigan platform impact metrics: 83 counties, 43 data sources, 4 languages, zero cost.",
     h1: "Building infrastructure for health equity",
     summary:
       "Platform metrics, release timeline, and how Access Michigan helps Michiganders.",

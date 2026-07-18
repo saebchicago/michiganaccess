@@ -10,13 +10,18 @@ import { useState, useEffect } from "react";
 import {
   MONITORED_API_FEEDS_COUNT,
   COUNTIES_COVERED,
-  RESOURCE_COUNT_DISPLAY,
 } from "@/config/platformConstants";
 
 export interface FooterStats {
   dataFeeds: number;
   loadMs: number | null;
-  resourceCount: string;
+  /**
+   * Live count of curated community resources, formatted for display
+   * (e.g. "743+"), or null until the live query resolves. This is the
+   * single canonical resource-count display on the site; the footer hides
+   * the stat entirely while it is null so no unverified number is shown.
+   */
+  resourceCount: string | null;
   countyCount: number;
   lastRefresh: string;
 }
@@ -36,9 +41,7 @@ export function loadTimeColor(ms: number | null): string {
 
 export function useFooterStats(): FooterStats {
   const [loadMs, setLoadMs] = useState<number | null>(null);
-  const [resourceCount, setResourceCount] = useState<string>(
-    RESOURCE_COUNT_DISPLAY,
-  );
+  const [resourceCount, setResourceCount] = useState<string | null>(null);
 
   useEffect(() => {
     const measure = () => {
@@ -114,7 +117,8 @@ export function useFooterStats(): FooterStats {
         }
       })
       .catch(() => {
-        // Network errors leave the SSOT display string in place. We
+        // Network errors leave resourceCount null, so the footer simply
+        // hides the stat rather than showing an unverified number. We
         // intentionally do not cache a failure: a transient network
         // hiccup should not block a successful retry on the next route.
       })

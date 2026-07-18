@@ -23,7 +23,6 @@ import {
 import ShareButton from "@/components/shared/ShareButton";
 import {
   COUNTIES_COVERED,
-  RESOURCE_COUNT_DISPLAY,
   DATA_SOURCE_DISPLAY,
 } from "@/config/platformConstants";
 
@@ -70,7 +69,7 @@ const quadrants = [
         source: "CDC/ATSDR SVI",
       },
       {
-        text: `${COUNTIES_COVERED}-county unified resource directory indexing ${RESOURCE_COUNT_DISPLAY} records across hospitals, providers, and services`,
+        text: `${COUNTIES_COVERED}-county unified resource directory indexing records across hospitals, providers, and services`,
         source: "Platform database",
       },
       {
@@ -213,11 +212,6 @@ const ExecutiveSummaryPage = () => {
                       sub: "100% of Michigan",
                     },
                     {
-                      value: RESOURCE_COUNT_DISPLAY,
-                      label: "Records indexed",
-                      sub: "Hospitals · Providers · Services",
-                    },
-                    {
                       value: DATA_SOURCE_DISPLAY,
                       label: "Public data sources",
                       sub: "CMS · HRSA · CDC · MDHHS",
@@ -358,7 +352,7 @@ const ExecutiveSummaryPage = () => {
             </Button>
             <ShareButton
               title="Access Michigan - Executive Summary"
-              description={`Civic health navigation platform: ${COUNTIES_COVERED} counties, ${RESOURCE_COUNT_DISPLAY} records indexed, ${DATA_SOURCE_DISPLAY} public data sources.`}
+              description={`Civic health navigation platform: ${COUNTIES_COVERED} counties, ${DATA_SOURCE_DISPLAY} public data sources.`}
             />
           </div>
         </div>

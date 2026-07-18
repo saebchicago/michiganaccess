@@ -8,7 +8,6 @@ import {
   BarChart3,
   Users,
   Map,
-  Shield,
   ClipboardList,
   FileText,
   TrendingUp,
@@ -24,7 +23,6 @@ import MetricsAPI from "@/components/partners/MetricsAPI";
 import EventCalendarPreview from "@/components/partners/EventCalendarPreview";
 import {
   COUNTIES_COVERED,
-  RESOURCE_COUNT_DISPLAY,
   MONITORED_API_FEEDS_COUNT,
 } from "@/config/platformConstants";
 
@@ -34,12 +32,6 @@ const METRICS = [
     label: "Counties Covered",
     value: `${COUNTIES_COVERED}/${COUNTIES_COVERED}`,
     trend: "All Michigan counties",
-  },
-  {
-    icon: Shield,
-    label: "Indexed Records",
-    value: RESOURCE_COUNT_DISPLAY,
-    trend: "Across hospitals, providers, services, and facility rows",
   },
   {
     icon: FileText,

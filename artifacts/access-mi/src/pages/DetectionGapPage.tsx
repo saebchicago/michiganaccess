@@ -8,7 +8,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 import { Link } from "react-router-dom";
 import {
-  RESOURCE_COUNT_DISPLAY,
   DATA_SOURCE_DISPLAY,
   COUNTIES_COVERED,
 } from "@/config/platformConstants";
@@ -22,7 +21,6 @@ import {
 import {
   ArrowRight,
   Heart,
-  Database,
   MapPin,
   DollarSign,
   AlertTriangle,
@@ -576,11 +574,6 @@ export default function DetectionGapPage() {
                   icon: MapPin,
                   stat: String(COUNTIES_COVERED),
                   label: "counties covered",
-                },
-                {
-                  icon: Database,
-                  stat: RESOURCE_COUNT_DISPLAY,
-                  label: "resources indexed",
                 },
                 {
                   icon: Heart,
