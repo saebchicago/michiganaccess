@@ -796,21 +796,43 @@ export const RESERVED_SLUGS: Set<string> = new Set(
 // ── Header Navigation Groups ────────────────────────────────────────────────
 
 export const NAV_GROUPS: (NavGroup | NavLink)[] = [
-  // ─── Layer 2 clusters (exposed directly per the IA spec) ───────────────────
-  // These mirror the homepage Layer 2 cards and anchor users at the cluster
-  // entry on the homepage. Full per-cluster destination pages can replace the
-  // anchors in a follow-up if we want dedicated cluster URLs.
-  { label: "Policy and investment", href: "/#policy-investment" },
-  { label: "Health and coverage", href: "/#health-coverage" },
-  { label: "Explore your area", href: "/#explore-area" },
-  { label: "Learn about benefits", href: "/#learn-benefits" },
-  // ───────────────────────────────────────────────────────────────────────────
+  // Three-pillar taxonomy (Understand / Visualize / Belong) shared with the
+  // homepage doors and the footer. The nav shows a curated set per pillar; the
+  // footer carries the comprehensive per-pillar index, so every destination
+  // stays reachable even when it is not surfaced here.
   {
-    label: "Find Help",
+    label: "Understand",
+    children: [
+      { label: "Data & Insights Hub", href: "/data-and-insights" },
+      { label: "ZIP Scorecard", href: "/zip/48201" },
+      { label: "Compare Counties", href: "/compare" },
+      { label: "Data Explorer", href: "/data-explorer", badge: "Census API" },
+      { label: "CHNA Explorer", href: "/chna-explorer" },
+      { label: "Domain Dashboard", href: "/domain-dashboard" },
+      { label: "Coverage at Risk", href: "/data/medicaid-coverage-at-risk" },
+      { label: "Detection Gap", href: "/detection-gap" },
+      { label: "Public Investment", href: "/public-investment" },
+      { label: "Methodology", href: "/methodology" },
+    ],
+  },
+  {
+    label: "Visualize",
+    children: [
+      { label: "Health Map", href: "/health-map", i18nKey: "nav.healthMap" },
+      { label: "Health Data Dashboard", href: "/data" },
+      { label: "Health Equity", href: "/equity" },
+      { label: "Health Equity Atlas", href: "/health-equity-atlas" },
+      { label: "Energy Burden", href: "/energy-burden" },
+      { label: "Environment", href: "/environment" },
+      { label: "Closure Watch", href: "/closure-watch" },
+      { label: "Disaster History", href: "/disaster-history" },
+      { label: "Deep Map (GIS)", href: "/map/layers" },
+    ],
+  },
+  {
+    label: "Belong",
     children: [
       { label: "Find Help", href: "/find-care" },
-      { label: "Housing Options", href: "/housing-options", badge: "New" },
-      { label: "Insurance & Coverage", href: "/insurance-coverage" },
       {
         label: "Community Resources",
         href: "/resources",
@@ -821,127 +843,29 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
         href: "/financial-help",
         i18nKey: "nav.financialHelp",
       },
-      { label: "Energy & Utilities", href: "/environment" },
+      { label: "Housing Options", href: "/housing-options" },
+      { label: "Insurance & Coverage", href: "/insurance-coverage" },
       {
         label: "Transportation",
         href: "/transportation",
         i18nKey: "nav.transportation",
       },
-      { label: "Community Alerts", href: "/#community-alerts" },
-      { label: "Health Map", href: "/health-map", i18nKey: "nav.healthMap" },
-      { label: "Quality Ratings", href: "/quality" },
-      { label: "Insurance Appeals", href: "/health/insurance-appeals" },
-      {
-        label: "Michigan Tribal Nations",
-        href: "/tribal-nations",
-        badge: "New",
-      },
-      { label: "Behavioral Health", href: "/behavioral-health", badge: "New" },
+      { label: "Civic Power", href: "/civic-power", badge: "New" },
+      { label: "Your Representatives", href: "/officials" },
+      { label: "Transparency Hub", href: "/transparency" },
+      { label: "Social Services & Benefits", href: "/social-services" },
     ],
   },
   {
-    label: "Data & Insights",
-    children: [
-      { label: "Data & Insights Hub", href: "/data-and-insights" },
-      { label: "SNAP in Michigan", href: "/data/snap-michigan", badge: "V3" },
-      {
-        label: "SNAP Coverage at Risk",
-        href: "/data/snap-coverage-at-risk",
-        badge: "V3",
-      },
-      {
-        label: "Medicaid Coverage at Risk",
-        href: "/data/medicaid-coverage-at-risk",
-        badge: "V2",
-      },
-      {
-        label: "Dual-Eligible Exposure",
-        href: "/data/dual-eligible-exposure",
-        badge: "V3",
-      },
-      { label: "Domain Dashboard", href: "/domain-dashboard", badge: "New" },
-      { label: "Data Explorer", href: "/data-explorer", badge: "Census API" },
-      { label: "CHNA Explorer", href: "/chna-explorer", badge: "Interactive" },
-      { label: "Compare Counties", href: "/compare", badge: "New" },
-      { label: "Dataset Explorer", href: "/datasets" },
-      { label: "Civic Data Hub", href: "/civic-data-hub" },
-      { label: "Health Data Dashboard", href: "/data" },
-      { label: "Health Equity", href: "/equity", badge: "Updated" },
-      { label: "Energy Burden", href: "/energy-burden" },
-      { label: "Data Centers", href: "/data-centers", badge: "New" },
-      { label: "Closure Watch", href: "/closure-watch", badge: "V2" },
-      {
-        label: "Find Your City",
-        href: "/find-your-city",
-        badge: "Interactive",
-      },
-      {
-        label: "Disaster History",
-        href: "/disaster-history",
-        badge: "Live API",
-      },
-      { label: "SBA Lending Insights", href: "/sba-insights", badge: "New" },
-      { label: "ZIP Scorecard", href: "/zip/48201", badge: "New" },
-      { label: "Detection Gap", href: "/detection-gap", badge: "Research" },
-      { label: "ZIP Finder", href: "/zip-finder", badge: "New" },
-      { label: "Service Area Builder", href: "/service-area", badge: "New" },
-      { label: "Public Investment", href: "/public-investment", badge: "New" },
-      { label: "Deep Map (GIS)", href: "/map/layers", badge: "New" },
-      { label: "Decision Science", href: "/decision-science", badge: "New" },
-    ],
-  },
-  { label: "Methodology", href: "/methodology" },
-  {
-    label: "About & Support",
+    label: "About",
     i18nKey: "nav.about",
     children: [
       { label: "About Access Michigan", href: "/about" },
-      { label: "Our Story", href: "/story", badge: "New" },
-      { label: "Support This Project", href: "/about#support" },
-      { label: "Executive Summary", href: "/executive-summary" },
-      { label: "For Health Systems", href: "/for-health-systems" },
+      { label: "Our Story", href: "/story" },
       { label: "Impact Dashboard", href: "/impact" },
+      { label: "For Health Systems", href: "/for-health-systems" },
       { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    label: "Environment",
-    children: [
-      { label: "Environment Overview", href: "/environment" },
-      {
-        label: "Water Safety & PFAS",
-        href: "/environment/water",
-        badge: "New",
-      },
-      { label: "Disaster Risk", href: "/environment/disaster", badge: "New" },
-      { label: "Energy Burden", href: "/environment/energy", badge: "New" },
-      { label: "Air Quality & Toxics", href: "/environment/air", badge: "New" },
-      { label: "Energy Burden Dashboard", href: "/energy-burden" },
-      { label: "Disaster History (FEMA)", href: "/disaster-history" },
-    ],
-  },
-  {
-    label: "Civic Power",
-    children: [
-      { label: "Civic Power Map", href: "/civic-power", badge: "New" },
-      { label: "Where to Serve", href: "/civic-power/boards" },
-      { label: "Races That Need Candidates", href: "/civic-power/races" },
-      { label: "Federal Presence", href: "/civic-power/federal" },
-      { label: "Elections & Civic Access", href: "/elections" },
-      { label: "Your Representatives", href: "/officials" },
-      { label: "Transparency Hub", href: "/transparency", badge: "New" },
-      { label: "Federal Contractors", href: "/transparency/contractors" },
-      { label: "Follow the Money", href: "/transparency/money" },
-      { label: "All Parties", href: "/transparency/parties" },
-      { label: "Public Records & FOIA", href: "/transparency/records" },
-      { label: "FOIA Request Builder", href: "/foia", badge: "Tool" },
-      { label: "Public Safety", href: "/public-safety" },
-    ],
-  },
-  {
-    label: "Benefits & Services",
-    children: [
-      { label: "Social Services & Benefits", href: "/social-services" },
+      { label: "Support This Project", href: "/about#support" },
     ],
   },
 ];
