@@ -25,69 +25,80 @@ export default function WeatherAlertBanner() {
   const primary = top[0];
   const bg = SEV_BG[primary.severity] || SEV_BG.Minor;
 
+  // Compact dismissible pill (never a full-width band). Sits just under the
+  // header; clicking expands a small panel with the active alerts.
   return (
-    <div className={`${bg} print:hidden`}>
-      <div className="container flex items-center gap-2 py-1.5 text-sm">
-        <CloudLightning className="h-4 w-4 shrink-0" aria-hidden="true" />
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="flex-1 text-left text-xs font-medium truncate"
+    <div className="container flex justify-start py-1.5 print:hidden">
+      <div className="relative">
+        <div
+          className={`${bg} inline-flex max-w-[90vw] items-center gap-1.5 rounded-full px-3 py-1 text-xs shadow-sm`}
         >
-          {primary.event} - {primary.areaDesc?.split(";")[0]}
-          {top.length > 1 && (
-            <span className="ml-1 font-semibold">+{top.length - 1} more</span>
-          )}
-        </button>
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="shrink-0 p-0.5"
-          aria-label="Toggle alerts"
-        >
-          <ChevronDown
-            className={`h-3.5 w-3.5 transition-transform ${expanded ? "rotate-180" : ""}`}
-          />
-        </button>
-        <button
-          onClick={() => setDismissed(true)}
-          className="shrink-0 p-0.5"
-          aria-label="Dismiss"
-        >
-          <X className="h-3.5 w-3.5" />
-        </button>
-      </div>
-      <AnimatePresence>
-        {expanded && (
-          <motion.div
-            initial={{ height: 0 }}
-            animate={{ height: "auto" }}
-            exit={{ height: 0 }}
-            className="overflow-hidden"
+          <CloudLightning className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="max-w-[60vw] truncate text-left font-medium sm:max-w-xs"
+            aria-expanded={expanded}
+            aria-label={`Weather alert: ${primary.event}${top.length > 1 ? `, +${top.length - 1} more` : ""}. Click to ${expanded ? "collapse" : "expand"}.`}
           >
-            <div className="container pb-2 space-y-1">
-              {top.map((a) => (
-                <div key={a.id} className="text-[11px] opacity-90">
-                  <strong>{a.event}</strong> -{" "}
-                  {a.areaDesc?.split(";").slice(0, 3).join(", ")}
-                  {a.expires && (
-                    <span className="opacity-70">
-                      {" "}
-                      · Until{" "}
-                      {new Date(a.expires).toLocaleString("en-US", {
-                        weekday: "short",
-                        hour: "numeric",
-                        minute: "2-digit",
-                      })}
-                    </span>
-                  )}
-                </div>
-              ))}
-              <p className="text-[9px] opacity-60">
-                Source: National Weather Service
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {primary.event}
+            {top.length > 1 && (
+              <span className="ml-1 font-semibold">+{top.length - 1}</span>
+            )}
+          </button>
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="shrink-0 p-0.5"
+            aria-label="Toggle alert details"
+          >
+            <ChevronDown
+              className={`h-3.5 w-3.5 transition-transform ${expanded ? "rotate-180" : ""}`}
+            />
+          </button>
+          <button
+            onClick={() => setDismissed(true)}
+            className="shrink-0 p-0.5"
+            aria-label="Dismiss weather alerts"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+        <AnimatePresence>
+          {expanded && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.15 }}
+              className="absolute left-0 top-full z-40 mt-1 w-80 max-w-[90vw] rounded-lg border border-border bg-popover p-3 text-popover-foreground shadow-lg"
+              role="region"
+              aria-label="Active weather alerts"
+            >
+              <div className="space-y-1.5">
+                {top.map((a) => (
+                  <div key={a.id} className="text-[11px]">
+                    <strong>{a.event}</strong> -{" "}
+                    {a.areaDesc?.split(";").slice(0, 3).join(", ")}
+                    {a.expires && (
+                      <span className="text-muted-foreground">
+                        {" "}
+                        · Until{" "}
+                        {new Date(a.expires).toLocaleString("en-US", {
+                          weekday: "short",
+                          hour: "numeric",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    )}
+                  </div>
+                ))}
+                <p className="text-[9px] text-muted-foreground">
+                  Source: National Weather Service
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

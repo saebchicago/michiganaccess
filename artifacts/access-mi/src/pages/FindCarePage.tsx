@@ -474,8 +474,6 @@ export default function FindCarePage() {
 
   return (
     <Layout>
-      <CrisisBanner />
-
       <div className="container pt-4">
         <Breadcrumbs items={[{ label: "Find Help" }]} />
       </div>
@@ -702,6 +700,11 @@ export default function FindCarePage() {
           </p>
         </div>
       </section>
+
+      {/* Crisis / 211 line moved into the page body (below the search) so it
+          no longer stacks ahead of the search input; the global crisis bar
+          keeps 988/211 visible at the top of every page. */}
+      <CrisisBanner />
 
       {/* ── Results area ── */}
       <div ref={resultsRef} className="container py-8 scroll-mt-4">
