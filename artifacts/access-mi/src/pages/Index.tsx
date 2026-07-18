@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
+import UninsuredSparkline from "@/components/county/UninsuredSparkline";
+import { STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
@@ -29,49 +31,57 @@ const C = {
   gold: "#c9a84c",
 } as const;
 
-// ─── Primary paths (I - IV) ─────────────────────────────────────────────────
+// ─── Three doors (Understand / Visualize / Belong) ──────────────────────────
+// The homepage's three-pillar taxonomy. Each door reuses existing, already-
+// labeled platform data - no agent-assigned provenance labels, no invented
+// figures. Understand -> composite ZIP score (MODELED, via /zip-intelligence
+// and the hero ZIP input above). Visualize -> a real ACS trend sparkline
+// (VERIFIED, from static trendSeries data). Belong -> civic power; its
+// uncontested-races figure is source-attributed but does not yet carry a
+// formal provenance badge, so it is disclosed as such rather than labeled.
 
-type PathCard = {
+type DoorProvenance = "VERIFIED" | "MODELED" | "PROJECTED" | null;
+
+type Door = {
   numeral: string;
   kicker: string;
   title: string;
   description: string;
   href: string;
-  provenance: "VERIFIED" | "MODELED" | "PROJECTED";
+  cta: string;
+  provenance: DoorProvenance;
 };
 
-const PATHS: PathCard[] = [
+const DOORS: Door[] = [
   {
     numeral: "I",
-    kicker: "Insight",
-    title: "Policy and investment",
-    description: "Follow the funding. See who gets what, and where the gaps live.",
-    href: "/public-investment",
-    provenance: "VERIFIED",
-  },
-  {
-    numeral: "II",
-    kicker: "Equity",
-    title: "Health and coverage",
-    description: "Track what is closing. See who is about to lose coverage.",
-    href: "/data/medicaid-coverage-at-risk",
+    kicker: "Understand",
+    title: "Understand your place",
+    description:
+      "Enter any Michigan ZIP for a composite community access score, built from verified public health and economic data and traceable to every source.",
+    href: "/zip-intelligence",
+    cta: "Look up your ZIP",
     provenance: "MODELED",
   },
   {
-    numeral: "III",
-    kicker: "Atlas",
-    title: "Explore your area",
-    description: "Look up your ZIP. Compare your county. See how you rank.",
-    href: "/zip-intelligence",
-    provenance: "PROJECTED",
+    numeral: "II",
+    kicker: "Visualize",
+    title: "See the trend",
+    description:
+      "Watch how coverage, population, and access are changing across all 83 counties over time - not just today's snapshot.",
+    href: "/data-and-insights",
+    cta: "Open the dashboards",
+    provenance: "VERIFIED",
   },
   {
-    numeral: "IV",
-    kicker: "Support",
-    title: "Learn about benefits",
-    description: "See what you qualify for. No account. No stored data.",
-    href: "/benefits",
-    provenance: "VERIFIED",
+    numeral: "III",
+    kicker: "Belong",
+    title: "Find your civic role",
+    description:
+      "Most local races in Michigan go uncontested. See where your community needs candidates, board members, and neighbors to step up.",
+    href: "/civic-power",
+    cta: "Explore civic power",
+    provenance: null,
   },
 ];
 
@@ -379,69 +389,113 @@ function ResourceBridgeBand() {
   );
 }
 
-// ─── Primary paths grid (I - IV) ────────────────────────────────────────────
+// ─── Three doors grid (Understand / Visualize / Belong) ─────────────────────
 
-function PrimaryPathsGrid() {
+function ThreeDoorsGrid() {
+  const miUncontested = STATE_UNCONTESTED_COMPARISON.find(
+    (s) => s.state === "Michigan",
+  );
   return (
     <section
       className="container mx-auto max-w-6xl px-4 pb-16"
-      aria-labelledby="paths-heading"
+      aria-labelledby="doors-heading"
     >
-      <h3 id="paths-heading" className="sr-only">
-        Choose a path
+      <h3 id="doors-heading" className="sr-only">
+        Three ways in: understand, visualize, belong
       </h3>
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-        {PATHS.map((p, i) => (
+      <div className="grid gap-8 md:grid-cols-3">
+        {DOORS.map((d, i) => (
           <motion.article
-            key={p.href}
+            key={d.title}
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.4, delay: i * 0.06 }}
-            className="group"
+            className="group flex flex-col h-full pl-6 py-4 border-l"
+            style={{ borderColor: `${C.emerald}1A` }}
           >
-            <Link
-              to={p.href}
-              className="flex flex-col h-full pl-6 py-4 border-l focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-              style={{ borderColor: `${C.emerald}1A` }}
-            >
-              <div className="mb-6 flex items-start justify-between">
-                <ProvenanceTag label={p.provenance} />
+            <div className="mb-4 flex items-start justify-between gap-2">
+              {d.provenance ? (
+                <ProvenanceTag label={d.provenance} />
+              ) : (
                 <span
-                  className="text-xs font-serif italic"
-                  style={{ color: `${C.emerald}66` }}
+                  className="text-[10px] font-semibold uppercase tracking-[0.14em]"
+                  style={{ color: `${C.emerald}80` }}
                 >
-                  {p.numeral}
+                  Source-attributed
                 </span>
-              </div>
-              <h4
-                className="font-serif text-2xl mb-3 leading-tight transition-colors"
-                style={{ color: C.emerald }}
-              >
-                <span className="group-hover:opacity-80 transition-opacity">
-                  {p.title}
-                </span>
-              </h4>
-              <p
-                className="text-sm leading-relaxed mb-4 flex-1"
-                style={{ color: `${C.emerald}B3` }}
-              >
-                {p.description}
-              </p>
+              )}
               <span
-                className="block h-px w-8 group-hover:w-full transition-all duration-500"
-                style={{ backgroundColor: C.gold }}
-                aria-hidden="true"
-              />
-              <span
-                className="mt-3 text-[11px] font-semibold uppercase inline-flex items-center gap-1"
-                style={{ color: C.emeraldMid, letterSpacing: "0.16em" }}
+                className="text-xs font-serif italic"
+                style={{ color: `${C.emerald}66` }}
               >
-                <span className="uppercase tracking-[0.16em]">
-                  {p.kicker}
-                </span>
-                <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                {d.numeral}
               </span>
+            </div>
+            <p
+              className="mb-1 text-[11px] font-semibold uppercase tracking-[0.16em]"
+              style={{ color: C.emeraldMid }}
+            >
+              {d.kicker}
+            </p>
+            <h4
+              className="font-serif text-2xl mb-3 leading-tight"
+              style={{ color: C.emerald }}
+            >
+              {d.title}
+            </h4>
+            <p
+              className="text-sm leading-relaxed mb-4"
+              style={{ color: `${C.emerald}B3` }}
+            >
+              {d.description}
+            </p>
+
+            {/* Live preview - existing, already-labeled platform data */}
+            <div className="mb-5 flex-1">
+              {d.numeral === "II" && (
+                <div
+                  className="border-t pt-3"
+                  style={{ borderColor: `${C.emerald}14` }}
+                >
+                  <UninsuredSparkline county="Wayne" />
+                </div>
+              )}
+              {d.numeral === "III" && miUncontested && (
+                <div
+                  className="border-t pt-3"
+                  style={{ borderColor: `${C.emerald}14` }}
+                >
+                  <p
+                    className="font-serif text-3xl leading-none"
+                    style={{ color: C.emerald }}
+                  >
+                    {miUncontested.pct}%
+                  </p>
+                  <p
+                    className="mt-1 text-xs leading-snug"
+                    style={{ color: `${C.emerald}B3` }}
+                  >
+                    of Michigan local races ran uncontested (2024).
+                  </p>
+                  <p
+                    className="mt-1.5 text-[10px] leading-snug"
+                    style={{ color: `${C.emerald}80` }}
+                  >
+                    Source: Ballotpedia analysis / Michigan SOS 2024. Formal
+                    provenance label pending.
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <Link
+              to={d.href}
+              className="mt-auto inline-flex items-center gap-1 text-[11px] font-semibold uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              style={{ color: C.emeraldMid, letterSpacing: "0.16em" }}
+            >
+              {d.cta}
+              <ArrowRight className="w-3 h-3" aria-hidden="true" />
             </Link>
           </motion.article>
         ))}
@@ -639,7 +693,7 @@ const Index = () => {
           <Masthead mode={mode} onModeChange={setMode} />
           <EditorialHero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
           <ResourceBridgeBand />
-          <PrimaryPathsGrid />
+          <ThreeDoorsGrid />
           <CountyPicker />
           <ProvenanceStrip />
         </div>
