@@ -1,0 +1,98 @@
+name: dedupe-types-react
+
+# One-shot maintenance workflow: collapse the duplicate @types/react in the
+# lockfile (19.1.17 from the expo/react-native workspace chain vs 19.2.x from
+# the catalog) into a single version. Two copies cause a nondeterministic
+# "Two different types with this name exist" tsc error in artifacts/access-mi
+# (e.g. src/components/ui/spinner.tsx).
+#
+# This must run in a clean CI runner - regenerating the lockfile in a
+# proxied/dev environment rewrites the private mi-federal-data git dependency
+# into a non-HTTPS form. On a GitHub-hosted runner, pnpm keeps the codeload
+# tarball URL, so the only meaningful change is the @types/react dedupe.
+#
+# Trigger manually from the Actions tab (Run workflow). It opens a PR with the
+# updated package.json + pnpm-lock.yaml for review; it never pushes to main.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dedupe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Add pnpm.overrides pinning a single @types/react (idempotent)
+        run: |
+          node -e '
+            const fs = require("fs");
+            const p = "package.json";
+            const pkg = JSON.parse(fs.readFileSync(p, "utf8"));
+            pkg.pnpm = pkg.pnpm || {};
+            pkg.pnpm.overrides = pkg.pnpm.overrides || {};
+            pkg.pnpm.overrides["@types/react"] = "^19.2.0";
+            pkg.pnpm.overrides["@types/react-dom"] = "^19.2.0";
+            fs.writeFileSync(p, JSON.stringify(pkg, null, 2) + "\n");
+            console.log("pnpm.overrides set:", pkg.pnpm.overrides);
+          '
+
+      - name: Regenerate the lockfile with the override applied
+        run: pnpm install --lockfile-only
+
+      - name: Verify a single @types/react version remains
+        run: |
+          VERSIONS=$(grep -oE "@types/react@19\.[0-9]+\.[0-9]+" pnpm-lock.yaml | sort -u)
+          echo "Resolved @types/react versions:"
+          echo "$VERSIONS"
+          COUNT=$(echo "$VERSIONS" | grep -c .)
+          if [ "$COUNT" -ne 1 ]; then
+            echo "ERROR: expected exactly one @types/react version, found $COUNT."
+            exit 1
+          fi
+          echo "Verify mi-federal-data still resolves via codeload tarball (HTTPS):"
+          if ! grep -q "codeload.github.com/saebchicago/mi-federal-data" pnpm-lock.yaml; then
+            echo "ERROR: mi-federal-data no longer resolves via its codeload tarball URL."
+            echo "Refusing to open a PR with a rewritten private-dependency resolution."
+            exit 1
+          fi
+
+      - name: Open a pull request with the deduped lockfile
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet -- package.json pnpm-lock.yaml; then
+            echo "No changes - lockfile is already deduped. Nothing to do."
+            exit 0
+          fi
+          BRANCH="chore/dedupe-types-react-$(git rev-parse --short HEAD)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add package.json pnpm-lock.yaml
+          git commit -m "chore(deps): dedupe @types/react to a single version
+
+          Pin @types/react / @types/react-dom via pnpm.overrides so the
+          expo/react-native chain (19.1.17) and the catalog (19.2.x) resolve
+          to one version. Removes the nondeterministic 'Two different types
+          with this name exist' tsc error (e.g. spinner.tsx)."
+          git push -u origin "$BRANCH"
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "chore(deps): dedupe @types/react to a single version" \
+            --body "Automated by the \`dedupe-types-react\` workflow. Collapses the duplicate \`@types/react\` (19.1.17 vs 19.2.x) into one version via \`pnpm.overrides\`, removing the flaky \`tsc\` 'Two different types with this name exist' error. Verified: exactly one \`@types/react\` version, and \`mi-federal-data\` still resolves via its codeload tarball URL. Please confirm CI is green before merging." \
+            --draft
