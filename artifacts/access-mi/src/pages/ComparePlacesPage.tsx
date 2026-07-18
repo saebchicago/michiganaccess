@@ -81,6 +81,7 @@ import ViewModeToggle, {
   type ViewMode,
 } from "@/components/shared/ViewModeToggle";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
+import { DataUnavailable } from "@/components/shared/EmptyState";
 
 // ── Animation variants ────────────────────────────────────────────────────────
 const fadeUp = {
@@ -987,17 +988,13 @@ export default function ComparePlacesPage() {
                 {selected.some(
                   (_, i) => queries[i]?.data?.source === "unavailable",
                 ) && (
-                  <p className="mt-3 text-center text-[11px] text-muted-foreground">
-                    Census ACS proxy returned no data. Verify that the
-                    <code className="mx-1 rounded bg-muted px-1">
-                      CENSUS_API_KEY
-                    </code>
-                    secret is set on the Supabase
-                    <code className="mx-1 rounded bg-muted px-1">
-                      census-acs-proxy
-                    </code>
-                    edge function.
-                  </p>
+                  <div className="mt-3">
+                    <DataUnavailable
+                      variant="error"
+                      label="Economic data temporarily unavailable"
+                      detail="We show data only when we can verify it."
+                    />
+                  </div>
                 )}
               </CardContent>
             </Card>
