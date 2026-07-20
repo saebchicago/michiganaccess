@@ -47,6 +47,7 @@ import FoodAccessMap from "@/components/health/FoodAccessMap";
 import MichiganTrends from "@/components/dashboard/MichiganTrends";
 import ChildcareEducationHub from "@/components/family/ChildcareEducationHub";
 import Layout from "@/components/layout/Layout";
+import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -249,6 +250,7 @@ export default function HealthDataDashboardPage() {
 
   return (
     <Layout>
+      <Breadcrumbs items={[{ label: "Health Data Dashboard" }]} />
       <section className="bg-gradient-to-b from-primary/5 to-background py-12 lg:py-20">
         <div className="container max-w-4xl text-center">
           <motion.div

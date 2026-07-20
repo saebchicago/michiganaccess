@@ -311,6 +311,7 @@ export default function DetectionGapPage() {
         </div>
 
         <div className="max-w-5xl mx-auto px-6 pb-16">
+          <h2 className="sr-only">Region and impact controls</h2>
           {/* Controls: Region + Slider */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}

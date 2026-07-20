@@ -44,8 +44,14 @@ export default function TractHealthExplorer() {
   const countyName = COUNTIES.find((c) => c.fips === countyFips)?.name || "Wayne";
   const measureLabel = TRACT_MEASURES.find((m) => m.id === measureId)?.label || "Diabetes";
 
-  const chartData = (data || []).slice(0, 25).map((d, i) => ({
-    tract: `Tract ${i + 1}`,
+  // CDC PLACES reports the tract's 11-digit Census FIPS/GEOID as
+  // `locationname` for tract-level data. The state+county prefix (first 5
+  // digits) is shared by every row in this view, so the trailing 6 digits
+  // are the real, source-traceable tract identifier - not an arbitrary
+  // 1-25 index.
+  const chartData = (data || []).slice(0, 25).map((d) => ({
+    tract: d.locationname ? `Tract ${d.locationname.slice(-6)}` : "Tract -",
+    geoid: d.locationname,
     value: d.data_value,
     fullName: d.locationname,
     pop: d.totalpopulation,
@@ -111,26 +117,53 @@ export default function TractHealthExplorer() {
             </div>
 
             {/* Chart */}
-            <ResponsiveContainer width="100%" height={Math.min(chartData.length * 28 + 40, 600)}>
-              <BarChart data={chartData} layout="vertical" margin={{ left: 0, right: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 20%, 90%)" horizontal={false} />
-                <XAxis type="number" unit="%" tick={{ fontSize: 10 }} domain={[0, "dataMax + 2"]} />
-                <YAxis dataKey="tract" type="category" width={60} tick={{ fontSize: 9 }} />
-                <Tooltip
-                  formatter={(v: number) => [`${v.toFixed(1)}%`, measureLabel]}
-                  labelFormatter={(label: string, payload: any[]) => {
-                    const d = payload?.[0]?.payload;
-                    return d ? `${d.fullName} (pop: ${d.pop || "-"})` : label;
-                  }}
-                  contentStyle={{ borderRadius: 8, fontSize: 11, border: "1px solid hsl(214, 20%, 90%)" }}
-                />
-                <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-                  {chartData.map((entry, i) => (
-                    <Cell key={i} fill={barColor(entry.value, max)} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <div
+              role="img"
+              aria-label={`Bar chart of ${measureLabel.toLowerCase()} prevalence by census tract in ${countyName} County, ranging from ${min.toFixed(1)}% to ${max.toFixed(1)}%. A data table with the same values follows for screen readers.`}
+            >
+              <ResponsiveContainer width="100%" height={Math.min(chartData.length * 28 + 40, 600)}>
+                <BarChart data={chartData} layout="vertical" margin={{ left: 0, right: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 20%, 90%)" horizontal={false} />
+                  <XAxis type="number" unit="%" tick={{ fontSize: 10 }} domain={[0, "dataMax + 2"]} />
+                  <YAxis dataKey="tract" type="category" width={60} tick={{ fontSize: 9 }} />
+                  <Tooltip
+                    formatter={(v: number) => [`${v.toFixed(1)}%`, measureLabel]}
+                    labelFormatter={(label: string, payload: any[]) => {
+                      const d = payload?.[0]?.payload;
+                      return d ? `${d.fullName} (pop: ${d.pop || "-"})` : label;
+                    }}
+                    contentStyle={{ borderRadius: 8, fontSize: 11, border: "1px solid hsl(214, 20%, 90%)" }}
+                  />
+                  <Bar dataKey="value" radius={[0, 4, 4, 0]}>
+                    {chartData.map((entry, i) => (
+                      <Cell key={i} fill={barColor(entry.value, max)} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            <table className="sr-only">
+              <caption>
+                {measureLabel} prevalence by census tract (GEOID), {countyName} County
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Census tract GEOID</th>
+                  <th scope="col">Population</th>
+                  <th scope="col">{measureLabel} prevalence</th>
+                </tr>
+              </thead>
+              <tbody>
+                {chartData.map((d) => (
+                  <tr key={d.geoid || d.tract}>
+                    <td>{d.geoid || "Unknown"}</td>
+                    <td>{d.pop || "Not reported"}</td>
+                    <td>{d.value.toFixed(1)}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </>
         )}
 

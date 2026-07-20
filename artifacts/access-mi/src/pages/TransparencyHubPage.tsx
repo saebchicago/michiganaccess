@@ -126,6 +126,7 @@ export default function TransparencyHubPage() {
 
       {/* Navigation Panels */}
       <section className="container py-10">
+        <h2 className="sr-only">Transparency data categories</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {[
             {

@@ -3,7 +3,6 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Badge } from "@/components/ui/badge";
-import PrintButton from "@/components/shared/PrintButton";
 import SBADashboard from "@/components/tools/SBADashboard";
 
 const fade = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
@@ -34,7 +33,6 @@ export default function SBAInsightsPage() {
       <div className="container max-w-5xl py-8">
         <SBADashboard />
       </div>
-      <PrintButton />
     </Layout>
   );
 }

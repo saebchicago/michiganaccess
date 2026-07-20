@@ -3,7 +3,6 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Badge } from "@/components/ui/badge";
-import PrintButton from "@/components/shared/PrintButton";
 import DisasterHistoryDashboard from "@/components/tools/DisasterHistoryDashboard";
 
 const fade = {
@@ -51,7 +50,6 @@ export default function DisasterHistoryPage() {
       <div className="container max-w-5xl py-8">
         <DisasterHistoryDashboard />
       </div>
-      <PrintButton />
     </Layout>
   );
 }

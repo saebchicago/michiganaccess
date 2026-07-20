@@ -393,9 +393,12 @@ export default function SnapMichiganPage() {
               role="grid"
               aria-label="Michigan county SNAP enrollment"
             >
+              <caption className="sr-only">
+                Michigan county SNAP enrollment, sortable by column
+              </caption>
               <thead>
                 <tr className="border-b border-border bg-muted/40">
-                  <th className="px-4 py-2.5 text-left font-medium">
+                  <th scope="col" className="px-4 py-2.5 text-left font-medium">
                     <SortButton
                       col="county"
                       label="County"
@@ -404,7 +407,7 @@ export default function SnapMichiganPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="px-4 py-2.5 text-right font-medium">
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
                     <SortButton
                       col="enrollmentTotal"
                       label="SNAP Persons"
@@ -413,7 +416,7 @@ export default function SnapMichiganPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="px-4 py-2.5 text-right font-medium">
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
                     <SortButton
                       col="enrollmentPct"
                       label="% of Pop."
@@ -422,7 +425,7 @@ export default function SnapMichiganPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="px-4 py-2.5 text-right font-medium">
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
                     <SortButton
                       col="retailerCount"
                       label="Retailers"
@@ -431,7 +434,7 @@ export default function SnapMichiganPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="px-4 py-2.5 text-right font-medium text-muted-foreground text-xs">
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium text-muted-foreground text-xs">
                     Data as of
                   </th>
                 </tr>

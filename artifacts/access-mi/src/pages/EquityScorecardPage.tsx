@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Info, Download, X } from "lucide-react";
-import PrintButton from "@/components/shared/PrintButton";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -308,6 +307,7 @@ export default function EquityScorecardPage() {
       </section>
 
       <div className="container max-w-4xl py-8 space-y-8">
+        <h2 className="sr-only">Equity summary</h2>
         {/* Summary cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
@@ -586,7 +586,6 @@ export default function EquityScorecardPage() {
         </div>
       </div>
 
-      <PrintButton />
     </Layout>
   );
 }
