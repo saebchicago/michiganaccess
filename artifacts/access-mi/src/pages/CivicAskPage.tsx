@@ -28,6 +28,7 @@ export default function CivicAskPage() {
     title: "Civic Intelligence - Ask AccessMI",
     description:
       "Ask plain-language questions about any Michigan county and get grounded, provenance-labeled answers from AccessMI's on-site datasets.",
+    path: "/ask",
   });
 
   const [searchParams] = useSearchParams();

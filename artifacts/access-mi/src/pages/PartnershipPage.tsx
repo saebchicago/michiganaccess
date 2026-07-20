@@ -4,6 +4,7 @@ import { Handshake, CheckCircle2, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import Layout from "@/components/layout/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,12 @@ const fadeUp = {
 };
 
 export default function PartnershipPage() {
+  usePageMeta({
+    title: "Partner With Access Michigan",
+    description:
+      "Health systems, nonprofits, and government agencies: partner with Access Michigan to reach residents with sourced civic data.",
+    path: "/partnerships",
+  });
   const { t } = useTranslation();
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);

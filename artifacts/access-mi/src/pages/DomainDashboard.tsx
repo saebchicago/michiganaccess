@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Download, Printer } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { HoverLift, SignalCardAnimation, CounterAnimation, ChartAnimation } from "@/components/animations/civic-animations";
 import { MobileCivicNav, ResponsiveGrid, StickyCountyHeader } from "@/components/responsive/ResponsiveGrid";
 import { Badge } from "@/components/ui/badge";
@@ -164,6 +165,13 @@ export default function DomainDashboard() {
   }, [location.pathname]);
 
   const domain = getIntelligenceDomain(selectedDomain);
+
+  usePageMeta({
+    title: `${domain.name} Intelligence Dashboard`,
+    description: `County-by-county ${domain.name.toLowerCase()} intelligence for Michigan, sourced from ${domain.dataSource} and updated ${domain.updateFrequency.toLowerCase()}.`,
+    path: location.pathname,
+  });
+
   const countyRecord = getCountyIntelligenceRecord(selectedCounty);
   const metrics = countyRecord?.domainMetrics[domain.slug] ?? null;
   const csvHref = metrics

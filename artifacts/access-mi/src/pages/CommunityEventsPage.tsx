@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -195,6 +196,13 @@ export default function CommunityEventsPage() {
   }, [allEvents]);
 
   const hasActiveFilters = !!search || !!eventType || !!county;
+
+  usePageMeta({
+    title: "Community Events",
+    description:
+      "Find Michigan community health fairs, resource events, and outreach programs by county.",
+    path: "/events",
+  });
 
   return (
     <Layout>

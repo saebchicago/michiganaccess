@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import Layout from '@/components/layout/Layout';
+import { usePageMeta } from '@/hooks/usePageMeta';
 
 const dataSources = [
   {
@@ -41,6 +42,11 @@ const dataSources = [
                                                                                                     ];
 
                                                                                                     export default function ProviderData() {
+                                                                                                      usePageMeta({
+                                                                                                        title: "Provider Data",
+                                                                                                        description: "Search Michigan Medicaid and Medicare provider data from public government sources",
+                                                                                                        path: "/provider-data",
+                                                                                                      });
                                                                                                       const [search, setSearch] = useState('');
                                                                                                         const [specialty, setSpecialty] = useState('');
                                                                                                           const [zip, setZip] = useState('');
@@ -53,7 +59,7 @@ const dataSources = [
                                                                                                                             };
 
                                                                                                                               return (
-                                                                                                                                  <Layout title="Provider Data" description="Search Michigan Medicaid and Medicare provider data from public government sources">
+                                                                                                                                  <Layout>
                                                                                                                                         <div className="min-h-screen bg-background">
                                                                                                                                                 {/* Header */}
                                                                                                                                                         <div className="border-b bg-muted/30">

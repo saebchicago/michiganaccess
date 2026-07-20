@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Layout from '@/components/layout/Layout';
+import { usePageMeta } from '@/hooks/usePageMeta';
 
 interface TransCard {
   label: string;
@@ -95,8 +96,13 @@ interface TransCard {
                                                                                                                                                                                                                                                                                                         }
 
                                                                                                                                                                                                                                                                                                         export default function TransparencyPage() {
+  usePageMeta({
+    title: "Transparency & Public Records",
+    description: "Michigan FOIA tools, state spending data, and legislative transparency resources",
+    path: "/transparency/records",
+  });
                                                                                                                                                                                                                                                                                                           return (
-                                                                                                                                                                                                                                                                                                              <Layout title="Transparency & Public Records" description="Michigan FOIA tools, state spending data, and legislative transparency resources">
+                                                                                                                                                                                                                                                                                                              <Layout>
                                                                                                                                                                                                                                                                                                                     <div className="min-h-screen bg-background">
                                                                                                                                                                                                                                                                                                                             {/* Header */}
                                                                                                                                                                                                                                                                                                                                     <div className="border-b bg-muted/30">

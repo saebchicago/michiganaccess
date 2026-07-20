@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Layout from '@/components/layout/Layout';
+import { usePageMeta } from '@/hooks/usePageMeta';
 
 const mspData = [
   {
@@ -79,8 +80,13 @@ const mspData = [
                                                                                                                                                                                                                         ];
 
                                                                                                                                                                                                                         export default function PublicSafety() {
+                                                                                                                                                                                                                          usePageMeta({
+                                                                                                                                                                                                                            title: "Public Safety & Policing",
+                                                                                                                                                                                                                            description: "Michigan policing transparency data, corrections data, and accountability resources",
+                                                                                                                                                                                                                            path: "/public-safety",
+                                                                                                                                                                                                                          });
                                                                                                                                                                                                                           return (
-                                                                                                                                                                                                                              <Layout title="Public Safety & Policing" description="Michigan policing transparency data, corrections data, and accountability resources">
+                                                                                                                                                                                                                              <Layout>
                                                                                                                                                                                                                                     <div className="min-h-screen bg-background">
                                                                                                                                                                                                                                             {/* Header */}
                                                                                                                                                                                                                                                     <div className="border-b bg-muted/30">

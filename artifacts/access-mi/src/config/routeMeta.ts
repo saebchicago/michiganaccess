@@ -295,6 +295,78 @@ export const ROUTE_META: RouteMeta[] = [
     summary:
       "One-page sourced county brief for health departments, journalists, and grant writers.",
   },
+  {
+    path: "/data-explorer",
+    title: "Data Explorer - Census & Community Indicators | Access Michigan",
+    description:
+      "Explore 50+ Census ACS tables for any Michigan county. Compare demographics, economics, housing, and education data.",
+    h1: "Explore live Census data.",
+    summary:
+      "50+ ACS tables, any Michigan county, compared side by side.",
+  },
+  {
+    path: "/equity",
+    title: "Michigan Health Equity Data | Access Michigan",
+    description:
+      "Health equity indicators across Michigan's 83 counties including social determinants, chronic disease burden, and access gaps.",
+    h1: "Michigan health equity data",
+    summary:
+      "Social determinants, chronic disease burden, and access gaps by county.",
+  },
+  {
+    path: "/energy-burden",
+    title: "Energy Burden Dashboard | Access Michigan",
+    description:
+      "County-level energy affordability data across Michigan, showing energy burden percentages and DOE threshold analysis.",
+    h1: "Energy Burden Dashboard",
+    summary:
+      "Energy affordability and DOE burden thresholds by Michigan county.",
+  },
+  {
+    path: "/detection-gap",
+    title: "The Detection Gap | Access Michigan",
+    description:
+      "Health systems screen millions for social needs but lack the infrastructure to act. See the data behind Michigan's detection-to-action gap.",
+    h1: "The Detection Gap",
+    summary:
+      "Screening volume versus the infrastructure to act on what's found.",
+  },
+  {
+    path: "/public-investment",
+    title: "Public Investment Intelligence | Access Michigan",
+    description:
+      "Where the money actually lands in Michigan. Federal funding, municipal bonds, and fiscal vulnerability analysis. Statewide.",
+    h1: "Public Investment Intelligence",
+    summary:
+      "Federal funding, municipal bonds, and fiscal vulnerability, statewide.",
+  },
+  {
+    path: "/officials",
+    title: "Your Representatives | Access Michigan",
+    description:
+      "Find your elected officials at every level of government in Michigan, with official .gov lookup tools by ZIP code.",
+    h1: "Your Representatives",
+    summary:
+      "Official .gov lookup tools for federal, state, and local Michigan representatives.",
+  },
+  {
+    path: "/transparency",
+    title: "Transparency Intelligence | Access Michigan",
+    description:
+      "Public money. Public contracts. Public officials. Federal contractors, lobbying, campaign finance, all Michigan political parties - sourced from primary records.",
+    h1: "Transparency Intelligence",
+    summary:
+      "Federal contractors, lobbying, and campaign finance, sourced from primary records.",
+  },
+  {
+    path: "/domain-dashboard",
+    title: "Domain Intelligence Dashboard | Access Michigan",
+    description:
+      "County-by-county health, housing, and food-security intelligence for Michigan, sourced from County Health Rankings and the Census ACS.",
+    h1: "Domain Intelligence Dashboard",
+    summary:
+      "Health, housing, and food-security signals by Michigan county.",
+  },
 ];
 
 /**

@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { APP_ROUTES } from "@/routes/manifest";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 /**
  * Recovery-flavored 404 page. The previous version was a generic
@@ -94,6 +95,12 @@ function getRouteSuggestions(query: string): RouteSuggestion[] {
 export function NotFound() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  usePageMeta({
+    title: "Page Not Found",
+    description: "The page you're looking for doesn't exist. Search or pick a primary destination below.",
+    noindex: true,
+  });
   const [query, setQuery] = useState(() =>
     location.pathname.replace(/^\/+/, ""),
   );

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useProviders } from "@/hooks/useProviders";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
@@ -40,6 +41,13 @@ function Section({
 }
 
 export default function SiteReportPage() {
+  usePageMeta({
+    title: "Site Report",
+    description:
+      "Printable Access Michigan site report summarizing facilities, providers, community resources, and financial programs data.",
+    path: "/site-report",
+    noindex: true,
+  });
   const { data: facilities = [], isLoading: fl } = useFacilities();
   const { data: providers = [], isLoading: pl } = useProviders();
   const { data: resources = [], isLoading: rl } = useCommunityResources();

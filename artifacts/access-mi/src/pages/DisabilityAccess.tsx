@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Layout from '@/components/layout/Layout';
+import { usePageMeta } from '@/hooks/usePageMeta';
 
 interface BenefitCard {
   label: string;
@@ -124,8 +125,13 @@ interface BenefitCard {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                   }
 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                   export default function DisabilityAccess() {
+  usePageMeta({
+    title: "Disability & Accessibility",
+    description: "Federal and Michigan disability benefits, services, and legal aid resources",
+    path: "/disability-access",
+  });
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     return (
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <Layout title="Disability & Accessibility" description="Federal and Michigan disability benefits, services, and legal aid resources">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <Layout>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <div className="min-h-screen bg-background">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       {/* Header */}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <div className="border-b bg-muted/30">
