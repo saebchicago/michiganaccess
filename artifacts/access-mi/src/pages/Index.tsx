@@ -457,9 +457,11 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
               {d.description}
             </p>
 
-            {/* Live preview - existing, already-labeled platform data */}
+            {/* Live preview - existing, already-labeled platform data.
+                Keyed off the stable door identity (kicker), not the numeral,
+                which is now position-based and reorders by persona mode. */}
             <div className="mb-5 flex-1">
-              {d.numeral === "II" && (
+              {d.kicker === "Visualize" && (
                 <div
                   className="border-t pt-3"
                   style={{ borderColor: `${C.emerald}14` }}
@@ -467,7 +469,7 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
                   <UninsuredSparkline county="Wayne" />
                 </div>
               )}
-              {d.numeral === "III" && miUncontested && (
+              {d.kicker === "Belong" && miUncontested && (
                 <div
                   className="border-t pt-3"
                   style={{ borderColor: `${C.emerald}14` }}

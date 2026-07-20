@@ -69,6 +69,11 @@ function FooterSection({
           onClick={() => setOpen(!open)}
           className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
           aria-expanded={open}
+          aria-label={
+            open
+              ? `Show fewer ${title} links`
+              : `Show all ${links.length} ${title} links`
+          }
         >
           {open ? "Show less" : `Show all ${links.length}`}
           <ChevronDown
