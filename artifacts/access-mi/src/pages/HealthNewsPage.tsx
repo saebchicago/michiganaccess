@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Newspaper, ExternalLink } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Card, CardContent } from "@/components/ui/card";
 
 const fadeUp = {
@@ -9,6 +10,12 @@ const fadeUp = {
 };
 
 export default function HealthNewsPage() {
+  usePageMeta({
+    title: "Michigan Health News",
+    description:
+      "Curated Michigan health news and policy updates, linking out to original reporting from statewide and local outlets.",
+    path: "/news",
+  });
   return (
     <Layout>
       <section className="bg-gradient-to-b from-michigan-sky/5 to-background py-12 lg:py-20">

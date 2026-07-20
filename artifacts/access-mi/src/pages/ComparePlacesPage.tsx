@@ -761,6 +761,7 @@ export default function ComparePlacesPage() {
                     onChange={(e) => setAddInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleAddZip()}
                     placeholder="ZIP code"
+                    aria-label="Add a ZIP code to compare"
                     className="w-24 h-8 text-xs"
                     maxLength={5}
                   />
@@ -821,6 +822,8 @@ export default function ComparePlacesPage() {
             <ViewModeToggle value={viewMode} onChange={setViewMode} />
           </div>
         </div>
+
+        <h2 className="sr-only">Comparison results</h2>
 
         {/* ── CHNA Summary (when active) ── */}
         {viewMode === "chna" && selected.length >= 2 && (
@@ -1142,14 +1145,16 @@ export default function ComparePlacesPage() {
               <CardContent>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm min-w-[420px]">
+                    <caption className="sr-only">Detailed comparison across selected places</caption>
                     <thead>
                       <tr className="border-b border-border">
-                        <th className="text-left py-2 pr-4 text-xs font-semibold text-muted-foreground w-[140px] sm:w-[180px] break-words whitespace-normal">
+                        <th scope="col" className="text-left py-2 pr-4 text-xs font-semibold text-muted-foreground w-[140px] sm:w-[180px] break-words whitespace-normal">
                           Metric
                         </th>
                         {selected.map((sel, i) => (
                           <th
                             key={sel.id}
+                            scope="col"
                             className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground"
                           >
                             <div className="flex items-center justify-end gap-1.5">
@@ -1167,7 +1172,7 @@ export default function ComparePlacesPage() {
                             </div>
                           </th>
                         ))}
-                        <th className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground hidden lg:table-cell">
+                        <th scope="col" className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground hidden lg:table-cell">
                           MI Avg
                         </th>
                       </tr>
@@ -1312,14 +1317,16 @@ export default function ComparePlacesPage() {
               <CardContent>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm min-w-[420px]">
+                    <caption className="sr-only">Insurance coverage breakdown across selected places</caption>
                     <thead>
                       <tr className="border-b border-border">
-                        <th className="text-left py-2 text-xs font-semibold text-muted-foreground w-[130px] sm:w-[160px] break-words whitespace-normal">
+                        <th scope="col" className="text-left py-2 text-xs font-semibold text-muted-foreground w-[130px] sm:w-[160px] break-words whitespace-normal">
                           Coverage Type
                         </th>
                         {selected.map((sel, i) => (
                           <th
                             key={sel.id}
+                            scope="col"
                             className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground"
                           >
                             <div className="flex items-center justify-end gap-1.5">

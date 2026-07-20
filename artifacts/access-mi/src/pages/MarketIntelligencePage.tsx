@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Info, Download } from "lucide-react";
-import PrintButton from "@/components/shared/PrintButton";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -537,7 +536,6 @@ export default function MarketIntelligencePage() {
           </p>
         </div>
       </div>
-      <PrintButton />
     </Layout>
   );
 }

@@ -307,9 +307,12 @@ export default function SnapCoverageAtRiskPage() {
 
           <div className="rounded-lg border border-border overflow-x-auto">
             <table data-testid="snap-county-table" className="w-full text-sm">
+              <caption className="sr-only">
+                Michigan county SNAP coverage-at-risk, sortable by column
+              </caption>
               <thead className="bg-muted/40 border-b border-border">
                 <tr>
-                  <th className="text-left px-4 py-3">
+                  <th scope="col" className="text-left px-4 py-3">
                     <SortButton
                       col="county"
                       label="County"
@@ -318,7 +321,7 @@ export default function SnapCoverageAtRiskPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="text-right px-4 py-3">
+                  <th scope="col" className="text-right px-4 py-3">
                     <SortButton
                       col="currentSnapEnrollment"
                       label="Current SNAP enrollment"
@@ -327,7 +330,7 @@ export default function SnapCoverageAtRiskPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
+                  <th scope="col" className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
                     <div className="flex flex-col items-end gap-0.5">
                       <SortButton
                         col="projectedAffectedLow"
@@ -341,7 +344,7 @@ export default function SnapCoverageAtRiskPage() {
                       </span>
                     </div>
                   </th>
-                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
+                  <th scope="col" className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
                     <div className="flex flex-col items-end gap-0.5">
                       <SortButton
                         col="projectedAffectedHigh"

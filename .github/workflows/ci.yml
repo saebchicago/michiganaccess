@@ -53,3 +53,27 @@ jobs:
           else
             echo "${ALLOWLIST} not yet on origin/main - skipping shrink-only check (initial introduction)"
           fi
+
+  lighthouse:
+    # Informational only while a real baseline is established - see the
+    # comment at the top of artifacts/access-mi/.lighthouserc.cjs. Does not
+    # block merges yet.
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        working-directory: artifacts/access-mi
+        run: pnpm build
+      - name: Lighthouse CI
+        working-directory: artifacts/access-mi
+        run: pnpm dlx @lhci/cli@0.14.x autorun

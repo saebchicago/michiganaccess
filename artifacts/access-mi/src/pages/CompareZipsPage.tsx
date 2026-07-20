@@ -132,14 +132,16 @@ function ZipComparisonTable({ summary }: { summary: ZipComparisonSummary }) {
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
+                    <caption className="sr-only">{group.title} by ZIP code</caption>
                     <thead>
                       <tr className="border-b border-border/30 bg-muted/20">
-                        <th className="text-left px-4 py-2.5 font-medium text-muted-foreground w-1/3">
+                        <th scope="col" className="text-left px-4 py-2.5 font-medium text-muted-foreground w-1/3">
                           Metric
                         </th>
                         {zips.map((z) => (
                           <th
                             key={z}
+                            scope="col"
                             className="text-center px-3 py-2.5 font-medium text-foreground tabular-nums"
                           >
                             <div className="flex flex-col items-center gap-0.5">

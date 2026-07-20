@@ -775,6 +775,7 @@ const PublicInvestmentPage = () => {
 
       {/* Dashboard */}
       <section className="container py-10">
+        <h2 className="sr-only">Federal funding, municipal bonds, and fiscal exposure</h2>
         <Tabs defaultValue="federal" className="w-full">
           <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
             <TabsList className="inline-flex w-max min-w-full sm:w-auto sm:min-w-0 gap-1">

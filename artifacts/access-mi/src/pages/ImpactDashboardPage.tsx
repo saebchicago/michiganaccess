@@ -26,7 +26,6 @@ import {
   COUNTIES_COVERED,
 } from "@/config/platformConstants";
 import EmbedShowcase from "@/components/partners/EmbedShowcase";
-import PrintButton from "@/components/shared/PrintButton";
 import { Link } from "react-router-dom";
 
 const fade = {
@@ -298,7 +297,6 @@ export default function ImpactDashboardPage() {
           </p>
         </div>
       </div>
-      <PrintButton />
     </Layout>
   );
 }

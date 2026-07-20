@@ -1,16 +1,16 @@
-import { useEffect } from "react";
+import Layout from "@/components/layout/Layout";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { FoodAccessExplorer } from "@/components/charts/multivar/FoodAccessExplorer";
 
 export default function FoodAccessExplorerPage() {
-  useEffect(() => {
-    const previous = document.title;
-    document.title = "Food Access Explorer | AccessMI";
-    return () => {
-      document.title = previous;
-    };
-  }, []);
+  usePageMeta({
+    title: "Food Access Explorer",
+    description:
+      "Multi-variable view of USDA SNAP enrollment and retailer access across all 83 Michigan counties, with primary-source provenance and transparent benchmark math.",
+    path: "/food-access",
+  });
   return (
-    <main className="min-h-screen bg-background">
+    <Layout>
       <div className="container max-w-6xl py-10 sm:py-14">
         <div className="mb-7 space-y-2">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
@@ -27,6 +27,6 @@ export default function FoodAccessExplorerPage() {
         </div>
         <FoodAccessExplorer />
       </div>
-    </main>
+    </Layout>
   );
 }

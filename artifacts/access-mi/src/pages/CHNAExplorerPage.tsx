@@ -33,7 +33,6 @@ import {
   Download,
   FileSpreadsheet,
 } from "lucide-react";
-import PrintButton from "@/components/shared/PrintButton";
 import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 import { CHNATractMap } from "@/components/chna/CHNATractMap";
 import {
@@ -1053,7 +1052,6 @@ export function CHNAExplorerPage() {
         </Tabs>
       </div>
 
-      <PrintButton />
     </Layout>
   );
 }

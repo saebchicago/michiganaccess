@@ -1,11 +1,17 @@
 import React from 'react';
 import { Users, MapPin, Building2, Shield, MapPinOff, Link as LinkIcon, Mail } from 'lucide-react';
 import Layout from '../components/layout/Layout';
+import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function Officials() {
+        usePageMeta({
+            title: "Your Representatives",
+            description: "Find your elected officials at every level of government in Michigan",
+            path: "/officials",
+        });
 
         return (
-            <Layout title="Your Representatives" description="Find your elected officials at every level of government in Michigan">
+            <Layout>
                   <div className="min-h-screen bg-background">
                           <div className="border-b bg-muted/30">
                                     <div className="container max-w-4xl py-12 space-y-4">

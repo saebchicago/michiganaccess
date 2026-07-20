@@ -13,7 +13,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Info, Zap, AlertTriangle, TrendingUp } from "lucide-react";
-import PrintButton from "@/components/shared/PrintButton";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -106,6 +105,7 @@ export default function EnergyBurdenPage() {
       </section>
 
       <div className="container max-w-5xl py-8 space-y-8">
+        <h2 className="sr-only">Energy burden summary</h2>
         {/* Summary cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
@@ -239,7 +239,6 @@ export default function EnergyBurdenPage() {
           </p>
         </div>
       </div>
-      <PrintButton />
     </Layout>
   );
 }

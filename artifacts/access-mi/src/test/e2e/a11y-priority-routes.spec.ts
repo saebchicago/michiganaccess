@@ -18,6 +18,16 @@ const PRIORITY_ROUTES = [
   '/data-sources',
   '/methodology',
   '/about',
+  '/data',
+  '/data-explorer',
+  '/disaster-history',
+  '/equity',
+  '/energy-burden',
+  '/domain-dashboard',
+  '/detection-gap',
+  '/public-investment',
+  '/officials',
+  '/transparency',
 ];
 
 type ViolationRow = {

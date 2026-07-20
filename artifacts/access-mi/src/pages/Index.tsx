@@ -688,6 +688,7 @@ const Index = () => {
     title: "AccessMI - Civic intelligence for every Michigan community",
     description:
       "Benefits, care, closures, and community risk across Michigan. Every number traced to a primary federal or state source.",
+    path: "/",
   });
 
   return (
