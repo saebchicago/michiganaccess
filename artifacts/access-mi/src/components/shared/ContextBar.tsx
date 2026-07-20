@@ -311,28 +311,31 @@ export default function ContextBar() {
         ))
       : null;
 
-  // Aria-live announcement
-  const announcement = [
-    county
-      ? `${county} County`
-      : region
-        ? `${region.name} region`
-        : "All Michigan",
-    audience ? `for ${AUDIENCE_LABELS[audience]}s` : "",
+  // Aria-live announcement - a single grammatical sentence rather than
+  // concatenated fragments (which previously read "for Health Systems as
+  // Immigrant data and services").
+  const locationLabel = county
+    ? `${county} County`
+    : region
+      ? `${region.name} region`
+      : "all of Michigan";
+  const lensParts = [
+    audience ? AUDIENCE_LABELS[audience] : "",
     subPersonas.length > 0
-      ? `as ${subPersonas.map((sp) => SUB_PERSONA_LABELS[sp]).join(", ")}`
+      ? subPersonas.map((sp) => SUB_PERSONA_LABELS[sp]).join(", ")
       : "",
-    eligibility.fplPercent ? `at ${eligibility.fplPercent}% FPL` : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+    eligibility.fplPercent ? `${eligibility.fplPercent}% FPL` : "",
+  ].filter(Boolean);
+  const announcement = `Now showing data and services for ${locationLabel}${
+    lensParts.length ? ` (${lensParts.join(" · ")})` : ""
+  }.`;
 
   // Mobile: collapsed pill
   if (isMobile) {
     return (
       <div className="border-b border-border/50 bg-background/95 backdrop-blur-md">
         <div aria-live="polite" className="sr-only">
-          Now showing {announcement} data and services.
+          {announcement}
         </div>
 
         {!mobileExpanded ? (
@@ -426,7 +429,7 @@ export default function ContextBar() {
       }`}
     >
       <div aria-live="polite" className="sr-only">
-        Now showing {announcement} data and services.
+        {announcement}
       </div>
 
       <div className="container flex items-center gap-3 h-8 text-[11px] text-muted-foreground overflow-x-auto">
