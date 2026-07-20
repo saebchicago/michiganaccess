@@ -83,13 +83,18 @@ export function usePageMeta({
     let canonicalEl = document.querySelector(
       'link[rel="canonical"]',
     ) as HTMLLinkElement | null;
+    if (!canonicalEl) {
+      canonicalEl = document.createElement("link");
+      canonicalEl.setAttribute("rel", "canonical");
+      document.head.appendChild(canonicalEl);
+    }
     if (path) {
       // Normalize to trailing-slash so canonical and og:url match the URL
       // Netlify serves (Pretty URLs adds a trailing slash to directory paths).
       // Root stays "/", query-string paths are left unchanged.
       const url = `${BASE_URL}${normalizePath(path)}`;
       setMeta("property", "og:url", url);
-      if (canonicalEl) canonicalEl.href = url;
+      canonicalEl.href = url;
     }
 
     if (noindex) {

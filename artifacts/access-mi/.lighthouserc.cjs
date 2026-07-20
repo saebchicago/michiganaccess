@@ -25,6 +25,10 @@ module.exports = {
       numberOfRuns: 1,
       settings: {
         preset: "desktop",
+        // GitHub-hosted runners don't grant the unprivileged user Chrome's
+        // sandboxing namespaces; without --no-sandbox Chrome shows a
+        // CHROME_INTERSTITIAL_ERROR instead of loading the page at all.
+        chromeFlags: "--no-sandbox --headless=new --disable-gpu",
       },
     },
     assert: {
