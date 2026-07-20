@@ -12,7 +12,12 @@
 module.exports = {
   ci: {
     collect: {
-      startServerCommand: "pnpm run serve -- --port 4173",
+      // vite.config.ts derives preview.port from the PORT env var (default
+      // 5173), not from a CLI --port flag - and pnpm's `-- --port 4173`
+      // pass-through mangles the arg anyway (vite's CLI parser treats a
+      // literal `--` as "stop parsing options", so --port never lands).
+      // Set PORT directly so this actually serves on 4173.
+      startServerCommand: "PORT=4173 pnpm run serve",
       startServerReadyPattern: "Local:",
       startServerReadyTimeout: 60000,
       url: [
