@@ -412,15 +412,13 @@ const CivicPowerPage = () => {
             <CardContent className="py-5">
               <Shield className="h-5 w-5 text-primary mb-2" />
               <h3 className="text-sm font-bold text-foreground mb-2">
-                The 7% Problem
+                The recruitment gap
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Only 7% of governing board members in the US found out about
-                their seat through a public-facing channel. The rest were
-                recruited through personal networks. accessmi.org changes this.
-              </p>
-              <p className="text-[9px] text-muted-foreground/60 mt-2">
-                Source: Santa Cruz County 2025 Boards Survey
+                Most governing-board seats are filled through personal networks
+                rather than public, open recruitment - so many residents never
+                hear that a seat is open. accessmi.org surfaces these seats
+                publicly so more people can serve.
               </p>
             </CardContent>
           </Card>
