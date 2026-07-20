@@ -166,14 +166,14 @@ function Masthead({
             className="text-xs sm:text-sm font-medium uppercase"
             style={{ color: C.emeraldMid, letterSpacing: "0.2em" }}
           >
-            The Civic Intelligence Journal of Michigan
+            Civic intelligence for every Michigan community
           </p>
           <p
             className="text-xs font-normal normal-case"
             style={{ color: `${C.emeraldMid}99` }}
           >
-            Independent civic project. No government or health system
-            affiliation.
+            An independent, public-data journal for Michigan's 83 counties. No
+            government or health system affiliation.
           </p>
         </div>
 
@@ -391,10 +391,16 @@ function ResourceBridgeBand() {
 
 // ─── Three doors grid (Understand / Visualize / Belong) ─────────────────────
 
-function ThreeDoorsGrid() {
+function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
   const miUncontested = STATE_UNCONTESTED_COMPARISON.find(
     (s) => s.state === "Michigan",
   );
+  // Give each reader mode a different first door: Analyst leads with Visualize
+  // (dashboards/trends), Resident leads with Understand (look up your place).
+  // Numerals are position-based below so they stay sequential after reorder.
+  const orderedDoors =
+    mode === "professional" ? [DOORS[1], DOORS[0], DOORS[2]] : DOORS;
+  const NUMERALS = ["I", "II", "III"];
   return (
     <section
       className="container mx-auto max-w-6xl px-4 pb-16"
@@ -404,7 +410,7 @@ function ThreeDoorsGrid() {
         Three ways in: understand, visualize, belong
       </h3>
       <div className="grid gap-8 md:grid-cols-3">
-        {DOORS.map((d, i) => (
+        {orderedDoors.map((d, i) => (
           <motion.article
             key={d.title}
             initial={{ opacity: 0, y: 12 }}
@@ -429,7 +435,7 @@ function ThreeDoorsGrid() {
                 className="text-xs font-serif italic"
                 style={{ color: `${C.emerald}66` }}
               >
-                {d.numeral}
+                {NUMERALS[i]}
               </span>
             </div>
             <p
@@ -451,9 +457,11 @@ function ThreeDoorsGrid() {
               {d.description}
             </p>
 
-            {/* Live preview - existing, already-labeled platform data */}
+            {/* Live preview - existing, already-labeled platform data.
+                Keyed off the stable door identity (kicker), not the numeral,
+                which is now position-based and reorders by persona mode. */}
             <div className="mb-5 flex-1">
-              {d.numeral === "II" && (
+              {d.kicker === "Visualize" && (
                 <div
                   className="border-t pt-3"
                   style={{ borderColor: `${C.emerald}14` }}
@@ -461,7 +469,7 @@ function ThreeDoorsGrid() {
                   <UninsuredSparkline county="Wayne" />
                 </div>
               )}
-              {d.numeral === "III" && miUncontested && (
+              {d.kicker === "Belong" && miUncontested && (
                 <div
                   className="border-t pt-3"
                   style={{ borderColor: `${C.emerald}14` }}
@@ -693,7 +701,7 @@ const Index = () => {
           <Masthead mode={mode} onModeChange={setMode} />
           <EditorialHero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
           <ResourceBridgeBand />
-          <ThreeDoorsGrid />
+          <ThreeDoorsGrid mode={mode} />
           <CountyPicker />
           <ProvenanceStrip />
         </div>

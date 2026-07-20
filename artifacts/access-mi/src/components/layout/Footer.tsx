@@ -26,7 +26,6 @@ import {
   loadTimeColor,
 } from "@/hooks/useFooterStats";
 import { replayTour } from "@/components/shared/OnboardingTour";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { DATA_SOURCE_DISPLAY } from "@/config/platformConstants";
 
 function FooterSection({
@@ -38,43 +37,50 @@ function FooterSection({
   links: { label: string; href: string }[];
   collapsible?: boolean;
 }) {
-  const isMobile = useIsMobile();
-  const [open, setOpen] = useState(!collapsible || !isMobile);
-  const shouldCollapse = collapsible && isMobile;
+  // Progressive disclosure on ALL breakpoints: long (collapsible) sections show
+  // a capped preview with a "Show all N" toggle, so the comprehensive footer
+  // index no longer renders as a ~30-link wall by default. Every link stays
+  // reachable via the toggle (and via /sitemap).
+  const PREVIEW = 7;
+  const [open, setOpen] = useState(false);
+  const canCap = collapsible && links.length > PREVIEW;
+  const visible = canCap && !open ? links.slice(0, PREVIEW) : links;
 
   return (
     <nav aria-label={title}>
-      {shouldCollapse ? (
+      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        {title}
+      </p>
+      <ul className="space-y-2">
+        {visible.map((link) => (
+          <li key={link.href + link.label}>
+            <Link
+              to={link.href}
+              className="text-sm text-foreground/70 transition-colors hover:text-primary"
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      {canCap && (
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="flex w-full items-center justify-between mb-3"
+          className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+          aria-expanded={open}
+          aria-label={
+            open
+              ? `Show fewer ${title} links`
+              : `Show all ${links.length} ${title} links`
+          }
         >
-          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            {title}
-          </p>
+          {open ? "Show less" : `Show all ${links.length}`}
           <ChevronDown
-            className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
+            className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}
+            aria-hidden="true"
           />
         </button>
-      ) : (
-        <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          {title}
-        </p>
-      )}
-      {(!shouldCollapse || open) && (
-        <ul className="space-y-2">
-          {links.map((link) => (
-            <li key={link.href + link.label}>
-              <Link
-                to={link.href}
-                className="text-sm text-foreground/70 transition-colors hover:text-primary"
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
       )}
     </nav>
   );
@@ -259,7 +265,7 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Link sections - collapsible on mobile for Services & About */}
+          {/* Link sections - long indexes show a capped preview with "Show all N" */}
           {footerSections.map((section) => (
             <FooterSection
               key={section.title}
