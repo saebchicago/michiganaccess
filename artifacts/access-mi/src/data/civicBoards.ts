@@ -268,7 +268,7 @@ export const MICHIGAN_BOARDS: GoverningBoard[] = [
     seatsPerJurisdiction: "10 total board seats",
     vacanciesPubliclyPosted: true,
     compensationNote: "Per diem + expenses",
-    applicationUrl: "rtamichigan.org or county executive office",
+    applicationUrl: "https://www.rtamichigan.org",
     description: "Governs the Regional Transit Authority for SE Michigan - coordinates bus rapid transit, commuter rail planning, and federal transit funding across 4 counties.",
     whyItMatters: "SE Michigan is the largest US metro without a unified transit system - this board is the mechanism through which that changes. Every appointment matters.",
     michiganCount: 1,

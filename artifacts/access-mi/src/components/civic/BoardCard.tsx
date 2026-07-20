@@ -95,7 +95,9 @@ export default function BoardCard({ board }: { board: GoverningBoard }) {
                 Apply <ExternalLink className="h-3 w-3" aria-hidden="true" />
               </a>
             ) : (
-              <span>{board.applicationUrl ?? "Contact your county"}</span>
+              <span className="text-muted-foreground font-normal">
+                How to apply: {board.applicationUrl ?? "contact your county clerk"}
+              </span>
             )}
           </span>
         </div>

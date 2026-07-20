@@ -24,8 +24,8 @@ const CrisisBar = () => {
           <Phone className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
           <a href="tel:988" className="font-semibold hover:underline">988</a>
           <span className="hidden sm:inline">·</span>
-          <span className="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741&body=HOME" className="font-semibold hover:underline">741741</a></span>
-          <span className="sm:hidden">· <a href="sms:741741&body=HOME" className="font-semibold hover:underline">TEXT HOME</a></span>
+          <span className="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741?body=HOME" className="font-semibold hover:underline">741741</a></span>
+          <span className="sm:hidden">· <a href="sms:741741?body=HOME" className="font-semibold hover:underline">TEXT HOME</a></span>
           <span className="hidden sm:inline">· <a href="tel:211" className="font-semibold hover:underline">211</a></span>
         </div>
 

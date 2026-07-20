@@ -47,45 +47,57 @@ const CivicBoardsPage = () => {
               ~50,000 Governing Board Seats
             </h1>
             <p className="text-base text-muted-foreground">
-              Only 7% of governing board members found their seat through public channels. Here are {MICHIGAN_BOARDS.length} board types - with who appoints, compensation, time commitment, and how to apply.
+              Most people never hear about open civic seats - they are filled through personal networks. Here are {MICHIGAN_BOARDS.length} Michigan board types, with who appoints, compensation, time commitment, and how to apply.
             </p>
-            <p className="text-xs text-muted-foreground/60 mt-1">Santa Cruz County 2025 Boards Survey · Michigan statutory authorities</p>
+            <p className="text-xs text-muted-foreground/60 mt-1">
+              ~50,000 is an estimate compiled from Ballotpedia, BallotReady, Michigan Municipal League, CLOSUP MPPS, and the Michigan Secretary of State. Board authorities are defined by Michigan statute.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="container py-6">
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant={categoryFilter === "all" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setCategoryFilter("all")}
-          >
-            All ({MICHIGAN_BOARDS.length})
-          </Button>
-          {BOARD_CATEGORIES.map(cat => (
+      {/* Filters - two independent axes, clearly separated */}
+      <section className="container py-6 space-y-4">
+        <div>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Filter by area
+          </p>
+          <div className="flex flex-wrap gap-2">
             <Button
-              key={cat.key}
-              variant={categoryFilter === cat.key ? "default" : "outline"}
+              variant={categoryFilter === "all" ? "default" : "outline"}
               size="sm"
-              onClick={() => setCategoryFilter(cat.key)}
+              onClick={() => setCategoryFilter("all")}
             >
-              {cat.label} ({cat.count})
+              All ({MICHIGAN_BOARDS.length})
             </Button>
-          ))}
-          <div className="w-px bg-border mx-1" />
-          {(["easy", "moderate", "competitive"] as const).map(d => (
-            <Button
-              key={d}
-              variant={difficultyFilter === d ? "default" : "outline"}
-              size="sm"
-              onClick={() => setDifficultyFilter(difficultyFilter === d ? "all" : d)}
-              className="capitalize"
-            >
-              {d === "easy" ? "Easy to Join" : d === "competitive" ? "Competitive" : "Moderate"}
-            </Button>
-          ))}
+            {BOARD_CATEGORIES.map(cat => (
+              <Button
+                key={cat.key}
+                variant={categoryFilter === cat.key ? "default" : "outline"}
+                size="sm"
+                onClick={() => setCategoryFilter(cat.key)}
+              >
+                {cat.label} ({cat.count})
+              </Button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            Filter by ease of joining
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {(["easy", "moderate", "competitive"] as const).map(d => (
+              <Button
+                key={d}
+                variant={difficultyFilter === d ? "default" : "outline"}
+                size="sm"
+                onClick={() => setDifficultyFilter(difficultyFilter === d ? "all" : d)}
+              >
+                {d === "easy" ? "Easy to Join" : d === "competitive" ? "Competitive" : "Moderate"}
+              </Button>
+            ))}
+          </div>
         </div>
       </section>
 

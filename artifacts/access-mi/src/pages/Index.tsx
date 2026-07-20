@@ -123,9 +123,6 @@ function UtilityRail() {
           className="flex flex-wrap items-center gap-x-5 gap-y-1 text-[11px] font-medium uppercase tracking-[0.18em]"
           style={{ color: C.emeraldMid }}
         >
-          <span style={{ color: C.gold }} className="font-semibold">
-            Crisis: 988 · 211
-          </span>
           <Link
             to="/methodology"
             className="underline underline-offset-4 decoration-transparent hover:decoration-current transition-colors"
@@ -134,8 +131,9 @@ function UtilityRail() {
           </Link>
           <span className="italic normal-case tracking-normal opacity-70">
             Updated{" "}
-            {new Date().toLocaleDateString("en-US", {
+            {new Date(__BUILD_TIMESTAMP__).toLocaleDateString("en-US", {
               month: "short",
+              day: "numeric",
               year: "numeric",
             })}
           </span>
@@ -219,7 +217,9 @@ function Masthead({
 
 function EditorialHero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
   const [zip, setZip] = useState("");
-  const updated = new Date().toLocaleDateString("en-US", {
+  // Real build/deploy date, not the client's "today" - avoids implying the
+  // datasets refresh every time the page is opened.
+  const updated = new Date(__BUILD_TIMESTAMP__).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
