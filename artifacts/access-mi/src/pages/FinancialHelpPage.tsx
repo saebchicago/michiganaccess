@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { useFinancialPrograms } from "@/hooks/useFinancialPrograms";
+import { useCounty } from "@/contexts/CountyContext";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import DataTimestamp from "@/components/shared/DataTimestamp";
 import AskCopilotButton from "@/components/shared/AskCopilotButton";
@@ -62,11 +63,33 @@ export default function FinancialHelpPage() {
     },
   });
   const { data: programs = [], isLoading } = useFinancialPrograms();
-  const [householdSize, setHouseholdSize] = useState<number>(1);
-  const [income, setIncome] = useState<string>("");
+  // Site-wide eligibility profile: seed the screener from what the
+  // visitor already entered elsewhere (ContextBar, benefits screener)
+  // and write changes back so every income-aware page stays in sync.
+  const { eligibility, setEligibility } = useCounty();
+  const [householdSize, setHouseholdSizeState] = useState<number>(
+    () => eligibility.householdSize ?? 1,
+  );
+  const [income, setIncomeState] = useState<string>(() =>
+    eligibility.annualIncome !== null ? String(eligibility.annualIncome) : "",
+  );
   const [incomeUnit, setIncomeUnit] = useState<IncomeUnit>("annual");
   const [expandedProgram, setExpandedProgram] = useState<string | null>(null);
   const [filterType, setFilterType] = useState<string>("all");
+
+  const setHouseholdSize = (size: number) => {
+    setHouseholdSizeState(size);
+    setEligibility({ householdSize: size });
+  };
+  const setIncome = (value: string) => {
+    setIncomeState(value);
+    const parsed = parseFloat(value);
+    if (!Number.isNaN(parsed) && parsed > 0) {
+      setEligibility({
+        annualIncome: Math.round(parsed * incomeMultipliers[incomeUnit]),
+      });
+    }
+  };
 
   const fplPercent = useMemo(() => {
     const inc = parseFloat(income);

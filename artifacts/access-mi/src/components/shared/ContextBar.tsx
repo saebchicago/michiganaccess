@@ -378,7 +378,7 @@ export default function ContextBar() {
                     e.preventDefault();
                     document
                       .querySelector<HTMLButtonElement>(
-                        '[aria-label="Select county"]',
+                        "[data-county-selector]",
                       )
                       ?.click();
                   }}
@@ -469,7 +469,7 @@ export default function ContextBar() {
                 e.preventDefault();
                 document
                   .querySelector<HTMLButtonElement>(
-                    '[aria-label="Select county"]',
+                    "[data-county-selector]",
                   )
                   ?.click();
               }}
@@ -512,8 +512,8 @@ export default function ContextBar() {
               </TooltipTrigger>
               <TooltipContent side="bottom" className="max-w-xs text-xs">
                 This bar shows your active filters - location, persona, and
-                eligibility - which control all data and recommendations across
-                the site.{" "}
+                eligibility - which apply wherever a page is location- or
+                income-aware.{" "}
                 <Link to="/data-validation" className="text-primary underline">
                   Learn more
                 </Link>
