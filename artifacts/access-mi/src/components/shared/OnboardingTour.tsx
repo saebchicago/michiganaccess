@@ -92,11 +92,12 @@ export default function OnboardingTour() {
   // ?tour=true starts the tour explicitly (footer replay from another
   // page navigates here with this param; external links may use it too).
   useEffect(() => {
-    if (!onHomepage) return;
+    if (!onHomepage) return undefined;
     if (new URLSearchParams(search).get("tour") === "true") {
       const timer = setTimeout(startTour, 400);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [onHomepage, search, startTour]);
 
   // Replay event listener
