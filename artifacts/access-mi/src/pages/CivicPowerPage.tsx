@@ -158,7 +158,8 @@ const CivicPowerPage = () => {
                 of Michigan races uncontested
               </p>
               <p className="text-[9px] text-muted-foreground/60">
-                Ballotpedia 2024
+                Ballotpedia analysis / Michigan SOS 2024. Formal provenance
+                label pending.
               </p>
             </div>
             <div className="text-center">

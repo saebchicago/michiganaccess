@@ -237,6 +237,28 @@ export default function PrivacyPage() {
             This data never leaves your device and can be cleared at any time
             through your browser settings.
           </p>
+
+          <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
+            3e. Crisis Resources and Quick Exit
+          </h3>
+          <p>
+            Visiting a crisis-resource link (988, 741741, 211) or clicking a
+            page section related to sensitive topics is measured the same way
+            as any other page view under Section 3b - as an aggregate,
+            non-identifying count. We do not flag, tag, or separately profile
+            visits to crisis or sensitive-topic pages, and this data is never
+            linked to your identity.
+          </p>
+          <p className="mt-2">
+            The <strong>Quick Exit</strong> button (and the Escape key) hides
+            the page immediately and replaces the current browser-history
+            entry with a neutral site, so clicking "back" will not return a
+            visitor to this site. It does <strong>not</strong> clear your full
+            browsing history or close the browser tab. If you are in a
+            situation where someone else may check your device's browsing
+            history, consider using a private/incognito browsing window in
+            addition to Quick Exit.
+          </p>
         </Section>
 
         <Separator />
