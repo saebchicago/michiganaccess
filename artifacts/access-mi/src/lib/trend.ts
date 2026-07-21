@@ -120,11 +120,13 @@ export function summarize(
   };
 }
 
+// Token-based so trend colors match the rest of the site and follow the
+// light / dark / high-contrast themes (see src/lib/chartTheme.ts).
 export const TREND_COLORS: Record<TrendClassification, string> = {
-  IMPROVING: "hsl(160, 84%, 32%)",
-  STABLE: "hsl(215, 16%, 47%)",
-  CONCERN: "hsl(38, 92%, 50%)",
-  INSUFFICIENT: "hsl(215, 16%, 75%)",
+  IMPROVING: "hsl(var(--forest-green))",
+  STABLE: "hsl(var(--muted-foreground))",
+  CONCERN: "hsl(var(--color-amber))",
+  INSUFFICIENT: "hsl(var(--border))",
 };
 
 export const TREND_LABELS: Record<TrendClassification, string> = {

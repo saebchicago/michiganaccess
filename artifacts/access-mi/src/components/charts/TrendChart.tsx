@@ -70,7 +70,9 @@ export function TrendChart({
             contentStyle={{
               borderRadius: 8,
               fontSize: 11,
-              border: "1px solid hsl(214, 20%, 90%)",
+              border: "1px solid hsl(var(--border))",
+              backgroundColor: "hsl(var(--card))",
+              color: "hsl(var(--foreground))",
             }}
           />
           <Area

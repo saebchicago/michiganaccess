@@ -15,7 +15,7 @@ export const MICHIGAN_TRENDS: Record<string, { data: TrendPoint[]; label: string
     unit: "%",
     insight: "Michigan's uninsured rate dropped from 11% to 5.8% after the Healthy Michigan Plan - but gains are at risk from federal Medicaid changes.",
     source: "ACS / MDHHS",
-    color: "hsl(209, 86%, 31%)",
+    color: "hsl(var(--chart-1))",
     improving: "down",
   },
   opioidDeaths: {
@@ -28,7 +28,7 @@ export const MICHIGAN_TRENDS: Record<string, { data: TrendPoint[]; label: string
     unit: "",
     insight: "Opioid deaths peaked at 3,074 in 2022 and declined 7.5% in 2023 - the first drop in 4 years - but remain 68% above 2015 levels.",
     source: "MDHHS / CDC WONDER",
-    color: "hsl(0, 80%, 55%)",
+    color: "hsl(var(--coral))",
     improving: "down",
   },
   renewableEnergy: {
@@ -41,7 +41,7 @@ export const MICHIGAN_TRENDS: Record<string, { data: TrendPoint[]; label: string
     unit: "%",
     insight: "Michigan's renewable energy share grew from 5.8% to 15.2% - on track toward the 100% clean energy standard by 2040, but data center demand may challenge the timeline.",
     source: "U.S. EIA",
-    color: "hsl(145, 45%, 42%)",
+    color: "hsl(var(--forest-green))",
     improving: "up",
   },
   childPoverty: {
@@ -54,7 +54,7 @@ export const MICHIGAN_TRENDS: Record<string, { data: TrendPoint[]; label: string
     unit: "%",
     insight: "Child poverty fell from 22.7% to 16.8% but ticked up to 17.5% in 2023 after the expiration of the expanded Child Tax Credit.",
     source: "ACS / Census",
-    color: "hsl(27, 87%, 55%)",
+    color: "hsl(var(--color-amber))",
     improving: "down",
   },
 };

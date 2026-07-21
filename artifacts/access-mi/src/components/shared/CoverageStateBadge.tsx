@@ -17,6 +17,9 @@ interface StateConfig {
   className: string;
 }
 
+// Colors follow the shared provenance grammar (see shared/ProvenanceTag.tsx
+// and chna/IntegrityBadge.tsx): brand tokens whose -deep variants are
+// AA-tuned per theme, so no raw palette classes or dark: overrides.
 const STATE_CONFIG: Record<CoverageState, StateConfig> = {
   present: {
     label: "Present",
@@ -24,7 +27,7 @@ const STATE_CONFIG: Record<CoverageState, StateConfig> = {
     description:
       "Direct county-native value read from the primary source. No transformation, no aggregation.",
     className:
-      "bg-emerald-100 text-emerald-900 border-emerald-300 dark:bg-emerald-950/30 dark:text-emerald-100 dark:border-emerald-800/60",
+      "border-michigan-forest/30 bg-michigan-forest/10 text-michigan-forest-deep",
   },
   suppressed: {
     label: "Suppressed",
@@ -32,15 +35,14 @@ const STATE_CONFIG: Record<CoverageState, StateConfig> = {
     description:
       "The source publishes the indicator but a federal or state small-cell rule blocks this cell from showing a value.",
     className:
-      "bg-amber-100 text-amber-900 border-amber-300 dark:bg-amber-950/30 dark:text-amber-100 dark:border-amber-800/60",
+      "border-michigan-gold/30 bg-michigan-gold/10 text-michigan-gold-deep",
   },
   "not-ingested": {
     label: "Not ingested",
     icon: CircleSlash,
     description:
       "The source publishes the indicator at this resolution but it is not yet bundled in this build. The gap is visible by design.",
-    className:
-      "bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700",
+    className: "border-border bg-muted text-muted-foreground",
   },
   "modeled-estimate": {
     label: "Modeled",
@@ -48,7 +50,7 @@ const STATE_CONFIG: Record<CoverageState, StateConfig> = {
     description:
       "Value computed at runtime from data at a different geographic resolution. Always labeled MODELED at minimum, regardless of input labels.",
     className:
-      "bg-sky-100 text-sky-900 border-sky-300 dark:bg-sky-950/30 dark:text-sky-100 dark:border-sky-800/60",
+      "border-michigan-teal/30 bg-michigan-teal/10 text-michigan-teal-deep",
   },
 };
 
@@ -69,7 +71,7 @@ export function CoverageStateBadge({
   const text = size === "xs" ? "text-[10px]" : "text-xs";
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full border ${padding} ${text} font-medium ${config.className}`}
+      className={`inline-flex items-center gap-1 rounded-md border ${padding} ${text} font-medium ${config.className}`}
       title={title}
       aria-label={`Coverage: ${config.label}. ${title}`}
       tabIndex={0}
