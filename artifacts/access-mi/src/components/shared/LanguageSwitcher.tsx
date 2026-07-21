@@ -8,9 +8,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+// `partial: true` renders an honest "(partial translation)" note: the
+// locale files exist but most of the interface is not yet extracted for
+// translation, so non-English visitors should know what to expect.
 const languages = [
   { code: "en", label: "English" },
-  { code: "es", label: "Español" },
+  { code: "es", label: "Español", partial: true },
 ];
 
 const LanguageSwitcher = () => {
@@ -39,6 +42,11 @@ const LanguageSwitcher = () => {
             className={i18n.language === lang.code ? "font-semibold text-primary" : ""}
           >
             {lang.label}
+            {lang.partial && (
+              <span className="ml-1.5 text-[10px] text-muted-foreground">
+                (partial translation)
+              </span>
+            )}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
