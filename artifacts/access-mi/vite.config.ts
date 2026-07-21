@@ -4,6 +4,7 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
+import { VitePWA } from "vite-plugin-pwa";
 
 const rawPort = process.env.PORT ?? "5173";
 const port = Number(rawPort);
@@ -24,6 +25,45 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    // Real installability + honest offline behavior. injectManifest (not
+    // generateSW) because navigations must be NetworkFirst with an
+    // offline.html fallback - see src/sw.ts. Note on prerendering: the
+    // per-route dist/<path>/index.html files are written AFTER the vite
+    // build by scripts/prerender-meta.mjs, so they are not in the SW
+    // precache manifest. That is accepted: they are crawler artifacts;
+    // in-app navigations go NetworkFirst and fall back to offline.html.
+    VitePWA({
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "sw.ts",
+      registerType: "autoUpdate",
+      injectRegister: false,
+      manifest: {
+        name: "Access Michigan",
+        short_name: "AccessMI",
+        description:
+          "Independent Michigan civic intelligence. County-level health, environmental, and social data across all 83 counties.",
+        start_url: "/",
+        scope: "/",
+        display: "standalone",
+        theme_color: "#1e3a5f",
+        background_color: "#ffffff",
+        icons: [
+          { src: "/pwa-192x192.png", sizes: "192x192", type: "image/png" },
+          { src: "/pwa-512x512.png", sizes: "512x512", type: "image/png" },
+          {
+            src: "/pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "maskable",
+          },
+        ],
+      },
+      injectManifest: {
+        globPatterns: ["**/*.{js,css,woff2}", "offline.html", "index.html"],
+        maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+      },
+    }),
     runtimeErrorOverlay(),
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
