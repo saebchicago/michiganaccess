@@ -20,6 +20,7 @@ vi.mock("react-i18next", () => ({
 }));
 
 import FinancialHelpPage from "@/pages/FinancialHelpPage";
+import { CountyProvider } from "@/contexts/CountyContext";
 
 describe("Financial Help page - a11y", () => {
   it("FinancialHelpPage has no a11y violations", async () => {
@@ -27,7 +28,9 @@ describe("Financial Help page - a11y", () => {
     const { container } = render(
       <QueryClientProvider client={qc}>
         <MemoryRouter>
-          <FinancialHelpPage />
+          <CountyProvider>
+            <FinancialHelpPage />
+          </CountyProvider>
         </MemoryRouter>
       </QueryClientProvider>,
     );

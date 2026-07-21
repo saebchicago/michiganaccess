@@ -32,6 +32,7 @@ import {
   type ApplicantCondition,
 } from "@/data/benefitsRules";
 import { evaluatePrograms } from "@/utils/benefitsEligibility";
+import { useCounty } from "@/contexts/CountyContext";
 
 type Step = "size" | "income" | "conditions" | "results";
 
@@ -68,9 +69,18 @@ interface BenefitsScreenerProps {
 }
 
 export function BenefitsScreener({ compact = false }: BenefitsScreenerProps) {
+  // Seed from the site-wide eligibility profile when the visitor already
+  // entered household details elsewhere (ContextBar, financial help).
+  // Read-only on purpose: this component promises "nothing is sent
+  // anywhere or stored", so it never writes the profile back.
+  const { eligibility } = useCounty();
   const [step, setStep] = useState<Step>("size");
-  const [householdSize, setHouseholdSize] = useState<number | null>(null);
-  const [incomeInput, setIncomeInput] = useState("");
+  const [householdSize, setHouseholdSize] = useState<number | null>(
+    () => eligibility.householdSize,
+  );
+  const [incomeInput, setIncomeInput] = useState(() =>
+    eligibility.annualIncome !== null ? String(eligibility.annualIncome) : "",
+  );
   const [conditions, setConditions] = useState<ApplicantCondition[]>([]);
 
   const annualIncome = useMemo(() => {

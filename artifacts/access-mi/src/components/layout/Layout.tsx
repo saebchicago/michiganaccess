@@ -29,7 +29,6 @@ const MobileBottomNav = lazy(
 const QuickExitBar = lazy(() => import("@/components/shared/QuickExitBar"));
 
 const OnboardingTour = lazy(() => import("@/components/shared/OnboardingTour"));
-const GuidedTour = lazy(() => import("@/components/shared/GuidedTour"));
 interface LayoutProps {
   children: ReactNode;
   title?: string;
@@ -58,7 +57,10 @@ const Layout = ({ children }: LayoutProps) => (
     <ErrorBoundary>
       <motion.main
         id="main-content"
-        className="flex-1 pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0"
+        // Programmatic focus target for route changes (RouteAnnouncer)
+        // and the skip link; not in the tab order itself.
+        tabIndex={-1}
+        className="flex-1 pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0 focus:outline-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.1 }}
@@ -80,7 +82,6 @@ const Layout = ({ children }: LayoutProps) => (
       <QuickExitBar />
 
       <OnboardingTour />
-      <GuidedTour />
     </Suspense>
   </div>
 );

@@ -40,7 +40,12 @@ import NPIResultCard from "@/components/findcare/NPIResultCard";
 import StaticResourceCard from "@/components/findcare/StaticResourceCard";
 import DVSafetyInterstitial from "@/components/findcare/DVSafetyInterstitial";
 import { useNPISearch, type NPISearchMode } from "@/hooks/useNPISearch";
-import { findCategory, type HelpCategory } from "@/data/findhelp-categories";
+import {
+  ALL_CATEGORIES,
+  findCategory,
+  type HelpCategory,
+} from "@/data/findhelp-categories";
+import { useCounty } from "@/contexts/CountyContext";
 import { STATIC_RESOURCES } from "@/data/findhelp-resources";
 import { Link, useSearchParams } from "react-router-dom";
 import ResultHeader from "@/components/shared/ResultHeader";
@@ -177,12 +182,16 @@ export default function FindCarePage() {
   });
 
   const [searchParams] = useSearchParams();
+  // Site-wide location context: pre-fills the location field when the
+  // visitor already picked a county elsewhere (header selector, county
+  // page, ZIP search). An explicit ?county= URL param always wins.
+  const { county: contextCounty } = useCounty();
 
   const [categoryValue, setCategoryValue] = useState("");
   const [category, setCategory] = useState<HelpCategory | null>(null);
   const [specialty, setSpecialty] = useState("");
   const [location, setLocation] = useState(
-    () => searchParams.get("county") || "",
+    () => searchParams.get("county") || contextCounty || "",
   );
   const [hasSearched, setHasSearched] = useState(false);
 
@@ -286,6 +295,47 @@ export default function FindCarePage() {
           "specialty",
         );
       }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Honor ?q= deep links (site search, JSON-LD SearchAction, keyword
+  // suggestions all emit them). Match the query against the help
+  // categories; on a hit, select the category and - for provider
+  // categories - auto-search with the effective location (URL county
+  // beats site-wide context). On no match, leave the page ready with
+  // whatever location we have rather than guessing.
+  useEffect(() => {
+    const qParam = searchParams.get("q")?.trim();
+    const scopeParam = searchParams.get("scope");
+    if (!qParam || scopeParam || hasSearched || searchMode !== "specialty") {
+      return;
+    }
+    const lower = qParam.toLowerCase();
+    const cat =
+      findCategory(lower) ??
+      ALL_CATEGORIES.find(
+        (c) =>
+          c.label.toLowerCase().includes(lower) ||
+          lower.includes(c.value.replace(/-/g, " ")),
+      );
+    if (!cat) return;
+
+    const effectiveLocation =
+      searchParams.get("county") || contextCounty || "";
+    setCategoryValue(cat.value);
+    setCategory(cat);
+    if (cat.mode === "static") {
+      setHasSearched(true);
+      npi.reset();
+    } else if (cat.mode === "npi" && effectiveLocation) {
+      setHasSearched(true);
+      npi.search(
+        cat.taxonomies || [],
+        cat.enumerationType || "NPI-1",
+        effectiveLocation,
+        "specialty",
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

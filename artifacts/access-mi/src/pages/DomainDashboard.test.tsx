@@ -45,9 +45,10 @@ describe("DomainDashboard", () => {
     // "benefits" is no longer a valid domain slug (see FIXLOG.md - its route
     // never actually pointed at this dashboard in production); "/housing" is
     // one of the 3 domains still routed here.
+    localStorage.setItem("michigan-access-county", "Wayne");
     renderDashboard(["/housing"]);
 
-    expect(screen.getByRole("heading", { name: /all michigan - housing intelligence/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /wayne county - housing intelligence/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: /renter burden rate/i })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("switch", { name: /toggle research mode/i }));
@@ -55,6 +56,19 @@ describe("DomainDashboard", () => {
     expect(screen.getByText(/research mode enabled/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /methodology/i })).toHaveAttribute("id", "methodology-link");
     expect(screen.getByRole("table")).toHaveAttribute("id", "data-table");
+  });
+
+  it("prompts for a county instead of silently defaulting to Wayne", () => {
+    // No stored county: the dashboard must not show Wayne data under an
+    // "All Michigan" heading. It asks for a county instead.
+    renderDashboard(["/housing"]);
+
+    expect(screen.getByRole("heading", { name: /all michigan - housing intelligence/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /pick a county to see local signals/i })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: /choose a county/i })).toBeInTheDocument();
+    // Wayne's county-scoped content must be absent.
+    expect(screen.queryByRole("heading", { name: /renter burden rate/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: /wayne county in context/i })).not.toBeInTheDocument();
   });
 
   it("shows sourced context indicators for a non-priority county (Alcona)", () => {

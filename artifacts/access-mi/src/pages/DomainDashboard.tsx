@@ -11,7 +11,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { useCounty } from "@/contexts/CountyContext";
+import {
+  MICHIGAN_COUNTIES,
+  useCounty,
+  type MichiganCounty,
+} from "@/contexts/CountyContext";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   INTELLIGENCE_DOMAINS,
   formatMetricName,
@@ -224,10 +235,43 @@ function CountyContextSection({ domain, countyName }: { domain: IntelligenceDoma
   );
 }
 
+/**
+ * Shown instead of county-scoped sections when no county is selected.
+ * Honest behavior: domain signals are county-scoped, so we ask for a
+ * county rather than silently defaulting to Wayne under an
+ * "All Michigan" heading.
+ */
+function CountyPromptCard({ onSelect }: { onSelect: (county: MichiganCounty) => void }) {
+  return (
+    <Card id="county-prompt" className="civic-card border-border/60 bg-card/95">
+      <div className="space-y-3 max-w-xl">
+        <p className="civic-eyebrow">County signals</p>
+        <h2 className="civic-subsection-title">Pick a county to see local signals</h2>
+        <p className="text-sm text-muted-foreground">
+          Domain signals are county-scoped. Choose one of Michigan's 83 counties
+          and this dashboard, plus the rest of the site, will follow it.
+        </p>
+        <Select onValueChange={(value) => onSelect(value as MichiganCounty)}>
+          <SelectTrigger className="w-full sm:w-72" aria-label="Choose a county">
+            <SelectValue placeholder="Choose a county" />
+          </SelectTrigger>
+          <SelectContent className="max-h-72">
+            {MICHIGAN_COUNTIES.map((name) => (
+              <SelectItem key={name} value={name}>
+                {name} County
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    </Card>
+  );
+}
+
 export default function DomainDashboard() {
   const location = useLocation();
-  const { county, countyLabel } = useCounty();
-  const selectedCounty = county ?? "Wayne";
+  const { county, countyLabel, setCounty } = useCounty();
+  const selectedCounty = county;
   const [selectedDomain, setSelectedDomain] = useState<IntelligenceDomainSlug>(
     inferDomainFromPath(location.pathname) as IntelligenceDomainSlug,
   );
@@ -245,11 +289,14 @@ export default function DomainDashboard() {
     path: location.pathname,
   });
 
-  const countyRecord = getCountyIntelligenceRecord(selectedCounty);
+  const countyRecord = selectedCounty
+    ? getCountyIntelligenceRecord(selectedCounty)
+    : null;
   const metrics = countyRecord?.domainMetrics[domain.slug] ?? null;
-  const csvHref = metrics
-    ? `data:text/csv;charset=utf-8,${encodeURIComponent(buildCsv(domain, selectedCounty, metrics))}`
-    : undefined;
+  const csvHref =
+    metrics && selectedCounty
+      ? `data:text/csv;charset=utf-8,${encodeURIComponent(buildCsv(domain, selectedCounty, metrics))}`
+      : undefined;
 
   const dashboardLinks = INTELLIGENCE_DOMAINS.map((item) => ({
     label: item.name,
@@ -318,7 +365,11 @@ export default function DomainDashboard() {
           <h2 className="text-2xl font-bold">{countyLabel} Intelligence Snapshot</h2>
         </div>
 
-        <CountyContextSection domain={domain} countyName={selectedCounty} />
+        {selectedCounty === null && <CountyPromptCard onSelect={setCounty} />}
+
+        {selectedCounty && (
+          <CountyContextSection domain={domain} countyName={selectedCounty} />
+        )}
 
         {metrics ? (
           <ResponsiveGrid className="items-stretch">
@@ -357,7 +408,7 @@ export default function DomainDashboard() {
               );
             })}
           </ResponsiveGrid>
-        ) : (
+        ) : selectedCounty ? (
           <Card id="county-fallback" className="civic-card border-border/60 bg-card/95">
             <p className="civic-subsection-title">County fallback</p>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -365,7 +416,7 @@ export default function DomainDashboard() {
               county indicators above cover all 83 Michigan counties.
             </p>
           </Card>
-        )}
+        ) : null}
 
         {metrics ? <DomainVisualization domain={domain} metrics={metrics} /> : null}
         {metrics ? <CountyComparison domain={domain} metrics={metrics} /> : null}
