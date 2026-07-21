@@ -195,7 +195,8 @@ export default function CommunityResourcesPage() {
 
   const [activeTab, setActiveTab] = useState(initialTab);
   const [county, setCounty] = useState(urlCounty || globalCounty || "All Counties");
-  const [search, setSearch] = useState("");
+  // ?q= lets site-search results land pre-filtered to the record found.
+  const [search, setSearch] = useState(() => searchParams.get("q") || "");
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [activeSegments, setActiveSegments] = useState<Set<string>>(new Set());

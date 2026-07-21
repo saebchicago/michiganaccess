@@ -32,6 +32,7 @@ import {
   type SearchSuggestion,
 } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
+import { searchPages } from "@/utils/pageSearchIndex";
 import { useCounty } from "@/contexts/CountyContext";
 
 const SITE_SEARCH_COMMAND_EVENT = "mi-access:site-search";
@@ -85,55 +86,9 @@ const ACTION_SHORTCUTS = [
   },
 ];
 
-const STATIC_PAGES = [
-  { label: "Find Care", href: "/find-care", category: "page" },
-  { label: "Health Map", href: "/health-map", category: "page" },
-  { label: "Financial Help", href: "/financial-help", category: "page" },
-  { label: "Community Resources", href: "/resources", category: "page" },
-  { label: "Transportation", href: "/transportation", category: "page" },
-  {
-    label: "Insurance Appeals",
-    href: "/health/insurance-appeals",
-    category: "page",
-  },
-  { label: "Health Conditions", href: "/conditions", category: "page" },
-  {
-    label: "Environment & Air Quality",
-    href: "/environment",
-    category: "page",
-  },
-  { label: "Civic Data", href: "/civic-data", category: "page" },
-  { label: "Quality Ratings", href: "/quality", category: "page" },
-  { label: "Cost Transparency", href: "/costs", category: "page" },
-  { label: "Prevention & Wellness", href: "/wellness", category: "page" },
-  { label: "Health Data Dashboard", href: "/data", category: "page" },
-  { label: "Executive Summary", href: "/executive-summary", category: "page" },
-  { label: "Health Equity", href: "/equity", category: "page" },
-  { label: "Lean Healthcare", href: "/lean-healthcare", category: "page" },
-  {
-    label: "For Health Systems",
-    href: "/for-health-systems",
-    category: "page",
-  },
-  { label: "Illustrative Scenarios", href: "/case-studies", category: "page" },
-  { label: "Impact Dashboard", href: "/impact", category: "page" },
-  { label: "Life Navigator", href: "/life-navigator", category: "page" },
-  { label: "Regions", href: "/regions", category: "page" },
-  { label: "Utility Outages", href: "/outages", category: "page" },
-  { label: "About", href: "/about", category: "page" },
-  { label: "Contact", href: "/contact", category: "page" },
-  {
-    label: "BD Financial Model",
-    href: "/bd-financial-model",
-    category: "page",
-  },
-  {
-    label: "Market Intelligence",
-    href: "/market-intelligence",
-    category: "page",
-  },
-  { label: "Portfolio", href: "/portfolio", category: "page" },
-];
+// Page results come from the route-manifest-derived index in
+// src/utils/pageSearchIndex.ts, so every navigable page (135+) is
+// discoverable here without hand-maintaining a list.
 
 interface SearchResult {
   label: string;
@@ -242,12 +197,13 @@ export default function SiteSearch() {
 
     const term = q.toLowerCase();
 
-    // Static pages filter
-    const pageResults: SearchResult[] = STATIC_PAGES.filter((p) =>
-      p.label.toLowerCase().includes(term),
-    )
-      .slice(0, 4)
-      .map((p) => ({ ...p, category: "page" as const }));
+    // Page results from the full route-manifest index
+    const pageResults: SearchResult[] = searchPages(term, 6).map((p) => ({
+      label: p.label,
+      sublabel: p.description,
+      href: p.href,
+      category: "page" as const,
+    }));
 
     // Parse combo query for county-scoped DB search
     const { term: searchTerm, county: comboCounty } = parseComboQuery(q);
@@ -315,11 +271,13 @@ export default function SiteSearch() {
       });
     }
 
+    // Deep-link each hit so the destination page arrives pre-filtered
+    // to the record's county and name instead of an unfiltered list.
     const facilityResults: SearchResult[] = (facilities.data ?? []).map(
       (f) => ({
         label: f.name,
         sublabel: `${f.city}, ${f.county} County · ${f.facility_type}`,
-        href: "/find-care",
+        href: `/find-care?county=${encodeURIComponent(f.county)}&q=${encodeURIComponent(f.name)}`,
         category: "facility",
       }),
     );
@@ -327,7 +285,7 @@ export default function SiteSearch() {
     const resourceResults: SearchResult[] = (resources.data ?? []).map((r) => ({
       label: r.resource_name,
       sublabel: `${r.city}, ${r.county} County · ${r.resource_type}`,
-      href: "/resources",
+      href: `/resources?county=${encodeURIComponent(r.county)}&q=${encodeURIComponent(r.resource_name)}`,
       category: "resource",
     }));
 
