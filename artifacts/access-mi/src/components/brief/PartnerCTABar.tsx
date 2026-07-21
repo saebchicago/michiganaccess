@@ -4,8 +4,7 @@ import { ArrowRight, Building2 } from "lucide-react";
 
 export default function PartnerCTABar({ context }: { context?: "brief" | "compare" | "utility" }) {
   const href = context === "utility" ? "/partners/utilities-regulators"
-    : context === "compare" ? "/partners/health-systems"
-    : "/partners/health-systems";
+    : "/partnerships/health-systems";
 
   return (
     <div className="rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 flex flex-col sm:flex-row items-center gap-3 print:hidden">

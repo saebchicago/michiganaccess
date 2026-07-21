@@ -42,6 +42,13 @@
   [headers.values]
     Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
 
+# The service worker must never be cached long-term or clients would
+# keep running stale app shells after a deploy.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
 # Self-hosted brand fonts. The filenames are stable across deploys, so
 # they can be cached aggressively at the edge and in the browser. If
 # a font is ever replaced, change the filename to bust the cache.
@@ -50,7 +57,7 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Renamed routes — declared as <Navigate> inside the SPA. Mirror them
+# Renamed routes - declared as <Navigate> inside the SPA. Mirror them
 # at the edge so crawlers and direct nav skip the SPA round-trip and
 # get the canonical URL via a 301. Order MUST stay above the SPA
 # catch-all below; Netlify evaluates redirects top-down.
@@ -133,6 +140,14 @@
 [[redirects]]
   from = "/life-event/reentry"
   to = "/reentry"
+  status = 301
+[[redirects]]
+  from = "/insurance-appeals"
+  to = "/health/insurance-appeals"
+  status = 301
+[[redirects]]
+  from = "/partners/health-systems"
+  to = "/partnerships/health-systems"
   status = 301
 
 # SPA fallback. Without this, every non-prerendered route 404s on

@@ -497,11 +497,8 @@ export const APP_ROUTES: RouteEntry[] = [
     component: pages.InsuranceAppealsPage,
     label: "Insurance Appeals",
   },
-  {
-    path: "/insurance-appeals",
-    component: pages.InsuranceAppealsPage,
-    label: "Insurance Appeals",
-  },
+  // /insurance-appeals redirects to /health/insurance-appeals (App.tsx
+  // Navigate alias + netlify 301) - one canonical URL per page.
   { path: "/partners", component: pages.PartnersPage, label: "Partners" },
   {
     path: "/partnerships/health-systems",
@@ -513,11 +510,8 @@ export const APP_ROUTES: RouteEntry[] = [
     component: pages.PartnershipOnePager,
     label: "One-Pager",
   },
-  {
-    path: "/partners/health-systems",
-    component: pages.HealthSystemsPage,
-    label: "Partners: Health Systems",
-  },
+  // /partners/health-systems redirects to /partnerships/health-systems
+  // (identical page; App.tsx Navigate alias + netlify 301).
   {
     path: "/partners/health-plans-medicaid",
     component: pages.HealthPlansMedicaidPage,

@@ -70,6 +70,16 @@ const App = () => (
                   ))}
                   {/* Semantic aliases - redirect common URL guesses */}
                   <Route
+                    path="/insurance-appeals"
+                    element={<Navigate to="/health/insurance-appeals" replace />}
+                  />
+                  <Route
+                    path="/partners/health-systems"
+                    element={
+                      <Navigate to="/partnerships/health-systems" replace />
+                    }
+                  />
+                  <Route
                     path="/health-equity"
                     element={<Navigate to="/equity" replace />}
                   />
