@@ -121,3 +121,118 @@ export const COUNTY_CROSS_DOMAIN: Record<string, CountyCrossDomain> = {
 export function getCountyCrossDomain(countyName: string): CountyCrossDomain {
   return COUNTY_CROSS_DOMAIN[countyName] ?? MI_STATE_AVERAGES;
 }
+
+/** Display formatting hint for a cross-domain metric. */
+export type CrossDomainFormat = "currency" | "percent" | "minutes" | "per100k";
+
+export interface CrossDomainMetricMeta {
+  label: string;
+  /** Unit suffix rendered after the value (empty for currency, which is prefixed). */
+  unit: string;
+  /** Named primary source - copied from this file's source header. */
+  source: string;
+  vintage: string;
+  /** true -> a higher value is the better civic outcome. */
+  higherIsBetter: boolean;
+  format: CrossDomainFormat;
+}
+
+/**
+ * Per-metric provenance and display metadata for CountyCrossDomain fields.
+ * Sources mirror the file header: ACS 5-Year (2022), BLS LAUS (2024),
+ * NCES/MI DOE (2023), FBI UCR (2022), EPA SDWIS (2024). Every tile rendered
+ * from this map carries a named source; values are direct tabulations
+ * (VERIFIED), nothing here is composited or modeled.
+ */
+export const CROSS_DOMAIN_METRIC_META: Record<keyof CountyCrossDomain, CrossDomainMetricMeta> = {
+  medianIncome: {
+    label: "Median household income",
+    unit: "",
+    source: "Census ACS 5-Year",
+    vintage: "2022",
+    higherIsBetter: true,
+    format: "currency",
+  },
+  povertyRate: {
+    label: "Poverty rate",
+    unit: "%",
+    source: "Census ACS 5-Year",
+    vintage: "2022",
+    higherIsBetter: false,
+    format: "percent",
+  },
+  medianRent: {
+    label: "Median gross rent",
+    unit: "",
+    source: "Census ACS 5-Year",
+    vintage: "2022",
+    higherIsBetter: false,
+    format: "currency",
+  },
+  rentBurden: {
+    label: "Rent-burdened households",
+    unit: "%",
+    source: "Census ACS 5-Year",
+    vintage: "2022",
+    higherIsBetter: false,
+    format: "percent",
+  },
+  vehicleAccess: {
+    label: "Households with a vehicle",
+    unit: "%",
+    source: "Census ACS 5-Year",
+    vintage: "2022",
+    higherIsBetter: true,
+    format: "percent",
+  },
+  commuteTime: {
+    label: "Average commute",
+    unit: " min",
+    source: "Census ACS 5-Year",
+    vintage: "2022",
+    higherIsBetter: false,
+    format: "minutes",
+  },
+  hsGradRate: {
+    label: "High school graduation",
+    unit: "%",
+    source: "NCES / MI DOE",
+    vintage: "2023",
+    higherIsBetter: true,
+    format: "percent",
+  },
+  unemploymentRate: {
+    label: "Unemployment rate",
+    unit: "%",
+    source: "BLS LAUS",
+    vintage: "2024",
+    higherIsBetter: false,
+    format: "percent",
+  },
+  violentCrimeRate: {
+    label: "Violent crime",
+    unit: " per 100k",
+    source: "FBI UCR",
+    vintage: "2022",
+    higherIsBetter: false,
+    format: "per100k",
+  },
+  drinkingWaterCompliance: {
+    label: "Drinking water compliance",
+    unit: "%",
+    source: "EPA SDWIS",
+    vintage: "2024",
+    higherIsBetter: true,
+    format: "percent",
+  },
+};
+
+/** Format a cross-domain value for display. Null stays null - callers label it honestly. */
+export function formatCrossDomainValue(
+  value: number | null,
+  format: CrossDomainFormat,
+): string | null {
+  if (value === null) return null;
+  if (format === "currency") return `$${value.toLocaleString()}`;
+  return value.toLocaleString();
+}

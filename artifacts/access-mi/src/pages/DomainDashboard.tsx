@@ -20,6 +20,14 @@ import {
   type IntelligenceDomainSlug,
 } from "@/data/intelligence-domains";
 import { getCountyIntelligenceRecord } from "@/data/michigan-counties-intelligence";
+import {
+  COUNTY_CROSS_DOMAIN,
+  CROSS_DOMAIN_METRIC_META,
+  MI_STATE_AVERAGES,
+  formatCrossDomainValue,
+} from "@/data/cross-domain-indicators";
+import SnapshotCard, { type SnapshotMetric } from "@/components/shared/SnapshotCard";
+import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
 
 const DOMAIN_ROUTE_SLUGS = new Set<IntelligenceDomainSlug>(INTELLIGENCE_DOMAINS.map((domain) => domain.slug));
 const CHART_BASELINE_Y = 54;
@@ -67,7 +75,17 @@ function getSignalTone(metric: string, value: number | null) {
 
 function buildCsv(domain: IntelligenceDomain, countyName: string, metrics: Record<string, number | null>) {
   const rows = domain.metrics.map((metric) => `${metric},${metrics[metric] ?? ""}`);
-  return `county,domain\n${countyName},${domain.slug}\n\nmetric,value\n${rows.join("\n")}`;
+  const contextData = COUNTY_CROSS_DOMAIN[countyName];
+  const contextRows = contextData
+    ? domain.contextMetrics.map((key) => {
+        const meta = CROSS_DOMAIN_METRIC_META[key];
+        return `${key},${contextData[key] ?? ""},${meta.source},${meta.vintage}`;
+      })
+    : [];
+  const contextBlock = contextRows.length
+    ? `\n\ncontext_metric,value,source,vintage\n${contextRows.join("\n")}`
+    : "";
+  return `county,domain\n${countyName},${domain.slug}\n\nmetric,value\n${rows.join("\n")}${contextBlock}`;
 }
 
 function inferDomainFromPath(pathname: string): IntelligenceDomainSlug {
@@ -149,6 +167,60 @@ function CountyComparison({ domain, metrics }: { domain: IntelligenceDomain; met
         </div>
       </div>
     </Card>
+  );
+}
+
+/**
+ * Real, sourced indicators for every one of Michigan's 83 counties,
+ * resolved from COUNTY_CROSS_DOMAIN. This section is what guarantees a
+ * non-priority county never sees an empty dashboard: these are direct
+ * federal/state tabulations (VERIFIED), shown as context for the domain.
+ */
+function CountyContextSection({ domain, countyName }: { domain: IntelligenceDomain; countyName: string }) {
+  const contextData = COUNTY_CROSS_DOMAIN[countyName];
+  if (!contextData || domain.contextMetrics.length === 0) return null;
+
+  const snapshotMetrics: SnapshotMetric[] = domain.contextMetrics.map((key) => {
+    const meta = CROSS_DOMAIN_METRIC_META[key];
+    const raw = contextData[key];
+    const formatted = formatCrossDomainValue(raw, meta.format);
+    return {
+      id: key,
+      label: meta.label,
+      value: formatted ?? "Not published",
+      unit: formatted ? meta.unit : undefined,
+      source: meta.source,
+      vintage: meta.vintage,
+      benchmark:
+        raw !== null && MI_STATE_AVERAGES[key] !== null
+          ? {
+              rawValue: raw,
+              value: MI_STATE_AVERAGES[key] as number,
+              label: "MI Avg",
+              higherIsBetter: meta.higherIsBetter,
+            }
+          : undefined,
+    };
+  });
+
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <ProvenanceTag
+          label="VERIFIED"
+          source="Census ACS / BLS / NCES / FBI / EPA"
+          vintage="2022-2024"
+        />
+        <p className="text-sm text-muted-foreground">
+          Direct federal and state tabulations, available for all 83 Michigan counties.
+        </p>
+      </div>
+      <SnapshotCard
+        title={`${countyName} County in context`}
+        geographyType="county"
+        metrics={snapshotMetrics}
+      />
+    </div>
   );
 }
 
@@ -246,6 +318,8 @@ export default function DomainDashboard() {
           <h2 className="text-2xl font-bold">{countyLabel} Intelligence Snapshot</h2>
         </div>
 
+        <CountyContextSection domain={domain} countyName={selectedCounty} />
+
         {metrics ? (
           <ResponsiveGrid className="items-stretch">
             {domain.metrics.slice(0, MAX_VISIBLE_METRICS).map((metric, index) => {
@@ -287,7 +361,8 @@ export default function DomainDashboard() {
           <Card id="county-fallback" className="civic-card border-border/60 bg-card/95">
             <p className="civic-subsection-title">County fallback</p>
             <p className="mt-2 text-sm text-muted-foreground">
-              We could not find a domain snapshot for {selectedCounty}. Showing the default Michigan domain scaffold instead.
+              Deep-dive {domain.name.toLowerCase()} metrics are not yet ingested for {selectedCounty}. The sourced
+              county indicators above cover all 83 Michigan counties.
             </p>
           </Card>
         )}

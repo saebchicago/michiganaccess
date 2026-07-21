@@ -5,6 +5,7 @@ import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
 import { MapPin, Globe, Building2 } from "lucide-react";
 import { GeoResolutionBadge } from "@/components/shared/GeoResolutionBadge";
 import { UpstreamUnavailableBanner } from "@/components/shared/UpstreamUnavailableBanner";
+import DeltaChip from "@/components/shared/DeltaChip";
 import type { GeoResolution } from "@/types/data-layers";
 
 export type SnapshotMetric = {
@@ -28,6 +29,16 @@ export type SnapshotMetric = {
    * attempt. When set and that source's latest attempt failed, the
    * tile renders an UpstreamUnavailableBanner beneath it. */
   sourceId?: string;
+  /** Optional comparison baseline. When set (and the raw numeric value is
+   * provided via benchmark.rawValue), the tile renders a DeltaChip vs the
+   * baseline, e.g. "+12.4% vs MI Avg". */
+  benchmark?: {
+    /** Raw numeric value of this tile (m.value may be a formatted string). */
+    rawValue: number | null;
+    value: number;
+    label: string;
+    higherIsBetter: boolean;
+  };
 };
 
 export type SnapshotCardProps = {
@@ -180,6 +191,16 @@ export default function SnapshotCard({
                     Reflects {m.countyName} County, which contains ZIP{" "}
                     {zipContext.zip}. Not specific to the ZIP.
                   </p>
+                )}
+                {m.benchmark && m.benchmark.rawValue !== null && (
+                  <div className="pt-1">
+                    <DeltaChip
+                      value={m.benchmark.rawValue}
+                      benchmark={m.benchmark.value}
+                      higherIsBetter={m.benchmark.higherIsBetter}
+                      label={m.benchmark.label}
+                    />
+                  </div>
                 )}
                 {(m.source || m.vintage) && (
                   <p className="pt-1 text-[10px] leading-snug text-muted-foreground/80">

@@ -57,6 +57,22 @@ describe("DomainDashboard", () => {
     expect(screen.getByRole("table")).toHaveAttribute("id", "data-table");
   });
 
+  it("shows sourced context indicators for a non-priority county (Alcona)", () => {
+    // Alcona has no priority-county deep-dive record, but the cross-domain
+    // context section covers all 83 counties, so the dashboard is no longer
+    // an empty "Data pending" wall outside the 7 priority counties.
+    localStorage.setItem("michigan-access-county", "Alcona");
+    renderDashboard(["/housing"]);
+
+    expect(screen.getByRole("heading", { name: /alcona county in context/i })).toBeInTheDocument();
+    // Median gross rent for Alcona, straight from COUNTY_CROSS_DOMAIN.
+    expect(screen.getByText("$580")).toBeInTheDocument();
+    // Every context tile carries its named source.
+    expect(screen.getAllByText(/census acs 5-year/i).length).toBeGreaterThan(0);
+    // The provenance chip labels the section as verified primary data.
+    expect(screen.getByRole("button", { name: /provenance: verified/i })).toBeInTheDocument();
+  });
+
   it("no longer offers the removed energy or legal-aid domain tabs", () => {
     renderDashboard();
     expect(screen.queryByRole("link", { name: /^energy$/i })).not.toBeInTheDocument();
