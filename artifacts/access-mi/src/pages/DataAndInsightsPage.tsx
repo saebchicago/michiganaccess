@@ -208,7 +208,7 @@ export default function DataAndInsightsPage() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl"
           >
-            <h1 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl mb-4">
+            <h1 className="font-display text-3xl font-semibold text-foreground md:text-4xl lg:text-5xl mb-4">
               Live data. Real signals.
             </h1>
             <p className="text-lg text-muted-foreground mb-6">

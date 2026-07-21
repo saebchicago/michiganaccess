@@ -44,12 +44,13 @@ export default function DeltaChip({
     ? `${diff > 0 ? "+" : ""}${diff.toFixed(precision)}`
     : `${diff > 0 ? "+" : ""}${((diff / benchmark) * 100).toFixed(precision)}%`;
 
-  /* ── Semantic colour mapping ────────────────────────── */
+  /* ── Semantic colour mapping (brand tokens; -deep variants are
+     AA-tuned per theme in index.css, so no dark: overrides needed) ── */
   const pillClasses = isNeutral
     ? "text-muted-foreground bg-muted"
     : isBetter
-    ? "text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/30"
-    : "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30";
+    ? "text-michigan-forest-deep bg-michigan-forest/10"
+    : "text-michigan-coral-deep bg-michigan-coral/10";
 
   const Icon = isNeutral ? Minus : isBetter ? ArrowUp : ArrowDown;
 

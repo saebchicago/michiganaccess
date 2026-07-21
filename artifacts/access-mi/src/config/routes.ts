@@ -115,6 +115,7 @@ const pages = {
   CityPlacePage: lazy(() => import("@/pages/CityPlacePage")),
   ZipPlacePage: lazy(() => import("@/pages/ZipPlacePage")),
   DataAndInsightsPage: lazy(() => import("@/pages/DataAndInsightsPage")),
+  InsightsPage: lazy(() => import("@/pages/InsightsPage")),
   DataExplorerPage: lazy(() => import("@/pages/DataExplorerPage")),
   FoodAccessExplorerPage: lazy(() => import("@/pages/FoodAccessExplorerPage")),
   ComparePlacesPage: lazy(() => import("@/pages/ComparePlacesPage")),
@@ -277,6 +278,11 @@ export const APP_ROUTES: RouteEntry[] = [
     path: "/data-and-insights",
     component: pages.DataAndInsightsPage,
     label: "Data & Insights",
+  },
+  {
+    path: "/insights",
+    component: pages.InsightsPage,
+    label: "Insights",
   },
   {
     path: "/data/snap-michigan",
@@ -803,6 +809,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
   {
     label: "Understand",
     children: [
+      { label: "Insights", href: "/insights", badge: "New" },
       { label: "Data & Insights Hub", href: "/data-and-insights" },
       { label: "ZIP Scorecard", href: "/zip/48201" },
       { label: "Compare Counties", href: "/compare" },
@@ -886,7 +893,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       },
       { label: "Complex Care Navigation", href: "/complex-care" },
       { label: "Life Navigator Assessment", href: "/life-navigator" },
-      { label: "Support Groups", href: "/support" },
+      { label: "Support Groups", href: "/support-groups" },
     ],
   },
   {
@@ -905,6 +912,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
     title: "Maps & Data",
     iconName: "Map",
     links: [
+      { label: "Insights - Findings & Trends", href: "/insights", badge: "New" },
       { label: "Interactive Health Map", href: "/health-map" },
       { label: "CHNA Explorer", href: "/chna-explorer", badge: "Interactive" },
       { label: "Health Data Dashboard", href: "/data" },
@@ -953,6 +961,8 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Air Quality & Toxics", href: "/environment/air", badge: "New" },
       { label: "Energy Deep Dive", href: "/environment/energy", badge: "New" },
       { label: "Deep Map (GIS)", href: "/map/layers", badge: "New" },
+      { label: "Zoning & Land Use", href: "/zoning" },
+      { label: "Provider Data", href: "/provider-data" },
       { label: "Replicate This Platform", href: "/replicate" },
       { label: "ourintel.org Vision", href: "/about/ourintel", badge: "New" },
       { label: "Our Story", href: "/story", badge: "New" },
@@ -996,6 +1006,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
         href: "/transparency/officials",
         badge: "New",
       },
+      { label: "Civic Intelligence (Ask)", href: "/ask" },
     ],
   },
   {
@@ -1009,6 +1020,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
         badge: "Dashboard",
       },
       { label: "County Pages (83)", href: "/county/wayne" },
+      { label: "County Brief", href: "/brief" },
     ],
   },
   {
@@ -1017,6 +1029,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
     links: [
       { label: "Transportation & Safety", href: "/transportation" },
       { label: "Community Events", href: "/events" },
+      { label: "Libraries", href: "/libraries" },
     ],
   },
   {

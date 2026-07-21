@@ -7,6 +7,9 @@ export interface DataStory {
   source: string;
   href: string;
   color: string;
+  /** Counties this story names directly (by county name, e.g. "Wayne").
+   *  Omitted = statewide story. Used for county-page cross-links. */
+  counties?: string[];
 }
 
 export const DATA_STORIES: DataStory[] = [
@@ -23,7 +26,7 @@ export const DATA_STORIES: DataStory[] = [
     },
     source: "United For ALICE 2023",
     href: "/equity",
-    color: "#DC2626",
+    color: "hsl(var(--coral-deep))",
   },
   {
     id: "pfas-water",
@@ -34,7 +37,7 @@ export const DATA_STORIES: DataStory[] = [
     stat: { value: 102, label: "'Do Not Eat' water bodies", suffix: "" },
     source: "EGLE MPART, MDHHS",
     href: "/environment#water-safety",
-    color: "#F59E0B",
+    color: "hsl(var(--warm-gold-deep))",
   },
   {
     id: "reentry-success",
@@ -45,7 +48,7 @@ export const DATA_STORIES: DataStory[] = [
     stat: { value: 21, label: "recidivism rate (historic low)", suffix: "%" },
     source: "MDOC 2025",
     href: "/reentry",
-    color: "#22c55e",
+    color: "hsl(var(--forest-green-deep))",
   },
   {
     id: "childcare-crisis",
@@ -60,7 +63,7 @@ export const DATA_STORIES: DataStory[] = [
     },
     source: "BPC, LARA, Census ACS",
     href: "/equity",
-    color: "#0A4C95",
+    color: "hsl(var(--michigan-blue))",
   },
   {
     id: "disaster-acceleration",
@@ -71,7 +74,8 @@ export const DATA_STORIES: DataStory[] = [
     stat: { value: 70, label: "years of FEMA disaster data", suffix: "+" },
     source: "FEMA OpenFEMA API",
     href: "/disaster-history",
-    color: "#EF4444",
+    counties: ["Midland"],
+    color: "hsl(var(--coral))",
   },
   {
     id: "dental-desert",
@@ -82,6 +86,6 @@ export const DATA_STORIES: DataStory[] = [
     stat: { value: 59, label: "of 83 counties with dental HPSAs", suffix: "" },
     source: "MDHHS, HRSA",
     href: "/equity",
-    color: "#8B5CF6",
+    color: "hsl(var(--teal-deep))",
   },
 ];

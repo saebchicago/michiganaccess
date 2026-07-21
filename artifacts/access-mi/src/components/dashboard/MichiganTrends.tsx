@@ -44,7 +44,7 @@ export default function MichiganTrends() {
         >
           Temporal Depth
         </Badge>
-        <h2 className="text-xl font-bold text-foreground">
+        <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground">
           Michigan Over Time
         </h2>
         <p className="text-sm text-muted-foreground">
@@ -96,10 +96,10 @@ export default function MichiganTrends() {
                   ariaLabel={`${trend.label} trend, ${points[0].vintage} to ${points[points.length - 1].vintage}`}
                 />
 
-                <p className="text-[10px] text-muted-foreground leading-relaxed mt-2">
+                <p className="text-xs text-muted-foreground leading-relaxed mt-2">
                   {trend.insight}
                 </p>
-                <p className="text-[9px] text-muted-foreground mt-1">
+                <p className="text-[10px] text-muted-foreground mt-1">
                   Source: {trend.source}
                 </p>
               </CardContent>

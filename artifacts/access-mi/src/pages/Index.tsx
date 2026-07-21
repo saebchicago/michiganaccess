@@ -8,6 +8,8 @@ import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 import { STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
+import IntelligenceBriefing from "@/components/home/IntelligenceBriefing";
+import { EDITORIAL } from "@/components/home/editorialTheme";
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -21,15 +23,12 @@ const AccessChat = lazy(() =>
 export type PersonaView = "resident" | "professional";
 
 // ─── Editorial palette (locked from the redesign direction) ───────────────
-// Applied as Tailwind arbitrary values so the change is scoped to the
-// homepage and does not disturb the site-wide token system. Not migrated
-// into --civic-* tokens yet: the redesign is scoped to this page.
-const C = {
-  cream: "#f5f0e0",
-  emerald: "#064e3b",
-  emeraldMid: "#0d7a5f",
-  gold: "#c9a84c",
-} as const;
+// Applied as inline values so the change is scoped to the homepage and
+// does not disturb the site-wide token system. Not migrated into
+// --civic-* tokens yet: the redesign is scoped to this page. Definition
+// lives in components/home/editorialTheme.ts, shared with the homepage
+// sections that render outside this file.
+const C = EDITORIAL;
 
 // ─── Three doors (Understand / Visualize / Belong) ──────────────────────────
 // The homepage's three-pillar taxonomy. Each door reuses existing, already-
@@ -701,6 +700,7 @@ const Index = () => {
           <CountyWelcomeBanner />
           <Masthead mode={mode} onModeChange={setMode} />
           <EditorialHero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
+          <IntelligenceBriefing />
           <ResourceBridgeBand />
           <ThreeDoorsGrid mode={mode} />
           <CountyPicker />

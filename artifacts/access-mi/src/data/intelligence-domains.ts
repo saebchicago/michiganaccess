@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { HeartPulse, Home, Soup } from "lucide-react";
+import type { CountyCrossDomain } from "@/data/cross-domain-indicators";
 
 export type IntelligenceDomainSlug = "health" | "housing" | "food-security";
 
@@ -10,6 +11,14 @@ export interface IntelligenceDomain {
   updateFrequency: "Monthly" | "Quarterly" | "Annual";
   dataSource: string;
   metrics: readonly string[];
+  /**
+   * Cross-domain CONTEXT indicators for this domain, resolved against
+   * COUNTY_CROSS_DOMAIN (real values for all 83 counties, sourced per
+   * CROSS_DOMAIN_METRIC_META). These are context for the domain - e.g.
+   * poverty rate as context for food security - not domain outcome
+   * metrics, and are labeled as such in the UI.
+   */
+  contextMetrics: readonly (keyof CountyCrossDomain)[];
 }
 
 // Originally scaffolded with 10 domains (health, housing, food-security,
@@ -35,6 +44,7 @@ export const INTELLIGENCE_DOMAINS = [
     updateFrequency: "Annual",
     dataSource: "County Health Rankings 2025",
     metrics: ["uninsured_rate", "primary_care_access"],
+    contextMetrics: ["drinkingWaterCompliance", "povertyRate", "unemploymentRate"],
   },
   {
     name: "Housing",
@@ -43,6 +53,7 @@ export const INTELLIGENCE_DOMAINS = [
     updateFrequency: "Annual",
     dataSource: "ACS 5-Year 2022",
     metrics: ["renter_burden_rate"],
+    contextMetrics: ["medianRent", "rentBurden", "medianIncome", "vehicleAccess"],
   },
   {
     name: "Food Security",
@@ -51,6 +62,7 @@ export const INTELLIGENCE_DOMAINS = [
     updateFrequency: "Annual",
     dataSource: "County Health Rankings 2025 (Map the Meal Gap 2022, modeled)",
     metrics: ["food_insecurity_rate"],
+    contextMetrics: ["povertyRate", "medianIncome", "vehicleAccess", "unemploymentRate"],
   },
 ] as const satisfies readonly IntelligenceDomain[];
 

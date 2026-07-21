@@ -13,7 +13,7 @@ export default function DataStoriesSection() {
           <Badge variant="outline" className="mb-2 text-xs uppercase tracking-wider border-primary/30 text-primary">
             Data Stories
           </Badge>
-          <h2 className="text-xl font-bold text-foreground">Michigan by the Numbers</h2>
+          <h2 className="font-display text-2xl md:text-3xl font-semibold text-foreground">Michigan by the Numbers</h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {DATA_STORIES.map((story, i) => (
@@ -29,10 +29,10 @@ export default function DataStoriesSection() {
                   <p className="text-xs font-bold uppercase tracking-wider" style={{ color: story.color }}>{story.title}</p>
                   <p className="text-sm font-medium text-foreground">{story.hook}</p>
                   <AnimatedCounter value={story.stat.value} suffix={story.stat.suffix} className="text-3xl font-bold text-foreground" />
-                  <p className="text-[10px] text-muted-foreground">{story.stat.label}</p>
+                  <p className="text-[11px] text-muted-foreground">{story.stat.label}</p>
                   <p className="text-xs text-muted-foreground leading-relaxed">{story.narrative}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-[9px] text-muted-foreground">{story.source}</span>
+                    <span className="text-[10px] text-muted-foreground">{story.source}</span>
                     <ArrowRight className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 </div>

@@ -26,10 +26,10 @@ export function BriefStatBlock({
 
   return (
     <div
-      className={`rounded-lg border border-border bg-card p-4 ${className}`}
+      className={`rounded-xl border border-border bg-card p-4 ${className}`}
       data-brief-stat
     >
-      <p className="text-[11px] text-muted-foreground uppercase tracking-wide mb-1.5">
+      <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wide mb-1.5">
         {label}
       </p>
       {isNull ? (
@@ -37,7 +37,7 @@ export function BriefStatBlock({
           {nullNote ?? "No data available"}
         </p>
       ) : (
-        <p className="text-2xl font-bold text-foreground leading-none">
+        <p className="text-xl font-bold text-foreground leading-none">
           {typeof value === "number" ? value.toLocaleString() : value}
         </p>
       )}

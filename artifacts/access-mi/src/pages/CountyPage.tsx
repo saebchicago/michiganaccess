@@ -50,6 +50,7 @@ import RecentlyViewedBar from "@/components/county/RecentlyViewedBar";
 import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 import PopulationSparkline from "@/components/county/PopulationSparkline";
 import SnapshotCard from "@/components/shared/SnapshotCard";
+import CountyInsightLinks from "@/components/county/CountyInsightLinks";
 import DataConfidenceCard, {
   buildDataConfidence,
 } from "@/components/shared/DataConfidenceCard";
@@ -284,7 +285,7 @@ export default function CountyPage() {
                   </Link>
                 )}
               </div>
-              <h1 className="mb-2 text-3xl font-bold text-foreground md:text-4xl">
+              <h1 className="mb-2 font-display text-3xl font-semibold text-foreground md:text-4xl">
                 {county} County
               </h1>
               <p className="text-lg text-muted-foreground">
@@ -327,6 +328,9 @@ export default function CountyPage() {
           geographyType="county"
           metrics={snapshotMetrics}
         />
+
+        {/* Related curated findings for this county */}
+        <CountyInsightLinks countyName={county} />
 
         {/* Quick Stats */}
         <motion.div
