@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,44 +13,57 @@ interface TourStep {
   targetSelector: string;
 }
 
+// Selectors are stable ids/labels on the CURRENT homepage
+// (src/pages/Index.tsx). The tour only runs on "/", so these are the
+// only elements it may target - keep them in sync with the homepage.
 const STEPS: TourStep[] = [
   {
     title: "Welcome to Access Michigan",
-    body: "Find free resources for housing, health, food, and more across all 83 Michigan counties.",
-    cta: "Show me around →",
-    targetSelector: "[aria-label='Hero']",
+    body: "Public records turned into civic intelligence for all 83 Michigan counties - find help, or trace any number to its source.",
+    cta: "Show me around",
+    targetSelector: "#hero-headline",
   },
   {
-    title: "Search anything",
-    body: "Type a ZIP, city, county, or service. Try: '48322 food pantry' or 'Oakland County mental health'.",
-    cta: "Got it →",
-    targetSelector: ".hero-search-input",
+    title: "Start with your ZIP",
+    body: "Enter any Michigan ZIP for a community scorecard built from verified public health and economic data.",
+    cta: "Got it",
+    targetSelector: "input[aria-label='ZIP code']",
   },
   {
-    title: "Compare communities",
-    body: "Pick any two counties and compare income, health, equity scores, and more side by side.",
-    cta: "Nice →",
-    targetSelector: "[href='/compare']",
+    title: "This week's intelligence",
+    body: "The briefing leads with a sourced finding, a decade-long trend, and data stories - updated as the data moves.",
+    cta: "Nice",
+    targetSelector: "#briefing-heading",
   },
   {
-    title: "Your Civic Insight Score",
-    body: "Every Michigan county gets a 0–100 score across access, equity, and opportunity. Yours is here.",
-    cta: "Let's go →",
-    targetSelector: "[aria-label*='Civic Insight Score']",
+    title: "Or pick your county",
+    body: "Every county has a full profile. Pick yours once and the whole site follows it.",
+    cta: "Let's go",
+    targetSelector: "#county-heading",
   },
 ];
 
-/** Fires a custom event so the footer "Replay tour" button can re-open it */
+/**
+ * Re-opens the tour (used by the footer "Replay tour" button). The tour
+ * lives on the homepage, so off-homepage replays navigate there first
+ * via the ?tour=true contract.
+ */
 export function replayTour() {
   localStorage.removeItem(STORAGE_KEY);
+  if (window.location.pathname !== "/") {
+    window.location.href = "/?tour=true";
+    return;
+  }
   window.dispatchEvent(new CustomEvent("accessmi:replay-tour"));
 }
 
 export default function OnboardingTour() {
+  const { pathname, search } = useLocation();
   const [step, setStep] = useState(-1);
   const [visible, setVisible] = useState(false);
   const [spotlightRect, setSpotlightRect] = useState<DOMRect | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const onHomepage = pathname === "/";
 
   const prefersReducedMotion =
     typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -65,12 +79,25 @@ export default function OnboardingTour() {
     setVisible(true);
   }, []);
 
-  // Launch on first visit
+  // Launch on first visit - homepage only. A first visit that lands on a
+  // deep link (a shared county URL, a dataset) must not get a tour that
+  // spotlights homepage elements which are not on the page.
   useEffect(() => {
+    if (!onHomepage) return;
     if (localStorage.getItem(STORAGE_KEY)) return;
     const timer = setTimeout(startTour, 1500);
     return () => clearTimeout(timer);
-  }, [startTour]);
+  }, [onHomepage, startTour]);
+
+  // ?tour=true starts the tour explicitly (footer replay from another
+  // page navigates here with this param; external links may use it too).
+  useEffect(() => {
+    if (!onHomepage) return;
+    if (new URLSearchParams(search).get("tour") === "true") {
+      const timer = setTimeout(startTour, 400);
+      return () => clearTimeout(timer);
+    }
+  }, [onHomepage, search, startTour]);
 
   // Replay event listener
   useEffect(() => {
