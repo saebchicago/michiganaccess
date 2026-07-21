@@ -221,7 +221,10 @@ export default function AboutPage() {
             AccessMI is an independent, non-governmental project. It organizes
             public data from federal, state, and nonprofit sources for education
             and research. It cannot enroll anyone in any program; applications
-            happen at official government portals.
+            happen at official government portals. AccessMI (accessmi.org) is
+            not affiliated with any other organization using "Access" in its
+            name - including ACCESS (the Arab Community Center for Economic
+            and Social Services), Access Health, or Access Michigan LLC.
           </motion.p>
 
           <motion.div
