@@ -119,6 +119,15 @@ export const ROUTE_META: RouteMeta[] = [
       "Civic data stories, leaderboards, and analytical tools across Michigan.",
   },
   {
+    path: "/insights",
+    title: "Insights - Michigan Findings, Stories & Trends | Access Michigan",
+    description:
+      "Headline findings, data stories, and decade-long trends from Michigan public data. Every number carries a named source and a provenance label.",
+    h1: "What the data says about Michigan",
+    summary:
+      "Curated findings, narrative data stories, and long-run trends for Michigan.",
+  },
+  {
     path: "/data-sources",
     title: "Data Sources | Access Michigan",
     description:
