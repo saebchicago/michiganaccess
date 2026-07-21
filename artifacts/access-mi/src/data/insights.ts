@@ -10,6 +10,9 @@ export interface WeeklyInsight {
   source: string;
   href: string;
   dataPoints?: InsightDataPoint[];
+  /** Counties this finding names directly (by county name, e.g. "Wayne").
+   *  Omitted = statewide finding. Used for county-page cross-links. */
+  counties?: string[];
 }
 
 export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
@@ -29,6 +32,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
     text: "41% of Michigan households fall below the ALICE threshold - earning too much for aid but not enough for basics.",
     source: "United For ALICE 2023",
     href: "/equity",
+    counties: ["Lake"],
     dataPoints: [
       { label: "ALICE households", value: "41%", context: "statewide" },
       { label: "Survival budget", value: "$27,156", context: "single adult/yr" },
@@ -51,6 +55,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
     text: "Wayne County has had 8,500 flood claims since 1978 but only 4,200 active flood insurance policies.",
     source: "FEMA NFIP",
     href: "/disaster-history",
+    counties: ["Wayne"],
     dataPoints: [
       { label: "Flood claims", value: "8,500", context: "since 1978" },
       { label: "Active policies", value: "4,200", context: "coverage gap" },
@@ -62,6 +67,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
     text: "Detroit's east side has the highest EITC claim rate in Michigan at 44.9% of tax filers.",
     source: "IRS SOI 2021",
     href: "/zip/48205",
+    counties: ["Wayne"],
     dataPoints: [
       { label: "EITC rate (48205)", value: "44.9%", context: "highest in MI" },
       { label: "MI average", value: "17.6%", context: "EITC participation" },
@@ -106,6 +112,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
     text: "$3.2 billion in SBA lending has flowed to Michigan small businesses since FY2020.",
     source: "SBA FOIA",
     href: "/sba-insights",
+    counties: ["Wayne"],
     dataPoints: [
       { label: "Total lending", value: "$3.2B", context: "since FY2020" },
       { label: "Top county", value: "Wayne", context: "$680M in loans" },
@@ -139,6 +146,7 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
     text: "Birmingham (48009) has an average AGI of $142,000 while Detroit East (48205) averages $21,200 - a 6.7x gap within 20 miles.",
     source: "IRS SOI 2021",
     href: "/zip/48009",
+    counties: ["Oakland", "Wayne"],
     dataPoints: [
       { label: "Birmingham AGI", value: "$142,000", context: "48009" },
       { label: "Detroit East AGI", value: "$21,200", context: "48205" },
