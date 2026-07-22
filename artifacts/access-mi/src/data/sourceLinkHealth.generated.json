@@ -1,10 +1,596 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": null,
-  "checked": 0,
-  "dead": 0,
-  "timed_out": 0,
+  "generated_at": "2026-07-22T15:19:28.896Z",
+  "checked": 64,
+  "dead": 8,
+  "timed_out": 5,
   "redirected": 0,
-  "results": [],
-  "note": "Not yet populated - runs via .github/workflows/source-link-check.yml. A run of check-source-links.mjs from the dev sandbox reports every URL as dead (403) because the sandbox's own egress proxy blocks these hosts, not because the links are actually dead; do not commit sandbox-run output here."
+  "results": [
+    {
+      "url": "https://data.hrsa.gov/tools/data-reporting/program-data/state/MI",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://data.hrsa.gov/topics/healthcenters/uds/overview/state/MI",
+      "contexts": [
+        "FQHC patients served 2024"
+      ]
+    },
+    {
+      "url": "https://unitedforalice.org/michigan",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "Michigan households below ALICE threshold",
+        "United For ALICE"
+      ]
+    },
+    {
+      "url": "https://mi211.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://mi211.org/",
+      "contexts": [
+        "Michigan 211 annual requests",
+        "Michigan 211"
+      ]
+    },
+    {
+      "url": "https://flexmonitoring.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.flexmonitoring.org/",
+      "contexts": [
+        "Critical Access Hospitals in Michigan"
+      ]
+    },
+    {
+      "url": "https://liheapch.acf.hhs.gov",
+      "status": "network-error",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "fetch failed",
+      "contexts": [
+        "LIHEAP allocation Michigan"
+      ]
+    },
+    {
+      "url": "https://michigan.gov/egle",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.michigan.gov/egle",
+      "contexts": [
+        "MiHER allocation (IRA/DOE energy rebates)",
+        "MiHER households served"
+      ]
+    },
+    {
+      "url": "https://michigansaves.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://michigansaves.org/",
+      "contexts": [
+        "Michigan Saves financed 2024"
+      ]
+    },
+    {
+      "url": "https://michigan.gov/pfasresponse",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.michigan.gov/pfasresponse",
+      "contexts": [
+        "Confirmed PFAS contamination sites + 38 AOI"
+      ]
+    },
+    {
+      "url": "https://marchofdimes.org/peristats",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.marchofdimes.org/peristats/",
+      "contexts": [
+        "Counties that are full maternity care deserts (21.7%)"
+      ]
+    },
+    {
+      "url": "https://vitalstats.michigan.gov",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://vitalstats.michigan.gov/",
+      "contexts": [
+        "Infant mortality rate per 1,000 (2024)",
+        "Black infant mortality per 1,000 (2019-2023)"
+      ]
+    },
+    {
+      "url": "https://michigan.gov/mdhhs",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.michigan.gov/mdhhs",
+      "contexts": [
+        "Maternal mortality ratio per 100K (2016-2020)",
+        "Postpartum Medicaid coverage since April 2023"
+      ]
+    },
+    {
+      "url": "https://ruralhospitals.chqpr.org",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
+      "contexts": [
+        "At-risk rural hospitals (5 immediate risk)"
+      ]
+    },
+    {
+      "url": "https://sturgishospital.com",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://sturgishospital.com/",
+      "contexts": [
+        "Sturgis REH conversion date"
+      ]
+    },
+    {
+      "url": "https://bridgemi.com",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://bridgemi.com/",
+      "contexts": [
+        "OB closures since 2008"
+      ]
+    },
+    {
+      "url": "https://feedingamerica.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.feedingamerica.org/",
+      "contexts": [
+        "Food insecure Michigan residents"
+      ]
+    },
+    {
+      "url": "https://ers.usda.gov",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://ers.usda.gov/",
+      "contexts": [
+        "SNAP economic multiplier per $1"
+      ]
+    },
+    {
+      "url": "https://bread.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.bread.org/",
+      "contexts": [
+        "Annual hunger cost Michigan"
+      ]
+    },
+    {
+      "url": "https://healthmanagement.com",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.healthmanagement.com/",
+      "contexts": [
+        "Total MCO enrollment Mar 2025"
+      ]
+    },
+    {
+      "url": "https://michwa.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://michwa.org/",
+      "contexts": [
+        "CHW programs surveyed across 93 orgs"
+      ]
+    },
+    {
+      "url": "https://michigan.gov/flintwater",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.michigan.gov/flintwater",
+      "contexts": [
+        "Flint lead lines replaced (~11,000)"
+      ]
+    },
+    {
+      "url": "https://rxkids.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://rxkids.org/",
+      "contexts": [
+        "Rx Kids enrollment take-up rate"
+      ]
+    },
+    {
+      "url": "https://findhelp.org",
+      "status": "client-error",
+      "httpStatus": 403,
+      "finalUrl": "https://findhelp.org/",
+      "contexts": [
+        "Trinity Health preventable hospitalization reduction"
+      ]
+    },
+    {
+      "url": "https://trinity-health.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://trinity-health.org/",
+      "contexts": [
+        "Trinity Health unmet social need screening rate"
+      ]
+    },
+    {
+      "url": "https://www.cdc.gov/places/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "CDC PLACES / BRFSS"
+      ]
+    },
+    {
+      "url": "https://data.cms.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "CMS Hospital Compare"
+      ]
+    },
+    {
+      "url": "https://data.cms.gov/provider-data/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "CMS Physician Compare"
+      ]
+    },
+    {
+      "url": "https://data.hrsa.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "HRSA Data Warehouse"
+      ]
+    },
+    {
+      "url": "https://npiregistry.cms.hhs.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "NPPES NPI Registry"
+      ]
+    },
+    {
+      "url": "https://api.weather.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "NWS Weather API"
+      ]
+    },
+    {
+      "url": "https://www.airnow.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "AirNow API"
+      ]
+    },
+    {
+      "url": "https://api.eia.gov/",
+      "status": "client-error",
+      "httpStatus": 403,
+      "finalUrl": null,
+      "contexts": [
+        "EIA v2 API"
+      ]
+    },
+    {
+      "url": "https://waterservices.usgs.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "USGS Water Services"
+      ]
+    },
+    {
+      "url": "https://api.fda.gov/",
+      "status": "client-error",
+      "httpStatus": 404,
+      "finalUrl": null,
+      "contexts": [
+        "FDA openFDA"
+      ]
+    },
+    {
+      "url": "https://api.census.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.census.gov/data/developers.html",
+      "contexts": [
+        "Census ACS API"
+      ]
+    },
+    {
+      "url": "https://hazards.fema.gov/nri/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.fema.gov/emergency-managers/practitioners/resilience-analysis-and-planning-tool",
+      "contexts": [
+        "FEMA NRI"
+      ]
+    },
+    {
+      "url": "https://clinicaltrials.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "ClinicalTrials.gov"
+      ]
+    },
+    {
+      "url": "https://fred.stlouisfed.org/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "FRED / BLS"
+      ]
+    },
+    {
+      "url": "https://broadbandmap.fcc.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "FCC BDC"
+      ]
+    },
+    {
+      "url": "https://www.hudexchange.info/",
+      "status": "client-error",
+      "httpStatus": 404,
+      "finalUrl": null,
+      "contexts": [
+        "HUD PIT Count"
+      ]
+    },
+    {
+      "url": "https://www.fema.gov/about/openfema/api",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "FEMA OpenFEMA API"
+      ]
+    },
+    {
+      "url": "https://data.sba.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "SBA FOIA Data"
+      ]
+    },
+    {
+      "url": "https://www.irs.gov/statistics/soi-tax-stats",
+      "status": "client-error",
+      "httpStatus": 404,
+      "finalUrl": null,
+      "contexts": [
+        "IRS Statistics of Income"
+      ]
+    },
+    {
+      "url": "https://enviro.epa.gov/triexplorer",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
+      "contexts": [
+        "EPA Toxic Release Inventory"
+      ]
+    },
+    {
+      "url": "https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "USDA Rural-Urban Commuting Area Codes"
+      ]
+    },
+    {
+      "url": "https://www.huduser.gov/portal/datasets/fmr.html",
+      "status": "ok",
+      "httpStatus": 202,
+      "finalUrl": null,
+      "contexts": [
+        "HUD Fair Market Rents"
+      ]
+    },
+    {
+      "url": "https://www.fema.gov/openfema",
+      "status": "client-error",
+      "httpStatus": 404,
+      "finalUrl": "https://www.fema.gov/es/node/214324",
+      "contexts": [
+        "FEMA National Flood Insurance Program"
+      ]
+    },
+    {
+      "url": "https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "NHTSA FARS"
+      ]
+    },
+    {
+      "url": "https://www.fna.usda.gov/snap/retailer/data",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "USDA SNAP Retailer Locator"
+      ]
+    },
+    {
+      "url": "https://www.michigan.gov/mdhhs",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "MDHHS Health Data"
+      ]
+    },
+    {
+      "url": "https://www.michigan.gov/egle/maps-data/mpart-pfas-gis",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
+      "contexts": [
+        "EGLE MPART PFAS"
+      ]
+    },
+    {
+      "url": "https://www.michigan.gov/egle/about/featured/mi-lead-safe",
+      "status": "client-error",
+      "httpStatus": 404,
+      "finalUrl": "https://www.michigan.gov/egle/404",
+      "contexts": [
+        "EGLE MiLeadSafe"
+      ]
+    },
+    {
+      "url": "https://www.michigan.gov/corrections",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "MDOC Statistics"
+      ]
+    },
+    {
+      "url": "https://www.mischooldata.org/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "Michigan Dept of Education"
+      ]
+    },
+    {
+      "url": "https://mi-psc.my.site.com/s/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "MPSC E-Dockets"
+      ]
+    },
+    {
+      "url": "https://www.michigan.gov/mdot/business/gis-open-data",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "MDOT GIS"
+      ]
+    },
+    {
+      "url": "https://data.michigan.gov/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "data.michigan.gov"
+      ]
+    },
+    {
+      "url": "https://childcaresearch.apps.lara.state.mi.us/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
+      "contexts": [
+        "LARA Provider Search"
+      ]
+    },
+    {
+      "url": "https://www.countyhealthrankings.org/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "County Health Rankings"
+      ]
+    },
+    {
+      "url": "https://www.marchofdimes.org/peristats/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "March of Dimes PeriStats"
+      ]
+    },
+    {
+      "url": "https://www.feedingamerica.org/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "Feeding America"
+      ]
+    },
+    {
+      "url": "https://www.hospitalsafetygrade.org/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "Leapfrog Group"
+      ]
+    },
+    {
+      "url": "https://gis.semcog.org/",
+      "status": "client-error",
+      "httpStatus": 401,
+      "finalUrl": null,
+      "contexts": [
+        "SEMCOG FeatureServer"
+      ]
+    },
+    {
+      "url": "https://nationoutside.org",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.nationoutside.org/",
+      "contexts": [
+        "Nation Outside"
+      ]
+    },
+    {
+      "url": "https://www.scha-mi.org/",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": null,
+      "contexts": [
+        "SCHA-MI"
+      ]
+    }
+  ]
 }
