@@ -51,6 +51,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import { SuppressedEstimate } from "@/components/shared/ReliabilityNote";
+import { useCounty, MICHIGAN_COUNTIES } from "@/contexts/CountyContext";
+import {
+  COUNTY_TRAFFIC_FATALITIES,
+  FARS_SOURCE,
+  FARS_VINTAGE,
+  FARS_SUPPRESSION_THRESHOLD,
+} from "@/data/county-traffic-fatalities";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -466,6 +475,102 @@ function StatsCards() {
         </motion.div>
       ))}
     </div>
+  );
+}
+
+/** Sorted worst-to-best by rate; suppressed counties (small-cell, FARS_SUPPRESSION_THRESHOLD) sort last. */
+function sortedTrafficFatalityRows() {
+  return MICHIGAN_COUNTIES.map((county) => ({
+    county,
+    data: COUNTY_TRAFFIC_FATALITIES[county],
+  }))
+    .filter((row) => row.data !== undefined)
+    .map((row) => ({ county: row.county, data: row.data! }))
+    .sort((a, b) => {
+      if (a.data.suppressed && !b.data.suppressed) return 1;
+      if (!a.data.suppressed && b.data.suppressed) return -1;
+      return (b.data.ratePer100k ?? 0) - (a.data.ratePer100k ?? 0);
+    });
+}
+
+function TrafficSafetyDataTab() {
+  const { county } = useCounty();
+  const rows = sortedTrafficFatalityRows();
+  const selected = county ? COUNTY_TRAFFIC_FATALITIES[county] : undefined;
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      variants={fadeUp}
+      custom={0}
+      className="space-y-6"
+    >
+      <Card>
+        <CardHeader className="pb-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <CardTitle className="text-base">Traffic Fatalities by County</CardTitle>
+            <ProvenanceTag label="VERIFIED" source={FARS_SOURCE} vintage={FARS_VINTAGE} />
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {county && (
+            <div className="rounded-lg border border-border bg-muted/30 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">
+                {county} County
+              </p>
+              {selected ? (
+                selected.suppressed ? (
+                  <SuppressedEstimate source={FARS_SOURCE} />
+                ) : (
+                  <p className="text-sm text-foreground">
+                    <span className="text-xl font-bold">{selected.fiveYearCount}</span>{" "}
+                    fatal-crash deaths over {FARS_VINTAGE} ({selected.ratePer100k?.toFixed(1)} per
+                    100,000 residents)
+                  </p>
+                )
+              ) : (
+                <p className="text-sm text-muted-foreground">No data on file for this county.</p>
+              )}
+            </div>
+          )}
+
+          <div className="overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="border-b border-border text-left text-xs text-muted-foreground">
+                  <th className="py-2 pr-4 font-semibold">County</th>
+                  <th className="py-2 pr-4 font-semibold">Deaths ({FARS_VINTAGE})</th>
+                  <th className="py-2 font-semibold">Rate per 100k</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map(({ county: rowCounty, data }) => (
+                  <tr key={rowCounty} className="border-b border-border/50">
+                    <td className="py-1.5 pr-4 text-foreground">{rowCounty}</td>
+                    <td className="py-1.5 pr-4 text-muted-foreground">{data.fiveYearCount}</td>
+                    <td className="py-1.5 text-muted-foreground">
+                      {data.suppressed ? (
+                        <span className="italic">suppressed</span>
+                      ) : (
+                        data.ratePer100k?.toFixed(1)
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="text-xs text-muted-foreground">
+            Persons killed in fatal crashes, {FARS_SOURCE}, {FARS_VINTAGE} (5-year window).
+            Counties with fewer than {FARS_SUPPRESSION_THRESHOLD} fatal events in the window show
+            a suppressed rate rather than a noisy per-100,000 figure.
+          </p>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
 
@@ -1334,6 +1439,7 @@ export default function TransportationPage() {
               Walking, Biking & Accessibility
             </TabsTrigger>
             <TabsTrigger value="stoparm">AI Stop-Arm Cameras</TabsTrigger>
+            <TabsTrigger value="data-trends">Data & Trends</TabsTrigger>
           </TabsList>
 
           {/* RESOURCES TAB */}
@@ -1708,6 +1814,11 @@ export default function TransportationPage() {
           {/* AI STOP-ARM CAMERAS TAB */}
           <TabsContent value="stoparm" className="space-y-6">
             <StopArmCameraExplainer />
+          </TabsContent>
+
+          {/* DATA & TRENDS TAB */}
+          <TabsContent value="data-trends" className="space-y-6">
+            <TrafficSafetyDataTab />
           </TabsContent>
         </Tabs>
 
