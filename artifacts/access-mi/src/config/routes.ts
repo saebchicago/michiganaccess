@@ -70,6 +70,7 @@ const pages = {
   EmbedWidget: lazy(() => import("@/pages/EmbedWidget")),
   HealthEquityAtlasPage: lazy(() => import("@/pages/HealthEquityAtlasPage")),
   MaternalHealthPage: lazy(() => import("@/pages/MaternalHealthPage")),
+  EarlyChildhoodPage: lazy(() => import("@/pages/EarlyChildhoodPage")),
   QuizPage: lazy(() => import("@/pages/QuizPage")),
   StatusPage2: lazy(() => import("@/pages/StatusPage2")),
   TaxComparisonPage: lazy(() => import("@/pages/TaxComparisonPage")),
@@ -425,6 +426,11 @@ export const APP_ROUTES: RouteEntry[] = [
     path: "/maternal-health",
     component: pages.MaternalHealthPage,
     label: "Maternal & Infant Health",
+  },
+  {
+    path: "/early-childhood",
+    component: pages.EarlyChildhoodPage,
+    label: "Early Childhood",
   },
   { path: "/quiz", component: pages.QuizPage, label: "Michigan Quiz" },
   { path: "/status", component: pages.StatusPage2, label: "System Status" },
@@ -941,6 +947,11 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       {
         label: "Maternal & Infant Health",
         href: "/maternal-health",
+        badge: "New",
+      },
+      {
+        label: "Early Childhood",
+        href: "/early-childhood",
         badge: "New",
       },
       { label: "ZIP Finder", href: "/zip-finder", badge: "New" },
