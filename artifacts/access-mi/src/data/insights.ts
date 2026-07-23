@@ -153,4 +153,16 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
       { label: "Distance", value: "20 mi", context: "6.7x income gap" },
     ],
   },
+  {
+    week: 12,
+    text: "Rx Kids, the nation's first community-wide cash-prescription program for pregnant residents and new parents, has grown from one city in 2024 to 28 of Michigan's 83 counties.",
+    source: "Rx Kids community coverage, 2026",
+    href: "/early-childhood",
+    counties: ["Genesee"],
+    dataPoints: [
+      { label: "Counties covered", value: "28 of 83", context: "as of mid-2026" },
+      { label: "Launched", value: "Jan 2024", context: "Flint, Genesee County" },
+      { label: "State investment", value: "$250M", context: "over 3 years, FY2026 budget" },
+    ],
+  },
 ];
