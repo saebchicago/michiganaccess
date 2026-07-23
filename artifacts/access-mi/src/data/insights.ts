@@ -5,7 +5,7 @@ export interface InsightDataPoint {
 }
 
 export interface WeeklyInsight {
-  week: number;  // 0-11
+  week: number;  // arbitrary ordinal; rotation cycles over WEEKLY_INSIGHTS.length, not a fixed count
   text: string;
   source: string;
   href: string;
