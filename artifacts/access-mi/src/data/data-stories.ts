@@ -88,4 +88,16 @@ export const DATA_STORIES: DataStory[] = [
     href: "/equity",
     color: "hsl(var(--teal-deep))",
   },
+  {
+    id: "rx-kids-outcomes",
+    title: "Cash Before Birth",
+    hook: "Flint babies are being born healthier since unconditional cash payments began.",
+    narrative:
+      "A quasi-experimental study of Rx Kids, Flint's unconditional cash-prescription program for pregnant residents and new parents, found significantly fewer preterm and low-birthweight births among enrolled families compared to similar cities.",
+    stat: { value: 18, label: "fewer preterm births in Flint", suffix: "%" },
+    source: "Lancet Public Health, 2026",
+    href: "/early-childhood",
+    counties: ["Genesee"],
+    color: "hsl(var(--forest-green-deep))",
+  },
 ];
