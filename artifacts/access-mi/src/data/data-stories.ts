@@ -100,4 +100,15 @@ export const DATA_STORIES: DataStory[] = [
     counties: ["Genesee"],
     color: "hsl(var(--forest-green-deep))",
   },
+  {
+    id: "prek-for-all-coverage",
+    title: "Half a Class Behind",
+    hook: "Record preschool enrollment, still only half the eligible kids.",
+    narrative:
+      "Michigan's Great Start Readiness Program hit a record ~55,000 four-year-olds enrolled - more than double since 2021. But that's roughly 59,000 funded seats against about 118,000 Michigan four-year-olds, so PreK for All still covers only about half the eligible children.",
+    stat: { value: 50, label: "of eligible four-year-olds have a funded seat", suffix: "%" },
+    source: "MiLEAP, Mar 2026",
+    href: "/early-childhood",
+    color: "hsl(var(--michigan-blue))",
+  },
 ];

@@ -165,4 +165,15 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
       { label: "State investment", value: "$250M", context: "over 3 years, FY2026 budget" },
     ],
   },
+  {
+    week: 13,
+    text: "Michigan bicyclist fatalities rose 21% in 2024, and bicyclist-involved crashes climbed 20% - even as statewide seat belt use hit its highest rate since 2019.",
+    source: "Michigan State Police, Aug 2025 / Feb 2026",
+    href: "/transportation",
+    dataPoints: [
+      { label: "Bicyclist deaths", value: "29", context: "2024, up from 24 in 2023" },
+      { label: "Bike-involved crashes", value: "+20%", context: "2024 vs 2023" },
+      { label: "Seat belt use", value: "93.2%", context: "2025, highest since 2019" },
+    ],
+  },
 ];
