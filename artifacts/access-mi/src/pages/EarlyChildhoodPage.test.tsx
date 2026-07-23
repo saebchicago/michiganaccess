@@ -87,11 +87,22 @@ describe("EarlyChildhoodPage", () => {
     );
   });
 
-  it("discloses what data is not yet available", () => {
+  it("discloses what data is not yet available, including the M-STEP proxy caveat", () => {
     localStorage.clear();
     renderPage();
 
     expect(screen.getByText(/what we don't have yet/i)).toBeInTheDocument();
     expect(screen.getByText(/kindergarten entry/i)).toBeInTheDocument();
+    expect(screen.getByText(/not a substitute for a/i)).toBeInTheDocument();
+  });
+
+  it("shows the PreK for All stat block with sources", () => {
+    localStorage.clear();
+    renderPage();
+
+    expect(screen.getByRole("heading", { name: /preschool in michigan/i })).toBeInTheDocument();
+    expect(screen.getByText("~55,000")).toBeInTheDocument();
+    expect(screen.getByText("~50%")).toBeInTheDocument();
+    expect(screen.getAllByText(/mileap/i).length).toBeGreaterThan(0);
   });
 });
