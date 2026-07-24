@@ -40,4 +40,18 @@ describe("Index (homepage)", () => {
       "/find-care",
     );
   });
+
+  it("legend lists every provenance label the platform can render", () => {
+    localStorage.clear();
+    renderHomepage();
+
+    // The heading promises "Every number carries a label", so the legend has to
+    // show the full set. PENDING was added to ProvenanceTag but missed here.
+    for (const label of ["VERIFIED", "MODELED", "PROJECTED", "PENDING"]) {
+      expect(
+        screen.getAllByText(label).length,
+        `${label} missing from the homepage provenance legend`,
+      ).toBeGreaterThan(0);
+    }
+  });
 });

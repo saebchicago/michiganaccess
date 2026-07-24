@@ -10,7 +10,10 @@ import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import IntelligenceBriefing from "@/components/home/IntelligenceBriefing";
 import { EDITORIAL } from "@/components/home/editorialTheme";
-import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import {
+  ProvenanceTag,
+  type ProvenanceLabel,
+} from "@/components/shared/ProvenanceTag";
 import { NeedCapacityCard } from "@/components/shared/NeedCapacityCard";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -575,13 +578,16 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
 // ─── Provenance strip ──────────────────────────────────────────────────────
 
 function ProvenanceStrip() {
+  // Must list every label the platform can render. ProvenanceTag added
+  // PENDING in Round 5; the heading below promises the full set.
   const items: {
-    label: "VERIFIED" | "MODELED" | "PROJECTED";
+    label: ProvenanceLabel;
     gloss: string;
   }[] = [
     { label: "VERIFIED", gloss: "Direct tabulation from a named primary source." },
     { label: "MODELED", gloss: "Calculated from verified inputs." },
     { label: "PROJECTED", gloss: "Forward-looking estimate." },
+    { label: "PENDING", gloss: "Not yet ingested; shown as a known gap." },
   ];
   return (
     <section
@@ -598,7 +604,7 @@ function ProvenanceStrip() {
           >
             Every number carries a label.
           </h3>
-          <dl className="grid gap-4 sm:grid-cols-3 flex-1">
+          <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 flex-1">
             {items.map(({ label, gloss }) => (
               <div key={label} className="flex flex-col gap-1.5">
                 <dt>
