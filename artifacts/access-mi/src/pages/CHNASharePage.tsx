@@ -44,6 +44,7 @@ const INTEGRITY_COLORS: Record<IntegrityLabel, string> = {
   VERIFIED: "text-emerald-700",
   MODELED: "text-sky-700",
   PROJECTED: "text-amber-700",
+  PENDING: "text-slate-500",
 };
 
 function geoLabel(geography: CHNAGeography, note?: string): string {

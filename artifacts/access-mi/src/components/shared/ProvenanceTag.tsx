@@ -1,4 +1,4 @@
-import { CheckCircle2, Calculator, TrendingUp, ArrowRight } from "lucide-react";
+import { CheckCircle2, Calculator, TrendingUp, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
@@ -6,8 +6,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import type { ProvenanceLabel } from "@/types/provenance";
 
-export type ProvenanceLabel = "VERIFIED" | "MODELED" | "PROJECTED";
+export type { ProvenanceLabel };
 
 interface ProvenanceTagProps {
   label: ProvenanceLabel;
@@ -37,6 +38,12 @@ const STYLES: Record<
       "border-michigan-gold/30 bg-michigan-gold/10 text-michigan-gold-deep",
     Icon: TrendingUp,
     description: "Forward-looking estimate.",
+  },
+  PENDING: {
+    classes:
+      "border-michigan-slate/30 bg-michigan-slate/10 text-muted-foreground",
+    Icon: Clock,
+    description: "This metric has not been ingested yet.",
   },
 };
 

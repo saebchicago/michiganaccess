@@ -1,4 +1,8 @@
-export type IntegrityLabel = "VERIFIED" | "MODELED" | "PROJECTED";
+import type { ProvenanceLabel } from "@/types/provenance";
+
+/** Alias of ProvenanceLabel - single source of truth for the platform's
+ *  VERIFIED / MODELED / PROJECTED / PENDING trust-chip states. */
+export type IntegrityLabel = ProvenanceLabel;
 
 export type DataMode = "live" | "fallback";
 
