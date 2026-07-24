@@ -493,6 +493,53 @@ function sortedTrafficFatalityRows() {
     });
 }
 
+// Source: Michigan State Police / Office of Highway Safety Planning news releases.
+const MICHIGAN_SAFETY_TRENDS = [
+  {
+    label: "Seat belt use",
+    value: "93.2%",
+    context: "2025, up from 92.0% in 2024 - highest since 2019",
+    source: "Michigan OHSP / MSP, Feb 2026",
+  },
+  {
+    label: "Pedestrian fatalities",
+    value: "183",
+    context: "2023, up from 173 in 2022",
+    source: "MSP, Jul 2024",
+  },
+  {
+    label: "Bicyclist fatalities",
+    value: "29",
+    context: "2024, up 21% from 24 in 2023; bicyclist-involved crashes up 20% in 2024",
+    source: "MSP, Aug 2025",
+  },
+];
+
+function MichiganSafetyTrendsCard() {
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <CardTitle className="text-base">Michigan Safety Trends</CardTitle>
+          <ProvenanceTag label="VERIFIED" source="Michigan State Police" vintage="2022-2025" />
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {MICHIGAN_SAFETY_TRENDS.map((s) => (
+            <div key={s.label} className="rounded-lg border border-border p-3 space-y-1">
+              <p className="text-xl font-bold text-foreground">{s.value}</p>
+              <p className="text-[11px] font-medium text-muted-foreground">{s.label}</p>
+              <p className="text-[11px] text-muted-foreground/80">{s.context}</p>
+              <p className="text-[10px] text-muted-foreground/70">{s.source}</p>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 function TrafficSafetyDataTab() {
   const { county } = useCounty();
   const rows = sortedTrafficFatalityRows();
@@ -507,6 +554,8 @@ function TrafficSafetyDataTab() {
       custom={0}
       className="space-y-6"
     >
+      <MichiganSafetyTrendsCard />
+
       <Card>
         <CardHeader className="pb-3">
           <div className="flex flex-wrap items-center gap-2">

@@ -18,6 +18,28 @@ import {
   isRxKidsActive,
 } from "@/data/rx-kids";
 
+// Source: MiLEAP press releases, Mar 25 2026 and May 21 2026.
+const PREK_FOR_ALL_STATS = [
+  {
+    label: "Four-year-olds enrolled in GSRP",
+    value: "~55,000",
+    context: "Record high, more than double since 2021",
+    source: "MiLEAP, Mar 2026",
+  },
+  {
+    label: "Funded seats vs. eligible children",
+    value: "~50%",
+    context: "~59,000 funded seats for about 118,000 Michigan four-year-olds",
+    source: "MiLEAP, Mar 2026",
+  },
+  {
+    label: "2026-27 applications so far",
+    value: "+65%",
+    context: "36,000+ applications as of May 2026",
+    source: "MiLEAP, May 2026",
+  },
+];
+
 /** Group community rows by county for the full coverage list. */
 function groupByCounty() {
   const groups = new Map<string, typeof RX_KIDS_COMMUNITIES>();
@@ -175,6 +197,29 @@ export default function EarlyChildhoodPage() {
         </div>
       </section>
 
+      <section className="container max-w-4xl py-8 space-y-4 border-t border-border/30" aria-labelledby="prek-heading">
+        <h2 id="prek-heading" className="text-lg font-bold text-foreground">
+          Preschool in Michigan
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          PreK for All is Michigan's push toward universal state-funded preschool. Enrollment in
+          the Great Start Readiness Program just hit a record high - but it still covers only
+          about half of the state's four-year-olds.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {PREK_FOR_ALL_STATS.map((s) => (
+            <Card key={s.label}>
+              <CardContent className="py-3 space-y-1">
+                <p className="text-xl font-bold text-foreground">{s.value}</p>
+                <p className="text-[11px] font-medium text-muted-foreground">{s.label}</p>
+                <p className="text-[11px] text-muted-foreground/80">{s.context}</p>
+                <p className="text-[10px] text-muted-foreground/70">{s.source}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
       <section className="container max-w-4xl py-8 space-y-4 border-t border-border/30" aria-labelledby="landscape-heading">
         <h2 id="landscape-heading" className="text-lg font-bold text-foreground">
           Childcare and preschool
@@ -205,9 +250,13 @@ export default function EarlyChildhoodPage() {
             <p className="text-sm font-semibold text-foreground">What we don't have yet</p>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Michigan discontinued its statewide Kindergarten Entry (readiness) Assessment in
-              2021, so no county-level readiness indicator exists to show. County-level childcare
-              capacity and preschool enrollment data (Great Start Readiness Program, Head Start)
-              are on our roadmap for a future update but not yet on the platform.
+              2021, so no county-level readiness indicator exists to show. The closest available
+              proxy is 3rd-grade M-STEP English language arts proficiency - 38.9% in spring 2025,
+              an 11-year low, down from 39.6% in 2024 (MDE / CEPI via MI School Data) - but that
+              measures a different grade and a different construct, not a substitute for a
+              readiness assessment. County-level childcare capacity and preschool enrollment data
+              (Great Start Readiness Program, Head Start) are on our roadmap for a future update
+              but not yet on the platform.
             </p>
           </CardContent>
         </Card>
