@@ -33,7 +33,7 @@ describe("NeedCapacityCard", () => {
     expect(pc).toBeTruthy();
     expect(
       screen.getByText(
-        new RegExp(`${pc!.providerFte.toFixed(1)} FTE in place, ${pc!.shortageFte.toFixed(1)} FTE still needed`),
+        `${pc!.providerFte.toFixed(1)} FTE in place, ${pc!.shortageFte.toFixed(1)} FTE still needed`,
       ),
     ).toBeInTheDocument();
   });

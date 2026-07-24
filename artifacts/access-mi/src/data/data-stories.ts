@@ -118,7 +118,7 @@ export const DATA_STORIES: DataStory[] = [
     narrative:
       "Michigan's Vocational Village program trains incarcerated residents in skilled trades before release. Graduates return to prison at roughly half the statewide recidivism rate, and 69% are employed while on parole.",
     stat: { value: 12, label: "3-year recidivism for graduates, vs 21.0% statewide", suffix: "%" },
-    source: "MDOC, Jul 2025",
+    source: "MDOC, Jul 2025; MLPP analysis of MDOC data, 2022",
     href: "/reentry",
     color: "hsl(var(--coral-deep))",
   },
