@@ -6,8 +6,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import type { ProvenanceLabel } from "@/types/provenance";
 
-export type ProvenanceLabel = "VERIFIED" | "MODELED" | "PROJECTED" | "PENDING";
+export type { ProvenanceLabel };
 
 interface ProvenanceTagProps {
   label: ProvenanceLabel;
@@ -42,7 +43,7 @@ const STYLES: Record<
     classes:
       "border-michigan-slate/30 bg-michigan-slate/10 text-muted-foreground",
     Icon: Clock,
-    description: "Ingestion in progress - not yet on the platform.",
+    description: "This metric has not been ingested yet.",
   },
 };
 

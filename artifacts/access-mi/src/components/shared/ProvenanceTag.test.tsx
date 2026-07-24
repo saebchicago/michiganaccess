@@ -30,7 +30,7 @@ describe("ProvenanceTag", () => {
 
     await user.click(screen.getByRole("button", { name: /provenance: pending/i }));
 
-    expect(screen.getByText(/ingestion in progress/i)).toBeInTheDocument();
+    expect(screen.getByText(/has not been ingested yet/i)).toBeInTheDocument();
     expect(screen.getByText(/hrsa hpsa - jun 2026/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /view source ledger/i })).toHaveAttribute(
       "href",

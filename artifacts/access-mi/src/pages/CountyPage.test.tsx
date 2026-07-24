@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CountyProvider } from "@/contexts/CountyContext";
@@ -35,7 +35,9 @@ describe("CountyPage", () => {
   it("shows the care-capacity-vs-need section scoped to the county", () => {
     renderCountyPage("kent");
 
-    expect(screen.getByText("Care Capacity vs. Need")).toBeInTheDocument();
-    expect(screen.getAllByText("Kent County").length).toBeGreaterThan(0);
+    const heading = screen.getByRole("heading", { name: "Care Capacity vs. Need" });
+    const cardHeader = heading.closest('[class*="pb-3"]');
+    expect(cardHeader).not.toBeNull();
+    expect(within(cardHeader as HTMLElement).getByText("Kent County")).toBeInTheDocument();
   });
 });

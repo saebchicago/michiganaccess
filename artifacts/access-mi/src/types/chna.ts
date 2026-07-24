@@ -1,4 +1,4 @@
-import type { ProvenanceLabel } from "@/components/shared/ProvenanceTag";
+import type { ProvenanceLabel } from "@/types/provenance";
 
 /** Alias of ProvenanceLabel - single source of truth for the platform's
  *  VERIFIED / MODELED / PROJECTED / PENDING trust-chip states. */
