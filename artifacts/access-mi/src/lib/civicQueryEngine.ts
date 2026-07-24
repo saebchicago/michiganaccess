@@ -169,6 +169,36 @@ const TOPIC_KEYWORDS: Record<CivicTopic, string[]> = {
 };
 
 /**
+ * The topics this engine can actually answer, in the wording a visitor would
+ * use.
+ *
+ * The panel copy promises "any of the 83 Michigan counties", which oversells a
+ * nine-topic county-metric lookup: ask about anything else and the router falls
+ * through to `general` and returns population/poverty/unemployment. Declaring
+ * the scope up front converts the common failure from confidently-wrong into
+ * honestly-limited.
+ *
+ * Typed as a Record over the non-general topics so adding a CivicTopic without
+ * giving it a label is a type error, and this list cannot drift.
+ */
+export const TOPIC_LABELS: Record<Exclude<CivicTopic, "general">, string> = {
+  food_insecurity: "Food insecurity",
+  health_access: "Health coverage and access",
+  economic_hardship: "Economic hardship",
+  housing: "Housing",
+  unemployment: "Unemployment",
+  broadband: "Broadband",
+  chronic_disease: "Chronic disease",
+  mental_health: "Mental health",
+  provider_shortage: "Provider shortage",
+};
+
+export const ANSWERABLE_TOPICS = Object.entries(TOPIC_LABELS) as [
+  Exclude<CivicTopic, "general">,
+  string,
+][];
+
+/**
  * Detect the topic by the LONGEST matching keyword across all topics, not by
  * declaration order.
  *
@@ -540,8 +570,7 @@ function resolveChronicDisease(
     measures.push({ key: "copd", label: "COPD" });
   // Both are present in the CDC PLACES rollup but previously had no branch, so
   // asking about them fell through to the generic top-three below.
-  if (q.includes("stroke"))
-    measures.push({ key: "stroke", label: "Stroke" });
+  if (q.includes("stroke")) measures.push({ key: "stroke", label: "Stroke" });
   if (q.includes("arthritis"))
     measures.push({ key: "arthritis", label: "Arthritis" });
 
@@ -919,7 +948,8 @@ export function queryCivicData(question: string): CivicAnswer {
   // Row count only breaks ties among genuinely responsive answers.
   const answered = dataPoints.filter((p) => !p.isFallback);
   const allPending =
-    dataPoints.length > 0 && dataPoints.every((p) => p.valueLabel === "PENDING");
+    dataPoints.length > 0 &&
+    dataPoints.every((p) => p.valueLabel === "PENDING");
   const hasFallback = dataPoints.some((p) => p.isFallback);
 
   const confidence: CivicConfidence =
