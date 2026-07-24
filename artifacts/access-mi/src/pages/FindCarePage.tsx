@@ -58,6 +58,7 @@ import {
 } from "@/components/ui/select";
 import InsuranceNavigator from "@/components/findcare/InsuranceNavigator";
 import PhysicianCompare from "@/components/care/PhysicianCompare";
+import { NeedCapacityCard } from "@/components/shared/NeedCapacityCard";
 import CivicDataCallout from "@/components/shared/CivicDataCallout";
 
 /* ── Crisis banner ────────────────────────────── */
@@ -755,6 +756,14 @@ export default function FindCarePage() {
           no longer stacks ahead of the search input; the global crisis bar
           keeps 988/211 visible at the top of every page. */}
       <CrisisBanner />
+
+      {/* ── Why the search matters: real provider shortage data ── */}
+      <section className="container max-w-3xl py-6" aria-labelledby="care-capacity-heading">
+        <h2 id="care-capacity-heading" className="sr-only">
+          Care capacity vs. need{contextCounty ? ` in ${contextCounty} County` : ""}
+        </h2>
+        <NeedCapacityCard county={contextCounty} />
+      </section>
 
       {/* ── Results area ── */}
       <div ref={resultsRef} className="container py-8 scroll-mt-4">

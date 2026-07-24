@@ -23,6 +23,34 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+// Source: MDOC press releases, May 7 2025 and Jul 2 2025; MLPP analysis of MDOC data, 2022.
+const REENTRY_STATS = [
+  {
+    label: "Prison population",
+    value: "32,778",
+    context: "End of 2024, down from a 51,554 peak in 2007 - a 17-year low",
+    source: "MDOC, May 2025",
+  },
+  {
+    label: "3-year recidivism",
+    value: "21.0%",
+    context: "Lowest rate on state record; 79% of 2021 parolees have not returned",
+    source: "MDOC, Jul 2025",
+  },
+  {
+    label: "Vocational Village recidivism",
+    value: "12%",
+    context: "For program graduates, versus 21.0% statewide",
+    source: "MDOC, Jul 2025",
+  },
+  {
+    label: "Vocational Village employment",
+    value: "69%",
+    context: "Of graduates employed while on parole",
+    source: "MLPP analysis of MDOC data, 2022",
+  },
+];
+
 const SECTIONS = [
   {
     id: "id",
@@ -67,7 +95,7 @@ const SECTIONS = [
     items: [
       "Michigan Works! offices (all 83 counties)",
       "MiCRI (Michigan Citizen Reentry Initiative) - job training + placement",
-      "Vocational Village graduates: 69% employment rate on parole",
+      "Vocational Village graduates: see employment and recidivism outcomes above",
       "MDOC Goodwill Flip the Script",
       "Michigan Rehabilitation Services",
     ],
@@ -120,6 +148,24 @@ export default function ReentryCareNavigator() {
               returning citizens and their families.
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="container max-w-3xl py-6 space-y-4" aria-labelledby="reentry-stats-heading">
+        <h2 id="reentry-stats-heading" className="text-lg font-bold text-foreground">
+          Reentry in Michigan
+        </h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {REENTRY_STATS.map((s) => (
+            <Card key={s.label}>
+              <CardContent className="py-3 space-y-1">
+                <p className="text-xl font-bold text-foreground">{s.value}</p>
+                <p className="text-[11px] font-medium text-muted-foreground">{s.label}</p>
+                <p className="text-[11px] text-muted-foreground/80">{s.context}</p>
+                <p className="text-[10px] text-muted-foreground/70">{s.source}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </section>
 

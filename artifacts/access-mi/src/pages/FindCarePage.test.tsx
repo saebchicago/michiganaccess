@@ -94,4 +94,18 @@ describe("FindCarePage location context", () => {
       screen.getAllByLabelText(/where in michigan\?|location filter/i).length,
     ).toBeGreaterThan(0);
   });
+
+  it("shows a statewide care-capacity card when no county is set", () => {
+    renderPage();
+
+    expect(screen.getByText("Care Capacity vs. Need")).toBeInTheDocument();
+    expect(screen.getByText("Michigan statewide")).toBeInTheDocument();
+  });
+
+  it("scopes the care-capacity card to the selected county", () => {
+    localStorage.setItem("michigan-access-county", "Kent");
+    renderPage();
+
+    expect(screen.getByText("Kent County")).toBeInTheDocument();
+  });
 });
