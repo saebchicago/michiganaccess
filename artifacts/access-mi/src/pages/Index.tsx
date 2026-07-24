@@ -11,6 +11,7 @@ import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import IntelligenceBriefing from "@/components/home/IntelligenceBriefing";
 import { EDITORIAL } from "@/components/home/editorialTheme";
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import { NeedCapacityCard } from "@/components/shared/NeedCapacityCard";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { AI_CHAT_ENABLED } from "@/config/aiChat";
@@ -341,6 +342,66 @@ function EditorialHero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) 
 }
 
 // ─── Bridge-to-resources band ───────────────────────────────────────────────
+
+// ─── Need vs. capacity band ─────────────────────────────────────────────────
+// "See the need, find the help" - surfaced immediately after the hero using
+// the standard Card-based NeedCapacityCard (shared with FindCarePage and
+// county pages), not a homepage-only bespoke variant.
+function NeedHelpBand() {
+  return (
+    <section
+      className="container mx-auto max-w-6xl px-4 pb-12 pt-4"
+      aria-labelledby="need-help-heading"
+    >
+      <div className="mb-5 max-w-2xl">
+        <span
+          className="text-[11px] uppercase font-semibold"
+          style={{ color: C.gold, letterSpacing: "0.18em" }}
+        >
+          See the need, find the help
+        </span>
+        <h2
+          id="need-help-heading"
+          className="font-serif text-2xl md:text-3xl mt-1"
+          style={{ color: C.emerald }}
+        >
+          Where care is short, and where to turn.
+        </h2>
+        <p className="text-sm mt-2" style={{ color: `${C.emerald}cc` }}>
+          Michigan's provider shortages, mapped against the help already
+          available - statewide today, by county once you pick one.
+        </p>
+      </div>
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
+        <NeedCapacityCard />
+        <div
+          className="flex flex-col justify-center gap-3 rounded-lg border p-5"
+          style={{ borderColor: `${C.emerald}33`, backgroundColor: C.cream }}
+        >
+          <p className="font-serif text-lg" style={{ color: C.emerald }}>
+            Need help now?
+          </p>
+          <p className="text-sm" style={{ color: `${C.emerald}cc` }}>
+            Search verified care, benefits, and community resources across
+            all 83 counties.
+          </p>
+          <Link
+            to="/find-care"
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 min-h-[44px] text-sm font-medium border transition-colors focus-visible:outline-none focus-visible:ring-2"
+            style={{
+              borderColor: C.emerald,
+              color: C.cream,
+              backgroundColor: C.emerald,
+            }}
+          >
+            Find help near you
+            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function ResourceBridgeBand() {
   return (
@@ -700,6 +761,7 @@ const Index = () => {
           <CountyWelcomeBanner />
           <Masthead mode={mode} onModeChange={setMode} />
           <EditorialHero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
+          <NeedHelpBand />
           <IntelligenceBriefing />
           <ResourceBridgeBand />
           <ThreeDoorsGrid mode={mode} />
