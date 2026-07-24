@@ -269,6 +269,7 @@ const INTEGRITY_MARKERS: Record<IntegrityLabel, string> = {
   VERIFIED: "●",
   MODELED: "◆",
   PROJECTED: "▲",
+  PENDING: "○",
 };
 
 interface LegendEntry {

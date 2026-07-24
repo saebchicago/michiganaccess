@@ -144,7 +144,7 @@ describe("BriefPage  -  Saginaw (full data)", () => {
     expect(statBlocks.length).toBeGreaterThan(0);
     statBlocks.forEach((block) => {
       const hasNoData = /No data available/i.test(block.textContent ?? "");
-      const badge = block.querySelector("[aria-label^='Data integrity']");
+      const badge = block.querySelector("[aria-label^='Provenance']");
       if (hasNoData) {
         // A missing value must never carry a false integrity stamp.
         expect(badge).toBeNull();
