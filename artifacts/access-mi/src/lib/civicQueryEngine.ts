@@ -41,6 +41,13 @@ export interface CivicDataPoint {
   source: string;
   vintage: string;
   note?: string;
+  /**
+   * True when this point is adjacent context rather than the measure the user
+   * actually asked for (e.g. the generic top-3 chronic measures shown for an
+   * unspecific question). Confidence is capped when any point is a fallback,
+   * so an answer that did not address the question cannot report "high".
+   */
+  isFallback?: boolean;
 }
 
 export type CivicConfidence = "high" | "medium" | "thin" | "none";
@@ -135,6 +142,11 @@ const TOPIC_KEYWORDS: Record<CivicTopic, string[]> = {
     "chronic",
     "cancer",
     "blood pressure",
+    // Both are in the CDC PLACES rollup and have resolver branches, but were
+    // missing here - so "stroke in Wayne County" fell through to `general` and
+    // answered with population/poverty/unemployment at "high" confidence.
+    "stroke",
+    "arthritis",
   ],
   mental_health: [
     "mental health",
@@ -156,16 +168,38 @@ const TOPIC_KEYWORDS: Record<CivicTopic, string[]> = {
   general: [],
 };
 
+/**
+ * Detect the topic by the LONGEST matching keyword across all topics, not by
+ * declaration order.
+ *
+ * Declaration order was actively wrong: `health_access` is declared before
+ * `mental_health` and lists the bare keyword "health", so every mental-health
+ * question ("mental health services in Kent County") matched `health_access`
+ * first and came back with uninsured rate and PCP ratio. Preferring the longest
+ * match makes "mental health" (13 chars) beat "health" (6), and fixes the whole
+ * class rather than that one pair - any specific multi-word keyword now wins
+ * over a generic substring of itself.
+ *
+ * Ties keep declaration order, which is the previous behavior.
+ */
 export function detectTopic(text: string): CivicTopic {
   const lower = text.toLowerCase();
+  let best: { topic: CivicTopic; length: number } | null = null;
+
   for (const [topic, keywords] of Object.entries(TOPIC_KEYWORDS) as [
     CivicTopic,
     string[],
   ][]) {
     if (topic === "general") continue;
-    if (keywords.some((kw) => lower.includes(kw))) return topic;
+    for (const kw of keywords) {
+      if (!lower.includes(kw)) continue;
+      if (best === null || kw.length > best.length) {
+        best = { topic, length: kw.length };
+      }
+    }
   }
-  return "general";
+
+  return best?.topic ?? "general";
 }
 
 // ── Data Resolvers ────────────────────────────────────────────────────────
@@ -442,6 +476,24 @@ function resolveBroadband(county: string): CivicDataPoint[] {
     });
   }
 
+  // The ACS broadband rollup is not yet ingested - every county row is status
+  // "pending-ci" (ACS_BROADBAND_IS_POPULATED === false). Without this point the
+  // resolver answered a broadband question with household VEHICLE access alone,
+  // under a "Broadband access in X County" headline: a different measure
+  // presented as the answer. State the gap explicitly instead.
+  if (points.length === 0) {
+    points.push({
+      label: "Broadband subscription rate",
+      value: "Not yet available",
+      valueLabel: "PENDING",
+      source: "U.S. Census ACS 5-Year (B28002)",
+      vintage: "pending ingestion",
+      note: "County-level broadband data has not been ingested yet.",
+    });
+  }
+
+  // Retained as related digital/physical access context, not as broadband.
+  // Flagged isFallback so it cannot lift the answer's confidence.
   if (cd.vehicleAccess !== null) {
     points.push({
       label: "Households with vehicle access",
@@ -449,6 +501,8 @@ function resolveBroadband(county: string): CivicDataPoint[] {
       valueLabel: "VERIFIED",
       source: "ACS 5-Year 2022",
       vintage: "2022",
+      note: "Related access measure, not a broadband figure.",
+      isFallback: true,
     });
   }
 
@@ -484,9 +538,39 @@ function resolveChronicDisease(
     });
   if (q.includes("copd") || q.includes("lung"))
     measures.push({ key: "copd", label: "COPD" });
+  // Both are present in the CDC PLACES rollup but previously had no branch, so
+  // asking about them fell through to the generic top-three below.
+  if (q.includes("stroke"))
+    measures.push({ key: "stroke", label: "Stroke" });
+  if (q.includes("arthritis"))
+    measures.push({ key: "arthritis", label: "Arthritis" });
 
-  // If no specific measure asked, show top chronic measures
-  if (measures.length === 0) {
+  // Measures a user may reasonably ask about that this dataset does not carry.
+  // "cancer" is a chronic_disease keyword, so without this the question fell to
+  // the generic top-three and answered about diabetes without ever saying that
+  // cancer data is unavailable.
+  const UNAVAILABLE: Array<{ match: string; label: string }> = [
+    { match: "cancer", label: "Cancer prevalence" },
+    { match: "oncolog", label: "Cancer prevalence" },
+  ];
+  const unavailable = UNAVAILABLE.find((u) => q.includes(u.match));
+  if (unavailable && measures.length === 0) {
+    return [
+      {
+        label: unavailable.label,
+        value: "Not available",
+        valueLabel: "PENDING",
+        source: "CDC PLACES county rollup",
+        vintage: "2025 release",
+        note: "This measure is not in the CDC PLACES dataset on the platform. Showing unrelated chronic-disease figures instead would not answer the question.",
+      },
+    ];
+  }
+
+  // If no specific measure asked, show top chronic measures as general context.
+  // Flagged isFallback so an unspecific question cannot report high confidence.
+  const isGenericFallback = measures.length === 0;
+  if (isGenericFallback) {
     measures.push(
       { key: "diabetes", label: "Diagnosed diabetes" },
       { key: "obesity", label: "Obesity (BMI >= 30)" },
@@ -504,6 +588,7 @@ function resolveChronicDisease(
         source: "CDC PLACES 2025 (BRFSS MRP estimates)",
         vintage: "2023",
         note: m.ci95 ? `95% CI: ${m.ci95.low}-${m.ci95.high}%` : undefined,
+        isFallback: isGenericFallback,
       });
     }
   }
@@ -826,12 +911,23 @@ export function queryCivicData(question: string): CivicAnswer {
       break;
   }
 
+  // Confidence used to be a pure row count, so an answer that addressed the
+  // wrong measure could still render "high" simply by returning four rows.
+  // It now reflects whether the answer actually addressed the question:
+  //   - any fallback point (adjacent context, not what was asked)  -> cap "thin"
+  //   - every point PENDING (the data is not on the platform yet)  -> "none"
+  // Row count only breaks ties among genuinely responsive answers.
+  const answered = dataPoints.filter((p) => !p.isFallback);
+  const allPending =
+    dataPoints.length > 0 && dataPoints.every((p) => p.valueLabel === "PENDING");
+  const hasFallback = dataPoints.some((p) => p.isFallback);
+
   const confidence: CivicConfidence =
-    dataPoints.length === 0
+    dataPoints.length === 0 || allPending
       ? "none"
-      : dataPoints.length === 1
+      : hasFallback || answered.length === 1
         ? "thin"
-        : dataPoints.length <= 3
+        : answered.length <= 3
           ? "medium"
           : "high";
 
