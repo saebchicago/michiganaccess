@@ -19,17 +19,16 @@ import {
   Tooltip,
 } from "recharts";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
-import { computeCompoundDeficit } from "@/utils/compoundDeficit";
+import {
+  computeCompoundDeficit,
+  CADI_PROVENANCE,
+} from "@/utils/compoundDeficit";
 
 interface CountyDeficit {
   county: string;
+  uninsured: number;
   food: number;
-  broadband: number;
-  transit: number;
-  healthcare: number;
-  svi: number;
-  ej: number;
-  energy: number;
+  providerShortage: number;
   compound: number;
   tier: string;
   population: number;
@@ -38,16 +37,12 @@ interface CountyDeficit {
 function computeDeficits(): CountyDeficit[] {
   return Object.entries(COUNTY_PROFILES)
     .map(([name, p]) => {
-      const s = computeCompoundDeficit(p);
+      const s = computeCompoundDeficit(name, p);
       return {
         county: name,
+        uninsured: s.uninsured,
         food: s.food,
-        broadband: s.broadband,
-        transit: s.transit,
-        healthcare: s.healthcare,
-        svi: s.svi,
-        ej: s.ej,
-        energy: s.energy,
+        providerShortage: s.providerShortage,
         compound: s.compound,
         tier: s.tier,
         population: p.population,
@@ -65,13 +60,9 @@ const TIER_COLORS: Record<string, string> = {
 
 function MiniRadar({ data }: { data: CountyDeficit }) {
   const radarData = [
+    { axis: "Uninsured", value: data.uninsured },
     { axis: "Food", value: data.food },
-    { axis: "Broadband", value: data.broadband },
-    { axis: "Transit", value: data.transit },
-    { axis: "Healthcare", value: data.healthcare },
-    { axis: "SVI", value: data.svi },
-    { axis: "EJ", value: data.ej },
-    { axis: "Energy", value: data.energy },
+    { axis: "Providers", value: data.providerShortage },
   ];
 
   return (
@@ -183,15 +174,15 @@ export default function CompoundDeficitRanking() {
                           Population: {d.population.toLocaleString()}
                         </p>
                         <p>
-                          Food: {d.food}/100 · Broadband: {d.broadband}/100
+                          Uninsured: {d.uninsured.toFixed(0)}/100 · Food:{" "}
+                          {d.food.toFixed(0)}/100
                         </p>
                         <p>
-                          Transit: {d.transit}/100 · Healthcare: {d.healthcare}
-                          /100
+                          Primary care shortage:{" "}
+                          {d.providerShortage.toFixed(0)}/100
                         </p>
-                        <p>
-                          SVI: {d.svi.toFixed(0)}/100 · EJ: {d.ej}/100 · Energy:{" "}
-                          {d.energy}/100
+                        <p className="text-muted-foreground/80 pt-1">
+                          {CADI_PROVENANCE.note}
                         </p>
                         <Link
                           to={`/brief?county=${d.county}`}

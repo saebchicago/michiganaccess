@@ -63,12 +63,26 @@ Identical to prior sprints:
 ```
 npm run build
 ```
-Runs: generate-sitemap → check-links → check-counts → check-zip-population →
-check-county-facilities → check-trend-series → check-chna-mapping → vite build →
+Runs: generate-source-catalog → generate-sitemap → check-links → check-counts →
+check-zip-population → check-county-facilities → check-trend-series →
+check-snap-county-dataset → check-fabrication → check-copy → check-no-backend-leak →
+check-provenance → check-dataset-labels → check-integrity-labels → vite build →
 prerender-meta
 
-Build-time assertions: `platformConstants.ts` throws if SOURCES_TOTAL ≠ 41 or
-breakdown drifts; `check-chna-mapping.mjs` validates CHNA gap mapping integrity.
+Build-time assertions: `platformConstants.ts` throws if SOURCES_TOTAL drifts from
+EXPECTED_SOURCE_COUNT or the federal/state/nonprofit breakdown changes;
+`check-dataset-labels.mjs` requires every `.generated.json` to carry a
+`provenance.value_label`; `check-integrity-labels.mjs` rejects any `.ts` data seed
+that pairs VERIFIED with a secondary-source string.
+
+**Corrected 2026-07-24 (Round 6):** this section previously listed a
+`check-chna-mapping` step and claimed `check-chna-mapping.mjs` "validates CHNA gap
+mapping integrity." No such script has ever existed in the repo and it was not in
+the build chain. Its absence is why the 41 mislabeled `chnaSeed.ts` metrics (see
+Future work) went uncaught. The list above is the actual chain from
+`artifacts/access-mi/package.json`. It also previously hardcoded "SOURCES_TOTAL ≠ 41"
+while the registry now expects 43; the assertion is described by name instead so it
+cannot drift again.
 
 ### Test runner
 
@@ -97,7 +111,15 @@ Verdict from code:
 | "Ask Access Michigan conversational agent" | CONFIRMED | `AccessChat.tsx:245` renders `CardTitle` "Ask Access Michigan"; calls `/.netlify/functions/chat-mistral` |
 | "verified low latency" / "Sub-3-second loads on 3G" | STALE / REMEDIATED | `MethodologyPage.tsx` trust log records prior false claim replaced Mar 2026 |
 | "automated weekly pulls" | STALE / REMEDIATED | Same trust log entry; no automated pull scheduler in code |
-| "zero-cookie architecture" | CONFIRMED with caveat | GA removed per `index.html:4-13`; no ad/tracking scripts; `localStorage` used but disclosed in `PrivacyPage.tsx:107` |
+| "zero-cookie architecture" | ~~CONFIRMED with caveat~~ **CORRECTED 2026-07-24 - see note below** | ~~GA removed per `index.html:4-13`~~; no ad/tracking scripts; `localStorage` used but disclosed in `PrivacyPage.tsx:107` |
+
+> **Correction (2026-07-24, Round 6 audit):** the row above was wrong. Google
+> Analytics 4 (`G-367X8MQ1F6`) is **live** at `artifacts/access-mi/index.html:4-20`
+> and sets `_ga` / `_ga_*` first-party cookies. The site is therefore not
+> "zero-cookie." Importantly, the *user-facing* disclosure is accurate and always
+> was: `PrivacyPage.tsx:179-199` names GA4, its measurement ID, the exact cookies,
+> and links the opt-out add-on. Only this audit record was false. Any future copy
+> asserting "zero cookies" must be checked against `index.html` first.
 | CMS data layer | CONFIRMED | `verifiedHealthFacilities.json` CMS Hospital General Information source |
 | HRSA data layer | CONFIRMED | `verifiedHealthFacilities.json` HRSA Health Center Sites source |
 | CDC PLACES data layer | CONFIRMED | `sourcesRegistry.ts:29`, `dataFreshness.ts:56` |
@@ -126,7 +148,19 @@ your inputs after the response is returned."
 
 ---
 
-### F-2: QuickExitBar ESC key false claim (LOGGED, fix blocked by sacrosanct rule)
+### F-2: QuickExitBar ESC key false claim (RESOLVED 2026-07-24)
+
+**Status: no longer accurate. The claim is now true and this entry is retained
+only for history.** `QuickExitBar.tsx` has a working `useEffect` `keydown`
+listener that calls `triggerExit()` on `Escape`, so the ESC copy described below
+now describes real behavior. No sacrosanct exception was needed - the handler was
+added independently. Verified 2026-07-24 during the Round 6 integrity audit.
+
+The original (now stale) entry follows.
+
+---
+
+### F-2 (original entry): QuickExitBar ESC key false claim (LOGGED, fix blocked by sacrosanct rule)
 
 **Claim:** `QuickExitBar.tsx:31` aria-label — "Quick exit - leave this site immediately
 **(also press Escape)**"; `QuickExitBar.tsx:32` title — "**Press ESC to quickly leave
@@ -149,9 +183,13 @@ the false ESC copy requires an explicit named exception in a future sprint promp
 - EJScreen sparse coverage: `ejscreen.ts` has only ~15 ZCTAs. If EJScreen is
   claimed as a statewide layer, coverage should be expanded or the disclaimer
   clarified. Requires data-ingestion work.
-- CHNA chnaSeed.ts D5 audit: 35 metrics labeled VERIFIED but sourced from HFH 2022
+- ~~CHNA chnaSeed.ts D5 audit: 35 metrics labeled VERIFIED but sourced from HFH 2022
   CHNA document (secondary source). Relabeling to MODELED deferred to a named
-  Phase 4 of the CHNA gap analysis sprint.
+  Phase 4 of the CHNA gap analysis sprint.~~ **DONE 2026-07-24 (Round 6).** The
+  count was **41**, not 35 - 40 sourced to the HFH 2022 CHNA plus one to a Planet
+  Detroit write-up of ACS. All 41 relabeled MODELED. A new build guard,
+  `scripts/check-integrity-labels.mjs`, now fails the build if any `.ts` data seed
+  pairs VERIFIED with a secondary-source string, so this cannot silently recur.
 - AI privacy claims (no conversation logging, no PHI storage after response): these
   are server-side behavioral claims that cannot be verified from client code alone.
   Verification requires Supabase/Netlify function review.

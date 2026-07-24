@@ -104,6 +104,9 @@ const Footer = () => {
     {
       title: "Understand",
       links: [
+        { label: "Ask a Question", href: "/ask" },
+        { label: "County Brief", href: "/brief" },
+        { label: "Learn About Programs", href: "/learn" },
         { label: "Data & Insights Hub", href: "/data-and-insights" },
         { label: "ZIP Scorecard", href: "/zip/48201" },
         { label: "ZIP Intelligence", href: "/zip-intelligence" },
@@ -120,12 +123,21 @@ const Footer = () => {
         { label: "Decision Science", href: "/decision-science" },
         { label: "Service Area Builder", href: "/service-area" },
         { label: "Tax Comparison", href: "/tax-comparison" },
-        { label: "Medicaid Coverage at Risk", href: "/data/medicaid-coverage-at-risk" },
+        {
+          label: "Medicaid Coverage at Risk",
+          href: "/data/medicaid-coverage-at-risk",
+        },
         { label: "SNAP Coverage at Risk", href: "/data/snap-coverage-at-risk" },
-        { label: "Dual-Eligible Exposure", href: "/data/dual-eligible-exposure" },
+        {
+          label: "Dual-Eligible Exposure",
+          href: "/data/dual-eligible-exposure",
+        },
         { label: "SNAP in Michigan", href: "/data/snap-michigan" },
         { label: "Methodology", href: "/methodology" },
-        { label: `Data Sources (${DATA_SOURCE_DISPLAY})`, href: "/data-sources" },
+        {
+          label: `Data Sources (${DATA_SOURCE_DISPLAY})`,
+          href: "/data-sources",
+        },
         { label: "Downloads", href: "/downloads" },
       ],
     },
@@ -136,6 +148,7 @@ const Footer = () => {
         { label: "Health Data Dashboard", href: "/data" },
         { label: "Health Equity", href: "/equity" },
         { label: "Health Equity Atlas", href: "/health-equity-atlas" },
+        { label: "Food Access Explorer", href: "/food-access" },
         { label: "Deep Map (GIS)", href: "/map/layers" },
         { label: "Energy Burden", href: "/energy-burden" },
         { label: "Closure Watch", href: "/closure-watch" },
@@ -165,6 +178,7 @@ const Footer = () => {
         { label: "Cost Transparency", href: "/costs" },
         { label: "Behavioral Health", href: "/behavioral-health" },
         { label: "Michigan Tribal Nations", href: "/tribal-nations" },
+        { label: "Disability & Accessibility", href: "/disability-access" },
         { label: "Reentry Resources", href: "/reentry" },
         { label: "Social Services & Benefits", href: "/social-services" },
         { label: "Learn About Benefits", href: "/benefits" },
@@ -198,6 +212,8 @@ const Footer = () => {
         { label: "Accessibility", href: "/accessibility" },
         { label: "Site Map", href: "/sitemap" },
         { label: "System Status", href: "/status" },
+        { label: "Site Data Report", href: "/site-report" },
+        { label: "How This Was Built", href: "/portfolio" },
         { label: "Replicate for Your State", href: "/replicate" },
         { label: "ourintel.org", href: "/about/ourintel" },
       ],
@@ -208,6 +224,14 @@ const Footer = () => {
         { label: "Health System Leaders", href: "/partners" },
         { label: "Community Organizations", href: "/partnerships" },
         { label: "For Health Systems", href: "/for-health-systems" },
+        {
+          label: "Health Plans & Medicaid",
+          href: "/partners/health-plans-medicaid",
+        },
+        {
+          label: "Utilities & Regulators",
+          href: "/partners/utilities-regulators",
+        },
         { label: "Executive Summary", href: "/executive-summary" },
         { label: "Illustrative Scenarios", href: "/case-studies" },
       ],
@@ -322,24 +346,24 @@ const Footer = () => {
               // blank or unverified figure is shown.
               .filter((m) => m.value != null && m.value !== "")
               .map((m) => (
-              <div
-                key={m.label}
-                className="flex items-center gap-1.5"
-                title={"title" in m ? (m.title as string) : undefined}
-              >
-                <m.icon className="h-3 w-3 text-primary" aria-hidden="true" />
-                <span className={`text-xs font-bold ${m.colorClass}`}>
-                  {m.value}
-                </span>
-                <span className="text-[10px] text-muted-foreground">
-                  {m.label}
-                </span>
-                <CheckCircle2
-                  className="h-2.5 w-2.5 text-michigan-forest-deep"
-                  aria-hidden="true"
-                />
-              </div>
-            ))}
+                <div
+                  key={m.label}
+                  className="flex items-center gap-1.5"
+                  title={"title" in m ? (m.title as string) : undefined}
+                >
+                  <m.icon className="h-3 w-3 text-primary" aria-hidden="true" />
+                  <span className={`text-xs font-bold ${m.colorClass}`}>
+                    {m.value}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground">
+                    {m.label}
+                  </span>
+                  <CheckCircle2
+                    className="h-2.5 w-2.5 text-michigan-forest-deep"
+                    aria-hidden="true"
+                  />
+                </div>
+              ))}
           </div>
           <p className="text-center text-[11px] text-muted-foreground mt-3 max-w-xl mx-auto">
             Independent civic project. Not affiliated with any agency, employer,

@@ -117,9 +117,34 @@ export const COUNTY_CROSS_DOMAIN: Record<string, CountyCrossDomain> = {
   Wexford:         { medianIncome: 45890, povertyRate: 16.2, medianRent: 700, rentBurden: 48.5, vehicleAccess: 91.1, commuteTime: 21.8, hsGradRate: 81.5, unemploymentRate: 5.1, violentCrimeRate: 290, drinkingWaterCompliance: 90 },
 };
 
-/** Look up cross-domain data for a county. Returns null-filled defaults if county not found. */
+/**
+ * Look up cross-domain data for a county.
+ *
+ * WARNING: on an unrecognized name this returns MICHIGAN STATEWIDE AVERAGES,
+ * not the county's data and not nulls. The doc comment here previously claimed
+ * "null-filled defaults", which was false and made the fallback easy to miss.
+ *
+ * All 83 counties are present, so this does not fire for a correctly spelled
+ * county. It is still reachable via a typo or a false-positive county detection
+ * (`detectCounty` substring-matches, so "iron", "lake" and "bay" can match), and
+ * a caller that renders the result as county data would be presenting state
+ * averages under a county label.
+ *
+ * Prefer `getCountyCrossDomainStrict` when the value will be shown to a user
+ * as a county measurement.
+ */
 export function getCountyCrossDomain(countyName: string): CountyCrossDomain {
   return COUNTY_CROSS_DOMAIN[countyName] ?? MI_STATE_AVERAGES;
+}
+
+/**
+ * Strict lookup: returns null when the county is unknown, so callers must
+ * decide explicitly rather than silently inheriting statewide averages.
+ */
+export function getCountyCrossDomainStrict(
+  countyName: string,
+): CountyCrossDomain | null {
+  return COUNTY_CROSS_DOMAIN[countyName] ?? null;
 }
 
 /** Display formatting hint for a cross-domain metric. */

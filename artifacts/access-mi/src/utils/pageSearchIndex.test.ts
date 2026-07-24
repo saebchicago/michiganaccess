@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { PAGE_SEARCH_INDEX, searchPages } from "@/utils/pageSearchIndex";
+import { getPageSearchIndex, searchPages } from "@/utils/pageSearchIndex";
 import { ROUTE_MANIFEST } from "@/routes/manifest";
 
-describe("PAGE_SEARCH_INDEX", () => {
+describe("getPageSearchIndex", () => {
   it("contains no dynamic-param routes or excluded paths", () => {
-    for (const entry of PAGE_SEARCH_INDEX) {
+    for (const entry of getPageSearchIndex()) {
       expect(entry.href.includes(":"), entry.href).toBe(false);
       expect(entry.href).not.toBe("/embed");
       expect(entry.href).not.toBe("/admin/search-trends");
@@ -14,17 +14,19 @@ describe("PAGE_SEARCH_INDEX", () => {
 
   it("only indexes hrefs that exist in the route manifest", () => {
     const known = new Set(ROUTE_MANIFEST.map((r) => r.path));
-    for (const entry of PAGE_SEARCH_INDEX) {
+    for (const entry of getPageSearchIndex()) {
       expect(known.has(entry.href), entry.href).toBe(true);
     }
   });
 
   it("covers far more pages than the old hand-maintained list", () => {
-    expect(PAGE_SEARCH_INDEX.length).toBeGreaterThan(100);
+    expect(getPageSearchIndex().length).toBeGreaterThan(100);
   });
 
   it("applies curated overrides", () => {
-    const caseStudies = PAGE_SEARCH_INDEX.find((p) => p.href === "/case-studies");
+    const caseStudies = getPageSearchIndex().find(
+      (p) => p.href === "/case-studies",
+    );
     expect(caseStudies?.label).toBe("Illustrative Scenarios");
   });
 });

@@ -33,7 +33,7 @@ function getCountyScore(county: string): {
   const f = parseFloat(p.healthHighlights[2]?.value || "12");
   // Health Score is the inverse of the shared CADI so move-decision
   // numbers agree with what users see on the Health Equity Atlas.
-  const compound = computeCompoundDeficit(p).compound;
+  const compound = computeCompoundDeficit(county, p).compound;
   const score = Math.max(0, Math.min(100, Math.round(100 - compound)));
   return { uninsured: u, food: f, score };
 }

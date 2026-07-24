@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 import {
   queryCivicData,
+  ANSWERABLE_TOPICS,
   type CivicAnswer,
   type CivicDataPoint,
 } from "@/lib/civicQueryEngine";
@@ -87,6 +88,7 @@ export function CivicAskPanel({ initialQuestion, compact = false }: Props) {
   const [answer, setAnswer] = useState<CivicAnswer | null>(null);
   const [loading, setLoading] = useState(false);
   const answerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit(e?: React.FormEvent) {
     e?.preventDefault();
@@ -107,6 +109,16 @@ export function CivicAskPanel({ initialQuestion, compact = false }: Props) {
     }
   }, [answer]);
 
+  /**
+   * A topic chip declares scope; it does not answer on its own, because an
+   * answer needs a county. Seed the input and hand focus back so the visitor
+   * finishes the sentence.
+   */
+  function handleTopicPick(label: string) {
+    setQuery(`${label} in `);
+    inputRef.current?.focus();
+  }
+
   function handleSuggestion(q: string) {
     setQuery(q);
     setLoading(true);
@@ -126,8 +138,8 @@ export function CivicAskPanel({ initialQuestion, compact = false }: Props) {
           <div>
             <CardTitle className="text-base">Civic Intelligence</CardTitle>
             <p className="text-xs text-muted-foreground">
-              Ask about any of the 83 Michigan counties - answers come only from
-              on-site verified data.
+              Ask about nine indicators across any of the 83 Michigan counties -
+              answers come only from on-site data, with its label and source.
             </p>
           </div>
         </div>
@@ -136,6 +148,7 @@ export function CivicAskPanel({ initialQuestion, compact = false }: Props) {
       <CardContent className="p-4 space-y-4">
         <form onSubmit={handleSubmit} className="flex gap-2">
           <Input
+            ref={inputRef}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="e.g. What is driving food insecurity in Wayne County?"
@@ -153,6 +166,35 @@ export function CivicAskPanel({ initialQuestion, compact = false }: Props) {
             <Search className="h-4 w-4" />
           </Button>
         </form>
+
+        {/*
+          Scope declaration. The engine is a keyword matcher over nine county
+          datasets; anything outside them falls through to `general` and comes
+          back with population/poverty/unemployment. Naming the nine up front
+          sets the right expectation before the question is typed.
+        */}
+        <div className="space-y-1.5">
+          <p className="text-[11px] text-muted-foreground uppercase tracking-wide">
+            This tool answers questions about
+          </p>
+          <ul role="list" className="flex flex-wrap gap-1.5">
+            {ANSWERABLE_TOPICS.map(([topic, label]) => (
+              <li key={topic}>
+                <button
+                  type="button"
+                  onClick={() => handleTopicPick(label)}
+                  className="rounded-full border border-border bg-muted/40 px-2.5 py-1 text-[11px] text-foreground/80 hover:border-primary/40 hover:text-primary transition-colors"
+                >
+                  {label}
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[11px] text-muted-foreground">
+            Name a county to get an answer. Other subjects fall back to general
+            county statistics.
+          </p>
+        </div>
 
         {!answer && !loading && (
           <div className="space-y-2">

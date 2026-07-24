@@ -10,7 +10,10 @@ import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import IntelligenceBriefing from "@/components/home/IntelligenceBriefing";
 import { EDITORIAL } from "@/components/home/editorialTheme";
-import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import {
+  ProvenanceTag,
+  type ProvenanceLabel,
+} from "@/components/shared/ProvenanceTag";
 import { NeedCapacityCard } from "@/components/shared/NeedCapacityCard";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -93,6 +96,19 @@ const BRIDGE_CHIPS: { label: string; href: string }[] = [
   { label: "Community resources", href: "/resources" },
   { label: "Insurance and coverage", href: "/insurance-coverage" },
   { label: "Life event navigator", href: "/benefits" },
+];
+
+// The Resident/Analyst toggle used to only reorder the three door cards, while
+// every chip below stayed resident-oriented - so picking "Analyst" changed
+// almost nothing and nothing on the homepage reached an analyst tool. These are
+// the six that do. Every href points to a real existing route.
+const ANALYST_CHIPS: { label: string; href: string }[] = [
+  { label: "County brief", href: "/brief" },
+  { label: "Ask the data", href: "/ask" },
+  { label: "Compare counties", href: "/compare" },
+  { label: "Compare ZIP codes", href: "/compare-zips" },
+  { label: "Data explorer", href: "/data-explorer" },
+  { label: "Downloads", href: "/downloads" },
 ];
 
 // ─── Grain overlay ──────────────────────────────────────────────────────────
@@ -215,7 +231,11 @@ function Masthead({
 
 // ─── Hero ───────────────────────────────────────────────────────────────────
 
-function EditorialHero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) {
+function EditorialHero({
+  onZipSubmit,
+}: {
+  onZipSubmit: (zip: string) => void;
+}) {
   const [zip, setZip] = useState("");
   // Real build/deploy date, not the client's "today" - avoids implying the
   // datasets refresh every time the page is opened.
@@ -251,10 +271,7 @@ function EditorialHero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) 
               }}
             >
               Local data for{" "}
-              <em
-                className="italic font-serif"
-                style={{ color: C.emeraldMid }}
-              >
+              <em className="italic font-serif" style={{ color: C.emeraldMid }}>
                 public
               </em>{" "}
               good.
@@ -307,9 +324,7 @@ function EditorialHero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) 
                     maxLength={5}
                     placeholder="Enter ZIP"
                     value={zip}
-                    onChange={(e) =>
-                      setZip(e.target.value.replace(/\D/g, ""))
-                    }
+                    onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
                     aria-label="ZIP code"
                     className="w-full bg-transparent text-2xl font-serif outline-none placeholder:opacity-40"
                     style={{ color: C.cream }}
@@ -382,8 +397,8 @@ function NeedHelpBand() {
             Need help now?
           </p>
           <p className="text-sm" style={{ color: `${C.emerald}cc` }}>
-            Search verified care, benefits, and community resources across
-            all 83 counties.
+            Search verified care, benefits, and community resources across all
+            83 counties.
           </p>
           <Link
             to="/find-care"
@@ -403,7 +418,10 @@ function NeedHelpBand() {
   );
 }
 
-function ResourceBridgeBand() {
+function ResourceBridgeBand({ mode }: { mode: PersonaView }) {
+  const isAnalyst = mode === "professional";
+  const chips = isAnalyst ? ANALYST_CHIPS : BRIDGE_CHIPS;
+
   return (
     <section
       className="container mx-auto max-w-6xl px-4 pb-12"
@@ -415,17 +433,17 @@ function ResourceBridgeBand() {
           className="font-serif text-2xl md:text-3xl"
           style={{ color: C.emerald }}
         >
-          Need help right now?
+          {isAnalyst ? "Start your analysis" : "Need help right now?"}
         </h3>
         <span
           className="text-[11px] uppercase font-semibold"
           style={{ color: C.gold, letterSpacing: "0.18em" }}
         >
-          Direct pathways
+          {isAnalyst ? "Analyst tools" : "Direct pathways"}
         </span>
       </div>
       <ul role="list" className="flex flex-wrap gap-2">
-        {BRIDGE_CHIPS.map((chip) => (
+        {chips.map((chip) => (
           <li key={chip.href}>
             <Link
               to={chip.href}
@@ -575,13 +593,19 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
 // ─── Provenance strip ──────────────────────────────────────────────────────
 
 function ProvenanceStrip() {
+  // Must list every label the platform can render. ProvenanceTag added
+  // PENDING in Round 5; the heading below promises the full set.
   const items: {
-    label: "VERIFIED" | "MODELED" | "PROJECTED";
+    label: ProvenanceLabel;
     gloss: string;
   }[] = [
-    { label: "VERIFIED", gloss: "Direct tabulation from a named primary source." },
+    {
+      label: "VERIFIED",
+      gloss: "Direct tabulation from a named primary source.",
+    },
     { label: "MODELED", gloss: "Calculated from verified inputs." },
     { label: "PROJECTED", gloss: "Forward-looking estimate." },
+    { label: "PENDING", gloss: "Not yet ingested; shown as a known gap." },
   ];
   return (
     <section
@@ -598,7 +622,7 @@ function ProvenanceStrip() {
           >
             Every number carries a label.
           </h3>
-          <dl className="grid gap-4 sm:grid-cols-3 flex-1">
+          <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 flex-1">
             {items.map(({ label, gloss }) => (
               <div key={label} className="flex flex-col gap-1.5">
                 <dt>
@@ -631,8 +655,7 @@ function ProvenanceStrip() {
 const COUNTY_NAMES = Object.keys(MI_COUNTY_FIPS).sort((a, b) =>
   a.localeCompare(b),
 );
-const countySlug = (name: string) =>
-  name.toLowerCase().replace(/[.\s]+/g, "-");
+const countySlug = (name: string) => name.toLowerCase().replace(/[.\s]+/g, "-");
 
 function CountyPicker() {
   const [query, setQuery] = useState("");
@@ -715,7 +738,10 @@ function CountyPicker() {
           id="all-counties-grid"
           role="list"
           className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-px border"
-          style={{ backgroundColor: `${C.emerald}1A`, borderColor: `${C.emerald}1A` }}
+          style={{
+            backgroundColor: `${C.emerald}1A`,
+            borderColor: `${C.emerald}1A`,
+          }}
         >
           {COUNTY_NAMES.map((name) => (
             <li key={name}>
@@ -763,7 +789,7 @@ const Index = () => {
           <EditorialHero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
           <NeedHelpBand />
           <IntelligenceBriefing />
-          <ResourceBridgeBand />
+          <ResourceBridgeBand mode={mode} />
           <ThreeDoorsGrid mode={mode} />
           <CountyPicker />
           <ProvenanceStrip />

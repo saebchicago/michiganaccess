@@ -809,6 +809,10 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
   {
     label: "Understand",
     children: [
+      // Ask and County Brief were reachable only from /sitemap until Round 7.
+      // /ask had zero inbound links anywhere in the app.
+      { label: "Ask a Question", href: "/ask" },
+      { label: "County Brief", href: "/brief" },
       { label: "Insights", href: "/insights", badge: "New" },
       { label: "Data & Insights Hub", href: "/data-and-insights" },
       { label: "ZIP Scorecard", href: "/zip/48201" },
@@ -884,8 +888,10 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
     title: "Learn about programs and resources",
     iconName: "Heart",
     links: [
+      { label: "Learn About Programs", href: "/learn" },
       { label: "Financial-help explainer", href: "/financial-help" },
       { label: "Community Resources", href: "/resources" },
+      { label: "Disability & Accessibility", href: "/disability-access" },
       {
         label: "Insurance Appeals",
         href: "/health/insurance-appeals",
@@ -912,7 +918,11 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
     title: "Maps & Data",
     iconName: "Map",
     links: [
-      { label: "Insights - Findings & Trends", href: "/insights", badge: "New" },
+      {
+        label: "Insights - Findings & Trends",
+        href: "/insights",
+        badge: "New",
+      },
       { label: "Interactive Health Map", href: "/health-map" },
       { label: "CHNA Explorer", href: "/chna-explorer", badge: "Interactive" },
       { label: "Health Data Dashboard", href: "/data" },
@@ -920,6 +930,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "Equity Scorecard", href: "/equity", badge: "Updated" },
       { label: "Energy Burden", href: "/energy-burden" },
       { label: "Environment & Air Quality", href: "/environment" },
+      { label: "Food Access Explorer", href: "/food-access" },
       { label: "Data Centers", href: "/data-centers", badge: "New" },
       {
         label: "Health Equity Atlas",
@@ -1056,6 +1067,14 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "One-Pager", href: "/partnerships/health-systems/one-pager" },
       { label: "Executive Summary", href: "/executive-summary" },
       { label: "Illustrative Scenarios", href: "/case-studies" },
+      {
+        label: "Health Plans & Medicaid",
+        href: "/partners/health-plans-medicaid",
+      },
+      {
+        label: "Utilities & Regulators",
+        href: "/partners/utilities-regulators",
+      },
       { label: "Lean Healthcare", href: "/lean-healthcare" },
       { label: "Platform Impact", href: "/impact" },
     ],

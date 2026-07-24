@@ -223,8 +223,8 @@ export default function AboutPage() {
             and research. It cannot enroll anyone in any program; applications
             happen at official government portals. AccessMI (accessmi.org) is
             not affiliated with any other organization using "Access" in its
-            name - including ACCESS (the Arab Community Center for Economic
-            and Social Services), Access Health, or Access Michigan LLC.
+            name - including ACCESS (the Arab Community Center for Economic and
+            Social Services), Access Health, or Access Michigan LLC.
           </motion.p>
 
           <motion.div
@@ -239,8 +239,8 @@ export default function AboutPage() {
               Maintainer
             </p>
             <p>
-              Built and maintained by Saeb, a Michigan-based civic
-              technologist (MPP, University of Chicago Harris). More at{" "}
+              Built and maintained by Saeb, a Michigan-based civic technologist
+              (MPP, University of Chicago Harris). More at{" "}
               <a
                 href="https://michigans.me"
                 target="_blank"
@@ -984,8 +984,11 @@ export default function AboutPage() {
                   Platform Transparency
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  Real-time health indicators for this platform. Last audit:{" "}
-                  {PLATFORM_HEALTH.lastAudit}
+                  Health indicators for this platform. Last platform-wide
+                  verification pass: {PLATFORM_HEALTH.lastAudit}.{" "}
+                  <Link to="/status" className="underline">
+                    Live endpoint status
+                  </Link>
                 </p>
               </div>
             </div>
@@ -995,7 +998,7 @@ export default function AboutPage() {
             {(
               [
                 ["Data Freshness", PLATFORM_HEALTH.dataFreshness],
-                ["Uptime", PLATFORM_HEALTH.uptime],
+                ["Monitored Feeds", PLATFORM_HEALTH.monitoredFeeds],
                 ["Open Source", PLATFORM_HEALTH.openSource],
                 ["Funding Model", PLATFORM_HEALTH.funding],
                 ["Advertiser Conflicts", PLATFORM_HEALTH.conflicts],

@@ -6,9 +6,35 @@ import {
   PRIORITY_DRIVER_MAP,
 } from "@/data/chnaSeed";
 
-const VALID_INTEGRITY_LABELS = ["VERIFIED", "MODELED", "PROJECTED"] as const;
+const VALID_INTEGRITY_LABELS = [
+  "VERIFIED",
+  "MODELED",
+  "PROJECTED",
+  "PENDING",
+] as const;
+
+/**
+ * Source strings that indicate a figure was transcribed from someone else's
+ * report rather than confirmed against a primary federal or state release.
+ * Mirrors the build guard in scripts/check-integrity-labels.mjs.
+ */
+const SECONDARY_SOURCE_PATTERNS = [/CHNA/i, /Planet Detroit/i, /\bvia\b/i];
 
 describe("CHNA seed data", () => {
+  it("never labels a secondary-sourced metric VERIFIED", () => {
+    for (const m of CHNA_METRICS) {
+      const isSecondary = SECONDARY_SOURCE_PATTERNS.some((p) =>
+        p.test(m.source),
+      );
+      if (isSecondary) {
+        expect(
+          m.integrityLabel,
+          `Metric ${m.id} cites the secondary source "${m.source}" but claims ${m.integrityLabel}. VERIFIED is reserved for figures confirmed against a primary federal or state release.`,
+        ).not.toBe("VERIFIED");
+      }
+    }
+  });
+
   it("every metric has a non-empty integrityLabel", () => {
     for (const m of CHNA_METRICS) {
       expect(
