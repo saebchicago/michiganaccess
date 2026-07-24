@@ -345,8 +345,8 @@ function EditorialHero({ onZipSubmit }: { onZipSubmit: (zip: string) => void }) 
 
 // ─── Need vs. capacity band ─────────────────────────────────────────────────
 // "See the need, find the help" - surfaced immediately after the hero using
-// the standard Card-based NeedCapacityCard (also used on FindCarePage),
-// not a homepage-only bespoke variant.
+// the standard Card-based NeedCapacityCard (also used on FindCarePage and
+// CountyPage), not a homepage-only bespoke variant.
 function NeedHelpBand() {
   return (
     <section

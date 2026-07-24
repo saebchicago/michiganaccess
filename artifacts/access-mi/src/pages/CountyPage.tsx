@@ -51,6 +51,7 @@ import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 import PopulationSparkline from "@/components/county/PopulationSparkline";
 import SnapshotCard from "@/components/shared/SnapshotCard";
 import CountyInsightLinks from "@/components/county/CountyInsightLinks";
+import { NeedCapacityCard } from "@/components/shared/NeedCapacityCard";
 import DataConfidenceCard, {
   buildDataConfidence,
 } from "@/components/shared/DataConfidenceCard";
@@ -567,6 +568,9 @@ export default function CountyPage() {
             ) : null;
           })()}
         </section>
+
+        {/* Care capacity vs. need */}
+        <NeedCapacityCard county={county} />
 
         {/* Data Confidence */}
         <DataConfidenceCard data={dataConfidence} />
