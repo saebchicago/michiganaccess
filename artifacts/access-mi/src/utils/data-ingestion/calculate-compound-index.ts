@@ -1,19 +1,52 @@
 /**
  * Calculate Compound Access Deficit Index per census tract.
  *
- * Reads from: food_access_tracts, broadband_access, transit_stops,
- *   compound data from HRSA HPSA, CDC SVI, ej_screen, ACEEE energy burden
+ * !! DISABLED - DO NOT RUN WITHOUT FIXING THE INPUTS FIRST !!
  *
- * Weights:
- *   food(15%) + broadband(15%) + transit(15%) + healthcare(20%)
- *   + svi(15%) + ej(10%) + energy(10%)
+ * This job is not wired into the build, CI, or any npm script, and nothing
+ * in the app reads its output. It is kept for reference only.
  *
- * Tiers: Critical ≥ 75, High ≥ 50, Moderate ≥ 25, Low < 25
+ * Its former docstring claimed to read "HRSA HPSA, CDC SVI, ej_screen, ACEEE
+ * energy burden". It does not. Four of its seven inputs are the literal
+ * constant 50 (see the `placeholder` comments below), and those four carry
+ * 60% of the total weight - so every tract's score is 60% the same number.
+ * Running it would write fabricated scores into the `compound_access_index`
+ * Supabase table.
  *
- * Usage: npx tsx calculate-compound-index.ts
+ * Actually sourced here: food desert flag, and broadband (when present).
+ * Not sourced: transit, healthcare/HPSA, SVI, energy burden.
+ *
+ * The county-level index the app really uses was rewritten in Round 6 to
+ * score only sourced dimensions - see src/utils/compoundDeficit.ts. If this
+ * tract-level job is ever revived, mirror that approach: drop any dimension
+ * without a real per-tract source rather than defaulting it to a constant.
+ *
+ * To revive: supply real inputs for the four placeholders, delete the guard
+ * below, and align the weighting with compoundDeficit.ts.
+ *
+ * Usage (blocked): npx tsx calculate-compound-index.ts
  */
 
 import { createClient } from "@supabase/supabase-js";
+
+// Refuse to run while the fabricated placeholders are still in place. This is
+// deliberate: the job is reachable by anyone with the repo and a service-role
+// key, and its output would be indistinguishable from measured data.
+if (!process.env.ALLOW_FABRICATED_COMPOUND_INDEX) {
+  console.error(
+    [
+      "calculate-compound-index is DISABLED.",
+      "",
+      "4 of its 7 inputs (transit, healthcare/HPSA, SVI, energy) are the",
+      "hardcoded constant 50 and carry 60% of the score's weight. Running it",
+      "would write fabricated values into compound_access_index.",
+      "",
+      "Fix the placeholder inputs first. See src/utils/compoundDeficit.ts for",
+      "the sourced-inputs-only approach used by the live county index.",
+    ].join("\n"),
+  );
+  process.exit(1);
+}
 
 const supabase = createClient(
   process.env.SUPABASE_URL || "",

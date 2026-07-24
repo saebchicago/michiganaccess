@@ -36,7 +36,7 @@ function getLayerData(layer: AtlasLayer): CountyMetrics[] {
           value = null;
           break;
         case "compound":
-          value = computeCompoundDeficit(profile).compound;
+          value = computeCompoundDeficit(name, profile).compound;
           break;
         case "food_desert":
           // Guard 3: food insecurity != food desert tracts; pending USDA tract ingestion

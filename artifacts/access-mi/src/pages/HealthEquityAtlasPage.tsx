@@ -55,7 +55,7 @@ function getCountyData(
     population: p.population,
     uninsured: parseFloat(h[0]?.value || "0"),
     poverty: parseFloat(h[2]?.value || "0"),
-    compound: computeCompoundDeficit(p).compound,
+    compound: computeCompoundDeficit(county, p).compound,
     // FCC BDC 2024: real value for 10/83 counties, undefined elsewhere
     broadband_unserved: broadbandLookup[county] as number | undefined,
     // MDHHS: null until 2020-2024 five-year CSV seeded via seed-maternal-health.ts
@@ -127,8 +127,9 @@ export default function HealthEquityAtlasPage() {
           result[name] = null;
           break;
         case "compound":
-          // Access Michigan Index formula - derived from verified inputs
-          result[name] = computeCompoundDeficit(profile).compound;
+          // CADI: equal-weighted composite of three sourced dimensions
+          // (uninsured, food insecurity, primary care shortage). MODELED.
+          result[name] = computeCompoundDeficit(name, profile).compound;
           break;
         case "energy_burden":
           // ACEEE LEAD Tool 2023 - 7/83 counties; null elsewhere
