@@ -359,6 +359,15 @@ export const ROUTE_META: RouteMeta[] = [
       "Official .gov lookup tools for federal, state, and local Michigan representatives.",
   },
   {
+    path: "/data-gaps",
+    title: "Open Data Gaps | Access Michigan",
+    description:
+      "What Michigan public data exists, what doesn't, who holds it, and how residents can help close the gaps - with a citation for every gap claim.",
+    h1: "Open Data Gaps",
+    summary:
+      "Documented gaps in Michigan's public data, in two honest lanes, with citations and constructive actions.",
+  },
+  {
     path: "/transparency",
     title: "Transparency Intelligence | Access Michigan",
     description:
