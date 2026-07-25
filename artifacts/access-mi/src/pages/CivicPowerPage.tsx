@@ -31,7 +31,7 @@ import { Button } from "@/components/ui/button";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import SuggestResource from "@/components/community/SuggestResource";
 import HelpfulVote from "@/components/community/HelpfulVote";
-import { MICHIGAN_CIVIC_STATS } from "@/data/civicBoards";
+import { MICHIGAN_BOARDS, MICHIGAN_CIVIC_STATS } from "@/data/civicBoards";
 import {
   MICHIGAN_RACE_DATA,
   STATE_UNCONTESTED_COMPARISON,
@@ -150,49 +150,51 @@ const CivicPowerPage = () => {
       <section className="border-y border-border bg-muted/30">
         <div className="container py-6">
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+            {/* Values render from MICHIGAN_CIVIC_STATS so this band cannot
+                drift from the registry that sources them. */}
             <div className="text-center">
               <p className="text-3xl font-bold text-red-600 tabular-nums">
-                79.7%
+                {MICHIGAN_CIVIC_STATS.uncontestedRatePct}%
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 of Michigan races uncontested
               </p>
               <p className="text-[9px] text-muted-foreground/60">
-                Ballotpedia analysis / Michigan SOS 2024. Formal provenance
-                label pending.
+                Ballotpedia analysis / Michigan SOS 2024
               </p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-foreground tabular-nums">
-                ~50,000
+                ~{MICHIGAN_CIVIC_STATS.boardSeatsEstimated.toLocaleString()}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 governing board seats statewide
               </p>
               <p className="text-[9px] text-muted-foreground/60">
-                Estimated across all board types
+                Platform estimate across all board types - not an official count
               </p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-orange-600 tabular-nums">
-                22%
+                {MICHIGAN_CIVIC_STATS.detroitLocalTurnout}%
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 Detroit local election turnout
               </p>
               <p className="text-[9px] text-muted-foreground/60">
-                Michigan SOS 2017
+                Michigan SOS 2017 city election
               </p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-amber-600 tabular-nums">
-                38%
+                {MICHIGAN_CIVIC_STATS.engagementSatisfaction2025}%
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 of officials say residents are engaged
               </p>
               <p className="text-[9px] text-muted-foreground/60">
-                CLOSUP MPPS 2025 (down from 58%)
+                CLOSUP MPPS 2025 (down from{" "}
+                {MICHIGAN_CIVIC_STATS.engagementSatisfaction2012}% in 2012)
               </p>
             </div>
           </div>
@@ -213,7 +215,7 @@ const CivicPowerPage = () => {
             {
               icon: BookOpen,
               title: "Where to Serve",
-              desc: "15 types of governing boards where Michigan residents can apply. Health, housing, transit, environment, education - with how-to-apply guides.",
+              desc: `${MICHIGAN_BOARDS.length} types of governing boards where Michigan residents can apply. Health, housing, transit, environment, education - with how-to-apply guides.`,
               href: "/civic-power/boards",
               color: "text-michigan-teal-deep",
               badge: "New",

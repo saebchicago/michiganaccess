@@ -16,6 +16,7 @@ import ShareButton from "@/components/shared/ShareButton";
 import { Link } from "react-router-dom";
 import {
   COUNTIES_COVERED,
+  LANGUAGES_SUPPORTED,
 } from "@/config/platformConstants";
 
 const fade = {
@@ -70,14 +71,14 @@ const studies = [
     approach: [
       "Template-assisted appeal letter generation using denial code mapping and Michigan insurance regulations (MCL 500.2213)",
       "Automated extraction of carrier-specific submission requirements and deadlines",
-      "Template library covering 24 common denial categories with clinical justification frameworks",
+      "Template library covering the six most common denial categories with clinical justification frameworks",
       "Step-by-step guided workflow designed to reduce preparation time significantly",
     ],
     projectedOutcomes: [
       {
         label: "Denial categories covered",
-        value: "24",
-        basis: "Platform template library",
+        value: "6",
+        basis: "Platform template library (AIAppealGenerator DENIAL_TYPES)",
       },
       {
         label: "Prep time reduction target",
@@ -111,7 +112,11 @@ const studies = [
         value: "83/83",
         basis: "Michigan county data",
       },
-      { label: "Languages supported", value: "4", basis: "EN, ES, AR, BN" },
+      {
+        label: "Languages supported",
+        value: String(LANGUAGES_SUPPORTED),
+        basis: "EN, ES, AR, BN",
+      },
     ],
   },
 ];

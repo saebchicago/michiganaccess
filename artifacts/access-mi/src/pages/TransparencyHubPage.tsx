@@ -93,7 +93,7 @@ export default function TransparencyHubPage() {
                 color: "text-teal-400",
               },
               {
-                value: "8",
+                value: String(MICHIGAN_POLITICAL_PARTY_COUNT),
                 label: "Political Parties",
                 source: "Michigan SOS 2025",
                 color: "text-white",
