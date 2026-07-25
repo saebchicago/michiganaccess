@@ -55,6 +55,7 @@ import {
 import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
 import { SuppressedEstimate } from "@/components/shared/ReliabilityNote";
 import { useCounty, MICHIGAN_COUNTIES } from "@/contexts/CountyContext";
+import { GapFlag } from "@/components/shared/GapFlag";
 import {
   COUNTY_TRAFFIC_FATALITIES,
   FARS_SOURCE,
@@ -643,7 +644,11 @@ function TrafficSafetyDataTab() {
             Persons killed in fatal crashes, {FARS_SOURCE}, {FARS_VINTAGE}{" "}
             (5-year window). Counties with fewer than{" "}
             {FARS_SUPPRESSION_THRESHOLD} fatal events in the window show a
-            suppressed rate rather than a noisy per-100,000 figure.
+            suppressed rate rather than a noisy per-100,000 figure.{" "}
+            <GapFlag
+              gapId="traffic-fatality-rates-small-counties"
+              className="align-middle"
+            />
           </p>
         </CardContent>
       </Card>

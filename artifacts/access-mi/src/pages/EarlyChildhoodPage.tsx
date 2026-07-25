@@ -9,6 +9,7 @@ import { useCounty } from "@/contexts/CountyContext";
 import CountyInsightLinks from "@/components/county/CountyInsightLinks";
 import ChildcareEducationHub from "@/components/family/ChildcareEducationHub";
 import ChildcareDesertCard from "@/components/equity/ChildcareDesertCard";
+import { GapFlag } from "@/components/shared/GapFlag";
 import {
   RX_KIDS_COMMUNITIES,
   RX_KIDS_COVERED_COUNTIES,
@@ -307,8 +308,10 @@ export default function EarlyChildhoodPage() {
       <section className="container max-w-4xl py-8 border-t border-border/30">
         <Card className="bg-muted/30">
           <CardContent className="py-4 space-y-2">
-            <p className="text-sm font-semibold text-foreground">
+            <p className="text-sm font-semibold text-foreground flex items-center gap-2">
               What we don't have yet
+              <GapFlag gapId="kindergarten-readiness" />
+              <GapFlag gapId="gsrp-headstart-capacity" />
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Michigan discontinued its statewide Kindergarten Entry (readiness)

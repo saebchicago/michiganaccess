@@ -152,6 +152,7 @@ const pages = {
       default: m.CHNASharePage,
     })),
   ),
+  OpenDataGapsPage: lazy(() => import("@/pages/OpenDataGapsPage")),
   FOIAPage: lazy(() =>
     import("@/pages/FOIAPage").then((m) => ({ default: m.FOIAPage })),
   ),
@@ -642,6 +643,11 @@ export const APP_ROUTES: RouteEntry[] = [
     label: "Transparency Intelligence",
   },
   {
+    path: "/data-gaps",
+    component: pages.OpenDataGapsPage,
+    label: "Open Data Gaps",
+  },
+  {
     path: "/transparency/records",
     component: pages.TransparencyPage,
     label: "Public Records & FOIA",
@@ -999,6 +1005,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
     title: "Civic & Democracy",
     iconName: "Landmark",
     links: [
+      { label: "Open Data Gaps", href: "/data-gaps", badge: "New" },
       { label: "Civic Power Map", href: "/civic-power", badge: "New" },
       { label: "Where to Serve", href: "/civic-power/boards", badge: "New" },
       {

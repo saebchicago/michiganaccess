@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -684,7 +685,14 @@ export default function MethodologyPage() {
               individual household circumstances. MDHHS disparity indices use
               age-adjusted rates; year-over-year comparisons should account for
               methodology changes. All data has inherent lag (typically 1–2
-              years from collection to publication).
+              years from collection to publication). Known gaps in the public
+              record itself - datasets government does not publish, and
+              published datasets not yet ingested here - are documented with
+              citations on the{" "}
+              <Link to="/data-gaps" className="text-primary underline">
+                Open Data Gaps
+              </Link>{" "}
+              page.
             </p>
             <p className="text-xs text-muted-foreground mt-2">
               <a

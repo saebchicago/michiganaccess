@@ -212,6 +212,7 @@ const Footer = () => {
         { label: "Accessibility", href: "/accessibility" },
         { label: "Site Map", href: "/sitemap" },
         { label: "System Status", href: "/status" },
+        { label: "Open Data Gaps", href: "/data-gaps" },
         { label: "Site Data Report", href: "/site-report" },
         { label: "How This Was Built", href: "/portfolio" },
         { label: "Replicate for Your State", href: "/replicate" },

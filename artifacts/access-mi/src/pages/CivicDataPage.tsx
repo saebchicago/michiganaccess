@@ -57,6 +57,7 @@ import BroadbandDashboard from "@/components/broadband/BroadbandDashboard";
 import EconomicPulse from "@/components/economic/EconomicPulse";
 import { LegislativeTracker } from "@/components/civic/LegislativeTracker";
 import { DataProvenance } from "@/components/shared/DataProvenance";
+import { GapFlag } from "@/components/shared/GapFlag";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -413,6 +414,10 @@ const CivicDataPage = () => {
                           aria-hidden="true"
                         />
                         <span>
+                          <GapFlag
+                            gapId="foia-statewide-counts"
+                            className="mr-1.5 align-middle"
+                          />
                           Michigan does not publish a statewide aggregate count
                           of FOIA requests. A chart previously displayed here
                           used fabricated placeholder data and has been removed.
