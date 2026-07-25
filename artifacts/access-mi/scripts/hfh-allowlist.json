@@ -1,10 +1,7 @@
 [
   "src/pages/ForHealthSystemsPage.tsx",
   "src/pages/LeanHealthcarePage.tsx",
-  "src/data/chnaGapMapping.json",
   "src/data/chnaSeed.ts",
-  "src/data/cmsHsaf.ts",
-  "src/data/mockFacilities.ts",
   "src/data/verifiedHealthFacilities.json",
   "src/components/shared/SubstanceAbuseInsights.tsx",
   "src/components/map/NetworkFilter.tsx",
@@ -14,7 +11,6 @@
   "src/pages/PortfolioPage.tsx",
   "src/pages/CountyPage.tsx",
   "src/pages/ClinicalTrialsPage.tsx",
-  "src/pages/QualityComparisonPage.tsx",
   "src/pages/MarketIntelligencePage.tsx",
   "src/ACCESS_MI_SUPERPROMPT.md"
 ]

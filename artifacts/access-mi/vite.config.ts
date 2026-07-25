@@ -161,10 +161,6 @@ export default defineConfig({
           if (id.includes("node_modules/jspdf")) {
             return "vendor-pdf";
           }
-          // Screenshot capture for the same export path. ~200 KB.
-          if (id.includes("node_modules/html2canvas")) {
-            return "vendor-html2canvas";
-          }
           // Map runtime - cached across every page that renders a map.
           if (id.includes("node_modules/leaflet/")) {
             return "vendor-leaflet";

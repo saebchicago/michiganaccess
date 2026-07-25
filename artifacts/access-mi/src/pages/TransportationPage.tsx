@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
 import { COUNTIES_COVERED } from "@/config/platformConstants";
@@ -510,7 +511,8 @@ const MICHIGAN_SAFETY_TRENDS = [
   {
     label: "Bicyclist fatalities",
     value: "29",
-    context: "2024, up 21% from 24 in 2023; bicyclist-involved crashes up 20% in 2024",
+    context:
+      "2024, up 21% from 24 in 2023; bicyclist-involved crashes up 20% in 2024",
     source: "MSP, Aug 2025",
   },
 ];
@@ -521,16 +523,27 @@ function MichiganSafetyTrendsCard() {
       <CardHeader className="pb-3">
         <div className="flex flex-wrap items-center gap-2">
           <CardTitle className="text-base">Michigan Safety Trends</CardTitle>
-          <ProvenanceTag label="VERIFIED" source="Michigan State Police" vintage="2022-2025" />
+          <ProvenanceTag
+            label="VERIFIED"
+            source="Michigan State Police"
+            vintage="2022-2025"
+          />
         </div>
       </CardHeader>
       <CardContent>
         <div className="grid gap-3 sm:grid-cols-3">
           {MICHIGAN_SAFETY_TRENDS.map((s) => (
-            <div key={s.label} className="rounded-lg border border-border p-3 space-y-1">
+            <div
+              key={s.label}
+              className="rounded-lg border border-border p-3 space-y-1"
+            >
               <p className="text-xl font-bold text-foreground">{s.value}</p>
-              <p className="text-[11px] font-medium text-muted-foreground">{s.label}</p>
-              <p className="text-[11px] text-muted-foreground/80">{s.context}</p>
+              <p className="text-[11px] font-medium text-muted-foreground">
+                {s.label}
+              </p>
+              <p className="text-[11px] text-muted-foreground/80">
+                {s.context}
+              </p>
               <p className="text-[10px] text-muted-foreground/70">{s.source}</p>
             </div>
           ))}
@@ -559,8 +572,14 @@ function TrafficSafetyDataTab() {
       <Card>
         <CardHeader className="pb-3">
           <div className="flex flex-wrap items-center gap-2">
-            <CardTitle className="text-base">Traffic Fatalities by County</CardTitle>
-            <ProvenanceTag label="VERIFIED" source={FARS_SOURCE} vintage={FARS_VINTAGE} />
+            <CardTitle className="text-base">
+              Traffic Fatalities by County
+            </CardTitle>
+            <ProvenanceTag
+              label="VERIFIED"
+              source={FARS_SOURCE}
+              vintage={FARS_VINTAGE}
+            />
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -574,13 +593,17 @@ function TrafficSafetyDataTab() {
                   <SuppressedEstimate source={FARS_SOURCE} />
                 ) : (
                   <p className="text-sm text-foreground">
-                    <span className="text-xl font-bold">{selected.fiveYearCount}</span>{" "}
-                    fatal-crash deaths over {FARS_VINTAGE} ({selected.ratePer100k?.toFixed(1)} per
-                    100,000 residents)
+                    <span className="text-xl font-bold">
+                      {selected.fiveYearCount}
+                    </span>{" "}
+                    fatal-crash deaths over {FARS_VINTAGE} (
+                    {selected.ratePer100k?.toFixed(1)} per 100,000 residents)
                   </p>
                 )
               ) : (
-                <p className="text-sm text-muted-foreground">No data on file for this county.</p>
+                <p className="text-sm text-muted-foreground">
+                  No data on file for this county.
+                </p>
               )}
             </div>
           )}
@@ -590,7 +613,9 @@ function TrafficSafetyDataTab() {
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">
                   <th className="py-2 pr-4 font-semibold">County</th>
-                  <th className="py-2 pr-4 font-semibold">Deaths ({FARS_VINTAGE})</th>
+                  <th className="py-2 pr-4 font-semibold">
+                    Deaths ({FARS_VINTAGE})
+                  </th>
                   <th className="py-2 font-semibold">Rate per 100k</th>
                 </tr>
               </thead>
@@ -598,7 +623,9 @@ function TrafficSafetyDataTab() {
                 {rows.map(({ county: rowCounty, data }) => (
                   <tr key={rowCounty} className="border-b border-border/50">
                     <td className="py-1.5 pr-4 text-foreground">{rowCounty}</td>
-                    <td className="py-1.5 pr-4 text-muted-foreground">{data.fiveYearCount}</td>
+                    <td className="py-1.5 pr-4 text-muted-foreground">
+                      {data.fiveYearCount}
+                    </td>
                     <td className="py-1.5 text-muted-foreground">
                       {data.suppressed ? (
                         <span className="italic">suppressed</span>
@@ -613,9 +640,10 @@ function TrafficSafetyDataTab() {
           </div>
 
           <p className="text-xs text-muted-foreground">
-            Persons killed in fatal crashes, {FARS_SOURCE}, {FARS_VINTAGE} (5-year window).
-            Counties with fewer than {FARS_SUPPRESSION_THRESHOLD} fatal events in the window show
-            a suppressed rate rather than a noisy per-100,000 figure.
+            Persons killed in fatal crashes, {FARS_SOURCE}, {FARS_VINTAGE}{" "}
+            (5-year window). Counties with fewer than{" "}
+            {FARS_SUPPRESSION_THRESHOLD} fatal events in the window show a
+            suppressed rate rather than a noisy per-100,000 figure.
           </p>
         </CardContent>
       </Card>
@@ -801,16 +829,16 @@ function StopArmCameraExplainer() {
                 </p>
                 <ul className="list-disc pl-5 space-y-1">
                   <li>
-                    An estimated <strong>39.3 million</strong> illegal
-                    passings of stopped school buses occur nationwide per
-                    school year, projected from a one-day count of drivers
-                    reporting how many vehicles passed their bus illegally
+                    An estimated <strong>39.3 million</strong> illegal passings
+                    of stopped school buses occur nationwide per school year,
+                    projected from a one-day count of drivers reporting how many
+                    vehicles passed their bus illegally
                   </li>
                   <li>
                     NHTSA crash data (2014-2023) show most school-bus-related
-                    fatalities are people outside the bus:{" "}
-                    <strong>71%</strong> were occupants of other vehicles and{" "}
-                    <strong>16%</strong> were pedestrians
+                    fatalities are people outside the bus: <strong>71%</strong>{" "}
+                    were occupants of other vehicles and <strong>16%</strong>{" "}
+                    were pedestrians
                   </li>
                   <li>
                     <strong>67,258</strong> illegal passes were reported by
@@ -818,11 +846,10 @@ function StopArmCameraExplainer() {
                     single survey day in 2025
                   </li>
                   <li>
-                    Districts with stop-arm camera enforcement report an
-                    average <strong>30% reduction</strong> in violations
-                    year over year; individual programs have reported larger
-                    first-year drops (35% in Manassas, VA; 40% in Suffolk
-                    County, NY)
+                    Districts with stop-arm camera enforcement report an average{" "}
+                    <strong>30% reduction</strong> in violations year over year;
+                    individual programs have reported larger first-year drops
+                    (35% in Manassas, VA; 40% in Suffolk County, NY)
                   </li>
                 </ul>
                 <p className="text-[10px] text-muted-foreground/60 mt-2">
@@ -1410,6 +1437,34 @@ export default function TransportationPage() {
   });
   const [search, setSearch] = useState("");
   const [activeTab, setActiveTab] = useState("transit");
+  const [mainTab, setMainTab] = useState("resources");
+  const location = useLocation();
+
+  // Sync from the URL hash, mirroring EnvironmentPage's pattern. The homepage
+  // TransportationSafetyCallout links /transportation#safety, which previously
+  // landed on the default view with no scroll because this page had no ids and
+  // no hash handling. #safety selects the Resources tab AND its Safety
+  // section; the other hashes map to the top-level tabs.
+  useEffect(() => {
+    const hash = location.hash.replace("#", "");
+    const sectionHashes = ["transit", "safety", "school", "accessibility"];
+    const mainTabMap: Record<string, string> = {
+      resources: "resources",
+      "active-transport": "active-transport",
+      walking: "active-transport",
+      biking: "active-transport",
+      stoparm: "stoparm",
+      "stop-arm": "stoparm",
+      "data-trends": "data-trends",
+      trends: "data-trends",
+    };
+    if (sectionHashes.includes(hash)) {
+      setMainTab("resources");
+      setActiveTab(hash);
+    } else if (hash && mainTabMap[hash]) {
+      setMainTab(mainTabMap[hash]);
+    }
+  }, [location.hash]);
 
   const activeSection = sections.find((s) => s.key === activeTab)!;
 
@@ -1481,7 +1536,7 @@ export default function TransportationPage() {
         <StatsCards />
 
         {/* Main Tabs */}
-        <Tabs defaultValue="resources" className="space-y-6">
+        <Tabs value={mainTab} onValueChange={setMainTab} className="space-y-6">
           <TabsList className="w-full justify-start flex-wrap h-auto gap-1 p-1">
             <TabsTrigger value="resources">Resources</TabsTrigger>
             <TabsTrigger value="active-transport">
@@ -1725,12 +1780,11 @@ export default function TransportationPage() {
                             automatically detect and cite drivers who illegally
                             pass stopped school buses. Dearborn is the first
                             Michigan community to launch a citywide program
-                            (enforcement began January 2026); BusPatrol
-                            reports communities nationwide see an average{" "}
+                            (enforcement began January 2026); BusPatrol reports
+                            communities nationwide see an average{" "}
                             <strong>30% reduction</strong> in violations year
-                            over year, with over{" "}
-                            <strong>90%</strong> of first-time violators not
-                            reoffending.
+                            over year, with over <strong>90%</strong> of
+                            first-time violators not reoffending.
                           </p>
                           <p className="text-[10px] text-muted-foreground/60">
                             Source:{" "}
