@@ -35,6 +35,26 @@ jobs:
       - name: Provenance gate
         working-directory: artifacts/access-mi
         run: pnpm check:provenance
+      - name: Integrity guards
+        # The full static guard chain. These previously ran only inside the
+        # app's `build` script, which no blocking job invoked - Netlify's root
+        # build calls vite directly and the only CI job running `pnpm build`
+        # was the non-blocking lighthouse job. That made every guard advisory.
+        # All of these are static file scans; none needs network access.
+        working-directory: artifacts/access-mi
+        run: |
+          node scripts/check-links.mjs
+          node scripts/check-counts.mjs
+          node scripts/check-zip-population.mjs
+          node scripts/check-county-facilities.mjs
+          node scripts/check-trend-series.mjs
+          node scripts/check-snap-county-dataset.mjs
+          node scripts/check-fabrication.mjs
+          node scripts/check-copy.mjs
+          node scripts/check-no-backend-leak.mjs
+          node scripts/check-dataset-labels.mjs
+          node scripts/check-integrity-labels.mjs
+          node scripts/check-route-reachability.mjs
       - name: Allowlist shrink-only check
         working-directory: artifacts/access-mi
         run: |
@@ -55,11 +75,13 @@ jobs:
           fi
 
   lighthouse:
-    # Informational only while a real baseline is established - see the
-    # comment at the top of artifacts/access-mi/.lighthouserc.cjs. Does not
-    # block merges yet.
+    # BLOCKING as of Round 8. Every assertion in .lighthouserc.cjs is a
+    # "warn", so a low score cannot fail this job - a failure here always
+    # means a Lighthouse runtime error, i.e. the production bundle genuinely
+    # did not render. This is the only check that exercises the real bundle
+    # in a real browser; it is what finally surfaced the TDZ crash that
+    # served a blank page while 1017 unit tests stayed green.
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
