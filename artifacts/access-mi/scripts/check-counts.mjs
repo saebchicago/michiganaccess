@@ -178,12 +178,21 @@ async function main() {
   const freshnessTrackedCount = extractConstant(platformSrc, "FRESHNESS_TRACKED_COUNT");
   const liveMonitoredCount = extractConstant(platformSrc, "LIVE_MONITORED_COUNT");
 
-  const dashboardPath = path.join(srcDir, "components/shared/DataFreshnessDashboard.tsx");
-  const actualFreshnessCount = await countArrayEntries(dashboardPath, "DATA_SOURCES", `\\bname:\\s*"`);
+  // NAMED EXCEPTION (Round 8): this check previously counted the private
+  // DATA_SOURCES array inside DataFreshnessDashboard.tsx. That array was a
+  // hand-maintained duplicate of the dataFreshness.ts registry, and the two
+  // had drifted into public contradiction (/methodology said "100% fresh,
+  // verified March 2026" while /about said "1 of 15 fresh, verified July
+  // 2026"). The duplicate was deleted and the dashboard now renders the
+  // registry, so the count assertion follows the data to its single source.
+  // The assertion itself is unchanged: the constant must equal the actual
+  // array length.
+  const freshnessRegistryPath = path.join(srcDir, "data/dataFreshness.ts");
+  const actualFreshnessCount = await countArrayEntries(freshnessRegistryPath, "DATA_FRESHNESS_SOURCES", `\\bname:\\s*"`);
 
   if (actualFreshnessCount !== freshnessTrackedCount) {
     issues.push(
-      `FRESHNESS_TRACKED_COUNT=${freshnessTrackedCount} in platformConstants.ts does not match DATA_SOURCES.length=${actualFreshnessCount} in DataFreshnessDashboard.tsx. Update the constant or the array so they match.`,
+      `FRESHNESS_TRACKED_COUNT=${freshnessTrackedCount} in platformConstants.ts does not match DATA_FRESHNESS_SOURCES.length=${actualFreshnessCount} in src/data/dataFreshness.ts. Update the constant or the registry so they match.`,
     );
   }
 

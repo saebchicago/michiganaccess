@@ -31,6 +31,7 @@ import Layout from "@/components/layout/Layout";
 import DisparityBars from "@/components/equity/DisparityBars";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { GapFlag } from "@/components/shared/GapFlag";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -229,9 +230,12 @@ export default function MaternalHealthPage() {
                 urban counties where racial breakdowns are published.
               </p>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2">
-              Source: MDHHS Vital Records, 2019-2023 aggregated. Suppressed
-              where &lt;20 events. Macomb and Ottawa Black IMR suppressed.
+            <p className="text-[10px] text-muted-foreground mt-2 flex items-center gap-1.5 flex-wrap">
+              <span>
+                Source: MDHHS Vital Records, 2019-2023 aggregated. Suppressed
+                where &lt;20 events. Macomb and Ottawa Black IMR suppressed.
+              </span>
+              <GapFlag gapId="infant-mortality-small-counties" />
             </p>
           </CardContent>
         </Card>

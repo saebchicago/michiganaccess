@@ -8,6 +8,7 @@ import {
   ArrowRight,
   Shield,
   Info,
+  Landmark,
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -93,7 +94,7 @@ export default function TransparencyHubPage() {
                 color: "text-teal-400",
               },
               {
-                value: "8",
+                value: String(MICHIGAN_POLITICAL_PARTY_COUNT),
                 label: "Political Parties",
                 source: "Michigan SOS 2025",
                 color: "text-white",
@@ -143,6 +144,14 @@ export default function TransparencyHubPage() {
               desc: "Lobbying expenditures by industry, campaign finance explainers, and links to Michigan MiTN and OpenSecrets.",
               href: "/transparency/money",
               color: "text-teal-600",
+              badge: "New",
+            },
+            {
+              icon: Landmark,
+              title: "Open Data Gaps",
+              desc: "What Michigan public data exists, what doesn't, who holds it, and how residents can help close the gaps - with a citation for every gap claim.",
+              href: "/data-gaps",
+              color: "text-michigan-blue",
               badge: "New",
             },
             {

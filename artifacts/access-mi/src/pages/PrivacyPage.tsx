@@ -195,8 +195,10 @@ export default function PrivacyPage() {
             geographic region. We do not enable Google Signals, advertising
             features, or User-ID identification, and this data is never used for
             advertising or to identify individual visitors. You can opt out by
-            enabling Do Not Track, using a browser extension that blocks GA, or
-            installing the Google Analytics Opt-out Browser Add-on.
+            using a browser extension that blocks Google Analytics or by
+            installing the Google Analytics Opt-out Browser Add-on. (We do not
+            currently read the browser Do Not Track signal, and Google Analytics
+            does not honor it - a browser-level block is the effective opt-out.)
           </p>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
@@ -243,21 +245,20 @@ export default function PrivacyPage() {
           </h3>
           <p>
             Visiting a crisis-resource link (988, 741741, 211) or clicking a
-            page section related to sensitive topics is measured the same way
-            as any other page view under Section 3b - as an aggregate,
+            page section related to sensitive topics is measured the same way as
+            any other page view under Section 3b - as an aggregate,
             non-identifying count. We do not flag, tag, or separately profile
             visits to crisis or sensitive-topic pages, and this data is never
             linked to your identity.
           </p>
           <p className="mt-2">
             The <strong>Quick Exit</strong> button (and the Escape key) hides
-            the page immediately and replaces the current browser-history
-            entry with a neutral site, so clicking "back" will not return a
-            visitor to this site. It does <strong>not</strong> clear your full
-            browsing history or close the browser tab. If you are in a
-            situation where someone else may check your device's browsing
-            history, consider using a private/incognito browsing window in
-            addition to Quick Exit.
+            the page immediately and replaces the current browser-history entry
+            with a neutral site, so clicking "back" will not return a visitor to
+            this site. It does <strong>not</strong> clear your full browsing
+            history or close the browser tab. If you are in a situation where
+            someone else may check your device's browsing history, consider
+            using a private/incognito browsing window in addition to Quick Exit.
           </p>
         </Section>
 
@@ -600,11 +601,11 @@ export default function PrivacyPage() {
             you to review this policy periodically.
           </p>
           <p className="mt-3">
-            All previous versions of this policy are available through our{" "}
+            Material updates to this policy will be recorded in our{" "}
             <Link to="/changelog" className="text-primary hover:underline">
               changelog
-            </Link>
-            .
+            </Link>{" "}
+            from the date of this revision forward.
           </p>
         </Section>
 

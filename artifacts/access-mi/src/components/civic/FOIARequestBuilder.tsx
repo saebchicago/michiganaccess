@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { getGapById } from "@/data/openDataGaps";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -151,12 +153,23 @@ ${fields.email}`;
 
 export default function FOIARequestBuilder() {
   const { county } = useCounty();
+  const [searchParams] = useSearchParams();
+
+  // /foia?topic=<gapId> - arriving from an Open Data Gaps card prefills the
+  // records description from the gap registry, so the FOIA letter names the
+  // specific missing record instead of starting from a blank box.
+  const gap = getGapById(searchParams.get("topic") ?? "");
+  const gapRecordsPrefill = gap
+    ? `Records sufficient to show: ${gap.whatIsMissing} ` +
+      `(Context: ${gap.whatExists})`
+    : "";
+
   const [level, setLevel] = useState<FoiaLevel>("municipal");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [agency, setAgency] = useState(county ? `${county} County Clerk` : "");
-  const [records, setRecords] = useState("");
+  const [records, setRecords] = useState(gapRecordsPrefill);
   const [dateRange, setDateRange] = useState("");
   const [generated, setGenerated] = useState("");
   const [copied, setCopied] = useState(false);

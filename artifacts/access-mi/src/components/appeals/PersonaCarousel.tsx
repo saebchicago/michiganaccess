@@ -18,7 +18,11 @@ interface Persona {
   location: string;
   situation: string;
   solution: string;
-  successStory: string;
+  /** Third-person illustrative outcome - NOT a testimonial. Quoted
+   * first-person success stories attributed to named personas read as real
+   * endorsements (FTC endorsement-guide territory) even under an
+   * "illustrative" banner. */
+  illustrativeOutcome: string;
   links: { label: string; href: string }[];
   color: string;
 }
@@ -33,8 +37,8 @@ const PERSONAS: Persona[] = [
       "Maria's dental claim was denied by Medicaid after she finally got coverage through Healthy Michigan Plan.",
     solution:
       "Used our Medicaid Fair Hearing template → benefits continued during appeal → approval in 21 days.",
-    successStory:
-      '"I didn\'t know I could fight back. The template made it so easy-I just filled in my information and mailed it."',
+    illustrativeOutcome:
+      "In this scenario, the template walks the resident through filling in their information and mailing the appeal - no legal help required to start.",
     links: [
       { label: "Financial assistance", href: "/financial-help" },
       { label: "Free clinics nearby", href: "/find-care" },
@@ -50,8 +54,8 @@ const PERSONAS: Persona[] = [
       "Dorothy's Medicare Advantage plan denied physical therapy for her hip replacement recovery. Employer plans can also use the free DIFS external review process to independently overturn denials.",
     solution:
       "Built an appeal letter using CMS coverage criteria → peer-to-peer review → PT approved for 12 weeks.",
-    successStory:
-      '"My doctor said the PT was critical. The appeal letter helped me explain why in terms the insurance company understood."',
+    illustrativeOutcome:
+      "In this scenario, the appeal letter translates the physician's medical-necessity rationale into the coverage criteria the plan reviews against.",
     links: [
       { label: "Medicare appeal guide", href: "#ai-generator" },
       { label: "DIFS external review", href: "#flowchart" },
@@ -132,9 +136,9 @@ const PersonaCarousel = () => {
                     </div>
                   </div>
 
-                  <blockquote className="text-sm italic text-muted-foreground border-l-2 border-primary/30 pl-3">
-                    {persona.successStory}
-                  </blockquote>
+                  <p className="text-sm italic text-muted-foreground border-l-2 border-primary/30 pl-3">
+                    {persona.illustrativeOutcome}
+                  </p>
 
                   <div className="flex flex-wrap gap-2 pt-2">
                     {persona.links.map((link) => (

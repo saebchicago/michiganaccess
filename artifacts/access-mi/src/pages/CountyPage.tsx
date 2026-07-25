@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import NotFound from "./NotFound";
+import { MI_BENCHMARKS } from "@/data/michiganBenchmarks";
 import { TruncatedResourceList } from "@/components/shared/TruncatedResourceList";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -67,13 +68,11 @@ import { MEDICAID_COVERAGE_AT_RISK_FALLBACK } from "@/data/medicaidCoverageAtRis
 import { SNAP_COVERAGE_AT_RISK_FALLBACK } from "@/data/snapCoverageAtRiskFallback";
 import { DUAL_ELIGIBLE_EXPOSURE_FALLBACK } from "@/data/dualEligibleExposureFallback";
 
-// State benchmarks: County Health Rankings & Roadmaps 2025 edition
+// State benchmarks come from the shared module so BriefPage, HeroSection and
+// this page cannot quote different "state averages" for the same measure.
+// Source: County Health Rankings & Roadmaps 2025 edition
 // https://www.countyhealthrankings.org/health-data/michigan
-const BENCHMARKS: Record<string, { state: string; us: string }> = {
-  "Uninsured rate": { state: "5%", us: "8.0%" },
-  "Food insecurity": { state: "13.3%", us: "13.5%" },
-  "Primary care ratio": { state: "1,240:1", us: "1,310:1" },
-};
+const BENCHMARKS = MI_BENCHMARKS;
 
 const StatSkeleton = () => (
   <Card>

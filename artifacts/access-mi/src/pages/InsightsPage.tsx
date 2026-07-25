@@ -1,5 +1,10 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, LineChart as LineChartIcon, Landmark } from "lucide-react";
+import {
+  ArrowRight,
+  BookOpen,
+  LineChart as LineChartIcon,
+  Landmark,
+} from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -49,14 +54,14 @@ export default function InsightsPage() {
             What the data says about Michigan
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {WEEKLY_INSIGHTS.length} headline findings, {DATA_STORIES.length} data stories, and{" "}
-            {trendCount} decade-long trends - drawn from public records, every number traced to a
-            named source.
+            {WEEKLY_INSIGHTS.length} headline findings, {DATA_STORIES.length}{" "}
+            data stories, and {trendCount} decade-long trends - drawn from
+            public records, every number traced to a named source.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <ProvenanceTag label="VERIFIED" />
-            <ProvenanceTag label="MODELED" />
-            <ProvenanceTag label="PROJECTED" />
+            <ProvenanceTag label="VERIFIED" legend />
+            <ProvenanceTag label="MODELED" legend />
+            <ProvenanceTag label="PROJECTED" legend />
             <Link
               to="/methodology"
               className="ml-1 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"

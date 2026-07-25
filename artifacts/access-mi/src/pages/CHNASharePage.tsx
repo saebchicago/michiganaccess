@@ -286,19 +286,19 @@ export function CHNASharePage() {
             </p>
             <div className="grid sm:grid-cols-3 gap-1 mt-2">
               <div className="flex items-start gap-1.5">
-                <IntegrityBadge label="VERIFIED" />
+                <IntegrityBadge label="VERIFIED" legend />
                 <span>
                   Directly measured from a primary federal or state source.
                 </span>
               </div>
               <div className="flex items-start gap-1.5">
-                <IntegrityBadge label="MODELED" />
+                <IntegrityBadge label="MODELED" legend />
                 <span>
                   Derived from verified inputs via an EPA or FEMA model.
                 </span>
               </div>
               <div className="flex items-start gap-1.5">
-                <IntegrityBadge label="PROJECTED" />
+                <IntegrityBadge label="PROJECTED" legend />
                 <span>Forward-looking estimate.</span>
               </div>
             </div>

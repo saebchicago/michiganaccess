@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "build": "node scripts/generate-source-catalog.mjs && node scripts/generate-sitemap.mjs && node scripts/check-links.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && node scripts/check-snap-county-dataset.mjs && node scripts/check-fabrication.mjs && node scripts/check-copy.mjs && node scripts/check-no-backend-leak.mjs && node scripts/check-provenance.mjs && node scripts/check-dataset-labels.mjs && node scripts/check-integrity-labels.mjs && node scripts/check-route-reachability.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs",
+    "build": "node scripts/generate-source-catalog.mjs && node scripts/generate-sitemap.mjs && node scripts/check-links.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && node scripts/check-snap-county-dataset.mjs && node scripts/check-fabrication.mjs && node scripts/check-copy.mjs && node scripts/check-no-backend-leak.mjs && node scripts/check-provenance.mjs && node scripts/check-dataset-labels.mjs && node scripts/check-integrity-labels.mjs && node scripts/check-route-reachability.mjs && node scripts/check-page-provenance.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs",
     "check:fabrication": "node scripts/check-fabrication.mjs",
     "check:provenance": "node scripts/check-provenance.mjs",
     "check:dataset-labels": "node scripts/check-dataset-labels.mjs",
     "check:integrity-labels": "node scripts/check-integrity-labels.mjs",
     "check:route-reachability": "node scripts/check-route-reachability.mjs",
+    "check:page-provenance": "node scripts/check-page-provenance.mjs",
     "check:copy": "node scripts/check-copy.mjs",
     "check:no-backend-leak": "node scripts/check-no-backend-leak.mjs",
     "check:links": "node scripts/check-links.mjs",
@@ -29,7 +30,9 @@
     "test:watch": "vitest"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
     "@hookform/resolvers": "^3.10.0",
+    "@playwright/test": "1.61.1",
     "@radix-ui/react-accordion": "^1.2.4",
     "@radix-ui/react-alert-dialog": "^1.1.7",
     "@radix-ui/react-aspect-ratio": "^1.1.3",
@@ -74,6 +77,7 @@
     "@workspace/api-client-react": "workspace:*",
     "autoprefixer": "^10.5.0",
     "axe-core": "^4.12.1",
+    "axe-playwright": "2.2.2",
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
     "cmdk": "^1.1.1",
@@ -89,7 +93,6 @@
     "react-day-picker": "^9.11.1",
     "react-dom": "catalog:",
     "react-hook-form": "^7.55.0",
-    "react-icons": "^5.4.0",
     "react-resizable-panels": "^2.1.7",
     "recharts": "^2.15.2",
     "sonner": "^2.0.7",
@@ -107,13 +110,10 @@
     "workbox-routing": "^7.3.0",
     "workbox-strategies": "^7.3.0",
     "workbox-window": "^7.3.0",
-    "wouter": "^3.3.5",
     "zod": "catalog:"
   },
   "dependencies": {
-    "@mistralai/mistralai": "^2.2.1",
     "@supabase/supabase-js": "^2.105.4",
-    "mi-federal-data": "git+https://github.com/saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742",
     "@types/d3": "^7.4.3",
     "@types/d3-sankey": "^0.12.4",
     "@types/leaflet": "^1.9.21",
@@ -121,17 +121,16 @@
     "@types/topojson-client": "^3.1.5",
     "d3": "^7.9.0",
     "d3-sankey": "^0.12.3",
-    "html2canvas": "^1.4.1",
     "i18next": "^26.2.0",
     "i18next-browser-languagedetector": "^8.2.1",
     "jspdf": "^4.2.1",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
+    "mi-federal-data": "git+https://github.com/saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742",
     "react-i18next": "^17.0.8",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.15.1",
-    "topojson-client": "^3.1.0",
-    "zustand": "^5.0.13"
+    "topojson-client": "^3.1.0"
   },
   "optionalDependencies": {
     "@esbuild/darwin-arm64": "0.27.3"

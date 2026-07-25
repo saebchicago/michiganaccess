@@ -8,6 +8,8 @@ interface IntegrityBadgeProps {
   /** Data vintage (e.g. "2022 5-Year ACS"). Shown in the popover. */
   vintage?: string;
   className?: string;
+  /** Legend entry - explains the label, asserts nothing. See ProvenanceTag. */
+  legend?: boolean;
 }
 
 /**
@@ -22,6 +24,7 @@ export function IntegrityBadge({
   source,
   vintage,
   className,
+  legend,
 }: IntegrityBadgeProps) {
   return (
     <ProvenanceTag
@@ -29,6 +32,7 @@ export function IntegrityBadge({
       source={source}
       vintage={vintage}
       className={className}
+      legend={legend}
     />
   );
 }

@@ -129,7 +129,6 @@ const fallbackAQI = [
   },
 ];
 
-
 // EIA SEDS - Michigan vs National residential electricity price & consumption (1990–2023)
 // Source: EIA State Energy Data System (SEDS), 1990-2023
 const eiaSEDS = [
@@ -573,7 +572,6 @@ const EnvironmentPage = () => {
                     </CardContent>
                   </Card>
                 </motion.div>
-
               </motion.div>
 
               {/* Water Safety Advisories */}
@@ -1108,11 +1106,11 @@ const EnvironmentPage = () => {
                         </h3>
                         <p className="text-sm text-muted-foreground mb-3">
                           FY2025 federal allocation:{" "}
-                          <strong>$183,334,313</strong> (including $5.85M
-                          IIJA). In FY2024, served{" "}
-                          <strong>434,124</strong> households (heating) and{" "}
-                          <strong>129,420</strong> (crisis). Benefits range
-                          $1–$2,205 (heating); up to $800 (crisis).{" "}
+                          <strong>$183,334,313</strong> (including $5.85M IIJA).
+                          In FY2024, served <strong>434,124</strong> households
+                          (heating) and <strong>129,420</strong> (crisis).
+                          Benefits range $1–$2,205 (heating); up to $800
+                          (crisis).{" "}
                           <ProvenanceTag
                             label="VERIFIED"
                             source="LIHEAP Clearinghouse (all figures this paragraph)"
@@ -1344,16 +1342,16 @@ const EnvironmentPage = () => {
                         In 2024: <strong>7,304 residential projects</strong> and{" "}
                         <strong>$96.6 million</strong>{" "}
                         <ProvenanceTag
-                          label="VERIFIED"
-                          source="Michigan Saves"
+                          label="MODELED"
+                          source="Michigan Saves annual report (self-reported)"
                           className="align-middle"
                         />{" "}
                         financed ($108.1M total investment). Average savings:{" "}
                         <strong>$347/year</strong>. Cumulative: 50,000+
-                        customers, <strong>$500+ million</strong> financed,
-                        207 GWh saved. Plus a $97M grant from EPA Greenhouse
-                        Gas Reduction Fund. Loan terms: $1,000–$75,000, from
-                        6.49% APR, up to 15 years.
+                        customers, <strong>$500+ million</strong> financed, 207
+                        GWh saved. Plus a $97M grant from EPA Greenhouse Gas
+                        Reduction Fund. Loan terms: $1,000–$75,000, from 6.49%
+                        APR, up to 15 years.
                       </p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         <Badge variant="outline" className="text-xs">
@@ -1504,11 +1502,11 @@ const EnvironmentPage = () => {
                         />{" "}
                         in federal BEAD investment to connect unserved and
                         underserved Michigan homes and businesses with
-                        high-speed internet. The federal Affordable
-                        Connectivity Program (ACP) subsidy ended June 1, 2024
-                        and has not been renewed by Congress; the Lifeline
-                        program remains active for eligible households. Check
-                        local broadband grants through MIHI.
+                        high-speed internet. The federal Affordable Connectivity
+                        Program (ACP) subsidy ended June 1, 2024 and has not
+                        been renewed by Congress; the Lifeline program remains
+                        active for eligible households. Check local broadband
+                        grants through MIHI.
                       </p>
                       <div className="flex flex-wrap gap-2 mb-4">
                         <Badge variant="outline" className="text-xs">
@@ -1600,8 +1598,8 @@ const EnvironmentPage = () => {
                           <p className="text-3xl font-bold text-michigan-forest-deep flex items-center gap-2">
                             ~76%
                             <ProvenanceTag
-                              label="VERIFIED"
-                              source="Bridge Michigan (state unclaimed-deposit reporting, current and pre-pandemic figures both)"
+                              label="MODELED"
+                              source="Bridge Michigan reporting of state unclaimed-deposit figures (news secondary source)"
                               className="align-middle"
                             />
                           </p>
@@ -1695,8 +1693,8 @@ const EnvironmentPage = () => {
                       </AccordionTrigger>
                       <AccordionContent className="text-muted-foreground">
                         Zebra and quagga mussels, sea lamprey, and Asian carp
-                        remain the top invasive threats. Michigan invests
-                        tens of millions annually{" "}
+                        remain the top invasive threats. Michigan invests tens
+                        of millions annually{" "}
                         <ProvenanceTag
                           label="MODELED"
                           source="Michigan DNR (aggregated across state/federal prevention, monitoring, and GLRI grant programs)"
@@ -2046,16 +2044,16 @@ const EnvironmentPage = () => {
                     Data Centers & Michigan's Energy Future
                   </h3>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Multibillion-dollar data center projects could
-                    significantly increase Michigan's electricity demand.
+                    Multibillion-dollar data center projects could significantly
+                    increase Michigan's electricity demand.
                   </p>
                   <Link
                     to="/data-centers"
                     className="mt-2 inline-flex items-center gap-1 text-xs text-primary hover:underline"
                   >
                     <ArrowRight className="h-3 w-3" />
-                    Track the Stargate project, energy pipeline, and
-                    community impact →
+                    Track the Stargate project, energy pipeline, and community
+                    impact →
                   </Link>
                 </div>
               </div>

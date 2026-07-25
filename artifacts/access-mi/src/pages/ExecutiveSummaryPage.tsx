@@ -24,6 +24,7 @@ import ShareButton from "@/components/shared/ShareButton";
 import {
   COUNTIES_COVERED,
   DATA_SOURCE_DISPLAY,
+  LANGUAGES_SUPPORTED,
 } from "@/config/platformConstants";
 
 const fade = {
@@ -96,7 +97,7 @@ const quadrants = [
         source: "GTFS real-time",
       },
       {
-        text: "Denial appeal automation covering 24 common denial categories",
+        text: "Template-assisted appeal letters for the six most common denial categories",
         source: "Platform templates",
       },
       {
@@ -112,7 +113,7 @@ const quadrants = [
     stats: [
       {
         text: "Built on authoritative public data: CMS, HRSA, CDC, MDHHS, EPA, EIA, NWS",
-        source: "15+ sources",
+        source: `${DATA_SOURCE_DISPLAY} sources`,
       },
       {
         text: "No accounts required; aggregated analytics only",
@@ -217,7 +218,7 @@ const ExecutiveSummaryPage = () => {
                       sub: "CMS · HRSA · CDC · MDHHS",
                     },
                     {
-                      value: "4",
+                      value: String(LANGUAGES_SUPPORTED),
                       label: "Languages supported",
                       sub: "EN · ES · AR · BN",
                     },
