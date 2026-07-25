@@ -40,7 +40,7 @@ const fade = {
 // @fabrication-allow: not external data - values are imported from the
 // governed src/config/platformConstants.ts (COUNTIES_COVERED,
 // DATA_SOURCE_COUNT, LANGUAGES_SUPPORTED); the two bare
-// 0 literals ("Personal Data Collected", "Cost to Users") are platform
+// 0 literals ("Data Sold or Shared", "Cost to Users") are platform
 // policy statements, not empirical claims.
 const STATS = [
   {
@@ -56,7 +56,7 @@ const STATS = [
     suffix: "",
   },
   { icon: Globe, value: LANGUAGES_SUPPORTED, label: "Languages", suffix: "" },
-  { icon: Shield, value: 0, label: "Personal Data Collected", suffix: "" },
+  { icon: Shield, value: 0, label: "Data Sold or Shared", suffix: "" },
   { icon: DollarSign, value: 0, label: "Cost to Users", suffix: "" },
 ];
 
