@@ -110,7 +110,7 @@ importers:
         version: 1.5.3(leaflet@1.9.4)
       mi-federal-data:
         specifier: git+https://github.com/saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742
-        version: git+https://git@github.com:saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742
+        version: https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742
       react-i18next:
         specifier: ^17.0.8
         version: 17.0.8(i18next@26.2.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -6950,8 +6950,8 @@ packages:
     engines: {node: '>=20.19.4'}
     hasBin: true
 
-  mi-federal-data@git+https://git@github.com:saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742:
-    resolution: {commit: afb52547eaa8269ca9f6cbd343d81dcd35f97742, repo: git@github.com:saebchicago/mi-federal-data.git, type: git}
+  mi-federal-data@https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742:
+    resolution: {gitHosted: true, integrity: sha512-Snn5D47YQmv3k32D5R1wSQOIEnYeLx37D8C8bJnqsxB+xgqJPQdUYN2Dn6qgEbbjA95IzRY4FHVKCJbTHhpgnA==, tarball: https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742}
     version: 0.1.0
     engines: {node: '>=18'}
 
@@ -16153,7 +16153,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  mi-federal-data@git+https://git@github.com:saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742: {}
+  mi-federal-data@https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742: {}
 
   micromark-core-commonmark@2.0.3:
     dependencies:
