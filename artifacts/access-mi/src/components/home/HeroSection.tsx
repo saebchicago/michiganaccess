@@ -31,6 +31,7 @@ import {
   type SearchSuggestion,
 } from "@/utils/searchUtils";
 import { logSearch } from "@/utils/searchAnalytics";
+import { MI_BENCHMARKS, BENCHMARK_SOURCE } from "@/data/michiganBenchmarks";
 import {
   DATA_SOURCE_DISPLAY,
   COUNTIES_COVERED,
@@ -173,15 +174,15 @@ const ROTATING_STATS = [
     href: "/zip/48201",
   },
   {
-    text: "76 of 83 Michigan counties have zero pedestrian data",
+    text: "76 of 83 Michigan counties have zero pedestrian data (SEMCOG/GATIS)",
     href: "/transportation",
   },
   {
-    text: "625,852 Michigan residents called 211 last year",
+    text: "Michigan residents made 625,852 requests to 211 (Michigan 211)",
     href: "/resources",
   },
   {
-    text: "Only 27.4% of patients are screened for social needs",
+    text: "27.4% of screened patients have a social need (Trinity Health)",
     href: "/detection-gap",
   },
 ];
@@ -453,29 +454,34 @@ const HeroSection = () => {
             transition={{ delay: 0.28, duration: 0.5 }}
             className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-2 text-left"
           >
+            {/* Each value renders from the shared statewide benchmark module.
+                The previous strip hand-typed four figures (10.8% diabetes,
+                74.2yr life expectancy, +4.2% access, 5.2% uninsured) with no
+                source, no vintage, and editorial trend words no trend series
+                backed. */}
             {[
               {
-                title: "Diabetes",
-                value: "10.8%",
-                trend: "Rising",
-                tone: "worsening" as const,
-              },
-              {
-                title: "Life Expectancy",
-                value: "74.2 yrs",
-                trend: "Declining",
-                tone: "worsening" as const,
-              },
-              {
-                title: "Primary Care Access",
-                value: "+4.2%",
-                trend: "Improving",
+                title: "Uninsured Rate",
+                value: MI_BENCHMARKS["Uninsured rate"].state,
+                trend: "MI statewide",
                 tone: "improving" as const,
               },
               {
-                title: "Uninsured Rate",
-                value: "5.2%",
-                trend: "Improving",
+                title: "Food Insecurity",
+                value: MI_BENCHMARKS["Food insecurity"].state,
+                trend: "MI statewide",
+                tone: "worsening" as const,
+              },
+              {
+                title: "Primary Care Ratio",
+                value: MI_BENCHMARKS["Primary care ratio"].state,
+                trend: "residents per PCP",
+                tone: "worsening" as const,
+              },
+              {
+                title: "US Uninsured",
+                value: MI_BENCHMARKS["Uninsured rate"].us,
+                trend: "national comparison",
                 tone: "improving" as const,
               },
             ].map((signal) => (
@@ -499,6 +505,10 @@ const HeroSection = () => {
               </div>
             ))}
           </motion.div>
+
+          <p className="mt-1.5 text-[10px] text-primary-foreground/40">
+            Source: {BENCHMARK_SOURCE}
+          </p>
 
           {/* Rotating Stats */}
           <RotatingStats />

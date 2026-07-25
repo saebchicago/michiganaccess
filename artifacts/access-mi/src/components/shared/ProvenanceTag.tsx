@@ -1,4 +1,10 @@
-import { CheckCircle2, Calculator, TrendingUp, Clock, ArrowRight } from "lucide-react";
+import {
+  CheckCircle2,
+  Calculator,
+  TrendingUp,
+  Clock,
+  ArrowRight,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
@@ -15,6 +21,13 @@ interface ProvenanceTagProps {
   source?: string;
   vintage?: string;
   className?: string;
+  /**
+   * Render as a LEGEND entry - the chip explains what the label means and
+   * asserts nothing about any particular figure. Without this, a VERIFIED
+   * chip with no `source` is a claim ("confirmed from a primary source")
+   * that names no source; check-page-provenance fails the build on those.
+   */
+  legend?: boolean;
 }
 
 const STYLES: Record<
@@ -63,12 +76,16 @@ export function ProvenanceTag({
   source,
   vintage,
   className,
+  legend = false,
 }: ProvenanceTagProps) {
   const { classes, Icon, description } = STYLES[label];
   const provenance = [source, vintage].filter(Boolean).join(" - ");
+  const explainer = legend
+    ? `Label meaning: ${description.replace(/^This metric/, "The metric")}`
+    : description;
   const title = provenance
-    ? `${description} ${provenance}. Click to open source.`
-    : `${description} Click for source ledger.`;
+    ? `${explainer} ${provenance}. Click to open source.`
+    : `${explainer} Click for source ledger.`;
 
   return (
     <Popover>
@@ -91,7 +108,7 @@ export function ProvenanceTag({
         <p className="font-semibold text-foreground text-[11px] uppercase tracking-wider mb-1.5">
           {label}
         </p>
-        <p className="text-muted-foreground leading-relaxed">{description}</p>
+        <p className="text-muted-foreground leading-relaxed">{explainer}</p>
         {provenance && (
           <p className="mt-2 text-foreground/80 leading-relaxed">
             <span className="font-semibold">Source:</span> {provenance}

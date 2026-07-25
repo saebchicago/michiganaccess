@@ -626,7 +626,7 @@ function ProvenanceStrip() {
             {items.map(({ label, gloss }) => (
               <div key={label} className="flex flex-col gap-1.5">
                 <dt>
-                  <ProvenanceTag label={label} />
+                  <ProvenanceTag label={label} legend />
                 </dt>
                 <dd
                   className="text-sm leading-relaxed"

@@ -322,8 +322,8 @@ const ForHealthSystemsPage = () => {
                     </li>
                   </ul>
                   <IntegrityBadge
-                    label="VERIFIED"
-                    source="HFH Mosaic ACO press release"
+                    label="MODELED"
+                    source="HFH Mosaic ACO press release (self-reported)"
                     vintage="PY2024, Dec 2025"
                     className="mt-3"
                   />
@@ -387,8 +387,8 @@ const ForHealthSystemsPage = () => {
                     <li>• Largest health system in Michigan</li>
                   </ul>
                   <IntegrityBadge
-                    label="VERIFIED"
-                    source="Corewell Health Annual Report"
+                    label="MODELED"
+                    source="Corewell Health Annual Report (self-reported)"
                     vintage="FY2023"
                     className="mt-3"
                   />

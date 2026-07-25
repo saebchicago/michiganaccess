@@ -1,3 +1,4 @@
+import { MI_BENCHMARKS, BENCHMARK_SOURCE } from "@/data/michiganBenchmarks";
 import { useState, useRef, useEffect, useCallback } from "react";
 import PageFeedback from "@/components/shared/PageFeedback";
 import CivicDataCallout from "@/components/shared/CivicDataCallout";
@@ -105,13 +106,13 @@ function buildUrgentSummary(
     lines.push(
       `Health: Uninsured rate data is pending for ${county} County. Check back soon or visit the county page for details.`,
     );
-  } else if (uninsured > 8) {
+  } else if (uninsured > MI_BENCHMARKS["Uninsured rate"].stateValue) {
     lines.push(
-      `Health: ${county} County's uninsured rate (${uninsured}%) is above the state average of 6.2%, signaling gaps in coverage access.`,
+      `Health: ${county} County's uninsured rate (${uninsured}%) is above the state average of ${MI_BENCHMARKS["Uninsured rate"].state} (${BENCHMARK_SOURCE}), signaling gaps in coverage access.`,
     );
   } else {
     lines.push(
-      `Health: ${county} County has a manageable uninsured rate (${uninsured}%), but primary care access varies by community.`,
+      `Health: ${county} County's uninsured rate (${uninsured}%) is at or below the state average of ${MI_BENCHMARKS["Uninsured rate"].state} (${BENCHMARK_SOURCE}), though primary care access varies by community.`,
     );
   }
 
@@ -119,13 +120,13 @@ function buildUrgentSummary(
     lines.push(
       `Housing & Food: Food insecurity data is pending for ${county} County.`,
     );
-  } else if (food > 14) {
+  } else if (food > MI_BENCHMARKS["Food insecurity"].stateValue) {
     lines.push(
-      `Housing & Food: Food insecurity at ${food}% exceeds the state average (13.5%), compounding chronic health conditions.`,
+      `Housing & Food: Food insecurity at ${food}% exceeds the state average of ${MI_BENCHMARKS["Food insecurity"].state} (${BENCHMARK_SOURCE}), compounding chronic health conditions.`,
     );
   } else {
     lines.push(
-      `Housing & Food: Food insecurity (${food}%) is near or below state norms, though pockets of need persist.`,
+      `Housing & Food: Food insecurity (${food}%) is at or below the state average of ${MI_BENCHMARKS["Food insecurity"].state} (${BENCHMARK_SOURCE}), though pockets of need persist.`,
     );
   }
   lines.push(
