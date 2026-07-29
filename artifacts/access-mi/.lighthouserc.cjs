@@ -2,12 +2,13 @@
  * Lighthouse CI config. Runs against a local `vite preview` server of the
  * production build for a small set of representative routes.
  *
- * Assertions are set to "warn", not "error" - this is the first time
- * Lighthouse has run against this app, so there's no verified baseline yet.
- * The CI job (.github/workflows/ci.yml) also runs with continue-on-error
- * so a bad score surfaces in the log without blocking merges. Once the
- * owner has reviewed a few runs, tighten SEO/Accessibility to "error" at
- * the target thresholds below.
+ * Assertions are set to "warn", not "error", so a low score surfaces in
+ * the log without blocking merges. The CI job (.github/workflows/ci.yml)
+ * has been BLOCKING since Round 8: with warn-only assertions, a job
+ * failure always means a Lighthouse runtime error, i.e. the production
+ * bundle genuinely did not render. Once the owner has reviewed a few
+ * runs, tighten SEO/Accessibility to "error" at the target thresholds
+ * below.
  *
  * READ THE FAILURE BEFORE DISMISSING IT. Because every assertion is only a
  * "warn", a low score can never fail this job - so when it does fail, it is a
@@ -18,9 +19,8 @@
  * Every visitor got a blank page, and nothing else in CI could see it because
  * vitest and the dev server use a different module graph than the bundle.
  *
- * This job is the only check that exercises the real production build in a real
- * browser. Promote it to blocking (drop continue-on-error in ci.yml) once a
- * green run has been observed.
+ * This job is the only check that exercises the real production build in a
+ * real browser, and it is blocking in ci.yml for exactly that reason.
  */
 module.exports = {
   ci: {

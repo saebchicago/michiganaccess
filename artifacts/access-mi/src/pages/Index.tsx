@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
-import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 import { STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
@@ -14,7 +13,6 @@ import {
   ProvenanceTag,
   type ProvenanceLabel,
 } from "@/components/shared/ProvenanceTag";
-import { NeedCapacityCard } from "@/components/shared/NeedCapacityCard";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { AI_CHAT_ENABLED } from "@/config/aiChat";
@@ -22,6 +20,19 @@ import { AI_CHAT_ENABLED } from "@/config/aiChat";
 // Lazy chat, gated by env flag (unchanged behavior).
 const AccessChat = lazy(() =>
   import("@/components/AccessChat").then((m) => ({ default: m.AccessChat })),
+);
+
+// Lazy so their raw JSON datasets (trendSeries.json ~117 KB,
+// hrsa-hpsa-county.generated.json ~70 KB) split out of the eager
+// homepage chunk; these two widgets are the only reason those files
+// were in it.
+const UninsuredSparkline = lazy(
+  () => import("@/components/county/UninsuredSparkline"),
+);
+const NeedCapacityCard = lazy(() =>
+  import("@/components/shared/NeedCapacityCard").then((m) => ({
+    default: m.NeedCapacityCard,
+  })),
 );
 
 export type PersonaView = "resident" | "professional";
@@ -388,7 +399,11 @@ function NeedHelpBand() {
         </p>
       </div>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
-        <NeedCapacityCard />
+        <Suspense
+          fallback={<div className="min-h-40 rounded-lg bg-muted/30 animate-pulse" />}
+        >
+          <NeedCapacityCard />
+        </Suspense>
         <div
           className="flex flex-col justify-center gap-3 rounded-lg border p-5"
           style={{ borderColor: `${C.emerald}33`, backgroundColor: C.cream }}
@@ -544,7 +559,9 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
                   className="border-t pt-3"
                   style={{ borderColor: `${C.emerald}14` }}
                 >
-                  <UninsuredSparkline county="Wayne" />
+                  <Suspense fallback={null}>
+                    <UninsuredSparkline county="Wayne" />
+                  </Suspense>
                 </div>
               )}
               {d.kicker === "Belong" && miUncontested && (
