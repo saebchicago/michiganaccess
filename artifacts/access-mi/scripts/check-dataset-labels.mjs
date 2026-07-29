@@ -28,7 +28,7 @@ const ALLOWED_LABELS = new Set(["VERIFIED", "MODELED", "PROJECTED", "PENDING"]);
 let failures = 0;
 
 function fail(file, msg) {
-  console.error(`[check-dataset-labels] FAIL ${file} — ${msg}`);
+  console.error(`[check-dataset-labels] FAIL ${file} - ${msg}`);
   failures++;
 }
 
@@ -46,7 +46,7 @@ function checkFile(filePath) {
   if (!prov) {
     // Files that use a different schema (e.g. sourceHealth.generated.json with "schema" key)
     // are metadata files, not dataset files. Log and skip.
-    console.log(`[check-dataset-labels] skip ${rel} — no "provenance" key (non-dataset generated file)`);
+    console.log(`[check-dataset-labels] skip ${rel} - no "provenance" key (non-dataset generated file)`);
     return;
   }
 
@@ -80,7 +80,7 @@ function checkFile(filePath) {
   if (!hasPayload) {
     // Not a hard failure if the file simply hasn't been populated yet (pending-ci pattern)
     // but we warn so it's visible in CI logs
-    console.warn(`[check-dataset-labels] WARN ${rel} — no populated data array found (counties/zctas/records/data)`);
+    console.warn(`[check-dataset-labels] WARN ${rel} - no populated data array found (counties/zctas/records/data)`);
   }
 }
 
@@ -110,5 +110,5 @@ if (failures > 0) {
   console.error(`\n[check-dataset-labels] ${failures} violation(s). Every .generated.json must have provenance.value_label in [${[...ALLOWED_LABELS].join(", ")}] and a non-empty source_name.`);
   process.exit(1);
 } else {
-  console.log(`[check-dataset-labels] ok — ${entries.length} dataset(s) have valid provenance labels.`);
+  console.log(`[check-dataset-labels] ok - ${entries.length} dataset(s) have valid provenance labels.`);
 }

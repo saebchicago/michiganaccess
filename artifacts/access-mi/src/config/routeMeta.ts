@@ -253,6 +253,15 @@ export const ROUTE_META: RouteMeta[] = [
       "A nonpartisan civic intelligence platform for Michigan, built on public data.",
   },
   {
+    path: "/support",
+    title: "Support This Project | Access Michigan",
+    description:
+      "Ways to support Access Michigan: share it with your community, partner with us, or contribute financially. Hosting, data pipelines, and accessibility work.",
+    h1: "Support Access Michigan",
+    summary:
+      "Share it, partner with us, or contribute to hosting and data costs.",
+  },
+  {
     path: "/changelog",
     title: "Changelog | Access Michigan",
     description:
