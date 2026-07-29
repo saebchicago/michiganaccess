@@ -101,31 +101,23 @@ async function fetchAcs(miFips, manifestEntries) {
     minBytes: 500,
     entries: manifestEntries,
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ACS`);
-  // Census returns HTTP 200 with an HTML error page when CENSUS_API_KEY is
-  // missing or invalid, so we must sniff the body before trusting .json().
-  const bodyText = await res.text();
-  const contentType = res.headers.get("content-type") ?? "";
-  const trimmed = bodyText.trimStart();
-  if (
-    contentType.includes("text/html") ||
-    trimmed.startsWith("<") ||
-    !contentType.toLowerCase().includes("json")
-  ) {
-    const preview = bodyText.slice(0, 240).replace(/\s+/g, " ").trim();
-    throw new Error(
-      `ACS returned non-JSON response (content-type "${contentType}"). ` +
-        `Census returns HTTP 200 with an HTML error page when CENSUS_API_KEY ` +
-        `is missing or invalid. Body preview: ${preview}`,
-    );
-  }
+  // No status/content-type checks here: fetchAndRecord throws on a non-2xx
+  // response and runs assertShapeOk, which already catches the Census
+  // failure mode that matters - an HTTP 200 carrying an HTML error page when
+  // the API key is missing or rejected - and enforces the minBytes floor.
+  //
+  // A hand-rolled duplicate of those checks used to sit here, left behind by
+  // an incomplete migration to fetchAndRecord. It referenced an undefined
+  // `res` and redeclared `rows`, which made this entire module fail to parse:
+  // `node --check` reported "Identifier 'rows' has already been declared".
+  // The refresh could therefore never run, with or without a valid API key.
+  // See docs/audit-2026-07.md (D10).
   let rows;
   try {
-    rows = JSON.parse(bodyText);
+    rows = JSON.parse(text);
   } catch (err) {
     throw new Error(`ACS response was not valid JSON: ${err.message}`);
   }
-  const rows = JSON.parse(text);
   if (!Array.isArray(rows) || rows.length < 2) {
     throw new Error("ACS returned no rows (schema drift or key rejected)");
   }

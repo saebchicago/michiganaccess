@@ -55,6 +55,7 @@ jobs:
           node scripts/check-no-backend-leak.mjs
           node scripts/check-dataset-labels.mjs
           node scripts/check-plausibility.mjs
+          node scripts/check-script-syntax.mjs
           node scripts/check-integrity-labels.mjs
           node scripts/check-route-reachability.mjs
           node scripts/check-page-provenance.mjs
