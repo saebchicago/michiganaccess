@@ -2,6 +2,7 @@
   "$schema": "snapCountyGenerated.v1",
   "provenance": {
     "dataset": "USDA FNA FNS-388A SNAP project-area / county participation",
+    "value_label": "VERIFIED",
     "vintage": "FY2022",
     "source_name": "USDA FNA SNAP Data Tables",
     "source_url": "https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap",

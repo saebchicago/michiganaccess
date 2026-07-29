@@ -84,8 +84,18 @@ function checkFile(filePath) {
   }
 }
 
+// Machine-produced datasets whose filenames do not match the
+// .generated.json suffix convention but feed user-facing figures all
+// the same. The suffix filter alone let these ship for weeks with no
+// value_label. verifiedHealthFacilities.json is intentionally absent:
+// it and its ingestion script are sacrosanct (regenerate-only), so its
+// label must be added at ingestion under a named exception.
+const EXTRA_DATASETS = ["snapCountyGenerated.json", "trendSeries.json"];
+
 // Find all .generated.json files in src/data/
-const entries = readdirSync(DATA_DIR).filter((f) => f.endsWith(".generated.json"));
+const entries = readdirSync(DATA_DIR)
+  .filter((f) => f.endsWith(".generated.json"))
+  .concat(EXTRA_DATASETS);
 
 if (entries.length === 0) {
   console.warn("[check-dataset-labels] WARN: no .generated.json files found in src/data/");
