@@ -10,18 +10,42 @@
  */
 import raw from "./hrsa-hpsa-county.generated.json";
 
+/**
+ * NOT ADDITIVE - read before aggregating anything below.
+ *
+ * HRSA HPSA designations are facility-based and their service areas overlap:
+ * several designations in the same county routinely cover the same residents
+ * and the same clinicians. The four sum-derived fields here are therefore
+ * already inflated at the county level and inflate further if summed across
+ * counties. Measured on the June 2026 files:
+ *
+ *   - Wayne County holds 310 primary-care designations whose
+ *     designationPopulation sums to 32,678,471 against a county population of
+ *     roughly 1.79 million (about 18x).
+ *   - Summing estimatedUnderservedPopulation statewide yields 24,282,165
+ *     "underserved residents" against a state population of roughly 10.1
+ *     million.
+ *   - Summing shortageFte statewide yields 8,114 primary-care FTE "still
+ *     needed" against a whole-state baseline need of roughly 2,879 FTE at the
+ *     conventional 1:3500 ratio.
+ *
+ * Safe to aggregate: designatedHpsas (a count of records), a count of
+ * counties with at least one designation, and maxHpsaScore (a maximum, not a
+ * sum). Everything else is meaningful only for a single designation.
+ * See docs/audit-2026-07.md (D8) and NeedCapacityCard.tsx.
+ */
 export interface HpsaDisciplineMetrics {
-  /** Number of designated HPSAs in this county for this discipline. */
+  /** Number of designated HPSAs in this county for this discipline. Safe to sum. */
   designatedHpsas: number;
-  /** Max HPSA Score across designations, or null if none. Higher = more severe. */
+  /** Max HPSA Score across designations, or null if none. Higher = more severe. Safe to max. */
   maxHpsaScore: number | null;
-  /** Sum of HPSA Designation Population across designations. */
+  /** NOT ADDITIVE. Sum of HPSA Designation Population across overlapping designations. */
   designationPopulation: number;
-  /** Sum of HPSA Estimated Underserved Population across designations. */
+  /** NOT ADDITIVE. Sum of HPSA Estimated Underserved Population across overlapping designations. */
   estimatedUnderservedPopulation: number;
-  /** Sum of HPSA FTE (provider FTEs currently in place). */
+  /** NOT ADDITIVE. Sum of HPSA FTE (provider FTEs in place) across overlapping designations. */
   providerFte: number;
-  /** Sum of HPSA Shortage (provider FTEs still needed). */
+  /** NOT ADDITIVE. Sum of HPSA Shortage (provider FTEs still needed) across overlapping designations. */
   shortageFte: number;
 }
 

@@ -98,7 +98,7 @@ describe("FindCarePage location context", () => {
   it("shows a statewide care-capacity card when no county is set", () => {
     renderPage();
 
-    expect(screen.getByText("Care Capacity vs. Need")).toBeInTheDocument();
+    expect(screen.getByText("Designated Provider Shortage Areas")).toBeInTheDocument();
     expect(screen.getByText("Michigan statewide")).toBeInTheDocument();
   });
 
