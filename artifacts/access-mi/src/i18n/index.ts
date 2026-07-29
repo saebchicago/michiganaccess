@@ -38,15 +38,31 @@ i18n
     },
   } as any);
 
+const RTL_LANGS = new Set(["ar"]);
+
+// Keep <html lang/dir> in sync with the active language. index.html
+// ships a static lang="en", so without this a returning Arabic or
+// Bengali visitor gets translated text under the wrong lang (wrong
+// screen-reader voice) and, for Arabic, rendered LTR until they
+// reopen the language switcher.
+function applyDocumentLanguage(lng: string): void {
+  if (typeof document === "undefined") return;
+  document.documentElement.lang = lng;
+  document.documentElement.dir = RTL_LANGS.has(lng) ? "rtl" : "ltr";
+}
+
 // Pre-load the initially detected language if non-English so the
 // first render avoids a flash of English on non-English browsers.
 const initialLng = i18n.language?.split("-")[0];
 if (initialLng && initialLng !== "en") {
   loadLocale(initialLng);
+  applyDocumentLanguage(initialLng);
 }
 
 i18n.on("languageChanged", (lng) => {
-  loadLocale(lng.split("-")[0]);
+  const base = lng.split("-")[0];
+  loadLocale(base);
+  applyDocumentLanguage(base);
 });
 
 export { loadLocale };

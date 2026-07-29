@@ -14,16 +14,17 @@ import {
 const languages = [
   { code: "en", label: "English" },
   { code: "es", label: "Español", partial: true },
+  { code: "ar", label: "العربية", partial: true },
+  { code: "bn", label: "বাংলা", partial: true },
 ];
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
 
   const handleLanguageChange = (code: string) => {
+    // <html lang/dir> updates via the languageChanged listener in
+    // src/i18n/index.ts, which also covers restore-on-reload.
     i18n.changeLanguage(code);
-    const dir = code === "ar" ? "rtl" : "ltr";
-    document.documentElement.dir = dir;
-    document.documentElement.lang = code;
   };
 
   return (

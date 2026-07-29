@@ -92,9 +92,9 @@ const langLinks = [
 function LanguageStrip() {
   const { i18n } = useTranslation();
   const switchLang = (code: string) => {
+    // <html lang/dir> updates via the languageChanged listener in
+    // src/i18n/index.ts, which also covers restore-on-reload.
     i18n.changeLanguage(code);
-    document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
-    document.documentElement.lang = code;
   };
   return (
     <p className="mt-1.5 text-xs text-primary-foreground/50 text-center">
