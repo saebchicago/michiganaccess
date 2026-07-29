@@ -44,6 +44,7 @@ jobs:
         working-directory: artifacts/access-mi
         run: |
           node scripts/check-links.mjs
+          node scripts/check-routemeta-routes.mjs
           node scripts/check-counts.mjs
           node scripts/check-zip-population.mjs
           node scripts/check-county-facilities.mjs

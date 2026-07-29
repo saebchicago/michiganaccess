@@ -27,27 +27,28 @@ Access Michigan helps residents find care, understand benefits, compare counties
 - [Environment](/environment): Environmental hazards, EJSCREEN, and air quality.
 - [Transportation](/transportation): Transit, mobility, and access barriers.
 - [Community Resources](/resources): Food, housing, and social services directory.
-- [Community Events](/community-events): Health fairs and community events across Michigan.
+- [Community Events](/events): Health fairs and community events across Michigan.
 - [Libraries](/libraries): Michigan public libraries directory.
 - [Notary Services](/notary-services): Where to find a notary across the state.
-- [Support Groups](/support): Peer support and recovery groups.
+- [Support Groups](/support-groups): Peer support and recovery groups.
 - [Health News](/news): Michigan health and policy news.
 - [Health Conditions](/conditions): Condition-specific information and local resources.
 - [Health Data Dashboard](/data): Interactive county-level health dashboards.
 - [Data Sources](/data-sources): Every dataset, with cadence, license, and source link.
 - [Methodology](/methodology): How we score, rank, and surface insights.
-- [Our Intel](/our-intel): Original analyses and briefings.
+- [Our Intel](/about/ourintel): Original analyses and briefings.
 - [Decision Science](/decision-science): Models and scoring methodology.
 - [Quiz](/quiz): Civic and health literacy quiz.
 - [Story](/story): The story behind Access Michigan.
 - [About](/about): Mission, team, and values.
-- [Partnership](/partnership): Apply to partner with Access Michigan.
+- [Partnership](/partnerships): Apply to partner with Access Michigan.
 - [Contact](/contact): Reach the team.
 - [Privacy](/privacy): Privacy practices and data handling.
 
 ## Optional
 
-- [Replication](/replication): How to replicate this platform for other states.
+- [Replication](/replicate): How to replicate this platform for other states.
 - [Learn](/learn): Background reading on the datasets and methods.
-- [Site Report](/closure-watch): Closure watch and facility status changes.
+- [Closure Watch](/closure-watch): Two-source-verified facility closures and status changes.
+- [Site Report](/site-report): Printable site summary report.
 - [Status](/status): Platform uptime and data freshness.

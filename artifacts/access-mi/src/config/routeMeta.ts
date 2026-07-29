@@ -217,24 +217,6 @@ export const ROUTE_META: RouteMeta[] = [
       "USDA SNAP enrollment, retailer access, and coverage state for every Michigan county.",
   },
   {
-    path: "/energy",
-    title: "Energy | Access Michigan",
-    description:
-      "Michigan energy data: LIHEAP and State Emergency Relief eligibility, MEAP heating assistance, MiHER rebates, and utility equity programs.",
-    h1: "Energy assistance in Michigan",
-    summary:
-      "Heating assistance, rebates, and clean-energy financing programs by county.",
-  },
-  {
-    path: "/legal-aid",
-    title: "Legal Aid | Access Michigan",
-    description:
-      "Michigan civil legal aid for housing, benefits, family, immigration, and reentry. Attorney referrals, MichLegalHelp resources, and self-help tools.",
-    h1: "Legal aid in Michigan",
-    summary:
-      "Civil legal help for housing, benefits, family, and immigration matters.",
-  },
-  {
     path: "/civic-data",
     title: "Civic Data | Access Michigan",
     description:

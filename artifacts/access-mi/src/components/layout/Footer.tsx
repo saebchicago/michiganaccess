@@ -202,7 +202,7 @@ const Footer = () => {
       title: "About & Legal",
       links: [
         { label: "About Access Michigan", href: "/about" },
-        { label: "Support This Project", href: "/about#support" },
+        { label: "Support This Project", href: "/support" },
         { label: "Our Story", href: "/story" },
         { label: "Impact", href: "/impact" },
         { label: "Contact", href: "/contact" },

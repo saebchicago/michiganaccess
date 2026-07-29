@@ -882,7 +882,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Impact Dashboard", href: "/impact" },
       { label: "For Health Systems", href: "/for-health-systems" },
       { label: "Contact", href: "/contact" },
-      { label: "Support This Project", href: "/about#support" },
+      { label: "Support This Project", href: "/support" },
     ],
   },
 ];
