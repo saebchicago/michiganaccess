@@ -28,7 +28,7 @@ const ALLOWED_LABELS = new Set(["VERIFIED", "MODELED", "PROJECTED", "PENDING"]);
 let failures = 0;
 
 function fail(file, msg) {
-  console.error(`[check-dataset-labels] FAIL ${file} — ${msg}`);
+  console.error(`[check-dataset-labels] FAIL ${file} - ${msg}`);
   failures++;
 }
 
@@ -46,7 +46,7 @@ function checkFile(filePath) {
   if (!prov) {
     // Files that use a different schema (e.g. sourceHealth.generated.json with "schema" key)
     // are metadata files, not dataset files. Log and skip.
-    console.log(`[check-dataset-labels] skip ${rel} — no "provenance" key (non-dataset generated file)`);
+    console.log(`[check-dataset-labels] skip ${rel} - no "provenance" key (non-dataset generated file)`);
     return;
   }
 
@@ -80,12 +80,22 @@ function checkFile(filePath) {
   if (!hasPayload) {
     // Not a hard failure if the file simply hasn't been populated yet (pending-ci pattern)
     // but we warn so it's visible in CI logs
-    console.warn(`[check-dataset-labels] WARN ${rel} — no populated data array found (counties/zctas/records/data)`);
+    console.warn(`[check-dataset-labels] WARN ${rel} - no populated data array found (counties/zctas/records/data)`);
   }
 }
 
+// Machine-produced datasets whose filenames do not match the
+// .generated.json suffix convention but feed user-facing figures all
+// the same. The suffix filter alone let these ship for weeks with no
+// value_label. verifiedHealthFacilities.json is intentionally absent:
+// it and its ingestion script are sacrosanct (regenerate-only), so its
+// label must be added at ingestion under a named exception.
+const EXTRA_DATASETS = ["snapCountyGenerated.json", "trendSeries.json"];
+
 // Find all .generated.json files in src/data/
-const entries = readdirSync(DATA_DIR).filter((f) => f.endsWith(".generated.json"));
+const entries = readdirSync(DATA_DIR)
+  .filter((f) => f.endsWith(".generated.json"))
+  .concat(EXTRA_DATASETS);
 
 if (entries.length === 0) {
   console.warn("[check-dataset-labels] WARN: no .generated.json files found in src/data/");
@@ -100,5 +110,5 @@ if (failures > 0) {
   console.error(`\n[check-dataset-labels] ${failures} violation(s). Every .generated.json must have provenance.value_label in [${[...ALLOWED_LABELS].join(", ")}] and a non-empty source_name.`);
   process.exit(1);
 } else {
-  console.log(`[check-dataset-labels] ok — ${entries.length} dataset(s) have valid provenance labels.`);
+  console.log(`[check-dataset-labels] ok - ${entries.length} dataset(s) have valid provenance labels.`);
 }

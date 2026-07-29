@@ -1,6 +1,8 @@
 {
   "$schema": "trendSeries.v1",
   "provenance": {
+    "value_label": "VERIFIED",
+    "source_name": "U.S. Census Bureau: Population Estimates Program (Vintage 2024) and ACS 5-Year S2701",
     "generatedAt": "2026-06-12T18:58:05.707Z",
     "buildScript": "artifacts/access-mi/scripts/build-trend-series.mjs",
     "validityRules": [

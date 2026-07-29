@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
-import UninsuredSparkline from "@/components/county/UninsuredSparkline";
 import { STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
@@ -14,7 +13,6 @@ import {
   ProvenanceTag,
   type ProvenanceLabel,
 } from "@/components/shared/ProvenanceTag";
-import { NeedCapacityCard } from "@/components/shared/NeedCapacityCard";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { AI_CHAT_ENABLED } from "@/config/aiChat";
@@ -22,6 +20,19 @@ import { AI_CHAT_ENABLED } from "@/config/aiChat";
 // Lazy chat, gated by env flag (unchanged behavior).
 const AccessChat = lazy(() =>
   import("@/components/AccessChat").then((m) => ({ default: m.AccessChat })),
+);
+
+// Lazy so their raw JSON datasets (trendSeries.json ~117 KB,
+// hrsa-hpsa-county.generated.json ~70 KB) split out of the eager
+// homepage chunk; these two widgets are the only reason those files
+// were in it.
+const UninsuredSparkline = lazy(
+  () => import("@/components/county/UninsuredSparkline"),
+);
+const NeedCapacityCard = lazy(() =>
+  import("@/components/shared/NeedCapacityCard").then((m) => ({
+    default: m.NeedCapacityCard,
+  })),
 );
 
 export type PersonaView = "resident" | "professional";
@@ -145,7 +156,7 @@ function UtilityRail() {
           >
             Methodology
           </Link>
-          <span className="italic normal-case tracking-normal opacity-70">
+          <span className="italic normal-case tracking-normal">
             Updated{" "}
             {new Date(__BUILD_TIMESTAMP__).toLocaleDateString("en-US", {
               month: "short",
@@ -186,7 +197,7 @@ function Masthead({
           </p>
           <p
             className="text-xs font-normal normal-case"
-            style={{ color: `${C.emeraldMid}99` }}
+            style={{ color: C.emeraldMid }}
           >
             An independent, public-data journal for Michigan's 83 counties. No
             government or health system affiliation.
@@ -216,7 +227,7 @@ function Masthead({
                 className="px-4 py-2 min-h-[36px] text-[11px] font-bold uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
                 style={{
                   backgroundColor: active ? C.emerald : "transparent",
-                  color: active ? C.cream : `${C.emerald}99`,
+                  color: active ? C.cream : `${C.emerald}bf`,
                 }}
               >
                 {label}
@@ -294,7 +305,7 @@ function EditorialHero({
             >
               <div
                 className="absolute -top-3 -right-3 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em]"
-                style={{ backgroundColor: C.gold, color: C.emerald }}
+                style={{ backgroundColor: C.gold, color: C.emeraldInk }}
               >
                 Updated {updated}
               </div>
@@ -342,7 +353,7 @@ function EditorialHero({
                 <Link
                   to="/methodology"
                   className="inline-flex items-center gap-1.5 text-[10px] uppercase font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity"
-                  style={{ color: C.gold, letterSpacing: "0.16em" }}
+                  style={{ color: C.goldBright, letterSpacing: "0.16em" }}
                 >
                   View methodology and data integrity
                   <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
@@ -371,7 +382,7 @@ function NeedHelpBand() {
       <div className="mb-5 max-w-2xl">
         <span
           className="text-[11px] uppercase font-semibold"
-          style={{ color: C.gold, letterSpacing: "0.18em" }}
+          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
         >
           See the need, find the help
         </span>
@@ -388,7 +399,11 @@ function NeedHelpBand() {
         </p>
       </div>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
-        <NeedCapacityCard />
+        <Suspense
+          fallback={<div className="min-h-40 rounded-lg bg-muted/30 animate-pulse" />}
+        >
+          <NeedCapacityCard />
+        </Suspense>
         <div
           className="flex flex-col justify-center gap-3 rounded-lg border p-5"
           style={{ borderColor: `${C.emerald}33`, backgroundColor: C.cream }}
@@ -437,7 +452,7 @@ function ResourceBridgeBand({ mode }: { mode: PersonaView }) {
         </h3>
         <span
           className="text-[11px] uppercase font-semibold"
-          style={{ color: C.gold, letterSpacing: "0.18em" }}
+          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
         >
           {isAnalyst ? "Analyst tools" : "Direct pathways"}
         </span>
@@ -504,7 +519,7 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
               ) : (
                 <span
                   className="text-[10px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ color: `${C.emerald}80` }}
+                  style={{ color: `${C.emerald}bf` }}
                 >
                   Source-attributed
                 </span>
@@ -544,7 +559,9 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
                   className="border-t pt-3"
                   style={{ borderColor: `${C.emerald}14` }}
                 >
-                  <UninsuredSparkline county="Wayne" />
+                  <Suspense fallback={null}>
+                    <UninsuredSparkline county="Wayne" />
+                  </Suspense>
                 </div>
               )}
               {d.kicker === "Belong" && miUncontested && (
@@ -566,7 +583,7 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
                   </p>
                   <p
                     className="mt-1.5 text-[10px] leading-snug"
-                    style={{ color: `${C.emerald}80` }}
+                    style={{ color: `${C.emerald}bf` }}
                   >
                     Source: Ballotpedia analysis / Michigan SOS 2024. Formal
                     provenance label pending.
@@ -630,7 +647,7 @@ function ProvenanceStrip() {
                 </dt>
                 <dd
                   className="text-sm leading-relaxed"
-                  style={{ color: `${C.emerald}99` }}
+                  style={{ color: `${C.emerald}bf` }}
                 >
                   {gloss}
                 </dd>
@@ -640,7 +657,7 @@ function ProvenanceStrip() {
           <Link
             to="/methodology"
             className="text-[11px] uppercase font-semibold underline underline-offset-4 shrink-0"
-            style={{ color: C.gold, letterSpacing: "0.16em" }}
+            style={{ color: C.goldInk, letterSpacing: "0.16em" }}
           >
             Read methods
           </Link>
@@ -681,7 +698,7 @@ function CountyPicker() {
         </h3>
         <span
           className="text-[11px] uppercase font-semibold hidden sm:inline"
-          style={{ color: C.gold, letterSpacing: "0.18em" }}
+          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
         >
           83 counties
         </span>

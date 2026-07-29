@@ -63,6 +63,8 @@ export default function OnboardingTour() {
   const [visible, setVisible] = useState(false);
   const [spotlightRect, setSpotlightRect] = useState<DOMRect | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const skipRef = useRef<HTMLButtonElement>(null);
+  const ctaRef = useRef<HTMLButtonElement>(null);
   const onHomepage = pathname === "/";
 
   const prefersReducedMotion =
@@ -123,16 +125,48 @@ export default function OnboardingTour() {
     }
   }, [step, prefersReducedMotion]);
 
-  // Keyboard: Escape to dismiss, Enter/Tab to advance
+  // Keyboard: Escape dismisses; Tab is trapped between the dialog's two
+  // controls (Skip, CTA). Enter is NOT bound globally - the dialog is
+  // aria-modal, and a window-level Enter handler both advanced the tour
+  // and activated whatever control happened to hold focus underneath.
   useEffect(() => {
     if (!visible) return;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") dismiss();
-      if (e.key === "Enter") next();
+      if (e.key === "Tab") {
+        const focusables = [skipRef.current, ctaRef.current].filter(
+          (el): el is HTMLButtonElement => el !== null,
+        );
+        if (focusables.length === 0) return;
+        const idx = focusables.indexOf(
+          document.activeElement as HTMLButtonElement,
+        );
+        e.preventDefault();
+        const nextIdx = e.shiftKey
+          ? (idx <= 0 ? focusables.length : idx) - 1
+          : (idx + 1) % focusables.length;
+        focusables[nextIdx].focus();
+      }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   });
+
+  // Initial focus: aria-modal promises focus is inside the dialog. Move
+  // it to the CTA when the tour opens or the step changes, remembering
+  // and restoring the previously focused element on close.
+  const previousFocus = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (visible) {
+      if (!previousFocus.current) {
+        previousFocus.current = document.activeElement as HTMLElement | null;
+      }
+      ctaRef.current?.focus();
+    } else if (previousFocus.current) {
+      previousFocus.current.focus();
+      previousFocus.current = null;
+    }
+  }, [visible, step]);
 
   const next = useCallback(() => {
     if (step < STEPS.length - 1) {
@@ -208,6 +242,7 @@ export default function OnboardingTour() {
 
           {/* Skip tour link */}
           <button
+            ref={skipRef}
             onClick={dismiss}
             className="fixed top-4 right-4 z-[10000] text-xs text-white/80 hover:text-white flex items-center gap-1 pointer-events-auto"
           >
@@ -245,7 +280,7 @@ export default function OnboardingTour() {
                     />
                   ))}
                 </div>
-                <Button size="sm" className="text-xs" onClick={next}>
+                <Button ref={ctaRef} size="sm" className="text-xs" onClick={next}>
                   {current.cta}
                 </Button>
               </div>

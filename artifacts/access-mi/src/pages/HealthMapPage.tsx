@@ -39,7 +39,7 @@ export default function HealthMapPage() {
     "county-boundaries",
   ]);
   const [selectedSystem, setSelectedSystem] = useState<string | null>(null);
-  const { data: facilities = [], isLoading } = useFacilities(undefined, county);
+  const { data: facilities = [], isLoading, isError } = useFacilities(undefined, county);
 
   const toggleLayer = useCallback((layerId: string) => {
     setActiveLayers((prev) =>
@@ -160,6 +160,18 @@ export default function HealthMapPage() {
                   {t("healthMap.loading")}
                 </p>
               </motion.div>
+            </div>
+          )}
+          {/* A failed facility fetch must not render an empty map that
+              reads as "no facilities near you". */}
+          {isError && !isLoading && (
+            <div
+              role="alert"
+              className="absolute inset-x-0 top-0 z-[1000] m-3 rounded-lg border border-destructive/40 bg-background/95 p-3 text-center text-sm text-foreground shadow-md"
+            >
+              Facility data is temporarily unavailable, so the map may be
+              missing locations. Please try again in a few minutes, or call
+              2-1-1 for help finding care.
             </div>
           )}
           <Suspense

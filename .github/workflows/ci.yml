@@ -44,6 +44,7 @@ jobs:
         working-directory: artifacts/access-mi
         run: |
           node scripts/check-links.mjs
+          node scripts/check-routemeta-routes.mjs
           node scripts/check-counts.mjs
           node scripts/check-zip-population.mjs
           node scripts/check-county-facilities.mjs
@@ -74,6 +75,39 @@ jobs:
           else
             echo "${ALLOWLIST} not yet on origin/main - skipping shrink-only check (initial introduction)"
           fi
+
+  e2e:
+    # Browser E2E: user journeys, all-routes smoke, mobile viewports, and
+    # axe accessibility specs (src/test/e2e/). These specs existed but no
+    # CI job ran them. Non-blocking for now (continue-on-error), matching
+    # how the Lighthouse job was introduced - promote to blocking once a
+    # few green runs have been observed.
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Install Playwright browsers
+        working-directory: artifacts/access-mi
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Playwright E2E
+        working-directory: artifacts/access-mi
+        run: pnpm test:e2e
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: artifacts/access-mi/playwright-report
+          retention-days: 7
 
   lighthouse:
     # BLOCKING as of Round 8. Every assertion in .lighthouserc.cjs is a

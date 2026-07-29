@@ -4,9 +4,12 @@
  *
  * Walks `src/config/routes.ts` (APP_ROUTES + Navigate redirects),
  * `netlify.toml` (edge 301 redirects), and every `href="/..."` or
- * `to="/..."` reference in `src/`. Fails the build if any internal
- * link points at a path that is neither a defined APP_ROUTES path
- * nor an edge/Navigate redirect source.
+ * `to="/..."` reference in `src/`. Also validates markdown links in
+ * `public/llms.txt`, the AI-crawler surface robots.txt invites in -
+ * it shipped 4 dead paths for weeks because nothing scanned it.
+ * Fails the build if any internal link points at a path that is
+ * neither a defined APP_ROUTES path nor an edge/Navigate redirect
+ * source.
  *
  * Wired into the build (artifacts/access-mi/package.json -> build)
  * so a dead nav link cannot ship to Netlify.
@@ -146,6 +149,19 @@ async function main() {
   const files = await collectFiles(srcDir);
 
   const dead = [];
+
+  const llmsTxtPath = path.join(projectRoot, "public/llms.txt");
+  if (existsSync(llmsTxtPath)) {
+    const llmsSrc = await readFile(llmsTxtPath, "utf8");
+    const mdLinkRe = /\]\((\/[^)#?]*)\)/g;
+    let m;
+    while ((m = mdLinkRe.exec(llmsSrc)) !== null) {
+      const link = m[1];
+      if (link === "/" || matchesPattern(link, validTargets)) continue;
+      dead.push({ file: "public/llms.txt", link });
+    }
+  }
+
   for (const file of files) {
     const src = await readFile(file, "utf8");
     const links = extractInternalLinks(src);
@@ -163,12 +179,12 @@ async function main() {
 
   if (dead.length === 0) {
     console.log(
-      `[check-links] ok — ${routePaths.size} routes, ${navigateSources.size} navigates, ${edgeRedirects.size} netlify redirects; no dead links.`,
+      `[check-links] ok - ${routePaths.size} routes, ${navigateSources.size} navigates, ${edgeRedirects.size} netlify redirects; no dead links.`,
     );
     return;
   }
 
-  console.error(`[check-links] FAIL — ${dead.length} dead internal link(s):`);
+  console.error(`[check-links] FAIL - ${dead.length} dead internal link(s):`);
   for (const d of dead.slice(0, 50)) {
     console.error(`  ${d.file}: ${d.link}`);
   }

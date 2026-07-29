@@ -28,7 +28,7 @@ function renderHomepage() {
 }
 
 describe("Index (homepage)", () => {
-  it("shows the statewide need-vs-capacity section right after the hero, before the intelligence briefing", () => {
+  it("shows the statewide need-vs-capacity section right after the hero, before the intelligence briefing", async () => {
     localStorage.clear();
     renderHomepage();
 
@@ -37,7 +37,11 @@ describe("Index (homepage)", () => {
         name: /where care is short, and where to turn/i,
       }),
     ).toBeInTheDocument();
-    expect(screen.getByText("Care Capacity vs. Need")).toBeInTheDocument();
+    // findBy: NeedCapacityCard is lazy-loaded so its HPSA dataset stays
+    // out of the eager homepage chunk; the card resolves a tick later.
+    expect(
+      await screen.findByText("Care Capacity vs. Need"),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /find help near you/i }),
     ).toHaveAttribute("href", "/find-care");

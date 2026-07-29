@@ -4,9 +4,9 @@ Site: https://michigans.me
 Contact: https://accessmi.org/contact
 
 /* SITE */
-Last update: 2026-07-17
+Last update: 2026-07-29
 Standards: HTML5, CSS3, ARIA
-Components: React 18, TypeScript, Tailwind CSS, Vite
+Components: React 19, TypeScript, Tailwind CSS, Vite
 Software: pnpm, vitest
 
 AccessMI is an independent, non-commercial civic project. It has no

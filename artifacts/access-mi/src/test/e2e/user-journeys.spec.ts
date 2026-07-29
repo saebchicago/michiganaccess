@@ -10,27 +10,26 @@ test.describe('AccessMI User Journeys', () => {
     await page.waitForLoadState('networkidle');
   });
 
+  // The signal-card / trend-indicator / explore-question testids belonged
+  // to the pre-redesign homepage. J1/J2 now assert the equivalents in the
+  // editorial redesign: the masthead + need-vs-capacity band above the
+  // fold, and the bridge-chip pathways as the click-through affordances.
+  // (ExploreQuestionsPanel moved to /about.)
   test('J1: homepage shows intelligence signals above fold', async ({ page }) => {
-    const signals = page.locator('[data-testid="signal-card"]');
-    await expect(signals.first()).toBeInViewport();
-    await expect(signals).toHaveCount(4); // minimum 4 visible
-    const trend = page.locator('[data-testid="trend-indicator"]').first();
-    await expect(trend).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: /local data for/i }),
+    ).toBeInViewport();
+    await expect(
+      page.getByRole('heading', { name: /where care is short, and where to turn/i }),
+    ).toBeVisible();
   });
 
-  test('J2: explore questions navigate to real pages', async ({ page }) => {
-    const questions = page.locator('[data-testid="explore-question"]');
-    await expect(questions.first()).toBeVisible();
-    const href =
-      (await questions.first().getAttribute('href')) ??
-      (await questions
-        .first()
-        .evaluate(
-          (el) => el.closest('a')?.href ?? (el as HTMLElement).dataset.href ?? '',
-        ));
-    await questions.first().click();
+  test('J2: bridge pathways navigate to real pages', async ({ page }) => {
+    const chips = page.locator('section[aria-labelledby="bridge-heading"] a');
+    await expect(chips.first()).toBeVisible();
+    await chips.first().click();
     await page.waitForLoadState('networkidle');
-    expect(page.url()).not.toBe('http://localhost:5173/');
+    expect(new URL(page.url()).pathname).not.toBe('/');
   });
 
   test('J3: county selector updates county name in snapshot', async ({ page }) => {

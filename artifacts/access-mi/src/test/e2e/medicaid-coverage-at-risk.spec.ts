@@ -4,7 +4,8 @@ test.describe("Medicaid Coverage at Risk  -  V2 Feature 3", () => {
   // T1: Page loads and county table renders
   test("data page renders h1, stat cards, and county table rows", async ({ page }) => {
     await page.goto("/data/medicaid-coverage-at-risk");
-    await expect(page.locator("h1")).toContainText("Medicaid Coverage at Risk");
+    // h1 was retitled from "Medicaid Coverage at Risk" in the page redesign
+    await expect(page.locator("h1")).toContainText("Who could lose Medicaid.");
     await expect(page.getByTestId("medicaid-stat-urban")).toBeVisible();
     await expect(page.getByTestId("medicaid-stat-urban")).toContainText("171,000");
     await expect(page.getByTestId("medicaid-stat-urban")).toContainText("355,000");
@@ -35,7 +36,7 @@ test.describe("Medicaid Coverage at Risk  -  V2 Feature 3", () => {
     await expect(snapLink).toBeVisible();
     await snapLink.click();
     await expect(page).toHaveURL(/snap-coverage-at-risk/);
-    await expect(page.locator("h1")).toContainText("SNAP Coverage at Risk");
+    await expect(page.locator("h1")).toContainText("Who could lose SNAP.");
   });
 
   // T5: CSV download button is present and clickable
@@ -70,11 +71,15 @@ test.describe("Medicaid Coverage at Risk  -  V2 Feature 3", () => {
     await expect(page.locator("text=Medicaid Coverage at Risk")).toBeVisible();
   });
 
-  // T8: Home page features P.L. 119-21 section with Medicaid link
-  test("home page shows P.L. 119-21 Impact Projections section", async ({ page }) => {
+  // T8: The coverage-at-risk analyses stay discoverable from the homepage.
+  // The dedicated "P.L. 119-21 Impact Projections" homepage section was
+  // removed in the homepage redesign; the path is now the Data & Insights
+  // door (T7 covers the hub card itself).
+  test("home page links to the Data & Insights hub that carries the analysis", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator("text=P.L. 119-21 Impact Projections")).toBeVisible();
-    await expect(page.locator("a[href='/data/medicaid-coverage-at-risk']")).toBeVisible();
+    await expect(
+      page.locator("a[href='/data-and-insights']").first(),
+    ).toBeVisible();
   });
 
   // T9: JSON-LD Dataset schema appears in HTML source

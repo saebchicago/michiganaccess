@@ -11,6 +11,7 @@ import { type Facility } from "@/hooks/useFacilities";
 import ValueBadges from "@/components/civic/ValueBadges";
 import ProviderCostComparison from "./ProviderCostComparison";
 import { ALL_SPECIALTIES } from "@/data/findhelp-specialties";
+import { DataUnavailable } from "@/components/shared/EmptyState";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -64,7 +65,7 @@ interface Props {
 }
 
 export default function ProviderDirectory({ facilities }: Props) {
-  const { data: providers = [], isLoading } = useProviders();
+  const { data: providers = [], isLoading, isError } = useProviders();
   const [search, setSearch] = useState("");
   const [specialty, setSpecialty] = useState("all");
   const [langFilter, setLangFilter] = useState("all");
@@ -130,6 +131,18 @@ export default function ProviderDirectory({ facilities }: Props) {
       <div className="flex items-center justify-center py-12">
         <div className="h-6 w-6 animate-spin rounded-full border-4 border-primary border-t-transparent" />
       </div>
+    );
+  }
+
+  // A failed fetch must not read as "no providers near you" - the empty
+  // branch below is only for a successful response with zero matches.
+  if (isError) {
+    return (
+      <DataUnavailable
+        variant="error"
+        label="Provider directory is temporarily unavailable"
+        detail="We could not reach the provider database. Please try again in a few minutes, or call 2-1-1 for help finding care."
+      />
     );
   }
 

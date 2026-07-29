@@ -53,28 +53,35 @@ function entry(
 
 export const DATA_FRESHNESS_SOURCES: DataSource[] = [
   entry({
+    // Matches cdc-places-county.generated.json provenance: 2025 release
+    // (Socrata rows updated 2025-12-04), ingested 2026-07-02.
     id: "cdc-places",
     name: "CDC PLACES Health Metrics",
     category: "Health",
     url: "https://data.cdc.gov",
-    lastUpdated: "2024-05-01",
+    lastUpdated: "2026-07-02",
     updateFrequency: "Annual",
-    currentVersion: "PLACES 2024 Release",
-    nextExpectedUpdate: "2025-05-01",
+    currentVersion: "PLACES 2025 Release",
+    nextExpectedUpdate: "2026-12-01",
     isLive: true,
-    freshnessStatus: "stale",
+    freshnessStatus: "fresh",
+    lastVerified: "2026-07-29",
   }),
   entry({
+    // Matches acs-broadband-county.generated.json and trendSeries.json:
+    // the shipped window is 2019-2023 (2023 5-Year ACS). The 2020-2024
+    // release is out, so this is one cycle behind, not two.
     id: "census-acs",
     name: "Census ACS 5-Year Estimates",
     category: "Demographics",
     url: "https://api.census.gov",
-    lastUpdated: "2023-12-07",
+    lastUpdated: "2026-07-02",
     updateFrequency: "Annual",
-    currentVersion: "2022 5-Year ACS",
-    nextExpectedUpdate: "2024-12-01",
+    currentVersion: "2023 5-Year ACS (2019-2023)",
+    nextExpectedUpdate: "2026-12-01",
     isLive: true,
-    freshnessStatus: "stale",
+    freshnessStatus: "aging",
+    lastVerified: "2026-07-29",
   }),
   entry({
     id: "hud-fmr",

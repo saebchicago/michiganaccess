@@ -29,7 +29,10 @@ export default function MobileBottomNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-50 flex min-h-14 items-center justify-around border-t border-border bg-background/95 backdrop-blur-md lg:hidden print:hidden"
+      // Below the sm breakpoint QuickExitBar is fixed to bottom-0 at
+      // z-[9999]; sit above it so the safety bar never covers primary
+      // navigation. From sm up the exit bar leaves the bottom edge.
+      className="fixed inset-x-0 bottom-[4.5rem] sm:bottom-0 z-50 flex min-h-14 items-center justify-around border-t border-border bg-background/95 backdrop-blur-md lg:hidden print:hidden"
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
       aria-label="Mobile navigation"
     >

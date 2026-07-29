@@ -30,7 +30,7 @@ const tiers = [
     icon: Heart,
     title: "Donate",
     price: "Financial",
-    description: "Your tax-deductible donation helps us cover hosting, data integration, and accessibility improvements.",
+    description: "Your donation helps us cover hosting, data integration, and accessibility improvements.",
     cta: "Donate →",
     action: "donate",
   },

@@ -42,6 +42,35 @@ const TAG_STYLES: Record<string, string> = {
 // external citation.
 const entries: ChangelogEntry[] = [
   {
+    month: "July",
+    year: "2026",
+    title: "Audit Hardening & Open Data Gaps - v1.18",
+    icon: Shield,
+    tag: "improvement",
+    items: [
+      "Fixed a blank production page: a TDZ crash in the bundle rendered nothing while unit tests stayed green; the Lighthouse CI job is now blocking so a non-rendering bundle fails the build (PR #187)",
+      "Integrity-label truth-up: 41 CHNA metrics transcribed from a hospital CHNA PDF were relabeled from VERIFIED to MODELED, and a new check-integrity-labels guard fails the build when a VERIFIED label cites a secondary source (PR #187)",
+      "New Open Data Gaps layer at /data-gaps documenting datasets Michigan does not publish, with the full static guard chain promoted from advisory to blocking in CI (PR #188)",
+      "Buried pages and analyst tools made reachable from navigation, with a route-reachability guard so every registered route stays linked (PR #187)",
+    ],
+  },
+  {
+    month: "July",
+    year: "2026",
+    title: "Intelligence & Ease-of-Use Rounds - v1.17",
+    icon: Sparkles,
+    tag: "feature",
+    items: [
+      "Resident/Analyst persona toggle on the homepage, /insights hub, and 83-county domain dashboards with a unified visual language (PRs #177, #181)",
+      "Full-site command-palette search over every registered route, county, ZIP, and facility, with slash shortcuts like /food and /insurance (PR #182)",
+      "Location follows you: county selection persists across pages, and the PWA gained offline support with a crisis-resources offline page (PR #182)",
+      "Need-vs-capacity intelligence on the homepage and county pages, plus reentry and disaster context layers (PRs #185, #186)",
+      "Early childhood (Rx Kids), statewide PreK for All, and MSP/OHSP transportation safety context added with primary-source provenance (PRs #183, #184)",
+      "Trust badges consolidated and a PENDING provenance state added for metrics awaiting ingestion (PR #186)",
+      "E2E SEO, accessibility, and data-integrity fix sweep from an external credibility review (PRs #178, #180)",
+    ],
+  },
+  {
     month: "April",
     year: "2026",
     title: "WCAG 2.1 AA Cleanup - v1.16",

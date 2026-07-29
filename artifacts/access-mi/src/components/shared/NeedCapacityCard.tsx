@@ -117,7 +117,7 @@ export function NeedCapacityCard({ county, className }: NeedCapacityCardProps) {
                 aria-label={`${label}: ${capacityPct}% of needed provider capacity in place, ${metrics.shortageFte.toFixed(1)} FTE still needed`}
                 className="h-2.5"
               />
-              <p className="text-[11px] text-muted-foreground/80">
+              <p className="text-[11px] text-muted-foreground">
                 {metrics.estimatedUnderservedPopulation.toLocaleString()} residents in an
                 underserved area
                 {metrics.designatedHpsas > 0
