@@ -35,7 +35,7 @@ describe("CountyPage", () => {
   it("shows the care-capacity-vs-need section scoped to the county", () => {
     renderCountyPage("kent");
 
-    const heading = screen.getByRole("heading", { name: "Care Capacity vs. Need" });
+    const heading = screen.getByRole("heading", { name: "Designated Provider Shortage Areas" });
     const cardHeader = heading.closest('[class*="pb-3"]');
     expect(cardHeader).not.toBeNull();
     expect(within(cardHeader as HTMLElement).getByText("Kent County")).toBeInTheDocument();

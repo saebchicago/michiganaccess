@@ -40,7 +40,7 @@ describe("Index (homepage)", () => {
     // findBy: NeedCapacityCard is lazy-loaded so its HPSA dataset stays
     // out of the eager homepage chunk; the card resolves a tick later.
     expect(
-      await screen.findByText("Care Capacity vs. Need"),
+      await screen.findByText("Designated Provider Shortage Areas"),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /find help near you/i }),

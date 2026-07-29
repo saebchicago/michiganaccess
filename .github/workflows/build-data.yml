@@ -23,6 +23,30 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Preflight - CENSUS_API_KEY must be present
+        # Without this, a missing secret surfaces only as an opaque throw from
+        # deep inside the refresh script ("CENSUS_API_KEY is empty and
+        # --require-live was passed"), several steps into the log. This job
+        # then fails red every Monday while the ACS broadband dataset stays
+        # 100% null in production and nobody is told what to do about it.
+        # Fail at the top instead, with the exact remediation.
+        env:
+          CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
+        run: |
+          if [ -z "${CENSUS_API_KEY}" ]; then
+            echo "::error title=CENSUS_API_KEY secret is not set::The ACS broadband refresh cannot run without it, so src/data/acs-broadband-county.generated.json stays at status pending-ci with all 83 counties null."
+            echo ""
+            echo "To fix (one time, about 30 seconds):"
+            echo "  1. Request a free key: https://api.census.gov/data/key_signup.html"
+            echo "  2. In this repo: Settings > Secrets and variables > Actions > New repository secret"
+            echo "  3. Name it exactly CENSUS_API_KEY and paste the key as the value"
+            echo "  4. Re-run this workflow (Actions > build-data > Run workflow)"
+            echo ""
+            echo "Do not paste the key into source, a PR, or a chat transcript - a repository secret is the only place it belongs."
+            exit 1
+          fi
+          echo "CENSUS_API_KEY is present (value redacted by Actions)."
+
       - name: Build open-data files
         run: node scripts/build-data.mjs
         env:
