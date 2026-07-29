@@ -289,6 +289,18 @@ function buildJsonPayload(ingestedAt, records, disciplines) {
       michigan_county_registry: "src/data/census-geographies.ts",
       michigan_county_registry_size: records.length,
       value_label: "MODELED",
+      // Consumed by scripts/check-plausibility.mjs. These four fields are
+      // sums over overlapping designation records, so they are not counts of
+      // people or clinicians and must never be summed or rendered as such.
+      // Emitted here so a regeneration cannot silently drop the declaration.
+      non_additive_fields: [
+        "designationPopulation",
+        "estimatedUnderservedPopulation",
+        "providerFte",
+        "shortageFte",
+      ],
+      non_additive_reason:
+        "HRSA HPSA designations are facility- or population-group based and their service areas overlap, so these four fields already double-count within a county and double-count further if summed across counties. Measured on the June 2026 files: Barry County's dental designationPopulation sums to 1,009,634 against a county population of 64,025, and statewide estimatedUnderservedPopulation sums to 24,282,165 against a state of roughly 10.1 million. Safe to aggregate: designatedHpsas (a count of records) and maxHpsaScore (a maximum). See docs/audit-2026-07.md (D8).",
       rollup_method:
         "Filter each HRSA discipline CSV to Common State Abbreviation='MI' and HPSA Status='Designated', then group by Common State County FIPS Code. Per (county, discipline): designatedHpsas=count of designations; maxHpsaScore=max HPSA Score across designations; designationPopulation=sum of HPSA Designation Population; estimatedUnderservedPopulation=sum of HPSA Estimated Underserved Population; providerFte=sum of HPSA FTE; shortageFte=sum of HPSA Shortage. Counties with zero designated HPSAs render as 0/null, not missing.",
       notes:

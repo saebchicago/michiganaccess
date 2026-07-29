@@ -79,6 +79,12 @@ export interface HpsaProvenance {
   michigan_county_registry: string;
   michigan_county_registry_size: number;
   value_label: "MODELED";
+  /**
+   * Leaf field names that must never be summed or rendered as counts of
+   * people or clinicians. Enforced by scripts/check-plausibility.mjs.
+   */
+  non_additive_fields: string[];
+  non_additive_reason: string;
   rollup_method: string;
   notes: string;
 }
