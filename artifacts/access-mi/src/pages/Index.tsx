@@ -156,7 +156,7 @@ function UtilityRail() {
           >
             Methodology
           </Link>
-          <span className="italic normal-case tracking-normal opacity-70">
+          <span className="italic normal-case tracking-normal">
             Updated{" "}
             {new Date(__BUILD_TIMESTAMP__).toLocaleDateString("en-US", {
               month: "short",
@@ -197,7 +197,7 @@ function Masthead({
           </p>
           <p
             className="text-xs font-normal normal-case"
-            style={{ color: `${C.emeraldMid}99` }}
+            style={{ color: C.emeraldMid }}
           >
             An independent, public-data journal for Michigan's 83 counties. No
             government or health system affiliation.
@@ -227,7 +227,7 @@ function Masthead({
                 className="px-4 py-2 min-h-[36px] text-[11px] font-bold uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
                 style={{
                   backgroundColor: active ? C.emerald : "transparent",
-                  color: active ? C.cream : `${C.emerald}99`,
+                  color: active ? C.cream : `${C.emerald}bf`,
                 }}
               >
                 {label}
@@ -305,7 +305,7 @@ function EditorialHero({
             >
               <div
                 className="absolute -top-3 -right-3 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em]"
-                style={{ backgroundColor: C.gold, color: C.emerald }}
+                style={{ backgroundColor: C.gold, color: C.emeraldInk }}
               >
                 Updated {updated}
               </div>
@@ -353,7 +353,7 @@ function EditorialHero({
                 <Link
                   to="/methodology"
                   className="inline-flex items-center gap-1.5 text-[10px] uppercase font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity"
-                  style={{ color: C.gold, letterSpacing: "0.16em" }}
+                  style={{ color: C.goldBright, letterSpacing: "0.16em" }}
                 >
                   View methodology and data integrity
                   <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
@@ -382,7 +382,7 @@ function NeedHelpBand() {
       <div className="mb-5 max-w-2xl">
         <span
           className="text-[11px] uppercase font-semibold"
-          style={{ color: C.gold, letterSpacing: "0.18em" }}
+          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
         >
           See the need, find the help
         </span>
@@ -452,7 +452,7 @@ function ResourceBridgeBand({ mode }: { mode: PersonaView }) {
         </h3>
         <span
           className="text-[11px] uppercase font-semibold"
-          style={{ color: C.gold, letterSpacing: "0.18em" }}
+          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
         >
           {isAnalyst ? "Analyst tools" : "Direct pathways"}
         </span>
@@ -519,7 +519,7 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
               ) : (
                 <span
                   className="text-[10px] font-semibold uppercase tracking-[0.14em]"
-                  style={{ color: `${C.emerald}80` }}
+                  style={{ color: `${C.emerald}bf` }}
                 >
                   Source-attributed
                 </span>
@@ -583,7 +583,7 @@ function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
                   </p>
                   <p
                     className="mt-1.5 text-[10px] leading-snug"
-                    style={{ color: `${C.emerald}80` }}
+                    style={{ color: `${C.emerald}bf` }}
                   >
                     Source: Ballotpedia analysis / Michigan SOS 2024. Formal
                     provenance label pending.
@@ -647,7 +647,7 @@ function ProvenanceStrip() {
                 </dt>
                 <dd
                   className="text-sm leading-relaxed"
-                  style={{ color: `${C.emerald}99` }}
+                  style={{ color: `${C.emerald}bf` }}
                 >
                   {gloss}
                 </dd>
@@ -657,7 +657,7 @@ function ProvenanceStrip() {
           <Link
             to="/methodology"
             className="text-[11px] uppercase font-semibold underline underline-offset-4 shrink-0"
-            style={{ color: C.gold, letterSpacing: "0.16em" }}
+            style={{ color: C.goldInk, letterSpacing: "0.16em" }}
           >
             Read methods
           </Link>
@@ -698,7 +698,7 @@ function CountyPicker() {
         </h3>
         <span
           className="text-[11px] uppercase font-semibold hidden sm:inline"
-          style={{ color: C.gold, letterSpacing: "0.18em" }}
+          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
         >
           83 counties
         </span>

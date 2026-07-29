@@ -52,7 +52,7 @@ export default function IntelligenceBriefing() {
         <Link
           to="/insights"
           className="inline-flex items-center gap-1.5 text-[11px] uppercase font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity"
-          style={{ color: C.gold, letterSpacing: "0.18em" }}
+          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
         >
           Read all insights
           <ArrowRight className="w-3 h-3" aria-hidden="true" />
@@ -95,14 +95,14 @@ export default function IntelligenceBriefing() {
                     className="mt-1 text-xs"
                     style={{ color: `${C.emerald}B3` }}
                   >
-                    {dp.label} <span style={{ color: `${C.emerald}80` }}>({dp.context})</span>
+                    {dp.label} <span style={{ color: `${C.emerald}bf` }}>({dp.context})</span>
                   </dt>
                 </div>
               ))}
             </dl>
           )}
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-[11px]" style={{ color: `${C.emerald}80` }}>
+            <p className="text-[11px]" style={{ color: `${C.emerald}bf` }}>
               Source: {insight.source}
             </p>
             <Link
@@ -159,7 +159,7 @@ export default function IntelligenceBriefing() {
           >
             {FEATURED_TREND.insight}
           </p>
-          <p className="mt-1.5 text-[11px]" style={{ color: `${C.emerald}80` }}>
+          <p className="mt-1.5 text-[11px]" style={{ color: `${C.emerald}bf` }}>
             Source: {FEATURED_TREND.source}
           </p>
         </motion.aside>
@@ -189,12 +189,12 @@ export default function IntelligenceBriefing() {
                 {story.stat.value.toLocaleString()}
                 {story.stat.suffix}
               </p>
-              <p className="text-[11px]" style={{ color: `${C.emerald}99` }}>
+              <p className="text-[11px]" style={{ color: `${C.emerald}bf` }}>
                 {story.stat.label}
               </p>
               <p
                 className="flex items-center justify-between text-[11px]"
-                style={{ color: `${C.emerald}80` }}
+                style={{ color: `${C.emerald}bf` }}
               >
                 {story.source}
                 <ArrowRight
