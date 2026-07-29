@@ -34,18 +34,36 @@ jobs:
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
         run: |
           if [ -z "${CENSUS_API_KEY}" ]; then
-            echo "::error title=CENSUS_API_KEY secret is not set::The ACS broadband refresh cannot run without it, so src/data/acs-broadband-county.generated.json stays at status pending-ci with all 83 counties null."
+            echo "::error title=CENSUS_API_KEY is not set as a GitHub Actions secret::A key stored in Netlify or Supabase does NOT reach this workflow. Until it is set here, src/data/acs-broadband-county.generated.json stays at status pending-ci with all 83 counties null."
+            echo ""
+            echo "This project keeps CENSUS_API_KEY in THREE separate stores. They do not"
+            echo "share values, and having it in one says nothing about the others:"
+            echo ""
+            echo "  1. GitHub Actions secrets  -> this workflow and facility-refresh.yml."
+            echo "                                THIS is the one that is missing."
+            echo "  2. Supabase function secrets -> the census-acs-proxy, chna-data-proxy,"
+            echo "                                medicaid-coverage-at-risk and"
+            echo "                                dual-eligible-exposure edge functions."
+            echo "  3. Netlify environment variables -> the Netlify build and"
+            echo "                                netlify/functions/*. Note that NOTHING"
+            echo "                                census-related reads from here: the three"
+            echo "                                Netlify functions are airnow, eia and"
+            echo "                                epa-echo. A key set only in Netlify is"
+            echo "                                inert for Census data."
             echo ""
             echo "To fix (one time, about 30 seconds):"
-            echo "  1. Request a free key: https://api.census.gov/data/key_signup.html"
-            echo "  2. In this repo: Settings > Secrets and variables > Actions > New repository secret"
+            echo "  1. Get the key you already have, or request a free one:"
+            echo "     https://api.census.gov/data/key_signup.html"
+            echo "  2. In THIS repo: Settings > Secrets and variables > Actions"
+            echo "     > New repository secret"
             echo "  3. Name it exactly CENSUS_API_KEY and paste the key as the value"
             echo "  4. Re-run this workflow (Actions > build-data > Run workflow)"
             echo ""
-            echo "Do not paste the key into source, a PR, or a chat transcript - a repository secret is the only place it belongs."
+            echo "Do not paste the key into source, a PR, or a chat transcript - a"
+            echo "repository secret is the only place it belongs."
             exit 1
           fi
-          echo "CENSUS_API_KEY is present (value redacted by Actions)."
+          echo "CENSUS_API_KEY is present as a GitHub Actions secret (value redacted)."
 
       - name: Build open-data files
         run: node scripts/build-data.mjs

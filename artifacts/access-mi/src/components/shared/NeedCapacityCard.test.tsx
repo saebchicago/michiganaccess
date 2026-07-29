@@ -49,13 +49,16 @@ describe("NeedCapacityCard", () => {
     expect(
       screen.getByText(`${expectedCount.toLocaleString()} designated shortage areas`),
     ).toBeInTheDocument();
+    // getAllByText, not getByText: two disciplines legitimately share a
+    // county count (primary care and mental health both cover 79 of 83),
+    // so this string is expected to appear more than once.
     expect(
-      screen.getByText(
+      screen.getAllByText(
         new RegExp(
           `Across ${expectedCounties} of ${HRSA_HPSA_COUNTY_RECORDS.length} counties`,
         ),
-      ),
-    ).toBeInTheDocument();
+      ).length,
+    ).toBeGreaterThan(0);
   });
 
   it("scopes to a county when one is given and matches its real HPSA record", () => {
