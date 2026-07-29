@@ -60,7 +60,10 @@ const Layout = ({ children }: LayoutProps) => (
         // Programmatic focus target for route changes (RouteAnnouncer)
         // and the skip link; not in the tab order itself.
         tabIndex={-1}
-        className="flex-1 pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0 focus:outline-none"
+        // Bottom padding reserves the fixed mobile chrome: below sm both
+        // QuickExitBar (~4.5rem) and MobileBottomNav (3.5rem) are pinned
+        // to the bottom edge; from sm to lg only the nav remains.
+        className="flex-1 pb-[calc(8rem+env(safe-area-inset-bottom,0px))] sm:pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0 focus:outline-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3, delay: 0.1 }}

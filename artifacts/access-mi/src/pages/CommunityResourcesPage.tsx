@@ -184,7 +184,7 @@ export default function CommunityResourcesPage() {
     },
   });
   // Load ALL resources - local dropdown and tabs handle filtering
-  const { data: resources = [], isLoading } = useCommunityResources();
+  const { data: resources = [], isLoading, isError } = useCommunityResources();
 
   // Resolve initial category from URL param
   const initialTab = useMemo(() => {
@@ -492,9 +492,23 @@ export default function CommunityResourcesPage() {
           </Select>
         </div>
 
-        {/* Results - progressive disclosure */}
+        {/* Results - progressive disclosure. A fetch failure gets its own
+            branch so it never reads as "no resources in your county". */}
         {isLoading ? (
           <ContentSkeleton variant="cards" count={6} />
+        ) : isError ? (
+          <Card className="border-destructive/30 bg-destructive/5">
+            <CardContent className="py-6 text-center space-y-3" role="alert">
+              <AlertTriangle className="h-10 w-10 text-destructive mx-auto" />
+              <h3 className="text-lg font-semibold text-foreground">The resource directory is temporarily unavailable.</h3>
+              <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                This is a problem on our end, not a lack of resources near you.
+                Please try again in a few minutes, or call{" "}
+                <a href="tel:211" className="font-bold text-primary underline hover:text-primary/80">2-1-1</a>{" "}
+                right now to speak with a human who can help.
+              </p>
+            </CardContent>
+          </Card>
         ) : filtered.length === 0 ? (
           <div className="space-y-4">
             <Card className="border-destructive/30 bg-destructive/5">

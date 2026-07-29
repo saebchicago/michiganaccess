@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { CheckCircle2, Loader2, RotateCcw, Home } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Link, useSearchParams } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -108,6 +108,12 @@ export default function FeedbackPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid()) return;
+    if (!supabaseConfigured) {
+      toast.error(
+        "Feedback submission is not available right now. Please try again later.",
+      );
+      return;
+    }
     setSubmitting(true);
     try {
       const payload = {

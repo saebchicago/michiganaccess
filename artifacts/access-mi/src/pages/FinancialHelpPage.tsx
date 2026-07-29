@@ -62,7 +62,7 @@ export default function FinancialHelpPage() {
       ],
     },
   });
-  const { data: programs = [], isLoading } = useFinancialPrograms();
+  const { data: programs = [], isLoading, isError } = useFinancialPrograms();
   // Site-wide eligibility profile: seed the screener from what the
   // visitor already entered elsewhere (ContextBar, benefits screener)
   // and write changes back so every income-aware page stays in sync.
@@ -262,9 +262,15 @@ export default function FinancialHelpPage() {
           ))}
         </div>
 
-        {/* Programs by category */}
+        {/* Programs by category. A failed fetch must not read as
+            "no programs you qualify for". */}
         {isLoading ? (
           <ContentSkeleton variant="rows" count={5} />
+        ) : isError ? (
+          <EmptyState
+            title="Program listings are temporarily unavailable"
+            subtitle="This is a problem on our end, not your eligibility. Please try again in a few minutes, or call 2-1-1 for help applying."
+          />
         ) : Object.keys(grouped).length === 0 ? (
           <EmptyState title="No programs found" subtitle="Try adjusting your income or filter settings" onReset={() => { setFilterType("all"); setIncome(""); }} />
         ) : (

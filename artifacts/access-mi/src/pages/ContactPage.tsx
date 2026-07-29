@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { Send, CheckCircle2, Mail, Loader2 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -61,6 +61,12 @@ export default function ContactPage() {
       !form.message.trim()
     )
       return;
+    if (!supabaseConfigured) {
+      toast.error(
+        "The contact form is not available right now. Please try again later or use the feedback page.",
+      );
+      return;
+    }
     setSending(true);
     try {
       const { data, error } = await supabase.functions.invoke(
@@ -167,7 +173,6 @@ export default function ContactPage() {
                 <form
                   onSubmit={handleSubmit}
                   className="space-y-5"
-                  data-netlify="true"
                   name="contact"
                 >
                   <div>
