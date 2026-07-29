@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Heart, Phone } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 /**
  * Embeddable widget for county spin-offs.
@@ -10,6 +11,15 @@ import { Button } from "@/components/ui/button";
  * Lightweight, self-contained quick-search widget.
  */
 export default function EmbedWidget() {
+  // noindex: this page exists to be iframed by partner sites, not to
+  // appear in search results as a bare widget.
+  usePageMeta({
+    title: "Find Help Widget",
+    description:
+      "Embeddable Access Michigan quick-search widget for partner and county websites.",
+    path: "/embed",
+    noindex: true,
+  });
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 

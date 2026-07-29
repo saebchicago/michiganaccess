@@ -76,7 +76,7 @@ const standards = [
       "Mobile-first responsive design that adapts from small phones (320px) to large desktop screens",
       "Progressive loading with skeleton states for slow connections",
       "Lazy-loaded images and code-split routes for performance",
-      "Print-optimized stylesheets for resource pages",
+      "Print stylesheets on key report pages (county brief, comparisons, site report), with broader print coverage in progress",
     ],
   },
   {

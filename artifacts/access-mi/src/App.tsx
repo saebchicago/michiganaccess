@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { CountyProvider } from "./contexts/CountyContext";
 import { NerdModeProvider } from "./contexts/NerdModeContext";
 import { APP_ROUTES } from "./routes/manifest";
+import { usePageViewTracking } from "./hooks/usePageViewTracking";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -45,6 +46,13 @@ const PageLoader = () => (
   </div>
 );
 
+// Must render inside BrowserRouter; a component (not a bare hook call
+// in App) so useLocation has router context.
+const PageViewTracker = () => {
+  usePageViewTracking();
+  return null;
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <CountyProvider>
@@ -53,6 +61,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <PageViewTracker />
             <ErrorBoundary>
               <Suspense fallback={<PageLoader />}>
                 <Routes>
