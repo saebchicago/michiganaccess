@@ -24,6 +24,10 @@ export interface AcsBroadbandCountyRecord {
   householdsWithBroadband: number | null;
   /** Percent, 2 decimals, computed as broadband / households * 100, or null. */
   broadbandSubscriptionRate: number | null;
+  /** ACS B28002_001M - margin of error for households (90% confidence), or null. */
+  householdsMoe: number | null;
+  /** ACS B28002_007M - margin of error for broadband households (90% confidence), or null. */
+  householdsWithBroadbandMoe: number | null;
   /** Human-readable reason when the record is not populated. */
   pendingReason: string | null;
 }
@@ -39,6 +43,8 @@ export interface AcsBroadbandCountyProvenance {
   numerator_label: string;
   universe_variable: string;
   universe_label: string;
+  numerator_moe_variable: string;
+  universe_moe_variable: string;
   ingested_at: string;
   ingest_script: string;
   michigan_county_registry: string;
@@ -82,4 +88,4 @@ export function getAcsBroadbandForCountyName(
 }
 
 /** True iff every county has a real broadband subscription rate. */
-export const ACS_BROADBAND_IS_POPULATED = false;
+export const ACS_BROADBAND_IS_POPULATED = true;
