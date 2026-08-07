@@ -60,10 +60,22 @@ describe("civicQueryEngine - answers address the question", () => {
     expect(a.confidence).toBe("none");
   });
 
-  it("marks broadband as pending rather than answering with vehicle access", () => {
+  it("answers a broadband question with broadband data, never with vehicle access", () => {
     const a = queryCivicData("broadband access in Alcona County");
     const broadband = a.dataPoints.find((p) => /broadband/i.test(p.label));
-    expect(broadband?.valueLabel).toBe("PENDING");
+
+    // Assert the invariant, not a snapshot. This previously asserted
+    // PENDING outright, which encoded a transient empty-dataset state as an
+    // expectation - so it failed the moment the 2026-08-07 refresh populated
+    // all 83 counties with real ACS rates. What must hold in either state is
+    // that a broadband question yields a broadband-labeled point carrying a
+    // valid provenance label.
+    expect(broadband).toBeDefined();
+    expect(["VERIFIED", "PENDING"]).toContain(broadband?.valueLabel);
+    if (broadband?.valueLabel === "VERIFIED") {
+      expect(broadband.value).toMatch(/^\d+(\.\d+)?%$/);
+      expect(broadband.source).toMatch(/ACS/i);
+    }
 
     // Vehicle access is retained as related context (no data removed) but must
     // be flagged so it cannot read as the broadband answer.
