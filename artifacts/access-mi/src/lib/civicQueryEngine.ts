@@ -506,11 +506,13 @@ function resolveBroadband(county: string): CivicDataPoint[] {
     });
   }
 
-  // The ACS broadband rollup is not yet ingested - every county row is status
-  // "pending-ci" (ACS_BROADBAND_IS_POPULATED === false). Without this point the
-  // resolver answered a broadband question with household VEHICLE access alone,
-  // under a "Broadband access in X County" headline: a different measure
-  // presented as the answer. State the gap explicitly instead.
+  // Fallback for when the ACS broadband rollup has no value for this county
+  // (rows carry status "pending-ci" until a refresh populates them). Without
+  // this point the resolver answered a broadband question with household
+  // VEHICLE access alone, under a "Broadband access in X County" headline: a
+  // different measure presented as the answer. State the gap explicitly
+  // instead. As of the 2026-08-07 refresh all 83 counties are populated, so
+  // this branch is dormant - it stays because a future refresh can fail.
   if (points.length === 0) {
     points.push({
       label: "Broadband subscription rate",
