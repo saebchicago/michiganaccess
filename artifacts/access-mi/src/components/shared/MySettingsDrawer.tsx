@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { usePersonalProfile, type PersonalProfile } from "@/hooks/usePersonalProfile";
 import { toast } from "sonner";
+import { clearLocalActivity } from "@/utils/clearLocalActivity";
 
 const COVERAGE_OPTIONS: { value: PersonalProfile["coverageType"]; label: string }[] = [
   { value: "medicaid", label: "Medicaid / Healthy Michigan" },
@@ -60,9 +61,19 @@ export default function MySettingsDrawer() {
   };
 
   const handleClear = () => {
+    // The drawer promises "You can clear it anytime". Clearing only the
+    // profile key left recent searches, the last 20 pages viewed, ZIP,
+    // county and saved resources behind, so the promise overstated what
+    // the button did. clearLocalActivity removes everything except
+    // display preferences - see src/utils/clearLocalActivity.ts.
     clearProfile();
     setDraft({});
-    toast.info("Personal settings cleared");
+    const { removed } = clearLocalActivity();
+    toast.success(
+      removed > 0
+        ? `Cleared ${removed} saved item${removed === 1 ? "" : "s"} from this device, including recent searches and pages viewed.`
+        : "Nothing was stored on this device.",
+    );
   };
 
   const toggleUtility = (u: string) => {
@@ -179,14 +190,14 @@ export default function MySettingsDrawer() {
           <div className="flex items-start gap-2 rounded-md border border-border bg-muted/30 p-3">
             <Info className="h-4 w-4 mt-0.5 shrink-0 text-muted-foreground" />
             <p className="text-[11px] leading-relaxed text-muted-foreground">
-              This information is stored only in your browser's local storage. It is never sent to our servers and no one else can see it. You can clear it at any time using the button below.
+              This information is stored only in your browser's local storage. It is never sent to our servers. Anyone using this device can see it, so if that is a concern, clear it with the button below - that also removes your recent searches and the pages you have viewed.
             </p>
           </div>
         </div>
 
         <SheetFooter className="flex-row gap-2">
           <Button variant="destructive" size="sm" onClick={handleClear} className="gap-1.5">
-            <Trash2 className="h-3.5 w-3.5" /> Clear All
+            <Trash2 className="h-3.5 w-3.5" /> Clear my activity
           </Button>
           <Button size="sm" onClick={handleSave} className="gap-1.5 ml-auto">
             <Save className="h-3.5 w-3.5" /> Save
