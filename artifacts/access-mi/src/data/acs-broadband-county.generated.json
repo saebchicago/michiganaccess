@@ -12,7 +12,7 @@
     "universe_label": "Households (universe)",
     "numerator_moe_variable": "B28002_007M",
     "universe_moe_variable": "B28002_001M",
-    "ingested_at": "2026-08-07T17:19:54.711Z",
+    "ingested_at": "2026-08-10T08:03:41.568Z",
     "ingest_script": "scripts/refresh-acs-broadband-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
