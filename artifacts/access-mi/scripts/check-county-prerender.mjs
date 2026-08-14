@@ -55,7 +55,7 @@ async function main() {
     )?.[1];
     if (!canonical) {
       failures.push(`${slug}: no canonical link`);
-    } else if (!canonical.endsWith(`/county/${slug}`)) {
+    } else if (!/\/county\/${slug}\/?$/.test(canonical)) {
       failures.push(`${slug}: canonical points to ${canonical}`);
     }
     const title = html.match(/<title>([^<]*)<\/title>/i)?.[1] ?? "";
