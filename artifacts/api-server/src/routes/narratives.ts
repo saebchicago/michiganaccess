@@ -110,7 +110,6 @@ router.post("/narratives", async (req: Request, res: Response) => {
         "A 5-digit ZIP, a county name, and numeric equity, income, renter, and LEP values are required.",
     });
     return;
-
   }
 
   const prompts: Record<"resident" | "strategist", string> = {
