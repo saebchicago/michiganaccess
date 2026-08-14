@@ -2,6 +2,46 @@ import { Router, type Request, type Response } from "express";
 
 const router: Router = Router();
 
+/**
+ * Abuse controls for a paid upstream (Mistral) endpoint that has no login.
+ * Each request costs two LLM calls, so we cap per-IP frequency and validate
+ * every attacker-controlled field before it reaches the prompt.
+ */
+const WINDOW_MS = 60_000;
+const MAX_PER_WINDOW = 5;
+const MAX_BODY_CHARS = 2_000;
+const hits = new Map<string, number[]>();
+
+function rateLimited(ip: string): boolean {
+  const now = Date.now();
+  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  hits.set(ip, recent);
+  if (hits.size > 5_000) {
+    // Bound memory: drop entries whose window has fully expired.
+    for (const [k, v] of hits) {
+      if (v.every((t) => now - t >= WINDOW_MS)) hits.delete(k);
+    }
+  }
+  return recent.length > MAX_PER_WINDOW;
+}
+
+/** Plain text only: no newlines, no prompt-instruction payloads, length capped. */
+function safeText(value: unknown, maxLength: number): string | null {
+  if (typeof value !== "string") return null;
+  const cleaned = value.replace(/[\r\n]+/g, " ").trim();
+  if (!cleaned || cleaned.length > maxLength) return null;
+  if (!/^[A-Za-z0-9 .,'’&/()-]+$/.test(cleaned)) return null;
+  return cleaned;
+}
+
+function safeNumber(value: unknown, min: number, max: number): number | null {
+  const n = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(n) || n < min || n > max) return null;
+  return n;
+}
+
+
 const RESIDENT_PROMPT = (
   zip: string,
   county: string,
