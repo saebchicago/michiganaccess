@@ -39,6 +39,108 @@ const projectRoot = path.resolve(here, "..");
 const distDir = path.join(projectRoot, "dist");
 const indexPath = path.join(distDir, "index.html");
 const routeMetaPath = path.join(projectRoot, "src/config/routeMeta.ts");
+const countyProfilesPath = path.join(
+  projectRoot,
+  "src/data/michigan-county-profiles.ts",
+);
+
+/** Mirrors countyToSlug in src/utils/countyUtils.ts and generate-sitemap.mjs. */
+function countyToSlug(county) {
+  return county.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "");
+}
+
+function formatNumber(n) {
+  return Number(n).toLocaleString("en-US");
+}
+
+/**
+ * Lift name/population/cities/health figures out of COUNTY_PROFILES in
+ * src/data/michigan-county-profiles.ts with a narrow regex, same approach
+ * as loadRouteMeta: no TS tooling in the post-build step.
+ *
+ * Each entry in that file looks like:
+ *   Wayne: {
+ *     population: 1771063,
+ *     majorCities: ["Detroit", "Dearborn"],
+ *     countyType: "urban",
+ *     healthHighlights: h("5.7%", "1,426:1", "15.4%"),
+ *   },
+ */
+async function loadCountyProfiles() {
+  const src = await readFile(countyProfilesPath, "utf8");
+  const start = src.indexOf("COUNTY_PROFILES: Record<string, CountyProfile> = {");
+  if (start < 0) {
+    throw new Error(
+      "Could not locate COUNTY_PROFILES in src/data/michigan-county-profiles.ts",
+    );
+  }
+  const body = src.slice(start);
+  const entryRe =
+    /(?:^|\n)\s{2}(?:"([^"]+)"|([A-Za-z][\w]*))\s*:\s*\{\s*\n\s*population:\s*(\d+),[\s\S]*?countyType:\s*"([^"]+)",\s*\n\s*healthHighlights:\s*h\(\s*"([^"]*)"\s*,\s*"([^"]*)"\s*,\s*"([^"]*)"/g;
+  const out = [];
+  let m;
+  while ((m = entryRe.exec(body)) !== null) {
+    const name = m[1] ?? m[2];
+    if (name === "DEFAULT_PROFILE") continue;
+    out.push({
+      name,
+      population: Number(m[3]),
+      countyType: m[4],
+      uninsured: m[5],
+      primaryCare: m[6],
+      foodInsecurity: m[7],
+    });
+  }
+  return out;
+}
+
+/**
+ * Build a prerenderable meta entry per county so /county/<slug> ships its
+ * own title, description, self-referencing canonical and noscript summary
+ * in raw HTML. Before this, every county URL fell through Netlify's SPA
+ * catch-all to dist/index.html and therefore declared the homepage as its
+ * canonical - telling crawlers each county page was a duplicate of "/".
+ *
+ * Figures and their source labels are kept identical to what the county
+ * page renders after hydration; the source names are spelled out because
+ * this text is the only thing non-JS crawlers ever read.
+ */
+function countyRouteMeta(profile) {
+  const slug = countyToSlug(profile.name);
+  const pop = formatNumber(profile.population);
+  return {
+    path: `/county/${slug}`,
+    title: `${profile.name} County, MI civic data | Access Michigan`,
+    description:
+      `${profile.name} County, Michigan: population ${pop}, uninsured ${profile.uninsured}, ` +
+      `primary care ratio ${profile.primaryCare}, food insecurity ${profile.foodInsecurity}. Every figure sourced.`,
+    h1: `${profile.name} County, Michigan`,
+    summary:
+      `Population ${pop} (U.S. Census Bureau Population Estimates, Vintage 2024). ` +
+      `Uninsured rate ${profile.uninsured} (County Health Rankings 2025, SAHIE 2022). ` +
+      `Primary care ratio ${profile.primaryCare} (County Health Rankings 2025, AHRF 2021). ` +
+      `Food insecurity ${profile.foodInsecurity} (County Health Rankings 2025, Map the Meal Gap 2022, modeled estimate). ` +
+      `Health facility, environmental and community resource detail for ${profile.name} County loads in the interactive view.`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "GovernmentService",
+      name: `${profile.name} County Health & Community Resources`,
+      serviceArea: {
+        "@type": "AdministrativeArea",
+        name: `${profile.name} County, Michigan`,
+      },
+      provider: {
+        "@type": "Organization",
+        name: "Access Michigan",
+        description:
+          "Independent civic data and education project. Not affiliated with the State of Michigan or any government agency.",
+        url: SITE_URL,
+      },
+      url: `${SITE_URL}/county/${slug}/`,
+    },
+  };
+}
+
 
 function escapeHtml(s) {
   return String(s)
@@ -270,9 +372,10 @@ const ROUTE_JSONLD = {
 const JSONLD_MARKER_START = "<!-- prerender-jsonld:start -->";
 const JSONLD_MARKER_END = "<!-- prerender-jsonld:end -->";
 
-function injectRouteJsonLd(html, routePath) {
-  const schema = ROUTE_JSONLD[routePath];
+function injectRouteJsonLd(html, routePath, explicitSchema) {
+  const schema = explicitSchema ?? ROUTE_JSONLD[routePath];
   if (!schema) return html;
+
 
   // Strip any previously injected block (idempotent re-runs)
   const stripped = html.replace(
@@ -375,9 +478,37 @@ async function main() {
     written++;
   }
 
+  // Dynamic /county/<slug> routes. These are advertised in sitemap.xml
+  // (all 83) but had no static file, so Netlify's `/* -> /index.html`
+  // catch-all served the homepage shell - complete with the homepage's
+  // canonical - under every county URL. Writing a real file per county
+  // makes the canonical self-referencing before JS runs.
+  const countyProfiles = await loadCountyProfiles();
+  let countiesWritten = 0;
+  for (const profile of countyProfiles) {
+    const meta = countyRouteMeta(profile);
+    const routeDir = path.join(distDir, meta.path.replace(/^\/+/, ""));
+    await mkdir(routeDir, { recursive: true });
+    const html = injectRouteJsonLd(
+      injectNoscript(rewriteHead(indexHtml, meta), meta),
+      meta.path,
+      meta.jsonLd,
+    );
+    await writeFile(path.join(routeDir, "index.html"), html, "utf8");
+    countiesWritten++;
+  }
+  if (countiesWritten < 83) {
+    console.error(
+      `[prerender-meta] expected 83 county pages, parsed ${countiesWritten}. ` +
+        "COUNTY_PROFILES in src/data/michigan-county-profiles.ts may have changed shape.",
+    );
+    process.exit(1);
+  }
+
   console.log(
-    `[prerender-meta] wrote ${written} per-route HTML files into dist/.`,
+    `[prerender-meta] wrote ${written} static + ${countiesWritten} county per-route HTML files into dist/.`,
   );
+
 }
 
 main().catch((err) => {

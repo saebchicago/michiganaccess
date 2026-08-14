@@ -33,7 +33,10 @@ interface Props {
 export default function CommunityTrustWidget({
   resourceId, resourceName, resourceType = "community_resource", county, compact,
 }: Props) {
-  const [helpfulCount, setHelpfulCount] = useState(0);
+  // null = we do not know the count (fetch failed or not finished). Never 0,
+  // which would claim nobody has found this resource helpful.
+  const [helpfulCount, setHelpfulCount] = useState<number | null>(null);
+
   const [hasVoted, setHasVoted] = useState(false);
   const [showReport, setShowReport] = useState(false);
   const [reportText, setReportText] = useState("");
@@ -44,18 +47,20 @@ export default function CommunityTrustWidget({
   useEffect(() => {
     const fetchCounts = async () => {
       try {
-        const { count } = await supabase
+        const { count, error } = await supabase
           .from("resource_ratings")
           .select("*", { count: "exact", head: true })
           .eq("resource_id", resourceId)
           .gte("rating", 4);
-        setHelpfulCount(count ?? 0);
+        setHelpfulCount(error ? null : (count ?? null));
       } catch {
-        // silent
+        // Leave the count unknown rather than asserting zero.
+        setHelpfulCount(null);
       } finally {
         setLoadingCounts(false);
       }
     };
+
     fetchCounts();
 
     // Check localStorage for prior votes
@@ -75,7 +80,7 @@ export default function CommunityTrustWidget({
         county,
       });
       if (error) throw error;
-      setHelpfulCount(c => c + 1);
+      setHelpfulCount((c) => (c === null ? null : c + 1));
       setHasVoted(true);
       localStorage.setItem(`trust-vote-${resourceId}`, "1");
       toast.success("Thank you! Your feedback helps neighbors find reliable resources.");
@@ -123,7 +128,7 @@ export default function CommunityTrustWidget({
     <div className="space-y-2">
       {/* Trust Score */}
       <div className="flex items-center gap-2 flex-wrap">
-        {helpfulCount > 0 && (
+        {helpfulCount !== null && helpfulCount > 0 && (
           <Badge variant="outline" className="text-[10px] gap-1 border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300">
             <ShieldCheck className="h-3 w-3" />
             {helpfulCount} neighbor{helpfulCount !== 1 ? "s" : ""} found this helpful
