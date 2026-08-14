@@ -70,29 +70,47 @@ router.post("/narratives", async (req: Request, res: Response) => {
     return;
   }
 
-  const {
-    zip,
-    county,
-    equityScore,
-    equityTier,
-    topHealthConcern,
-    medianIncome,
-    renterPct,
-    lepPct,
-  } = req.body as {
-    zip: string;
-    county: string;
-    equityScore: number;
-    equityTier: number;
-    topHealthConcern: string;
-    medianIncome: number;
-    renterPct: number;
-    lepPct: number;
-  };
-
-  if (!zip || !county) {
-    res.status(400).json({ error: "zip and county are required" });
+  const ip = req.ip ?? req.socket.remoteAddress ?? "unknown";
+  if (rateLimited(ip)) {
+    res.setHeader("Retry-After", "60");
+    res
+      .status(429)
+      .json({ error: "Too many narrative requests. Try again in a minute." });
     return;
+  }
+
+  const body = (req.body ?? {}) as Record<string, unknown>;
+  if (JSON.stringify(body).length > MAX_BODY_CHARS) {
+    res.status(413).json({ error: "Request body too large" });
+    return;
+  }
+
+  const zip = typeof body["zip"] === "string" && /^\d{5}$/.test(body["zip"])
+    ? body["zip"]
+    : null;
+  const county = safeText(body["county"], 40);
+  const topHealthConcern = safeText(body["topHealthConcern"], 80) ?? "not reported";
+  const equityScore = safeNumber(body["equityScore"], 0, 100);
+  const equityTier = safeNumber(body["equityTier"], 1, 5);
+  const medianIncome = safeNumber(body["medianIncome"], 0, 1_000_000);
+  const renterPct = safeNumber(body["renterPct"], 0, 100);
+  const lepPct = safeNumber(body["lepPct"], 0, 100);
+
+  if (
+    !zip ||
+    !county ||
+    equityScore === null ||
+    equityTier === null ||
+    medianIncome === null ||
+    renterPct === null ||
+    lepPct === null
+  ) {
+    res.status(400).json({
+      error:
+        "A 5-digit ZIP, a county name, and numeric equity, income, renter, and LEP values are required.",
+    });
+    return;
+
   }
 
   const prompts: Record<"resident" | "strategist", string> = {
