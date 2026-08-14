@@ -63,7 +63,17 @@ export default function EconomicVitalityDashboard() {
                 <DollarSign className="h-5 w-5 text-michigan-gold-deep" /> Economic Vitality by County
               </CardTitle>
               <CardDescription>Income, poverty, employment, and housing costs across Michigan</CardDescription>
+              {/* The hook falls back to a 20-county static snapshot when the
+                  Census ACS API is unreachable. Say so, rather than passing
+                  cached figures off as a live statewide read. */}
+              {isFallback && (
+                <p className="mt-1 text-[11px] text-amber-700 dark:text-amber-400">
+                  Live Census ACS request failed. Showing a cached 20-county
+                  snapshot (ACS 5-year), not a live statewide read.
+                </p>
+              )}
             </div>
+
             <Button variant="outline" size="sm" className="h-7 text-xs" onClick={handleCSV}>
               <Download className="mr-1 h-3 w-3" /> CSV
             </Button>
