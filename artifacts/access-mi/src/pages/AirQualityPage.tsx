@@ -26,6 +26,8 @@ import {
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { useECHOFacilities } from "@/hooks/useEPAEcho";
 import AirQualityChecker from "@/components/environment/AirQualityChecker";
+import { DataUnavailable } from "@/components/shared/EmptyState";
+
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -57,7 +59,12 @@ export default function AirQualityPage() {
   });
 
   const [selectedCounty, setSelectedCounty] = useState<string | null>(null);
-  const { data: facilities, isLoading } = useECHOFacilities(selectedCounty);
+  const {
+    data: facilities,
+    isLoading,
+    isError,
+  } = useECHOFacilities(selectedCounty);
+
 
   const totalFacilities = facilities?.length ?? 0;
   const withViolations =
@@ -170,6 +177,18 @@ export default function AirQualityPage() {
                 ECHO...
               </div>
             )}
+
+            {/* A failed ECHO query must never render as 0 facilities and
+                0 violations - that reads as a clean compliance record. */}
+            {isError && !isLoading && (
+              <DataUnavailable
+                variant="error"
+                label="EPA ECHO data is temporarily unavailable"
+                detail="We could not reach the EPA ECHO service, so facility and violation counts are not shown. Check echo.epa.gov directly, or try again in a few minutes."
+              />
+            )}
+
+
 
             {facilities && facilities.length > 0 && (
               <div className="space-y-4">

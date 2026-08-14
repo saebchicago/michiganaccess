@@ -232,8 +232,12 @@ export default function CountyPage() {
     ([, name]) => name === county,
   )?.[0];
   const triFacilities = getTRIByCounty(county);
-  const { data: echoFacilities, isLoading: echoLoading } =
-    useECHOFacilities(county);
+  const {
+    data: echoFacilities,
+    isLoading: echoLoading,
+    isError: echoError,
+  } = useECHOFacilities(county);
+
   const echoTotal = echoFacilities?.length ?? 0;
   const echoRCRA =
     echoFacilities?.filter((f) => f.programs.includes("RCRA")).length ?? 0;
@@ -550,7 +554,13 @@ export default function CountyPage() {
             })}
           </div>
 
-          {/* Sparkline for uninsured rate trend */}
+          {/* Sparkline for uninsured rate trend.
+              The tile above cites SAHIE 2022 via County Health Rankings; the
+              sparkline cites ACS 5-year S2701. Two different surveys, two
+              different vintages, two different universes - so the numbers do
+              not match and must not be read as a correction of each other.
+              The note below states that explicitly rather than leaving a
+              reader to assume one of them is wrong. */}
           {(() => {
             const uninsuredH = profile.healthHighlights.find(
               (h) => h.label === "Uninsured rate",
@@ -562,10 +572,20 @@ export default function CountyPage() {
                     currentRate={uninsuredH.value}
                     county={county}
                   />
+                  <p className="mt-3 border-t border-border pt-2 text-[10px] leading-relaxed text-muted-foreground">
+                    Why this differs from the {uninsuredH.value} above: the
+                    highlight tile reports {COUNTY_UNINSURED_SOURCE}, while this
+                    comparison uses the American Community Survey 5-year table
+                    S2701. Different surveys, vintages and populations, so the
+                    two figures are not interchangeable. Cite the tile value
+                    when matching County Health Rankings, and the ACS series
+                    when showing change over time.
+                  </p>
                 </CardContent>
               </Card>
             ) : null;
           })()}
+
         </section>
 
         {/* Care capacity vs. need */}
@@ -826,12 +846,31 @@ export default function CountyPage() {
                 </Card>
               ))}
             </div>
+          ) : echoError ? (
+            <Card>
+              <CardContent className="py-4">
+                <p className="text-sm text-muted-foreground">
+                  EPA ECHO live data is temporarily unavailable, so no facility
+                  or violation counts are shown for {county} County. View
+                  enforcement data directly at{" "}
+                  <a
+                    href="https://echo.epa.gov/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    echo.epa.gov
+                  </a>
+                  .
+                </p>
+              </CardContent>
+            </Card>
           ) : (
             <Card>
               <CardContent className="py-4">
                 <p className="text-sm text-muted-foreground">
-                  EPA ECHO live data temporarily unavailable. View enforcement
-                  data directly at{" "}
+                  EPA ECHO returned no regulated facilities for {county} County.
+                  Confirm at{" "}
                   <a
                     href="https://echo.epa.gov/"
                     target="_blank"
@@ -845,6 +884,7 @@ export default function CountyPage() {
               </CardContent>
             </Card>
           )}
+
           <p className="mt-3 text-[10px] text-muted-foreground">
             Source:{" "}
             <a

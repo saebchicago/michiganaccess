@@ -31,22 +31,29 @@ export default function BetaImpactCounter() {
 
   useEffect(() => {
     (async () => {
-      const [feedback, reports, appeals, ratings] = await Promise.all([
+      const results = await Promise.all([
         supabase.from("page_feedback" as any).select("id", { count: "exact", head: true }),
         supabase.from("community_reports" as any).select("id", { count: "exact", head: true }),
         supabase.from("appeal_outcomes" as any).select("id", { count: "exact", head: true }),
         supabase.from("resource_ratings" as any).select("id", { count: "exact", head: true }),
       ]);
 
+      // A failed count query returns `count: null`. Coercing that to 0 would
+      // publish "0 community reports" as a fact about participation, so if
+      // any of the four counts is missing we render nothing at all rather
+      // than a partially-zeroed panel.
+      if (results.some((r) => r.error || r.count === null)) return;
+
+      const [feedback, reports, appeals, ratings] = results;
       const counts = [
-        { label: "Feedback Submitted", raw: feedback.count || 0, icon: Users },
-        { label: "Community Reports", raw: reports.count || 0, icon: FileText },
-        { label: "Appeal Letters Generated", raw: appeals.count || 0, icon: TrendingUp },
-        { label: "Resources Rated", raw: ratings.count || 0, icon: BarChart3 },
+        { label: "Feedback Submitted", raw: feedback.count as number, icon: Users },
+        { label: "Community Reports", raw: reports.count as number, icon: FileText },
+        { label: "Appeal Letters Generated", raw: appeals.count as number, icon: TrendingUp },
+        { label: "Resources Rated", raw: ratings.count as number, icon: BarChart3 },
       ];
 
       // Don't render if no real activity yet
-      if (counts.every(c => c.raw === 0)) return;
+      if (counts.every((c) => c.raw === 0)) return;
 
       setStats(
         counts.map((c) => ({
@@ -58,6 +65,7 @@ export default function BetaImpactCounter() {
       );
     })();
   }, [population]);
+
 
   if (stats.length === 0) return null;
 

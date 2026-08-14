@@ -33,16 +33,26 @@ const FALLBACK: CountyEconomicData[] = [
   { county: "Lake", fips: "26085", medianIncome: 32145, povertyRate: 28.6, unemploymentRate: 11.2, medianHomeValue: 78500, medianRent: 625 },
 ];
 
+export interface EconomicDataResult {
+  counties: CountyEconomicData[];
+  /**
+   * True when the live Census ACS call failed and the 20-county static
+   * snapshot below is being served instead. Consumers must label this in
+   * the UI - previously the fallback rendered as if it were live data.
+   */
+  isFallback: boolean;
+}
+
 export function useEconomicData() {
-  return useQuery<CountyEconomicData[]>({
+  return useQuery<EconomicDataResult>({
     queryKey: ["census-economic-mi"],
     queryFn: async () => {
       try {
         const url = "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B17001_002E,B01003_001E,B23025_005E,B23025_003E,B25077_001E,B25064_001E&for=county:*&in=state:26";
         const res = await fetch(url);
-        if (!res.ok) return FALLBACK;
+        if (!res.ok) return { counties: FALLBACK, isFallback: true };
         const data = await res.json();
-        return data
+        const counties = data
           .slice(1)
           .map((row: string[]) => {
             const totalPop = parseInt(row[3]) || 1;
@@ -61,11 +71,15 @@ export function useEconomicData() {
           })
           .filter((d: CountyEconomicData) => d.medianIncome > 0)
           .sort((a: CountyEconomicData, b: CountyEconomicData) => b.medianIncome - a.medianIncome);
+        // An empty parse is a failure, not "Michigan has no counties".
+        if (counties.length === 0) return { counties: FALLBACK, isFallback: true };
+        return { counties, isFallback: false };
       } catch {
-        return FALLBACK;
+        return { counties: FALLBACK, isFallback: true };
       }
     },
     staleTime: 24 * 60 * 60 * 1000,
     retry: 1,
   });
 }
+

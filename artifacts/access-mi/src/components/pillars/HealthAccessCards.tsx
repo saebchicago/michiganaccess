@@ -168,12 +168,17 @@ export default function HealthAccessCards({
             ))}
           </SelectContent>
         </Select>
+        {/* This count comes from the live facilities table, while the card
+            below headlines the static CMS/HRSA extract. The two are counted
+            differently, so each says which source it is reporting instead of
+            showing two bare numbers that appear to contradict. */}
         {facilityTypeFilter !== "all" && filteredCount !== null && (
-          <span className="text-xs text-muted-foreground">
-            {filteredCount} {filteredCount === 1 ? "facility" : "facilities"}{" "}
-            shown
+          <span className="text-xs text-muted-foreground tabular-nums">
+            {filteredCount} {filteredCount === 1 ? "facility" : "facilities"} in
+            our directory
           </span>
         )}
+
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

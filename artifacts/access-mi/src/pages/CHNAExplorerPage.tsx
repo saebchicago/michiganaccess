@@ -88,13 +88,20 @@ const fade = {
 interface CountyCompareRecord {
   name: string;
   population: number;
-  insuredRate: number;
-  pcpPer100k: number;
-  foodInsecurityRate: number;
-  obesityRate: number;
-  diabetesRate: number;
-  facilities: number;
+  /**
+   * `null` means the source has no value for this county - never 0.
+   * A 0 here would be read as a real measurement (and would drag the
+   * statewide averages below), so missing values stay null all the way
+   * through averaging and rendering.
+   */
+  insuredRate: number | null;
+  pcpPer100k: number | null;
+  foodInsecurityRate: number | null;
+  obesityRate: number | null;
+  diabetesRate: number | null;
+  facilities: number | null;
 }
+
 
 /** Reads a labeled value out of a CountyProfile's healthHighlights list
  * by substring match on the label, mirroring BriefPage.tsx's getVal(). */
@@ -108,20 +115,36 @@ function getHealthValue(
   );
 }
 
-function parsePercent(value: string): number {
+/** Returns null when the source string carries no parseable figure, so a
+ *  blank or "N/A" entry never becomes a 0 percent measurement. */
+function parsePercent(value: string): number | null {
   const n = parseFloat(value.replace(/[^0-9.]/g, ""));
-  return Number.isFinite(n) ? n : 0;
+  return Number.isFinite(n) ? n : null;
 }
 
 /** CountyProfile stores primary-care access as a population-per-1-PCP
- * ratio string (e.g. "1,426:1"); convert to PCPs per 100,000 residents. */
-function parseRatioToPer100k(value: string): number {
+ *  ratio string (e.g. "1,426:1"); convert to PCPs per 100,000 residents.
+ *  Returns null for an unparseable or zero ratio rather than 0 per 100K. */
+function parseRatioToPer100k(value: string): number | null {
   const n = parseInt(value.split(":")[0].replace(/[^0-9]/g, ""), 10);
-  return Number.isFinite(n) && n > 0 ? Math.round(100000 / n) : 0;
+  return Number.isFinite(n) && n > 0 ? Math.round(100000 / n) : null;
 }
 
-function average(values: number[]): number {
-  return values.reduce((s, v) => s + v, 0) / values.length;
+/** Mean over the counties that actually have a value. Nulls are excluded
+ *  from both the numerator and the denominator; an all-null metric yields
+ *  null so callers can render "N/A" instead of a fabricated 0. */
+function average(values: (number | null)[]): number | null {
+  const present = values.filter((v): v is number => v !== null);
+  if (present.length === 0) return null;
+  return present.reduce((s, v) => s + v, 0) / present.length;
+}
+
+function round1(value: number | null): number | null {
+  return value === null ? null : Math.round(value * 10) / 10;
+}
+
+function round0(value: number | null): number | null {
+  return value === null ? null : Math.round(value);
 }
 
 // Built once at module load from real, already-ingested all-83-county
@@ -142,29 +165,35 @@ const COUNTIES: CountyCompareRecord[] = Object.keys(MI_COUNTY_FIPS)
     return {
       name,
       population: profile.population,
-      insuredRate: Math.round((100 - uninsuredPct) * 10) / 10,
+      insuredRate: uninsuredPct === null ? null : round1(100 - uninsuredPct),
       pcpPer100k: parseRatioToPer100k(pcpRatio),
       foodInsecurityRate: parsePercent(
         getHealthValue(profile.healthHighlights, "food"),
       ),
-      obesityRate: places?.measures.obesity.crudePrevalence ?? 0,
-      diabetesRate: places?.measures.diabetes.crudePrevalence ?? 0,
+      // A county absent from the PLACES extract has no modeled prevalence;
+      // it must not be counted as 0% obesity or 0% diabetes.
+      obesityRate: places?.measures.obesity.crudePrevalence ?? null,
+      diabetesRate: places?.measures.diabetes.crudePrevalence ?? null,
+      // Facility counts come from a complete national extract, so 0 here
+      // is a real "no facilities in this county" finding, not missing data.
       facilities: countFacilitiesForCounty(name),
     };
   });
 
-// Unweighted mean across all 83 counties (each county counts once,
-// regardless of population) - matches the convention already used by
-// buildStateSnapshotMetrics() in snapshotMetrics.ts.
+// Unweighted mean across the counties that report each metric (each county
+// counts once, regardless of population) - matches the convention already
+// used by buildStateSnapshotMetrics() in snapshotMetrics.ts.
 const MI_AVG = {
-  insuredRate: Math.round(average(COUNTIES.map((c) => c.insuredRate)) * 10) / 10,
-  pcpPer100k: Math.round(average(COUNTIES.map((c) => c.pcpPer100k))),
-  foodInsecurityRate:
-    Math.round(average(COUNTIES.map((c) => c.foodInsecurityRate)) * 10) / 10,
-  obesityRate: Math.round(average(COUNTIES.map((c) => c.obesityRate)) * 10) / 10,
-  diabetesRate: Math.round(average(COUNTIES.map((c) => c.diabetesRate)) * 10) / 10,
-  facilities: Math.round(average(COUNTIES.map((c) => c.facilities))),
+  insuredRate: round1(average(COUNTIES.map((c) => c.insuredRate))),
+  pcpPer100k: round0(average(COUNTIES.map((c) => c.pcpPer100k))),
+  foodInsecurityRate: round1(
+    average(COUNTIES.map((c) => c.foodInsecurityRate)),
+  ),
+  obesityRate: round1(average(COUNTIES.map((c) => c.obesityRate))),
+  diabetesRate: round1(average(COUNTIES.map((c) => c.diabetesRate))),
+  facilities: round0(average(COUNTIES.map((c) => c.facilities))),
 };
+
 
 const COMPARE_METRICS = [
   {
@@ -630,32 +659,56 @@ function StatCard({
   higherBetter,
 }: {
   label: string;
-  value: number;
+  value: number | null;
   unit: string;
-  avg: number;
+  avg: number | null;
   higherBetter: boolean;
 }) {
-  const diff = value - avg;
-  const isBetter = higherBetter ? diff >= 0 : diff <= 0;
+  // Either the county figure or the statewide mean can be missing; show
+  // "N/A" rather than a 0 or a comparison against a fabricated baseline.
+  if (value === null) {
+    return (
+      <Card>
+        <CardContent className="pt-4 pb-3">
+          <p className="text-xs text-muted-foreground font-medium mb-1">
+            {label}
+          </p>
+          <p className="text-2xl font-bold text-muted-foreground">N/A</p>
+          <p className="mt-2 text-[10px] text-muted-foreground">
+            Not reported for this county
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+  const diff = avg === null ? null : value - avg;
+  const isBetter =
+    diff === null ? true : higherBetter ? diff >= 0 : diff <= 0;
   return (
     <Card>
       <CardContent className="pt-4 pb-3">
         <p className="text-xs text-muted-foreground font-medium mb-1">
           {label}
         </p>
-        <p className="text-2xl font-bold text-foreground">
+        <p className="text-2xl font-bold text-foreground tabular-nums">
           {value}
           <span className="text-sm font-normal text-muted-foreground ml-1">
             {unit}
           </span>
         </p>
-        <Badge
-          variant={isBetter ? "default" : "destructive"}
-          className="mt-2 text-[10px]"
-        >
-          {diff > 0 ? "+" : ""}
-          {diff.toFixed(1)} vs MI avg
-        </Badge>
+        {diff === null ? (
+          <p className="mt-2 text-[10px] text-muted-foreground">
+            State average unavailable
+          </p>
+        ) : (
+          <Badge
+            variant={isBetter ? "default" : "destructive"}
+            className="mt-2 text-[10px] tabular-nums"
+          >
+            {diff > 0 ? "+" : ""}
+            {diff.toFixed(1)} vs MI avg
+          </Badge>
+        )}
       </CardContent>
     </Card>
   );
@@ -668,15 +721,21 @@ function BarViz({
   county: CountyCompareRecord;
   metric: (typeof COMPARE_METRICS)[number];
 }) {
-  const val = county[metric.key as keyof CountyCompareRecord] as number;
-  const max =
-    Math.max(
-      ...COUNTIES.map(
-        (c) => c[metric.key as keyof CountyCompareRecord] as number,
-      ),
-    ) * 1.1;
-  const pct = (val / max) * 100;
-  const avgPct = (metric.avg / max) * 100;
+  const val = county[metric.key] as number | null;
+  if (val === null) {
+    return (
+      <div className="flex h-7 items-center rounded-full bg-muted px-3 text-xs text-muted-foreground">
+        Not reported
+      </div>
+    );
+  }
+  const present = COUNTIES.map((c) => c[metric.key] as number | null).filter(
+    (v): v is number => v !== null,
+  );
+  const max = (present.length > 0 ? Math.max(...present) : val || 1) * 1.1;
+  const pct = max > 0 ? (val / max) * 100 : 0;
+  const avgPct =
+    metric.avg !== null && max > 0 ? (metric.avg / max) * 100 : null;
   return (
     <div className="relative h-7 bg-muted rounded-full overflow-hidden">
       <div
@@ -684,16 +743,19 @@ function BarViz({
         style={{ width: `${pct}%` }}
         aria-hidden="true"
       />
-      <div
-        className="absolute h-full w-0.5 bg-destructive z-10"
-        style={{ left: `${avgPct}%` }}
-        title={`MI Avg: ${metric.avg}`}
-        aria-hidden="true"
-      />
-      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-foreground">
+      {avgPct !== null && (
+        <div
+          className="absolute h-full w-0.5 bg-destructive z-10"
+          style={{ left: `${avgPct}%` }}
+          title={`MI Avg: ${metric.avg}`}
+          aria-hidden="true"
+        />
+      )}
+      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-foreground tabular-nums">
         {val}
         {metric.unit}
       </span>
+
     </div>
   );
 }
@@ -705,21 +767,44 @@ function CountyCompareTab() {
   const county = COUNTIES.find((c) => c.name === selectedCounty)!;
   const compare = COUNTIES.find((c) => c.name === compareCounty)!;
 
-  const findings = useMemo(
-    () =>
-      [
-        county.obesityRate > MI_AVG.obesityRate * 1.1 &&
-          `Obesity rate ${((county.obesityRate / MI_AVG.obesityRate - 1) * 100).toFixed(0)}% above state average (modeled, CDC PLACES)`,
-        county.diabetesRate > MI_AVG.diabetesRate * 1.1 &&
-          `Diabetes prevalence ${((county.diabetesRate / MI_AVG.diabetesRate - 1) * 100).toFixed(0)}% above state average (modeled, CDC PLACES)`,
-        county.foodInsecurityRate > MI_AVG.foodInsecurityRate * 1.1 &&
-          `Food insecurity ${((county.foodInsecurityRate / MI_AVG.foodInsecurityRate - 1) * 100).toFixed(0)}% above state average`,
-        county.pcpPer100k > 0 &&
-          county.pcpPer100k < MI_AVG.pcpPer100k * 0.8 &&
-          `Primary care physician shortage: ${county.pcpPer100k} per 100K vs. ${MI_AVG.pcpPer100k} state average`,
-      ].filter(Boolean) as string[],
-    [county],
-  );
+  // Findings only fire when both the county value and the state mean exist.
+  // A missing metric produces no finding rather than a false "0% vs avg".
+  const findings = useMemo(() => {
+    const over = (
+      value: number | null,
+      avg: number | null,
+      label: (pct: string) => string,
+    ) =>
+      value !== null && avg !== null && avg > 0 && value > avg * 1.1
+        ? label(((value / avg - 1) * 100).toFixed(0))
+        : null;
+    return [
+      over(
+        county.obesityRate,
+        MI_AVG.obesityRate,
+        (p) =>
+          `Obesity rate ${p}% above state average (modeled, CDC PLACES)`,
+      ),
+      over(
+        county.diabetesRate,
+        MI_AVG.diabetesRate,
+        (p) =>
+          `Diabetes prevalence ${p}% above state average (modeled, CDC PLACES)`,
+      ),
+      over(
+        county.foodInsecurityRate,
+        MI_AVG.foodInsecurityRate,
+        (p) => `Food insecurity ${p}% above state average`,
+      ),
+      county.pcpPer100k !== null &&
+      MI_AVG.pcpPer100k !== null &&
+      county.pcpPer100k > 0 &&
+      county.pcpPer100k < MI_AVG.pcpPer100k * 0.8
+        ? `Primary care physician shortage: ${county.pcpPer100k} per 100K vs. ${MI_AVG.pcpPer100k} state average`
+        : null,
+    ].filter(Boolean) as string[];
+  }, [county]);
+
 
   return (
     <div className="space-y-6">
