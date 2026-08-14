@@ -11,7 +11,9 @@ type SortKey = "medianIncome" | "povertyRate" | "unemploymentRate" | "medianHome
 const fmt = (n: number) => n >= 1000 ? `$${(n / 1000).toFixed(0)}K` : `$${n}`;
 
 export default function EconomicVitalityDashboard() {
-  const { data, isLoading } = useEconomicData();
+  const { data: result, isLoading } = useEconomicData();
+  const data = result?.counties;
+  const isFallback = result?.isFallback ?? false;
   const [sortKey, setSortKey] = useState<SortKey>("medianIncome");
   const [sortAsc, setSortAsc] = useState(false);
 
@@ -27,6 +29,7 @@ export default function EconomicVitalityDashboard() {
 
   const top10 = useMemo(() => (data || []).slice(0, 10).map((d) => ({ county: d.county, income: d.medianIncome })), [data]);
   const bottom10 = useMemo(() => [...(data || [])].sort((a, b) => a.medianIncome - b.medianIncome).slice(0, 10).map((d) => ({ county: d.county, income: d.medianIncome })), [data]);
+
 
   const handleCSV = () => {
     if (!sorted.length) return;
