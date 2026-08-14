@@ -34,6 +34,10 @@ import {
 import { logSearch } from "@/utils/searchAnalytics";
 import { searchPages } from "@/utils/pageSearchIndex";
 import { useCounty } from "@/contexts/CountyContext";
+import {
+  sanitizeOrFilterValue,
+  isUsableSearchValue,
+} from "@/utils/postgrestFilter";
 
 const SITE_SEARCH_COMMAND_EVENT = "mi-access:site-search";
 
@@ -206,7 +210,18 @@ export default function SiteSearch() {
     }));
 
     // Parse combo query for county-scoped DB search
-    const { term: searchTerm, county: comboCounty } = parseComboQuery(q);
+    const { term: rawSearchTerm, county: rawComboCounty } = parseComboQuery(q);
+    // PostgREST parses .or() as a comma-separated clause list, so user text has
+    // to be stripped of filter syntax before it is interpolated.
+    const searchTerm = sanitizeOrFilterValue(rawSearchTerm);
+    const comboCounty = rawComboCounty
+      ? sanitizeOrFilterValue(rawComboCounty, 40)
+      : rawComboCounty;
+    if (!isUsableSearchValue(searchTerm)) {
+      setResults(pageResults);
+      setLoading(false);
+      return;
+    }
 
     // DB queries in parallel
     const [counties, facilities, resources] = await Promise.all([

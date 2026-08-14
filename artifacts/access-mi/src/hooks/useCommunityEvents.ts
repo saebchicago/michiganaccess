@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  sanitizeOrFilterValue,
+  isUsableSearchValue,
+} from "@/utils/postgrestFilter";
 
 export interface CommunityEvent {
   id: string;
@@ -54,9 +58,14 @@ export function useCommunityEvents(filters?: {
       if (effectiveCounty) {
         query = query.eq("county", effectiveCounty);
       }
-      if (filters?.search) {
+      // Sanitized: raw input in a PostgREST .or() string can inject extra
+      // filter clauses (see utils/postgrestFilter).
+      const safeSearch = filters?.search
+        ? sanitizeOrFilterValue(filters.search)
+        : "";
+      if (isUsableSearchValue(safeSearch)) {
         query = query.or(
-          `title.ilike.%${filters.search}%,description.ilike.%${filters.search}%,location_name.ilike.%${filters.search}%`
+          `title.ilike.%${safeSearch}%,description.ilike.%${safeSearch}%,location_name.ilike.%${safeSearch}%`
         );
       }
 
