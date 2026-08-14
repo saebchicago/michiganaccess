@@ -50,7 +50,6 @@ const ROUTES_FILE = join(ROOT, "src", "config", "routes.ts");
 const INTENTIONALLY_UNLINKED = new Map([
   ["/", "the homepage itself"],
   ["/embed", "embeddable widget, linked externally by consumers"],
-  ["/admin/search-trends", "internal admin view"],
   ["/sitemap", "reached from the footer chrome, not a content route"],
   ["/not-found", "error route"],
   ["/404", "error route"],
