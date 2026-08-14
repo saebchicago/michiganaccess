@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Download, Shield, FileText } from "lucide-react";
-import { toast } from "sonner";
+import { BarChart3, Mail, Shield, FileText } from "lucide-react";
 
 const METRICS_FEATURES = [
   {
@@ -26,29 +25,6 @@ const METRICS_FEATURES = [
 ];
 
 export default function MetricsAPI() {
-  const handleExport = async () => {
-    try {
-      const url = `${import.meta.env.VITE_SUPABASE_URL ?? "https://znahhtdbcgepezrxwnah.supabase.co"}/functions/v1/feedback-export`;
-      const resp = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-      });
-      if (!resp.ok) throw new Error("Export failed");
-      const data = await resp.json();
-      const blob = new Blob([JSON.stringify(data, null, 2)], {
-        type: "application/json",
-      });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = `michigan-access-metrics-${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-      toast.success("Metrics report downloaded");
-    } catch {
-      toast.error("Unable to export metrics. Please try again.");
-    }
-  };
-
   return (
     <section aria-labelledby="metrics-heading">
       <div className="text-center mb-8">
@@ -83,13 +59,18 @@ export default function MetricsAPI() {
       </div>
 
       <div className="text-center">
-        <Button onClick={handleExport} className="bg-gradient-michigan">
-          <Download className="h-4 w-4 mr-2" />
-          Download Sample Metrics Report
+        {/* Metrics exports are fulfilled by staff on request. The former
+            one-click download called a service-role endpoint that returned raw
+            free-text feedback comments to any anonymous visitor. */}
+        <Button asChild className="bg-gradient-michigan">
+          <a href="mailto:partners@accessmi.org?subject=Aggregated%20metrics%20request">
+            <Mail className="h-4 w-4 mr-2" />
+            Request an Aggregated Metrics Report
+          </a>
         </Button>
         <p className="mt-2 text-xs text-muted-foreground">
-          JSON format · Aggregated satisfaction rates · No personal data
-          included
+          Reviewed and sent by our team · Aggregated satisfaction rates · No
+          personal data or free-text comments included
         </p>
       </div>
     </section>
