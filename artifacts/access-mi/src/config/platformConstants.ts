@@ -10,26 +10,41 @@
  */
 
 import { DATA_FRESHNESS_SOURCES } from "@/data/dataFreshness";
-import { SOURCES_BREAKDOWN, SOURCES_TOTAL } from "@/data/sourcesRegistry";
+import {
+  PUBLISHERS_TOTAL,
+  SOURCES_BREAKDOWN,
+  SOURCES_TOTAL,
+} from "@/data/sourcesRegistry";
 import { ATLAS_LAYERS } from "@/config/atlasLayers";
 
 /**
- * Total verified public source ORGANIZATIONS powering the platform.
+ * Total verified public data FEEDS powering the platform.
  *
  * Derived from `src/data/sourcesRegistry.ts`. The expected canonical
- * value is 41 (23 federal + 9 state + 9 nonprofit). If the registry
+ * value is 49 (28 federal + 9 state + 12 nonprofit). If the registry
  * grows or shrinks, update the EXPECTED_* constants below in the same
  * commit so the build assertion does not fail silently.
  *
- * Rule: count unique source organizations by publisher entity, not API
- * endpoints or downstream tables.
+ * Rule: one entry per distinct feed/dataset. A publisher shipping
+ * several independent datasets contributes one entry each - this is a
+ * feed count, NOT an organization count. See EXPECTED_PUBLISHER_COUNT
+ * below for the organization number.
  */
-const EXPECTED_SOURCE_COUNT = 43;
+const EXPECTED_SOURCE_COUNT = 49;
 const EXPECTED_SOURCE_BREAKDOWN = {
-  federal: 25,
+  federal: 28,
   state: 9,
-  nonprofit: 9,
+  nonprofit: 12,
 } as const;
+
+/**
+ * Distinct publisher organizations behind those feeds.
+ *
+ * Lower than EXPECTED_SOURCE_COUNT because CMS, FEMA, EPA, HUD, and
+ * EGLE each ship more than one feed. Copy that says "organizations"
+ * must render this number.
+ */
+const EXPECTED_PUBLISHER_COUNT = 42;
 
 if (SOURCES_TOTAL !== EXPECTED_SOURCE_COUNT) {
   throw new Error(
@@ -46,11 +61,26 @@ if (
   );
 }
 
+if (PUBLISHERS_TOTAL !== EXPECTED_PUBLISHER_COUNT) {
+  throw new Error(
+    `platformConstants: distinct publisher orgs is ${PUBLISHERS_TOTAL}, expected ${EXPECTED_PUBLISHER_COUNT}. Update EXPECTED_PUBLISHER_COUNT or fix the registry.`,
+  );
+}
+
 export const DATA_SOURCE_COUNT = SOURCES_TOTAL;
 export const DATA_SOURCE_BREAKDOWN = SOURCES_BREAKDOWN;
 
+/**
+ * Distinct publisher entities behind the feeds. Render this - never the
+ * feed count - whenever visible copy uses the word "organizations".
+ */
+export const DATA_PUBLISHER_COUNT = PUBLISHERS_TOTAL;
+
 export const DATA_SOURCE_RULE =
-  "Unique source organizations counted by publisher entity (federal agency, state agency, or nonprofit/academic publisher). API endpoints from the same publisher are not double-counted.";
+  "One entry per distinct public data feed. A publisher that ships several independent datasets (CMS Hospital Compare, Physician Compare, and NPPES, for example) contributes one entry per dataset, because each carries its own URL, cadence, and vintage. This is a count of feeds, not of organizations.";
+
+export const DATA_PUBLISHER_RULE =
+  "Distinct publisher entities (federal agency, state agency, or nonprofit/academic publisher) behind those feeds, counted once each regardless of how many datasets they contribute.";
 
 /**
  * Canonical provenance phrasing for metadata and visible copy.
@@ -115,9 +145,9 @@ export const MICHIGAN_POLITICAL_PARTY_COUNT = 7;
  * "monitored feeds", "verified feeds", or similar so the number on
  * the page and the number /status actually pings cannot diverge.
  *
- * Note: this is NOT the same as DATA_SOURCE_COUNT (43 publisher
- * organizations). Most of the 43 publishers ship as static data
- * imports, not live API calls; the four here are the ones with
+ * Note: this is NOT the same as DATA_SOURCE_COUNT (49 feeds from
+ * DATA_PUBLISHER_COUNT publishers). Most registry feeds ship as static
+ * data imports, not live API calls; the four here are the ones with
  * always-on uptime checks.
  */
 export const MONITORED_API_FEEDS_COUNT = 4;

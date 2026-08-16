@@ -37,8 +37,15 @@ async function main() {
     });
   }
 
-  if (entries.length !== 43) {
-    console.error(`Expected 43 entries, got ${entries.length}`);
+  // Sanity floor only - a parse failure yields 0 or a handful of entries
+  // and must not silently produce an empty catalog. The exact count is
+  // asserted against the registry by scripts/check-counts.mjs, which is
+  // the single authority; duplicating the literal here is what let the
+  // generator and the registry drift apart.
+  if (entries.length < 20) {
+    console.error(
+      `Parsed only ${entries.length} entries from sourcesRegistry.ts - the parse is broken.`,
+    );
     process.exit(1);
   }
 

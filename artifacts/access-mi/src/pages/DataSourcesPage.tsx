@@ -8,6 +8,7 @@ import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import {
   DATA_SOURCE_DISPLAY,
   DATA_SOURCE_BREAKDOWN,
+  DATA_PUBLISHER_COUNT,
 } from "@/config/platformConstants";
 import {
   SOURCES_BY_CATEGORY as SOURCES,
@@ -27,7 +28,7 @@ const facilityFetchedAt = new Date(
 export default function DataSourcesPage() {
   usePageMeta({
     title: "Data Sources - Access Michigan",
-    description: `${DATA_SOURCE_DISPLAY} verified public source organizations (${DATA_SOURCE_BREAKDOWN.federal} federal, ${DATA_SOURCE_BREAKDOWN.state} state, ${DATA_SOURCE_BREAKDOWN.nonprofit} nonprofit) powering the Independent Michigan civic intelligence platform. Every organization credited.`,
+    description: `${DATA_SOURCE_DISPLAY} verified public data feeds (${DATA_SOURCE_BREAKDOWN.federal} federal, ${DATA_SOURCE_BREAKDOWN.state} state, ${DATA_SOURCE_BREAKDOWN.nonprofit} nonprofit) from ${DATA_PUBLISHER_COUNT} publishers powering the Independent Michigan civic intelligence platform. Every publisher credited.`,
     path: "/data-sources",
   });
 
@@ -54,6 +55,11 @@ export default function DataSourcesPage() {
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
               Every number, a public source. No contribution changes rankings.
+            </p>
+            <p className="text-xs text-muted-foreground/80 mt-2 max-w-xl mx-auto">
+              {totalSources} distinct feeds published by {DATA_PUBLISHER_COUNT}{" "}
+              organizations - several publishers ship more than one dataset, so
+              the two numbers differ by design.
             </p>
           </motion.div>
         </div>

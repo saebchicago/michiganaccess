@@ -26,7 +26,10 @@ import {
   loadTimeColor,
 } from "@/hooks/useFooterStats";
 import { replayTour } from "@/components/shared/OnboardingTour";
-import { DATA_SOURCE_DISPLAY } from "@/config/platformConstants";
+import {
+  DATA_PUBLISHER_COUNT,
+  DATA_SOURCE_DISPLAY,
+} from "@/config/platformConstants";
 
 function FooterSection({
   title,
@@ -332,7 +335,7 @@ const Footer = () => {
                 icon: Database,
                 value: String(stats.dataFeeds),
                 label: "Live sources",
-                title: `${stats.dataFeeds} uptime-monitored API endpoints. Distinct from the ${DATA_SOURCE_DISPLAY} public source organizations behind the platform's data.`,
+                title: `${stats.dataFeeds} uptime-monitored API endpoints. Distinct from the ${DATA_SOURCE_DISPLAY} public data feeds (from ${DATA_PUBLISHER_COUNT} publishers) behind the platform's data.`,
                 colorClass: "text-foreground",
               },
               {

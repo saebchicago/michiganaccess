@@ -12,6 +12,8 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
 
+import { PUBLISHERS_TOTAL, SOURCES_TOTAL } from "@/data/sourcesRegistry";
+
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, "../../..");
 
@@ -20,15 +22,35 @@ function read(rel: string) {
 }
 
 describe("Claims anchor guard  -  VERIFIED rows", () => {
-  // V-1: 43 sources build assertion (42 before USDA SNAP integration).
-  it("V-1: platformConstants.ts asserts SOURCES_TOTAL === 43", () => {
+  // V-1: the source-count build assertion exists AND its declared
+  // expectation still equals the live registry. Asserting the mechanism
+  // plus a computed comparison beats pinning the integer here - the
+  // literal already lives in platformConstants.ts and is enforced against
+  // the registry by scripts/check-counts.mjs, and a third hardcoded copy
+  // in this file only ever drifted.
+  it("V-1: platformConstants.ts pins SOURCES_TOTAL to the live registry", () => {
     const src = read("src/config/platformConstants.ts");
-    expect(src).toContain("EXPECTED_SOURCE_COUNT = 43");
     expect(src).toContain("SOURCES_TOTAL !== EXPECTED_SOURCE_COUNT");
+
+    const declared = src.match(/EXPECTED_SOURCE_COUNT = (\d+)/);
+    expect(declared, "EXPECTED_SOURCE_COUNT declaration").not.toBeNull();
+    expect(Number(declared![1])).toBe(SOURCES_TOTAL);
+  });
+
+  // V-1b: the publisher count is asserted the same way, so copy that says
+  // "organizations" can never silently borrow the feed count.
+  it("V-1b: platformConstants.ts pins the publisher count too", () => {
+    const src = read("src/config/platformConstants.ts");
+    expect(src).toContain("PUBLISHERS_TOTAL !== EXPECTED_PUBLISHER_COUNT");
+
+    const declared = src.match(/EXPECTED_PUBLISHER_COUNT = (\d+)/);
+    expect(declared, "EXPECTED_PUBLISHER_COUNT declaration").not.toBeNull();
+    expect(Number(declared![1])).toBe(PUBLISHERS_TOTAL);
+    expect(PUBLISHERS_TOTAL).toBeLessThan(SOURCES_TOTAL);
   });
 
   // V-2: DATA_SOURCE_DISPLAY used in AboutPage
-  it("V-2: AboutPage uses DATA_SOURCE_DISPLAY in '43 verified sources' copy", () => {
+  it("V-2: AboutPage renders the source count from DATA_SOURCE_DISPLAY, not a literal", () => {
     const src = read("src/pages/AboutPage.tsx");
     expect(src).toContain("DATA_SOURCE_DISPLAY");
     expect(src).toContain("verified sources. Structured for action.");

@@ -13,6 +13,11 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { STATEWIDE_DATASETS, DETROIT_DATASETS } from "@/data/datasetRegistry";
+import {
+  DATA_CATALOG,
+  type CatalogEntry,
+  type CatalogAccess,
+} from "@/data/dataCatalog";
 import { useCivicDataset } from "@/hooks/useCivicDataset";
 
 const InsightPanel = lazy(() => import("@/components/civic/InsightPanel"));
@@ -23,35 +28,6 @@ const SectionFallback = () => (
   </div>
 );
 
-/** Authoritative data catalog - curated list of public datasets referenced by Access Michigan */
-interface CatalogEntry {
-  name: string;
-  domain: "Health" | "Social" | "Environment" | "Safety" | "Infrastructure" | "Civic";
-  geography: "State" | "County" | "ZIP" | "Tract" | "Facility";
-  frequency: string;
-  sourceUrl: string;
-  description: string;
-}
-
-const DATA_CATALOG: CatalogEntry[] = [
-  { name: "CDC Social Vulnerability Index (SVI)", domain: "Health", geography: "Tract", frequency: "Every 4 years", sourceUrl: "https://www.atsdr.cdc.gov/placeandhealth/svi/", description: "Census tract-level vulnerability scores across socioeconomic, housing, and demographic dimensions." },
-  { name: "United For ALICE - Michigan", domain: "Social", geography: "County", frequency: "Annual", sourceUrl: "https://www.unitedforalice.org/county-reports/Michigan", description: "Asset-Limited, Income-Constrained, Employed household counts and thresholds by county." },
-  { name: "MDHHS Health Equity Data", domain: "Health", geography: "County", frequency: "Annual", sourceUrl: "https://www.michigan.gov/mdhhs/inside-mdhhs/legislationpolicy/2022-2024-social-determinants-of-health-strategy", description: "State social determinants of health strategy, hubs, and equity indicators." },
-  { name: "Michigan 2-1-1", domain: "Social", geography: "County", frequency: "Ongoing", sourceUrl: "https://mi211.org", description: "Community resource referral database - food, housing, utilities, transportation." },
-  { name: "CMS Provider Data Catalog", domain: "Health", geography: "Facility", frequency: "Monthly", sourceUrl: "https://data.cms.gov/provider-data", description: "Hospital quality, provider enrollment, Medicare utilization, and Open Payments data." },
-  { name: "HHS Medicaid Provider Spending", domain: "Health", geography: "State", frequency: "Annual", sourceUrl: "https://opendata.hhs.gov/datasets/medicaid-provider-spending/", description: "State-level Medicaid provider spending and utilization patterns." },
-  { name: "EPA AirNow", domain: "Environment", geography: "County", frequency: "Hourly", sourceUrl: "https://www.airnow.gov/", description: "Real-time air quality index (AQI) readings from monitoring stations." },
-  { name: "EGLE Drinking Water", domain: "Environment", geography: "Facility", frequency: "Ongoing", sourceUrl: "https://www.michigan.gov/egle/about/organization/drinking-water-and-environmental-health", description: "Public water system violations, advisories, and compliance data." },
-  { name: "NHTSA FARS", domain: "Safety", geography: "County", frequency: "Annual", sourceUrl: "https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars", description: "Fatal traffic crash records by location, type, and contributing factors." },
-  { name: "MSP Traffic Stop Data", domain: "Safety", geography: "State", frequency: "Annual", sourceUrl: "https://www.michigan.gov/msp/public-information/transparency/accordion/reports/traffic-stop-data-main", description: "Michigan State Police traffic stop demographic data for transparency and accountability." },
-  { name: "MPSC Utility Reports", domain: "Infrastructure", geography: "State", frequency: "Annual", sourceUrl: "https://www.michigan.gov/mpsc", description: "Electric and gas utility reliability, outage metrics (SAIDI/SAIFI), and rate cases." },
-  { name: "County Health Rankings", domain: "Health", geography: "County", frequency: "Annual", sourceUrl: "https://www.countyhealthrankings.org/explore-health-rankings/michigan", description: "County-level health outcomes, behaviors, clinical care, and social/economic factors." },
-  { name: "Census ACS 5-Year Estimates", domain: "Social", geography: "Tract", frequency: "Annual", sourceUrl: "https://data.census.gov/", description: "Demographic, economic, housing, and social characteristics at multiple geographies." },
-  { name: "HRSA Health Professional Shortage Areas", domain: "Health", geography: "County", frequency: "Annual", sourceUrl: "https://data.hrsa.gov/", description: "Designated primary care, mental health, and dental provider shortage areas." },
-  { name: "FBI Crime Data Explorer", domain: "Safety", geography: "County", frequency: "Annual", sourceUrl: "https://cde.ucr.cjis.gov/", description: "Uniform Crime Reporting (UCR) data including violent and property crime rates." },
-  { name: "Michigan SOS FOIA Portal", domain: "Civic", geography: "State", frequency: "Ongoing", sourceUrl: "https://www.michigan.gov/sos", description: "Public records requests, campaign finance data, and election administration." },
-];
-
 const DOMAIN_COLORS: Record<string, string> = {
   Health: "bg-primary/10 text-primary",
   Social: "bg-michigan-gold/10 text-michigan-gold-deep",
@@ -61,7 +37,15 @@ const DOMAIN_COLORS: Record<string, string> = {
   Civic: "bg-michigan-navy/10 text-michigan-navy",
 };
 
-type SortKey = "name" | "domain" | "geography" | "frequency";
+/** Short label for how a dataset reaches the page. */
+const ACCESS_LABELS: Record<CatalogAccess, string> = {
+  live_api: "Live API",
+  static: "Ingested snapshot",
+  modeled: "Modeled estimate",
+  curated: "Curated reference",
+};
+
+type SortKey = "name" | "domain" | "geography" | "cadence";
 
 /** Detail view when a dataset is selected */
 function DatasetDetail({ datasetId }: { datasetId: string }) {
@@ -135,11 +119,13 @@ const CivicDataHubPage = () => {
   });
 
   const filtered = useMemo(() => {
+    const q = search.toLowerCase();
     const items = DATA_CATALOG.filter(
       (d) =>
-        d.name.toLowerCase().includes(search.toLowerCase()) ||
-        d.domain.toLowerCase().includes(search.toLowerCase()) ||
-        d.description.toLowerCase().includes(search.toLowerCase())
+        d.name.toLowerCase().includes(q) ||
+        d.domain.toLowerCase().includes(q) ||
+        d.publisherOrg.toLowerCase().includes(q) ||
+        d.description.toLowerCase().includes(q),
     );
     items.sort((a, b) => {
       const av = a[sortKey].toLowerCase();
@@ -148,6 +134,11 @@ const CivicDataHubPage = () => {
     });
     return items;
   }, [search, sortKey, sortAsc]);
+
+  const ingestedCount = DATA_CATALOG.filter(
+    (d) => d.kind === "ingested",
+  ).length;
+  const referenceCount = DATA_CATALOG.length - ingestedCount;
 
   const toggleSort = (key: SortKey) => {
     if (sortKey === key) setSortAsc(!sortAsc);
@@ -201,7 +192,10 @@ const CivicDataHubPage = () => {
             <div>
               <h2 className="text-xl font-bold text-foreground">Authoritative Data Sources</h2>
               <p className="text-sm text-muted-foreground mt-1">
-                {DATA_CATALOG.length} public datasets referenced by Access Michigan - each with a direct link to the official source.
+                {DATA_CATALOG.length} public datasets, each with a direct link to the official source.
+              </p>
+              <p className="text-xs text-muted-foreground/80 mt-1">
+                {ingestedCount} are ingested - figures on this site are computed from them. {referenceCount} are reference links we point you to but compute nothing from.
               </p>
             </div>
             <div className="relative w-full sm:w-64">
@@ -223,21 +217,39 @@ const CivicDataHubPage = () => {
                   <th className="px-4 py-3 text-left w-1/4"><SortButton k="name" label="Dataset" /></th>
                   <th className="px-3 py-3 text-left w-20"><SortButton k="domain" label="Domain" /></th>
                   <th className="px-3 py-3 text-left w-20"><SortButton k="geography" label="Level" /></th>
-                  <th className="px-3 py-3 text-left w-24"><SortButton k="frequency" label="Updated" /></th>
+                  <th className="px-3 py-3 text-left w-24"><SortButton k="cadence" label="Updated" /></th>
                   <th className="px-3 py-3 text-left">Description</th>
                   <th className="px-3 py-3 w-16" />
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((d) => (
-                  <tr key={d.name} className="border-t border-border/40 hover:bg-muted/20 transition-colors">
-                    <td className="px-4 py-3 font-medium text-foreground text-xs">{d.name}</td>
+                  <tr key={d.id} className="border-t border-border/40 hover:bg-muted/20 transition-colors">
+                    <td className="px-4 py-3 text-xs">
+                      <span className="font-medium text-foreground">{d.name}</span>
+                      <span className="block text-[10px] text-muted-foreground mt-0.5">
+                        {d.publisherOrg} · {ACCESS_LABELS[d.access]}
+                        {d.kind === "reference" && " · reference only"}
+                      </span>
+                    </td>
                     <td className="px-3 py-3">
                       <Badge variant="outline" className={`text-[10px] ${DOMAIN_COLORS[d.domain] || ""}`}>{d.domain}</Badge>
                     </td>
                     <td className="px-3 py-3 text-xs text-muted-foreground">{d.geography}</td>
-                    <td className="px-3 py-3 text-xs text-muted-foreground">{d.frequency}</td>
-                    <td className="px-3 py-3 text-xs text-muted-foreground max-w-xs">{d.description}</td>
+                    <td className="px-3 py-3 text-xs text-muted-foreground">
+                      {d.cadence}
+                      {d.cadenceNote && (
+                        <span className="block text-[10px] text-muted-foreground/70 mt-0.5" title={d.cadenceNote}>
+                          see note
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-3 py-3 text-xs text-muted-foreground max-w-xs">
+                      {d.description}
+                      <span className="block text-[10px] text-muted-foreground/70 mt-1">
+                        Appears on: {d.poweredSurfaces.join(", ")}
+                      </span>
+                    </td>
                     <td className="px-3 py-3">
                       <a href={d.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-xs text-primary hover:underline font-medium" aria-label={`Open ${d.name} source`}>
                         Source <ExternalLink className="h-3 w-3" />

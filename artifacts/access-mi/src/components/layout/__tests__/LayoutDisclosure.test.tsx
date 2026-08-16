@@ -34,8 +34,12 @@ vi.mock("@/hooks/use-mobile", () => ({
   useIsMobile: () => false,
 }));
 
+// Arbitrary stand-in values: this suite asserts the disclosure sentence
+// renders, not what the counts are. The real numbers are covered by
+// src/data/__tests__/dataCatalog.test.ts and scripts/check-counts.mjs.
 vi.mock("@/config/platformConstants", () => ({
   DATA_SOURCE_DISPLAY: "41",
+  DATA_PUBLISHER_COUNT: 36,
 }));
 
 // ── Header mocks ─────────────────────────────────────────────────────────────

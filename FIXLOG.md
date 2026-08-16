@@ -13,7 +13,8 @@ sprint prompt names the file explicitly as a named exception.
 | `src/components/shared/CrisisBar.tsx` | Crisis affordance | 988 / 211 / Quick Exit; any copy or behavior change requires explicit exception |
 | `src/data/verifiedHealthFacilities.json` | Source data | CMS+HRSA statewide facility dataset; regenerate via script only |
 | `src/data/census-geographies.ts` | Source data | 83-county FIPS registry; authoritative for all county lookups |
-| `src/data/sourcesRegistry.ts` | Source data | Platform source-org registry; build asserts against it |
+| `src/data/sourcesRegistry.ts` | Source data | Platform data-FEED registry; build asserts against it |
+| `src/data/dataCatalog.ts` | Source data | Governed dataset catalog behind /civic-data-hub and /data-validation; every entry build-reconciled against the feed registry |
 | `src/data/sourceManifest.ts` | Source data | Numeric claim anchor manifest |
 | `src/config/platformConstants.ts` | Source data | SSOT for all site-wide factual figures; build-asserted |
 | `scripts/build-facility-dataset.mjs` | Ingestion script | Regenerates verifiedHealthFacilities; no hand edits |
@@ -352,3 +353,108 @@ partitioned into "has a real value" (7 priority counties) vs. "Data
 pending" (the other 76) - the same pattern already used elsewhere in this
 codebase, rather than a state-average fallback silently presented as a
 county-specific figure (the previous `getCountyIntelligence()` behavior).
+
+---
+
+## Data-catalog E2E accuracy audit (2026-08-16)
+
+### The defect: three unreconciled catalogs
+
+The platform described its own data in three places that nothing checked
+against each other:
+
+| List | Location | Entries | Guarded? |
+|---|---|---|---|
+| Feed registry | `src/data/sourcesRegistry.ts` | 43 | yes (`check-counts.mjs`) |
+| Hub catalog | `DATA_CATALOG` literal inside `CivicDataHubPage.tsx` | 16 | no |
+| Validation list | `DATA_SOURCES` literal inside `DataValidationPage.tsx` | 15 | no |
+
+The two page-local lists were the site's transparency surface - the pages a
+user visits specifically to check where a number came from - and they were
+the least governed code in the repo. Measured drift:
+
+- **Wrong publisher URL.** Leapfrog was listed at `leapfroggroup.org` on
+  /data-validation and `hospitalsafetygrade.org` in the registry.
+- **Cadences that disagreed with the registry**: CMS (Monthly vs Quarterly),
+  Michigan 2-1-1 (Ongoing vs Daily), HRSA (Annual vs Quarterly),
+  NHTSA and MODA similarly.
+- **Wrong attribution.** County Health Rankings was credited to the Robert
+  Wood Johnson Foundation; it is produced by the University of Wisconsin
+  Population Health Institute with RWJF funding.
+
+### The larger defect: "sources" were not "organizations"
+
+`DATA_SOURCE_RULE` claimed the count was "unique source organizations ...
+API endpoints from the same publisher are not double-counted". The registry
+contradicted this outright - CMS appeared 3x, FEMA 3x, EPA/HUD/EGLE 2x each.
+The rendered claim "43 verified public source organizations" was therefore
+wrong: 43 was a count of *feeds* published by 36 *organizations*.
+
+Fixed by separating the two numbers rather than deleting entries: feeds are
+genuinely distinct datasets worth listing, only the label was false.
+`SOURCES_TOTAL` (feeds) and `PUBLISHERS_TOTAL` (distinct orgs) are now
+separate derived exports, both build-asserted, and `check-data-catalog.mjs`
+fails any copy that renders the feed count next to the word "organizations".
+
+### Uncredited publishers
+
+/data-sources promises "Every organization credited" while six publishers
+backing rendered figures appeared on no registry: ACEEE (energy-burden
+choropleth), FBI Crime Data Explorer (county crime rates), CDC/ATSDR SVI
+(compound-deficit scoring), and MI-SUDDR, Monitoring the Future, SAMHSA
+(substance-use charts). All six are now registered; the feed count moved
+43 -> 49 and the publisher count is 42.
+
+`Monitoring the Future` and `MI-SUDDR` carry `attributionUnverified: true` -
+their publisher entity is carried forward from the citations already on the
+site and could not be confirmed against the publishers' own sites from the
+build environment. The guard reports these on every run so they do not
+harden into unexamined fact.
+
+### The structure that sustains it
+
+`src/data/dataCatalog.ts` is now the single catalog behind both pages, with
+two entry kinds:
+
+- `ingested` - a rendered figure is computed from it. Must name a
+  `registryFeed` that exists in the feed registry; publisher, cadence, and
+  URL host are reconciled against that feed.
+- `reference` - linked for the user, nothing computed from it. Carries no
+  registry feed and is deliberately excluded from the counted total, so a
+  convenience link can never inflate the "verified sources" claim.
+
+`scripts/check-data-catalog.mjs` (wired into `pnpm build` and the blocking
+CI `Integrity guards` step) enforces eleven invariants, including the two
+that stop this class of defect recurring:
+
+- **Documented overrides.** A cadence or host that differs from the linked
+  feed fails the build unless a substantive `cadenceNote`/`urlNote` explains
+  why. Legitimate cases (api.census.gov vs data.census.gov, SEDS vs the EIA
+  v2 API) are now explained in writing on the page instead of drifting.
+- **No shadow catalogs.** The consumer pages must import from
+  `dataCatalog.ts`, and any local array literal shaped like a dataset list
+  fails the build - the exact regression that created this defect.
+
+Every `poweredSurfaces` path is checked against the registered routes, which
+caught 11 non-existent paths in the first draft of the catalog itself.
+
+The guard was mutation-tested: ten separate corruptions (unknown feed,
+publisher mismatch, undocumented cadence drift, host swap, reference entry
+given a feed, bogus route, out-of-enum domain, duplicate id, non-https URL,
+missing feed link) were each confirmed to fail it.
+
+**Guard self-check.** An early revision of the guard parsed
+`DATA_CATALOG: CatalogEntry[] = [` by taking the first `[`, matched the
+empty brackets of the type annotation, and reported "ok - 0 catalog
+entries" - passing every rule vacuously. The parser now anchors on the
+initializer, and both the guard and the vitest suite assert a non-empty
+parse. A guard that silently validates nothing is worse than no guard.
+
+### Duplicate literals removed
+
+`generate-source-catalog.mjs` carried its own hardcoded `!== 43` check and
+`claims-anchor-guard.test.ts` asserted `EXPECTED_SOURCE_COUNT = 43`. Both
+were a fourth and fifth copy of a number that only ever drifted. The
+generator now asserts a parse-sanity floor and the test compares the
+declared constant against the live registry - `check-counts.mjs` remains the
+single authority on the exact figure.

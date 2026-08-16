@@ -1,13 +1,30 @@
 /**
- * Canonical registry of every public source organization powering the
- * platform. This file is the single point of truth: the homepage hero
- * counter, the footer chip, the Data Sources page table, and the build
- * assertion in platformConstants.ts all derive their numbers from this
- * array. Add or remove an entry here and every count updates in lockstep.
+ * Canonical registry of every public data FEED powering the platform.
+ * This file is the single point of truth: the homepage hero counter, the
+ * footer chip, the Data Sources page table, the dataset catalog in
+ * `src/data/dataCatalog.ts`, and the build assertion in
+ * platformConstants.ts all derive their numbers from this array. Add or
+ * remove an entry here and every count updates in lockstep.
  *
- * Adding an entry: append it under the correct category. The build will
- * fail in `scripts/check-counts.mjs` if SOURCES_TOTAL drifts from the
- * `41` declared in platformConstants.ts; update both together.
+ * FEEDS vs PUBLISHERS - these are different numbers and the distinction
+ * is load-bearing:
+ *
+ *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 49).
+ *                      A publisher that ships several independent feeds
+ *                      gets one entry per feed - CMS contributes Hospital
+ *                      Compare, Physician Compare, and NPPES separately
+ *                      because each is a distinct dataset with its own
+ *                      cadence and URL.
+ *   PUBLISHERS_TOTAL   distinct `org` values (currently 42). This is the
+ *                      number that may be described as "organizations".
+ *
+ * Copy that renders SOURCES_TOTAL must call it "data sources" or "feeds",
+ * never "organizations" - `scripts/check-data-catalog.mjs` fails the build
+ * on that phrasing. Use PUBLISHERS_TOTAL when the copy says organizations.
+ *
+ * Adding an entry: append it under the correct category. The build fails
+ * in `scripts/check-counts.mjs` if SOURCES_TOTAL drifts from the count
+ * declared in platformConstants.ts; update both in the same commit.
  */
 
 export interface SourceEntry {
@@ -16,6 +33,13 @@ export interface SourceEntry {
   url: string;
   powers: string;
   frequency: string;
+  /**
+   * Set when this entry's publisher attribution is carried forward from
+   * existing on-site citations rather than confirmed against the
+   * publisher's own site. Surfaced by the catalog guard so unverified
+   * attributions stay visible instead of hardening into fact.
+   */
+  attributionUnverified?: boolean;
 }
 
 export type SourceCategory =
@@ -203,6 +227,30 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       powers: "County-level SNAP-authorized food retailer counts (per-10k)",
       frequency: "Annual",
     },
+    {
+      name: "FBI Crime Data Explorer",
+      org: "FBI",
+      url: "https://cde.ucr.cjis.gov/",
+      powers:
+        "County violent and property crime rates (UCR/MICR) on /public-safety",
+      frequency: "Annual",
+    },
+    {
+      name: "SAMHSA",
+      org: "SAMHSA",
+      url: "https://www.samhsa.gov/find-help/national-helpline",
+      powers:
+        "Treatment referral and crisis helpline references, federal behavioral health spending",
+      frequency: "Ongoing",
+    },
+    {
+      name: "CDC/ATSDR Social Vulnerability Index",
+      org: "ATSDR",
+      url: "https://www.atsdr.cdc.gov/placeandhealth/svi/",
+      powers:
+        "Census tract social vulnerability scores used in compound-deficit scoring and equity sections",
+      frequency: "Every 2 years",
+    },
   ],
   "Michigan State Agencies": [
     {
@@ -333,6 +381,31 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       powers: "School-based health centers",
       frequency: "Annual",
     },
+    {
+      name: "ACEEE Energy Burden Research",
+      org: "ACEEE",
+      url: "https://www.aceee.org/research-report/u2006",
+      powers:
+        "Modeled county energy-burden estimates behind the /data energy burden choropleth and heat grid",
+      frequency: "Periodic",
+    },
+    {
+      name: "Monitoring the Future",
+      org: "U-M ISR",
+      url: "https://monitoringthefuture.org",
+      powers: "Adolescent substance use prevalence charts on /support-groups",
+      frequency: "Annual",
+      attributionUnverified: true,
+    },
+    {
+      name: "MI-SUDDR",
+      org: "MI-SUDDR",
+      url: "https://mi-suddr.com/resources-2",
+      powers:
+        "Michigan Substance Use Disorder Data Repository - treatment admissions and drug trend charts on /support-groups",
+      frequency: "Annual",
+      attributionUnverified: true,
+    },
   ],
 };
 
@@ -345,4 +418,25 @@ export const SOURCES_BREAKDOWN = {
   nonprofit: SOURCES_BY_CATEGORY["Nonprofits & Research"].length,
 } as const;
 
+/** Distinct feeds. This is the number rendered as "data sources". */
 export const SOURCES_TOTAL = SOURCES_REGISTRY.length;
+
+/**
+ * Distinct publisher organizations behind those feeds. Lower than
+ * SOURCES_TOTAL because several publishers ship more than one feed
+ * (CMS x3, FEMA x3, EPA x2, HUD x2, EGLE x2). Any copy that uses the
+ * word "organizations" must render THIS number, not SOURCES_TOTAL.
+ */
+export const PUBLISHERS_TOTAL = new Set(
+  SOURCES_REGISTRY.map((s) => s.org),
+).size;
+
+/** Every distinct publisher org, sorted - used by the catalog guard. */
+export const PUBLISHER_ORGS: ReadonlyArray<string> = [
+  ...new Set(SOURCES_REGISTRY.map((s) => s.org)),
+].sort();
+
+/** Look up the registry entries a given publisher org contributes. */
+export function getFeedsByOrg(org: string): SourceEntry[] {
+  return SOURCES_REGISTRY.filter((s) => s.org === org);
+}
