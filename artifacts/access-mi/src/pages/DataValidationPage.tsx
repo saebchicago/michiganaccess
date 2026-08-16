@@ -17,155 +17,21 @@ import {
 } from "lucide-react";
 import {
   COUNTIES_COVERED,
+  DATA_PUBLISHER_COUNT,
+  DATA_SOURCE_COUNT,
 } from "@/config/platformConstants";
+import { DATA_CATALOG } from "@/data/dataCatalog";
 
-interface DataSource {
-  name: string;
-  url: string;
-  description: string;
-  usedFor: string;
-  type: "live_api" | "modeled" | "curated" | "static";
-  updateCadence: string;
-}
-
-const DATA_SOURCES: DataSource[] = [
-  {
-    name: "CMS (Centers for Medicare & Medicaid Services)",
-    url: "https://data.cms.gov/",
-    description:
-      "Hospital quality measures, provider enrollment, facility data.",
-    usedFor:
-      "Facility quality scores, insurance acceptance, provider directory.",
-    type: "live_api",
-    updateCadence: "Quarterly",
-  },
-  {
-    name: "HRSA (Health Resources & Services Administration)",
-    url: "https://data.hrsa.gov/",
-    description:
-      "Federally Qualified Health Center locations, Health Professional Shortage Areas.",
-    usedFor:
-      "FQHC mapping, shortage area identification on /find-care and /health-map.",
-    type: "live_api",
-    updateCadence: "Annual (UDS data)",
-  },
-  {
-    name: "CDC PLACES",
-    url: "https://www.cdc.gov/places/",
-    description:
-      "County-level chronic disease prevalence and health behavior estimates.",
-    usedFor:
-      "County health profiles, /data dashboard, /environment air quality context.",
-    type: "live_api",
-    updateCadence: "Annual",
-  },
-  {
-    name: "EPA AirNow",
-    url: "https://www.airnow.gov/",
-    description: "Real-time Air Quality Index (AQI) by monitoring station.",
-    usedFor:
-      "/environment real-time AQI display for Michigan monitoring stations.",
-    type: "live_api",
-    updateCadence: "Real-time (hourly)",
-  },
-  {
-    name: "EIA SEDS (State Energy Data System)",
-    url: "https://www.eia.gov/state/seds/",
-    description: "State-level energy consumption, prices, and expenditures.",
-    usedFor:
-      "/data and /environment energy price trends, Michigan vs national comparisons.",
-    type: "static",
-    updateCadence: "Annual",
-  },
-  {
-    name: "ACEEE LEAD Tool",
-    url: "https://www.aceee.org/research-report/u2006",
-    description: "Low-income energy affordability data by county.",
-    usedFor:
-      "Energy burden choropleth on /data - modeled county-level estimates.",
-    type: "modeled",
-    updateCadence: "Periodic (research reports)",
-  },
-  {
-    name: "NHTSA (National Highway Traffic Safety Administration)",
-    url: "https://www.nhtsa.gov/data",
-    description: "Motor vehicle crash fatality data.",
-    usedFor: "/transportation crash fatality trends and county comparisons.",
-    type: "static",
-    updateCadence: "Annual",
-  },
-  {
-    name: "openFDA",
-    url: "https://open.fda.gov/",
-    description:
-      "FDA drug approval database, product labeling, adverse events.",
-    usedFor:
-      "/learn drug data widget - real-time search of approved medications.",
-    type: "live_api",
-    updateCadence: "Daily",
-  },
-  {
-    name: "Michigan MODA Dashboard",
-    url: "https://michigan.gov/opioids/category-data",
-    description:
-      "Michigan Overdose Data to Action - overdose deaths by county, vulnerability index.",
-    usedFor: "/support-groups substance abuse trends charts.",
-    type: "modeled",
-    updateCadence: "Annual/semi-annual",
-  },
-  {
-    name: "MI-SUDDR",
-    url: "https://mi-suddr.com/resources-2",
-    description: "Michigan Substance Use Disorder Data Repository.",
-    usedFor: "/support-groups treatment admissions, drug trend charts.",
-    type: "modeled",
-    updateCadence: "Annual",
-  },
-  {
-    name: "Monitoring the Future",
-    url: "https://monitoringthefuture.org",
-    description: "National survey of adolescent substance use prevalence.",
-    usedFor: "/support-groups youth substance use charts.",
-    type: "static",
-    updateCadence: "Annual",
-  },
-  {
-    name: "SAMHSA",
-    url: "https://www.samhsa.gov/find-help/national-helpline",
-    description: "Substance Abuse and Mental Health Services Administration.",
-    usedFor: "Crisis helpline references, treatment referral links.",
-    type: "curated",
-    updateCadence: "Ongoing",
-  },
-  {
-    name: "Michigan DHHS",
-    url: "https://www.michigan.gov/mdhhs",
-    description:
-      "Michigan Department of Health and Human Services - county-level service directories.",
-    usedFor:
-      "County health profiles, Medicaid guidance, substance abuse contacts.",
-    type: "curated",
-    updateCadence: "Ongoing",
-  },
-  {
-    name: "County Health Rankings",
-    url: "https://www.countyhealthrankings.org/",
-    description:
-      "Robert Wood Johnson Foundation - county health factor rankings.",
-    usedFor:
-      "County profile benchmarks (uninsured rate, food insecurity, PCP ratio).",
-    type: "static",
-    updateCadence: "Annual",
-  },
-  {
-    name: "Leapfrog Group",
-    url: "https://www.leapfroggroup.org/",
-    description: "Hospital safety grades.",
-    usedFor: "/find-care facility safety grade badges.",
-    type: "static",
-    updateCadence: "Semi-annual",
-  },
-];
+/**
+ * Rendered from the governed catalog in `src/data/dataCatalog.ts`. This
+ * page used to keep its own hardcoded array, which drifted from the feed
+ * registry - wrong publisher URLs, cadences that disagreed with the
+ * registry, and publishers that appeared nowhere else. `pnpm
+ * check:data-catalog` now fails the build if a local list reappears here.
+ */
+const DATA_SOURCES = [...DATA_CATALOG].sort((a, b) =>
+  a.name.localeCompare(b.name),
+);
 
 const TYPE_LABELS: Record<
   string,
@@ -280,6 +146,13 @@ export default function DataValidationPage() {
             <FileText className="h-4 w-4 text-primary" /> All Data Sources (
             {DATA_SOURCES.length})
           </h2>
+          <p className="text-xs text-muted-foreground mb-4">
+            Every entry below is reconciled at build time against the platform
+            feed registry ({DATA_SOURCE_COUNT} feeds from{" "}
+            {DATA_PUBLISHER_COUNT} publishers). Where a dataset's cadence or
+            link differs from its publisher's headline feed, the reason is
+            stated on the card rather than left to drift.
+          </p>
           <div className="space-y-4">
             {DATA_SOURCES.map((src, i) => (
               <motion.div
@@ -292,15 +165,22 @@ export default function DataValidationPage() {
                 <Card>
                   <CardHeader className="pb-2">
                     <div className="flex items-start justify-between gap-2 flex-wrap">
-                      <CardTitle className="text-sm">{src.name}</CardTitle>
+                      <div>
+                        <CardTitle className="text-sm">{src.name}</CardTitle>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">
+                          {src.publisherOrg}
+                          {src.kind === "reference" &&
+                            " - reference link, no figure computed from it"}
+                        </p>
+                      </div>
                       <div className="flex items-center gap-2">
                         <Badge
-                          className={`${TYPE_LABELS[src.type].color} text-[10px]`}
+                          className={`${TYPE_LABELS[src.access].color} text-[10px]`}
                         >
-                          {TYPE_LABELS[src.type].label}
+                          {TYPE_LABELS[src.access].label}
                         </Badge>
                         <span className="text-[10px] text-muted-foreground flex items-center gap-1">
-                          <Clock className="h-2.5 w-2.5" /> {src.updateCadence}
+                          <Clock className="h-2.5 w-2.5" /> {src.cadence}
                         </span>
                       </div>
                     </div>
@@ -310,15 +190,26 @@ export default function DataValidationPage() {
                       {src.description}
                     </p>
                     <p className="text-xs text-foreground">
-                      <strong>Used for:</strong> {src.usedFor}
+                      <strong>Used for:</strong>{" "}
+                      {src.poweredSurfaces.join(", ")}
                     </p>
+                    {src.cadenceNote && (
+                      <p className="text-[11px] text-muted-foreground/80">
+                        <strong>Cadence note:</strong> {src.cadenceNote}
+                      </p>
+                    )}
+                    {src.urlNote && (
+                      <p className="text-[11px] text-muted-foreground/80">
+                        <strong>Link note:</strong> {src.urlNote}
+                      </p>
+                    )}
                     <a
-                      href={src.url}
+                      href={src.sourceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[11px] text-primary hover:underline inline-flex items-center gap-1"
                     >
-                      <ExternalLink className="h-3 w-3" /> {src.url}
+                      <ExternalLink className="h-3 w-3" /> {src.sourceUrl}
                     </a>
                   </CardContent>
                 </Card>
