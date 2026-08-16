@@ -9,6 +9,42 @@
 // Legacy single-stamp fields (lastUpdated, currentVersion) are retained
 // for back-compat with components that have not yet migrated; they
 // duplicate lastPulled and sourceYear respectively.
+//
+// TWO DIMENSIONS, NOT ONE
+// -----------------------
+// `freshnessStatus` used to be hand-set per entry, and it silently answered
+// two different questions depending on who wrote the line:
+//
+//   "how recently did we pull it?"        (ingest recency)
+//   "is our copy the newest release?"     (vintage currency)
+//
+// That produced entries that contradicted each other on identical inputs -
+// cdc-places and census-acs carried the same lastUpdated, the same Annual
+// cadence, and the same nextExpectedUpdate, but one said "fresh" (judging
+// ingest) and the other "aging" (judging vintage). A reader could not tell
+// which dimension a badge referred to, and nothing caught the conflict.
+//
+// The two questions are now separate fields, and the rendered rollup is
+// derived from them rather than typed by hand:
+//
+//   ingestStatus    derived from lastPulled against updateFrequency and
+//                   nextExpectedUpdate. Never hand-set.
+//   vintageStatus   declared, because only a human can know whether the
+//                   publisher has issued a newer release than the one we
+//                   ship. "behind" requires a vintageNote saying so.
+//   freshnessStatus derived rollup: the worse of the two.
+//
+// Dates are not hand-copied either. An entry backed by a generated dataset
+// names it in `generatedFrom`, and scripts/check-data-freshness.mjs asserts
+// lastPulled equals that file's provenance.ingested_at. The census-acs entry
+// claimed 2026-07-02 while the file recorded 2026-08-10 - a hand-copied date
+// that drifted 39 days from the machine-recorded truth it cited.
+
+/** Has our copy been pulled recently enough for its own stated cadence? */
+export type IngestStatus = "current" | "overdue";
+
+/** Is the release we ship the newest the publisher has issued? */
+export type VintageStatus = "current" | "behind";
 
 export interface DataSource {
   id: string;
@@ -28,6 +64,19 @@ export interface DataSource {
   updateFrequency: string;
   nextExpectedUpdate: string;
   isLive: boolean;
+  /**
+   * Generated dataset whose `provenance.ingested_at` is authoritative for
+   * `lastUpdated`. Build-asserted; omit for sources we do not ingest into
+   * a committed file.
+   */
+  generatedFrom?: string;
+  /** Declared: is the shipped release the publisher's newest? */
+  vintageStatus: VintageStatus;
+  /** Required when vintageStatus is "behind" - which release we are missing. */
+  vintageNote?: string;
+  /** Derived from lastPulled. Never hand-set. */
+  ingestStatus: IngestStatus;
+  /** Derived rollup of ingestStatus and vintageStatus. Never hand-set. */
   freshnessStatus: "fresh" | "aging" | "stale";
 }
 
@@ -38,16 +87,114 @@ export interface DataSource {
  */
 const PLATFORM_LAST_VERIFIED = "2026-07-14";
 
-function entry(
-  partial: Omit<DataSource, "lastPulled" | "sourceYear" | "lastVerified"> & {
-    lastVerified?: string;
-  },
-): DataSource {
+/**
+ * How long a dataset may go unpulled before its ingest is overdue, keyed by
+ * substrings of `updateFrequency`. Budgets are deliberately generous - a
+ * dataset is only flagged once it is past the point where a refresh should
+ * plainly have happened. Longest matching key wins, so "semi-annual" is not
+ * captured by "annual".
+ */
+const CADENCE_BUDGET_DAYS: ReadonlyArray<readonly [string, number]> = [
+  ["real-time", 7],
+  ["continuous", 7],
+  ["live", 7],
+  ["hourly", 7],
+  ["daily", 7],
+  ["weekly", 21],
+  ["monthly", 60],
+  ["quarterly", 150],
+  ["semi-annual", 240],
+  ["semiannual", 240],
+  ["biannual", 240],
+  ["every 2 years", 850],
+  ["every 2-3 years", 1250],
+  ["every 4-5 years", 1950],
+  ["biennial", 850],
+  ["annual", 450],
+];
+
+function cadenceBudgetDays(updateFrequency: string): number | null {
+  const f = updateFrequency.toLowerCase();
+  let best: number | null = null;
+  let bestKeyLength = -1;
+  for (const [key, days] of CADENCE_BUDGET_DAYS) {
+    if (f.includes(key) && key.length > bestKeyLength) {
+      best = days;
+      bestKeyLength = key.length;
+    }
+  }
+  return best;
+}
+
+/**
+ * Deadline implied by `nextExpectedUpdate`. Accepts a plain date
+ * ("2025-10-01") or a year / year-range ("2026", "2024-2025"), in which case
+ * the deadline is the end of the last year named. Non-committal values like
+ * "Ongoing" yield null and the cadence budget decides on its own.
+ */
+function expectedDeadline(nextExpectedUpdate: string): Date | null {
+  const iso = nextExpectedUpdate.match(/^\d{4}-\d{2}-\d{2}$/);
+  if (iso) return new Date(nextExpectedUpdate + "T00:00:00Z");
+  const years = [...nextExpectedUpdate.matchAll(/\b(20\d{2})\b/g)].map((m) =>
+    Number(m[1]),
+  );
+  if (years.length === 0) return null;
+  return new Date(Date.UTC(Math.max(...years) + 1, 0, 1));
+}
+
+/**
+ * Ingest is overdue when the publisher's own expected-update date has passed,
+ * or when we have simply not pulled within the cadence budget.
+ */
+export function deriveIngestStatus(
+  lastPulled: string,
+  updateFrequency: string,
+  nextExpectedUpdate: string,
+  now: Date = new Date(),
+): IngestStatus {
+  const pulled = Date.parse(lastPulled + "T00:00:00Z");
+  if (Number.isNaN(pulled)) return "overdue";
+
+  const deadline = expectedDeadline(nextExpectedUpdate);
+  if (deadline && now.getTime() >= deadline.getTime()) return "overdue";
+
+  const budget = cadenceBudgetDays(updateFrequency);
+  if (budget === null) return "current";
+  const ageDays = (now.getTime() - pulled) / 86_400_000;
+  return ageDays > budget ? "overdue" : "current";
+}
+
+/** Rendered rollup: the worse of the two dimensions. */
+export function deriveFreshnessStatus(
+  ingest: IngestStatus,
+  vintage: VintageStatus,
+): "fresh" | "aging" | "stale" {
+  if (ingest === "overdue") return "stale";
+  return vintage === "behind" ? "aging" : "fresh";
+}
+
+type FreshnessSeed = Omit<
+  DataSource,
+  | "lastPulled"
+  | "sourceYear"
+  | "lastVerified"
+  | "ingestStatus"
+  | "freshnessStatus"
+> & { lastVerified?: string };
+
+function entry(partial: FreshnessSeed): DataSource {
+  const ingestStatus = deriveIngestStatus(
+    partial.lastUpdated,
+    partial.updateFrequency,
+    partial.nextExpectedUpdate,
+  );
   return {
     ...partial,
     lastPulled: partial.lastUpdated,
     sourceYear: partial.currentVersion,
     lastVerified: partial.lastVerified ?? PLATFORM_LAST_VERIFIED,
+    ingestStatus,
+    freshnessStatus: deriveFreshnessStatus(ingestStatus, partial.vintageStatus),
   };
 }
 
@@ -60,11 +207,12 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     category: "Health",
     url: "https://data.cdc.gov",
     lastUpdated: "2026-07-02",
+    generatedFrom: "cdc-places-county.generated.json",
     updateFrequency: "Annual",
     currentVersion: "PLACES 2025 Release",
     nextExpectedUpdate: "2026-12-01",
     isLive: true,
-    freshnessStatus: "fresh",
+    vintageStatus: "current",
     lastVerified: "2026-07-29",
   }),
   entry({
@@ -75,13 +223,49 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     name: "Census ACS 5-Year Estimates",
     category: "Demographics",
     url: "https://api.census.gov",
-    lastUpdated: "2026-07-02",
+    lastUpdated: "2026-08-10",
+    generatedFrom: "acs-broadband-county.generated.json",
     updateFrequency: "Annual",
     currentVersion: "2023 5-Year ACS (2019-2023)",
     nextExpectedUpdate: "2026-12-01",
     isLive: true,
-    freshnessStatus: "aging",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship the 2023 5-Year ACS (2019-2023); the 2020-2024 release is published. One cycle behind.",
     lastVerified: "2026-07-29",
+  }),
+  entry({
+    // Added 2026-08-16: this dataset ships county unemployment rates on
+    // /county and /data but carried no freshness entry, so the tracked-source
+    // rollup under-reported what the platform actually ingests.
+    id: "bls-laus",
+    name: "BLS Local Area Unemployment Statistics",
+    category: "Economy",
+    url: "https://www.bls.gov/lau/",
+    lastUpdated: "2026-07-02",
+    generatedFrom: "bls-laus-county.generated.json",
+    updateFrequency: "Monthly",
+    currentVersion: "May 2026 (Preliminary)",
+    nextExpectedUpdate: "Ongoing",
+    isLive: false,
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship the May 2026 preliminary series; BLS has released later monthly estimates since our last pull.",
+  }),
+  entry({
+    // Added 2026-08-16: same omission as bls-laus - HPSA designations back
+    // /find-care and /health-map but were not tracked for freshness.
+    id: "hrsa-hpsa",
+    name: "HRSA Health Professional Shortage Areas",
+    category: "Health",
+    url: "https://data.hrsa.gov/",
+    lastUpdated: "2026-07-02",
+    generatedFrom: "hrsa-hpsa-county.generated.json",
+    updateFrequency: "Quarterly",
+    currentVersion: "HRSA detail files dated 2026-06-30",
+    nextExpectedUpdate: "Ongoing",
+    isLive: false,
+    vintageStatus: "current",
   }),
   entry({
     id: "hud-fmr",
@@ -93,7 +277,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "FY2025",
     nextExpectedUpdate: "2025-10-01",
     isLive: false,
-    freshnessStatus: "stale",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship FY2025 Fair Market Rents; HUD has since published the FY2026 schedule.",
   }),
   entry({
     id: "egle-mpart",
@@ -105,7 +291,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "March 2026",
     nextExpectedUpdate: "Ongoing",
     isLive: false,
-    freshnessStatus: "aging",
+    vintageStatus: "current",
   }),
   entry({
     id: "usaspending",
@@ -117,7 +303,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "FY2024",
     nextExpectedUpdate: "FY2025 Q4",
     isLive: true,
-    freshnessStatus: "stale",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship FY2024 obligations; FY2025 is closed and published.",
   }),
   entry({
     id: "alice",
@@ -129,7 +317,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2025 Report (2023 data)",
     nextExpectedUpdate: "2027",
     isLive: false,
-    freshnessStatus: "fresh",
+    vintageStatus: "current",
   }),
   entry({
     id: "fema-nri",
@@ -141,7 +329,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2023 NRI",
     nextExpectedUpdate: "2025-2026",
     isLive: false,
-    freshnessStatus: "aging",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship the 2023 National Risk Index; FEMA's next release window (2025-2026) has opened.",
   }),
   entry({
     id: "fema-declarations",
@@ -153,7 +343,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "Live API",
     nextExpectedUpdate: "Ongoing",
     isLive: true,
-    freshnessStatus: "aging",
+    vintageStatus: "current",
   }),
   entry({
     id: "usda-fara",
@@ -165,7 +355,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2019 FARA",
     nextExpectedUpdate: "2024-2025",
     isLive: false,
-    freshnessStatus: "stale",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship the 2019 Food Access Research Atlas; the 2024-2025 update window has passed.",
   }),
   entry({
     id: "fcc-broadband",
@@ -177,7 +369,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "BDC 2024",
     nextExpectedUpdate: "2025-06-01",
     isLive: false,
-    freshnessStatus: "stale",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship the 2024 Broadband Data Collection; newer semiannual filings are published.",
   }),
   entry({
     id: "epa-echo",
@@ -189,7 +383,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "Live API",
     nextExpectedUpdate: "Ongoing",
     isLive: true,
-    freshnessStatus: "aging",
+    vintageStatus: "current",
   }),
   entry({
     id: "hmda",
@@ -201,7 +395,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2023 HMDA",
     nextExpectedUpdate: "2025-06-01",
     isLive: false,
-    freshnessStatus: "stale",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship 2023 HMDA loan-level data; the 2024 release is published.",
   }),
   entry({
     id: "lead-risk",
@@ -213,7 +409,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2023 data",
     nextExpectedUpdate: "2025-01-01",
     isLive: false,
-    freshnessStatus: "stale",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship 2023 lead-risk data; the expected 2025 refresh has passed.",
   }),
   entry({
     id: "eviction-lab",
@@ -225,7 +423,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2023 data",
     nextExpectedUpdate: "2025-01-01",
     isLive: false,
-    freshnessStatus: "stale",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship 2023 eviction filings; the expected 2025 refresh has passed.",
   }),
   entry({
     id: "mitn-lobbying",
@@ -237,7 +437,9 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     currentVersion: "2024 reporting period",
     nextExpectedUpdate: "2025-06-01",
     isLive: false,
-    freshnessStatus: "stale",
+    vintageStatus: "behind",
+    vintageNote:
+      "We ship the 2024 reporting period; the mid-2025 filing period has closed.",
   }),
 ];
 
@@ -250,4 +452,12 @@ export const DATA_FRESHNESS_SUMMARY = {
   stale: DATA_FRESHNESS_SOURCES.filter((s) => s.freshnessStatus === "stale")
     .length,
   liveAPIs: DATA_FRESHNESS_SOURCES.filter((s) => s.isLive).length,
+  /** Datasets we have not re-pulled within their own stated cadence. */
+  ingestOverdue: DATA_FRESHNESS_SOURCES.filter(
+    (s) => s.ingestStatus === "overdue",
+  ).length,
+  /** Datasets where the publisher has issued a newer release than we ship. */
+  vintageBehind: DATA_FRESHNESS_SOURCES.filter(
+    (s) => s.vintageStatus === "behind",
+  ).length,
 };

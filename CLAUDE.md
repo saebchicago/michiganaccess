@@ -22,6 +22,7 @@ Never run `npm install` in this repo. Use `pnpm install --frozen-lockfile`.
 - `src/data/census-geographies.ts` - 83-county FIPS registry
 - `src/data/sourcesRegistry.ts` - data-FEED registry (49 feeds, 42 publishers)
 - `src/data/dataCatalog.ts` - governed dataset catalog behind the data hub
+- `src/data/dataFreshness.ts` - freshness registry; status is derived, not hand-set
 - `src/data/sourceManifest.ts` - numeric claim anchor manifest
 - `src/config/platformConstants.ts` - SSOT for site-wide factual figures
 - `scripts/build-facility-dataset.mjs` - data ingestion script
