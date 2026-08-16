@@ -596,3 +596,54 @@ new upstream data produces no diff.
 End-to-end verified: rewriting a dataset's `ingested_at` fails
 `check-data-freshness.mjs` with an instruction to regenerate; running the
 generator makes it pass. No hand-editing anywhere in the loop.
+
+---
+
+## Dead-code sweep (2026-08-16)
+
+82 modules under `src/` were referenced nowhere - not imported, not
+lazy-loaded, not named in any test. 351KB of source: whole home-page sections
+(`RegionalGateway`, `CommunityAlerts`, `GuidedPathways`, `MichiganAtAGlance`),
+twelve `*Spotlights` components, five `tools/*Card` components, four
+`utils/data-ingestion/seed-*.ts` scripts, and a `src/data/testfile.ts`.
+
+Vite tree-shakes them, so no user ever downloaded them. The cost was
+maintenance surface and misdirection: several rendered platform claims - "43
+verified data sources", the Trinity Health outcome figures, "all 83 counties"
+- which `check-copy.mjs` and `check-fabrication.mjs` scanned on every build,
+for components no user could reach. Anyone grepping for one of those claims
+would find it and reasonably conclude it was live on the site.
+
+Removal ran to a fixed point: deleting the first 73 orphaned nine more
+(`fema-flood.ts` was reachable only from the deleted `FloodInsuranceGapCard`,
+`school-districts.ts` only from `SchoolDistrictCard`, and so on), and those
+in turn orphaned `lib/resilience-score.ts`.
+
+`scripts/check-orphan-modules.mjs` (in `pnpm build` and blocking CI) fails on
+any new orphan. `orphan-allowlist.json` is shrink-only and currently empty.
+
+### The guard's own false positive, and what it taught
+
+The first revision of this guard scanned only `src/`, `scripts/` and
+`public/`. It declared `src/lib/radix-compose-refs-patch.ts` an orphan, and
+deleting it **broke `vite build`** - the module is aliased into the Radix
+tooltip package by `vite.config.ts`, so production code imports it without
+any `src/` file naming it.
+
+Typecheck stayed clean and all 1070 tests passed through that deletion. Only
+the full build caught it. The corpus now includes the root-level config
+files, and the guard is verified against exactly this case: hiding
+`vite.config.ts` makes it flag the patch, restoring it makes it pass.
+
+A second, subtler bug surfaced immediately after: the guard's own explanatory
+comment names `radix-compose-refs-patch`, and under "any mention counts" that
+made the module permanently invisible to it. The script now excludes itself
+from its own corpus. A guard that documents the modules it protects must not
+thereby stop protecting them.
+
+### Not addressed here
+
+`.migration-backup/` is 901 tracked files and 24MB - larger than the entire
+built site - and is a duplicate of the pre-migration `src/` tree. It is
+excluded from every guard and build. Removing it is a separate decision from
+this sweep and is left to the owner; git history retains it either way.
