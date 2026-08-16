@@ -458,3 +458,192 @@ were a fourth and fifth copy of a number that only ever drifted. The
 generator now asserts a parse-sanity floor and the test compares the
 declared constant against the live registry - `check-counts.mjs` remains the
 single authority on the exact figure.
+
+---
+
+## Data-freshness accuracy audit (2026-08-16)
+
+Follow-up sweep after the data-catalog audit. Same defect class, different
+layer: a hand-maintained field that nothing reconciled against the machine
+-recorded truth sitting next to it.
+
+### The root defect: one field, two questions
+
+`freshnessStatus` was hand-typed per entry, and it silently answered either
+of two different questions depending on who wrote the line:
+
+  - "how recently did we pull it?"     (ingest recency)
+  - "is our copy the newest release?"  (vintage currency)
+
+`cdc-places` and `census-acs` carried the *same* `lastUpdated` (2026-07-02),
+the *same* `Annual` cadence, and the *same* `nextExpectedUpdate`
+(2026-12-01) - but one said "fresh" (judging ingest) and the other "aging"
+(judging vintage). Both badges render on /methodology and /about. A reader
+could not tell which dimension a badge referred to, and nothing caught the
+contradiction.
+
+### Findings
+
+| # | Finding |
+|---|---|
+| 1 | `census-acs` claimed `lastUpdated: "2026-07-02"` in a comment that said it matched `acs-broadband-county.generated.json` - that file records `ingested_at: 2026-08-10`. The hand-copied date had drifted 39 days from the machine-recorded truth it cited, and understated how fresh the data actually was. |
+| 2 | `cdc-places` vs `census-acs`: identical inputs, contradictory hand-set status (above). |
+| 3 | `fema-declarations`, `epa-echo`, and `egle-mpart` declare a "Real-time"/"Continuous" cadence, had not been re-pulled in 168 days, and were labeled merely "aging". A real-time feed five and a half months stale is not aging. |
+| 4 | `fema-nri` was 1,323 days past ingest on an "Every 2-3 years" cadence and labeled "aging". |
+| 5 | `bls-laus-county` and `hrsa-hpsa-county` are ingested into committed datasets with full provenance and render on /county, /data, /find-care and /health-map - but had no freshness entry at all, so the "15 tracked datasets" rollup under-reported actual coverage. |
+
+### The structure
+
+Freshness is now two declared/derived dimensions instead of one typed label:
+
+- `ingestStatus` (**derived**, never hand-set) - from `lastPulled` against
+  `updateFrequency` and `nextExpectedUpdate`. A documented cadence-budget
+  table converts phrases like "Every 2-3 years" into a day budget;
+  longest-key-wins so "annual" cannot swallow "semi-annual". A
+  `nextExpectedUpdate` in the past makes ingest overdue regardless of budget,
+  and year ranges ("2024-2025") resolve to the end of their last year.
+- `vintageStatus` (**declared**) - only a human can know whether the
+  publisher has issued a newer release than the one we ship. "behind"
+  requires a `vintageNote` naming the release we are missing.
+- `freshnessStatus` (**derived rollup**) - the worse of the two. Field name
+  and its three values are unchanged, so no consumer broke.
+
+Dates are no longer hand-copied either: an entry backed by a committed
+dataset names it in `generatedFrom`, and the guard asserts `lastUpdated`
+equals that file's `provenance.ingested_at`.
+
+The dashboard now states *which* dimension is failing on each card, because
+"stale" alone could mean either - and used to.
+
+### Guard
+
+`scripts/check-data-freshness.mjs`, wired into `pnpm build` and the blocking
+CI `Integrity guards` step, fails on: a hand-set `freshnessStatus` or
+`ingestStatus`; a `generatedFrom` that is missing or whose `ingested_at`
+disagrees with the entry; a committed dataset with `ingested_at` that no
+entry tracks (opt out only via a written reason in `NOT_FRESHNESS_TRACKED`);
+`vintageStatus` "behind" without a note or "current" carrying one; duplicate
+ids; and `FRESHNESS_TRACKED_COUNT` drift.
+
+Mutation-tested - eight corruptions each confirmed to fail it, including the
+exact drift that started this audit (a hand-copied date diverging from the
+generated file's `ingested_at`).
+
+### Effect on the rendered numbers
+
+Tracked datasets 15 -> 17. The honest distribution moved from 2 fresh / 4
+aging / 9 stale to **3 fresh / 2 aging / 12 stale** - four entries moved
+from "aging" to "stale" because real-time feeds had gone unpulled for
+months, and two newly-tracked datasets joined. Per this file's standing
+rule, that is a statement about the data, not a reason to soften the
+dashboard: twelve of seventeen datasets are genuinely overdue for a
+re-pull, and the refresh workflows are the fix.
+
+### Root cause of the staleness: 9 of 11 refresh scripts ran on no schedule
+
+The freshness audit above measured the problem. This is why it existed.
+
+`artifacts/access-mi/scripts/` holds eleven `refresh-*.mjs` ingestion scripts.
+Only two were referenced by any workflow:
+
+| Script | Scheduled by |
+|---|---|
+| `refresh-acs-broadband-county.mjs` | `build-data.yml` (weekly) |
+| `refresh-county-population.mjs` | `facility-refresh.yml` (weekly) |
+| the other nine | **nothing** |
+
+That maps exactly onto the observed data: ACS broadband was the only dataset
+with a recent ingest date (2026-08-10) while every other generated dataset
+sat at 2026-07-01/02, its last manual run. The scripts were not broken - they
+had simply never been wired to a trigger. None of the nine needs an API key;
+all take the same `--apply` flag.
+
+`.github/workflows/dataset-refresh.yml` now runs all nine weekly (Tuesdays,
+offset from the two existing data jobs so they cannot race on the same
+commit). It deliberately:
+
+- commits successful datasets even when one upstream fetch fails, then
+  re-raises the failure afterwards, so a single outage cannot discard eight
+  good refreshes;
+- checksums `census-geographies.ts` before and after and fails if an
+  ingestion script rewrote the sacrosanct 83-county registry;
+- re-runs the data guards against the refreshed output before committing, so
+  a bad upstream release cannot land silently.
+
+Polling weekly for annually-published data is intentional: nine HTTP requests
+a week buys pickup within seven days of a release instead of whenever someone
+remembers to run the script.
+
+### Derived ingest dates: provenance-index.generated.json
+
+Wiring up the refresh jobs exposed a flaw in the freshness work above. Every
+refresh rewrites `provenance.ingested_at`, and the guard pinned
+`dataFreshness.lastUpdated` to that value - so each scheduled run would have
+turned the build red until a human hand-edited the TypeScript. A guard that
+requires weekly manual maintenance is a guard that gets disabled.
+
+Importing the datasets to read the timestamp directly was not an option
+either: `cdc-places-zcta.generated.json` alone is 2.7MB, and pulling whole
+datasets into the bundle to read one field each is a real regression.
+
+`scripts/generate-provenance-index.mjs` emits a few-hundred-byte index of
+just `{filename: ingested_at}` for every committed generated dataset.
+`dataFreshness.ts` reads `lastPulled` from it; entries naming `generatedFrom`
+may no longer declare a date at all, and the guard rejects one that tries.
+The index carries no generation timestamp of its own, so a run that finds no
+new upstream data produces no diff.
+
+End-to-end verified: rewriting a dataset's `ingested_at` fails
+`check-data-freshness.mjs` with an instruction to regenerate; running the
+generator makes it pass. No hand-editing anywhere in the loop.
+
+---
+
+## Dead-code sweep (2026-08-16)
+
+82 modules under `src/` were referenced nowhere - not imported, not
+lazy-loaded, not named in any test. 351KB of source: whole home-page sections
+(`RegionalGateway`, `CommunityAlerts`, `GuidedPathways`, `MichiganAtAGlance`),
+twelve `*Spotlights` components, five `tools/*Card` components, four
+`utils/data-ingestion/seed-*.ts` scripts, and a `src/data/testfile.ts`.
+
+Vite tree-shakes them, so no user ever downloaded them. The cost was
+maintenance surface and misdirection: several rendered platform claims - "43
+verified data sources", the Trinity Health outcome figures, "all 83 counties"
+- which `check-copy.mjs` and `check-fabrication.mjs` scanned on every build,
+for components no user could reach. Anyone grepping for one of those claims
+would find it and reasonably conclude it was live on the site.
+
+Removal ran to a fixed point: deleting the first 73 orphaned nine more
+(`fema-flood.ts` was reachable only from the deleted `FloodInsuranceGapCard`,
+`school-districts.ts` only from `SchoolDistrictCard`, and so on), and those
+in turn orphaned `lib/resilience-score.ts`.
+
+`scripts/check-orphan-modules.mjs` (in `pnpm build` and blocking CI) fails on
+any new orphan. `orphan-allowlist.json` is shrink-only and currently empty.
+
+### The guard's own false positive, and what it taught
+
+The first revision of this guard scanned only `src/`, `scripts/` and
+`public/`. It declared `src/lib/radix-compose-refs-patch.ts` an orphan, and
+deleting it **broke `vite build`** - the module is aliased into the Radix
+tooltip package by `vite.config.ts`, so production code imports it without
+any `src/` file naming it.
+
+Typecheck stayed clean and all 1070 tests passed through that deletion. Only
+the full build caught it. The corpus now includes the root-level config
+files, and the guard is verified against exactly this case: hiding
+`vite.config.ts` makes it flag the patch, restoring it makes it pass.
+
+A second, subtler bug surfaced immediately after: the guard's own explanatory
+comment names `radix-compose-refs-patch`, and under "any mention counts" that
+made the module permanently invisible to it. The script now excludes itself
+from its own corpus. A guard that documents the modules it protects must not
+thereby stop protecting them.
+
+### Not addressed here
+
+`.migration-backup/` is 901 tracked files and 24MB - larger than the entire
+built site - and is a duplicate of the pre-migration `src/` tree. It is
+excluded from every guard and build. Removing it is a separate decision from
+this sweep and is left to the owner; git history retains it either way.

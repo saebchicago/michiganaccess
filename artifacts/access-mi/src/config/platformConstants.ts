@@ -158,11 +158,14 @@ export const MONITORED_API_FEEDS_COUNT = 4;
  *
  * This is a monitored subset of the full registry. Most registry
  * sources are static imports with no periodic freshness snapshot;
- * these 15 are the ones for which we maintain last-refresh timestamps
- * and status labels. Must equal the length of DATA_SOURCES in
- * src/components/shared/DataFreshnessDashboard.tsx.
+ * these are the ones for which we maintain last-refresh timestamps
+ * and derived status. Must equal DATA_FRESHNESS_SOURCES.length.
+ *
+ * Went 15 -> 17 on 2026-08-16: bls-laus and hrsa-hpsa are ingested into
+ * committed generated datasets and render on live pages, but had no
+ * freshness entry, so this rollup under-reported actual coverage.
  */
-export const FRESHNESS_TRACKED_COUNT = 15;
+export const FRESHNESS_TRACKED_COUNT = 17;
 
 /**
  * Number of sources with live endpoint health checks on the /status page.

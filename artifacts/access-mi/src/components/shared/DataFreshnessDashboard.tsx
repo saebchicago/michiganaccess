@@ -23,8 +23,13 @@ import { DATA_FRESHNESS_SOURCES } from "@/data/dataFreshness";
  * its own freshness claim, on two live pages at once.
  *
  * One list, one rollup, one date. If the honest distribution looks bad
- * (1 fresh / 4 aging / 10 stale today), that is a statement about the data -
+ * (3 fresh / 2 aging / 12 stale today), that is a statement about the data -
  * fix the data, not the dashboard.
+ *
+ * As of 2026-08-16 the per-source status is DERIVED, not hand-set: see the
+ * header of src/data/dataFreshness.ts. The badge is a rollup of ingest
+ * recency and vintage currency, so each card also states which of the two
+ * is failing - "stale" on its own could mean either, and used to.
  */
 
 type FreshnessStatus = "fresh" | "aging" | "stale";
@@ -150,6 +155,20 @@ export default function DataFreshnessDashboard() {
                   {source.sourceYear} · pulled {source.lastPulled} ·{" "}
                   {source.updateFrequency}
                 </p>
+                {/* The badge is a rollup of two distinct questions. Say which
+                    one is failing, so "stale" is never ambiguous. */}
+                <p className="text-[10px] text-muted-foreground/80">
+                  {source.ingestStatus === "overdue"
+                    ? "Not re-pulled within its stated cadence"
+                    : "Pulled within its stated cadence"}
+                  {source.vintageStatus === "behind" &&
+                    " · newer release published upstream"}
+                </p>
+                {source.vintageNote && (
+                  <p className="text-[10px] text-muted-foreground/70 mt-0.5">
+                    {source.vintageNote}
+                  </p>
+                )}
               </div>
               <div className="flex items-center gap-1 shrink-0">
                 {source.isLive && (

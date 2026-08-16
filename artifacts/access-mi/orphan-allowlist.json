@@ -1,0 +1,4 @@
+{
+  "_comment": "Modules under src/{components,pages,hooks,utils,lib,data} that are deliberately unreferenced. Shrink-only: CI blocks growth. Each entry needs a reason. Empty is the goal - the 2026-08-16 audit deleted all 73 orphans it found rather than allowlisting them.",
+  "orphans": []
+}

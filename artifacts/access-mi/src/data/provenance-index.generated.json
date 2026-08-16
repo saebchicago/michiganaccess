@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "schema": "v1",
+    "source": "provenance.ingested_at of each src/data/*.generated.json",
+    "generator": "scripts/generate-provenance-index.mjs",
+    "note": "Derived file. Do not hand-edit; regenerate instead."
+  },
+  "ingestedAt": {
+    "acs-broadband-county.generated.json": "2026-08-10",
+    "bls-laus-county.generated.json": "2026-07-02",
+    "cdc-places-county.generated.json": "2026-07-02",
+    "cdc-places-zcta.generated.json": "2026-07-01",
+    "hrsa-hpsa-county.generated.json": "2026-07-02"
+  }
+}
