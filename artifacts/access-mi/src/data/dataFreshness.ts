@@ -35,10 +35,17 @@
 //   freshnessStatus derived rollup: the worse of the two.
 //
 // Dates are not hand-copied either. An entry backed by a generated dataset
-// names it in `generatedFrom`, and scripts/check-data-freshness.mjs asserts
-// lastPulled equals that file's provenance.ingested_at. The census-acs entry
-// claimed 2026-07-02 while the file recorded 2026-08-10 - a hand-copied date
-// that drifted 39 days from the machine-recorded truth it cited.
+// names it in `generatedFrom` and its `lastPulled` is READ from
+// provenance-index.generated.json - the machine record of each dataset's
+// provenance.ingested_at. The census-acs entry used to claim 2026-07-02
+// while the file recorded 2026-08-10: a hand-copied date that drifted 39
+// days from the truth it cited. Nothing to hand-copy now, so nothing to
+// drift, and the scheduled refresh jobs that rewrite ingested_at update
+// this automatically instead of silently invalidating it.
+
+import provenanceIndex from "./provenance-index.generated.json";
+
+const INGESTED_AT: Record<string, string> = provenanceIndex.ingestedAt;
 
 /** Has our copy been pulled recently enough for its own stated cadence? */
 export type IngestStatus = "current" | "overdue";
@@ -57,7 +64,11 @@ export interface DataSource {
   lastVerified: string;
   /** Vintage of the underlying data (e.g., "2022 5-Year ACS"). */
   sourceYear: string;
-  /** @deprecated Use lastPulled. Retained for back-compat. */
+  /**
+   * @deprecated Use lastPulled. Retained for back-compat.
+   * For entries with `generatedFrom` this is resolved from the provenance
+   * index, not declared - see `entry()` below.
+   */
   lastUpdated: string;
   /** @deprecated Use sourceYear. Retained for back-compat. */
   currentVersion: string;
@@ -180,17 +191,39 @@ type FreshnessSeed = Omit<
   | "lastVerified"
   | "ingestStatus"
   | "freshnessStatus"
-> & { lastVerified?: string };
+  | "lastUpdated"
+> & {
+  lastVerified?: string;
+  /**
+   * Declare only for sources with no committed generated dataset. When
+   * `generatedFrom` is set the date comes from the provenance index and
+   * declaring it here is rejected by scripts/check-data-freshness.mjs.
+   */
+  lastUpdated?: string;
+};
 
 function entry(partial: FreshnessSeed): DataSource {
+  const lastUpdated = partial.generatedFrom
+    ? INGESTED_AT[partial.generatedFrom]
+    : partial.lastUpdated;
+
+  if (!lastUpdated) {
+    throw new Error(
+      partial.generatedFrom
+        ? `dataFreshness: "${partial.id}" names generatedFrom "${partial.generatedFrom}" but provenance-index.generated.json has no ingest date for it. Run scripts/generate-provenance-index.mjs.`
+        : `dataFreshness: "${partial.id}" has no generatedFrom and no lastUpdated.`,
+    );
+  }
+
   const ingestStatus = deriveIngestStatus(
-    partial.lastUpdated,
+    lastUpdated,
     partial.updateFrequency,
     partial.nextExpectedUpdate,
   );
   return {
     ...partial,
-    lastPulled: partial.lastUpdated,
+    lastUpdated,
+    lastPulled: lastUpdated,
     sourceYear: partial.currentVersion,
     lastVerified: partial.lastVerified ?? PLATFORM_LAST_VERIFIED,
     ingestStatus,
@@ -206,7 +239,6 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     name: "CDC PLACES Health Metrics",
     category: "Health",
     url: "https://data.cdc.gov",
-    lastUpdated: "2026-07-02",
     generatedFrom: "cdc-places-county.generated.json",
     updateFrequency: "Annual",
     currentVersion: "PLACES 2025 Release",
@@ -223,7 +255,6 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     name: "Census ACS 5-Year Estimates",
     category: "Demographics",
     url: "https://api.census.gov",
-    lastUpdated: "2026-08-10",
     generatedFrom: "acs-broadband-county.generated.json",
     updateFrequency: "Annual",
     currentVersion: "2023 5-Year ACS (2019-2023)",
@@ -242,7 +273,6 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     name: "BLS Local Area Unemployment Statistics",
     category: "Economy",
     url: "https://www.bls.gov/lau/",
-    lastUpdated: "2026-07-02",
     generatedFrom: "bls-laus-county.generated.json",
     updateFrequency: "Monthly",
     currentVersion: "May 2026 (Preliminary)",
@@ -259,7 +289,6 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     name: "HRSA Health Professional Shortage Areas",
     category: "Health",
     url: "https://data.hrsa.gov/",
-    lastUpdated: "2026-07-02",
     generatedFrom: "hrsa-hpsa-county.generated.json",
     updateFrequency: "Quarterly",
     currentVersion: "HRSA detail files dated 2026-06-30",

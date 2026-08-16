@@ -1,0 +1,147 @@
+name: dataset-refresh
+
+# Re-pulls the open datasets whose refresh scripts existed but were wired to
+# nothing. Before this workflow, 9 of the 11 scripts in
+# artifacts/access-mi/scripts/refresh-*.mjs were never executed on any
+# schedule - only refresh-acs-broadband-county (build-data.yml) and
+# refresh-county-population (facility-refresh.yml) ran. That is precisely why
+# ACS broadband was the single dataset with a recent ingest date while
+# everything else sat at its last manual run, and why the freshness dashboard
+# honestly reported twelve of seventeen datasets overdue.
+#
+# None of these scripts needs an API key. They are plain Node with a uniform
+# --apply flag, so this workflow is deliberately boring: run them all, commit
+# whatever actually changed, and report anything that failed.
+#
+# Cadence note: weekly, even though several of these publishers release
+# annually. Polling more often than the publisher releases costs nine HTTP
+# requests a week and means a new release is picked up within seven days
+# instead of whenever someone remembers. Runs that find no new upstream data
+# still rewrite provenance.ingested_at, which is the point - that timestamp
+# records "we checked and this is still current", and the freshness registry
+# derives lastPulled from it.
+
+on:
+  schedule:
+    - cron: "23 7 * * 2"    # Tuesdays 07:23 UTC - offset from build-data
+                            # (Mon 06:17) and facility-refresh (Mon 11:00)
+                            # so the three jobs never contend for the same
+                            # commit race on artifacts/access-mi/src/data.
+  workflow_dispatch: {}     # manual "Run workflow" button
+
+permissions:
+  contents: write           # REQUIRED to commit refreshed data back. An
+                            # explicit permissions block drops all defaults,
+                            # so this also restores the read access checkout
+                            # needs.
+
+concurrency:
+  # Never let two refresh runs push to the same branch at once.
+  group: dataset-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install dependencies
+        # refresh-cdc-places-zcta.mjs imports the shared mi-federal-data
+        # package, so this cannot run on a bare checkout.
+        run: pnpm install --frozen-lockfile
+
+      - name: Record the pre-run state of sacrosanct inputs
+        # census-geographies.ts is the 83-county FIPS registry every one of
+        # these scripts reads and none may write. Checksum it before and
+        # after so an ingestion bug that rewrites it is caught here rather
+        # than discovered later in a data diff.
+        run: |
+          sha256sum artifacts/access-mi/src/data/census-geographies.ts \
+            > /tmp/census-geographies.before
+
+      - name: Refresh datasets
+        working-directory: artifacts/access-mi
+        run: |
+          set -uo pipefail
+          scripts_to_run="
+            refresh-mi-zcta-registry
+            refresh-zcta-county-crosswalk
+            refresh-cdc-places-county
+            refresh-cdc-places-zcta
+            refresh-bls-laus-county
+            refresh-hrsa-hpsa-county
+            refresh-county-health
+            refresh-fars
+            refresh-snap-retailers
+          "
+          failed=""
+          for s in $scripts_to_run; do
+            echo "::group::$s"
+            if node "scripts/$s.mjs" --apply; then
+              echo "$s ok"
+            else
+              echo "::warning title=$s failed::Upstream fetch or parse failed. Other datasets still refreshed; existing data for this one is left untouched."
+              failed="$failed $s"
+            fi
+            echo "::endgroup::"
+          done
+          # Deliberately do not exit here. A single upstream outage must not
+          # discard the datasets that refreshed successfully - commit first,
+          # then report. The failure is re-raised after the commit step.
+          echo "FAILED_SCRIPTS=$failed" >> "$GITHUB_ENV"
+
+      - name: Verify sacrosanct inputs were not rewritten
+        run: |
+          sha256sum artifacts/access-mi/src/data/census-geographies.ts \
+            > /tmp/census-geographies.after
+          if ! diff -q /tmp/census-geographies.before /tmp/census-geographies.after > /dev/null; then
+            echo "::error title=census-geographies.ts was modified by a refresh script::The 83-county FIPS registry is read-only for ingestion. Investigate before merging any of this run's output."
+            exit 1
+          fi
+          echo "census-geographies.ts unchanged."
+
+      - name: Regenerate the provenance index
+        # Every refresh rewrites provenance.ingested_at. The freshness
+        # registry derives lastPulled from this index, so it must be rebuilt
+        # in the same commit or check-data-freshness.mjs fails on the next
+        # build - by design.
+        working-directory: artifacts/access-mi
+        run: node scripts/generate-provenance-index.mjs
+
+      - name: Verify the refreshed data still passes its guards
+        working-directory: artifacts/access-mi
+        run: |
+          node scripts/check-data-freshness.mjs
+          node scripts/check-dataset-labels.mjs
+          node scripts/check-plausibility.mjs
+          node scripts/check-county-facilities.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name "data-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add artifacts/access-mi/src/data
+          if git diff --staged --quiet; then
+            echo "No data changes."
+          else
+            git commit -m "data: scheduled dataset refresh $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Re-raise any refresh failures
+        run: |
+          if [ -n "${FAILED_SCRIPTS// /}" ]; then
+            echo "::error title=Some datasets did not refresh::Failed:${FAILED_SCRIPTS}. Successful datasets were committed; these were left at their previous values."
+            exit 1
+          fi
+          echo "All datasets refreshed."

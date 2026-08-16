@@ -40,6 +40,8 @@ const ROOT = path.resolve(here, "..");
 const DATA_DIR = path.join(ROOT, "src", "data");
 const FRESHNESS_FILE = path.join(DATA_DIR, "dataFreshness.ts");
 const CONSTANTS_FILE = path.join(ROOT, "src", "config", "platformConstants.ts");
+const INDEX_NAME = "provenance-index.generated.json";
+const INDEX_FILE = path.join(DATA_DIR, INDEX_NAME);
 
 const MIN_NOTE_LENGTH = 30;
 
@@ -68,6 +70,20 @@ const fail = (msg) => {
 };
 
 const src = readFileSync(FRESHNESS_FILE, "utf8");
+
+let provenanceIndex = {};
+if (!existsSync(INDEX_FILE)) {
+  fail(
+    `${INDEX_NAME} is missing. Run scripts/generate-provenance-index.mjs (it runs first in pnpm build).`,
+  );
+} else {
+  try {
+    provenanceIndex =
+      JSON.parse(readFileSync(INDEX_FILE, "utf8")).ingestedAt ?? {};
+  } catch (err) {
+    fail(`${INDEX_NAME} could not be parsed: ${err.message}`);
+  }
+}
 
 // ── Rule 1: derived fields must not be hand-set inside entries ──────────
 
@@ -139,8 +155,20 @@ for (const e of entries) {
       `${at} carries a vintageNote while vintageStatus is "current"; remove the stale note or mark it behind`,
     );
 
-  if (!e.generatedFrom) continue;
+  if (!e.generatedFrom) {
+    if (!e.lastUpdated)
+      fail(`${at} has neither generatedFrom nor a declared lastUpdated`);
+    continue;
+  }
   anchored.add(e.generatedFrom);
+
+  // An anchored entry must not declare its own date - it is read from the
+  // provenance index. A hand-copied date here is exactly what drifted before,
+  // and it would also be silently invalidated by every scheduled refresh.
+  if (e.lastUpdated)
+    fail(
+      `${at} declares lastUpdated while also naming generatedFrom "${e.generatedFrom}". Remove the date; it is resolved from ${INDEX_NAME}.`,
+    );
 
   const genPath = path.join(DATA_DIR, e.generatedFrom);
   if (!existsSync(genPath)) {
@@ -163,10 +191,16 @@ for (const e of entries) {
   }
 
   const machineDate = String(ingestedAt).slice(0, 10);
-  if (e.lastUpdated !== machineDate)
+  const indexed = provenanceIndex[e.generatedFrom];
+  if (!indexed) {
     fail(
-      `${at} lastUpdated "${e.lastUpdated}" disagrees with ${e.generatedFrom} provenance.ingested_at "${machineDate}". The generated file is authoritative - hand-copied dates are exactly what drifted before.`,
+      `${at} generatedFrom "${e.generatedFrom}" is absent from ${INDEX_NAME}. Run scripts/generate-provenance-index.mjs.`,
     );
+  } else if (indexed !== machineDate) {
+    fail(
+      `${at} ${INDEX_NAME} records "${indexed}" for ${e.generatedFrom} but the dataset's provenance.ingested_at is "${machineDate}". The index is stale - run scripts/generate-provenance-index.mjs.`,
+    );
+  }
 }
 
 // ── Rule 3: every ingested dataset is tracked ──────────────────────────

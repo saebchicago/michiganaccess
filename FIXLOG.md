@@ -538,3 +538,61 @@ months, and two newly-tracked datasets joined. Per this file's standing
 rule, that is a statement about the data, not a reason to soften the
 dashboard: twelve of seventeen datasets are genuinely overdue for a
 re-pull, and the refresh workflows are the fix.
+
+### Root cause of the staleness: 9 of 11 refresh scripts ran on no schedule
+
+The freshness audit above measured the problem. This is why it existed.
+
+`artifacts/access-mi/scripts/` holds eleven `refresh-*.mjs` ingestion scripts.
+Only two were referenced by any workflow:
+
+| Script | Scheduled by |
+|---|---|
+| `refresh-acs-broadband-county.mjs` | `build-data.yml` (weekly) |
+| `refresh-county-population.mjs` | `facility-refresh.yml` (weekly) |
+| the other nine | **nothing** |
+
+That maps exactly onto the observed data: ACS broadband was the only dataset
+with a recent ingest date (2026-08-10) while every other generated dataset
+sat at 2026-07-01/02, its last manual run. The scripts were not broken - they
+had simply never been wired to a trigger. None of the nine needs an API key;
+all take the same `--apply` flag.
+
+`.github/workflows/dataset-refresh.yml` now runs all nine weekly (Tuesdays,
+offset from the two existing data jobs so they cannot race on the same
+commit). It deliberately:
+
+- commits successful datasets even when one upstream fetch fails, then
+  re-raises the failure afterwards, so a single outage cannot discard eight
+  good refreshes;
+- checksums `census-geographies.ts` before and after and fails if an
+  ingestion script rewrote the sacrosanct 83-county registry;
+- re-runs the data guards against the refreshed output before committing, so
+  a bad upstream release cannot land silently.
+
+Polling weekly for annually-published data is intentional: nine HTTP requests
+a week buys pickup within seven days of a release instead of whenever someone
+remembers to run the script.
+
+### Derived ingest dates: provenance-index.generated.json
+
+Wiring up the refresh jobs exposed a flaw in the freshness work above. Every
+refresh rewrites `provenance.ingested_at`, and the guard pinned
+`dataFreshness.lastUpdated` to that value - so each scheduled run would have
+turned the build red until a human hand-edited the TypeScript. A guard that
+requires weekly manual maintenance is a guard that gets disabled.
+
+Importing the datasets to read the timestamp directly was not an option
+either: `cdc-places-zcta.generated.json` alone is 2.7MB, and pulling whole
+datasets into the bundle to read one field each is a real regression.
+
+`scripts/generate-provenance-index.mjs` emits a few-hundred-byte index of
+just `{filename: ingested_at}` for every committed generated dataset.
+`dataFreshness.ts` reads `lastPulled` from it; entries naming `generatedFrom`
+may no longer declare a date at all, and the guard rejects one that tries.
+The index carries no generation timestamp of its own, so a run that finds no
+new upstream data produces no diff.
+
+End-to-end verified: rewriting a dataset's `ingested_at` fails
+`check-data-freshness.mjs` with an instruction to regenerate; running the
+generator makes it pass. No hand-editing anywhere in the loop.
