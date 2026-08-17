@@ -647,3 +647,57 @@ thereby stop protecting them.
 built site - and is a duplicate of the pre-migration `src/` tree. It is
 excluded from every guard and build. Removing it is a separate decision from
 this sweep and is left to the owner; git history retains it either way.
+
+---
+
+## Accessibility deep pass (2026-08-16)
+
+Requested as a pass beyond the nine vitest-axe suites in `src/test/a11y/`.
+
+The structural picture is genuinely good and worth recording: **zero**
+`onClick` handlers on non-interactive elements without keyboard support,
+**zero** `<img>` without `alt`, **zero** positive `tabIndex`. Those are the
+defects that usually dominate a React codebase this size, and they are absent.
+
+### The finding axe cannot report
+
+39 text inputs and textareas had no real accessible name - 35 relied solely
+on `placeholder`, and 4 had nothing at all.
+
+All nine axe suites were green across every one of them, and that is correct
+behaviour on axe's part: the accessible-name computation accepts `placeholder`
+as a last-resort name, so a placeholder-only input is not an axe violation.
+It is still a real defect. Placeholder text disappears the moment the user
+types, taking the field's purpose with it - worst for screen-reader users
+re-navigating a partly-filled form, and for anyone relying on short-term
+memory to remember what they were filling in.
+
+This is the whole reason the pass was worth running: the automated gate was
+green and stayed green while 39 controls were unlabelled.
+
+Fixed by adding `aria-label` to all 39. Where the placeholder was descriptive
+the label was derived from it; where it was dynamic or useless (`placeholder="0"`
+on an income field, an interpolated county name, a ternary over search mode) a
+static label was written by hand.
+
+`scripts/check-form-labels.mjs` (in `pnpm build` and blocking CI) now fails on
+any text control lacking `aria-label`, `aria-labelledby`, an `id`/`htmlFor`
+pair, a nearby `<Label>`, or a `<FormControl>` wrapper. Vendored shadcn
+primitives under `src/components/ui/` are exempt: they forward `{...props}`
+and the caller supplies the name.
+
+### Two false-positive classes worth remembering
+
+Both were caught before anything was changed:
+
+- **`aria-hidden` on a link.** Three hits in `PublicOfficialsPage.tsx` looked
+  like focusable elements hidden from the accessibility tree. They are
+  decorative `<ExternalLink aria-hidden="true" />` icons *inside* anchors that
+  carry an explicit `aria-label`. Correct practice, not a defect.
+- **Arrow functions break naive JSX parsing.** A first scan using
+  "match up to the next angle bracket" for tag attributes reported 43 unnamed
+  controls. The `>` in `onChange={(e) => setX(...)}` truncates the attribute
+  text, hiding any `aria-label` written after the handler. The real number was
+  7. Both the guard and the audit script parse with brace and string tracking;
+  a guard built on the naive scan would have failed the build on correctly
+  labelled code and been disabled within a week.

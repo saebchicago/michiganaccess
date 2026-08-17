@@ -246,6 +246,7 @@ export default function ZipFinderPage() {
                   </select>
                   <input
                     type="number"
+                    aria-label="Filter threshold value"
                     className="text-sm border rounded-md px-3 py-1.5 w-24 bg-background tabular-nums"
                     value={cond.value}
                     onChange={(e) =>

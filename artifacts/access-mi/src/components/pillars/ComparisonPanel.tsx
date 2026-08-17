@@ -118,6 +118,7 @@ function GeoPicker({
         <div className="relative mb-2">
           <Search className="absolute left-2 top-2.5 h-3.5 w-3.5 text-muted-foreground" />
           <Input
+            aria-label="Search county or enter ZIP"
             placeholder="Search county or enter ZIP…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}

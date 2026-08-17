@@ -56,6 +56,7 @@ export default function HelpfulVote({ pagePath, zip }: HelpfulVoteProps) {
       {showComment && (
         <div className="flex items-center gap-2">
           <input
+            aria-label="What would make it better?"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="What would make it better?"

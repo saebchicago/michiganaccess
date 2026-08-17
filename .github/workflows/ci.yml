@@ -61,6 +61,7 @@ jobs:
           node scripts/check-integrity-labels.mjs
           node scripts/check-route-reachability.mjs
           node scripts/check-orphan-modules.mjs
+          node scripts/check-form-labels.mjs
           node scripts/check-page-provenance.mjs
       - name: Allowlist shrink-only check
         working-directory: artifacts/access-mi
