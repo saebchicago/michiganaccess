@@ -701,3 +701,62 @@ Both were caught before anything was changed:
   7. Both the guard and the audit script parse with brace and string tracking;
   a guard built on the naive scan would have failed the build on correctly
   labelled code and been disabled within a week.
+
+---
+
+## Performance and bundle audit (2026-08-16)
+
+### The precache was undoing the code-splitting
+
+The PWA precached **394 files, 6.70MB** - every emitted chunk. Among them:
+
+| Chunk | Size | What it is |
+|---|---|---|
+| `vendor-pdf-*.js` | 378KB | jsPDF |
+| `html2canvas.esm-*.js` | 196KB | html2canvas |
+| `index.es-*.js` | 155KB | canvg |
+
+That is ~730KB of PDF-export machinery, and every call site already loads it
+correctly with `await import()` at the moment the user clicks export -
+`generateCountyPDF.ts`, `generateBriefPDF.ts`, `generateCHNABrief.ts`,
+`CHNAExport.tsx`. The `manualChunks` comment in `vite.config.ts` even says so:
+*"only loaded when the user actually clicks export."*
+
+The service worker then downloaded all of it for everyone, in the background,
+on first visit. The code did the right thing and the cache config silently
+undid it.
+
+That matters more here than on most sites. This platform's audience is the
+households it maps - ALICE families, rural counties, broadband deserts - many
+of them on metered mobile data. A first visit that quietly pulls an extra
+730KB is a real cost to exactly the people the site exists for.
+
+`globIgnores` in the VitePWA `injectManifest` block now excludes the three
+chunks. Precache is **6.70MB -> 5.99MB**, and the chunks still ship and still
+load on demand, unchanged, when someone actually exports.
+
+Offline effect: PDF export stops working offline. That is the correct trade -
+it is a deliberate, network-adjacent action, not part of the reading
+experience the offline shell exists to protect.
+
+`scripts/check-precache-budget.mjs` runs after `vite build` and fails if an
+export-only chunk reappears in the manifest or if the total exceeds a 6.4MB
+ceiling. Both rules were mutation-proven: removing `globIgnores` and
+rebuilding produced exactly the two failures the guard is meant to catch.
+Raising the ceiling is deliberate - change the constant and justify it in the
+commit.
+
+### Not changed: the remaining 5.99MB precache
+
+Full-app precaching looks intentional (`vite.config.ts` calls it "real
+installability + honest offline behavior"), and trading it away would mean
+pages a user has not yet visited stop working offline. Narrowing the precache
+to the app shell and serving lazy chunks through a runtime `CacheFirst` route
+is the standard alternative and would cut first-visit cost substantially, but
+it is a product decision about what "works offline" promises, not a defect.
+Left for the owner.
+
+Other observations, no action taken: the entry chunk is 718KB raw / 212KB
+gzipped, `vendor-charts` (recharts + d3) is 504KB, and
+`verifiedHealthFacilities` is a 326KB data chunk. All three are already
+split out and cached across routes, which is the right shape.
