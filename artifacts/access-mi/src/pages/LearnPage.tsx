@@ -278,7 +278,8 @@ export default function LearnPage() {
               <p className="text-sm text-muted-foreground mb-4">Medical terms can be confusing. Search or browse common clinical words translated into plain language.</p>
               <div className="relative max-w-md">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input placeholder="Search a medical term..." value={jargonSearch} onChange={e => setJargonSearch(e.target.value)} className="pl-9" />
+                <Input
+                  aria-label="Search a medical term" placeholder="Search a medical term..." value={jargonSearch} onChange={e => setJargonSearch(e.target.value)} className="pl-9" />
               </div>
             </div>
             <div className="space-y-3">

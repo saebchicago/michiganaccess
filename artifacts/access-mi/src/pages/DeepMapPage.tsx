@@ -329,6 +329,7 @@ export default function DeepMapPage() {
           </div>
           <div className="flex items-center gap-2">
             <Input
+              aria-label="ZIP code"
               value={zipSearch}
               onChange={(e) => setZipSearch(e.target.value)}
               placeholder="ZIP code"

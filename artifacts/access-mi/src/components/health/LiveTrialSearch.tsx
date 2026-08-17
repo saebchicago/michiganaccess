@@ -48,6 +48,7 @@ export default function LiveTrialSearch() {
       <CardContent className="space-y-4">
         <form onSubmit={(e) => { e.preventDefault(); handleSearch(); }} className="flex gap-2">
           <Input
+            aria-label="Search by condition"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by condition..."

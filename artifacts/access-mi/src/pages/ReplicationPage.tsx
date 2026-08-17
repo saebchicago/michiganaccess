@@ -419,12 +419,14 @@ function CollaborationForm() {
       </p>
       <div className="grid gap-3 max-w-lg">
         <input
+          aria-label="Your name"
           value={form.name}
           onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
           placeholder="Your name"
           className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
         <input
+          aria-label="Email address"
           value={form.email}
           onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
           placeholder="Email address"
@@ -432,12 +434,14 @@ function CollaborationForm() {
           className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
         <input
+          aria-label="Which state would you build for?"
           value={form.state}
           onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))}
           placeholder="Which state would you build for?"
           className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
         <input
+          aria-label="Organization (optional)"
           value={form.organization}
           onChange={(e) =>
             setForm((f) => ({ ...f, organization: e.target.value }))
@@ -446,6 +450,7 @@ function CollaborationForm() {
           className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
         />
         <textarea
+          aria-label="Tell us in one sentence what you"
           value={form.message}
           onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
           placeholder="Tell us in one sentence what you'd build (optional)"

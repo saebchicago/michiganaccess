@@ -259,6 +259,7 @@ export default function OurIntelPage() {
           ) : (
             <div className="grid gap-3 max-w-md">
               <input
+                aria-label="Your name"
                 value={form.name}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, name: e.target.value }))
@@ -267,6 +268,7 @@ export default function OurIntelPage() {
                 className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
               />
               <input
+                aria-label="Email address"
                 value={form.email}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, email: e.target.value }))
@@ -276,6 +278,7 @@ export default function OurIntelPage() {
                 className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
               />
               <input
+                aria-label="Which state would you build for?"
                 value={form.state}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, state: e.target.value }))
@@ -284,6 +287,7 @@ export default function OurIntelPage() {
                 className="border border-border rounded-lg px-4 py-2.5 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-primary/40"
               />
               <textarea
+                aria-label="One sentence about what you"
                 value={form.message}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, message: e.target.value }))

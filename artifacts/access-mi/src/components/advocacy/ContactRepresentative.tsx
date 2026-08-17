@@ -143,6 +143,7 @@ export default function ContactRepresentative({ place }: Props) {
             <Mail className="h-3.5 w-3.5 text-primary" /> Pre-filled email template:
           </p>
           <Textarea
+            aria-label="Pre-filled email template, read only"
             readOnly
             value={emailBody}
             className="text-xs min-h-[140px] bg-muted/30 cursor-default"

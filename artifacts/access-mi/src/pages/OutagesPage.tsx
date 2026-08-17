@@ -171,7 +171,8 @@ export default function OutagesPage() {
           {/* Active Outages Table */}
           <TabsContent value="table" className="space-y-4">
             <div className="flex flex-wrap gap-3 items-end">
-              <Input placeholder="Search county or cause..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 w-56 text-sm" />
+              <Input
+                aria-label="Search county or cause" placeholder="Search county or cause..." value={search} onChange={(e) => setSearch(e.target.value)} className="h-9 w-56 text-sm" />
               <Select value={utilityFilter} onValueChange={setUtilityFilter}>
                 <SelectTrigger className="w-40 h-9"><SelectValue placeholder="Utility" /></SelectTrigger>
                 <SelectContent>

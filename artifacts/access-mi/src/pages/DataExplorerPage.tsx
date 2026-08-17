@@ -160,6 +160,7 @@ export default function DataExplorerPage() {
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
+              aria-label="Search tables (e.g., income, race, rent)"
               placeholder="Search tables (e.g., income, race, rent)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

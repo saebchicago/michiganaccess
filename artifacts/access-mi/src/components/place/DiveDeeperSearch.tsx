@@ -76,6 +76,7 @@ export default function DiveDeeperSearch({ countyName }: DiveDeeperSearchProps) 
       <div className="relative">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         <Input
+          aria-label={`Search cities or ZIP codes in ${countyName} County`}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={`Search cities or ZIPs in ${countyName} County…`}

@@ -83,6 +83,7 @@ const CountySelector = ({ variant = "header" }: CountySelectorProps) => {
       >
         <div className="p-2 border-b border-border">
           <Input
+            aria-label="Search regions or counties"
             placeholder="Search regions or counties…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}

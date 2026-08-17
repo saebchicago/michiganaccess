@@ -61,6 +61,28 @@ export default defineConfig({
       },
       injectManifest: {
         globPatterns: ["**/*.{js,css,woff2}", "offline.html", "index.html"],
+        // The PDF export stack is excluded from the precache on purpose.
+        //
+        // jsPDF, html2canvas and canvg total ~730KB and are already loaded
+        // via `await import()` at the moment the user clicks export - see the
+        // manualChunks comment below and src/utils/generateCountyPDF.ts. The
+        // precache was undoing that work: every first-time visitor downloaded
+        // all three in the background whether or not they ever exported
+        // anything, which is 11% of the precache and the single largest
+        // avoidable cost on this site's first visit.
+        //
+        // That matters here more than most places. This platform's audience
+        // is explicitly the households it maps - ALICE families, rural
+        // counties, broadband deserts - many of them on metered mobile data.
+        //
+        // Offline effect: export stops working offline. That is the correct
+        // trade. It is a deliberate, network-adjacent user action, not part
+        // of the reading experience the offline shell exists to protect.
+        globIgnores: [
+          "assets/vendor-pdf-*.js",
+          "assets/html2canvas.esm-*.js",
+          "assets/index.es-*.js",
+        ],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },
     }),

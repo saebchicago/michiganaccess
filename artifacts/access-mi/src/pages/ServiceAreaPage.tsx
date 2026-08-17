@@ -212,6 +212,7 @@ export default function ServiceAreaPage() {
               <div className="relative flex-1 min-w-[200px]">
                 <input
                   type="text"
+                  aria-label={searchMode === "county" ? "Search by county name" : "Search by ZIP code"}
                   className="text-sm border rounded-md px-3 py-1.5 w-full bg-background"
                   placeholder={searchMode === "county" ? "Type county name..." : "Type ZIP code..."}
                   value={searchTerm}

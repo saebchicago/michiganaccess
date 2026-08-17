@@ -218,6 +218,7 @@ export default function ReferralToolkit({
           </h4>
           <div className="flex gap-2">
             <Input
+              aria-label="Referral link, read only"
               value={referralUrl}
               readOnly
               className="text-xs h-8 flex-1 bg-muted/50"

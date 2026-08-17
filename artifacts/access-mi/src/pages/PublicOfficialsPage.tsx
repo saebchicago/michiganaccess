@@ -39,7 +39,8 @@ function NonprofitSearchPanel() {
   return (
     <div className="space-y-4">
       <div className="flex gap-2">
-        <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search Michigan nonprofits..." className="max-w-sm" onKeyDown={e => e.key === "Enter" && setSearchQuery(query)} />
+        <Input
+          aria-label="Search Michigan nonprofits" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search Michigan nonprofits..." className="max-w-sm" onKeyDown={e => e.key === "Enter" && setSearchQuery(query)} />
         <Button onClick={() => setSearchQuery(query)} disabled={query.length < 3}>Search</Button>
       </div>
       {isLoading && <div className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" /> Searching ProPublica...</div>}

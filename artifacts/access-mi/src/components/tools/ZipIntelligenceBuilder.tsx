@@ -229,6 +229,7 @@ export default function ZipIntelligenceBuilder({
           <form onSubmit={handleSearch} className="flex gap-2 items-center">
             <Search className="h-4 w-4 text-muted-foreground shrink-0" />
             <Input
+              aria-label="Enter Michigan ZIP code"
               type="text"
               inputMode="numeric"
               maxLength={5}
@@ -298,6 +299,7 @@ export default function ZipIntelligenceBuilder({
                     className="flex gap-2 items-center flex-1"
                   >
                     <Input
+                      aria-label="Compare ZIP"
                       type="text"
                       inputMode="numeric"
                       maxLength={5}

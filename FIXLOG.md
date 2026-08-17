@@ -647,3 +647,151 @@ thereby stop protecting them.
 built site - and is a duplicate of the pre-migration `src/` tree. It is
 excluded from every guard and build. Removing it is a separate decision from
 this sweep and is left to the owner; git history retains it either way.
+
+---
+
+## Accessibility deep pass (2026-08-16)
+
+Requested as a pass beyond the nine vitest-axe suites in `src/test/a11y/`.
+
+The structural picture is genuinely good and worth recording: **zero**
+`onClick` handlers on non-interactive elements without keyboard support,
+**zero** `<img>` without `alt`, **zero** positive `tabIndex`. Those are the
+defects that usually dominate a React codebase this size, and they are absent.
+
+### The finding axe cannot report
+
+39 text inputs and textareas had no real accessible name - 35 relied solely
+on `placeholder`, and 4 had nothing at all.
+
+All nine axe suites were green across every one of them, and that is correct
+behaviour on axe's part: the accessible-name computation accepts `placeholder`
+as a last-resort name, so a placeholder-only input is not an axe violation.
+It is still a real defect. Placeholder text disappears the moment the user
+types, taking the field's purpose with it - worst for screen-reader users
+re-navigating a partly-filled form, and for anyone relying on short-term
+memory to remember what they were filling in.
+
+This is the whole reason the pass was worth running: the automated gate was
+green and stayed green while 39 controls were unlabelled.
+
+Fixed by adding `aria-label` to all 39. Where the placeholder was descriptive
+the label was derived from it; where it was dynamic or useless (`placeholder="0"`
+on an income field, an interpolated county name, a ternary over search mode) a
+static label was written by hand.
+
+`scripts/check-form-labels.mjs` (in `pnpm build` and blocking CI) now fails on
+any text control lacking `aria-label`, `aria-labelledby`, an `id`/`htmlFor`
+pair, a nearby `<Label>`, or a `<FormControl>` wrapper. Vendored shadcn
+primitives under `src/components/ui/` are exempt: they forward `{...props}`
+and the caller supplies the name.
+
+### Two false-positive classes worth remembering
+
+Both were caught before anything was changed:
+
+- **`aria-hidden` on a link.** Three hits in `PublicOfficialsPage.tsx` looked
+  like focusable elements hidden from the accessibility tree. They are
+  decorative `<ExternalLink aria-hidden="true" />` icons *inside* anchors that
+  carry an explicit `aria-label`. Correct practice, not a defect.
+- **Arrow functions break naive JSX parsing.** A first scan using
+  "match up to the next angle bracket" for tag attributes reported 43 unnamed
+  controls. The `>` in `onChange={(e) => setX(...)}` truncates the attribute
+  text, hiding any `aria-label` written after the handler. The real number was
+  7. Both the guard and the audit script parse with brace and string tracking;
+  a guard built on the naive scan would have failed the build on correctly
+  labelled code and been disabled within a week.
+
+---
+
+## Performance and bundle audit (2026-08-16)
+
+### The precache was undoing the code-splitting
+
+The PWA precached **394 files, 6.70MB** - every emitted chunk. Among them:
+
+| Chunk | Size | What it is |
+|---|---|---|
+| `vendor-pdf-*.js` | 378KB | jsPDF |
+| `html2canvas.esm-*.js` | 196KB | html2canvas |
+| `index.es-*.js` | 155KB | canvg |
+
+That is ~730KB of PDF-export machinery, and every call site already loads it
+correctly with `await import()` at the moment the user clicks export -
+`generateCountyPDF.ts`, `generateBriefPDF.ts`, `generateCHNABrief.ts`,
+`CHNAExport.tsx`. The `manualChunks` comment in `vite.config.ts` even says so:
+*"only loaded when the user actually clicks export."*
+
+The service worker then downloaded all of it for everyone, in the background,
+on first visit. The code did the right thing and the cache config silently
+undid it.
+
+That matters more here than on most sites. This platform's audience is the
+households it maps - ALICE families, rural counties, broadband deserts - many
+of them on metered mobile data. A first visit that quietly pulls an extra
+730KB is a real cost to exactly the people the site exists for.
+
+`globIgnores` in the VitePWA `injectManifest` block now excludes the three
+chunks. Precache is **6.70MB -> 5.99MB**, and the chunks still ship and still
+load on demand, unchanged, when someone actually exports.
+
+Offline effect: PDF export stops working offline. That is the correct trade -
+it is a deliberate, network-adjacent action, not part of the reading
+experience the offline shell exists to protect.
+
+`scripts/check-precache-budget.mjs` runs after `vite build` and fails if an
+export-only chunk reappears in the manifest or if the total exceeds a 6.4MB
+ceiling. Both rules were mutation-proven: removing `globIgnores` and
+rebuilding produced exactly the two failures the guard is meant to catch.
+Raising the ceiling is deliberate - change the constant and justify it in the
+commit.
+
+### Not changed: the remaining 5.99MB precache
+
+Full-app precaching looks intentional (`vite.config.ts` calls it "real
+installability + honest offline behavior"), and trading it away would mean
+pages a user has not yet visited stop working offline. Narrowing the precache
+to the app shell and serving lazy chunks through a runtime `CacheFirst` route
+is the standard alternative and would cut first-visit cost substantially, but
+it is a product decision about what "works offline" promises, not a defect.
+Left for the owner.
+
+Other observations, no action taken: the entry chunk is 718KB raw / 212KB
+gzipped, `vendor-charts` (recharts + d3) is 504KB, and
+`verifiedHealthFacilities` is a 326KB data chunk. All three are already
+split out and cached across routes, which is the right shape.
+
+### CI ran every PR commit twice (2026-08-17)
+
+The `e2e` job failed on PR #197: the axe scan of `/data` hit the 45s test
+timeout inside `AxeBuilder.analyze()`. It was not caused by the diff.
+
+Evidence:
+
+- The **same commit** (`25b0b57`) had two concurrent CI runs. One `e2e` job
+  passed, the other timed out - same SHA, same minute.
+- The test passes locally against the same code in **14.7s**, a third of the
+  budget.
+- `e2e` passed on `main` immediately before this branch.
+
+Cause: `on.push.branches` was `["**"]` alongside the `pull_request` trigger,
+so every push to a PR branch ran the entire workflow twice - six concurrent
+jobs (2x test, 2x e2e, 2x lighthouse) for one commit, competing for runners.
+The Playwright suite runs against the Vite **dev** server, which compiles
+routes on demand, so a heavy dashboard route under contention is exactly
+where a fixed 45s budget breaks first. `mode: 'serial'` on that spec then
+skipped the nine tests behind it.
+
+Fixed by building `main` on push and leaving every other branch to its pull
+request, plus a `concurrency` group with `cancel-in-progress` so a newer
+commit supersedes an in-flight run. Halves runner load per commit and removes
+the contention.
+
+Also fixed: `playwright.config.ts` started its web server with `npm run dev`,
+the last npm invocation in a repo whose root preinstall hook rejects npm.
+
+Left alone: the e2e suite still exercises the dev server rather than a
+production preview. Testing the real bundle would be more representative and
+faster per route - it is what the Lighthouse job exists to do - but switching
+changes what the suite covers, so it is a deliberate decision rather than a
+drive-by fix.

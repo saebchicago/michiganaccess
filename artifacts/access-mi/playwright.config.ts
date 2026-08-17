@@ -13,7 +13,10 @@ export default defineConfig({
     trace: "retain-on-failure",
   },
   webServer: {
-    command: "PORT=8081 npm run dev",
+    // pnpm, not npm: the root package.json preinstall hook rejects npm and
+    // yarn outright (see CLAUDE.md). This line was the last npm invocation
+    // left in the repo.
+    command: "PORT=8081 pnpm run dev",
     cwd: "../../",
     port: 8081,
     timeout: 180 * 1000,

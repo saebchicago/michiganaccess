@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
-    "build": "node scripts/generate-provenance-index.mjs && node scripts/generate-source-catalog.mjs && node scripts/generate-sitemap.mjs && node scripts/check-links.mjs && node scripts/check-routemeta-routes.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && node scripts/check-snap-county-dataset.mjs && node scripts/check-fabrication.mjs && node scripts/check-copy.mjs && node scripts/check-no-backend-leak.mjs && node scripts/check-provenance.mjs && node scripts/check-data-catalog.mjs && node scripts/check-data-freshness.mjs && node scripts/check-dataset-labels.mjs && node scripts/check-plausibility.mjs && node scripts/check-script-syntax.mjs && node scripts/check-integrity-labels.mjs && node scripts/check-route-reachability.mjs && node scripts/check-orphan-modules.mjs && node scripts/check-page-provenance.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs && node scripts/check-county-prerender.mjs",
+    "build": "node scripts/generate-provenance-index.mjs && node scripts/generate-source-catalog.mjs && node scripts/generate-sitemap.mjs && node scripts/check-links.mjs && node scripts/check-routemeta-routes.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && node scripts/check-snap-county-dataset.mjs && node scripts/check-fabrication.mjs && node scripts/check-copy.mjs && node scripts/check-no-backend-leak.mjs && node scripts/check-provenance.mjs && node scripts/check-data-catalog.mjs && node scripts/check-data-freshness.mjs && node scripts/check-dataset-labels.mjs && node scripts/check-plausibility.mjs && node scripts/check-script-syntax.mjs && node scripts/check-integrity-labels.mjs && node scripts/check-route-reachability.mjs && node scripts/check-orphan-modules.mjs && node scripts/check-form-labels.mjs && node scripts/check-page-provenance.mjs && vite build --config vite.config.ts && node scripts/prerender-meta.mjs && node scripts/check-county-prerender.mjs && node scripts/check-precache-budget.mjs",
     "check:fabrication": "node scripts/check-fabrication.mjs",
     "check:provenance": "node scripts/check-provenance.mjs",
     "check:data-catalog": "node scripts/check-data-catalog.mjs",
@@ -17,6 +17,8 @@
     "check:integrity-labels": "node scripts/check-integrity-labels.mjs",
     "check:route-reachability": "node scripts/check-route-reachability.mjs",
     "check:orphan-modules": "node scripts/check-orphan-modules.mjs",
+    "check:form-labels": "node scripts/check-form-labels.mjs",
+    "check:precache": "node scripts/check-precache-budget.mjs",
     "check:page-provenance": "node scripts/check-page-provenance.mjs",
     "check:copy": "node scripts/check-copy.mjs",
     "check:no-backend-leak": "node scripts/check-no-backend-leak.mjs",

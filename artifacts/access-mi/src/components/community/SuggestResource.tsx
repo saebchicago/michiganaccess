@@ -121,6 +121,7 @@ export default function SuggestResource({
                   </div>
                 </div>
                 <textarea
+                  aria-label="Your suggestion or issue description"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder={
@@ -133,6 +134,7 @@ export default function SuggestResource({
                   className="w-full text-xs border border-border rounded-lg p-2.5 bg-background resize-none focus:outline-none focus:ring-1 focus:ring-primary min-h-[80px]"
                 />
                 <input
+                  aria-label="Your organization (optional)"
                   value={org}
                   onChange={(e) => setOrg(e.target.value)}
                   placeholder="Your organization (optional)"

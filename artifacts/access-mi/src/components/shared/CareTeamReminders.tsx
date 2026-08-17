@@ -83,6 +83,7 @@ const CareTeamReminders = () => {
           <div key={reminder.id} className="flex items-start gap-2">
             <div className="flex-1 space-y-2">
               <Input
+                aria-label={`Reminder ${index + 1} description`}
                 placeholder={
                   index === 0
                     ? "Schedule follow-up with cardiologist"
@@ -96,6 +97,7 @@ const CareTeamReminders = () => {
               />
               <Input
                 type="date"
+                aria-label={`Due date for reminder ${index + 1}`}
                 value={reminder.dueDate}
                 onChange={(e) => updateReminder(reminder.id, "dueDate", e.target.value)}
                 min={new Date().toISOString().split("T")[0]}

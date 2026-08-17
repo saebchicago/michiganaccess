@@ -70,6 +70,7 @@ export default function ReportIssue({ variant = "inline" }: { variant?: "inline"
               </SelectContent>
             </Select>
             <Textarea
+              aria-label="Describe the issue or suggestion"
               value={comment}
               onChange={e => setComment(e.target.value)}
               placeholder="Describe the issue or suggestion…"
@@ -111,6 +112,7 @@ export default function ReportIssue({ variant = "inline" }: { variant?: "inline"
             </SelectContent>
           </Select>
           <Textarea
+            aria-label="Describe the issue or suggestion"
             value={comment}
             onChange={e => setComment(e.target.value)}
             placeholder="Describe the issue or suggestion…"

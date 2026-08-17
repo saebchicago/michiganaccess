@@ -29,6 +29,13 @@ Never run `npm install` in this repo. Use `pnpm install --frozen-lockfile`.
 - `scripts/refresh-county-population.mjs` - data ingestion script
 - Any `scripts/check-*.mjs` - data-integrity guard scripts
 
+### Guards added by the 2026-08-16 audit
+`check-data-catalog` (catalog/registry reconciliation), `check-data-freshness`
+(derived freshness + provenance anchoring), `check-orphan-modules` (unreachable
+source), `check-form-labels` (accessible names axe accepts but shouldn't),
+`check-precache-budget` (post-build, service-worker weight). All are in `pnpm
+build` and the blocking CI `Integrity guards` step.
+
 ### No fabricated or unlabeled data
 Every rendered number needs a named source. Modeled/estimated values use the
 IntegrityBadge component with VERIFIED / MODELED / PROJECTED / PENDING label.
