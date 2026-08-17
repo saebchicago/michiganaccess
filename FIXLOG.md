@@ -885,3 +885,43 @@ compiled them and no import resolved to them. The root `types.ts` carried two
 table types the app's copy lacks (`dataset_registry`,
 `maternal_infant_health`); Supabase types are regenerable, and neither table
 is queried by the app.
+
+### The a11y gate could not say what it caught (2026-08-17)
+
+`e2e` failed on PR #199: `/environment has zero critical/serious violations`,
+206 passed, 1 failed. The log said only:
+
+```
+AssertionError: 1 accessibility violation was detected
+1 !== 0
+```
+
+No rule, no impact, no selector. Diagnosing it meant a local reproduction -
+which passed with zero violations, because `/environment` renders live AQI
+data that is reachable from a GitHub runner and not from the build
+environment. The failure was real and unreproducible at the same time, and
+the test had thrown away the only evidence.
+
+Not caused by that PR: its diff touches no rendering code at all. The single
+`src/` change is one date inside `provenance-index.generated.json`, which
+feeds `dataFreshness.ts` and renders on /methodology and /about;
+`/environment` references none of `DataFreshnessDashboard`, `dataFreshness`,
+`DATA_FRESHNESS`, or the index.
+
+`accessibility.spec.ts` now collects violations with `getViolations` and
+asserts explicitly, logging rule id, impact, help URL, offending selectors and
+axe's own fix summary before failing. Same gate, evidence retained.
+
+Two things worth recording from writing it:
+
+- **`getViolations` ignores `includedImpacts`.** It returns every impact
+  level. Passing the option and trusting it silently promoted the gate from
+  critical/serious to all-impacts and failed `/compare`, which reports a
+  moderate `region` violation and is meant to pass. The filter is applied
+  explicitly now, with a comment saying why.
+- The diagnostic path was verified by forcing a failure (temporarily adding
+  `moderate` to the blocking set) and confirming the log names the rule,
+  the target selector and the remedy - rather than assuming it would.
+
+The underlying `/environment` violation remains unidentified and is
+data-dependent. The next occurrence will name itself.
