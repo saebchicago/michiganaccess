@@ -70,6 +70,8 @@ jobs:
           node scripts/check-no-backend-leak.mjs
           node scripts/check-data-catalog.mjs
           node scripts/check-data-freshness.mjs
+          node scripts/check-data-workflows.mjs
+          node scripts/check-backend-functions.mjs
           node scripts/check-dataset-labels.mjs
           node scripts/check-plausibility.mjs
           node scripts/check-script-syntax.mjs

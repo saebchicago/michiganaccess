@@ -1,0 +1,15 @@
+{
+  "_comment": "Declared exceptions for scripts/check-backend-functions.mjs. Every entry states why the endpoint's source is not where you would expect it. Prefer promoting source into netlify/functions/ or supabase/functions/ over adding an entry here.",
+  "_migrationBackupIsLoadBearing": "IMPORTANT: .migration-backup/ is NOT dead weight. It holds the only in-repo source for the functions declared below. It is excluded from every other guard, so a routine dead-code sweep will delete it - one nearly did on 2026-08-17. Do not remove it without first promoting these functions into supabase/functions/.",
+  "netlify": {},
+  "supabaseBackupOnly": {
+    "appeal-generator": "Deployed to Supabase out-of-band; .migration-backup/supabase/functions/appeal-generator is the authoritative repo record. Powers the AI appeals generator.",
+    "civic-copilot": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers the AIChatWidget.",
+    "airnow-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers real-time AQI on /environment/air.",
+    "arcgis-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers ArcGIS FeatureServer reads behind the civic datasets.",
+    "cdc-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers CDC data reads.",
+    "gtfs-rt-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers realtime transit feeds.",
+    "npi-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers NPPES provider search."
+  },
+  "_netlifyNote": "Empty by design. chat-mistral was promoted from .migration-backup/netlify/functions/ into netlify/functions/ on 2026-08-17 so Netlify actually deploys it; its catch block was malformed and leaked err.message to the client, and was fixed in the same change. Every Netlify endpoint the app calls now has deployable source."
+}

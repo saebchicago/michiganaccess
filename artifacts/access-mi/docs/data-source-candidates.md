@@ -6,6 +6,15 @@
 
 Authored: 2026-06-26. Branch: `docs/data-source-candidate-registry`.
 
+> **Baseline superseded (2026-08-17).** The "41 source organizations
+> (23 federal, 9 state, 9 nonprofit)" figure below was accurate when this was
+> written and is retained as the historical baseline this analysis was carried
+> out against. The registry has since moved to 49 feeds from 42 publishers,
+> and the platform now counts feeds and publishers as separate numbers - the
+> older figure conflated them. The candidate analysis itself is unaffected;
+> only the starting count has changed. See `src/config/platformConstants.ts`
+> for the live values.
+
 ## Purpose
 
 The platform integrates 41 source organizations (23 federal, 9 state, 9 nonprofit) per
