@@ -760,3 +760,38 @@ Other observations, no action taken: the entry chunk is 718KB raw / 212KB
 gzipped, `vendor-charts` (recharts + d3) is 504KB, and
 `verifiedHealthFacilities` is a 326KB data chunk. All three are already
 split out and cached across routes, which is the right shape.
+
+### CI ran every PR commit twice (2026-08-17)
+
+The `e2e` job failed on PR #197: the axe scan of `/data` hit the 45s test
+timeout inside `AxeBuilder.analyze()`. It was not caused by the diff.
+
+Evidence:
+
+- The **same commit** (`25b0b57`) had two concurrent CI runs. One `e2e` job
+  passed, the other timed out - same SHA, same minute.
+- The test passes locally against the same code in **14.7s**, a third of the
+  budget.
+- `e2e` passed on `main` immediately before this branch.
+
+Cause: `on.push.branches` was `["**"]` alongside the `pull_request` trigger,
+so every push to a PR branch ran the entire workflow twice - six concurrent
+jobs (2x test, 2x e2e, 2x lighthouse) for one commit, competing for runners.
+The Playwright suite runs against the Vite **dev** server, which compiles
+routes on demand, so a heavy dashboard route under contention is exactly
+where a fixed 45s budget breaks first. `mode: 'serial'` on that spec then
+skipped the nine tests behind it.
+
+Fixed by building `main` on push and leaving every other branch to its pull
+request, plus a `concurrency` group with `cancel-in-progress` so a newer
+commit supersedes an in-flight run. Halves runner load per commit and removes
+the contention.
+
+Also fixed: `playwright.config.ts` started its web server with `npm run dev`,
+the last npm invocation in a repo whose root preinstall hook rejects npm.
+
+Left alone: the e2e suite still exercises the dev server rather than a
+production preview. Testing the real bundle would be more representative and
+faster per route - it is what the Lighthouse job exists to do - but switching
+changes what the suite covers, so it is a deliberate decision rather than a
+drive-by fix.
