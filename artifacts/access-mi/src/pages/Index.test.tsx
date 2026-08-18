@@ -38,17 +38,12 @@ describe("Index (homepage)", () => {
         name: /where care is short, and where to turn/i,
       }),
     ).toBeInTheDocument();
-    // findBy: NeedCapacityCard is lazy-loaded so its HPSA dataset stays
-    // out of the eager homepage chunk; the card resolves a tick later.
-    expect(
-      await screen.findByText("Designated Provider Shortage Areas"),
-    ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /find help near you/i }),
     ).toHaveAttribute("href", "/find-care");
   });
 
-  it("renders four intent cards with three taxonomy destinations each", () => {
+  it("renders three clear entry pathways", () => {
     // The old three abstract doors are replaced by four concrete intents.
     // Contents come from the route taxonomy via getIntentCards(); the
     // taxonomy guard pins exactly 3 destinations per intent, so this
@@ -57,13 +52,12 @@ describe("Index (homepage)", () => {
     renderHomepage();
 
     const section = screen
-      .getByRole("heading", { name: /what are you here for/i })
+      .getByRole("heading", { name: /three ways in/i })
       .closest("section")!;
     for (const title of [
       "Get help now",
       "Understand my place",
-      "Follow the money",
-      "Analyze and export",
+      "Use data to decide",
     ]) {
       expect(within(section).getByText(title)).toBeInTheDocument();
     }
@@ -85,12 +79,12 @@ describe("Index (homepage)", () => {
 
     await user.click(screen.getByRole("tab", { name: "Analyst" }));
     const section = screen
-      .getByRole("heading", { name: /what are you here for/i })
+      .getByRole("heading", { name: /three ways in/i })
       .closest("section")!;
     const headings = within(section)
-      .getAllByRole("heading", { level: 4 })
+      .getAllByRole("heading", { level: 3 })
       .map((h) => h.textContent);
-    expect(headings[0]).toBe("Analyze and export");
+    expect(headings[0]).toBe("Use data to decide");
 
     // Resident pathways stay one click away, not removed.
     await user.click(screen.getByRole("tab", { name: "Resident" }));

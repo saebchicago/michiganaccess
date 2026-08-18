@@ -44,17 +44,37 @@ function FooterSection({
   // a capped preview with a "Show all N" toggle, so the comprehensive footer
   // index no longer renders as a ~30-link wall by default. Every link stays
   // reachable via the toggle (and via /sitemap).
-  const PREVIEW = 7;
+  const PREVIEW = 4;
   const [open, setOpen] = useState(false);
   const canCap = collapsible && links.length > PREVIEW;
   const visible = canCap && !open ? links.slice(0, PREVIEW) : links;
 
   return (
     <nav aria-label={title}>
-      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-        {title}
-      </p>
-      <ul className="space-y-2">
+      <div className="mb-3 flex items-center justify-between border-b border-border pb-2 sm:border-0 sm:pb-0">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+          {title}
+        </p>
+        {canCap && (
+          <button
+            type="button"
+            onClick={() => setOpen(!open)}
+            className="inline-flex min-h-[40px] items-center gap-1 text-xs font-medium text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:hidden"
+            aria-expanded={open}
+            aria-controls={`footer-${title.toLowerCase().replace(/[^a-z]+/g, "-")}`}
+          >
+            {open ? "Close" : "Open"}
+            <ChevronDown
+              className={`h-3 w-3 transition-transform ${open ? "rotate-180" : ""}`}
+              aria-hidden="true"
+            />
+          </button>
+        )}
+      </div>
+      <ul
+        id={`footer-${title.toLowerCase().replace(/[^a-z]+/g, "-")}`}
+        className={`${canCap && !open ? "hidden sm:block" : "block"} space-y-2`}
+      >
         {visible.map((link) => (
           <li key={link.href + link.label}>
             <Link
@@ -70,7 +90,7 @@ function FooterSection({
         <button
           type="button"
           onClick={() => setOpen(!open)}
-          className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+          className="mt-2 hidden sm:inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           aria-expanded={open}
           aria-label={
             open
@@ -244,36 +264,8 @@ const Footer = () => {
 
   return (
     <footer className="border-t border-border bg-muted/30" role="contentinfo">
-      {/* Crisis strip */}
-      <div className="border-b border-border bg-muted/50">
-        <div className="container flex flex-wrap items-center justify-center gap-3 py-2.5 text-sm">
-          <Phone
-            className="h-3.5 w-3.5 text-muted-foreground"
-            aria-hidden="true"
-          />
-          <span className="text-muted-foreground">
-            {t("crisis.inCrisis")}{" "}
-            <a
-              href="tel:988"
-              className="font-semibold text-foreground hover:underline"
-            >
-              988
-            </a>
-            {" · "}
-            {t("crisis.textHome")}
-            {" · "}
-            <a
-              href="tel:211"
-              className="font-semibold text-foreground hover:underline"
-            >
-              2-1-1
-            </a>
-          </span>
-        </div>
-      </div>
-
-      <div className="container py-12">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+      <div className="container py-8 sm:py-10">
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -299,12 +291,7 @@ const Footer = () => {
               key={section.title}
               title={section.title}
               links={section.links}
-              collapsible={
-                section.title === "Understand" ||
-                section.title === "Visualize" ||
-                section.title === "Belong" ||
-                section.title.includes("About")
-              }
+              collapsible
             />
           ))}
         </div>

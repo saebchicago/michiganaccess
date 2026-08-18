@@ -40,25 +40,46 @@ const ThemeToggle = () => {
   }, [theme]);
 
   const icon =
-    theme === "dark" ? <Moon className="h-4 w-4" /> :
-    theme === "high-contrast" ? <Contrast className="h-4 w-4" /> :
-    <Sun className="h-4 w-4" />;
+    theme === "dark" ? (
+      <Moon className="h-4 w-4" />
+    ) : theme === "high-contrast" ? (
+      <Contrast className="h-4 w-4" />
+    ) : (
+      <Sun className="h-4 w-4" />
+    );
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Change theme">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          aria-label={`Change color theme. Current theme: ${theme}`}
+        >
           {icon}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="z-50 bg-card border border-border">
-        <DropdownMenuItem onClick={() => setTheme("light")} className="gap-2 text-sm cursor-pointer">
+      <DropdownMenuContent
+        align="end"
+        className="z-50 bg-card border border-border"
+      >
+        <DropdownMenuItem
+          onClick={() => setTheme("light")}
+          className="gap-2 text-sm cursor-pointer"
+        >
           <Sun className="h-4 w-4" /> Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")} className="gap-2 text-sm cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => setTheme("dark")}
+          className="gap-2 text-sm cursor-pointer"
+        >
           <Moon className="h-4 w-4" /> Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("high-contrast")} className="gap-2 text-sm cursor-pointer">
+        <DropdownMenuItem
+          onClick={() => setTheme("high-contrast")}
+          className="gap-2 text-sm cursor-pointer"
+        >
           <Contrast className="h-4 w-4" /> High Contrast
         </DropdownMenuItem>
       </DropdownMenuContent>

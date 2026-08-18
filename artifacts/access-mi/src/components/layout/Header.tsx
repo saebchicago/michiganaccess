@@ -1,13 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Menu,
-  ChevronDown,
-  Download,
-  Search,
-  BarChart2,
-} from "lucide-react";
+import { Menu, ChevronDown, Download, Search, BarChart2 } from "lucide-react";
 import { AccessMILogo } from "@/components/branding/AccessMILogo";
 import MySettingsDrawer from "@/components/shared/MySettingsDrawer";
 import { useTranslation } from "react-i18next";
@@ -99,7 +93,7 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav
-            className="hidden items-center gap-0.5 lg:flex"
+            className="hidden items-center gap-1 lg:flex"
             aria-label="Main navigation"
           >
             {resolvedNavGroups.map((link) =>
@@ -138,7 +132,7 @@ const Header = () => {
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 lg:ml-3 lg:border-l lg:border-border/70 lg:pl-3">
             <DesktopSearchTrigger />
             <div className="lg:hidden">
               <SiteSearch />
@@ -153,6 +147,7 @@ const Header = () => {
               aria-current={
                 location.pathname === "/compare" ? "page" : undefined
               }
+              aria-label="Compare Michigan places"
             >
               <BarChart2 className="h-3.5 w-3.5" />
               Compare

@@ -16,7 +16,11 @@ const CountyWelcomeBanner = () => {
   if (!county) return null;
 
   const stats = [
-    { icon: Building2, value: facilities.length, label: t("county.facilitiesStat") },
+    {
+      icon: Building2,
+      value: facilities.length,
+      label: t("county.facilitiesStat"),
+    },
     { icon: Users, value: resources.length, label: t("county.resourcesStat") },
   ];
 
@@ -25,6 +29,8 @@ const CountyWelcomeBanner = () => {
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       className="border-b border-primary/10 bg-primary/5"
+      role="region"
+      aria-label={`${county} County context`}
     >
       <div className="container flex items-center justify-between gap-4 py-3">
         <div className="flex items-center gap-3 min-w-0">
@@ -37,9 +43,15 @@ const CountyWelcomeBanner = () => {
             </p>
             <div className="flex items-center gap-4 mt-0.5">
               {stats.map((s) => (
-                <span key={s.label} className="flex items-center gap-1 text-xs text-muted-foreground">
+                <span
+                  key={s.label}
+                  className="flex items-center gap-1 text-xs text-muted-foreground"
+                >
                   <s.icon className="h-3 w-3" />
-                  <strong className="text-foreground">{s.value || "-"}</strong> {s.label}
+                  <strong className="text-foreground">
+                    {s.value || "-"}
+                  </strong>{" "}
+                  {s.label}
                 </span>
               ))}
             </div>

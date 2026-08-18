@@ -69,7 +69,7 @@ const CountySelector = ({ variant = "header" }: CountySelectorProps) => {
             variant === "header" && "h-9 text-xs",
             hasSelection && "border-primary/30 bg-primary/5 text-primary",
           )}
-          aria-label={`${filterLabel} - ${t("county.selectCounty")}`}
+          aria-label={`Change county or region. Current selection: ${filterLabel}`}
           data-county-selector=""
         >
           <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
