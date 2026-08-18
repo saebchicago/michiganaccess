@@ -1,7 +1,7 @@
 import { useState, lazy, Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
 import { STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
@@ -107,12 +107,12 @@ function Masthead({
     <header className="container mx-auto max-w-6xl px-4 pt-10 pb-6">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div className="space-y-1.5">
-          <h1
+          <div
             className="font-serif leading-none tracking-tight"
             style={{ color: C.emerald, fontSize: "clamp(2.75rem, 5vw, 4rem)" }}
           >
             AccessMI
-          </h1>
+          </div>
           <p
             className="text-xs sm:text-sm font-medium uppercase"
             style={{ color: C.emeraldMid, letterSpacing: "0.2em" }}
@@ -197,7 +197,7 @@ function EditorialHero({
         >
           {/* Left: standfirst */}
           <div className="lg:col-span-7 space-y-6">
-            <h2
+            <h1
               id="hero-headline"
               className="font-serif leading-[1.05]"
               style={{
@@ -210,7 +210,7 @@ function EditorialHero({
                 public
               </em>{" "}
               good.
-            </h2>
+            </h1>
             <p
               className="max-w-xl text-lg md:text-xl font-light leading-relaxed"
               style={{ color: `${C.emerald}CC` }}
@@ -248,10 +248,7 @@ function EditorialHero({
                 >
                   Explore your community
                 </label>
-                <div
-                  className="flex items-center border-b pb-2 mb-4"
-                  style={{ borderColor: `${C.cream}4D` }}
-                >
+                <div className="mb-4">
                   <input
                     id="hero-zip"
                     inputMode="numeric"
@@ -261,84 +258,40 @@ function EditorialHero({
                     value={zip}
                     onChange={(e) => setZip(e.target.value.replace(/\D/g, ""))}
                     aria-label="ZIP code"
-                    className="w-full bg-transparent text-2xl font-serif outline-none placeholder:opacity-40"
-                    style={{ color: C.cream }}
+                    className="w-full min-h-[48px] border px-3 bg-transparent text-xl font-serif outline-none placeholder:opacity-60 focus-visible:ring-2 focus-visible:ring-offset-2"
+                    style={{ color: C.cream, borderColor: `${C.cream}66` }}
                   />
                   <button
                     type="submit"
-                    aria-label="Show my area"
+                    aria-label="Explore civic data for this ZIP code"
                     disabled={zip.trim().length !== 5}
-                    className="ml-3 min-w-[44px] min-h-[44px] flex items-center justify-center transition-colors disabled:opacity-40"
-                    style={{ color: C.gold }}
+                    className="mt-3 min-h-[48px] w-full flex items-center justify-center gap-2 px-5 text-sm font-bold transition-colors disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                    style={{ backgroundColor: C.gold, color: C.emeraldInk }}
                   >
-                    <ArrowRight className="w-6 h-6" aria-hidden="true" />
+                    Explore my area
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
                   </button>
                 </div>
                 <Link
-                  to="/methodology"
-                  className="inline-flex items-center gap-1.5 text-[10px] uppercase font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity"
-                  style={{ color: C.goldBright, letterSpacing: "0.16em" }}
+                  to="/find-care"
+                  className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold underline underline-offset-4 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 transition-opacity"
+                  style={{ color: C.cream }}
                 >
-                  View methodology and data integrity
-                  <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
+                  Find help without entering a ZIP
+                  <ArrowRight className="w-3 h-3" aria-hidden="true" />
                 </Link>
               </form>
-
-              {/* Question pathways: most people arrive with a question, not
-                  a ZIP. Four real destinations, phrased the way the question
-                  is actually asked. */}
-              <nav
-                className="mt-6 border-t pt-4"
-                style={{ borderColor: `${C.cream}2E` }}
-                aria-label="Start with a question"
+              <p
+                className="mt-5 flex items-start gap-2 border-t pt-4 text-xs leading-relaxed"
+                style={{ borderColor: `${C.cream}2E`, color: `${C.cream}CC` }}
               >
-                <p
-                  className="mb-1 text-[10px] uppercase font-semibold opacity-70"
-                  style={{ letterSpacing: "0.16em" }}
-                >
-                  Or start with a question
-                </p>
-                <ul role="list">
-                  {[
-                    {
-                      q: "Is my drinking water safe?",
-                      href: "/environment/water",
-                    },
-                    {
-                      q: "What help can I get with my energy bill?",
-                      href: "/environment/energy",
-                    },
-                    {
-                      q: "Which local seats have no candidate?",
-                      href: "/civic-power/races",
-                    },
-                    {
-                      q: "Where did federal money land near me?",
-                      href: "/transparency/contractors",
-                    },
-                  ].map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        to={item.href}
-                        className="group flex min-h-[40px] items-center justify-between gap-3 border-b py-2 text-[13.5px] transition-colors focus-visible:outline-none focus-visible:ring-2"
-                        style={{
-                          borderColor: `${C.cream}1F`,
-                          color: `${C.cream}EB`,
-                        }}
-                      >
-                        <span className="group-hover:underline underline-offset-4">
-                          {item.q}
-                        </span>
-                        <ArrowRight
-                          className="h-3.5 w-3.5 shrink-0"
-                          style={{ color: C.goldBright }}
-                          aria-hidden="true"
-                        />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+                <ShieldCheck
+                  className="mt-0.5 h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                />
+                Independent public data. Every figure links to its source and
+                methodology.
+              </p>
             </div>
           </div>
         </motion.div>
@@ -380,7 +333,9 @@ function NeedHelpBand() {
       </div>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
         <Suspense
-          fallback={<div className="min-h-40 rounded-lg bg-muted/30 animate-pulse" />}
+          fallback={
+            <div className="min-h-40 rounded-lg bg-muted/30 animate-pulse" />
+          }
         >
           <NeedCapacityCard />
         </Suspense>
@@ -422,21 +377,32 @@ function NeedHelpBand() {
 
 function IntentCardsSection({ mode }: { mode: PersonaView }) {
   const cards = getIntentCards();
-  // Analyst mode leads with the analyst tools instead of "get help now".
-  const ordered = mode === "professional" ? [...cards].reverse() : cards;
+  const pathways = [
+    cards[0],
+    cards[1],
+    {
+      ...cards[3],
+      id: "decide-with-data",
+      title: "Use data to decide",
+      lede: "Follow public money, compare places, and export evidence.",
+      destinations: [...cards[2].destinations, ...cards[3].destinations],
+    },
+  ];
+  // Analyst mode leads with data tools; every pathway remains one tab stop away.
+  const ordered = mode === "professional" ? [...pathways].reverse() : pathways;
   return (
     <section
       className="container mx-auto max-w-6xl px-4 pb-14"
       aria-labelledby="intent-heading"
     >
       <div className="mb-6 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-        <h3
+        <h2
           id="intent-heading"
           className="font-serif text-2xl md:text-3xl"
           style={{ color: C.emerald }}
         >
-          What are you here for?
-        </h3>
+          Three ways in
+        </h2>
         <Link
           to="/explore"
           className="inline-flex min-h-[40px] items-center gap-1 text-[11px] font-semibold uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
@@ -446,7 +412,7 @@ function IntentCardsSection({ mode }: { mode: PersonaView }) {
           <ArrowRight className="w-3 h-3" aria-hidden="true" />
         </Link>
       </div>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-3">
         {ordered.map((card, i) => (
           <motion.article
             key={card.id}
@@ -457,12 +423,12 @@ function IntentCardsSection({ mode }: { mode: PersonaView }) {
             className="flex h-full flex-col border-l pl-5 py-3"
             style={{ borderColor: `${C.emerald}1A` }}
           >
-            <h4
+            <h3
               className="font-serif text-xl leading-tight"
               style={{ color: C.emerald }}
             >
               {card.title}
-            </h4>
+            </h3>
             <p
               className="mt-1.5 text-[13px] leading-relaxed"
               style={{ color: `${C.emerald}CC` }}
@@ -522,13 +488,13 @@ function WorthALookRail() {
         >
           Worth a look
         </span>
-        <h3
+        <h2
           id="featured-heading"
           className="font-serif text-2xl md:text-3xl mt-1"
           style={{ color: C.emerald }}
         >
           The things people don't know are here.
-        </h3>
+        </h2>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {featured.map((d) => (
@@ -538,9 +504,9 @@ function WorthALookRail() {
             className="group flex h-full flex-col border p-5 transition-colors hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
             style={{ borderColor: `${C.emerald}26`, color: C.emerald }}
           >
-            <h4 className="font-serif text-xl leading-tight group-hover:underline underline-offset-4">
+            <h3 className="font-serif text-xl leading-tight group-hover:underline underline-offset-4">
               {d.label}
-            </h4>
+            </h3>
             {d.description && (
               <p
                 className="mt-2 flex-1 text-sm leading-relaxed"
@@ -608,13 +574,13 @@ function ExploreBand() {
           >
             The full library
           </span>
-          <h3
+          <h2
             id="explore-band-heading"
             className="font-serif text-2xl md:text-3xl mt-2"
             style={{ color: C.cream }}
           >
             {total} destinations, finally browsable.
-          </h3>
+          </h2>
           <p
             className="mt-2 text-sm leading-relaxed"
             style={{ color: `${C.cream}C7` }}
@@ -685,13 +651,13 @@ function ProvenanceStrip() {
     >
       <div className="container mx-auto max-w-6xl px-4 py-10">
         <div className="flex flex-col md:flex-row md:items-baseline gap-4 md:gap-10">
-          <h3
+          <h2
             id="provenance-heading"
             className="font-serif text-xl md:text-2xl shrink-0"
             style={{ color: C.emerald }}
           >
             Every number carries a label.
-          </h3>
+          </h2>
           <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 flex-1">
             {items.map(({ label, gloss }) => (
               <div key={label} className="flex flex-col gap-1.5">
@@ -742,13 +708,13 @@ function CountyPicker() {
       aria-labelledby="county-heading"
     >
       <div className="flex items-baseline justify-between mb-4">
-        <h3
+        <h2
           id="county-heading"
           className="font-serif text-2xl md:text-3xl"
           style={{ color: C.emerald }}
         >
           Or pick a county.
-        </h3>
+        </h2>
         <span
           className="text-[11px] uppercase font-semibold hidden sm:inline"
           style={{ color: C.goldInk, letterSpacing: "0.18em" }}

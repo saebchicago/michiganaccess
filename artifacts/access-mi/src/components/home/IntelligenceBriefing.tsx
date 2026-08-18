@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -36,6 +36,7 @@ const FEATURED_TREND = MICHIGAN_TRENDS.uninsuredRate;
  * as /insights, rendered in the homepage's editorial voice.
  */
 export default function IntelligenceBriefing() {
+  const [activeView, setActiveView] = useState<"finding" | "trend">("finding");
   const insight = WEEKLY_INSIGHTS[getCurrentWeekIndex()];
   const stories = DATA_STORIES.slice(0, 3);
   const trendPoints = FEATURED_TREND.data.map((p) => ({
@@ -51,13 +52,13 @@ export default function IntelligenceBriefing() {
       aria-labelledby="briefing-heading"
     >
       <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-6">
-        <h3
+        <h2
           id="briefing-heading"
           className="font-serif text-2xl md:text-3xl"
           style={{ color: C.emerald }}
         >
           What the data says.
-        </h3>
+        </h2>
         <Link
           to="/insights"
           className="inline-flex items-center gap-1.5 text-[11px] uppercase font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity"
@@ -68,14 +69,60 @@ export default function IntelligenceBriefing() {
         </Link>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+      <div
+        className="mb-6 inline-flex rounded-sm border p-1"
+        role="tablist"
+        aria-label="Data briefing views"
+        style={{ borderColor: `${C.emerald}33` }}
+      >
+        {(
+          [
+            ["finding", "This week's finding"],
+            ["trend", "The long view"],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            key={id}
+            id={`briefing-tab-${id}`}
+            type="button"
+            role="tab"
+            aria-selected={activeView === id}
+            aria-controls={`briefing-panel-${id}`}
+            tabIndex={activeView === id ? 0 : -1}
+            onClick={() => setActiveView(id)}
+            onKeyDown={(event) => {
+              if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+                event.preventDefault();
+                const next = id === "finding" ? "trend" : "finding";
+                setActiveView(next);
+                requestAnimationFrame(() =>
+                  document.getElementById(`briefing-tab-${next}`)?.focus(),
+                );
+              }
+            }}
+            className="min-h-[44px] px-4 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            style={{
+              backgroundColor: activeView === id ? C.emerald : "transparent",
+              color: activeView === id ? C.cream : C.emerald,
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      <div>
         {/* This week's finding */}
-        <motion.article
+        <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.4 }}
-          className="lg:col-span-7 border-l pl-6 py-2"
+          id="briefing-panel-finding"
+          role="tabpanel"
+          aria-labelledby="briefing-tab-finding"
+          hidden={activeView !== "finding"}
+          className="max-w-3xl border-l pl-6 py-2"
           style={{ borderColor: `${C.emerald}33` }}
         >
           <p
@@ -104,7 +151,10 @@ export default function IntelligenceBriefing() {
                     className="mt-1 text-xs"
                     style={{ color: `${C.emerald}B3` }}
                   >
-                    {dp.label} <span style={{ color: `${C.emerald}bf` }}>({dp.context})</span>
+                    {dp.label}{" "}
+                    <span style={{ color: `${C.emerald}bf` }}>
+                      ({dp.context})
+                    </span>
                   </dt>
                 </div>
               ))}
@@ -123,15 +173,19 @@ export default function IntelligenceBriefing() {
               <ArrowRight className="w-3 h-3" aria-hidden="true" />
             </Link>
           </div>
-        </motion.article>
+        </motion.div>
 
         {/* Long-run trend */}
-        <motion.aside
+        <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.4, delay: 0.08 }}
-          className="lg:col-span-5 border-l pl-6 py-2"
+          id="briefing-panel-trend"
+          role="tabpanel"
+          aria-labelledby="briefing-tab-trend"
+          hidden={activeView !== "trend"}
+          className="max-w-3xl border-l pl-6 py-2"
           style={{ borderColor: `${C.emerald}33` }}
           aria-label="Featured long-run trend"
         >
@@ -181,14 +235,17 @@ export default function IntelligenceBriefing() {
           <p className="mt-1.5 text-[11px]" style={{ color: `${C.emerald}bf` }}>
             Source: {FEATURED_TREND.source}
           </p>
-        </motion.aside>
+        </motion.div>
       </div>
 
       {/* Story teasers */}
       <ul
         role="list"
         className="mt-8 grid gap-px sm:grid-cols-3 border"
-        style={{ backgroundColor: `${C.emerald}1A`, borderColor: `${C.emerald}1A` }}
+        style={{
+          backgroundColor: `${C.emerald}1A`,
+          borderColor: `${C.emerald}1A`,
+        }}
       >
         {stories.map((story) => (
           <li key={story.id}>
