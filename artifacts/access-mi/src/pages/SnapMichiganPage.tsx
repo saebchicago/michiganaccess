@@ -163,13 +163,12 @@ function SortButton({
   onSort: (k: SortKey) => void;
 }) {
   const active = sortKey === col;
+  // aria-sort lives on the wrapping <th> (the only element the ARIA spec
+  // allows it on); the button is purely the click/label affordance.
   return (
     <button
       onClick={() => onSort(col)}
       className={`flex items-center gap-1 text-left text-xs font-medium hover:text-primary transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
-      aria-sort={
-        active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
-      }
     >
       {label}
       <ArrowUpDown className="h-3 w-3 shrink-0" />
@@ -398,7 +397,7 @@ export default function SnapMichiganPage() {
               </caption>
               <thead>
                 <tr className="border-b border-border bg-muted/40">
-                  <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                  <th scope="col" className="px-4 py-2.5 text-left font-medium" aria-sort={sortKey === "county" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="county"
                       label="County"
@@ -407,7 +406,7 @@ export default function SnapMichiganPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium" aria-sort={sortKey === "enrollmentTotal" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="enrollmentTotal"
                       label="SNAP Persons"
@@ -416,7 +415,7 @@ export default function SnapMichiganPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium" aria-sort={sortKey === "enrollmentPct" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="enrollmentPct"
                       label="% of Pop."
@@ -425,7 +424,7 @@ export default function SnapMichiganPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th scope="col" className="px-4 py-2.5 text-right font-medium">
+                  <th scope="col" className="px-4 py-2.5 text-right font-medium" aria-sort={sortKey === "retailerCount" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="retailerCount"
                       label="Retailers"

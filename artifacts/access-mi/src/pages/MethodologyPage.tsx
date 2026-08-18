@@ -657,7 +657,7 @@ export default function MethodologyPage() {
                     href={src.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] text-primary hover:underline mt-1 inline-block"
+                    className="text-[10px] text-primary underline underline-offset-2 mt-1 inline-block"
                   >
                     {src.url}
                   </a>
@@ -1107,7 +1107,7 @@ export default function MethodologyPage() {
               audit our methods and tell us what they see.{" "}
               <a
                 href="/contact?subject=Methods%20audit"
-                className="text-primary hover:underline font-medium"
+                className="text-primary underline underline-offset-2 font-medium"
               >
                 Contact us here →
               </a>
@@ -1252,7 +1252,7 @@ export default function MethodologyPage() {
                     href="https://sunlightfoundation.com/opendataguidelines/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline break-words"
+                    className="text-primary underline underline-offset-2 break-words"
                   >
                     https://sunlightfoundation.com/opendataguidelines/
                   </a>
@@ -1271,7 +1271,7 @@ export default function MethodologyPage() {
                     href="https://datafoundation.org/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline break-words"
+                    className="text-primary underline underline-offset-2 break-words"
                   >
                     https://datafoundation.org/
                   </a>
@@ -1291,7 +1291,7 @@ export default function MethodologyPage() {
                     href="https://ckan.org/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline break-words"
+                    className="text-primary underline underline-offset-2 break-words"
                   >
                     https://ckan.org/
                   </a>{" "}
@@ -1300,7 +1300,7 @@ export default function MethodologyPage() {
                     href="https://okfn.org/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline break-words"
+                    className="text-primary underline underline-offset-2 break-words"
                   >
                     https://okfn.org/
                   </a>
@@ -1319,7 +1319,7 @@ export default function MethodologyPage() {
                     href="https://digitalpublicgoods.net/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline break-words"
+                    className="text-primary underline underline-offset-2 break-words"
                   >
                     https://digitalpublicgoods.net/
                   </a>
@@ -1341,7 +1341,7 @@ export default function MethodologyPage() {
                     href="https://data.gov/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline break-words"
+                    className="text-primary underline underline-offset-2 break-words"
                   >
                     https://data.gov/
                   </a>{" "}
@@ -1350,7 +1350,7 @@ export default function MethodologyPage() {
                     href="https://healthdata.gov/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary hover:underline break-words"
+                    className="text-primary underline underline-offset-2 break-words"
                   >
                     https://healthdata.gov/
                   </a>

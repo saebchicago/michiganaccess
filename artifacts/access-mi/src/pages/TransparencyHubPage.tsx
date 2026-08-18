@@ -118,7 +118,7 @@ export default function TransparencyHubPage() {
                   {stat.value}
                 </p>
                 <p className="text-xs text-slate-400 mt-1">{stat.label}</p>
-                <p className="text-[9px] text-slate-500">{stat.source}</p>
+                <p className="text-[9px] text-slate-400">{stat.source}</p>
               </motion.div>
             ))}
           </motion.div>

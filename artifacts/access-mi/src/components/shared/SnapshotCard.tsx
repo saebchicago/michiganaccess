@@ -203,7 +203,7 @@ export default function SnapshotCard({
                   </div>
                 )}
                 {(m.source || m.vintage) && (
-                  <p className="pt-1 text-[10px] leading-snug text-muted-foreground/80">
+                  <p className="pt-1 text-[10px] leading-snug text-muted-foreground">
                     {m.source}
                     {m.source && m.vintage ? " - " : ""}
                     {m.vintage}

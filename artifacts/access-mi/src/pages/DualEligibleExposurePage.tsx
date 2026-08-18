@@ -97,13 +97,12 @@ function SortButton({
   onSort: (k: SortKey) => void;
 }) {
   const active = sortKey === col;
+  // aria-sort lives on the wrapping <th> (the only element the ARIA spec
+  // allows it on); the button is purely the click/label affordance.
   return (
     <button
       onClick={() => onSort(col)}
       className={`flex items-center gap-1 text-left text-xs font-medium hover:text-primary transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
-      aria-sort={
-        active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
-      }
     >
       {label}
       <ArrowUpDown className="h-3 w-3 shrink-0" />
@@ -331,7 +330,7 @@ export default function DualEligibleExposurePage() {
             <table data-testid="dual-county-table" className="w-full text-sm">
               <thead className="bg-muted/40 border-b border-border">
                 <tr>
-                  <th className="text-left px-4 py-3">
+                  <th className="text-left px-4 py-3" aria-sort={sortKey === "county" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="county"
                       label="County"
@@ -340,7 +339,7 @@ export default function DualEligibleExposurePage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="text-right px-4 py-3">
+                  <th className="text-right px-4 py-3" aria-sort={sortKey === "acsDualEstimate" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="acsDualEstimate"
                       label="ACS dual-eligible count"
@@ -349,7 +348,7 @@ export default function DualEligibleExposurePage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
+                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium" aria-sort={sortKey === "allocatedLow" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <div className="flex flex-col items-end gap-0.5">
                       <SortButton
                         col="allocatedLow"
@@ -363,7 +362,7 @@ export default function DualEligibleExposurePage() {
                       </span>
                     </div>
                   </th>
-                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
+                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium" aria-sort={sortKey === "allocatedHigh" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <div className="flex flex-col items-end gap-0.5">
                       <SortButton
                         col="allocatedHigh"

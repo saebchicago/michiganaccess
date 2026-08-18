@@ -91,13 +91,12 @@ function SortButton({
   onSort: (k: SortKey) => void;
 }) {
   const active = sortKey === col;
+  // aria-sort lives on the wrapping <th> (the only element the ARIA spec
+  // allows it on); the button is purely the click/label affordance.
   return (
     <button
       onClick={() => onSort(col)}
       className={`flex items-center gap-1 text-left text-xs font-medium hover:text-primary transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
-      aria-sort={
-        active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
-      }
     >
       {label}
       <ArrowUpDown className="h-3 w-3 shrink-0" />
@@ -313,7 +312,7 @@ export default function SnapCoverageAtRiskPage() {
               </caption>
               <thead className="bg-muted/40 border-b border-border">
                 <tr>
-                  <th scope="col" className="text-left px-4 py-3">
+                  <th scope="col" className="text-left px-4 py-3" aria-sort={sortKey === "county" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="county"
                       label="County"
@@ -322,7 +321,7 @@ export default function SnapCoverageAtRiskPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th scope="col" className="text-right px-4 py-3">
+                  <th scope="col" className="text-right px-4 py-3" aria-sort={sortKey === "currentSnapEnrollment" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="currentSnapEnrollment"
                       label="Current SNAP enrollment"
@@ -331,7 +330,7 @@ export default function SnapCoverageAtRiskPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th scope="col" className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
+                  <th scope="col" className="text-right px-4 py-3 text-muted-foreground text-xs font-medium" aria-sort={sortKey === "projectedAffectedLow" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <div className="flex flex-col items-end gap-0.5">
                       <SortButton
                         col="projectedAffectedLow"
@@ -345,7 +344,7 @@ export default function SnapCoverageAtRiskPage() {
                       </span>
                     </div>
                   </th>
-                  <th scope="col" className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
+                  <th scope="col" className="text-right px-4 py-3 text-muted-foreground text-xs font-medium" aria-sort={sortKey === "projectedAffectedHigh" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <div className="flex flex-col items-end gap-0.5">
                       <SortButton
                         col="projectedAffectedHigh"
