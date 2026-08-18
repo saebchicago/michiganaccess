@@ -33,8 +33,19 @@ Never run `npm install` in this repo. Use `pnpm install --frozen-lockfile`.
 `check-data-catalog` (catalog/registry reconciliation), `check-data-freshness`
 (derived freshness + provenance anchoring), `check-orphan-modules` (unreachable
 source), `check-form-labels` (accessible names axe accepts but shouldn't),
-`check-precache-budget` (post-build, service-worker weight). All are in `pnpm
+`check-precache-budget` (post-build, service-worker weight), `check-data-workflows`
+(data jobs must regenerate the provenance index), `check-backend-functions`
+(every endpoint the app calls has deployable source). All are in `pnpm
 build` and the blocking CI `Integrity guards` step.
+
+### .migration-backup/ is load-bearing - do not delete
+It holds the ONLY in-repo source for seven Supabase functions the app calls
+(appeal-generator, civic-copilot, airnow-proxy, arcgis-proxy, cdc-proxy,
+gtfs-rt-proxy, npi-proxy). They deploy to Supabase out-of-band, so the repo
+is their only record. It is excluded from every other guard, so a routine
+dead-code sweep will happily delete it - one nearly did. `check-backend-
+functions.mjs` now fails the build if an endpoint the app calls has no source,
+and `backend-function-allowlist.json` records why each exception exists.
 
 ### No fabricated or unlabeled data
 Every rendered number needs a named source. Modeled/estimated values use the

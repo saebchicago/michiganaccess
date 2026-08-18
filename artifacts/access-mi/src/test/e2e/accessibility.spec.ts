@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { injectAxe, checkA11y } from 'axe-playwright';
+import { injectAxe, getViolations } from 'axe-playwright';
 
 const PAGES_TO_TEST = ['/', '/brief', '/compare', '/county', '/environment', '/data-insights'];
 
@@ -13,16 +13,44 @@ for (const path of PAGES_TO_TEST) {
     // Give React a moment to render, but don't block on external API calls
     await page.waitForLoadState('networkidle', { timeout: 8000 }).catch(() => {});
     await injectAxe(page);
-    await checkA11y(
-      page,
-      undefined,
-      {
-        detailedReport: true,
-        detailedReportOptions: { html: true },
-        includedImpacts: ['critical', 'serious'],
-      } as any,
-      false,
+
+    // getViolations + an explicit assertion rather than checkA11y, so a
+    // failure names the rule, its impact, and the offending selectors in the
+    // CI log. checkA11y's assertion prints only "1 !== 0"; when /environment
+    // failed on 2026-08-17 the log gave no way to tell which rule broke, and
+    // the page could not be reproduced locally because it renders live AQI
+    // data. Same strictness, diagnosable output.
+    // getViolations does NOT honour `includedImpacts` - it returns every
+    // impact level - so the filter is applied here. Passing the option and
+    // trusting it silently promotes this gate from critical/serious to
+    // all-impacts, which fails pages that are meant to pass (e.g. /compare
+    // reports a moderate "region" violation).
+    const BLOCKING_IMPACTS = ['critical', 'serious'];
+    const allViolations = await getViolations(page);
+    const violations = allViolations.filter(
+      (v) => v.impact && BLOCKING_IMPACTS.includes(v.impact),
     );
+
+    if (violations.length > 0) {
+      for (const v of violations) {
+        console.error(
+          `[a11y] ${path} ${v.impact?.toUpperCase()} ${v.id}: ${v.help}\n` +
+            `       ${v.helpUrl}\n` +
+            v.nodes
+              .map(
+                (n) =>
+                  `       target: ${JSON.stringify(n.target)}\n` +
+                  `       ${(n.failureSummary ?? '').replace(/\n/g, '\n       ')}`,
+              )
+              .join('\n'),
+        );
+      }
+    }
+
+    expect(
+      violations.map((v) => `${v.impact}:${v.id}`),
+      `critical/serious a11y violations on ${path}`,
+    ).toEqual([]);
   });
 }
 

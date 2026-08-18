@@ -17,7 +17,7 @@
 | Cross-Domain Indicators | cross-domain-indicators.ts | 83 | VERIFIED (ACS 2022 stated inline) | Live |
 | ALICE Economic Hardship | aliceData.ts | 8 + statewide | VERIFIED (source field per record) | Partial - major counties only |
 | Source Manifest | sourceManifest.ts | Statewide | VERIFIED/false per claim | 26 claims total |
-| Sources Registry | sourcesRegistry.ts | Statewide | Named org per entry | 41 sources |
+| Sources Registry | sourcesRegistry.ts | Statewide | Named org per entry | `SOURCES_TOTAL` feeds / `PUBLISHERS_TOTAL` publishers (both derived; see platformConstants.ts) |
 
 ---
 
@@ -51,10 +51,18 @@
 **Fix:** Add `/ask` route and `CivicAskPage`.  
 **Effort:** 1 hour (mostly included in GAP 3).
 
-## GAP 7 - LOW: Netlify chat-mistral function lives in migration-backup
-**Impact:** Unclear whether the Mistral proxy is active in production. If not, AccessChat silently fails.  
-**Fix:** Out of scope for this branch - tracked separately. AccessChat degrades with an error message.  
-**Effort:** Not addressed here.
+## GAP 7 - RESOLVED 2026-08-17: Netlify chat-mistral function lived in migration-backup
+**Impact (confirmed, and worse than the LOW rating suggested):** Netlify deploys from
+`netlify/functions/` and `netlify.toml` sets no `[functions]` override, so the endpoint
+`/.netlify/functions/chat-mistral` - called from `AccessChat.tsx` in four places - returned
+404 in production. "Ask Access Michigan" could not work at all.
+**Fix:** `chat-mistral.js` promoted into `netlify/functions/` so it is bundled and deployed.
+Its `catch` block was also malformed - it set `body` twice, omitted the `statusCode` Netlify
+requires, and returned `detail: err.message` to the browser - and was corrected in the same
+change. Requires `MISTRAL_API_KEY` in the Netlify environment; without it the function now
+returns a clean 500 naming the missing key rather than a 404.
+**Guarded by:** `scripts/check-backend-functions.mjs` fails the build if any
+`.netlify/functions/<name>` the app calls has no deployable source.
 
 ## GAP 8 - LOW: ALICE data covers only 8 counties
 **Impact:** For 75 rural/suburban counties, `getALICEByCounty()` returns null. Query engine must degrade gracefully.  
@@ -74,7 +82,7 @@
 
 ## Gaps Not Addressed (out of scope)
 
-- GAP 7 - Netlify chat-mistral function status (separate ops issue)
+- ~~GAP 7 - Netlify chat-mistral function status (separate ops issue)~~ **RESOLVED 2026-08-17** - the function was never deployed at all; promoted into netlify/functions/ and now guarded. See GAP 7 above.
 - GAP 8 - Partial: ALICE statewide fallback added, but county-level data extension requires a separate data-refresh pass
 
 ---

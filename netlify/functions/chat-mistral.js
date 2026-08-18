@@ -128,11 +128,15 @@ export async function handler(event) {
       body: JSON.stringify({ reply }),
     };
   } catch (err) {
+    // Log server-side only. The previous version of this block was malformed:
+    // it set `body` twice (the first was dead), omitted `statusCode` entirely
+    // - which Netlify requires - and returned `detail: err.message` to the
+    // browser, leaking internal error text. Details stay in the function log.
     console.error('chat-mistral error:', err);
     return {
-            body: JSON.stringify({ error: 'AI service error' }),
+      statusCode: 500,
       headers: getCors(event),
-      body: JSON.stringify({ error: 'AI service error', detail: err.message }),
+      body: JSON.stringify({ error: 'AI service error' }),
     };
   }
 }

@@ -795,3 +795,133 @@ production preview. Testing the real bundle would be more representative and
 faster per route - it is what the Lighthouse job exists to do - but switching
 changes what the suite covers, so it is a deliberate decision rather than a
 drive-by fix.
+
+---
+
+## Gap closure and debt cleanup (2026-08-17)
+
+### P0: the freshness guard broke main, and the guard was right
+
+`build-data.yml` ran on schedule, refreshed
+`acs-broadband-county.generated.json`, bumped its `provenance.ingested_at`
+from 2026-08-10 to 2026-08-17, and committed the dataset **without**
+`provenance-index.generated.json`. `dataFreshness.ts` derives `lastPulled`
+from that index, so the two disagreed and `check-data-freshness.mjs` failed -
+turning every `pnpm build` and CI Integrity-guards run red.
+
+The guard behaved correctly; the workflow was incomplete. Introduced in #196,
+which added the index and taught only the new `dataset-refresh.yml` to
+regenerate it, leaving the pre-existing `build-data.yml` with the same trap.
+
+Fixed by regenerating the index, adding the regeneration step and the index
+path to `build-data.yml`, and closing the class with
+`scripts/check-data-workflows.mjs`: any workflow staging a dataset that
+appears in the index must run the generator and stage the index too. Its
+scope is derived from the index itself rather than pattern-matched, after a
+first revision treated every `*.generated.json` as a dataset and failed on
+`source-link-check.yml` (a link-reachability report with no `provenance` block
+at all). Mutation-proven against both the exact 2026-08-17 bug and the
+forgot-to-stage variant.
+
+### The near-miss: .migration-backup/ is production source
+
+The dead-code sweep in #196 removed 82 unreachable modules. Continuing that
+work, `.migration-backup/` looked like the obvious next target: 901 tracked
+files, 24MB, larger than the built site, referenced by no code, excluded from
+every guard. It was staged for deletion.
+
+`threat_model.md` and `GAPS.md` stopped it. That tree holds the **only
+in-repo source** for seven Supabase functions the app calls in production -
+`appeal-generator`, `civic-copilot`, `airnow-proxy`, `arcgis-proxy`,
+`cdc-proxy`, `gtfs-rt-proxy`, `npi-proxy` - which deploy to Supabase
+out-of-band and therefore exist nowhere else in version control.
+
+Kept, and the hazard made explicit rather than left to the next person's luck:
+`scripts/check-backend-functions.mjs` fails the build if any endpoint the app
+calls has no source, `backend-function-allowlist.json` records why each
+exception exists, and CLAUDE.md carries a do-not-delete note. The lesson is
+general: "referenced by no code" is not the same as "safe to delete" when the
+code in question is deployed from somewhere else.
+
+### GAP 7 was not LOW - the chat was simply broken
+
+`AccessChat.tsx` calls `/.netlify/functions/chat-mistral` in four places.
+Netlify deploys from `netlify/functions/` and `netlify.toml` sets no
+`[functions]` override, so with the source sitting only in
+`.migration-backup/netlify/functions/`, that endpoint returned 404. "Ask
+Access Michigan" could not work at all. GAPS.md rated this LOW and "out of
+scope - AccessChat degrades with an error message"; the degradation *was* the
+symptom.
+
+Promoted into `netlify/functions/` on the owner's decision. Reading it before
+shipping found a second defect in the `catch` block: it set `body` twice (the
+first dead), omitted the `statusCode` Netlify requires, and returned
+`detail: err.message` to the browser - leaking internal error text from a
+function that otherwise takes care to keep the API key server-side. Corrected
+in the same change; details now stay in the function log.
+
+Needs `MISTRAL_API_KEY` in the Netlify environment. Without it the function
+returns a clean 500 naming the missing key rather than a 404.
+
+### Stale numbers in the documentation
+
+`CLAIMS.md` quoted "One platform. 41 verified sources." as the literal
+AboutPage string while its own Evidence column said the value is a dynamic
+import - and the registry had since moved to 43 and then 49. `GAPS.md`
+recorded "41 sources".
+
+Both now quote the derivation rather than a rendered instance
+(`${DATA_SOURCE_DISPLAY}`, `SOURCES_TOTAL` / `PUBLISHERS_TOTAL`), which
+removes the drift surface instead of policing it. `docs/data-source-
+candidates.md` is a dated PR analysis whose baseline was genuinely 41 at the
+time; rewriting it would falsify a record, so it carries a superseded note.
+
+### Also removed
+
+Root `src/` - two orphaned Supabase files (`client.ts`, `types.ts`) shadowed
+by the app's own copies under `artifacts/access-mi/src/integrations/supabase/`.
+Root `tsconfig.json` has `"files": []` and references only `lib/*`, so nothing
+compiled them and no import resolved to them. The root `types.ts` carried two
+table types the app's copy lacks (`dataset_registry`,
+`maternal_infant_health`); Supabase types are regenerable, and neither table
+is queried by the app.
+
+### The a11y gate could not say what it caught (2026-08-17)
+
+`e2e` failed on PR #199: `/environment has zero critical/serious violations`,
+206 passed, 1 failed. The log said only:
+
+```
+AssertionError: 1 accessibility violation was detected
+1 !== 0
+```
+
+No rule, no impact, no selector. Diagnosing it meant a local reproduction -
+which passed with zero violations, because `/environment` renders live AQI
+data that is reachable from a GitHub runner and not from the build
+environment. The failure was real and unreproducible at the same time, and
+the test had thrown away the only evidence.
+
+Not caused by that PR: its diff touches no rendering code at all. The single
+`src/` change is one date inside `provenance-index.generated.json`, which
+feeds `dataFreshness.ts` and renders on /methodology and /about;
+`/environment` references none of `DataFreshnessDashboard`, `dataFreshness`,
+`DATA_FRESHNESS`, or the index.
+
+`accessibility.spec.ts` now collects violations with `getViolations` and
+asserts explicitly, logging rule id, impact, help URL, offending selectors and
+axe's own fix summary before failing. Same gate, evidence retained.
+
+Two things worth recording from writing it:
+
+- **`getViolations` ignores `includedImpacts`.** It returns every impact
+  level. Passing the option and trusting it silently promoted the gate from
+  critical/serious to all-impacts and failed `/compare`, which reports a
+  moderate `region` violation and is meant to pass. The filter is applied
+  explicitly now, with a comment saying why.
+- The diagnostic path was verified by forcing a failure (temporarily adding
+  `moderate` to the blocking set) and confirming the log names the rule,
+  the target selector and the remedy - rather than assuming it would.
+
+The underlying `/environment` violation remains unidentified and is
+data-dependent. The next occurrence will name itself.
