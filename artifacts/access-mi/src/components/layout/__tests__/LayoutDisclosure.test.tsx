@@ -111,14 +111,14 @@ describe("Footer  -  D1 independence disclosure", () => {
 });
 
 describe("Header  -  D2 tagline", () => {
-  it("renders 'Independent Michigan civic intelligence platform.' tagline in the logo lockup", () => {
+  it("renders the civic-intelligence tagline in the logo lockup", () => {
     render(
       <MemoryRouter>
         <Header />
       </MemoryRouter>,
     );
     expect(
-      screen.getByText("Independent Michigan civic intelligence platform."),
+      screen.getByText("Independent civic intelligence · Michigan-wide"),
     ).toBeInTheDocument();
   });
 
@@ -132,7 +132,7 @@ describe("Header  -  D2 tagline", () => {
       name: /Access Michigan Home/i,
     });
     expect(homeLink).toContainElement(
-      screen.getByText("Independent Michigan civic intelligence platform."),
+      screen.getByText("Independent civic intelligence · Michigan-wide"),
     );
   });
 });

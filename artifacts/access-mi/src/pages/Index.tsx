@@ -36,6 +36,14 @@ const NeedCapacityCard = lazy(() =>
   })),
 );
 
+// Keeps the HRSA county payload out of the homepage's critical bundle while
+// still deriving every displayed oral-health metric from the source extract.
+const OralHealthIntelligence = lazy(() =>
+  import("@/components/home/OralHealthIntelligence").then((m) => ({
+    default: m.OralHealthIntelligence,
+  })),
+);
+
 export type PersonaView = "resident" | "professional";
 
 // ─── Editorial palette (locked from the redesign direction) ───────────────
@@ -825,6 +833,16 @@ const Index = () => {
           <EditorialHero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
           <IntentCardsSection mode={mode} />
           <NeedHelpBand />
+          <Suspense
+            fallback={
+              <div
+                className="container mx-auto mb-14 min-h-64 max-w-6xl animate-pulse bg-muted/30"
+                aria-hidden="true"
+              />
+            }
+          >
+            <OralHealthIntelligence />
+          </Suspense>
           <IntelligenceBriefing />
           <WorthALookRail />
           <ExploreBand />
