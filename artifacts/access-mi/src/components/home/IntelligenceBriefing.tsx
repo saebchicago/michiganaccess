@@ -1,10 +1,19 @@
+import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { WEEKLY_INSIGHTS } from "@/data/insights";
 import { DATA_STORIES } from "@/data/data-stories";
 import { MICHIGAN_TRENDS } from "@/data/michigan-trends";
-import { TrendChart } from "@/components/charts/TrendChart";
+// Lazy: TrendChart pulls recharts (the ~500KB vendor-charts chunk), and
+// this briefing is on the eagerly-loaded homepage. Splitting it keeps the
+// chart out of the homepage's critical path; the precache total is
+// unchanged (the chunk was already precached for the dashboard routes).
+const TrendChart = lazy(() =>
+  import("@/components/charts/TrendChart").then((m) => ({
+    default: m.TrendChart,
+  })),
+);
 import { classify } from "@/lib/trend";
 import { EDITORIAL as C } from "@/components/home/editorialTheme";
 
@@ -144,15 +153,25 @@ export default function IntelligenceBriefing() {
               {FEATURED_TREND.unit}
             </p>
           </div>
-          <TrendChart
-            data={trendPoints}
-            direction="down_is_better"
-            unit={FEATURED_TREND.unit}
-            height={110}
-            overrideColor={C.emeraldMid}
-            classification={trendClassification}
-            ariaLabel={`${FEATURED_TREND.label} trend, ${trendPoints[0].vintage} to ${trendPoints[trendPoints.length - 1].vintage}`}
-          />
+          <Suspense
+            fallback={
+              <div
+                className="h-[110px] w-full animate-pulse rounded"
+                style={{ backgroundColor: `${C.emerald}0D` }}
+                aria-hidden="true"
+              />
+            }
+          >
+            <TrendChart
+              data={trendPoints}
+              direction="down_is_better"
+              unit={FEATURED_TREND.unit}
+              height={110}
+              overrideColor={C.emeraldMid}
+              classification={trendClassification}
+              ariaLabel={`${FEATURED_TREND.label} trend, ${trendPoints[0].vintage} to ${trendPoints[trendPoints.length - 1].vintage}`}
+            />
+          </Suspense>
           <p
             className="mt-2 text-xs leading-relaxed"
             style={{ color: `${C.emerald}B3` }}

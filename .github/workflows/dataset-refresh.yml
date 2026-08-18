@@ -126,6 +126,17 @@ jobs:
           node scripts/check-plausibility.mjs
           node scripts/check-county-facilities.mjs
 
+      - name: Verify the refreshed data still passes the unit suite
+        # The 2026-08-18 run committed a legitimate catalog expansion (CDC
+        # PLACES 17 -> 40 measures) that a dataset test still pinned, and
+        # main went red on the very next push. Guards alone do not cover
+        # dataset<->test agreement; the suite does. If this fails, nothing
+        # is committed: the data stays at its previous values, the workflow
+        # goes red, and the derived freshness registry reports the staleness
+        # honestly until a human reconciles the test with the new shape.
+        working-directory: artifacts/access-mi
+        run: pnpm check:tests
+
       - name: Commit if changed
         run: |
           git config user.name "data-bot"

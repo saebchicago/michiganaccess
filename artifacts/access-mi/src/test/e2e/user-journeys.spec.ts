@@ -13,8 +13,8 @@ test.describe('AccessMI User Journeys', () => {
   // The signal-card / trend-indicator / explore-question testids belonged
   // to the pre-redesign homepage. J1/J2 now assert the equivalents in the
   // editorial redesign: the masthead + need-vs-capacity band above the
-  // fold, and the bridge-chip pathways as the click-through affordances.
-  // (ExploreQuestionsPanel moved to /about.)
+  // fold, and the intent-card destinations as the click-through
+  // affordances. (ExploreQuestionsPanel moved to /about.)
   test('J1: homepage shows intelligence signals above fold', async ({ page }) => {
     await expect(
       page.getByRole('heading', { name: /local data for/i }),
@@ -24,10 +24,10 @@ test.describe('AccessMI User Journeys', () => {
     ).toBeVisible();
   });
 
-  test('J2: bridge pathways navigate to real pages', async ({ page }) => {
-    const chips = page.locator('section[aria-labelledby="bridge-heading"] a');
-    await expect(chips.first()).toBeVisible();
-    await chips.first().click();
+  test('J2: intent-card pathways navigate to real pages', async ({ page }) => {
+    const links = page.locator('section[aria-labelledby="intent-heading"] a');
+    await expect(links.first()).toBeVisible();
+    await links.first().click();
     await page.waitForLoadState('networkidle');
     expect(new URL(page.url()).pathname).not.toBe('/');
   });

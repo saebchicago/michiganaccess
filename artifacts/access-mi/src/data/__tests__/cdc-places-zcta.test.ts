@@ -7,8 +7,23 @@ import {
   getPlacesMeasure,
 } from "../cdc-places-zcta";
 import { MI_ZCTA_CODES } from "../mi-zctas";
+import { ROUTE_META } from "@/config/routeMeta";
 
-const EXPECTED_MEASURE_IDS = [
+/**
+ * The measure catalog is owned by the ingest pipeline (mi-federal-data's
+ * MEASURES, written into the generated JSON by
+ * scripts/refresh-cdc-places-zcta.mjs), so this suite derives the id list
+ * from the dataset instead of pinning it: the 2026-08-18 scheduled refresh
+ * expanded the catalog from 17 to 40 measures (the count the platform's
+ * copy had claimed all along) and the old hardcoded pin turned that
+ * legitimate refresh into a red main. What stays pinned:
+ *  - CORE_MEASURE_IDS: the original 17 measures existing pages rely on.
+ *    A refresh that DROPS one of these still fails loudly.
+ *  - The category vocabulary, closed below.
+ *  - The routeMeta copy anchor: the "N ... measures" figure in the
+ *    /zip-intelligence prerender copy must equal the live catalog length.
+ */
+const CORE_MEASURE_IDS = [
   "diabetes",
   "obesity",
   "highBloodPressure",
@@ -27,6 +42,8 @@ const EXPECTED_MEASURE_IDS = [
   "physicalHealthNotGood",
   "generalHealthFairPoor",
 ];
+
+const CATALOG_MEASURE_IDS = CDC_PLACES_MEASURES.map((m) => m.id);
 
 describe("cdc-places-zcta provenance", () => {
   it("carries the source name, dataset id, and Socrata rowsUpdated timestamp", () => {
@@ -51,18 +68,56 @@ describe("cdc-places-zcta provenance", () => {
 });
 
 describe("cdc-places-zcta measure catalog", () => {
-  it("publishes exactly the 17 agreed measure ids", () => {
-    const ids = CDC_PLACES_MEASURES.map((m) => m.id).sort();
-    expect(ids).toEqual([...EXPECTED_MEASURE_IDS].sort());
-    expect(CDC_PLACES_ZCTA_PROVENANCE.measure_count).toBe(17);
+  it("still publishes every core measure id", () => {
+    const ids = new Set(CATALOG_MEASURE_IDS);
+    for (const id of CORE_MEASURE_IDS) {
+      expect(ids.has(id), `core measure ${id} dropped from the catalog`).toBe(
+        true,
+      );
+    }
+  });
+
+  it("ids are unique and measure_count matches the catalog", () => {
+    expect(new Set(CATALOG_MEASURE_IDS).size).toBe(CATALOG_MEASURE_IDS.length);
+    expect(CDC_PLACES_ZCTA_PROVENANCE.measure_count).toBe(
+      CATALOG_MEASURE_IDS.length,
+    );
+    expect(CATALOG_MEASURE_IDS.length).toBeGreaterThanOrEqual(
+      CORE_MEASURE_IDS.length,
+    );
   });
 
   it("every measure has a category from the allowed set and a PLACES field", () => {
-    const cats = new Set(["chronic", "behavioral", "preventive", "status"]);
+    const cats = new Set([
+      "chronic",
+      "behavioral",
+      "preventive",
+      "status",
+      "access",
+      "disability",
+      "sdoh",
+    ]);
     for (const m of CDC_PLACES_MEASURES) {
-      expect(cats.has(m.category), m.id).toBe(true);
+      expect(cats.has(m.category), `${m.id}: unknown category ${m.category}`).toBe(true);
       expect(m.places_field).toMatch(/_CrudePrev$/);
       expect(m.value_label).toBe("MODELED");
+    }
+  });
+
+  it("the /zip-intelligence copy claims exactly the catalog's measure count", () => {
+    // Claims-anchor rule: a rendered number needs a live source. The
+    // prerender copy for /zip-intelligence advertises the measure count;
+    // if the catalog grows or shrinks again, this fails until the copy
+    // is updated with it.
+    const meta = ROUTE_META.find((r) => r.path === "/zip-intelligence");
+    expect(meta, "/zip-intelligence routeMeta entry").toBeDefined();
+    for (const text of [meta!.description, meta!.summary ?? ""]) {
+      const m = text.match(/(\d+)\s+(?:CDC PLACES|health)/);
+      if (m) {
+        expect(Number(m[1]), `stale measure count in: ${text}`).toBe(
+          CATALOG_MEASURE_IDS.length,
+        );
+      }
     }
   });
 });
@@ -80,9 +135,9 @@ describe("cdc-places-zcta records", () => {
     }
   });
 
-  it("every record carries all 17 measure ids (present or null)", () => {
+  it("every record carries every catalog measure id (present or null)", () => {
     for (const r of CDC_PLACES_ZCTA_RECORDS) {
-      for (const id of EXPECTED_MEASURE_IDS) {
+      for (const id of CATALOG_MEASURE_IDS) {
         expect(r.measures[id], `${r.zcta5} missing ${id}`).toBeDefined();
       }
     }
@@ -90,7 +145,7 @@ describe("cdc-places-zcta records", () => {
 
   it("crudePrevalence values are null or between 0 and 100", () => {
     for (const r of CDC_PLACES_ZCTA_RECORDS) {
-      for (const id of EXPECTED_MEASURE_IDS) {
+      for (const id of CATALOG_MEASURE_IDS) {
         const v = r.measures[id].crudePrevalence;
         if (v === null) continue;
         expect(v, `${r.zcta5} ${id}`).toBeGreaterThanOrEqual(0);
@@ -101,7 +156,7 @@ describe("cdc-places-zcta records", () => {
 
   it("ci95 low <= crudePrev <= high when all three are present", () => {
     for (const r of CDC_PLACES_ZCTA_RECORDS) {
-      for (const id of EXPECTED_MEASURE_IDS) {
+      for (const id of CATALOG_MEASURE_IDS) {
         const m = r.measures[id];
         if (m.crudePrevalence === null || m.ci95 === null) continue;
         expect(m.ci95.low, `${r.zcta5} ${id}`).toBeLessThanOrEqual(
@@ -115,7 +170,7 @@ describe("cdc-places-zcta records", () => {
   it("suppressed count matches the number of records with all-null measures", () => {
     let allNullCount = 0;
     for (const r of CDC_PLACES_ZCTA_RECORDS) {
-      const anyPresent = EXPECTED_MEASURE_IDS.some(
+      const anyPresent = CATALOG_MEASURE_IDS.some(
         (id) => r.measures[id].crudePrevalence !== null,
       );
       if (!anyPresent) allNullCount++;

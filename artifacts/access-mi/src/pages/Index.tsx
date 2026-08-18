@@ -15,6 +15,12 @@ import {
 } from "@/components/shared/ProvenanceTag";
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import {
+  getFeaturedRail,
+  getIntentCards,
+  getSubjectCounts,
+  getLibrarySize,
+} from "@/components/home/homeDestinations";
 import { AI_CHAT_ENABLED } from "@/config/aiChat";
 
 // Lazy chat, gated by env flag (unchanged behavior).
@@ -22,13 +28,8 @@ const AccessChat = lazy(() =>
   import("@/components/AccessChat").then((m) => ({ default: m.AccessChat })),
 );
 
-// Lazy so their raw JSON datasets (trendSeries.json ~117 KB,
-// hrsa-hpsa-county.generated.json ~70 KB) split out of the eager
-// homepage chunk; these two widgets are the only reason those files
-// were in it.
-const UninsuredSparkline = lazy(
-  () => import("@/components/county/UninsuredSparkline"),
-);
+// Lazy so its raw JSON dataset (hrsa-hpsa-county.generated.json ~70 KB)
+// splits out of the eager homepage chunk.
 const NeedCapacityCard = lazy(() =>
   import("@/components/shared/NeedCapacityCard").then((m) => ({
     default: m.NeedCapacityCard,
@@ -44,83 +45,6 @@ export type PersonaView = "resident" | "professional";
 // lives in components/home/editorialTheme.ts, shared with the homepage
 // sections that render outside this file.
 const C = EDITORIAL;
-
-// ─── Three doors (Understand / Visualize / Belong) ──────────────────────────
-// The homepage's three-pillar taxonomy. Each door reuses existing, already-
-// labeled platform data - no agent-assigned provenance labels, no invented
-// figures. Understand -> composite ZIP score (MODELED, via /zip-intelligence
-// and the hero ZIP input above). Visualize -> a real ACS trend sparkline
-// (VERIFIED, from static trendSeries data). Belong -> civic power; its
-// uncontested-races figure is source-attributed but does not yet carry a
-// formal provenance badge, so it is disclosed as such rather than labeled.
-
-type DoorProvenance = "VERIFIED" | "MODELED" | "PROJECTED" | null;
-
-type Door = {
-  numeral: string;
-  kicker: string;
-  title: string;
-  description: string;
-  href: string;
-  cta: string;
-  provenance: DoorProvenance;
-};
-
-const DOORS: Door[] = [
-  {
-    numeral: "I",
-    kicker: "Understand",
-    title: "Understand your place",
-    description:
-      "Enter any Michigan ZIP for a composite community access score, built from verified public health and economic data and traceable to every source.",
-    href: "/zip-intelligence",
-    cta: "Look up your ZIP",
-    provenance: "MODELED",
-  },
-  {
-    numeral: "II",
-    kicker: "Visualize",
-    title: "See the trend",
-    description:
-      "Watch how coverage, population, and access are changing across all 83 counties over time - not just today's snapshot.",
-    href: "/data-and-insights",
-    cta: "Open the dashboards",
-    provenance: "VERIFIED",
-  },
-  {
-    numeral: "III",
-    kicker: "Belong",
-    title: "Find your civic role",
-    description:
-      "Most local races in Michigan go uncontested. See where your community needs candidates, board members, and neighbors to step up.",
-    href: "/civic-power",
-    cta: "Explore civic power",
-    provenance: null,
-  },
-];
-
-// Resource-bridge chips: the "help now" pathway kept close at hand
-// without dominating the hero. Every href points to a real existing route.
-const BRIDGE_CHIPS: { label: string; href: string }[] = [
-  { label: "Find care near you", href: "/find-care" },
-  { label: "Financial help", href: "/financial-help" },
-  { label: "Community resources", href: "/resources" },
-  { label: "Insurance and coverage", href: "/insurance-coverage" },
-  { label: "Life event navigator", href: "/benefits" },
-];
-
-// The Resident/Analyst toggle used to only reorder the three door cards, while
-// every chip below stayed resident-oriented - so picking "Analyst" changed
-// almost nothing and nothing on the homepage reached an analyst tool. These are
-// the six that do. Every href points to a real existing route.
-const ANALYST_CHIPS: { label: string; href: string }[] = [
-  { label: "County brief", href: "/brief" },
-  { label: "Ask the data", href: "/ask" },
-  { label: "Compare counties", href: "/compare" },
-  { label: "Compare ZIP codes", href: "/compare-zips" },
-  { label: "Data explorer", href: "/data-explorer" },
-  { label: "Downloads", href: "/downloads" },
-];
 
 // ─── Grain overlay ──────────────────────────────────────────────────────────
 // Very light SVG noise so the cream reads like paper rather than a swatch.
@@ -359,6 +283,62 @@ function EditorialHero({
                   <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
                 </Link>
               </form>
+
+              {/* Question pathways: most people arrive with a question, not
+                  a ZIP. Four real destinations, phrased the way the question
+                  is actually asked. */}
+              <nav
+                className="mt-6 border-t pt-4"
+                style={{ borderColor: `${C.cream}2E` }}
+                aria-label="Start with a question"
+              >
+                <p
+                  className="mb-1 text-[10px] uppercase font-semibold opacity-70"
+                  style={{ letterSpacing: "0.16em" }}
+                >
+                  Or start with a question
+                </p>
+                <ul role="list">
+                  {[
+                    {
+                      q: "Is my drinking water safe?",
+                      href: "/environment/water",
+                    },
+                    {
+                      q: "What help can I get with my energy bill?",
+                      href: "/environment/energy",
+                    },
+                    {
+                      q: "Which local seats have no candidate?",
+                      href: "/civic-power/races",
+                    },
+                    {
+                      q: "Where did federal money land near me?",
+                      href: "/transparency/contractors",
+                    },
+                  ].map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        to={item.href}
+                        className="group flex min-h-[40px] items-center justify-between gap-3 border-b py-2 text-[13.5px] transition-colors focus-visible:outline-none focus-visible:ring-2"
+                        style={{
+                          borderColor: `${C.cream}1F`,
+                          color: `${C.cream}EB`,
+                        }}
+                      >
+                        <span className="group-hover:underline underline-offset-4">
+                          {item.q}
+                        </span>
+                        <ArrowRight
+                          className="h-3.5 w-3.5 shrink-0"
+                          style={{ color: C.goldBright }}
+                          aria-hidden="true"
+                        />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
         </motion.div>
@@ -433,175 +413,248 @@ function NeedHelpBand() {
   );
 }
 
-function ResourceBridgeBand({ mode }: { mode: PersonaView }) {
-  const isAnalyst = mode === "professional";
-  const chips = isAnalyst ? ANALYST_CHIPS : BRIDGE_CHIPS;
+// ─── Intent cards (What are you here for?) ──────────────────────────────────
+// Four concrete intents replace the abstract Understand/Visualize/Belong
+// doors. Card contents come from the route taxonomy via the manifest
+// (getIntentCards resolves lazily inside render - see homeDestinations.ts);
+// this file holds no destination copy of its own. The taxonomy guard pins
+// exactly 3 destinations per intent, so the 4x3 grid cannot silently break.
 
+function IntentCardsSection({ mode }: { mode: PersonaView }) {
+  const cards = getIntentCards();
+  // Analyst mode leads with the analyst tools instead of "get help now".
+  const ordered = mode === "professional" ? [...cards].reverse() : cards;
   return (
     <section
-      className="container mx-auto max-w-6xl px-4 pb-12"
-      aria-labelledby="bridge-heading"
+      className="container mx-auto max-w-6xl px-4 pb-14"
+      aria-labelledby="intent-heading"
     >
-      <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3 mb-4">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
         <h3
-          id="bridge-heading"
+          id="intent-heading"
           className="font-serif text-2xl md:text-3xl"
           style={{ color: C.emerald }}
         >
-          {isAnalyst ? "Start your analysis" : "Need help right now?"}
+          What are you here for?
         </h3>
-        <span
-          className="text-[11px] uppercase font-semibold"
-          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
+        <Link
+          to="/explore"
+          className="inline-flex min-h-[40px] items-center gap-1 text-[11px] font-semibold uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          style={{ color: C.goldInk, letterSpacing: "0.16em" }}
         >
-          {isAnalyst ? "Analyst tools" : "Direct pathways"}
-        </span>
+          Browse everything
+          <ArrowRight className="w-3 h-3" aria-hidden="true" />
+        </Link>
       </div>
-      <ul role="list" className="flex flex-wrap gap-2">
-        {chips.map((chip) => (
-          <li key={chip.href}>
-            <Link
-              to={chip.href}
-              className="inline-flex items-center gap-1.5 px-4 py-2 min-h-[40px] text-sm font-medium border transition-colors focus-visible:outline-none focus-visible:ring-2"
-              style={{
-                borderColor: `${C.emerald}33`,
-                color: C.emerald,
-                backgroundColor: `${C.cream}`,
-              }}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {ordered.map((card, i) => (
+          <motion.article
+            key={card.id}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.4, delay: i * 0.05 }}
+            className="flex h-full flex-col border-l pl-5 py-3"
+            style={{ borderColor: `${C.emerald}1A` }}
+          >
+            <h4
+              className="font-serif text-xl leading-tight"
+              style={{ color: C.emerald }}
             >
-              {chip.label}
-              <ArrowRight
-                className="w-3.5 h-3.5 opacity-60"
-                aria-hidden="true"
-              />
-            </Link>
-          </li>
+              {card.title}
+            </h4>
+            <p
+              className="mt-1.5 text-[13px] leading-relaxed"
+              style={{ color: `${C.emerald}CC` }}
+            >
+              {card.lede}
+            </p>
+            <ul
+              role="list"
+              className="mt-4 border-t pt-1"
+              style={{ borderColor: `${C.emerald}14` }}
+            >
+              {card.destinations.map((d) => (
+                <li key={d.href}>
+                  <Link
+                    to={d.href}
+                    className="group flex min-h-[40px] items-center justify-between gap-2 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
+                    style={{ color: C.emerald }}
+                  >
+                    <span className="font-medium group-hover:underline underline-offset-4">
+                      {d.label}
+                    </span>
+                    <ArrowRight
+                      className="h-3 w-3 shrink-0 opacity-0 transition-opacity group-hover:opacity-70"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.article>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
 
-// ─── Three doors grid (Understand / Visualize / Belong) ─────────────────────
+// ─── Worth a look (editorial picks) ─────────────────────────────────────────
+// The taxonomy's `featured` flags: an editorial pick set, not a popularity
+// measurement. Card copy is each page's ROUTE_META summary. The
+// uncontested-races figure keeps its inline source line exactly as the old
+// Belong door disclosed it.
 
-function ThreeDoorsGrid({ mode }: { mode: PersonaView }) {
+function WorthALookRail() {
+  const featured = getFeaturedRail();
   const miUncontested = STATE_UNCONTESTED_COMPARISON.find(
-    (s) => s.state === "Michigan",
+    (st) => st.state === "Michigan",
   );
-  // Give each reader mode a different first door: Analyst leads with Visualize
-  // (dashboards/trends), Resident leads with Understand (look up your place).
-  // Numerals are position-based below so they stay sequential after reorder.
-  const orderedDoors =
-    mode === "professional" ? [DOORS[1], DOORS[0], DOORS[2]] : DOORS;
-  const NUMERALS = ["I", "II", "III"];
   return (
     <section
-      className="container mx-auto max-w-6xl px-4 pb-16"
-      aria-labelledby="doors-heading"
+      className="container mx-auto max-w-6xl px-4 pb-14"
+      aria-labelledby="featured-heading"
     >
-      <h3 id="doors-heading" className="sr-only">
-        Three ways in: understand, visualize, belong
-      </h3>
-      <div className="grid gap-8 md:grid-cols-3">
-        {orderedDoors.map((d, i) => (
-          <motion.article
-            key={d.title}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.4, delay: i * 0.06 }}
-            className="group flex flex-col h-full pl-6 py-4 border-l"
-            style={{ borderColor: `${C.emerald}1A` }}
+      <div className="mb-5 max-w-2xl">
+        <span
+          className="text-[11px] uppercase font-semibold"
+          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
+        >
+          Worth a look
+        </span>
+        <h3
+          id="featured-heading"
+          className="font-serif text-2xl md:text-3xl mt-1"
+          style={{ color: C.emerald }}
+        >
+          The things people don't know are here.
+        </h3>
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {featured.map((d) => (
+          <Link
+            key={d.href}
+            to={d.href}
+            className="group flex h-full flex-col border p-5 transition-colors hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            style={{ borderColor: `${C.emerald}26`, color: C.emerald }}
           >
-            <div className="mb-4 flex items-start justify-between gap-2">
-              {d.provenance ? (
-                <ProvenanceTag label={d.provenance} />
-              ) : (
-                <span
-                  className="text-[10px] font-semibold uppercase tracking-[0.14em]"
+            <h4 className="font-serif text-xl leading-tight group-hover:underline underline-offset-4">
+              {d.label}
+            </h4>
+            {d.description && (
+              <p
+                className="mt-2 flex-1 text-sm leading-relaxed"
+                style={{ color: `${C.emerald}CC` }}
+              >
+                {d.description}
+              </p>
+            )}
+            {d.href === "/civic-power" && miUncontested && (
+              <div
+                className="mt-3 border-t pt-3"
+                style={{ borderColor: `${C.emerald}14` }}
+              >
+                <p className="font-serif text-3xl leading-none">
+                  {miUncontested.pct}%
+                </p>
+                <p
+                  className="mt-1 text-xs leading-snug"
+                  style={{ color: `${C.emerald}CC` }}
+                >
+                  of Michigan local races ran uncontested (2024).
+                </p>
+                <p
+                  className="mt-1.5 text-[10px] leading-snug"
                   style={{ color: `${C.emerald}bf` }}
                 >
-                  Source-attributed
-                </span>
-              )}
-              <span
-                className="text-xs font-serif italic"
-                style={{ color: `${C.emerald}66` }}
-              >
-                {NUMERALS[i]}
-              </span>
-            </div>
-            <p
-              className="mb-1 text-[11px] font-semibold uppercase tracking-[0.16em]"
-              style={{ color: C.emeraldMid }}
-            >
-              {d.kicker}
-            </p>
-            <h4
-              className="font-serif text-2xl mb-3 leading-tight"
-              style={{ color: C.emerald }}
-            >
-              {d.title}
-            </h4>
-            <p
-              className="text-sm leading-relaxed mb-4"
-              style={{ color: `${C.emerald}B3` }}
-            >
-              {d.description}
-            </p>
-
-            {/* Live preview - existing, already-labeled platform data.
-                Keyed off the stable door identity (kicker), not the numeral,
-                which is now position-based and reorders by persona mode. */}
-            <div className="mb-5 flex-1">
-              {d.kicker === "Visualize" && (
-                <div
-                  className="border-t pt-3"
-                  style={{ borderColor: `${C.emerald}14` }}
-                >
-                  <Suspense fallback={null}>
-                    <UninsuredSparkline county="Wayne" />
-                  </Suspense>
-                </div>
-              )}
-              {d.kicker === "Belong" && miUncontested && (
-                <div
-                  className="border-t pt-3"
-                  style={{ borderColor: `${C.emerald}14` }}
-                >
-                  <p
-                    className="font-serif text-3xl leading-none"
-                    style={{ color: C.emerald }}
-                  >
-                    {miUncontested.pct}%
-                  </p>
-                  <p
-                    className="mt-1 text-xs leading-snug"
-                    style={{ color: `${C.emerald}B3` }}
-                  >
-                    of Michigan local races ran uncontested (2024).
-                  </p>
-                  <p
-                    className="mt-1.5 text-[10px] leading-snug"
-                    style={{ color: `${C.emerald}bf` }}
-                  >
-                    Source: Ballotpedia analysis / Michigan SOS 2024. Formal
-                    provenance label pending.
-                  </p>
-                </div>
-              )}
-            </div>
-
-            <Link
-              to={d.href}
-              className="mt-auto inline-flex items-center gap-1 text-[11px] font-semibold uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                  Source: Ballotpedia analysis / Michigan SOS 2024. Formal
+                  provenance label pending.
+                </p>
+              </div>
+            )}
+            <span
+              className="mt-4 inline-flex items-center gap-1 text-[11px] font-semibold uppercase"
               style={{ color: C.emeraldMid, letterSpacing: "0.16em" }}
             >
-              {d.cta}
+              Open
               <ArrowRight className="w-3 h-3" aria-hidden="true" />
-            </Link>
-          </motion.article>
+            </span>
+          </Link>
         ))}
+      </div>
+    </section>
+  );
+}
+
+// ─── Explore band ───────────────────────────────────────────────────────────
+// Per-subject counts are computed from the same taxonomy-curated index the
+// /explore page renders, so the numbers here can never disagree with the
+// library behind the link.
+
+function ExploreBand() {
+  const counts = getSubjectCounts();
+  const total = getLibrarySize();
+  return (
+    <section
+      className="py-10"
+      style={{ backgroundColor: C.emerald, color: C.cream }}
+      aria-labelledby="explore-band-heading"
+    >
+      <div className="container mx-auto max-w-6xl px-4 grid gap-8 lg:grid-cols-[1fr_1.3fr] lg:items-center">
+        <div>
+          <span
+            className="text-[11px] uppercase font-semibold"
+            style={{ color: C.goldBright, letterSpacing: "0.18em" }}
+          >
+            The full library
+          </span>
+          <h3
+            id="explore-band-heading"
+            className="font-serif text-2xl md:text-3xl mt-2"
+            style={{ color: C.cream }}
+          >
+            {total} destinations, finally browsable.
+          </h3>
+          <p
+            className="mt-2 text-sm leading-relaxed"
+            style={{ color: `${C.cream}C7` }}
+          >
+            Everything on the platform in one searchable index, grouped by
+            subject, with a plain-language line on each.
+          </p>
+          <Link
+            to="/explore"
+            className="mt-5 inline-flex min-h-[44px] items-center gap-1.5 px-5 text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            style={{ backgroundColor: C.gold, color: C.emeraldInk }}
+          >
+            Explore the library
+            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+        <ul role="list" className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {counts.map((subject) => (
+            <li key={subject.id}>
+              <Link
+                to="/explore"
+                className="flex h-full flex-col rounded-md border px-3 py-2.5 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2"
+                style={{ borderColor: `${C.cream}33` }}
+              >
+                <span
+                  className="font-serif text-xl leading-none"
+                  style={{ color: C.goldBright }}
+                >
+                  {subject.count}
+                </span>
+                <span
+                  className="mt-1 text-[11.5px] leading-snug"
+                  style={{ color: `${C.cream}D6` }}
+                >
+                  {subject.label}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -804,10 +857,11 @@ const Index = () => {
           <CountyWelcomeBanner />
           <Masthead mode={mode} onModeChange={setMode} />
           <EditorialHero onZipSubmit={(zip) => navigate(`/zip/${zip}`)} />
+          <IntentCardsSection mode={mode} />
           <NeedHelpBand />
           <IntelligenceBriefing />
-          <ResourceBridgeBand mode={mode} />
-          <ThreeDoorsGrid mode={mode} />
+          <WorthALookRail />
+          <ExploreBand />
           <CountyPicker />
           <ProvenanceStrip />
         </div>

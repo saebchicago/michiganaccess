@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CountyProvider } from "@/contexts/CountyContext";
 import Index from "@/pages/Index";
+import { getLibrarySize } from "@/components/home/homeDestinations";
 
 vi.mock("@/components/layout/Layout", () => ({
   default: ({ children }: { children: ReactNode }) => <div>{children}</div>,
@@ -47,38 +48,70 @@ describe("Index (homepage)", () => {
     ).toHaveAttribute("href", "/find-care");
   });
 
-  it("swaps the resident bridge chips for analyst tools in Analyst mode", async () => {
-    // The Resident/Analyst toggle used to only reorder the three door cards, so
-    // picking "Analyst" changed almost nothing and no homepage affordance
-    // reached an analyst tool.
+  it("renders four intent cards with three taxonomy destinations each", () => {
+    // The old three abstract doors are replaced by four concrete intents.
+    // Contents come from the route taxonomy via getIntentCards(); the
+    // taxonomy guard pins exactly 3 destinations per intent, so this
+    // asserts the wiring, not hand-typed labels.
+    localStorage.clear();
+    renderHomepage();
+
+    const section = screen
+      .getByRole("heading", { name: /what are you here for/i })
+      .closest("section")!;
+    for (const title of [
+      "Get help now",
+      "Understand my place",
+      "Follow the money",
+      "Analyze and export",
+    ]) {
+      expect(within(section).getByText(title)).toBeInTheDocument();
+    }
+    // One taxonomy-assigned destination per intent, resolved by href.
+    for (const href of ["/find-care", "/brief", "/foia", "/data-explorer"]) {
+      expect(
+        within(section)
+          .getAllByRole("link")
+          .some((a) => a.getAttribute("href") === href),
+        `intent cards missing a link to ${href}`,
+      ).toBe(true);
+    }
+  });
+
+  it("Analyst mode reorders the intent cards to lead with analyst tools", async () => {
     localStorage.clear();
     const user = userEvent.setup();
     renderHomepage();
 
-    expect(
-      screen.getByRole("link", { name: /find care near you/i }),
-    ).toBeInTheDocument();
-
     await user.click(screen.getByRole("tab", { name: "Analyst" }));
+    const section = screen
+      .getByRole("heading", { name: /what are you here for/i })
+      .closest("section")!;
+    const headings = within(section)
+      .getAllByRole("heading", { level: 4 })
+      .map((h) => h.textContent);
+    expect(headings[0]).toBe("Analyze and export");
 
-    expect(
-      screen.getByRole("heading", { name: /start your analysis/i }),
-    ).toBeInTheDocument();
-    for (const [name, href] of [
-      [/county brief/i, "/brief"],
-      [/ask the data/i, "/ask"],
-      [/compare counties/i, "/compare"],
-      [/compare zip codes/i, "/compare-zips"],
-      [/data explorer/i, "/data-explorer"],
-      [/downloads/i, "/downloads"],
-    ] as const) {
-      expect(screen.getByRole("link", { name })).toHaveAttribute("href", href);
-    }
-
-    // Resident pathways are still one click away, not removed.
+    // Resident pathways stay one click away, not removed.
     await user.click(screen.getByRole("tab", { name: "Resident" }));
     expect(
-      screen.getByRole("link", { name: /find care near you/i }),
+      within(section)
+        .getAllByRole("link")
+        .some((a) => a.getAttribute("href") === "/find-care"),
+    ).toBe(true);
+  });
+
+  it("explore band counts come from the taxonomy, not literals", () => {
+    localStorage.clear();
+    renderHomepage();
+
+    // The band's total equals the curated-library size the /explore page
+    // renders; anything hand-typed here would be the counts-drift bug the
+    // audit removed everywhere else.
+    expect(
+      screen.getByRole("heading", {
+        name: new RegExp(`${getLibrarySize()} destinations`),
+      }),
     ).toBeInTheDocument();
   });
 

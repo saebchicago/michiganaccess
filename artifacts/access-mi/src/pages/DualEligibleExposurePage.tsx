@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { COUNTIES_COVERED } from "@/config/platformConstants";
 import Layout from "@/components/layout/Layout";
+import KeepExploring from "@/components/shared/KeepExploring";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -449,45 +450,10 @@ export default function DualEligibleExposurePage() {
         </section>
 
         {/* ── Related analyses ── */}
-        <section className="rounded-lg border border-border bg-muted/20 px-5 py-4 space-y-2">
-          <h2 className="text-sm font-semibold text-foreground">
-            Related coverage-at-risk analyses
-          </h2>
-          <ul className="space-y-1 text-sm text-muted-foreground">
-            <li>
-              <Link
-                data-testid="dual-snap-crosslink"
-                to="/data/snap-coverage-at-risk"
-                className="text-primary hover:underline font-medium"
-              >
-                SNAP Coverage at Risk
-              </Link>{" "}
-              - county-level exposure to P.L. 119-21 ABAWD provisions{" "}
-              <Link
-                to="/methodology/snap-coverage-at-risk"
-                className="text-xs text-muted-foreground hover:underline"
-              >
-                (methodology)
-              </Link>
-            </li>
-            <li>
-              <Link
-                data-testid="dual-medicaid-crosslink"
-                to="/data/medicaid-coverage-at-risk"
-                className="text-primary hover:underline font-medium"
-              >
-                Medicaid Coverage at Risk
-              </Link>{" "}
-              - county-level exposure to P.L. 119-21 work requirement provisions{" "}
-              <Link
-                to="/methodology/medicaid-coverage-at-risk"
-                className="text-xs text-muted-foreground hover:underline"
-              >
-                (methodology)
-              </Link>
-            </li>
-          </ul>
-        </section>
+        <KeepExploring
+          currentPath="/data/dual-eligible-exposure"
+          heading="Related coverage-at-risk analyses"
+        />
 
         {/* ── Methodology link ── */}
         <div className="pt-2 border-t border-border flex items-center justify-between gap-4">
