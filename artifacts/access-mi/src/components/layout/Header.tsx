@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
@@ -25,11 +25,11 @@ import SiteSearch, { commandSiteSearch } from "@/components/shared/SiteSearch";
 import { useCounty } from "@/contexts/CountyContext";
 import {
   NAV_GROUPS,
+  getManifestEntry,
   isNavGroup,
   type NavGroup,
   type NavLink as NavLinkType,
 } from "@/routes/manifest";
-import { cn } from "@/lib/utils";
 
 /** Check if current path matches a nav href - supports exact match and prefix match for nested routes */
 function isRouteActive(currentPath: string, href: string): boolean {
@@ -73,7 +73,7 @@ const Header = () => {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4 }}
-        className="bg-background/95 backdrop-blur-md border-b border-border/60"
+        className="relative bg-background/95 backdrop-blur-md border-b border-border/60"
         role="banner"
       >
         <div className="container flex h-16 items-center justify-between">
@@ -108,6 +108,7 @@ const Header = () => {
                   key={link.label}
                   label={link.label}
                   items={(link as NavGroup).children}
+                  panel={(link as NavGroup).panel}
                   currentPath={location.pathname}
                 />
               ) : (
@@ -283,26 +284,45 @@ function DesktopSearchTrigger() {
 }
 
 /**
- * Accessible dropdown nav: click-toggle (not hover), full keyboard support.
- * - Enter/Space toggles open
- * - Escape closes
- * - ArrowDown/ArrowUp navigates items
- * - Tab moves focus naturally; closing on blur-outside
+ * Accessible disclosure nav for the desktop header.
+ *
+ * Click-toggle (not hover) is deliberate: hover menus are hostile to
+ * touch, to switch access, and to anyone with a tremor. The trigger is a
+ * plain aria-expanded disclosure button; the panel is a labelled region
+ * of ordinary links in natural Tab order. This intentionally does NOT use
+ * role="menu"/"menuitem": those imply a linear widget with roving focus,
+ * and a multi-column panel with descriptions is a navigation region, not
+ * a menu widget (see APG disclosure navigation pattern).
+ *
+ * - Enter/Space toggles open (native button behavior)
+ * - ArrowDown from the trigger opens and focuses the first link
+ * - Escape closes and returns focus to the trigger - but note the
+ *   sacrosanct QuickExitBar binds Escape on window as the DV-safety
+ *   panic key (immediate exit to weather.com), so in practice Escape
+ *   leaves the site entirely. These handlers deliberately do NOT call
+ *   stopPropagation: the menu must never swallow the safety key.
+ * - Outside click and route change close
+ *
+ * Entry descriptions are resolved from the route manifest at render time
+ * (summary, else description) - the nav never stores its own copy of
+ * them, so menu text can never drift from the page it points to.
+ * Groups without a `panel` config fall back to a single-column list.
  */
 function DropdownNav({
   label,
   items,
+  panel,
   currentPath,
 }: {
   label: string;
   items: NavLinkType[];
+  panel?: NavGroup["panel"];
   currentPath: string;
 }) {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-  const [focusedIndex, setFocusedIndex] = useState(-1);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   // Close on outside click
   useEffect(() => {
@@ -324,101 +344,60 @@ function DropdownNav({
     setOpen(false);
   }, [currentPath]);
 
-  const toggle = useCallback(() => {
-    setOpen((prev) => {
-      if (!prev) setFocusedIndex(-1);
-      return !prev;
-    });
+  const close = useCallback((refocus: boolean) => {
+    setOpen(false);
+    if (refocus) triggerRef.current?.focus();
   }, []);
 
   const handleTriggerKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      switch (e.key) {
-        case "Enter":
-        case " ":
-          e.preventDefault();
-          toggle();
-          break;
-        case "ArrowDown":
-          e.preventDefault();
-          setOpen(true);
-          setFocusedIndex(0);
-          break;
-        case "Escape":
-          if (open) {
-            e.preventDefault();
-            setOpen(false);
-          }
-          break;
-      }
-    },
-    [open, toggle],
-  );
-
-  const handleItemKeyDown = useCallback(
-    (e: React.KeyboardEvent, index: number) => {
-      switch (e.key) {
-        case "ArrowDown":
-          e.preventDefault();
-          setFocusedIndex(Math.min(index + 1, items.length - 1));
-          break;
-        case "ArrowUp":
-          e.preventDefault();
-          if (index === 0) {
-            setOpen(false);
-            // Return focus to trigger
-            containerRef.current
-              ?.querySelector<HTMLButtonElement>("button")
-              ?.focus();
-          } else {
-            setFocusedIndex(index - 1);
-          }
-          break;
-        case "Escape":
-          e.preventDefault();
-          setOpen(false);
-          containerRef.current
-            ?.querySelector<HTMLButtonElement>("button")
-            ?.focus();
-          break;
-        case "Tab":
-          // Let tab work naturally but close dropdown
-          setOpen(false);
-          break;
-      }
-    },
-    [items.length],
-  );
-
-  // Focus management
-  useEffect(() => {
-    if (open && focusedIndex >= 0) {
-      itemRefs.current[focusedIndex]?.focus();
-    }
-  }, [open, focusedIndex]);
-
-  const handleItemClick = useCallback(
-    (child: NavLinkType) => {
-      setOpen(false);
-      const isAnchor = child.href.includes("#");
-      if (isAnchor) {
-        const [path, hash] = child.href.split("#");
-        if (currentPath === (path || "/")) {
-          document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (open) {
+          panelRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
         } else {
-          navigate(child.href);
+          setOpen(true);
+          // Focus the first link once the panel has rendered.
+          requestAnimationFrame(() => {
+            panelRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+          });
         }
+      } else if (e.key === "Escape" && open) {
+        e.preventDefault();
+        setOpen(false);
       }
     },
-    [currentPath, navigate],
+    [open],
+  );
+
+  const handlePanelKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close(true);
+      }
+    },
+    [close],
   );
 
   const menuId = `nav-menu-${label.toLowerCase().replace(/\s+/g, "-")}`;
+  const byHref = new Map(items.map((child) => [child.href, child]));
+  const columns = panel
+    ? panel.columns.map((col) => ({
+        heading: col.heading,
+        links: col.hrefs
+          .map((href) => byHref.get(href))
+          .filter((c): c is NavLinkType => c !== undefined),
+      }))
+    : [{ heading: null, links: items }];
 
   return (
-    <div className="relative" ref={containerRef}>
+    // NOT position:relative - the panel anchors to the header itself so it
+    // can span the full width. The ref still scopes outside-click closing.
+    <div ref={containerRef}>
       <button
-        onClick={toggle}
+        ref={triggerRef}
+        onClick={() => setOpen((prev) => !prev)}
         onKeyDown={handleTriggerKeyDown}
         className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
           isGroupActive(currentPath, items)
@@ -426,7 +405,6 @@ function DropdownNav({
             : "text-muted-foreground"
         }`}
         aria-expanded={open}
-        aria-haspopup="true"
         aria-controls={menuId}
       >
         {label}
@@ -439,39 +417,94 @@ function DropdownNav({
         {open && (
           <motion.div
             id={menuId}
+            ref={panelRef}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 6 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 top-full mt-1 w-52 rounded-lg border border-border bg-popover p-1.5 shadow-lg z-50"
-            role="menu"
+            onKeyDown={handlePanelKeyDown}
+            className="absolute left-0 right-0 top-full z-50 border-b border-border bg-popover shadow-xl"
             aria-label={label}
           >
-            {items.map((child, index) => (
-              <Link
-                key={child.href + child.label}
-                to={child.href}
-                ref={(el) => {
-                  itemRefs.current[index] = el;
-                }}
-                onClick={() => handleItemClick(child)}
-                onKeyDown={(e) => handleItemKeyDown(e, index)}
-                role="menuitem"
-                tabIndex={open ? 0 : -1}
-                className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
-                  isRouteActive(currentPath, child.href)
-                    ? "font-medium text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                <span>{child.label}</span>
-                {child.badge && (
-                  <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold text-primary leading-none shrink-0">
-                    {child.badge}
-                  </span>
-                )}
-              </Link>
-            ))}
+            <div
+              className={`container grid max-w-6xl gap-x-8 gap-y-4 py-5 ${
+                panel
+                  ? "grid-cols-[repeat(3,minmax(0,1fr))_minmax(0,0.9fr)]"
+                  : "max-w-xs grid-cols-1"
+              }`}
+            >
+              {columns.map((col, colIndex) => (
+                <div key={col.heading ?? colIndex}>
+                  {col.heading && (
+                    <h3 className="mb-2 border-b border-border pb-2 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      {col.heading}
+                    </h3>
+                  )}
+                  <ul className="space-y-0.5">
+                    {col.links.map((child) => {
+                      const entry = getManifestEntry(child.href);
+                      const description = entry?.summary ?? entry?.description;
+                      return (
+                        <li key={child.href + child.label}>
+                          <Link
+                            to={child.href}
+                            onClick={() => close(false)}
+                            className={`block rounded-md px-2.5 py-2 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 ${
+                              isRouteActive(currentPath, child.href)
+                                ? "text-primary"
+                                : "text-foreground"
+                            }`}
+                            aria-current={
+                              isRouteActive(currentPath, child.href)
+                                ? "page"
+                                : undefined
+                            }
+                          >
+                            <span className="flex items-center gap-2 text-sm font-medium">
+                              {child.label}
+                              {child.badge && (
+                                <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-bold text-primary leading-none shrink-0">
+                                  {child.badge}
+                                </span>
+                              )}
+                            </span>
+                            {description && (
+                              <span className="mt-0.5 block text-xs leading-snug text-muted-foreground">
+                                {description}
+                              </span>
+                            )}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
+              {panel && (
+                <div className="flex flex-col rounded-lg border border-border bg-muted/40 p-4">
+                  <h3 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                    Start here
+                  </h3>
+                  <p className="mt-2 text-sm font-semibold text-foreground">
+                    {panel.promo.title}
+                  </p>
+                  <p className="mt-1 flex-1 text-xs leading-relaxed text-muted-foreground">
+                    {panel.promo.body}
+                  </p>
+                  <Link
+                    to={panel.promo.href}
+                    onClick={() => close(false)}
+                    className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
+                  >
+                    {panel.promo.cta}
+                    <ChevronDown
+                      className="h-3.5 w-3.5 -rotate-90"
+                      aria-hidden="true"
+                    />
+                  </Link>
+                </div>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

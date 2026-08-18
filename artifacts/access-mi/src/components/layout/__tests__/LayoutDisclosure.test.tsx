@@ -72,6 +72,7 @@ vi.mock("@/contexts/CountyContext", () => ({
 vi.mock("@/routes/manifest", () => ({
   NAV_GROUPS: [],
   isNavGroup: () => false,
+  getManifestEntry: () => undefined,
 }));
 
 // ── imports after mocks ───────────────────────────────────────────────────────
