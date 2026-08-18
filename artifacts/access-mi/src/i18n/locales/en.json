@@ -46,7 +46,7 @@
   },
   "access": {
     "sectionTitle": "Where do you want to start?",
-    "sectionSubtitle": "Three paths to what Michigan residents need most.",
+    "sectionSubtitle": "Four ways into what Michigan residents need most.",
     "housingTitle": "Housing & Stability",
     "housingDesc": "Emergency shelter, rental assistance, utility programs, and pathways to stable housing across Michigan.",
     "foodTitle": "Food & Essential Support",
@@ -120,7 +120,7 @@
     "stayInformedDesc": "Diabetes rates, energy burden, air quality, opioid data, pedestrian infrastructure - county by county, updated from CDC, CMS, and USGS."
   },
   "featuredTopics": {
-     "title": "Featured Topics",
+    "title": "Featured Topics",
     "subtitle": "Stay informed about what matters most to Michigan families",
     "seasonalHealth": "Seasonal Health",
     "fluTitle": "Flu Season: Where to Get Vaccinated",
@@ -420,7 +420,7 @@
     "technologyTitle": "Technology & Scalability",
     "technologySubtitle": "Built for growth and sustainability",
     "limitationsTitle": "Limitations & Disclaimers",
-     "portfolioTitle": "Open Civic Infrastructure",
+    "portfolioTitle": "Open Civic Infrastructure",
     "portfolioDesc": "Designed to be replicated. {{sourceCount}} public data sources. Any state can build this."
   },
   "methodologyPage": {
