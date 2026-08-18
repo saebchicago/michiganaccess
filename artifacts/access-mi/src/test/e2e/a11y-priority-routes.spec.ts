@@ -20,6 +20,7 @@ const PRIORITY_ROUTES = [
   '/about',
   '/data',
   '/data-explorer',
+  '/explore',
   '/disaster-history',
   '/equity',
   '/energy-burden',

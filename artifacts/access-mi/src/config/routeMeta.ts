@@ -376,6 +376,422 @@ export const ROUTE_META: RouteMeta[] = [
     summary:
       "Health, housing, and food-security signals by Michigan county.",
   },
+  {
+    path: "/explore",
+    title: "Explore - Access Michigan",
+    description:
+      "Every destination on the platform in one searchable index: health, money, housing, environment, food, civic power, public spending, and analyst tools.",
+    h1: "Everything on the platform, in one place.",
+    summary:
+      "The full library, grouped by subject, searchable in plain language.",
+  },
+  // --- Discovery backfill (2026-08-18) -------------------------------------
+  // Entries for every curated destination in src/config/routeTaxonomy.ts that
+  // previously had no prerender metadata. title/description are the page's own
+  // usePageMeta() strings at the time of writing; h1 is the page's rendered
+  // heading; summary is the short card/menu line. All values must stay plain
+  // double-quoted literals: scripts/prerender-meta.mjs parses this file with a
+  // regex and silently drops anything else.
+  {
+    path: "/closure-watch",
+    title: "Michigan Closure Watch",
+    description:
+      "Hospital, service line, and FQHC closures in Michigan since 2020, two-source verified.",
+    h1: "What's closing, and when it closed.",
+    summary: "Hospital, service line, and FQHC closures since 2020, two-source verified.",
+  },
+  {
+    path: "/maternal-health",
+    title: "Maternal & Infant Health - Access Michigan",
+    description:
+      "Michigan maternal mortality: 19.1/100K. Infant mortality: 6.3/1K (MDHHS 2024). County-level data with racial disparity breakdowns from MDHHS and March of Dimes.",
+    h1: "Care from prenatal to postpartum.",
+    summary: "Maternal and infant health outcomes by county, with racial disparity breakdowns.",
+  },
+  {
+    path: "/behavioral-health",
+    title: "Behavioral Health Crisis Dashboard - Access Michigan",
+    description:
+      "Michigan's behavioral health infrastructure: psychiatric beds, 988 lifeline, CCBHCs, SUD treatment access, children's mental health. Michigan's #1 CHNA-identified need.",
+    h1: "Michigan's behavioral health gap.",
+    summary: "Psychiatric beds, 988 lifeline, CCBHCs, and SUD treatment access statewide.",
+  },
+  {
+    path: "/clinical-trials",
+    title: "Clinical Trials",
+    description:
+      "Search active clinical trials at Michigan's leading research institutions. Find enrolling studies for cancer, diabetes, neurology, and more.",
+    h1: "Find a clinical trial.",
+    summary: "Search enrolling clinical trials at Michigan research institutions.",
+  },
+  {
+    path: "/complex-care",
+    title: "Complex Care Navigation - Autoimmune & Rare Diseases",
+    description:
+      "Directory of autoimmune and rare disease resources, specialists, and community support across Michigan.",
+    h1: "Autoimmune & Rare Disease Directory",
+    summary: "Autoimmune and rare disease specialists, resources, and community support.",
+  },
+  {
+    path: "/wellness",
+    title: "Prevention & Wellness",
+    description:
+      "Age-specific screening recommendations, vaccine schedules, and wellness guidance based on USPSTF, CDC, and ACS guidelines for Michigan residents.",
+    h1: "Stay ahead of it.",
+    summary: "Screening schedules, vaccines, and prevention guidance by age.",
+  },
+  {
+    path: "/insurance-coverage",
+    title: "Insurance & Coverage Guide - Michigan",
+    description:
+      "Understand Medicaid, Medicare, Marketplace, FQHC, and private insurance options in Michigan. County-level data and navigator for all 83 counties.",
+    h1: "Michigan Insurance & Coverage Guide",
+    summary: "Medicaid, Medicare, Marketplace, and FQHC options, county by county.",
+  },
+  {
+    path: "/learn",
+    title: "Health Education Library",
+    description:
+      "Plain-language health education, symptom body map, clinical jargon decoder, health calculators, and doctor visit prep tools.",
+    h1: "Understand Your Health",
+    summary: "Plain-language health education, a symptom body map, and visit prep tools.",
+  },
+  {
+    path: "/provider-data",
+    title: "Provider Data",
+    description:
+      "Search Michigan Medicaid and Medicare provider data from public government sources",
+    h1: "Provider Data",
+    summary: "Search Michigan Medicaid and Medicare providers from public records.",
+  },
+  {
+    path: "/conditions",
+    title: "Health Conditions",
+    description:
+      "Find specialized care pathways for diabetes, heart disease, cancer, maternal health, and more across Michigan.",
+    h1: "Care for your condition.",
+    summary: "Care pathways for diabetes, heart disease, cancer, and more.",
+  },
+  {
+    path: "/early-childhood",
+    title: "Early Childhood in Michigan - Rx Kids & Childcare Access",
+    description:
+      "Rx Kids coverage by county, published program outcomes, and Michigan's childcare and preschool landscape - every number sourced.",
+    h1: "Rx Kids and Michigan's childcare landscape",
+    summary: "Rx Kids coverage, childcare, and preschool access by county.",
+  },
+  {
+    path: "/social-services",
+    title: "Social Services & Benefits",
+    description:
+      "Michigan and federal benefits, housing assistance, legal help, and behavioral health resources",
+    h1: "Social Services & Benefits",
+    summary: "Michigan and federal benefits, housing help, and legal aid in one place.",
+  },
+  {
+    path: "/costs",
+    title: "Cost Transparency",
+    description:
+      "Prescription savings programs, billing tips, and pointers to the official CMS Hospital Price Transparency search.",
+    h1: "Know Before You Go",
+    summary: "Prescription savings, billing tips, and hospital price transparency pointers.",
+  },
+  {
+    path: "/tax-comparison",
+    title: "Michigan Tax Comparison Calculator | City Income Tax, Property Tax, Auto Insurance | accessmi.org",
+    description:
+      "Compare federal, state, city income tax, property tax, and auto insurance between any two Michigan cities. See how much you'd keep.",
+    h1: "Michigan Tax Comparison",
+    summary: "Income, property, and auto insurance costs between any two Michigan cities.",
+  },
+  {
+    path: "/disability-access",
+    title: "Disability & Accessibility",
+    description:
+      "Federal and Michigan disability benefits, services, and legal aid resources",
+    h1: "Disability & Accessibility",
+    summary: "Disability benefits, services, and legal aid, federal and state.",
+  },
+  {
+    path: "/reentry",
+    title: "Coming Home to Michigan | Reentry Resources for Housing, Healthcare, Employment | accessmi.org",
+    description:
+      "Housing, healthcare, ID, employment, and legal help for returning citizens and their families across 83 Michigan counties.",
+    h1: "Coming home to Michigan.",
+    summary: "Housing, healthcare, ID, and work help for returning citizens.",
+  },
+  {
+    path: "/decision-science",
+    title: "Decision Science - Game Theory for Michigan Health - Access Michigan",
+    description:
+      "Interactive simulations: Benefits Gap Calculator, Hospital Market Dynamics, ALICE Survival Budget. Powered by DecisionPlay.",
+    h1: "Why Does Michigan's Healthcare System Work This Way?",
+    summary: "Interactive simulations of benefits gaps and hospital market dynamics.",
+  },
+  {
+    path: "/sba-insights",
+    title: "SBA Economic Intelligence - Access Michigan",
+    description:
+      "Small business lending trends across Michigan counties, including SBA loan volume, equity metrics, and industry breakdown.",
+    h1: "SBA Small Business Lending",
+    summary: "Small business lending volume and equity metrics by county.",
+  },
+  {
+    path: "/housing-options",
+    title: "Find Housing Options - Access Michigan",
+    description:
+      "Step-by-step help finding emergency shelter, affordable rentals, and subsidized housing in Michigan.",
+    h1: "Find a place to land.",
+    summary: "Emergency shelter to subsidized housing, step by step.",
+  },
+  {
+    path: "/zoning",
+    title: "Zoning & Land Use",
+    description:
+      "Michigan zoning information, land use regulations, flood zones, property lookups, and planning resources for all 83 counties.",
+    h1: "Michigan Zoning & Land Use Resource Center",
+    summary: "Zoning rules, flood zones, and property lookups for all 83 counties.",
+  },
+  {
+    path: "/libraries",
+    title: "Michigan Public Libraries | Access Michigan",
+    description:
+      "Find public libraries across Michigan's 83 counties. Free internet, digital resources, community programs, and more.",
+    h1: "Michigan Public Libraries",
+    summary: "Public libraries with free internet and programs, all 83 counties.",
+  },
+  {
+    path: "/outages",
+    title: "Utility Outage Dashboard",
+    description:
+      "Real-time utility outage tracking across all 83 Michigan counties. Monitor DTE and Consumers Energy outages with severity levels, affected customers, and historical trends.",
+    h1: "Utility Outage Dashboard",
+    summary: "Live DTE and Consumers Energy outage tracking by county.",
+  },
+  {
+    path: "/find-your-city",
+    title: "Find Your Ideal Michigan City | Compare by Cost, Health, Schools, Safety | accessmi.org",
+    description:
+      "Rank 25 Michigan cities by what matters to you: affordability, health, schools, safety, and environment. Real data, real-time results.",
+    h1: "Find Your Michigan City",
+    summary: "Rank 25 Michigan cities by affordability, health, schools, and safety.",
+  },
+  {
+    path: "/community-infrastructure",
+    title: "Community Infrastructure | Access Michigan",
+    description:
+      "Navigate Michigan's civic infrastructure - libraries, transit, courts, voting, and community centers.",
+    h1: "Community Infrastructure",
+    summary: "Libraries, transit, courts, and community centers by county.",
+  },
+  {
+    path: "/environment/water",
+    title: "Water Safety & PFAS Intelligence - Access Michigan",
+    description:
+      "Michigan PFAS contamination map, EPA drinking water violations, USGS stream data, and Great Lakes freshwater intelligence.",
+    h1: "Know your water.",
+    summary: "PFAS contamination, drinking water violations, and Great Lakes data.",
+  },
+  {
+    path: "/environment/air",
+    title: "Michigan Air Quality by County | Access Michigan",
+    description:
+      "County-level air quality data for Michigan. Source: EPA AirNow.",
+    h1: "Know what's in your air.",
+    summary: "County air quality from EPA AirNow, updated continuously.",
+  },
+  {
+    path: "/environment/energy",
+    title: "Energy Burden Intelligence - Access Michigan",
+    description:
+      "Michigan county energy burden analysis. Low-income households spend up to 12% of income on energy. LIHEAP, MiHER, solar potential data.",
+    h1: "Michigan Energy Burden",
+    summary: "Energy burden against DOE thresholds, with LIHEAP and MiHER pointers.",
+  },
+  {
+    path: "/environment/disaster",
+    title: "Disaster Intelligence - Access Michigan",
+    description:
+      "Michigan disaster risk analysis: FEMA NRI county scores, 104 presidential disaster declarations, flood risk, and community resilience data.",
+    h1: "Michigan Disaster Risk",
+    summary: "FEMA risk scores, disaster declarations, and flood exposure by county.",
+  },
+  {
+    path: "/disaster-history",
+    title: "FEMA Disaster History - Access Michigan",
+    description:
+      "Interactive dashboard of FEMA disaster declarations in Michigan from 1953 to present, powered by the live OpenFEMA API.",
+    h1: "Every disaster, since 1953.",
+    summary: "Every FEMA disaster declaration in Michigan since 1953, from the live API.",
+  },
+  {
+    path: "/data/snap-michigan",
+    title: "SNAP in Michigan | accessmi.org",
+    description:
+      "Food assistance enrollment and retailer access across all 83 Michigan counties, sourced from USDA Food and Nutrition Administration (FNA) and the SNAP Retailer Locator.",
+    h1: "SNAP in Michigan",
+    summary: "SNAP enrollment and retailer access for all 83 counties.",
+  },
+  {
+    path: "/events",
+    title: "Community Events",
+    description:
+      "Find Michigan community health fairs, resource events, and outreach programs by county.",
+    h1: "Community Health Events",
+    summary: "Community health fairs and resource events by county.",
+  },
+  {
+    path: "/civic-power",
+    title: "Civic Power Map - Access Michigan",
+    description:
+      "Michigan's democracy has open seats. 79.7% of races uncontested. Find where to serve, who represents you, and where candidates are needed.",
+    h1: "Democracy has open seats.",
+    summary: "Most local races go uncontested. See where your community needs you.",
+  },
+  {
+    path: "/civic-power/races",
+    title: "Races That Need Candidates - Access Michigan",
+    description:
+      "79.7% of Michigan's 15,139 races in 2024 were uncontested. See which regions and office types need candidates most.",
+    h1: "79.7% Uncontested. #1 Among Large States.",
+    summary: "Which regions and office types need candidates most.",
+  },
+  {
+    path: "/civic-power/federal",
+    title: "Federal Presence in Michigan - Access Michigan",
+    description:
+      "7 major federal agencies, 140+ Michigan offices, and federal advisory committees with public nomination processes.",
+    h1: "The Federal Government in Your County",
+    summary: "Federal agencies, offices, and advisory committees in Michigan.",
+  },
+  {
+    path: "/elections",
+    title: "Elections & Civic Access",
+    description:
+      "Michigan election dates, voter registration, and civic participation resources",
+    h1: "Elections & Civic Access",
+    summary: "Election dates, registration, and civic participation resources.",
+  },
+  {
+    path: "/foia",
+    title: "FOIA Request Builder - Access Michigan",
+    description:
+      "Draft professional public records requests for Michigan municipal, county, or federal agencies. Browser-only, no data stored.",
+    h1: "FOIA Request Builder",
+    summary: "Draft a public records request in the browser. Nothing stored.",
+  },
+  {
+    path: "/tribal-nations",
+    title: "Michigan Tribal Nations - Access Michigan",
+    description:
+      "Michigan's 12 federally recognized tribal nations: sovereign health infrastructure, equity data, and community resources.",
+    h1: "12 Sovereign Nations",
+    summary: "Michigan's 12 federally recognized tribal nations and their health systems.",
+  },
+  {
+    path: "/transparency/contractors",
+    title: "Federal Contractors - Access Michigan",
+    description:
+      "Every federal contract awarded in Michigan - searchable by county. Live USASpending.gov data.",
+    h1: "Federal Contracts in Michigan",
+    summary: "Every federal contract awarded in Michigan, searchable by county.",
+  },
+  {
+    path: "/transparency/money",
+    title: "Follow the Money - Access Michigan",
+    description:
+      "Michigan lobbying expenditures, campaign finance resources, and political contribution data. All parties, all public record.",
+    h1: "Follow the money.",
+    summary: "Lobbying, campaign finance, and political contributions, all public record.",
+  },
+  {
+    path: "/transparency/officials",
+    title: "Public Officials & Workforce - Access Michigan",
+    description:
+      "Michigan Legislature, federal workforce data, state salary ranges, and nonprofit grant recipients.",
+    h1: "Michigan Public Officials & Workforce",
+    summary: "Legislature rosters, federal workforce data, and state salary ranges.",
+  },
+  {
+    path: "/transparency/records",
+    title: "Transparency & Public Records",
+    description:
+      "Michigan FOIA tools, state spending data, and legislative transparency resources",
+    h1: "Transparency & Public Records",
+    summary: "FOIA tools, state spending data, and legislative transparency.",
+  },
+  {
+    path: "/chna-explorer",
+    title: "CHNA Explorer - Access Michigan",
+    description:
+      "Michigan health system CHNA priorities mapped to workforce, air, water, and access indicators at neighborhood resolution: the granularity the CHNA itself does not provide.",
+    h1: "Community Health Needs Assessment",
+    summary: "Health system CHNA priorities mapped to neighborhood-level indicators.",
+  },
+  {
+    path: "/map/layers",
+    title: "Deep Map - GIS Intelligence - Access Michigan",
+    description:
+      "Eight map layers in one view. Broadband, food access, PFAS, disaster risk, energy burden - every Michigan county.",
+    h1: "Deep Map - GIS Intelligence",
+    summary: "Broadband, food access, PFAS, disaster risk, and energy burden on one map.",
+  },
+  {
+    path: "/downloads",
+    title: "Download Center - Access Michigan",
+    description:
+      "Download community briefs, county comparisons, health maps, and raw data exports across all 83 Michigan counties.",
+    h1: "Download Center",
+    summary: "County briefs, comparisons, maps, and raw exports for all 83 counties.",
+  },
+  {
+    path: "/datasets",
+    title: "Dataset Explorer | Michigan Civic Intelligence",
+    description:
+      "Explore real Michigan datasets across health, environment, mobility, and economic pillars. All data from public authoritative sources.",
+    h1: "Browse every dataset.",
+    summary: "Browse Michigan datasets across health, environment, mobility, and economy.",
+  },
+  {
+    path: "/ask",
+    title: "Civic Intelligence - Ask AccessMI",
+    description:
+      "Ask plain-language questions about any Michigan county and get grounded, provenance-labeled answers from AccessMI's on-site datasets.",
+    h1: "Civic Intelligence",
+    summary: "Plain-language questions about any county, answered from on-site data.",
+  },
+  {
+    path: "/service-area",
+    title: "Service Area Builder",
+    description:
+      "Define a custom Michigan service area by selecting counties or ZIP codes. View aggregate statistics.",
+    h1: "Service Area Builder",
+    summary: "Build a custom service area from counties or ZIP codes.",
+  },
+  {
+    path: "/data/snap-coverage-at-risk",
+    title: "SNAP Coverage at Risk | accessmi.org",
+    description:
+      "County-level modeled ranges of Michigan SNAP participants in categories affected by P.L. 119-21 work requirement provisions. Not a point estimate. Exposure does not equal loss.",
+    h1: "Who could lose SNAP.",
+    summary: "Modeled ranges of SNAP participants affected by new work requirements.",
+  },
+  {
+    path: "/data/medicaid-coverage-at-risk",
+    title: "Medicaid Coverage at Risk | accessmi.org",
+    description:
+      "County-level modeled ranges of Michigan Medicaid enrollees in categories affected by P.L. 119-21 work requirement provisions. Not a point estimate. Exposure is not disenrollment.",
+    h1: "Who could lose Medicaid.",
+    summary: "Modeled ranges of Medicaid enrollees affected by new work requirements.",
+  },
+  {
+    path: "/data/dual-eligible-exposure",
+    title: "Dual-Eligible Exposure in Michigan | accessmi.org",
+    description:
+      "County-level view of Michiganders enrolled in both Medicare and Medicaid. Dual-eligibles are exempt from P.L. 119-21 work requirements. This map shows where they live.",
+    h1: "Dual-Eligible Exposure in Michigan",
+    summary: "Where Michiganders enrolled in both Medicare and Medicaid live.",
+  },
 ];
 
 /**

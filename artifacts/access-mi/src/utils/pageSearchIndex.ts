@@ -6,6 +6,7 @@
  * result sublabels.
  */
 import { ROUTE_MANIFEST, SITEMAP_SECTIONS } from "@/routes/manifest";
+import type { SubjectId } from "@/config/routeTaxonomy";
 
 export interface PageSearchEntry {
   label: string;
@@ -13,6 +14,10 @@ export interface PageSearchEntry {
   description?: string;
   /** Extra match text: sitemap link labels pointing at this page. */
   synonyms: string[];
+  /** Subject chips from the route taxonomy; present only for curated pages. */
+  subjects?: SubjectId[];
+  /** Editorial pick flag from the route taxonomy. */
+  featured?: boolean;
 }
 
 /** Curated copy that reads better in a search palette than the route label. */
@@ -49,6 +54,8 @@ function buildIndex(): PageSearchEntry[] {
     synonyms: (synonymsByHref.get(r.path) ?? []).filter(
       (s) => s !== (PAGE_OVERRIDES[r.path]?.label ?? r.label),
     ),
+    subjects: r.subjects,
+    featured: r.featured,
   }));
 }
 
@@ -83,23 +90,31 @@ export function getPageSearchIndex(): PageSearchEntry[] {
 }
 
 /**
+ * Rank one page against a query: 0 label hit, 1 sitemap-synonym hit,
+ * 2 description hit, -1 no match. Case-insensitive substring matching
+ * keeps behavior predictable inside the cmdk palette (which does its
+ * own highlighting). Shared by the palette and the /explore filter so
+ * the two surfaces can never disagree about what matches.
+ */
+export function matchesPageQuery(p: PageSearchEntry, query: string): number {
+  const q = query.trim().toLowerCase();
+  if (!q) return -1;
+  if (p.label.toLowerCase().includes(q)) return 0;
+  if (p.synonyms.some((s) => s.toLowerCase().includes(q))) return 1;
+  if (p.description?.toLowerCase().includes(q)) return 2;
+  return -1;
+}
+
+/**
  * Rank pages for a query: label hits first, then sitemap synonyms, then
- * description text. Case-insensitive substring matching keeps behavior
- * predictable inside the cmdk palette (which does its own highlighting).
+ * description text.
  */
 export function searchPages(term: string, limit = 6): PageSearchEntry[] {
   const q = term.trim().toLowerCase();
   if (!q) return [];
 
-  const rank = (p: PageSearchEntry): number => {
-    if (p.label.toLowerCase().includes(q)) return 0;
-    if (p.synonyms.some((s) => s.toLowerCase().includes(q))) return 1;
-    if (p.description?.toLowerCase().includes(q)) return 2;
-    return -1;
-  };
-
   return getPageSearchIndex()
-    .map((p) => ({ p, r: rank(p) }))
+    .map((p) => ({ p, r: matchesPageQuery(p, q) }))
     .filter(({ r }) => r >= 0)
     .sort((a, b) => a.r - b.r || a.p.label.localeCompare(b.p.label))
     .slice(0, limit)
