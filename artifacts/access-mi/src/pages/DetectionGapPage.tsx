@@ -142,10 +142,10 @@ function FunnelBar({
         </motion.div>
       </div>
       <div className="flex items-center justify-between">
-        <p className="text-[11px] text-gray-500 leading-snug flex-1">
+        <p className="text-[11px] text-gray-400 leading-snug flex-1">
           {stage.desc}
         </p>
-        <span className="text-[9px] text-gray-600 ml-2 shrink-0 italic">
+        <span className="text-[9px] text-gray-400 ml-2 shrink-0 italic">
           {stage.source}
         </span>
       </div>
@@ -339,7 +339,7 @@ export default function DetectionGapPage() {
                   </SelectContent>
                 </Select>
               </div>
-              <p className="text-xs text-gray-500 mt-1 sm:mt-4">
+              <p className="text-xs text-gray-400 mt-1 sm:mt-4">
                 {regionData.description}
               </p>
             </div>
@@ -350,7 +350,7 @@ export default function DetectionGapPage() {
                 <label className="text-sm font-semibold text-gray-200">
                   Adjust Screening Volume
                 </label>
-                <span className="text-lg font-bold text-primary tabular-nums">
+                <span className="text-lg font-bold text-amber-400 tabular-nums">
                   {fmt(volume[0])} patients
                 </span>
               </div>
@@ -362,7 +362,7 @@ export default function DetectionGapPage() {
                 step={50_000}
                 className="w-full"
               />
-              <div className="flex justify-between mt-2 text-[10px] text-gray-600">
+              <div className="flex justify-between mt-2 text-[10px] text-gray-400">
                 <span>50K</span>
                 <span>1M (Trinity actual)</span>
                 <span>5M</span>
@@ -429,7 +429,7 @@ export default function DetectionGapPage() {
                     <p className="text-[10px] text-michigan-coral-deep/70">
                       est. annual cost of unmet needs
                     </p>
-                    <p className="text-[9px] text-gray-600 italic mt-1">
+                    <p className="text-[9px] text-gray-400 italic mt-1">
                       Illustrative: $3,200/person/yr avg
                     </p>
                   </div>
@@ -441,7 +441,7 @@ export default function DetectionGapPage() {
                     <p className="text-[10px] text-red-400/70">
                       preventable hospitalizations
                     </p>
-                    <p className="text-[9px] text-gray-600 italic mt-1">
+                    <p className="text-[9px] text-gray-400 italic mt-1">
                       Illustrative: 8% of unconnected
                     </p>
                   </div>
@@ -453,7 +453,7 @@ export default function DetectionGapPage() {
                     <p className="text-[10px] text-michigan-gold-deep/70">
                       preventable hospitalization cost
                     </p>
-                    <p className="text-[9px] text-gray-600 italic mt-1">
+                    <p className="text-[9px] text-gray-400 italic mt-1">
                       Illustrative: AHRQ $14,500 avg
                     </p>
                   </div>
@@ -469,7 +469,7 @@ export default function DetectionGapPage() {
                 </div>
               </div>
 
-              <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-[10px] text-gray-500">
+              <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-[10px] text-gray-400">
                 <AlertTriangle className="h-3 w-3 inline mr-1 text-michigan-gold-deep" />
                 All dollar calculations are{" "}
                 <strong className="text-gray-400">modeled estimates</strong>{" "}
@@ -588,14 +588,14 @@ export default function DetectionGapPage() {
                   </div>
                   <div>
                     <p className="text-lg font-bold text-white">{item.stat}</p>
-                    <p className="text-xs text-gray-500">{item.label}</p>
+                    <p className="text-xs text-gray-400">{item.label}</p>
                   </div>
                 </div>
               ))}
             </div>
             <Link
               to="/for-health-systems"
-              className="inline-flex items-center gap-1 mt-6 text-sm text-primary hover:underline"
+              className="inline-flex items-center gap-1 mt-6 text-sm text-amber-400 underline underline-offset-2"
             >
               For Health System Leaders <ArrowRight className="h-3 w-3" />
             </Link>
@@ -603,7 +603,7 @@ export default function DetectionGapPage() {
 
           {/* Sources */}
           <div className="mt-12 rounded-lg border border-white/10 bg-white/5 p-4">
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-400">
               <strong className="text-gray-400">Data Sources:</strong> Trinity
               Health Community Impact Report (FY2025, published Jan 2026) -
               27.4% unmet need rate; ~16% hospitalization reduction is
@@ -614,7 +614,7 @@ export default function DetectionGapPage() {
               modeled. CDC Social Determinants of Health evidence base. Cost per
               preventable hospitalization ($14,500) from AHRQ HCUP. All dollar
               figures are modeled. See{" "}
-              <a href="/methodology" className="text-primary hover:underline">
+              <a href="/methodology" className="text-amber-400 underline underline-offset-2">
                 Methodology
               </a>
               .

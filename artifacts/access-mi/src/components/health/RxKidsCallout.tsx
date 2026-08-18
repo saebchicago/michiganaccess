@@ -22,7 +22,7 @@ export default function RxKidsCallout({ county }: RxKidsCalloutProps) {
         <div>
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <span className="text-xs font-bold text-teal-700 dark:text-teal-400">Rx Kids - National Innovation</span>
-            <span className="text-[9px] bg-teal-600 text-white px-1.5 py-0.5 rounded font-semibold">ACTIVE IN {county.toUpperCase()}</span>
+            <span className="text-[9px] bg-teal-700 text-white px-1.5 py-0.5 rounded font-semibold">ACTIVE IN {county.toUpperCase()}</span>
           </div>
           <p className="text-xs text-teal-800 dark:text-teal-300 mb-2">
             {RX_KIDS_PROGRAM_FACTS.operator} runs an unconditional cash prescription

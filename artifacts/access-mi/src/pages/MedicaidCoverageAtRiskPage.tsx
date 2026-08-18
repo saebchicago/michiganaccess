@@ -94,13 +94,12 @@ function SortButton({
   onSort: (k: SortKey) => void;
 }) {
   const active = sortKey === col;
+  // aria-sort lives on the wrapping <th> (the only element the ARIA spec
+  // allows it on); the button is purely the click/label affordance.
   return (
     <button
       onClick={() => onSort(col)}
       className={`flex items-center gap-1 text-left text-xs font-medium hover:text-primary transition-colors ${active ? "text-primary" : "text-muted-foreground"}`}
-      aria-sort={
-        active ? (sortDir === "asc" ? "ascending" : "descending") : "none"
-      }
     >
       {label}
       <ArrowUpDown className="h-3 w-3 shrink-0" />
@@ -326,7 +325,7 @@ export default function MedicaidCoverageAtRiskPage() {
             >
               <thead className="bg-muted/40 border-b border-border">
                 <tr>
-                  <th className="text-left px-4 py-3">
+                  <th className="text-left px-4 py-3" aria-sort={sortKey === "county" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="county"
                       label="County"
@@ -335,7 +334,7 @@ export default function MedicaidCoverageAtRiskPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="text-right px-4 py-3">
+                  <th className="text-right px-4 py-3" aria-sort={sortKey === "currentEnrollment" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
                       col="currentEnrollment"
                       label="Current Medicaid enrollment"
@@ -344,7 +343,7 @@ export default function MedicaidCoverageAtRiskPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
+                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium" aria-sort={sortKey === "projectedLossLow" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <div className="flex flex-col items-end gap-0.5">
                       <SortButton
                         col="projectedLossLow"
@@ -358,7 +357,7 @@ export default function MedicaidCoverageAtRiskPage() {
                       </span>
                     </div>
                   </th>
-                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium">
+                  <th className="text-right px-4 py-3 text-muted-foreground text-xs font-medium" aria-sort={sortKey === "projectedLossHigh" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <div className="flex flex-col items-end gap-0.5">
                       <SortButton
                         col="projectedLossHigh"

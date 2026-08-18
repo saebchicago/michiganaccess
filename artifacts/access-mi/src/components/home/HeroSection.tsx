@@ -427,15 +427,16 @@ const HeroSection = () => {
             Verified public data across all 83 Michigan counties
           </motion.p>
 
-          {/* H1 */}
-          <motion.h1
+          {/* Section heading. h2, not h1: this hero is embedded in /about,
+              which already renders the page's single h1. */}
+          <motion.h2
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.5 }}
             className="text-3xl font-bold tracking-tight text-primary-foreground md:text-5xl leading-tight"
           >
             Michigan's public data, organized for action.
-          </motion.h1>
+          </motion.h2>
 
           {/* Subhead */}
           <motion.p

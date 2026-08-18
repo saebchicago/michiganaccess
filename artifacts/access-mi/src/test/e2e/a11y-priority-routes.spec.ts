@@ -73,13 +73,23 @@ test.describe('A11y audit  -  priority routes', () => {
         });
       }
 
-      // Log count but do not hard-fail; full report is written in afterAll
       const criticalOrSerious = results.violations.filter(
         (v) => v.impact === 'critical' || v.impact === 'serious'
       );
       console.log(
         `[a11y] ${route}: ${criticalOrSerious.length} critical/serious, ${results.violations.length - criticalOrSerious.length} other`
       );
+
+      // Hard gate. This spec was advisory for its first months, and 4
+      // critical + 14 serious violations accumulated on priority routes
+      // under green CI until the 2026-08-18 pre-launch audit cleared them.
+      // All priority routes scan clean as of that audit; keep them that
+      // way. The full report (all impacts) still lands in
+      // A11Y_VIOLATIONS.md via afterAll.
+      expect(
+        criticalOrSerious.map((v) => `${v.impact}:${v.id} x${v.nodes.length}`),
+        `critical/serious a11y violations on ${route}`
+      ).toEqual([]);
     });
   }
 
