@@ -7,6 +7,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CountyProvider } from "@/contexts/CountyContext";
 import Index from "@/pages/Index";
 import { getLibrarySize } from "@/components/home/homeDestinations";
+import {
+  HRSA_HPSA_COUNTY_PROVENANCE,
+  HRSA_HPSA_COUNTY_RECORDS,
+} from "@/data/hrsa-hpsa-county";
 
 vi.mock("@/components/layout/Layout", () => ({
   default: ({ children }: { children: ReactNode }) => <div>{children}</div>,
@@ -69,6 +73,45 @@ describe("Index (homepage)", () => {
           .some((a) => a.getAttribute("href") === href),
         `intent cards missing a link to ${href}`,
       ).toBe(true);
+    }
+  });
+
+  it("frames dental intelligence across capacity, use, and coverage", async () => {
+    localStorage.clear();
+    renderHomepage();
+
+    const section = (
+      await screen.findByRole("heading", {
+        name: /whole dental-care picture/i,
+      })
+    ).closest("section")!;
+    const dentalCount = HRSA_HPSA_COUNTY_RECORDS.filter(
+      (county) => county.disciplines.dental.designatedHpsas > 0,
+    ).length;
+    expect(
+      within(section).getByText(
+        new RegExp(`${dentalCount} of ${HRSA_HPSA_COUNTY_RECORDS.length}`),
+      ),
+    ).toBeInTheDocument();
+    expect(
+      within(section).getByRole("link", { name: /verify with/i }),
+    ).toHaveAttribute("href", HRSA_HPSA_COUNTY_PROVENANCE.source_url);
+    for (const label of ["Capacity", "Use", "Coverage"]) {
+      expect(within(section).getByText(label)).toBeInTheDocument();
+    }
+    for (const href of ["/equity", "/data-explorer", "/insurance-coverage"]) {
+      expect(
+        within(section).getByRole("link", {
+          name: new RegExp(
+            href === "/equity"
+              ? "shortages"
+              : href === "/data-explorer"
+                ? "dental visits"
+                : "coverage context",
+            "i",
+          ),
+        }),
+      ).toHaveAttribute("href", href);
     }
   });
 

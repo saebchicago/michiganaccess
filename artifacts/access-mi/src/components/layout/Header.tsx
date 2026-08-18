@@ -70,30 +70,30 @@ const Header = () => {
         className="relative bg-background/95 backdrop-blur-md border-b border-border/60"
         role="banner"
       >
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex min-h-16 items-center gap-3 py-2">
           {/* Logo */}
           <Link
             to="/"
-            className="flex items-center gap-2.5 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg"
+            className="group flex min-w-0 shrink-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 xl:min-w-[16.5rem]"
             aria-label="Access Michigan Home"
           >
-            <AccessMILogo className="h-8 w-8" variant="compact" />
-            <div className="flex flex-col leading-tight">
-              <span className="text-sm font-bold text-foreground">
+            <AccessMILogo className="h-9 w-9 shrink-0" variant="compact" />
+            <div className="flex min-w-0 flex-col leading-tight">
+              <span className="whitespace-nowrap text-sm font-bold text-foreground">
                 Access Michigan
               </span>
               <span
-                className="text-[9px] text-muted-foreground"
+                className="hidden whitespace-nowrap text-[10px] font-medium tracking-[0.01em] text-muted-foreground sm:block"
                 aria-hidden="true"
               >
-                Independent Michigan civic intelligence platform.
+                Independent civic intelligence · Michigan-wide
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
           <nav
-            className="hidden items-center gap-1 lg:flex"
+            className="ml-auto hidden min-w-0 items-center gap-0.5 lg:flex xl:gap-1"
             aria-label="Main navigation"
           >
             {resolvedNavGroups.map((link) =>
