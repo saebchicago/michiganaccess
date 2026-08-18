@@ -16,10 +16,10 @@ export interface CdcPlacesMeasureValue {
   ci95: { low: number; high: number } | null;
 }
 
-/** All 17 measures for one ZCTA, keyed by the platform's stable measure id. */
+/** All 40 measures for one ZCTA, keyed by the platform's stable measure id. */
 export type CdcPlacesZctaMeasures = Record<string, CdcPlacesMeasureValue>;
 
-/** One MI ZCTA's PLACES snapshot: 18+ population and 17 measures. */
+/** One MI ZCTA's PLACES snapshot: 18+ population and 40 measures. */
 export interface CdcPlacesZctaRecord {
   zcta5: string;
   totalPopulation: number | null;
@@ -45,12 +45,13 @@ export interface CdcPlacesProvenance {
   value_label: "MODELED";
   weighting: string;
   notes: string;
+  shared_package: string;
 }
 
 /** Static description of one measure (stable id, category, PLACES field). */
 export interface CdcPlacesMeasureDef {
   id: string;
-  category: "chronic" | "behavioral" | "preventive" | "status";
+  category: "chronic" | "behavioral" | "preventive" | "status" | "access" | "disability" | "sdoh";
   label: string;
   places_field: string;
   value_label: "MODELED";
