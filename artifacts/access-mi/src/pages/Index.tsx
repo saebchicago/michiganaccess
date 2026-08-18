@@ -465,7 +465,7 @@ function IntentCardsSection({ mode }: { mode: PersonaView }) {
             </h4>
             <p
               className="mt-1.5 text-[13px] leading-relaxed"
-              style={{ color: `${C.emerald}B3` }}
+              style={{ color: `${C.emerald}CC` }}
             >
               {card.lede}
             </p>
@@ -544,7 +544,7 @@ function WorthALookRail() {
             {d.description && (
               <p
                 className="mt-2 flex-1 text-sm leading-relaxed"
-                style={{ color: `${C.emerald}B3` }}
+                style={{ color: `${C.emerald}CC` }}
               >
                 {d.description}
               </p>
@@ -559,7 +559,7 @@ function WorthALookRail() {
                 </p>
                 <p
                   className="mt-1 text-xs leading-snug"
-                  style={{ color: `${C.emerald}B3` }}
+                  style={{ color: `${C.emerald}CC` }}
                 >
                   of Michigan local races ran uncontested (2024).
                 </p>
