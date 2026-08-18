@@ -15,6 +15,19 @@ export interface NavGroup {
   /** i18n key for the group label */
   i18nKey?: string;
   children: NavLink[];
+  /**
+   * Optional mega-menu layout for the desktop header. Columns group this
+   * group's OWN children by href (the union of column hrefs must equal the
+   * children hrefs exactly - navPanels.test.ts enforces it), so the flat
+   * `children` list stays the single source for the mobile sheet and any
+   * surface that ignores panels. Entry descriptions are NOT stored here:
+   * the header resolves them from the route manifest at render time.
+   */
+  panel?: {
+    columns: { heading: string; hrefs: string[] }[];
+    /** Editorial start-here card; href is any registered route. */
+    promo: { title: string; body: string; href: string; cta: string };
+  };
 }
 
 export interface NavLink {
@@ -832,6 +845,39 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Public Investment", href: "/public-investment" },
       { label: "Methodology", href: "/methodology" },
     ],
+    panel: {
+      columns: [
+        {
+          heading: "Start with a place",
+          hrefs: ["/zip/48201", "/brief", "/compare", "/data-explorer"],
+        },
+        {
+          heading: "Dig into a question",
+          hrefs: [
+            "/ask",
+            "/insights",
+            "/detection-gap",
+            "/public-investment",
+            "/data/medicaid-coverage-at-risk",
+          ],
+        },
+        {
+          heading: "Check the work",
+          hrefs: [
+            "/methodology",
+            "/data-and-insights",
+            "/domain-dashboard",
+            "/chna-explorer",
+          ],
+        },
+      ],
+      promo: {
+        title: "Explore the library",
+        body: "Every destination on the platform in one searchable index, grouped by subject.",
+        href: "/explore",
+        cta: "Browse everything",
+      },
+    },
   },
   {
     label: "Visualize",
@@ -846,6 +892,28 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Disaster History", href: "/disaster-history" },
       { label: "Deep Map (GIS)", href: "/map/layers" },
     ],
+    panel: {
+      columns: [
+        {
+          heading: "Maps",
+          hrefs: ["/health-map", "/map/layers", "/health-equity-atlas"],
+        },
+        {
+          heading: "Dashboards",
+          hrefs: ["/data", "/equity", "/energy-burden"],
+        },
+        {
+          heading: "Watchlists",
+          hrefs: ["/closure-watch", "/disaster-history", "/environment"],
+        },
+      ],
+      promo: {
+        title: "Take the data with you",
+        body: "County briefs, comparisons, maps, and raw exports for all 83 counties.",
+        href: "/downloads",
+        cta: "Open the Download Center",
+      },
+    },
   },
   {
     label: "Belong",
@@ -873,6 +941,33 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Transparency Hub", href: "/transparency" },
       { label: "Social Services & Benefits", href: "/social-services" },
     ],
+    panel: {
+      columns: [
+        {
+          heading: "Get help",
+          hrefs: [
+            "/find-care",
+            "/financial-help",
+            "/housing-options",
+            "/social-services",
+          ],
+        },
+        {
+          heading: "Everyday needs",
+          hrefs: ["/resources", "/insurance-coverage", "/transportation"],
+        },
+        {
+          heading: "Take part",
+          hrefs: ["/civic-power", "/officials", "/transparency"],
+        },
+      ],
+      promo: {
+        title: "Request public records",
+        body: "Draft a FOIA request for any Michigan agency, in the browser. Nothing stored.",
+        href: "/foia",
+        cta: "Open the FOIA builder",
+      },
+    },
   },
   {
     label: "About",
@@ -885,6 +980,28 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Contact", href: "/contact" },
       { label: "Support This Project", href: "/support" },
     ],
+    panel: {
+      columns: [
+        {
+          heading: "The project",
+          hrefs: ["/about", "/story", "/impact"],
+        },
+        {
+          heading: "Work with us",
+          hrefs: ["/for-health-systems", "/contact"],
+        },
+        {
+          heading: "Keep it going",
+          hrefs: ["/support"],
+        },
+      ],
+      promo: {
+        title: "Help us improve",
+        body: "Flag a data error or a broken link. Feedback shapes what gets built.",
+        href: "/feedback",
+        cta: "Send feedback",
+      },
+    },
   },
   { label: "Explore", href: "/explore" },
 ];
