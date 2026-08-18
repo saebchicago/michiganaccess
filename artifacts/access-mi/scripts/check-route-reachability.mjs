@@ -70,6 +70,7 @@ const INTENTIONALLY_UNLINKED = new Map([
  */
 const NON_LINK_FILES = new Set([
   "src/config/routeMeta.ts",
+  "src/config/routeTaxonomy.ts",
   "src/utils/pageSearchIndex.ts",
   "src/utils/searchUtils.ts",
 ]);

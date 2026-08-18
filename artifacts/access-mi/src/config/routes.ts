@@ -117,6 +117,7 @@ const pages = {
   DataAndInsightsPage: lazy(() => import("@/pages/DataAndInsightsPage")),
   InsightsPage: lazy(() => import("@/pages/InsightsPage")),
   DataExplorerPage: lazy(() => import("@/pages/DataExplorerPage")),
+  ExplorePage: lazy(() => import("@/pages/ExplorePage")),
   FoodAccessExplorerPage: lazy(() => import("@/pages/FoodAccessExplorerPage")),
   ComparePlacesPage: lazy(() => import("@/pages/ComparePlacesPage")),
   DatasetExplorerPage: lazy(() => import("@/pages/DatasetExplorerPage")),
@@ -334,6 +335,11 @@ export const APP_ROUTES: RouteEntry[] = [
     path: "/data-explorer",
     component: pages.DataExplorerPage,
     label: "Data Explorer",
+  },
+  {
+    path: "/explore",
+    component: pages.ExplorePage,
+    label: "Explore",
   },
   {
     path: "/food-access",
@@ -805,7 +811,8 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
   // Three-pillar taxonomy (Understand / Visualize / Belong) shared with the
   // homepage doors and the footer. The nav shows a curated set per pillar; the
   // footer carries the comprehensive per-pillar index, so every destination
-  // stays reachable even when it is not surfaced here.
+  // stays reachable even when it is not surfaced here. /explore (last entry
+  // below) is the full searchable library derived from the route taxonomy.
   {
     label: "Understand",
     children: [
@@ -879,6 +886,7 @@ export const NAV_GROUPS: (NavGroup | NavLink)[] = [
       { label: "Support This Project", href: "/support" },
     ],
   },
+  { label: "Explore", href: "/explore" },
 ];
 
 // ── Sitemap Sections ────────────────────────────────────────────────────────
@@ -1101,6 +1109,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       { label: "System Status", href: "/status" },
       { label: "Press & Media Kit", href: "/press" },
       { label: "Site Map", href: "/sitemap" },
+      { label: "Explore the Library", href: "/explore" },
     ],
   },
 ];

@@ -5,7 +5,7 @@ const VIEWPORTS = [
   { name: 'iPhone 14', width: 390, height: 844 },
 ];
 
-const ROUTES = ['/', '/find-care', '/compare', '/tax-comparison', '/data-sources'];
+const ROUTES = ['/', '/find-care', '/compare', '/explore', '/tax-comparison', '/data-sources'];
 
 for (const vp of VIEWPORTS) {
   test.describe(`Mobile ${vp.name} (${vp.width}x${vp.height})`, () => {

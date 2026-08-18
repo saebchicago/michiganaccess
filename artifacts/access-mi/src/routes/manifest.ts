@@ -25,6 +25,11 @@ import {
   type SitemapSection,
 } from "@/config/routes";
 import { ROUTE_META } from "@/config/routeMeta";
+import {
+  ROUTE_TAXONOMY,
+  type IntentId,
+  type SubjectId,
+} from "@/config/routeTaxonomy";
 
 export interface RouteManifestEntry {
   path: string;
@@ -41,6 +46,14 @@ export interface RouteManifestEntry {
   description?: string;
   h1?: string;
   summary?: string;
+  /**
+   * Discovery-surface curation, merged from `@/config/routeTaxonomy`.
+   * Present only for curated destinations (the /explore library).
+   */
+  subjects?: SubjectId[];
+  featured?: boolean;
+  related?: string[];
+  intent?: IntentId;
 }
 
 const HOME_META = ROUTE_META.find((m) => m.path === "/");
@@ -59,6 +72,7 @@ const homeEntry: RouteManifestEntry = {
 
 const appEntries: RouteManifestEntry[] = APP_ROUTES.map((r) => {
   const meta = ROUTE_META.find((m) => m.path === r.path);
+  const taxonomy = ROUTE_TAXONOMY[r.path];
   return {
     path: r.path,
     component: r.component,
@@ -69,6 +83,10 @@ const appEntries: RouteManifestEntry[] = APP_ROUTES.map((r) => {
     description: meta?.description,
     h1: meta?.h1,
     summary: meta?.summary,
+    subjects: taxonomy?.subjects,
+    featured: taxonomy?.featured,
+    related: taxonomy?.related,
+    intent: taxonomy?.intent,
   };
 });
 

@@ -29,6 +29,20 @@ describe("getPageSearchIndex", () => {
     );
     expect(caseStudies?.label).toBe("Illustrative Scenarios");
   });
+
+  it("carries route-taxonomy subjects onto curated entries", () => {
+    const curated = getPageSearchIndex().filter((p) => p.subjects?.length);
+    // The /explore library floor; check-route-taxonomy.mjs enforces the
+    // same bound on the taxonomy file itself.
+    expect(curated.length).toBeGreaterThanOrEqual(60);
+    const findCare = curated.find((p) => p.href === "/find-care");
+    expect(findCare?.subjects).toContain("health");
+    // Every curated entry must have card copy (a description resolved
+    // from its ROUTE_META summary).
+    for (const entry of curated) {
+      expect(entry.description, entry.href).toBeTruthy();
+    }
+  });
 });
 
 describe("searchPages", () => {
