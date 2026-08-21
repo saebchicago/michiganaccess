@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm run build && node scripts/write-build-manifest.mjs"
   publish = "dist"
   ignore = "node ./scripts/netlify-ignore-build.mjs"
 
