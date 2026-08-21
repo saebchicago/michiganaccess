@@ -1,0 +1,38 @@
+name: Release accumulated data updates
+
+# Data refresh workflows and reviewed data PRs can land on main without each
+# consuming a separate production deploy. Netlify ignores data-only commits;
+# this job emits one build-eligible release commit when HEAD is still data-only.
+on:
+  schedule:
+    - cron: "30 13 * * 5" # Friday 13:30 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-automated-updates
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Publish only when data changes are pending
+        run: |
+          set -euo pipefail
+          subject="$(git log -1 --pretty=%s)"
+          if printf '%s\n' "$subject" | grep -Eqi '^data:'; then
+            git config user.name "release-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git commit --allow-empty -m "chore(release): publish accumulated data updates $(date -u +%Y-%m-%d)"
+            git push
+            echo "Created one build-eligible release commit for accumulated data updates."
+          else
+            echo "HEAD is already a build-eligible release/non-data commit; no release pulse needed."
+          fi
