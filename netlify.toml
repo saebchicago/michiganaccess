@@ -1,14 +1,16 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  ignore = "node ./scripts/netlify-ignore-build.mjs"
 
 # Netlify config for the Access Michigan site.
 #
 # The [build] block above pins the build command and the publish dir
 # (repo-root dist/, which is what the npm run build script ultimately
-# copies to). This overrides any build settings configured in the
-# Netlify dashboard. The rest of this file adds baseline HTTP security
-# headers and a cache header for /data/*.
+# copies to). Deploy Previews and branch deploys remain available; only
+# data-only production commits are batched by the ignore script so multiple
+# refreshes do not each consume a separate production deploy.
+# The rest of this file adds baseline HTTP security headers and cache policy.
 
 [[headers]]
   for = "/*"
