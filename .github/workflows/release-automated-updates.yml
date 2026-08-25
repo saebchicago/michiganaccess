@@ -1,19 +1,29 @@
-name: Release accumulated data updates
+name: Publish production release
 
-# Data refresh workflows and reviewed data PRs can land on main without each
-# consuming a separate production deploy. Netlify ignores data-only commits;
-# this job emits one build-eligible release commit when HEAD is still data-only.
+# Production is intentionally decoupled from merges to main. Reviewed PRs and
+# automated data refreshes can accumulate without consuming a production deploy.
+# When the site is ready to publish, run this workflow manually from main. It
+# verifies the currently deployed commit when possible and then creates the one
+# commit shape that Netlify's ignore policy allows to build in production.
 on:
-  schedule:
-    - cron: "30 13 * * 5" # Friday 13:30 UTC
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Optional note describing why this production release is being published"
+        required: false
+        type: string
+      force:
+        description: "Publish even if the deployed commit cannot be verified"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: write
 
 concurrency:
-  group: release-automated-updates
-  cancel-in-progress: true
+  group: publish-production-release
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -23,16 +33,66 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Publish only when data changes are pending
+      - name: Require main branch
         run: |
           set -euo pipefail
-          subject="$(git log -1 --pretty=%s)"
-          if printf '%s\n' "$subject" | grep -Eqi '^data:'; then
-            git config user.name "release-bot"
-            git config user.email "actions@users.noreply.github.com"
-            git commit --allow-empty -m "chore(release): publish accumulated data updates $(date -u +%Y-%m-%d)"
-            git push
-            echo "Created one build-eligible release commit for accumulated data updates."
-          else
-            echo "HEAD is already a build-eligible release/non-data commit; no release pulse needed."
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "::error::Production releases must be dispatched from main."
+            exit 1
           fi
+
+      - name: Check whether production is behind main
+        id: drift
+        env:
+          FORCE_RELEASE: ${{ inputs.force }}
+        run: |
+          set -euo pipefail
+          head_sha="$(git rev-parse HEAD)"
+          deployed_sha=""
+
+          if manifest="$(curl --fail --silent --show-error --max-time 15 https://accessmi.org/.well-known/build.json)"; then
+            deployed_sha="$(printf '%s' "$manifest" | jq -r '.commit // empty')"
+          fi
+
+          if [ -z "$deployed_sha" ]; then
+            if [ "$FORCE_RELEASE" = "true" ]; then
+              echo "Production identity unavailable; continuing because force=true."
+            else
+              echo "::error::Could not verify the deployed commit from /.well-known/build.json. Re-run with force only after confirming production manually."
+              exit 1
+            fi
+          elif [ "$deployed_sha" = "$head_sha" ]; then
+            echo "Production already matches main ($head_sha); no deploy needed."
+            echo "release_needed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          elif git merge-base --is-ancestor "$deployed_sha" "$head_sha"; then
+            echo "Production $deployed_sha is behind main $head_sha; release is needed."
+          elif [ "$FORCE_RELEASE" = "true" ]; then
+            echo "Deployed commit is not an ancestor of main; continuing because force=true."
+          else
+            echo "::error::Deployed commit $deployed_sha is not an ancestor of main $head_sha. Resolve the drift or re-run with force after review."
+            exit 1
+          fi
+
+          echo "release_needed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create production release commit
+        if: steps.drift.outputs.release_needed != 'false'
+        env:
+          RELEASE_REASON: ${{ inputs.reason }}
+        run: |
+          set -euo pipefail
+          timestamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git config user.name "release-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          body="Requested manually through the Publish production release workflow."
+          if [ -n "$RELEASE_REASON" ]; then
+            body="$body Reason: $RELEASE_REASON"
+          fi
+
+          git commit --allow-empty \
+            -m "chore(release): publish production $timestamp" \
+            -m "$body"
+          git push origin HEAD:main
+          echo "Created the explicit production release marker. Netlify will build this commit once."
