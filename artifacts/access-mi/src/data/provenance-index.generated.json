@@ -7,9 +7,9 @@
   },
   "ingestedAt": {
     "acs-broadband-county.generated.json": "2026-08-24",
-    "bls-laus-county.generated.json": "2026-08-18",
-    "cdc-places-county.generated.json": "2026-08-18",
-    "cdc-places-zcta.generated.json": "2026-08-18",
-    "hrsa-hpsa-county.generated.json": "2026-08-18"
+    "bls-laus-county.generated.json": "2026-08-25",
+    "cdc-places-county.generated.json": "2026-08-25",
+    "cdc-places-zcta.generated.json": "2026-08-25",
+    "hrsa-hpsa-county.generated.json": "2026-08-25"
   }
 }

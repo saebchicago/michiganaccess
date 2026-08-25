@@ -8,8 +8,8 @@
         "disciplineId": "primaryCare",
         "label": "Primary Care",
         "file": "BCD_HPSA_FCT_DET_PC.csv",
-        "dwCreateDate": "08/17/2026",
-        "miDesignatedHpsas": 605,
+        "dwCreateDate": "08/24/2026",
+        "miDesignatedHpsas": 606,
         "miWithdrawnHpsas": 2031,
         "miOtherStatusHpsas": 439
       },
@@ -17,8 +17,8 @@
         "disciplineId": "dental",
         "label": "Dental Health",
         "file": "BCD_HPSA_FCT_DET_DH.csv",
-        "dwCreateDate": "08/17/2026",
-        "miDesignatedHpsas": 551,
+        "dwCreateDate": "08/24/2026",
+        "miDesignatedHpsas": 552,
         "miWithdrawnHpsas": 1067,
         "miOtherStatusHpsas": 359
       },
@@ -26,13 +26,13 @@
         "disciplineId": "mental",
         "label": "Mental Health",
         "file": "BCD_HPSA_FCT_DET_MH.csv",
-        "dwCreateDate": "08/17/2026",
-        "miDesignatedHpsas": 601,
+        "dwCreateDate": "08/24/2026",
+        "miDesignatedHpsas": 602,
         "miWithdrawnHpsas": 830,
         "miOtherStatusHpsas": 410
       }
     ],
-    "ingested_at": "2026-08-18T07:57:55.372Z",
+    "ingested_at": "2026-08-25T08:02:42.862Z",
     "ingest_script": "scripts/refresh-hrsa-hpsa-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
@@ -893,25 +893,25 @@
       "countyName": "Gratiot",
       "disciplines": {
         "primaryCare": {
-          "designatedHpsas": 8,
+          "designatedHpsas": 9,
           "maxHpsaScore": 15,
-          "designationPopulation": 414803,
+          "designationPopulation": 472080,
           "estimatedUnderservedPopulation": 5217,
           "providerFte": 2.5,
           "shortageFte": 2.6
         },
         "dental": {
-          "designatedHpsas": 8,
+          "designatedHpsas": 9,
           "maxHpsaScore": 17,
-          "designationPopulation": 765454,
+          "designationPopulation": 853381,
           "estimatedUnderservedPopulation": 10857,
           "providerFte": 0.3,
           "shortageFte": 3.4
         },
         "mental": {
-          "designatedHpsas": 8,
+          "designatedHpsas": 9,
           "maxHpsaScore": 16,
-          "designationPopulation": 765469,
+          "designationPopulation": 853396,
           "estimatedUnderservedPopulation": 2109,
           "providerFte": 0.5,
           "shortageFte": 0.9

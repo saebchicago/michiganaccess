@@ -4,11 +4,9 @@
  * diffable and the vintage metadata can be read at build time without
  * touching this shim.
  *
- * County-level companion to cdc-places-zcta.ts. Every county measure id
- * also exists in the ZCTA shim's catalog (the county set is the subset
- * PLACES publishes at county granularity), so a county view and a ZCTA
- * view can be built against a single measure vocabulary. Counts are
- * whatever the ingest pipeline publishes - do not pin them in comments.
+ * County-level companion to cdc-places-zcta.ts. The 17 measure ids match
+ * one-for-one with the ZCTA shim so a county view and a ZCTA view can be
+ * built against a single measure catalog.
  */
 import raw from "./cdc-places-county.generated.json";
 
