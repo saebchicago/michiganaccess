@@ -7,9 +7,13 @@
 #
 # The [build] block above pins the build command and the publish dir
 # (repo-root dist/, which is what the npm run build script ultimately
-# copies to). Deploy Previews and branch deploys remain available; only
-# data-only production commits are batched by the ignore script so multiple
-# refreshes do not each consume a separate production deploy.
+# copies to). Deploy Previews and branch deploys remain automatic so every
+# PR can be reviewed without publishing it. Production is different: the
+# ignore script skips ordinary main-branch commits and automated data refreshes.
+# A production build runs only for the explicit release marker created by the
+# GitHub "Publish production release" workflow. This batches many reviewed
+# changes into one deliberate production deploy and avoids spending a deploy
+# on every merge while retaining Git history and Netlify deploy traceability.
 # The rest of this file adds baseline HTTP security headers and cache policy.
 
 [[headers]]
