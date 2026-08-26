@@ -211,25 +211,27 @@ export default function IntelligenceBriefing() {
               {FEATURED_TREND.unit}
             </p>
           </div>
-          <Suspense
-            fallback={
-              <div
-                className="h-[110px] w-full animate-pulse rounded"
-                style={{ backgroundColor: `${C.emerald}0D` }}
-                aria-hidden="true"
+          {activeView === "trend" ? (
+            <Suspense
+              fallback={
+                <div
+                  className="h-[110px] w-full animate-pulse rounded"
+                  style={{ backgroundColor: `${C.emerald}0D` }}
+                  aria-hidden="true"
+                />
+              }
+            >
+              <TrendChart
+                data={trendPoints}
+                direction="down_is_better"
+                unit={FEATURED_TREND.unit}
+                height={110}
+                overrideColor={C.emeraldMid}
+                classification={trendClassification}
+                ariaLabel={`${FEATURED_TREND.label} trend, ${trendPoints[0].vintage} to ${trendPoints[trendPoints.length - 1].vintage}`}
               />
-            }
-          >
-            <TrendChart
-              data={trendPoints}
-              direction="down_is_better"
-              unit={FEATURED_TREND.unit}
-              height={110}
-              overrideColor={C.emeraldMid}
-              classification={trendClassification}
-              ariaLabel={`${FEATURED_TREND.label} trend, ${trendPoints[0].vintage} to ${trendPoints[trendPoints.length - 1].vintage}`}
-            />
-          </Suspense>
+            </Suspense>
+          ) : null}
           <p
             className="mt-2 text-xs leading-relaxed"
             style={{ color: `${C.emerald}CC` }}
