@@ -19,7 +19,7 @@ const trustItems = [
   },
   {
     icon: GitBranch,
-    label: "Open-source code",
+    label: "Public source code",
     href: "https://github.com/saebchicago/michiganaccess",
     external: true,
   },
