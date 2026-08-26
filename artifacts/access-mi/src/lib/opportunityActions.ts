@@ -5,9 +5,11 @@ import {
   type OpportunityDomain,
 } from "@/data/opportunityAtlas";
 
-function day(value: string): number {
-  const parsed = Date.parse(`${value}T23:59:59Z`);
-  if (!Number.isFinite(parsed)) throw new Error(`Invalid opportunity action date: ${value}`);
+function boundary(value: string, endOfDay: boolean): number {
+  const parsed = Date.parse(`${value}T${endOfDay ? "23:59:59" : "00:00:00"}Z`);
+  if (!Number.isFinite(parsed)) {
+    throw new Error(`Invalid opportunity action date: ${value}`);
+  }
   return parsed;
 }
 
@@ -17,9 +19,11 @@ export function deriveOpportunityActionStatus(
 ): OpportunityActionStatus {
   const nowMs = now.getTime();
 
-  if (action.opensOn && nowMs < day(action.opensOn)) return "opens-soon";
+  if (action.opensOn && nowMs < boundary(action.opensOn, false)) {
+    return "opens-soon";
+  }
 
-  if (action.closesOn && nowMs > day(action.closesOn)) {
+  if (action.closesOn && nowMs > boundary(action.closesOn, true)) {
     return "next-cycle";
   }
 
