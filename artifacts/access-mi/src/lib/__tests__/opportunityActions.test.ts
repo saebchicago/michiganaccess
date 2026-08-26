@@ -33,7 +33,7 @@ describe("Opportunity action freshness", () => {
     ).toBe("next-cycle");
   });
 
-  it("presents Seed Awards as opens-soon until the published opening date", () => {
+  it("presents Seed Awards as opens-soon only before the published opening date", () => {
     expect(seedAwards).toBeDefined();
     expect(
       deriveOpportunityActionStatus(
@@ -44,7 +44,7 @@ describe("Opportunity action freshness", () => {
     expect(
       deriveOpportunityActionStatus(
         seedAwards!,
-        new Date("2026-09-08T12:00:00Z"),
+        new Date("2026-09-07T12:00:00Z"),
       ),
     ).toBe("available-now");
   });
