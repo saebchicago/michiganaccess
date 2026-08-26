@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   ArrowRight,
@@ -19,13 +19,15 @@ import { InsightShareCard } from "@/components/opportunity/InsightShareCard";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   OPPORTUNITY_LENSES,
-  getOpportunityActions,
   getOpportunityInsights,
-  resolveOpportunityPlace,
-  resolveOpportunityPlaceId,
   type OpportunityInsight,
   type OpportunityPlace,
 } from "@/data/opportunityAtlas";
+import {
+  resolveOpportunityPlace,
+  resolveOpportunityPlaceId,
+} from "@/lib/opportunityPlaceResolver";
+import { getCurrentOpportunityActions } from "@/lib/opportunityActions";
 import {
   buildOpportunityUrl,
   parseOpportunityState,
@@ -194,7 +196,7 @@ export default function OpportunityAtlasPage() {
     ? getOpportunityPlaceChanges(savedCurrent, insights)
     : [];
   const domains = Array.from(new Set(insights.map((insight) => insight.domain)));
-  const actions = getOpportunityActions([
+  const actions = getCurrentOpportunityActions([
     ...domains,
     "food",
     "greenery",
@@ -357,7 +359,7 @@ export default function OpportunityAtlasPage() {
                   <div
                     key={insight.id}
                     id={`metric-${insight.metricId}`}
-                    onMouseEnter={() =>
+                    onFocus={() =>
                       trackOpportunityEvent("opportunity_metric_viewed", {
                         geography_type: place.geographyType,
                         place_id: place.id,
@@ -446,7 +448,7 @@ export default function OpportunityAtlasPage() {
                 Current avenues to act
               </h2>
               <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-                Programs and financing are maintained separately from observed data. Availability does not mean a community is eligible; follow the primary program rules before acting.
+                Programs and financing are maintained separately from observed data. Availability does not mean a community is eligible; follow the primary program rules before acting. Date-bounded statuses are recalculated when this page loads.
               </p>
               <div className="mt-5 grid gap-4 md:grid-cols-2">
                 {actions.map((action) => (
@@ -538,16 +540,21 @@ export default function OpportunityAtlasPage() {
               </div>
               {saved.length ? (
                 <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                  {saved.map((item) => (
-                    <Link
-                      key={item.placeId}
-                      to={buildOpportunityUrl({ placeId: item.placeId }).replace(window.location.origin, "")}
-                      className="rounded-lg border border-border p-4 transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      <div className="font-semibold text-foreground">{item.label}</div>
-                      <div className="mt-1 text-xs text-muted-foreground">{item.countyName} County context</div>
-                    </Link>
-                  ))}
+                  {saved.map((item) => {
+                    const href = new URL(
+                      buildOpportunityUrl({ placeId: item.placeId }),
+                    );
+                    return (
+                      <Link
+                        key={item.placeId}
+                        to={`${href.pathname}${href.search}`}
+                        className="rounded-lg border border-border p-4 transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        <div className="font-semibold text-foreground">{item.label}</div>
+                        <div className="mt-1 text-xs text-muted-foreground">{item.countyName} County context</div>
+                      </Link>
+                    );
+                  })}
                 </div>
               ) : (
                 <p className="mt-4 text-sm text-muted-foreground">
