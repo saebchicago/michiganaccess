@@ -6,7 +6,10 @@ import { MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CountyProvider } from "@/contexts/CountyContext";
 import Index from "@/pages/Index";
-import { getLibrarySize } from "@/components/home/homeDestinations";
+import {
+  getIntentCards,
+  getLibrarySize,
+} from "@/components/home/homeDestinations";
 import {
   HRSA_HPSA_COUNTY_PROVENANCE,
   HRSA_HPSA_COUNTY_RECORDS,
@@ -48,10 +51,10 @@ describe("Index (homepage)", () => {
   });
 
   it("renders three clear entry pathways", () => {
-    // The old three abstract doors are replaced by four concrete intents.
-    // Contents come from the route taxonomy via getIntentCards(); the
-    // taxonomy guard pins exactly 3 destinations per intent, so this
-    // asserts the wiring, not hand-typed labels.
+    // The homepage composes three reader pathways from the four underlying
+    // taxonomy intents: help, place, and a combined money + analyst pathway.
+    // Validate the destinations returned by getIntentCards() rather than
+    // hard-coding a route that can become stale when editorial ordering changes.
     localStorage.clear();
     renderHomepage();
 
@@ -65,13 +68,18 @@ describe("Index (homepage)", () => {
     ]) {
       expect(within(section).getByText(title)).toBeInTheDocument();
     }
-    // One taxonomy-assigned destination per intent, resolved by href.
-    for (const href of ["/find-care", "/brief", "/foia", "/data-explorer"]) {
+
+    const renderedHrefs = within(section)
+      .getAllByRole("link")
+      .map((link) => link.getAttribute("href"));
+    const expectedHrefs = getIntentCards().flatMap((card) =>
+      card.destinations.map((destination) => destination.href),
+    );
+
+    for (const href of expectedHrefs) {
       expect(
-        within(section)
-          .getAllByRole("link")
-          .some((a) => a.getAttribute("href") === href),
-        `intent cards missing a link to ${href}`,
+        renderedHrefs.includes(href),
+        `intent cards missing taxonomy destination ${href}`,
       ).toBe(true);
     }
   });
