@@ -12,7 +12,7 @@ export function OpportunityHomeBanner() {
           <MapPinned className="h-4 w-4 shrink-0" aria-hidden="true" />
           <span className="font-semibold">Community Opportunity Atlas</span>
           <span className="hidden text-emerald-100/80 sm:inline">
-            What stands out here — and what could change it?
+            What stands out here - and what could change it?
           </span>
         </div>
         <Link
