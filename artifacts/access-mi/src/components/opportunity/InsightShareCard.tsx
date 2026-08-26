@@ -80,7 +80,7 @@ export function InsightShareCard({ place, insight }: InsightShareCardProps) {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
+      setTimeout(() => setCopied(false), 1800);
       trackOpportunityEvent("opportunity_share_completed", {
         geography_type: place.geographyType,
         place_id: place.id,
@@ -106,7 +106,7 @@ export function InsightShareCard({ place, insight }: InsightShareCardProps) {
     try {
       await navigator.share({
         title: `${place.label}: ${insight.title}`,
-        text: `${insight.displayValue} — ${insight.summary}`,
+        text: `${insight.displayValue} - ${insight.summary}`,
         url,
       });
       trackOpportunityEvent("opportunity_share_completed", {
