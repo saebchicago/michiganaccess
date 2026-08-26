@@ -9,6 +9,7 @@ const __dirname = dirname(__filename);
 
 const PRIORITY_ROUTES = [
   '/',
+  '/opportunity',
   '/find-care',
   '/zip/48201',
   '/compare',
@@ -42,8 +43,7 @@ type ViolationRow = {
 
 const allViolations: ViolationRow[] = [];
 
-test.describe.configure({ mode: 'serial' });
-test.describe('A11y audit  -  priority routes', () => {
+test.describe('A11y audit - priority routes', () => {
   test.beforeEach(async ({ page }) => {
     // Suppress first-visit onboarding tour so axe doesn't sample the
     // card mid-fade (transparent card reveals crisis-bar coral and
@@ -80,12 +80,9 @@ test.describe('A11y audit  -  priority routes', () => {
         `[a11y] ${route}: ${criticalOrSerious.length} critical/serious, ${results.violations.length - criticalOrSerious.length} other`
       );
 
-      // Hard gate. This spec was advisory for its first months, and 4
-      // critical + 14 serious violations accumulated on priority routes
-      // under green CI until the 2026-08-18 pre-launch audit cleared them.
-      // All priority routes scan clean as of that audit; keep them that
-      // way. The full report (all impacts) still lands in
-      // A11Y_VIOLATIONS.md via afterAll.
+      // Hard gate. Keep individual route tests independent: using Playwright's
+      // serial mode caused every later route to be skipped after one failure,
+      // hiding the actual breadth of regressions and wasting a CI cycle.
       expect(
         criticalOrSerious.map((v) => `${v.impact}:${v.id} x${v.nodes.length}`),
         `critical/serious a11y violations on ${route}`
@@ -103,7 +100,7 @@ test.describe('A11y audit  -  priority routes', () => {
     ];
     if (allViolations.length === 0) {
       lines.push(
-        '**Status: clean.** No critical/serious WCAG 2.0/2.1 A/AA violations detected across the 10 priority routes:',
+        '**Status: clean.** No WCAG 2.0/2.1 A/AA violations detected across the priority routes:',
         '',
         ...PRIORITY_ROUTES.map((r) => `- ${r}`),
       );
