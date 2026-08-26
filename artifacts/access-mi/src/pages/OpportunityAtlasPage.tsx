@@ -150,7 +150,7 @@ function ComparisonTable({
 
 export default function OpportunityAtlasPage() {
   usePageMeta({
-    title: "Community Opportunity Atlas — Access Michigan",
+    title: "Community Opportunity Atlas - Access Michigan",
     description:
       "Find what stands out in a Michigan community, trace every figure to its source, compare places, find current action pathways, and share the exact finding.",
     path: "/opportunity",
