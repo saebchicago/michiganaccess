@@ -1,0 +1,19 @@
+{
+  "provenance": {
+    "source_name": "USDA Economic Research Service — Food Access Research Atlas, 2025 SRAM",
+    "source_url": "https://www.ers.usda.gov/data-products/food-access-research-atlas/download-the-data",
+    "map_service": "https://gisportal.ers.usda.gov/server/rest/services/FARA/FARA_2025_StraightLine/MapServer/7",
+    "distance_method": "straight-line (Euclidean)",
+    "release_date": "2026-07-27",
+    "retailer_vintage": "June 2025 SNAP-authorized retailers",
+    "tract_geography": "2020 Census tracts",
+    "socioeconomic_context": "2020–2024 ACS",
+    "ingested_at": null,
+    "ingest_script": "scripts/refresh-usda-sram-2025.mjs",
+    "value_label": "PENDING",
+    "populated": false,
+    "record_count": 0,
+    "notes": "Primary source and schema are documented, but this branch has not yet committed a normalized Michigan extract. The refresh script fails closed on schema, tract-count, county-coverage, binary-flag, and population plausibility checks. No tract values are rendered from this pending artifact."
+  },
+  "records": []
+}
