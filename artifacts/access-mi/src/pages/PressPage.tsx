@@ -17,7 +17,7 @@ const FACTS = [
     value: `${COUNTIES_COVERED} / ${COUNTIES_COVERED} Michigan counties`,
   },
   { label: "Public Data Sources", value: DATA_SOURCE_DISPLAY },
-  { label: "Languages", value: "English, Spanish, Arabic, Bengali" },
+  { label: "Language Access", value: "English; partial Spanish, Arabic, Bengali" },
   { label: "Access", value: "Free - No login required" },
   { label: "Analytics", value: "Aggregate GA4 measurement" },
   { label: "Data Policy", value: "No sale of personal data" },
