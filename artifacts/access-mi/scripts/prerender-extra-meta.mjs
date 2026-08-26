@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 /**
- * Prerender a deliberately small set of flagship routes that are registered
- * directly in App.tsx rather than the legacy APP_ROUTES table.
+ * Prerender a deliberately small metadata extension set.
  *
  * This keeps crawler metadata build-time/static (zero request-time compute)
- * while the broader route-table consolidation proceeds independently. The
- * metadata lives in src/config/extraRouteMeta.json so sitemap generation and
- * this prerender step consume exactly the same facts.
+ * while allowing a flagship direct route or a legacy-route correction to
+ * receive accurate canonical/social metadata after the standard prerender.
  */
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -51,6 +49,16 @@ function rewriteHead(html, meta) {
     /<link\s+rel=["']canonical["'][^>]*>/i,
     `<link rel="canonical" href="${escapeHtml(canonical)}" />`,
   );
+
+  if (meta.noindex === true) {
+    out = replaceOrInsert(
+      out,
+      /<meta\s+name=["']robots["'][^>]*>/i,
+      '<meta name="robots" content="noindex,follow" />',
+    );
+  } else {
+    out = out.replace(/\s*<meta\s+name=["']robots["'][^>]*>/i, "");
+  }
 
   const social = [
     [/<meta\s+property=["']og:title["'][^>]*>/i, `<meta property="og:title" content="${escapeHtml(meta.title)}" />`],
@@ -102,7 +110,7 @@ async function main() {
     await writeFile(path.join(targetDir, "index.html"), rewriteHead(baseHtml, meta), "utf8");
   }
 
-  console.log(`[prerender-extra-meta] wrote ${entries.length} flagship route HTML file(s).`);
+  console.log(`[prerender-extra-meta] wrote ${entries.length} metadata extension HTML file(s).`);
 }
 
 main().catch((error) => {
