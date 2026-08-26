@@ -2,14 +2,12 @@
 /**
  * Generates public/sitemap.xml from:
  *   - All routes in src/config/routeMeta.ts (prerendered, canonical 200s)
+ *   - Flagship extras in src/config/extraRouteMeta.json
  *   - All 83 Michigan county routes (/county/<slug>)
  *   - All 83 brief?county= canonicals (/brief?county=<slug>)
  *
  * lastmod is the build date, never hand-typed.
  * Wired into pnpm build (first step, before check-links).
- *
- * Usage:
- *   node scripts/generate-sitemap.mjs
  */
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
@@ -19,11 +17,11 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");
 const OUT = path.join(projectRoot, "public/sitemap.xml");
 const ROUTE_META_PATH = path.join(projectRoot, "src/config/routeMeta.ts");
+const EXTRA_META_PATH = path.join(projectRoot, "src/config/extraRouteMeta.json");
 
 const SITE_URL = "https://accessmi.org";
-const BUILD_DATE = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+const BUILD_DATE = new Date().toISOString().split("T")[0];
 
-// All 83 Michigan counties — must match MI_COUNTY_FIPS in census-geographies.ts
 const MI_COUNTIES_83 = [
   "Alcona", "Alger", "Allegan", "Alpena", "Antrim", "Arenac", "Baraga",
   "Barry", "Bay", "Benzie", "Berrien", "Branch", "Calhoun", "Cass",
@@ -40,26 +38,27 @@ const MI_COUNTIES_83 = [
   "Shiawassee", "Tuscola", "Van Buren", "Washtenaw", "Wayne", "Wexford",
 ];
 
-// Mirrors countyToSlug in src/utils/countyUtils.ts
 function countyToSlug(county) {
   return county.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "");
 }
 
-// Parse ROUTE_META paths from routeMeta.ts (same narrow regex as prerender-meta.mjs)
 async function loadRoutePaths() {
   const src = await readFile(ROUTE_META_PATH, "utf8");
   const paths = [];
   const re = /path\s*:\s*"(\/[^"]*)"/g;
   let m;
-  while ((m = re.exec(src)) !== null) {
-    paths.push(m[1]);
+  while ((m = re.exec(src)) !== null) paths.push(m[1]);
+
+  const extra = JSON.parse(await readFile(EXTRA_META_PATH, "utf8"));
+  for (const entry of extra) {
+    if (typeof entry?.path !== "string" || !entry.path.startsWith("/")) {
+      throw new Error("extraRouteMeta.json contains an invalid path");
+    }
+    paths.push(entry.path);
   }
-  return paths;
+  return [...new Set(paths)];
 }
 
-// Normalize to trailing-slash so sitemap loc matches the URL Netlify serves.
-// Query-string paths (e.g. /brief?county=wayne) are left unchanged because
-// Netlify Pretty URLs only adds slashes to directory-style paths.
 function trailingSlash(loc) {
   if (loc === "/" || loc.includes("?")) return loc;
   return loc.endsWith("/") ? loc : `${loc}/`;
@@ -73,12 +72,11 @@ function url(loc, { priority = "0.7", changefreq = "monthly", lastmod = null } =
 
 async function main() {
   const routePaths = await loadRoutePaths();
-
   const lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'];
 
-  // Static prerendered routes from routeMeta
   const priorities = {
     "/": { priority: "1.0", changefreq: "daily" },
+    "/opportunity": { priority: "0.95", changefreq: "weekly" },
     "/find-care": { priority: "0.9", changefreq: "weekly" },
     "/financial-help": { priority: "0.9", changefreq: "weekly" },
     "/benefits": { priority: "0.9", changefreq: "weekly" },
@@ -98,14 +96,12 @@ async function main() {
     lines.push(url(p, { ...opts, lastmod: BUILD_DATE }));
   }
 
-  // 83 county pages
   lines.push("  <!-- Michigan county pages (83) -->");
   for (const county of MI_COUNTIES_83) {
     const slug = countyToSlug(county);
     lines.push(url(`/county/${slug}`, { priority: "0.8", changefreq: "weekly", lastmod: BUILD_DATE }));
   }
 
-  // 83 brief?county= canonicals
   lines.push("  <!-- County brief canonicals (83) -->");
   for (const county of MI_COUNTIES_83) {
     const slug = countyToSlug(county);
@@ -113,7 +109,6 @@ async function main() {
   }
 
   lines.push("</urlset>");
-
   const xml = lines.join("\n") + "\n";
   await writeFile(OUT, xml, "utf8");
 
