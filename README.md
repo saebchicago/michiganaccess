@@ -51,7 +51,7 @@ Production-equivalent root build:
 pnpm build
 ```
 
-The production build includes static integrity checks and a structured-data guard that prevents AccessMI from being emitted as the provider of a `GovernmentService`.
+The CI workflow runs the repository's static integrity gates. The Netlify production build additionally includes a structured-data guard that prevents AccessMI from being emitted as the provider of a `GovernmentService`.
 
 ## Deployment
 
