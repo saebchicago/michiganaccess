@@ -11,6 +11,8 @@
     "title": "Legacy Deep Map | Access Michigan",
     "description": "The early Deep Map prototype is retired from public analysis. Use AccessMI's governed Community Opportunity Atlas, Health Map, Environment, and Food Access surfaces instead.",
     "h1": "Deep Map prototype retired from public analysis",
-    "summary": "This legacy exploratory surface is no longer represented as a current statewide analytical map. AccessMI now directs visitors to governed, source-specific map and community-intelligence experiences."
+    "summary": "This legacy exploratory surface is no longer represented as a current statewide analytical map. AccessMI now directs visitors to governed, source-specific map and community-intelligence experiences.",
+    "noindex": true,
+    "excludeFromSitemap": true
   }
 ]
