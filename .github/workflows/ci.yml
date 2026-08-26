@@ -101,13 +101,12 @@ jobs:
           fi
 
   e2e:
-    # Browser E2E: user journeys, all-routes smoke, mobile viewports, and
-    # axe accessibility specs (src/test/e2e/). These specs existed but no
-    # CI job ran them. Non-blocking for now (continue-on-error), matching
-    # how the Lighthouse job was introduced - promote to blocking once a
-    # few green runs have been observed.
+    # Browser E2E is a release-quality gate: user journeys, all-routes smoke,
+    # mobile viewports, and axe accessibility specs (src/test/e2e/). The suite
+    # is intentionally blocking now that the known homepage contrast defect is
+    # fixed; a serious browser/accessibility regression must not be hidden by a
+    # green aggregate workflow.
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
