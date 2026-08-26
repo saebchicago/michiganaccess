@@ -18,10 +18,13 @@ describe("disaster history accessibility regressions", () => {
     expect(source).toContain('id="disaster-county"');
   });
 
-  it("does not reintroduce low-opacity trend-card text", () => {
-    const source = fs.readFileSync(pagePath, "utf8");
+  it("keeps the known contrast fixes in place", () => {
+    const pageSource = fs.readFileSync(pagePath, "utf8");
+    const dashboardSource = fs.readFileSync(dashboardPath, "utf8");
 
-    expect(source).not.toContain("text-muted-foreground/70");
-    expect(source).not.toContain("text-muted-foreground/80");
+    expect(pageSource).not.toContain("text-muted-foreground/70");
+    expect(pageSource).not.toContain("text-muted-foreground/80");
+    expect(dashboardSource).toContain("text-amber-800 dark:text-amber-300");
+    expect(dashboardSource).not.toContain("text-amber-600 dark:text-amber-400");
   });
 });
