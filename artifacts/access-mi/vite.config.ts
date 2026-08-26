@@ -18,20 +18,10 @@ const basePath = process.env.BASE_PATH ?? "/";
 export default defineConfig({
   base: basePath,
   define: {
-    // Build-time timestamp used by the footer freshness chip. Single
-    // source of truth for "Site updated"; per-source vintage comes
-    // from the data registry (see DATA_FRESHNESS_SOURCES).
     __BUILD_TIMESTAMP__: JSON.stringify(new Date().toISOString()),
   },
   plugins: [
     react(),
-    // Real installability + honest offline behavior. injectManifest (not
-    // generateSW) because navigations must be NetworkFirst with an
-    // offline.html fallback - see src/sw.ts. Note on prerendering: the
-    // per-route dist/<path>/index.html files are written AFTER the vite
-    // build by scripts/prerender-meta.mjs, so they are not in the SW
-    // precache manifest. That is accepted: they are crawler artifacts;
-    // in-app navigations go NetworkFirst and fall back to offline.html.
     VitePWA({
       strategies: "injectManifest",
       srcDir: "src",
@@ -61,27 +51,21 @@ export default defineConfig({
       },
       injectManifest: {
         globPatterns: ["**/*.{js,css,woff2}", "offline.html", "index.html"],
-        // The PDF export stack is excluded from the precache on purpose.
+        // Keep the offline shell focused on reading/navigation. Large
+        // interaction-only vendors are fetched and browser-cached when a user
+        // actually opens a chart/map/export surface instead of being charged
+        // to every first install in the background.
         //
-        // jsPDF, html2canvas and canvg total ~730KB and are already loaded
-        // via `await import()` at the moment the user clicks export - see the
-        // manualChunks comment below and src/utils/generateCountyPDF.ts. The
-        // precache was undoing that work: every first-time visitor downloaded
-        // all three in the background whether or not they ever exported
-        // anything, which is 11% of the precache and the single largest
-        // avoidable cost on this site's first visit.
-        //
-        // That matters here more than most places. This platform's audience
-        // is explicitly the households it maps - ALICE families, rural
-        // counties, broadband deserts - many of them on metered mobile data.
-        //
-        // Offline effect: export stops working offline. That is the correct
-        // trade. It is a deliberate, network-adjacent user action, not part
-        // of the reading experience the offline shell exists to protect.
+        // PDF export is explicitly network-adjacent and has always been safe to
+        // omit offline. Charts/maps remain fully available online and after a
+        // normal browser visit; they simply are not forced into the install
+        // precache before the user asks for those features.
         globIgnores: [
           "assets/vendor-pdf-*.js",
           "assets/html2canvas.esm-*.js",
           "assets/index.es-*.js",
+          "assets/vendor-charts-*.js",
+          "assets/vendor-leaflet-*.js",
         ],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },
@@ -108,13 +92,6 @@ export default defineConfig({
   },
   resolve: {
     alias: [
-      // Patched compose-refs to break the React 19 + Radix unstable-ref
-      // infinite loop on /county/* (and any page rendering Radix Select
-      // or Tooltip). Listed first and as an exact-match RegExp so the
-      // Rollup alias plugin used by the production build cannot fall
-      // through to the prefix-matching `@` entry below. See
-      // src/lib/radix-compose-refs-patch.ts for the patch and the
-      // explanation of why this is safe.
       {
         find: /^@radix-ui\/react-compose-refs$/,
         replacement: path.resolve(
@@ -136,9 +113,6 @@ export default defineConfig({
     dedupe: ["react", "react-dom"],
   },
   optimizeDeps: {
-    // Force the Vite alias above to win over node_modules pre-bundling.
-    // Without this, every Radix package that calls `useComposedRefs`
-    // pulls the unpatched version from node_modules/.vite/deps/.
     exclude: ["@radix-ui/react-compose-refs"],
   },
   root: path.resolve(import.meta.dirname),
@@ -148,7 +122,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // React core - cached across all routes
           if (
             id.includes("node_modules/react/") ||
             id.includes("node_modules/react-dom/") ||
@@ -157,20 +130,15 @@ export default defineConfig({
           ) {
             return "vendor-react";
           }
-          // framer-motion is ~200 KB and used in almost every page
           if (id.includes("node_modules/framer-motion/")) {
             return "vendor-motion";
           }
-          // i18n stack - i18next + plugins (locales are lazy-loaded separately)
           if (
             id.includes("node_modules/i18next") ||
             id.includes("node_modules/react-i18next")
           ) {
             return "vendor-i18n";
           }
-          // Charts: recharts + d3 transitive deps. ~340 KB; only used on
-          // dashboard/data routes, so keeping it out of the main chunk
-          // means /find-care and friends don't pay for it.
           if (
             id.includes("node_modules/recharts/") ||
             id.includes("node_modules/d3-") ||
@@ -178,12 +146,9 @@ export default defineConfig({
           ) {
             return "vendor-charts";
           }
-          // PDF export (Download Local Insights). ~390 KB; only loaded
-          // when the user actually clicks export.
           if (id.includes("node_modules/jspdf")) {
             return "vendor-pdf";
           }
-          // Map runtime - cached across every page that renders a map.
           if (id.includes("node_modules/leaflet/")) {
             return "vendor-leaflet";
           }
