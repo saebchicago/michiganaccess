@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 /**
- * Guard the intentionally tiny set of flagship routes that are composed
- * outside the legacy literal route table. Each extra route must be:
- *   1. registered as a real App route,
- *   2. present in the discovery manifest,
- *   3. linked from another source module, and
- *   4. backed by static metadata.
+ * Guard the deliberately small static-metadata extension set.
  *
- * This prevents a temporary consolidation seam from becoming an ungoverned
- * second route system.
+ * An entry may be either a flagship route composed directly in App.tsx or a
+ * metadata correction for a route in the legacy config table. Every entry must
+ * still be a real route, be represented by the discovery manifest, and have an
+ * inbound content/navigation link. This keeps the extension from becoming an
+ * ungoverned second route system.
  */
 import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
@@ -32,9 +30,10 @@ async function collectSource(dir, out = []) {
 }
 
 async function main() {
-  const [metaRaw, app, manifest] = await Promise.all([
+  const [metaRaw, app, routes, manifest] = await Promise.all([
     readFile(path.join(srcDir, "config/extraRouteMeta.json"), "utf8"),
     readFile(path.join(srcDir, "App.tsx"), "utf8"),
+    readFile(path.join(srcDir, "config/routes.ts"), "utf8"),
     readFile(path.join(srcDir, "routes/manifest.ts"), "utf8"),
   ]);
   const entries = JSON.parse(metaRaw);
@@ -42,19 +41,41 @@ async function main() {
   const failures = [];
 
   for (const entry of entries) {
-    const routeLiteral = `path=\"${entry.path}\"`;
-    if (!app.includes(routeLiteral)) failures.push(`${entry.path}: not registered in App.tsx`);
-    if (!manifest.includes(`path: \"${entry.path}\"`)) failures.push(`${entry.path}: missing from route manifest`);
+    const appLiteral = `path=\"${entry.path}\"`;
+    const configLiteral = `path: \"${entry.path}\"`;
+    if (!app.includes(appLiteral) && !routes.includes(configLiteral)) {
+      failures.push(`${entry.path}: not registered in App.tsx or config/routes.ts`);
+    }
+
+    // Direct flagship routes are literal in manifest.ts; legacy routes are
+    // composed into the manifest from APP_ROUTES. Validate the latter by the
+    // config registration above and the APP_ROUTES composition contract.
+    const directManifest = manifest.includes(`path: \"${entry.path}\"`);
+    const composedLegacy = routes.includes(configLiteral) && manifest.includes("APP_ROUTES.map");
+    if (!directManifest && !composedLegacy) {
+      failures.push(`${entry.path}: missing from route manifest`);
+    }
 
     let inbound = 0;
     for (const file of files) {
-      if (file.endsWith("OpportunityAtlasPage.tsx")) continue;
+      const base = path.basename(file);
+      // A route linking to itself is not discoverability.
+      if (
+        (entry.path === "/opportunity" && base === "OpportunityAtlasPage.tsx") ||
+        (entry.path === "/map/layers" && base === "DeepMapPage.tsx")
+      ) {
+        continue;
+      }
       const src = await readFile(file, "utf8");
-      if (src.includes(`to=\"${entry.path}\"`) || src.includes(`href=\"${entry.path}\"`) || src.includes(`href: \"${entry.path}\"`)) {
+      if (
+        src.includes(`to=\"${entry.path}\"`) ||
+        src.includes(`href=\"${entry.path}\"`) ||
+        src.includes(`href: \"${entry.path}\"`)
+      ) {
         inbound += 1;
       }
     }
-    if (inbound === 0) failures.push(`${entry.path}: no inbound content link`);
+    if (inbound === 0) failures.push(`${entry.path}: no inbound content/navigation link`);
   }
 
   if (failures.length) {
@@ -63,7 +84,9 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`[check-extra-routes] ok - ${entries.length} flagship route(s) registered, discoverable, linked, and metadata-backed.`);
+  console.log(
+    `[check-extra-routes] ok - ${entries.length} metadata extension route(s) registered, discoverable, linked, and guarded.`,
+  );
 }
 
 main().catch((error) => {
