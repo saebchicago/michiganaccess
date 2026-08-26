@@ -1,11 +1,10 @@
 import { motion } from "framer-motion";
-import { MapPin, Building2, Users, Heart, X } from "lucide-react";
+import { MapPin, Building2, Users, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useCounty } from "@/contexts/CountyContext";
 import { useFacilities } from "@/hooks/useFacilities";
 import { useCommunityResources } from "@/hooks/useCommunityResources";
 import { Button } from "@/components/ui/button";
-import CountySelector from "@/components/shared/CountySelector";
 
 const CountyWelcomeBanner = () => {
   const { t } = useTranslation();
@@ -35,7 +34,7 @@ const CountyWelcomeBanner = () => {
       <div className="container flex items-center justify-between gap-4 py-3">
         <div className="flex items-center gap-3 min-w-0">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
-            <MapPin className="h-4 w-4 text-primary" />
+            <MapPin className="h-4 w-4 text-primary" aria-hidden="true" />
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-foreground truncate">
@@ -47,7 +46,7 @@ const CountyWelcomeBanner = () => {
                   key={s.label}
                   className="flex items-center gap-1 text-xs text-muted-foreground"
                 >
-                  <s.icon className="h-3 w-3" />
+                  <s.icon className="h-3 w-3" aria-hidden="true" />
                   <strong className="text-foreground">
                     {s.value || "-"}
                   </strong>{" "}
@@ -60,11 +59,11 @@ const CountyWelcomeBanner = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7 flex-shrink-0"
+          className="flex-shrink-0"
           onClick={() => setCounty(null)}
           aria-label={t("county.clearSelection")}
         >
-          <X className="h-3.5 w-3.5" />
+          <X className="h-4 w-4" aria-hidden="true" />
         </Button>
       </div>
     </motion.div>

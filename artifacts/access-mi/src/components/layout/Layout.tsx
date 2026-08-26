@@ -9,9 +9,10 @@ import ScrollToTop from "@/components/shared/ScrollToTop";
 import SkipToContent from "@/components/shared/SkipToContent";
 import RouteAnnouncer from "@/components/shared/RouteAnnouncer";
 import PublicTrustBar from "@/components/shared/PublicTrustBar";
+import OnboardingTour from "@/components/shared/OnboardingTour";
 import { AI_CHAT_ENABLED } from "@/config/aiChat";
 
-// Deferred: non-critical widgets that don't affect initial render
+// Deferred: non-critical widgets that don't affect initial render.
 const AIChatWidget = lazy(() => import("@/components/shared/AIChatWidget"));
 const WeatherAlertBanner = lazy(
   () => import("@/components/alerts/WeatherAlertBanner"),
@@ -28,7 +29,6 @@ const MobileBottomNav = lazy(
 );
 const QuickExitBar = lazy(() => import("@/components/shared/QuickExitBar"));
 
-const OnboardingTour = lazy(() => import("@/components/shared/OnboardingTour"));
 interface LayoutProps {
   children: ReactNode;
   title?: string;
@@ -57,12 +57,7 @@ const Layout = ({ children }: LayoutProps) => (
     <ErrorBoundary>
       <motion.main
         id="main-content"
-        // Programmatic focus target for route changes (RouteAnnouncer)
-        // and the skip link; not in the tab order itself.
         tabIndex={-1}
-        // Bottom padding reserves the fixed mobile chrome: below sm both
-        // QuickExitBar (~4.5rem) and MobileBottomNav (3.5rem) are pinned
-        // to the bottom edge; from sm to lg only the nav remains.
         className="flex-1 pb-[calc(8rem+env(safe-area-inset-bottom,0px))] sm:pb-[calc(3.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0 focus:outline-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -79,13 +74,13 @@ const Layout = ({ children }: LayoutProps) => (
       <PrintButton />
       <PWAInstallBanner />
       <MobileBottomNav />
-      {/* AI chat widget: hard-disabled via AI_CHAT_ENABLED regardless of
-          the VITE_ENABLE_AI_CHAT env var - see src/config/aiChat.ts. */}
       {AI_CHAT_ENABLED && <AIChatWidget />}
       <QuickExitBar />
-
-      <OnboardingTour />
     </Suspense>
+    {/* Footer already imports replayTour from this module, so a dynamic import
+        here could never split OnboardingTour into its own chunk. Keep one clear
+        static dependency instead of paying the warning/indirection cost. */}
+    <OnboardingTour />
   </div>
 );
 

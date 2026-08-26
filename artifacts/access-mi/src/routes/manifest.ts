@@ -1,17 +1,12 @@
 /**
- * Single source of truth for every route on the platform.
+ * Single source of truth for discoverable destinations on the platform.
  *
- * The literal arrays live in `@/config/routes` (router) and
- * `@/config/routeMeta` (prerender metadata). This file composes them
- * into one typed registry so consumers (Router, Header, Footer,
- * homepage cards, Downloads, CI link check, prerender script) all
- * resolve per-route facts from a single import.
- *
- * Any new route MUST be added to `APP_ROUTES` in `@/config/routes`;
- * the corresponding navigation entry MUST point at a path that is
- * present in this manifest. `scripts/check-links.mjs` enforces both.
+ * Most literal routes live in `@/config/routes` and metadata in
+ * `@/config/routeMeta`. A very small flagship set can be composed here while
+ * legacy route-table consolidation is in progress; those routes must also have
+ * build-time metadata in `extraRouteMeta.json` and a real router entry.
  */
-import type { ComponentType, LazyExoticComponent } from "react";
+import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import Index from "@/pages/Index";
 import {
   APP_ROUTES,
@@ -36,20 +31,11 @@ export interface RouteManifestEntry {
   component: LazyExoticComponent<ComponentType<any>> | ComponentType<any>;
   label: string;
   eager?: boolean;
-  /**
-   * True when `scripts/prerender-meta.mjs` writes a per-route
-   * dist/<path>/index.html with route-specific head + noscript body.
-   * Derived from presence of an entry in `ROUTE_META`.
-   */
   prerender: boolean;
   title?: string;
   description?: string;
   h1?: string;
   summary?: string;
-  /**
-   * Discovery-surface curation, merged from `@/config/routeTaxonomy`.
-   * Present only for curated destinations (the /explore library).
-   */
   subjects?: SubjectId[];
   featured?: boolean;
   related?: string[];
@@ -68,6 +54,25 @@ const homeEntry: RouteManifestEntry = {
   description: HOME_META?.description,
   h1: HOME_META?.h1,
   summary: HOME_META?.summary,
+};
+
+// Flagship product route: registered directly in App.tsx for now, but included
+// in the discovery manifest so homepage/Explore surfaces treat it as a real
+// destination. Static crawler metadata is generated from extraRouteMeta.json.
+const opportunityEntry: RouteManifestEntry = {
+  path: "/opportunity",
+  component: lazy(() => import("@/pages/OpportunityAtlasPage")),
+  label: "Community Opportunity Atlas",
+  prerender: true,
+  title: "Community Opportunity Atlas | Access Michigan",
+  description:
+    "Start with a Michigan place. See source-backed local gaps, neighborhood-resolution data status, current action pathways, careful comparisons, and shareable findings.",
+  h1: "What stands out in your community?",
+  summary:
+    "Place-first Michigan civic intelligence: understand local signals, trace every figure to its source, compare communities, identify current avenues to act, and share the exact finding.",
+  subjects: ["home", "env", "food", "civic", "tools"],
+  featured: true,
+  related: ["/food-access", "/environment", "/public-investment", "/compare"],
 };
 
 const appEntries: RouteManifestEntry[] = APP_ROUTES.map((r) => {
@@ -90,7 +95,11 @@ const appEntries: RouteManifestEntry[] = APP_ROUTES.map((r) => {
   };
 });
 
-export const ROUTE_MANIFEST: RouteManifestEntry[] = [homeEntry, ...appEntries];
+export const ROUTE_MANIFEST: RouteManifestEntry[] = [
+  homeEntry,
+  opportunityEntry,
+  ...appEntries,
+];
 
 export const PRERENDER_ROUTES: RouteManifestEntry[] = ROUTE_MANIFEST.filter(
   (r) => r.prerender,

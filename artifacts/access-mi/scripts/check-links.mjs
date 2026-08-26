@@ -2,17 +2,10 @@
 /**
  * Internal-link integrity check.
  *
- * Walks `src/config/routes.ts` (APP_ROUTES + Navigate redirects),
- * `netlify.toml` (edge 301 redirects), and every `href="/..."` or
- * `to="/..."` reference in `src/`. Also validates markdown links in
- * `public/llms.txt`, the AI-crawler surface robots.txt invites in -
- * it shipped 4 dead paths for weeks because nothing scanned it.
- * Fails the build if any internal link points at a path that is
- * neither a defined APP_ROUTES path nor an edge/Navigate redirect
- * source.
- *
- * Wired into the build (artifacts/access-mi/package.json -> build)
- * so a dead nav link cannot ship to Netlify.
+ * Walks registered routes from src/config/routes.ts plus literal <Route path>
+ * entries in App.tsx, Netlify redirects, and every internal href/to reference.
+ * This keeps flagship/direct routes under the same dead-link contract as the
+ * legacy route table while route configuration is gradually consolidated.
  */
 import { readFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
@@ -28,7 +21,7 @@ const appTsxPath = path.join(srcDir, "App.tsx");
 const netlifyTomlPath = path.join(repoRoot, "netlify.toml");
 
 async function collectFiles(root) {
-  const { readdir, stat } = await import("node:fs/promises");
+  const { readdir } = await import("node:fs/promises");
   const out = [];
   async function walk(dir) {
     let entries;
@@ -43,10 +36,7 @@ async function collectFiles(root) {
         if (e.name === "node_modules" || e.name.startsWith(".")) continue;
         if (e.name === "test" || e.name === "__tests__") continue;
         await walk(full);
-      } else if (
-        e.isFile() &&
-        (full.endsWith(".tsx") || full.endsWith(".ts"))
-      ) {
+      } else if (e.isFile() && (full.endsWith(".tsx") || full.endsWith(".ts"))) {
         out.push(full);
       }
     }
@@ -59,8 +49,16 @@ function extractRoutePaths(src) {
   const paths = new Set();
   const re = /path:\s*"(\/[^"]*)"/g;
   let m;
+  while ((m = re.exec(src)) !== null) paths.add(m[1]);
+  return paths;
+}
+
+function extractAppRoutePaths(src) {
+  const paths = new Set();
+  const re = /<Route\s+path="(\/[^"]+|\*)"/g;
+  let m;
   while ((m = re.exec(src)) !== null) {
-    paths.add(m[1]);
+    if (m[1] !== "*") paths.add(m[1]);
   }
   return paths;
 }
@@ -69,9 +67,7 @@ function extractNavigateSources(src) {
   const sources = new Set();
   const re = /<Route\s+path="(\/[^"]+)"\s+element=\{<Navigate\s+to=/g;
   let m;
-  while ((m = re.exec(src)) !== null) {
-    sources.add(m[1]);
-  }
+  while ((m = re.exec(src)) !== null) sources.add(m[1]);
   return sources;
 }
 
@@ -79,9 +75,7 @@ function extractNetlifyRedirects(src) {
   const sources = new Set();
   const re = /from\s*=\s*"(\/[^"]+)"/g;
   let m;
-  while ((m = re.exec(src)) !== null) {
-    sources.add(m[1]);
-  }
+  while ((m = re.exec(src)) !== null) sources.add(m[1]);
   return sources;
 }
 
@@ -91,13 +85,10 @@ function extractInternalLinks(src) {
   let m;
   while ((m = re.exec(src)) !== null) {
     const p = m[1];
-    if (p.length === 0) continue;
-    links.add(p);
+    if (p.length > 0) links.add(p);
   }
   const reObj = /(?:href|to):\s*"(\/[^"#?]*)"/g;
-  while ((m = reObj.exec(src)) !== null) {
-    links.add(m[1]);
-  }
+  while ((m = reObj.exec(src)) !== null) links.add(m[1]);
   return links;
 }
 
@@ -130,24 +121,20 @@ async function main() {
 
   const routesSrc = await readFile(routesPath, "utf8");
   const appSrc = await readFile(appTsxPath, "utf8");
-  const routePaths = extractRoutePaths(routesSrc);
+  const configRoutePaths = extractRoutePaths(routesSrc);
+  const appRoutePaths = extractAppRoutePaths(appSrc);
+  const routePaths = new Set([...configRoutePaths, ...appRoutePaths]);
   const navigateSources = extractNavigateSources(appSrc);
 
   let edgeRedirects = new Set();
   if (existsSync(netlifyTomlPath)) {
-    const tomlSrc = await readFile(netlifyTomlPath, "utf8");
-    edgeRedirects = extractNetlifyRedirects(tomlSrc);
+    edgeRedirects = extractNetlifyRedirects(await readFile(netlifyTomlPath, "utf8"));
   }
 
-  const validTargets = new Set([
-    ...routePaths,
-    ...navigateSources,
-    ...edgeRedirects,
-  ]);
+  const validTargets = new Set([...routePaths, ...navigateSources, ...edgeRedirects]);
   validTargets.add("/");
 
   const files = await collectFiles(srcDir);
-
   const dead = [];
 
   const llmsTxtPath = path.join(projectRoot, "public/llms.txt");
@@ -179,18 +166,14 @@ async function main() {
 
   if (dead.length === 0) {
     console.log(
-      `[check-links] ok - ${routePaths.size} routes, ${navigateSources.size} navigates, ${edgeRedirects.size} netlify redirects; no dead links.`,
+      `[check-links] ok - ${routePaths.size} routes (${appRoutePaths.size} direct App route(s)), ${navigateSources.size} navigates, ${edgeRedirects.size} netlify redirects; no dead links.`,
     );
     return;
   }
 
   console.error(`[check-links] FAIL - ${dead.length} dead internal link(s):`);
-  for (const d of dead.slice(0, 50)) {
-    console.error(`  ${d.file}: ${d.link}`);
-  }
-  if (dead.length > 50) {
-    console.error(`  ... ${dead.length - 50} more`);
-  }
+  for (const d of dead.slice(0, 50)) console.error(`  ${d.file}: ${d.link}`);
+  if (dead.length > 50) console.error(`  ... ${dead.length - 50} more`);
   process.exit(1);
 }
 

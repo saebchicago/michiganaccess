@@ -60,6 +60,7 @@ jobs:
         run: |
           node scripts/check-links.mjs
           node scripts/check-routemeta-routes.mjs
+          node scripts/check-extra-routes.mjs
           node scripts/check-route-taxonomy.mjs
           node scripts/check-counts.mjs
           node scripts/check-zip-population.mjs
@@ -101,13 +102,12 @@ jobs:
           fi
 
   e2e:
-    # Browser E2E: user journeys, all-routes smoke, mobile viewports, and
-    # axe accessibility specs (src/test/e2e/). These specs existed but no
-    # CI job ran them. Non-blocking for now (continue-on-error), matching
-    # how the Lighthouse job was introduced - promote to blocking once a
-    # few green runs have been observed.
+    # Browser E2E is a release-quality gate: user journeys, all-routes smoke,
+    # mobile viewports, and axe accessibility specs (src/test/e2e/). The suite
+    # is intentionally blocking now that the known homepage contrast defect is
+    # fixed; a serious browser/accessibility regression must not be hidden by a
+    # green aggregate workflow.
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -134,12 +134,10 @@ jobs:
           retention-days: 7
 
   lighthouse:
-    # BLOCKING as of Round 8. Every assertion in .lighthouserc.cjs is a
-    # "warn", so a low score cannot fail this job - a failure here always
-    # means a Lighthouse runtime error, i.e. the production bundle genuinely
-    # did not render. This is the only check that exercises the real bundle
-    # in a real browser; it is what finally surfaced the TDZ crash that
-    # served a blank page while 1017 unit tests stayed green.
+    # The production bundle must render in a real browser. SEO, accessibility,
+    # and best-practices assertions are blocking in .lighthouserc.cjs;
+    # performance stays measured as a warning while shared-runner variance is
+    # separated from actual runtime failures.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
