@@ -1,0 +1,73 @@
+name: Refresh Opportunity Atlas tract data
+
+on:
+  schedule:
+    - cron: "17 9 1 * *" # monthly; USDA SRAM itself is not a high-frequency feed
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: opportunity-data-refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh-usda-sram:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Refresh USDA 2025 SRAM Michigan tract extract
+        working-directory: artifacts/access-mi
+        run: node scripts/refresh-usda-sram-2025.mjs
+
+      - name: Regenerate provenance index
+        working-directory: artifacts/access-mi
+        run: node scripts/generate-provenance-index.mjs
+
+      - name: Validate generated-data contracts
+        working-directory: artifacts/access-mi
+        run: |
+          set -euo pipefail
+          node scripts/check-script-syntax.mjs
+          node scripts/check-dataset-labels.mjs
+          node scripts/check-plausibility.mjs
+          node scripts/check-data-freshness.mjs
+
+      - name: Typecheck and unit tests
+        run: |
+          set -euo pipefail
+          pnpm typecheck
+          pnpm --filter @workspace/access-mi check:tests
+
+      - name: Commit refreshed extract only when changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- \
+            artifacts/access-mi/src/data/usda-sram-2025-mi.generated.json \
+            artifacts/access-mi/src/data/provenance-index.generated.json; then
+            echo "USDA SRAM extract is unchanged; nothing to commit."
+            exit 0
+          fi
+          git config user.name "opportunity-data-refresh-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add \
+            artifacts/access-mi/src/data/usda-sram-2025-mi.generated.json \
+            artifacts/access-mi/src/data/provenance-index.generated.json
+          git commit -m "data: refresh USDA SRAM 2025 Michigan tract extract"
+          git push
