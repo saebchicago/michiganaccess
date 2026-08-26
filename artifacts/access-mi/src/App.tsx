@@ -3,14 +3,17 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { CountyProvider } from "./contexts/CountyContext";
 import { NerdModeProvider } from "./contexts/NerdModeContext";
 import { APP_ROUTES } from "./routes/manifest";
 import { usePageViewTracking } from "./hooks/usePageViewTracking";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
+import { OpportunityHomeBanner } from "./components/opportunity/OpportunityHomeBanner";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+
+const OpportunityAtlasPage = lazy(() => import("./pages/OpportunityAtlasPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,6 +56,13 @@ const PageViewTracker = () => {
   return null;
 };
 
+const Home = () => (
+  <>
+    <OpportunityHomeBanner />
+    <Index />
+  </>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <CountyProvider>
@@ -65,7 +75,15 @@ const App = () => (
             <ErrorBoundary>
               <Suspense fallback={<PageLoader />}>
                 <Routes>
-                  <Route path="/" element={<Index />} />
+                  <Route path="/" element={<Home />} />
+                  <Route
+                    path="/opportunity"
+                    element={
+                      <ErrorBoundary>
+                        <OpportunityAtlasPage />
+                      </ErrorBoundary>
+                    }
+                  />
                   {APP_ROUTES.map((route) => (
                     <Route
                       key={route.path}
@@ -199,6 +217,10 @@ const App = () => (
                   <Route
                     path="/civic"
                     element={<Navigate to="/civic-data" replace />}
+                  />
+                  <Route
+                    path="/opportunity-atlas"
+                    element={<Navigate to="/opportunity" replace />}
                   />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
