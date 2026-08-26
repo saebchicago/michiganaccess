@@ -1,18 +1,10 @@
 /**
  * Homepage discovery data, resolved from the route manifest.
  *
- * The intent cards, the featured rail, and the /explore band all render
- * curated destinations, but none of the curation lives here: intents,
- * featured flags, and subjects come from `@/config/routeTaxonomy` via the
- * manifest, and each destination's copy is its ROUTE_META summary. This
- * module only groups and caches.
- *
- * Every export is a FUNCTION with a lazy cache, never a module-scope
- * constant. This module sits inside the manifest -> Index -> (component
- * tree) import cycle, and reading a manifest binding at module-evaluation
- * time is exactly the TDZ bug that once blanked the production site - see
- * the long note in src/utils/pageSearchIndex.ts. Call these inside
- * component render only.
+ * The intent cards, featured rail, and /explore band render curated
+ * destinations. Everything is resolved lazily inside functions to avoid the
+ * manifest -> Index -> component import cycle that once caused a production
+ * TDZ blank page.
  */
 import { ROUTE_MANIFEST } from "@/routes/manifest";
 import {
@@ -50,24 +42,43 @@ function toDestination(entry: {
 
 let cachedIntentCards: IntentCard[] | null = null;
 
-/** The four homepage intent cards, each with its 3 taxonomy-assigned destinations. */
+/**
+ * The four homepage intent cards, three destinations each.
+ *
+ * `Understand my place` deliberately starts with the Opportunity Atlas. The
+ * broad specialist route taxonomy remains intact, but the resident-facing
+ * homepage gets one canonical place-first product instead of presenting every
+ * comparison/explorer surface at equal weight.
+ */
 export function getIntentCards(): IntentCard[] {
   if (cachedIntentCards === null) {
-    cachedIntentCards = INTENTS.map((intent) => ({
-      id: intent.id,
-      title: intent.title,
-      lede: intent.lede,
-      destinations: ROUTE_MANIFEST.filter((r) => r.intent === intent.id).map(
-        toDestination,
-      ),
-    }));
+    cachedIntentCards = INTENTS.map((intent) => {
+      const taxonomyDestinations = ROUTE_MANIFEST.filter(
+        (r) => r.intent === intent.id,
+      );
+
+      const entries =
+        intent.id === "place"
+          ? [
+              ...ROUTE_MANIFEST.filter((r) => r.path === "/opportunity"),
+              ...taxonomyDestinations.filter((r) => r.path !== "/opportunity"),
+            ].slice(0, 3)
+          : taxonomyDestinations.slice(0, 3);
+
+      return {
+        id: intent.id,
+        title: intent.title,
+        lede: intent.lede,
+        destinations: entries.map(toDestination),
+      };
+    });
   }
   return cachedIntentCards;
 }
 
 let cachedFeatured: HomeDestination[] | null = null;
 
-/** Editorial picks for the "Worth a look" rail, in taxonomy order. */
+/** Editorial picks for the "Worth a look" rail, in manifest order. */
 export function getFeaturedRail(): HomeDestination[] {
   if (cachedFeatured === null) {
     cachedFeatured = ROUTE_MANIFEST.filter((r) => r.featured).map(
