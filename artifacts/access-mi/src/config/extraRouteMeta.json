@@ -5,5 +5,12 @@
     "description": "Start with a Michigan place. See source-backed local gaps, neighborhood-resolution data status, current action pathways, careful comparisons, and shareable findings.",
     "h1": "What stands out in your community?",
     "summary": "Place-first Michigan civic intelligence: understand local signals, trace every figure to its source, compare communities, identify current avenues to act, and share the exact finding."
+  },
+  {
+    "path": "/map/layers",
+    "title": "Legacy Deep Map | Access Michigan",
+    "description": "The early Deep Map prototype is retired from public analysis. Use AccessMI's governed Community Opportunity Atlas, Health Map, Environment, and Food Access surfaces instead.",
+    "h1": "Deep Map prototype retired from public analysis",
+    "summary": "This legacy exploratory surface is no longer represented as a current statewide analytical map. AccessMI now directs visitors to governed, source-specific map and community-intelligence experiences."
   }
 ]
