@@ -1,9 +1,6 @@
 import { Phone, LogOut } from "lucide-react";
-import { useTranslation } from "react-i18next";
 
 const CrisisBar = () => {
-  const { t } = useTranslation();
-
   const handleQuickExit = () => {
     // Match the dedicated QuickExitBar safety contract: replace this history
     // entry rather than opening an unrelated tab and attempting to walk an
