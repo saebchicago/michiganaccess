@@ -2,15 +2,12 @@ import { Phone, LogOut } from "lucide-react";
 
 const CrisisBar = () => {
   const handleQuickExit = () => {
-    // Match the dedicated QuickExitBar safety contract: replace this history
-    // entry rather than opening an unrelated tab and attempting to walk an
-    // unknown history stack.
     document.body.style.visibility = "hidden";
     window.location.replace("https://www.weather.com");
   };
 
   const crisisLinkClass =
-    "inline-flex min-h-[44px] items-center px-1 font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80";
+    "inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-1 font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80";
 
   return (
     <div
