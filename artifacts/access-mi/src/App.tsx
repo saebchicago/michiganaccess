@@ -9,7 +9,6 @@ import { NerdModeProvider } from "./contexts/NerdModeContext";
 import { APP_ROUTES } from "./routes/manifest";
 import { usePageViewTracking } from "./hooks/usePageViewTracking";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
-import { OpportunityHomeBanner } from "./components/opportunity/OpportunityHomeBanner";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -20,7 +19,7 @@ const queryClient = new QueryClient({
     queries: {
       retry: 1,
       refetchOnWindowFocus: false,
-      staleTime: 5 * 60 * 1000, // 5 min default
+      staleTime: 5 * 60 * 1000,
     },
   },
 });
@@ -49,19 +48,10 @@ const PageLoader = () => (
   </div>
 );
 
-// Must render inside BrowserRouter; a component (not a bare hook call
-// in App) so useLocation has router context.
 const PageViewTracker = () => {
   usePageViewTracking();
   return null;
 };
-
-const Home = () => (
-  <>
-    <OpportunityHomeBanner />
-    <Index />
-  </>
-);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -75,7 +65,7 @@ const App = () => (
             <ErrorBoundary>
               <Suspense fallback={<PageLoader />}>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<Index />} />
                   <Route
                     path="/opportunity"
                     element={
