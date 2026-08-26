@@ -80,8 +80,8 @@ export default function DisasterHistoryPage() {
               <CardContent className="py-3 space-y-1">
                 <p className="text-xl font-bold text-foreground">{s.value}</p>
                 <p className="text-[11px] font-medium text-muted-foreground">{s.label}</p>
-                <p className="text-[11px] text-muted-foreground/80">{s.context}</p>
-                <p className="text-[10px] text-muted-foreground/70">{s.source}</p>
+                <p className="text-[11px] text-muted-foreground">{s.context}</p>
+                <p className="text-[10px] text-muted-foreground">{s.source}</p>
               </CardContent>
             </Card>
           ))}
