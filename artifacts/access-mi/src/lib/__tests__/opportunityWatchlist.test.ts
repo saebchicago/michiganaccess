@@ -5,12 +5,10 @@ import {
   removeOpportunityPlace,
   saveOpportunityPlace,
 } from "@/lib/opportunityWatchlist";
-import {
-  getOpportunityInsights,
-  resolveOpportunityPlace,
-} from "@/data/opportunityAtlas";
+import { getOpportunityInsights } from "@/data/opportunityAtlas";
+import { resolveOpportunityPlace } from "@/lib/opportunityPlaceResolver";
 
- describe("Opportunity Atlas local watchlist", () => {
+describe("Opportunity Atlas local watchlist", () => {
   beforeEach(() => {
     localStorage.clear();
   });
