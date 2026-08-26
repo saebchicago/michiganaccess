@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
  * Generates public/sitemap.xml from:
- *   - All routes in src/config/routeMeta.ts (prerendered, canonical 200s)
- *   - Flagship extras in src/config/extraRouteMeta.json
+ *   - Routes in src/config/routeMeta.ts
+ *   - Metadata extensions/overrides in src/config/extraRouteMeta.json
  *   - All 83 Michigan county routes (/county/<slug>)
  *   - All 83 brief?county= canonicals (/brief?county=<slug>)
  *
+ * Metadata overrides may explicitly remove a retired route from the sitemap.
  * lastmod is the build date, never hand-typed.
- * Wired into pnpm build (first step, before check-links).
  */
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
@@ -50,13 +50,15 @@ async function loadRoutePaths() {
   while ((m = re.exec(src)) !== null) paths.push(m[1]);
 
   const extra = JSON.parse(await readFile(EXTRA_META_PATH, "utf8"));
+  const excluded = new Set();
   for (const entry of extra) {
     if (typeof entry?.path !== "string" || !entry.path.startsWith("/")) {
       throw new Error("extraRouteMeta.json contains an invalid path");
     }
-    paths.push(entry.path);
+    if (entry.excludeFromSitemap === true) excluded.add(entry.path);
+    else paths.push(entry.path);
   }
-  return [...new Set(paths)];
+  return [...new Set(paths)].filter((routePath) => !excluded.has(routePath));
 }
 
 function trailingSlash(loc) {
