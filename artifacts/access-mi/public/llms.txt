@@ -1,19 +1,19 @@
 # Access Michigan
 
-> Michigan civic intelligence platform. County-level health, environmental, financial, and social data across all 83 counties. Built by and for Michigan residents, with no login required.
+> Independent Michigan civic-intelligence project and public-data journal. County- and ZIP-level health, environmental, financial, and social data across all 83 counties, with no login required.
 
-Access Michigan helps residents find care, understand benefits, compare counties, and navigate public services using authoritative public datasets (CDC PLACES, SVI, ALICE, EJSCREEN, FEMA, FRED, and state agency feeds). Every metric links back to its source and cadence; no mock data.
+AccessMI organizes authoritative public datasets (including CDC PLACES, Census, CMS, HRSA, EPA, USDA, and Michigan agency sources) so residents can find help and analysts, journalists, and planners can trace local indicators to their sources. Quantitative outputs are labeled by provenance state, including VERIFIED, MODELED, PROJECTED, and PENDING where applicable. AccessMI is not a government agency, health system, benefits administrator, or 211 provider.
 
 ## Pages
 
 - [Home](/): ZIP and county entry point for Michigan civic data.
 - [Find Care](/find-care): Search hospitals, clinics, FQHCs, and providers across Michigan.
-- [Financial Help](/financial-help): Screener for Medicaid, SNAP, WIC, energy assistance, and charity care eligibility.
+- [Financial Help](/financial-help): Educational financial-help navigation and preliminary screening that routes to official programs.
 - [Insurance Coverage](/insurance-coverage): Coverage options, appeals, and Marketplace navigation.
 - [Health Map](/health-map): Map of facilities, deserts, and access gaps.
 - [Health Equity Atlas](/health-equity-atlas): County-level equity indicators and disparities.
 - [ZIP Intelligence](/zip-intelligence): Neighborhood-level scorecard by ZIP code.
-- [Civic Data Hub](/civic-data-hub): Authoritative open datasets powering the platform.
+- [Civic Data Hub](/civic-data-hub): Public datasets used across the project.
 - [Civic Data](/civic-data): Municipal records, FOIA contacts, and council resources.
 - [Clinical Trials](/clinical-trials): Active Michigan trials from ClinicalTrials.gov.
 - [Quality Ratings](/quality): Hospital and provider quality metrics.
@@ -34,20 +34,22 @@ Access Michigan helps residents find care, understand benefits, compare counties
 - [Health News](/news): Michigan health and policy news.
 - [Health Conditions](/conditions): Condition-specific information and local resources.
 - [Health Data Dashboard](/data): Interactive county-level health dashboards.
-- [Data Sources](/data-sources): Every dataset, with cadence, license, and source link.
-- [Methodology](/methodology): How we score, rank, and surface insights.
+- [Data Sources](/data-sources): Public datasets with source and refresh context.
+- [Methodology](/methodology): How AccessMI sources, labels, scores, and surfaces insights.
 - [Our Intel](/about/ourintel): Original analyses and briefings.
 - [Decision Science](/decision-science): Models and scoring methodology.
 - [Quiz](/quiz): Civic and health literacy quiz.
-- [Story](/story): The story behind Access Michigan.
-- [About](/about): Mission, team, and values.
-- [Partnership](/partnerships): Apply to partner with Access Michigan.
-- [Contact](/contact): Reach the team.
+- [Story](/story): The story behind AccessMI.
+- [About](/about): Project identity, maintainer, mission, methods, and limitations.
+- [Press & Directory Kit](/press): Directory-ready project description and verified project facts.
+- [Partnership](/partnerships): Partnership information for civic and community collaborators.
+- [Feedback](/feedback): Report data errors, broken links, accessibility issues, or framing concerns.
+- [Contact](/contact): Contact the project maintainer.
 - [Privacy](/privacy): Privacy practices and data handling.
 
 ## Optional
 
-- [Replication](/replicate): How to replicate this platform for other states.
+- [Replication](/replicate): How to replicate this project for other states.
 - [Learn](/learn): Background reading on the datasets and methods.
 - [Closure Watch](/closure-watch): Two-source-verified facility closures and status changes.
 - [Site Report](/site-report): Printable site summary report.
