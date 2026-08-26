@@ -85,7 +85,7 @@ export function OralHealthIntelligence() {
               href={HRSA_HPSA_COUNTY_PROVENANCE.source_url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-[36px] items-center gap-1 underline underline-offset-4"
+              className="inline-flex min-h-[44px] items-center gap-1 underline underline-offset-4"
             >
               Verify with {HRSA_HPSA_COUNTY_PROVENANCE.source_name}
               <ExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -128,13 +128,13 @@ export function OralHealthIntelligence() {
                 </h3>
                 <p
                   className="mt-2 text-xs leading-relaxed"
-                  style={{ color: `${C.emerald}B8` }}
+                  style={{ color: `${C.emerald}CC` }}
                 >
                   {lens.description}
                 </p>
                 <Link
                   to={lens.href}
-                  className="mt-3 inline-flex min-h-[40px] items-center gap-1 text-xs font-semibold underline underline-offset-4"
+                  className="mt-3 inline-flex min-h-[44px] items-center gap-1 text-xs font-semibold underline underline-offset-4"
                   style={{ color: C.emeraldMid }}
                 >
                   {lens.link}
