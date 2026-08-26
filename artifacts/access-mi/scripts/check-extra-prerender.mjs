@@ -23,6 +23,9 @@ async function main() {
       if (!html.includes(`rel="canonical" href="${canonical}"`)) failures.push(`${meta.path}: canonical`);
       if (!html.includes("data-accessmi-prerender")) failures.push(`${meta.path}: noscript summary`);
       if (!html.includes(`property="og:url" content="${canonical}"`)) failures.push(`${meta.path}: og:url`);
+      const hasNoindex = html.includes('name="robots" content="noindex,follow"');
+      if (meta.noindex === true && !hasNoindex) failures.push(`${meta.path}: missing noindex`);
+      if (meta.noindex !== true && hasNoindex) failures.push(`${meta.path}: unexpected noindex`);
     } catch {
       failures.push(`${meta.path}: missing output`);
     }
@@ -33,7 +36,7 @@ async function main() {
     for (const failure of failures) console.error(`  ${failure}`);
     process.exit(1);
   }
-  console.log(`[check-extra-prerender] ok - ${entries.length} flagship route(s) have static metadata.`);
+  console.log(`[check-extra-prerender] ok - ${entries.length} metadata extension route(s) have guarded static metadata.`);
 }
 
 main().catch((error) => {
