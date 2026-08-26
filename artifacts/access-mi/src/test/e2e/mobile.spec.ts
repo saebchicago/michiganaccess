@@ -47,7 +47,7 @@ for (const vp of VIEWPORTS) {
       await page.goto('/', { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('networkidle').catch(() => {});
 
-      const menuButton = page.locator('[data-testid="mobile-nav"]').filter({ visible: true }).first();
+      const menuButton = page.locator('[data-testid="mobile-nav"]:visible').first();
       await expectTouchSafe(menuButton, 'mobile menu');
       await menuButton.dispatchEvent('click');
       const drawer = page.getByRole('dialog').first();
@@ -60,7 +60,7 @@ for (const vp of VIEWPORTS) {
 
       await expectTouchSafe(page.locator('#crisis-bar a[href="tel:988"]'), '988 crisis link');
       await expectTouchSafe(
-        page.locator('#crisis-bar a[href^="sms:741741"]').filter({ visible: true }).first(),
+        page.locator('#crisis-bar a[href^="sms:741741"]:visible').first(),
         'crisis text link'
       );
       await expectTouchSafe(
@@ -68,7 +68,7 @@ for (const vp of VIEWPORTS) {
         'crisis quick exit'
       );
       await expectTouchSafe(
-        page.locator('[data-testid="mobile-nav"]').filter({ visible: true }).first(),
+        page.locator('[data-testid="mobile-nav"]:visible').first(),
         'mobile menu'
       );
     });
