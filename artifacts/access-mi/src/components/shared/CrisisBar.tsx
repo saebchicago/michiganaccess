@@ -5,11 +5,15 @@ const CrisisBar = () => {
   const { t } = useTranslation();
 
   const handleQuickExit = () => {
-    window.open("https://google.com", "_blank");
-    if (window.history.length > 1) {
-      window.history.go(-window.history.length);
-    }
+    // Match the dedicated QuickExitBar safety contract: replace this history
+    // entry rather than opening an unrelated tab and attempting to walk an
+    // unknown history stack.
+    document.body.style.visibility = "hidden";
+    window.location.replace("https://www.weather.com");
   };
+
+  const crisisLinkClass =
+    "inline-flex min-h-[44px] items-center px-1 font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80";
 
   return (
     <div
@@ -18,23 +22,31 @@ const CrisisBar = () => {
       role="region"
       aria-label="Crisis resources and safety options"
     >
-      <div className="container flex flex-wrap items-center justify-between gap-2 md:gap-3 py-2.5 text-xs md:text-sm">
-        {/* Crisis Resources Left Side */}
-        <div className="flex items-center gap-1 md:gap-2 text-white">
+      <div className="container flex flex-wrap items-center justify-between gap-2 md:gap-3 py-1 text-xs md:text-sm">
+        <div className="flex min-w-0 items-center gap-1 md:gap-2 text-white">
           <Phone className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
-          <a href="tel:988" className="font-semibold hover:underline">988</a>
-          <span className="hidden sm:inline">·</span>
-          <span className="hidden sm:inline">Text <strong>HOME</strong> to <a href="sms:741741?body=HOME" className="font-semibold hover:underline">741741</a></span>
-          <span className="sm:hidden">· <a href="sms:741741?body=HOME" className="font-semibold hover:underline">TEXT HOME</a></span>
-          <span className="hidden sm:inline">· <a href="tel:211" className="font-semibold hover:underline">211</a></span>
+          <a href="tel:988" className={crisisLinkClass}>988</a>
+          <span className="hidden sm:inline" aria-hidden="true">·</span>
+          <span className="hidden sm:flex items-center gap-1">
+            Text <strong>HOME</strong> to
+            <a href="sms:741741?body=HOME" className={crisisLinkClass}>741741</a>
+          </span>
+          <span className="sm:hidden" aria-hidden="true">·</span>
+          <a
+            href="sms:741741?body=HOME"
+            className={`${crisisLinkClass} sm:hidden`}
+          >
+            TEXT HOME
+          </a>
+          <span className="hidden sm:inline" aria-hidden="true">·</span>
+          <a href="tel:211" className={`${crisisLinkClass} hidden sm:inline-flex`}>211</a>
         </div>
 
-        {/* Quick Exit Button Right Side */}
         <button
           onClick={handleQuickExit}
-          className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-black/25 hover:bg-black/40 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white/70"
-          aria-label="Quick exit - close this page"
-          title="Quick exit - close this page"
+          className="flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-md bg-black/25 px-3 py-2 text-white transition-colors hover:bg-black/40 focus:outline-none focus:ring-2 focus:ring-white/70"
+          aria-label="Quick exit - leave this site immediately"
+          title="Quick exit - leave this site immediately"
         >
           <LogOut className="h-4 w-4" aria-hidden="true" />
           <span className="hidden sm:inline font-semibold">Quick Exit</span>
