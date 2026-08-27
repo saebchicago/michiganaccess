@@ -120,8 +120,11 @@ export function useCommunityEvents(county?: string) {
     queryFn: async () => {
       const today = new Date().toISOString().split("T")[0];
       let query = supabase
-        .from("community_events")
-        .select("*")
+        // Curated view: excludes contact_email / contact_phone (not readable by anon).
+        .from("community_events_public")
+        .select(
+          "id, title, description, event_type, event_date, start_time, end_time, location_name, address, city, county, state, zip, organizer, website, is_free, registration_required, registration_url, tags, is_active",
+        )
         .eq("is_active", true)
         .gte("event_date", today);
       if (county) query = query.ilike("county", `%${county}%`);
