@@ -20,8 +20,7 @@ export interface CommunityEvent {
   state: string;
   zip: string | null;
   organizer: string | null;
-  contact_phone: string | null;
-  contact_email: string | null;
+  // contact_phone / contact_email are deliberately absent: not readable by anon.
   website: string | null;
   is_free: boolean | null;
   registration_required: boolean | null;
