@@ -147,20 +147,7 @@ function EventCard({ event }: { event: CommunityEvent }) {
                 </a>
               </Button>
             )}
-            {event.contact_phone && (
-              <Button size="sm" variant="outline" asChild>
-                <a href={`tel:${event.contact_phone}`}>
-                  <Phone className="h-3 w-3" /> Call
-                </a>
-              </Button>
-            )}
-            {event.contact_email && (
-              <Button size="sm" variant="outline" asChild>
-                <a href={`mailto:${event.contact_email}`}>
-                  <Mail className="h-3 w-3" /> Email
-                </a>
-              </Button>
-            )}
+            {/* Organizer contact details are intentionally not exposed publicly. */}
             {event.website && (
               <Button size="sm" variant="ghost" asChild>
                 <a href={event.website} target="_blank" rel="noopener noreferrer">
