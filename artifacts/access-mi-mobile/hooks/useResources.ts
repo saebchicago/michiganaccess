@@ -72,7 +72,7 @@ export interface CommunityEvent {
   registration_required: boolean | null;
   registration_url: string | null;
   website: string | null;
-  contact_phone: string | null;
+  // contact_phone / contact_email are not exposed publicly.
   tags: string[] | null;
   is_active: boolean | null;
 }
