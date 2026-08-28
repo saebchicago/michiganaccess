@@ -1,9 +1,9 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": "2026-08-19T14:04:19.262Z",
+  "generated_at": "2026-08-26T14:09:42.243Z",
   "checked": 70,
   "dead": 11,
-  "timed_out": 5,
+  "timed_out": 3,
   "redirected": 0,
   "results": [
     {
@@ -93,8 +93,8 @@
     },
     {
       "url": "https://vitalstats.michigan.gov",
-      "status": "server-error",
-      "httpStatus": 521,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": "https://vitalstats.michigan.gov/",
       "contexts": [
         "Infant mortality rate per 1,000 (2024)",
@@ -365,10 +365,9 @@
     },
     {
       "url": "https://www.fema.gov/about/openfema/api",
-      "status": "timeout",
-      "httpStatus": null,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
-      "error": "This operation was aborted",
       "contexts": [
         "FEMA OpenFEMA API"
       ]
@@ -421,10 +420,9 @@
     },
     {
       "url": "https://www.fema.gov/openfema",
-      "status": "timeout",
-      "httpStatus": null,
-      "finalUrl": null,
-      "error": "This operation was aborted",
+      "status": "client-error",
+      "httpStatus": 404,
+      "finalUrl": "https://www.fema.gov/es/node/214324",
       "contexts": [
         "FEMA National Flood Insurance Program"
       ]
@@ -623,7 +621,7 @@
       "url": "https://www.aceee.org/research-report/u2006",
       "status": "ok",
       "httpStatus": 200,
-      "finalUrl": null,
+      "finalUrl": "https://www.aceee.org/resource/u2006/",
       "contexts": [
         "ACEEE Energy Burden Research"
       ]
