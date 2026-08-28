@@ -100,6 +100,10 @@
   to = "/civic-data"
   status = 301
 [[redirects]]
+  from = "/roots"
+  to = "/story"
+  status = 301
+[[redirects]]
   from = "/county-compare"
   to = "/compare"
   status = 301

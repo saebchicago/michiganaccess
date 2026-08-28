@@ -128,6 +128,10 @@ const App = () => (
                     path="/representatives"
                     element={<Navigate to="/civic-data" replace />}
                   />
+                  <Route
+                    path="/roots"
+                    element={<Navigate to="/story" replace />}
+                  />
                   {/* Life-event scenario aliases - partner-shareable URLs */}
                   <Route
                     path="/life-events"
