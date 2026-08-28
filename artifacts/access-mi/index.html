@@ -42,7 +42,7 @@
     <link rel="preconnect" href="https://api.weather.gov" />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="dns-prefetch" href="https://znahhtdbcgepezrxwnah.supabase.co" />
-    <title>Access Michigan - Michigan, County by County</title>
+    <title>AccessMI - Civic intelligence for every Michigan community</title>
     <meta name="theme-color" content="#1e3a5f" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,22 +54,22 @@
     <meta name="apple-mobile-web-app-title" content="MI Access" />
     <meta
       name="description"
-      content="Independent Michigan civic intelligence, built by and for fellow citizens. County-level health, environmental, and social data across all 83 counties."
+      content="AccessMI is an independent Michigan civic-intelligence project and public-data journal organizing sourced local data and service-navigation context across all 83 counties."
     />
-    <meta name="author" content="Access Michigan" />
+    <meta name="author" content="Saeb A. Ahsan" />
     <meta
       name="keywords"
-      content="Michigan services, housing assistance Michigan, food assistance, health services, SNAP Michigan, Medicaid Michigan, community resources"
+      content="Michigan civic data, open civic data, county data, social-service navigation, government transparency, data journalism"
     />
     <link rel="canonical" href="https://accessmi.org/" />
 
     <meta
       property="og:title"
-      content="Access Michigan: civic intelligence, county by county."
+      content="Access Michigan: independent civic intelligence for Michigan"
     />
     <meta
       property="og:description"
-      content="Independent civic data for all 83 Michigan counties. Every figure is traced to a primary federal source and labeled verified, modeled, or projected."
+      content="Independent civic-intelligence project and public-data journal organizing sourced local data and service-navigation context across all 83 Michigan counties."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://accessmi.org/" />
@@ -79,7 +79,7 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="Access Michigan: civic intelligence, county by county."
+      content="Access Michigan: independent civic intelligence for Michigan"
     />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="Access Michigan" />
@@ -87,36 +87,39 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Access Michigan: civic intelligence, county by county."
+      content="Access Michigan: independent civic intelligence for Michigan"
     />
     <meta
       name="twitter:description"
-      content="Independent civic data for all 83 Michigan counties. Every figure is traced to a primary federal source and labeled verified, modeled, or projected."
+      content="Independent civic-intelligence project and public-data journal organizing sourced local data and service-navigation context across all 83 Michigan counties."
     />
     <meta name="twitter:image" content="https://accessmi.org/og-card.png" />
     <meta
       name="twitter:image:alt"
-      content="Access Michigan: civic intelligence, county by county."
+      content="Access Michigan: independent civic intelligence for Michigan"
     />
 
-    <!-- JSON-LD structured data -->
+    <!-- JSON-LD structured data. AccessMI is intentionally represented as a
+         WebSite created by a person, not as a government service or legal
+         organization. -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": "Access Michigan",
-        "description": "Independent civic project organizing Michigan health, housing, energy, transportation, and legal resources into a single structured gateway.",
+        "alternateName": "AccessMI",
+        "description": "Independent Michigan civic-intelligence project and public-data journal organizing sourced local data and service-navigation context across all 83 counties.",
+        "disambiguatingDescription": "Independent civic project; not a government agency, health system, benefits administrator, or 211 provider.",
         "url": "https://accessmi.org",
+        "creator": {
+          "@type": "Person",
+          "name": "Saeb A. Ahsan",
+          "url": "https://michigans.me"
+        },
         "potentialAction": {
           "@type": "SearchAction",
           "target": "https://accessmi.org/find-care?q={search_term_string}",
           "query-input": "required name=search_term_string"
-        },
-        "publisher": {
-          "@type": "Organization",
-          "name": "Access Michigan",
-          "description": "Independent, non-commercial civic resource platform",
-          "url": "https://accessmi.org"
         }
       }
     </script>
@@ -125,13 +128,16 @@
         "@context": "https://schema.org",
         "@type": "Dataset",
         "name": "Michigan Community Resources Database",
-        "description": "Curated database of community resources across all 83 Michigan counties including health, housing, food, transportation, and legal services.",
+        "description": "Curated community-resource data across Michigan counties, including health, housing, food, transportation, and legal-service context.",
         "url": "https://accessmi.org/resources",
-        "license": "https://accessmi.org/methodology",
         "creator": {
-          "@type": "Organization",
+          "@type": "Person",
+          "name": "Saeb A. Ahsan",
+          "url": "https://michigans.me"
+        },
+        "isPartOf": {
+          "@type": "WebSite",
           "name": "Access Michigan",
-          "description": "Independent civic data and education project. Not affiliated with the State of Michigan or any government agency.",
           "url": "https://accessmi.org"
         },
         "keywords": [
@@ -143,7 +149,6 @@
           "public policy",
           "83 counties"
         ],
-        "temporalCoverage": "2024/..",
         "spatialCoverage": {
           "@type": "Place",
           "name": "Michigan, United States"

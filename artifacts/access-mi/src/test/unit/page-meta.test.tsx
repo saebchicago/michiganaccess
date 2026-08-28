@@ -4,10 +4,15 @@
  *    (usePageMeta's cleanup only reset document.title, not the rest)
  *  - duplicate brand suffix ("X - Access Michigan - Access Michigan")
  *  - canonical/og:url trailing-slash normalization
+ *  - independent project pages being misclassified as GovernmentService
  */
 import { describe, it, expect, afterEach } from "vitest";
 import { render, cleanup } from "@testing-library/react";
-import { buildPageTitle, usePageMeta } from "@/hooks/usePageMeta";
+import {
+  buildPageTitle,
+  normalizeAccessMiJsonLd,
+  usePageMeta,
+} from "@/hooks/usePageMeta";
 import { SITE_NAME, BASE_URL } from "@/config/site";
 
 function getMeta(attr: string, key: string) {
@@ -69,6 +74,43 @@ describe("buildPageTitle", () => {
 
   it("leaves an exact SITE_NAME title untouched", () => {
     expect(buildPageTitle(SITE_NAME)).toBe(SITE_NAME);
+  });
+});
+
+describe("normalizeAccessMiJsonLd", () => {
+  it("converts an Access Michigan GovernmentService into a neutral WebPage", () => {
+    const normalized = normalizeAccessMiJsonLd({
+      "@type": "GovernmentService",
+      name: "Wayne County Health & Community Resources",
+      serviceArea: {
+        "@type": "AdministrativeArea",
+        name: "Wayne County, Michigan",
+      },
+      provider: { "@type": "Organization", name: "Access Michigan" },
+      url: `${BASE_URL}/county/wayne`,
+    });
+
+    expect(normalized["@type"]).toBe("WebPage");
+    expect(normalized).not.toHaveProperty("provider");
+    expect(normalized).toMatchObject({
+      name: "Wayne County Health & Community Resources",
+      url: `${BASE_URL}/county/wayne`,
+      isPartOf: { "@type": "WebSite", name: "Access Michigan" },
+      creator: { "@type": "Person", name: "Saeb A. Ahsan" },
+      about: {
+        "@type": "AdministrativeArea",
+        name: "Wayne County, Michigan",
+      },
+    });
+  });
+
+  it("does not rewrite unrelated structured data", () => {
+    const input = {
+      "@type": "WebPage",
+      name: "Methodology",
+      url: `${BASE_URL}/methodology`,
+    };
+    expect(normalizeAccessMiJsonLd(input)).toEqual(input);
   });
 });
 

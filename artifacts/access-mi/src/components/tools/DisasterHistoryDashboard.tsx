@@ -123,23 +123,35 @@ export default function DisasterHistoryDashboard() {
   return (
     <div className="space-y-8">
       {/* Filters */}
-      <div className="flex flex-wrap gap-3">
-        <select
-          className="rounded-md border border-border bg-background px-3 py-1.5 text-sm"
-          value={filterType}
-          onChange={e => setFilterType(e.target.value)}
-        >
-          <option value="all">All Incident Types</option>
-          {incidentTypes.map(t => <option key={t} value={t}>{t}</option>)}
-        </select>
-        <select
-          className="rounded-md border border-border bg-background px-3 py-1.5 text-sm"
-          value={filterCounty}
-          onChange={e => setFilterCounty(e.target.value)}
-        >
-          <option value="all">All Counties</option>
-          {countyNames.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
+      <div className="flex flex-wrap gap-3" aria-label="Disaster filters">
+        <div className="flex flex-col gap-1">
+          <label htmlFor="disaster-incident-type" className="text-xs font-medium text-foreground">
+            Incident type
+          </label>
+          <select
+            id="disaster-incident-type"
+            className="rounded-md border border-border bg-background px-3 py-1.5 text-sm"
+            value={filterType}
+            onChange={e => setFilterType(e.target.value)}
+          >
+            <option value="all">All Incident Types</option>
+            {incidentTypes.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </div>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="disaster-county" className="text-xs font-medium text-foreground">
+            County
+          </label>
+          <select
+            id="disaster-county"
+            className="rounded-md border border-border bg-background px-3 py-1.5 text-sm"
+            value={filterCounty}
+            onChange={e => setFilterCounty(e.target.value)}
+          >
+            <option value="all">All Counties</option>
+            {countyNames.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
       </div>
 
       {/* Key stats */}
@@ -294,7 +306,7 @@ export default function DisasterHistoryDashboard() {
             </div>
             <div>
               <p className="text-muted-foreground text-xs">Unmet Need</p>
-              <p className="font-bold text-amber-600 dark:text-amber-400">${(MIDLAND_DAM_STATS.unmetNeed / 1e6).toFixed(0)}M</p>
+              <p className="font-bold text-amber-800 dark:text-amber-300">${(MIDLAND_DAM_STATS.unmetNeed / 1e6).toFixed(0)}M</p>
             </div>
           </div>
         </CardContent>

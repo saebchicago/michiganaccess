@@ -89,7 +89,8 @@ export default function CommunityEventSubmissionForm() {
         is_free: form.is_free,
         registration_required: form.registration_required,
         registration_url: form.registration_url.trim() || null,
-        is_active: false, // requires moderation
+        // is_active is intentionally omitted: the column defaults to false and
+        // the insert policy rejects any submission that marks itself published.
       });
       if (error) throw error;
       setSubmitted(true);

@@ -11,11 +11,25 @@ interface PageMeta {
   noindex?: boolean;
 }
 
-const DEFAULT_TITLE = `${SITE_NAME} - Michigan, County by County`;
+const DEFAULT_TITLE = `${SITE_NAME} - Civic intelligence for every Michigan community`;
 const DEFAULT_DESCRIPTION =
-  "Independent Michigan civic intelligence, built by and for fellow citizens. County-level health, environmental, and social data across all 83 counties.";
-const DEFAULT_OG_TITLE = "Access Michigan: civic intelligence, county by county.";
+  "Independent Michigan civic-intelligence project and public-data journal organizing sourced local data and service-navigation context across all 83 counties.";
+const DEFAULT_OG_TITLE =
+  "Access Michigan: independent civic intelligence for Michigan";
 const DEFAULT_CANONICAL = `${BASE_URL}/`;
+
+const ACCESS_MI_PROJECT_DESCRIPTION =
+  "Independent Michigan civic-intelligence project; not a government agency, health system, benefits administrator, or 211 provider.";
+const ACCESS_MI_CREATOR = {
+  "@type": "Person",
+  name: "Saeb A. Ahsan",
+  url: "https://michigans.me",
+};
+const ACCESS_MI_WEBSITE = {
+  "@type": "WebSite",
+  name: "Access Michigan",
+  url: BASE_URL,
+};
 
 const BRAND_SUFFIXES = [` | ${SITE_NAME}`, ` - ${SITE_NAME}`];
 
@@ -42,6 +56,36 @@ function normalizePath(path: string): string {
     : path.endsWith("/")
       ? path
       : `${path}/`;
+}
+
+/**
+ * AccessMI is an independent civic project, not the provider of a government
+ * service. Older page callers used GovernmentService JSON-LD for county pages;
+ * normalize that centrally so client-side navigation cannot reintroduce a
+ * government-provider identity after the static build has been corrected.
+ */
+export function normalizeAccessMiJsonLd(
+  jsonLd: Record<string, unknown>,
+): Record<string, unknown> {
+  const provider = jsonLd.provider as Record<string, unknown> | undefined;
+  if (
+    jsonLd["@type"] === "GovernmentService" &&
+    provider?.name === "Access Michigan"
+  ) {
+    const normalized: Record<string, unknown> = {
+      "@type": "WebPage",
+      name: jsonLd.name,
+      isPartOf: ACCESS_MI_WEBSITE,
+      creator: ACCESS_MI_CREATOR,
+      disambiguatingDescription: ACCESS_MI_PROJECT_DESCRIPTION,
+    };
+
+    if (jsonLd.url) normalized.url = jsonLd.url;
+    if (jsonLd.serviceArea) normalized.about = jsonLd.serviceArea;
+    return normalized;
+  }
+
+  return jsonLd;
 }
 
 export function usePageMeta({
@@ -104,7 +148,7 @@ export function usePageMeta({
       if (robotsEl) robotsEl.remove();
     }
 
-    // Inject JSON-LD structured data
+    // Inject JSON-LD structured data.
     let scriptEl = document.querySelector(
       "script[data-page-jsonld]",
     ) as HTMLScriptElement | null;
@@ -117,7 +161,7 @@ export function usePageMeta({
       }
       scriptEl.textContent = JSON.stringify({
         "@context": "https://schema.org",
-        ...jsonLd,
+        ...normalizeAccessMiJsonLd(jsonLd),
       });
     } else if (scriptEl) {
       scriptEl.remove();
