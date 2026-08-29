@@ -58,14 +58,23 @@ describe("Community Opportunity Atlas data contracts", () => {
     );
   });
 
-  it("does not silently upgrade fine-grain lenses before ingestion or permission review", () => {
+  it("does not silently upgrade fine-grain lenses before ingestion or while link-out only", () => {
     const statuses = Object.fromEntries(
       OPPORTUNITY_LENSES.map((lens) => [lens.id, lens.status]),
     );
+    const parkServe = OPPORTUNITY_LENSES.find(
+      (lens) => lens.id === "parkserve",
+    );
+
     expect(statuses["usda-sram-2025"]).toBe("ingestion-pending");
     expect(statuses["tree-equity"]).toBe("ingestion-pending");
-    expect(statuses.parkserve).toBe("permission-review");
+    expect(statuses.parkserve).toBe("link-out-only");
     expect(statuses["miejscreen-1-5"]).toBe("ingestion-pending");
+    expect(parkServe?.termsUrl).toBe(
+      "https://parkserve.tpl.org/downloads/ParkServe_Terms_of_Use_May_2024.pdf",
+    );
+    expect(parkServe?.vintage).toContain("no ParkServe data stored");
+    expect(parkServe?.caveat).toContain("prior written permission");
     expect(
       OPPORTUNITY_LENSES.every((lens) => lens.provenanceLabel === "PENDING"),
     ).toBe(true);
