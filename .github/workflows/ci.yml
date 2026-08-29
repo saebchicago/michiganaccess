@@ -1,21 +1,15 @@
 name: ci
 
+# Cost architecture:
+# - pull requests run the complete release-quality gate once
+# - merges do not repeat the same three jobs on main
+# - an explicit manual run remains available when needed
 on:
-  # Push builds only main. Every other branch is covered by its pull request.
-  #
-  # This used to be `branches: ["**"]` alongside the pull_request trigger, so
-  # every push to a PR branch ran the whole workflow TWICE - six concurrent
-  # jobs (2x test, 2x e2e, 2x lighthouse) for one commit. On 2026-08-17 that
-  # contention produced a real failure: on commit 25b0b57 one e2e run passed
-  # and the other timed out after 45s inside the axe scan of /data, same SHA,
-  # same minute. Halving the load removes the contention and the wasted
-  # runner minutes with it.
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
-# A newer commit supersedes an in-flight run for the same PR (or for main).
+# A newer commit supersedes an in-flight run for the same PR (or manual run).
 # Without this, pushing twice in quick succession leaves both runs competing.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
