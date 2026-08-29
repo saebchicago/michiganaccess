@@ -67,7 +67,8 @@ export interface OpportunityInsight {
 export type OpportunityLensStatus =
   | "live"
   | "ingestion-pending"
-  | "permission-review";
+  | "permission-review"
+  | "link-out-only";
 
 export interface OpportunityLens {
   id: string;
@@ -79,6 +80,7 @@ export interface OpportunityLens {
   provenanceLabel: ProvenanceLabel;
   source: string;
   sourceUrl: string;
+  termsUrl?: string;
   vintage: string;
   description: string;
   caveat: string;
@@ -317,15 +319,17 @@ export const OPPORTUNITY_LENSES: readonly OpportunityLens[] = [
     label: "10-minute park access",
     shortLabel: "Park access",
     nativeResolution: "walkshed",
-    status: "permission-review",
+    status: "link-out-only",
     provenanceLabel: "PENDING",
     source: "Trust for Public Land - ParkServe",
     sourceUrl: "https://www.tpl.org/park-data-downloads",
-    vintage: "Current ParkServe release; redistribution not enabled in AccessMI",
+    termsUrl:
+      "https://parkserve.tpl.org/downloads/ParkServe_Terms_of_Use_May_2024.pdf",
+    vintage: "Terms reviewed 2026-08-29; no ParkServe data stored",
     description:
-      "ParkServe's network-based walksheds account for walkable streets and barriers and are methodologically preferable to a simple radius.",
+      "ParkServe publishes network-based 10-minute walk access using walkable routes and barriers. AccessMI links to the official source for that methodology and result.",
     caveat:
-      "AccessMI will not reproduce or redistribute ParkServe geometry until the applicable terms permit the intended use. A circular-distance approximation will never be labeled as ParkServe's 10-minute result.",
+      "Under the publisher's current terms, AccessMI does not store, display, modify, or redistribute ParkServe files, geometry, walksheds, priority areas, or derived ParkServe metrics without prior written permission. A radius or separately sourced network analysis will not be labeled as ParkServe.",
   },
   {
     id: "miejscreen-1-5",
