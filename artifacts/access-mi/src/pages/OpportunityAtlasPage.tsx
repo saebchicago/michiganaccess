@@ -45,6 +45,7 @@ const STATUS_COPY = {
   live: "Live in AccessMI",
   "ingestion-pending": "Primary source published · AccessMI ingestion pending",
   "permission-review": "Source available · redistribution permission review",
+  "link-out-only": "Official source only · no source data stored in AccessMI",
 } as const;
 
 function SearchForm({
@@ -386,7 +387,7 @@ export default function OpportunityAtlasPage() {
                 Neighborhood-resolution lenses
               </h2>
               <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-                These are the intended tract, block-group, and network-walkshed lenses. AccessMI does not substitute a coarse proxy merely to fill the map. A primary source may be available while normalized AccessMI ingestion or redistribution permission is still pending.
+                These are the intended tract, block-group, and network-walkshed lenses. AccessMI does not substitute a coarse proxy merely to fill the map. A source may remain ingestion-pending or link-out only when its published terms do not support display or redistribution.
               </p>
               <div className="mt-5 grid gap-4 md:grid-cols-2">
                 {OPPORTUNITY_LENSES.map((lens) => (
@@ -434,6 +435,17 @@ export default function OpportunityAtlasPage() {
                           Primary source <ExternalLink className="ml-1 h-3.5 w-3.5" aria-hidden="true" />
                         </a>
                       </Button>
+                      {lens.termsUrl ? (
+                        <Button variant="ghost" size="sm" asChild>
+                          <a
+                            href={lens.termsUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Terms of use <ExternalLink className="ml-1 h-3.5 w-3.5" aria-hidden="true" />
+                          </a>
+                        </Button>
+                      ) : null}
                     </div>
                   </article>
                 ))}
