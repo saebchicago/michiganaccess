@@ -15,7 +15,7 @@
 | BLS LAUS Unemployment | bls-laus-county.generated.json | 83 | VERIFIED | Populated May 2026 (Preliminary) |
 | County Profiles (pop + health) | michigan-county-profiles.ts | 83 | VERIFIED (explicit constants) | Live |
 | Cross-Domain Indicators | cross-domain-indicators.ts | 83 | VERIFIED (ACS 2022 stated inline) | Live |
-| ALICE Economic Hardship | aliceData.ts | 8 + statewide | VERIFIED (source field per record) | Partial - major counties only |
+| ALICE Economic Hardship | alice-county.generated.json | 83 + statewide | MODELED | Populated 2026-08-30 from official 2026 data sheet (2024 data) |
 | Source Manifest | sourceManifest.ts | Statewide | VERIFIED/false per claim | 26 claims total |
 | Sources Registry | sourcesRegistry.ts | Statewide | Named org per entry | `SOURCES_TOTAL` feeds / `PUBLISHERS_TOTAL` publishers (both derived; see platformConstants.ts) |
 
@@ -64,10 +64,10 @@ returns a clean 500 naming the missing key rather than a 404.
 **Guarded by:** `scripts/check-backend-functions.mjs` fails the build if any
 `.netlify/functions/<name>` the app calls has no deployable source.
 
-## GAP 8 - LOW: ALICE data covers only 8 counties
-**Impact:** For 75 rural/suburban counties, `getALICEByCounty()` returns null. Query engine must degrade gracefully.  
-**Fix:** Degrade to statewide ALICE averages when county-level data is absent, labeled as such.  
-**Effort:** Handled in GAP 3 implementation.
+## GAP 8 - RESOLVED 2026-08-30: ALICE data covers all 83 counties
+**Impact (was):** For 75 rural/suburban counties, `getALICEByCounty()` returned null.
+**Fix:** Ingested the official United For ALICE Michigan Data Sheet 2026 (data year 2024) into `alice-county.generated.json`. 83 counties + statewide rollup. Labeled MODELED. Statewide fallback remains only for unrecognized geography names.
+**Guarded by:** `alice-coverage.test.ts` asserts 83 FIPS and official statewide sums.
 
 ---
 
@@ -79,11 +79,12 @@ returns a clean 500 naming the missing key rather than a 404.
 - [x] GAP 4 - provenance labels on every query answer data point
 - [x] GAP 5 - BriefPage BLS LAUS + HRSA HPSA + CDC PLACES + ACS broadband sections
 - [x] GAP 6 - /ask route and CivicAskPage
+- [x] GAP 7 - chat-mistral promoted into netlify/functions (2026-08-17)
+- [x] GAP 8 - official ALICE 2024 coverage for all 83 counties (2026-08-30)
 
 ## Gaps Not Addressed (out of scope)
 
-- ~~GAP 7 - Netlify chat-mistral function status (separate ops issue)~~ **RESOLVED 2026-08-17** - the function was never deployed at all; promoted into netlify/functions/ and now guarded. See GAP 7 above.
-- GAP 8 - Partial: ALICE statewide fallback added, but county-level data extension requires a separate data-refresh pass
+- None from the original civic-intelligence audit list. Remaining work is trend depth (multi-year ALICE history) and demographic splits the publisher does not release at county level.
 
 ---
 
