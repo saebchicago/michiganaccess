@@ -17,14 +17,14 @@ describe("OnboardingTour launch gating", () => {
     vi.useFakeTimers();
   });
 
-  it("launches on a first visit to the homepage", () => {
+  it("does not auto-launch on a first visit to the homepage", () => {
     renderAt("/");
     act(() => {
       vi.advanceTimersByTime(2000);
     });
     expect(
-      screen.getByRole("dialog", { name: /onboarding tour/i }),
-    ).toBeInTheDocument();
+      screen.queryByRole("dialog", { name: /onboarding tour/i }),
+    ).not.toBeInTheDocument();
     vi.useRealTimers();
   });
 
