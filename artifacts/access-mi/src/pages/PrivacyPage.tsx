@@ -35,6 +35,7 @@ export default function PrivacyPage() {
   });
 
   const effectiveDate = "February 27, 2026";
+  const lastUpdated = "August 30, 2026";
 
   return (
     <Layout>
@@ -79,7 +80,7 @@ export default function PrivacyPage() {
             className="mt-4 text-sm text-muted-foreground"
           >
             <strong>Effective Date:</strong> {effectiveDate} ·{" "}
-            <strong>Last Updated:</strong> {effectiveDate}
+            <strong>Last Updated:</strong> {lastUpdated}
           </motion.p>
         </div>
       </section>
@@ -252,11 +253,12 @@ export default function PrivacyPage() {
             linked to your identity.
           </p>
           <p className="mt-2">
-            The <strong>Quick Exit</strong> button (and the Escape key) hides
-            the page immediately and replaces the current browser-history entry
-            with a neutral site, so clicking "back" will not return a visitor to
-            this site. It does <strong>not</strong> clear your full browsing
-            history or close the browser tab. If you are in a situation where
+            The <strong>Quick Exit</strong> button hides the page immediately
+            and replaces the current browser-history entry with a neutral site,
+            so clicking "back" will not return a visitor to this site. Quick
+            Exit is button-only on this site; the Escape key is not wired to
+            it. It does <strong>not</strong> clear your full browsing history
+            or close the browser tab. If you are in a situation where
             someone else may check your device's browsing history, consider
             using a private/incognito browsing window in addition to Quick Exit.
           </p>
