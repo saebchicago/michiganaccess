@@ -86,7 +86,6 @@ export default function PrivacyPage() {
       </section>
 
       <div className="container max-w-4xl py-12 space-y-14">
-        {/* 1 - Overview */}
         <Section icon={Shield} title="1. Overview" index={0}>
           <p>
             Access Michigan ("the Platform") is an independent, non-commercial
@@ -108,7 +107,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 2 - What We Don't Do */}
         <Section icon={Lock} title="2. What We Do NOT Do" index={1}>
           <ul className="list-disc pl-6 space-y-2">
             <li>
@@ -150,7 +148,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 3 - What We May Collect */}
         <Section
           icon={Database}
           title="3. Information We May Collect"
@@ -160,8 +157,8 @@ export default function PrivacyPage() {
             3a. Operational Server Logs
           </h3>
           <p>
-            Our hosting provider (Netlify / Vercel) automatically collects
-            minimal operational data for security and reliability:
+            Our hosting provider (Netlify) automatically collects minimal
+            operational data for security and reliability:
           </p>
           <ul className="list-disc pl-6 space-y-1.5 mt-2">
             <li>IP addresses (not linked to any user profile)</li>
@@ -266,7 +263,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 4 - AI Features */}
         <Section icon={Eye} title="4. Automated Features" index={3}>
           <p>
             Access Michigan includes AI-powered tools such as the chat assistant
@@ -302,7 +298,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 5 - Third-Party Services */}
         <Section icon={Globe} title="5. Third-Party Services" index={4}>
           <p>
             Access Michigan integrates data from public agencies and may load
@@ -327,9 +322,9 @@ export default function PrivacyPage() {
                 note: "Prompts processed under provider terms; no personal data included in requests by design",
               },
               {
-                name: "Hosting Platform",
-                purpose: "Serving the website",
-                note: "Standard operational logs retained per hosting provider policy (≤30 days)",
+                name: "Netlify",
+                purpose: "Hosting and form delivery",
+                note: "Standard operational logs retained per Netlify policy (≤30 days)",
               },
             ].map((svc) => (
               <div
@@ -364,7 +359,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 6 - Data Security */}
         <Section icon={Shield} title="6. Data Security" index={5}>
           <p>
             We employ industry-standard security measures to protect any data we
@@ -398,7 +392,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 7 - HIPAA */}
         <Section icon={AlertTriangle} title="7. HIPAA Disclaimer" index={6}>
           <div className="rounded-xl border-2 border-michigan-coral/30 bg-michigan-coral/5 p-6">
             <h3 className="text-base font-bold text-foreground mb-3 flex items-center gap-2">
@@ -450,7 +443,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 8 - Michigan Privacy Rights */}
         <Section
           icon={Scale}
           title="8. Your Rights Under Michigan & Federal Law"
@@ -528,7 +520,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 9 - Data Retention */}
         <Section icon={FileText} title="9. Data Retention" index={8}>
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[500px]">
@@ -594,7 +585,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* 10 - Changes */}
         <Section icon={FileText} title="10. Changes to This Policy" index={9}>
           <p>
             We may update this Privacy Policy to reflect changes in our
@@ -613,7 +603,6 @@ export default function PrivacyPage() {
 
         <Separator />
 
-        {/* Contact */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -644,7 +633,6 @@ export default function PrivacyPage() {
   );
 }
 
-/* ── Reusable Section Wrapper ─────────────────────────────────── */
 function Section({
   icon: Icon,
   title,
