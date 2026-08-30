@@ -30,7 +30,7 @@ function parseCsv(text) {
 
 const rows = parseCsv(fs.readFileSync(csvPath, "utf8"));
 if (rows.length !== 83) {
-  console.error(`expected 83 counties, got ${rows.length}`);
+  console.error("expected 83 counties, got " + rows.length);
   process.exit(1);
 }
 
@@ -116,5 +116,5 @@ const payload = {
   counties,
 };
 
-fs.writeFileSync(outPath, `${JSON.stringify(payload, null, 2)}\n`);
-console.log(`wrote ${path.relative(root, outPath)} (${counties.length} counties`);
+fs.writeFileSync(outPath, JSON.stringify(payload, null, 2) + "\n");
+console.log("wrote " + path.relative(root, outPath) + " (" + counties.length + " counties)");
