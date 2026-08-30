@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import type { AtlasLayer } from "./LayerSelector";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { computeCompoundDeficit } from "@/utils/compoundDeficit";
+import { getALICEByCounty } from "@/data/aliceData";
 
 interface CountyMetrics {
   county: string;
@@ -28,42 +29,33 @@ function getLayerData(layer: AtlasLayer): CountyMetrics[] {
 
       switch (layer) {
         case "uninsured":
-          // ACS via County Health Rankings 2025 - all 83 counties
           value = parseFloat(h[0]?.value || "0");
           break;
         case "poverty":
-          // Guard 3: food insecurity (h[2]) != ACS poverty rate; pending ACS ingestion
           value = null;
           break;
         case "compound":
           value = computeCompoundDeficit(name, profile).compound;
           break;
         case "food_desert":
-          // Guard 3: food insecurity != food desert tracts; pending USDA tract ingestion
           value = null;
           break;
         case "energy_burden":
-          // Guard 3: proxy removed; partial ACEEE data (7/83) not wired to mobile grid
           value = null;
           break;
         case "infant_mortality":
-          // Guard 3: data unavailable until MDHHS 2020-2024 CSV seeded
           value = null;
           break;
         case "broadband":
-          // Guard 3: proxy removed; partial FCC data (10/83) not wired to mobile grid
           value = null;
           break;
         case "ej_index":
-          // Guard 3: FEMA NRI compositeRisk != EPA EJScreen index (source mismatch)
           value = null;
           break;
         case "alice":
-          // Guard 3: proxy removed; partial ALICE data (7/83) not wired to mobile grid
-          value = null;
+          value = getALICEByCounty(name)?.combinedHardshipPct ?? null;
           break;
         case "pharmacy":
-          // Guard 3: no verified county-level source exists
           value = null;
           break;
       }
