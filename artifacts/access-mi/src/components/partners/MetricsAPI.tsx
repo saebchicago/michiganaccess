@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BarChart3, Mail, Shield, FileText } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const METRICS_FEATURES = [
   {
@@ -63,10 +64,10 @@ export default function MetricsAPI() {
             one-click download called a service-role endpoint that returned raw
             free-text feedback comments to any anonymous visitor. */}
         <Button asChild className="bg-gradient-michigan">
-          <a href="mailto:partners@accessmi.org?subject=Aggregated%20metrics%20request">
+          <Link to="/contact">
             <Mail className="h-4 w-4 mr-2" />
             Request an Aggregated Metrics Report
-          </a>
+          </Link>
         </Button>
         <p className="mt-2 text-xs text-muted-foreground">
           Reviewed and sent by our team · Aggregated satisfaction rates · No

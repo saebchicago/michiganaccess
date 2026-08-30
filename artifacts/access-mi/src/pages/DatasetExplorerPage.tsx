@@ -53,8 +53,9 @@ const DatasetExplorerPage = () => {
             Browse every dataset.
           </h1>
           <p className="text-muted-foreground">
-            Health access, environmental risk, mobility, economic stress. All
-            VERIFIED to public agencies.
+            Health access, environmental risk, mobility, economic stress.
+            Published figures are labeled VERIFIED, MODELED, or PENDING from
+            named public sources. Gaps stay listed as gaps.
           </p>
         </div>
       </section>
