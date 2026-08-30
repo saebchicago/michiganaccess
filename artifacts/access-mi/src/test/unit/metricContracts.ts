@@ -12,8 +12,9 @@ export interface MetricContract {
 }
 
 export const METRIC_CONTRACTS: Record<string, MetricContract> = {
-  // ALICE combined hardship % - United Way ALICE Michigan 2025 (2023 data)
-  // Ratified range: 20-65. MI county seed data spans 25.6-47.0 (statewide 41%).
+  // ALICE combined hardship % - United For ALICE Michigan 2026 sheet (2024 data)
+  // Ratified range: 20-65. Official 83-county payload spans 28.9-55.4
+  // (statewide 39.7%, rendered as 40%).
   // Tightened from 10-80 per owner ratification 2026-06-15.
   alice_combined_hardship_pct: {
     name: "ALICE combined hardship %",

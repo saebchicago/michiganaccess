@@ -76,6 +76,7 @@ jobs:
           node scripts/check-orphan-modules.mjs
           node scripts/check-form-labels.mjs
           node scripts/check-page-provenance.mjs
+          node scripts/check-build-parity.mjs
       - name: Allowlist shrink-only check
         working-directory: artifacts/access-mi
         run: |

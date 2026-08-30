@@ -18,7 +18,10 @@ import {
   getCountyCrossDomain,
   MI_STATE_AVERAGES,
 } from "@/data/cross-domain-indicators";
-import { getALICEByCounty } from "@/data/aliceData";
+import {
+  ALICE_COUNTY_PROVENANCE,
+  getALICEByCounty,
+} from "@/data/aliceData";
 import { computeCivicScore } from "@/lib/civic-score";
 import { getBlsLausForCountyName } from "@/data/bls-laus-county";
 import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
@@ -329,11 +332,18 @@ export default function BriefPage() {
             };
           })(),
           {
+            // The below-threshold share is a classification against a
+            // constructed Household Survival Budget, not a published count -
+            // aliceData.ts labels every row MODELED. This block claimed
+            // VERIFIED and a "2025 (2023 data)" vintage the payload stopped
+            // shipping when the official 2026 sheet landed.
             label: "ALICE Economic Hardship",
             value: aliceData ? `${aliceData.combinedHardshipPct}%` : "no data",
-            badge: aliceData ? "VERIFIED" : "no data",
-            source: "United Way ALICE Report",
-            vintage: "2025 (2023 data)",
+            badge: aliceData ? "MODELED" : "no data",
+            source: "United For ALICE Michigan Data Sheet",
+            vintage: aliceData
+              ? `${ALICE_COUNTY_PROVENANCE.report_year} report (${aliceData.year} data)`
+              : "no data",
           },
           {
             label: "Civic Insight Score",

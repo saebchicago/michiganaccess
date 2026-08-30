@@ -4,6 +4,7 @@ import { describe, it, expect, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import fs from "fs";
 import path from "path";
+import { getALICERecordByCountyName } from "@/data/aliceData";
 
 // ── shared mocks ─────────────────────────────────────────────────────────────
 
@@ -223,16 +224,26 @@ describe("BriefPage  -  Keweenaw (null handling)", () => {
     expect(screen.getByText(/0 \(verified zero\)/)).toBeInTheDocument();
   });
 
-  it("ALICE block shows no-data treatment for Keweenaw (not seeded)", () => {
+  // Keweenaw used to be an unseeded ALICE county and this asserted the
+  // no-data path. The official 2026 Michigan Data Sheet covers all 83
+  // counties, so the brief must now render Keweenaw's real share - and
+  // label it MODELED, because the below-threshold flag is a classification
+  // against a constructed Survival Budget, not a published count.
+  it("ALICE block shows Keweenaw's official share, labelled MODELED", () => {
     renderBrief("Keweenaw");
     const aliceLabel = screen.getByText("ALICE Economic Hardship");
     const aliceBlock = aliceLabel.closest("[data-brief-stat]");
     expect(aliceBlock).not.toBeNull();
+    const scoped = within(aliceBlock as HTMLElement);
+    const record = getALICERecordByCountyName("Keweenaw");
+    expect(record).not.toBeNull();
     expect(
-      within(aliceBlock as HTMLElement).getByText(
-        /No data available for this county/i,
-      ),
+      scoped.getByText(`${record!.belowAliceThresholdPct}%`),
     ).toBeInTheDocument();
+    expect(scoped.getByText("MODELED")).toBeInTheDocument();
+    expect(
+      scoped.queryByText(/No data available for this county/i),
+    ).toBeNull();
   });
 
   it("no contradictory badges  -  null stats do not show 'verified' with a value", () => {

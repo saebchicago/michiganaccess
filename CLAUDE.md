@@ -38,6 +38,14 @@ source), `check-form-labels` (accessible names axe accepts but shouldn't),
 (every endpoint the app calls has deployable source). All are in `pnpm
 build` and the blocking CI `Integrity guards` step.
 
+### Guard added by the 2026-08-30 audit
+`check-build-parity` - the repo has two build entry points and they had
+diverged. `artifacts/access-mi`'s `build` runs the data generators before
+`vite build`; the repo-root `build` (what `netlify.toml` invokes) did not,
+so a generated dataset committed as a stub shipped empty and crashed every
+county brief. Both now run the same generators, and the guard fails the
+build if one gains a generator the other lacks.
+
 ### .migration-backup/ is load-bearing - do not delete
 It holds the ONLY in-repo source for seven Supabase functions the app calls
 (appeal-generator, civic-copilot, airnow-proxy, arcgis-proxy, cdc-proxy,
