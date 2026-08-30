@@ -13,7 +13,7 @@ export interface VerifiedClaim {
 
 export const SOURCE_MANIFEST: VerifiedClaim[] = [
   { value: "683,234", context: "FQHC patients served 2024", source: "HRSA UDS 2024", url: "https://data.hrsa.gov/tools/data-reporting/program-data/state/MI", verified: true },
-  { value: "41%", context: "Michigan households below ALICE threshold", source: "United For ALICE 2023", url: "https://unitedforalice.org/michigan", verified: true },
+  { value: "40%", context: "Michigan households below ALICE threshold (39.7% unrounded; 13.4% poverty + 26.3% ALICE)", source: "United For ALICE 2026 Report (2024 data)", url: "https://www.unitedforalice.org/michigan", verified: true },
   { value: "625,852", context: "Michigan 211 annual requests", source: "Michigan 211", url: "https://mi211.org", verified: true },
   { value: "35", context: "Critical Access Hospitals in Michigan", source: "Flex Monitoring Team", url: "https://flexmonitoring.org", verified: true },
   { value: "$183.3M", context: "LIHEAP allocation Michigan", source: "LIHEAP Clearinghouse", url: "https://liheapch.acf.hhs.gov", verified: true },
