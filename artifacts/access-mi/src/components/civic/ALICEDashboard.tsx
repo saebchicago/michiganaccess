@@ -1,43 +1,61 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Users, ArrowRight, ExternalLink, DollarSign } from "lucide-react";
+import { Users, ArrowRight, DollarSign } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { ProvenanceTag } from "@/components/shared/ProvenanceTag";
+import {
+  ALICE_COUNTY_PROVENANCE,
+  ALICE_COUNTY_RECORDS,
+  ALICE_STATEWIDE_RECORD,
+} from "@/data/aliceData";
 
-// Source: United for ALICE, 2023 data
-const ALICE_COUNTIES = [
-  { county: "Lake", aliceThreshold: 64, poverty: 28.6, alice: 35.4 },
-  { county: "Oscoda", aliceThreshold: 61, poverty: 24.8, alice: 36.2 },
-  { county: "Crawford", aliceThreshold: 58, poverty: 21.4, alice: 36.6 },
-  { county: "Montmorency", aliceThreshold: 57, poverty: 22.1, alice: 34.9 },
-  { county: "Arenac", aliceThreshold: 56, poverty: 20.8, alice: 35.2 },
-  { county: "Genesee", aliceThreshold: 52, poverty: 20.6, alice: 31.4 },
-  { county: "Wayne", aliceThreshold: 51, poverty: 25.4, alice: 25.6 },
-  { county: "Saginaw", aliceThreshold: 50, poverty: 19.8, alice: 30.2 },
-  { county: "Calhoun", aliceThreshold: 48, poverty: 17.8, alice: 30.2 },
-  { county: "Muskegon", aliceThreshold: 47, poverty: 17.2, alice: 29.8 },
-  { county: "Jackson", aliceThreshold: 45, poverty: 14.8, alice: 30.2 },
-  { county: "Berrien", aliceThreshold: 45, poverty: 16.5, alice: 28.5 },
-  { county: "Ingham", aliceThreshold: 43, poverty: 18.1, alice: 24.9 },
-  { county: "Kent", aliceThreshold: 38, poverty: 11.2, alice: 26.8 },
-  { county: "Macomb", aliceThreshold: 36, poverty: 10.8, alice: 25.2 },
-  { county: "Kalamazoo", aliceThreshold: 37, poverty: 15.4, alice: 21.6 },
-  { county: "Washtenaw", aliceThreshold: 30, poverty: 13.2, alice: 16.8 },
-  { county: "Ottawa", aliceThreshold: 29, poverty: 6.8, alice: 22.2 },
-  { county: "Livingston", aliceThreshold: 27, poverty: 4.8, alice: 22.2 },
-  { county: "Oakland", aliceThreshold: 28, poverty: 8.1, alice: 19.9 },
-];
+/**
+ * Every figure on this card reads from alice-county.generated.json - the
+ * official United For ALICE Michigan Data Sheet, all 83 counties.
+ *
+ * It used to carry a hand-maintained 20-county table and a monthly budget
+ * split from the 2025 report (2023 data). Once the 2026 sheet landed, this
+ * card disagreed with the platform's own dataset on every county it listed
+ * (Lake 64% here vs 51.5% official, Ottawa 29% vs 33.8%) and on the
+ * statewide headline (41% vs 39.7%). The budget bars were worse: they were
+ * titled "Family of 4" while summing to $36,912 - the single-adult figure -
+ * and no published breakdown backed the categories. Nothing here is typed
+ * by hand any more.
+ */
 
-// Source: United for ALICE, 2023 data (Survival Budget)
-const BUDGET = [
-  { category: "Housing", monthly: 828, pct: 27 },
-  { category: "Childcare", monthly: 726, pct: 24 },
-  { category: "Food", monthly: 383, pct: 12 },
-  { category: "Transportation", monthly: 468, pct: 15 },
-  { category: "Healthcare", monthly: 306, pct: 10 },
-  { category: "Taxes + Other", monthly: 365, pct: 12 },
+const SOURCE_LABEL = `United For ALICE ${ALICE_COUNTY_PROVENANCE.report_year} Report (${ALICE_COUNTY_PROVENANCE.data_year} data)`;
+
+const TOP_COUNTY_COUNT = 15;
+
+const TOP_COUNTIES = [...ALICE_COUNTY_RECORDS]
+  .sort((a, b) => b.belowAliceThresholdPct - a.belowAliceThresholdPct)
+  .slice(0, TOP_COUNTY_COUNT);
+
+const STATEWIDE_BELOW_HOUSEHOLDS =
+  ALICE_STATEWIDE_RECORD.povertyHouseholds + ALICE_STATEWIDE_RECORD.aliceHouseholds;
+
+const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
+
+const millions = (n: number) => `${(n / 1_000_000).toFixed(1)}M`;
+
+/** Official statewide Household Survival Budgets. The sheet publishes the
+ *  annual totals only; it does not break them into monthly categories, so
+ *  none are invented here. */
+const SURVIVAL_BUDGETS = [
+  {
+    label: "Single adult",
+    annual: ALICE_STATEWIDE_RECORD.survivalBudgetSingleAdult,
+    federalPovertyLevel:
+      ALICE_STATEWIDE_RECORD.federalPovertyLevelSingleAdult,
+  },
+  {
+    label: "Family of four",
+    annual: ALICE_STATEWIDE_RECORD.survivalBudgetFamilyOfFour,
+    federalPovertyLevel:
+      ALICE_STATEWIDE_RECORD.federalPovertyLevelFamilyOfFour,
+  },
 ];
 
 function barColor(pct: number): string {
@@ -47,9 +65,9 @@ function barColor(pct: number): string {
 }
 
 export default function ALICEDashboard() {
-  const chartData = ALICE_COUNTIES.slice(0, 15).map((d) => ({
-    county: d.county,
-    threshold: d.aliceThreshold,
+  const chartData = TOP_COUNTIES.map((d) => ({
+    county: d.countyName,
+    threshold: d.belowAliceThresholdPct,
   }));
 
   return (
@@ -68,15 +86,28 @@ export default function ALICEDashboard() {
           {/* Headline */}
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-3xl font-bold text-michigan-coral-deep">41%</p>
-              <p className="text-xs text-muted-foreground">of MI households below ALICE Threshold (14% poverty + 27% ALICE) · United For ALICE 2025 report, 2023 data</p>
+              <p className="text-3xl font-bold text-michigan-coral-deep">
+                {Math.round(ALICE_STATEWIDE_RECORD.belowAliceThresholdPct)}%
+              </p>
+              <p className="text-xs text-muted-foreground">
+                of MI households below ALICE Threshold (
+                {ALICE_STATEWIDE_RECORD.povertyPct}% poverty +{" "}
+                {ALICE_STATEWIDE_RECORD.alicePct}% ALICE) · {SOURCE_LABEL}
+              </p>
             </div>
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-3xl font-bold text-foreground">1.8M+</p>
-              <p className="text-xs text-muted-foreground">households struggling to afford basics</p>
+              <p className="text-3xl font-bold text-foreground">
+                {millions(STATEWIDE_BELOW_HOUSEHOLDS)}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                households struggling to afford basics, of{" "}
+                {millions(ALICE_STATEWIDE_RECORD.households)} statewide
+              </p>
             </div>
             <div className="rounded-lg border border-border bg-background p-3 text-center">
-              <p className="text-3xl font-bold text-michigan-gold-deep">$73K</p>
+              <p className="text-3xl font-bold text-michigan-gold-deep">
+                {usd(ALICE_STATEWIDE_RECORD.survivalBudgetFamilyOfFour)}
+              </p>
               <p className="text-xs text-muted-foreground">Survival Budget (family of 4)</p>
             </div>
           </div>
@@ -91,13 +122,23 @@ export default function ALICEDashboard() {
         {/* County chart */}
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm">% Households Below ALICE Threshold by County</CardTitle>
+            <CardTitle className="text-sm">
+              % Households Below ALICE Threshold - {TOP_COUNTY_COUNT} highest of 83 counties
+            </CardTitle>
+            <CardDescription className="flex items-center gap-2">
+              <ProvenanceTag
+                label="MODELED"
+                source={SOURCE_LABEL}
+                vintage={`${ALICE_COUNTY_PROVENANCE.data_year} data`}
+              />
+              <span className="text-[10px]">Classification against the ALICE Threshold</span>
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={380}>
               <BarChart data={chartData} layout="vertical" margin={{ left: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(214, 20%, 90%)" />
-                <XAxis type="number" unit="%" tick={{ fontSize: 10 }} domain={[0, 70]} />
+                <XAxis type="number" unit="%" tick={{ fontSize: 10 }} domain={[0, 60]} />
                 <YAxis dataKey="county" type="category" width={85} tick={{ fontSize: 10 }} />
                 <Tooltip formatter={(v: number) => [`${v}%`, "Below ALICE Threshold"]} />
                 <Bar dataKey="threshold" radius={[0, 4, 4, 0]}>
@@ -115,31 +156,54 @@ export default function ALICEDashboard() {
           <CardHeader className="pb-2">
             <CardTitle className="text-sm flex items-center gap-2">
               <DollarSign className="h-4 w-4 text-michigan-gold-deep" />
-              ALICE Survival Budget (Family of 4, MI)
+              ALICE Survival Budget vs Federal Poverty Level (MI)
             </CardTitle>
-            <CardDescription>Monthly cost to meet basic needs - not thrive, just survive</CardDescription>
+            <CardDescription>
+              What it costs to meet basic needs - not thrive, just survive -
+              against the poverty line used to decide who qualifies for help
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
-              {BUDGET.map((b) => (
-                <div key={b.category} className="flex items-center gap-3">
-                  <span className="text-xs text-muted-foreground w-28 shrink-0">{b.category}</span>
-                  <div className="flex-1 h-6 bg-muted rounded overflow-hidden">
-                    <div
-                      className="h-full bg-primary/60 rounded flex items-center px-2"
-                      style={{ width: `${b.pct * 1.5}%` }}
-                    >
-                      <span className="text-[9px] font-bold text-white whitespace-nowrap">${b.monthly}/mo</span>
+            <div className="space-y-4">
+              {SURVIVAL_BUDGETS.map((b) => (
+                <div key={b.label} className="space-y-1.5">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-xs font-semibold text-foreground">{b.label}</span>
+                    <span className="text-sm font-bold text-foreground tabular-nums">
+                      {usd(b.annual)}/year
+                    </span>
+                  </div>
+                  <div className="h-6 bg-muted rounded overflow-hidden">
+                    <div className="h-full bg-primary/60 rounded flex items-center px-2 w-full">
+                      <span className="text-[9px] font-bold text-white whitespace-nowrap">
+                        Survival Budget {usd(Math.round(b.annual / 12))}/mo
+                      </span>
                     </div>
                   </div>
-                  <span className="text-[10px] text-muted-foreground w-8 text-right">{b.pct}%</span>
+                  <div className="h-6 bg-muted rounded overflow-hidden">
+                    <div
+                      className="h-full bg-michigan-coral/60 rounded flex items-center px-2"
+                      style={{
+                        width: `${Math.round((b.federalPovertyLevel / b.annual) * 100)}%`,
+                      }}
+                    >
+                      <span className="text-[9px] font-bold text-white whitespace-nowrap">
+                        FPL {usd(b.federalPovertyLevel)}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-muted-foreground">
+                    The Survival Budget is{" "}
+                    {(b.annual / b.federalPovertyLevel).toFixed(1)}x the federal
+                    poverty level, so a household can earn well over the line
+                    and still not cover basics.
+                  </p>
                 </div>
               ))}
             </div>
-            <div className="mt-4 rounded-lg border border-border p-3 text-center">
-              <p className="text-lg font-bold text-foreground">$3,076/month · $36,912/year</p>
-              <p className="text-[10px] text-muted-foreground">Single adult ALICE Survival Budget</p>
-            </div>
+            <p className="mt-4 text-[10px] text-muted-foreground">
+              {ALICE_STATEWIDE_RECORD.reportRoundingNote}
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -161,9 +225,12 @@ export default function ALICEDashboard() {
           </div>
           <p className="text-[10px] text-muted-foreground mt-3">
             Source:{" "}
-            <a href="https://unitedforalice.org/state-overview/michigan" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-              United for ALICE, 2023 data
+            <a href={ALICE_COUNTY_PROVENANCE.source_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              {SOURCE_LABEL}
             </a>. ALICE Threshold = poverty + ALICE households combined.
+            Household counts are published by United For ALICE; the
+            below-threshold classification is MODELED against a constructed
+            Household Survival Budget.
           </p>
         </CardContent>
       </Card>

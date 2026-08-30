@@ -29,12 +29,12 @@ export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
   },
   {
     week: 1,
-    text: "41% of Michigan households fall below the ALICE threshold - earning too much for aid but not enough for basics.",
-    source: "United For ALICE 2023",
+    text: "40% of Michigan households fall below the ALICE threshold - earning too much for aid but not enough for basics.",
+    source: "United For ALICE 2026 Report (2024 data)",
     href: "/equity",
     counties: ["Lake"],
     dataPoints: [
-      { label: "ALICE households", value: "41%", context: "statewide" },
+      { label: "ALICE households", value: "40%", context: "statewide" },
       { label: "Survival budget", value: "$27,156", context: "single adult/yr" },
       { label: "Worst county", value: "Lake Co.", context: "64% below ALICE" },
     ],

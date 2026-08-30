@@ -67,33 +67,37 @@ export function ProvenancePanel({
       className="rounded-lg border border-border bg-card text-card-foreground"
       aria-labelledby={`${panelId}-trigger`}
     >
-      <button
-        id={`${panelId}-trigger`}
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        aria-controls={`${panelId}-content`}
-        className="flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left transition-colors hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"
-      >
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            How this is computed
+      {/* The disclosure trigger and the composite ProvenanceTag are
+          siblings, not nested. ProvenanceTag renders its own <button>
+          (the source popover); when it lived inside this trigger the page
+          shipped a button inside a button - invalid HTML that React logs
+          as a hydration error on /food-access, and that made the popover
+          unopenable because the click toggled the disclosure instead. */}
+      <div className="flex w-full flex-wrap items-center gap-2 px-4 py-2.5">
+        <button
+          id={`${panelId}-trigger`}
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls={`${panelId}-content`}
+          className="flex items-center gap-1.5 rounded text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          How this is computed
+          <span className="flex items-center gap-1 font-normal normal-case">
+            {open ? "Hide" : "Show"}
+            {open ? (
+              <ChevronUp className="h-3.5 w-3.5" aria-hidden="true" />
+            ) : (
+              <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
           </span>
-          <ProvenanceTag
-            label={compositeLabel}
-            source={metrics.map((m) => m.source.name).join(" + ")}
-            vintage={metrics.map((m) => m.vintage).join(" / ")}
-          />
-        </div>
-        <span className="flex items-center gap-1 text-xs text-muted-foreground">
-          {open ? "Hide" : "Show"}
-          {open ? (
-            <ChevronUp className="h-3.5 w-3.5" aria-hidden="true" />
-          ) : (
-            <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" />
-          )}
-        </span>
-      </button>
+        </button>
+        <ProvenanceTag
+          label={compositeLabel}
+          source={metrics.map((m) => m.source.name).join(" + ")}
+          vintage={metrics.map((m) => m.vintage).join(" / ")}
+        />
+      </div>
 
       {open ? (
         <div

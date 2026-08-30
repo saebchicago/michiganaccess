@@ -337,14 +337,19 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
       "We ship FY2024 obligations; FY2025 is closed and published.",
   }),
   entry({
+    // Anchored 2026-08-30: the county payload moved to the official 2026
+    // Michigan Data Sheet (2024 data, all 83 counties) but this entry still
+    // hand-declared 2025-05-01 / "2025 Report (2023 data)", so the freshness
+    // page reported a vintage the platform no longer ships. The date now
+    // resolves from alice-county.generated.json via the provenance index.
     id: "alice",
     name: "United Way ALICE Report",
     category: "Economic",
     url: "https://unitedforalice.org/michigan",
-    lastUpdated: "2025-05-01",
+    generatedFrom: "alice-county.generated.json",
     updateFrequency: "Every 2 years",
-    currentVersion: "2025 Report (2023 data)",
-    nextExpectedUpdate: "2027",
+    currentVersion: "2026 Report (2024 data)",
+    nextExpectedUpdate: "2028",
     isLive: false,
     vintageStatus: "current",
   }),

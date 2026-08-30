@@ -105,14 +105,14 @@ export default function StoryPage() {
               label="food insecure residents"
               source="Feeding America 2024"
             />
-            {/* Source: United For ALICE 2023 */}
+            {/* Source: United For ALICE 2026 Report (2024 data) */}
             <div className="text-center">
-              <p className="text-4xl lg:text-5xl font-bold tabular-nums">41%</p>
+              <p className="text-4xl lg:text-5xl font-bold tabular-nums">40%</p>
               <p className="text-sm mt-1 opacity-80">
                 of households below ALICE threshold
               </p>
               <p className="text-[9px] opacity-50 mt-0.5">
-                United For ALICE 2023
+                United For ALICE 2026 Report (2024 data)
               </p>
             </div>
             {/* Source: HMA March 2025 */}

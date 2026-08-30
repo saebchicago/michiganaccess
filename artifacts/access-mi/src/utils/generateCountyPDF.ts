@@ -67,7 +67,7 @@ export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
         data.combinedHardshipPct != null
           ? `${data.combinedHardshipPct}%`
           : "N/A",
-      source: "United For ALICE 2023",
+      source: "United For ALICE 2026 Report (2024 data)",
     },
     {
       label: "Uninsured Rate",

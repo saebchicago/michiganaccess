@@ -30,10 +30,10 @@ const QUESTIONS: Question[] = [
   },
   {
     q: "What percentage of Michigan households are below the ALICE threshold?",
-    options: ["22%", "31%", "41%", "55%"],
+    options: ["22%", "31%", "40%", "55%"],
     answer: 2,
-    fact: "41% of Michigan households earn too much for safety nets but can't afford basics.",
-    source: "United For ALICE 2023",
+    fact: "40% of Michigan households earn too much for safety nets but can't afford basics.",
+    source: "United For ALICE 2026 Report (2024 data)",
   },
   {
     q: "Which Michigan city has the most expensive auto insurance?",

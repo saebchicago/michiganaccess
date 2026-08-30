@@ -18,13 +18,13 @@ export const DATA_STORIES: DataStory[] = [
     title: "The Invisible 41%",
     hook: "They work full-time but can't afford the basics.",
     narrative:
-      "41% of Michigan households fall below the ALICE Threshold - earning too much for most assistance programs but not enough to cover housing, childcare, food, and healthcare.",
+      "40% of Michigan households fall below the ALICE Threshold - earning too much for most assistance programs but not enough to cover housing, childcare, food, and healthcare.",
     stat: {
-      value: 41,
+      value: 40,
       label: "of households below ALICE Threshold",
       suffix: "%",
     },
-    source: "United For ALICE 2023",
+    source: "United For ALICE 2026 Report (2024 data)",
     href: "/equity",
     color: "hsl(var(--coral-deep))",
   },

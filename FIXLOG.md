@@ -925,3 +925,101 @@ Two things worth recording from writing it:
 
 The underlying `/environment` violation remains unidentified and is
 data-dependent. The next occurrence will name itself.
+
+## End-to-end audit (2026-08-30)
+
+Full-site audit against `main` at 6c0db78. Typecheck, `pnpm build`,
+`pnpm check:tests`, `pnpm test:a11y`, the Playwright suite, and a browser
+sweep of all 89 `ROUTE_META` routes plus a sample of `/county/*` and
+`/brief?county=*`. Five defects, four of them shipped by #228.
+
+### Every county brief crashed in a production build
+
+`src/data/alice-county.generated.json` was committed as a six-line
+provenance stub - no `counties`, no `statewide`, no `ingested_at`. Every
+other `*.generated.json` in `src/data/` is committed in full; this one
+was not.
+
+`aliceData.ts` runs `payload.counties.map(toLegacy)` at module scope, so
+importing it against the stub throws `TypeError: Cannot read properties of
+undefined (reading 'map')`. Confirmed in a headless browser against a
+production-shaped bundle: `/brief?county=Keweenaw` rendered the
+ErrorBoundary fallback, 73 characters of body text, nothing else. All 83
+county briefs, plus `/civic-data`'s ALICE card and the atlas ALICE layer.
+
+The app build hid it. `artifacts/access-mi`'s `build` script runs
+`build-alice-county.mjs` first, which rewrites the file from the committed
+CSV before Vite ever reads it. Netlify does not run that script: per
+`netlify.toml` it runs the repo-root `build`, which called `vite build`
+directly. Two build entry points, one of them missing four generators.
+
+Production was not serving the crash - deploys are gated behind an explicit
+release marker and the last one predates #228 - but the next release would
+have shipped it.
+
+Fixed three ways: the real 83-county payload is committed; the root build
+runs the same four generators the app build does; and
+`scripts/check-build-parity.mjs` fails the build when a generator that runs
+before `vite build` in one entry point is missing from the other. The class
+closes, not just the instance.
+
+### `check-data-freshness` was red on main
+
+#228 moved the ALICE payload to the official 2026 Michigan Data Sheet but
+added no freshness entry naming it in `generatedFrom`, so `pnpm build` and
+CI's Integrity-guards step both failed. The `alice` entry also still
+hand-declared `lastUpdated: 2025-05-01` and `"2025 Report (2023 data)"` -
+a vintage the platform had stopped shipping. It is anchored to
+`alice-county.generated.json` now, so the date is derived rather than
+declared, which is what the registry is for.
+
+### The site quoted two different ALICE figures
+
+`sourceManifest.ts` and `monthly-signals.ts` carried the 2026 number (40%,
+39.7% unrounded). `ALICEDashboard`, `insights.ts`, `data-stories.ts`,
+`MichiganQuiz` and `StoryPage` still carried 41% from the 2025 report, and
+`generateCountyPDF` labelled the live 2024 value "United For ALICE 2023".
+Same statistic, two answers, depending on which page you were on.
+
+`ALICEDashboard` was the worst of it: a hand-maintained 20-county table that
+disagreed with the platform's own dataset on every row (Lake 64% vs 51.5%
+official, Ottawa 29% vs 33.8%), a household count of "1.8M+" against an
+official 1.63M, and a budget card titled "Family of 4" whose bars summed to
+$36,912 - the single-adult figure - from category splits no published
+source backs. It reads from `aliceData.ts` now, like `MichiganHeatGrid`
+already did, and the invented category split is replaced by the sheet's own
+Survival Budget vs federal poverty level comparison.
+
+`BriefPage` labelled its ALICE stat VERIFIED. The below-threshold share is a
+classification against a constructed Survival Budget; `aliceData.ts` labels
+every row MODELED. The brief says MODELED now, with the vintage read from
+provenance instead of a hardcoded `"2025 (2023 data)"`.
+
+### A stale test asserted the bug
+
+`BriefPage.test.tsx` asserted Keweenaw showed "No data available for this
+county" for ALICE, which stopped being true when #228 seeded all 83
+counties. `pnpm check:tests` was red on main. The test now asserts the
+opposite - Keweenaw's real share, labelled MODELED - which is the assertion
+that would have caught the stub.
+
+### A button inside a button on /food-access
+
+`all-routes.spec.ts` had been recording this to `FAILED_ROUTES.md` without
+failing on it: React logging a DOM-nesting hydration error. `ProvenancePanel`
+put a `ProvenanceTag` inside its disclosure `<button>`, and `ProvenanceTag`
+renders its own `<button>` for the source popover. Invalid HTML, and the
+popover could not be opened - clicking it toggled the disclosure instead.
+They are siblings now.
+
+### Not defects
+
+- `index.html`'s site-wide `Dataset` JSON-LD block carried no `license`, so
+  `discoverability.test.ts` failed the moment a `dist/` existed for it to
+  read. The assertion was right and the block was missing a field; added.
+- The axe specs fail intermittently in a CPU-constrained container running
+  two browser workers, reporting `color-contrast` on a different route each
+  run - framer-motion fade-ins sampled mid-transition. Nothing reproduces
+  serially: the flagged routes return zero violations every time when run
+  alone. Same class the spec's own `beforeEach` comment already documents
+  for the onboarding tour.
