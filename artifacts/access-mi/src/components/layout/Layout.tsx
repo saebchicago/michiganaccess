@@ -20,7 +20,6 @@ const WeatherAlertBanner = lazy(
 const OfflineAccessBanner = lazy(
   () => import("@/components/shared/OfflineAccessBanner"),
 );
-const PrintButton = lazy(() => import("@/components/shared/PrintButton"));
 const PWAInstallBanner = lazy(
   () => import("@/components/shared/PWAInstallBanner"),
 );
@@ -71,7 +70,6 @@ const Layout = ({ children }: LayoutProps) => (
     <Footer />
     <ScrollToTop />
     <Suspense fallback={null}>
-      <PrintButton />
       <PWAInstallBanner />
       <MobileBottomNav />
       {AI_CHAT_ENABLED && <AIChatWidget />}

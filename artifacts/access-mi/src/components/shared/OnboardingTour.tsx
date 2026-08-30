@@ -81,15 +81,9 @@ export default function OnboardingTour() {
     setVisible(true);
   }, []);
 
-  // Launch on first visit - homepage only. A first visit that lands on a
-  // deep link (a shared county URL, a dataset) must not get a tour that
-  // spotlights homepage elements which are not on the page.
-  useEffect(() => {
-    if (!onHomepage) return;
-    if (localStorage.getItem(STORAGE_KEY)) return;
-    const timer = setTimeout(startTour, 1500);
-    return () => clearTimeout(timer);
-  }, [onHomepage, startTour]);
+  // Do not auto-launch. A first-visit modal covers the headline, fights
+  // the crisis bar, and reads like product onboarding. The tour stays
+  // available from the footer ("Replay welcome tour") and ?tour=true.
 
   // ?tour=true starts the tour explicitly (footer replay from another
   // page navigates here with this param; external links may use it too).
