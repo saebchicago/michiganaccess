@@ -18,7 +18,7 @@
         "dedupe_key": "FQHC Site NPI Number (preferred); BHCMIS Org # + Site Address + Site Name (fallback when NPI missing)"
       }
     ],
-    "fetched_at": "2026-08-24T11:34:36.043Z",
+    "fetched_at": "2026-08-31T17:57:48.271Z",
     "transform_script": "scripts/build-facility-dataset.mjs",
     "counties_covered": 82,
     "counties_total": 83,
