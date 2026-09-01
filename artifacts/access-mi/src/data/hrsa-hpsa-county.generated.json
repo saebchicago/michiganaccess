@@ -8,7 +8,7 @@
         "disciplineId": "primaryCare",
         "label": "Primary Care",
         "file": "BCD_HPSA_FCT_DET_PC.csv",
-        "dwCreateDate": "08/24/2026",
+        "dwCreateDate": "09/01/2026",
         "miDesignatedHpsas": 606,
         "miWithdrawnHpsas": 2031,
         "miOtherStatusHpsas": 439
@@ -17,8 +17,8 @@
         "disciplineId": "dental",
         "label": "Dental Health",
         "file": "BCD_HPSA_FCT_DET_DH.csv",
-        "dwCreateDate": "08/24/2026",
-        "miDesignatedHpsas": 552,
+        "dwCreateDate": "09/01/2026",
+        "miDesignatedHpsas": 557,
         "miWithdrawnHpsas": 1067,
         "miOtherStatusHpsas": 359
       },
@@ -26,13 +26,13 @@
         "disciplineId": "mental",
         "label": "Mental Health",
         "file": "BCD_HPSA_FCT_DET_MH.csv",
-        "dwCreateDate": "08/24/2026",
-        "miDesignatedHpsas": 602,
+        "dwCreateDate": "09/01/2026",
+        "miDesignatedHpsas": 603,
         "miWithdrawnHpsas": 830,
         "miOtherStatusHpsas": 410
       }
     ],
-    "ingested_at": "2026-08-25T08:02:42.862Z",
+    "ingested_at": "2026-09-01T12:37:32.701Z",
     "ingest_script": "scripts/refresh-hrsa-hpsa-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
@@ -691,12 +691,12 @@
           "shortageFte": 1.8
         },
         "dental": {
-          "designatedHpsas": 7,
-          "maxHpsaScore": 15,
-          "designationPopulation": 133957,
-          "estimatedUnderservedPopulation": 0,
-          "providerFte": 0,
-          "shortageFte": 0
+          "designatedHpsas": 8,
+          "maxHpsaScore": 16,
+          "designationPopulation": 141958,
+          "estimatedUnderservedPopulation": 6657,
+          "providerFte": 0.3,
+          "shortageFte": 1.7
         },
         "mental": {
           "designatedHpsas": 8,
@@ -1051,12 +1051,12 @@
           "shortageFte": 8.6
         },
         "dental": {
-          "designatedHpsas": 8,
+          "designatedHpsas": 9,
           "maxHpsaScore": 15,
-          "designationPopulation": 1565561,
-          "estimatedUnderservedPopulation": 0,
-          "providerFte": 0.6,
-          "shortageFte": 0.9
+          "designationPopulation": 1585723,
+          "estimatedUnderservedPopulation": 16174,
+          "providerFte": 1.6,
+          "shortageFte": 4.9
         },
         "mental": {
           "designatedHpsas": 10,
@@ -1171,12 +1171,12 @@
           "shortageFte": 18.7
         },
         "dental": {
-          "designatedHpsas": 2,
+          "designatedHpsas": 3,
           "maxHpsaScore": 17,
-          "designationPopulation": 41381,
-          "estimatedUnderservedPopulation": 0,
-          "providerFte": 2.1,
-          "shortageFte": 0.9
+          "designationPopulation": 99268,
+          "estimatedUnderservedPopulation": 34642,
+          "providerFte": 7.9,
+          "shortageFte": 9.6
         },
         "mental": {
           "designatedHpsas": 4,
@@ -1539,12 +1539,12 @@
           "shortageFte": 0.2
         },
         "mental": {
-          "designatedHpsas": 2,
+          "designatedHpsas": 3,
           "maxHpsaScore": 18,
-          "designationPopulation": 131894,
-          "estimatedUnderservedPopulation": 0,
-          "providerFte": 0.4,
-          "shortageFte": 0.3
+          "designationPopulation": 444649,
+          "estimatedUnderservedPopulation": 191511,
+          "providerFte": 6.4,
+          "shortageFte": 15.1
         }
       }
     },
@@ -1561,12 +1561,12 @@
           "shortageFte": 2.6
         },
         "dental": {
-          "designatedHpsas": 2,
+          "designatedHpsas": 3,
           "maxHpsaScore": 16,
-          "designationPopulation": 3194,
-          "estimatedUnderservedPopulation": 0,
+          "designationPopulation": 12352,
+          "estimatedUnderservedPopulation": 9158,
           "providerFte": 0,
-          "shortageFte": 0.7
+          "shortageFte": 3
         },
         "mental": {
           "designatedHpsas": 2,
@@ -2101,12 +2101,12 @@
           "shortageFte": 2.5
         },
         "dental": {
-          "designatedHpsas": 0,
-          "maxHpsaScore": null,
-          "designationPopulation": 0,
-          "estimatedUnderservedPopulation": 0,
-          "providerFte": 0,
-          "shortageFte": 0
+          "designatedHpsas": 1,
+          "maxHpsaScore": 12,
+          "designationPopulation": 10143,
+          "estimatedUnderservedPopulation": 7325,
+          "providerFte": 0.7,
+          "shortageFte": 1.8
         },
         "mental": {
           "designatedHpsas": 1,

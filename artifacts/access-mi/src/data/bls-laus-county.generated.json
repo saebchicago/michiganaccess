@@ -6,7 +6,7 @@
     "api_url": "https://api.bls.gov/publicAPI/v2/timeseries/data/",
     "measure": "Unemployment rate (measure code 03)",
     "series_id_pattern": "LAUCN + 2-digit state FIPS + 3-digit county FIPS + 00000000 + 03",
-    "ingested_at": "2026-08-25T08:02:35.883Z",
+    "ingested_at": "2026-09-01T12:37:26.144Z",
     "ingest_script": "scripts/refresh-bls-laus-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,

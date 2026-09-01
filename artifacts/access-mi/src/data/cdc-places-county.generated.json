@@ -7,7 +7,7 @@
     "socrata_rows_updated_at": "2025-12-04T10:35:06.000Z",
     "release_label": "PLACES: Local Data for Better Health, County Data, 2025 release",
     "release_description": "This dataset contains model-based county estimates. PLACES covers the entire United States—50 states and the District of Columbia—at county, place, census tract, and ZIP Code Tabulation Area levels. It provides information uniformly on this large scale for local areas at four geographic levels. Estimates were provided by the Centers for Disease Control and Prevention (CDC), Division of Population Health, Epidemiology and Surveillance Branch. PLACES was funded by the Robert Wood Johnson Foundation in conjunction with the CDC Foundation. This dataset includes estimates for 40 measures: 12 for he",
-    "ingested_at": "2026-08-25T08:02:30.145Z",
+    "ingested_at": "2026-09-01T12:37:22.178Z",
     "ingest_script": "scripts/refresh-cdc-places-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,

@@ -7,7 +7,7 @@
     "socrata_rows_updated_at": "2025-12-04T10:37:20.000Z",
     "release_label": "PLACES: ZCTA Data (GIS Friendly Format), 2025 release",
     "release_description": "This dataset contains model-based ZIP Code Tabulation Area (ZCTA) level estimates in GIS-friendly format. PLACES covers the entire United States—50 states and the District of Columbia—at county, place, census tract, and ZIP Code Tabulation Area levels. It provides information uniformly on this large scale for local areas at four geographic levels. Estimates were provided by the Centers for Disease Control and Prevention (CDC), Division of Population Health, Epidemiology and Surveillance Branch. PLACES was funded by the Robert Wood Johnson Foundation in conjunction with the CDC Foundation. Data",
-    "ingested_at": "2026-08-25T08:02:34.245Z",
+    "ingested_at": "2026-09-01T12:37:24.816Z",
     "ingest_script": "scripts/refresh-cdc-places-zcta.mjs",
     "michigan_zcta_registry": "src/data/mi-zctas.ts",
     "michigan_zcta_registry_size": 992,
