@@ -1,9 +1,9 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": "2026-08-26T14:09:42.243Z",
-  "checked": 70,
+  "generated_at": "2026-09-02T17:14:05.610Z",
+  "checked": 72,
   "dead": 11,
-  "timed_out": 3,
+  "timed_out": 5,
   "redirected": 0,
   "results": [
     {
@@ -16,13 +16,12 @@
       ]
     },
     {
-      "url": "https://unitedforalice.org/michigan",
-      "status": "ok",
-      "httpStatus": 200,
+      "url": "https://www.unitedforalice.org/michigan",
+      "status": "client-error",
+      "httpStatus": 403,
       "finalUrl": null,
       "contexts": [
-        "Michigan households below ALICE threshold",
-        "United For ALICE"
+        "Michigan households below ALICE threshold (39.7% unrounded; 13.4% poverty + 26.3% ALICE)"
       ]
     },
     {
@@ -177,7 +176,7 @@
     {
       "url": "https://michwa.org",
       "status": "ok",
-      "httpStatus": 200,
+      "httpStatus": 202,
       "finalUrl": "https://michwa.org/",
       "contexts": [
         "CHW programs surveyed across 93 orgs"
@@ -320,9 +319,10 @@
     },
     {
       "url": "https://hazards.fema.gov/nri/",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.fema.gov/emergency-managers/practitioners/resilience-analysis-and-planning-tool",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "FEMA NRI"
       ]
@@ -383,8 +383,8 @@
     },
     {
       "url": "https://www.irs.gov/statistics/soi-tax-stats",
-      "status": "client-error",
-      "httpStatus": 404,
+      "status": "server-error",
+      "httpStatus": 503,
       "finalUrl": null,
       "contexts": [
         "IRS Statistics of Income"
@@ -419,10 +419,11 @@
       ]
     },
     {
-      "url": "https://www.fema.gov/openfema",
-      "status": "client-error",
-      "httpStatus": 404,
-      "finalUrl": "https://www.fema.gov/es/node/214324",
+      "url": "https://www.fema.gov/about/openfema/data-sets",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "FEMA National Flood Insurance Program"
       ]
@@ -464,9 +465,18 @@
       ]
     },
     {
-      "url": "https://www.atsdr.cdc.gov/placeandhealth/svi/",
-      "status": "client-error",
-      "httpStatus": 404,
+      "url": "https://www.huduser.gov/portal/datasets/cp.html",
+      "status": "ok",
+      "httpStatus": 202,
+      "finalUrl": null,
+      "contexts": [
+        "HUD CHAS"
+      ]
+    },
+    {
+      "url": "https://www.atsdr.cdc.gov/place-health/php/svi/index.html",
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
       "contexts": [
         "CDC/ATSDR Social Vulnerability Index"
@@ -552,6 +562,15 @@
       "error": "This operation was aborted",
       "contexts": [
         "LARA Provider Search"
+      ]
+    },
+    {
+      "url": "https://unitedforalice.org/michigan",
+      "status": "client-error",
+      "httpStatus": 403,
+      "finalUrl": null,
+      "contexts": [
+        "United For ALICE"
       ]
     },
     {
