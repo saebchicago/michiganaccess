@@ -9,7 +9,7 @@
  * FEEDS vs PUBLISHERS - these are different numbers and the distinction
  * is load-bearing:
  *
- *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 49).
+ *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 50).
  *                      A publisher that ships several independent feeds
  *                      gets one entry per feed - CMS contributes Hospital
  *                      Compare, Physician Compare, and NPPES separately
@@ -125,7 +125,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       org: "Census",
       url: "https://api.census.gov/",
       powers:
-        "Economic, demographic data; county broadband subscription (B28002)",
+        "Economic, demographic data; county broadband subscription (B28002); county SDOH bundle (B17001, B17020, B25070, B25091, B08201, B08303, B15003, C16002, B25014, B25003)",
       frequency: "Annual",
     },
     {
@@ -209,7 +209,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
     {
       name: "FEMA National Flood Insurance Program",
       org: "FEMA",
-      url: "https://www.fema.gov/openfema",
+      url: "https://www.fema.gov/about/openfema/data-sets",
       powers: "Flood claims and policy data by county",
       frequency: "Monthly",
     },
@@ -244,9 +244,17 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       frequency: "Ongoing",
     },
     {
+      name: "HUD CHAS",
+      org: "HUD",
+      url: "https://www.huduser.gov/portal/datasets/cp.html",
+      powers:
+        "County housing cost burden (>30% and >50% of income) by HUD income band and tenure on /county, /brief, /ask",
+      frequency: "Annual",
+    },
+    {
       name: "CDC/ATSDR Social Vulnerability Index",
       org: "ATSDR",
-      url: "https://www.atsdr.cdc.gov/placeandhealth/svi/",
+      url: "https://www.atsdr.cdc.gov/place-health/php/svi/index.html",
       powers:
         "Census tract social vulnerability scores used in compound-deficit scoring and equity sections",
       frequency: "Every 2 years",
@@ -285,7 +293,8 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "Michigan Dept of Education",
       org: "MDE",
       url: "https://www.mischooldata.org/",
-      powers: "School data, absenteeism",
+      powers:
+        "County K-12 indicators: chronic absenteeism, 3rd-grade M-STEP ELA proficiency, 4-year graduation rate, economically disadvantaged share (MI School Data county exports)",
       frequency: "Annual",
     },
     {

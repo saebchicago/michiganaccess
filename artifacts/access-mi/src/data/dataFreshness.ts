@@ -275,12 +275,12 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     url: "https://www.bls.gov/lau/",
     generatedFrom: "bls-laus-county.generated.json",
     updateFrequency: "Monthly",
-    currentVersion: "May 2026 (Preliminary)",
+    currentVersion: "June 2026 (Preliminary)",
     nextExpectedUpdate: "Ongoing",
     isLive: false,
     vintageStatus: "behind",
     vintageNote:
-      "We ship the May 2026 preliminary series; BLS has released later monthly estimates since our last pull.",
+      "We ship the June 2026 preliminary series; BLS has released later monthly estimates since our last pull.",
   }),
   entry({
     // Added 2026-08-16: same omission as bls-laus - HPSA designations back
@@ -293,6 +293,55 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     updateFrequency: "Quarterly",
     currentVersion: "HRSA detail files dated 2026-06-30",
     nextExpectedUpdate: "Ongoing",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
+    // Added 2026-09-02: county housing cost burden from HUD's CHAS special
+    // tabulation. The ingest script tries the newest county file HUD serves
+    // (2018-2022, then 2017-2021) and records the one used in provenance;
+    // this string names the newest candidate and is corrected if the first
+    // scheduled pull lands on the older one.
+    id: "hud-chas",
+    name: "HUD CHAS Housing Cost Burden",
+    category: "Housing",
+    url: "https://www.huduser.gov/portal/datasets/cp.html",
+    generatedFrom: "hud-chas-county.generated.json",
+    updateFrequency: "Annual",
+    currentVersion: "CHAS 2018-2022 (5-year county file)",
+    nextExpectedUpdate: "2026-10-31",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
+    // Added 2026-09-02: the county SDOH bundle pulls the 2020-2024 ACS
+    // release. The separate broadband file (census-acs above) still sits on
+    // 2019-2023 and keeps its own "behind" entry until it is bumped.
+    id: "census-acs-sdoh",
+    name: "Census ACS 5-Year County SDOH Bundle",
+    category: "Demographics",
+    url: "https://api.census.gov",
+    generatedFrom: "acs-sdoh-county.generated.json",
+    updateFrequency: "Annual",
+    currentVersion: "2024 5-Year ACS (2020-2024)",
+    nextExpectedUpdate: "2026-12-15",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
+    // Added 2026-09-02: the platform's first ingested education dataset.
+    // Built by hand from MI School Data county exports (see
+    // scripts/build-mde-county.mjs for why it is a manual drop); the
+    // school year comes from the export and this string is updated with
+    // it. Shipped as a pending-ci stub until the first export is dropped.
+    id: "mde-county-education",
+    name: "MDE County K-12 Indicators",
+    category: "Education",
+    url: "https://www.mischooldata.org/",
+    generatedFrom: "mde-county.generated.json",
+    updateFrequency: "Annual",
+    currentVersion: "MI School Data county exports (awaiting first drop)",
+    nextExpectedUpdate: "2026-11-30",
     isLive: false,
     vintageStatus: "current",
   }),

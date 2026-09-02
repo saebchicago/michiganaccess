@@ -27,6 +27,15 @@ import { getBlsLausForCountyName } from "@/data/bls-laus-county";
 import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
 import { getPlacesForCountyName } from "@/data/cdc-places-county";
 import { getAcsBroadbandForCountyName } from "@/data/acs-broadband-county";
+import {
+  HUD_CHAS_COUNTY_PROVENANCE,
+  getChasForCountyName,
+} from "@/data/hud-chas-county";
+import {
+  ACS_SDOH_COUNTY_PROVENANCE,
+  getAcsSdohValue,
+} from "@/data/acs-sdoh-county";
+import { MDE_COUNTY_PROVENANCE, getMdeValue } from "@/data/mde-county";
 import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -361,7 +370,7 @@ export default function BriefPage() {
               value: hasVal ? `${bls!.unemploymentRate}%` : "no data",
               badge: hasVal ? "VERIFIED" : "no data",
               source: "BLS Local Area Unemployment Statistics",
-              vintage: bls?.latestPeriod ?? "May 2026",
+              vintage: bls?.latestPeriod ?? "no data",
             };
           })(),
           (() => {
@@ -400,6 +409,38 @@ export default function BriefPage() {
               badge: hasVal ? "VERIFIED" : "no data",
               source: "ACS 5-Year 2019-2023 (B28002)",
               vintage: "2019-2023",
+            };
+          })(),
+          (() => {
+            const chas = getChasForCountyName(county);
+            const hasVal =
+              chas?.status === "populated" && chas.costBurdened30Pct !== null;
+            return {
+              label: "Cost-Burdened Households (>30%)",
+              value: hasVal ? `${chas!.costBurdened30Pct!.toFixed(1)}%` : "no data",
+              badge: hasVal ? "VERIFIED" : "no data",
+              source: "HUD CHAS (Table 8)",
+              vintage: HUD_CHAS_COUNTY_PROVENANCE.vintage_window ?? "pending first pull",
+            };
+          })(),
+          (() => {
+            const val = getAcsSdohValue(county, "noVehicleHouseholdsPct");
+            return {
+              label: "Households With No Vehicle",
+              value: val !== null ? `${val.toFixed(1)}%` : "no data",
+              badge: val !== null ? "VERIFIED" : "no data",
+              source: "ACS 5-Year (B08201)",
+              vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
+            };
+          })(),
+          (() => {
+            const val = getMdeValue(county, "chronicAbsenteeismPct");
+            return {
+              label: "Chronic Absenteeism (K-12)",
+              value: val !== null ? `${val.toFixed(1)}%` : "no data",
+              badge: val !== null ? "VERIFIED" : "no data",
+              source: "MDE / CEPI, MI School Data",
+              vintage: MDE_COUNTY_PROVENANCE.school_year ?? "awaiting first county export",
             };
           })(),
         ]

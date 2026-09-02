@@ -7,10 +7,13 @@
   },
   "ingestedAt": {
     "acs-broadband-county.generated.json": "2026-08-24",
+    "acs-sdoh-county.generated.json": "2026-09-02",
     "alice-county.generated.json": "2026-08-30",
     "bls-laus-county.generated.json": "2026-09-01",
     "cdc-places-county.generated.json": "2026-09-01",
     "cdc-places-zcta.generated.json": "2026-09-01",
-    "hrsa-hpsa-county.generated.json": "2026-09-01"
+    "hrsa-hpsa-county.generated.json": "2026-09-01",
+    "hud-chas-county.generated.json": "2026-09-02",
+    "mde-county.generated.json": "2026-09-02"
   }
 }

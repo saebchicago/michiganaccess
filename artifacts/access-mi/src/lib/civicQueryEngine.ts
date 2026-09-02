@@ -31,6 +31,52 @@ import { getBlsLausForCountyName } from "@/data/bls-laus-county";
 import { getPlacesForCountyName } from "@/data/cdc-places-county";
 import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
 import { getAcsBroadbandForCountyName } from "@/data/acs-broadband-county";
+import {
+  HUD_CHAS_COUNTY_PROVENANCE,
+  getChasForCountyName,
+} from "@/data/hud-chas-county";
+import {
+  ACS_SDOH_COUNTY_PROVENANCE,
+  getAcsSdohValue,
+} from "@/data/acs-sdoh-county";
+import { MDE_COUNTY_PROVENANCE, MDE_SOURCE_LABEL, getMdeValue } from "@/data/mde-county";
+
+/** Source string for ACS county SDOH bundle points. */
+const ACS_SDOH_SOURCE = `U.S. Census ACS 5-Year ${ACS_SDOH_COUNTY_PROVENANCE.vintage_window}`;
+
+/**
+ * Poverty point: the ACS bundle (2020-2024, B17001) when populated,
+ * otherwise the static cross-domain "ACS 5-Year 2022" column. Shared by
+ * resolveEconomicHardship and resolveGeneral so the two never disagree.
+ */
+function povertyPoint(county: string, cdPovertyRate: number | null): CivicDataPoint | null {
+  const bundled = getAcsSdohValue(county, "povertyPct");
+  if (bundled !== null) {
+    return {
+      label: "Poverty rate",
+      value: `${bundled.toFixed(1)}%`,
+      valueLabel: "VERIFIED",
+      source: `${ACS_SDOH_SOURCE} (B17001)`,
+      vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
+      note:
+        bundled > MI_STATE_AVERAGES.povertyRate!
+          ? "Above state average"
+          : "Below state average",
+    };
+  }
+  if (cdPovertyRate === null) return null;
+  return {
+    label: "Poverty rate",
+    value: `${cdPovertyRate}%`,
+    valueLabel: "VERIFIED",
+    source: "ACS 5-Year 2022",
+    vintage: "2022",
+    note:
+      cdPovertyRate > MI_STATE_AVERAGES.povertyRate!
+        ? "Above state average"
+        : "Below state average",
+  };
+}
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -122,7 +168,17 @@ const TOPIC_KEYWORDS: Record<CivicTopic, string[]> = {
     "household",
     "financial",
   ],
-  housing: ["housing", "rent", "eviction", "homeless", "shelter", "afford"],
+  housing: [
+    "housing",
+    "rent",
+    "eviction",
+    "homeless",
+    "shelter",
+    "afford",
+    "cost burden",
+    "housing cost",
+    "chas",
+  ],
   unemployment: [
     "unemployment",
     "unemployed",
@@ -358,17 +414,16 @@ function resolveEconomicHardship(county: string): CivicDataPoint[] {
   const alice = getALICEByCounty(county);
   const points: CivicDataPoint[] = [];
 
-  if (cd.povertyRate !== null) {
+  const poverty = povertyPoint(county, cd.povertyRate);
+  if (poverty) points.push(poverty);
+  const childPoverty = getAcsSdohValue(county, "childPovertyPct");
+  if (childPoverty !== null) {
     points.push({
-      label: "Poverty rate",
-      value: `${cd.povertyRate}%`,
+      label: "Children under 18 below the poverty line",
+      value: `${childPoverty.toFixed(1)}%`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
-      vintage: "2022",
-      note:
-        cd.povertyRate > MI_STATE_AVERAGES.povertyRate!
-          ? "Above state average"
-          : "Below state average",
+      source: `${ACS_SDOH_SOURCE} (B17020)`,
+      vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
     });
   }
   if (cd.medianIncome !== null) {
@@ -396,12 +451,16 @@ function resolveEconomicHardship(county: string): CivicDataPoint[] {
   }
 
   if (alice) {
+    // Below-threshold share is a classification against a constructed
+    // Survival Budget; aliceData.ts labels every row MODELED. This point
+    // said VERIFIED with a hardcoded 2023 vintage after the payload moved
+    // to the 2026 sheet (2024 data).
     points.push({
       label: "Economic hardship rate (poverty + ALICE)",
       value: `${alice.combinedHardshipPct}%`,
-      valueLabel: "VERIFIED",
+      valueLabel: "MODELED",
       source: alice.source,
-      vintage: "2023",
+      vintage: String(alice.year),
     });
   }
 
@@ -411,6 +470,37 @@ function resolveEconomicHardship(county: string): CivicDataPoint[] {
 function resolveHousing(county: string): CivicDataPoint[] {
   const cd = getCountyCrossDomain(county);
   const points: CivicDataPoint[] = [];
+
+  // HUD CHAS cost burden across all tenures and income bands. When it is
+  // populated the older static ACS rent-burden point below is kept as
+  // context but flagged isFallback so two burden figures cannot inflate
+  // confidence; when CHAS is pending-ci the static point stands alone.
+  const chas = getChasForCountyName(county);
+  const chasPopulated =
+    chas?.status === "populated" && chas.costBurdened30Pct !== null;
+  if (chasPopulated) {
+    const vintage = HUD_CHAS_COUNTY_PROVENANCE.vintage_window ?? "latest";
+    points.push({
+      label: "Cost-burdened households (>30% of income on housing)",
+      value: `${chas!.costBurdened30Pct!.toFixed(1)}%`,
+      valueLabel: "VERIFIED",
+      source: `HUD CHAS ${vintage} (Table 8, all tenures)`,
+      vintage,
+      note:
+        chas!.costBurdened50Pct !== null
+          ? `${chas!.costBurdened50Pct.toFixed(1)}% severely burdened (>50%)`
+          : undefined,
+    });
+    if (chas!.renterCostBurdened30Pct !== null) {
+      points.push({
+        label: "Renter households cost-burdened (>30%)",
+        value: `${chas!.renterCostBurdened30Pct.toFixed(1)}%`,
+        valueLabel: "VERIFIED",
+        source: `HUD CHAS ${vintage} (Table 8, renters)`,
+        vintage,
+      });
+    }
+  }
 
   if (cd.rentBurden !== null) {
     points.push({
@@ -423,6 +513,7 @@ function resolveHousing(county: string): CivicDataPoint[] {
         cd.rentBurden > MI_STATE_AVERAGES.rentBurden!
           ? "Above state average (47.2%)"
           : "Below state average (47.2%)",
+      isFallback: chasPopulated,
     });
   }
   if (cd.medianRent !== null) {
@@ -525,8 +616,20 @@ function resolveBroadband(county: string): CivicDataPoint[] {
   }
 
   // Retained as related digital/physical access context, not as broadband.
-  // Flagged isFallback so it cannot lift the answer's confidence.
-  if (cd.vehicleAccess !== null) {
+  // Flagged isFallback so it cannot lift the answer's confidence. Reads the
+  // ACS bundle (B08201) when populated, else the static 2022 column.
+  const noVehicle = getAcsSdohValue(county, "noVehicleHouseholdsPct");
+  if (noVehicle !== null) {
+    points.push({
+      label: "Households with no vehicle available",
+      value: `${noVehicle.toFixed(1)}%`,
+      valueLabel: "VERIFIED",
+      source: `${ACS_SDOH_SOURCE} (B08201)`,
+      vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
+      note: "Related access measure, not a broadband figure.",
+      isFallback: true,
+    });
+  } else if (cd.vehicleAccess !== null) {
     points.push({
       label: "Households with vehicle access",
       value: `${cd.vehicleAccess}%`,
@@ -753,15 +856,8 @@ function resolveGeneral(county: string): CivicDataPoint[] {
     }
   }
 
-  if (cd.povertyRate !== null) {
-    points.push({
-      label: "Poverty rate",
-      value: `${cd.povertyRate}%`,
-      valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
-      vintage: "2022",
-    });
-  }
+  const poverty = povertyPoint(county, cd.povertyRate);
+  if (poverty) points.push({ ...poverty, note: undefined });
 
   if (blsData?.status === "populated" && blsData.unemploymentRate !== null) {
     points.push({
@@ -771,6 +867,20 @@ function resolveGeneral(county: string): CivicDataPoint[] {
       source: "BLS LAUS",
       vintage: blsData.latestPeriod ?? "2026",
       note: blsData.preliminary ? "Preliminary" : undefined,
+    });
+  }
+
+  // K-12 chronic absenteeism (MDE / CEPI county export). Null while the
+  // dataset is pending or the county cell is suppressed, so nothing is
+  // pushed rather than a zero.
+  const absent = getMdeValue(county, "chronicAbsenteeismPct");
+  if (absent !== null) {
+    points.push({
+      label: "Chronically absent K-12 students",
+      value: `${absent.toFixed(1)}%`,
+      valueLabel: "VERIFIED",
+      source: MDE_SOURCE_LABEL,
+      vintage: MDE_COUNTY_PROVENANCE.school_year ?? "latest",
     });
   }
 

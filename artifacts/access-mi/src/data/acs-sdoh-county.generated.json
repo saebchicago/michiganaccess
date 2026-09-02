@@ -1,0 +1,1859 @@
+{
+  "provenance": {
+    "source_name": "U.S. Census Bureau ACS 5-Year (2020-2024), county SDOH bundle",
+    "source_url": "https://www.census.gov/programs-surveys/acs/data.html",
+    "api_base": "https://api.census.gov/data",
+    "dataset": "2024/acs/acs5",
+    "vintage_window": "2020-2024",
+    "tables": [
+      "B08201",
+      "B08303",
+      "B15003",
+      "B17001",
+      "B17020",
+      "B25003",
+      "B25014",
+      "B25070",
+      "B25091",
+      "C16002"
+    ],
+    "table_urls": {
+      "B08201": "https://data.census.gov/table/ACSDT5Y2024.B08201",
+      "B08303": "https://data.census.gov/table/ACSDT5Y2024.B08303",
+      "B15003": "https://data.census.gov/table/ACSDT5Y2024.B15003",
+      "B17001": "https://data.census.gov/table/ACSDT5Y2024.B17001",
+      "B17020": "https://data.census.gov/table/ACSDT5Y2024.B17020",
+      "B25003": "https://data.census.gov/table/ACSDT5Y2024.B25003",
+      "B25014": "https://data.census.gov/table/ACSDT5Y2024.B25014",
+      "B25070": "https://data.census.gov/table/ACSDT5Y2024.B25070",
+      "B25091": "https://data.census.gov/table/ACSDT5Y2024.B25091",
+      "C16002": "https://data.census.gov/table/ACSDT5Y2024.C16002"
+    },
+    "measure_count": 11,
+    "ingested_at": "2026-09-02T10:48:49.042Z",
+    "ingest_script": "scripts/refresh-acs-sdoh-county.mjs",
+    "michigan_county_registry": "src/data/census-geographies.ts",
+    "michigan_county_registry_size": 83,
+    "value_label": "PENDING",
+    "populated": false,
+    "pending_reason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values.",
+    "notes": "Each measure is numerator / (universe - not-computed cells) * 100 from Census-published county counts; the exact variables are listed per measure. Values are direct tabulations (VERIFIED). Margins of error are not propagated through the ratios; this payload carries estimates only. Negative Census sentinels (suppressed or unavailable estimates) become null, never zero. When status = 'pending-ci' the ingest environment lacked CENSUS_API_KEY or could not reach api.census.gov; build-data.yml re-runs this script with the key to populate. The broadband subscription file (acs-broadband-county) is a separate ingest and may sit on an older ACS window."
+  },
+  "measures": [
+    {
+      "id": "povertyPct",
+      "label": "Population below the poverty line",
+      "tables": [
+        "B17001"
+      ],
+      "numerator": [
+        "B17001_002E"
+      ],
+      "universe": [
+        "B17001_001E"
+      ],
+      "excluded": [],
+      "universeLabel": "Population for whom poverty status is determined",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "childPovertyPct",
+      "label": "Children under 18 below the poverty line",
+      "tables": [
+        "B17020"
+      ],
+      "numerator": [
+        "B17020_003E",
+        "B17020_004E",
+        "B17020_005E"
+      ],
+      "universe": [
+        "B17020_003E",
+        "B17020_004E",
+        "B17020_005E",
+        "B17020_011E",
+        "B17020_012E",
+        "B17020_013E"
+      ],
+      "excluded": [],
+      "universeLabel": "Children under 18 for whom poverty status is determined",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "rentBurden30Pct",
+      "label": "Renter households paying 30% or more of income on rent",
+      "tables": [
+        "B25070"
+      ],
+      "numerator": [
+        "B25070_007E",
+        "B25070_008E",
+        "B25070_009E",
+        "B25070_010E"
+      ],
+      "universe": [
+        "B25070_001E"
+      ],
+      "excluded": [
+        "B25070_011E"
+      ],
+      "universeLabel": "Renter-occupied units with rent burden computed",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "ownerCostBurden30Pct",
+      "label": "Owner households paying 30% or more of income on housing",
+      "tables": [
+        "B25091"
+      ],
+      "numerator": [
+        "B25091_008E",
+        "B25091_009E",
+        "B25091_010E",
+        "B25091_011E",
+        "B25091_019E",
+        "B25091_020E",
+        "B25091_021E",
+        "B25091_022E"
+      ],
+      "universe": [
+        "B25091_001E"
+      ],
+      "excluded": [
+        "B25091_012E",
+        "B25091_023E"
+      ],
+      "universeLabel": "Owner-occupied units with cost burden computed",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "noVehicleHouseholdsPct",
+      "label": "Households with no vehicle available",
+      "tables": [
+        "B08201"
+      ],
+      "numerator": [
+        "B08201_002E"
+      ],
+      "universe": [
+        "B08201_001E"
+      ],
+      "excluded": [],
+      "universeLabel": "Households",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "longCommute45Pct",
+      "label": "Workers commuting 45 minutes or more",
+      "tables": [
+        "B08303"
+      ],
+      "numerator": [
+        "B08303_011E",
+        "B08303_012E",
+        "B08303_013E"
+      ],
+      "universe": [
+        "B08303_001E"
+      ],
+      "excluded": [],
+      "universeLabel": "Workers 16+ who did not work from home",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "noHsDiplomaPct",
+      "label": "Adults 25+ without a high school diploma or GED",
+      "tables": [
+        "B15003"
+      ],
+      "numerator": [
+        "B15003_002E",
+        "B15003_003E",
+        "B15003_004E",
+        "B15003_005E",
+        "B15003_006E",
+        "B15003_007E",
+        "B15003_008E",
+        "B15003_009E",
+        "B15003_010E",
+        "B15003_011E",
+        "B15003_012E",
+        "B15003_013E",
+        "B15003_014E",
+        "B15003_015E",
+        "B15003_016E"
+      ],
+      "universe": [
+        "B15003_001E"
+      ],
+      "excluded": [],
+      "universeLabel": "Population 25 years and over",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "bachelorsPlusPct",
+      "label": "Adults 25+ with a bachelor's degree or higher",
+      "tables": [
+        "B15003"
+      ],
+      "numerator": [
+        "B15003_022E",
+        "B15003_023E",
+        "B15003_024E",
+        "B15003_025E"
+      ],
+      "universe": [
+        "B15003_001E"
+      ],
+      "excluded": [],
+      "universeLabel": "Population 25 years and over",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "limitedEnglishHouseholdsPct",
+      "label": "Limited-English-speaking households",
+      "tables": [
+        "C16002"
+      ],
+      "numerator": [
+        "C16002_004E",
+        "C16002_007E",
+        "C16002_010E",
+        "C16002_013E"
+      ],
+      "universe": [
+        "C16002_001E"
+      ],
+      "excluded": [],
+      "universeLabel": "Households",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "crowdedHouseholdsPct",
+      "label": "Households with more than one occupant per room",
+      "tables": [
+        "B25014"
+      ],
+      "numerator": [
+        "B25014_005E",
+        "B25014_006E",
+        "B25014_007E",
+        "B25014_011E",
+        "B25014_012E",
+        "B25014_013E"
+      ],
+      "universe": [
+        "B25014_001E"
+      ],
+      "excluded": [],
+      "universeLabel": "Occupied housing units",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "renterHouseholdsPct",
+      "label": "Renter-occupied share of households",
+      "tables": [
+        "B25003"
+      ],
+      "numerator": [
+        "B25003_003E"
+      ],
+      "universe": [
+        "B25003_001E"
+      ],
+      "excluded": [],
+      "universeLabel": "Occupied housing units",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    }
+  ],
+  "counties": [
+    {
+      "countyFips": "26001",
+      "countyName": "Alcona",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26003",
+      "countyName": "Alger",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26005",
+      "countyName": "Allegan",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26007",
+      "countyName": "Alpena",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26009",
+      "countyName": "Antrim",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26011",
+      "countyName": "Arenac",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26013",
+      "countyName": "Baraga",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26015",
+      "countyName": "Barry",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26017",
+      "countyName": "Bay",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26019",
+      "countyName": "Benzie",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26021",
+      "countyName": "Berrien",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26023",
+      "countyName": "Branch",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26025",
+      "countyName": "Calhoun",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26027",
+      "countyName": "Cass",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26029",
+      "countyName": "Charlevoix",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26031",
+      "countyName": "Cheboygan",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26033",
+      "countyName": "Chippewa",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26035",
+      "countyName": "Clare",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26037",
+      "countyName": "Clinton",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26039",
+      "countyName": "Crawford",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26041",
+      "countyName": "Delta",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26043",
+      "countyName": "Dickinson",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26045",
+      "countyName": "Eaton",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26047",
+      "countyName": "Emmet",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26049",
+      "countyName": "Genesee",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26051",
+      "countyName": "Gladwin",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26053",
+      "countyName": "Gogebic",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26055",
+      "countyName": "Grand Traverse",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26057",
+      "countyName": "Gratiot",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26059",
+      "countyName": "Hillsdale",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26061",
+      "countyName": "Houghton",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26063",
+      "countyName": "Huron",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26065",
+      "countyName": "Ingham",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26067",
+      "countyName": "Ionia",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26069",
+      "countyName": "Iosco",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26071",
+      "countyName": "Iron",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26073",
+      "countyName": "Isabella",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26075",
+      "countyName": "Jackson",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26077",
+      "countyName": "Kalamazoo",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26079",
+      "countyName": "Kalkaska",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26081",
+      "countyName": "Kent",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26083",
+      "countyName": "Keweenaw",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26085",
+      "countyName": "Lake",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26087",
+      "countyName": "Lapeer",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26089",
+      "countyName": "Leelanau",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26091",
+      "countyName": "Lenawee",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26093",
+      "countyName": "Livingston",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26095",
+      "countyName": "Luce",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26097",
+      "countyName": "Mackinac",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26099",
+      "countyName": "Macomb",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26101",
+      "countyName": "Manistee",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26103",
+      "countyName": "Marquette",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26105",
+      "countyName": "Mason",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26107",
+      "countyName": "Mecosta",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26109",
+      "countyName": "Menominee",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26111",
+      "countyName": "Midland",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26113",
+      "countyName": "Missaukee",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26115",
+      "countyName": "Monroe",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26117",
+      "countyName": "Montcalm",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26119",
+      "countyName": "Montmorency",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26121",
+      "countyName": "Muskegon",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26123",
+      "countyName": "Newaygo",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26125",
+      "countyName": "Oakland",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26127",
+      "countyName": "Oceana",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26129",
+      "countyName": "Ogemaw",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26131",
+      "countyName": "Ontonagon",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26133",
+      "countyName": "Osceola",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26135",
+      "countyName": "Oscoda",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26137",
+      "countyName": "Otsego",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26139",
+      "countyName": "Ottawa",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26141",
+      "countyName": "Presque Isle",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26143",
+      "countyName": "Roscommon",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26145",
+      "countyName": "Saginaw",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26147",
+      "countyName": "St. Clair",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26149",
+      "countyName": "St. Joseph",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26151",
+      "countyName": "Sanilac",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26153",
+      "countyName": "Schoolcraft",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26155",
+      "countyName": "Shiawassee",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26157",
+      "countyName": "Tuscola",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26159",
+      "countyName": "Van Buren",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26161",
+      "countyName": "Washtenaw",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26163",
+      "countyName": "Wayne",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    },
+    {
+      "countyFips": "26165",
+      "countyName": "Wexford",
+      "status": "pending-ci",
+      "values": {
+        "povertyPct": null,
+        "childPovertyPct": null,
+        "rentBurden30Pct": null,
+        "ownerCostBurden30Pct": null,
+        "noVehicleHouseholdsPct": null,
+        "longCommute45Pct": null,
+        "noHsDiplomaPct": null,
+        "bachelorsPlusPct": null,
+        "limitedEnglishHouseholdsPct": null,
+        "crowdedHouseholdsPct": null,
+        "renterHouseholdsPct": null
+      },
+      "pendingReason": "Requires CENSUS_API_KEY. build-data.yml runs refresh-acs-sdoh-county.mjs with the key set to populate real values."
+    }
+  ]
+}

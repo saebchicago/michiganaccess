@@ -16,6 +16,11 @@ import {
   SNAP_SOURCE,
   SNAP_VINTAGE,
 } from "@/data/county-snap-retailers";
+import {
+  HUD_CHAS_COUNTY_PROVENANCE,
+  getChasForCountyName,
+} from "@/data/hud-chas-county";
+import { MDE_COUNTY_PROVENANCE, MDE_SOURCE_LABEL, getMdeValue } from "@/data/mde-county";
 
 function parseRate(val: string): number {
   return parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
@@ -333,6 +338,44 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
       countyName: county,
       source: SNAP_SOURCE,
       vintage: `${SNAP_VINTAGE} (current authorizations)`,
+    });
+  }
+
+  // Housing cost burden (HUD CHAS Table 8, all tenures and income bands).
+  // Only pushed when the county row is populated; a pending-ci row is a
+  // coverage state, not a zero, so the tile is omitted rather than shown
+  // as 0%.
+  const chas = getChasForCountyName(county);
+  if (chas?.status === "populated" && chas.costBurdened30Pct !== null) {
+    metrics.push({
+      id: "cost-burden",
+      label: "Cost-Burdened Households",
+      value: chas.costBurdened30Pct.toFixed(1),
+      unit: "% paying >30% of income",
+      geoResolution: "county",
+      countyName: county,
+      source: "HUD CHAS (Table 8)",
+      vintage: HUD_CHAS_COUNTY_PROVENANCE.vintage_window ?? "latest",
+      sourceId: HUD_CHAS_COUNTY_PROVENANCE.vintage_window
+        ? `hud-chas-county-${HUD_CHAS_COUNTY_PROVENANCE.vintage_window.replace("-", "thru")}`
+        : undefined,
+    });
+  }
+
+  // Chronic absenteeism (MDE / CEPI county export). Omitted while the
+  // dataset is pending or the county cell is suppressed (under 10 students),
+  // so neither state is ever shown as 0%.
+  const absent = getMdeValue(county, "chronicAbsenteeismPct");
+  if (absent !== null) {
+    metrics.push({
+      id: "chronic-absenteeism",
+      label: "Chronic Absenteeism (K-12)",
+      value: absent.toFixed(1),
+      unit: "% of students",
+      geoResolution: "county",
+      countyName: county,
+      source: MDE_SOURCE_LABEL,
+      vintage: `${MDE_COUNTY_PROVENANCE.school_year} school year`,
     });
   }
 
