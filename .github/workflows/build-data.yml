@@ -65,6 +65,28 @@ jobs:
           fi
           echo "CENSUS_API_KEY is present as a GitHub Actions secret (value redacted)."
 
+          # Presence is not validity. On 2026-08-31 and again on 2026-09-02 this
+          # workflow failed several steps in because api.census.gov answered the
+          # keyed request with an HTML "Invalid Key" page. Probe the key with
+          # the smallest possible request (one variable, one geography) and
+          # fail here, with the remediation, before any dataset step runs.
+          # The key never appears in the log: curl reads it from the
+          # environment and the response body is only grepped, never echoed.
+          probe_body="$(curl -sS --max-time 30 \
+            --get "https://api.census.gov/data/2023/acs/acs5" \
+            --data-urlencode "get=NAME" \
+            --data-urlencode "for=state:26" \
+            --data-urlencode "key=${CENSUS_API_KEY}" || true)"
+          if printf '%s' "${probe_body}" | grep -qi "invalid key"; then
+            echo "::error title=CENSUS_API_KEY is set but api.census.gov rejects it (Invalid Key)::The secret exists in this repo but the Census API answers 'Invalid Key'. Every ACS step below would fail with the same message. Rotate the secret: request a new key at https://api.census.gov/data/key_signup.html (activation email must be clicked), then Settings > Secrets and variables > Actions > CENSUS_API_KEY > Update. Never paste the key into source, a PR, or a chat transcript."
+            exit 1
+          fi
+          if ! printf '%s' "${probe_body}" | grep -q '"Michigan"'; then
+            echo "::warning title=CENSUS_API_KEY probe was inconclusive::api.census.gov did not answer the one-row probe with Michigan. The key was not rejected outright, so the dataset steps will run; if they fail, read their error before touching the secret."
+          else
+            echo "CENSUS_API_KEY probe succeeded: api.census.gov accepted the key for a one-row ACS request."
+          fi
+
       - name: Build open-data files
         run: node scripts/build-data.mjs
         env:

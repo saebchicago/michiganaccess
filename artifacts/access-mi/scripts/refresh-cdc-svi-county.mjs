@@ -129,6 +129,28 @@ async function loadMiCountyFips() {
 const manifestEntries = [];
 const BUILD_ID = `refresh-cdc-svi-county-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 
+/**
+ * Never regress a populated file to the pending-ci stub. dataset-refresh.yml
+ * runs every script with plain --apply and commits whatever changed, so a
+ * transient upstream failure would otherwise silently replace real data
+ * with nulls. If the committed file already carries real values and this
+ * run could not fetch, exit non-zero and leave it untouched; the workflow
+ * reports the failure and the data stays at its last good pull.
+ */
+async function refuseToRegress(existingPath, err) {
+  let existing = null;
+  try {
+    existing = JSON.parse(await readFile(existingPath, "utf8"));
+  } catch {
+    return; // no committed file yet - a stub is the honest first state
+  }
+  if (existing?.provenance?.populated === true) {
+    throw new Error(
+      `Refusing to overwrite a populated ${path.basename(existingPath)} with a pending-ci stub after a fetch failure: ${err.message}`,
+    );
+  }
+}
+
 async function fetchNewestCsv() {
   const errors = [];
   for (const year of SVI_YEARS) {
@@ -337,6 +359,7 @@ async function main() {
     console.log(`[refresh-cdc-svi-county] fetched SVI ${year} (sha256 ${csvSha256.slice(0, 12)}...)`);
   } catch (err) {
     if (REQUIRE_LIVE) throw err;
+    await refuseToRegress(outJsonPath, err);
     pendingReason = `Could not fetch or parse the SVI county CSV (${err.message}). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values.`;
     console.warn(`[refresh-cdc-svi-county] ${pendingReason}`);
     records = buildStubCounties(miFips, pendingReason);
