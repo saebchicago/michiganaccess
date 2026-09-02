@@ -335,6 +335,21 @@ export const DATA_CATALOG: CatalogEntry[] = [
     poweredSurfaces: ["/county/:slug", "/brief", "/ask"],
   },
   {
+    id: "census-acs-sdoh-county",
+    name: "Census ACS 5-Year County SDOH Bundle",
+    kind: "ingested",
+    registryFeed: "Census ACS API",
+    publisherOrg: "Census",
+    domain: "Social",
+    geography: "County",
+    access: "static",
+    cadence: "Annual",
+    sourceUrl: "https://api.census.gov/data/2024/acs/acs5",
+    description:
+      "Eleven county social-determinant ratios computed from ACS 5-year detail-table counts: poverty and child poverty, renter and owner cost burden, no-vehicle households, 45-minute-plus commutes, adults without a diploma and with a bachelor's degree, limited-English households, crowding, and renter share.",
+    poweredSurfaces: ["/county/:slug", "/brief", "/ask", "/health-equity-atlas"],
+  },
+  {
     id: "michigan-211",
     name: "Michigan 2-1-1",
     kind: "ingested",

@@ -314,6 +314,21 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Added 2026-09-02: the county SDOH bundle pulls the 2020-2024 ACS
+    // release. The separate broadband file (census-acs above) still sits on
+    // 2019-2023 and keeps its own "behind" entry until it is bumped.
+    id: "census-acs-sdoh",
+    name: "Census ACS 5-Year County SDOH Bundle",
+    category: "Demographics",
+    url: "https://api.census.gov",
+    generatedFrom: "acs-sdoh-county.generated.json",
+    updateFrequency: "Annual",
+    currentVersion: "2024 5-Year ACS (2020-2024)",
+    nextExpectedUpdate: "2026-12-15",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
     id: "hud-fmr",
     name: "HUD Fair Market Rents",
     category: "Housing",

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-09-02T10:45:20.872Z",
+    "generated": "2026-09-02T10:51:25.504Z",
     "source": "src/data/sourcesRegistry.ts",
     "entryCount": 50,
     "schema": "v1",
@@ -162,7 +162,7 @@
       "name": "Census ACS API",
       "agency": "Census",
       "url": "https://api.census.gov/",
-      "description": "Economic, demographic data; county broadband subscription (B28002)",
+      "description": "Economic, demographic data; county broadband subscription (B28002); county SDOH bundle (B17001, B17020, B25070, B25091, B08201, B08303, B15003, C16002, B25014, B25003)",
       "updateFrequency": "Annual",
       "license": null,
       "licenseReviewStatus": "pending",

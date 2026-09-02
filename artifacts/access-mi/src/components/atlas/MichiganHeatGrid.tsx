@@ -4,6 +4,7 @@ import type { AtlasLayer } from "./LayerSelector";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { computeCompoundDeficit } from "@/utils/compoundDeficit";
 import { getALICEByCounty } from "@/data/aliceData";
+import { getAcsSdohValue } from "@/data/acs-sdoh-county";
 
 interface CountyMetrics {
   county: string;
@@ -32,7 +33,7 @@ function getLayerData(layer: AtlasLayer): CountyMetrics[] {
           value = parseFloat(h[0]?.value || "0");
           break;
         case "poverty":
-          value = null;
+          value = getAcsSdohValue(name, "povertyPct");
           break;
         case "compound":
           value = computeCompoundDeficit(name, profile).compound;

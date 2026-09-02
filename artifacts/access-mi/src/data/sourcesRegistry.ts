@@ -125,7 +125,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       org: "Census",
       url: "https://api.census.gov/",
       powers:
-        "Economic, demographic data; county broadband subscription (B28002)",
+        "Economic, demographic data; county broadband subscription (B28002); county SDOH bundle (B17001, B17020, B25070, B25091, B08201, B08303, B15003, C16002, B25014, B25003)",
       frequency: "Annual",
     },
     {

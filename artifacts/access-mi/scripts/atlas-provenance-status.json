@@ -55,17 +55,12 @@
     {
       "key": "poverty",
       "label": "Poverty Rate",
-      "status": "pending_data",
+      "status": "wired_pending_first_pull",
       "declared_source": "ACS",
-      "actual_source": "None - h[2] is food insecurity rate not ACS poverty; same data as food_desert layer",
-      "coverage": "0/83 counties with correct ACS poverty data (Guard 3 on mobile; desktop also null now)",
-      "issue": "Metric and source both wrong. Poverty layer renders same data as food_desert.",
+      "actual_source": "ACS 5-Year B17001 via acs-sdoh-county.generated.json (getAcsSdohValue povertyPct); build-data.yml populates with CENSUS_API_KEY",
+      "coverage": "83/83 counties once build-data.yml has run; null (Guard 3) while the bundle is pending-ci",
       "guard": 3,
-      "remediation_pr": "separate - wire ACS B17001 poverty rate for all 83 counties",
-      "files": [
-        "src/pages/HealthEquityAtlasPage.tsx:134",
-        "src/components/atlas/MichiganHeatGrid.tsx:31-33"
-      ]
+      "remediation_pr": "wired 2026-09-02; awaiting first scheduled pull"
     },
     {
       "key": "broadband",

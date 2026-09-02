@@ -82,6 +82,17 @@ jobs:
         env:
           CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
 
+      - name: Populate ACS county SDOH bundle
+        # Ten county measures (poverty, child poverty, rent and owner cost
+        # burden, no-vehicle households, long commutes, attainment,
+        # limited-English households, crowding, tenure) from the ACS 5-Year
+        # detail tables. Same key, same --require-live contract as the
+        # broadband step: never commit a stub over populated data.
+        run: node scripts/refresh-acs-sdoh-county.mjs --apply --require-live
+        working-directory: artifacts/access-mi
+        env:
+          CENSUS_API_KEY: ${{ secrets.CENSUS_API_KEY }}
+
       - name: Regenerate the provenance index
         # Refreshing acs-broadband-county.generated.json rewrites its
         # provenance.ingested_at, and src/data/dataFreshness.ts derives
@@ -96,7 +107,7 @@ jobs:
         run: |
           git config user.name "data-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add artifacts/access-mi/public/data artifacts/access-mi/src/data/acs-broadband-county.generated.json artifacts/access-mi/src/data/acs-broadband-county.ts artifacts/access-mi/src/data/provenance-index.generated.json
+          git add artifacts/access-mi/public/data artifacts/access-mi/src/data/acs-broadband-county.generated.json artifacts/access-mi/src/data/acs-broadband-county.ts artifacts/access-mi/src/data/acs-sdoh-county.generated.json artifacts/access-mi/src/data/acs-sdoh-county.ts artifacts/access-mi/src/data/provenance-index.generated.json
           if git diff --staged --quiet; then
             echo "No data changes."
           else

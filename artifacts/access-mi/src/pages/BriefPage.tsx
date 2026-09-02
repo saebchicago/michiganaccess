@@ -31,6 +31,10 @@ import {
   HUD_CHAS_COUNTY_PROVENANCE,
   getChasForCountyName,
 } from "@/data/hud-chas-county";
+import {
+  ACS_SDOH_COUNTY_PROVENANCE,
+  getAcsSdohValue,
+} from "@/data/acs-sdoh-county";
 import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -416,6 +420,16 @@ export default function BriefPage() {
               badge: hasVal ? "VERIFIED" : "no data",
               source: "HUD CHAS (Table 8)",
               vintage: HUD_CHAS_COUNTY_PROVENANCE.vintage_window ?? "pending first pull",
+            };
+          })(),
+          (() => {
+            const val = getAcsSdohValue(county, "noVehicleHouseholdsPct");
+            return {
+              label: "Households With No Vehicle",
+              value: val !== null ? `${val.toFixed(1)}%` : "no data",
+              badge: val !== null ? "VERIFIED" : "no data",
+              source: "ACS 5-Year (B08201)",
+              vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
             };
           })(),
         ]

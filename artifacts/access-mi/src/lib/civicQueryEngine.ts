@@ -35,6 +35,47 @@ import {
   HUD_CHAS_COUNTY_PROVENANCE,
   getChasForCountyName,
 } from "@/data/hud-chas-county";
+import {
+  ACS_SDOH_COUNTY_PROVENANCE,
+  getAcsSdohValue,
+} from "@/data/acs-sdoh-county";
+
+/** Source string for ACS county SDOH bundle points. */
+const ACS_SDOH_SOURCE = `U.S. Census ACS 5-Year ${ACS_SDOH_COUNTY_PROVENANCE.vintage_window}`;
+
+/**
+ * Poverty point: the ACS bundle (2020-2024, B17001) when populated,
+ * otherwise the static cross-domain "ACS 5-Year 2022" column. Shared by
+ * resolveEconomicHardship and resolveGeneral so the two never disagree.
+ */
+function povertyPoint(county: string, cdPovertyRate: number | null): CivicDataPoint | null {
+  const bundled = getAcsSdohValue(county, "povertyPct");
+  if (bundled !== null) {
+    return {
+      label: "Poverty rate",
+      value: `${bundled.toFixed(1)}%`,
+      valueLabel: "VERIFIED",
+      source: `${ACS_SDOH_SOURCE} (B17001)`,
+      vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
+      note:
+        bundled > MI_STATE_AVERAGES.povertyRate!
+          ? "Above state average"
+          : "Below state average",
+    };
+  }
+  if (cdPovertyRate === null) return null;
+  return {
+    label: "Poverty rate",
+    value: `${cdPovertyRate}%`,
+    valueLabel: "VERIFIED",
+    source: "ACS 5-Year 2022",
+    vintage: "2022",
+    note:
+      cdPovertyRate > MI_STATE_AVERAGES.povertyRate!
+        ? "Above state average"
+        : "Below state average",
+  };
+}
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -372,17 +413,16 @@ function resolveEconomicHardship(county: string): CivicDataPoint[] {
   const alice = getALICEByCounty(county);
   const points: CivicDataPoint[] = [];
 
-  if (cd.povertyRate !== null) {
+  const poverty = povertyPoint(county, cd.povertyRate);
+  if (poverty) points.push(poverty);
+  const childPoverty = getAcsSdohValue(county, "childPovertyPct");
+  if (childPoverty !== null) {
     points.push({
-      label: "Poverty rate",
-      value: `${cd.povertyRate}%`,
+      label: "Children under 18 below the poverty line",
+      value: `${childPoverty.toFixed(1)}%`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
-      vintage: "2022",
-      note:
-        cd.povertyRate > MI_STATE_AVERAGES.povertyRate!
-          ? "Above state average"
-          : "Below state average",
+      source: `${ACS_SDOH_SOURCE} (B17020)`,
+      vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
     });
   }
   if (cd.medianIncome !== null) {
@@ -575,8 +615,20 @@ function resolveBroadband(county: string): CivicDataPoint[] {
   }
 
   // Retained as related digital/physical access context, not as broadband.
-  // Flagged isFallback so it cannot lift the answer's confidence.
-  if (cd.vehicleAccess !== null) {
+  // Flagged isFallback so it cannot lift the answer's confidence. Reads the
+  // ACS bundle (B08201) when populated, else the static 2022 column.
+  const noVehicle = getAcsSdohValue(county, "noVehicleHouseholdsPct");
+  if (noVehicle !== null) {
+    points.push({
+      label: "Households with no vehicle available",
+      value: `${noVehicle.toFixed(1)}%`,
+      valueLabel: "VERIFIED",
+      source: `${ACS_SDOH_SOURCE} (B08201)`,
+      vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
+      note: "Related access measure, not a broadband figure.",
+      isFallback: true,
+    });
+  } else if (cd.vehicleAccess !== null) {
     points.push({
       label: "Households with vehicle access",
       value: `${cd.vehicleAccess}%`,
@@ -803,15 +855,8 @@ function resolveGeneral(county: string): CivicDataPoint[] {
     }
   }
 
-  if (cd.povertyRate !== null) {
-    points.push({
-      label: "Poverty rate",
-      value: `${cd.povertyRate}%`,
-      valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
-      vintage: "2022",
-    });
-  }
+  const poverty = povertyPoint(county, cd.povertyRate);
+  if (poverty) points.push({ ...poverty, note: undefined });
 
   if (blsData?.status === "populated" && blsData.unemploymentRate !== null) {
     points.push({

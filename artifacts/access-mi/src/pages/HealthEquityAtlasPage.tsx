@@ -13,6 +13,7 @@ import CountyDetailPanel from "@/components/atlas/CountyDetailPanel";
 import MapLegend from "@/components/atlas/MapLegend";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { getALICEByCounty } from "@/data/aliceData";
+import { getAcsSdohValue } from "@/data/acs-sdoh-county";
 import { MICHIGAN_ENERGY_BURDEN } from "@/data/environmentalData";
 import { MICHIGAN_BROADBAND_SEED } from "@/hooks/useBroadbandData";
 import { computeCompoundDeficit } from "@/utils/compoundDeficit";
@@ -119,8 +120,10 @@ export default function HealthEquityAtlasPage() {
           result[name] = parseFloat(h[0]?.value || "0");
           break;
         case "poverty":
-          // Guard 3: food insecurity != ACS poverty rate; pending ACS ingestion
-          result[name] = null;
+          // ACS 5-Year B17001 via the county SDOH bundle. Null while the
+          // bundle is pending-ci (build-data.yml populates it), never a
+          // food-insecurity proxy.
+          result[name] = getAcsSdohValue(name, "povertyPct");
           break;
         case "food_desert":
           // Guard 3: food insecurity != food desert tracts; pending USDA tract ingestion
