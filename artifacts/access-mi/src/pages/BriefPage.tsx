@@ -27,6 +27,10 @@ import { getBlsLausForCountyName } from "@/data/bls-laus-county";
 import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
 import { getPlacesForCountyName } from "@/data/cdc-places-county";
 import { getAcsBroadbandForCountyName } from "@/data/acs-broadband-county";
+import {
+  HUD_CHAS_COUNTY_PROVENANCE,
+  getChasForCountyName,
+} from "@/data/hud-chas-county";
 import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -400,6 +404,18 @@ export default function BriefPage() {
               badge: hasVal ? "VERIFIED" : "no data",
               source: "ACS 5-Year 2019-2023 (B28002)",
               vintage: "2019-2023",
+            };
+          })(),
+          (() => {
+            const chas = getChasForCountyName(county);
+            const hasVal =
+              chas?.status === "populated" && chas.costBurdened30Pct !== null;
+            return {
+              label: "Cost-Burdened Households (>30%)",
+              value: hasVal ? `${chas!.costBurdened30Pct!.toFixed(1)}%` : "no data",
+              badge: hasVal ? "VERIFIED" : "no data",
+              source: "HUD CHAS (Table 8)",
+              vintage: HUD_CHAS_COUNTY_PROVENANCE.vintage_window ?? "pending first pull",
             };
           })(),
         ]

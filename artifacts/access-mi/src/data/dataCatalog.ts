@@ -320,6 +320,21 @@ export const DATA_CATALOG: CatalogEntry[] = [
     poweredSurfaces: ["/county/:slug", "/benefits"],
   },
   {
+    id: "hud-chas",
+    name: "HUD CHAS Housing Cost Burden",
+    kind: "ingested",
+    registryFeed: "HUD CHAS",
+    publisherOrg: "HUD",
+    domain: "Social",
+    geography: "County",
+    access: "static",
+    cadence: "Annual",
+    sourceUrl: "https://www.huduser.gov/portal/datasets/cp.html",
+    description:
+      "Share of households paying more than 30% and more than 50% of income on housing, by HUD income band and tenure, from HUD's CHAS special tabulation of ACS 5-year microdata.",
+    poweredSurfaces: ["/county/:slug", "/brief", "/ask"],
+  },
+  {
     id: "michigan-211",
     name: "Michigan 2-1-1",
     kind: "ingested",

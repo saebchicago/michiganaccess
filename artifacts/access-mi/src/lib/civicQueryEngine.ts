@@ -31,6 +31,10 @@ import { getBlsLausForCountyName } from "@/data/bls-laus-county";
 import { getPlacesForCountyName } from "@/data/cdc-places-county";
 import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
 import { getAcsBroadbandForCountyName } from "@/data/acs-broadband-county";
+import {
+  HUD_CHAS_COUNTY_PROVENANCE,
+  getChasForCountyName,
+} from "@/data/hud-chas-county";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -122,7 +126,17 @@ const TOPIC_KEYWORDS: Record<CivicTopic, string[]> = {
     "household",
     "financial",
   ],
-  housing: ["housing", "rent", "eviction", "homeless", "shelter", "afford"],
+  housing: [
+    "housing",
+    "rent",
+    "eviction",
+    "homeless",
+    "shelter",
+    "afford",
+    "cost burden",
+    "housing cost",
+    "chas",
+  ],
   unemployment: [
     "unemployment",
     "unemployed",
@@ -416,6 +430,37 @@ function resolveHousing(county: string): CivicDataPoint[] {
   const cd = getCountyCrossDomain(county);
   const points: CivicDataPoint[] = [];
 
+  // HUD CHAS cost burden across all tenures and income bands. When it is
+  // populated the older static ACS rent-burden point below is kept as
+  // context but flagged isFallback so two burden figures cannot inflate
+  // confidence; when CHAS is pending-ci the static point stands alone.
+  const chas = getChasForCountyName(county);
+  const chasPopulated =
+    chas?.status === "populated" && chas.costBurdened30Pct !== null;
+  if (chasPopulated) {
+    const vintage = HUD_CHAS_COUNTY_PROVENANCE.vintage_window ?? "latest";
+    points.push({
+      label: "Cost-burdened households (>30% of income on housing)",
+      value: `${chas!.costBurdened30Pct!.toFixed(1)}%`,
+      valueLabel: "VERIFIED",
+      source: `HUD CHAS ${vintage} (Table 8, all tenures)`,
+      vintage,
+      note:
+        chas!.costBurdened50Pct !== null
+          ? `${chas!.costBurdened50Pct.toFixed(1)}% severely burdened (>50%)`
+          : undefined,
+    });
+    if (chas!.renterCostBurdened30Pct !== null) {
+      points.push({
+        label: "Renter households cost-burdened (>30%)",
+        value: `${chas!.renterCostBurdened30Pct.toFixed(1)}%`,
+        valueLabel: "VERIFIED",
+        source: `HUD CHAS ${vintage} (Table 8, renters)`,
+        vintage,
+      });
+    }
+  }
+
   if (cd.rentBurden !== null) {
     points.push({
       label: "Rent-burdened households (>30% of income on rent)",
@@ -427,6 +472,7 @@ function resolveHousing(county: string): CivicDataPoint[] {
         cd.rentBurden > MI_STATE_AVERAGES.rentBurden!
           ? "Above state average (47.2%)"
           : "Below state average (47.2%)",
+      isFallback: chasPopulated,
     });
   }
   if (cd.medianRent !== null) {

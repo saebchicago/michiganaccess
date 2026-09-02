@@ -21,7 +21,7 @@ import { ATLAS_LAYERS } from "@/config/atlasLayers";
  * Total verified public data FEEDS powering the platform.
  *
  * Derived from `src/data/sourcesRegistry.ts`. The expected canonical
- * value is 49 (28 federal + 9 state + 12 nonprofit). If the registry
+ * value is 50 (29 federal + 9 state + 12 nonprofit). If the registry
  * grows or shrinks, update the EXPECTED_* constants below in the same
  * commit so the build assertion does not fail silently.
  *
@@ -30,9 +30,9 @@ import { ATLAS_LAYERS } from "@/config/atlasLayers";
  * feed count, NOT an organization count. See EXPECTED_PUBLISHER_COUNT
  * below for the organization number.
  */
-const EXPECTED_SOURCE_COUNT = 49;
+const EXPECTED_SOURCE_COUNT = 50;
 const EXPECTED_SOURCE_BREAKDOWN = {
-  federal: 28,
+  federal: 29,
   state: 9,
   nonprofit: 12,
 } as const;
@@ -145,7 +145,7 @@ export const MICHIGAN_POLITICAL_PARTY_COUNT = 7;
  * "monitored feeds", "verified feeds", or similar so the number on
  * the page and the number /status actually pings cannot diverge.
  *
- * Note: this is NOT the same as DATA_SOURCE_COUNT (49 feeds from
+ * Note: this is NOT the same as DATA_SOURCE_COUNT (50 feeds from
  * DATA_PUBLISHER_COUNT publishers). Most registry feeds ship as static
  * data imports, not live API calls; the four here are the ones with
  * always-on uptime checks.
@@ -164,8 +164,9 @@ export const MONITORED_API_FEEDS_COUNT = 4;
  * Went 15 -> 17 on 2026-08-16: bls-laus and hrsa-hpsa are ingested into
  * committed generated datasets and render on live pages, but had no
  * freshness entry, so this rollup under-reported actual coverage.
+ * 17 -> 18 on 2026-09-02: hud-chas county cost burden ingested.
  */
-export const FRESHNESS_TRACKED_COUNT = 17;
+export const FRESHNESS_TRACKED_COUNT = 18;
 
 /**
  * Number of sources with live endpoint health checks on the /status page.

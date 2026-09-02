@@ -83,6 +83,7 @@ jobs:
             refresh-county-health
             refresh-fars
             refresh-snap-retailers
+            refresh-hud-chas-county
           "
           failed=""
           for s in $scripts_to_run; do

@@ -9,7 +9,7 @@
  * FEEDS vs PUBLISHERS - these are different numbers and the distinction
  * is load-bearing:
  *
- *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 49).
+ *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 50).
  *                      A publisher that ships several independent feeds
  *                      gets one entry per feed - CMS contributes Hospital
  *                      Compare, Physician Compare, and NPPES separately
@@ -242,6 +242,14 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       powers:
         "Treatment referral and crisis helpline references, federal behavioral health spending",
       frequency: "Ongoing",
+    },
+    {
+      name: "HUD CHAS",
+      org: "HUD",
+      url: "https://www.huduser.gov/portal/datasets/cp.html",
+      powers:
+        "County housing cost burden (>30% and >50% of income) by HUD income band and tenure on /county, /brief, /ask",
+      frequency: "Annual",
     },
     {
       name: "CDC/ATSDR Social Vulnerability Index",

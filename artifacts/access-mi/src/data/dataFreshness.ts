@@ -297,6 +297,23 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Added 2026-09-02: county housing cost burden from HUD's CHAS special
+    // tabulation. The ingest script tries the newest county file HUD serves
+    // (2018-2022, then 2017-2021) and records the one used in provenance;
+    // this string names the newest candidate and is corrected if the first
+    // scheduled pull lands on the older one.
+    id: "hud-chas",
+    name: "HUD CHAS Housing Cost Burden",
+    category: "Housing",
+    url: "https://www.huduser.gov/portal/datasets/cp.html",
+    generatedFrom: "hud-chas-county.generated.json",
+    updateFrequency: "Annual",
+    currentVersion: "CHAS 2018-2022 (5-year county file)",
+    nextExpectedUpdate: "2026-10-31",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
     id: "hud-fmr",
     name: "HUD Fair Market Rents",
     category: "Housing",

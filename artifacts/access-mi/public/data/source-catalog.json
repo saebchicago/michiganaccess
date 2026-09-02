@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "generated": "2026-08-16T20:23:32.014Z",
+    "generated": "2026-09-02T10:45:20.872Z",
     "source": "src/data/sourcesRegistry.ts",
-    "entryCount": 49,
+    "entryCount": 50,
     "schema": "v1",
     "note": "Machine-readable source catalog. license fields are null pending legal review."
   },
@@ -341,7 +341,7 @@
       "id": "fema-national-flood-insurance-program",
       "name": "FEMA National Flood Insurance Program",
       "agency": "FEMA",
-      "url": "https://www.fema.gov/openfema",
+      "url": "https://www.fema.gov/about/openfema/data-sets",
       "description": "Flood claims and policy data by county",
       "updateFrequency": "Monthly",
       "license": null,
@@ -413,10 +413,25 @@
       "monitoringStatus": "not-yet-monitored"
     },
     {
+      "id": "hud-chas",
+      "name": "HUD CHAS",
+      "agency": "HUD",
+      "url": "https://www.huduser.gov/portal/datasets/cp.html",
+      "description": "County housing cost burden (>30% and >50% of income) by HUD income band and tenure on /county, /brief, /ask",
+      "updateFrequency": "Annual",
+      "license": null,
+      "licenseReviewStatus": "pending",
+      "vintage": null,
+      "geographyLevel": null,
+      "integrityTier": null,
+      "lastVerified": null,
+      "monitoringStatus": "not-yet-monitored"
+    },
+    {
       "id": "cdc-atsdr-social-vulnerability-index",
       "name": "CDC/ATSDR Social Vulnerability Index",
       "agency": "ATSDR",
-      "url": "https://www.atsdr.cdc.gov/placeandhealth/svi/",
+      "url": "https://www.atsdr.cdc.gov/place-health/php/svi/index.html",
       "description": "Census tract social vulnerability scores used in compound-deficit scoring and equity sections",
       "updateFrequency": "Every 2 years",
       "license": null,
