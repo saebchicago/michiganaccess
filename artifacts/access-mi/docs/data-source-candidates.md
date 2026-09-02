@@ -125,9 +125,9 @@ classification against the existing 41 sources; `Disp.` is the disposition.
 | 39 | Census ACS 5-year county SDOH bundle (B17001, B17020, B25070, B25091, B08201, B08303, B15003, C16002, B25014, B25003) | county | VERIFIED | S | upgrades `Census ACS API` | GO - integrated 2026-09-02 (stub until build-data.yml runs) |
 | 40 | MDE MI School Data county K-12 exports (absenteeism, 3rd-grade ELA, graduation, economically disadvantaged) | county | VERIFIED | M | upgrades `Michigan Dept of Education` | GO - builder integrated 2026-09-02, awaiting first county export |
 | 41 | EPA EJScreen 2024 bulk block-group file, aggregated to county and ZCTA | tract (block group native) | MODELED (aggregation) | M | upgrades `EPA EJScreen` pillar (15 ZCTAs today) | GO - next tranche |
-| 42 | CDC/ATSDR SVI 2022 county file | county | MODELED | S | upgrades `CDC/ATSDR Social Vulnerability Index` (tract today) | GO - next tranche |
+| 42 | CDC/ATSDR SVI 2022 county file | county | MODELED | S | upgrades `CDC/ATSDR Social Vulnerability Index` (tract today) | GO - integrated 2026-09-02, tranche 2 (stub until first scheduled pull) |
 | 43 | USDA ERS Food Environment Atlas | county | VERIFIED | S | net-new (USDA publisher exists) | GO - next tranche |
-| 44 | NCHS provisional county drug-overdose deaths (data.cdc.gov Socrata) | county | VERIFIED | S | upgrades `MDHHS Health Data` MODA text; Socrata route, not WONDER | GO - next tranche |
+| 44 | NCHS provisional county drug-overdose deaths (data.cdc.gov Socrata) | county | VERIFIED | S | net-new feed `NCHS Vital Statistics Rapid Release` under the CDC publisher; Socrata route, not WONDER | GO - integrated 2026-09-02, tranche 2 (stub until first scheduled pull) |
 | 45 | MDHHS monthly SNAP / FAP county tables | county (monthly) | VERIFIED | M | upgrades `USDA SNAP` FY2022 baseline; closes gap `snap-monthly-county` | GO - tranche 3 |
 | 46 | Head Start locator + MDE GSRP allocations | county | VERIFIED (locator) / MODELED (PDF parse) | M | closes gap `gsrp-headstart-capacity` | HOLD - first sanctioned scrape; needs the scraping policy in FIXLOG applied |
 | 47 | Michigan Treasury local-unit fiscal data (F65) | municipality | VERIFIED | M | net-new | HOLD - first municipal-grain layer; no Place FIPS registry yet |
@@ -1422,14 +1422,16 @@ is picked up.
   and ZCTA with the platform's area-weighted crosswalk. Closes the
   `ejscreen-coverage` gap and lets the compound index restore its
   environmental dimension honestly. MODELED because aggregation is ours.
-- **CDC/ATSDR SVI 2022 county file (42).** The tract-level feed is already
-  registered; the county CSV is a single keyless file and the first measured
-  social-context county series.
+- **CDC/ATSDR SVI 2022 county file (42).** Integrated in tranche 2
+  (`scripts/refresh-cdc-svi-county.mjs`): overall and four theme percentile
+  ranks plus ATSDR's sixteen input percentages, MODELED, -999 to null.
 - **USDA ERS Food Environment Atlas (43).** County grocery and SNAP-store
   density; pairs with the SNAP retailer counts already ingested.
-- **NCHS provisional county drug-overdose deaths (44).** data.cdc.gov Socrata
-  route (row 10's WONDER HOLD stands); replaces curated MODA text with a
-  numeric series; suppression rules must be honored.
+- **NCHS provisional county drug-overdose deaths (44).** Integrated in
+  tranche 2 (`scripts/refresh-nchs-overdose-county.mjs`, dataset gb4e-bhi7):
+  latest 12-month period chosen from the data, under-10 suppression carried
+  as null with status "suppressed", no rate computed. Row 10's WONDER HOLD
+  stands; this is the Socrata route.
 - **MDHHS monthly SNAP / FAP county tables (45).** Ends the FY2022 baseline
   and closes `snap-monthly-county`.
 - **Head Start locator + MDE GSRP allocations (46).** GSRP allocations are PDF

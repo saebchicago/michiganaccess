@@ -1109,3 +1109,37 @@ committed 83-row array.
 - The remaining dead citation URLs (irs.gov SOI, hudexchange root, EGLE
   MiLeadSafe, and the bot-blocked API roots): moves could not be confirmed
   without egress.
+
+## SDOH source expansion, tranche 2 (2026-09-02)
+
+Two county datasets on the tranche-1 recipe, in one PR:
+
+- **CDC/ATSDR SVI county rankings.** The platform already labelled the
+  tract-level SVI MODELED and fetched it live for the compound index; this
+  commits the county file (overall + four theme percentiles, sixteen ATSDR
+  input percentages) so the brief, snapshot tile and `/ask` have a measured
+  social-context series. -999 sentinels become null, never 0.
+- **NCHS provisional county overdose counts** (VSRR, data.cdc.gov
+  gb4e-bhi7). New federal feed under the existing CDC publisher: 51 feeds,
+  30 federal, 42 publishers. The script asserts the dataset title, resolves
+  field names by meaning and records them in provenance, takes the latest
+  12-month period from the data, and carries NCHS's under-10 suppression as
+  a null with status "suppressed". VERIFIED counts, no per-100k rate, and
+  the word "provisional" on every surface. This is the Socrata route the
+  candidates registry preferred over CDC WONDER.
+
+Both shipped as pending-ci stubs (svi.cdc.gov and data.cdc.gov are blocked
+from the build environment) and populate on `dataset-refresh.yml`.
+
+### Deferred from the tranche-2 list, and why
+
+- **EPA EJScreen bulk aggregation.** EPA took EJScreen and its gaftp mirror
+  down in 2025; the surviving copies are third-party mirrors (PEDP, Harvard
+  Dataverse) whose file URLs could not be confirmed without egress. A guessed
+  URL on `dataset-refresh.yml` would go red every week. It stays GO in the
+  candidates registry pending a confirmed, stable mirror URL.
+- **USDA ERS Food Environment Atlas.** Published as an xlsx whose download
+  path changed with the 2024 ERS site redesign and whose newest edition
+  carries 2015-2019 data. Needs the OOXML reader from
+  `build-snap-county-dataset.mjs` and a confirmed URL; deferred for the same
+  reason.
