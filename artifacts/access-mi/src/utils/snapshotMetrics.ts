@@ -21,6 +21,8 @@ import {
   getChasForCountyName,
 } from "@/data/hud-chas-county";
 import { MDE_COUNTY_PROVENANCE, MDE_SOURCE_LABEL, getMdeValue } from "@/data/mde-county";
+import { SVI_COUNTY_PROVENANCE, getSviOverallPercentile } from "@/data/cdc-svi-county";
+import { getOverdoseForCountyName, overdosePeriodLabel } from "@/data/nchs-overdose-county";
 
 function parseRate(val: string): number {
   return parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
@@ -376,6 +378,38 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
       countyName: county,
       source: MDE_SOURCE_LABEL,
       vintage: `${MDE_COUNTY_PROVENANCE.school_year} school year`,
+    });
+  }
+
+  // Social vulnerability (CDC/ATSDR SVI overall theme, US county percentile).
+  // Omitted while pending; a percentile is MODELED and labelled so upstream.
+  const svi = getSviOverallPercentile(county);
+  if (svi !== null) {
+    metrics.push({
+      id: "social-vulnerability",
+      label: "Social Vulnerability",
+      value: svi.toFixed(0),
+      unit: "th US percentile",
+      geoResolution: "county",
+      countyName: county,
+      source: "CDC/ATSDR SVI (county, MODELED)",
+      vintage: `SVI ${SVI_COUNTY_PROVENANCE.svi_year}`,
+    });
+  }
+
+  // Provisional overdose deaths (NCHS VSRR, 12-month-ending). Suppressed
+  // counties (under 10) are omitted rather than shown as 0.
+  const od = getOverdoseForCountyName(county);
+  if (od?.status === "populated" && od.provisionalDeaths12mo !== null) {
+    metrics.push({
+      id: "overdose-deaths",
+      label: "Drug Overdose Deaths (provisional)",
+      value: od.provisionalDeaths12mo.toLocaleString(),
+      unit: "in 12 months",
+      geoResolution: "county",
+      countyName: county,
+      source: "CDC / NCHS Vital Statistics Rapid Release",
+      vintage: overdosePeriodLabel() ?? "latest",
     });
   }
 

@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "generated": "2026-09-02T10:56:35.750Z",
+    "generated": "2026-09-02T20:46:21.142Z",
     "source": "src/data/sourcesRegistry.ts",
-    "entryCount": 50,
+    "entryCount": 51,
     "schema": "v1",
     "note": "Machine-readable source catalog. license fields are null pending legal review."
   },
@@ -404,6 +404,21 @@
       "url": "https://www.samhsa.gov/find-help/national-helpline",
       "description": "Treatment referral and crisis helpline references, federal behavioral health spending",
       "updateFrequency": "Ongoing",
+      "license": null,
+      "licenseReviewStatus": "pending",
+      "vintage": null,
+      "geographyLevel": null,
+      "integrityTier": null,
+      "lastVerified": null,
+      "monitoringStatus": "not-yet-monitored"
+    },
+    {
+      "id": "nchs-vital-statistics-rapid-release",
+      "name": "NCHS Vital Statistics Rapid Release",
+      "agency": "CDC",
+      "url": "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-bhi7",
+      "description": "Provisional 12-month county drug overdose death counts on /county, /brief, /ask",
+      "updateFrequency": "Monthly",
       "license": null,
       "licenseReviewStatus": "pending",
       "vintage": null,

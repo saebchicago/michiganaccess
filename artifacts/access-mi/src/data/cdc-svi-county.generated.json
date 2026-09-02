@@ -1,0 +1,2727 @@
+{
+  "provenance": {
+    "source_name": "CDC/ATSDR Social Vulnerability Index (year pending), Michigan county file",
+    "source_url": "https://www.atsdr.cdc.gov/place-health/php/svi/index.html",
+    "download_url": null,
+    "csv_sha256": null,
+    "svi_year": null,
+    "candidate_years": [
+      2022,
+      2020
+    ],
+    "ranking_universe": "United States counties (RPL_* percentile ranks, 0 = least vulnerable, 1 = most)",
+    "ingested_at": "2026-09-02T20:40:10.093Z",
+    "ingest_script": "scripts/refresh-cdc-svi-county.mjs",
+    "michigan_county_registry": "src/data/census-geographies.ts",
+    "michigan_county_registry_size": 83,
+    "value_label": "PENDING",
+    "populated": false,
+    "pending_reason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values.",
+    "notes": "The SVI is ATSDR's composite percentile ranking of ACS 5-year inputs, so every value is MODELED: a published model, not a direct count. Theme ranks are US-wide county percentiles (0-1); the EP_* inputs are ATSDR's own ACS-derived percentages and are republished here with the same label. -999 in the source means the value is unavailable and becomes null, never 0. When status = 'pending-ci' the ingest environment could not reach svi.cdc.gov; the scheduled dataset-refresh workflow populates the file."
+  },
+  "themes": [
+    {
+      "id": "overall",
+      "column": "RPL_THEMES",
+      "label": "Overall social vulnerability",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "socioeconomic",
+      "column": "RPL_THEME1",
+      "label": "Socioeconomic status",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "householdCharacteristics",
+      "column": "RPL_THEME2",
+      "label": "Household characteristics",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "racialEthnicMinority",
+      "column": "RPL_THEME3",
+      "label": "Racial and ethnic minority status",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "housingTransportation",
+      "column": "RPL_THEME4",
+      "label": "Housing type and transportation",
+      "value_label": "MODELED"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "belowPoverty150Pct",
+      "column": "EP_POV150",
+      "label": "Persons below 150% of poverty",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "unemployedPct",
+      "column": "EP_UNEMP",
+      "label": "Civilian unemployed (16+)",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "housingCostBurdenPct",
+      "column": "EP_HBURD",
+      "label": "Housing cost-burdened occupied units",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "noHsDiplomaPct",
+      "column": "EP_NOHSDP",
+      "label": "Persons 25+ with no high school diploma",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "uninsuredPct",
+      "column": "EP_UNINSUR",
+      "label": "Uninsured (civilian noninstitutionalized)",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "age65PlusPct",
+      "column": "EP_AGE65",
+      "label": "Persons aged 65 and older",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "age17UnderPct",
+      "column": "EP_AGE17",
+      "label": "Persons aged 17 and younger",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "disabilityPct",
+      "column": "EP_DISABL",
+      "label": "Civilian noninstitutionalized with a disability",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "singleParentPct",
+      "column": "EP_SNGPNT",
+      "label": "Single-parent households with children under 18",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "limitedEnglishPct",
+      "column": "EP_LIMENG",
+      "label": "Persons 5+ who speak English less than well",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "minorityPct",
+      "column": "EP_MINRTY",
+      "label": "Racial and ethnic minority persons",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "multiUnitHousingPct",
+      "column": "EP_MUNIT",
+      "label": "Housing in structures with 10+ units",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "mobileHomesPct",
+      "column": "EP_MOBILE",
+      "label": "Mobile homes",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "crowdingPct",
+      "column": "EP_CROWD",
+      "label": "Occupied units with more people than rooms",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "noVehiclePct",
+      "column": "EP_NOVEH",
+      "label": "Households with no vehicle available",
+      "value_label": "MODELED"
+    },
+    {
+      "id": "groupQuartersPct",
+      "column": "EP_GROUPQ",
+      "label": "Persons in group quarters",
+      "value_label": "MODELED"
+    }
+  ],
+  "counties": [
+    {
+      "countyFips": "26001",
+      "countyName": "Alcona",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26003",
+      "countyName": "Alger",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26005",
+      "countyName": "Allegan",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26007",
+      "countyName": "Alpena",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26009",
+      "countyName": "Antrim",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26011",
+      "countyName": "Arenac",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26013",
+      "countyName": "Baraga",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26015",
+      "countyName": "Barry",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26017",
+      "countyName": "Bay",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26019",
+      "countyName": "Benzie",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26021",
+      "countyName": "Berrien",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26023",
+      "countyName": "Branch",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26025",
+      "countyName": "Calhoun",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26027",
+      "countyName": "Cass",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26029",
+      "countyName": "Charlevoix",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26031",
+      "countyName": "Cheboygan",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26033",
+      "countyName": "Chippewa",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26035",
+      "countyName": "Clare",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26037",
+      "countyName": "Clinton",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26039",
+      "countyName": "Crawford",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26041",
+      "countyName": "Delta",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26043",
+      "countyName": "Dickinson",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26045",
+      "countyName": "Eaton",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26047",
+      "countyName": "Emmet",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26049",
+      "countyName": "Genesee",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26051",
+      "countyName": "Gladwin",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26053",
+      "countyName": "Gogebic",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26055",
+      "countyName": "Grand Traverse",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26057",
+      "countyName": "Gratiot",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26059",
+      "countyName": "Hillsdale",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26061",
+      "countyName": "Houghton",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26063",
+      "countyName": "Huron",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26065",
+      "countyName": "Ingham",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26067",
+      "countyName": "Ionia",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26069",
+      "countyName": "Iosco",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26071",
+      "countyName": "Iron",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26073",
+      "countyName": "Isabella",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26075",
+      "countyName": "Jackson",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26077",
+      "countyName": "Kalamazoo",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26079",
+      "countyName": "Kalkaska",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26081",
+      "countyName": "Kent",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26083",
+      "countyName": "Keweenaw",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26085",
+      "countyName": "Lake",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26087",
+      "countyName": "Lapeer",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26089",
+      "countyName": "Leelanau",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26091",
+      "countyName": "Lenawee",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26093",
+      "countyName": "Livingston",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26095",
+      "countyName": "Luce",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26097",
+      "countyName": "Mackinac",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26099",
+      "countyName": "Macomb",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26101",
+      "countyName": "Manistee",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26103",
+      "countyName": "Marquette",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26105",
+      "countyName": "Mason",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26107",
+      "countyName": "Mecosta",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26109",
+      "countyName": "Menominee",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26111",
+      "countyName": "Midland",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26113",
+      "countyName": "Missaukee",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26115",
+      "countyName": "Monroe",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26117",
+      "countyName": "Montcalm",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26119",
+      "countyName": "Montmorency",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26121",
+      "countyName": "Muskegon",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26123",
+      "countyName": "Newaygo",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26125",
+      "countyName": "Oakland",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26127",
+      "countyName": "Oceana",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26129",
+      "countyName": "Ogemaw",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26131",
+      "countyName": "Ontonagon",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26133",
+      "countyName": "Osceola",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26135",
+      "countyName": "Oscoda",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26137",
+      "countyName": "Otsego",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26139",
+      "countyName": "Ottawa",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26141",
+      "countyName": "Presque Isle",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26143",
+      "countyName": "Roscommon",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26145",
+      "countyName": "Saginaw",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26147",
+      "countyName": "St. Clair",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26149",
+      "countyName": "St. Joseph",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26151",
+      "countyName": "Sanilac",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26153",
+      "countyName": "Schoolcraft",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26155",
+      "countyName": "Shiawassee",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26157",
+      "countyName": "Tuscola",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26159",
+      "countyName": "Van Buren",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26161",
+      "countyName": "Washtenaw",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26163",
+      "countyName": "Wayne",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    },
+    {
+      "countyFips": "26165",
+      "countyName": "Wexford",
+      "status": "pending-ci",
+      "themes": {
+        "overall": null,
+        "socioeconomic": null,
+        "householdCharacteristics": null,
+        "racialEthnicMinority": null,
+        "housingTransportation": null
+      },
+      "inputs": {
+        "belowPoverty150Pct": null,
+        "unemployedPct": null,
+        "housingCostBurdenPct": null,
+        "noHsDiplomaPct": null,
+        "uninsuredPct": null,
+        "age65PlusPct": null,
+        "age17UnderPct": null,
+        "disabilityPct": null,
+        "singleParentPct": null,
+        "limitedEnglishPct": null,
+        "minorityPct": null,
+        "multiUnitHousingPct": null,
+        "mobileHomesPct": null,
+        "crowdingPct": null,
+        "noVehiclePct": null,
+        "groupQuartersPct": null
+      },
+      "pendingReason": "Could not fetch or parse the SVI county CSV (No SVI county CSV could be fetched. 2022: [cdc-svi-county-2022] fetch failed: HTTP 403 | 2020: [cdc-svi-county-2020] fetch failed: HTTP 403). Re-run scripts/refresh-cdc-svi-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+    }
+  ]
+}
