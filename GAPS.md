@@ -11,7 +11,7 @@
 |---|---|---|---|---|
 | CDC PLACES County 2025 | cdc-places-county.generated.json | 83 | MODELED | Populated 2026-07-02 |
 | HRSA HPSA County Rollup | hrsa-hpsa-county.generated.json | 83 | MODELED | Populated 2026-07-02 |
-| ACS Broadband (B28002) | acs-broadband-county.generated.json | 83 | VERIFIED | **pending-ci** (needs CENSUS_API_KEY) |
+| ACS Broadband (B28002) | acs-broadband-county.generated.json | 83 | VERIFIED | Populated 2026-08-24 (build-data.yml, ACS 2019-2023) |
 | BLS LAUS Unemployment | bls-laus-county.generated.json | 83 | VERIFIED | Populated May 2026 (Preliminary) |
 | County Profiles (pop + health) | michigan-county-profiles.ts | 83 | VERIFIED (explicit constants) | Live |
 | Cross-Domain Indicators | cross-domain-indicators.ts | 83 | VERIFIED (ACS 2022 stated inline) | Live |

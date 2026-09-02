@@ -275,12 +275,12 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     url: "https://www.bls.gov/lau/",
     generatedFrom: "bls-laus-county.generated.json",
     updateFrequency: "Monthly",
-    currentVersion: "May 2026 (Preliminary)",
+    currentVersion: "June 2026 (Preliminary)",
     nextExpectedUpdate: "Ongoing",
     isLive: false,
     vintageStatus: "behind",
     vintageNote:
-      "We ship the May 2026 preliminary series; BLS has released later monthly estimates since our last pull.",
+      "We ship the June 2026 preliminary series; BLS has released later monthly estimates since our last pull.",
   }),
   entry({
     // Added 2026-08-16: same omission as bls-laus - HPSA designations back

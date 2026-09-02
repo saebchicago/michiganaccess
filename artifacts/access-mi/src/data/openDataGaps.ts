@@ -258,26 +258,6 @@ export const OPEN_DATA_GAPS: OpenDataGap[] = [
   },
   // ── Lane 2: published, not yet on this platform ─────────────────────────
   {
-    id: "acs-broadband",
-    title: "County broadband subscription rates",
-    domain: "Infrastructure",
-    lane: "not-yet-ingested",
-    status: "pending-ingestion",
-    whatExists:
-      "The Census Bureau publishes county broadband subscription rates (ACS table B28002) for all 83 counties.",
-    whatIsMissing:
-      "This platform's ingestion of B28002 is pending a CI credential; every county currently shows a PENDING broadband point on /ask.",
-    holder:
-      "U.S. Census Bureau (published) / this platform (ingestion pending)",
-    statedReason:
-      "Our gap, not the government's: the scheduled refresh needs a Census API key in CI.",
-    whyItMatters:
-      "Broadband access shapes telehealth, schooling and job access. The data exists - this row is on our roadmap, and we show the gap plainly instead of dropping the column.",
-    gapSource: {
-      name: "acs-broadband-county.generated.json (status pending-ci, 83/83)",
-    },
-  },
-  {
     id: "snap-monthly-county",
     title: "Monthly SNAP participation by county",
     domain: "Economy",

@@ -100,6 +100,17 @@ jobs:
           # then report. The failure is re-raised after the commit step.
           echo "FAILED_SCRIPTS=$failed" >> "$GITHUB_ENV"
 
+      - name: Roll up ingest health
+        # Every refresh above records an ingest-manifest entry via
+        # scripts/lib/ingest-manifest.mjs. Nothing summarised those into
+        # src/data/sourceHealth.generated.json on any schedule, so the
+        # accessor in sourceHealth.ts read an empty file. The script is
+        # local-only (reads ingest-manifest/, writes one JSON) and carries no
+        # provenance block, so check-data-workflows does not require the
+        # provenance index for it.
+        working-directory: artifacts/access-mi
+        run: node scripts/build-source-health.mjs
+
       - name: Verify sacrosanct inputs were not rewritten
         run: |
           sha256sum artifacts/access-mi/src/data/census-geographies.ts \

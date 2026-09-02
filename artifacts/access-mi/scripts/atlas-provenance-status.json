@@ -113,16 +113,11 @@
     {
       "key": "alice",
       "label": "ALICE Rate (Below Threshold)",
-      "status": "partial",
+      "status": "verified",
       "declared_source": "United For ALICE",
-      "actual_source": "United Way ALICE Report Michigan 2025 via aliceData.ts",
-      "coverage": "7/83 counties on desktop map; 0/83 on mobile (Guard 3 - case was missing from switch)",
-      "guard": 3,
-      "remediation_pr": "separate - ingest United For ALICE 2025 for all 83 counties; wire to mobile grid",
-      "files": [
-        "src/pages/HealthEquityAtlasPage.tsx:173-176",
-        "src/components/atlas/MichiganHeatGrid.tsx:61-63"
-      ]
+      "actual_source": "United For ALICE Michigan Data Sheet 2026 (data year 2024) via aliceData.ts, labelled MODELED",
+      "coverage": "83/83 counties (desktop map and mobile grid)",
+      "remediation_pr": null
     },
     {
       "key": "pharmacy",

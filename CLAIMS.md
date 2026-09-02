@@ -25,7 +25,7 @@ Verdicts: VERIFIED · PARTIAL · UNANCHORED · FALSE
 
 | # | Verbatim claim | Surface file:line | Category | Evidence file:line | Reasoning |
 |---|---|---|---|---|---|
-| V-1 | "41 verified public source organizations (23 federal, 9 state, 9 nonprofit)" | `DataSourcesPage.tsx:30` | SOURCE | `platformConstants.ts:27,34-38` | Build throws if `SOURCES_TOTAL !== 41`; `check-counts.mjs` enforces same |
+| V-1 | "41 verified public source organizations (23 federal, 9 state, 9 nonprofit)" | `DataSourcesPage.tsx:30` | SOURCE | `platformConstants.ts:27,34-38` | Build throws if `SOURCES_TOTAL !== 41`; `check-counts.mjs` enforces same. Historical baseline: the registry now counts feeds and publishers separately (see platformConstants.ts for the live values) and copy renders the derived constants, never a literal |
 | V-2 | "One platform. `${DATA_SOURCE_DISPLAY}` verified sources. Structured for action." | `AboutPage.tsx:273` | SOURCE | `platformConstants.ts` | Dynamic import of `DATA_SOURCE_DISPLAY`, derived from the feed registry. Quoted as the template rather than a rendered instance: the literal here read "41" while the registry had moved to 43 and then 49. |
 | V-3 | "Ask Access Michigan" (conversational agent title) | `AccessChat.tsx:245` | CAPABILITY | `AccessChat.tsx:195` | Calls `/.netlify/functions/chat-mistral` with Mistral AI; component rendered on homepage `Index.tsx:264` |
 | V-4 | "No tracking cookies" | `PrivacyPage.tsx:65` | PRIVACY | `index.html:4-13` | GA script removed per trust audit; no ad/analytics scripts in `index.html` or `main.tsx` |

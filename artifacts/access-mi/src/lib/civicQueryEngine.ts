@@ -396,12 +396,16 @@ function resolveEconomicHardship(county: string): CivicDataPoint[] {
   }
 
   if (alice) {
+    // Below-threshold share is a classification against a constructed
+    // Survival Budget; aliceData.ts labels every row MODELED. This point
+    // said VERIFIED with a hardcoded 2023 vintage after the payload moved
+    // to the 2026 sheet (2024 data).
     points.push({
       label: "Economic hardship rate (poverty + ALICE)",
       value: `${alice.combinedHardshipPct}%`,
-      valueLabel: "VERIFIED",
+      valueLabel: "MODELED",
       source: alice.source,
-      vintage: "2023",
+      vintage: String(alice.year),
     });
   }
 

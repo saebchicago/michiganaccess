@@ -209,7 +209,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
     {
       name: "FEMA National Flood Insurance Program",
       org: "FEMA",
-      url: "https://www.fema.gov/openfema",
+      url: "https://www.fema.gov/about/openfema/data-sets",
       powers: "Flood claims and policy data by county",
       frequency: "Monthly",
     },
@@ -246,7 +246,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
     {
       name: "CDC/ATSDR Social Vulnerability Index",
       org: "ATSDR",
-      url: "https://www.atsdr.cdc.gov/placeandhealth/svi/",
+      url: "https://www.atsdr.cdc.gov/place-health/php/svi/index.html",
       powers:
         "Census tract social vulnerability scores used in compound-deficit scoring and equity sections",
       frequency: "Every 2 years",

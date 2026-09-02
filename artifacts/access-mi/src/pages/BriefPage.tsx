@@ -361,7 +361,7 @@ export default function BriefPage() {
               value: hasVal ? `${bls!.unemploymentRate}%` : "no data",
               badge: hasVal ? "VERIFIED" : "no data",
               source: "BLS Local Area Unemployment Statistics",
-              vintage: bls?.latestPeriod ?? "May 2026",
+              vintage: bls?.latestPeriod ?? "no data",
             };
           })(),
           (() => {
