@@ -9,7 +9,7 @@
  * FEEDS vs PUBLISHERS - these are different numbers and the distinction
  * is load-bearing:
  *
- *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 50).
+ *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 51).
  *                      A publisher that ships several independent feeds
  *                      gets one entry per feed - CMS contributes Hospital
  *                      Compare, Physician Compare, and NPPES separately
@@ -242,6 +242,14 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       powers:
         "Treatment referral and crisis helpline references, federal behavioral health spending",
       frequency: "Ongoing",
+    },
+    {
+      name: "NCHS Vital Statistics Rapid Release",
+      org: "CDC",
+      url: "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-bhi7",
+      powers:
+        "Provisional 12-month county drug overdose death counts on /county, /brief, /ask",
+      frequency: "Monthly",
     },
     {
       name: "HUD CHAS",

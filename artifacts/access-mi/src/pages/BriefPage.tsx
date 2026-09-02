@@ -36,6 +36,14 @@ import {
   getAcsSdohValue,
 } from "@/data/acs-sdoh-county";
 import { MDE_COUNTY_PROVENANCE, getMdeValue } from "@/data/mde-county";
+import {
+  SVI_COUNTY_PROVENANCE,
+  getSviOverallPercentile,
+} from "@/data/cdc-svi-county";
+import {
+  getOverdoseForCountyName,
+  overdosePeriodLabel,
+} from "@/data/nchs-overdose-county";
 import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -441,6 +449,35 @@ export default function BriefPage() {
               badge: val !== null ? "VERIFIED" : "no data",
               source: "MDE / CEPI, MI School Data",
               vintage: MDE_COUNTY_PROVENANCE.school_year ?? "awaiting first county export",
+            };
+          })(),
+          (() => {
+            const pct = getSviOverallPercentile(county);
+            return {
+              label: "Social Vulnerability (US percentile)",
+              value: pct !== null ? `${pct.toFixed(0)}th` : "no data",
+              badge: pct !== null ? "MODELED" : "no data",
+              source: "CDC/ATSDR SVI county rankings",
+              vintage: SVI_COUNTY_PROVENANCE.svi_year
+                ? `SVI ${SVI_COUNTY_PROVENANCE.svi_year}`
+                : "pending first pull",
+            };
+          })(),
+          (() => {
+            const od = getOverdoseForCountyName(county);
+            const period = overdosePeriodLabel();
+            const value =
+              od?.status === "populated" && od.provisionalDeaths12mo !== null
+                ? od.provisionalDeaths12mo.toLocaleString()
+                : od?.status === "suppressed"
+                  ? "under 10 (suppressed)"
+                  : "no data";
+            return {
+              label: "Drug Overdose Deaths (provisional, 12-mo)",
+              value,
+              badge: od?.status === "populated" ? "VERIFIED" : "no data",
+              source: "CDC / NCHS Vital Statistics Rapid Release",
+              vintage: period ?? "pending first pull",
             };
           })(),
         ]

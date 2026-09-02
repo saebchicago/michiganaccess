@@ -66,6 +66,17 @@ const CHAS_VINTAGES = ["2018thru2022", "2017thru2021"];
 const SOURCE_LANDING = "https://www.huduser.gov/portal/datasets/cp.html";
 const zipUrl = (v) =>
   `https://www.huduser.gov/portal/datasets/cp/${v}-050-csv.zip`;
+/** HUD USER has served the same file from several paths; try each. The
+ *  2026-09-02 scheduled run got HTTP 200 with a 0-byte body from the first
+ *  form, which the shape gate correctly rejected. */
+const zipUrlCandidates = (v) => [
+  zipUrl(v),
+  `https://www.huduser.gov/PORTAL/datasets/cp/${v}-050-csv.zip`,
+  `https://www.huduser.gov/portal/sites/default/files/datasets/cp/${v}-050-csv.zip`,
+];
+/** A browser-like UA: huduser.gov answers some generic clients with an empty 200. */
+const BROWSER_UA =
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36 accessmi-data-refresh";
 const vintageWindow = (v) => v.replace("thru", "-");
 
 // HUD income bands in Table 8 order, with the platform's field keys.
@@ -181,26 +192,52 @@ async function loadMiCountyFips() {
 const manifestEntries = [];
 const BUILD_ID = `refresh-hud-chas-county-${new Date().toISOString().replace(/[:.]/g, "-")}`;
 
+/**
+ * Never regress a populated file to the pending-ci stub. dataset-refresh.yml
+ * runs every script with plain --apply and commits whatever changed, so a
+ * transient upstream failure would otherwise silently replace real data
+ * with nulls. If the committed file already carries real values and this
+ * run could not fetch, exit non-zero and leave it untouched; the workflow
+ * reports the failure and the data stays at its last good pull.
+ */
+async function refuseToRegress(existingPath, err) {
+  let existing = null;
+  try {
+    existing = JSON.parse(await readFile(existingPath, "utf8"));
+  } catch {
+    return; // no committed file yet - a stub is the honest first state
+  }
+  if (existing?.provenance?.populated === true) {
+    throw new Error(
+      `Refusing to overwrite a populated ${path.basename(existingPath)} with a pending-ci stub after a fetch failure: ${err.message}`,
+    );
+  }
+}
+
 /** Try each vintage newest-first; return the first zip HUD serves. */
 async function fetchNewestZip() {
   const errors = [];
   for (const vintage of CHAS_VINTAGES) {
-    try {
-      const buf = await fetchAndRecord({
-        sourceId: `hud-chas-county-${vintage}`,
-        url: zipUrl(vintage),
-        headers: {
-          "user-agent": "accessmi-data-refresh",
-          accept: "application/zip,application/octet-stream,*/*",
-        },
-        vintage: vintageWindow(vintage),
-        minBytes: 100_000,
-        binary: true,
-        entries: manifestEntries,
-      });
-      return { vintage, buf };
-    } catch (err) {
-      errors.push(`${vintage}: ${err.message}`);
+    const urls = zipUrlCandidates(vintage);
+    for (let i = 0; i < urls.length; i++) {
+      try {
+        const buf = await fetchAndRecord({
+          sourceId: `hud-chas-county-${vintage}${i ? `-alt${i}` : ""}`,
+          url: urls[i],
+          headers: {
+            "user-agent": BROWSER_UA,
+            accept: "application/zip,application/octet-stream,*/*",
+            referer: SOURCE_LANDING,
+          },
+          vintage: vintageWindow(vintage),
+          minBytes: 100_000,
+          binary: true,
+          entries: manifestEntries,
+        });
+        return { vintage, buf, url: urls[i] };
+      } catch (err) {
+        errors.push(`${vintage} via ${urls[i]}: ${err.message}`);
+      }
     }
   }
   throw new Error(`No CHAS county zip could be fetched. ${errors.join(" | ")}`);
@@ -347,11 +384,11 @@ function buildPopulatedCounties(miFips, byFips) {
   return { records, missing };
 }
 
-function buildProvenance({ ingestedAt, populated, vintage, zipSha256, pendingReason }) {
+function buildProvenance({ ingestedAt, populated, vintage, downloadUrl, zipSha256, pendingReason }) {
   return {
     source_name: `HUD Comprehensive Housing Affordability Strategy (CHAS) county file, ${vintage ? vintageWindow(vintage) : "vintage pending"}`,
     source_url: SOURCE_LANDING,
-    download_url: vintage ? zipUrl(vintage) : null,
+    download_url: downloadUrl ?? null,
     zip_sha256: zipSha256,
     table: "Table 8 - Household income by cost burden, by tenure",
     vintage_window: vintage ? vintageWindow(vintage) : null,
@@ -465,11 +502,13 @@ async function main() {
   let records;
   let populated = false;
   let vintage = null;
+  let downloadUrl = null;
   let zipSha256 = null;
   let pendingReason = null;
   try {
     const got = await fetchNewestZip();
     vintage = got.vintage;
+    downloadUrl = got.url;
     zipSha256 = createHash("sha256").update(got.buf).digest("hex");
     console.log(`[refresh-hud-chas-county] fetched ${vintage} (${got.buf.length} bytes, sha256 ${zipSha256.slice(0, 12)}...)`);
     const byFips = parseTable8(findTable8(unzipEntries(got.buf)), miFips);
@@ -481,6 +520,7 @@ async function main() {
     populated = true;
   } catch (err) {
     if (REQUIRE_LIVE) throw err;
+    await refuseToRegress(outJsonPath, err);
     pendingReason = `Could not fetch or parse the HUD CHAS county file (${err.message}). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values.`;
     console.warn(`[refresh-hud-chas-county] ${pendingReason}`);
     records = buildStubCounties(miFips, pendingReason);
@@ -506,7 +546,7 @@ async function main() {
   }
 
   const payload = {
-    provenance: buildProvenance({ ingestedAt: new Date().toISOString(), populated, vintage, zipSha256, pendingReason }),
+    provenance: buildProvenance({ ingestedAt: new Date().toISOString(), populated, vintage, downloadUrl, zipSha256, pendingReason }),
     counties: records,
   };
   const shim = buildTsShim(populated ? "true" : "false");

@@ -346,6 +346,36 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Added 2026-09-02 (tranche 2): a committed county SVI file. The
+    // tract-level SVI stays a live fetch for the compound index; this entry
+    // tracks the county rankings the brief and /ask read.
+    id: "cdc-svi-county",
+    name: "CDC/ATSDR SVI County Rankings",
+    category: "Social",
+    url: "https://www.atsdr.cdc.gov/place-health/php/svi/index.html",
+    generatedFrom: "cdc-svi-county.generated.json",
+    updateFrequency: "Every 2 years",
+    currentVersion: "SVI 2022 (newest ATSDR county file the script finds)",
+    nextExpectedUpdate: "2027-06-30",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
+    // Added 2026-09-02 (tranche 2): provisional county overdose counts.
+    // The period is read from the data at ingest time and recorded in
+    // provenance.period_ending; this string names the series, not a month.
+    id: "nchs-overdose-county",
+    name: "NCHS Provisional County Overdose Deaths",
+    category: "Health",
+    url: "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-bhi7",
+    generatedFrom: "nchs-overdose-county.generated.json",
+    updateFrequency: "Monthly",
+    currentVersion: "VSRR county series, latest 12-month period at each pull",
+    nextExpectedUpdate: "Ongoing",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
     id: "hud-fmr",
     name: "HUD Fair Market Rents",
     category: "Housing",

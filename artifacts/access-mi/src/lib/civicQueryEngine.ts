@@ -40,6 +40,8 @@ import {
   getAcsSdohValue,
 } from "@/data/acs-sdoh-county";
 import { MDE_COUNTY_PROVENANCE, MDE_SOURCE_LABEL, getMdeValue } from "@/data/mde-county";
+import { SVI_COUNTY_PROVENANCE, getSviOverallPercentile } from "@/data/cdc-svi-county";
+import { getOverdoseForCountyName, overdosePeriodLabel } from "@/data/nchs-overdose-county";
 
 /** Source string for ACS county SDOH bundle points. */
 const ACS_SDOH_SOURCE = `U.S. Census ACS 5-Year ${ACS_SDOH_COUNTY_PROVENANCE.vintage_window}`;
@@ -211,6 +213,7 @@ const TOPIC_KEYWORDS: Record<CivicTopic, string[]> = {
     "substance",
     "behavioral health",
     "opioid",
+    "overdose",
   ],
   provider_shortage: [
     "shortage",
@@ -424,6 +427,17 @@ function resolveEconomicHardship(county: string): CivicDataPoint[] {
       valueLabel: "VERIFIED",
       source: `${ACS_SDOH_SOURCE} (B17020)`,
       vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
+    });
+  }
+  const svi = getSviOverallPercentile(county);
+  if (svi !== null) {
+    points.push({
+      label: "Social vulnerability (US county percentile)",
+      value: `${svi.toFixed(0)}th`,
+      valueLabel: "MODELED",
+      source: `CDC/ATSDR SVI ${SVI_COUNTY_PROVENANCE.svi_year}, county rankings`,
+      vintage: String(SVI_COUNTY_PROVENANCE.svi_year),
+      note: "ATSDR composite of ACS inputs; higher = more vulnerable.",
     });
   }
   if (cd.medianIncome !== null) {
@@ -768,6 +782,30 @@ function resolveMentalHealth(county: string): CivicDataPoint[] {
         vintage: "2026",
       });
     }
+  }
+
+  // Provisional overdose deaths (NCHS VSRR). A suppressed county states the
+  // suppression rather than reporting nothing; pending rows push nothing.
+  const od = getOverdoseForCountyName(county);
+  const odPeriod = overdosePeriodLabel();
+  if (od?.status === "populated" && od.provisionalDeaths12mo !== null) {
+    points.push({
+      label: `Drug overdose deaths (provisional, ${odPeriod ?? "12 months"})`,
+      value: od.provisionalDeaths12mo.toLocaleString(),
+      valueLabel: "VERIFIED",
+      source: "CDC / NCHS Vital Statistics Rapid Release, county counts",
+      vintage: odPeriod ?? "latest",
+      note: "Provisional; NCHS revises as death certificates finalize.",
+    });
+  } else if (od?.status === "suppressed") {
+    points.push({
+      label: `Drug overdose deaths (provisional, ${odPeriod ?? "12 months"})`,
+      value: "under 10 (suppressed by NCHS)",
+      valueLabel: "VERIFIED",
+      source: "CDC / NCHS Vital Statistics Rapid Release, county counts",
+      vintage: odPeriod ?? "latest",
+      note: "NCHS withholds counts under 10 to protect privacy.",
+    });
   }
 
   return points;
