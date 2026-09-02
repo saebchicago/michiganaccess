@@ -1023,3 +1023,89 @@ They are siblings now.
   serially: the flagged routes return zero violations every time when run
   alone. Same class the spec's own `beforeEach` comment already documents
   for the onboarding tour.
+
+## SDOH source expansion, tranche 1 (2026-09-02)
+
+A whole-site review of what the platform holds per Healthy People 2030 SDOH
+domain, against every public source it could honestly add. The full candidate
+universe and verdicts live in `artifacts/access-mi/docs/data-source-candidates.md`
+(rows 38-50); the roadmap that produced them is summarised here with the
+decisions that bind future work.
+
+### What the review found
+
+Health Care Access was deep (county, ZCTA, tract, point). Economic Stability
+was solid at county. Neighborhood / Built Environment was broad but shallow:
+EJScreen at 15 ZCTAs, USDA SRAM 2025 committed with zero records, the atlas
+poverty layer returning null since the 2026-07 audit. Social Context was
+curated, not measured. Education was empty: no ingested dataset, no catalog
+entry, no atlas layer, one ACS attainment column in a static table.
+
+The platform's records about itself had also drifted. `openDataGaps.ts` said
+ACS broadband was pending a CI credential (it had been 83/83 VERIFIED since
+2026-08-24); `dataFreshness.ts` said BLS LAUS was May 2026 (the file said
+June); `/ask` labelled the ALICE hardship point VERIFIED with a hardcoded 2023
+vintage; `atlas-provenance-status.json` still called the ALICE layer 7/83;
+`sourceHealth.generated.json` was empty because nothing ever ran the rollup.
+All fixed in the first commit.
+
+### What shipped
+
+Three datasets, each following the existing recipe (script, generated JSON +
+typed shim, registry / catalog / freshness / constants, workflow, surfaces,
+coverage test):
+
+- **HUD CHAS county cost burden** (new federal feed, 50 feeds / 42 publishers).
+  `refresh-hud-chas-county.mjs` on `dataset-refresh.yml`. Table 8's 53-column
+  layout is asserted, not trusted: owner + renter must equal total and every
+  income subtotal must equal its four burden cells, or the script refuses to
+  write.
+- **Census ACS 5-year county SDOH bundle** - eleven VERIFIED ratios from
+  B17001, B17020, B25070, B25091, B08201, B08303, B15003, C16002, B25014,
+  B25003 - on `build-data.yml`, the only workflow holding CENSUS_API_KEY.
+  Wires the atlas poverty layer for the first time.
+- **MDE county K-12 indicators** - the first education dataset. Manual-drop
+  county CSV plus `build-mde-county.mjs` (ALICE pattern), because
+  mischooldata.org's export URLs rotate yearly and a scheduled fetch would go
+  red every Tuesday. County exports ship VERIFIED; district files are never
+  rolled up.
+
+All three shipped as `pending-ci` stubs: huduser.gov, api.census.gov and
+mischooldata.org are unreachable from the build environment (HTTP 403 at the
+egress proxy). Every surface renders "no data" until the scheduled workflow
+populates the file; none renders a zero. The stub pattern is the BLS one, and
+the `/brief` crash of 2026-08-30 cannot recur because every shim maps over a
+committed 83-row array.
+
+### Standing decision: scraping policy
+
+1. Prefer API, then bulk file, then structured PDF, then HTML, in that order.
+2. Scrape only publisher-owned pages whose terms permit it and that publish
+   the data nowhere else in machine form. Sanctioned by this review: MDE GSRP
+   allocation PDFs, MPSC disconnection reports, the mischooldata.org bulk
+   index (to discover the current year's export URL).
+3. Never scrape aggregators or commercial sites (Zillow, Niche, GreatSchools,
+   Redfin, Data USA). Licensing, attribution and reproducibility all fail the
+   platform's provenance standard.
+4. Every scrape ingest pins its source URL, records the file sha256 in
+   provenance, falls back to a `pending-ci` stub rather than partial data,
+   and labels output MODELED unless the parse reproduces a publisher
+   tabulation exactly.
+5. Yearly-rotating URLs never go on `dataset-refresh.yml` (it re-raises every
+   failure). They use the manual-drop CSV + builder pattern.
+
+### Deferred, deliberately
+
+- A `CatalogDomain` "Education": touches `CATALOG_DOMAINS` and both consumer
+  pages; the MDE entry files under Social until that is its own change.
+- An `education` `CivicTopic` for `/ask` (`TOPIC_LABELS` is an exhaustive
+  Record).
+- An ACS uninsured measure (B27010's age-nested cells); S2701 is the cleaner
+  source.
+- Bumping the separate ACS broadband file from 2019-2023 to 2020-2024.
+- `usda-sram-2025-mi.generated.json` (0 records): `opportunityAtlas.ts` and
+  two tests depend on its `ingestion-pending` lens; fixing the ArcGIS paging
+  is its own item.
+- The remaining dead citation URLs (irs.gov SOI, hudexchange root, EGLE
+  MiLeadSafe, and the bot-blocked API roots): moves could not be confirmed
+  without egress.

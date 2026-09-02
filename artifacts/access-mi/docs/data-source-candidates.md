@@ -121,6 +121,19 @@ classification against the existing 41 sources; `Disp.` is the disposition.
 | 35 | NASA SEDAC GPW (gridded population) | unverified (gridded) | MODELED | L | net-new | HOLD |
 | 36 | NASA POWER (meteorology / solar) | unverified (gridded) | MODELED | M to L | net-new | GO |
 | 37 | NASA MODIS LST (urban heat) | unverified (gridded) | MODELED | L | net-new | GO |
+| 38 | HUD CHAS county cost burden | county | VERIFIED | S | net-new feed (HUD publisher exists) | GO - integrated 2026-09-02 (stub until first scheduled pull) |
+| 39 | Census ACS 5-year county SDOH bundle (B17001, B17020, B25070, B25091, B08201, B08303, B15003, C16002, B25014, B25003) | county | VERIFIED | S | upgrades `Census ACS API` | GO - integrated 2026-09-02 (stub until build-data.yml runs) |
+| 40 | MDE MI School Data county K-12 exports (absenteeism, 3rd-grade ELA, graduation, economically disadvantaged) | county | VERIFIED | M | upgrades `Michigan Dept of Education` | GO - builder integrated 2026-09-02, awaiting first county export |
+| 41 | EPA EJScreen 2024 bulk block-group file, aggregated to county and ZCTA | tract (block group native) | MODELED (aggregation) | M | upgrades `EPA EJScreen` pillar (15 ZCTAs today) | GO - next tranche |
+| 42 | CDC/ATSDR SVI 2022 county file | county | MODELED | S | upgrades `CDC/ATSDR Social Vulnerability Index` (tract today) | GO - next tranche |
+| 43 | USDA ERS Food Environment Atlas | county | VERIFIED | S | net-new (USDA publisher exists) | GO - next tranche |
+| 44 | NCHS provisional county drug-overdose deaths (data.cdc.gov Socrata) | county | VERIFIED | S | upgrades `MDHHS Health Data` MODA text; Socrata route, not WONDER | GO - next tranche |
+| 45 | MDHHS monthly SNAP / FAP county tables | county (monthly) | VERIFIED | M | upgrades `USDA SNAP` FY2022 baseline; closes gap `snap-monthly-county` | GO - tranche 3 |
+| 46 | Head Start locator + MDE GSRP allocations | county | VERIFIED (locator) / MODELED (PDF parse) | M | closes gap `gsrp-headstart-capacity` | HOLD - first sanctioned scrape; needs the scraping policy in FIXLOG applied |
+| 47 | Michigan Treasury local-unit fiscal data (F65) | municipality | VERIFIED | M | net-new | HOLD - first municipal-grain layer; no Place FIPS registry yet |
+| 48 | MPSC utility disconnection / shutoff reports | utility service area | MODELED (PDF parse) | M | would replace the illustrative `utility-stress.ts` stub | HOLD - PDF scrape; publisher-owned, permitted |
+| 49 | MI SOS county election turnout | county | VERIFIED | S | complements UF Election Lab state VEP | GO - tranche 3 |
+| 50 | HUD PIT / HIC by Continuum of Care with a CoC-to-county lookup | CoC (~20 in MI) | VERIFIED | M | upgrades `HUD PIT Count` link-out | HOLD - needs the lookup table authored first |
 
 ## Ranked integration backlog
 
@@ -1309,6 +1322,128 @@ to elevate them and re-run vetting._
 - URL: https://cmu-delphi.github.io/delphi-epidata/api/fluview.html
 
 ---
+
+## Additions from the 2026-09-02 SDOH source review
+
+Candidates 38-50 were added by a whole-site review against the Healthy People
+2030 SDOH domains. Education was the platform's empty domain (no ingested
+dataset, no catalog entry, no atlas layer); 38-40 were integrated in the same
+change, shipped as pending-ci stubs because this build environment cannot
+reach huduser.gov, api.census.gov, or mischooldata.org, and populate on the
+scheduled workflows. See FIXLOG.md, "SDOH source expansion, tranche 1", and
+the scraping policy recorded there.
+
+#### HUD CHAS - Comprehensive Housing Affordability Strategy (county)
+
+1. **Source and publisher:** HUD Office of Policy Development and Research,
+   CHAS special tabulation of ACS 5-year microdata.
+2. **Michigan-relevant measures:** Households paying more than 30% and more
+   than 50% of income on housing, by HUD Area Median Family Income band and
+   tenure (Table 8), for every county.
+3. **Native geography:** `county` (also tract and place files).
+4. **Michigan coverage:** confirmed; the 050 summary-level file covers all
+   3,000+ US counties.
+5. **Latest vintage:** 2018-2022 five-year file, with 2017-2021 as the
+   fallback the ingest script tries second.
+6. **Update cadence:** annual.
+7. **Access method:** bulk CSV inside a zip per vintage and summary level
+   (`cp/<vintage>-050-csv.zip`); no key. A HUD USER API also exists but
+   requires a token, so the bulk route is used.
+8. **Proposed provenance tier:** VERIFIED. HUD's own tabulation; the
+   platform computes shares from HUD's counts and ships the counts alongside.
+9. **Relation to existing sources:** net-new feed under an existing
+   publisher (HUD already ships PIT and FMR), so the publisher count is
+   unchanged.
+10. **Effort:** S. `scripts/refresh-hud-chas-county.mjs`; the parser asserts
+    Table 8's layout identities so a dictionary change fails loudly.
+11. **Disposition:** GO - integrated 2026-09-02.
+12. **Source URL(s):** https://www.huduser.gov/portal/datasets/cp.html
+
+#### Census ACS 5-year county SDOH bundle
+
+1. **Source and publisher:** U.S. Census Bureau, American Community Survey
+   5-Year detail tables via api.census.gov.
+2. **Michigan-relevant measures:** poverty (B17001), child poverty (B17020),
+   renter and owner cost burden (B25070, B25091), no-vehicle households
+   (B08201), 45-minute-plus commutes (B08303), adults without a diploma and
+   with a bachelor's degree (B15003), limited-English households (C16002),
+   crowding (B25014), renter share (B25003). Eleven ratios in one payload.
+3. **Native geography:** `county` (the same tables exist at ZCTA and tract
+   for a follow-up).
+4. **Michigan coverage:** confirmed, all 83 counties, no county suppression
+   for these tables.
+5. **Latest vintage:** 2020-2024 release.
+6. **Update cadence:** annual (December).
+7. **Access method:** open REST with the CENSUS_API_KEY already held as a
+   GitHub Actions secret; `get=` capped at 50 variables so the fetch is
+   split into groups.
+8. **Proposed provenance tier:** VERIFIED. Direct tabulations; margins of
+   error are not propagated and the payload says so.
+9. **Relation to existing sources:** upgrades `Census ACS API`; no new feed.
+10. **Effort:** S. Cloned from `refresh-acs-broadband-county.mjs`.
+11. **Disposition:** GO - integrated 2026-09-02. An uninsured measure was
+    deliberately left out (B27010's age-nested no-coverage cells); S2701 is
+    the cleaner follow-up.
+12. **Source URL(s):** https://api.census.gov/data/2024/acs/acs5 and
+    https://data.census.gov/table/ACSDT5Y2024.B17001
+
+#### MDE / MI School Data county K-12 indicators
+
+1. **Source and publisher:** Michigan Department of Education / Center for
+   Educational Performance and Information, MI School Data.
+2. **Michigan-relevant measures:** chronic absenteeism, 3rd-grade M-STEP
+   ELA proficiency, four-year cohort graduation rate, economically
+   disadvantaged share, at the County location level of each report.
+3. **Native geography:** `county` (reports also publish district, ISD,
+   building).
+4. **Michigan coverage:** confirmed; MDE suppresses cells under 10 students.
+5. **Latest vintage:** 2024-25 school year.
+6. **Update cadence:** annual, with report-specific release dates.
+7. **Access method:** report exports from an ASP.NET viewer whose URLs
+   rotate yearly; no documented bulk endpoint. Hence a manual county-export
+   drop plus `scripts/build-mde-county.mjs`, the ALICE pattern, not a
+   scheduled fetch.
+8. **Proposed provenance tier:** VERIFIED for county-level exports. District
+   files are never rolled up (boundaries cross county lines).
+9. **Relation to existing sources:** upgrades `Michigan Dept of Education`;
+   row 32's org-level NO-GO stands, this is a dataset under that feed.
+10. **Effort:** M (manual drop each year).
+11. **Disposition:** GO - builder, shim, catalog, freshness, and four
+    surfaces integrated 2026-09-02; awaiting the first county export.
+12. **Source URL(s):** https://www.mischooldata.org/
+
+#### Next-tranche and held candidates (41-50)
+
+One-line rationale each; full 12-point entries are written when a candidate
+is picked up.
+
+- **EPA EJScreen 2024 bulk file (41).** EPA retired the interactive tool in
+  2025; the archived block-group CSV remains and can be aggregated to county
+  and ZCTA with the platform's area-weighted crosswalk. Closes the
+  `ejscreen-coverage` gap and lets the compound index restore its
+  environmental dimension honestly. MODELED because aggregation is ours.
+- **CDC/ATSDR SVI 2022 county file (42).** The tract-level feed is already
+  registered; the county CSV is a single keyless file and the first measured
+  social-context county series.
+- **USDA ERS Food Environment Atlas (43).** County grocery and SNAP-store
+  density; pairs with the SNAP retailer counts already ingested.
+- **NCHS provisional county drug-overdose deaths (44).** data.cdc.gov Socrata
+  route (row 10's WONDER HOLD stands); replaces curated MODA text with a
+  numeric series; suppression rules must be honored.
+- **MDHHS monthly SNAP / FAP county tables (45).** Ends the FY2022 baseline
+  and closes `snap-monthly-county`.
+- **Head Start locator + MDE GSRP allocations (46).** GSRP allocations are PDF
+  tables: the platform's first sanctioned scrape, gated on the FIXLOG
+  scraping policy.
+- **Michigan Treasury F65 (47).** First municipal-grain fiscal layer; held
+  until a Census Place FIPS registry exists to key it.
+- **MPSC disconnection reports (48).** PDF scrape of a publisher-owned page;
+  would replace the illustrative `utility-stress.ts` stub.
+- **MI SOS county turnout (49).** Bulk county results complement the state
+  VEP series.
+- **HUD PIT / HIC by CoC (50).** Michigan's ~20 Continuums of Care need a
+  CoC-to-county lookup authored (itself a VERIFIED artifact) before the
+  counts can render on county pages.
 
 ## Methodology notes
 
