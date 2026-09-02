@@ -1,5 +1,174 @@
 {
   "schema": "sourceHealth.v1",
-  "generated_at": "2026-07-04T02:07:13.633Z",
-  "sources": {}
+  "generated_at": "2026-09-02T20:37:42.889Z",
+  "sources": {
+    "bls-laus-county-batch-0": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:22.128Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:22.128Z",
+      "invalid_reason": null
+    },
+    "bls-laus-county-batch-1": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:22.459Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:22.459Z",
+      "invalid_reason": null
+    },
+    "bls-laus-county-batch-2": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:22.794Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:22.794Z",
+      "invalid_reason": null
+    },
+    "bls-laus-county-batch-3": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:23.024Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:23.024Z",
+      "invalid_reason": null
+    },
+    "cdc-places-county-metadata": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:17.554Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:17.554Z",
+      "invalid_reason": null
+    },
+    "cdc-places-county-rows": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:17.919Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:17.919Z",
+      "invalid_reason": null
+    },
+    "cdc-places-zcta-metadata": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:19.121Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:19.121Z",
+      "invalid_reason": null
+    },
+    "cdc-places-zcta-chunk-0": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:19.598Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:19.598Z",
+      "invalid_reason": null
+    },
+    "cdc-places-zcta-chunk-1": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:20.304Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:20.304Z",
+      "invalid_reason": null
+    },
+    "cdc-places-zcta-chunk-2": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:20.792Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:20.792Z",
+      "invalid_reason": null
+    },
+    "cdc-places-zcta-chunk-3": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:21.092Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:21.092Z",
+      "invalid_reason": null
+    },
+    "cdc-places-zcta-chunk-4": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:21.446Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:21.446Z",
+      "invalid_reason": null
+    },
+    "chr-county-health-food-2025": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:33.275Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:33.275Z",
+      "invalid_reason": null
+    },
+    "chr-county-health-pcp-2025": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:33.279Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:33.279Z",
+      "invalid_reason": null
+    },
+    "chr-county-health-uninsured-2025": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:33.291Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:33.291Z",
+      "invalid_reason": null
+    },
+    "nhtsa-fars-2020": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:34.241Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:34.241Z",
+      "invalid_reason": null
+    },
+    "nhtsa-fars-2021": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:35.416Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:35.416Z",
+      "invalid_reason": null
+    },
+    "nhtsa-fars-2022": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:36.336Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:36.336Z",
+      "invalid_reason": null
+    },
+    "nhtsa-fars-2023": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:37.675Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:37.675Z",
+      "invalid_reason": null
+    },
+    "nhtsa-fars-2024": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:38.740Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:38.740Z",
+      "invalid_reason": null
+    },
+    "hrsa-hpsa-primarycare-county": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:27.397Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:27.397Z",
+      "invalid_reason": null
+    },
+    "hrsa-hpsa-dental-county": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:30.158Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:30.158Z",
+      "invalid_reason": null
+    },
+    "hrsa-hpsa-mental-county": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:31.796Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:31.796Z",
+      "invalid_reason": null
+    },
+    "hud-chas-county-2018thru2022": {
+      "latest_valid": false,
+      "latest_retrieved_at": "2026-09-02T20:37:42.564Z",
+      "last_valid_retrieved_at": null,
+      "invalid_reason": "payload is 0 bytes, below the expected minimum of 100000"
+    },
+    "hud-chas-county-2017thru2021": {
+      "latest_valid": false,
+      "latest_retrieved_at": "2026-09-02T20:37:42.776Z",
+      "last_valid_retrieved_at": null,
+      "invalid_reason": "payload is 0 bytes, below the expected minimum of 100000"
+    },
+    "census-zcta-county-relationship-2020": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:15.975Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:15.975Z",
+      "invalid_reason": null
+    },
+    "usda-snap-retailer-locator": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:40.690Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:40.690Z",
+      "invalid_reason": null
+    },
+    "census-zcta-county-crosswalk-2020": {
+      "latest_valid": true,
+      "latest_retrieved_at": "2026-09-02T20:37:16.458Z",
+      "last_valid_retrieved_at": "2026-09-02T20:37:16.458Z",
+      "invalid_reason": null
+    }
+  }
 }

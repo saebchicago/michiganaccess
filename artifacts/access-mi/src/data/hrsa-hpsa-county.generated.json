@@ -32,7 +32,7 @@
         "miOtherStatusHpsas": 410
       }
     ],
-    "ingested_at": "2026-09-01T12:37:32.701Z",
+    "ingested_at": "2026-09-02T20:37:32.211Z",
     "ingest_script": "scripts/refresh-hrsa-hpsa-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,

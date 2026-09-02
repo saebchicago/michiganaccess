@@ -17,13 +17,13 @@
       "gt80le100ami: > 80% to <= 100% HAMFI",
       "gt100ami: > 100% HAMFI"
     ],
-    "ingested_at": "2026-09-02T10:42:35.900Z",
+    "ingested_at": "2026-09-02T20:37:42.777Z",
     "ingest_script": "scripts/refresh-hud-chas-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
     "value_label": "PENDING",
     "populated": false,
-    "pending_reason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values.",
+    "pending_reason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values.",
     "notes": "HUD CHAS is a special tabulation of ACS 5-year microdata against HUD Area Median Family Income (HAMFI) bands. Cost burden = gross housing costs as a share of household income; >30% is the HUD affordability threshold, >50% is severe. Counts are HUD's; percents are computed here from those counts and the counts ship alongside. 'Not computed' burden cells (zero or negative income) stay in the universe and out of the numerator, so shares are conservative. When status = 'pending-ci' the ingest environment could not reach huduser.gov and the file must be re-run on the scheduled dataset-refresh workflow to populate."
   },
   "counties": [
@@ -39,7 +39,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26003",
@@ -53,7 +53,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26005",
@@ -67,7 +67,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26007",
@@ -81,7 +81,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26009",
@@ -95,7 +95,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26011",
@@ -109,7 +109,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26013",
@@ -123,7 +123,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26015",
@@ -137,7 +137,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26017",
@@ -151,7 +151,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26019",
@@ -165,7 +165,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26021",
@@ -179,7 +179,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26023",
@@ -193,7 +193,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26025",
@@ -207,7 +207,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26027",
@@ -221,7 +221,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26029",
@@ -235,7 +235,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26031",
@@ -249,7 +249,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26033",
@@ -263,7 +263,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26035",
@@ -277,7 +277,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26037",
@@ -291,7 +291,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26039",
@@ -305,7 +305,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26041",
@@ -319,7 +319,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26043",
@@ -333,7 +333,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26045",
@@ -347,7 +347,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26047",
@@ -361,7 +361,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26049",
@@ -375,7 +375,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26051",
@@ -389,7 +389,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26053",
@@ -403,7 +403,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26055",
@@ -417,7 +417,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26057",
@@ -431,7 +431,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26059",
@@ -445,7 +445,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26061",
@@ -459,7 +459,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26063",
@@ -473,7 +473,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26065",
@@ -487,7 +487,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26067",
@@ -501,7 +501,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26069",
@@ -515,7 +515,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26071",
@@ -529,7 +529,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26073",
@@ -543,7 +543,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26075",
@@ -557,7 +557,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26077",
@@ -571,7 +571,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26079",
@@ -585,7 +585,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26081",
@@ -599,7 +599,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26083",
@@ -613,7 +613,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26085",
@@ -627,7 +627,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26087",
@@ -641,7 +641,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26089",
@@ -655,7 +655,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26091",
@@ -669,7 +669,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26093",
@@ -683,7 +683,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26095",
@@ -697,7 +697,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26097",
@@ -711,7 +711,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26099",
@@ -725,7 +725,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26101",
@@ -739,7 +739,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26103",
@@ -753,7 +753,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26105",
@@ -767,7 +767,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26107",
@@ -781,7 +781,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26109",
@@ -795,7 +795,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26111",
@@ -809,7 +809,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26113",
@@ -823,7 +823,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26115",
@@ -837,7 +837,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26117",
@@ -851,7 +851,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26119",
@@ -865,7 +865,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26121",
@@ -879,7 +879,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26123",
@@ -893,7 +893,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26125",
@@ -907,7 +907,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26127",
@@ -921,7 +921,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26129",
@@ -935,7 +935,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26131",
@@ -949,7 +949,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26133",
@@ -963,7 +963,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26135",
@@ -977,7 +977,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26137",
@@ -991,7 +991,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26139",
@@ -1005,7 +1005,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26141",
@@ -1019,7 +1019,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26143",
@@ -1033,7 +1033,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26145",
@@ -1047,7 +1047,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26147",
@@ -1061,7 +1061,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26149",
@@ -1075,7 +1075,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26151",
@@ -1089,7 +1089,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26153",
@@ -1103,7 +1103,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26155",
@@ -1117,7 +1117,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26157",
@@ -1131,7 +1131,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26159",
@@ -1145,7 +1145,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26161",
@@ -1159,7 +1159,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26163",
@@ -1173,7 +1173,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     },
     {
       "countyFips": "26165",
@@ -1187,7 +1187,7 @@
       "ownerCostBurdened30Pct": null,
       "renterCostBurdened30Pct": null,
       "byIncomeBand": null,
-      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] fetch failed: HTTP 403 | 2017thru2021: [hud-chas-county-2017thru2021] fetch failed: HTTP 403). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": "Could not fetch or parse the HUD CHAS county file (No CHAS county zip could be fetched. 2018thru2022: [hud-chas-county-2018thru2022] shape validation failed: payload is 0 bytes, below the expected minimum of 100000 | 2017thru2021: [hud-chas-county-2017thru2021] shape validation failed: payload is 0 bytes, below the expected minimum of 100000). Re-run scripts/refresh-hud-chas-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
     }
   ]
 }
