@@ -20,6 +20,7 @@ import {
   HUD_CHAS_COUNTY_PROVENANCE,
   getChasForCountyName,
 } from "@/data/hud-chas-county";
+import { MDE_COUNTY_PROVENANCE, MDE_SOURCE_LABEL, getMdeValue } from "@/data/mde-county";
 
 function parseRate(val: string): number {
   return parseFloat(val.replace(/[^0-9.]/g, "")) || 0;
@@ -358,6 +359,23 @@ export function buildCountySnapshotMetrics(county: string): SnapshotMetric[] {
       sourceId: HUD_CHAS_COUNTY_PROVENANCE.vintage_window
         ? `hud-chas-county-${HUD_CHAS_COUNTY_PROVENANCE.vintage_window.replace("-", "thru")}`
         : undefined,
+    });
+  }
+
+  // Chronic absenteeism (MDE / CEPI county export). Omitted while the
+  // dataset is pending or the county cell is suppressed (under 10 students),
+  // so neither state is ever shown as 0%.
+  const absent = getMdeValue(county, "chronicAbsenteeismPct");
+  if (absent !== null) {
+    metrics.push({
+      id: "chronic-absenteeism",
+      label: "Chronic Absenteeism (K-12)",
+      value: absent.toFixed(1),
+      unit: "% of students",
+      geoResolution: "county",
+      countyName: county,
+      source: MDE_SOURCE_LABEL,
+      vintage: `${MDE_COUNTY_PROVENANCE.school_year} school year`,
     });
   }
 

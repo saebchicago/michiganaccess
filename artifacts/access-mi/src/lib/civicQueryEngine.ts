@@ -39,6 +39,7 @@ import {
   ACS_SDOH_COUNTY_PROVENANCE,
   getAcsSdohValue,
 } from "@/data/acs-sdoh-county";
+import { MDE_COUNTY_PROVENANCE, MDE_SOURCE_LABEL, getMdeValue } from "@/data/mde-county";
 
 /** Source string for ACS county SDOH bundle points. */
 const ACS_SDOH_SOURCE = `U.S. Census ACS 5-Year ${ACS_SDOH_COUNTY_PROVENANCE.vintage_window}`;
@@ -866,6 +867,20 @@ function resolveGeneral(county: string): CivicDataPoint[] {
       source: "BLS LAUS",
       vintage: blsData.latestPeriod ?? "2026",
       note: blsData.preliminary ? "Preliminary" : undefined,
+    });
+  }
+
+  // K-12 chronic absenteeism (MDE / CEPI county export). Null while the
+  // dataset is pending or the county cell is suppressed, so nothing is
+  // pushed rather than a zero.
+  const absent = getMdeValue(county, "chronicAbsenteeismPct");
+  if (absent !== null) {
+    points.push({
+      label: "Chronically absent K-12 students",
+      value: `${absent.toFixed(1)}%`,
+      valueLabel: "VERIFIED",
+      source: MDE_SOURCE_LABEL,
+      vintage: MDE_COUNTY_PROVENANCE.school_year ?? "latest",
     });
   }
 

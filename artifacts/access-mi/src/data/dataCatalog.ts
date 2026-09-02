@@ -350,6 +350,21 @@ export const DATA_CATALOG: CatalogEntry[] = [
     poweredSurfaces: ["/county/:slug", "/brief", "/ask", "/health-equity-atlas"],
   },
   {
+    id: "mde-county-education",
+    name: "MDE County K-12 Indicators",
+    kind: "ingested",
+    registryFeed: "Michigan Dept of Education",
+    publisherOrg: "MDE",
+    domain: "Social",
+    geography: "County",
+    access: "static",
+    cadence: "Annual",
+    sourceUrl: "https://www.mischooldata.org/",
+    description:
+      "Chronic absenteeism, 3rd-grade M-STEP English language arts proficiency, four-year graduation rate, and economically disadvantaged share from MI School Data's county-level report exports. MDE suppresses cells under 10 students; those render as unavailable, never zero.",
+    poweredSurfaces: ["/early-childhood", "/county/:slug", "/brief", "/ask"],
+  },
+  {
     id: "michigan-211",
     name: "Michigan 2-1-1",
     kind: "ingested",

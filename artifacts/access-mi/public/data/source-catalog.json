@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-09-02T10:51:25.504Z",
+    "generated": "2026-09-02T10:56:35.750Z",
     "source": "src/data/sourcesRegistry.ts",
     "entryCount": 50,
     "schema": "v1",
@@ -507,7 +507,7 @@
       "name": "Michigan Dept of Education",
       "agency": "MDE",
       "url": "https://www.mischooldata.org/",
-      "description": "School data, absenteeism",
+      "description": "County K-12 indicators: chronic absenteeism, 3rd-grade M-STEP ELA proficiency, 4-year graduation rate, economically disadvantaged share (MI School Data county exports)",
       "updateFrequency": "Annual",
       "license": null,
       "licenseReviewStatus": "pending",

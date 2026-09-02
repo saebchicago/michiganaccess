@@ -11,6 +11,11 @@ import ChildcareEducationHub from "@/components/family/ChildcareEducationHub";
 import ChildcareDesertCard from "@/components/equity/ChildcareDesertCard";
 import { GapFlag } from "@/components/shared/GapFlag";
 import {
+  MDE_COUNTY_PROVENANCE,
+  MDE_SOURCE_LABEL,
+  getMdeForCountyName,
+} from "@/data/mde-county";
+import {
   RX_KIDS_COMMUNITIES,
   RX_KIDS_COVERED_COUNTIES,
   RX_KIDS_OUTCOMES,
@@ -305,6 +310,49 @@ export default function EarlyChildhoodPage() {
         </div>
       </section>
 
+      {county && (() => {
+        const mde = getMdeForCountyName(county);
+        if (!mde || mde.status === "pending-ci") return null;
+        const rows: Array<{ label: string; value: number | null }> = [
+          { label: "3rd-grade M-STEP ELA proficient", value: mde.values.grade3ElaProficientPct },
+          { label: "Chronically absent (K-12)", value: mde.values.chronicAbsenteeismPct },
+          { label: "Four-year graduation rate", value: mde.values.gradRate4yr },
+          { label: "Economically disadvantaged students", value: mde.values.economicallyDisadvantagedPct },
+        ];
+        return (
+          <section className="container max-w-4xl py-8 border-t border-border/30">
+            <Card>
+              <CardContent className="py-4 space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="text-sm font-semibold text-foreground">
+                    {county} County schools, {mde.schoolYear}
+                  </p>
+                  <ProvenanceTag
+                    label="VERIFIED"
+                    source={MDE_SOURCE_LABEL}
+                    vintage={`${mde.schoolYear} school year`}
+                  />
+                </div>
+                <dl className="grid gap-3 sm:grid-cols-2">
+                  {rows.map((r) => (
+                    <div key={r.label} className="rounded-lg border border-border bg-background p-3">
+                      <dt className="text-xs text-muted-foreground">{r.label}</dt>
+                      <dd className="text-xl font-bold text-foreground tabular-nums">
+                        {r.value !== null ? `${r.value.toFixed(1)}%` : "Suppressed (under 10 students)"}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="text-[10px] text-muted-foreground">
+                  {MDE_COUNTY_PROVENANCE.suppression_rule} County-level MI School
+                  Data exports; district files are not rolled up.
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+        );
+      })()}
+
       <section className="container max-w-4xl py-8 border-t border-border/30">
         <Card className="bg-muted/30">
           <CardContent className="py-4 space-y-2">
@@ -324,6 +372,8 @@ export default function EarlyChildhoodPage() {
               capacity and preschool enrollment data (Great Start Readiness
               Program, Head Start) are on our roadmap for a future update but
               not yet on the platform.
+              {!MDE_COUNTY_PROVENANCE.populated &&
+                " County-level absenteeism, 3rd-grade ELA, graduation, and economically disadvantaged shares are wired and awaiting the first MI School Data county export."}
             </p>
           </CardContent>
         </Card>

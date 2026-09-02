@@ -35,6 +35,7 @@ import {
   ACS_SDOH_COUNTY_PROVENANCE,
   getAcsSdohValue,
 } from "@/data/acs-sdoh-county";
+import { MDE_COUNTY_PROVENANCE, getMdeValue } from "@/data/mde-county";
 import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -430,6 +431,16 @@ export default function BriefPage() {
               badge: val !== null ? "VERIFIED" : "no data",
               source: "ACS 5-Year (B08201)",
               vintage: ACS_SDOH_COUNTY_PROVENANCE.vintage_window,
+            };
+          })(),
+          (() => {
+            const val = getMdeValue(county, "chronicAbsenteeismPct");
+            return {
+              label: "Chronic Absenteeism (K-12)",
+              value: val !== null ? `${val.toFixed(1)}%` : "no data",
+              badge: val !== null ? "VERIFIED" : "no data",
+              source: "MDE / CEPI, MI School Data",
+              vintage: MDE_COUNTY_PROVENANCE.school_year ?? "awaiting first county export",
             };
           })(),
         ]

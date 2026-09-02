@@ -293,7 +293,8 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "Michigan Dept of Education",
       org: "MDE",
       url: "https://www.mischooldata.org/",
-      powers: "School data, absenteeism",
+      powers:
+        "County K-12 indicators: chronic absenteeism, 3rd-grade M-STEP ELA proficiency, 4-year graduation rate, economically disadvantaged share (MI School Data county exports)",
       frequency: "Annual",
     },
     {

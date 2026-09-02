@@ -329,6 +329,23 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Added 2026-09-02: the platform's first ingested education dataset.
+    // Built by hand from MI School Data county exports (see
+    // scripts/build-mde-county.mjs for why it is a manual drop); the
+    // school year comes from the export and this string is updated with
+    // it. Shipped as a pending-ci stub until the first export is dropped.
+    id: "mde-county-education",
+    name: "MDE County K-12 Indicators",
+    category: "Education",
+    url: "https://www.mischooldata.org/",
+    generatedFrom: "mde-county.generated.json",
+    updateFrequency: "Annual",
+    currentVersion: "MI School Data county exports (awaiting first drop)",
+    nextExpectedUpdate: "2026-11-30",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
     id: "hud-fmr",
     name: "HUD Fair Market Rents",
     category: "Housing",

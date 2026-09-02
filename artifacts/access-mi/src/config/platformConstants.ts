@@ -164,10 +164,10 @@ export const MONITORED_API_FEEDS_COUNT = 4;
  * Went 15 -> 17 on 2026-08-16: bls-laus and hrsa-hpsa are ingested into
  * committed generated datasets and render on live pages, but had no
  * freshness entry, so this rollup under-reported actual coverage.
- * 17 -> 19 on 2026-09-02: hud-chas county cost burden and the ACS county
- * SDOH bundle ingested.
+ * 17 -> 20 on 2026-09-02: hud-chas county cost burden, the ACS county
+ * SDOH bundle, and MDE county K-12 indicators ingested.
  */
-export const FRESHNESS_TRACKED_COUNT = 19;
+export const FRESHNESS_TRACKED_COUNT = 20;
 
 /**
  * Number of sources with live endpoint health checks on the /status page.
