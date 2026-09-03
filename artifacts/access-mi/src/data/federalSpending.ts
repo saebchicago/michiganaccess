@@ -73,10 +73,55 @@ export const FEDERAL_SPENDING_PROVENANCE: FederalSpendingProvenance = payload.pr
 export const FEDERAL_SPENDING_BUCKETS = payload.buckets;
 export const FEDERAL_SPENDING_IS_POPULATED = true;
 
+/**
+ * A county whose figures came back from USASpending. Every numeric field is a
+ * real published number here (0 is a real 0), which is why the pending rows
+ * are filtered out rather than defaulted.
+ */
+export type PopulatedCountyFederalSpending = Omit<
+  CountyFederalSpending,
+  | "total_awards_millions"
+  | "medicaid_millions"
+  | "snap_millions"
+  | "housing_millions"
+  | "infrastructure_millions"
+  | "health_grants_millions"
+  | "education_millions"
+  | "energy_millions"
+  | "cfda_covered_millions"
+  | "fy"
+> & {
+  total_awards_millions: number;
+  medicaid_millions: number;
+  snap_millions: number;
+  housing_millions: number;
+  infrastructure_millions: number;
+  health_grants_millions: number;
+  education_millions: number;
+  energy_millions: number;
+  cfda_covered_millions: number;
+  fy: number;
+};
+
+function isPopulated(c: CountyFederalSpending): c is PopulatedCountyFederalSpending {
+  return (
+    c.status === "populated" &&
+    c.total_awards_millions !== null &&
+    c.medicaid_millions !== null &&
+    c.snap_millions !== null &&
+    c.housing_millions !== null &&
+    c.infrastructure_millions !== null &&
+    c.health_grants_millions !== null &&
+    c.education_millions !== null &&
+    c.energy_millions !== null &&
+    c.cfda_covered_millions !== null &&
+    c.fy !== null
+  );
+}
+
 /** Every Michigan county with a published total, newest complete fiscal year. */
-export const MICHIGAN_FEDERAL_SPENDING: CountyFederalSpending[] = payload.counties.filter(
-  (c) => c.status === "populated" && c.total_awards_millions !== null,
-);
+export const MICHIGAN_FEDERAL_SPENDING: PopulatedCountyFederalSpending[] =
+  payload.counties.filter(isPopulated);
 
 /** All 83 records including pending ones, for provenance and audit views. */
 export const FEDERAL_SPENDING_ALL_COUNTIES: readonly CountyFederalSpending[] = payload.counties;
@@ -95,14 +140,23 @@ export function getCountyFederalSpending(county: string): CountyFederalSpending 
  */
 export function getSafetyNetShare(county: string): number | null {
   const rec = getCountyFederalSpending(county);
-  if (!rec || rec.status !== "populated" || !rec.total_awards_millions) return null;
-  const parts = [rec.medicaid_millions, rec.snap_millions, rec.housing_millions, rec.energy_millions];
-  if (parts.every((p) => p === null)) return null;
-  const sum = parts.reduce((s, p) => s + (p ?? 0), 0);
+  if (!rec || !isPopulated(rec) || rec.total_awards_millions === 0) return null;
+  const sum =
+    rec.medicaid_millions + rec.snap_millions + rec.housing_millions + rec.energy_millions;
   return Math.round((sum / rec.total_awards_millions) * 1000) / 10;
+}
+
+/**
+ * Superseded name for the safety-net share. The old federal "dependency"
+ * score was an unsourced illustrative table; this returns a ratio of
+ * published obligations instead, or null when unknown.
+ */
+export function getFederalDependencyScore(county: string): number | null {
+  return getSafetyNetShare(county);
 }
 
 /** Back-compat alias for the safety-net share. Returns null when unknown. */
 export function n(county: string): number | null {
   return getSafetyNetShare(county);
 }
+
