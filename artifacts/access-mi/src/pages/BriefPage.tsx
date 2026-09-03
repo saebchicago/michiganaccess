@@ -451,35 +451,51 @@ export default function BriefPage() {
               vintage: MDE_COUNTY_PROVENANCE.school_year ?? "awaiting first county export",
             };
           })(),
-          (() => {
+          // SVI and provisional overdose counts are omitted until the
+          // scheduled refresh populates them - an empty "no data" row for all
+          // 83 counties reads as a platform defect, not as pending ingest.
+          ...(((): Array<{
+            label: string;
+            value: string;
+            badge: string;
+            source: string;
+            vintage: string;
+          }> => {
             const pct = getSviOverallPercentile(county);
-            return {
-              label: "Social Vulnerability (US percentile)",
-              value: pct !== null ? `${pct.toFixed(0)}th` : "no data",
-              badge: pct !== null ? "MODELED" : "no data",
-              source: "CDC/ATSDR SVI county rankings",
-              vintage: SVI_COUNTY_PROVENANCE.svi_year
-                ? `SVI ${SVI_COUNTY_PROVENANCE.svi_year}`
-                : "pending first pull",
-            };
-          })(),
-          (() => {
+            if (pct === null) return [];
+            return [
+              {
+                label: "Social Vulnerability (US percentile)",
+                value: `${pct.toFixed(0)}th`,
+                badge: "MODELED",
+                source: "CDC/ATSDR SVI county rankings",
+                vintage: `SVI ${SVI_COUNTY_PROVENANCE.svi_year}`,
+              },
+            ];
+          })()),
+          ...(((): Array<{
+            label: string;
+            value: string;
+            badge: string;
+            source: string;
+            vintage: string;
+          }> => {
             const od = getOverdoseForCountyName(county);
-            const period = overdosePeriodLabel();
+            if (!od || od.status === "pending-ci") return [];
             const value =
-              od?.status === "populated" && od.provisionalDeaths12mo !== null
+              od.status === "populated" && od.provisionalDeaths12mo !== null
                 ? od.provisionalDeaths12mo.toLocaleString()
-                : od?.status === "suppressed"
-                  ? "under 10 (suppressed)"
-                  : "no data";
-            return {
-              label: "Drug Overdose Deaths (provisional, 12-mo)",
-              value,
-              badge: od?.status === "populated" ? "VERIFIED" : "no data",
-              source: "CDC / NCHS Vital Statistics Rapid Release",
-              vintage: period ?? "pending first pull",
-            };
-          })(),
+                : "under 10 (suppressed)";
+            return [
+              {
+                label: "Drug Overdose Deaths (provisional, 12-mo)",
+                value,
+                badge: od.status === "populated" ? "VERIFIED" : "SUPPRESSED",
+                source: "CDC / NCHS Vital Statistics Rapid Release",
+                vintage: overdosePeriodLabel() ?? "latest",
+              },
+            ];
+          })()),
         ]
       : [];
 
