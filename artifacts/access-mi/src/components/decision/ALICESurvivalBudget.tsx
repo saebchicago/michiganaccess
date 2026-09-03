@@ -94,21 +94,17 @@ export default function ALICESurvivalBudget() {
   const budget = BUDGET_PROFILES[household];
   const totalBudget = Object.values(budget).reduce((s, v) => s + v, 0);
 
-  // Median income estimate by household type for this county
-  const medianIncome = useMemo(() => {
-    const base = alice?.aliceThreshold_single ?? 28740;
-    switch (household) {
-      case "single":
-        return Math.round(base * 0.95);
-      case "single_parent_1":
-        return Math.round(base * 1.4);
-      case "couple_2":
-        return Math.round(base * 2.6);
-    }
-  }, [alice, household]);
+  // No county median-income series ships with this app, and the ALICE
+  // Threshold is an income *requirement*, not household earnings - deriving a
+  // "median income" from it produced a false monthly surplus. Compare the
+  // modeled budget against the official ALICE Threshold instead.
+  const annualNeeded = totalBudget * 12;
+  // Official under-65 ALICE income threshold for the county (United For ALICE).
+  const officialThreshold = alice?.aliceThreshold_family4 || null;
+  const hardshipPct =
+    alice?.combinedHardshipPct ??
+    MICHIGAN_ALICE_STATEWIDE.combinedHardshipPct;
 
-  const monthlyIncome = Math.round(medianIncome / 12);
-  const gap = monthlyIncome - totalBudget;
 
   const chartData = [
     { category: "Housing", cost: budget.housing, fill: "#0A4C95" },
