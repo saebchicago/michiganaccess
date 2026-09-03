@@ -28,7 +28,7 @@ const ENDPOINTS: Record<string, { url: string; transform?: string }> = {
     url: "https://services2.arcgis.com/qvkbeam7Wirps6zC/ArcGIS/rest/services/DDOT_Bus_Routes/FeatureServer/0/query?where=1%3D0&outFields=*&f=geojson&outSR=4326",
   },
   "pfas-sites": {
-    url: "https://services1.arcgis.com/VdSAmGfE7jMMbR2h/arcgis/rest/services/PFAS_Sites_Public/FeatureServer/0/query?where=1%3D1&outFields=Site_Name,County,Site_Type,Investigation_Status,City&f=geojson&outSR=4326&resultRecordCount=500",
+    url: "https://services1.arcgis.com/FNjlrOFR0aGJ71Tg/arcgis/rest/services/Michigan_PFAS_Sites_and_Areas_of_Interest_PUBLIC_view/FeatureServer/1/query?where=1%3D1&outFields=Name,County,City,Type,SiteOrAoi,ResidentialWellsSampled,WebpageSite&f=geojson&outSR=4326&resultRecordCount=1000",
   },
 };
 
@@ -140,10 +140,11 @@ Deno.serve(async (req) => {
 
     if (!response.ok) {
       console.error(`Upstream error for ${layer || customUrl}: ${response.status}`);
-      const empty = { type: "FeatureCollection", features: [] };
+      // Surface the failure. Returning HTTP 200 with an empty FeatureCollection
+      // made the UI render "no data" for what is actually an outage.
       return new Response(
-        JSON.stringify({ data: empty, cached: false, error: `Upstream returned ${response.status}`, fetched_at: new Date().toISOString() }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        JSON.stringify({ error: `Upstream returned ${response.status}`, layer: layer ?? null, fetched_at: new Date().toISOString() }),
+        { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -164,11 +165,10 @@ Deno.serve(async (req) => {
     );
   } catch (error: unknown) {
     console.error("ArcGIS proxy error:", error);
-    const empty = { type: "FeatureCollection", features: [] };
     const msg = error instanceof Error ? error.message : "Failed to fetch data";
     return new Response(
-      JSON.stringify({ data: empty, cached: false, error: msg, fetched_at: new Date().toISOString() }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      JSON.stringify({ error: msg, fetched_at: new Date().toISOString() }),
+      { status: 502, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
 });
