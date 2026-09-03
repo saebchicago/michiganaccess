@@ -23,6 +23,7 @@ const PENDING_MARKERS = [/awaiting/i, /pending/i, /not yet/i];
 const WATCHED = [
   ["src/data/cdc-svi-county.generated.json", "cdc-svi-county"],
   ["src/data/nchs-overdose-county.generated.json", "nchs-overdose-county"],
+  ["src/data/usaspending-county.generated.json", "usaspending"],
 ];
 
 const freshness = await readFile(freshnessPath, "utf8");
