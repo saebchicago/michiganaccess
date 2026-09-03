@@ -315,6 +315,24 @@ serve(async (req) => {
         const parsed = await readJsonStrict(resp);
 
         if (!parsed.ok) {
+          // The Census API answers an invalid/expired key with HTTP 200 and an
+          // "Invalid Key" HTML page. Every table then fails identically, so
+          // short-circuit with an actionable diagnostic instead of repeating
+          // the same upstream body eight times.
+          if (/invalid key/i.test(parsed.bodySnippet)) {
+            return new Response(
+              JSON.stringify({
+                error: "CENSUS_API_KEY is invalid or expired",
+                proxyVersion: PROXY_VERSION,
+                hint:
+                  "The Census API rejected the configured key ('Invalid Key'). Request a new key at https://api.census.gov/data/key_signup.html, activate it via the confirmation email, and update the CENSUS_API_KEY secret.",
+              }),
+              {
+                status: 502,
+                headers: { ...corsHeaders, "Content-Type": "application/json" },
+              },
+            );
+          }
           tableErrors.push({
             table,
             upstreamStatus: parsed.status,
