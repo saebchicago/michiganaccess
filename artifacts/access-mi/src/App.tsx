@@ -10,7 +10,12 @@ import { APP_ROUTES } from "./routes/manifest";
 import { usePageViewTracking } from "./hooks/usePageViewTracking";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
 import Index from "./pages/Index";
+import { AuthProvider } from "./hooks/useAuth";
+import RequireStaff from "./components/auth/RequireStaff";
 import NotFound from "./pages/NotFound";
+
+const SignInPage = lazy(() => import("./pages/SignInPage"));
+const AdminPage = lazy(() => import("./pages/AdminPage"));
 
 const OpportunityAtlasPage = lazy(() => import("./pages/OpportunityAtlasPage"));
 
@@ -57,6 +62,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <CountyProvider>
       <NerdModeProvider>
+        <AuthProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
@@ -216,12 +222,22 @@ const App = () => (
                     path="/opportunity-atlas"
                     element={<Navigate to="/opportunity" replace />}
                   />
+                  <Route path="/signin" element={<SignInPage />} />
+                  <Route
+                    path="/admin"
+                    element={
+                      <RequireStaff>
+                        <AdminPage />
+                      </RequireStaff>
+                    }
+                  />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
             </ErrorBoundary>
           </BrowserRouter>
         </TooltipProvider>
+        </AuthProvider>
       </NerdModeProvider>
     </CountyProvider>
   </QueryClientProvider>
