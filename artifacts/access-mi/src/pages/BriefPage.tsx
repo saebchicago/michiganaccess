@@ -454,13 +454,7 @@ export default function BriefPage() {
           // SVI and provisional overdose counts are omitted until the
           // scheduled refresh populates them - an empty "no data" row for all
           // 83 counties reads as a platform defect, not as pending ingest.
-          ...(((): Array<{
-            label: string;
-            value: string;
-            badge: string;
-            source: string;
-            vintage: string;
-          }> => {
+          ...(((): BriefStat[] => {
             const pct = getSviOverallPercentile(county);
             if (pct === null) return [];
             return [
@@ -473,13 +467,7 @@ export default function BriefPage() {
               },
             ];
           })()),
-          ...(((): Array<{
-            label: string;
-            value: string;
-            badge: string;
-            source: string;
-            vintage: string;
-          }> => {
+          ...(((): BriefStat[] => {
             const od = getOverdoseForCountyName(county);
             if (!od || od.status === "pending-ci") return [];
             const value =
@@ -490,7 +478,7 @@ export default function BriefPage() {
               {
                 label: "Drug Overdose Deaths (provisional, 12-mo)",
                 value,
-                badge: od.status === "populated" ? "VERIFIED" : "SUPPRESSED",
+                badge: "VERIFIED" as const,
                 source: "CDC / NCHS Vital Statistics Rapid Release",
                 vintage: overdosePeriodLabel() ?? "latest",
               },
