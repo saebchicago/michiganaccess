@@ -6,7 +6,7 @@
  * requests fail at the database, not just disappear from the UI.
  */
 import { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -29,8 +29,7 @@ function useQueueRows(queue: Queue) {
     queryKey: ["admin-queue", queue],
     queryFn: async () => {
       const orderCol = queue === "community_events" ? "created_at" : "submitted_at";
-      const { data, error } = await supabase
-        .from(queue)
+      const { data, error } = await (supabase.from(queue) as any)
         .select("*")
         .order(orderCol, { ascending: false })
         .limit(200);
@@ -54,7 +53,7 @@ function QueuePanel({ queue }: { queue: Queue }) {
               status: approve ? "approved" : "rejected",
               reviewed_at: new Date().toISOString(),
             };
-      const { error: err } = await supabase.from(queue).update(patch).eq("id", id);
+      const { error: err } = await (supabase.from(queue) as any).update(patch).eq("id", id);
       if (err) throw err;
     },
     onSuccess: () => {
@@ -129,14 +128,10 @@ function QueuePanel({ queue }: { queue: Queue }) {
 export default function AdminPage() {
   const { user, roles, signOut } = useAuth();
   const [tab, setTab] = useState<Queue>("partnership_submissions");
+  usePageMeta({ title: "Moderation queue", description: "Reviewer moderation queue for Access Michigan submissions.", path: "/admin", noindex: true });
 
   return (
-    <>
-      <Helmet>
-        <title>Moderation queue | Access Michigan</title>
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
-      <main className="min-h-screen bg-background px-4 py-10">
+    <>      <main className="min-h-screen bg-background px-4 py-10">
         <div className="mx-auto max-w-3xl space-y-6">
           <header className="flex flex-wrap items-end justify-between gap-3">
             <div>

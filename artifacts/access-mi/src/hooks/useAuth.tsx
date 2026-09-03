@@ -70,14 +70,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setRoles([]);
       return;
     }
-    supabase
-      .from("user_roles")
+    (supabase.from("user_roles" as any) as any)
       .select("role")
       .eq("user_id", userId)
-      .then(({ data, error }) => {
+      .then(({ data, error }: { data: { role: string }[] | null; error: unknown }) => {
         if (!active) return;
         // A failed lookup grants nothing.
-        setRoles(error || !data ? [] : (data.map((r) => r.role) as StaffRole[]));
+        setRoles(
+          error || !data ? [] : (data.map((r: { role: string }) => r.role) as StaffRole[]),
+        );
       });
     return () => {
       active = false;

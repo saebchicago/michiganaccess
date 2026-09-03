@@ -4,7 +4,7 @@
  */
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,7 @@ export default function SignInPage() {
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  usePageMeta({ title: "Staff sign-in", description: "Reviewer sign-in for Access Michigan moderation.", path: "/signin", noindex: true });
 
   const from = (location.state as { from?: string } | null)?.from ?? "/admin";
 
@@ -48,12 +49,7 @@ export default function SignInPage() {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>Staff sign-in | Access Michigan</title>
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
-      <main className="min-h-screen bg-background flex items-center justify-center px-4 py-16">
+    <>      <main className="min-h-screen bg-background flex items-center justify-center px-4 py-16">
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle className="text-xl">Staff sign-in</CardTitle>
