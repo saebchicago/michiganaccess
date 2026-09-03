@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   BarChart,
@@ -21,7 +21,6 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import {
   getALICEByCounty,
-  ALICE_SURVIVAL_BUDGETS,
   MICHIGAN_ALICE_STATEWIDE,
 } from "@/data/aliceData";
 
