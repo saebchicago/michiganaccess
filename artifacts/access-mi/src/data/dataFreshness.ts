@@ -415,8 +415,6 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     nextExpectedUpdate: "FY2026 Q4",
     isLive: false,
     vintageStatus: "current",
-    notes:
-      "All 83 counties, recipient-location basis. Program buckets aggregate CFDA assistance listings only, so they do not sum to the county total.",
   }),
 
   entry({
