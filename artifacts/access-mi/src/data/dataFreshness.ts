@@ -403,19 +403,22 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Repointed 2026-09-03: the hand-seeded 20-county table was replaced by a
+    // generated all-83-county ingest (scripts/refresh-usaspending-county.mjs).
     id: "usaspending",
     name: "USASpending.gov Federal Awards",
     category: "Finance",
     url: "https://api.usaspending.gov",
-    lastUpdated: "2025-11-01",
+    generatedFrom: "usaspending-county.generated.json",
     updateFrequency: "Quarterly + real-time",
-    currentVersion: "FY2024",
-    nextExpectedUpdate: "FY2025 Q4",
-    isLive: true,
-    vintageStatus: "behind",
-    vintageNote:
-      "We ship FY2024 obligations; FY2025 is closed and published.",
+    currentVersion: "FY2025 county obligations",
+    nextExpectedUpdate: "FY2026 Q4",
+    isLive: false,
+    vintageStatus: "current",
+    notes:
+      "All 83 counties, recipient-location basis. Program buckets aggregate CFDA assistance listings only, so they do not sum to the county total.",
   }),
+
   entry({
     // Anchored 2026-08-30: the county payload moved to the official 2026
     // Michigan Data Sheet (2024 data, all 83 counties) but this entry still
