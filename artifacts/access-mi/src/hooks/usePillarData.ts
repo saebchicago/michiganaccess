@@ -87,6 +87,8 @@ async function fetchPillarData(
       });
       if (!res.ok) throw new Error(`ArcGIS proxy: ${res.status}`);
       const json = await res.json();
+      // An upstream outage must not read as "no sites in this county".
+      if (json.error) throw new Error(String(json.error));
       if (json.data?.features) {
         return json.data.features.map((f: any) => ({
           ...f.properties,
