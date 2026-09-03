@@ -85,6 +85,7 @@ import ViewModeToggle, {
 import CHNAViewSection from "@/components/brief/CHNAViewSection";
 import UtilityStressSection from "@/components/brief/UtilityStressSection";
 import GetToCarePanel from "@/components/brief/GetToCarePanel";
+import CountyResourceBridge from "@/components/brief/CountyResourceBridge";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
 import { generateBriefPDF } from "@/utils/generateBriefPDF";
 import type { BriefStat } from "@/utils/generateBriefPDF";
