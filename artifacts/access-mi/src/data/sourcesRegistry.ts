@@ -246,7 +246,7 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
     {
       name: "NCHS Vital Statistics Rapid Release",
       org: "CDC",
-      url: "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-bhi7",
+      url: "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-yj24",
       powers:
         "Provisional 12-month county drug overdose death counts on /county, /brief, /ask",
       frequency: "Monthly",

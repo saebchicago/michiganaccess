@@ -66,4 +66,4 @@ export function overdosePeriodLabel(): string | null {
   return `12 months ending ${month} ${y}`;
 }
 
-export const OVERDOSE_IS_POPULATED = false;
+export const OVERDOSE_IS_POPULATED = true;

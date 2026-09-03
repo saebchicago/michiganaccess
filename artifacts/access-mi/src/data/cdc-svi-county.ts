@@ -91,4 +91,4 @@ export function getSviOverallPercentile(countyName: string): number | null {
   return v === null || v === undefined ? null : Math.round(v * 1000) / 10;
 }
 
-export const SVI_IS_POPULATED = false;
+export const SVI_IS_POPULATED = true;

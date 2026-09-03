@@ -7,8 +7,8 @@
  *
  *   Source     CDC / NCHS, VSRR Provisional County-Level Drug Overdose
  *              Death Counts (data.cdc.gov)
- *   Dataset    gb4e-bhi7 (Socrata). Metadata is fetched from
- *              /api/views/gb4e-bhi7.json and the title is asserted to
+ *   Dataset    gb4e-yj24 (Socrata). Metadata is fetched from
+ *              /api/views/gb4e-yj24.json and the title is asserted to
  *              mention "overdose" and "county" so a renumbered dataset
  *              fails loudly instead of parsing the wrong table.
  *   Content    Rolling 12-month-ending counts per county, published
@@ -44,7 +44,7 @@ const outTsPath = path.join(projectRoot, "src/data/nchs-overdose-county.ts");
 const APPLY = process.argv.includes("--apply");
 const REQUIRE_LIVE = process.argv.includes("--require-live");
 
-const DATASET_ID = "gb4e-bhi7";
+const DATASET_ID = "gb4e-yj24";
 const SOCRATA_METADATA_URL = `https://data.cdc.gov/api/views/${DATASET_ID}.json`;
 const SOCRATA_ROWS_URL = `https://data.cdc.gov/resource/${DATASET_ID}.json`;
 const SOURCE_LANDING = `https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/${DATASET_ID}`;
@@ -116,7 +116,13 @@ const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(
 function resolveFields(sample) {
   const keys = Object.keys(sample);
   const find = (label, ...tokens) => {
-    const hits = keys.filter((k) => tokens.every((t) => norm(k).includes(t)));
+    let hits = keys.filter((k) => tokens.every((t) => norm(k).includes(t)));
+    // An exact name match wins over substring siblings: the release carries
+    // fips, statefips and countyfips, and only "fips" is the 5-digit county id.
+    if (hits.length > 1 && tokens.length === 1) {
+      const exact = hits.filter((k) => norm(k) === tokens[0]);
+      if (exact.length === 1) hits = exact;
+    }
     if (hits.length !== 1) {
       throw new Error(`Schema drift: expected exactly one field for ${label} (${tokens.join("+")}), found [${hits.join(", ")}] among [${keys.join(", ")}]`);
     }
@@ -127,9 +133,10 @@ function resolveFields(sample) {
     fips: find("county FIPS", "fips"),
     year: find("year", "year"),
     month: find("month", "month"),
-    deaths: find("provisional overdose deaths", "provisional", "death"),
+    deaths: find("provisional overdose deaths", "provisional", "overdose"),
   };
 }
+
 
 function parseCount(raw) {
   if (raw === null || raw === undefined) return { value: null, suppressed: true };
@@ -157,7 +164,12 @@ async function fetchLatestMichigan(miFips) {
     rows = await fetchJson(`${SOCRATA_ROWS_URL}?$limit=200000`, "nchs-overdose-county-rows-all", "provisional");
     if (!Array.isArray(rows) || rows.length === 0) throw new Error("NCHS returned no rows");
   }
-  const f = resolveFields(rows[0]);
+  // Socrata omits keys with no value, and suppressed rows drop the count
+  // field entirely, so resolve the schema against the union of all row keys.
+  const unionSample = {};
+  for (const r of rows) for (const k of Object.keys(r)) unionSample[k] = r[k];
+  const f = resolveFields(unionSample);
+
   const mi = rows.filter((r) => String(r[f.state]).toUpperCase() === "MI");
   if (mi.length === 0) throw new Error("No Michigan rows in the NCHS county overdose dataset");
 

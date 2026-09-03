@@ -1,0 +1,36 @@
+{
+  "schema": "ingest-manifest.v1",
+  "build_id": "refresh-nchs-overdose-county-2026-09-03T20-15-18-106Z",
+  "generated_at": "2026-09-03T20:15:19.784Z",
+  "payload_cap_bytes": 2097152,
+  "entries": [
+    {
+      "source_id": "nchs-overdose-county-metadata",
+      "request_url": "https://data.cdc.gov/api/views/gb4e-yj24.json",
+      "retrieved_at": "2026-09-03T20:15:18.753Z",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "byte_size": 33990,
+      "sha256": "b08aa6ea5800a51756f9e7097c6b61a087ec263fec8a28db4a921813cd74e0c6",
+      "source_vintage": "socrata",
+      "valid": true,
+      "invalid_reason": null,
+      "payload_stored": true,
+      "payload_path": "payloads/nchs-overdose-county-metadata-b08aa6ea5800.gz"
+    },
+    {
+      "source_id": "nchs-overdose-county-rows",
+      "request_url": "https://data.cdc.gov/resource/gb4e-yj24.json?$limit=50000&$where=upper(st_abbrev)%3D%27MI%27",
+      "retrieved_at": "2026-09-03T20:15:19.763Z",
+      "http_status": 200,
+      "content_type": "application/json;charset=utf-8",
+      "byte_size": 2837650,
+      "sha256": "d9de0569387b1d0862fc05dabaee2fc283318284b321215105bd9a96ee591f9e",
+      "source_vintage": "provisional",
+      "valid": true,
+      "invalid_reason": null,
+      "payload_stored": false,
+      "payload_path": null
+    }
+  ]
+}

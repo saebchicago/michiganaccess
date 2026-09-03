@@ -1428,7 +1428,7 @@ is picked up.
 - **USDA ERS Food Environment Atlas (43).** County grocery and SNAP-store
   density; pairs with the SNAP retailer counts already ingested.
 - **NCHS provisional county drug-overdose deaths (44).** Integrated in
-  tranche 2 (`scripts/refresh-nchs-overdose-county.mjs`, dataset gb4e-bhi7):
+  tranche 2 (`scripts/refresh-nchs-overdose-county.mjs`, dataset gb4e-yj24):
   latest 12-month period chosen from the data, under-10 suppression carried
   as null with status "suppressed", no rate computed. Row 10's WONDER HOLD
   stands; this is the Socrata route.
