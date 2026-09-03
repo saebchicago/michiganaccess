@@ -1,6 +1,6 @@
 // src/components/investment/FiscalCliffCalculator.tsx
 // Interactive simulator: what happens when federal funding is cut
-// Source: USASpending.gov FY2024 estimates
+// Source: USASpending.gov published county obligations (see federalSpending.ts)
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,73 +8,6 @@ import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, TrendingDown, Users, DollarSign } from "lucide-react";
 import { MICHIGAN_FEDERAL_SPENDING } from "@/data/federalSpending";
-
-// Program-specific dependency percentages by county
-// Source: Illustrative composite from USASpending.gov FY2024
-const PROGRAM_DEPENDENCY: Record<
-  string,
-  {
-    medicaid_pct: number;
-    snap_pct: number;
-    housing_pct: number;
-    health_grants_pct: number;
-  }
-> = {
-  Wayne: {
-    medicaid_pct: 44,
-    snap_pct: 8,
-    housing_pct: 9,
-    health_grants_pct: 18,
-  },
-  Genesee: {
-    medicaid_pct: 47,
-    snap_pct: 16,
-    housing_pct: 12,
-    health_grants_pct: 8,
-  },
-  Saginaw: {
-    medicaid_pct: 44,
-    snap_pct: 16,
-    housing_pct: 13,
-    health_grants_pct: 9,
-  },
-  Oakland: {
-    medicaid_pct: 34,
-    snap_pct: 6,
-    housing_pct: 10,
-    health_grants_pct: 18,
-  },
-  Macomb: {
-    medicaid_pct: 39,
-    snap_pct: 8,
-    housing_pct: 11,
-    health_grants_pct: 15,
-  },
-  Kent: {
-    medicaid_pct: 39,
-    snap_pct: 9,
-    housing_pct: 12,
-    health_grants_pct: 14,
-  },
-  Washtenaw: {
-    medicaid_pct: 28,
-    snap_pct: 6,
-    housing_pct: 12,
-    health_grants_pct: 25,
-  },
-  Ingham: {
-    medicaid_pct: 31,
-    snap_pct: 5,
-    housing_pct: 8,
-    health_grants_pct: 34,
-  },
-  Kalamazoo: {
-    medicaid_pct: 39,
-    snap_pct: 10,
-    housing_pct: 13,
-    health_grants_pct: 15,
-  },
-};
 
 // Medicaid enrollees estimate by county (Michigan MDHHS 2024)
 const MEDICAID_ENROLLEES: Record<string, number> = {
@@ -107,31 +40,32 @@ export default function FiscalCliffCalculator() {
 
   const impacts = useMemo(() => {
     return MICHIGAN_FEDERAL_SPENDING.map((county) => {
-      const dep = PROGRAM_DEPENDENCY[county.county];
-      if (!dep) return null;
-
+      // Program dollars are the county's published USASpending obligations for
+      // that program, not a modeled share of its total. Counties with no
+      // published obligations for the selected program are omitted rather than
+      // shown as a zero impact.
       let dollarImpact = 0;
       let residentsAffected = 0;
+      let hasProgramDollars = false;
 
       if (program === "medicaid" || program === "all") {
-        const medicaidDollars =
-          county.total_awards_millions * (dep.medicaid_pct / 100);
-        dollarImpact += medicaidDollars * (cutPct / 100);
+        dollarImpact += county.medicaid_millions * (cutPct / 100);
+        if (county.medicaid_millions > 0) hasProgramDollars = true;
         const enrollees = MEDICAID_ENROLLEES[county.county] ?? 0;
         residentsAffected += Math.round(enrollees * (cutPct / 100) * 0.3);
       }
       if (program === "snap" || program === "all") {
-        const snapDollars = county.total_awards_millions * (dep.snap_pct / 100);
-        dollarImpact += snapDollars * (cutPct / 100);
+        dollarImpact += county.snap_millions * (cutPct / 100);
+        if (county.snap_millions > 0) hasProgramDollars = true;
         residentsAffected += Math.round(
           (county.snap_millions * (cutPct / 100) * 1000000) / 1200,
         );
       }
       if (program === "housing" || program === "all") {
-        const housingDollars =
-          county.total_awards_millions * (dep.housing_pct / 100);
-        dollarImpact += housingDollars * (cutPct / 100);
+        dollarImpact += county.housing_millions * (cutPct / 100);
+        if (county.housing_millions > 0) hasProgramDollars = true;
       }
+      if (!hasProgramDollars) return null;
 
       const severity: Severity =
         dollarImpact > 200
