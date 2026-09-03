@@ -12,10 +12,11 @@
     "bls-laus-county.generated.json": "2026-09-02",
     "cdc-places-county.generated.json": "2026-09-02",
     "cdc-places-zcta.generated.json": "2026-09-02",
-    "cdc-svi-county.generated.json": "2026-09-02",
+    "cdc-svi-county.generated.json": "2026-09-03",
     "hrsa-hpsa-county.generated.json": "2026-09-02",
     "hud-chas-county.generated.json": "2026-09-02",
     "mde-county.generated.json": "2026-09-02",
-    "nchs-overdose-county.generated.json": "2026-09-02"
+    "nchs-overdose-county.generated.json": "2026-09-03",
+    "usaspending-county.generated.json": "2026-09-03"
   }
 }

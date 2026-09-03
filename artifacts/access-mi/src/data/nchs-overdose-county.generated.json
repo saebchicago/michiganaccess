@@ -1,604 +1,610 @@
 {
   "provenance": {
     "source_name": "CDC / NCHS Vital Statistics Rapid Release, provisional county-level drug overdose death counts",
-    "source_url": "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-bhi7",
-    "dataset_id": "gb4e-bhi7",
-    "dataset_title": null,
-    "socrata_metadata_url": "https://data.cdc.gov/api/views/gb4e-bhi7.json",
-    "socrata_rows_updated_at": null,
-    "period_ending": null,
+    "source_url": "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-yj24",
+    "dataset_id": "gb4e-yj24",
+    "dataset_title": "VSRR Provisional County-Level Drug Overdose Death Counts",
+    "socrata_metadata_url": "https://data.cdc.gov/api/views/gb4e-yj24.json",
+    "socrata_rows_updated_at": "2026-07-15T14:01:54.000Z",
+    "period_ending": "2025-12",
     "period_definition": "12-month-ending count for the month shown (provisional)",
-    "resolved_fields": null,
-    "ingested_at": "2026-09-02T20:40:10.397Z",
+    "resolved_fields": {
+      "state": "st_abbrev",
+      "fips": "fips",
+      "year": "year",
+      "month": "month",
+      "deaths": "provisional_drug_overdose"
+    },
+    "ingested_at": "2026-09-03T20:15:38.320Z",
     "ingest_script": "scripts/refresh-nchs-overdose-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
-    "value_label": "PENDING",
-    "populated": false,
-    "pending_reason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values.",
+    "value_label": "VERIFIED",
+    "populated": true,
+    "pending_reason": null,
     "notes": "Provisional counts of drug overdose deaths by county of residence, 12-month-ending, from NCHS's Vital Statistics Rapid Release. NCHS suppresses counts under 10; suppressed counties carry status 'suppressed' and a null count, never 0. Counts are provisional and revised as death certificates finalize; every surface says 'provisional'. No per-100k rate is computed: NCHS publishes none at this level and a rate on small provisional counts would be noise. When status = 'pending-ci' the ingest environment could not reach data.cdc.gov; the scheduled dataset-refresh workflow populates the file."
   },
   "counties": [
     {
       "countyFips": "26001",
       "countyName": "Alcona",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 0,
+      "pendingReason": null
     },
     {
       "countyFips": "26003",
       "countyName": "Alger",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26005",
       "countyName": "Allegan",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 10,
+      "pendingReason": null
     },
     {
       "countyFips": "26007",
       "countyName": "Alpena",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26009",
       "countyName": "Antrim",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26011",
       "countyName": "Arenac",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26013",
       "countyName": "Baraga",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26015",
       "countyName": "Barry",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26017",
       "countyName": "Bay",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 17,
+      "pendingReason": null
     },
     {
       "countyFips": "26019",
       "countyName": "Benzie",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26021",
       "countyName": "Berrien",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 32,
+      "pendingReason": null
     },
     {
       "countyFips": "26023",
       "countyName": "Branch",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26025",
       "countyName": "Calhoun",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 27,
+      "pendingReason": null
     },
     {
       "countyFips": "26027",
       "countyName": "Cass",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26029",
       "countyName": "Charlevoix",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26031",
       "countyName": "Cheboygan",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26033",
       "countyName": "Chippewa",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26035",
       "countyName": "Clare",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26037",
       "countyName": "Clinton",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26039",
       "countyName": "Crawford",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26041",
       "countyName": "Delta",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26043",
       "countyName": "Dickinson",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26045",
       "countyName": "Eaton",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 19,
+      "pendingReason": null
     },
     {
       "countyFips": "26047",
       "countyName": "Emmet",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26049",
       "countyName": "Genesee",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 131,
+      "pendingReason": null
     },
     {
       "countyFips": "26051",
       "countyName": "Gladwin",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26053",
       "countyName": "Gogebic",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26055",
       "countyName": "Grand Traverse",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 16,
+      "pendingReason": null
     },
     {
       "countyFips": "26057",
       "countyName": "Gratiot",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26059",
       "countyName": "Hillsdale",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26061",
       "countyName": "Houghton",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26063",
       "countyName": "Huron",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26065",
       "countyName": "Ingham",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 60,
+      "pendingReason": null
     },
     {
       "countyFips": "26067",
       "countyName": "Ionia",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26069",
       "countyName": "Iosco",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26071",
       "countyName": "Iron",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26073",
       "countyName": "Isabella",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26075",
       "countyName": "Jackson",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 31,
+      "pendingReason": null
     },
     {
       "countyFips": "26077",
       "countyName": "Kalamazoo",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 45,
+      "pendingReason": null
     },
     {
       "countyFips": "26079",
       "countyName": "Kalkaska",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26081",
       "countyName": "Kent",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 65,
+      "pendingReason": null
     },
     {
       "countyFips": "26083",
       "countyName": "Keweenaw",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 0,
+      "pendingReason": null
     },
     {
       "countyFips": "26085",
       "countyName": "Lake",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26087",
       "countyName": "Lapeer",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 13,
+      "pendingReason": null
     },
     {
       "countyFips": "26089",
       "countyName": "Leelanau",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26091",
       "countyName": "Lenawee",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 13,
+      "pendingReason": null
     },
     {
       "countyFips": "26093",
       "countyName": "Livingston",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 18,
+      "pendingReason": null
     },
     {
       "countyFips": "26095",
       "countyName": "Luce",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26097",
       "countyName": "Mackinac",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26099",
       "countyName": "Macomb",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 166,
+      "pendingReason": null
     },
     {
       "countyFips": "26101",
       "countyName": "Manistee",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26103",
       "countyName": "Marquette",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 12,
+      "pendingReason": null
     },
     {
       "countyFips": "26105",
       "countyName": "Mason",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26107",
       "countyName": "Mecosta",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 0,
+      "pendingReason": null
     },
     {
       "countyFips": "26109",
       "countyName": "Menominee",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26111",
       "countyName": "Midland",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26113",
       "countyName": "Missaukee",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26115",
       "countyName": "Monroe",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 30,
+      "pendingReason": null
     },
     {
       "countyFips": "26117",
       "countyName": "Montcalm",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26119",
       "countyName": "Montmorency",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26121",
       "countyName": "Muskegon",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 40,
+      "pendingReason": null
     },
     {
       "countyFips": "26123",
       "countyName": "Newaygo",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26125",
       "countyName": "Oakland",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 155,
+      "pendingReason": null
     },
     {
       "countyFips": "26127",
       "countyName": "Oceana",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26129",
       "countyName": "Ogemaw",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26131",
       "countyName": "Ontonagon",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 0,
+      "pendingReason": null
     },
     {
       "countyFips": "26133",
       "countyName": "Osceola",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26135",
       "countyName": "Oscoda",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26137",
       "countyName": "Otsego",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26139",
       "countyName": "Ottawa",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 18,
+      "pendingReason": null
     },
     {
       "countyFips": "26141",
       "countyName": "Presque Isle",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26143",
       "countyName": "Roscommon",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26145",
       "countyName": "Saginaw",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 25,
+      "pendingReason": null
     },
     {
       "countyFips": "26147",
       "countyName": "St. Clair",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 30,
+      "pendingReason": null
     },
     {
       "countyFips": "26149",
       "countyName": "St. Joseph",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26151",
       "countyName": "Sanilac",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26153",
       "countyName": "Schoolcraft",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26155",
       "countyName": "Shiawassee",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 12,
+      "pendingReason": null
     },
     {
       "countyFips": "26157",
       "countyName": "Tuscola",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     },
     {
       "countyFips": "26159",
       "countyName": "Van Buren",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 12,
+      "pendingReason": null
     },
     {
       "countyFips": "26161",
       "countyName": "Washtenaw",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 43,
+      "pendingReason": null
     },
     {
       "countyFips": "26163",
       "countyName": "Wayne",
-      "status": "pending-ci",
-      "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "status": "populated",
+      "provisionalDeaths12mo": 540,
+      "pendingReason": null
     },
     {
       "countyFips": "26165",
       "countyName": "Wexford",
-      "status": "pending-ci",
+      "status": "suppressed",
       "provisionalDeaths12mo": null,
-      "pendingReason": "Could not fetch or parse the NCHS county overdose dataset ([nchs-overdose-county-metadata] fetch failed: HTTP 403). Re-run scripts/refresh-nchs-overdose-county.mjs --apply on the scheduled dataset-refresh workflow to populate real values."
+      "pendingReason": null
     }
   ]
 }

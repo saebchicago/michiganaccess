@@ -22,9 +22,9 @@ describe("nchs-overdose-county", () => {
 
   it("provenance names NCHS VSRR, the Socrata dataset, and the suppression rule", () => {
     expect(OVERDOSE_COUNTY_PROVENANCE.source_name).toMatch(/NCHS.*Vital Statistics Rapid Release/i);
-    expect(OVERDOSE_COUNTY_PROVENANCE.dataset_id).toBe("gb4e-bhi7");
+    expect(OVERDOSE_COUNTY_PROVENANCE.dataset_id).toBe("gb4e-yj24");
     expect(OVERDOSE_COUNTY_PROVENANCE.socrata_metadata_url).toBe(
-      "https://data.cdc.gov/api/views/gb4e-bhi7.json",
+      "https://data.cdc.gov/api/views/gb4e-yj24.json",
     );
     expect(OVERDOSE_COUNTY_PROVENANCE.notes).toMatch(/under 10/);
     expect(OVERDOSE_COUNTY_PROVENANCE.notes).toMatch(/provisional/i);
@@ -42,11 +42,15 @@ describe("nchs-overdose-county", () => {
         if (r.status === "populated") {
           expect(r.provisionalDeaths12mo).not.toBeNull();
           expect(Number.isInteger(r.provisionalDeaths12mo)).toBe(true);
-          expect(r.provisionalDeaths12mo!).toBeGreaterThanOrEqual(10);
+          // NCHS publishes a true 0 for counties with no overdose deaths and
+          // suppresses 1-9, so a published count is either 0 or >= 10.
+          const n = r.provisionalDeaths12mo!;
+          expect(n === 0 || n >= 10).toBe(true);
         } else {
-          // NCHS suppresses counts under 10: null, never 0.
+          // Suppressed (1-9 deaths) is null, never 0.
           expect(r.provisionalDeaths12mo).toBeNull();
         }
+
       }
     } else {
       expect(OVERDOSE_COUNTY_PROVENANCE.value_label).toBe("PENDING");

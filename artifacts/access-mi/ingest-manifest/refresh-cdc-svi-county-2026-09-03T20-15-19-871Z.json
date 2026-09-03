@@ -1,0 +1,22 @@
+{
+  "schema": "ingest-manifest.v1",
+  "build_id": "refresh-cdc-svi-county-2026-09-03T20-15-19-871Z",
+  "generated_at": "2026-09-03T20:15:20.164Z",
+  "payload_cap_bytes": 2097152,
+  "entries": [
+    {
+      "source_id": "cdc-svi-county-2022",
+      "request_url": "https://svi.cdc.gov/Documents/Data/2022/csv/states_counties/Michigan_county.csv",
+      "retrieved_at": "2026-09-03T20:15:20.141Z",
+      "http_status": 200,
+      "content_type": "application/octet-stream",
+      "byte_size": 62319,
+      "sha256": "4415ecd7b5506696c737b3a58cee87d8dabfbf36f73fbeddab3adbbd38b46832",
+      "source_vintage": "2022",
+      "valid": true,
+      "invalid_reason": null,
+      "payload_stored": true,
+      "payload_path": "payloads/cdc-svi-county-2022-4415ecd7b550.gz"
+    }
+  ]
+}

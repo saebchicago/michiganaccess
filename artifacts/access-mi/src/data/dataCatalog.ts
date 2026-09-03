@@ -389,7 +389,7 @@ export const DATA_CATALOG: CatalogEntry[] = [
     geography: "County",
     access: "static",
     cadence: "Monthly",
-    sourceUrl: "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-bhi7",
+    sourceUrl: "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-yj24",
     description:
       "Provisional 12-month-ending drug overdose death counts by county of residence from NCHS's Vital Statistics Rapid Release. Counts under 10 are suppressed by NCHS and render as unavailable, never zero; no per-100k rate is computed.",
     poweredSurfaces: ["/county/:slug", "/brief", "/ask"],

@@ -48,6 +48,7 @@ import {
 import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   MICHIGAN_FEDERAL_SPENDING,
+  FEDERAL_SPENDING_PROVENANCE,
   getFederalDependencyScore,
 } from "@/data/federalSpending";
 import SuggestResource from "@/components/community/SuggestResource";
@@ -203,7 +204,7 @@ function FederalFundingTab() {
               ${totalAwards.toLocaleString()}M
             </p>
             <p className="text-[9px] text-muted-foreground">
-              Source: USASpending.gov FY2024
+              Source: USASpending.gov FY{FEDERAL_SPENDING_PROVENANCE.fiscal_year}
             </p>
           </CardContent>
         </Card>
@@ -229,7 +230,7 @@ function FederalFundingTab() {
               {filtered.length}
             </p>
             <p className="text-[9px] text-muted-foreground">
-              Top Michigan counties by population
+              All Michigan counties with published obligations
             </p>
           </CardContent>
         </Card>
@@ -242,7 +243,7 @@ function FederalFundingTab() {
             Federal Spending by Category
           </CardTitle>
           <p className="text-xs text-muted-foreground">
-            Source: USASpending.gov FY2024 - values in $M
+            Source: USASpending.gov FY{FEDERAL_SPENDING_PROVENANCE.fiscal_year} - values in $M. Awards are counted where the recipient is located, so statewide programs paid to a state agency sit in that agency’s county.
           </p>
         </CardHeader>
         <CardContent>
@@ -863,7 +864,7 @@ const PublicInvestmentPage = () => {
               <div className="space-y-1">
                 <p className="text-xs text-muted-foreground">
                   <strong>Data Sources:</strong> Federal spending from
-                  USASpending.gov FY2024 (public record). Municipal bonds from
+                  USASpending.gov FY{FEDERAL_SPENDING_PROVENANCE.fiscal_year} (public record, all 83 counties). Municipal bonds from
                   MSRB EMMA (public municipal securities record). Federal
                   dependency and equity scores are modeled composites - not
                   official government metrics.

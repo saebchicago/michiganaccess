@@ -1,0 +1,3873 @@
+{
+  "provenance": {
+    "source_name": "USASpending.gov (Treasury, Bureau of the Fiscal Service)",
+    "source_url": "https://www.usaspending.gov/",
+    "api_endpoints": [
+      "https://api.usaspending.gov/api/v2/search/spending_by_geography/",
+      "https://api.usaspending.gov/api/v2/search/spending_by_category/cfda/"
+    ],
+    "fiscal_year": 2025,
+    "geography_basis": "recipient_location",
+    "geography_caveat": "Awards are attributed to the recipient's location. Statewide programs paid to a state agency are counted in the county where that agency is located (Medicaid and SNAP concentrate in Ingham County), so a county figure is not federal spending on that county's residents.",
+    "program_bucket_basis": "CFDA assistance listing numbers",
+    "program_bucket_caveat": "Program buckets aggregate CFDA-numbered assistance only. Contract obligations without a CFDA number are inside the county total but in no bucket, so buckets do not sum to the total.",
+    "ingested_at": "2026-09-03T20:20:13.762Z",
+    "ingest_script": "scripts/refresh-usaspending-county.mjs",
+    "michigan_county_registry": "src/data/census-geographies.ts",
+    "michigan_county_registry_size": 83,
+    "value_label": "VERIFIED",
+    "populated": true,
+    "pending_reason": null,
+    "notes": "Replaces the previous hand-seeded 20-county federal spending table. Missing figures are null, never 0."
+  },
+  "buckets": [
+    {
+      "field": "medicaid_millions",
+      "label": "Medicaid"
+    },
+    {
+      "field": "snap_millions",
+      "label": "SNAP / food assistance"
+    },
+    {
+      "field": "housing_millions",
+      "label": "Housing (HUD)"
+    },
+    {
+      "field": "energy_millions",
+      "label": "Energy and weatherization"
+    },
+    {
+      "field": "education_millions",
+      "label": "Education"
+    },
+    {
+      "field": "infrastructure_millions",
+      "label": "Transportation and infrastructure"
+    },
+    {
+      "field": "health_grants_millions",
+      "label": "Other health and human services"
+    }
+  ],
+  "counties": [
+    {
+      "county": "Alcona",
+      "fips": "26001",
+      "status": "populated",
+      "total_awards_millions": 124.5,
+      "population": 10167,
+      "per_capita_dollars": 12249,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.1,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 88937442
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 13842226
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 9332181
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 6184415
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 2550261
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Alger",
+      "fips": "26003",
+      "status": "populated",
+      "total_awards_millions": 87.5,
+      "population": 8842,
+      "per_capita_dollars": 9898,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.6,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 0.8,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 55545288
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 7334003
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 7293722
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 4191431
+        },
+        {
+          "cfda": "10.760",
+          "name": "Water and Waste Disposal Systems for Rural Communities",
+          "dollars": 2009555.2
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Allegan",
+      "fips": "26005",
+      "status": "populated",
+      "total_awards_millions": 806.4,
+      "population": 120502,
+      "per_capita_dollars": 6692,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.1,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 0.5,
+      "health_grants_millions": 11.6,
+      "cfda_covered_millions": 14.2,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 571377156
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 71271655
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 41068916
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 37033760
+        },
+        {
+          "cfda": "32.004",
+          "name": "UNIVERSAL SERVICE FUND - SCHOOLS and LIBRARIES",
+          "dollars": 19765742.64
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Alpena",
+      "fips": "26007",
+      "status": "populated",
+      "total_awards_millions": 303.6,
+      "population": 28907,
+      "per_capita_dollars": 10504,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.6,
+      "energy_millions": 0,
+      "education_millions": 2.2,
+      "infrastructure_millions": 4.7,
+      "health_grants_millions": 37.6,
+      "cfda_covered_millions": 46,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 167987747
+        },
+        {
+          "cfda": "93.600",
+          "name": "Head Start",
+          "dollars": 32093103
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 29871170
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 19033083
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 18037260
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Antrim",
+      "fips": "26009",
+      "status": "populated",
+      "total_awards_millions": 274.4,
+      "population": 23431,
+      "per_capita_dollars": 11710,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.1,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 0.2,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 173343986
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 16328980
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 12618502
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 11662535
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 3427128
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Arenac",
+      "fips": "26011",
+      "status": "populated",
+      "total_awards_millions": 145.8,
+      "population": 15002,
+      "per_capita_dollars": 9719,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.1,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 3.5,
+      "cfda_covered_millions": 3.6,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 94535926
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 16998817
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 11674007
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 9635556
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 3789336
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Baraga",
+      "fips": "26013",
+      "status": "populated",
+      "total_awards_millions": 106.1,
+      "population": 8158,
+      "per_capita_dollars": 13001,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 10.4,
+      "energy_millions": 0.7,
+      "education_millions": 6.4,
+      "infrastructure_millions": 7.6,
+      "health_grants_millions": 9.3,
+      "cfda_covered_millions": 34.3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 38166829
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 7272655
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 7188981
+        },
+        {
+          "cfda": "14.024",
+          "name": "Community Development Block Grant- PRICE Competition",
+          "dollars": 7155231.4
+        },
+        {
+          "cfda": "20.205",
+          "name": "Highway Planning and Construction",
+          "dollars": 6132867
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Barry",
+      "fips": "26015",
+      "status": "populated",
+      "total_awards_millions": 420.1,
+      "population": 62423,
+      "per_capita_dollars": 6730,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.5,
+      "energy_millions": 0,
+      "education_millions": 0.4,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 1.5,
+      "cfda_covered_millions": 2.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 305815024
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 37994785
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 26500284
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 23505224
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 6601731
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Bay",
+      "fips": "26017",
+      "status": "populated",
+      "total_awards_millions": 850,
+      "population": 103856,
+      "per_capita_dollars": 8185,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 10.7,
+      "energy_millions": 0,
+      "education_millions": 36.5,
+      "infrastructure_millions": 2,
+      "health_grants_millions": 6.7,
+      "cfda_covered_millions": 55.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 532648594
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 91461128
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 61316742
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 51475686
+        },
+        {
+          "cfda": "84.063",
+          "name": "Federal Pell Grant Program",
+          "dollars": 34952480.81
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Benzie",
+      "fips": "26019",
+      "status": "populated",
+      "total_awards_millions": 169.1,
+      "population": 17970,
+      "per_capita_dollars": 9409,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 0.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 123562683
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 11666748
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 9904962
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 8070086
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 2036946
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Berrien",
+      "fips": "26021",
+      "status": "populated",
+      "total_awards_millions": 1146.7,
+      "population": 154316,
+      "per_capita_dollars": 7431,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 17.7,
+      "energy_millions": 0,
+      "education_millions": 12.1,
+      "infrastructure_millions": 22.6,
+      "health_grants_millions": 15.7,
+      "cfda_covered_millions": 68.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 780246960
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 90129001
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 65661966
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 62955942
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 35758468
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Branch",
+      "fips": "26023",
+      "status": "populated",
+      "total_awards_millions": 296,
+      "population": 44862,
+      "per_capita_dollars": 6599,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.4,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 3.7,
+      "cfda_covered_millions": 5.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 200439699
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 32003239
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 18246020
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 17448168
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 7908605
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Calhoun",
+      "fips": "26025",
+      "status": "populated",
+      "total_awards_millions": 1009.4,
+      "population": 134310,
+      "per_capita_dollars": 7515,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 18.7,
+      "energy_millions": 0,
+      "education_millions": 15.1,
+      "infrastructure_millions": 5.2,
+      "health_grants_millions": 63.9,
+      "cfda_covered_millions": 102.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 567101321
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 110346969
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 78332562
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 56257015
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 38298463
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Cass",
+      "fips": "26027",
+      "status": "populated",
+      "total_awards_millions": 464.5,
+      "population": 51589,
+      "per_capita_dollars": 9004,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 9,
+      "energy_millions": 0.2,
+      "education_millions": 5.6,
+      "infrastructure_millions": 7,
+      "health_grants_millions": 11.1,
+      "cfda_covered_millions": 32.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 267514929
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 35287272
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 24122858
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 17442532
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 8661993
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Charlevoix",
+      "fips": "26029",
+      "status": "populated",
+      "total_awards_millions": 232.3,
+      "population": 26054,
+      "per_capita_dollars": 8916,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 0.2,
+      "health_grants_millions": 2.2,
+      "cfda_covered_millions": 3.5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 178567843
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 14222989
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 12312407
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 10780744
+        },
+        {
+          "cfda": "10.850",
+          "name": "Rural Electrification Loans and Loan Guarantees",
+          "dollars": 5097437.1
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Cheboygan",
+      "fips": "26031",
+      "status": "populated",
+      "total_awards_millions": 280.5,
+      "population": 25579,
+      "per_capita_dollars": 10966,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.2,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 1,
+      "health_grants_millions": 0.2,
+      "cfda_covered_millions": 2.5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 168706822
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 20738875
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 16376313
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 13620217
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 5721230
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Chippewa",
+      "fips": "26033",
+      "status": "populated",
+      "total_awards_millions": 456.9,
+      "population": 36785,
+      "per_capita_dollars": 12421,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 14.6,
+      "energy_millions": 2,
+      "education_millions": 16.5,
+      "infrastructure_millions": 48.9,
+      "health_grants_millions": 54.7,
+      "cfda_covered_millions": 136.8,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 156057390
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 28825402
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 25716052
+        },
+        {
+          "cfda": "66.616",
+          "name": "Environmental and Climate Justice Community Change Grants Program",
+          "dollars": 23000000
+        },
+        {
+          "cfda": "93.210",
+          "name": "Tribal Self-Governance Program: IHS Compacts/Funding Agreements ",
+          "dollars": 22628529
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Clare",
+      "fips": "26035",
+      "status": "populated",
+      "total_awards_millions": 294.7,
+      "population": 30856,
+      "per_capita_dollars": 9552,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 3.6,
+      "energy_millions": 0,
+      "education_millions": 7.6,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 3.2,
+      "cfda_covered_millions": 14.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 181797722
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 38639241
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 23067567
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 17427116
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 10134004
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Clinton",
+      "fips": "26037",
+      "status": "populated",
+      "total_awards_millions": 918.4,
+      "population": 79128,
+      "per_capita_dollars": 11606,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.7,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 1.2,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 3.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 371113425
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 34521624
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 30495215
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 27928808
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 6906300
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Crawford",
+      "fips": "26039",
+      "status": "populated",
+      "total_awards_millions": 179.3,
+      "population": 12988,
+      "per_capita_dollars": 13808,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.1,
+      "energy_millions": 0,
+      "education_millions": 4.6,
+      "infrastructure_millions": 0.3,
+      "health_grants_millions": 0.9,
+      "cfda_covered_millions": 6.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 80541443
+        },
+        {
+          "cfda": "12.599",
+          "name": "Congressionally Directed Assistance",
+          "dollars": 51400000
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 15178239
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 11365056
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 6527369
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Delta",
+      "fips": "26041",
+      "status": "populated",
+      "total_awards_millions": 366,
+      "population": 36903,
+      "per_capita_dollars": 9918,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.1,
+      "energy_millions": 0,
+      "education_millions": 4.1,
+      "infrastructure_millions": 3.4,
+      "health_grants_millions": 4.6,
+      "cfda_covered_millions": 14.2,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 214183121
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 36111088
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 29385320
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 19780321
+        },
+        {
+          "cfda": "57.001",
+          "name": "Social Insurance for Railroad Workers",
+          "dollars": 11837048.31
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Dickinson",
+      "fips": "26043",
+      "status": "populated",
+      "total_awards_millions": 241,
+      "population": 25947,
+      "per_capita_dollars": 9289,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.9,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 4,
+      "health_grants_millions": 3.5,
+      "cfda_covered_millions": 8.5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 143186219
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 28621206
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 20553296
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 11397960
+        },
+        {
+          "cfda": "20.106",
+          "name": "Airport Improvement Program, Infrastructure Investment and Jobs Act Programs, and COVID-19 Airports Programs",
+          "dollars": 4011968
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Eaton",
+      "fips": "26045",
+      "status": "populated",
+      "total_awards_millions": 1388.7,
+      "population": 109175,
+      "per_capita_dollars": 12720,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 9.5,
+      "energy_millions": 0,
+      "education_millions": 11.1,
+      "infrastructure_millions": 169.7,
+      "health_grants_millions": 460.5,
+      "cfda_covered_millions": 650.8,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 544335115
+        },
+        {
+          "cfda": "93.774",
+          "name": "Medicare Supplementary Medical Insurance",
+          "dollars": 248455373.97
+        },
+        {
+          "cfda": "93.773",
+          "name": "Medicare Hospital Insurance",
+          "dollars": 162589983.8
+        },
+        {
+          "cfda": "97.022",
+          "name": "Flood Insurance",
+          "dollars": 109954224.29
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 64489165
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Emmet",
+      "fips": "26047",
+      "status": "populated",
+      "total_awards_millions": 301.1,
+      "population": 34112,
+      "per_capita_dollars": 8827,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 3.2,
+      "energy_millions": 0,
+      "education_millions": 3.2,
+      "infrastructure_millions": 3.7,
+      "health_grants_millions": 7.1,
+      "cfda_covered_millions": 17.2,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 218020000
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 16932746
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 15739708
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 14374963
+        },
+        {
+          "cfda": "93.441",
+          "name": "Indian Self-Determination",
+          "dollars": 5719427
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Genesee",
+      "fips": "26049",
+      "status": "populated",
+      "total_awards_millions": 2893.2,
+      "population": 406211,
+      "per_capita_dollars": 7122,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 37.2,
+      "energy_millions": 0,
+      "education_millions": 41.6,
+      "infrastructure_millions": 8.8,
+      "health_grants_millions": 100.6,
+      "cfda_covered_millions": 188.2,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 1787445436
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 322212572
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 214439204
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 166636182
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 137188988
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Gladwin",
+      "fips": "26051",
+      "status": "populated",
+      "total_awards_millions": 243.1,
+      "population": 25386,
+      "per_capita_dollars": 9576,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.9,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 165901843
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 28063886
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 19243702
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 15682920
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 7222058
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Gogebic",
+      "fips": "26053",
+      "status": "populated",
+      "total_awards_millions": 147.5,
+      "population": 14380,
+      "per_capita_dollars": 10260,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.8,
+      "energy_millions": 0,
+      "education_millions": 3.1,
+      "infrastructure_millions": 17,
+      "health_grants_millions": 4.9,
+      "cfda_covered_millions": 26.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 80163389
+        },
+        {
+          "cfda": "66.046",
+          "name": "Climate Pollution Reduction Grants",
+          "dollars": 14946563
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 12372758
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 10147572
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 7269188
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Grand Traverse",
+      "fips": "26055",
+      "status": "populated",
+      "total_awards_millions": 829.4,
+      "population": 95238,
+      "per_capita_dollars": 8708,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 5.6,
+      "energy_millions": 1.1,
+      "education_millions": 6.1,
+      "infrastructure_millions": 10.2,
+      "health_grants_millions": 27.3,
+      "cfda_covered_millions": 50.3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 559472347
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 44879595
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 43440357
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 33841620
+        },
+        {
+          "cfda": "93.600",
+          "name": "Head Start",
+          "dollars": 13315927
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Gratiot",
+      "fips": "26057",
+      "status": "populated",
+      "total_awards_millions": 263,
+      "population": 41761,
+      "per_capita_dollars": 6297,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.4,
+      "energy_millions": 0,
+      "education_millions": 2.4,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.2,
+      "cfda_covered_millions": 5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 163227735
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 28592597
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 19216932
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 17409811
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 8465393
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Hillsdale",
+      "fips": "26059",
+      "status": "populated",
+      "total_awards_millions": 334.9,
+      "population": 45746,
+      "per_capita_dollars": 7321,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.6,
+      "energy_millions": 0,
+      "education_millions": 0.2,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 1.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 212638060
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 33111311
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 20924730
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 17792847
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 9404284
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Houghton",
+      "fips": "26061",
+      "status": "populated",
+      "total_awards_millions": 434.1,
+      "population": 37361,
+      "per_capita_dollars": 11618,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.5,
+      "energy_millions": 125.8,
+      "education_millions": 10.2,
+      "infrastructure_millions": 3.1,
+      "health_grants_millions": 13.7,
+      "cfda_covered_millions": 154.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 153092327
+        },
+        {
+          "cfda": "81.253",
+          "name": "Manufacturing and Energy Supply Chain Demonstrations and Commercial Applications",
+          "dollars": 122993645.63
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 29212888
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 16912488
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 12649980
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Huron",
+      "fips": "26063",
+      "status": "populated",
+      "total_awards_millions": 285.4,
+      "population": 31407,
+      "per_capita_dollars": 9086,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.1,
+      "energy_millions": 0,
+      "education_millions": 0.2,
+      "infrastructure_millions": 0,
+      "health_grants_millions": -0.1,
+      "cfda_covered_millions": 2.2,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 192079194
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 24987272
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 17849521
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 14033447
+        },
+        {
+          "cfda": "10.121",
+          "name": "Emergency Commodity Assistance Program",
+          "dollars": 6432664.51
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Ingham",
+      "fips": "26065",
+      "status": "populated",
+      "total_awards_millions": 35206.1,
+      "population": 284900,
+      "per_capita_dollars": 123574,
+      "medicaid_millions": 18593.9,
+      "snap_millions": 3938.2,
+      "housing_millions": 477.1,
+      "energy_millions": 546.4,
+      "education_millions": 1523,
+      "infrastructure_millions": 4105,
+      "health_grants_millions": 3127.2,
+      "cfda_covered_millions": 32310.8,
+      "top_programs": [
+        {
+          "cfda": "93.778",
+          "name": "Grants to States for Medicaid",
+          "dollars": 18593856382
+        },
+        {
+          "cfda": "10.551",
+          "name": "Supplemental Nutrition Assistance Program",
+          "dollars": 2855800805.8
+        },
+        {
+          "cfda": "20.205",
+          "name": "Highway Planning and Construction",
+          "dollars": 1629129383.14
+        },
+        {
+          "cfda": "11.035",
+          "name": "Broadband Equity, Access, and Deployment Program",
+          "dollars": 1554363778
+        },
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 1059595690
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Ionia",
+      "fips": "26067",
+      "status": "populated",
+      "total_awards_millions": 387.1,
+      "population": 66804,
+      "per_capita_dollars": 5794,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 3.8,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 12,
+      "cfda_covered_millions": 15.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 257207739
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 40370134
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 24409652
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 22370770
+        },
+        {
+          "cfda": "93.600",
+          "name": "Head Start",
+          "dollars": 11801349
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Iosco",
+      "fips": "26069",
+      "status": "populated",
+      "total_awards_millions": 256.8,
+      "population": 25237,
+      "per_capita_dollars": 10177,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.7,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 3,
+      "health_grants_millions": 0.3,
+      "cfda_covered_millions": 4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 177023647
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 28065573
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 20076090
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 15785982
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 6671696
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Iron",
+      "fips": "26071",
+      "status": "populated",
+      "total_awards_millions": 116.3,
+      "population": 11631,
+      "per_capita_dollars": 9997,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.1,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 2.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 79196656
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 11840499
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 11592648
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 5924672
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 2415170
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Isabella",
+      "fips": "26073",
+      "status": "populated",
+      "total_awards_millions": 417.1,
+      "population": 64394,
+      "per_capita_dollars": 6478,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 13.9,
+      "energy_millions": 2.8,
+      "education_millions": 28.4,
+      "infrastructure_millions": 4.9,
+      "health_grants_millions": 26.2,
+      "cfda_covered_millions": 76.2,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 227584137
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 35506548
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 23045301
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 22917802
+        },
+        {
+          "cfda": "84.063",
+          "name": "Federal Pell Grant Program",
+          "dollars": 22046772.78
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Jackson",
+      "fips": "26075",
+      "status": "populated",
+      "total_awards_millions": 1190,
+      "population": 160366,
+      "per_capita_dollars": 7421,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 18.3,
+      "energy_millions": 25.6,
+      "education_millions": 18.8,
+      "infrastructure_millions": 8.2,
+      "health_grants_millions": 29.9,
+      "cfda_covered_millions": 101,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 750424815
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 115648904
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 66384398
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 62079479
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 39106580
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Kalamazoo",
+      "fips": "26077",
+      "status": "populated",
+      "total_awards_millions": 1731.8,
+      "population": 261670,
+      "per_capita_dollars": 6618,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 23.1,
+      "energy_millions": 2.9,
+      "education_millions": 52.1,
+      "infrastructure_millions": 39.4,
+      "health_grants_millions": 20.7,
+      "cfda_covered_millions": 138.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 1113510417
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 134652018
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 88851297
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 83806894
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 53702572
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Kalkaska",
+      "fips": "26079",
+      "status": "populated",
+      "total_awards_millions": 137.7,
+      "population": 17939,
+      "per_capita_dollars": 7675,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.4,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 94943157
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 17415690
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 11005000
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 8108034
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 3353828
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Kent",
+      "fips": "26081",
+      "status": "populated",
+      "total_awards_millions": 7322.7,
+      "population": 657974,
+      "per_capita_dollars": 11129,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 96.2,
+      "energy_millions": 0.3,
+      "education_millions": 57.3,
+      "infrastructure_millions": 29.2,
+      "health_grants_millions": 3481.5,
+      "cfda_covered_millions": 3664.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 2492009341
+        },
+        {
+          "cfda": "93.774",
+          "name": "Medicare Supplementary Medical Insurance",
+          "dollars": 1794112060.09
+        },
+        {
+          "cfda": "93.773",
+          "name": "Medicare Hospital Insurance",
+          "dollars": 1178511106.07
+        },
+        {
+          "cfda": "93.770",
+          "name": "Medicare Prescription Drug Coverage",
+          "dollars": 380600720.65
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 289770632
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Keweenaw",
+      "fips": "26083",
+      "status": "populated",
+      "total_awards_millions": 23.1,
+      "population": 2046,
+      "per_capita_dollars": 11296,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.6,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0.1,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0.7,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 16350504
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 2288896
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 1691207
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 1123543
+        },
+        {
+          "cfda": "14.850",
+          "name": "Public Housing Operating Fund",
+          "dollars": 313821
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Lake",
+      "fips": "26085",
+      "status": "populated",
+      "total_awards_millions": 123.8,
+      "population": 12096,
+      "per_capita_dollars": 10237,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.6,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 5.6,
+      "cfda_covered_millions": 7.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 76040989
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 17540993
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 7473909
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 6187471
+        },
+        {
+          "cfda": "93.224",
+          "name": "Health Center Program",
+          "dollars": 5402682
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Lapeer",
+      "fips": "26087",
+      "status": "populated",
+      "total_awards_millions": 644.9,
+      "population": 88619,
+      "per_capita_dollars": 7278,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.1,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 0.2,
+      "health_grants_millions": 1,
+      "cfda_covered_millions": 3.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 457807688
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 63829758
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 46677599
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 42306195
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 11158621
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Leelanau",
+      "fips": "26089",
+      "status": "populated",
+      "total_awards_millions": 258.7,
+      "population": 22301,
+      "per_capita_dollars": 11601,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.4,
+      "energy_millions": 0,
+      "education_millions": 4.7,
+      "infrastructure_millions": 8.8,
+      "health_grants_millions": 9.8,
+      "cfda_covered_millions": 25.7,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 196088546
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 8910067
+        },
+        {
+          "cfda": "15.022",
+          "name": "Tribal Self-Governance",
+          "dollars": 7340904.87
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 6674043
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 6216535
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Lenawee",
+      "fips": "26091",
+      "status": "populated",
+      "total_awards_millions": 711.7,
+      "population": 99423,
+      "per_capita_dollars": 7158,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.2,
+      "energy_millions": 0,
+      "education_millions": 8.5,
+      "infrastructure_millions": 0.8,
+      "health_grants_millions": 4.8,
+      "cfda_covered_millions": 16.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 497136809
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 69895578
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 45605988
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 43267363
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 14964834
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Livingston",
+      "fips": "26093",
+      "status": "populated",
+      "total_awards_millions": 1442.2,
+      "population": 193866,
+      "per_capita_dollars": 7439,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.3,
+      "energy_millions": 0,
+      "education_millions": 21.1,
+      "infrastructure_millions": 3.2,
+      "health_grants_millions": 3.3,
+      "cfda_covered_millions": 27.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 1089332830
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 92657941
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 76578382
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 72375416
+        },
+        {
+          "cfda": "84.063",
+          "name": "Federal Pell Grant Program",
+          "dollars": 21017553.13
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Luce",
+      "fips": "26095",
+      "status": "populated",
+      "total_awards_millions": 63,
+      "population": 5339,
+      "per_capita_dollars": 11798,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.4,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.4,
+      "cfda_covered_millions": 0.8,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 29170293
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 5588220
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 4246482
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 2610896
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 1422115
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Mackinac",
+      "fips": "26097",
+      "status": "populated",
+      "total_awards_millions": 100.2,
+      "population": 10834,
+      "per_capita_dollars": 9250,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.2,
+      "energy_millions": 0,
+      "education_millions": 0.5,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0.8,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 73809350
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 8772886
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 7780062
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 5484557
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 1434013
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Macomb",
+      "fips": "26099",
+      "status": "populated",
+      "total_awards_millions": 8625.1,
+      "population": 881217,
+      "per_capita_dollars": 9788,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 55.6,
+      "energy_millions": 0,
+      "education_millions": 26.1,
+      "infrastructure_millions": 10.2,
+      "health_grants_millions": 24.6,
+      "cfda_covered_millions": 116.5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 3767646844
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 556084731
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 396563918
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 276218080
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 213016939
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Manistee",
+      "fips": "26101",
+      "status": "populated",
+      "total_awards_millions": 255.9,
+      "population": 25032,
+      "per_capita_dollars": 10221,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.8,
+      "energy_millions": 0.3,
+      "education_millions": 0.1,
+      "infrastructure_millions": 8.2,
+      "health_grants_millions": 2.8,
+      "cfda_covered_millions": 12.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 162430158
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 20642576
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 16456528
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 12385507
+        },
+        {
+          "cfda": "20.901",
+          "name": "Payments for Essential Air Services",
+          "dollars": 6849260
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Marquette",
+      "fips": "26103",
+      "status": "populated",
+      "total_awards_millions": 672.5,
+      "population": 66017,
+      "per_capita_dollars": 10186,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 5.7,
+      "energy_millions": 0.7,
+      "education_millions": 15.1,
+      "infrastructure_millions": 7.1,
+      "health_grants_millions": 89.2,
+      "cfda_covered_millions": 117.7,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 320565903
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 54521549
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 39124695
+        },
+        {
+          "cfda": "93.774",
+          "name": "Medicare Supplementary Medical Insurance",
+          "dollars": 36539470.52
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 28789219
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Mason",
+      "fips": "26105",
+      "status": "populated",
+      "total_awards_millions": 257.1,
+      "population": 29052,
+      "per_capita_dollars": 8848,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.5,
+      "energy_millions": 0,
+      "education_millions": 3,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 4.6,
+      "cfda_covered_millions": 9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 183438666
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 22663100
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 15080478
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 13539471
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 4922506
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Mecosta",
+      "fips": "26107",
+      "status": "populated",
+      "total_awards_millions": 340.7,
+      "population": 39714,
+      "per_capita_dollars": 8580,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.7,
+      "energy_millions": 0,
+      "education_millions": 25.8,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 1.1,
+      "cfda_covered_millions": 28.6,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 204058919
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 31114445
+        },
+        {
+          "cfda": "84.063",
+          "name": "Federal Pell Grant Program",
+          "dollars": 22835539.18
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 21758966
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 14895153
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Menominee",
+      "fips": "26109",
+      "status": "populated",
+      "total_awards_millions": 202.5,
+      "population": 23502,
+      "per_capita_dollars": 8614,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.1,
+      "energy_millions": 0,
+      "education_millions": 2.4,
+      "infrastructure_millions": 1.4,
+      "health_grants_millions": 3.2,
+      "cfda_covered_millions": 9.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 133079596
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 16289641
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 15596745
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 10262629
+        },
+        {
+          "cfda": "15.047",
+          "name": "Indian Education Facilities, Operations, and Maintenance",
+          "dollars": 4426952
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Midland",
+      "fips": "26111",
+      "status": "populated",
+      "total_awards_millions": 770.3,
+      "population": 83494,
+      "per_capita_dollars": 9226,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.9,
+      "energy_millions": 195,
+      "education_millions": 4.7,
+      "infrastructure_millions": 1.2,
+      "health_grants_millions": 0.3,
+      "cfda_covered_millions": 203,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 406773489
+        },
+        {
+          "cfda": "81.253",
+          "name": "Manufacturing and Energy Supply Chain Demonstrations and Commercial Applications",
+          "dollars": 100000000
+        },
+        {
+          "cfda": "81.255",
+          "name": "Clean Energy Demonstrations",
+          "dollars": 95000000
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 51664483
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 40288277
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Missaukee",
+      "fips": "26113",
+      "status": "populated",
+      "total_awards_millions": 111.6,
+      "population": 15052,
+      "per_capita_dollars": 7417,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 76213715
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 12418895
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 7050027
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 6910634
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 2653435
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Monroe",
+      "fips": "26115",
+      "status": "populated",
+      "total_awards_millions": 1107.1,
+      "population": 154809,
+      "per_capita_dollars": 7151,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 7.3,
+      "energy_millions": 0,
+      "education_millions": 7,
+      "infrastructure_millions": 3,
+      "health_grants_millions": 7.4,
+      "cfda_covered_millions": 24.8,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 739397741
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 119663743
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 78828070
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 67684820
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 23255883
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Montcalm",
+      "fips": "26117",
+      "status": "populated",
+      "total_awards_millions": 441.9,
+      "population": 66614,
+      "per_capita_dollars": 6633,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.6,
+      "energy_millions": 0,
+      "education_millions": 3.2,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 5.9,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 283894779
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 54707902
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 36507403
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 26447289
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 14861117
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Montmorency",
+      "fips": "26119",
+      "status": "populated",
+      "total_awards_millions": 119.9,
+      "population": 9153,
+      "per_capita_dollars": 13105,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.1,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 3.4,
+      "cfda_covered_millions": 3.5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 78089990
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 13650208
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 11425350
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 6764627
+        },
+        {
+          "cfda": "93.224",
+          "name": "Health Center Program",
+          "dollars": 3383514
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Muskegon",
+      "fips": "26121",
+      "status": "populated",
+      "total_awards_millions": 1568.5,
+      "population": 175824,
+      "per_capita_dollars": 8921,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 15.3,
+      "energy_millions": 0,
+      "education_millions": 8,
+      "infrastructure_millions": 3.8,
+      "health_grants_millions": 39.2,
+      "cfda_covered_millions": 66.3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 793019589
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 147982763
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 86583033
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 75452021
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 51019941
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Newaygo",
+      "fips": "26123",
+      "status": "populated",
+      "total_awards_millions": 371.2,
+      "population": 49978,
+      "per_capita_dollars": 7427,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.6,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 6.4,
+      "cfda_covered_millions": 7.1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 245985325
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 49008894
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 27711439
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 21118165
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 12655300
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Oakland",
+      "fips": "26125",
+      "status": "populated",
+      "total_awards_millions": 12930.7,
+      "population": 1274395,
+      "per_capita_dollars": 10147,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 156.1,
+      "energy_millions": 1143.8,
+      "education_millions": 67,
+      "infrastructure_millions": 10.4,
+      "health_grants_millions": 2662.5,
+      "cfda_covered_millions": 4039.8,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 5997627997
+        },
+        {
+          "cfda": "93.774",
+          "name": "Medicare Supplementary Medical Insurance",
+          "dollars": 1367648608.19
+        },
+        {
+          "cfda": "81.253",
+          "name": "Manufacturing and Energy Supply Chain Demonstrations and Commercial Applications",
+          "dollars": 1089840498
+        },
+        {
+          "cfda": "93.773",
+          "name": "Medicare Hospital Insurance",
+          "dollars": 900099795.77
+        },
+        {
+          "cfda": "86.001",
+          "name": "Pension Plan Termination Insurance",
+          "dollars": 636431405.5
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Oceana",
+      "fips": "26127",
+      "status": "populated",
+      "total_awards_millions": 226.8,
+      "population": 26659,
+      "per_capita_dollars": 8508,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.2,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 0.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 141399931
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 22707212
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 17987464
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 11361074
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 5949243
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Ogemaw",
+      "fips": "26129",
+      "status": "populated",
+      "total_awards_millions": 199.8,
+      "population": 20770,
+      "per_capita_dollars": 9619,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.2,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0.3,
+      "health_grants_millions": 0.2,
+      "cfda_covered_millions": 0.7,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 133057986
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 25765800
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 15647604
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 13704363
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 6210140
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Ontonagon",
+      "fips": "26131",
+      "status": "populated",
+      "total_awards_millions": 68.8,
+      "population": 5816,
+      "per_capita_dollars": 11823,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.3,
+      "energy_millions": 0,
+      "education_millions": 0.2,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0.6,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 46687071
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 8753486
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 5789585
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 3616716
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 943407
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Osceola",
+      "fips": "26133",
+      "status": "populated",
+      "total_awards_millions": 188.5,
+      "population": 22891,
+      "per_capita_dollars": 8234,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.4,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 1.5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 121228945
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 21740470
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 15819725
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 10915864
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 6356665
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Oscoda",
+      "fips": "26135",
+      "status": "populated",
+      "total_awards_millions": 82.9,
+      "population": 8219,
+      "per_capita_dollars": 10083,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.2,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0.2,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0.5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 55338413
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 12026974
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 6237744
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 4954062
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 2480992
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Otsego",
+      "fips": "26137",
+      "status": "populated",
+      "total_awards_millions": 203.7,
+      "population": 25091,
+      "per_capita_dollars": 8117,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.4,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 0.1,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 0.5,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 142249115
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 20754783
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 20328127
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 10286448
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 4849897
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Ottawa",
+      "fips": "26139",
+      "status": "populated",
+      "total_awards_millions": 1848.6,
+      "population": 296200,
+      "per_capita_dollars": 6241,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 5,
+      "energy_millions": 0,
+      "education_millions": 56.8,
+      "infrastructure_millions": 5.7,
+      "health_grants_millions": 8.1,
+      "cfda_covered_millions": 75.7,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 1353882956
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 116483118
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 90969234
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 82461931
+        },
+        {
+          "cfda": "84.063",
+          "name": "Federal Pell Grant Program",
+          "dollars": 48246006.22
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Presque Isle",
+      "fips": "26141",
+      "status": "populated",
+      "total_awards_millions": 141.1,
+      "population": 12982,
+      "per_capita_dollars": 10869,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.3,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.3,
+      "cfda_covered_millions": 0.6,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 101293006
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 12986531
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 10953025
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 8454559
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 2705566
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Roscommon",
+      "fips": "26143",
+      "status": "populated",
+      "total_awards_millions": 278.7,
+      "population": 23459,
+      "per_capita_dollars": 11881,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.3,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": -0.9,
+      "health_grants_millions": 3.2,
+      "cfda_covered_millions": 2.6,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 198383542
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 30550256
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 20549569
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 15050093
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 6895077
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Saginaw",
+      "fips": "26145",
+      "status": "populated",
+      "total_awards_millions": 1401.5,
+      "population": 190124,
+      "per_capita_dollars": 7371,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 23.7,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 11.8,
+      "health_grants_millions": 34.1,
+      "cfda_covered_millions": 69.7,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 872605527
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 150826069
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 101439718
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 86881642
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 73634577
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Sanilac",
+      "fips": "26151",
+      "status": "populated",
+      "total_awards_millions": 322.2,
+      "population": 40611,
+      "per_capita_dollars": 7933,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.8,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": 2.6,
+      "health_grants_millions": 1.9,
+      "cfda_covered_millions": 5.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 211466135
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 34994202
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 21623875
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 17584808
+        },
+        {
+          "cfda": "10.121",
+          "name": "Emergency Commodity Assistance Program",
+          "dollars": 9517891.17
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Schoolcraft",
+      "fips": "26153",
+      "status": "populated",
+      "total_awards_millions": 78.9,
+      "population": 8047,
+      "per_capita_dollars": 9804,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 0.8,
+      "energy_millions": 0,
+      "education_millions": 0.2,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0,
+      "cfda_covered_millions": 1,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 51242763
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 10082766
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 8404851
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 4093797
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 1775389
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Shiawassee",
+      "fips": "26155",
+      "status": "populated",
+      "total_awards_millions": 493.9,
+      "population": 68094,
+      "per_capita_dollars": 7254,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.9,
+      "energy_millions": 0,
+      "education_millions": 10.3,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 0.1,
+      "cfda_covered_millions": 13.3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 319864969
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 53451069
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 36702740
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 33101791
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 13127781
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "St. Clair",
+      "fips": "26147",
+      "status": "populated",
+      "total_awards_millions": 1186.3,
+      "population": 160383,
+      "per_capita_dollars": 7397,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 17.4,
+      "energy_millions": 0,
+      "education_millions": 8,
+      "infrastructure_millions": 8.6,
+      "health_grants_millions": 3.3,
+      "cfda_covered_millions": 37.3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 809823205
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 133877160
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 86199693
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 81149258
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 27960144
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "St. Joseph",
+      "fips": "26149",
+      "status": "populated",
+      "total_awards_millions": 389.6,
+      "population": 60939,
+      "per_capita_dollars": 6394,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 4,
+      "energy_millions": 0,
+      "education_millions": 2.3,
+      "infrastructure_millions": 0,
+      "health_grants_millions": 2,
+      "cfda_covered_millions": 8.3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 274120198
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 41766920
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 24185260
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 20223893
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 10386405
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Tuscola",
+      "fips": "26157",
+      "status": "populated",
+      "total_awards_millions": 427.1,
+      "population": 53323,
+      "per_capita_dollars": 8010,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 1.1,
+      "energy_millions": 0,
+      "education_millions": 0.1,
+      "infrastructure_millions": -0.6,
+      "health_grants_millions": 2.4,
+      "cfda_covered_millions": 3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 265204336
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 50175247
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 32207662
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 30297837
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 11870522
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Van Buren",
+      "fips": "26159",
+      "status": "populated",
+      "total_awards_millions": 586.6,
+      "population": 75587,
+      "per_capita_dollars": 7761,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 3.7,
+      "energy_millions": 0,
+      "education_millions": 0,
+      "infrastructure_millions": 8.7,
+      "health_grants_millions": 21.9,
+      "cfda_covered_millions": 34.3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 375097692
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 53184758
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 36824337
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 32569292
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 16235381
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Washtenaw",
+      "fips": "26161",
+      "status": "populated",
+      "total_awards_millions": 4802,
+      "population": 372258,
+      "per_capita_dollars": 12900,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 63,
+      "energy_millions": 47,
+      "education_millions": 116.5,
+      "infrastructure_millions": 48.8,
+      "health_grants_millions": 785.1,
+      "cfda_covered_millions": 1060.3,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 1528434648
+        },
+        {
+          "cfda": "12.225",
+          "name": "Commercial Technologies for Maintenance Activities Program",
+          "dollars": 974402683.57
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 140685328
+        },
+        {
+          "cfda": "93.866",
+          "name": "Aging Research",
+          "dollars": 121035949.22
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 97082469
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Wayne",
+      "fips": "26163",
+      "status": "populated",
+      "total_awards_millions": 22050.3,
+      "population": 1793561,
+      "per_capita_dollars": 12294,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 906.4,
+      "energy_millions": 124.2,
+      "education_millions": 191.7,
+      "infrastructure_millions": 166.8,
+      "health_grants_millions": 10348.3,
+      "cfda_covered_millions": 11737.4,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 6142051083
+        },
+        {
+          "cfda": "93.774",
+          "name": "Medicare Supplementary Medical Insurance",
+          "dollars": 5589984512.58
+        },
+        {
+          "cfda": "93.773",
+          "name": "Medicare Hospital Insurance",
+          "dollars": 3675480998.33
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 1172028630
+        },
+        {
+          "cfda": "93.770",
+          "name": "Medicare Prescription Drug Coverage",
+          "dollars": 773723775.96
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    },
+    {
+      "county": "Wexford",
+      "fips": "26165",
+      "status": "populated",
+      "total_awards_millions": 353.2,
+      "population": 33673,
+      "per_capita_dollars": 10488,
+      "medicaid_millions": 0,
+      "snap_millions": 0,
+      "housing_millions": 2.4,
+      "energy_millions": 0,
+      "education_millions": 0.3,
+      "infrastructure_millions": 0.2,
+      "health_grants_millions": 0.8,
+      "cfda_covered_millions": 3.6,
+      "top_programs": [
+        {
+          "cfda": "96.002",
+          "name": "Social Security Retirement Insurance",
+          "dollars": 163844236
+        },
+        {
+          "cfda": "96.001",
+          "name": "Social Security Disability Insurance",
+          "dollars": 28436932
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 22452434
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 15758256
+        },
+        {
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 8433213
+        }
+      ],
+      "fy": 2025,
+      "source": "USASpending.gov FY2025",
+      "pending_reason": null
+    }
+  ]
+}

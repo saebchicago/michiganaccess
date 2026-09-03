@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-09-02T20:46:21.142Z",
+    "generated": "2026-09-03T20:16:11.074Z",
     "source": "src/data/sourcesRegistry.ts",
     "entryCount": 51,
     "schema": "v1",
@@ -416,7 +416,7 @@
       "id": "nchs-vital-statistics-rapid-release",
       "name": "NCHS Vital Statistics Rapid Release",
       "agency": "CDC",
-      "url": "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-bhi7",
+      "url": "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-yj24",
       "description": "Provisional 12-month county drug overdose death counts on /county, /brief, /ask",
       "updateFrequency": "Monthly",
       "license": null,

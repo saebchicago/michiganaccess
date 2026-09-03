@@ -355,7 +355,7 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     url: "https://www.atsdr.cdc.gov/place-health/php/svi/index.html",
     generatedFrom: "cdc-svi-county.generated.json",
     updateFrequency: "Every 2 years",
-    currentVersion: "ATSDR county rankings (awaiting first successful pull)",
+    currentVersion: "SVI 2022 county rankings",
     nextExpectedUpdate: "2027-06-30",
     isLive: false,
     vintageStatus: "current",
@@ -367,10 +367,11 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     id: "nchs-overdose-county",
     name: "NCHS Provisional County Overdose Deaths",
     category: "Health",
-    url: "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-bhi7",
+    url: "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-yj24",
     generatedFrom: "nchs-overdose-county.generated.json",
     updateFrequency: "Monthly",
-    currentVersion: "VSRR county series (awaiting first successful pull)",
+    currentVersion: "VSRR 12-month-ending December 2025",
+
     nextExpectedUpdate: "Ongoing",
     isLive: false,
     vintageStatus: "current",
@@ -402,19 +403,20 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Repointed 2026-09-03: the hand-seeded 20-county table was replaced by a
+    // generated all-83-county ingest (scripts/refresh-usaspending-county.mjs).
     id: "usaspending",
     name: "USASpending.gov Federal Awards",
     category: "Finance",
     url: "https://api.usaspending.gov",
-    lastUpdated: "2025-11-01",
+    generatedFrom: "usaspending-county.generated.json",
     updateFrequency: "Quarterly + real-time",
-    currentVersion: "FY2024",
-    nextExpectedUpdate: "FY2025 Q4",
-    isLive: true,
-    vintageStatus: "behind",
-    vintageNote:
-      "We ship FY2024 obligations; FY2025 is closed and published.",
+    currentVersion: "FY2025 county obligations",
+    nextExpectedUpdate: "FY2026 Q4",
+    isLive: false,
+    vintageStatus: "current",
   }),
+
   entry({
     // Anchored 2026-08-30: the county payload moved to the official 2026
     // Michigan Data Sheet (2024 data, all 83 counties) but this entry still
