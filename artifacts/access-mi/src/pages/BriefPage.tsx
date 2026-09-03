@@ -829,8 +829,12 @@ export default function BriefPage() {
               </>
             )}
 
+            {/* Shortage -> real local programs */}
+            <CountyResourceBridge county={county} />
+
             {/* Utility Customer Stress - shown in both views */}
             <UtilityStressSection county={county} />
+
 
             {/* Get to Care panel */}
             <GetToCarePanel
