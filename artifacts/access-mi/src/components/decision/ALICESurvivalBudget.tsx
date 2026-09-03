@@ -206,9 +206,7 @@ export default function ALICESurvivalBudget() {
         animate={{ opacity: 1, y: 0 }}
         key={`${county}-${household}`}
       >
-        <Card
-          className={`border-2 ${gap < 0 ? "border-red-300 dark:border-red-900/40" : "border-green-300 dark:border-green-900/40"}`}
-        >
+        <Card className="border-2 border-border">
           <CardContent className="py-5">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
@@ -216,69 +214,75 @@ export default function ALICESurvivalBudget() {
                 <p className="text-xl font-bold text-foreground tabular-nums">
                   ${totalBudget.toLocaleString()}/mo
                 </p>
+                <p className="text-[10px] text-muted-foreground">MODELED</p>
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Median Income</p>
+                <p className="text-xs text-muted-foreground">
+                  Income needed / yr
+                </p>
                 <p className="text-xl font-bold text-foreground tabular-nums">
-                  ${monthlyIncome.toLocaleString()}/mo
+                  ${annualNeeded.toLocaleString()}
+                </p>
+                <p className="text-[10px] text-muted-foreground">
+                  {officialThreshold
+                    ? `ALICE Threshold (under 65): $${officialThreshold.toLocaleString()}`
+                    : "ALICE Threshold unavailable"}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Gap</p>
-                <p
-                  className={`text-xl font-bold tabular-nums ${gap < 0 ? "text-red-600" : "text-green-600"}`}
-                >
-                  {gap < 0
-                    ? `-$${Math.abs(gap).toLocaleString()}`
-                    : `+$${gap.toLocaleString()}`}
-                  /mo
+                <p className="text-xs text-muted-foreground">
+                  Below ALICE Threshold
+                </p>
+                <p className="text-xl font-bold text-amber-600 tabular-nums">
+                  {hardshipPct}%
+                </p>
+                <p className="text-[10px] text-muted-foreground">
+                  of {county} households
                 </p>
               </div>
             </div>
 
-            {gap < 0 && (
-              <div className="mt-4 rounded-lg bg-red-50 dark:bg-red-950/20 p-3">
-                <p className="text-xs text-red-700 dark:text-red-400 font-medium mb-1">
-                  Programs that could close this gap:
+            <div className="mt-4 rounded-lg bg-muted/50 p-3">
+              <p className="text-xs text-foreground font-medium mb-1">
+                Programs that reduce this budget:
+              </p>
+              <div className="space-y-1 text-xs text-muted-foreground">
+                <p>
+                  SNAP: ~$
+                  {household === "single"
+                    ? 234
+                    : household === "single_parent_1"
+                      ? 468
+                      : 939}
+                  /mo in food benefits
                 </p>
-                <div className="space-y-1 text-xs text-red-600 dark:text-red-400">
+                <p>
+                  Medicaid: ~$
+                  {household === "single"
+                    ? 600
+                    : household === "single_parent_1"
+                      ? 1200
+                      : 2400}
+                  /mo healthcare value
+                </p>
+                <p>LIHEAP: ~$83/mo energy assistance</p>
+                {budget.childcare > 0 && (
                   <p>
-                    SNAP: ~$
-                    {household === "single"
-                      ? 234
-                      : household === "single_parent_1"
-                        ? 468
-                        : 939}
-                    /mo in food benefits
+                    Childcare subsidy: up to $
+                    {Math.round(budget.childcare * 0.8)}/mo
                   </p>
-                  <p>
-                    Medicaid: ~$
-                    {household === "single"
-                      ? 600
-                      : household === "single_parent_1"
-                        ? 1200
-                        : 2400}
-                    /mo healthcare value
-                  </p>
-                  <p>LIHEAP: ~$83/mo energy assistance</p>
-                  {budget.childcare > 0 && (
-                    <p>
-                      Childcare subsidy: up to $
-                      {Math.round(budget.childcare * 0.8)}/mo
-                    </p>
-                  )}
-                </div>
+                )}
               </div>
-            )}
+            </div>
 
             <p className="text-[9px] text-muted-foreground mt-3">
-              Source: United Way ALICE Methodology 2025 + BLS OES Michigan 2024.
-              Budget is modeled - actual costs vary by location. ALICE hardship
-              in {county} County:{" "}
-              {alice?.combinedHardshipPct ??
-                MICHIGAN_ALICE_STATEWIDE.combinedHardshipPct}
-              %.
+              Budget is modeled (United Way ALICE Methodology 2025 + BLS OES
+              Michigan 2024); actual costs vary by location. Threshold and
+              hardship share: United For ALICE Michigan Data Sheet 2026 (data
+              year 2024). No county household-income series is published here,
+              so this tool does not estimate earnings.
             </p>
+
           </CardContent>
         </Card>
       </motion.div>
