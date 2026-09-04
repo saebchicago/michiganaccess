@@ -51,6 +51,10 @@ import {
   FEDERAL_SPENDING_PROVENANCE,
   getFederalDependencyScore,
 } from "@/data/federalSpending";
+import {
+  STATEWIDE_ADMINISTERED_NOTE,
+  STATEWIDE_ADMINISTERED_TOTALS,
+} from "@/data/federalSpendingScope";
 import SuggestResource from "@/components/community/SuggestResource";
 import HelpfulVote from "@/components/community/HelpfulVote";
 import { MICHIGAN_BONDS } from "@/data/municipalBonds";
@@ -299,6 +303,21 @@ function FederalFundingTab() {
                 />
               </BarChart>
             </ResponsiveContainer>
+          </div>
+          <div className="mt-4 rounded-lg border border-border bg-muted/40 p-4 space-y-2">
+            <p className="text-xs font-semibold text-foreground">
+              Medicaid and SNAP are reported statewide, not by county
+            </p>
+            <p className="text-[11px] text-muted-foreground leading-relaxed">
+              {STATEWIDE_ADMINISTERED_NOTE}
+            </p>
+            <ul className="text-[11px] text-muted-foreground space-y-0.5">
+              {STATEWIDE_ADMINISTERED_TOTALS.map((t) => (
+                <li key={t.field} className="tabular-nums">
+                  {t.label}: ${t.millions.toFixed(0)}M statewide
+                </li>
+              ))}
+            </ul>
           </div>
         </CardContent>
       </Card>

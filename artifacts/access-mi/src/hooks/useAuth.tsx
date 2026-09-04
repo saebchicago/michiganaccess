@@ -39,7 +39,11 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [roles, setRoles] = useState<StaffRole[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [sessionLoading, setSessionLoading] = useState(true);
+  // Separate from the session read: roles arrive later, and until they do we
+  // must not tell a signed-in reviewer that they have no reviewer role.
+  const [rolesLoading, setRolesLoading] = useState(false);
+
 
   useEffect(() => {
     let active = true;
