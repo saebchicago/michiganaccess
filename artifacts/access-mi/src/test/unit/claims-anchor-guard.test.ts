@@ -63,11 +63,17 @@ describe("Claims anchor guard  -  VERIFIED rows", () => {
     expect(src).toContain("chat-mistral");
   });
 
-  // V-4: GA4 (G-367X8MQ1F6) loaded in index.html
+  // V-4: GA4 (G-367X8MQ1F6) loaded in index.html.
+  // The loader tag stays in index.html; the config call moved to
+  // public/ga-init.js so script-src does not need 'unsafe-inline'. Both
+  // halves are still asserted, and index.html must reference the init file
+  // or the config would never run.
   it("V-4: index.html loads GA4 with the canonical measurement ID", () => {
     const src = read("index.html");
     expect(src).toMatch(/googletagmanager\.com\/gtag\/js\?id=G-367X8MQ1F6/);
-    expect(src).toContain('gtag("config", "G-367X8MQ1F6")');
+    expect(src).toContain('src="/ga-init.js"');
+    const init = read("public/ga-init.js");
+    expect(init).toContain('gtag("config", "G-367X8MQ1F6")');
   });
 
   // V-5: No ad network scripts in index.html
