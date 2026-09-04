@@ -97,10 +97,18 @@ const COUNTY_EQUITY_SCORES: Record<string, number> = {
   Ottawa: 72,
 };
 
+/**
+ * X axis is the share of a county's county-attributable federal awards that is
+ * direct safety-net aid (HUD housing + energy). Medicaid and SNAP cannot be
+ * split by county in USASpending, so they are excluded; the 5% split reflects
+ * the observed Michigan distribution (median 0.6%, max 29%).
+ */
+const SAFETY_NET_SHARE_SPLIT = 5;
+
 function getQuadrantLabel(fedDep: number, equity: number): string {
-  if (fedDep <= 35 && equity >= 50) return "Resilient";
-  if (fedDep > 35 && equity >= 50) return "Watch";
-  if (fedDep <= 35 && equity < 50) return "Vulnerable";
+  if (fedDep <= SAFETY_NET_SHARE_SPLIT && equity >= 50) return "Resilient";
+  if (fedDep > SAFETY_NET_SHARE_SPLIT && equity >= 50) return "Watch";
+  if (fedDep <= SAFETY_NET_SHARE_SPLIT && equity < 50) return "Vulnerable";
   return "Critical";
 }
 
@@ -264,12 +272,6 @@ function FederalFundingTab() {
                   formatter={(val: number) => `$${val}M`}
                 />
                 <Legend wrapperStyle={{ fontSize: 11 }} />
-                <Bar
-                  dataKey="Medicaid"
-                  stackId="a"
-                  fill={CATEGORY_COLORS.medicaid}
-                />
-                <Bar dataKey="SNAP" stackId="a" fill={CATEGORY_COLORS.snap} />
                 <Bar
                   dataKey="Housing"
                   stackId="a"
@@ -532,11 +534,13 @@ function FiscalVulnerabilityTab() {
       <Card>
         <CardHeader>
           <CardTitle className="text-sm">
-            Federal Dependency vs. Equity Score
+            Safety-Net Share vs. Equity Score
           </CardTitle>
           <p className="text-xs text-muted-foreground">
-            Each dot = one county. Quadrants at X=35%, Y=50 score. Illustrative
-            composite.
+            Each dot = one county. Quadrants at X={SAFETY_NET_SHARE_SPLIT}%, Y=50
+            score. Equity score is an illustrative composite. Medicaid and SNAP
+            are excluded from this axis - USASpending books them to the state
+            agency in Lansing, so they cannot be attributed to a county.
           </p>
         </CardHeader>
         <CardContent>
@@ -552,12 +556,12 @@ function FiscalVulnerabilityTab() {
                 <XAxis
                   type="number"
                   dataKey="federalDependency"
-                  domain={[0, 60]}
-                  name="Federal Dependency"
+                  domain={[0, 32]}
+                  name="Safety-Net Share"
                   unit="%"
                   tick={{ fontSize: 11 }}
                   label={{
-                    value: "Federal Dependency Score (%)",
+                    value: "Direct safety-net share of county awards (%)",
                     position: "bottom",
                     offset: 20,
                     style: { fontSize: 11 },
@@ -584,7 +588,7 @@ function FiscalVulnerabilityTab() {
                   name="Total Awards ($M)"
                 />
                 <ReferenceLine
-                  x={35}
+                  x={SAFETY_NET_SHARE_SPLIT}
                   stroke="hsl(var(--muted-foreground))"
                   strokeDasharray="6 4"
                 />
@@ -596,7 +600,7 @@ function FiscalVulnerabilityTab() {
                 <Tooltip
                   contentStyle={{ fontSize: 11, borderRadius: 8 }}
                   formatter={(val: number, name: string) =>
-                    name === "Federal Dependency"
+                    name === "Safety-Net Share"
                       ? `${val}%`
                       : name === "Equity Score"
                         ? `${val}/100`
@@ -681,7 +685,7 @@ function FiscalVulnerabilityTab() {
                     Equity Score
                   </th>
                   <th className="py-2 pr-4 text-xs font-semibold text-muted-foreground">
-                    Federal Dependency
+                    Safety-Net Share
                   </th>
                   <th className="py-2 text-xs font-semibold text-muted-foreground">
                     Top Federal Program
