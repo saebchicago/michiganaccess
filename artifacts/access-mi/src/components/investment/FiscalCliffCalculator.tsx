@@ -7,24 +7,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, TrendingDown, Users, DollarSign } from "lucide-react";
-import { MICHIGAN_FEDERAL_SPENDING } from "@/data/federalSpending";
-
-// Medicaid enrollees estimate by county (Michigan MDHHS 2024)
-const MEDICAID_ENROLLEES: Record<string, number> = {
-  Wayne: 580000,
-  Genesee: 142000,
-  Oakland: 128000,
-  Macomb: 98000,
-  Kent: 104000,
-  Saginaw: 68000,
-  Ingham: 74000,
-  Kalamazoo: 58000,
-  Washtenaw: 44000,
-  Muskegon: 42000,
-};
+import {
+  MICHIGAN_FEDERAL_SPENDING,
+  FEDERAL_SPENDING_PROVENANCE,
+} from "@/data/federalSpending";
+import {
+  STATEWIDE_ADMINISTERED_NOTE,
+  STATEWIDE_ADMINISTERED_TOTALS,
+  countyAttributableTotal,
+} from "@/data/federalSpendingScope";
 
 type Severity = "critical" | "high" | "moderate";
-type ProgramKey = "medicaid" | "snap" | "housing" | "all";
+type ProgramKey = "housing" | "energy" | "health" | "all";
 
 const SEVERITY_COLORS: Record<Severity, string> = {
   critical:
@@ -36,48 +30,38 @@ const SEVERITY_COLORS: Record<Severity, string> = {
 
 export default function FiscalCliffCalculator() {
   const [cutPct, setCutPct] = useState(10);
-  const [program, setProgram] = useState<ProgramKey>("medicaid");
+  const [program, setProgram] = useState<ProgramKey>("housing");
 
   const impacts = useMemo(() => {
     return MICHIGAN_FEDERAL_SPENDING.map((county) => {
       // Program dollars are the county's published USASpending obligations for
-      // that program, not a modeled share of its total. Counties with no
-      // published obligations for the selected program are omitted rather than
-      // shown as a zero impact.
+      // that program, not a modeled share of its total. Medicaid and SNAP are
+      // excluded because USASpending books them to the state agency in Lansing,
+      // so they cannot be split by county (see the note below the results).
       let dollarImpact = 0;
-      let residentsAffected = 0;
       let hasProgramDollars = false;
 
-      if (program === "medicaid" || program === "all") {
-        dollarImpact += county.medicaid_millions * (cutPct / 100);
-        if (county.medicaid_millions > 0) hasProgramDollars = true;
-        const enrollees = MEDICAID_ENROLLEES[county.county] ?? 0;
-        residentsAffected += Math.round(enrollees * (cutPct / 100) * 0.3);
-      }
-      if (program === "snap" || program === "all") {
-        dollarImpact += county.snap_millions * (cutPct / 100);
-        if (county.snap_millions > 0) hasProgramDollars = true;
-        residentsAffected += Math.round(
-          (county.snap_millions * (cutPct / 100) * 1000000) / 1200,
-        );
-      }
-      if (program === "housing" || program === "all") {
-        dollarImpact += county.housing_millions * (cutPct / 100);
-        if (county.housing_millions > 0) hasProgramDollars = true;
+      const add = (millions: number) => {
+        dollarImpact += millions * (cutPct / 100);
+        if (millions > 0) hasProgramDollars = true;
+      };
+
+      if (program === "housing" || program === "all") add(county.housing_millions);
+      if (program === "energy" || program === "all") add(county.energy_millions);
+      if (program === "health" || program === "all") add(county.health_grants_millions);
+      if (program === "all") {
+        add(county.education_millions);
+        add(county.infrastructure_millions);
       }
       if (!hasProgramDollars) return null;
 
       const severity: Severity =
-        dollarImpact > 200
-          ? "critical"
-          : dollarImpact > 50
-            ? "high"
-            : "moderate";
+        dollarImpact > 200 ? "critical" : dollarImpact > 50 ? "high" : "moderate";
 
       return {
         county: county.county,
         dollarImpactM: dollarImpact,
-        residentsAffected,
+        countyAttributableM: countyAttributableTotal(county),
         severity,
       };
     })
@@ -86,7 +70,7 @@ export default function FiscalCliffCalculator() {
   }, [cutPct, program]);
 
   const totalImpactM = impacts.reduce((s, i) => s + i.dollarImpactM, 0);
-  const totalResidents = impacts.reduce((s, i) => s + i.residentsAffected, 0);
+  const fy = FEDERAL_SPENDING_PROVENANCE.fiscal_year ?? null;
 
   return (
     <div className="space-y-6">
@@ -100,9 +84,10 @@ export default function FiscalCliffCalculator() {
             </h3>
             <p className="text-xs text-muted-foreground mt-0.5">
               Simulate the impact of federal funding reductions on Michigan
-              counties. Based on USASpending.gov FY2024 data. Dollar impacts are
-              modeled estimates - actual effects depend on program structure and
-              state matching requirements.
+              counties. Based on published USASpending.gov obligations
+              {fy ? ` for FY${fy}` : ""}. Dollar impacts are modeled estimates -
+              actual effects depend on program structure and state matching
+              requirements.
             </p>
           </div>
         </div>
@@ -148,10 +133,10 @@ export default function FiscalCliffCalculator() {
           </label>
           <div className="grid grid-cols-2 gap-2">
             {[
-              { key: "medicaid" as const, label: "Medicaid" },
-              { key: "snap" as const, label: "SNAP / Food" },
-              { key: "housing" as const, label: "Housing" },
-              { key: "all" as const, label: "All Programs" },
+              { key: "housing" as const, label: "Housing (HUD)" },
+              { key: "energy" as const, label: "Energy / weatherization" },
+              { key: "health" as const, label: "Health & human services" },
+              { key: "all" as const, label: "All county programs" },
             ].map((p) => (
               <button
                 key={p.key}
@@ -186,19 +171,19 @@ export default function FiscalCliffCalculator() {
               Estimated funding loss across Michigan
             </p>
             <p className="text-[9px] text-red-500/70 mt-1">
-              Illustrative estimate - USASpending.gov FY2024
+              Illustrative estimate - USASpending.gov{fy ? ` FY${fy}` : ""}
             </p>
           </div>
           <div className="rounded-xl border border-orange-200 bg-orange-50 dark:bg-orange-950/30 dark:border-orange-900/40 p-4">
             <Users className="h-4 w-4 text-orange-600 mb-1" />
             <p className="text-2xl font-bold text-orange-700 dark:text-orange-400 tabular-nums">
-              {totalResidents.toLocaleString()}
+              {impacts.length}
             </p>
             <p className="text-xs text-orange-600 dark:text-orange-400">
-              Estimated residents affected
+              Counties with published obligations for this program
             </p>
             <p className="text-[9px] text-orange-500/70 mt-1">
-              Illustrative estimate
+              Of 83 Michigan counties
             </p>
           </div>
           <div className="rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-950/30 dark:border-amber-900/40 p-4">
@@ -274,8 +259,30 @@ export default function FiscalCliffCalculator() {
         </div>
       </div>
 
+      <div className="rounded-lg border border-border bg-muted/40 p-4 space-y-2">
+        <p className="text-xs font-semibold text-foreground">
+          Medicaid and SNAP are statewide figures, not county figures
+        </p>
+        <p className="text-[11px] text-muted-foreground leading-relaxed">
+          {STATEWIDE_ADMINISTERED_NOTE}
+        </p>
+        <ul className="text-[11px] text-muted-foreground space-y-0.5">
+          {STATEWIDE_ADMINISTERED_TOTALS.map((t) => (
+            <li key={t.field} className="tabular-nums">
+              {t.label}: ${t.millions.toFixed(0)}M statewide
+              {cutPct
+                ? ` - a ${cutPct}% cut removes about $${(
+                    (t.millions * cutPct) /
+                    100
+                  ).toFixed(0)}M from Michigan`
+                : ""}
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <p className="text-[9px] text-muted-foreground/60">
-        All figures are modeled estimates based on USASpending.gov FY2024
+        All figures are modeled estimates based on published USASpending.gov
         county-level award data. Actual program impacts depend on program
         structure, state matching requirements, and federal rulemaking. Not
         financial or policy advice.
