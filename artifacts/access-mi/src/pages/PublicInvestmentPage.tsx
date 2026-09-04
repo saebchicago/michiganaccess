@@ -134,8 +134,6 @@ function FederalFundingTab() {
     () =>
       filtered.map((r) => ({
         county: r.county,
-        Medicaid: r.medicaid_millions,
-        SNAP: r.snap_millions,
         Housing: r.housing_millions,
         Infrastructure: r.infrastructure_millions,
         "Health Grants": r.health_grants_millions,
@@ -152,8 +150,6 @@ function FederalFundingTab() {
   // single county where Infrastructure outweighs Medicaid).
   const largestCategory = useMemo(() => {
     const sums: Record<string, number> = {
-      Medicaid: 0,
-      SNAP: 0,
       Housing: 0,
       Infrastructure: 0,
       "Health Grants": 0,
@@ -161,8 +157,6 @@ function FederalFundingTab() {
       Energy: 0,
     };
     for (const r of filtered) {
-      sums.Medicaid += r.medicaid_millions;
-      sums.SNAP += r.snap_millions;
       sums.Housing += r.housing_millions;
       sums.Infrastructure += r.infrastructure_millions;
       sums["Health Grants"] += r.health_grants_millions;
@@ -501,8 +495,6 @@ function FiscalVulnerabilityTab() {
     const r = MICHIGAN_FEDERAL_SPENDING.find((d) => d.county === county);
     if (!r) return "N/A";
     const cats: [string, number][] = [
-      ["Medicaid", r.medicaid_millions],
-      ["SNAP", r.snap_millions],
       ["Housing (HUD)", r.housing_millions],
       ["Health Grants", r.health_grants_millions],
       ["Education", r.education_millions],
