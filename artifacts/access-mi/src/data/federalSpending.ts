@@ -132,19 +132,24 @@ export function getCountyFederalSpending(county: string): CountyFederalSpending 
 }
 
 /**
- * Share of a county's federal obligations that arrives as safety-net
- * assistance (Medicaid, food, housing, energy), 0-100, or null when the
- * inputs are missing. This is a ratio of published figures, not a model of
- * county revenue: the previous "federal dependency" score was an unsourced
- * illustrative table and has been removed.
+ * Share of a county's county-attributable federal obligations that arrives as
+ * local safety-net assistance (HUD housing plus energy/weatherization),
+ * 0-100, or null when the inputs are missing.
+ *
+ * Medicaid and SNAP are excluded on purpose: USASpending records those against
+ * the state agency that receives them, so all of Michigan's Medicaid and SNAP
+ * dollars land in Ingham County and none can be attributed to the county whose
+ * residents are served. See federalSpendingScope.ts.
  */
 export function getSafetyNetShare(county: string): number | null {
   const rec = getCountyFederalSpending(county);
-  if (!rec || !isPopulated(rec) || rec.total_awards_millions === 0) return null;
-  const sum =
-    rec.medicaid_millions + rec.snap_millions + rec.housing_millions + rec.energy_millions;
-  return Math.round((sum / rec.total_awards_millions) * 1000) / 10;
+  if (!rec || !isPopulated(rec)) return null;
+  const base = rec.total_awards_millions - rec.medicaid_millions - rec.snap_millions;
+  if (base <= 0) return null;
+  const sum = rec.housing_millions + rec.energy_millions;
+  return Math.round((sum / base) * 1000) / 10;
 }
+
 
 /**
  * Superseded name for the safety-net share. The old federal "dependency"

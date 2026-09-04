@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, within } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import fs from "fs";
 import path from "path";
 import { getALICERecordByCountyName } from "@/data/aliceData";
@@ -87,10 +88,16 @@ import BriefPage from "@/pages/BriefPage";
 
 function renderBrief(county: string) {
   mockCounty = county;
+  // BriefPage's resource bridge fetches with react-query, so the tree needs a client.
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false, gcTime: 0 } },
+  });
   return render(
-    <MemoryRouter initialEntries={[`/brief?county=${county}`]}>
-      <BriefPage />
-    </MemoryRouter>,
+    <QueryClientProvider client={client}>
+      <MemoryRouter initialEntries={[`/brief?county=${county}`]}>
+        <BriefPage />
+      </MemoryRouter>
+    </QueryClientProvider>,
   );
 }
 

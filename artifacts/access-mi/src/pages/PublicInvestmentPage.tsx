@@ -51,6 +51,10 @@ import {
   FEDERAL_SPENDING_PROVENANCE,
   getFederalDependencyScore,
 } from "@/data/federalSpending";
+import {
+  STATEWIDE_ADMINISTERED_NOTE,
+  STATEWIDE_ADMINISTERED_TOTALS,
+} from "@/data/federalSpendingScope";
 import SuggestResource from "@/components/community/SuggestResource";
 import HelpfulVote from "@/components/community/HelpfulVote";
 import { MICHIGAN_BONDS } from "@/data/municipalBonds";
@@ -97,10 +101,18 @@ const COUNTY_EQUITY_SCORES: Record<string, number> = {
   Ottawa: 72,
 };
 
+/**
+ * X axis is the share of a county's county-attributable federal awards that is
+ * direct safety-net aid (HUD housing + energy). Medicaid and SNAP cannot be
+ * split by county in USASpending, so they are excluded; the 5% split reflects
+ * the observed Michigan distribution (median 0.6%, max 29%).
+ */
+const SAFETY_NET_SHARE_SPLIT = 5;
+
 function getQuadrantLabel(fedDep: number, equity: number): string {
-  if (fedDep <= 35 && equity >= 50) return "Resilient";
-  if (fedDep > 35 && equity >= 50) return "Watch";
-  if (fedDep <= 35 && equity < 50) return "Vulnerable";
+  if (fedDep <= SAFETY_NET_SHARE_SPLIT && equity >= 50) return "Resilient";
+  if (fedDep > SAFETY_NET_SHARE_SPLIT && equity >= 50) return "Watch";
+  if (fedDep <= SAFETY_NET_SHARE_SPLIT && equity < 50) return "Vulnerable";
   return "Critical";
 }
 
@@ -134,8 +146,6 @@ function FederalFundingTab() {
     () =>
       filtered.map((r) => ({
         county: r.county,
-        Medicaid: r.medicaid_millions,
-        SNAP: r.snap_millions,
         Housing: r.housing_millions,
         Infrastructure: r.infrastructure_millions,
         "Health Grants": r.health_grants_millions,
@@ -152,8 +162,6 @@ function FederalFundingTab() {
   // single county where Infrastructure outweighs Medicaid).
   const largestCategory = useMemo(() => {
     const sums: Record<string, number> = {
-      Medicaid: 0,
-      SNAP: 0,
       Housing: 0,
       Infrastructure: 0,
       "Health Grants": 0,
@@ -161,8 +169,6 @@ function FederalFundingTab() {
       Energy: 0,
     };
     for (const r of filtered) {
-      sums.Medicaid += r.medicaid_millions;
-      sums.SNAP += r.snap_millions;
       sums.Housing += r.housing_millions;
       sums.Infrastructure += r.infrastructure_millions;
       sums["Health Grants"] += r.health_grants_millions;
@@ -271,12 +277,6 @@ function FederalFundingTab() {
                 />
                 <Legend wrapperStyle={{ fontSize: 11 }} />
                 <Bar
-                  dataKey="Medicaid"
-                  stackId="a"
-                  fill={CATEGORY_COLORS.medicaid}
-                />
-                <Bar dataKey="SNAP" stackId="a" fill={CATEGORY_COLORS.snap} />
-                <Bar
                   dataKey="Housing"
                   stackId="a"
                   fill={CATEGORY_COLORS.housing}
@@ -303,6 +303,21 @@ function FederalFundingTab() {
                 />
               </BarChart>
             </ResponsiveContainer>
+          </div>
+          <div className="mt-4 rounded-lg border border-border bg-muted/40 p-4 space-y-2">
+            <p className="text-xs font-semibold text-foreground">
+              Medicaid and SNAP are reported statewide, not by county
+            </p>
+            <p className="text-[11px] text-muted-foreground leading-relaxed">
+              {STATEWIDE_ADMINISTERED_NOTE}
+            </p>
+            <ul className="text-[11px] text-muted-foreground space-y-0.5">
+              {STATEWIDE_ADMINISTERED_TOTALS.map((t) => (
+                <li key={t.field} className="tabular-nums">
+                  {t.label}: ${t.millions.toFixed(0)}M statewide
+                </li>
+              ))}
+            </ul>
           </div>
         </CardContent>
       </Card>
@@ -501,8 +516,6 @@ function FiscalVulnerabilityTab() {
     const r = MICHIGAN_FEDERAL_SPENDING.find((d) => d.county === county);
     if (!r) return "N/A";
     const cats: [string, number][] = [
-      ["Medicaid", r.medicaid_millions],
-      ["SNAP", r.snap_millions],
       ["Housing (HUD)", r.housing_millions],
       ["Health Grants", r.health_grants_millions],
       ["Education", r.education_millions],
@@ -540,11 +553,13 @@ function FiscalVulnerabilityTab() {
       <Card>
         <CardHeader>
           <CardTitle className="text-sm">
-            Federal Dependency vs. Equity Score
+            Safety-Net Share vs. Equity Score
           </CardTitle>
           <p className="text-xs text-muted-foreground">
-            Each dot = one county. Quadrants at X=35%, Y=50 score. Illustrative
-            composite.
+            Each dot = one county. Quadrants at X={SAFETY_NET_SHARE_SPLIT}%, Y=50
+            score. Equity score is an illustrative composite. Medicaid and SNAP
+            are excluded from this axis - USASpending books them to the state
+            agency in Lansing, so they cannot be attributed to a county.
           </p>
         </CardHeader>
         <CardContent>
@@ -560,12 +575,12 @@ function FiscalVulnerabilityTab() {
                 <XAxis
                   type="number"
                   dataKey="federalDependency"
-                  domain={[0, 60]}
-                  name="Federal Dependency"
+                  domain={[0, 32]}
+                  name="Safety-Net Share"
                   unit="%"
                   tick={{ fontSize: 11 }}
                   label={{
-                    value: "Federal Dependency Score (%)",
+                    value: "Direct safety-net share of county awards (%)",
                     position: "bottom",
                     offset: 20,
                     style: { fontSize: 11 },
@@ -592,7 +607,7 @@ function FiscalVulnerabilityTab() {
                   name="Total Awards ($M)"
                 />
                 <ReferenceLine
-                  x={35}
+                  x={SAFETY_NET_SHARE_SPLIT}
                   stroke="hsl(var(--muted-foreground))"
                   strokeDasharray="6 4"
                 />
@@ -604,7 +619,7 @@ function FiscalVulnerabilityTab() {
                 <Tooltip
                   contentStyle={{ fontSize: 11, borderRadius: 8 }}
                   formatter={(val: number, name: string) =>
-                    name === "Federal Dependency"
+                    name === "Safety-Net Share"
                       ? `${val}%`
                       : name === "Equity Score"
                         ? `${val}/100`
@@ -689,7 +704,7 @@ function FiscalVulnerabilityTab() {
                     Equity Score
                   </th>
                   <th className="py-2 pr-4 text-xs font-semibold text-muted-foreground">
-                    Federal Dependency
+                    Safety-Net Share
                   </th>
                   <th className="py-2 text-xs font-semibold text-muted-foreground">
                     Top Federal Program

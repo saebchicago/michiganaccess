@@ -39,7 +39,12 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [roles, setRoles] = useState<StaffRole[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [sessionLoading, setSessionLoading] = useState(true);
+  // Separate from the session read: roles arrive later, and until they do we
+  // must not tell a signed-in reviewer that they have no reviewer role.
+  // Id of the user whose role lookup has settled; anything else means pending.
+  const [rolesLoadedFor, setRolesLoadedFor] = useState<string | null>(null);
+
 
   useEffect(() => {
     let active = true;
@@ -52,8 +57,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     supabase.auth.getSession().then(({ data }) => {
       if (!active) return;
-      setSession(data.session ?? null);
-      setLoading(false);
+      const next = data.session ?? null;
+      setSession(next);
+      setSessionLoading(false);
     });
 
     return () => {
@@ -68,6 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let active = true;
     if (!userId) {
       setRoles([]);
+      setRolesLoadedFor(null);
       return;
     }
     (supabase.from("user_roles" as any) as any)
@@ -79,11 +86,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setRoles(
           error || !data ? [] : (data.map((r: { role: string }) => r.role) as StaffRole[]),
         );
+        setRolesLoadedFor(userId);
       });
     return () => {
       active = false;
     };
   }, [userId]);
+
+  // Signed-in users are still "loading" until their roles are known, so no
+  // screen can claim they lack a reviewer role while the query is in flight.
+  const loading = sessionLoading || (!!userId && rolesLoadedFor !== userId);
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -93,6 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAdmin: roles.includes("admin"),
       isStaff: roles.length > 0,
       loading,
+
       signIn: async (email, password) => {
         const { error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
@@ -103,6 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signOut: async () => {
         await supabase.auth.signOut();
         setRoles([]);
+        setRolesLoadedFor(null);
       },
       requestPasswordReset: async (email) => {
         const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
