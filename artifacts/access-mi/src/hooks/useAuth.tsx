@@ -56,8 +56,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     supabase.auth.getSession().then(({ data }) => {
       if (!active) return;
-      setSession(data.session ?? null);
-      setLoading(false);
+      const next = data.session ?? null;
+      setSession(next);
+      // A signed-in user still needs a role lookup before we can judge access.
+      if (next) setRolesLoading(true);
+      setSessionLoading(false);
     });
 
     return () => {
@@ -72,8 +75,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let active = true;
     if (!userId) {
       setRoles([]);
+      setRolesLoading(false);
       return;
     }
+    setRolesLoading(true);
     (supabase.from("user_roles" as any) as any)
       .select("role")
       .eq("user_id", userId)
@@ -83,11 +88,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setRoles(
           error || !data ? [] : (data.map((r: { role: string }) => r.role) as StaffRole[]),
         );
+        setRolesLoading(false);
       });
     return () => {
       active = false;
     };
   }, [userId]);
+
+  // Signed-in users are still "loading" until their roles are known, so no
+  // screen can claim they lack a reviewer role while the query is in flight.
+  const loading = sessionLoading || (!!session && rolesLoading);
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -97,6 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAdmin: roles.includes("admin"),
       isStaff: roles.length > 0,
       loading,
+
       signIn: async (email, password) => {
         const { error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
