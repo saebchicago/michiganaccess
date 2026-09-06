@@ -17,7 +17,7 @@ const ENDPOINTS: Record<string, { url: string; transform?: string }> = {
     transform: "esriJson",
   },
   "ev-stations": {
-    url: "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?api_key=DEMO_KEY&fuel_type=ELEC&state=MI&limit=200",
+    url: "https://developer.nlr.gov/api/alt-fuel-stations/v1.json?api_key=DEMO_KEY&fuel_type=ELEC&state=MI&limit=200",
     transform: "nrelAfdc",
   },
   "ddot-routes": {
@@ -117,6 +117,8 @@ Deno.serve(async (req) => {
       "data.detroitmi.gov",
       "gis.ridecata.com",
       "developer.nrel.gov",
+      "developer.nlr.gov",
+      "api.nlr.gov",
     ];
     if (!trustedDomains.some((d) => parsed.hostname === d || parsed.hostname.endsWith("." + d))) {
       return new Response(
