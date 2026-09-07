@@ -202,19 +202,9 @@ export default function MethodologyPage() {
             variants={fade}
             custom={0}
           >
-            <div className="flex items-center gap-3 mb-8">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                <Database className="h-5 w-5 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="mb-8 text-2xl font-bold text-foreground">
                   {t("methodologyPage.frameworkTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("methodologyPage.frameworkSubtitle")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <div className="grid gap-4 md:grid-cols-4">
@@ -272,19 +262,9 @@ export default function MethodologyPage() {
             variants={fade}
             custom={0}
           >
-            <div className="flex items-center gap-3 mb-8">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
-                <Heart className="h-5 w-5 text-michigan-coral-deep" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="mb-8 text-2xl font-bold text-foreground">
                   {t("methodologyPage.equityTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("methodologyPage.equitySubtitle")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <div className="grid gap-4 sm:grid-cols-2">
@@ -724,19 +704,9 @@ export default function MethodologyPage() {
             variants={fade}
             custom={0}
           >
-            <div className="flex items-center gap-3 mb-8">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
-                <BarChart3 className="h-5 w-5 text-michigan-forest-deep" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="mb-8 text-2xl font-bold text-foreground">
                   {t("methodologyPage.rankingTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("methodologyPage.rankingSubtitle")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           {/* Formula */}
