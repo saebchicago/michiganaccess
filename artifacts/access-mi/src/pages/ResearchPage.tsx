@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -24,17 +25,24 @@ const scenarios = [
     decisions: [
       {
         text: "Sliding-scale and \"no one turned away\" status shown on the listing, before the click",
-        where: "/find-care",
+        to: "/find-care",
+        where: "Find Care",
       },
       {
         text: "Eligibility screener reachable in under five clicks from the homepage",
-        where: "/benefits",
+        to: "/benefits",
+        where: "Benefits & Decisions",
       },
       {
         text: "Every page laid out mobile-first, with 44px minimum tap targets",
+        to: null,
         where: null,
       },
-      { text: "English, Spanish, Arabic and Bengali interface", where: null },
+      {
+        text: "English, Spanish, Arabic and Bengali interface",
+        to: null,
+        where: null,
+      },
     ],
   },
   {
@@ -50,12 +58,18 @@ const scenarios = [
     decisions: [
       {
         text: "Phone numbers rendered as text on the page, never behind a dropdown",
-        where: "/find-care",
+        to: "/find-care",
+        where: "Find Care",
       },
-      { text: "Print-optimized layout on resource pages", where: null },
+      {
+        text: "Print-optimized layout on resource pages",
+        to: null,
+        where: null,
+      },
       {
         text: "Facilities grouped by system so same-day scheduling is visible",
-        where: "/compare-places",
+        to: "/compare",
+        where: "Compare Counties",
       },
     ],
   },
@@ -152,15 +166,15 @@ export default function ResearchPage() {
                       {s.decisions.map((d) => (
                         <li key={d.text}>
                           {d.text}
-                          {d.where && (
+                          {d.to && d.where && (
                             <>
                               {" "}
-                              <a
-                                href={d.where}
+                              <Link
+                                to={d.to}
                                 className="whitespace-nowrap underline underline-offset-2 hover:text-foreground"
                               >
                                 {d.where}
-                              </a>
+                              </Link>
                             </>
                           )}
                         </li>
