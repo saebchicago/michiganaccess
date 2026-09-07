@@ -153,9 +153,11 @@ describe("Index (homepage)", () => {
     // The band's total equals the curated-library size the /explore page
     // renders; anything hand-typed here would be the counts-drift bug the
     // audit removed everywhere else.
+    // The heading now reads "All <n> pages, searchable by subject"; what the
+    // guard cares about is that <n> is getLibrarySize() and not a literal.
     expect(
       screen.getByRole("heading", {
-        name: new RegExp(`${getLibrarySize()} destinations`),
+        name: new RegExp(`\\b${getLibrarySize()}\\b`),
       }),
     ).toBeInTheDocument();
   });
