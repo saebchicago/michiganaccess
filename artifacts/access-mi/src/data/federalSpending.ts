@@ -150,7 +150,6 @@ export function getSafetyNetShare(county: string): number | null {
   return Math.round((sum / base) * 1000) / 10;
 }
 
-
 /**
  * Superseded name for the safety-net share. The old federal "dependency"
  * score was an unsourced illustrative table; this returns a ratio of
@@ -164,4 +163,5 @@ export function getFederalDependencyScore(county: string): number | null {
 export function n(county: string): number | null {
   return getSafetyNetShare(county);
 }
+
 

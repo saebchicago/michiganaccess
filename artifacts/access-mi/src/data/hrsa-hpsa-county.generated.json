@@ -8,7 +8,7 @@
         "disciplineId": "primaryCare",
         "label": "Primary Care",
         "file": "BCD_HPSA_FCT_DET_PC.csv",
-        "dwCreateDate": "09/01/2026",
+        "dwCreateDate": "09/08/2026",
         "miDesignatedHpsas": 606,
         "miWithdrawnHpsas": 2031,
         "miOtherStatusHpsas": 439
@@ -17,7 +17,7 @@
         "disciplineId": "dental",
         "label": "Dental Health",
         "file": "BCD_HPSA_FCT_DET_DH.csv",
-        "dwCreateDate": "09/01/2026",
+        "dwCreateDate": "09/08/2026",
         "miDesignatedHpsas": 557,
         "miWithdrawnHpsas": 1067,
         "miOtherStatusHpsas": 359
@@ -26,13 +26,13 @@
         "disciplineId": "mental",
         "label": "Mental Health",
         "file": "BCD_HPSA_FCT_DET_MH.csv",
-        "dwCreateDate": "09/01/2026",
+        "dwCreateDate": "09/08/2026",
         "miDesignatedHpsas": 603,
         "miWithdrawnHpsas": 830,
         "miOtherStatusHpsas": 410
       }
     ],
-    "ingested_at": "2026-09-02T20:37:32.211Z",
+    "ingested_at": "2026-09-08T12:11:36.431Z",
     "ingest_script": "scripts/refresh-hrsa-hpsa-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,

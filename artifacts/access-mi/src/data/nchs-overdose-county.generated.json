@@ -15,7 +15,7 @@
       "month": "month",
       "deaths": "provisional_drug_overdose"
     },
-    "ingested_at": "2026-09-03T20:15:38.320Z",
+    "ingested_at": "2026-09-08T12:11:51.066Z",
     "ingest_script": "scripts/refresh-nchs-overdose-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
