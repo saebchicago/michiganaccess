@@ -27,9 +27,7 @@ import {
   BookOpen,
   Award,
   Target,
-  Lightbulb,
   CheckCircle2,
-  ArrowRight,
   Info,
   Sparkles,
   MapPin,
@@ -334,59 +332,33 @@ export default function AboutPage() {
 
       <div className="container max-w-5xl py-12 space-y-16">
         {/* Mission */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          custom={0}
-        >
-          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8 lg:p-12">
-            <h2 className="mb-4 text-2xl font-bold text-foreground">
-              {t("aboutPage.missionTitle")}
-            </h2>
-            <p className="text-muted-foreground leading-relaxed">
-              {t("aboutPage.missionDesc")}
-            </p>
+        <section>
+          <h2 className="mb-4 text-2xl font-bold text-foreground">
+            {t("aboutPage.missionTitle")}
+          </h2>
+          <p className="max-w-2xl text-muted-foreground leading-relaxed">
+            {t("aboutPage.missionDesc")}
+          </p>
 
-            <div className="mt-8 grid gap-6 sm:grid-cols-3">
-              {[
-                {
-                  icon: Scale,
-                  titleKey: "independentTitle",
-                  descKey: "independentDesc",
-                },
-                {
-                  icon: Users,
-                  titleKey: "residentFirstTitle",
-                  descKey: "residentFirstDesc",
-                },
-                {
-                  icon: Database,
-                  titleKey: "dataDrivenTitle",
-                  descKey: "dataDrivenDesc",
-                },
-              ].map((item, i) => (
-                <motion.div
-                  key={item.titleKey}
-                  variants={fadeUp}
-                  custom={i + 1}
-                  className="flex flex-col items-center text-center"
-                >
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
-                    <item.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="mb-1 text-sm font-semibold text-foreground">
-                    {t(`aboutPage.${item.titleKey}`)}
-                  </h3>
-                  <p className="text-xs text-muted-foreground">
-                    {t(`aboutPage.${item.descKey}`)}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
+          <dl className="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-3">
+            {(
+              [
+                ["independentTitle", "independentDesc"],
+                ["residentFirstTitle", "residentFirstDesc"],
+                ["dataDrivenTitle", "dataDrivenDesc"],
+              ] as const
+            ).map(([titleKey, descKey]) => (
+              <div key={titleKey}>
+                <dt className="text-sm font-semibold text-foreground">
+                  {t(`aboutPage.${titleKey}`)}
+                </dt>
+                <dd className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                  {t(`aboutPage.${descKey}`)}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
         {/* Ranking Methodology */}
         <section id="methodology">
@@ -397,19 +369,9 @@ export default function AboutPage() {
             variants={fadeUp}
             custom={0}
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-forest/10">
-                <Target className="h-5 w-5 text-michigan-forest-deep" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="mb-6 text-2xl font-bold text-foreground">
                   {t("aboutPage.rankingTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("aboutPage.rankingSubtitle")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <p className="mb-8 text-muted-foreground leading-relaxed">
@@ -474,19 +436,9 @@ export default function AboutPage() {
             variants={fadeUp}
             custom={0}
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-teal/10">
-                <Lightbulb className="h-5 w-5 text-michigan-teal-deep" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="mb-6 text-2xl font-bold text-foreground">
                   {t("aboutPage.choiceArchTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("aboutPage.choiceArchSubtitle")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <div className="space-y-4">
@@ -544,19 +496,9 @@ export default function AboutPage() {
             variants={fadeUp}
             custom={0}
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-coral/10">
-                <Heart className="h-5 w-5 text-michigan-coral-deep" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="mb-6 text-2xl font-bold text-foreground">
                   {t("aboutPage.communityBenefitTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("aboutPage.communityBenefitSubtitle")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -625,19 +567,9 @@ export default function AboutPage() {
             variants={fadeUp}
             custom={0}
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-blue/10">
-                <Database className="h-5 w-5 text-michigan-blue" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="mb-6 text-2xl font-bold text-foreground">
                   {t("aboutPage.dataSourcesTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("aboutPage.dataSourcesSubtitle")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <div className="space-y-3">
@@ -710,19 +642,9 @@ export default function AboutPage() {
             variants={fadeUp}
             custom={0}
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-michigan-sky/10">
-                <BarChart3 className="h-5 w-5 text-michigan-sky" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="mb-6 text-2xl font-bold text-foreground">
                   {t("aboutPage.technologyTitle")}
                 </h2>
-                <p className="text-sm text-muted-foreground">
-                  {t("aboutPage.technologySubtitle")}
-                </p>
-              </div>
-            </div>
           </motion.div>
 
           <div className="grid gap-4 sm:grid-cols-2">

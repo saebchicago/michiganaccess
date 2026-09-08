@@ -1,7 +1,7 @@
 import { useState, lazy, Suspense } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
 import { STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
@@ -121,18 +121,9 @@ function Masthead({
           >
             AccessMI
           </div>
-          <p
-            className="text-xs sm:text-sm font-medium uppercase"
-            style={{ color: C.emeraldMid, letterSpacing: "0.2em" }}
-          >
-            Civic intelligence for every Michigan community
-          </p>
-          <p
-            className="text-xs font-normal normal-case"
-            style={{ color: C.emeraldMid }}
-          >
-            An independent, public-data journal for Michigan's 83 counties. No
-            government or health system affiliation.
+          <p className="text-sm" style={{ color: C.emeraldMid }}>
+            Public data for Michigan's 83 counties. No government or health
+            system affiliation.
           </p>
         </div>
 
@@ -223,9 +214,8 @@ function EditorialHero({
               className="max-w-xl text-lg md:text-xl font-light leading-relaxed"
               style={{ color: `${C.emerald}CC` }}
             >
-              AccessMI turns public records into civic intelligence for
-              Michigan's 83 counties, so residents can find help and analysts
-              can trace every number to its source.
+              Care, benefits, closures and community risk, county by county.
+              Every figure links to the federal or state record it came from.
             </p>
           </div>
 
@@ -235,26 +225,19 @@ function EditorialHero({
               className="p-6 md:p-8 relative"
               style={{ backgroundColor: C.emerald, color: C.cream }}
             >
-              <div
-                className="absolute -top-3 -right-3 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em]"
-                style={{ backgroundColor: C.gold, color: C.emeraldInk }}
-              >
-                Updated {updated}
-              </div>
-
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (zip.trim().length === 5) onZipSubmit(zip.trim());
                 }}
-                aria-label="Explore your community by ZIP"
+                aria-label="Look up a ZIP code"
               >
                 <label
                   htmlFor="hero-zip"
                   className="block text-[11px] uppercase font-semibold mb-3 opacity-80"
                   style={{ letterSpacing: "0.16em" }}
                 >
-                  Explore your community
+                  Look up a ZIP code
                 </label>
                 <div className="mb-4">
                   <input
@@ -271,12 +254,12 @@ function EditorialHero({
                   />
                   <button
                     type="submit"
-                    aria-label="Explore civic data for this ZIP code"
+                    aria-label="See data for this ZIP code"
                     disabled={zip.trim().length !== 5}
                     className="mt-3 min-h-[48px] w-full flex items-center justify-center gap-2 px-5 text-sm font-bold transition-colors disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                     style={{ backgroundColor: C.gold, color: C.emeraldInk }}
                   >
-                    Explore my area
+                    See my ZIP
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
                   </button>
                 </div>
@@ -289,17 +272,6 @@ function EditorialHero({
                   <ArrowRight className="w-3 h-3" aria-hidden="true" />
                 </Link>
               </form>
-              <p
-                className="mt-5 flex items-start gap-2 border-t pt-4 text-xs leading-relaxed"
-                style={{ borderColor: `${C.cream}2E`, color: `${C.cream}CC` }}
-              >
-                <ShieldCheck
-                  className="mt-0.5 h-4 w-4 shrink-0"
-                  aria-hidden="true"
-                />
-                Independent public data. Every figure links to its source and
-                methodology.
-              </p>
             </div>
           </div>
         </motion.div>
@@ -321,22 +293,16 @@ function NeedHelpBand() {
       aria-labelledby="need-help-heading"
     >
       <div className="mb-5 max-w-2xl">
-        <span
-          className="text-[11px] uppercase font-semibold"
-          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
-        >
-          See the need, find the help
-        </span>
         <h2
           id="need-help-heading"
-          className="font-serif text-2xl md:text-3xl mt-1"
+          className="font-serif text-2xl md:text-3xl"
           style={{ color: C.emerald }}
         >
-          Where care is short, and where to turn.
+          Where care is short, and where to turn
         </h2>
         <p className="text-sm mt-2" style={{ color: `${C.emerald}cc` }}>
-          Michigan's provider shortages, mapped against the help already
-          available - statewide today, by county once you pick one.
+          Provider shortages against the help already there. Statewide now, by
+          county once you pick one.
         </p>
       </div>
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
@@ -416,7 +382,7 @@ function IntentCardsSection({ mode }: { mode: PersonaView }) {
           className="inline-flex min-h-[40px] items-center gap-1 text-[11px] font-semibold uppercase focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
           style={{ color: C.goldInk, letterSpacing: "0.16em" }}
         >
-          Browse everything
+          Browse all pages
           <ArrowRight className="w-3 h-3" aria-hidden="true" />
         </Link>
       </div>
@@ -490,18 +456,12 @@ function WorthALookRail() {
       aria-labelledby="featured-heading"
     >
       <div className="mb-5 max-w-2xl">
-        <span
-          className="text-[11px] uppercase font-semibold"
-          style={{ color: C.goldInk, letterSpacing: "0.18em" }}
-        >
-          Worth a look
-        </span>
         <h2
           id="featured-heading"
-          className="font-serif text-2xl md:text-3xl mt-1"
+          className="font-serif text-2xl md:text-3xl"
           style={{ color: C.emerald }}
         >
-          The things people don't know are here.
+          Worth a look
         </h2>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -576,32 +536,19 @@ function ExploreBand() {
     >
       <div className="container mx-auto max-w-6xl px-4 grid gap-8 lg:grid-cols-[1fr_1.3fr] lg:items-center">
         <div>
-          <span
-            className="text-[11px] uppercase font-semibold"
-            style={{ color: C.goldBright, letterSpacing: "0.18em" }}
-          >
-            The full library
-          </span>
           <h2
             id="explore-band-heading"
-            className="font-serif text-2xl md:text-3xl mt-2"
+            className="font-serif text-2xl md:text-3xl"
             style={{ color: C.cream }}
           >
-            {total} destinations, finally browsable.
+            All {total} pages, searchable by subject
           </h2>
-          <p
-            className="mt-2 text-sm leading-relaxed"
-            style={{ color: `${C.cream}C7` }}
-          >
-            Everything on the platform in one searchable index, grouped by
-            subject, with a plain-language line on each.
-          </p>
           <Link
             to="/explore"
             className="mt-5 inline-flex min-h-[44px] items-center gap-1.5 px-5 text-sm font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
             style={{ backgroundColor: C.gold, color: C.emeraldInk }}
           >
-            Explore the library
+            Open the index
             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
           </Link>
         </div>
