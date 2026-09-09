@@ -141,6 +141,49 @@ function countyRouteMeta(profile) {
   };
 }
 
+/**
+ * /county/<slug>/help - the full shortage-to-program page. Prerendered for
+ * the same reason as the county page itself: without a real file the SPA
+ * catch-all hands crawlers the homepage canonical. The noscript summary is
+ * deliberately about how to get help, not about the statistics, because that
+ * is what this URL is for.
+ */
+function countyHelpRouteMeta(profile) {
+  const slug = countyToSlug(profile.name);
+  return {
+    path: `/county/${slug}/help`,
+    title: `Get help in ${profile.name} County, MI | Access Michigan`,
+    description:
+      `Health, housing, food and coverage programs serving ${profile.name} County, Michigan, ` +
+      `matched to the shortages measured in this county, with how to apply.`,
+    h1: `Get help in ${profile.name} County, Michigan`,
+    summary:
+      `Every shortage measured in ${profile.name} County with the programs that answer it: ` +
+      "CMS-certified hospitals and HRSA health center sites located in the county, " +
+      "community resource directory listings for the county, and assistance programs " +
+      "labelled with their coverage area. Call 2-1-1 for a live referral at any time.",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "GovernmentService",
+      name: `${profile.name} County assistance programs`,
+      serviceType: "Health, housing, food and coverage assistance",
+      serviceArea: {
+        "@type": "AdministrativeArea",
+        name: `${profile.name} County, Michigan`,
+      },
+      provider: {
+        "@type": "Organization",
+        name: "Access Michigan",
+        description:
+          "Independent civic data and education project. Not affiliated with the State of Michigan or any government agency.",
+        url: SITE_URL,
+      },
+      url: `${SITE_URL}/county/${slug}/help/`,
+    },
+  };
+}
+
+
 
 function escapeHtml(s) {
   return String(s)
@@ -485,21 +528,24 @@ async function main() {
   // makes the canonical self-referencing before JS runs.
   const countyProfiles = await loadCountyProfiles();
   let countiesWritten = 0;
+  let helpWritten = 0;
   for (const profile of countyProfiles) {
-    const meta = countyRouteMeta(profile);
-    const routeDir = path.join(distDir, meta.path.replace(/^\/+/, ""));
-    await mkdir(routeDir, { recursive: true });
-    const html = injectRouteJsonLd(
-      injectNoscript(rewriteHead(indexHtml, meta), meta),
-      meta.path,
-      meta.jsonLd,
-    );
-    await writeFile(path.join(routeDir, "index.html"), html, "utf8");
-    countiesWritten++;
+    for (const meta of [countyRouteMeta(profile), countyHelpRouteMeta(profile)]) {
+      const routeDir = path.join(distDir, meta.path.replace(/^\/+/, ""));
+      await mkdir(routeDir, { recursive: true });
+      const html = injectRouteJsonLd(
+        injectNoscript(rewriteHead(indexHtml, meta), meta),
+        meta.path,
+        meta.jsonLd,
+      );
+      await writeFile(path.join(routeDir, "index.html"), html, "utf8");
+      if (meta.path.endsWith("/help")) helpWritten++;
+      else countiesWritten++;
+    }
   }
-  if (countiesWritten < 83) {
+  if (countiesWritten < 83 || helpWritten < 83) {
     console.error(
-      `[prerender-meta] expected 83 county pages, parsed ${countiesWritten}. ` +
+      `[prerender-meta] expected 83 county pages and 83 county help pages, parsed ${countiesWritten} and ${helpWritten}. ` +
         "COUNTY_PROFILES in src/data/michigan-county-profiles.ts may have changed shape.",
     );
     process.exit(1);

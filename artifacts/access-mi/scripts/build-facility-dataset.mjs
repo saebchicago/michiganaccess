@@ -240,6 +240,25 @@ function countByCounty(rows) {
   return counts;
 }
 
+/**
+ * Per-county split of the same extract by facility type, so a county page
+ * can say "3 hospitals, 7 health center sites" instead of one opaque total.
+ * Every county in the registry appears with explicit zeros: a real zero is
+ * a finding (Keweenaw has neither), not missing data.
+ */
+function breakdownByCounty(rows) {
+  const out = Object.fromEntries(
+    MI_COUNTIES_83.map((c) => [c, { hospital: 0, fqhc: 0 }]),
+  );
+  for (const r of rows) {
+    const bucket = out[r.county];
+    if (!bucket) continue;
+    if (r.type === "hospital") bucket.hospital += 1;
+    else if (r.type === "fqhc") bucket.fqhc += 1;
+  }
+  return out;
+}
+
 function validate(facilities, counts) {
   const errors = [];
 
@@ -377,6 +396,7 @@ async function main() {
       note: "Per-county counts derived from the same extract as verifiedHealthFacilities.json. The build-time guard (scripts/check-county-facilities.mjs) fails if the seed file drops below these counts.",
     },
     counts,
+    breakdown: breakdownByCounty(all),
   };
 
   if (DRY_RUN) {

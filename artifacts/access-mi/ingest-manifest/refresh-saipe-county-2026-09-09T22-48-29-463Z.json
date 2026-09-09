@@ -1,0 +1,36 @@
+{
+  "schema": "ingest-manifest.v1",
+  "build_id": "refresh-saipe-county-2026-09-09T22-48-29-463Z",
+  "generated_at": "2026-09-09T22:48:30.467Z",
+  "payload_cap_bytes": 2097152,
+  "entries": [
+    {
+      "source_id": "census-saipe-mi-2025",
+      "request_url": "https://www2.census.gov/programs-surveys/saipe/datasets/2025/2025-state-and-county/est25-mi.txt",
+      "retrieved_at": "2026-09-09T22:48:30.091Z",
+      "http_status": 404,
+      "content_type": "text/html",
+      "byte_size": 18933,
+      "sha256": "02594ec848c23440ef69d447e1a8f6f4d0dd412958b0776eb1ea7d0019b519bd",
+      "source_vintage": "2025",
+      "valid": false,
+      "invalid_reason": "HTTP 404",
+      "payload_stored": false,
+      "payload_path": null
+    },
+    {
+      "source_id": "census-saipe-mi-2024",
+      "request_url": "https://www2.census.gov/programs-surveys/saipe/datasets/2024/2024-state-and-county/est24-mi.txt",
+      "retrieved_at": "2026-09-09T22:48:30.445Z",
+      "http_status": 200,
+      "content_type": "text/plain",
+      "byte_size": 22260,
+      "sha256": "9be2de1c7dd4fc74e20ae18c3a7ffe99e8e2c4db1cef9c1b47072a076d93dd49",
+      "source_vintage": "2024",
+      "valid": true,
+      "invalid_reason": null,
+      "payload_stored": true,
+      "payload_path": "payloads/census-saipe-mi-2024-9be2de1c7dd4.gz"
+    }
+  ]
+}

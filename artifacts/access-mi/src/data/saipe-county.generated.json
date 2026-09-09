@@ -1,0 +1,2374 @@
+{
+  "provenance": {
+    "source_name": "U.S. Census Bureau Small Area Income and Poverty Estimates (SAIPE), state and county",
+    "source_url": "https://www.census.gov/programs-surveys/saipe.html",
+    "download_url": "https://www2.census.gov/programs-surveys/saipe/datasets/2024/2024-state-and-county/est24-mi.txt",
+    "estimate_year": 2024,
+    "ingested_at": "2026-09-09T22:49:13.956Z",
+    "ingest_script": "scripts/refresh-saipe-county.mjs",
+    "michigan_county_registry": "src/data/census-geographies.ts",
+    "michigan_county_registry_size": 83,
+    "statewide": {
+      "povertyPct": 13.4,
+      "childPovertyPct": 17.7,
+      "schoolAgePovertyPct": 16.8,
+      "medianHouseholdIncome": 72336
+    },
+    "value_label": "VERIFIED",
+    "populated": true,
+    "pending_reason": null,
+    "notes": "Values are the Census Bureau's published SAIPE county estimates read from the fixed-width state-and-county release; this repo performs no modelling and no rescaling. SAIPE is a model-based program, so each value ships with the Bureau's own 90% confidence bounds. No API key is used or required. A suppressed or unpublished cell becomes null, never zero."
+  },
+  "measures": [
+    {
+      "id": "povertyPct",
+      "label": "Population below the poverty line (all ages)",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "childPovertyPct",
+      "label": "Children under 18 below the poverty line",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "schoolAgePovertyPct",
+      "label": "Children ages 5-17 in families below the poverty line",
+      "unit": "percent",
+      "value_label": "VERIFIED"
+    },
+    {
+      "id": "medianHouseholdIncome",
+      "label": "Median household income",
+      "unit": "dollars",
+      "value_label": "VERIFIED"
+    }
+  ],
+  "counties": [
+    {
+      "countyFips": "26001",
+      "countyName": "Alcona",
+      "status": "populated",
+      "values": {
+        "povertyPct": 15.1,
+        "childPovertyPct": 23.2,
+        "schoolAgePovertyPct": 23.6,
+        "medianHouseholdIncome": 53966
+      },
+      "confidence": {
+        "povertyPct": [
+          12.4,
+          17.8
+        ],
+        "childPovertyPct": [
+          15.4,
+          31
+        ],
+        "medianHouseholdIncome": [
+          49036,
+          58896
+        ]
+      },
+      "peopleInPoverty": 1587,
+      "childrenInPoverty": 308,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26003",
+      "countyName": "Alger",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12.2,
+        "childPovertyPct": 14,
+        "schoolAgePovertyPct": 13.6,
+        "medianHouseholdIncome": 63959
+      },
+      "confidence": {
+        "povertyPct": [
+          9.4,
+          15
+        ],
+        "childPovertyPct": [
+          9.5,
+          18.5
+        ],
+        "medianHouseholdIncome": [
+          57527,
+          70391
+        ]
+      },
+      "peopleInPoverty": 951,
+      "childrenInPoverty": 171,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26005",
+      "countyName": "Allegan",
+      "status": "populated",
+      "values": {
+        "povertyPct": 8.2,
+        "childPovertyPct": 9.5,
+        "schoolAgePovertyPct": 8.8,
+        "medianHouseholdIncome": 85080
+      },
+      "confidence": {
+        "povertyPct": [
+          6.6,
+          9.8
+        ],
+        "childPovertyPct": [
+          6.6,
+          12.4
+        ],
+        "medianHouseholdIncome": [
+          82064,
+          88096
+        ]
+      },
+      "peopleInPoverty": 9990,
+      "childrenInPoverty": 2555,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26007",
+      "countyName": "Alpena",
+      "status": "populated",
+      "values": {
+        "povertyPct": 16.7,
+        "childPovertyPct": 22.1,
+        "schoolAgePovertyPct": 20.9,
+        "medianHouseholdIncome": 57827
+      },
+      "confidence": {
+        "povertyPct": [
+          14.4,
+          19
+        ],
+        "childPovertyPct": [
+          17.2,
+          27
+        ],
+        "medianHouseholdIncome": [
+          51786,
+          63868
+        ]
+      },
+      "peopleInPoverty": 4781,
+      "childrenInPoverty": 1148,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26009",
+      "countyName": "Antrim",
+      "status": "populated",
+      "values": {
+        "povertyPct": 10.7,
+        "childPovertyPct": 15.7,
+        "schoolAgePovertyPct": 15.1,
+        "medianHouseholdIncome": 69924
+      },
+      "confidence": {
+        "povertyPct": [
+          8.6,
+          12.8
+        ],
+        "childPovertyPct": [
+          11.1,
+          20.3
+        ],
+        "medianHouseholdIncome": [
+          67193,
+          72655
+        ]
+      },
+      "peopleInPoverty": 2616,
+      "childrenInPoverty": 620,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26011",
+      "countyName": "Arenac",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.7,
+        "childPovertyPct": 17.1,
+        "schoolAgePovertyPct": 16.6,
+        "medianHouseholdIncome": 58859
+      },
+      "confidence": {
+        "povertyPct": [
+          9.1,
+          14.3
+        ],
+        "childPovertyPct": [
+          10.5,
+          23.7
+        ],
+        "medianHouseholdIncome": [
+          55505,
+          62213
+        ]
+      },
+      "peopleInPoverty": 1754,
+      "childrenInPoverty": 464,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26013",
+      "countyName": "Baraga",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.6,
+        "childPovertyPct": 18.4,
+        "schoolAgePovertyPct": 19.2,
+        "medianHouseholdIncome": 59617
+      },
+      "confidence": {
+        "povertyPct": [
+          11.4,
+          17.8
+        ],
+        "childPovertyPct": [
+          13.2,
+          23.6
+        ],
+        "medianHouseholdIncome": [
+          52998,
+          66236
+        ]
+      },
+      "peopleInPoverty": 1079,
+      "childrenInPoverty": 255,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26015",
+      "countyName": "Barry",
+      "status": "populated",
+      "values": {
+        "povertyPct": 9,
+        "childPovertyPct": 11,
+        "schoolAgePovertyPct": 10.1,
+        "medianHouseholdIncome": 81939
+      },
+      "confidence": {
+        "povertyPct": [
+          7.4,
+          10.6
+        ],
+        "childPovertyPct": [
+          8.3,
+          13.7
+        ],
+        "medianHouseholdIncome": [
+          75032,
+          88846
+        ]
+      },
+      "peopleInPoverty": 5702,
+      "childrenInPoverty": 1462,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26017",
+      "countyName": "Bay",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.8,
+        "childPovertyPct": 15.9,
+        "schoolAgePovertyPct": 14,
+        "medianHouseholdIncome": 64751
+      },
+      "confidence": {
+        "povertyPct": [
+          9.5,
+          14.1
+        ],
+        "childPovertyPct": [
+          11.4,
+          20.4
+        ],
+        "medianHouseholdIncome": [
+          60701,
+          68801
+        ]
+      },
+      "peopleInPoverty": 12023,
+      "childrenInPoverty": 3052,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26019",
+      "countyName": "Benzie",
+      "status": "populated",
+      "values": {
+        "povertyPct": 9.2,
+        "childPovertyPct": 13.2,
+        "schoolAgePovertyPct": 12.8,
+        "medianHouseholdIncome": 76215
+      },
+      "confidence": {
+        "povertyPct": [
+          7.1,
+          11.3
+        ],
+        "childPovertyPct": [
+          9,
+          17.4
+        ],
+        "medianHouseholdIncome": [
+          69691,
+          82739
+        ]
+      },
+      "peopleInPoverty": 1681,
+      "childrenInPoverty": 396,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26021",
+      "countyName": "Berrien",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13.4,
+        "childPovertyPct": 18.1,
+        "schoolAgePovertyPct": 16.8,
+        "medianHouseholdIncome": 68882
+      },
+      "confidence": {
+        "povertyPct": [
+          11.1,
+          15.7
+        ],
+        "childPovertyPct": [
+          13.4,
+          22.8
+        ],
+        "medianHouseholdIncome": [
+          64981,
+          72783
+        ]
+      },
+      "peopleInPoverty": 20120,
+      "childrenInPoverty": 5623,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26023",
+      "countyName": "Branch",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13.2,
+        "childPovertyPct": 17.8,
+        "schoolAgePovertyPct": 17.4,
+        "medianHouseholdIncome": 64636
+      },
+      "confidence": {
+        "povertyPct": [
+          10.7,
+          15.7
+        ],
+        "childPovertyPct": [
+          12.6,
+          23
+        ],
+        "medianHouseholdIncome": [
+          60372,
+          68900
+        ]
+      },
+      "peopleInPoverty": 5857,
+      "childrenInPoverty": 1866,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26025",
+      "countyName": "Calhoun",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.5,
+        "childPovertyPct": 20.1,
+        "schoolAgePovertyPct": 18.2,
+        "medianHouseholdIncome": 65049
+      },
+      "confidence": {
+        "povertyPct": [
+          12.1,
+          16.9
+        ],
+        "childPovertyPct": [
+          15,
+          25.2
+        ],
+        "medianHouseholdIncome": [
+          61837,
+          68261
+        ]
+      },
+      "peopleInPoverty": 19002,
+      "childrenInPoverty": 5813,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26027",
+      "countyName": "Cass",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12.7,
+        "childPovertyPct": 16.9,
+        "schoolAgePovertyPct": 16.7,
+        "medianHouseholdIncome": 69579
+      },
+      "confidence": {
+        "povertyPct": [
+          10.7,
+          14.7
+        ],
+        "childPovertyPct": [
+          12.9,
+          20.9
+        ],
+        "medianHouseholdIncome": [
+          63500,
+          75658
+        ]
+      },
+      "peopleInPoverty": 6456,
+      "childrenInPoverty": 1669,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26029",
+      "countyName": "Charlevoix",
+      "status": "populated",
+      "values": {
+        "povertyPct": 9.9,
+        "childPovertyPct": 12.7,
+        "schoolAgePovertyPct": 11.3,
+        "medianHouseholdIncome": 71544
+      },
+      "confidence": {
+        "povertyPct": [
+          8,
+          11.8
+        ],
+        "childPovertyPct": [
+          8.6,
+          16.8
+        ],
+        "medianHouseholdIncome": [
+          66104,
+          76984
+        ]
+      },
+      "peopleInPoverty": 2572,
+      "childrenInPoverty": 551,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26031",
+      "countyName": "Cheboygan",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12.5,
+        "childPovertyPct": 19.3,
+        "schoolAgePovertyPct": 18,
+        "medianHouseholdIncome": 58842
+      },
+      "confidence": {
+        "povertyPct": [
+          10,
+          15
+        ],
+        "childPovertyPct": [
+          13.1,
+          25.5
+        ],
+        "medianHouseholdIncome": [
+          53914,
+          63770
+        ]
+      },
+      "peopleInPoverty": 3219,
+      "childrenInPoverty": 731,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26033",
+      "countyName": "Chippewa",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.4,
+        "childPovertyPct": 18.2,
+        "schoolAgePovertyPct": 17.2,
+        "medianHouseholdIncome": 61705
+      },
+      "confidence": {
+        "povertyPct": [
+          11.5,
+          17.3
+        ],
+        "childPovertyPct": [
+          13,
+          23.4
+        ],
+        "medianHouseholdIncome": [
+          57390,
+          66020
+        ]
+      },
+      "peopleInPoverty": 4641,
+      "childrenInPoverty": 1142,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26035",
+      "countyName": "Clare",
+      "status": "populated",
+      "values": {
+        "povertyPct": 19.3,
+        "childPovertyPct": 30.3,
+        "schoolAgePovertyPct": 30.4,
+        "medianHouseholdIncome": 48238
+      },
+      "confidence": {
+        "povertyPct": [
+          16.2,
+          22.4
+        ],
+        "childPovertyPct": [
+          23.6,
+          37
+        ],
+        "medianHouseholdIncome": [
+          43733,
+          52743
+        ]
+      },
+      "peopleInPoverty": 5998,
+      "childrenInPoverty": 1792,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26037",
+      "countyName": "Clinton",
+      "status": "populated",
+      "values": {
+        "povertyPct": 8.4,
+        "childPovertyPct": 7.3,
+        "schoolAgePovertyPct": 7,
+        "medianHouseholdIncome": 90150
+      },
+      "confidence": {
+        "povertyPct": [
+          7.3,
+          9.5
+        ],
+        "childPovertyPct": [
+          5.2,
+          9.4
+        ],
+        "medianHouseholdIncome": [
+          82223,
+          98077
+        ]
+      },
+      "peopleInPoverty": 6664,
+      "childrenInPoverty": 1191,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26039",
+      "countyName": "Crawford",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.4,
+        "childPovertyPct": 21.8,
+        "schoolAgePovertyPct": 21,
+        "medianHouseholdIncome": 57605
+      },
+      "confidence": {
+        "povertyPct": [
+          11.5,
+          17.3
+        ],
+        "childPovertyPct": [
+          14.6,
+          29
+        ],
+        "medianHouseholdIncome": [
+          51591,
+          63619
+        ]
+      },
+      "peopleInPoverty": 1930,
+      "childrenInPoverty": 505,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26041",
+      "countyName": "Delta",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12.1,
+        "childPovertyPct": 15.3,
+        "schoolAgePovertyPct": 13.8,
+        "medianHouseholdIncome": 59827
+      },
+      "confidence": {
+        "povertyPct": [
+          9.9,
+          14.3
+        ],
+        "childPovertyPct": [
+          11.1,
+          19.5
+        ],
+        "medianHouseholdIncome": [
+          55649,
+          64005
+        ]
+      },
+      "peopleInPoverty": 4390,
+      "childrenInPoverty": 1011,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26043",
+      "countyName": "Dickinson",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.2,
+        "childPovertyPct": 12.4,
+        "schoolAgePovertyPct": 11.2,
+        "medianHouseholdIncome": 69360
+      },
+      "confidence": {
+        "povertyPct": [
+          8.9,
+          13.5
+        ],
+        "childPovertyPct": [
+          8.2,
+          16.6
+        ],
+        "medianHouseholdIncome": [
+          64302,
+          74418
+        ]
+      },
+      "peopleInPoverty": 2885,
+      "childrenInPoverty": 614,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26045",
+      "countyName": "Eaton",
+      "status": "populated",
+      "values": {
+        "povertyPct": 8.2,
+        "childPovertyPct": 10.5,
+        "schoolAgePovertyPct": 9.9,
+        "medianHouseholdIncome": 80080
+      },
+      "confidence": {
+        "povertyPct": [
+          6.7,
+          9.7
+        ],
+        "childPovertyPct": [
+          7.2,
+          13.8
+        ],
+        "medianHouseholdIncome": [
+          76140,
+          84020
+        ]
+      },
+      "peopleInPoverty": 8864,
+      "childrenInPoverty": 2272,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26047",
+      "countyName": "Emmet",
+      "status": "populated",
+      "values": {
+        "povertyPct": 8.4,
+        "childPovertyPct": 10.1,
+        "schoolAgePovertyPct": 9.3,
+        "medianHouseholdIncome": 79295
+      },
+      "confidence": {
+        "povertyPct": [
+          6.6,
+          10.2
+        ],
+        "childPovertyPct": [
+          6.7,
+          13.5
+        ],
+        "medianHouseholdIncome": [
+          71890,
+          86700
+        ]
+      },
+      "peopleInPoverty": 2802,
+      "childrenInPoverty": 583,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26049",
+      "countyName": "Genesee",
+      "status": "populated",
+      "values": {
+        "povertyPct": 18,
+        "childPovertyPct": 24.8,
+        "schoolAgePovertyPct": 24.3,
+        "medianHouseholdIncome": 63828
+      },
+      "confidence": {
+        "povertyPct": [
+          16.6,
+          19.4
+        ],
+        "childPovertyPct": [
+          21.2,
+          28.4
+        ],
+        "medianHouseholdIncome": [
+          60863,
+          66793
+        ]
+      },
+      "peopleInPoverty": 71580,
+      "childrenInPoverty": 21297,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26051",
+      "countyName": "Gladwin",
+      "status": "populated",
+      "values": {
+        "povertyPct": 16.9,
+        "childPovertyPct": 23.6,
+        "schoolAgePovertyPct": 22,
+        "medianHouseholdIncome": 56272
+      },
+      "confidence": {
+        "povertyPct": [
+          14.2,
+          19.6
+        ],
+        "childPovertyPct": [
+          16.7,
+          30.5
+        ],
+        "medianHouseholdIncome": [
+          51807,
+          60737
+        ]
+      },
+      "peopleInPoverty": 4349,
+      "childrenInPoverty": 1134,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26053",
+      "countyName": "Gogebic",
+      "status": "populated",
+      "values": {
+        "povertyPct": 17.5,
+        "childPovertyPct": 25.6,
+        "schoolAgePovertyPct": 23.5,
+        "medianHouseholdIncome": 53013
+      },
+      "confidence": {
+        "povertyPct": [
+          13.9,
+          21.1
+        ],
+        "childPovertyPct": [
+          17.6,
+          33.6
+        ],
+        "medianHouseholdIncome": [
+          47510,
+          58516
+        ]
+      },
+      "peopleInPoverty": 2442,
+      "childrenInPoverty": 580,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26055",
+      "countyName": "Grand Traverse",
+      "status": "populated",
+      "values": {
+        "povertyPct": 8.4,
+        "childPovertyPct": 9.3,
+        "schoolAgePovertyPct": 8.5,
+        "medianHouseholdIncome": 82515
+      },
+      "confidence": {
+        "povertyPct": [
+          6.9,
+          9.9
+        ],
+        "childPovertyPct": [
+          6.6,
+          12
+        ],
+        "medianHouseholdIncome": [
+          77048,
+          87982
+        ]
+      },
+      "peopleInPoverty": 8026,
+      "childrenInPoverty": 1667,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26057",
+      "countyName": "Gratiot",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.6,
+        "childPovertyPct": 17.3,
+        "schoolAgePovertyPct": 16.6,
+        "medianHouseholdIncome": 64157
+      },
+      "confidence": {
+        "povertyPct": [
+          11.5,
+          17.7
+        ],
+        "childPovertyPct": [
+          12.6,
+          22
+        ],
+        "medianHouseholdIncome": [
+          58256,
+          70058
+        ]
+      },
+      "peopleInPoverty": 5185,
+      "childrenInPoverty": 1338,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26059",
+      "countyName": "Hillsdale",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12.8,
+        "childPovertyPct": 18.3,
+        "schoolAgePovertyPct": 16.7,
+        "medianHouseholdIncome": 66118
+      },
+      "confidence": {
+        "povertyPct": [
+          10.3,
+          15.3
+        ],
+        "childPovertyPct": [
+          13.4,
+          23.2
+        ],
+        "medianHouseholdIncome": [
+          63424,
+          68812
+        ]
+      },
+      "peopleInPoverty": 5655,
+      "childrenInPoverty": 1745,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26061",
+      "countyName": "Houghton",
+      "status": "populated",
+      "values": {
+        "povertyPct": 17.4,
+        "childPovertyPct": 12.1,
+        "schoolAgePovertyPct": 11.2,
+        "medianHouseholdIncome": 55547
+      },
+      "confidence": {
+        "povertyPct": [
+          14.8,
+          20
+        ],
+        "childPovertyPct": [
+          8.5,
+          15.7
+        ],
+        "medianHouseholdIncome": [
+          50773,
+          60321
+        ]
+      },
+      "peopleInPoverty": 5953,
+      "childrenInPoverty": 887,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26063",
+      "countyName": "Huron",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.2,
+        "childPovertyPct": 17.5,
+        "schoolAgePovertyPct": 16.5,
+        "medianHouseholdIncome": 61317
+      },
+      "confidence": {
+        "povertyPct": [
+          12.2,
+          16.2
+        ],
+        "childPovertyPct": [
+          13.4,
+          21.6
+        ],
+        "medianHouseholdIncome": [
+          56931,
+          65703
+        ]
+      },
+      "peopleInPoverty": 4332,
+      "childrenInPoverty": 982,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26065",
+      "countyName": "Ingham",
+      "status": "populated",
+      "values": {
+        "povertyPct": 18.1,
+        "childPovertyPct": 19.2,
+        "schoolAgePovertyPct": 16.6,
+        "medianHouseholdIncome": 66388
+      },
+      "confidence": {
+        "povertyPct": [
+          16.3,
+          19.9
+        ],
+        "childPovertyPct": [
+          15.6,
+          22.8
+        ],
+        "medianHouseholdIncome": [
+          61924,
+          70852
+        ]
+      },
+      "peopleInPoverty": 49061,
+      "childrenInPoverty": 10526,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26067",
+      "countyName": "Ionia",
+      "status": "populated",
+      "values": {
+        "povertyPct": 10.5,
+        "childPovertyPct": 11.6,
+        "schoolAgePovertyPct": 11.2,
+        "medianHouseholdIncome": 75362
+      },
+      "confidence": {
+        "povertyPct": [
+          8.3,
+          12.7
+        ],
+        "childPovertyPct": [
+          7.9,
+          15.3
+        ],
+        "medianHouseholdIncome": [
+          69797,
+          80927
+        ]
+      },
+      "peopleInPoverty": 6345,
+      "childrenInPoverty": 1524,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26069",
+      "countyName": "Iosco",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.4,
+        "childPovertyPct": 20.4,
+        "schoolAgePovertyPct": 20,
+        "medianHouseholdIncome": 58092
+      },
+      "confidence": {
+        "povertyPct": [
+          11.8,
+          17
+        ],
+        "childPovertyPct": [
+          13.9,
+          26.9
+        ],
+        "medianHouseholdIncome": [
+          54737,
+          61447
+        ]
+      },
+      "peopleInPoverty": 3624,
+      "childrenInPoverty": 858,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26071",
+      "countyName": "Iron",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.2,
+        "childPovertyPct": 20.1,
+        "schoolAgePovertyPct": 18.2,
+        "medianHouseholdIncome": 53519
+      },
+      "confidence": {
+        "povertyPct": [
+          11.5,
+          16.9
+        ],
+        "childPovertyPct": [
+          13.3,
+          26.9
+        ],
+        "medianHouseholdIncome": [
+          49159,
+          57879
+        ]
+      },
+      "peopleInPoverty": 1625,
+      "childrenInPoverty": 391,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26073",
+      "countyName": "Isabella",
+      "status": "populated",
+      "values": {
+        "povertyPct": 19,
+        "childPovertyPct": 15.7,
+        "schoolAgePovertyPct": 14.8,
+        "medianHouseholdIncome": 56734
+      },
+      "confidence": {
+        "povertyPct": [
+          16.6,
+          21.4
+        ],
+        "childPovertyPct": [
+          11.4,
+          20
+        ],
+        "medianHouseholdIncome": [
+          53310,
+          60158
+        ]
+      },
+      "peopleInPoverty": 11579,
+      "childrenInPoverty": 1776,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26075",
+      "countyName": "Jackson",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.3,
+        "childPovertyPct": 15,
+        "schoolAgePovertyPct": 14.2,
+        "medianHouseholdIncome": 67303
+      },
+      "confidence": {
+        "povertyPct": [
+          9.5,
+          13.1
+        ],
+        "childPovertyPct": [
+          10.7,
+          19.3
+        ],
+        "medianHouseholdIncome": [
+          62825,
+          71781
+        ]
+      },
+      "peopleInPoverty": 17057,
+      "childrenInPoverty": 4780,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26077",
+      "countyName": "Kalamazoo",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.6,
+        "childPovertyPct": 10.5,
+        "schoolAgePovertyPct": 10,
+        "medianHouseholdIncome": 72071
+      },
+      "confidence": {
+        "povertyPct": [
+          9.9,
+          13.3
+        ],
+        "childPovertyPct": [
+          6.8,
+          14.2
+        ],
+        "medianHouseholdIncome": [
+          68190,
+          75952
+        ]
+      },
+      "peopleInPoverty": 29871,
+      "childrenInPoverty": 5678,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26079",
+      "countyName": "Kalkaska",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.1,
+        "childPovertyPct": 16.7,
+        "schoolAgePovertyPct": 16.3,
+        "medianHouseholdIncome": 71627
+      },
+      "confidence": {
+        "povertyPct": [
+          8.6,
+          13.6
+        ],
+        "childPovertyPct": [
+          11.3,
+          22.1
+        ],
+        "medianHouseholdIncome": [
+          67441,
+          75813
+        ]
+      },
+      "peopleInPoverty": 2037,
+      "childrenInPoverty": 595,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26081",
+      "countyName": "Kent",
+      "status": "populated",
+      "values": {
+        "povertyPct": 9.2,
+        "childPovertyPct": 11.2,
+        "schoolAgePovertyPct": 11.2,
+        "medianHouseholdIncome": 80768
+      },
+      "confidence": {
+        "povertyPct": [
+          8,
+          10.4
+        ],
+        "childPovertyPct": [
+          8.6,
+          13.8
+        ],
+        "medianHouseholdIncome": [
+          79002,
+          82534
+        ]
+      },
+      "peopleInPoverty": 60909,
+      "childrenInPoverty": 17066,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26083",
+      "countyName": "Keweenaw",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.8,
+        "childPovertyPct": 13.5,
+        "schoolAgePovertyPct": 12.3,
+        "medianHouseholdIncome": 58613
+      },
+      "confidence": {
+        "povertyPct": [
+          9.1,
+          14.5
+        ],
+        "childPovertyPct": [
+          9.3,
+          17.7
+        ],
+        "medianHouseholdIncome": [
+          51739,
+          65487
+        ]
+      },
+      "peopleInPoverty": 254,
+      "childrenInPoverty": 45,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26085",
+      "countyName": "Lake",
+      "status": "populated",
+      "values": {
+        "povertyPct": 24.2,
+        "childPovertyPct": 36.1,
+        "schoolAgePovertyPct": 36.3,
+        "medianHouseholdIncome": 48557
+      },
+      "confidence": {
+        "povertyPct": [
+          20,
+          28.4
+        ],
+        "childPovertyPct": [
+          27.8,
+          44.4
+        ],
+        "medianHouseholdIncome": [
+          44052,
+          53062
+        ]
+      },
+      "peopleInPoverty": 2843,
+      "childrenInPoverty": 664,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26087",
+      "countyName": "Lapeer",
+      "status": "populated",
+      "values": {
+        "povertyPct": 9,
+        "childPovertyPct": 11.9,
+        "schoolAgePovertyPct": 11.2,
+        "medianHouseholdIncome": 78002
+      },
+      "confidence": {
+        "povertyPct": [
+          7.2,
+          10.8
+        ],
+        "childPovertyPct": [
+          8.5,
+          15.3
+        ],
+        "medianHouseholdIncome": [
+          71632,
+          84372
+        ]
+      },
+      "peopleInPoverty": 7918,
+      "childrenInPoverty": 2007,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26089",
+      "countyName": "Leelanau",
+      "status": "populated",
+      "values": {
+        "povertyPct": 6.5,
+        "childPovertyPct": 9.3,
+        "schoolAgePovertyPct": 8,
+        "medianHouseholdIncome": 96419
+      },
+      "confidence": {
+        "povertyPct": [
+          5,
+          8
+        ],
+        "childPovertyPct": [
+          6.1,
+          12.5
+        ],
+        "medianHouseholdIncome": [
+          88829,
+          104009
+        ]
+      },
+      "peopleInPoverty": 1483,
+      "childrenInPoverty": 315,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26091",
+      "countyName": "Lenawee",
+      "status": "populated",
+      "values": {
+        "povertyPct": 9.6,
+        "childPovertyPct": 10.9,
+        "schoolAgePovertyPct": 9.6,
+        "medianHouseholdIncome": 71849
+      },
+      "confidence": {
+        "povertyPct": [
+          7.8,
+          11.4
+        ],
+        "childPovertyPct": [
+          7.6,
+          14.2
+        ],
+        "medianHouseholdIncome": [
+          69119,
+          74579
+        ]
+      },
+      "peopleInPoverty": 9021,
+      "childrenInPoverty": 2096,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26093",
+      "countyName": "Livingston",
+      "status": "populated",
+      "values": {
+        "povertyPct": 5.4,
+        "childPovertyPct": 5.8,
+        "schoolAgePovertyPct": 4.7,
+        "medianHouseholdIncome": 101995
+      },
+      "confidence": {
+        "povertyPct": [
+          4.5,
+          6.3
+        ],
+        "childPovertyPct": [
+          4.4,
+          7.2
+        ],
+        "medianHouseholdIncome": [
+          96501,
+          107489
+        ]
+      },
+      "peopleInPoverty": 10466,
+      "childrenInPoverty": 2221,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26095",
+      "countyName": "Luce",
+      "status": "populated",
+      "values": {
+        "povertyPct": 19.4,
+        "childPovertyPct": 24.4,
+        "schoolAgePovertyPct": 23.2,
+        "medianHouseholdIncome": 56009
+      },
+      "confidence": {
+        "povertyPct": [
+          14.8,
+          24
+        ],
+        "childPovertyPct": [
+          16.2,
+          32.6
+        ],
+        "medianHouseholdIncome": [
+          50723,
+          61295
+        ]
+      },
+      "peopleInPoverty": 987,
+      "childrenInPoverty": 233,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26097",
+      "countyName": "Mackinac",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12,
+        "childPovertyPct": 18.5,
+        "schoolAgePovertyPct": 18.6,
+        "medianHouseholdIncome": 60831
+      },
+      "confidence": {
+        "povertyPct": [
+          9.5,
+          14.5
+        ],
+        "childPovertyPct": [
+          12.4,
+          24.6
+        ],
+        "medianHouseholdIncome": [
+          55161,
+          66501
+        ]
+      },
+      "peopleInPoverty": 1327,
+      "childrenInPoverty": 301,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26099",
+      "countyName": "Macomb",
+      "status": "populated",
+      "values": {
+        "povertyPct": 10.8,
+        "childPovertyPct": 14.7,
+        "schoolAgePovertyPct": 14.7,
+        "medianHouseholdIncome": 77928
+      },
+      "confidence": {
+        "povertyPct": [
+          9.9,
+          11.7
+        ],
+        "childPovertyPct": [
+          12.5,
+          16.9
+        ],
+        "medianHouseholdIncome": [
+          75430,
+          80426
+        ]
+      },
+      "peopleInPoverty": 95073,
+      "childrenInPoverty": 25948,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26101",
+      "countyName": "Manistee",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13.7,
+        "childPovertyPct": 21.1,
+        "schoolAgePovertyPct": 20.8,
+        "medianHouseholdIncome": 62668
+      },
+      "confidence": {
+        "povertyPct": [
+          11,
+          16.4
+        ],
+        "childPovertyPct": [
+          15.5,
+          26.7
+        ],
+        "medianHouseholdIncome": [
+          58640,
+          66696
+        ]
+      },
+      "peopleInPoverty": 3322,
+      "childrenInPoverty": 853,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26103",
+      "countyName": "Marquette",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13.4,
+        "childPovertyPct": 10.3,
+        "schoolAgePovertyPct": 9.1,
+        "medianHouseholdIncome": 67030
+      },
+      "confidence": {
+        "povertyPct": [
+          11.8,
+          15
+        ],
+        "childPovertyPct": [
+          6.7,
+          13.9
+        ],
+        "medianHouseholdIncome": [
+          62039,
+          72021
+        ]
+      },
+      "peopleInPoverty": 8430,
+      "childrenInPoverty": 1168,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26105",
+      "countyName": "Mason",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.7,
+        "childPovertyPct": 15.7,
+        "schoolAgePovertyPct": 15,
+        "medianHouseholdIncome": 64623
+      },
+      "confidence": {
+        "povertyPct": [
+          9.6,
+          13.8
+        ],
+        "childPovertyPct": [
+          10.8,
+          20.6
+        ],
+        "medianHouseholdIncome": [
+          58793,
+          70453
+        ]
+      },
+      "peopleInPoverty": 3353,
+      "childrenInPoverty": 833,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26107",
+      "countyName": "Mecosta",
+      "status": "populated",
+      "values": {
+        "povertyPct": 19.3,
+        "childPovertyPct": 23.8,
+        "schoolAgePovertyPct": 25.1,
+        "medianHouseholdIncome": 62074
+      },
+      "confidence": {
+        "povertyPct": [
+          16.6,
+          22
+        ],
+        "childPovertyPct": [
+          18.4,
+          29.2
+        ],
+        "medianHouseholdIncome": [
+          56266,
+          67882
+        ]
+      },
+      "peopleInPoverty": 7777,
+      "childrenInPoverty": 1832,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26109",
+      "countyName": "Menominee",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13,
+        "childPovertyPct": 17.3,
+        "schoolAgePovertyPct": 15.6,
+        "medianHouseholdIncome": 58100
+      },
+      "confidence": {
+        "povertyPct": [
+          10.5,
+          15.5
+        ],
+        "childPovertyPct": [
+          12.2,
+          22.4
+        ],
+        "medianHouseholdIncome": [
+          52159,
+          64041
+        ]
+      },
+      "peopleInPoverty": 2957,
+      "childrenInPoverty": 644,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26111",
+      "countyName": "Midland",
+      "status": "populated",
+      "values": {
+        "povertyPct": 9.5,
+        "childPovertyPct": 10.5,
+        "schoolAgePovertyPct": 9.8,
+        "medianHouseholdIncome": 78615
+      },
+      "confidence": {
+        "povertyPct": [
+          7.7,
+          11.3
+        ],
+        "childPovertyPct": [
+          7.4,
+          13.6
+        ],
+        "medianHouseholdIncome": [
+          74392,
+          82838
+        ]
+      },
+      "peopleInPoverty": 7892,
+      "childrenInPoverty": 1788,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26113",
+      "countyName": "Missaukee",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12.1,
+        "childPovertyPct": 15.3,
+        "schoolAgePovertyPct": 14.1,
+        "medianHouseholdIncome": 66502
+      },
+      "confidence": {
+        "povertyPct": [
+          9.7,
+          14.5
+        ],
+        "childPovertyPct": [
+          10.9,
+          19.7
+        ],
+        "medianHouseholdIncome": [
+          60848,
+          72156
+        ]
+      },
+      "peopleInPoverty": 1830,
+      "childrenInPoverty": 495,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26115",
+      "countyName": "Monroe",
+      "status": "populated",
+      "values": {
+        "povertyPct": 9.7,
+        "childPovertyPct": 11.6,
+        "schoolAgePovertyPct": 10.9,
+        "medianHouseholdIncome": 76490
+      },
+      "confidence": {
+        "povertyPct": [
+          8.1,
+          11.3
+        ],
+        "childPovertyPct": [
+          8.4,
+          14.8
+        ],
+        "medianHouseholdIncome": [
+          73627,
+          79353
+        ]
+      },
+      "peopleInPoverty": 15017,
+      "childrenInPoverty": 3640,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26117",
+      "countyName": "Montcalm",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.2,
+        "childPovertyPct": 18.9,
+        "schoolAgePovertyPct": 19.6,
+        "medianHouseholdIncome": 66100
+      },
+      "confidence": {
+        "povertyPct": [
+          11.4,
+          17
+        ],
+        "childPovertyPct": [
+          13.9,
+          23.9
+        ],
+        "medianHouseholdIncome": [
+          62077,
+          70123
+        ]
+      },
+      "peopleInPoverty": 9019,
+      "childrenInPoverty": 2589,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26119",
+      "countyName": "Montmorency",
+      "status": "populated",
+      "values": {
+        "povertyPct": 15.3,
+        "childPovertyPct": 24.3,
+        "schoolAgePovertyPct": 24.5,
+        "medianHouseholdIncome": 51992
+      },
+      "confidence": {
+        "povertyPct": [
+          12,
+          18.6
+        ],
+        "childPovertyPct": [
+          16.2,
+          32.4
+        ],
+        "medianHouseholdIncome": [
+          47178,
+          56806
+        ]
+      },
+      "peopleInPoverty": 1494,
+      "childrenInPoverty": 359,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26121",
+      "countyName": "Muskegon",
+      "status": "populated",
+      "values": {
+        "povertyPct": 16.8,
+        "childPovertyPct": 24,
+        "schoolAgePovertyPct": 22.6,
+        "medianHouseholdIncome": 61598
+      },
+      "confidence": {
+        "povertyPct": [
+          14.9,
+          18.7
+        ],
+        "childPovertyPct": [
+          20.2,
+          27.8
+        ],
+        "medianHouseholdIncome": [
+          58265,
+          64931
+        ]
+      },
+      "peopleInPoverty": 29034,
+      "childrenInPoverty": 9118,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26123",
+      "countyName": "Newaygo",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.7,
+        "childPovertyPct": 15.4,
+        "schoolAgePovertyPct": 14.6,
+        "medianHouseholdIncome": 66127
+      },
+      "confidence": {
+        "povertyPct": [
+          9.5,
+          13.9
+        ],
+        "childPovertyPct": [
+          10.3,
+          20.5
+        ],
+        "medianHouseholdIncome": [
+          61267,
+          70987
+        ]
+      },
+      "peopleInPoverty": 5937,
+      "childrenInPoverty": 1663,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26125",
+      "countyName": "Oakland",
+      "status": "populated",
+      "values": {
+        "povertyPct": 7.6,
+        "childPovertyPct": 8,
+        "schoolAgePovertyPct": 7.2,
+        "medianHouseholdIncome": 99070
+      },
+      "confidence": {
+        "povertyPct": [
+          6.9,
+          8.3
+        ],
+        "childPovertyPct": [
+          6.5,
+          9.5
+        ],
+        "medianHouseholdIncome": [
+          95889,
+          102251
+        ]
+      },
+      "peopleInPoverty": 98067,
+      "childrenInPoverty": 20328,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26127",
+      "countyName": "Oceana",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.5,
+        "childPovertyPct": 20.3,
+        "schoolAgePovertyPct": 19.1,
+        "medianHouseholdIncome": 60449
+      },
+      "confidence": {
+        "povertyPct": [
+          11.8,
+          17.2
+        ],
+        "childPovertyPct": [
+          15,
+          25.6
+        ],
+        "medianHouseholdIncome": [
+          56990,
+          63908
+        ]
+      },
+      "peopleInPoverty": 3872,
+      "childrenInPoverty": 1097,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26129",
+      "countyName": "Ogemaw",
+      "status": "populated",
+      "values": {
+        "povertyPct": 15.7,
+        "childPovertyPct": 23,
+        "schoolAgePovertyPct": 23.2,
+        "medianHouseholdIncome": 55057
+      },
+      "confidence": {
+        "povertyPct": [
+          12.7,
+          18.7
+        ],
+        "childPovertyPct": [
+          16.4,
+          29.6
+        ],
+        "medianHouseholdIncome": [
+          51296,
+          58818
+        ]
+      },
+      "peopleInPoverty": 3250,
+      "childrenInPoverty": 821,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26131",
+      "countyName": "Ontonagon",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.3,
+        "childPovertyPct": 20.9,
+        "schoolAgePovertyPct": 18.7,
+        "medianHouseholdIncome": 52958
+      },
+      "confidence": {
+        "povertyPct": [
+          11.3,
+          17.3
+        ],
+        "childPovertyPct": [
+          14,
+          27.8
+        ],
+        "medianHouseholdIncome": [
+          47811,
+          58105
+        ]
+      },
+      "peopleInPoverty": 824,
+      "childrenInPoverty": 146,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26133",
+      "countyName": "Osceola",
+      "status": "populated",
+      "values": {
+        "povertyPct": 15.6,
+        "childPovertyPct": 20.7,
+        "schoolAgePovertyPct": 19.3,
+        "medianHouseholdIncome": 54928
+      },
+      "confidence": {
+        "povertyPct": [
+          13.5,
+          17.7
+        ],
+        "childPovertyPct": [
+          15.5,
+          25.9
+        ],
+        "medianHouseholdIncome": [
+          51385,
+          58471
+        ]
+      },
+      "peopleInPoverty": 3609,
+      "childrenInPoverty": 994,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26135",
+      "countyName": "Oscoda",
+      "status": "populated",
+      "values": {
+        "povertyPct": 16.5,
+        "childPovertyPct": 26.4,
+        "schoolAgePovertyPct": 26.9,
+        "medianHouseholdIncome": 52462
+      },
+      "confidence": {
+        "povertyPct": [
+          12.7,
+          20.3
+        ],
+        "childPovertyPct": [
+          18.4,
+          34.4
+        ],
+        "medianHouseholdIncome": [
+          47829,
+          57095
+        ]
+      },
+      "peopleInPoverty": 1406,
+      "childrenInPoverty": 434,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26137",
+      "countyName": "Otsego",
+      "status": "populated",
+      "values": {
+        "povertyPct": 8.5,
+        "childPovertyPct": 12.9,
+        "schoolAgePovertyPct": 12.4,
+        "medianHouseholdIncome": 69981
+      },
+      "confidence": {
+        "povertyPct": [
+          6.4,
+          10.6
+        ],
+        "childPovertyPct": [
+          8.7,
+          17.1
+        ],
+        "medianHouseholdIncome": [
+          63780,
+          76182
+        ]
+      },
+      "peopleInPoverty": 2208,
+      "childrenInPoverty": 672,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26139",
+      "countyName": "Ottawa",
+      "status": "populated",
+      "values": {
+        "povertyPct": 8.8,
+        "childPovertyPct": 8.5,
+        "schoolAgePovertyPct": 8.2,
+        "medianHouseholdIncome": 89708
+      },
+      "confidence": {
+        "povertyPct": [
+          7.8,
+          9.8
+        ],
+        "childPovertyPct": [
+          7,
+          10
+        ],
+        "medianHouseholdIncome": [
+          86742,
+          92674
+        ]
+      },
+      "peopleInPoverty": 26282,
+      "childrenInPoverty": 5717,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26141",
+      "countyName": "Presque Isle",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13.2,
+        "childPovertyPct": 22.7,
+        "schoolAgePovertyPct": 18.1,
+        "medianHouseholdIncome": 59991
+      },
+      "confidence": {
+        "povertyPct": [
+          10.9,
+          15.5
+        ],
+        "childPovertyPct": [
+          17,
+          28.4
+        ],
+        "medianHouseholdIncome": [
+          54200,
+          65782
+        ]
+      },
+      "peopleInPoverty": 1728,
+      "childrenInPoverty": 450,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26143",
+      "countyName": "Roscommon",
+      "status": "populated",
+      "values": {
+        "povertyPct": 16.3,
+        "childPovertyPct": 26.9,
+        "schoolAgePovertyPct": 25.4,
+        "medianHouseholdIncome": 50727
+      },
+      "confidence": {
+        "povertyPct": [
+          13,
+          19.6
+        ],
+        "childPovertyPct": [
+          18.7,
+          35.1
+        ],
+        "medianHouseholdIncome": [
+          47417,
+          54037
+        ]
+      },
+      "peopleInPoverty": 3872,
+      "childrenInPoverty": 887,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26145",
+      "countyName": "Saginaw",
+      "status": "populated",
+      "values": {
+        "povertyPct": 16.8,
+        "childPovertyPct": 24,
+        "schoolAgePovertyPct": 22.2,
+        "medianHouseholdIncome": 61572
+      },
+      "confidence": {
+        "povertyPct": [
+          14.7,
+          18.9
+        ],
+        "childPovertyPct": [
+          19,
+          29
+        ],
+        "medianHouseholdIncome": [
+          58175,
+          64969
+        ]
+      },
+      "peopleInPoverty": 30637,
+      "childrenInPoverty": 9259,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26147",
+      "countyName": "St. Clair",
+      "status": "populated",
+      "values": {
+        "povertyPct": 10.9,
+        "childPovertyPct": 14.1,
+        "schoolAgePovertyPct": 13.4,
+        "medianHouseholdIncome": 71545
+      },
+      "confidence": {
+        "povertyPct": [
+          9.1,
+          12.7
+        ],
+        "childPovertyPct": [
+          10.4,
+          17.8
+        ],
+        "medianHouseholdIncome": [
+          68730,
+          74360
+        ]
+      },
+      "peopleInPoverty": 17239,
+      "childrenInPoverty": 4378,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26149",
+      "countyName": "St. Joseph",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12.3,
+        "childPovertyPct": 17.7,
+        "schoolAgePovertyPct": 17.6,
+        "medianHouseholdIncome": 65096
+      },
+      "confidence": {
+        "povertyPct": [
+          10.2,
+          14.4
+        ],
+        "childPovertyPct": [
+          13.4,
+          22
+        ],
+        "medianHouseholdIncome": [
+          59712,
+          70480
+        ]
+      },
+      "peopleInPoverty": 7445,
+      "childrenInPoverty": 2529,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26151",
+      "countyName": "Sanilac",
+      "status": "populated",
+      "values": {
+        "povertyPct": 16.6,
+        "childPovertyPct": 22.5,
+        "schoolAgePovertyPct": 20.6,
+        "medianHouseholdIncome": 58383
+      },
+      "confidence": {
+        "povertyPct": [
+          14.5,
+          18.7
+        ],
+        "childPovertyPct": [
+          18,
+          27
+        ],
+        "medianHouseholdIncome": [
+          53878,
+          62888
+        ]
+      },
+      "peopleInPoverty": 6627,
+      "childrenInPoverty": 1821,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26153",
+      "countyName": "Schoolcraft",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13.8,
+        "childPovertyPct": 22.9,
+        "schoolAgePovertyPct": 21.6,
+        "medianHouseholdIncome": 58519
+      },
+      "confidence": {
+        "povertyPct": [
+          10.8,
+          16.8
+        ],
+        "childPovertyPct": [
+          15.3,
+          30.5
+        ],
+        "medianHouseholdIncome": [
+          53166,
+          63872
+        ]
+      },
+      "peopleInPoverty": 1114,
+      "childrenInPoverty": 315,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26155",
+      "countyName": "Shiawassee",
+      "status": "populated",
+      "values": {
+        "povertyPct": 12.4,
+        "childPovertyPct": 15,
+        "schoolAgePovertyPct": 14.5,
+        "medianHouseholdIncome": 71235
+      },
+      "confidence": {
+        "povertyPct": [
+          10.3,
+          14.5
+        ],
+        "childPovertyPct": [
+          10.9,
+          19.1
+        ],
+        "medianHouseholdIncome": [
+          67313,
+          75157
+        ]
+      },
+      "peopleInPoverty": 8324,
+      "childrenInPoverty": 2025,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26157",
+      "countyName": "Tuscola",
+      "status": "populated",
+      "values": {
+        "povertyPct": 11.3,
+        "childPovertyPct": 15.2,
+        "schoolAgePovertyPct": 14.3,
+        "medianHouseholdIncome": 62492
+      },
+      "confidence": {
+        "povertyPct": [
+          9.2,
+          13.4
+        ],
+        "childPovertyPct": [
+          10.4,
+          20
+        ],
+        "medianHouseholdIncome": [
+          58258,
+          66726
+        ]
+      },
+      "peopleInPoverty": 5888,
+      "childrenInPoverty": 1506,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26159",
+      "countyName": "Van Buren",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13.6,
+        "childPovertyPct": 18.5,
+        "schoolAgePovertyPct": 17.5,
+        "medianHouseholdIncome": 67463
+      },
+      "confidence": {
+        "povertyPct": [
+          11.5,
+          15.7
+        ],
+        "childPovertyPct": [
+          14.1,
+          22.9
+        ],
+        "medianHouseholdIncome": [
+          62948,
+          71978
+        ]
+      },
+      "peopleInPoverty": 10286,
+      "childrenInPoverty": 3097,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26161",
+      "countyName": "Washtenaw",
+      "status": "populated",
+      "values": {
+        "povertyPct": 13.9,
+        "childPovertyPct": 11.3,
+        "schoolAgePovertyPct": 10.2,
+        "medianHouseholdIncome": 90907
+      },
+      "confidence": {
+        "povertyPct": [
+          12.6,
+          15.2
+        ],
+        "childPovertyPct": [
+          8.9,
+          13.7
+        ],
+        "medianHouseholdIncome": [
+          87461,
+          94353
+        ]
+      },
+      "peopleInPoverty": 49125,
+      "childrenInPoverty": 7426,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26163",
+      "countyName": "Wayne",
+      "status": "populated",
+      "values": {
+        "povertyPct": 22.1,
+        "childPovertyPct": 33.2,
+        "schoolAgePovertyPct": 31.5,
+        "medianHouseholdIncome": 59484
+      },
+      "confidence": {
+        "povertyPct": [
+          21.2,
+          23
+        ],
+        "childPovertyPct": [
+          31.3,
+          35.1
+        ],
+        "medianHouseholdIncome": [
+          57693,
+          61275
+        ]
+      },
+      "peopleInPoverty": 386973,
+      "childrenInPoverty": 134836,
+      "pendingReason": null
+    },
+    {
+      "countyFips": "26165",
+      "countyName": "Wexford",
+      "status": "populated",
+      "values": {
+        "povertyPct": 14.6,
+        "childPovertyPct": 17.9,
+        "schoolAgePovertyPct": 17.5,
+        "medianHouseholdIncome": 56558
+      },
+      "confidence": {
+        "povertyPct": [
+          12.2,
+          17
+        ],
+        "childPovertyPct": [
+          13,
+          22.8
+        ],
+        "medianHouseholdIncome": [
+          52201,
+          60915
+        ]
+      },
+      "peopleInPoverty": 4949,
+      "childrenInPoverty": 1339,
+      "pendingReason": null
+    }
+  ]
+}

@@ -104,6 +104,12 @@ async function main() {
     lines.push(url(`/county/${slug}`, { priority: "0.8", changefreq: "weekly", lastmod: BUILD_DATE }));
   }
 
+  lines.push("  <!-- County help pages (83) -->");
+  for (const county of MI_COUNTIES_83) {
+    const slug = countyToSlug(county);
+    lines.push(url(`/county/${slug}/help`, { priority: "0.7", changefreq: "weekly", lastmod: BUILD_DATE }));
+  }
+
   lines.push("  <!-- County brief canonicals (83) -->");
   for (const county of MI_COUNTIES_83) {
     const slug = countyToSlug(county);
@@ -118,7 +124,7 @@ async function main() {
   const countyCount = MI_COUNTIES_83.length;
   console.log(
     `✓ [generate-sitemap] wrote ${OUT.split("/").slice(-3).join("/")} ` +
-    `(${staticCount} static + ${countyCount} county + ${countyCount} brief = ${staticCount + countyCount * 2} URLs, lastmod ${BUILD_DATE})`
+    `(${staticCount} static + ${countyCount} county + ${countyCount} help + ${countyCount} brief = ${staticCount + countyCount * 3} URLs, lastmod ${BUILD_DATE})`
   );
 }
 

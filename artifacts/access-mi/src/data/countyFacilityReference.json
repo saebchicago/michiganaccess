@@ -18,7 +18,7 @@
         "dedupe_key": "FQHC Site NPI Number (preferred); BHCMIS Org # + Site Address + Site Name (fallback when NPI missing)"
       }
     ],
-    "fetched_at": "2026-08-31T17:57:48.271Z",
+    "fetched_at": "2026-09-09T22:50:57.797Z",
     "transform_script": "scripts/build-facility-dataset.mjs",
     "counties_covered": 82,
     "counties_total": 83,
@@ -112,5 +112,339 @@
     "Washtenaw": 13,
     "Wayne": 91,
     "Wexford": 3
+  },
+  "breakdown": {
+    "Alcona": {
+      "hospital": 0,
+      "fqhc": 4
+    },
+    "Alger": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Allegan": {
+      "hospital": 1,
+      "fqhc": 2
+    },
+    "Alpena": {
+      "hospital": 1,
+      "fqhc": 8
+    },
+    "Antrim": {
+      "hospital": 0,
+      "fqhc": 1
+    },
+    "Arenac": {
+      "hospital": 1,
+      "fqhc": 4
+    },
+    "Baraga": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Barry": {
+      "hospital": 1,
+      "fqhc": 1
+    },
+    "Bay": {
+      "hospital": 1,
+      "fqhc": 6
+    },
+    "Benzie": {
+      "hospital": 1,
+      "fqhc": 2
+    },
+    "Berrien": {
+      "hospital": 2,
+      "fqhc": 6
+    },
+    "Branch": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Calhoun": {
+      "hospital": 4,
+      "fqhc": 19
+    },
+    "Cass": {
+      "hospital": 1,
+      "fqhc": 4
+    },
+    "Charlevoix": {
+      "hospital": 1,
+      "fqhc": 1
+    },
+    "Cheboygan": {
+      "hospital": 0,
+      "fqhc": 10
+    },
+    "Chippewa": {
+      "hospital": 1,
+      "fqhc": 8
+    },
+    "Clare": {
+      "hospital": 1,
+      "fqhc": 2
+    },
+    "Clinton": {
+      "hospital": 2,
+      "fqhc": 0
+    },
+    "Crawford": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Delta": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Dickinson": {
+      "hospital": 2,
+      "fqhc": 0
+    },
+    "Eaton": {
+      "hospital": 2,
+      "fqhc": 0
+    },
+    "Emmet": {
+      "hospital": 1,
+      "fqhc": 10
+    },
+    "Genesee": {
+      "hospital": 3,
+      "fqhc": 13
+    },
+    "Gladwin": {
+      "hospital": 1,
+      "fqhc": 3
+    },
+    "Gogebic": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Grand Traverse": {
+      "hospital": 1,
+      "fqhc": 4
+    },
+    "Gratiot": {
+      "hospital": 1,
+      "fqhc": 7
+    },
+    "Hillsdale": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Houghton": {
+      "hospital": 2,
+      "fqhc": 6
+    },
+    "Huron": {
+      "hospital": 3,
+      "fqhc": 2
+    },
+    "Ingham": {
+      "hospital": 3,
+      "fqhc": 12
+    },
+    "Ionia": {
+      "hospital": 1,
+      "fqhc": 1
+    },
+    "Iosco": {
+      "hospital": 1,
+      "fqhc": 5
+    },
+    "Iron": {
+      "hospital": 1,
+      "fqhc": 1
+    },
+    "Isabella": {
+      "hospital": 1,
+      "fqhc": 5
+    },
+    "Jackson": {
+      "hospital": 1,
+      "fqhc": 7
+    },
+    "Kalamazoo": {
+      "hospital": 4,
+      "fqhc": 6
+    },
+    "Kalkaska": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Kent": {
+      "hospital": 5,
+      "fqhc": 36
+    },
+    "Keweenaw": {
+      "hospital": 0,
+      "fqhc": 0
+    },
+    "Lake": {
+      "hospital": 0,
+      "fqhc": 3
+    },
+    "Lapeer": {
+      "hospital": 1,
+      "fqhc": 2
+    },
+    "Leelanau": {
+      "hospital": 0,
+      "fqhc": 2
+    },
+    "Lenawee": {
+      "hospital": 1,
+      "fqhc": 9
+    },
+    "Livingston": {
+      "hospital": 2,
+      "fqhc": 0
+    },
+    "Luce": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Mackinac": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Macomb": {
+      "hospital": 6,
+      "fqhc": 7
+    },
+    "Manistee": {
+      "hospital": 1,
+      "fqhc": 5
+    },
+    "Marquette": {
+      "hospital": 2,
+      "fqhc": 3
+    },
+    "Mason": {
+      "hospital": 1,
+      "fqhc": 1
+    },
+    "Mecosta": {
+      "hospital": 1,
+      "fqhc": 3
+    },
+    "Menominee": {
+      "hospital": 0,
+      "fqhc": 1
+    },
+    "Midland": {
+      "hospital": 1,
+      "fqhc": 2
+    },
+    "Missaukee": {
+      "hospital": 0,
+      "fqhc": 1
+    },
+    "Monroe": {
+      "hospital": 1,
+      "fqhc": 23
+    },
+    "Montcalm": {
+      "hospital": 3,
+      "fqhc": 2
+    },
+    "Montmorency": {
+      "hospital": 0,
+      "fqhc": 8
+    },
+    "Muskegon": {
+      "hospital": 1,
+      "fqhc": 25
+    },
+    "Newaygo": {
+      "hospital": 1,
+      "fqhc": 6
+    },
+    "Oakland": {
+      "hospital": 14,
+      "fqhc": 24
+    },
+    "Oceana": {
+      "hospital": 1,
+      "fqhc": 2
+    },
+    "Ogemaw": {
+      "hospital": 1,
+      "fqhc": 6
+    },
+    "Ontonagon": {
+      "hospital": 0,
+      "fqhc": 1
+    },
+    "Osceola": {
+      "hospital": 1,
+      "fqhc": 3
+    },
+    "Oscoda": {
+      "hospital": 0,
+      "fqhc": 4
+    },
+    "Otsego": {
+      "hospital": 1,
+      "fqhc": 2
+    },
+    "Ottawa": {
+      "hospital": 3,
+      "fqhc": 2
+    },
+    "Presque Isle": {
+      "hospital": 0,
+      "fqhc": 6
+    },
+    "Roscommon": {
+      "hospital": 0,
+      "fqhc": 5
+    },
+    "Saginaw": {
+      "hospital": 3,
+      "fqhc": 22
+    },
+    "St. Clair": {
+      "hospital": 2,
+      "fqhc": 4
+    },
+    "St. Joseph": {
+      "hospital": 2,
+      "fqhc": 2
+    },
+    "Sanilac": {
+      "hospital": 3,
+      "fqhc": 0
+    },
+    "Schoolcraft": {
+      "hospital": 1,
+      "fqhc": 0
+    },
+    "Shiawassee": {
+      "hospital": 1,
+      "fqhc": 2
+    },
+    "Tuscola": {
+      "hospital": 3,
+      "fqhc": 0
+    },
+    "Van Buren": {
+      "hospital": 2,
+      "fqhc": 2
+    },
+    "Washtenaw": {
+      "hospital": 6,
+      "fqhc": 7
+    },
+    "Wayne": {
+      "hospital": 21,
+      "fqhc": 70
+    },
+    "Wexford": {
+      "hospital": 1,
+      "fqhc": 2
+    }
   }
 }

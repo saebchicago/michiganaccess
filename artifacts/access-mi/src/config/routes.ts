@@ -106,6 +106,7 @@ const pages = {
   HealthSystemsPage: lazy(() => import("@/pages/HealthSystemsPage")),
   PartnershipOnePager: lazy(() => import("@/pages/PartnershipOnePager")),
   CountyPage: lazy(() => import("@/pages/CountyPage")),
+  CountyHelpPage: lazy(() => import("@/pages/CountyHelpPage")),
   ComplexCarePage: lazy(() => import("@/pages/ComplexCarePage")),
   LifeNavigatorPage: lazy(() => import("@/pages/LifeNavigatorPage")),
   RegionsPage: lazy(() => import("@/pages/RegionsPage")),
@@ -569,6 +570,11 @@ export const APP_ROUTES: RouteEntry[] = [
   },
   { path: "/place/:slug", component: pages.PlacePage, label: "Place" },
   { path: "/county/:slug", component: pages.CountyPage, label: "County" },
+  {
+    path: "/county/:slug/help",
+    component: pages.CountyHelpPage,
+    label: "County Help",
+  },
   { path: "/regions", component: pages.RegionsPage, label: "Regions" },
   {
     path: "/regions/compare",

@@ -44,6 +44,7 @@ import {
   getOverdoseForCountyName,
   overdosePeriodLabel,
 } from "@/data/nchs-overdose-county";
+import { getSaipeValue, saipeVintageLabel } from "@/data/saipe-county";
 import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import Layout from "@/components/layout/Layout";
@@ -280,6 +281,15 @@ export default function BriefPage() {
     county != null
       ? ((countyFacilityRef.counts as Record<string, number>)[county] ?? null)
       : null;
+  const facilityBreakdown =
+    county != null
+      ? ((
+          countyFacilityRef.breakdown as Record<
+            string,
+            { hospital: number; fqhc: number }
+          >
+        )[county] ?? null)
+      : null;
   const facilityFetched = new Date(
     countyFacilityRef.provenance.fetched_at,
   ).toLocaleDateString("en-US", {
@@ -317,6 +327,17 @@ export default function BriefPage() {
                   : "no data",
             badge: facilityCount != null ? "VERIFIED" : "no data",
             source: "CMS + HRSA",
+            vintage: facilityFetched,
+          },
+          {
+            // Split of the same CMS + HRSA extract, so "how many facilities"
+            // resolves into what kind. Both zeros are real findings.
+            label: "Hospitals / Health Center Sites",
+            value: facilityBreakdown
+              ? `${facilityBreakdown.hospital} / ${facilityBreakdown.fqhc}`
+              : "no data",
+            badge: facilityBreakdown ? "VERIFIED" : "no data",
+            source: "CMS Hospital General Information + HRSA site file",
             vintage: facilityFetched,
           },
           (() => {
@@ -452,9 +473,42 @@ export default function BriefPage() {
               vintage: MDE_COUNTY_PROVENANCE.school_year ?? "awaiting first county export",
             };
           })(),
-          // SVI and provisional overdose counts are omitted until the
-          // scheduled refresh populates them - an empty "no data" row for all
-          // 83 counties reads as a platform defect, not as pending ingest.
+          // Census SAIPE: published county income and poverty, replacing the
+          // modeled economic stand-ins these rows used to lean on. SAIPE is a
+          // keyless flat file, so it populates without CENSUS_API_KEY.
+          (() => {
+            const val = getSaipeValue(county, "medianHouseholdIncome");
+            return {
+              label: "Median Household Income",
+              value: val !== null ? `$${val.toLocaleString()}` : "no data",
+              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              source: "Census Bureau SAIPE (state and county)",
+              vintage: saipeVintageLabel(),
+            };
+          })(),
+          (() => {
+            const val = getSaipeValue(county, "povertyPct");
+            return {
+              label: "Poverty Rate (all ages)",
+              value: val !== null ? `${val.toFixed(1)}%` : "no data",
+              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              source: "Census Bureau SAIPE (state and county)",
+              vintage: saipeVintageLabel(),
+            };
+          })(),
+          (() => {
+            const val = getSaipeValue(county, "childPovertyPct");
+            return {
+              label: "Child Poverty Rate (under 18)",
+              value: val !== null ? `${val.toFixed(1)}%` : "no data",
+              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              source: "Census Bureau SAIPE (state and county)",
+              vintage: saipeVintageLabel(),
+            };
+          })(),
+          // SVI and provisional overdose counts are omitted only while an
+          // ingest is genuinely pending - an empty "no data" row for all 83
+          // counties reads as a platform defect, not as pending ingest.
           ...(((): BriefStat[] => {
             const pct = getSviOverallPercentile(county);
             if (pct === null) return [];
@@ -474,7 +528,7 @@ export default function BriefPage() {
             const value =
               od.status === "populated" && od.provisionalDeaths12mo !== null
                 ? od.provisionalDeaths12mo.toLocaleString()
-                : "under 10 (suppressed)";
+                : "fewer than 10 - withheld by NCHS";
             return [
               {
                 label: "Drug Overdose Deaths (provisional, 12-mo)",
