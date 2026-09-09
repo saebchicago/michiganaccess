@@ -396,6 +396,7 @@ async function main() {
       note: "Per-county counts derived from the same extract as verifiedHealthFacilities.json. The build-time guard (scripts/check-county-facilities.mjs) fails if the seed file drops below these counts.",
     },
     counts,
+    breakdown: breakdownByCounty(all),
   };
 
   if (DRY_RUN) {
