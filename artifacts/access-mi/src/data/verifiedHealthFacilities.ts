@@ -84,3 +84,29 @@ export const VERIFIED_FACILITY_SOURCE_LABEL = (() => {
 export function countFacilitiesForCounty(county: string): number {
   return COUNTY_FACILITY_COUNTS[county] ?? 0;
 }
+
+export interface CountyFacilityBreakdown {
+  hospital: number;
+  fqhc: number;
+}
+
+const breakdown = (
+  countyReference as unknown as {
+    breakdown?: Record<string, CountyFacilityBreakdown>;
+  }
+).breakdown;
+
+/** Hospital / health-center split for one county, or null when the generated
+ * reference predates the breakdown field (never a fabricated zero). */
+export function facilityBreakdownForCounty(
+  county: string,
+): CountyFacilityBreakdown | null {
+  return breakdown?.[county] ?? null;
+}
+
+/** Verified hospitals and health center sites in one county, name-sorted. */
+export function facilitiesInCounty(county: string): VerifiedHealthFacility[] {
+  return VERIFIED_HEALTH_FACILITIES.filter((f) => f.county === county).sort(
+    (a, b) => a.name.localeCompare(b.name),
+  );
+}
