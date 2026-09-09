@@ -274,7 +274,7 @@ export interface SaipeCountyRecord {
   status: "populated" | "pending-ci";
   values: Record<SaipeMeasureId, number | null>;
   /** Census 90% confidence bounds [lower, upper] where published. */
-  confidence: Record<"povertyPct" | "childPovertyPct" | "medianHouseholdIncome", [number | null, number | null]>;
+  confidence: Record<"povertyPct" | "childPovertyPct" | "medianHouseholdIncome", (number | null)[]>;
   peopleInPoverty: number | null;
   childrenInPoverty: number | null;
   pendingReason: string | null;
