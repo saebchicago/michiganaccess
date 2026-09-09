@@ -1,9 +1,9 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": "2026-09-02T17:14:05.610Z",
-  "checked": 72,
+  "generated_at": "2026-09-09T17:12:29.783Z",
+  "checked": 73,
   "dead": 11,
-  "timed_out": 5,
+  "timed_out": 6,
   "redirected": 0,
   "results": [
     {
@@ -319,10 +319,9 @@
     },
     {
       "url": "https://hazards.fema.gov/nri/",
-      "status": "timeout",
-      "httpStatus": null,
-      "finalUrl": null,
-      "error": "This operation was aborted",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.fema.gov/emergency-managers/practitioners/resilience-analysis-and-planning-tool",
       "contexts": [
         "FEMA NRI"
       ]
@@ -365,9 +364,10 @@
     },
     {
       "url": "https://www.fema.gov/about/openfema/api",
-      "status": "ok",
-      "httpStatus": 200,
+      "status": "timeout",
+      "httpStatus": null,
       "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "FEMA OpenFEMA API"
       ]
@@ -383,8 +383,8 @@
     },
     {
       "url": "https://www.irs.gov/statistics/soi-tax-stats",
-      "status": "server-error",
-      "httpStatus": 503,
+      "status": "client-error",
+      "httpStatus": 404,
       "finalUrl": null,
       "contexts": [
         "IRS Statistics of Income"
@@ -465,6 +465,15 @@
       ]
     },
     {
+      "url": "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-yj24",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://data.cdc.gov/National-Center-for-Health-Statistics/VSRR-Provisional-County-Level-Drug-Overdose-Death-/gb4e-yj24",
+      "contexts": [
+        "NCHS Vital Statistics Rapid Release"
+      ]
+    },
+    {
       "url": "https://www.huduser.gov/portal/datasets/cp.html",
       "status": "ok",
       "httpStatus": 202,
@@ -520,9 +529,10 @@
     },
     {
       "url": "https://www.mischooldata.org/",
-      "status": "ok",
-      "httpStatus": 200,
+      "status": "timeout",
+      "httpStatus": null,
       "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Michigan Dept of Education"
       ]
