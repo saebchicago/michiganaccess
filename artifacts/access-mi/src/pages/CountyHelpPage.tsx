@@ -26,7 +26,7 @@ export default function CountyHelpPage() {
     description: county
       ? `Health, housing, food and coverage programs serving ${county} County, Michigan, matched to the shortages measured in this county, with how to apply.`
       : "Programs serving Michigan counties, matched to measured local shortages.",
-    canonical: county ? `/county/${countyToSlug(county)}/help` : undefined,
+    path: county ? `/county/${countyToSlug(county)}/help` : undefined,
   });
 
   if (!county) return <NotFound />;
