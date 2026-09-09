@@ -320,6 +320,17 @@ export default function BriefPage() {
             source: "CMS + HRSA",
             vintage: facilityFetched,
           },
+          {
+            // Split of the same CMS + HRSA extract, so "how many facilities"
+            // resolves into what kind. Both zeros are real findings.
+            label: "Hospitals / Health Center Sites",
+            value: facilityBreakdown
+              ? `${facilityBreakdown.hospital} / ${facilityBreakdown.fqhc}`
+              : "no data",
+            badge: facilityBreakdown ? "VERIFIED" : "no data",
+            source: "CMS Hospital General Information + HRSA site file",
+            vintage: facilityFetched,
+          },
           (() => {
             const val = getVal(profile.healthHighlights, "uninsured");
             return {
