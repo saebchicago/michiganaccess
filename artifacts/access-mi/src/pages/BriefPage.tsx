@@ -462,7 +462,6 @@ export default function BriefPage() {
               value: val !== null ? `$${val.toLocaleString()}` : "no data",
               badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
               source: "Census Bureau SAIPE (state and county)",
-              sourceUrl: SAIPE_PROVENANCE.source_url,
               vintage: saipeVintageLabel(),
             };
           })(),
@@ -473,7 +472,6 @@ export default function BriefPage() {
               value: val !== null ? `${val.toFixed(1)}%` : "no data",
               badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
               source: "Census Bureau SAIPE (state and county)",
-              sourceUrl: SAIPE_PROVENANCE.source_url,
               vintage: saipeVintageLabel(),
             };
           })(),
@@ -484,7 +482,6 @@ export default function BriefPage() {
               value: val !== null ? `${val.toFixed(1)}%` : "no data",
               badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
               source: "Census Bureau SAIPE (state and county)",
-              sourceUrl: SAIPE_PROVENANCE.source_url,
               vintage: saipeVintageLabel(),
             };
           })(),
