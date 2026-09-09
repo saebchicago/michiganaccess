@@ -281,6 +281,15 @@ export default function BriefPage() {
     county != null
       ? ((countyFacilityRef.counts as Record<string, number>)[county] ?? null)
       : null;
+  const facilityBreakdown =
+    county != null
+      ? ((
+          countyFacilityRef.breakdown as Record<
+            string,
+            { hospital: number; fqhc: number }
+          >
+        )[county] ?? null)
+      : null;
   const facilityFetched = new Date(
     countyFacilityRef.provenance.fetched_at,
   ).toLocaleDateString("en-US", {
