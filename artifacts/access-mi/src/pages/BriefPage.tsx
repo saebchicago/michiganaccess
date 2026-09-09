@@ -452,9 +452,45 @@ export default function BriefPage() {
               vintage: MDE_COUNTY_PROVENANCE.school_year ?? "awaiting first county export",
             };
           })(),
-          // SVI and provisional overdose counts are omitted until the
-          // scheduled refresh populates them - an empty "no data" row for all
-          // 83 counties reads as a platform defect, not as pending ingest.
+          // Census SAIPE: published county income and poverty, replacing the
+          // modeled economic stand-ins these rows used to lean on. SAIPE is a
+          // keyless flat file, so it populates without CENSUS_API_KEY.
+          (() => {
+            const val = getSaipeValue(county, "medianHouseholdIncome");
+            return {
+              label: "Median Household Income",
+              value: val !== null ? `$${val.toLocaleString()}` : "no data",
+              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              source: "Census Bureau SAIPE (state and county)",
+              sourceUrl: SAIPE_PROVENANCE.source_url,
+              vintage: saipeVintageLabel(),
+            };
+          })(),
+          (() => {
+            const val = getSaipeValue(county, "povertyPct");
+            return {
+              label: "Poverty Rate (all ages)",
+              value: val !== null ? `${val.toFixed(1)}%` : "no data",
+              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              source: "Census Bureau SAIPE (state and county)",
+              sourceUrl: SAIPE_PROVENANCE.source_url,
+              vintage: saipeVintageLabel(),
+            };
+          })(),
+          (() => {
+            const val = getSaipeValue(county, "childPovertyPct");
+            return {
+              label: "Child Poverty Rate (under 18)",
+              value: val !== null ? `${val.toFixed(1)}%` : "no data",
+              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              source: "Census Bureau SAIPE (state and county)",
+              sourceUrl: SAIPE_PROVENANCE.source_url,
+              vintage: saipeVintageLabel(),
+            };
+          })(),
+          // SVI and provisional overdose counts are omitted only while an
+          // ingest is genuinely pending - an empty "no data" row for all 83
+          // counties reads as a platform defect, not as pending ingest.
           ...(((): BriefStat[] => {
             const pct = getSviOverallPercentile(county);
             if (pct === null) return [];
