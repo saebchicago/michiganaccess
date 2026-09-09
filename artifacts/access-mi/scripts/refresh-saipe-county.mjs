@@ -115,14 +115,18 @@ const num = (token) => {
  */
 function parseSaipe(text, year) {
   const yy = String(year).slice(2);
-  const lineRe = new RegExp(
-    `^\\s*(\\d{2})\\s+(\\d{1,3})\\s+(.+?)\\s{2,}([A-Za-z][^\\n]*?)\\s+MI\\s+est${yy}-mi\\.txt`,
-  );
+  // Trailing columns (postal code, file name, release date) are dropped
+  // first, then the geography name is peeled off the end. The name cannot
+  // be located by run-of-spaces alone: the statewide row leaves only one
+  // space before "Michigan", while county rows leave many.
+  const tailRe = new RegExp(`\\s+MI\\s+est${yy}-mi\\.txt.*$`);
+  const rowRe = /^\s*(\d{2})\s+(\d{1,3})\s+(.*?)\s+([A-Za-z][A-Za-z.'\- ]*)$/;
   const counties = new Map();
   let state = null;
-  for (const line of text.split(/\r?\n/)) {
-    if (!line.trim()) continue;
-    const m = lineRe.exec(line);
+  for (const raw of text.split(/\r?\n/)) {
+    if (!raw.trim()) continue;
+    if (!tailRe.test(raw)) continue;
+    const m = rowRe.exec(raw.replace(tailRe, ""));
     if (!m) continue;
     const stateFips = m[1];
     if (stateFips !== "26") continue;
