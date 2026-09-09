@@ -4,11 +4,16 @@
     "source_url": "https://www.census.gov/programs-surveys/saipe.html",
     "download_url": "https://www2.census.gov/programs-surveys/saipe/datasets/2024/2024-state-and-county/est24-mi.txt",
     "estimate_year": 2024,
-    "ingested_at": "2026-09-09T22:48:30.460Z",
+    "ingested_at": "2026-09-09T22:49:13.956Z",
     "ingest_script": "scripts/refresh-saipe-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
-    "statewide": null,
+    "statewide": {
+      "povertyPct": 13.4,
+      "childPovertyPct": 17.7,
+      "schoolAgePovertyPct": 16.8,
+      "medianHouseholdIncome": 72336
+    },
     "value_label": "VERIFIED",
     "populated": true,
     "pending_reason": null,
