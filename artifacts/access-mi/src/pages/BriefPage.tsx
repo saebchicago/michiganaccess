@@ -508,7 +508,7 @@ export default function BriefPage() {
             const value =
               od.status === "populated" && od.provisionalDeaths12mo !== null
                 ? od.provisionalDeaths12mo.toLocaleString()
-                : "under 10 (suppressed)";
+                : "fewer than 10 - withheld by NCHS";
             return [
               {
                 label: "Drug Overdose Deaths (provisional, 12-mo)",
