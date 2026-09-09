@@ -485,21 +485,24 @@ async function main() {
   // makes the canonical self-referencing before JS runs.
   const countyProfiles = await loadCountyProfiles();
   let countiesWritten = 0;
+  let helpWritten = 0;
   for (const profile of countyProfiles) {
-    const meta = countyRouteMeta(profile);
-    const routeDir = path.join(distDir, meta.path.replace(/^\/+/, ""));
-    await mkdir(routeDir, { recursive: true });
-    const html = injectRouteJsonLd(
-      injectNoscript(rewriteHead(indexHtml, meta), meta),
-      meta.path,
-      meta.jsonLd,
-    );
-    await writeFile(path.join(routeDir, "index.html"), html, "utf8");
-    countiesWritten++;
+    for (const meta of [countyRouteMeta(profile), countyHelpRouteMeta(profile)]) {
+      const routeDir = path.join(distDir, meta.path.replace(/^\/+/, ""));
+      await mkdir(routeDir, { recursive: true });
+      const html = injectRouteJsonLd(
+        injectNoscript(rewriteHead(indexHtml, meta), meta),
+        meta.path,
+        meta.jsonLd,
+      );
+      await writeFile(path.join(routeDir, "index.html"), html, "utf8");
+      if (meta.path.endsWith("/help")) helpWritten++;
+      else countiesWritten++;
+    }
   }
-  if (countiesWritten < 83) {
+  if (countiesWritten < 83 || helpWritten < 83) {
     console.error(
-      `[prerender-meta] expected 83 county pages, parsed ${countiesWritten}. ` +
+      `[prerender-meta] expected 83 county pages and 83 county help pages, parsed ${countiesWritten} and ${helpWritten}. ` +
         "COUNTY_PROFILES in src/data/michigan-county-profiles.ts may have changed shape.",
     );
     process.exit(1);
