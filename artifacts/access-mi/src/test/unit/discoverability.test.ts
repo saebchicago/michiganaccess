@@ -37,11 +37,20 @@ describe("sitemap.xml", () => {
     expect(bad).toHaveLength(0);
   });
 
-  it("has exactly 83 /county/ routes", () => {
+  it("has exactly 83 /county/:slug routes", () => {
     xml ??= readFileSync(sitemapPath, "utf8");
     locs ??= [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-    const countyRoutes = locs.filter((u) => u.includes("/county/"));
+    // /county/:slug/help/ also contains "/county/" - match the bare county
+    // page only (slug, then the trailing slash, nothing after).
+    const countyRoutes = locs.filter((u) => /^https:\/\/accessmi\.org\/county\/[^/]+\/$/.test(u));
     expect(countyRoutes).toHaveLength(83);
+  });
+
+  it("has exactly 83 /county/:slug/help routes", () => {
+    xml ??= readFileSync(sitemapPath, "utf8");
+    locs ??= [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+    const helpRoutes = locs.filter((u) => /^https:\/\/accessmi\.org\/county\/[^/]+\/help\/$/.test(u));
+    expect(helpRoutes).toHaveLength(83);
   });
 
   it("has exactly 83 /brief?county= canonicals", () => {
