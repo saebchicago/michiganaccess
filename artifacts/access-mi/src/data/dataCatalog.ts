@@ -283,7 +283,7 @@ export const DATA_CATALOG: CatalogEntry[] = [
     cadence: "Ongoing",
     sourceUrl: "https://www.samhsa.gov/find-help/national-helpline",
     description:
-      "National helpline and treatment locator references, plus federal behavioural health spending lines.",
+      "National helpline and treatment locator references, plus federal behavioral health spending lines.",
     poweredSurfaces: ["/support-groups", "/learn"],
   },
   {
@@ -348,6 +348,21 @@ export const DATA_CATALOG: CatalogEntry[] = [
     description:
       "Eleven county social-determinant ratios computed from ACS 5-year detail-table counts: poverty and child poverty, renter and owner cost burden, no-vehicle households, 45-minute-plus commutes, adults without a diploma and with a bachelor's degree, limited-English households, crowding, and renter share.",
     poweredSurfaces: ["/county/:slug", "/brief", "/ask", "/health-equity-atlas"],
+  },
+  {
+    id: "census-saipe-county",
+    name: "Census SAIPE County Estimates",
+    kind: "ingested",
+    registryFeed: "Census SAIPE County Estimates",
+    publisherOrg: "Census",
+    domain: "Social",
+    geography: "County",
+    access: "modeled",
+    cadence: "Annual",
+    sourceUrl: "https://www.census.gov/programs-surveys/saipe.html",
+    description:
+      "Median household income, poverty rate, child poverty rate, and school-age poverty rate for every Michigan county from the Bureau's Small Area Income and Poverty Estimates, a model-based program; each value ships with the Bureau's own 90% confidence bounds.",
+    poweredSurfaces: ["/county/:slug", "/county/:slug/help", "/brief", "/ask"],
   },
   {
     id: "mde-county-education",
@@ -421,7 +436,7 @@ export const DATA_CATALOG: CatalogEntry[] = [
     cadence: "Annual",
     sourceUrl: "https://data.census.gov/",
     urlNote:
-      "Human-facing data portal for the same programme the registry lists by its API host (api.census.gov).",
+      "Human-facing data portal for the same program the registry lists by its API host (api.census.gov).",
     description:
       "Demographic, economic, housing, and social characteristics at state, county, tract, and ZCTA level.",
     poweredSurfaces: ["/county/:slug", "/zip/:zipcode", "/compare"],

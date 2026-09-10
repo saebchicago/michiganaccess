@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "generated": "2026-09-07T23:17:07.698Z",
+    "generated": "2026-09-10T01:01:56.973Z",
     "source": "src/data/sourcesRegistry.ts",
-    "entryCount": 51,
+    "entryCount": 52,
     "schema": "v1",
     "note": "Machine-readable source catalog. license fields are null pending legal review."
   },
@@ -163,6 +163,21 @@
       "agency": "Census",
       "url": "https://api.census.gov/",
       "description": "Economic, demographic data; county broadband subscription (B28002); county SDOH bundle (B17001, B17020, B25070, B25091, B08201, B08303, B15003, C16002, B25014, B25003)",
+      "updateFrequency": "Annual",
+      "license": null,
+      "licenseReviewStatus": "pending",
+      "vintage": null,
+      "geographyLevel": null,
+      "integrityTier": null,
+      "lastVerified": null,
+      "monitoringStatus": "not-yet-monitored"
+    },
+    {
+      "id": "census-saipe-county-estimates",
+      "name": "Census SAIPE County Estimates",
+      "agency": "Census",
+      "url": "https://www.census.gov/programs-surveys/saipe.html",
+      "description": "County median household income, poverty rate, child poverty rate - small-area model-based estimates, county brief and help page",
       "updateFrequency": "Annual",
       "license": null,
       "licenseReviewStatus": "pending",

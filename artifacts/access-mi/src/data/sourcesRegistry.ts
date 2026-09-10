@@ -9,7 +9,7 @@
  * FEEDS vs PUBLISHERS - these are different numbers and the distinction
  * is load-bearing:
  *
- *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 51).
+ *   SOURCES_TOTAL      one entry per distinct feed/dataset (currently 52).
  *                      A publisher that ships several independent feeds
  *                      gets one entry per feed - CMS contributes Hospital
  *                      Compare, Physician Compare, and NPPES separately
@@ -126,6 +126,14 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       url: "https://api.census.gov/",
       powers:
         "Economic, demographic data; county broadband subscription (B28002); county SDOH bundle (B17001, B17020, B25070, B25091, B08201, B08303, B15003, C16002, B25014, B25003)",
+      frequency: "Annual",
+    },
+    {
+      name: "Census SAIPE County Estimates",
+      org: "Census",
+      url: "https://www.census.gov/programs-surveys/saipe.html",
+      powers:
+        "County median household income, poverty rate, child poverty rate - small-area model-based estimates, county brief and help page",
       frequency: "Annual",
     },
     {
