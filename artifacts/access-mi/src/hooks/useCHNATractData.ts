@@ -39,41 +39,9 @@ export interface EJScreenTract {
   lng: number;
 }
 
-const EJSCREEN_FALLBACK: EJScreenTract[] = [
-  {
-    id: "261630001",
-    tractFips: "26163000100",
-    county: "Wayne",
-    pm25Percentile: 84,
-    ozonePercentile: 79,
-    airToxicsCancerRisk: 35,
-    trafficPercentile: 91,
-    lat: 42.3314,
-    lng: -83.0458,
-  },
-  {
-    id: "261630025",
-    tractFips: "26163002500",
-    county: "Wayne",
-    pm25Percentile: 76,
-    ozonePercentile: 72,
-    airToxicsCancerRisk: 28,
-    trafficPercentile: 85,
-    lat: 42.3584,
-    lng: -83.0732,
-  },
-  {
-    id: "261250101",
-    tractFips: "26125010100",
-    county: "Oakland",
-    pm25Percentile: 58,
-    ozonePercentile: 61,
-    airToxicsCancerRisk: 19,
-    trafficPercentile: 55,
-    lat: 42.5783,
-    lng: -83.2645,
-  },
-];
+// EPA retired the public EJScreen services and no replacement exists, so this
+// layer renders nothing rather than sample tracts presented as real readings.
+const EJSCREEN_FALLBACK: EJScreenTract[] = [];
 
 export const EJSCREEN_META: {
   integrityLabel: IntegrityLabel;
