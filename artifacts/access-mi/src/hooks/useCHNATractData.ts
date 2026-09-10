@@ -291,29 +291,8 @@ export interface PFASSite {
   status?: string;
 }
 
-const PFAS_FALLBACK: PFASSite[] = [
-  {
-    id: "pfas-001",
-    name: "Wolverine Worldwide (Belmont)",
-    lat: 43.0586,
-    lng: -85.5979,
-    siteType: "Industrial",
-  },
-  {
-    id: "pfas-002",
-    name: "Wurtsmith Air Force Base",
-    lat: 44.4503,
-    lng: -83.5233,
-    siteType: "Military",
-  },
-  {
-    id: "pfas-003",
-    name: "Kalamazoo PFAS Site",
-    lat: 42.2917,
-    lng: -85.5872,
-    siteType: "Industrial",
-  },
-];
+// Live EGLE feed only; no sample sites.
+const PFAS_FALLBACK: PFASSite[] = [];
 
 export const PFAS_META: {
   integrityLabel: IntegrityLabel;
