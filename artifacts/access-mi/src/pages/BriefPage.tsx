@@ -474,16 +474,20 @@ export default function BriefPage() {
             };
           })(),
           // Census SAIPE: published county income and poverty, replacing the
-          // modeled economic stand-ins these rows used to lean on. SAIPE is a
+          // ad hoc economic stand-ins these rows used to lean on. SAIPE is a
           // keyless flat file, so it populates without CENSUS_API_KEY.
+          // Labeled MODELED, not VERIFIED: SAIPE is Census's own small-area
+          // statistical model (its provenance notes say so explicitly), the
+          // same standing as CDC/ATSDR SVI's ACS-derived inputs elsewhere on
+          // this page, which also render MODELED.
           (() => {
             const val = getSaipeValue(county, "medianHouseholdIncome");
             return {
               label: "Median Household Income",
               value: val !== null ? `$${val.toLocaleString()}` : "no data",
-              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              badge: (val !== null ? "MODELED" : "no data") as BriefStat["badge"],
               source: "Census Bureau SAIPE (state and county)",
-              vintage: saipeVintageLabel(),
+              vintage: val !== null ? `${saipeVintageLabel()} (model-based estimate, 90% CI published)` : saipeVintageLabel(),
             };
           })(),
           (() => {
@@ -491,9 +495,9 @@ export default function BriefPage() {
             return {
               label: "Poverty Rate (all ages)",
               value: val !== null ? `${val.toFixed(1)}%` : "no data",
-              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              badge: (val !== null ? "MODELED" : "no data") as BriefStat["badge"],
               source: "Census Bureau SAIPE (state and county)",
-              vintage: saipeVintageLabel(),
+              vintage: val !== null ? `${saipeVintageLabel()} (model-based estimate, 90% CI published)` : saipeVintageLabel(),
             };
           })(),
           (() => {
@@ -501,9 +505,9 @@ export default function BriefPage() {
             return {
               label: "Child Poverty Rate (under 18)",
               value: val !== null ? `${val.toFixed(1)}%` : "no data",
-              badge: (val !== null ? "VERIFIED" : "no data") as BriefStat["badge"],
+              badge: (val !== null ? "MODELED" : "no data") as BriefStat["badge"],
               source: "Census Bureau SAIPE (state and county)",
-              vintage: saipeVintageLabel(),
+              vintage: val !== null ? `${saipeVintageLabel()} (model-based estimate, 90% CI published)` : saipeVintageLabel(),
             };
           })(),
           // SVI and provisional overdose counts are omitted only while an

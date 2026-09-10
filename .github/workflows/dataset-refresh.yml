@@ -87,6 +87,7 @@ jobs:
             refresh-cdc-svi-county
             refresh-nchs-overdose-county
             refresh-usaspending-county
+            refresh-saipe-county
           "
           failed=""
           for s in $scripts_to_run; do

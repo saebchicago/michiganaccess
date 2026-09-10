@@ -10,7 +10,7 @@
  *  1. Verified hospitals and health center sites physically in the county
  *     (CMS + HRSA extract) - only for shortages that clinical sites answer.
  *  2. Community resource directory rows for this county.
- *  3. Assistance programs, each labelled with its own coverage area so a
+ *  3. Assistance programs, each labeled with its own coverage area so a
  *     statewide program never reads as a county-run one.
  * Nothing is invented; when no source has a match the block says so.
  */
@@ -25,6 +25,7 @@ import {
   facilitiesInCounty,
   VERIFIED_FACILITY_SOURCE_LABEL,
 } from "@/data/verifiedHealthFacilities";
+import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 
 export function ExtLink({
   href,
@@ -117,6 +118,7 @@ export default function ShortageBlock({
         <Badge variant="outline" className="text-[10px] tabular-nums">
           {shortage.figure}
         </Badge>
+        <IntegrityBadge label={shortage.label} source={shortage.source} />
         <span className="text-[10px] text-muted-foreground tabular-nums">
           vs {shortage.threshold}
         </span>
@@ -131,7 +133,7 @@ export default function ShortageBlock({
           {sites.length === 0 ? (
             <p className="text-xs text-muted-foreground">
               No CMS-certified hospital or HRSA health center site is located in
-              this county. The nearest sites are in neighbouring counties - use
+              this county. The nearest sites are in neighboring counties - use
               Find Care to sort by distance.
             </p>
           ) : (

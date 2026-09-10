@@ -21,18 +21,19 @@ import { ATLAS_LAYERS } from "@/config/atlasLayers";
  * Total verified public data FEEDS powering the platform.
  *
  * Derived from `src/data/sourcesRegistry.ts`. The expected canonical
- * value is 51 (30 federal + 9 state + 12 nonprofit). If the registry
- * grows or shrinks, update the EXPECTED_* constants below in the same
- * commit so the build assertion does not fail silently.
+ * value is 52 (31 federal + 9 state + 12 nonprofit) as of 2026-09-10,
+ * when Census SAIPE County Estimates was added under Federal Agencies.
+ * If the registry grows or shrinks, update the EXPECTED_* constants
+ * below in the same commit so the build assertion does not fail silently.
  *
  * Rule: one entry per distinct feed/dataset. A publisher shipping
  * several independent datasets contributes one entry each - this is a
  * feed count, NOT an organization count. See EXPECTED_PUBLISHER_COUNT
  * below for the organization number.
  */
-const EXPECTED_SOURCE_COUNT = 51;
+const EXPECTED_SOURCE_COUNT = 52;
 const EXPECTED_SOURCE_BREAKDOWN = {
-  federal: 30,
+  federal: 31,
   state: 9,
   nonprofit: 12,
 } as const;
@@ -145,7 +146,7 @@ export const MICHIGAN_POLITICAL_PARTY_COUNT = 7;
  * "monitored feeds", "verified feeds", or similar so the number on
  * the page and the number /status actually pings cannot diverge.
  *
- * Note: this is NOT the same as DATA_SOURCE_COUNT (51 feeds from
+ * Note: this is NOT the same as DATA_SOURCE_COUNT (52 feeds from
  * DATA_PUBLISHER_COUNT publishers). Most registry feeds ship as static
  * data imports, not live API calls; the four here are the ones with
  * always-on uptime checks.
@@ -169,7 +170,7 @@ export const MONITORED_API_FEEDS_COUNT = 4;
  * 20 -> 22 on 2026-09-02 (tranche 2): CDC/ATSDR SVI county and NCHS
  * provisional county overdose counts ingested.
  */
-export const FRESHNESS_TRACKED_COUNT = 22;
+export const FRESHNESS_TRACKED_COUNT = 23;
 
 /**
  * Number of sources with live endpoint health checks on the /status page.

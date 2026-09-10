@@ -15,7 +15,7 @@ export interface SaipeMeasure {
   id: SaipeMeasureId;
   label: string;
   unit: "percent" | "dollars";
-  value_label: "VERIFIED";
+  value_label: "MODELED";
 }
 
 export interface SaipeCountyRecord {
@@ -40,7 +40,7 @@ export interface SaipeProvenance {
   michigan_county_registry: string;
   michigan_county_registry_size: number;
   statewide: Record<string, number | null> | null;
-  value_label: "VERIFIED" | "PENDING";
+  value_label: "MODELED" | "PENDING";
   populated: boolean;
   pending_reason: string | null;
   notes: string;

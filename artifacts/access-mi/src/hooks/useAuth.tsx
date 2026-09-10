@@ -111,7 +111,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           email: email.trim(),
           password,
         });
-        return { error: error ? error.message : null };
+        if (error) console.error("[auth] sign-in failed:", error);
+        return { error: error ? "Incorrect email or password." : null };
       },
       signOut: async () => {
         await supabase.auth.signOut();
@@ -122,7 +123,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
           redirectTo: `${window.location.origin}/signin`,
         });
-        return { error: error ? error.message : null };
+        if (error) console.error("[auth] password reset request failed:", error);
+        return { error: error ? "Could not send a reset link right now. Try again in a moment." : null };
       },
     }),
     [session, roles, loading],
