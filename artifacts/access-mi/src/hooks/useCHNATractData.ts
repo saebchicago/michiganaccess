@@ -359,38 +359,8 @@ export interface NRITract {
   lng: number;
 }
 
-const NRI_FALLBACK: NRITract[] = [
-  {
-    id: "nri-26163-0001",
-    tractFips: "26163000100",
-    county: "Wayne",
-    riskRating: "High",
-    riskScore: 71.4,
-    socialVulnerability: 0.82,
-    lat: 42.3314,
-    lng: -83.0458,
-  },
-  {
-    id: "nri-26163-0025",
-    tractFips: "26163002500",
-    county: "Wayne",
-    riskRating: "High",
-    riskScore: 68.9,
-    socialVulnerability: 0.79,
-    lat: 42.3584,
-    lng: -83.0732,
-  },
-  {
-    id: "nri-26125-0101",
-    tractFips: "26125010100",
-    county: "Oakland",
-    riskRating: "Relatively Moderate",
-    riskScore: 41.2,
-    socialVulnerability: 0.35,
-    lat: 42.5783,
-    lng: -83.2645,
-  },
-];
+// Live FEMA National Risk Index feed only; no sample tracts.
+const NRI_FALLBACK: NRITract[] = [];
 
 export const NRI_META: {
   integrityLabel: IntegrityLabel;
