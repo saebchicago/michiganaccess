@@ -377,6 +377,22 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Added 2026-09-10: Census SAIPE county income and poverty estimates,
+    // shipped in the 2026-09-09 batch without a freshness entry. Keyless
+    // flat file; the 2025 release (est25-mi.txt) 404s as of this ingest, so
+    // 2024 is the publisher's newest available vintage.
+    id: "census-saipe-county",
+    name: "Census Bureau SAIPE County Estimates",
+    category: "Economic",
+    url: "https://www.census.gov/programs-surveys/saipe.html",
+    generatedFrom: "saipe-county.generated.json",
+    updateFrequency: "Annual",
+    currentVersion: "SAIPE 2024 state and county estimates",
+    nextExpectedUpdate: "2027-01-31",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
     id: "hud-fmr",
     name: "HUD Fair Market Rents",
     category: "Housing",

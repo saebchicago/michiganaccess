@@ -64,12 +64,14 @@ function QueuePanel({ queue }: { queue: Queue }) {
   });
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Loading queue...</p>;
-  if (error)
+  if (error) {
+    console.error(`[admin] queue "${queue}" failed to load:`, error);
     return (
       <p className="text-sm text-destructive">
-        Could not load this queue: {error instanceof Error ? error.message : "unknown error"}
+        Could not load this queue right now. Try refreshing the page.
       </p>
     );
+  }
   if ((data ?? []).length === 0)
     return <p className="text-sm text-muted-foreground">Nothing submitted yet.</p>;
 

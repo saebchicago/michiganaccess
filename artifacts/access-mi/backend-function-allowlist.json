@@ -6,7 +6,6 @@
     "appeal-generator": "Deployed to Supabase out-of-band; .migration-backup/supabase/functions/appeal-generator is the authoritative repo record. Powers the AI appeals generator.",
     "civic-copilot": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers the AIChatWidget.",
     "airnow-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers real-time AQI on /environment/air.",
-    "arcgis-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers ArcGIS FeatureServer reads behind the civic datasets.",
     "cdc-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers CDC data reads.",
     "gtfs-rt-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers realtime transit feeds.",
     "npi-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers NPPES provider search."
