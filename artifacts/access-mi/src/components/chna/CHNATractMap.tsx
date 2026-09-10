@@ -196,6 +196,8 @@ interface LayerEntry {
   colorSwatch?: string;
   symbol?: string;
   statewide?: boolean;
+  /** True when the layer could not load any rows at all. */
+  empty?: boolean;
 }
 
 function CachedSampleBadge() {
@@ -207,6 +209,19 @@ function CachedSampleBadge() {
     >
       <AlertCircle className="h-2.5 w-2.5" aria-hidden="true" />
       cached sample
+    </span>
+  );
+}
+
+function UnavailableBadge() {
+  return (
+    <span
+      className="inline-flex items-center gap-1 rounded border border-muted-foreground/40 bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground"
+      role="status"
+      aria-label="This layer could not be loaded, so no locations are shown"
+    >
+      <AlertCircle className="h-2.5 w-2.5" aria-hidden="true" />
+      data unavailable
     </span>
   );
 }
@@ -256,7 +271,8 @@ function LegendEntry({
           </span>
           <IntegrityBadge label={entry.integrityLabel} />
           {entry.statewide && <StatewideBadge />}
-          {entry.dataMode === "fallback" && <CachedSampleBadge />}
+          {entry.dataMode === "fallback" &&
+            (entry.empty ? <UnavailableBadge /> : <CachedSampleBadge />)}
         </div>
         <p className="text-[10px] text-muted-foreground leading-tight">
           {entry.source} ({entry.vintage})
@@ -393,6 +409,7 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
       label: "PM2.5 Burden (EJScreen tract)",
       ...EJSCREEN_META,
       dataMode: ejscreen.dataMode,
+      empty: ejscreen.data.length === 0,
       visible: visible.ejscreen ?? false,
       colorSwatch: "#f97316",
     },
@@ -409,6 +426,7 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
       label: "CSO Outfalls",
       ...CSO_META,
       dataMode: cso.dataMode,
+      empty: cso.data.length === 0,
       visible: visible.cso ?? false,
       symbol: "C",
       statewide: true,
@@ -418,6 +436,7 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
       label: "PFAS Sites",
       ...PFAS_META,
       dataMode: pfas.dataMode,
+      empty: pfas.data.length === 0,
       visible: visible.pfas ?? false,
       symbol: "P",
       statewide: true,
@@ -427,6 +446,7 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
       label: "FEMA Risk Index (tract)",
       ...NRI_META,
       dataMode: nri.dataMode,
+      empty: nri.data.length === 0,
       visible: visible.nri ?? false,
       colorSwatch: "#f97316",
     },

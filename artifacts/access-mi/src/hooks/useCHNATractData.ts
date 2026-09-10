@@ -39,41 +39,9 @@ export interface EJScreenTract {
   lng: number;
 }
 
-const EJSCREEN_FALLBACK: EJScreenTract[] = [
-  {
-    id: "261630001",
-    tractFips: "26163000100",
-    county: "Wayne",
-    pm25Percentile: 84,
-    ozonePercentile: 79,
-    airToxicsCancerRisk: 35,
-    trafficPercentile: 91,
-    lat: 42.3314,
-    lng: -83.0458,
-  },
-  {
-    id: "261630025",
-    tractFips: "26163002500",
-    county: "Wayne",
-    pm25Percentile: 76,
-    ozonePercentile: 72,
-    airToxicsCancerRisk: 28,
-    trafficPercentile: 85,
-    lat: 42.3584,
-    lng: -83.0732,
-  },
-  {
-    id: "261250101",
-    tractFips: "26125010100",
-    county: "Oakland",
-    pm25Percentile: 58,
-    ozonePercentile: 61,
-    airToxicsCancerRisk: 19,
-    trafficPercentile: 55,
-    lat: 42.5783,
-    lng: -83.2645,
-  },
-];
+// EPA retired the public EJScreen services and no replacement exists, so this
+// layer renders nothing rather than sample tracts presented as real readings.
+const EJSCREEN_FALLBACK: EJScreenTract[] = [];
 
 export const EJSCREEN_META: {
   integrityLabel: IntegrityLabel;
@@ -276,22 +244,27 @@ export function useCSOOutfalls(enabled = true): {
             raw as {
               features?: {
                 attributes: Record<string, unknown>;
-                geometry?: { x: number; y: number };
+                geometry?: { paths?: number[][][] };
               }[];
             }
           )?.features ?? [];
-        return features.map((f, i) => ({
-          id: String(f.attributes.OBJECTID ?? i),
-          name: String(
-            f.attributes.FACILITY_NAME ??
-              f.attributes.PERMIT_ID ??
-              `Outfall ${i + 1}`,
-          ),
-          lat: f.geometry?.y ?? 0,
-          lng: f.geometry?.x ?? 0,
-          permitId: String(f.attributes.PERMIT_ID ?? ""),
-          waterBody: String(f.attributes.RECEIVING_WATER ?? ""),
-        }));
+        // EGLE publishes impacted surface waters as lines; place the marker at
+        // the midpoint of the affected stretch.
+        return features
+          .map((f, i) => {
+            const path = f.geometry?.paths?.[0] ?? [];
+            const mid = path[Math.floor(path.length / 2)] ?? [];
+            return {
+              id: String(f.attributes.OBJECTID ?? i),
+              name: String(
+                f.attributes.OriginatingFacility ?? `Outfall ${i + 1}`,
+              ),
+              lat: typeof mid[1] === "number" ? mid[1] : 0,
+              lng: typeof mid[0] === "number" ? mid[0] : 0,
+              waterBody: String(f.attributes.ReceivingWaters ?? ""),
+            };
+          })
+          .filter((o) => o.lat !== 0 && o.lng !== 0);
       }),
     enabled,
     staleTime: 24 * 60 * 60 * 1000,
@@ -318,29 +291,8 @@ export interface PFASSite {
   status?: string;
 }
 
-const PFAS_FALLBACK: PFASSite[] = [
-  {
-    id: "pfas-001",
-    name: "Wolverine Worldwide (Belmont)",
-    lat: 43.0586,
-    lng: -85.5979,
-    siteType: "Industrial",
-  },
-  {
-    id: "pfas-002",
-    name: "Wurtsmith Air Force Base",
-    lat: 44.4503,
-    lng: -83.5233,
-    siteType: "Military",
-  },
-  {
-    id: "pfas-003",
-    name: "Kalamazoo PFAS Site",
-    lat: 42.2917,
-    lng: -85.5872,
-    siteType: "Industrial",
-  },
-];
+// Live EGLE feed only; no sample sites.
+const PFAS_FALLBACK: PFASSite[] = [];
 
 export const PFAS_META: {
   integrityLabel: IntegrityLabel;
@@ -369,16 +321,16 @@ export function usePFASSites(enabled = true): {
               }[];
             }
           )?.features ?? [];
-        return features.map((f, i) => ({
-          id: String(f.attributes.OBJECTID ?? i),
-          name: String(
-            f.attributes.SITE_NAME ?? f.attributes.NAME ?? `PFAS Site ${i + 1}`,
-          ),
-          lat: f.geometry?.y ?? 0,
-          lng: f.geometry?.x ?? 0,
-          siteType: String(f.attributes.SITE_TYPE ?? ""),
-          status: String(f.attributes.STATUS ?? ""),
-        }));
+        return features
+          .map((f, i) => ({
+            id: String(f.attributes.OBJECTID ?? i),
+            name: String(f.attributes.Name ?? `PFAS Site ${i + 1}`),
+            lat: f.geometry?.y ?? 0,
+            lng: f.geometry?.x ?? 0,
+            siteType: String(f.attributes.Type ?? ""),
+            status: String(f.attributes.SiteOrAoi ?? ""),
+          }))
+          .filter((s) => s.lat !== 0 && s.lng !== 0);
       }),
     enabled,
     staleTime: 24 * 60 * 60 * 1000,
@@ -407,38 +359,8 @@ export interface NRITract {
   lng: number;
 }
 
-const NRI_FALLBACK: NRITract[] = [
-  {
-    id: "nri-26163-0001",
-    tractFips: "26163000100",
-    county: "Wayne",
-    riskRating: "High",
-    riskScore: 71.4,
-    socialVulnerability: 0.82,
-    lat: 42.3314,
-    lng: -83.0458,
-  },
-  {
-    id: "nri-26163-0025",
-    tractFips: "26163002500",
-    county: "Wayne",
-    riskRating: "High",
-    riskScore: 68.9,
-    socialVulnerability: 0.79,
-    lat: 42.3584,
-    lng: -83.0732,
-  },
-  {
-    id: "nri-26125-0101",
-    tractFips: "26125010100",
-    county: "Oakland",
-    riskRating: "Relatively Moderate",
-    riskScore: 41.2,
-    socialVulnerability: 0.35,
-    lat: 42.5783,
-    lng: -83.2645,
-  },
-];
+// Live FEMA National Risk Index feed only; no sample tracts.
+const NRI_FALLBACK: NRITract[] = [];
 
 export const NRI_META: {
   integrityLabel: IntegrityLabel;
@@ -459,18 +381,26 @@ export function useNRITracts(enabled = true): {
     queryFn: () =>
       fetchCHNA<NRITract>("nri", (raw: unknown) => {
         const features =
-          (raw as { features?: { attributes: Record<string, unknown> }[] })
-            ?.features ?? [];
-        return features.map((f, i) => ({
-          id: String(f.attributes.OBJECTID ?? i),
-          tractFips: String(f.attributes.TRACTFIPS ?? ""),
-          county: String(f.attributes.COUNTY ?? ""),
-          riskRating: String(f.attributes.RISK_RATNG ?? "") || null,
-          riskScore: (f.attributes.RISK_SCORE as number) ?? null,
-          socialVulnerability: (f.attributes.SOVI_SCORE as number) ?? null,
-          lat: (f.attributes.CENTROID_LAT as number) ?? 42.33,
-          lng: (f.attributes.CENTROID_LON as number) ?? -83.05,
-        }));
+          (
+            raw as {
+              features?: {
+                attributes: Record<string, unknown>;
+                centroid?: { x: number; y: number };
+              }[];
+            }
+          )?.features ?? [];
+        return features
+          .map((f, i) => ({
+            id: String(f.attributes.TRACTFIPS ?? i),
+            tractFips: String(f.attributes.TRACTFIPS ?? ""),
+            county: String(f.attributes.COUNTY ?? ""),
+            riskRating: String(f.attributes.RISK_RATNG ?? "") || null,
+            riskScore: (f.attributes.RISK_SCORE as number) ?? null,
+            socialVulnerability: (f.attributes.SOVI_SCORE as number) ?? null,
+            lat: f.centroid?.y ?? 0,
+            lng: f.centroid?.x ?? 0,
+          }))
+          .filter((t) => t.lat !== 0 && t.lng !== 0);
       }),
     enabled,
     staleTime: 7 * 24 * 60 * 60 * 1000,
