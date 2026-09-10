@@ -381,18 +381,26 @@ export function useNRITracts(enabled = true): {
     queryFn: () =>
       fetchCHNA<NRITract>("nri", (raw: unknown) => {
         const features =
-          (raw as { features?: { attributes: Record<string, unknown> }[] })
-            ?.features ?? [];
-        return features.map((f, i) => ({
-          id: String(f.attributes.OBJECTID ?? i),
-          tractFips: String(f.attributes.TRACTFIPS ?? ""),
-          county: String(f.attributes.COUNTY ?? ""),
-          riskRating: String(f.attributes.RISK_RATNG ?? "") || null,
-          riskScore: (f.attributes.RISK_SCORE as number) ?? null,
-          socialVulnerability: (f.attributes.SOVI_SCORE as number) ?? null,
-          lat: (f.attributes.CENTROID_LAT as number) ?? 42.33,
-          lng: (f.attributes.CENTROID_LON as number) ?? -83.05,
-        }));
+          (
+            raw as {
+              features?: {
+                attributes: Record<string, unknown>;
+                centroid?: { x: number; y: number };
+              }[];
+            }
+          )?.features ?? [];
+        return features
+          .map((f, i) => ({
+            id: String(f.attributes.TRACTFIPS ?? i),
+            tractFips: String(f.attributes.TRACTFIPS ?? ""),
+            county: String(f.attributes.COUNTY ?? ""),
+            riskRating: String(f.attributes.RISK_RATNG ?? "") || null,
+            riskScore: (f.attributes.RISK_SCORE as number) ?? null,
+            socialVulnerability: (f.attributes.SOVI_SCORE as number) ?? null,
+            lat: f.centroid?.y ?? 0,
+            lng: f.centroid?.x ?? 0,
+          }))
+          .filter((t) => t.lat !== 0 && t.lng !== 0);
       }),
     enabled,
     staleTime: 7 * 24 * 60 * 60 * 1000,
