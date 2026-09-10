@@ -244,22 +244,27 @@ export function useCSOOutfalls(enabled = true): {
             raw as {
               features?: {
                 attributes: Record<string, unknown>;
-                geometry?: { x: number; y: number };
+                geometry?: { paths?: number[][][] };
               }[];
             }
           )?.features ?? [];
-        return features.map((f, i) => ({
-          id: String(f.attributes.OBJECTID ?? i),
-          name: String(
-            f.attributes.FACILITY_NAME ??
-              f.attributes.PERMIT_ID ??
-              `Outfall ${i + 1}`,
-          ),
-          lat: f.geometry?.y ?? 0,
-          lng: f.geometry?.x ?? 0,
-          permitId: String(f.attributes.PERMIT_ID ?? ""),
-          waterBody: String(f.attributes.RECEIVING_WATER ?? ""),
-        }));
+        // EGLE publishes impacted surface waters as lines; place the marker at
+        // the midpoint of the affected stretch.
+        return features
+          .map((f, i) => {
+            const path = f.geometry?.paths?.[0] ?? [];
+            const mid = path[Math.floor(path.length / 2)] ?? [];
+            return {
+              id: String(f.attributes.OBJECTID ?? i),
+              name: String(
+                f.attributes.OriginatingFacility ?? `Outfall ${i + 1}`,
+              ),
+              lat: typeof mid[1] === "number" ? mid[1] : 0,
+              lng: typeof mid[0] === "number" ? mid[0] : 0,
+              waterBody: String(f.attributes.ReceivingWaters ?? ""),
+            };
+          })
+          .filter((o) => o.lat !== 0 && o.lng !== 0);
       }),
     enabled,
     staleTime: 24 * 60 * 60 * 1000,
