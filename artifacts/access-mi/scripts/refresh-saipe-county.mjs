@@ -13,16 +13,19 @@
  * every request without an API key ("Missing Key"), and the platform's
  * CENSUS_API_KEY is not usable, which is why the ACS county SDOH bundle
  * still sits in pending-ci. The SAIPE state-and-county release is a flat
- * public file on www2.census.gov with no key, no quota and the same
- * publisher, so these rows are a published federal figure - VERIFIED -
- * rather than a modeled stand-in.
+ * public file on www2.census.gov with no key and no quota, so these values
+ * are read verbatim from a published federal release rather than derived
+ * by this repo.
  *
- * SAIPE is itself a model-based estimate program; the values are the
- * Census Bureau's own published county estimates (with 90% confidence
- * bounds, carried through to provenance), not a figure this repo derives.
- * They are labelled VERIFIED in the same sense as any other published
- * federal county statistic, and the confidence interval is available per
- * value so a reader can see the uncertainty.
+ * SAIPE is itself a model-based small-area estimate program (the Bureau's
+ * own description, not this repo's judgment): it blends administrative
+ * records with ACS survey data through a statistical model rather than
+ * tabulating a census. That places it on the same footing as CDC/ATSDR
+ * SVI's ACS-derived inputs elsewhere on this platform, which are labeled
+ * MODELED - so these values are labeled MODELED too, not VERIFIED, for
+ * consistency across datasets built the same way. The 90% confidence
+ * bounds the Bureau publishes are carried through to provenance so a
+ * reader can see the uncertainty.
  *
  * Fixed-width fields per the SAIPE record layout, county rows:
  *   state FIPS, county FIPS,
@@ -85,6 +88,31 @@ const MEASURES = [
 
 const manifestEntries = [];
 const BUILD_ID = `refresh-saipe-county-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+
+/**
+ * Never regress a populated file to the pending-ci stub. dataset-refresh.yml
+ * runs this script with plain --apply and commits whatever changed, so a
+ * transient upstream failure (or an egress block, as in a sandboxed agent
+ * session - discovered 2026-09-10 when a routine value_label relabeling run
+ * silently produced an all-null stub) would otherwise replace real data
+ * with nulls. If the committed file already carries real values and this
+ * run could not fetch, exit non-zero and leave it untouched; the workflow
+ * reports the failure and the data stays at its last good pull. Mirrors
+ * refresh-cdc-svi-county.mjs's refuseToRegress.
+ */
+async function refuseToRegress(existingPath, reason) {
+  let existing = null;
+  try {
+    existing = JSON.parse(await readFile(existingPath, "utf8"));
+  } catch {
+    return; // no committed file yet - a stub is the honest first state
+  }
+  if (existing?.provenance?.populated === true) {
+    throw new Error(
+      `Refusing to overwrite a populated ${path.basename(existingPath)} with a pending-ci stub: ${reason}`,
+    );
+  }
+}
 
 async function loadMiCountyFips() {
   const src = await readFile(registryPath, "utf8");
@@ -265,7 +293,7 @@ export interface SaipeMeasure {
   id: SaipeMeasureId;
   label: string;
   unit: "percent" | "dollars";
-  value_label: "VERIFIED";
+  value_label: "MODELED";
 }
 
 export interface SaipeCountyRecord {
@@ -290,7 +318,7 @@ export interface SaipeProvenance {
   michigan_county_registry: string;
   michigan_county_registry_size: number;
   statewide: Record<string, number | null> | null;
-  value_label: "VERIFIED" | "PENDING";
+  value_label: "MODELED" | "PENDING";
   populated: boolean;
   pending_reason: string | null;
   notes: string;
@@ -366,6 +394,7 @@ async function main() {
     }
   }
   if (!populated) {
+    await refuseToRegress(outJsonPath, pendingReason);
     console.warn(`[refresh-saipe-county] ${pendingReason}`);
     records = buildStub(miFips, pendingReason);
   }
@@ -408,17 +437,17 @@ async function main() {
             medianHouseholdIncome: st.median_household_income,
           }
         : null,
-      value_label: populated ? "VERIFIED" : "PENDING",
+      value_label: populated ? "MODELED" : "PENDING",
       populated,
       pending_reason: pendingReason,
       notes:
-        "Values are the Census Bureau's published SAIPE county estimates read from the fixed-width state-and-county release; this repo performs no modelling and no rescaling. SAIPE is a model-based program, so each value ships with the Bureau's own 90% confidence bounds. No API key is used or required. A suppressed or unpublished cell becomes null, never zero.",
+        "Values are the Census Bureau's published SAIPE county estimates read from the fixed-width state-and-county release; this repo performs no modeling and no rescaling of its own. SAIPE is itself a model-based program, so each value ships with the Bureau's own 90% confidence bounds, and is labeled MODELED for consistency with this platform's other small-area statistical estimates (e.g. CDC/ATSDR SVI). No API key is used or required. A suppressed or unpublished cell becomes null, never zero.",
     },
     measures: MEASURES.map((m) => ({
       id: m.id,
       label: m.label,
       unit: m.unit,
-      value_label: "VERIFIED",
+      value_label: "MODELED",
     })),
     counties: records,
   };

@@ -14,35 +14,35 @@
       "schoolAgePovertyPct": 16.8,
       "medianHouseholdIncome": 72336
     },
-    "value_label": "VERIFIED",
+    "value_label": "MODELED",
     "populated": true,
     "pending_reason": null,
-    "notes": "Values are the Census Bureau's published SAIPE county estimates read from the fixed-width state-and-county release; this repo performs no modelling and no rescaling. SAIPE is a model-based program, so each value ships with the Bureau's own 90% confidence bounds. No API key is used or required. A suppressed or unpublished cell becomes null, never zero."
+    "notes": "Values are the Census Bureau's published SAIPE county estimates read from the fixed-width state-and-county release; this repo performs no modeling and no rescaling of its own. SAIPE is itself a model-based program, so each value ships with the Bureau's own 90% confidence bounds, and is labeled MODELED for consistency with this platform's other small-area statistical estimates (e.g. CDC/ATSDR SVI). No API key is used or required. A suppressed or unpublished cell becomes null, never zero."
   },
   "measures": [
     {
       "id": "povertyPct",
       "label": "Population below the poverty line (all ages)",
       "unit": "percent",
-      "value_label": "VERIFIED"
+      "value_label": "MODELED"
     },
     {
       "id": "childPovertyPct",
       "label": "Children under 18 below the poverty line",
       "unit": "percent",
-      "value_label": "VERIFIED"
+      "value_label": "MODELED"
     },
     {
       "id": "schoolAgePovertyPct",
       "label": "Children ages 5-17 in families below the poverty line",
       "unit": "percent",
-      "value_label": "VERIFIED"
+      "value_label": "MODELED"
     },
     {
       "id": "medianHouseholdIncome",
       "label": "Median household income",
       "unit": "dollars",
-      "value_label": "VERIFIED"
+      "value_label": "MODELED"
     }
   ],
   "counties": [

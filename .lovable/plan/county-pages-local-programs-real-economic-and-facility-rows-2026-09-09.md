@@ -55,3 +55,17 @@ Both feeds are populated, so the fix is presentation, not ingestion:
 ## Order
 
 Ingestors first (economic, facility breakdown), then the program directory and seeding, then the help page, then the presentation fixes.
+
+## Status as of 2026-09-10
+
+**Delivered:**
+- `/county/:slug/help` page, route, prerender entry, and sitemap generator coverage (83 counties).
+- Facility breakdown (hospitals / health center sites) on the county brief, extracted from the same CMS + HRSA extract.
+- SAIPE rows for median household income, poverty rate, and child poverty rate.
+- CDC/ATSDR SVI and NCHS provisional overdose presentation fixes: both rows always render, a withheld overdose count reads "fewer than 10 - withheld by NCHS" instead of 0 or "no data."
+
+**Not delivered:**
+- The county program directory from MSHDA, Michigan Community Action, MDHHS, and Feeding America, and the migration/seeding that was this plan's stated fix for the help panel reading statewide. `community_resources` and `financial_programs` were not populated by this batch; the help page falls back to its "no local program of this type is in the directory yet" state wherever those tables have no county-level row.
+- Labor force participation.
+- SAIPE's registration in `sourcesRegistry.ts` / `dataCatalog.ts` / `dataFreshness.ts` and a nightly refresh workflow entry - this batch shipped the dataset without any of the four, which broke the blocking CI `Integrity guards` step. Closed in a follow-up PR (2026-09-10).
+- Extending `scripts/check-county-facilities.mjs` to validate the new `breakdown` field - also closed in that follow-up PR.
