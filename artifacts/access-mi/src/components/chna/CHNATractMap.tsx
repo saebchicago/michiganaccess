@@ -196,6 +196,8 @@ interface LayerEntry {
   colorSwatch?: string;
   symbol?: string;
   statewide?: boolean;
+  /** True when the layer could not load any rows at all. */
+  empty?: boolean;
 }
 
 function CachedSampleBadge() {
@@ -207,6 +209,19 @@ function CachedSampleBadge() {
     >
       <AlertCircle className="h-2.5 w-2.5" aria-hidden="true" />
       cached sample
+    </span>
+  );
+}
+
+function UnavailableBadge() {
+  return (
+    <span
+      className="inline-flex items-center gap-1 rounded border border-muted-foreground/40 bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground"
+      role="status"
+      aria-label="This layer could not be loaded, so no locations are shown"
+    >
+      <AlertCircle className="h-2.5 w-2.5" aria-hidden="true" />
+      data unavailable
     </span>
   );
 }
