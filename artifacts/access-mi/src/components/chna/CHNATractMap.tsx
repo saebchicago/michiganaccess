@@ -271,7 +271,8 @@ function LegendEntry({
           </span>
           <IntegrityBadge label={entry.integrityLabel} />
           {entry.statewide && <StatewideBadge />}
-          {entry.dataMode === "fallback" && <CachedSampleBadge />}
+          {entry.dataMode === "fallback" &&
+            (entry.empty ? <UnavailableBadge /> : <CachedSampleBadge />)}
         </div>
         <p className="text-[10px] text-muted-foreground leading-tight">
           {entry.source} ({entry.vintage})
