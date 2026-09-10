@@ -321,16 +321,16 @@ export function usePFASSites(enabled = true): {
               }[];
             }
           )?.features ?? [];
-        return features.map((f, i) => ({
-          id: String(f.attributes.OBJECTID ?? i),
-          name: String(
-            f.attributes.SITE_NAME ?? f.attributes.NAME ?? `PFAS Site ${i + 1}`,
-          ),
-          lat: f.geometry?.y ?? 0,
-          lng: f.geometry?.x ?? 0,
-          siteType: String(f.attributes.SITE_TYPE ?? ""),
-          status: String(f.attributes.STATUS ?? ""),
-        }));
+        return features
+          .map((f, i) => ({
+            id: String(f.attributes.OBJECTID ?? i),
+            name: String(f.attributes.Name ?? `PFAS Site ${i + 1}`),
+            lat: f.geometry?.y ?? 0,
+            lng: f.geometry?.x ?? 0,
+            siteType: String(f.attributes.Type ?? ""),
+            status: String(f.attributes.SiteOrAoi ?? ""),
+          }))
+          .filter((s) => s.lat !== 0 && s.lng !== 0);
       }),
     enabled,
     staleTime: 24 * 60 * 60 * 1000,
