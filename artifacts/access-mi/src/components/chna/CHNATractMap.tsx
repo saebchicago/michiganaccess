@@ -205,7 +205,7 @@ function CachedSampleBadge() {
     <span
       className="inline-flex items-center gap-1 rounded border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-800"
       role="status"
-      aria-label="This layer is showing cached sample data, not a live federal response"
+      aria-label="This layer is showing cached sample data because the live feed did not respond"
     >
       <AlertCircle className="h-2.5 w-2.5" aria-hidden="true" />
       cached sample
@@ -483,7 +483,7 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
                 role="status"
               >
                 <AlertCircle className="h-3 w-3" aria-hidden="true" />
-                One or more layers are showing cached sample data
+                One or more layers could not load live data
               </span>
             )}
           </div>
@@ -523,9 +523,11 @@ export function CHNATractMap({ priorityId, domains }: CHNATractMapProps) {
             </li>
           </ul>
           <p>
-            A <strong>cached sample</strong> badge means a federal data service
-            did not respond and this layer is showing representative seed data,
-            not a live API result. No value is presented as live when it is not.
+            A <strong>data unavailable</strong> badge means a federal data
+            service did not respond and no markers are shown for that layer. A
+            <strong>cached sample</strong> badge means the live feed did not
+            respond and the layer is showing representative seed data instead.
+            No value is presented as live when it is not.
           </p>
           <p>
             Coverage is not uniform. PFAS and CSO data reflect known sites only;
