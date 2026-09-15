@@ -17,7 +17,7 @@
       "gt80le100ami: > 80% to <= 100% HAMFI",
       "gt100ami: > 100% HAMFI"
     ],
-    "ingested_at": "2026-09-08T12:11:48.581Z",
+    "ingested_at": "2026-09-15T12:44:15.783Z",
     "ingest_script": "scripts/refresh-hud-chas-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
