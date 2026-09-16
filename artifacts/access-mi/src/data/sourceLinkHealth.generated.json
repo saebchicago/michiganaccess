@@ -1,7 +1,7 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": "2026-09-09T17:12:29.783Z",
-  "checked": 73,
+  "generated_at": "2026-09-16T17:40:31.943Z",
+  "checked": 74,
   "dead": 11,
   "timed_out": 6,
   "redirected": 0,
@@ -176,7 +176,7 @@
     {
       "url": "https://michwa.org",
       "status": "ok",
-      "httpStatus": 202,
+      "httpStatus": 200,
       "finalUrl": "https://michwa.org/",
       "contexts": [
         "CHW programs surveyed across 93 orgs"
@@ -318,10 +318,20 @@
       ]
     },
     {
-      "url": "https://hazards.fema.gov/nri/",
+      "url": "https://www.census.gov/programs-surveys/saipe.html",
       "status": "ok",
       "httpStatus": 200,
-      "finalUrl": "https://www.fema.gov/emergency-managers/practitioners/resilience-analysis-and-planning-tool",
+      "finalUrl": null,
+      "contexts": [
+        "Census SAIPE County Estimates"
+      ]
+    },
+    {
+      "url": "https://hazards.fema.gov/nri/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "FEMA NRI"
       ]
@@ -529,10 +539,9 @@
     },
     {
       "url": "https://www.mischooldata.org/",
-      "status": "timeout",
-      "httpStatus": null,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
-      "error": "This operation was aborted",
       "contexts": [
         "Michigan Dept of Education"
       ]
