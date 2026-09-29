@@ -1,701 +1,701 @@
 {
   "schema": "sourceHealth.v1",
-  "generated_at": "2026-09-22T12:41:45.893Z",
+  "generated_at": "2026-09-29T14:09:19.181Z",
   "sources": {
     "bls-laus-county-batch-0": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:45.470Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:45.470Z",
+      "latest_retrieved_at": "2026-09-29T14:08:26.227Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:26.227Z",
       "invalid_reason": null
     },
     "bls-laus-county-batch-1": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:45.792Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:45.792Z",
+      "latest_retrieved_at": "2026-09-29T14:08:26.629Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:26.629Z",
       "invalid_reason": null
     },
     "bls-laus-county-batch-2": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:46.102Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:46.102Z",
+      "latest_retrieved_at": "2026-09-29T14:08:26.945Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:26.945Z",
       "invalid_reason": null
     },
     "bls-laus-county-batch-3": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:46.367Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:46.367Z",
+      "latest_retrieved_at": "2026-09-29T14:08:27.157Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:27.157Z",
       "invalid_reason": null
     },
     "cdc-places-county-metadata": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:41.409Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:41.409Z",
+      "latest_retrieved_at": "2026-09-29T14:08:19.137Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:19.137Z",
       "invalid_reason": null
     },
     "cdc-places-county-rows": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:41.978Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:41.978Z",
+      "latest_retrieved_at": "2026-09-29T14:08:19.338Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:19.338Z",
       "invalid_reason": null
     },
     "cdc-places-zcta-metadata": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:42.633Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:42.633Z",
+      "latest_retrieved_at": "2026-09-29T14:08:23.611Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:23.611Z",
       "invalid_reason": null
     },
     "cdc-places-zcta-chunk-0": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:43.382Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:43.382Z",
+      "latest_retrieved_at": "2026-09-29T14:08:24.182Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:24.182Z",
       "invalid_reason": null
     },
     "cdc-places-zcta-chunk-1": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:43.726Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:43.726Z",
+      "latest_retrieved_at": "2026-09-29T14:08:24.494Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:24.494Z",
       "invalid_reason": null
     },
     "cdc-places-zcta-chunk-2": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:44.229Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:44.229Z",
+      "latest_retrieved_at": "2026-09-29T14:08:24.904Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:24.904Z",
       "invalid_reason": null
     },
     "cdc-places-zcta-chunk-3": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:44.528Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:44.528Z",
+      "latest_retrieved_at": "2026-09-29T14:08:25.126Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:25.126Z",
       "invalid_reason": null
     },
     "cdc-places-zcta-chunk-4": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:44.770Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:44.770Z",
+      "latest_retrieved_at": "2026-09-29T14:08:25.404Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:25.404Z",
       "invalid_reason": null
     },
     "cdc-svi-county-2022": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:07.208Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:07.208Z",
+      "latest_retrieved_at": "2026-09-29T14:08:46.340Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:46.340Z",
       "invalid_reason": null
     },
     "chr-county-health-pcp-2025": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:55.299Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:55.299Z",
+      "latest_retrieved_at": "2026-09-29T14:08:36.503Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:36.503Z",
       "invalid_reason": null
     },
     "chr-county-health-uninsured-2025": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:55.303Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:55.303Z",
+      "latest_retrieved_at": "2026-09-29T14:08:36.509Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:36.509Z",
       "invalid_reason": null
     },
     "chr-county-health-food-2025": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:55.319Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:55.319Z",
+      "latest_retrieved_at": "2026-09-29T14:08:36.519Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:36.519Z",
       "invalid_reason": null
     },
     "nhtsa-fars-2020": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:55.931Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:55.931Z",
+      "latest_retrieved_at": "2026-09-29T14:08:36.963Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:36.963Z",
       "invalid_reason": null
     },
     "nhtsa-fars-2021": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:57.142Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:57.142Z",
+      "latest_retrieved_at": "2026-09-29T14:08:38.173Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:38.173Z",
       "invalid_reason": null
     },
     "nhtsa-fars-2022": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:58.123Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:58.123Z",
+      "latest_retrieved_at": "2026-09-29T14:08:39.253Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:39.253Z",
       "invalid_reason": null
     },
     "nhtsa-fars-2023": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:59.350Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:59.350Z",
+      "latest_retrieved_at": "2026-09-29T14:08:40.380Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:40.380Z",
       "invalid_reason": null
     },
     "nhtsa-fars-2024": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:00.747Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:00.747Z",
+      "latest_retrieved_at": "2026-09-29T14:08:41.283Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:41.283Z",
       "invalid_reason": null
     },
     "hrsa-hpsa-primarycare-county": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:49.656Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:49.656Z",
+      "latest_retrieved_at": "2026-09-29T14:08:30.769Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:30.769Z",
       "invalid_reason": null
     },
     "hrsa-hpsa-dental-county": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:52.260Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:52.260Z",
+      "latest_retrieved_at": "2026-09-29T14:08:33.887Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:33.887Z",
       "invalid_reason": null
     },
     "hrsa-hpsa-mental-county": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:53.793Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:53.793Z",
+      "latest_retrieved_at": "2026-09-29T14:08:35.211Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:35.211Z",
       "invalid_reason": null
     },
     "hud-chas-county-2018thru2022": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:06.291Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:06.291Z",
+      "latest_retrieved_at": "2026-09-29T14:08:45.676Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:45.676Z",
       "invalid_reason": null
     },
     "census-zcta-county-relationship-2020": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:40.246Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:40.246Z",
+      "latest_retrieved_at": "2026-09-29T14:08:17.838Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:17.838Z",
       "invalid_reason": null
     },
     "nchs-overdose-county-metadata": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:07.766Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:07.766Z",
+      "latest_retrieved_at": "2026-09-29T14:08:46.732Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:46.732Z",
       "invalid_reason": null
     },
     "nchs-overdose-county-rows": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:10.640Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:10.640Z",
+      "latest_retrieved_at": "2026-09-29T14:08:47.204Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:47.204Z",
       "invalid_reason": null
     },
     "census-saipe-mi-2025": {
       "latest_valid": false,
-      "latest_retrieved_at": "2026-09-22T12:41:45.798Z",
+      "latest_retrieved_at": "2026-09-29T14:09:19.061Z",
       "last_valid_retrieved_at": null,
       "invalid_reason": "HTTP 404"
     },
     "census-saipe-mi-2024": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:45.824Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:45.824Z",
+      "latest_retrieved_at": "2026-09-29T14:09:19.102Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:19.102Z",
       "invalid_reason": null
     },
     "usda-snap-retailer-locator": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:03.160Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:03.160Z",
+      "latest_retrieved_at": "2026-09-29T14:08:43.454Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:43.454Z",
       "invalid_reason": null
     },
     "usaspending-county-totals": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:16.139Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:16.139Z",
+      "latest_retrieved_at": "2026-09-29T14:08:51.948Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:51.948Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26001": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:16.896Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:16.896Z",
+      "latest_retrieved_at": "2026-09-29T14:08:52.791Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:52.791Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26003": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:17.502Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:17.502Z",
+      "latest_retrieved_at": "2026-09-29T14:08:53.255Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:53.255Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26005": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:19.004Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:19.004Z",
+      "latest_retrieved_at": "2026-09-29T14:08:53.866Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:53.866Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26007": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:19.418Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:19.418Z",
+      "latest_retrieved_at": "2026-09-29T14:08:54.348Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:54.348Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26009": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:19.795Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:19.795Z",
+      "latest_retrieved_at": "2026-09-29T14:08:54.747Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:54.747Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26011": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:20.203Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:20.203Z",
+      "latest_retrieved_at": "2026-09-29T14:08:55.026Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:55.026Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26013": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:20.750Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:20.750Z",
+      "latest_retrieved_at": "2026-09-29T14:08:55.317Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:55.317Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26015": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:21.257Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:21.257Z",
+      "latest_retrieved_at": "2026-09-29T14:08:55.630Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:55.630Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26017": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:21.961Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:21.961Z",
+      "latest_retrieved_at": "2026-09-29T14:08:55.977Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:55.977Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26019": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:22.419Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:22.419Z",
+      "latest_retrieved_at": "2026-09-29T14:08:56.281Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:56.281Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26021": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:22.895Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:22.895Z",
+      "latest_retrieved_at": "2026-09-29T14:08:56.584Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:56.584Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26023": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:23.256Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:23.256Z",
+      "latest_retrieved_at": "2026-09-29T14:08:56.912Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:56.912Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26025": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:23.672Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:23.672Z",
+      "latest_retrieved_at": "2026-09-29T14:08:57.207Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:57.207Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26027": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:23.976Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:23.976Z",
+      "latest_retrieved_at": "2026-09-29T14:08:57.483Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:57.483Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26029": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:24.209Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:24.209Z",
+      "latest_retrieved_at": "2026-09-29T14:08:57.756Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:57.756Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26031": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:24.505Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:24.505Z",
+      "latest_retrieved_at": "2026-09-29T14:08:58.028Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:58.028Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26033": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:24.813Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:24.813Z",
+      "latest_retrieved_at": "2026-09-29T14:08:58.354Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:58.354Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26035": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:25.062Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:25.062Z",
+      "latest_retrieved_at": "2026-09-29T14:08:58.618Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:58.618Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26037": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:25.423Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:25.423Z",
+      "latest_retrieved_at": "2026-09-29T14:08:58.973Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:58.973Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26039": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:25.623Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:25.623Z",
+      "latest_retrieved_at": "2026-09-29T14:08:59.215Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:59.215Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26041": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:25.925Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:25.925Z",
+      "latest_retrieved_at": "2026-09-29T14:08:59.468Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:59.468Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26043": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:26.158Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:26.158Z",
+      "latest_retrieved_at": "2026-09-29T14:08:59.822Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:59.822Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26045": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:26.628Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:26.628Z",
+      "latest_retrieved_at": "2026-09-29T14:09:00.148Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:00.148Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26047": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:26.971Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:26.971Z",
+      "latest_retrieved_at": "2026-09-29T14:09:00.426Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:00.426Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26049": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:27.426Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:27.426Z",
+      "latest_retrieved_at": "2026-09-29T14:09:00.766Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:00.766Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26051": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:27.726Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:27.726Z",
+      "latest_retrieved_at": "2026-09-29T14:09:01.051Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:01.051Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26053": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:28.104Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:28.104Z",
+      "latest_retrieved_at": "2026-09-29T14:09:01.329Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:01.329Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26055": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:28.971Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:28.971Z",
+      "latest_retrieved_at": "2026-09-29T14:09:01.573Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:01.573Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26057": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:29.307Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:29.307Z",
+      "latest_retrieved_at": "2026-09-29T14:09:02.014Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:02.014Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26059": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:29.676Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:29.676Z",
+      "latest_retrieved_at": "2026-09-29T14:09:02.561Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:02.561Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26061": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:29.943Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:29.943Z",
+      "latest_retrieved_at": "2026-09-29T14:09:03.007Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:03.007Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26063": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:30.241Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:30.241Z",
+      "latest_retrieved_at": "2026-09-29T14:09:03.313Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:03.313Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26065": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:30.703Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:30.703Z",
+      "latest_retrieved_at": "2026-09-29T14:09:03.783Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:03.783Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26067": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:30.938Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:30.938Z",
+      "latest_retrieved_at": "2026-09-29T14:09:04.109Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:04.109Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26069": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:31.200Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:31.200Z",
+      "latest_retrieved_at": "2026-09-29T14:09:04.369Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:04.369Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26071": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:31.555Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:31.555Z",
+      "latest_retrieved_at": "2026-09-29T14:09:04.620Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:04.620Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26073": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:31.920Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:31.920Z",
+      "latest_retrieved_at": "2026-09-29T14:09:04.913Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:04.913Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26075": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:32.195Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:32.195Z",
+      "latest_retrieved_at": "2026-09-29T14:09:05.175Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:05.175Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26077": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:32.469Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:32.469Z",
+      "latest_retrieved_at": "2026-09-29T14:09:05.416Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:05.416Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26079": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:32.684Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:32.684Z",
+      "latest_retrieved_at": "2026-09-29T14:09:05.663Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:05.663Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26081": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:33.041Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:33.041Z",
+      "latest_retrieved_at": "2026-09-29T14:09:06.000Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:06.000Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26083": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:33.241Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:33.241Z",
+      "latest_retrieved_at": "2026-09-29T14:09:06.238Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:06.238Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26085": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:33.469Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:33.469Z",
+      "latest_retrieved_at": "2026-09-29T14:09:06.467Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:06.467Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26087": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:33.668Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:33.668Z",
+      "latest_retrieved_at": "2026-09-29T14:09:06.741Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:06.741Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26089": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:33.926Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:33.926Z",
+      "latest_retrieved_at": "2026-09-29T14:09:07.000Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:07.000Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26091": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:34.194Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:34.194Z",
+      "latest_retrieved_at": "2026-09-29T14:09:07.325Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:07.325Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26093": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:34.427Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:34.427Z",
+      "latest_retrieved_at": "2026-09-29T14:09:07.595Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:07.595Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26095": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:34.735Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:34.735Z",
+      "latest_retrieved_at": "2026-09-29T14:09:07.887Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:07.887Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26097": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:34.922Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:34.922Z",
+      "latest_retrieved_at": "2026-09-29T14:09:08.336Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:08.336Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26099": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:35.477Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:35.477Z",
+      "latest_retrieved_at": "2026-09-29T14:09:08.743Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:08.743Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26101": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:35.703Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:35.703Z",
+      "latest_retrieved_at": "2026-09-29T14:09:08.987Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:08.987Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26103": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:35.941Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:35.941Z",
+      "latest_retrieved_at": "2026-09-29T14:09:09.273Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:09.273Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26105": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:36.213Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:36.213Z",
+      "latest_retrieved_at": "2026-09-29T14:09:09.506Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:09.506Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26107": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:36.478Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:36.478Z",
+      "latest_retrieved_at": "2026-09-29T14:09:09.775Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:09.775Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26109": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:36.704Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:36.704Z",
+      "latest_retrieved_at": "2026-09-29T14:09:10.474Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:10.474Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26111": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:37.049Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:37.049Z",
+      "latest_retrieved_at": "2026-09-29T14:09:10.766Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:10.766Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26113": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:37.289Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:37.289Z",
+      "latest_retrieved_at": "2026-09-29T14:09:11.035Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:11.035Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26115": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:37.499Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:37.499Z",
+      "latest_retrieved_at": "2026-09-29T14:09:11.304Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:11.304Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26117": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:37.709Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:37.709Z",
+      "latest_retrieved_at": "2026-09-29T14:09:11.573Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:11.573Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26119": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:37.957Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:37.957Z",
+      "latest_retrieved_at": "2026-09-29T14:09:11.821Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:11.821Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26121": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:38.190Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:38.190Z",
+      "latest_retrieved_at": "2026-09-29T14:09:12.104Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:12.104Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26123": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:38.435Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:38.435Z",
+      "latest_retrieved_at": "2026-09-29T14:09:12.330Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:12.330Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26125": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:39.108Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:39.108Z",
+      "latest_retrieved_at": "2026-09-29T14:09:13.008Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:13.008Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26127": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:39.369Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:39.369Z",
+      "latest_retrieved_at": "2026-09-29T14:09:13.247Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:13.247Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26129": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:39.591Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:39.591Z",
+      "latest_retrieved_at": "2026-09-29T14:09:13.499Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:13.499Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26131": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:39.779Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:39.779Z",
+      "latest_retrieved_at": "2026-09-29T14:09:13.732Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:13.732Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26133": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:39.992Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:39.992Z",
+      "latest_retrieved_at": "2026-09-29T14:09:13.961Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:13.961Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26135": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:40.170Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:40.170Z",
+      "latest_retrieved_at": "2026-09-29T14:09:14.202Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:14.202Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26137": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:40.357Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:40.357Z",
+      "latest_retrieved_at": "2026-09-29T14:09:14.429Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:14.429Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26139": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:40.590Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:40.590Z",
+      "latest_retrieved_at": "2026-09-29T14:09:14.713Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:14.713Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26141": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:40.780Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:40.780Z",
+      "latest_retrieved_at": "2026-09-29T14:09:15.001Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:15.001Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26143": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:40.979Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:40.979Z",
+      "latest_retrieved_at": "2026-09-29T14:09:15.228Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:15.228Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26145": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:41.293Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:41.293Z",
+      "latest_retrieved_at": "2026-09-29T14:09:15.503Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:15.503Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26151": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:41.548Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:41.548Z",
+      "latest_retrieved_at": "2026-09-29T14:09:15.793Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:15.793Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26153": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:41.740Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:41.740Z",
+      "latest_retrieved_at": "2026-09-29T14:09:16.018Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:16.018Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26155": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:41.953Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:41.953Z",
+      "latest_retrieved_at": "2026-09-29T14:09:16.284Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:16.284Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26147": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:42.161Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:42.161Z",
+      "latest_retrieved_at": "2026-09-29T14:09:16.553Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:16.553Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26149": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:42.373Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:42.373Z",
+      "latest_retrieved_at": "2026-09-29T14:09:16.805Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:16.805Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26157": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:42.808Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:42.808Z",
+      "latest_retrieved_at": "2026-09-29T14:09:17.139Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:17.139Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26159": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:43.015Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:43.015Z",
+      "latest_retrieved_at": "2026-09-29T14:09:17.400Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:17.400Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26161": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:44.123Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:44.123Z",
+      "latest_retrieved_at": "2026-09-29T14:09:18.020Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:18.020Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26163": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:44.748Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:44.748Z",
+      "latest_retrieved_at": "2026-09-29T14:09:18.515Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:18.515Z",
       "invalid_reason": null
     },
     "usaspending-cfda-26165": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:41:45.002Z",
-      "last_valid_retrieved_at": "2026-09-22T12:41:45.002Z",
+      "latest_retrieved_at": "2026-09-29T14:09:18.756Z",
+      "last_valid_retrieved_at": "2026-09-29T14:09:18.756Z",
       "invalid_reason": null
     },
     "census-zcta-county-crosswalk-2020": {
       "latest_valid": true,
-      "latest_retrieved_at": "2026-09-22T12:40:40.622Z",
-      "last_valid_retrieved_at": "2026-09-22T12:40:40.622Z",
+      "latest_retrieved_at": "2026-09-29T14:08:18.420Z",
+      "last_valid_retrieved_at": "2026-09-29T14:08:18.420Z",
       "invalid_reason": null
     }
   }

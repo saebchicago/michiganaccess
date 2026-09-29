@@ -10,7 +10,7 @@
       2020
     ],
     "ranking_universe": "United States counties (RPL_* percentile ranks, 0 = least vulnerable, 1 = most)",
-    "ingested_at": "2026-09-22T12:41:07.216Z",
+    "ingested_at": "2026-09-29T14:08:46.347Z",
     "ingest_script": "scripts/refresh-cdc-svi-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
