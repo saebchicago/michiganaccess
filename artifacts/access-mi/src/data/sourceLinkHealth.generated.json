@@ -1,9 +1,9 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": "2026-09-23T17:53:38.773Z",
+  "generated_at": "2026-09-30T18:30:03.214Z",
   "checked": 74,
-  "dead": 11,
-  "timed_out": 5,
+  "dead": 10,
+  "timed_out": 8,
   "redirected": 0,
   "results": [
     {
@@ -112,9 +112,10 @@
     },
     {
       "url": "https://ruralhospitals.chqpr.org",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://ruralhospitals.chqpr.org/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "At-risk rural hospitals (5 immediate risk)"
       ]
@@ -176,7 +177,7 @@
     {
       "url": "https://michwa.org",
       "status": "ok",
-      "httpStatus": 200,
+      "httpStatus": 202,
       "finalUrl": "https://michwa.org/",
       "contexts": [
         "CHW programs surveyed across 93 orgs"
@@ -393,9 +394,10 @@
     },
     {
       "url": "https://www.irs.gov/statistics/soi-tax-stats",
-      "status": "client-error",
-      "httpStatus": 404,
+      "status": "timeout",
+      "httpStatus": null,
       "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "IRS Statistics of Income"
       ]
@@ -430,9 +432,10 @@
     },
     {
       "url": "https://www.fema.gov/about/openfema/data-sets",
-      "status": "ok",
-      "httpStatus": 200,
+      "status": "timeout",
+      "httpStatus": null,
       "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "FEMA National Flood Insurance Program"
       ]
