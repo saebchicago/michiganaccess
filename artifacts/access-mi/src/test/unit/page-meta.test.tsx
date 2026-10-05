@@ -96,7 +96,7 @@ describe("normalizeAccessMiJsonLd", () => {
       name: "Wayne County Health & Community Resources",
       url: `${BASE_URL}/county/wayne`,
       isPartOf: { "@type": "WebSite", name: "Access Michigan" },
-      creator: { "@type": "Person", name: "Saeb A. Ahsan" },
+      creator: { "@type": "Person", name: "Saeb Ahsan" },
       about: {
         "@type": "AdministrativeArea",
         name: "Wayne County, Michigan",

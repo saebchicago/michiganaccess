@@ -27,7 +27,7 @@ const HOME_DESCRIPTION =
 
 const creator = {
   "@type": "Person",
-  name: "Saeb A. Ahsan",
+  name: "Saeb Ahsan",
   url: "https://michigans.me",
 };
 

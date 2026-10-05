@@ -22,7 +22,7 @@ const ACCESS_MI_PROJECT_DESCRIPTION =
   "Independent Michigan civic-intelligence project; not a government agency, health system, benefits administrator, or 211 provider.";
 const ACCESS_MI_CREATOR = {
   "@type": "Person",
-  name: "Saeb A. Ahsan",
+  name: "Saeb Ahsan",
   url: "https://michigans.me",
 };
 const ACCESS_MI_WEBSITE = {
