@@ -762,7 +762,7 @@ const Index = () => {
   const [mode, setMode] = useState<PersonaView>("resident");
 
   usePageMeta({
-    title: "AccessMI - Civic intelligence for every Michigan community",
+    title: "Civic intelligence for every Michigan community | Access Michigan",
     description:
       "Benefits, care, closures, and community risk across Michigan. Every number traced to a primary federal or state source.",
     path: "/",

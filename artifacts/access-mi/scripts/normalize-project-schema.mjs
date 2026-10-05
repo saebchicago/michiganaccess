@@ -21,7 +21,7 @@ const homePath = path.join(distDir, "index.html");
 const SITE_URL = "https://accessmi.org";
 const PROJECT_DESCRIPTION =
   "Independent Michigan civic-intelligence project and public-data journal; not a government agency, health system, benefits administrator, or 211 provider.";
-const HOME_TITLE = "AccessMI - Civic intelligence for every Michigan community";
+const HOME_TITLE = "Civic intelligence for every Michigan community | Access Michigan";
 const HOME_DESCRIPTION =
   "AccessMI is an independent Michigan civic-intelligence project and public-data journal organizing sourced local data and service-navigation context across all 83 counties.";
 
