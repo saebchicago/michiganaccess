@@ -9,15 +9,15 @@
     "acs-broadband-county.generated.json": "2026-08-24",
     "acs-sdoh-county.generated.json": "2026-09-02",
     "alice-county.generated.json": "2026-08-30",
-    "bls-laus-county.generated.json": "2026-10-06",
-    "cdc-places-county.generated.json": "2026-10-06",
-    "cdc-places-zcta.generated.json": "2026-10-06",
-    "cdc-svi-county.generated.json": "2026-10-06",
-    "hrsa-hpsa-county.generated.json": "2026-10-06",
-    "hud-chas-county.generated.json": "2026-10-06",
+    "bls-laus-county.generated.json": "2026-10-13",
+    "cdc-places-county.generated.json": "2026-10-13",
+    "cdc-places-zcta.generated.json": "2026-10-13",
+    "cdc-svi-county.generated.json": "2026-10-13",
+    "hrsa-hpsa-county.generated.json": "2026-10-13",
+    "hud-chas-county.generated.json": "2026-10-13",
     "mde-county.generated.json": "2026-09-02",
-    "nchs-overdose-county.generated.json": "2026-10-06",
-    "saipe-county.generated.json": "2026-10-06",
-    "usaspending-county.generated.json": "2026-10-06"
+    "nchs-overdose-county.generated.json": "2026-10-13",
+    "saipe-county.generated.json": "2026-10-13",
+    "usaspending-county.generated.json": "2026-10-13"
   }
 }
