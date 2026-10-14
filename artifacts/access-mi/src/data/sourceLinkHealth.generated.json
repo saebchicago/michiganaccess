@@ -1,9 +1,9 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": "2026-09-30T18:30:03.214Z",
+  "generated_at": "2026-10-14T18:05:45.923Z",
   "checked": 74,
-  "dead": 10,
-  "timed_out": 8,
+  "dead": 11,
+  "timed_out": 14,
   "redirected": 0,
   "results": [
     {
@@ -36,19 +36,20 @@
     },
     {
       "url": "https://flexmonitoring.org",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.flexmonitoring.org/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Critical Access Hospitals in Michigan"
       ]
     },
     {
       "url": "https://liheapch.acf.hhs.gov",
-      "status": "network-error",
+      "status": "timeout",
       "httpStatus": null,
       "finalUrl": null,
-      "error": "fetch failed",
+      "error": "This operation was aborted",
       "contexts": [
         "LIHEAP allocation Michigan"
       ]
@@ -83,9 +84,10 @@
     },
     {
       "url": "https://marchofdimes.org/peristats",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.marchofdimes.org/peristats/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Counties that are full maternity care deserts (21.7%)"
       ]
@@ -112,10 +114,9 @@
     },
     {
       "url": "https://ruralhospitals.chqpr.org",
-      "status": "timeout",
-      "httpStatus": null,
-      "finalUrl": null,
-      "error": "This operation was aborted",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://ruralhospitals.chqpr.org/",
       "contexts": [
         "At-risk rural hospitals (5 immediate risk)"
       ]
@@ -140,9 +141,10 @@
     },
     {
       "url": "https://feedingamerica.org",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.feedingamerica.org/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Food insecure Michigan residents"
       ]
@@ -158,18 +160,20 @@
     },
     {
       "url": "https://bread.org",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.bread.org/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Annual hunger cost Michigan"
       ]
     },
     {
       "url": "https://healthmanagement.com",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.healthmanagement.com/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Total MCO enrollment Mar 2025"
       ]
@@ -177,7 +181,7 @@
     {
       "url": "https://michwa.org",
       "status": "ok",
-      "httpStatus": 202,
+      "httpStatus": 200,
       "finalUrl": "https://michwa.org/",
       "contexts": [
         "CHW programs surveyed across 93 orgs"
@@ -185,18 +189,20 @@
     },
     {
       "url": "https://michigan.gov/flintwater",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.michigan.gov/flintwater",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Flint lead lines replaced (~11,000)"
       ]
     },
     {
       "url": "https://rxkids.org",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://rxkids.org/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Rx Kids enrollment take-up rate"
       ]
@@ -329,10 +335,9 @@
     },
     {
       "url": "https://hazards.fema.gov/nri/",
-      "status": "network-error",
-      "httpStatus": null,
-      "finalUrl": null,
-      "error": "fetch failed",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.fema.gov/emergency-managers/practitioners/resilience-analysis-and-planning-tool",
       "contexts": [
         "FEMA NRI"
       ]
@@ -394,10 +399,9 @@
     },
     {
       "url": "https://www.irs.gov/statistics/soi-tax-stats",
-      "status": "timeout",
-      "httpStatus": null,
+      "status": "client-error",
+      "httpStatus": 404,
       "finalUrl": null,
-      "error": "This operation was aborted",
       "contexts": [
         "IRS Statistics of Income"
       ]
@@ -432,10 +436,9 @@
     },
     {
       "url": "https://www.fema.gov/about/openfema/data-sets",
-      "status": "timeout",
-      "httpStatus": null,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
-      "error": "This operation was aborted",
       "contexts": [
         "FEMA National Flood Insurance Program"
       ]
@@ -641,9 +644,10 @@
     },
     {
       "url": "https://nationoutside.org",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.nationoutside.org/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Nation Outside"
       ]
@@ -659,9 +663,10 @@
     },
     {
       "url": "https://www.aceee.org/research-report/u2006",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.aceee.org/resource/u2006/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "ACEEE Energy Burden Research"
       ]
@@ -677,9 +682,10 @@
     },
     {
       "url": "https://mi-suddr.com/resources-2",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://mi-suddr.com/resources-2/",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "MI-SUDDR"
       ]
