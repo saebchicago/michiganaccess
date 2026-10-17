@@ -76,6 +76,38 @@ describe("Claims anchor guard  -  VERIFIED rows", () => {
     expect(init).toContain('gtag("config", "G-367X8MQ1F6")');
   });
 
+  // V-4b: first-party analytics is installed through the same-origin /_ah/
+  // proxy, so script-src 'self' and connect-src 'self' cover it and the CSP
+  // is not widened. The proxy rules must sit above the SPA catch-all
+  // (Netlify evaluates redirects top-down, first match wins).
+  it("V-4b: Analytics Hub tag is same-origin and its proxy rules precede the SPA fallback", () => {
+    const html = read("index.html");
+    expect(html).toContain(
+      '<script defer src="/_ah/t.js" data-endpoint="/_ah/c"></script>',
+    );
+    const toml = readFileSync(resolve(root, "../../netlify.toml"), "utf8");
+    const iScript = toml.indexOf('from = "/_ah/t.js"');
+    const iCollect = toml.indexOf('from = "/_ah/c"');
+    const iSpa = toml.indexOf('from = "/*"');
+    expect(iScript).toBeGreaterThan(-1);
+    expect(iCollect).toBeGreaterThan(-1);
+    expect(iSpa).toBeGreaterThan(iCollect);
+    expect(iCollect).toBeGreaterThan(iScript);
+    expect(toml).toContain(
+      'to = "https://saeb-analytics-hub.lovable.app/tracker.js"',
+    );
+    expect(toml).toContain(
+      'to = "https://saeb-analytics-hub.lovable.app/api/public/collect"',
+    );
+    expect(toml.match(/force = true/g)?.length).toBe(2);
+    // CSP must stay unwidened: no analytics-hub host in any header.
+    const headerLines = toml
+      .split("\n")
+      .filter((l) => l.includes("Content-Security-Policy"));
+    expect(headerLines.length).toBeGreaterThan(0);
+    for (const l of headerLines) expect(l).not.toContain("lovable.app");
+  });
+
   // V-5: No ad network scripts in index.html
   it("V-5: index.html contains no ad-network script tags", () => {
     const src = read("index.html");
