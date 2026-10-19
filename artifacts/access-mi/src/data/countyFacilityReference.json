@@ -13,19 +13,19 @@
       {
         "name": "HRSA Health Center Service Delivery and Look-Alike Sites",
         "url": "https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv",
-        "mi_rows": 465,
+        "mi_rows": 460,
         "filter": "Site State Abbreviation == MI AND Site Status Description == Active AND Health Center Type Description in ('Service Delivery Site','Administrative/Service Delivery Site')",
         "dedupe_key": "FQHC Site NPI Number (preferred); BHCMIS Org # + Site Address + Site Name (fallback when NPI missing)"
       }
     ],
-    "fetched_at": "2026-09-09T22:50:57.797Z",
+    "fetched_at": "2026-10-19T17:24:23.865Z",
     "transform_script": "scripts/build-facility-dataset.mjs",
     "counties_covered": 82,
     "counties_total": 83,
     "expected_zero_counties": [
       "Keweenaw"
     ],
-    "mi_total": 614,
+    "mi_total": 609,
     "note": "Per-county counts derived from the same extract as verifiedHealthFacilities.json. The build-time guard (scripts/check-county-facilities.mjs) fails if the seed file drops below these counts."
   },
   "counts": {
@@ -45,7 +45,7 @@
     "Cass": 5,
     "Charlevoix": 2,
     "Cheboygan": 10,
-    "Chippewa": 9,
+    "Chippewa": 10,
     "Clare": 3,
     "Clinton": 2,
     "Crawford": 1,
@@ -54,7 +54,7 @@
     "Eaton": 2,
     "Emmet": 11,
     "Genesee": 16,
-    "Gladwin": 4,
+    "Gladwin": 3,
     "Gogebic": 1,
     "Grand Traverse": 5,
     "Gratiot": 8,
@@ -79,7 +79,7 @@
     "Luce": 1,
     "Mackinac": 1,
     "Macomb": 13,
-    "Manistee": 6,
+    "Manistee": 2,
     "Marquette": 5,
     "Mason": 2,
     "Mecosta": 4,
@@ -109,7 +109,7 @@
     "Shiawassee": 3,
     "Tuscola": 3,
     "Van Buren": 4,
-    "Washtenaw": 13,
+    "Washtenaw": 12,
     "Wayne": 91,
     "Wexford": 3
   },
@@ -180,7 +180,7 @@
     },
     "Chippewa": {
       "hospital": 1,
-      "fqhc": 8
+      "fqhc": 9
     },
     "Clare": {
       "hospital": 1,
@@ -216,7 +216,7 @@
     },
     "Gladwin": {
       "hospital": 1,
-      "fqhc": 3
+      "fqhc": 2
     },
     "Gogebic": {
       "hospital": 1,
@@ -316,7 +316,7 @@
     },
     "Manistee": {
       "hospital": 1,
-      "fqhc": 5
+      "fqhc": 1
     },
     "Marquette": {
       "hospital": 2,
@@ -436,7 +436,7 @@
     },
     "Washtenaw": {
       "hospital": 6,
-      "fqhc": 7
+      "fqhc": 6
     },
     "Wayne": {
       "hospital": 21,
