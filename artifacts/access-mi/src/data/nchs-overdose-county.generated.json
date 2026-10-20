@@ -5,8 +5,8 @@
     "dataset_id": "gb4e-yj24",
     "dataset_title": "VSRR Provisional County-Level Drug Overdose Death Counts",
     "socrata_metadata_url": "https://data.cdc.gov/api/views/gb4e-yj24.json",
-    "socrata_rows_updated_at": "2026-07-15T14:01:54.000Z",
-    "period_ending": "2025-12",
+    "socrata_rows_updated_at": "2026-10-14T14:04:20.000Z",
+    "period_ending": "2026-03",
     "period_definition": "12-month-ending count for the month shown (provisional)",
     "resolved_fields": {
       "state": "st_abbrev",
@@ -15,7 +15,7 @@
       "month": "month",
       "deaths": "provisional_drug_overdose"
     },
-    "ingested_at": "2026-10-13T15:08:04.288Z",
+    "ingested_at": "2026-10-20T12:47:50.680Z",
     "ingest_script": "scripts/refresh-nchs-overdose-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
@@ -56,8 +56,8 @@
     {
       "countyFips": "26009",
       "countyName": "Antrim",
-      "status": "suppressed",
-      "provisionalDeaths12mo": null,
+      "status": "populated",
+      "provisionalDeaths12mo": 0,
       "pendingReason": null
     },
     {
@@ -85,7 +85,7 @@
       "countyFips": "26017",
       "countyName": "Bay",
       "status": "populated",
-      "provisionalDeaths12mo": 17,
+      "provisionalDeaths12mo": 21,
       "pendingReason": null
     },
     {
@@ -113,7 +113,7 @@
       "countyFips": "26025",
       "countyName": "Calhoun",
       "status": "populated",
-      "provisionalDeaths12mo": 27,
+      "provisionalDeaths12mo": 26,
       "pendingReason": null
     },
     {
@@ -126,8 +126,8 @@
     {
       "countyFips": "26029",
       "countyName": "Charlevoix",
-      "status": "suppressed",
-      "provisionalDeaths12mo": null,
+      "status": "populated",
+      "provisionalDeaths12mo": 0,
       "pendingReason": null
     },
     {
@@ -183,7 +183,7 @@
       "countyFips": "26045",
       "countyName": "Eaton",
       "status": "populated",
-      "provisionalDeaths12mo": 19,
+      "provisionalDeaths12mo": 18,
       "pendingReason": null
     },
     {
@@ -197,7 +197,7 @@
       "countyFips": "26049",
       "countyName": "Genesee",
       "status": "populated",
-      "provisionalDeaths12mo": 131,
+      "provisionalDeaths12mo": 122,
       "pendingReason": null
     },
     {
@@ -218,7 +218,7 @@
       "countyFips": "26055",
       "countyName": "Grand Traverse",
       "status": "populated",
-      "provisionalDeaths12mo": 16,
+      "provisionalDeaths12mo": 13,
       "pendingReason": null
     },
     {
@@ -253,7 +253,7 @@
       "countyFips": "26065",
       "countyName": "Ingham",
       "status": "populated",
-      "provisionalDeaths12mo": 60,
+      "provisionalDeaths12mo": 61,
       "pendingReason": null
     },
     {
@@ -288,7 +288,7 @@
       "countyFips": "26075",
       "countyName": "Jackson",
       "status": "populated",
-      "provisionalDeaths12mo": 31,
+      "provisionalDeaths12mo": 33,
       "pendingReason": null
     },
     {
@@ -309,7 +309,7 @@
       "countyFips": "26081",
       "countyName": "Kent",
       "status": "populated",
-      "provisionalDeaths12mo": 65,
+      "provisionalDeaths12mo": 71,
       "pendingReason": null
     },
     {
@@ -330,7 +330,7 @@
       "countyFips": "26087",
       "countyName": "Lapeer",
       "status": "populated",
-      "provisionalDeaths12mo": 13,
+      "provisionalDeaths12mo": 11,
       "pendingReason": null
     },
     {
@@ -343,15 +343,15 @@
     {
       "countyFips": "26091",
       "countyName": "Lenawee",
-      "status": "populated",
-      "provisionalDeaths12mo": 13,
+      "status": "suppressed",
+      "provisionalDeaths12mo": null,
       "pendingReason": null
     },
     {
       "countyFips": "26093",
       "countyName": "Livingston",
       "status": "populated",
-      "provisionalDeaths12mo": 18,
+      "provisionalDeaths12mo": 22,
       "pendingReason": null
     },
     {
@@ -372,7 +372,7 @@
       "countyFips": "26099",
       "countyName": "Macomb",
       "status": "populated",
-      "provisionalDeaths12mo": 166,
+      "provisionalDeaths12mo": 165,
       "pendingReason": null
     },
     {
@@ -386,7 +386,7 @@
       "countyFips": "26103",
       "countyName": "Marquette",
       "status": "populated",
-      "provisionalDeaths12mo": 12,
+      "provisionalDeaths12mo": 10,
       "pendingReason": null
     },
     {
@@ -428,7 +428,7 @@
       "countyFips": "26115",
       "countyName": "Monroe",
       "status": "populated",
-      "provisionalDeaths12mo": 30,
+      "provisionalDeaths12mo": 33,
       "pendingReason": null
     },
     {
@@ -449,7 +449,7 @@
       "countyFips": "26121",
       "countyName": "Muskegon",
       "status": "populated",
-      "provisionalDeaths12mo": 40,
+      "provisionalDeaths12mo": 48,
       "pendingReason": null
     },
     {
@@ -463,7 +463,7 @@
       "countyFips": "26125",
       "countyName": "Oakland",
       "status": "populated",
-      "provisionalDeaths12mo": 155,
+      "provisionalDeaths12mo": 153,
       "pendingReason": null
     },
     {
@@ -512,7 +512,7 @@
       "countyFips": "26139",
       "countyName": "Ottawa",
       "status": "populated",
-      "provisionalDeaths12mo": 18,
+      "provisionalDeaths12mo": 17,
       "pendingReason": null
     },
     {
@@ -533,14 +533,14 @@
       "countyFips": "26145",
       "countyName": "Saginaw",
       "status": "populated",
-      "provisionalDeaths12mo": 25,
+      "provisionalDeaths12mo": 30,
       "pendingReason": null
     },
     {
       "countyFips": "26147",
       "countyName": "St. Clair",
       "status": "populated",
-      "provisionalDeaths12mo": 30,
+      "provisionalDeaths12mo": 35,
       "pendingReason": null
     },
     {
@@ -582,21 +582,21 @@
       "countyFips": "26159",
       "countyName": "Van Buren",
       "status": "populated",
-      "provisionalDeaths12mo": 12,
+      "provisionalDeaths12mo": 16,
       "pendingReason": null
     },
     {
       "countyFips": "26161",
       "countyName": "Washtenaw",
       "status": "populated",
-      "provisionalDeaths12mo": 43,
+      "provisionalDeaths12mo": 42,
       "pendingReason": null
     },
     {
       "countyFips": "26163",
       "countyName": "Wayne",
       "status": "populated",
-      "provisionalDeaths12mo": 540,
+      "provisionalDeaths12mo": 513,
       "pendingReason": null
     },
     {
