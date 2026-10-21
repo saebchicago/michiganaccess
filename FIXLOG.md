@@ -121,6 +121,11 @@ Verdict from code:
 > was: `PrivacyPage.tsx:179-199` names GA4, its measurement ID, the exact cookies,
 > and links the opt-out add-on. Only this audit record was false. Any future copy
 > asserting "zero cookies" must be checked against `index.html` first.
+
+> **Update (2026-10-21):** Google Analytics 4 was removed entirely (loader,
+> `public/ga-init.js`, gtag call sites, CSP allowance, Privacy section). The
+> first-party Analytics Hub (cookieless, same-origin `/_ah/` proxy) is now the
+> only analytics. The correction above describes the state at the time it was written.
 | CMS data layer | CONFIRMED | `verifiedHealthFacilities.json` CMS Hospital General Information source |
 | HRSA data layer | CONFIRMED | `verifiedHealthFacilities.json` HRSA Health Center Sites source |
 | CDC PLACES data layer | CONFIRMED | `sourcesRegistry.ts:29`, `dataFreshness.ts:56` |

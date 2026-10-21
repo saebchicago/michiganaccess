@@ -7,7 +7,7 @@
  * Mutation-proven: mutating any anchor text below causes exit 1 in the suite.
  */
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
@@ -63,17 +63,12 @@ describe("Claims anchor guard  -  VERIFIED rows", () => {
     expect(src).toContain("chat-mistral");
   });
 
-  // V-4: GA4 (G-367X8MQ1F6) loaded in index.html.
-  // The loader tag stays in index.html; the config call moved to
-  // public/ga-init.js so script-src does not need 'unsafe-inline'. Both
-  // halves are still asserted, and index.html must reference the init file
-  // or the config would never run.
-  it("V-4: index.html loads GA4 with the canonical measurement ID", () => {
+  // V-4: Google Analytics was removed; the Analytics Hub is the only analytics.
+  // index.html must carry no gtag/GTM loader and ga-init.js must be gone.
+  it("V-4: index.html loads no Google Analytics or Tag Manager", () => {
     const src = read("index.html");
-    expect(src).toMatch(/googletagmanager\.com\/gtag\/js\?id=G-367X8MQ1F6/);
-    expect(src).toContain('src="/ga-init.js"');
-    const init = read("public/ga-init.js");
-    expect(init).toContain('gtag("config", "G-367X8MQ1F6")');
+    expect(src).not.toMatch(/googletagmanager|google-analytics|gtag|ga-init/i);
+    expect(existsSync(resolve(root, "public/ga-init.js"))).toBe(false);
   });
 
   // V-4b: first-party analytics is installed through the same-origin /_ah/
@@ -105,7 +100,10 @@ describe("Claims anchor guard  -  VERIFIED rows", () => {
       .split("\n")
       .filter((l) => l.includes("Content-Security-Policy"));
     expect(headerLines.length).toBeGreaterThan(0);
-    for (const l of headerLines) expect(l).not.toContain("lovable.app");
+    for (const l of headerLines) {
+      expect(l).not.toContain("lovable.app");
+      expect(l).not.toMatch(/googletagmanager|google-analytics|analytics\.google/);
+    }
   });
 
   // V-5: No ad network scripts in index.html

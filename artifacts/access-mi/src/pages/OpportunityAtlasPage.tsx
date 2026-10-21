@@ -32,7 +32,6 @@ import {
   buildOpportunityUrl,
   parseOpportunityState,
 } from "@/lib/opportunityState";
-import { trackOpportunityEvent } from "@/lib/opportunityAnalytics";
 import {
   getOpportunityPlaceChanges,
   listSavedOpportunityPlaces,
@@ -182,14 +181,6 @@ export default function OpportunityAtlasPage() {
     setSaved(listSavedOpportunityPlaces());
   }, []);
 
-  useEffect(() => {
-    if (!place) return;
-    trackOpportunityEvent("opportunity_place_selected", {
-      geography_type: place.geographyType,
-      place_id: place.id,
-    });
-  }, [place?.id]);
-
   const savedCurrent = place
     ? saved.find((item) => item.placeId === place.id) ?? null
     : null;
@@ -216,10 +207,6 @@ export default function OpportunityAtlasPage() {
     params.set("place", place.id);
     params.set("compare", next.id);
     setSearchParams(params);
-    trackOpportunityEvent("opportunity_compare_started", {
-      geography_type: place.geographyType,
-      place_id: place.id,
-    });
   };
 
   const focusLens = (lensId: string) => {
@@ -228,27 +215,14 @@ export default function OpportunityAtlasPage() {
     params.set("place", place.id);
     params.set("lens", lensId);
     setSearchParams(params);
-    trackOpportunityEvent("opportunity_lens_viewed", {
-      geography_type: place.geographyType,
-      place_id: place.id,
-      lens_id: lensId,
-    });
   };
 
   const toggleSaved = () => {
     if (!place) return;
     if (savedCurrent) {
       setSaved(removeOpportunityPlace(place.id));
-      trackOpportunityEvent("opportunity_place_removed", {
-        geography_type: place.geographyType,
-        place_id: place.id,
-      });
     } else {
       setSaved(saveOpportunityPlace(place, insights));
-      trackOpportunityEvent("opportunity_place_saved", {
-        geography_type: place.geographyType,
-        place_id: place.id,
-      });
     }
   };
 
@@ -360,13 +334,6 @@ export default function OpportunityAtlasPage() {
                   <div
                     key={insight.id}
                     id={`metric-${insight.metricId}`}
-                    onFocus={() =>
-                      trackOpportunityEvent("opportunity_metric_viewed", {
-                        geography_type: place.geographyType,
-                        place_id: place.id,
-                        metric_id: insight.metricId,
-                      })
-                    }
                     className={
                       parsedState?.metricId === insight.metricId
                         ? "rounded-2xl ring-2 ring-primary ring-offset-2 ring-offset-background"
@@ -424,13 +391,6 @@ export default function OpportunityAtlasPage() {
                           href={lens.sourceUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={() =>
-                            trackOpportunityEvent("opportunity_source_opened", {
-                              geography_type: place.geographyType,
-                              place_id: place.id,
-                              lens_id: lens.id,
-                            })
-                          }
                         >
                           Primary source <ExternalLink className="ml-1 h-3.5 w-3.5" aria-hidden="true" />
                         </a>
@@ -495,13 +455,6 @@ export default function OpportunityAtlasPage() {
                         href={action.sourceUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() =>
-                          trackOpportunityEvent("opportunity_action_opened", {
-                            geography_type: place.geographyType,
-                            place_id: place.id,
-                            action_id: action.id,
-                          })
-                        }
                       >
                         Program details <ArrowRight className="ml-1 h-3.5 w-3.5" aria-hidden="true" />
                       </a>

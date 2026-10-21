@@ -126,17 +126,14 @@ export default function PrivacyPage() {
               identifying information.
             </li>
             <li>
-              <strong>No advertising or profiling cookies</strong> - We use
-              Google Analytics 4 first-party cookies (_ga, _ga_*) only for
-              aggregate page-view measurement, described in Section 3b. We do
-              not use cookies for advertising, behavioral profiling, or
-              cross-site tracking.
+              <strong>No advertising or profiling cookies</strong> - Our
+              only analytics is the first-party, cookieless service described in
+              Section 3b. We do not use cookies for advertising, behavioral
+              profiling, or cross-site tracking.
             </li>
             <li>
               <strong>No attempt to identify individuals</strong> - We do not
               fingerprint browsers, track across sites, or build user profiles.
-              Google Signals and User-ID features are disabled in our GA4
-              configuration.
             </li>
             <li>
               <strong>No storage of Protected Health Information (PHI)</strong>{" "}
@@ -177,38 +174,10 @@ export default function PrivacyPage() {
           </p>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
-            3b. Google Analytics 4
+            3b. First-Party Analytics
           </h3>
           <p>
-            We use <strong>Google Analytics 4</strong> (measurement ID{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-              G-367X8MQ1F6
-            </code>
-            ) to collect aggregated, non-identifying page-view counts, referring
-            URLs, and device/browser type to understand which resources are most
-            useful. GA4 sets first-party cookies (
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">_ga</code>,{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-              _ga_*
-            </code>
-            ) to distinguish unique sessions, and processes IP addresses
-            (truncated by Google before storage) to derive approximate
-            geographic region. We do not enable Google Signals, advertising
-            features, or User-ID identification, and this data is never used for
-            advertising or to identify individual visitors. You can opt out by
-            using a browser extension that blocks Google Analytics or by
-            installing the Google Analytics Opt-out Browser Add-on. (Google
-            Analytics does not honor the browser Do Not Track signal - a
-            browser-level block is the effective opt-out for Google Analytics.
-            The first-party analytics in Section 3c honor it, along with the
-            Global Privacy Control signal.)
-          </p>
-
-          <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
-            3c. First-Party Analytics
-          </h3>
-          <p>
-            In addition to Google Analytics, we run our own analytics. Its
+            We run our own analytics. Its
             script and data requests are sent through this site's own address
             (paths beginning with{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
@@ -266,7 +235,7 @@ export default function PrivacyPage() {
           </p>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
-            3d. Voluntarily Submitted Information
+            3c. Voluntarily Submitted Information
           </h3>
           <p>
             If you choose to use certain features, you may provide information
@@ -292,7 +261,7 @@ export default function PrivacyPage() {
           </ul>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
-            3e. Local Browser Storage
+            3d. Local Browser Storage
           </h3>
           <p>
             Some features use your browser's{" "}
@@ -305,12 +274,12 @@ export default function PrivacyPage() {
           </p>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
-            3f. Crisis Resources and Quick Exit
+            3e. Crisis Resources and Quick Exit
           </h3>
           <p>
             Visiting a crisis-resource link (988, 741741, 211) or clicking a
             page section related to sensitive topics is measured the same way as
-            any other page view under Sections 3b and 3c - as an aggregate,
+            any other page view under Section 3b - as an aggregate,
             non-identifying count. We do not flag, tag, or separately profile
             visits to crisis or sensitive-topic pages, and this data is never
             linked to your identity.
@@ -391,7 +360,7 @@ export default function PrivacyPage() {
               },
               {
                 name: "First-party analytics service",
-                purpose: "Usage measurement (Section 3c)",
+                purpose: "Usage measurement (Section 3b)",
                 note: "The site maintainer's own analytics service, reached through this site's own address (/_ah/); events retained 400 days",
               },
               {
@@ -634,7 +603,7 @@ export default function PrivacyPage() {
                   [
                     "First-party analytics events",
                     "400 days",
-                    "Usage measurement (Section 3c)",
+                    "Usage measurement (Section 3b)",
                   ],
                   [
                     "Search analytics",
