@@ -166,8 +166,8 @@ export default function SiteReportPage() {
             IP, max 100 rows)
           </li>
           <li>
-            <strong>Privacy:</strong> Google Analytics 4 for aggregate page-view
-            measurement; see Privacy Policy
+            <strong>Privacy:</strong> First-party cookieless analytics for aggregate
+            page-view measurement; see Privacy Policy
           </li>
         </ul>
         <h3 className="font-semibold mt-3 mb-1">Route Map</h3>

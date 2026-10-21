@@ -35,7 +35,7 @@ export default function PrivacyPage() {
   });
 
   const effectiveDate = "February 27, 2026";
-  const lastUpdated = "August 30, 2026";
+  const lastUpdated = "October 16, 2026";
 
   return (
     <Layout>
@@ -126,17 +126,14 @@ export default function PrivacyPage() {
               identifying information.
             </li>
             <li>
-              <strong>No advertising or profiling cookies</strong> - We use
-              Google Analytics 4 first-party cookies (_ga, _ga_*) only for
-              aggregate page-view measurement, described in Section 3b. We do
-              not use cookies for advertising, behavioral profiling, or
-              cross-site tracking.
+              <strong>No advertising or profiling cookies</strong> - Our
+              only analytics is the first-party, cookieless service described in
+              Section 3b. We do not use cookies for advertising, behavioral
+              profiling, or cross-site tracking.
             </li>
             <li>
               <strong>No attempt to identify individuals</strong> - We do not
               fingerprint browsers, track across sites, or build user profiles.
-              Google Signals and User-ID features are disabled in our GA4
-              configuration.
             </li>
             <li>
               <strong>No storage of Protected Health Information (PHI)</strong>{" "}
@@ -177,29 +174,64 @@ export default function PrivacyPage() {
           </p>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
-            3b. Google Analytics 4
+            3b. First-Party Analytics
           </h3>
           <p>
-            We use <strong>Google Analytics 4</strong> (measurement ID{" "}
+            We run our own analytics. Its
+            script and data requests are sent through this site's own address
+            (paths beginning with{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-              G-367X8MQ1F6
+              /_ah/
             </code>
-            ) to collect aggregated, non-identifying page-view counts, referring
-            URLs, and device/browser type to understand which resources are most
-            useful. GA4 sets first-party cookies (
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">_ga</code>,{" "}
+            ). It records:
+          </p>
+          <ul className="list-disc pl-6 space-y-1.5 mt-2">
+            <li>Page views.</li>
+            <li>
+              Clicks on links and buttons. The label text is capped at 80
+              characters, and text typed into form fields is never recorded.
+            </li>
+            <li>
+              Clicks on links to other sites. Only the destination hostname and
+              path are recorded.
+            </li>
+            <li>File downloads (the file name).</li>
+            <li>
+              Clicks on mailto and tel links. The email address or phone number
+              is not stored.
+            </li>
+            <li>Scroll depth milestones and engaged time.</li>
+            <li>
+              Whether a form was submitted. Field values are never recorded.
+            </li>
+            <li>Counts of JavaScript errors.</li>
+            <li>UTM parameters from the URL you landed on.</li>
+          </ul>
+          <p className="mt-3">
+            A random session identifier is kept in your tab's{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-              _ga_*
+              sessionStorage
             </code>
-            ) to distinguish unique sessions, and processes IP addresses
-            (truncated by Google before storage) to derive approximate
-            geographic region. We do not enable Google Signals, advertising
-            features, or User-ID identification, and this data is never used for
-            advertising or to identify individual visitors. You can opt out by
-            using a browser extension that blocks Google Analytics or by
-            installing the Google Analytics Opt-out Browser Add-on. (We do not
-            currently read the browser Do Not Track signal, and Google Analytics
-            does not honor it - a browser-level block is the effective opt-out.)
+            . It is specific to that tab. This analytics does not use cookies,
+            and it does not store IP addresses or user agent strings. The
+            server removes UUIDs, long numbers, and long tokens from page
+            paths before storing them.
+            Events are retained for 400 days.
+          </p>
+          <p className="mt-3">
+            <strong>Opting out:</strong> set the{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+              localStorage
+            </code>{" "}
+            key{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+              ah_optout
+            </code>{" "}
+            to{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">1</code>{" "}
+            in your browser. The Global Privacy Control and Do Not Track browser
+            signals are also honored. This site has no other control that turns
+            off analytics, so there is nothing further to switch off.
           </p>
 
           <h3 className="text-base font-semibold text-foreground mt-6 mb-2">
@@ -325,6 +357,11 @@ export default function PrivacyPage() {
                 name: "AI Model Providers",
                 purpose: "Chat and appeal generation",
                 note: "Prompts processed under provider terms; no personal data included in requests by design",
+              },
+              {
+                name: "First-party analytics service",
+                purpose: "Usage measurement (Section 3b)",
+                note: "The site maintainer's own analytics service, reached through this site's own address (/_ah/); events retained 400 days",
               },
               {
                 name: "Hosting Platform",
@@ -562,6 +599,11 @@ export default function PrivacyPage() {
                     "Page feedback",
                     "Indefinitely (anonymous)",
                     "Improve content quality",
+                  ],
+                  [
+                    "First-party analytics events",
+                    "400 days",
+                    "Usage measurement (Section 3b)",
                   ],
                   [
                     "Search analytics",

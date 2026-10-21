@@ -7,7 +7,7 @@
  * Mutation-proven: mutating any anchor text below causes exit 1 in the suite.
  */
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
@@ -63,17 +63,47 @@ describe("Claims anchor guard  -  VERIFIED rows", () => {
     expect(src).toContain("chat-mistral");
   });
 
-  // V-4: GA4 (G-367X8MQ1F6) loaded in index.html.
-  // The loader tag stays in index.html; the config call moved to
-  // public/ga-init.js so script-src does not need 'unsafe-inline'. Both
-  // halves are still asserted, and index.html must reference the init file
-  // or the config would never run.
-  it("V-4: index.html loads GA4 with the canonical measurement ID", () => {
+  // V-4: Google Analytics was removed; the Analytics Hub is the only analytics.
+  // index.html must carry no gtag/GTM loader and ga-init.js must be gone.
+  it("V-4: index.html loads no Google Analytics or Tag Manager", () => {
     const src = read("index.html");
-    expect(src).toMatch(/googletagmanager\.com\/gtag\/js\?id=G-367X8MQ1F6/);
-    expect(src).toContain('src="/ga-init.js"');
-    const init = read("public/ga-init.js");
-    expect(init).toContain('gtag("config", "G-367X8MQ1F6")');
+    expect(src).not.toMatch(/googletagmanager|google-analytics|gtag|ga-init/i);
+    expect(existsSync(resolve(root, "public/ga-init.js"))).toBe(false);
+  });
+
+  // V-4b: first-party analytics is installed through the same-origin /_ah/
+  // proxy, so script-src 'self' and connect-src 'self' cover it and the CSP
+  // is not widened. The proxy rules must sit above the SPA catch-all
+  // (Netlify evaluates redirects top-down, first match wins).
+  it("V-4b: Analytics Hub tag is same-origin and its proxy rules precede the SPA fallback", () => {
+    const html = read("index.html");
+    expect(html).toContain(
+      '<script defer src="/_ah/t.js" data-endpoint="/_ah/c"></script>',
+    );
+    const toml = readFileSync(resolve(root, "../../netlify.toml"), "utf8");
+    const iScript = toml.indexOf('from = "/_ah/t.js"');
+    const iCollect = toml.indexOf('from = "/_ah/c"');
+    const iSpa = toml.indexOf('from = "/*"');
+    expect(iScript).toBeGreaterThan(-1);
+    expect(iCollect).toBeGreaterThan(-1);
+    expect(iSpa).toBeGreaterThan(iCollect);
+    expect(iCollect).toBeGreaterThan(iScript);
+    expect(toml).toContain(
+      'to = "https://saeb-analytics-hub.lovable.app/tracker.js"',
+    );
+    expect(toml).toContain(
+      'to = "https://saeb-analytics-hub.lovable.app/api/public/collect"',
+    );
+    expect(toml.match(/force = true/g)?.length).toBe(2);
+    // CSP must stay unwidened: no analytics-hub host in any header.
+    const headerLines = toml
+      .split("\n")
+      .filter((l) => l.includes("Content-Security-Policy"));
+    expect(headerLines.length).toBeGreaterThan(0);
+    for (const l of headerLines) {
+      expect(l).not.toContain("lovable.app");
+      expect(l).not.toMatch(/googletagmanager|google-analytics|analytics\.google/);
+    }
   });
 
   // V-5: No ad network scripts in index.html

@@ -7,7 +7,6 @@ import type {
   OpportunityPlace,
 } from "@/data/opportunityAtlas";
 import { buildOpportunityUrl } from "@/lib/opportunityState";
-import { trackOpportunityEvent } from "@/lib/opportunityAnalytics";
 
 interface InsightShareCardProps {
   place: OpportunityPlace;
@@ -71,34 +70,16 @@ export function InsightShareCard({ place, insight }: InsightShareCardProps) {
   });
 
   const copy = async () => {
-    trackOpportunityEvent("opportunity_share_started", {
-      geography_type: place.geographyType,
-      place_id: place.id,
-      metric_id: insight.metricId,
-      channel: "copy",
-    });
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
-      trackOpportunityEvent("opportunity_share_completed", {
-        geography_type: place.geographyType,
-        place_id: place.id,
-        metric_id: insight.metricId,
-        channel: "copy",
-      });
     } catch {
       setCopied(false);
     }
   };
 
   const nativeShare = async () => {
-    trackOpportunityEvent("opportunity_share_started", {
-      geography_type: place.geographyType,
-      place_id: place.id,
-      metric_id: insight.metricId,
-      channel: "native",
-    });
     if (!navigator.share) {
       await copy();
       return;
@@ -108,12 +89,6 @@ export function InsightShareCard({ place, insight }: InsightShareCardProps) {
         title: `${place.label}: ${insight.title}`,
         text: `${insight.displayValue} - ${insight.summary}`,
         url,
-      });
-      trackOpportunityEvent("opportunity_share_completed", {
-        geography_type: place.geographyType,
-        place_id: place.id,
-        metric_id: insight.metricId,
-        channel: "native",
       });
     } catch {
       // User cancellation is not an error and should not be counted completed.
@@ -129,12 +104,6 @@ export function InsightShareCard({ place, insight }: InsightShareCardProps) {
     anchor.download = `accessmi-${place.id}-${insight.metricId}.svg`;
     anchor.click();
     URL.revokeObjectURL(objectUrl);
-    trackOpportunityEvent("opportunity_downloaded", {
-      geography_type: place.geographyType,
-      place_id: place.id,
-      metric_id: insight.metricId,
-      channel: "svg",
-    });
   };
 
   return (

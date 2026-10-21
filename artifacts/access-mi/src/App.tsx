@@ -7,7 +7,6 @@ import { lazy, Suspense } from "react";
 import { CountyProvider } from "./contexts/CountyContext";
 import { NerdModeProvider } from "./contexts/NerdModeContext";
 import { APP_ROUTES } from "./routes/manifest";
-import { usePageViewTracking } from "./hooks/usePageViewTracking";
 import ErrorBoundary from "./components/shared/ErrorBoundary";
 import Index from "./pages/Index";
 import { AuthProvider } from "./hooks/useAuth";
@@ -53,11 +52,6 @@ const PageLoader = () => (
   </div>
 );
 
-const PageViewTracker = () => {
-  usePageViewTracking();
-  return null;
-};
-
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <CountyProvider>
@@ -67,7 +61,6 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <PageViewTracker />
             <ErrorBoundary>
               <Suspense fallback={<PageLoader />}>
                 <Routes>

@@ -193,8 +193,8 @@ export default function PressPage() {
           </div>
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
             Analytics and privacy language intentionally follows the public
-            privacy policy: AccessMI uses aggregate Google Analytics measurement
-            and may receive information that a visitor voluntarily submits; it
+            privacy policy: AccessMI uses aggregate, cookieless first-party
+            analytics measurement and may receive information that a visitor voluntarily submits; it
             does not claim that no data is ever processed.
           </p>
         </section>
