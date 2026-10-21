@@ -169,8 +169,8 @@
 # First-party analytics proxy (Analytics Hub). Same-origin paths so the
 # tracker script and its collect calls are covered by script-src 'self' and
 # connect-src 'self' with no CSP change. These MUST stay above the SPA
-# catch-all below or /_ah/* would be answered with index.html. The force flag
-# so a future file under dist/_ah/ cannot shadow the proxy.
+# catch-all below or /_ah/* would be answered with index.html.
+# The force flag below stops a future file under dist/_ah/ from shadowing the proxy.
 [[redirects]]
   from = "/_ah/t.js"
   to = "https://saeb-analytics-hub.lovable.app/tracker.js"
