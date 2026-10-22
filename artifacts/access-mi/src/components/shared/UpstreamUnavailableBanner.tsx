@@ -15,6 +15,9 @@ function formatDate(iso: string): string {
     month: "long",
     day: "numeric",
     year: "numeric",
+    // Retrieval stamps are UTC. Without this, a viewer west of UTC sees a
+    // midnight-UTC stamp as the previous day.
+    timeZone: "UTC",
   });
 }
 
