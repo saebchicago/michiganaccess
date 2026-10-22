@@ -299,39 +299,6 @@ const ForHealthSystemsPage = () => {
               <Card>
                 <CardContent className="py-5">
                   <h3 className="font-bold text-foreground mb-2">
-                    Henry Ford Health
-                  </h3>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground">
-                    <li>
-                      • Mosaic ACO:{" "}
-                      <strong className="text-foreground">$27.2M</strong> shared
-                      savings, $19.9M retained (PY2024){" "}
-                      <a
-                        href="https://www.henryford.com/news/2025/12/henry-ford-health-mosaic-accountable-care-organization-earns-27-million-in-shared-savings"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary underline ml-1"
-                      >
-                        [source]
-                      </a>
-                    </li>
-                    <li>• $3B hospital expansion approved (Feb 2024)</li>
-                    <li>
-                      • Absorbed 8 former Ascension Michigan hospitals (Oct
-                      2024)
-                    </li>
-                  </ul>
-                  <IntegrityBadge
-                    label="MODELED"
-                    source="HFH Mosaic ACO press release (self-reported)"
-                    vintage="PY2024, Dec 2025"
-                    className="mt-3"
-                  />
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="py-5">
-                  <h3 className="font-bold text-foreground mb-2">
                     Trinity Health (Michigan)
                   </h3>
                   <ul className="space-y-1.5 text-xs text-muted-foreground">
