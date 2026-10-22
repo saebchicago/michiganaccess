@@ -90,25 +90,22 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Uninsured Rate",
           value: getHighlight(hh, "uninsured"),
-          stateAvg: "6.2%",
           direction: "lower-is-better",
           soWhat: "Lower means more people can access preventive care without financial hardship.",
-          source: "Census ACS",
-          sourceYear: "2023",
+          source: "County Health Rankings 2025 (SAHIE)",
+          sourceYear: "2022",
         },
         {
           label: "Primary Care Ratio",
           value: getHighlight(hh, "primary care"),
-          stateAvg: "1,240:1",
           direction: "lower-is-better",
           soWhat: "Fewer patients per provider means shorter waits and more access.",
-          source: "County Health Rankings & Roadmaps",
-          sourceYear: "2025",
+          source: "County Health Rankings 2025 (AHRF)",
+          sourceYear: "2021",
         },
         {
           label: "Preventable Hospital Stays",
           value: "Data pending",
-          stateAvg: "4,710 per 100K",
           direction: "lower-is-better",
           soWhat: "High rates signal gaps in outpatient care that drive costly ER visits.",
           source: "CMS / CHR",
@@ -117,11 +114,10 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Food Insecurity",
           value: getHighlight(hh, "food"),
-          stateAvg: "13.5%",
           direction: "lower-is-better",
           soWhat: "Food insecurity compounds chronic conditions like diabetes and hypertension.",
-          source: "Feeding America",
-          sourceYear: "2023",
+          source: "County Health Rankings 2025 (Map the Meal Gap, modeled)",
+          sourceYear: "2022",
         },
       ],
     },
@@ -137,7 +133,6 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Avg. Outage Duration (SAIDI)",
           value: "Data pending",
-          stateAvg: "~480 min/yr",
           direction: "lower-is-better",
           soWhat: "Longer outages disproportionately harm medically vulnerable residents.",
           source: "MPSC / EIA",
@@ -146,7 +141,6 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Outage Frequency (SAIFI)",
           value: "Data pending",
-          stateAvg: "~1.3 events/yr",
           direction: "lower-is-better",
           soWhat: "Frequent outages signal aging infrastructure or storm vulnerability.",
           source: "MPSC",
@@ -155,7 +149,6 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Energy Burden",
           value: "Data pending",
-          stateAvg: "3.5% of income",
           direction: "lower-is-better",
           soWhat: "When energy costs exceed 6% of income, families face impossible tradeoffs.",
           source: "DOE LEAD Tool",
@@ -175,7 +168,6 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Drinking Water Violations",
           value: "Data pending",
-          stateAvg: "Varies",
           direction: "lower-is-better",
           soWhat: "Violations may indicate treatment failures or aging distribution systems.",
           source: "EPA SDWIS",
@@ -211,7 +203,6 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Crash Rate",
           value: "Data pending",
-          stateAvg: "~650 per 100K",
           direction: "lower-is-better",
           soWhat: "High crash rates reflect road design and enforcement gaps.",
           source: "Michigan Traffic Crash Facts",
@@ -231,7 +222,6 @@ function buildDomains(place: Place): VPDomain[] {
         {
           label: "Unhealthy Air Days (AQI > 100)",
           value: "Data pending",
-          stateAvg: "~5 days/yr",
           direction: "lower-is-better",
           soWhat: "Poor air quality triggers asthma, COPD flares, and cardiovascular events.",
           source: "EPA AirNow",

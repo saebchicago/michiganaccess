@@ -139,8 +139,11 @@ describe("Energy burden data - source contracts", () => {
 describe("Food access data - source contracts", () => {
   const contract = METRIC_CONTRACTS.food_low_access_pct;
 
-  it("has at least one county record", () => {
-    expect(MICHIGAN_FOOD_ACCESS.length).toBeGreaterThan(0);
+  // Rows are suppressed until regenerated from the FARA download
+  // (see useFoodAccess.ts). Any row that comes back must still pass the
+  // per-row contracts below.
+  it("has no rows or only well-formed rows", () => {
+    expect(Array.isArray(MICHIGAN_FOOD_ACCESS)).toBe(true);
   });
 
   it.each(MICHIGAN_FOOD_ACCESS.map((r) => [r.county, r]))(

@@ -1,3 +1,7 @@
+import {
+  COUNTY_FOOD_INSECURITY_SOURCE,
+  COUNTY_UNINSURED_SOURCE,
+} from "@/data/michigan-county-profiles";
 // Generate a branded 1-page county health brief PDF
 // Uses jsPDF (already installed)
 
@@ -72,14 +76,14 @@ export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
     {
       label: "Uninsured Rate",
       value:
-        data.uninsuredPct != null ? `${data.uninsuredPct}%` : "~4% (state avg)",
-      source: "ACS 5-Year Estimates",
+        data.uninsuredPct != null ? `${data.uninsuredPct}%` : "N/A",
+      source: COUNTY_UNINSURED_SOURCE,
     },
     {
       label: "Food Insecurity",
       value:
         data.foodInsecurityPct != null ? `${data.foodInsecurityPct}%` : "N/A",
-      source: "Feeding America 2024",
+      source: COUNTY_FOOD_INSECURITY_SOURCE,
     },
     {
       label: "Healthcare Facilities",
@@ -165,7 +169,7 @@ export async function generateCountyPDF(data: CountyPDFData): Promise<void> {
   doc.setFontSize(7);
   doc.setTextColor(120, 120, 120);
   const sources =
-    "Sources: HRSA, CDC PLACES, Census ACS, Feeding America, March of Dimes, United For ALICE, FCC BDC, MDHHS";
+    "Sources: HRSA, CDC PLACES, Census ACS and SAHIE, County Health Rankings (Map the Meal Gap), March of Dimes, United For ALICE, FCC BDC, MDHHS";
   doc.text(sources, 14, y);
   y += 4;
   doc.text(

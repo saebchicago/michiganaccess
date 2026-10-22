@@ -4,7 +4,6 @@ import { Download, Loader2 } from "lucide-react";
 import { generateCountyPDF } from "@/utils/generateCountyPDF";
 import { getALICEByCounty } from "@/data/aliceData";
 import { getBroadbandByCounty } from "@/hooks/useBroadbandData";
-import { getFoodAccessByCounty } from "@/hooks/useFoodAccess";
 import { getCountyProfile } from "@/data/michigan-county-profiles";
 
 interface DownloadCountyGuideProps {
@@ -20,15 +19,18 @@ export default function DownloadCountyGuide({ county, facilityCount }: DownloadC
     try {
       const alice = getALICEByCounty(county);
       const broadband = getBroadbandByCounty(county);
-      const food = getFoodAccessByCounty(county);
       const profile = getCountyProfile(county);
+      const foodRaw = profile?.healthHighlights?.find((h) => h.label.toLowerCase().includes("food"))?.value;
+      const foodPct = foodRaw ? parseFloat(foodRaw) : undefined;
 
       await generateCountyPDF({
         countyName: county,
         population: profile?.population,
         combinedHardshipPct: alice?.combinedHardshipPct,
         uninsuredPct: profile?.healthHighlights?.[0]?.value ? parseFloat(profile.healthHighlights[0].value) : undefined,
-        foodInsecurityPct: food?.lowAccessPct,
+        // Food insecurity is the CHR measure (Map the Meal Gap 2022, modeled).
+        // USDA low-access tract share is a different measure and must not fill this field.
+        foodInsecurityPct: foodPct,
         facilityCount,
         broadbandPct: broadband?.pct_25_3_covered,
       });
