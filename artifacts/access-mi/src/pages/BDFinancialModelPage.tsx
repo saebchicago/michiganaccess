@@ -187,24 +187,24 @@ const SDOH_KEY = "bd-model-sdoh";
 // ─── SDOH preset configurations ───────────────────────────────────────────────
 const SDOH_PRESETS: { label: string; values: SdohState }[] = [
   {
-    label: "Henry Ford Health (Detroit)",
+    label: "Large urban system (illustrative)",
     values: { pop: 180000, scr: 72, pos: 17, nav: 34, cst: 14500, rr: 16 },
   },
   {
-    label: "Trinity Health (Statewide)",
+    label: "Statewide system (illustrative)",
     values: { pop: 120000, scr: 70, pos: 27, nav: 35, cst: 14500, rr: 16 },
   },
   {
-    label: "Corewell West Michigan",
+    label: "Regional system (illustrative)",
     values: { pop: 95000, scr: 58, pos: 14, nav: 28, cst: 13200, rr: 14 },
   },
 ];
 
 // ─── VBC-framed health system presets ─────────────────────────────────────────
 const PRESETS = {
-  hfhs: { pop: 180000, scr: 72, pos: 17, nav: 34, cst: 14500, rr: 16 },
-  trinity: { pop: 120000, scr: 70, pos: 27, nav: 35, cst: 14500, rr: 16 },
-  corewell: { pop: 140000, scr: 65, pos: 15, nav: 30, cst: 13800, rr: 14 },
+  urban: { pop: 180000, scr: 72, pos: 17, nav: 34, cst: 14500, rr: 16 },
+  statewide: { pop: 120000, scr: 70, pos: 27, nav: 35, cst: 14500, rr: 16 },
+  regional: { pop: 140000, scr: 65, pos: 15, nav: 30, cst: 13800, rr: 14 },
 };
 
 // ─── localStorage helpers ─────────────────────────────────────────────────────
@@ -1195,7 +1195,8 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
         risk - SDOH navigation directly drives shared savings, Stars scores, and
         total cost of care reduction. Anchored to Trinity Health (27.4% unmet
         need from 1M+ screened; system-reported ~16% readmission reduction,
-        FY2025 - not independently verified) and Henry Ford Health ACO data.
+        FY2025 - not independently verified). Baseline presets are
+        illustrative starting assumptions, not any named system's data.
       </p>
 
       {/* ── Preset buttons ────────────────────────────────────────────────── */}
@@ -1273,9 +1274,9 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
             <div className="flex flex-wrap gap-2">
               {(
                 [
-                  ["hfhs", "Henry Ford Health"],
-                  ["trinity", "Trinity Health"],
-                  ["corewell", "Corewell Health"],
+                  ["urban", "Large urban system"],
+                  ["statewide", "Statewide system"],
+                  ["regional", "Regional system"],
                 ] as const
               ).map(([key, label]) => (
                 <button
@@ -2081,9 +2082,9 @@ export default function BDFinancialModelPage() {
             . SDOH impact parameters anchored to published outcomes from{" "}
             <strong className="text-foreground">Trinity Health</strong> (27.4%
             unmet social need rate from 1M+ screened; system-reported ~16%
-            hospitalization reduction, FY2025 - not independently verified) and
-            <strong className="text-foreground">Henry Ford Health</strong> ACO
-            shared savings data (PY2024 $19.97M). Not actuarial projections.
+            hospitalization reduction, FY2025 - not independently verified).
+            Baseline presets are illustrative assumptions. Not actuarial
+            projections.
             AI-generated narratives are for strategic planning illustration
             only.
           </p>

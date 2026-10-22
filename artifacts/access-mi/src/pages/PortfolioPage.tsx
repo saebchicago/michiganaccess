@@ -87,7 +87,7 @@ export default function PortfolioPage() {
                   {[
                     "BD financial modeler: service line NPV, build vs. partner vs. acquire, SDOH ROI - all interactive, all sourced",
                     "83-county market opportunity scoring using CDC Social Vulnerability Index and HRSA shortage area data",
-                    "SDOH financial impact modeling anchored to Henry Ford Health and Trinity Health published outcomes",
+                    "SDOH financial impact modeling anchored to published, system-reported outcomes",
                   ].map((point) => (
                     <li key={point} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-michigan-teal-deep" />

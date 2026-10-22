@@ -420,7 +420,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/clinical-trials",
     title: "Clinical Trials",
     description:
-      "Search active clinical trials at Michigan's leading research institutions. Find enrolling studies for cancer, diabetes, neurology, and more.",
+      "Search ClinicalTrials.gov for studies recruiting in Michigan, and find the state's major research institutions.",
     h1: "Find a clinical trial.",
     summary: "Search enrolling clinical trials at Michigan research institutions.",
   },

@@ -144,7 +144,7 @@ export default function ProviderData() {
                   <Input
                     id="provider-search"
                     type="text"
-                    placeholder="e.g. Henry Ford Hospital or NPI #"
+                    placeholder="e.g. hospital name or NPI #"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleSearch()}

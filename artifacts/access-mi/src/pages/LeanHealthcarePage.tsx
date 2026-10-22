@@ -166,10 +166,7 @@ const sources = [
     label: "Trinity Health - Community Impact Report (FY2025, Jan 2026)",
     url: "https://company.findhelp.com/blog/2025/09/10/trinity-health-preventable-hospitalizations/",
   },
-  {
-    label: "Henry Ford Health - ACO Shared Savings (CMS)",
-    url: "https://www.cms.gov/priorities/innovation/innovation-models/aco",
-  },
+
   {
     label: "MVC PY 2026-2027 Technical Document",
     url: "https://michiganvalue.org/wp-content/uploads/2024/10/MVC-P4P-Technical-Document-PY26-27-FINAL-10.26.24-compressed-compressed.pdf",
@@ -209,18 +206,7 @@ const verifiedOutcomes: {
     integrityLabel: "PROJECTED",
     vintage: "FY2025, system-reported",
   },
-  {
-    system: "Henry Ford Health",
-    highlights: [
-      "Mosaic ACO: $27.2M shared savings, $19.9M retained (PY2024)",
-      "Absorbed eight former Ascension Michigan hospitals (October 2024)",
-      "$3 billion hospital expansion approved by Detroit City Council (February 2024)",
-    ],
-    source:
-      "Henry Ford Health Mosaic ACO press release (Dec 2025): henryford.com/news/2025/12/henry-ford-health-mosaic-accountable-care-organization-earns-27-million-in-shared-savings",
-    integrityLabel: "VERIFIED",
-    vintage: "PY2024, Dec 2025 press release",
-  },
+
   {
     system: "CHW Medicaid Reimbursement (Statewide)",
     highlights: [
