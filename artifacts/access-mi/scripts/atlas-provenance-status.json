@@ -40,16 +40,16 @@
     {
       "key": "food_desert",
       "label": "Food Desert Tracts",
-      "status": "pending_data",
+      "status": "verified",
       "declared_source": "USDA",
-      "actual_source": "USDA Food Access Research Atlas 2019 via useFoodAccess.ts (lowAccessPct)",
-      "coverage": "7/83 counties with real USDA data; 76/83 null (Guard 3)",
-      "issue": "Metric rendered is low-access % not food desert tract count. Label mismatch.",
+      "actual_source": "USDA ERS Food Access Research Atlas 2019 tract layer (lilatracts_1and10), counted per county by scripts/refresh-usda-fara-county.mjs into usda-fara-county.generated.json",
+      "coverage": "83/83 counties; county counts are MODELED (sums of USDA tract flags)",
       "guard": 3,
-      "remediation_pr": "separate - wire USDA tract-level data for all 83 counties; fix metric label",
+      "remediation_pr": "fix/fara-food-access-and-cleanup",
       "files": [
-        "src/pages/HealthEquityAtlasPage.tsx:134-137",
-        "src/components/atlas/MichiganHeatGrid.tsx:37-40"
+        "src/pages/HealthEquityAtlasPage.tsx",
+        "src/components/atlas/MichiganHeatGrid.tsx",
+        "src/hooks/useFoodAccess.ts"
       ]
     },
     {

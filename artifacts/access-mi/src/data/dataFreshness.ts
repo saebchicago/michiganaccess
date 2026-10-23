@@ -477,11 +477,13 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Matches usda-fara-county.generated.json: 2019 FARA tract layer,
+    // summed to county by scripts/refresh-usda-fara-county.mjs.
     id: "usda-fara",
     name: "USDA Food Access Research Atlas",
     category: "Food",
     url: "https://www.ers.usda.gov",
-    lastUpdated: "2022-01-01",
+    generatedFrom: "usda-fara-county.generated.json",
     updateFrequency: "Every 4-5 years",
     currentVersion: "2019 FARA",
     nextExpectedUpdate: "2024-2025",

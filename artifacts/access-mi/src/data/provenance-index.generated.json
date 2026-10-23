@@ -18,6 +18,7 @@
     "mde-county.generated.json": "2026-09-02",
     "nchs-overdose-county.generated.json": "2026-10-20",
     "saipe-county.generated.json": "2026-10-20",
-    "usaspending-county.generated.json": "2026-10-20"
+    "usaspending-county.generated.json": "2026-10-20",
+    "usda-fara-county.generated.json": "2026-10-23"
   }
 }
