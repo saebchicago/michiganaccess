@@ -5,6 +5,7 @@ import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
 import { computeCompoundDeficit } from "@/utils/compoundDeficit";
 import { getALICEByCounty } from "@/data/aliceData";
 import { getAcsSdohValue } from "@/data/acs-sdoh-county";
+import { getFoodAccessByCounty } from "@/hooks/useFoodAccess";
 
 interface CountyMetrics {
   county: string;
@@ -39,7 +40,7 @@ function getLayerData(layer: AtlasLayer): CountyMetrics[] {
           value = computeCompoundDeficit(name, profile).compound;
           break;
         case "food_desert":
-          value = null;
+          value = getFoodAccessByCounty(name)?.lilaTracts ?? null;
           break;
         case "energy_burden":
           value = null;

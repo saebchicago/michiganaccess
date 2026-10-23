@@ -139,12 +139,21 @@ describe("Energy burden data - source contracts", () => {
 describe("Food access data - source contracts", () => {
   const contract = METRIC_CONTRACTS.food_low_access_pct;
 
-  // Rows are suppressed until regenerated from the FARA download
-  // (see useFoodAccess.ts). Any row that comes back must still pass the
-  // per-row contracts below.
-  it("has no rows or only well-formed rows", () => {
-    expect(Array.isArray(MICHIGAN_FOOD_ACCESS)).toBe(true);
+  // Generated from USDA's FARA 2019 tract layer by
+  // scripts/refresh-usda-fara-county.mjs: one row per Michigan county.
+  it("covers all 83 Michigan counties", () => {
+    expect(MICHIGAN_FOOD_ACCESS).toHaveLength(83);
+    expect(new Set(MICHIGAN_FOOD_ACCESS.map((r) => r.fips)).size).toBe(83);
   });
+
+  it.each(MICHIGAN_FOOD_ACCESS.map((r) => [r.county, r]))(
+    "%s: tract counts are internally consistent",
+    (_county, row) => {
+      expect(row.lowAccessTracts).toBeLessThanOrEqual(row.totalTracts);
+      expect(row.lilaTracts).toBeLessThanOrEqual(row.lowAccessTracts);
+      expect(row.lowIncomeLowAccessPop).toBeLessThanOrEqual(row.lowAccessPop);
+    },
+  );
 
   it.each(MICHIGAN_FOOD_ACCESS.map((r) => [r.county, r]))(
     "%s: source attribution valid",

@@ -18,6 +18,7 @@ import { MICHIGAN_ENERGY_BURDEN } from "@/data/environmentalData";
 import { MICHIGAN_BROADBAND_SEED } from "@/hooks/useBroadbandData";
 import { computeCompoundDeficit } from "@/utils/compoundDeficit";
 import { getInfantMortalityAtlas } from "@/lib/data-layers";
+import { getFoodAccessByCounty } from "@/hooks/useFoodAccess";
 
 const MichiganHeatGrid = lazy(
   () => import("@/components/atlas/MichiganHeatGrid"),
@@ -63,7 +64,8 @@ function getCountyData(
     infant_mortality: imrLookup[county] ?? null,
     // ACEEE LEAD 2023: real value for 7/83 counties, undefined elsewhere
     energy_burden: energyLookup[county] as number | undefined,
-    // food_desert_tracts: Guard 3 - formula was fabricated; pending USDA tract data
+    // USDA FARA 2019 low-income, low-access tract count (MODELED county sum)
+    food_desert_tracts: getFoodAccessByCounty(county)?.lilaTracts,
     // ej_max: Guard 3 - FEMA NRI compositeRisk != EPA EJScreen index
   };
 }
@@ -126,8 +128,9 @@ export default function HealthEquityAtlasPage() {
           result[name] = getAcsSdohValue(name, "povertyPct");
           break;
         case "food_desert":
-          // Guard 3: food insecurity != food desert tracts; pending USDA tract ingestion
-          result[name] = null;
+          // USDA FARA 2019 low-income, low-access tracts, counted per county
+          // from USDA tract flags (1 mi urban / 10 mi rural). MODELED.
+          result[name] = getFoodAccessByCounty(name)?.lilaTracts ?? null;
           break;
         case "compound":
           // CADI: equal-weighted composite of three sourced dimensions
@@ -205,8 +208,8 @@ export default function HealthEquityAtlasPage() {
               Where access gaps compound.
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Pick a layer. Click a county. VERIFIED layers from USDA, FCC, EPA,
-              CDC, MDHHS, HRSA, Census.
+              Pick a layer. Click a county. Layers from USDA, FCC, EPA, CDC,
+              MDHHS, HRSA, Census; county sums of tract data are labeled MODELED.
             </p>
           </motion.div>
         </div>

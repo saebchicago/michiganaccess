@@ -11,7 +11,6 @@
 - 1M+ SDOH screens (nation-leading)
 - CHW Hub: 17 sites (7 school, 10 community)
 - Outcomes: Not publicly disclosed
-- Contact: CLATIME1@hfhs.org
 - Source: https://www.ahrq.gov/ncepcr/tools/workforce-financing/case-example-6.html
 ### Michigan Medicine
 - 17.1% screening positive rate (above avg)

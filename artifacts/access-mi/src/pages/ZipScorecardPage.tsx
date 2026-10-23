@@ -1843,21 +1843,22 @@ export default function ZipScorecardPage() {
                 return (
                   <>
                     <EconCard
-                      label="Food Access"
-                      value={fa.classification}
-                      source="USDA FARA 2019"
+                      label="Low-Income, Low-Access Tracts"
+                      value={`${fa.lilaTracts} of ${fa.totalTracts}`}
+                      benchmark="USDA food desert tract definition"
+                      source="USDA FARA 2019 (county count, modeled)"
                     />
                     <EconCard
                       label="Low-Access Tracts"
                       value={`${fa.lowAccessPct.toFixed(1)}%`}
-                      benchmark={`${fa.lowAccessTracts} of ${fa.totalTracts} tracts`}
-                      source="USDA FARA 2019"
+                      benchmark={`${fa.lowAccessTracts} of ${fa.totalTracts} tracts; 1 mi urban, 10 mi rural`}
+                      source="USDA FARA 2019 (county count, modeled)"
                     />
                     <EconCard
-                      label="No Vehicle + Low Access"
-                      value={fa.noVehicleLowAccessPop.toLocaleString()}
-                      benchmark="Most vulnerable population"
-                      source="USDA FARA 2019"
+                      label="No-Vehicle Households, Low Access"
+                      value={fa.noVehicleLowAccessHousingUnits.toLocaleString()}
+                      benchmark="Housing units without a vehicle"
+                      source="USDA FARA 2019 (county sum, modeled)"
                     />
                   </>
                 );

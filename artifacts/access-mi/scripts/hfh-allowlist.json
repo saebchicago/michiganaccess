@@ -11,6 +11,5 @@
   "src/pages/PortfolioPage.tsx",
   "src/pages/CountyPage.tsx",
   "src/pages/ClinicalTrialsPage.tsx",
-  "src/pages/MarketIntelligencePage.tsx",
-  "src/ACCESS_MI_SUPERPROMPT.md"
+  "src/pages/MarketIntelligencePage.tsx"
 ]
