@@ -30,7 +30,11 @@ export const ATLAS_LAYERS: ReadonlyArray<AtlasLayerEntry> = [
     label: "Compound Access Deficit",
     source: "Access Michigan Index",
   },
-  { key: "food_desert", label: "Food Desert Tracts", source: "USDA" },
+  {
+    key: "food_desert",
+    label: "Food Desert Tracts",
+    source: "USDA FARA 2019, county count (MODELED)",
+  },
   { key: "broadband", label: "Broadband % Unserved", source: "FCC" },
   { key: "infant_mortality", label: "Infant Mortality Rate", source: "MDHHS" },
   { key: "ej_index", label: "EJ Index (max)", source: "EPA EJScreen" },

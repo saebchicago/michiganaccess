@@ -208,8 +208,8 @@ export default function HealthEquityAtlasPage() {
               Where access gaps compound.
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Pick a layer. Click a county. VERIFIED layers from USDA, FCC, EPA,
-              CDC, MDHHS, HRSA, Census.
+              Pick a layer. Click a county. Layers from USDA, FCC, EPA, CDC,
+              MDHHS, HRSA, Census; county sums of tract data are labeled MODELED.
             </p>
           </motion.div>
         </div>
