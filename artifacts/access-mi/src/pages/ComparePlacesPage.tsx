@@ -30,7 +30,6 @@ import {
   Users,
   Star,
   MessageSquare,
-  ChevronRight,
   Eye,
   EyeOff,
   TrendingDown,
@@ -1469,16 +1468,6 @@ export default function ComparePlacesPage() {
                               </p>
                             ))}
                           </div>
-
-                          <button
-                            onClick={() =>
-                              toast.info("Community insights coming soon!")
-                            }
-                            className="flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline"
-                          >
-                            <ChevronRight className="h-3 w-3" />
-                            Add your insight
-                          </button>
                         </div>
                       );
                     })}
