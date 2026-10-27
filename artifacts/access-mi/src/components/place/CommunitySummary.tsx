@@ -95,16 +95,6 @@ export default function CommunitySummary({ place }: { place: Place }) {
           </div>
         ))}
       </div>
-
-      {/* Mini sparkline placeholder */}
-      <div className="mt-4 flex items-center gap-2 text-[10px] text-muted-foreground">
-        <div className="flex gap-px">
-          {[3, 5, 4, 6, 5, 7, 6, 8, 7, 6].map((h, i) => (
-            <div key={i} className="w-1 rounded-full bg-primary/20" style={{ height: `${h * 2}px` }} />
-          ))}
-        </div>
-        <span>Trend data coming soon</span>
-      </div>
     </motion.section>
   );
 }

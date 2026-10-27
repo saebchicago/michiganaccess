@@ -503,10 +503,9 @@ function PrioritiesTab() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {CHNA_SYSTEM_OPTIONS.map((s) => (
-              <SelectItem key={s.id} value={s.id} disabled={!s.available}>
+            {CHNA_SYSTEM_OPTIONS.filter((s) => s.available).map((s) => (
+              <SelectItem key={s.id} value={s.id}>
                 {s.label}
-                {!s.available && " (coming soon)"}
               </SelectItem>
             ))}
           </SelectContent>

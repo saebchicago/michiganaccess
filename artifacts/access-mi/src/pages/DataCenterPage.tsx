@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 import {
   BarChart,
   Bar,
@@ -74,7 +75,7 @@ const pipelineProjects: PipelineProject[] = [
     location: "Lyon Twp (Oakland)",
     developer: "Verrus/Sidewalk Infra/Alphabet",
     capacity: "1.8M sq ft",
-    investment: "TBD",
+    investment: "Not disclosed",
     investmentBillions: null,
     status: "Conditional approval",
   },
@@ -83,7 +84,7 @@ const pipelineProjects: PipelineProject[] = [
     location: "Van Buren Twp (Wayne)",
     developer: "Panattoni",
     capacity: "1 GW",
-    investment: "TBD",
+    investment: "Not disclosed",
     investmentBillions: null,
     status: "Preliminary approved",
   },
@@ -109,8 +110,8 @@ const pipelineProjects: PipelineProject[] = [
     project: "Microsoft",
     location: "Kent/Allegan",
     developer: "Microsoft",
-    capacity: "TBD",
-    investment: "TBD",
+    capacity: "Not disclosed",
+    investment: "Not disclosed",
     investmentBillions: null,
     status: "Rezoning",
   },
@@ -118,16 +119,16 @@ const pipelineProjects: PipelineProject[] = [
     project: "UofM/Los Alamos",
     location: "Ypsilanti Twp",
     developer: "UM + LANL",
-    capacity: "TBD",
+    capacity: "Not disclosed",
     investment: "$1.25B",
     investmentBillions: 1.25,
     status: "Planning",
   },
   {
     project: "DAMAC Properties",
-    location: "TBD",
+    location: "Not disclosed",
     developer: "DAMAC",
-    capacity: "TBD",
+    capacity: "Not disclosed",
     investment: "$500M",
     investmentBillions: 0.5,
     status: "Construction Q1 2026",
@@ -136,7 +137,7 @@ const pipelineProjects: PipelineProject[] = [
 
 // Headline aggregates derived from the pipeline table above so the hero
 // number can't drift from what users see when they scroll. Projects
-// whose dollar amount is "TBD" are excluded from the disclosed total but
+// whose dollar amount is not disclosed are excluded from the disclosed total but
 // counted toward the project count.
 const disclosedInvestmentBillions = pipelineProjects
   .map((p) => p.investmentBillions ?? 0)
@@ -226,7 +227,7 @@ const DataCenterPage = () => {
               across <strong>{pipelineProjects.length}</strong> announced
               projects
               {tbdProjectCount > 0
-                ? ` (${tbdProjectCount} with dollar amounts still TBD)`
+                ? ` (${tbdProjectCount} with dollar amounts not disclosed)`
                 : ""}
               . Tracking investment, energy demand, community impact, and
               environmental concerns across the state.
@@ -345,7 +346,15 @@ const DataCenterPage = () => {
                           {p.capacity}
                         </td>
                         <td className="py-3 font-medium text-foreground">
-                          {p.investment}
+                          <span className="mr-2">{p.investment}</span>
+                          {p.investmentBillions == null ? (
+                            <IntegrityBadge label="PENDING" />
+                          ) : (
+                            <IntegrityBadge
+                              label="PROJECTED"
+                              source="Published project announcements (see page source note)"
+                            />
+                          )}
                         </td>
                         <td className="py-3">
                           <Badge

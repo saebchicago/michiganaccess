@@ -792,6 +792,86 @@ export const ROUTE_META: RouteMeta[] = [
     h1: "Dual-Eligible Exposure in Michigan",
     summary: "Where Michiganders enrolled in both Medicare and Medicaid live.",
   },
+  {
+    path: "/privacy",
+    title: "Privacy Policy | Access Michigan",
+    description:
+      "Access Michigan's privacy policy explains what data we collect, how we protect your information, HIPAA disclaimers, and your rights under Michigan and federal law.",
+    h1: "Privacy Policy",
+    summary: "What data Access Michigan collects, how it is protected, and your rights.",
+  },
+  {
+    path: "/terms",
+    title: "Terms of Use | Access Michigan",
+    description:
+      "Terms and conditions for using Access Michigan, including disclaimers, limitation of liability, and acceptable use policies.",
+    h1: "Terms of Use",
+    summary: "Disclaimers, limitation of liability, and acceptable use.",
+  },
+  {
+    path: "/contact",
+    title: "Contact Us | Access Michigan",
+    description:
+      "Have a question, suggestion, or partnership idea? Get in touch with Access Michigan.",
+    h1: "Contact Access Michigan",
+    summary: "Send a question, suggestion, or partnership idea.",
+  },
+  {
+    path: "/press",
+    title: "Press, Media & Directory Kit | Access Michigan",
+    description:
+      "Directory-ready project description, verified facts, press context, and media resources for AccessMI, an independent Michigan civic-intelligence project.",
+    h1: "Describe AccessMI accurately",
+    summary: "Project description, facts, and media resources for press and directories.",
+  },
+  {
+    path: "/news",
+    title: "Michigan Health News | Access Michigan",
+    description:
+      "Curated Michigan health news and policy updates, linking out to original reporting from statewide and local outlets.",
+    h1: "Michigan Health News",
+    summary: "Curated links to original reporting on Michigan health and policy.",
+  },
+  {
+    path: "/quiz",
+    title: "How Well Do You Know Michigan? | Data Quiz | Access Michigan",
+    description:
+      "Test your knowledge of Michigan health, taxes, housing, and equity data with 10 questions backed by verified public sources.",
+    h1: "How Well Do You Know Michigan?",
+    summary: "A 10-question quiz on Michigan health, tax, housing, and equity data.",
+  },
+  {
+    path: "/accessibility",
+    title: "Accessibility Statement | Access Michigan",
+    description:
+      "Access Michigan works toward WCAG 2.1 AA conformance - currently partially conformant, with automated and manual testing on every change.",
+    h1: "Accessibility Statement",
+    summary: "Our WCAG 2.1 AA conformance status and how to report a barrier.",
+  },
+  {
+    path: "/about/ourintel",
+    title: "ourintel.org - National Civic Intelligence Vision | Access Michigan",
+    description:
+      "Civic intelligence infrastructure, built for every community, starting with Michigan.",
+    h1: "ourintel.org: civic intelligence for every community",
+    summary: "The national vision that grows out of the Access Michigan platform.",
+  },
+  {
+    path: "/notary-services",
+    title: "Find Notary Services in Michigan | Access Michigan",
+    description:
+      "Learn how to find a notary public in Michigan, understand notarization requirements, and access official state resources.",
+    h1: "Find Notary Services in Michigan",
+    summary: "How to find a notary public and what notarization requires in Michigan.",
+  },
+  {
+    path: "/regions",
+    title: "Michigan Regions | Regional Health & Services Overview",
+    description:
+      "Explore Michigan's six regions for comparable health metrics, access gaps, community resources, and nonprofit organizations.",
+    h1: "Michigan Regions",
+    summary: "Comparable health metrics and resources across Michigan's six regions.",
+  },
 ];
 
 /**

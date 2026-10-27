@@ -20,16 +20,18 @@ permissions:
 
 jobs:
   test:
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
       - uses: pnpm/action-setup@v4
         with:
           version: 10
           run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Typecheck
@@ -97,6 +99,7 @@ jobs:
           fi
 
   e2e:
+    timeout-minutes: 30
     # Browser E2E is a release-quality gate: user journeys, all-routes smoke,
     # mobile viewports, and axe accessibility specs (src/test/e2e/). The suite
     # is intentionally blocking now that the known homepage contrast defect is
@@ -105,13 +108,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
       - uses: pnpm/action-setup@v4
         with:
           version: 10
           run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Install Playwright browsers
@@ -129,6 +133,7 @@ jobs:
           retention-days: 7
 
   lighthouse:
+    timeout-minutes: 30
     # The production bundle must render in a real browser. SEO, accessibility,
     # and best-practices assertions are blocking in .lighthouserc.cjs;
     # performance stays measured as a warning while shared-runner variance is
@@ -136,13 +141,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
       - uses: pnpm/action-setup@v4
         with:
           version: 10
           run_install: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Build

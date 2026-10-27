@@ -725,8 +725,7 @@ export default function CompareZipsPage() {
                   </Button>
                 </div>
                 <p className="text-[11px] text-muted-foreground mt-3">
-                  CSV and JSON exports coming soon. Markdown and citation copy
-                  work now with county-level data.
+                  Markdown and citation copy use county-level data.
                 </p>
               </CardContent>
             </Card>
