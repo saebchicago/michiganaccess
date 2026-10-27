@@ -11,7 +11,7 @@
     "geography_caveat": "Awards are attributed to the recipient's location. Statewide programs paid to a state agency are counted in the county where that agency is located (Medicaid and SNAP concentrate in Ingham County), so a county figure is not federal spending on that county's residents.",
     "program_bucket_basis": "CFDA assistance listing numbers",
     "program_bucket_caveat": "Program buckets aggregate CFDA-numbered assistance only. Contract obligations without a CFDA number are inside the county total but in no bucket, so buckets do not sum to the total.",
-    "ingested_at": "2026-10-20T12:48:27.646Z",
+    "ingested_at": "2026-10-27T13:22:09.018Z",
     "ingest_script": "scripts/refresh-usaspending-county.mjs",
     "michigan_county_registry": "src/data/census-geographies.ts",
     "michigan_county_registry_size": 83,
@@ -55,9 +55,9 @@
       "county": "Alcona",
       "fips": "26001",
       "status": "populated",
-      "total_awards_millions": 137.6,
+      "total_awards_millions": 147.5,
       "population": 10167,
-      "per_capita_dollars": 13533,
+      "per_capita_dollars": 14508,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0,
@@ -70,12 +70,12 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 84271496
+          "dollars": 92060794
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 12882640
+          "dollars": 14008831
         },
         {
           "cfda": "10.752",
@@ -85,12 +85,12 @@
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 10839388
+          "dollars": 10921478
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 5856617
+          "dollars": 6390850
         }
       ],
       "fy": 2026,
@@ -101,9 +101,9 @@
       "county": "Alger",
       "fips": "26003",
       "status": "populated",
-      "total_awards_millions": 76.3,
+      "total_awards_millions": 82.2,
       "population": 8842,
-      "per_capita_dollars": 8632,
+      "per_capita_dollars": 9302,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1,
@@ -116,27 +116,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 51940665
+          "dollars": 56723609
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 7447081
+          "dollars": 7450249
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 6516956
+          "dollars": 7081512
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 3733170
+          "dollars": 4063220
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 1090021
+          "dollars": 1182052
         }
       ],
       "fy": 2026,
@@ -147,37 +147,37 @@
       "county": "Allegan",
       "fips": "26005",
       "status": "populated",
-      "total_awards_millions": 781.1,
+      "total_awards_millions": 844.5,
       "population": 120502,
-      "per_capita_dollars": 6482,
+      "per_capita_dollars": 7008,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.8,
       "energy_millions": 0,
       "education_millions": 0.1,
       "infrastructure_millions": 3.5,
-      "health_grants_millions": 10.1,
-      "cfda_covered_millions": 16.5,
+      "health_grants_millions": 10.2,
+      "cfda_covered_millions": 16.6,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 554652697
+          "dollars": 606650286
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 66331140
+          "dollars": 72274422
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 41725619
+          "dollars": 41887167
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 38226596
+          "dollars": 41706480
         },
         {
           "cfda": "32.004",
@@ -193,22 +193,22 @@
       "county": "Alpena",
       "fips": "26007",
       "status": "populated",
-      "total_awards_millions": 287.8,
+      "total_awards_millions": 308.1,
       "population": 28907,
-      "per_capita_dollars": 9955,
+      "per_capita_dollars": 10657,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.1,
       "energy_millions": 0,
       "education_millions": 3.8,
       "infrastructure_millions": 0.7,
-      "health_grants_millions": 38.3,
-      "cfda_covered_millions": 43.9,
+      "health_grants_millions": 38.4,
+      "cfda_covered_millions": 44,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 159817414
+          "dollars": 174587478
         },
         {
           "cfda": "93.600",
@@ -218,17 +218,17 @@
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 27277496
+          "dollars": 29719198
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 20042448
+          "dollars": 20167085
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 16997100
+          "dollars": 18553611
         }
       ],
       "fy": 2026,
@@ -239,9 +239,9 @@
       "county": "Antrim",
       "fips": "26009",
       "status": "populated",
-      "total_awards_millions": 237.3,
+      "total_awards_millions": 255.7,
       "population": 23431,
-      "per_capita_dollars": 10126,
+      "per_capita_dollars": 10914,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.3,
@@ -254,27 +254,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 166299868
+          "dollars": 181769719
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 15073431
+          "dollars": 16388727
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 14047167
+          "dollars": 14166646
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 10652941
+          "dollars": 11593045
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 3156680
+          "dollars": 3461593
         }
       ],
       "fy": 2026,
@@ -285,9 +285,9 @@
       "county": "Arenac",
       "fips": "26011",
       "status": "populated",
-      "total_awards_millions": 143,
+      "total_awards_millions": 154.2,
       "population": 15002,
-      "per_capita_dollars": 9531,
+      "per_capita_dollars": 10282,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.1,
@@ -300,27 +300,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 90425185
+          "dollars": 98791159
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 15998088
+          "dollars": 17457641
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 12886401
+          "dollars": 13040878
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 8863949
+          "dollars": 9670041
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 3524359
+          "dollars": 3859993
         }
       ],
       "fy": 2026,
@@ -331,22 +331,22 @@
       "county": "Baraga",
       "fips": "26013",
       "status": "populated",
-      "total_awards_millions": 94.7,
+      "total_awards_millions": 99.6,
       "population": 8158,
-      "per_capita_dollars": 11611,
+      "per_capita_dollars": 12214,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 3.2,
       "energy_millions": 0.1,
       "education_millions": 10.6,
-      "infrastructure_millions": 3.9,
-      "health_grants_millions": 8.7,
-      "cfda_covered_millions": 26.6,
+      "infrastructure_millions": 4,
+      "health_grants_millions": 8.8,
+      "cfda_covered_millions": 26.8,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 36196368
+          "dollars": 39569388
         },
         {
           "cfda": "84.215",
@@ -356,12 +356,12 @@
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 7775469
+          "dollars": 7852345
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 6804379
+          "dollars": 7414812
         },
         {
           "cfda": "93.210",
@@ -377,9 +377,9 @@
       "county": "Barry",
       "fips": "26015",
       "status": "populated",
-      "total_awards_millions": 404.9,
+      "total_awards_millions": 438.7,
       "population": 62423,
-      "per_capita_dollars": 6487,
+      "per_capita_dollars": 7028,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.5,
@@ -392,27 +392,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 294040248
+          "dollars": 321517058
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 35592711
+          "dollars": 38828143
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 29038278
+          "dollars": 29084252
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 21973493
+          "dollars": 24012989
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 6342033
+          "dollars": 6913865
         }
       ],
       "fy": 2026,
@@ -423,37 +423,37 @@
       "county": "Bay",
       "fips": "26017",
       "status": "populated",
-      "total_awards_millions": 818.3,
+      "total_awards_millions": 882.9,
       "population": 103856,
-      "per_capita_dollars": 7879,
+      "per_capita_dollars": 8501,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 11.4,
       "energy_millions": 1.4,
       "education_millions": 38,
-      "infrastructure_millions": 0,
-      "health_grants_millions": 9.5,
-      "cfda_covered_millions": 60.3,
+      "infrastructure_millions": 0.8,
+      "health_grants_millions": 10.5,
+      "cfda_covered_millions": 62,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 506582345
+          "dollars": 553589946
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 85269903
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 57527803
+          "dollars": 92972844
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 55978166
+          "dollars": 61064704
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 57888336
         },
         {
           "cfda": "84.063",
@@ -469,9 +469,9 @@
       "county": "Benzie",
       "fips": "26019",
       "status": "populated",
-      "total_awards_millions": 154.5,
+      "total_awards_millions": 167.9,
       "population": 17970,
-      "per_capita_dollars": 8599,
+      "per_capita_dollars": 9343,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0,
@@ -484,27 +484,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 118812372
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 10653959
+          "dollars": 129902951
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 10584548
+          "dollars": 11520575
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 10678748
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 7334304
+          "dollars": 8007831
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 1860413
+          "dollars": 2030253
         }
       ],
       "fy": 2026,
@@ -515,42 +515,42 @@
       "county": "Berrien",
       "fips": "26021",
       "status": "populated",
-      "total_awards_millions": 1077.1,
+      "total_awards_millions": 1166.3,
       "population": 154316,
-      "per_capita_dollars": 6980,
+      "per_capita_dollars": 7558,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 19.2,
       "energy_millions": 0,
       "education_millions": 7.1,
-      "infrastructure_millions": 4.3,
-      "health_grants_millions": 15.6,
-      "cfda_covered_millions": 46.3,
+      "infrastructure_millions": 5.1,
+      "health_grants_millions": 16.8,
+      "cfda_covered_millions": 48.2,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 749559774
+          "dollars": 819467881
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 83556362
+          "dollars": 91067739
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 72048686
+          "dollars": 72520810
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 60709116
+          "dollars": 66241351
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 32158599
+          "dollars": 35175318
         }
       ],
       "fy": 2026,
@@ -561,9 +561,9 @@
       "county": "Branch",
       "fips": "26023",
       "status": "populated",
-      "total_awards_millions": 280.9,
+      "total_awards_millions": 305.9,
       "population": 44862,
-      "per_capita_dollars": 6261,
+      "per_capita_dollars": 6819,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.8,
@@ -576,27 +576,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 191773112
+          "dollars": 209618661
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 30349511
+          "dollars": 33072519
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 19137003
+          "dollars": 19234040
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 15863198
+          "dollars": 17299940
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 7141589
+          "dollars": 7809665
         }
       ],
       "fy": 2026,
@@ -607,42 +607,42 @@
       "county": "Calhoun",
       "fips": "26025",
       "status": "populated",
-      "total_awards_millions": 955.6,
+      "total_awards_millions": 1028.5,
       "population": 134310,
-      "per_capita_dollars": 7115,
+      "per_capita_dollars": 7657,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 11.8,
       "energy_millions": 0,
       "education_millions": 14.2,
       "infrastructure_millions": 1.1,
-      "health_grants_millions": 64.7,
-      "cfda_covered_millions": 91.8,
+      "health_grants_millions": 68.6,
+      "cfda_covered_millions": 95.7,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 540206664
+          "dollars": 590386059
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 101495153
+          "dollars": 110667063
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 86434192
+          "dollars": 86938096
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 52059903
+          "dollars": 56783281
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 35073204
+          "dollars": 38410478
         }
       ],
       "fy": 2026,
@@ -653,9 +653,9 @@
       "county": "Cass",
       "fips": "26027",
       "status": "populated",
-      "total_awards_millions": 482.8,
+      "total_awards_millions": 512.9,
       "population": 51589,
-      "per_capita_dollars": 9358,
+      "per_capita_dollars": 9942,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 9,
@@ -668,22 +668,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 257132411
+          "dollars": 280993308
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 32901908
+          "dollars": 35850689
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 22277267
+          "dollars": 24289413
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 18993679
+          "dollars": 19078662
         },
         {
           "cfda": "93.441",
@@ -699,9 +699,9 @@
       "county": "Charlevoix",
       "fips": "26029",
       "status": "populated",
-      "total_awards_millions": 216.4,
+      "total_awards_millions": 235,
       "population": 26054,
-      "per_capita_dollars": 8308,
+      "per_capita_dollars": 9020,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.7,
@@ -714,27 +714,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 170297142
+          "dollars": 186247255
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 14312542
+          "dollars": 14372330
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 12915323
+          "dollars": 14086373
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 9653113
+          "dollars": 10537247
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 2773379
+          "dollars": 3033796
         }
       ],
       "fy": 2026,
@@ -745,9 +745,9 @@
       "county": "Cheboygan",
       "fips": "26031",
       "status": "populated",
-      "total_awards_millions": 245,
+      "total_awards_millions": 264.2,
       "population": 25579,
-      "per_capita_dollars": 9576,
+      "per_capita_dollars": 10327,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.3,
@@ -760,27 +760,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 160593317
+          "dollars": 175560019
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 18679616
+          "dollars": 20338769
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 17695077
+          "dollars": 17828838
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 12277097
+          "dollars": 13396728
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 4889401
+          "dollars": 5372415
         }
       ],
       "fy": 2026,
@@ -791,32 +791,32 @@
       "county": "Chippewa",
       "fips": "26033",
       "status": "populated",
-      "total_awards_millions": 396.8,
+      "total_awards_millions": 416.7,
       "population": 36785,
-      "per_capita_dollars": 10787,
+      "per_capita_dollars": 11329,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 18.3,
       "energy_millions": 0.7,
       "education_millions": 17.6,
       "infrastructure_millions": 7.8,
-      "health_grants_millions": 56.1,
-      "cfda_covered_millions": 100.5,
+      "health_grants_millions": 56.2,
+      "cfda_covered_millions": 100.6,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 148554393
+          "dollars": 162275819
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 31650534
+          "dollars": 31916879
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 24342313
+          "dollars": 26562095
         },
         {
           "cfda": "93.210",
@@ -837,9 +837,9 @@
       "county": "Clare",
       "fips": "26035",
       "status": "populated",
-      "total_awards_millions": 280.8,
+      "total_awards_millions": 302.8,
       "population": 30856,
-      "per_capita_dollars": 9101,
+      "per_capita_dollars": 9812,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.9,
@@ -852,27 +852,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 173101103
+          "dollars": 189178824
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 35640512
+          "dollars": 38806148
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 25605600
+          "dollars": 25642827
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 15985380
+          "dollars": 17436729
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 9548396
+          "dollars": 10482869
         }
       ],
       "fy": 2026,
@@ -883,9 +883,9 @@
       "county": "Clinton",
       "fips": "26037",
       "status": "populated",
-      "total_awards_millions": 733.1,
+      "total_awards_millions": 773.4,
       "population": 79128,
-      "per_capita_dollars": 9264,
+      "per_capita_dollars": 9774,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.7,
@@ -898,22 +898,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 357025598
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 33784186
+          "dollars": 390394084
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 32356062
+          "dollars": 35267611
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 33847312
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 25699054
+          "dollars": 28071934
         },
         {
           "cfda": "20.116",
@@ -929,9 +929,9 @@
       "county": "Crawford",
       "fips": "26039",
       "status": "populated",
-      "total_awards_millions": 123.2,
+      "total_awards_millions": 132.5,
       "population": 12988,
-      "per_capita_dollars": 9483,
+      "per_capita_dollars": 10199,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.1,
@@ -944,22 +944,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 77454323
+          "dollars": 84644456
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 14125085
+          "dollars": 15358705
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 13369045
+          "dollars": 13398715
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 5933879
+          "dollars": 6480981
         },
         {
           "cfda": "84.063",
@@ -975,9 +975,9 @@
       "county": "Delta",
       "fips": "26041",
       "status": "populated",
-      "total_awards_millions": 362.2,
+      "total_awards_millions": 387.3,
       "population": 36903,
-      "per_capita_dollars": 9815,
+      "per_capita_dollars": 10495,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.8,
@@ -990,22 +990,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 203684570
+          "dollars": 222517741
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 38576054
+          "dollars": 38796232
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 27282435
+          "dollars": 29765117
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 18559278
+          "dollars": 20257194
         },
         {
           "cfda": "57.001",
@@ -1021,9 +1021,9 @@
       "county": "Dickinson",
       "fips": "26043",
       "status": "populated",
-      "total_awards_millions": 219.7,
+      "total_awards_millions": 235.9,
       "population": 25947,
-      "per_capita_dollars": 8467,
+      "per_capita_dollars": 9091,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.1,
@@ -1036,27 +1036,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 137035017
+          "dollars": 149752384
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 31962948
+          "dollars": 32077910
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 19223701
+          "dollars": 20962642
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 10747675
+          "dollars": 11732933
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 3448521
+          "dollars": 3755423
         }
       ],
       "fy": 2026,
@@ -1067,42 +1067,42 @@
       "county": "Eaton",
       "fips": "26045",
       "status": "populated",
-      "total_awards_millions": 1280.9,
+      "total_awards_millions": 1387.9,
       "population": 109175,
-      "per_capita_dollars": 11732,
+      "per_capita_dollars": 12713,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 8.8,
       "energy_millions": 0,
       "education_millions": 10.6,
-      "infrastructure_millions": 19.2,
-      "health_grants_millions": 528.4,
-      "cfda_covered_millions": 567,
+      "infrastructure_millions": 18.8,
+      "health_grants_millions": 576.4,
+      "cfda_covered_millions": 614.6,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 520754260
+          "dollars": 569213101
         },
         {
           "cfda": "93.774",
           "name": "Medicare Supplementary Medical Insurance",
-          "dollars": 287748484.74
+          "dollars": 313545172.73
         },
         {
           "cfda": "93.773",
           "name": "Medicare Hospital Insurance",
-          "dollars": 183326289.16
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 61193323
+          "dollars": 199629173.4
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 59723754
+          "dollars": 65118805
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 61494844
         }
       ],
       "fy": 2026,
@@ -1113,9 +1113,9 @@
       "county": "Emmet",
       "fips": "26047",
       "status": "populated",
-      "total_awards_millions": 307.5,
+      "total_awards_millions": 330.5,
       "population": 34112,
-      "per_capita_dollars": 9015,
+      "per_capita_dollars": 9688,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 6.7,
@@ -1123,27 +1123,27 @@
       "education_millions": 3.6,
       "infrastructure_millions": 16.2,
       "health_grants_millions": 6.9,
-      "cfda_covered_millions": 33.4,
+      "cfda_covered_millions": 33.5,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 211518930
+          "dollars": 231305909
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 16932278
+          "dollars": 16968585
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 15466842
+          "dollars": 16864081
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 13334599
+          "dollars": 14535154
         },
         {
           "cfda": "20.116",
@@ -1159,42 +1159,42 @@
       "county": "Genesee",
       "fips": "26049",
       "status": "populated",
-      "total_awards_millions": 2783.2,
+      "total_awards_millions": 3004.5,
       "population": 406211,
-      "per_capita_dollars": 6852,
+      "per_capita_dollars": 7396,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 35.6,
       "energy_millions": 0,
       "education_millions": 44,
       "infrastructure_millions": 17.5,
-      "health_grants_millions": 100.1,
-      "cfda_covered_millions": 197.3,
+      "health_grants_millions": 104.8,
+      "cfda_covered_millions": 201.9,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 1698430153
+          "dollars": 1855829258
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 298184512
+          "dollars": 324816685
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 198653067
+          "dollars": 216685977
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 185707611
+          "dollars": 186767561
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 125938570
+          "dollars": 137778637
         }
       ],
       "fy": 2026,
@@ -1205,9 +1205,9 @@
       "county": "Gladwin",
       "fips": "26051",
       "status": "populated",
-      "total_awards_millions": 233.5,
+      "total_awards_millions": 252.7,
       "population": 25386,
-      "per_capita_dollars": 9196,
+      "per_capita_dollars": 9954,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.3,
@@ -1220,27 +1220,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 158375424
+          "dollars": 173112267
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 25895179
+          "dollars": 28189639
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 20784517
+          "dollars": 20821586
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 14575258
+          "dollars": 15896880
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 6494542
+          "dollars": 7088423
         }
       ],
       "fy": 2026,
@@ -1251,42 +1251,42 @@
       "county": "Gogebic",
       "fips": "26053",
       "status": "populated",
-      "total_awards_millions": 125.5,
+      "total_awards_millions": 134.9,
       "population": 14380,
-      "per_capita_dollars": 8728,
+      "per_capita_dollars": 9378,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.8,
       "energy_millions": 0,
       "education_millions": 2.8,
       "infrastructure_millions": 1.2,
-      "health_grants_millions": 3.8,
+      "health_grants_millions": 3.9,
       "cfda_covered_millions": 9.6,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 76553527
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 11355690
+          "dollars": 83627534
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 11130273
+          "dollars": 12117396
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 11420975
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 6339048
+          "dollars": 6879961
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 3146558
+          "dollars": 3447510
         }
       ],
       "fy": 2026,
@@ -1297,37 +1297,37 @@
       "county": "Grand Traverse",
       "fips": "26055",
       "status": "populated",
-      "total_awards_millions": 818.8,
+      "total_awards_millions": 879.2,
       "population": 95238,
-      "per_capita_dollars": 8597,
+      "per_capita_dollars": 9232,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 4.8,
       "energy_millions": 0.6,
       "education_millions": 6.1,
       "infrastructure_millions": 45.2,
-      "health_grants_millions": 27.4,
-      "cfda_covered_millions": 84,
+      "health_grants_millions": 28.4,
+      "cfda_covered_millions": 85,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 543724220
+          "dollars": 594784823
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 47345567
+          "dollars": 47517521
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 41604436
+          "dollars": 45349563
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 31595684
+          "dollars": 34450169
         },
         {
           "cfda": "20.116",
@@ -1343,9 +1343,9 @@
       "county": "Gratiot",
       "fips": "26057",
       "status": "populated",
-      "total_awards_millions": 243.3,
+      "total_awards_millions": 262.8,
       "population": 41761,
-      "per_capita_dollars": 5827,
+      "per_capita_dollars": 6293,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.2,
@@ -1358,27 +1358,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 155478502
+          "dollars": 169873821
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 26775960
+          "dollars": 29174287
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 21857270
+          "dollars": 21960454
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 16038966
+          "dollars": 17496708
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 7846952
+          "dollars": 8586681
         }
       ],
       "fy": 2026,
@@ -1389,9 +1389,9 @@
       "county": "Hillsdale",
       "fips": "26059",
       "status": "populated",
-      "total_awards_millions": 341.5,
+      "total_awards_millions": 366,
       "population": 45746,
-      "per_capita_dollars": 7465,
+      "per_capita_dollars": 8000,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.8,
@@ -1404,27 +1404,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 203620820
+          "dollars": 222498886
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 30500422
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 19927537
+          "dollars": 33241145
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 19099649
+          "dollars": 20806640
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 19993292
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 8902906
+          "dollars": 9769705
         }
       ],
       "fy": 2026,
@@ -1435,9 +1435,9 @@
       "county": "Houghton",
       "fips": "26061",
       "status": "populated",
-      "total_awards_millions": 302.1,
+      "total_awards_millions": 319.1,
       "population": 37361,
-      "per_capita_dollars": 8087,
+      "per_capita_dollars": 8542,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.8,
@@ -1450,12 +1450,12 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 144283415
+          "dollars": 157627638
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 31459774
+          "dollars": 31754788
         },
         {
           "cfda": "81.253",
@@ -1465,12 +1465,12 @@
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 15694990
+          "dollars": 17128481
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 11742513
+          "dollars": 12800286
         }
       ],
       "fy": 2026,
@@ -1481,9 +1481,9 @@
       "county": "Huron",
       "fips": "26063",
       "status": "populated",
-      "total_awards_millions": 281.2,
+      "total_awards_millions": 302.5,
       "population": 31407,
-      "per_capita_dollars": 8954,
+      "per_capita_dollars": 9631,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.6,
@@ -1496,22 +1496,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 183106588
+          "dollars": 200144101
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 23042444
+          "dollars": 25100795
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 16802334
+          "dollars": 18328352
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 15534445
+          "dollars": 15643950
         },
         {
           "cfda": "32.002",
@@ -1527,17 +1527,17 @@
       "county": "Ingham",
       "fips": "26065",
       "status": "populated",
-      "total_awards_millions": 36478.6,
+      "total_awards_millions": 37031.9,
       "population": 284900,
-      "per_capita_dollars": 128040,
+      "per_capita_dollars": 129982,
       "medicaid_millions": 21690.4,
       "snap_millions": 4037.1,
       "housing_millions": 471.5,
       "energy_millions": 320.9,
       "education_millions": 1540.6,
-      "infrastructure_millions": 2682.4,
-      "health_grants_millions": 3163.1,
-      "cfda_covered_millions": 33906,
+      "infrastructure_millions": 3093.7,
+      "health_grants_millions": 3165.4,
+      "cfda_covered_millions": 34319.6,
       "top_programs": [
         {
           "cfda": "93.778",
@@ -1552,7 +1552,7 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 1015107339
+          "dollars": 1109820832
         },
         {
           "cfda": "20.287",
@@ -1573,9 +1573,9 @@
       "county": "Ionia",
       "fips": "26067",
       "status": "populated",
-      "total_awards_millions": 371.3,
+      "total_awards_millions": 401.2,
       "population": 66804,
-      "per_capita_dollars": 5558,
+      "per_capita_dollars": 6006,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.7,
@@ -1588,22 +1588,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 247746420
+          "dollars": 270841701
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 37412993
+          "dollars": 40785485
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 26861997
+          "dollars": 27002929
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 20920062
+          "dollars": 22801139
         },
         {
           "cfda": "93.600",
@@ -1619,42 +1619,42 @@
       "county": "Iosco",
       "fips": "26069",
       "status": "populated",
-      "total_awards_millions": 244.1,
+      "total_awards_millions": 264.4,
       "population": 25237,
-      "per_capita_dollars": 9673,
+      "per_capita_dollars": 10478,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.8,
       "energy_millions": 0,
       "education_millions": 0,
       "infrastructure_millions": 0,
-      "health_grants_millions": 0.1,
-      "cfda_covered_millions": 0.9,
+      "health_grants_millions": 0.2,
+      "cfda_covered_millions": 1,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 168154120
+          "dollars": 183840979
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 26363733
+          "dollars": 28748520
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 22973877
+          "dollars": 23163513
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 14328924
+          "dollars": 15627544
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 5855422
+          "dollars": 6377621
         }
       ],
       "fy": 2026,
@@ -1665,9 +1665,9 @@
       "county": "Iron",
       "fips": "26071",
       "status": "populated",
-      "total_awards_millions": 112.2,
+      "total_awards_millions": 121.2,
       "population": 11631,
-      "per_capita_dollars": 9650,
+      "per_capita_dollars": 10421,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2,
@@ -1680,27 +1680,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 76259666
+          "dollars": 83320361
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 12775316
+          "dollars": 12877964
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 10520290
+          "dollars": 11471088
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 5382622
+          "dollars": 5891405
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 2237194
+          "dollars": 2443689
         }
       ],
       "fy": 2026,
@@ -1711,42 +1711,42 @@
       "county": "Isabella",
       "fips": "26073",
       "status": "populated",
-      "total_awards_millions": 416.9,
+      "total_awards_millions": 446.2,
       "population": 64394,
-      "per_capita_dollars": 6474,
+      "per_capita_dollars": 6930,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 13.7,
       "energy_millions": 0.8,
       "education_millions": 30.6,
       "infrastructure_millions": 12,
-      "health_grants_millions": 31.1,
-      "cfda_covered_millions": 88.2,
+      "health_grants_millions": 32.5,
+      "cfda_covered_millions": 89.6,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 218564369
+          "dollars": 238969269
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 33630482
+          "dollars": 36637870
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 25784907
+          "dollars": 25855525
+        },
+        {
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 23090144
         },
         {
           "cfda": "84.063",
           "name": "Federal Pell Grant Program",
           "dollars": 21539852.85
-        },
-        {
-          "cfda": "96.004",
-          "name": "Social Security Survivors Insurance",
-          "dollars": 21164044
         }
       ],
       "fy": 2026,
@@ -1757,42 +1757,42 @@
       "county": "Jackson",
       "fips": "26075",
       "status": "populated",
-      "total_awards_millions": 1105.4,
+      "total_awards_millions": 1193.6,
       "population": 160366,
-      "per_capita_dollars": 6893,
+      "per_capita_dollars": 7443,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 15.2,
       "energy_millions": 0,
       "education_millions": 18.5,
       "infrastructure_millions": 4,
-      "health_grants_millions": 28.5,
-      "cfda_covered_millions": 66.2,
+      "health_grants_millions": 29.7,
+      "cfda_covered_millions": 67.5,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 717663774
+          "dollars": 784224271
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 107852175
+          "dollars": 117531413
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 68484855
+          "dollars": 68851120
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 61287807
+          "dollars": 66903873
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 35574065
+          "dollars": 38963073
         }
       ],
       "fy": 2026,
@@ -1803,42 +1803,42 @@
       "county": "Kalamazoo",
       "fips": "26077",
       "status": "populated",
-      "total_awards_millions": 1670.6,
+      "total_awards_millions": 1801,
       "population": 261670,
-      "per_capita_dollars": 6384,
+      "per_capita_dollars": 6883,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 28.2,
       "energy_millions": 5,
       "education_millions": 48,
       "infrastructure_millions": 38.3,
-      "health_grants_millions": 23.9,
-      "cfda_covered_millions": 143.5,
+      "health_grants_millions": 24.1,
+      "cfda_covered_millions": 143.6,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 1073397977
+          "dollars": 1173433996
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 126016340
+          "dollars": 137407210
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 94917764
+          "dollars": 95642514
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 80755023
+          "dollars": 88080582
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 49142464
+          "dollars": 53847865
         }
       ],
       "fy": 2026,
@@ -1849,9 +1849,9 @@
       "county": "Kalkaska",
       "fips": "26079",
       "status": "populated",
-      "total_awards_millions": 132.5,
+      "total_awards_millions": 143.6,
       "population": 17939,
-      "per_capita_dollars": 7386,
+      "per_capita_dollars": 8006,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.4,
@@ -1864,27 +1864,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 90923193
+          "dollars": 99380670
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 15929130
+          "dollars": 17396866
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 12211395
+          "dollars": 12251225
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 7399779
+          "dollars": 8081492
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 3165928
+          "dollars": 3472545
         }
       ],
       "fy": 2026,
@@ -1895,42 +1895,42 @@
       "county": "Kent",
       "fips": "26081",
       "status": "populated",
-      "total_awards_millions": 7622.2,
+      "total_awards_millions": 8251.5,
       "population": 657974,
-      "per_capita_dollars": 11584,
+      "per_capita_dollars": 12541,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 99.5,
       "energy_millions": 0,
       "education_millions": 57.9,
       "infrastructure_millions": 53.2,
-      "health_grants_millions": 3839.5,
-      "cfda_covered_millions": 4050.2,
+      "health_grants_millions": 4188.8,
+      "cfda_covered_millions": 4399.5,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 2411333335
+          "dollars": 2637097477
         },
         {
           "cfda": "93.774",
           "name": "Medicare Supplementary Medical Insurance",
-          "dollars": 1974849702.56
+          "dollars": 2157779024.18
         },
         {
           "cfda": "93.773",
           "name": "Medicare Hospital Insurance",
-          "dollars": 1258880681.06
+          "dollars": 1374609928.2
         },
         {
           "cfda": "93.770",
           "name": "Medicare Prescription Drug Coverage",
-          "dollars": 464474913.75
+          "dollars": 515079876.86
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 267402244
+          "dollars": 291338480
         }
       ],
       "fy": 2026,
@@ -1941,9 +1941,9 @@
       "county": "Keweenaw",
       "fips": "26083",
       "status": "populated",
-      "total_awards_millions": 21.3,
+      "total_awards_millions": 23.1,
       "population": 2046,
-      "per_capita_dollars": 10424,
+      "per_capita_dollars": 11268,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0,
@@ -1956,27 +1956,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 15799908
+          "dollars": 17247066
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 2361711
+          "dollars": 2376693
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 1538619
+          "dollars": 1681755
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 1077334
+          "dollars": 1173142
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 203039
+          "dollars": 217897
         }
       ],
       "fy": 2026,
@@ -1987,9 +1987,9 @@
       "county": "Lake",
       "fips": "26085",
       "status": "populated",
-      "total_awards_millions": 118.3,
+      "total_awards_millions": 127.6,
       "population": 12096,
-      "per_capita_dollars": 9784,
+      "per_capita_dollars": 10550,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.6,
@@ -2002,27 +2002,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 72446894
+          "dollars": 79195530
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 16391618
+          "dollars": 17876281
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 8497842
+          "dollars": 8546148
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 5824501
+          "dollars": 6351180
         },
         {
-          "cfda": "93.224",
-          "name": "Health Center Program",
-          "dollars": 5006809.38
+          "cfda": "96.006",
+          "name": "Supplemental Security Income",
+          "dollars": 5333061
         }
       ],
       "fy": 2026,
@@ -2033,9 +2033,9 @@
       "county": "Lapeer",
       "fips": "26087",
       "status": "populated",
-      "total_awards_millions": 646.4,
+      "total_awards_millions": 698.6,
       "population": 88619,
-      "per_capita_dollars": 7295,
+      "per_capita_dollars": 7883,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.9,
@@ -2048,22 +2048,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 440929729
+          "dollars": 482138376
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 60536461
+          "dollars": 66000417
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 49015543
+          "dollars": 49155238
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 43060546
+          "dollars": 47027818
         },
         {
           "cfda": "32.004",
@@ -2079,9 +2079,9 @@
       "county": "Leelanau",
       "fips": "26089",
       "status": "populated",
-      "total_awards_millions": 252.8,
+      "total_awards_millions": 272.2,
       "population": 22301,
-      "per_capita_dollars": 11338,
+      "per_capita_dollars": 12205,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.4,
@@ -2094,12 +2094,12 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 190924964
+          "dollars": 208801184
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 8178709
+          "dollars": 8941279
         },
         {
           "cfda": "15.022",
@@ -2107,14 +2107,14 @@
           "dollars": 7816155.39
         },
         {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 6511625
-        },
-        {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 6095596
+          "dollars": 6652673
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 6528639
         }
       ],
       "fy": 2026,
@@ -2125,9 +2125,9 @@
       "county": "Lenawee",
       "fips": "26091",
       "status": "populated",
-      "total_awards_millions": 707.1,
+      "total_awards_millions": 763.1,
       "population": 99423,
-      "per_capita_dollars": 7112,
+      "per_capita_dollars": 7675,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.1,
@@ -2140,27 +2140,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 475286281
+          "dollars": 519411780
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 65209439
+          "dollars": 71156967
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 50863163
+          "dollars": 51258154
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 40495073
+          "dollars": 44173516
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 13682957
+          "dollars": 14950205
         }
       ],
       "fy": 2026,
@@ -2171,9 +2171,9 @@
       "county": "Livingston",
       "fips": "26093",
       "status": "populated",
-      "total_awards_millions": 1410.6,
+      "total_awards_millions": 1528.2,
       "population": 193866,
-      "per_capita_dollars": 7276,
+      "per_capita_dollars": 7883,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.1,
@@ -2186,22 +2186,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 1060325464
+          "dollars": 1159977080
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 87406173
+          "dollars": 95421832
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 81018656
+          "dollars": 81585111
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 70611857
+          "dollars": 77106043
         },
         {
           "cfda": "84.063",
@@ -2217,9 +2217,9 @@
       "county": "Luce",
       "fips": "26095",
       "status": "populated",
-      "total_awards_millions": 44,
+      "total_awards_millions": 47.4,
       "population": 5339,
-      "per_capita_dollars": 8241,
+      "per_capita_dollars": 8878,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.4,
@@ -2232,27 +2232,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 27413240
+          "dollars": 29930455
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 5248646
+          "dollars": 5722420
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 4352516
+          "dollars": 4373950
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 2332048
+          "dollars": 2536370
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 1296288
+          "dollars": 1432776
         }
       ],
       "fy": 2026,
@@ -2263,37 +2263,37 @@
       "county": "Mackinac",
       "fips": "26097",
       "status": "populated",
-      "total_awards_millions": 96.9,
+      "total_awards_millions": 104.8,
       "population": 10834,
-      "per_capita_dollars": 8941,
+      "per_capita_dollars": 9675,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.2,
       "energy_millions": 0,
       "education_millions": 0.5,
       "infrastructure_millions": 1.8,
-      "health_grants_millions": 0.1,
-      "cfda_covered_millions": 2.6,
+      "health_grants_millions": 0.2,
+      "cfda_covered_millions": 2.7,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 69569068
+          "dollars": 76045655
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 8323116
+          "dollars": 9068102
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 7879790
+          "dollars": 7893177
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 4960838
+          "dollars": 5409391
         },
         {
           "cfda": "66.202",
@@ -2309,42 +2309,42 @@
       "county": "Macomb",
       "fips": "26099",
       "status": "populated",
-      "total_awards_millions": 8772.3,
+      "total_awards_millions": 9223.2,
       "population": 881217,
-      "per_capita_dollars": 9955,
+      "per_capita_dollars": 10466,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 57.7,
       "energy_millions": 0,
       "education_millions": 50.5,
-      "infrastructure_millions": 5.2,
+      "infrastructure_millions": 5.5,
       "health_grants_millions": 20.6,
-      "cfda_covered_millions": 134,
+      "cfda_covered_millions": 134.3,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 3630745038
+          "dollars": 3969855912
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 515448634
+          "dollars": 562000364
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 364668190
+          "dollars": 397708854
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 306134961
+          "dollars": 307971052
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 201866046
+          "dollars": 221016277
         }
       ],
       "fy": 2026,
@@ -2355,9 +2355,9 @@
       "county": "Manistee",
       "fips": "26101",
       "status": "populated",
-      "total_awards_millions": 246.2,
+      "total_awards_millions": 264.2,
       "population": 25032,
-      "per_capita_dollars": 9836,
+      "per_capita_dollars": 10553,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.7,
@@ -2370,22 +2370,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 155340137
+          "dollars": 169821838
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 18996846
+          "dollars": 20703359
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 18635146
+          "dollars": 18812653
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 11269421
+          "dollars": 12271672
         },
         {
           "cfda": "20.901",
@@ -2401,42 +2401,42 @@
       "county": "Marquette",
       "fips": "26103",
       "status": "populated",
-      "total_awards_millions": 611.8,
+      "total_awards_millions": 654.5,
       "population": 66017,
-      "per_capita_dollars": 9268,
+      "per_capita_dollars": 9915,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 6.7,
       "energy_millions": 0,
       "education_millions": 15.2,
       "infrastructure_millions": 7.1,
-      "health_grants_millions": 74.7,
-      "cfda_covered_millions": 103.7,
+      "health_grants_millions": 80.9,
+      "cfda_covered_millions": 110,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 306868995
+          "dollars": 335311893
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 59168275
+          "dollars": 59481215
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 35686159
+          "dollars": 38851102
         },
         {
           "cfda": "93.774",
           "name": "Medicare Supplementary Medical Insurance",
-          "dollars": 31833946.28
+          "dollars": 34604475.37
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 26097408
+          "dollars": 28458299
         }
       ],
       "fy": 2026,
@@ -2447,9 +2447,9 @@
       "county": "Mason",
       "fips": "26105",
       "status": "populated",
-      "total_awards_millions": 272.9,
+      "total_awards_millions": 293.3,
       "population": 29052,
-      "per_capita_dollars": 9393,
+      "per_capita_dollars": 10094,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.4,
@@ -2462,17 +2462,17 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 175383796
+          "dollars": 191776440
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 20713235
+          "dollars": 22575281
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 16437952
+          "dollars": 16632702
         },
         {
           "cfda": "20.337",
@@ -2482,7 +2482,7 @@
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 12170817
+          "dollars": 13274248
         }
       ],
       "fy": 2026,
@@ -2493,9 +2493,9 @@
       "county": "Mecosta",
       "fips": "26107",
       "status": "populated",
-      "total_awards_millions": 350.6,
+      "total_awards_millions": 374.2,
       "population": 39714,
-      "per_capita_dollars": 8829,
+      "per_capita_dollars": 9422,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.6,
@@ -2508,17 +2508,17 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 194837591
+          "dollars": 212963701
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 29484063
+          "dollars": 32174820
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 25131793
+          "dollars": 25264812
         },
         {
           "cfda": "84.063",
@@ -2528,7 +2528,7 @@
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 13750240
+          "dollars": 14983464
         }
       ],
       "fy": 2026,
@@ -2539,22 +2539,22 @@
       "county": "Menominee",
       "fips": "26109",
       "status": "populated",
-      "total_awards_millions": 260.9,
+      "total_awards_millions": 275.4,
       "population": 23502,
-      "per_capita_dollars": 11101,
+      "per_capita_dollars": 11718,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.9,
       "energy_millions": 0,
       "education_millions": 3.2,
       "infrastructure_millions": 22.6,
-      "health_grants_millions": 3.2,
+      "health_grants_millions": 3.3,
       "cfda_covered_millions": 31.9,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 126480696
+          "dollars": 138222563
         },
         {
           "cfda": "32.002",
@@ -2569,12 +2569,12 @@
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 17763314
+          "dollars": 17871843
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 15077813
+          "dollars": 16446088
         }
       ],
       "fy": 2026,
@@ -2585,9 +2585,9 @@
       "county": "Midland",
       "fips": "26111",
       "status": "populated",
-      "total_awards_millions": 357.7,
+      "total_awards_millions": 404.8,
       "population": 83494,
-      "per_capita_dollars": 4284,
+      "per_capita_dollars": 4848,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.1,
@@ -2595,32 +2595,32 @@
       "education_millions": 4.2,
       "infrastructure_millions": 1.3,
       "health_grants_millions": 0.6,
-      "cfda_covered_millions": -186.9,
+      "cfda_covered_millions": -186.8,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 390981839
+          "dollars": 427527621
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 48096232
+          "dollars": 52425536
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 43911923
+          "dollars": 44132321
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 35508271
+          "dollars": 38698771
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 13725372
+          "dollars": 15045206
         }
       ],
       "fy": 2026,
@@ -2631,9 +2631,9 @@
       "county": "Missaukee",
       "fips": "26113",
       "status": "populated",
-      "total_awards_millions": 106.2,
+      "total_awards_millions": 115,
       "population": 15052,
-      "per_capita_dollars": 7055,
+      "per_capita_dollars": 7642,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0,
@@ -2646,27 +2646,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 72988735
+          "dollars": 79817584
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 11493346
+          "dollars": 12513157
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 8185033
+          "dollars": 8280725
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 6476715
+          "dollars": 7076991
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 2379007
+          "dollars": 2596870
         }
       ],
       "fy": 2026,
@@ -2677,9 +2677,9 @@
       "county": "Monroe",
       "fips": "26115",
       "status": "populated",
-      "total_awards_millions": 1054.7,
+      "total_awards_millions": 1141.9,
       "population": 154809,
-      "per_capita_dollars": 6813,
+      "per_capita_dollars": 7376,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 8.8,
@@ -2692,27 +2692,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 713044068
+          "dollars": 779578462
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 112861878
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 76105106
+          "dollars": 123107501
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 73212682
+          "dollars": 79975013
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 76649168
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 21512456
+          "dollars": 23633619
         }
       ],
       "fy": 2026,
@@ -2723,9 +2723,9 @@
       "county": "Montcalm",
       "fips": "26117",
       "status": "populated",
-      "total_awards_millions": 417.1,
+      "total_awards_millions": 451.1,
       "population": 66614,
-      "per_capita_dollars": 6262,
+      "per_capita_dollars": 6772,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.8,
@@ -2738,27 +2738,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 271439355
+          "dollars": 296717764
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 51038074
+          "dollars": 55624560
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 40417398
+          "dollars": 40568586
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 24604192
+          "dollars": 26830675
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 14045032
+          "dollars": 15353750
         }
       ],
       "fy": 2026,
@@ -2769,9 +2769,9 @@
       "county": "Montmorency",
       "fips": "26119",
       "status": "populated",
-      "total_awards_millions": 113.6,
+      "total_awards_millions": 122.6,
       "population": 9153,
-      "per_capita_dollars": 12416,
+      "per_capita_dollars": 13395,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.1,
@@ -2784,22 +2784,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 74428950
+          "dollars": 81320797
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 12598364
+          "dollars": 13724475
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 12094037
+          "dollars": 12197950
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 6153388
+          "dollars": 6703289
         },
         {
           "cfda": "93.224",
@@ -2815,42 +2815,42 @@
       "county": "Muskegon",
       "fips": "26121",
       "status": "populated",
-      "total_awards_millions": 1300.3,
+      "total_awards_millions": 1399.5,
       "population": 175824,
-      "per_capita_dollars": 7395,
+      "per_capita_dollars": 7959,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 13.5,
       "energy_millions": 0,
       "education_millions": 8.2,
       "infrastructure_millions": 3.6,
-      "health_grants_millions": 40,
-      "cfda_covered_millions": 65.3,
+      "health_grants_millions": 42.3,
+      "cfda_covered_millions": 67.6,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 760269611
+          "dollars": 831245947
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 136456339
+          "dollars": 148751736
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 99306911
+          "dollars": 99959265
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 69904640
+          "dollars": 76194010
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 47279180
+          "dollars": 51853335
         }
       ],
       "fy": 2026,
@@ -2861,42 +2861,42 @@
       "county": "Newaygo",
       "fips": "26123",
       "status": "populated",
-      "total_awards_millions": 355.4,
+      "total_awards_millions": 385.6,
       "population": 49978,
-      "per_capita_dollars": 7112,
+      "per_capita_dollars": 7716,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.9,
       "energy_millions": 0,
       "education_millions": 0,
       "infrastructure_millions": 0,
-      "health_grants_millions": 5.4,
-      "cfda_covered_millions": 6.3,
+      "health_grants_millions": 5.9,
+      "cfda_covered_millions": 6.8,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 236610428
+          "dollars": 258715817
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 45359613
+          "dollars": 49436518
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 29860107
+          "dollars": 30102945
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 19331565
+          "dollars": 21093497
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 11719783
+          "dollars": 12805582
         }
       ],
       "fy": 2026,
@@ -2907,42 +2907,42 @@
       "county": "Oakland",
       "fips": "26125",
       "status": "populated",
-      "total_awards_millions": 10888.6,
+      "total_awards_millions": 11812.7,
       "population": 1274395,
-      "per_capita_dollars": 8544,
+      "per_capita_dollars": 9269,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 144.8,
       "energy_millions": 0,
-      "education_millions": 67.7,
+      "education_millions": 67.5,
       "infrastructure_millions": 3.8,
-      "health_grants_millions": 2617.9,
-      "cfda_covered_millions": 2834.2,
+      "health_grants_millions": 2890.2,
+      "cfda_covered_millions": 3106.4,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 5810813881
+          "dollars": 6354820362
         },
         {
           "cfda": "93.774",
           "name": "Medicare Supplementary Medical Insurance",
-          "dollars": 1392674374.65
+          "dollars": 1534190447.19
         },
         {
           "cfda": "93.773",
           "name": "Medicare Hospital Insurance",
-          "dollars": 890131938.76
+          "dollars": 980129687.18
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 491842132
+          "dollars": 536069023
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 424998300
+          "dollars": 463761131
         }
       ],
       "fy": 2026,
@@ -2953,9 +2953,9 @@
       "county": "Oceana",
       "fips": "26127",
       "status": "populated",
-      "total_awards_millions": 219.3,
+      "total_awards_millions": 235.6,
       "population": 26659,
-      "per_capita_dollars": 8226,
+      "per_capita_dollars": 8838,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.3,
@@ -2968,27 +2968,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 135887955
+          "dollars": 148575047
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 20993211
+          "dollars": 22863923
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 19097547
+          "dollars": 19189553
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 10422843
+          "dollars": 11367159
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 5204134
+          "dollars": 5720618
         }
       ],
       "fy": 2026,
@@ -2999,9 +2999,9 @@
       "county": "Ogemaw",
       "fips": "26129",
       "status": "populated",
-      "total_awards_millions": 191.9,
+      "total_awards_millions": 207.7,
       "population": 20770,
-      "per_capita_dollars": 9239,
+      "per_capita_dollars": 10000,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.2,
@@ -3014,27 +3014,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 127047824
+          "dollars": 138846981
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 23981732
+          "dollars": 26131287
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 18003868
+          "dollars": 18119841
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 12764734
+          "dollars": 13918134
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 5509622
+          "dollars": 6020726
         }
       ],
       "fy": 2026,
@@ -3045,9 +3045,9 @@
       "county": "Ontonagon",
       "fips": "26131",
       "status": "populated",
-      "total_awards_millions": 67.7,
+      "total_awards_millions": 73,
       "population": 5816,
-      "per_capita_dollars": 11637,
+      "per_capita_dollars": 12559,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.3,
@@ -3060,27 +3060,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 44279242
+          "dollars": 48409284
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 9324739
+          "dollars": 9379186
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 5434899
+          "dollars": 5937748
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 3356282
+          "dollars": 3662869
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 894731
+          "dollars": 981102
         }
       ],
       "fy": 2026,
@@ -3091,9 +3091,9 @@
       "county": "Osceola",
       "fips": "26133",
       "status": "populated",
-      "total_awards_millions": 178.1,
+      "total_awards_millions": 192.5,
       "population": 22891,
-      "per_capita_dollars": 7782,
+      "per_capita_dollars": 8409,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.3,
@@ -3106,27 +3106,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 116074001
+          "dollars": 126816472
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 20247924
+          "dollars": 22090213
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 18042794
+          "dollars": 18120417
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 9986926
+          "dollars": 10915896
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 6115822
+          "dollars": 6662627
         }
       ],
       "fy": 2026,
@@ -3137,9 +3137,9 @@
       "county": "Oscoda",
       "fips": "26135",
       "status": "populated",
-      "total_awards_millions": 79.4,
+      "total_awards_millions": 86,
       "population": 8219,
-      "per_capita_dollars": 9659,
+      "per_capita_dollars": 10461,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.2,
@@ -3152,27 +3152,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 52421647
+          "dollars": 57310591
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 10858073
+          "dollars": 11809091
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 7302068
+          "dollars": 7375333
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 4596363
+          "dollars": 5026820
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 2327187
+          "dollars": 2537999
         }
       ],
       "fy": 2026,
@@ -3183,9 +3183,9 @@
       "county": "Otsego",
       "fips": "26137",
       "status": "populated",
-      "total_awards_millions": 198.6,
+      "total_awards_millions": 214.6,
       "population": 25091,
-      "per_capita_dollars": 7915,
+      "per_capita_dollars": 8554,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.4,
@@ -3198,27 +3198,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 136870180
+          "dollars": 149673373
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 23068856
+          "dollars": 23203739
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 18939472
+          "dollars": 20613135
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 9286783
+          "dollars": 10116186
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 4503088
+          "dollars": 4910896
         }
       ],
       "fy": 2026,
@@ -3229,9 +3229,9 @@
       "county": "Ottawa",
       "fips": "26139",
       "status": "populated",
-      "total_awards_millions": 1806.5,
+      "total_awards_millions": 1952.5,
       "population": 296200,
-      "per_capita_dollars": 6099,
+      "per_capita_dollars": 6592,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 5.2,
@@ -3244,22 +3244,22 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 1316503504
+          "dollars": 1440177626
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 107668631
+          "dollars": 117353377
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 93235627
+          "dollars": 93965927
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 84951461
+          "dollars": 92787754
         },
         {
           "cfda": "84.063",
@@ -3275,9 +3275,9 @@
       "county": "Presque Isle",
       "fips": "26141",
       "status": "populated",
-      "total_awards_millions": 132.4,
+      "total_awards_millions": 143.3,
       "population": 12982,
-      "per_capita_dollars": 10201,
+      "per_capita_dollars": 11040,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.3,
@@ -3290,27 +3290,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 95618157
+          "dollars": 104481746
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 11701973
+          "dollars": 12724753
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 11462786
+          "dollars": 11509150
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 7593327
+          "dollars": 8287728
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 2477168
+          "dollars": 2705347
         }
       ],
       "fy": 2026,
@@ -3321,9 +3321,9 @@
       "county": "Roscommon",
       "fips": "26143",
       "status": "populated",
-      "total_awards_millions": 268.2,
+      "total_awards_millions": 290.5,
       "population": 23459,
-      "per_capita_dollars": 11431,
+      "per_capita_dollars": 12383,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0,
@@ -3336,27 +3336,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 188903185
+          "dollars": 206458475
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 28663461
+          "dollars": 31252349
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 22766997
+          "dollars": 22870011
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 13799921
+          "dollars": 15052650
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 6340204
+          "dollars": 6943294
         }
       ],
       "fy": 2026,
@@ -3367,42 +3367,42 @@
       "county": "Saginaw",
       "fips": "26145",
       "status": "populated",
-      "total_awards_millions": 1357.4,
+      "total_awards_millions": 1465.5,
       "population": 190124,
-      "per_capita_dollars": 7139,
+      "per_capita_dollars": 7708,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 22.1,
       "energy_millions": 0,
       "education_millions": 0,
       "infrastructure_millions": 35.6,
-      "health_grants_millions": 28.1,
-      "cfda_covered_millions": 85.9,
+      "health_grants_millions": 29.4,
+      "cfda_covered_millions": 87.1,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 829383949
+          "dollars": 906457366
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 139785904
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 95981824
+          "dollars": 152347973
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 93866164
+          "dollars": 102369812
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 96509974
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 68035018
+          "dollars": 74536019
         }
       ],
       "fy": 2026,
@@ -3413,9 +3413,9 @@
       "county": "Sanilac",
       "fips": "26151",
       "status": "populated",
-      "total_awards_millions": 301,
+      "total_awards_millions": 325.5,
       "population": 40611,
-      "per_capita_dollars": 7411,
+      "per_capita_dollars": 8015,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.9,
@@ -3428,27 +3428,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 202711090
+          "dollars": 221526600
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 32225642
+          "dollars": 35119950
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 20227490
+          "dollars": 22070530
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 19930588
+          "dollars": 20054605
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 6836815
+          "dollars": 7490528
         }
       ],
       "fy": 2026,
@@ -3459,9 +3459,9 @@
       "county": "Schoolcraft",
       "fips": "26153",
       "status": "populated",
-      "total_awards_millions": 75.8,
+      "total_awards_millions": 81.5,
       "population": 8047,
-      "per_capita_dollars": 9414,
+      "per_capita_dollars": 10129,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.7,
@@ -3474,27 +3474,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 48754217
+          "dollars": 53243665
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 10338175
+          "dollars": 10349492
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 7765851
+          "dollars": 8463492
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 3678346
+          "dollars": 4014539
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 1620132
+          "dollars": 1773907
         }
       ],
       "fy": 2026,
@@ -3505,9 +3505,9 @@
       "county": "Shiawassee",
       "fips": "26155",
       "status": "populated",
-      "total_awards_millions": 469.3,
+      "total_awards_millions": 507.3,
       "population": 68094,
-      "per_capita_dollars": 6891,
+      "per_capita_dollars": 7450,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.4,
@@ -3520,27 +3520,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 305368097
+          "dollars": 333949928
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 49668595
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 35682579
+          "dollars": 54118466
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 33458465
+          "dollars": 36552912
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 36152049
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 12078409
+          "dollars": 13256618
         }
       ],
       "fy": 2026,
@@ -3551,42 +3551,42 @@
       "county": "St. Clair",
       "fips": "26147",
       "status": "populated",
-      "total_awards_millions": 1182.9,
+      "total_awards_millions": 1280,
       "population": 160383,
-      "per_capita_dollars": 7376,
+      "per_capita_dollars": 7981,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 16.8,
       "energy_millions": 0,
       "education_millions": 8.7,
-      "infrastructure_millions": 11.5,
+      "infrastructure_millions": 12.9,
       "health_grants_millions": 2.4,
-      "cfda_covered_millions": 39.4,
+      "cfda_covered_millions": 40.9,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 781558292
+          "dollars": 854574073
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 125341578
+          "dollars": 136794646
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 90317732
+          "dollars": 90866243
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 79773698
+          "dollars": 87040421
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 26090391
+          "dollars": 28539508
         }
       ],
       "fy": 2026,
@@ -3597,9 +3597,9 @@
       "county": "St. Joseph",
       "fips": "26149",
       "status": "populated",
-      "total_awards_millions": 376.4,
+      "total_awards_millions": 407.7,
       "population": 60939,
-      "per_capita_dollars": 6177,
+      "per_capita_dollars": 6691,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 4.1,
@@ -3612,27 +3612,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 261817823
+          "dollars": 286186853
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 39103885
-        },
-        {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 24157885
+          "dollars": 42637552
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 22565981
+          "dollars": 24662009
+        },
+        {
+          "cfda": "64.109",
+          "name": "Veterans Compensation for Service-Connected Disability",
+          "dollars": 24322070
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 9201457
+          "dollars": 10068802
         }
       ],
       "fy": 2026,
@@ -3643,9 +3643,9 @@
       "county": "Tuscola",
       "fips": "26157",
       "status": "populated",
-      "total_awards_millions": 402.8,
+      "total_awards_millions": 435.2,
       "population": 53323,
-      "per_capita_dollars": 7554,
+      "per_capita_dollars": 8161,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 0.4,
@@ -3658,27 +3658,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 251491186
+          "dollars": 274723221
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 46253558
+          "dollars": 50451265
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 35157076
+          "dollars": 35535135
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 27831258
+          "dollars": 30338920
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 10792586
+          "dollars": 11818101
         }
       ],
       "fy": 2026,
@@ -3689,9 +3689,9 @@
       "county": "Van Buren",
       "fips": "26159",
       "status": "populated",
-      "total_awards_millions": 548.2,
+      "total_awards_millions": 591,
       "population": 75587,
-      "per_capita_dollars": 7253,
+      "per_capita_dollars": 7819,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 1.8,
@@ -3704,27 +3704,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 360178526
+          "dollars": 393759797
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 49665507
+          "dollars": 54062624
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 41559647
+          "dollars": 41825390
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 29899200
+          "dollars": 32591547
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 15145078
+          "dollars": 16572223
         }
       ],
       "fy": 2026,
@@ -3735,22 +3735,22 @@
       "county": "Washtenaw",
       "fips": "26161",
       "status": "populated",
-      "total_awards_millions": 5048.4,
+      "total_awards_millions": 5220.7,
       "population": 372258,
-      "per_capita_dollars": 13562,
+      "per_capita_dollars": 14024,
       "medicaid_millions": 0,
       "snap_millions": 0,
-      "housing_millions": 63.5,
+      "housing_millions": 62.1,
       "energy_millions": 23.2,
       "education_millions": 105,
-      "infrastructure_millions": 58.7,
-      "health_grants_millions": 805.5,
-      "cfda_covered_millions": 1056,
+      "infrastructure_millions": 61.6,
+      "health_grants_millions": 807.1,
+      "cfda_covered_millions": 1059.1,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 1478486611
+          "dollars": 1617055653
         },
         {
           "cfda": "12.225",
@@ -3765,12 +3765,12 @@
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 127944904
+          "dollars": 139380289
         },
         {
-          "cfda": "64.109",
-          "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 95873385
+          "cfda": "96.004",
+          "name": "Social Security Survivors Insurance",
+          "dollars": 97494022
         }
       ],
       "fy": 2026,
@@ -3781,42 +3781,42 @@
       "county": "Wayne",
       "fips": "26163",
       "status": "populated",
-      "total_awards_millions": 20173.1,
+      "total_awards_millions": 21736.6,
       "population": 1793561,
-      "per_capita_dollars": 11247,
+      "per_capita_dollars": 12119,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 539.6,
       "energy_millions": 65,
       "education_millions": 184.8,
       "infrastructure_millions": 208.2,
-      "health_grants_millions": 9484,
-      "cfda_covered_millions": 10481.7,
+      "health_grants_millions": 10263.6,
+      "cfda_covered_millions": 11261.3,
       "top_programs": [
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 5864646986
+          "dollars": 6409906477
         },
         {
           "cfda": "93.774",
           "name": "Medicare Supplementary Medical Insurance",
-          "dollars": 5224844586.7
+          "dollars": 5671678528.61
         },
         {
           "cfda": "93.773",
           "name": "Medicare Hospital Insurance",
-          "dollars": 3324936007.05
+          "dollars": 3608023979.28
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 1085264127
+          "dollars": 1182945447
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 661603313
+          "dollars": 721550251
         }
       ],
       "fy": 2026,
@@ -3827,9 +3827,9 @@
       "county": "Wexford",
       "fips": "26165",
       "status": "populated",
-      "total_awards_millions": 365,
+      "total_awards_millions": 386.1,
       "population": 33673,
-      "per_capita_dollars": 10839,
+      "per_capita_dollars": 11465,
       "medicaid_millions": 0,
       "snap_millions": 0,
       "housing_millions": 2.3,
@@ -3842,27 +3842,27 @@
         {
           "cfda": "96.002",
           "name": "Social Security Retirement Insurance",
-          "dollars": 157420157
+          "dollars": 172076528
         },
         {
           "cfda": "96.001",
           "name": "Social Security Disability Insurance",
-          "dollars": 26219544
+          "dollars": 28534567
         },
         {
           "cfda": "64.109",
           "name": "Veterans Compensation for Service-Connected Disability",
-          "dollars": 24428422
+          "dollars": 24488104
         },
         {
           "cfda": "96.004",
           "name": "Social Security Survivors Insurance",
-          "dollars": 14679844
+          "dollars": 16020364
         },
         {
           "cfda": "96.006",
           "name": "Supplemental Security Income",
-          "dollars": 7730989
+          "dollars": 8424862
         }
       ],
       "fy": 2026,
