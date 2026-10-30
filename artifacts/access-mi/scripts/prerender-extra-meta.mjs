@@ -9,6 +9,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { buildArticle, injectArticle, primaryHubLinks } from "./lib/prerender-body.mjs";
 
 const SITE_URL = "https://accessmi.org";
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -69,15 +70,22 @@ function rewriteHead(html, meta) {
   ];
   for (const [pattern, tag] of social) out = replaceOrInsert(out, pattern, tag);
 
-  const noscript = `<noscript data-accessmi-prerender><main><h1>${escapeHtml(meta.h1)}</h1><p>${escapeHtml(meta.summary ?? meta.description)}</p></main></noscript>`;
-  if (/<div\s+id=["']root["']><\/div>/i.test(out)) {
-    out = out.replace(
-      /<div\s+id=["']root["']><\/div>/i,
-      (root) => `${root}\n    ${noscript}`,
-    );
-  } else {
-    out = out.replace(/<\/body>/i, `    ${noscript}\n  </body>`);
-  }
+  // Visible route article inside #root (replaced when React mounts). The
+  // data-accessmi-prerender attribute is what check-extra-prerender.mjs keys
+  // on. injectArticle strips the homepage article this template inherits
+  // from dist/index.html, so the route ships exactly one <h1>.
+  const paragraphs = [meta.summary, meta.description].filter(
+    (p, i, arr) => p && arr.indexOf(p) === i,
+  );
+  out = injectArticle(
+    out,
+    buildArticle({
+      h1: meta.h1,
+      paragraphs,
+      attrs: "data-accessmi-prerender",
+      sections: [{ heading: "Access Michigan", links: primaryHubLinks(meta.path) }],
+    }),
+  );
 
   return out;
 }
