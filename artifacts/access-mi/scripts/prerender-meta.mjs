@@ -12,16 +12,15 @@
  * This script copies dist/index.html into dist/<route>/index.html for
  * each entry in src/config/routeMeta.ts, then rewrites the head tags
  * (<title>, <meta name="description">, <link rel="canonical">, OG
- * and Twitter equivalents) and injects a <noscript> block with a
- * route-specific <h1> + summary so non-JS readers see route-specific
- * content instead of the homepage shell.
+ * and Twitter equivalents) and injects a visible route article (own
+ * <h1>, summary and crawlable links) inside #root, which React replaces
+ * on mount (scripts/lib/prerender-body.mjs), so raw HTML carries
+ * route-specific content instead of the homepage shell.
  *
- * The SPA still hydrates as normal in browsers that run JS. The
- * Netlify SPA fallback (`/* -> /index.html`) only fires when a
- * specific path is missing on disk, so a prerendered
- * dist/methodology/index.html is served directly for /methodology
- * while /county/wayne and other dynamic paths fall through to the
- * client-rendered shell.
+ * The SPA still mounts as normal in browsers that run JS. Netlify
+ * serves a prerendered dist/methodology/index.html directly for
+ * /methodology; valid routes without a file get a 200 rewrite from
+ * dist/_redirects (generate-spa-rewrites.mjs) and anything else 404s.
  *
  * Invoked from package.json's `build` script:
  *     vite build && node scripts/prerender-meta.mjs
@@ -31,6 +30,12 @@ import { mkdir, copyFile, readFile, writeFile, stat } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+  PRIMARY_HUBS,
+  buildArticle,
+  injectArticle,
+  linkLabel,
+} from "./lib/prerender-body.mjs";
 
 const SITE_URL = "https://accessmi.org";
 
@@ -117,7 +122,7 @@ function countyRouteMeta(profile) {
     h1: `${profile.name} County, Michigan`,
     summary:
       `Population ${pop} (U.S. Census Bureau Population Estimates, Vintage 2024). ` +
-      `Uninsured rate ${profile.uninsured} (County Health Rankings 2025, SAHIE 2022). ` +
+      `Uninsured rate ${profile.uninsured} (County Health Rankings 2025, SAHIE 2022, modeled estimate). ` +
       `Primary care ratio ${profile.primaryCare} (County Health Rankings 2025, AHRF 2021). ` +
       `Food insecurity ${profile.foodInsecurity} (County Health Rankings 2025, Map the Meal Gap 2022, modeled estimate). ` +
       `Health facility, environmental and community resource detail for ${profile.name} County loads in the interactive view.`,
@@ -355,7 +360,7 @@ const ROUTE_JSONLD = {
     "@type": "DataCatalog",
     "name": "Access Michigan Open Data Registry",
     "description":
-      "Registry of 41 verified public datasets used by the Access Michigan civic platform. Sources: U.S. Census Bureau, CDC, CMS, HRSA, County Health Rankings, USDA, EPA — covering all 83 Michigan counties.",
+      "Registry of 41 verified public datasets used by the Access Michigan civic platform. Sources: U.S. Census Bureau, CDC, CMS, HRSA, County Health Rankings, USDA, EPA - covering all 83 Michigan counties.",
     "url": `${SITE_URL}/data-sources`,
     "license": `${SITE_URL}/methodology`,
     "creator": {
@@ -450,23 +455,17 @@ function stripExistingNoscript(html) {
   return html.replace(re, "");
 }
 
-function injectNoscript(html, meta) {
-  // Drop a route-specific <h1> + summary inside a <noscript> block at
-  // the top of the SPA root. JS-enabled browsers ignore it; crawlers
-  // and text-mode readers see route-specific content instead of the
-  // homepage shell. Marker comments make the inserted region cheap to
-  // locate and replace on subsequent runs.
+function injectNoscript(html, _meta) {
+  // A <noscript> note for readers without JavaScript. The route's own <h1>,
+  // summary and links now ship as a visible article inside #root (see
+  // scripts/lib/prerender-body.mjs), so the note carries no heading: one
+  // <h1> per raw document, and no body text shared verbatim across routes
+  // beyond this one line. Marker comments keep re-runs idempotent.
   const cleaned = stripExistingNoscript(html);
   const snippet =
     `${PRERENDER_MARKER_START}\n` +
     `    <noscript>\n` +
-    `      <section role="main" aria-labelledby="noscript-route-h1">\n` +
-    `        <h1 id="noscript-route-h1">${escapeHtml(meta.h1)}</h1>\n` +
-    (meta.summary
-      ? `        <p>${escapeHtml(meta.summary)}</p>\n`
-      : "") +
-    `        <p>This page requires JavaScript for full interactivity. View the data we publish at <a href="${SITE_URL}/data-sources">${SITE_URL}/data-sources</a>.</p>\n` +
-    `      </section>\n` +
+    `      <p>Interactive maps and tools on this page need JavaScript. Every dataset we publish is listed at <a href="${SITE_URL}/data-sources/">${SITE_URL}/data-sources/</a>.</p>\n` +
     `    </noscript>\n` +
     `    ${PRERENDER_MARKER_END}\n    `;
 
@@ -477,6 +476,135 @@ function injectNoscript(html, meta) {
     );
   }
   return cleaned;
+}
+
+/**
+ * Link graph for the visible prerender article. Every page links the primary
+ * hubs; hubs also list their child routes; the home page, /regions and /brief
+ * list all 83 counties so county pages are discoverable from raw HTML.
+ */
+function buildLinkContext(routeMeta, countyProfiles) {
+  const byPath = new Map(routeMeta.map((r) => [r.path, r]));
+  const href = (p) =>
+    p === "/" || p.includes("?") ? p : p.endsWith("/") ? p : `${p}/`;
+  const hubs = PRIMARY_HUBS.filter((p) => byPath.has(p)).map((p) => ({
+    path: p,
+    href: href(p),
+    label: p === "/" ? "Access Michigan home" : linkLabel(byPath.get(p).title),
+  }));
+  const counties = countyProfiles.map((c) => ({
+    name: c.name,
+    slug: countyToSlug(c.name),
+  }));
+  const topLevel = routeMeta
+    .filter((r) => r.path !== "/" && r.path.split("/").filter(Boolean).length === 1)
+    .map((r) => ({ href: href(r.path), label: linkLabel(r.title) }));
+  return { byPath, href, hubs, counties, topLevel };
+}
+
+function hubSection(ctx, selfPath) {
+  return {
+    heading: "Access Michigan",
+    links: ctx.hubs
+      .filter((h) => h.path !== selfPath)
+      .map((h) => ({ href: h.href, label: h.label })),
+  };
+}
+
+function countyLinks(ctx, kind) {
+  return ctx.counties.map((c) => ({
+    href: kind === "brief" ? `/brief?county=${c.slug}` : `/county/${c.slug}/`,
+    label: kind === "brief" ? `${c.name} County brief` : `${c.name} County`,
+  }));
+}
+
+function staticRouteArticle(ctx, meta) {
+  const paragraphs = [meta.summary, meta.description].filter(
+    (p, i, arr) => p && arr.indexOf(p) === i,
+  );
+  const sections = [];
+  if (meta.path === "/") {
+    sections.push({ heading: "Explore", links: ctx.topLevel });
+    sections.push({ heading: "Michigan counties", links: countyLinks(ctx, "county") });
+  } else {
+    const prefix = `${meta.path.replace(/\/$/, "")}/`;
+    const children = [...ctx.byPath.values()]
+      .filter((r) => r.path.startsWith(prefix) && r.path !== meta.path)
+      .map((r) => ({ href: ctx.href(r.path), label: linkLabel(r.title) }));
+    if (children.length) sections.push({ heading: "In this section", links: children });
+    if (meta.path === "/regions") {
+      sections.push({ heading: "Michigan counties", links: countyLinks(ctx, "county") });
+    }
+    if (meta.path === "/brief") {
+      sections.push({ heading: "County briefs", links: countyLinks(ctx, "brief") });
+    }
+    sections.push(hubSection(ctx, meta.path));
+  }
+  return buildArticle({ h1: meta.h1, paragraphs, sections });
+}
+
+function countyArticle(ctx, meta, profile, kind) {
+  const slug = countyToSlug(profile.name);
+  const related =
+    kind === "help"
+      ? [
+          { href: `/county/${slug}/`, label: `${profile.name} County civic data` },
+          { href: `/brief?county=${slug}`, label: `${profile.name} County brief` },
+          { href: "/benefits/", label: "Benefits" },
+          { href: "/find-care/", label: "Find care" },
+        ]
+      : [
+          { href: `/county/${slug}/help/`, label: `Get help in ${profile.name} County` },
+          { href: `/brief?county=${slug}`, label: `${profile.name} County brief` },
+          { href: "/regions/", label: "Michigan regions" },
+        ];
+  return buildArticle({
+    h1: meta.h1,
+    paragraphs: [meta.summary],
+    sections: [
+      { heading: `${profile.name} County`, links: related },
+      hubSection(ctx, null),
+    ],
+  });
+}
+
+/**
+ * /brief?county=<slug>. The sitemap lists all 83 as canonical URLs, but
+ * Netlify serves one file per path, so every one of them shipped the generic
+ * /brief head. These files live at dist/brief-county/<slug>/index.html and the
+ * brief-county edge function serves them for /brief?county=<slug>. Title,
+ * description and H1 mirror BriefPage.tsx after hydration.
+ */
+function briefCountyMeta(profile) {
+  const slug = countyToSlug(profile.name);
+  return {
+    path: `/brief?county=${slug}`,
+    title: `${profile.name} County Brief | Access Michigan`,
+    description: `Civic snapshot for ${profile.name} County, Michigan - key health, economic, and access metrics at a glance.`,
+    h1: `${profile.name} County, at a glance.`,
+    summary:
+      `A citation-grade civic brief for ${profile.name} County, Michigan. ` +
+      "Each statistic carries its source, data vintage and integrity label in the interactive view.",
+  };
+}
+
+function briefCountyArticle(ctx, meta, profile) {
+  const slug = countyToSlug(profile.name);
+  return buildArticle({
+    h1: meta.h1,
+    paragraphs: [meta.summary, meta.description],
+    sections: [
+      {
+        heading: `${profile.name} County`,
+        links: [
+          { href: `/county/${slug}/`, label: `${profile.name} County civic data` },
+          { href: `/county/${slug}/help/`, label: `Get help in ${profile.name} County` },
+          { href: "/brief/", label: "All county briefs" },
+        ],
+      },
+      hubSection(ctx, null),
+    ],
+  });
 }
 
 async function main() {
@@ -499,12 +627,17 @@ async function main() {
   }
 
   const indexHtml = await readFile(indexPath, "utf8");
+  const countyProfiles = await loadCountyProfiles();
+  const ctx = buildLinkContext(routeMeta, countyProfiles);
 
   // Always rewrite dist/index.html in place for the home route so the
   // homepage shell itself ships the canonical / og / twitter tags.
   const homeMeta = routeMeta.find((r) => r.path === "/");
   if (homeMeta) {
-    const homeHtml = injectNoscript(rewriteHead(indexHtml, homeMeta), homeMeta);
+    const homeHtml = injectArticle(
+      injectNoscript(rewriteHead(indexHtml, homeMeta), homeMeta),
+      staticRouteArticle(ctx, homeMeta),
+    );
     await writeFile(indexPath, homeHtml, "utf8");
   }
 
@@ -513,9 +646,12 @@ async function main() {
     if (meta.path === "/") continue;
     const routeDir = path.join(distDir, meta.path.replace(/^\/+/, ""));
     await mkdir(routeDir, { recursive: true });
-    const html = injectRouteJsonLd(
-      injectNoscript(rewriteHead(indexHtml, meta), meta),
-      meta.path,
+    const html = injectArticle(
+      injectRouteJsonLd(
+        injectNoscript(rewriteHead(indexHtml, meta), meta),
+        meta.path,
+      ),
+      staticRouteArticle(ctx, meta),
     );
     await writeFile(path.join(routeDir, "index.html"), html, "utf8");
     written++;
@@ -526,24 +662,38 @@ async function main() {
   // catch-all served the homepage shell - complete with the homepage's
   // canonical - under every county URL. Writing a real file per county
   // makes the canonical self-referencing before JS runs.
-  const countyProfiles = await loadCountyProfiles();
   let countiesWritten = 0;
   let helpWritten = 0;
+  let briefsWritten = 0;
   for (const profile of countyProfiles) {
     for (const meta of [countyRouteMeta(profile), countyHelpRouteMeta(profile)]) {
+      const kind = meta.path.endsWith("/help") ? "help" : "county";
       const routeDir = path.join(distDir, meta.path.replace(/^\/+/, ""));
       await mkdir(routeDir, { recursive: true });
-      const html = injectRouteJsonLd(
-        injectNoscript(rewriteHead(indexHtml, meta), meta),
-        meta.path,
-        meta.jsonLd,
+      const html = injectArticle(
+        injectRouteJsonLd(
+          injectNoscript(rewriteHead(indexHtml, meta), meta),
+          meta.path,
+          meta.jsonLd,
+        ),
+        countyArticle(ctx, meta, profile, kind),
       );
       await writeFile(path.join(routeDir, "index.html"), html, "utf8");
-      if (meta.path.endsWith("/help")) helpWritten++;
+      if (kind === "help") helpWritten++;
       else countiesWritten++;
     }
+
+    const brief = briefCountyMeta(profile);
+    const briefDir = path.join(distDir, "brief-county", countyToSlug(profile.name));
+    await mkdir(briefDir, { recursive: true });
+    const briefHtml = injectArticle(
+      injectNoscript(rewriteHead(indexHtml, brief), brief),
+      briefCountyArticle(ctx, brief, profile),
+    );
+    await writeFile(path.join(briefDir, "index.html"), briefHtml, "utf8");
+    briefsWritten++;
   }
-  if (countiesWritten < 83 || helpWritten < 83) {
+  if (countiesWritten < 83 || helpWritten < 83 || briefsWritten < 83) {
     console.error(
       `[prerender-meta] expected 83 county pages and 83 county help pages, parsed ${countiesWritten} and ${helpWritten}. ` +
         "COUNTY_PROFILES in src/data/michigan-county-profiles.ts may have changed shape.",
@@ -552,7 +702,7 @@ async function main() {
   }
 
   console.log(
-    `[prerender-meta] wrote ${written} static + ${countiesWritten} county per-route HTML files into dist/.`,
+    `[prerender-meta] wrote ${written} static + ${countiesWritten} county + ${helpWritten} county help + ${briefsWritten} county brief per-route HTML files into dist/.`,
   );
 
 }
