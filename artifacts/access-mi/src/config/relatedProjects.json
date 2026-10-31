@@ -1,0 +1,11 @@
+{
+  "self": "https://accessmi.org/",
+  "projects": [
+    { "name": "ConditionMap", "url": "https://conditionmap.com/" },
+    { "name": "Access Michigan", "url": "https://accessmi.org/" },
+    { "name": "OurIntel", "url": "https://ourintel.org/" },
+    { "name": "DecisionPlay", "url": "https://decisionplay.app/" },
+    { "name": "Values in Care", "url": "https://valuesincare.com/" }
+  ],
+  "builtBy": { "name": "Built by Saeb", "url": "https://michigans.me/" }
+}

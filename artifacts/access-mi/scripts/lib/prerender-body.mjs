@@ -18,7 +18,13 @@
  *
  * Copy rules: text only, taken verbatim from routeMeta.ts, extraRouteMeta.json
  * or the existing county summaries. This module never introduces a number.
+ * Every article ends with the same "Related projects" nav the React footer
+ * renders, read from src/config/relatedProjects.json.
  */
+
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 export const SITE_URL = "https://accessmi.org";
 
@@ -100,6 +106,28 @@ function linkList(heading, links) {
   return `<nav aria-label="${escapeHtml(heading)}"><h2>${escapeHtml(heading)}</h2><ul>${items}</ul></nav>`;
 }
 
+// Same list the React footer renders (src/config/relatedProjects.json), so
+// crawlers reading raw HTML see the sibling-project links on every route.
+// Names only: no descriptions or claims.
+const relatedProjects = JSON.parse(
+  readFileSync(
+    path.resolve(
+      path.dirname(fileURLToPath(import.meta.url)),
+      "../../src/config/relatedProjects.json",
+    ),
+    "utf8",
+  ),
+);
+
+export function relatedProjectsNav() {
+  const links = relatedProjects.projects
+    .filter((p) => p.url !== relatedProjects.self)
+    .concat([relatedProjects.builtBy])
+    .map((p) => `<a href="${escapeHtml(p.url)}">${escapeHtml(p.name)}</a>`)
+    .join(" · ");
+  return `<nav aria-label="Related projects">Related projects: ${links}</nav>`;
+}
+
 /**
  * @param {{h1: string, paragraphs: string[], sections?: {heading: string, links: {href: string, label: string}[]}[], attrs?: string}} body
  */
@@ -112,7 +140,7 @@ export function buildArticle(body) {
   const attrs = body.attrs ? ` ${body.attrs}` : "";
   return (
     `${ARTICLE_START}<article id="prerender-content"${attrs} style="${ARTICLE_STYLE}">` +
-    `<h1>${escapeHtml(body.h1)}</h1>${paras}${navs}</article>${ARTICLE_END}`
+    `<h1>${escapeHtml(body.h1)}</h1>${paras}${navs}${relatedProjectsNav()}</article>${ARTICLE_END}`
   );
 }
 
