@@ -11,9 +11,9 @@
  * `scripts/prerender-meta.mjs` runs after the Vite build. For every
  * entry below it copies dist/index.html into dist/<path>/index.html
  * and rewrites the head tags (title, description, canonical, OG/
- * Twitter) and inserts a per-route <h1> + summary inside the
- * <noscript> body so non-JS readers get unique, route-specific
- * content. The SPA then hydrates as normal in browsers that run JS.
+ * Twitter) and inserts a visible per-route <h1>, summary and links
+ * inside #root so raw HTML carries unique, route-specific content.
+ * React replaces it on mount in browsers that run JS.
  *
  * Only static (non-parameterized) routes appear here. Dynamic
  * routes such as /county/:slug and /zip/:zipcode are left to the
@@ -31,7 +31,7 @@ export interface RouteMeta {
   title: string;
   /** HTML <meta name="description"> for the route. */
   description: string;
-  /** Visible page heading rendered inside <noscript> for crawlers. */
+  /** Page heading rendered in the raw-HTML prerender article. */
   h1: string;
   /** Optional short paragraph below the h1 for non-JS context. */
   summary?: string;

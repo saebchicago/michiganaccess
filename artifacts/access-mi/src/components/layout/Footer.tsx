@@ -26,6 +26,7 @@ import {
   loadTimeColor,
 } from "@/hooks/useFooterStats";
 import { replayTour } from "@/components/shared/OnboardingTour";
+import { BUILT_BY, OTHER_PROJECTS } from "@/config/relatedProjects";
 import {
   DATA_PUBLISHER_COUNT,
   DATA_SOURCE_DISPLAY,
@@ -505,6 +506,23 @@ const Footer = () => {
             </a>
             .
           </p>
+          <nav
+            aria-label="Related projects"
+            className="mt-2 text-center text-[10px] text-muted-foreground"
+          >
+            <span>Related projects: </span>
+            {OTHER_PROJECTS.map((p) => (
+              <span key={p.url}>
+                <a href={p.url} className="hover:underline">
+                  {p.name}
+                </a>
+                {" · "}
+              </span>
+            ))}
+            <a href={BUILT_BY.url} className="hover:underline">
+              {BUILT_BY.name}
+            </a>
+          </nav>
         </div>
       </div>
     </footer>

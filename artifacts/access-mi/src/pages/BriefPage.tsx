@@ -47,6 +47,7 @@ import {
 import { getSaipeValue, saipeVintageLabel } from "@/data/saipe-county";
 import countyFacilityRef from "@/data/countyFacilityReference.json";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import { countyToSlug, slugToCounty } from "@/utils/countyUtils";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
@@ -220,15 +221,17 @@ export default function BriefPage() {
   const [copied, setCopied] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
 
-  // Support ?county=Wayne from "Try it now" links
+  // Support ?county=Wayne from "Try it now" links and ?county=wayne, the
+  // slug form the sitemap, citations and county help pages use.
+  const rawParamCounty = searchParams.get("county");
+  const paramCounty: MichiganCounty | null = rawParamCounty
+    ? MICHIGAN_COUNTIES.includes(rawParamCounty as MichiganCounty)
+      ? (rawParamCounty as MichiganCounty)
+      : slugToCounty(rawParamCounty)
+    : null;
   useEffect(() => {
-    const paramCounty = searchParams.get("county");
-    if (
-      paramCounty &&
-      MICHIGAN_COUNTIES.includes(paramCounty as MichiganCounty) &&
-      paramCounty !== county
-    ) {
-      setCounty(paramCounty as MichiganCounty);
+    if (paramCounty && paramCounty !== county) {
+      setCounty(paramCounty);
     }
   }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -239,7 +242,9 @@ export default function BriefPage() {
     description: county
       ? `Civic snapshot for ${county} County, Michigan - key health, economic, and access metrics at a glance.`
       : "Generate a quick civic brief for any Michigan county.",
-    path: "/brief",
+    // Self-referencing canonical for the 83 /brief?county=<slug> sitemap URLs;
+    // matches the raw HTML prerender-meta.mjs writes for them.
+    path: paramCounty ? `/brief?county=${countyToSlug(paramCounty)}` : "/brief",
   });
 
   const profile = county ? COUNTY_PROFILES[county] : null;
@@ -302,7 +307,7 @@ export default function BriefPage() {
     month: "long",
     day: "numeric",
   });
-  const countySlug = county?.toLowerCase().replace(/\s+/g, "-") ?? "";
+  const countySlug = county ? countyToSlug(county) : "";
   const citeText = county
     ? `AccessMI (independent civic data project). ${county} County Brief. Data vintages as listed per statistic. accessmi.org/brief?county=${countySlug}. Retrieved ${retrievedDate}.`
     : "";

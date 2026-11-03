@@ -182,13 +182,18 @@
   status = 200
   force = true
 
-# SPA fallback. Without this, every non-prerendered route 404s on
-# direct nav and on hard refresh. The prerender step writes static
-# dist/<path>/index.html for the routes in the manifest with
-# `prerender: true`; Netlify serves those before falling through to
-# this catch-all for everything else. Status 200 (not 301) so the
-# URL the user typed is preserved for React Router to consume.
+# Unknown paths: real 404. This used to be `/* -> /index.html 200`, which
+# answered every typo, retired route and deleted page with 200 and the
+# homepage head (a soft 404 crawlers read as a duplicate of "/"). Valid SPA
+# routes without a prerendered file get their 200 from dist/_redirects,
+# generated from the router by scripts/generate-spa-rewrites.mjs; Netlify
+# evaluates that file before this one, and this rule stays last so the legacy
+# 301s above still apply. /404.html boots the app, so React Router still
+# renders NotFound client-side. Guarded by scripts/check-spa-rewrites.mjs.
+#
+# /brief?county=<slug> is served by netlify/edge-functions/brief-county.js
+# (path set in the function's inline config).
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404
