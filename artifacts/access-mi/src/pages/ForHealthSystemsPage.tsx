@@ -1,4 +1,4 @@
-import { useState, useMemo, lazy, Suspense } from "react";
+import { useState, lazy, Suspense } from "react";
 import Layout from "@/components/layout/Layout";
 const DetectionGapFunnel = lazy(
   () => import("@/components/shared/DetectionGapFunnel"),
@@ -22,7 +22,6 @@ import {
   Info,
 } from "lucide-react";
 import ShareButton from "@/components/shared/ShareButton";
-import { IntegrityBadge } from "@/components/chna/IntegrityBadge";
 
 const valueProps = [
   {
@@ -69,18 +68,14 @@ const valueProps = [
 ];
 
 function SystemImpactCalculator() {
-  const [counties, setCounties] = useState(5);
-  const [edVisits, setEdVisits] = useState(120000);
+  const [edVisits, setEdVisits] = useState("120000");
   const [lowAcuity, setLowAcuity] = useState([18]);
-
-  const results = useMemo(() => {
-    const pct = lowAcuity[0] / 100;
-    const diversions = Math.round(edVisits * pct * 0.35);
-    const capacityValue = diversions * 3200;
-    const sdohConnections = Math.round(diversions * 2.4);
-    const communityBenefit = Math.round(sdohConnections * 420);
-    return { diversions, capacityValue, sdohConnections, communityBenefit };
-  }, [counties, edVisits, lowAcuity]);
+  const [diversionRate, setDiversionRate] = useState([35]);
+  const visits = Number(edVisits);
+  const divertedVisits =
+    edVisits !== "" && Number.isSafeInteger(visits) && visits >= 0
+      ? Math.round(visits * (lowAcuity[0] / 100) * (diversionRate[0] / 100))
+      : null;
 
   return (
     <Card className="border-primary/20">
@@ -98,90 +93,56 @@ function SystemImpactCalculator() {
           </Badge>
         </div>
         <p className="text-xs text-muted-foreground">
-          Estimate potential operational impact of integrated navigation for
-          your service area. All outputs are{" "}
-          <strong>modeled projections</strong>, not guaranteed outcomes.
+          Explore a hypothetical ED diversion scenario. The starting inputs are
+          examples. Replace them with assumptions appropriate to your service area.
         </p>
 
-        <div className="grid sm:grid-cols-3 gap-4">
+        <div className="grid gap-4 sm:grid-cols-3">
           <div>
-            <Label className="text-xs">Service Area Counties</Label>
+            <Label htmlFor="annual-ed-visits" className="text-xs">Annual ED visits</Label>
             <Input
-              type="number"
-              value={counties}
-              onChange={(e) => setCounties(+e.target.value)}
-              min={1}
-              max={83}
-              className="mt-1"
-            />
-          </div>
-          <div>
-            <Label className="text-xs">Annual ED Visits</Label>
-            <Input
+              id="annual-ed-visits"
               type="number"
               value={edVisits}
-              onChange={(e) => setEdVisits(+e.target.value)}
-              min={1000}
+              onChange={(event) => setEdVisits(event.target.value)}
+              min={0}
+              step={1}
               className="mt-1"
             />
           </div>
           <div>
-            <Label className="text-xs">% Low-Acuity ({lowAcuity[0]}%)</Label>
+            <p className="text-xs">Low-acuity share ({lowAcuity[0]}%)</p>
             <Slider
+              aria-label="Low-acuity share"
               value={lowAcuity}
               onValueChange={setLowAcuity}
-              min={5}
-              max={40}
+              max={100}
+              step={1}
+              className="mt-3"
+            />
+          </div>
+          <div>
+            <p className="text-xs">Assumed diversion rate ({diversionRate[0]}%)</p>
+            <Slider
+              aria-label="Assumed diversion rate"
+              value={diversionRate}
+              onValueChange={setDiversionRate}
+              max={100}
               step={1}
               className="mt-3"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
-            {
-              label: "Projected ED Diversions",
-              value: results.diversions.toLocaleString(),
-              sub: "/year (modeled)",
-            },
-            {
-              label: "Projected Capacity Value",
-              value: `$${(results.capacityValue / 1e6).toFixed(1)}M`,
-              sub: "/year (modeled)",
-            },
-            {
-              label: "Projected SDOH Connections",
-              value: results.sdohConnections.toLocaleString(),
-              sub: "/year (modeled)",
-            },
-            {
-              label: "Projected Benefit Value",
-              value: `$${(results.communityBenefit / 1e6).toFixed(2)}M`,
-              sub: "Schedule H (modeled)",
-            },
-          ].map((r) => (
-            <div
-              key={r.label}
-              className="rounded-lg bg-primary/5 p-3 text-center"
-            >
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                {r.label}
-              </p>
-              <p className="text-xl font-bold text-primary mt-1">{r.value}</p>
-              <p className="text-[10px] text-muted-foreground">{r.sub}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="rounded-md bg-muted/30 p-3">
-          <p className="text-[10px] text-muted-foreground leading-relaxed">
-            <strong>Assumptions:</strong> 35% diversion rate for low-acuity ED
-            visits (Weinick et al., Health Affairs); $3,200 avg. ED visit cost
-            (AHRQ HCUP StatBrief #268); 2.4× SDOH referral multiplier; $420 avg.
-            community benefit value per connection (IRS Schedule H benchmarks).
-            All figures are modeled projections - actual results depend on
-            implementation, market conditions, and system-specific factors.
+        <div className="rounded-lg bg-primary/5 p-3" aria-live="polite">
+          <p className="text-sm font-semibold">
+            {divertedVisits === null
+              ? "Enter a nonnegative whole number of annual ED visits."
+              : `${divertedVisits.toLocaleString()} ED visits diverted per year in this scenario`}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Annual ED visits × low-acuity share × assumed diversion rate, rounded
+            to the nearest visit.
           </p>
         </div>
       </CardContent>
@@ -292,98 +253,39 @@ const ForHealthSystemsPage = () => {
               System Landscape
             </h2>
             <p className="text-sm text-muted-foreground mb-4">
-              Verified financial and community impact data from Michigan's major
-              health systems.
+              These figures come from the organizations’ own reports. Each
+              source defines the scope and reporting period for its figure.
             </p>
             <div className="grid gap-4 sm:grid-cols-2">
               <Card>
-                <CardContent className="py-5">
-                  <h3 className="font-bold text-foreground mb-2">
-                    Trinity Health (Michigan)
-                  </h3>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground">
-                    <li>
-                      • Community impact:{" "}
-                      <strong className="text-foreground">$2.9 billion</strong>{" "}
-                      (FY2025)
-                    </li>
-                    <li>• 162 CHWs addressed 16,300+ social needs</li>
-                    <li>• 1M+ screened for SDOH; 27.4% reported unmet need</li>
-                    <li>
-                      • System-reported{" "}
-                      <strong className="text-foreground">~16% decrease</strong>
-                      <IntegrityBadge
-                        label="PROJECTED"
-                        source="Trinity Health (system-reported, not independently verified)"
-                        className="ml-1 align-middle"
-                      />{" "}
-                      in preventable hospitalizations (not independently
-                      verified)
-                    </li>
-                    <li>
-                      • 45% reduction in health disparities (system-reported)
-                    </li>
-                  </ul>
-                  <IntegrityBadge
-                    label="MODELED"
-                    source="Trinity Health Community Impact Report"
-                    vintage="FY2025, system-reported"
-                    className="mt-3"
-                  />
+                <CardContent className="space-y-2 py-5">
+                  <h3 className="font-bold text-foreground">Trinity Health</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Trinity Health reported $2.9 billion in community impact
+                    across its national system in fiscal year 2025.
+                  </p>
+                  <a
+                    className="text-sm text-primary underline"
+                    href="https://www.trinity-health.org/our-impact/community-health-and-well-being/investing-in-our-communities"
+                  >
+                    Trinity Health community impact reporting
+                  </a>
                 </CardContent>
               </Card>
               <Card>
-                <CardContent className="py-5">
-                  <h3 className="font-bold text-foreground mb-2">
-                    Corewell Health
-                  </h3>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground">
-                    <li>
-                      • Revenue:{" "}
-                      <strong className="text-foreground">$10.4 billion</strong>{" "}
-                      <span className="text-[9px] opacity-60">
-                        (Corewell Health FY2023 Annual Report)
-                      </span>
-                    </li>
-                    <li>
-                      • 22 hospitals across Michigan{" "}
-                      <span className="text-[9px] opacity-60">
-                        (corewellhealth.org, 2024)
-                      </span>
-                    </li>
-                    <li>• Largest health system in Michigan</li>
-                  </ul>
-                  <IntegrityBadge
-                    label="MODELED"
-                    source="Corewell Health Annual Report (self-reported)"
-                    vintage="FY2023"
-                    className="mt-3"
-                  />
-                </CardContent>
-              </Card>
-              <Card>
-                <CardContent className="py-5">
-                  <h3 className="font-bold text-foreground mb-2">
-                    All MI Hospitals (MHA)
-                  </h3>
-                  <ul className="space-y-1.5 text-xs text-muted-foreground">
-                    <li>
-                      • Combined community benefit:{" "}
-                      <strong className="text-foreground">$4.5+ billion</strong>{" "}
-                      <span className="text-[9px] opacity-60">
-                        (MHA Community Benefit Report, system-reported)
-                      </span>
-                    </li>
-                    <li>• CHW Medicaid reimbursement effective Jan 2024</li>
-                    <li>• 7 MDHHS SDOH Hubs launched statewide</li>
-                    <li>• MVC covers ~84% of insured Michiganders</li>
-                  </ul>
-                  <IntegrityBadge
-                    label="MODELED"
-                    source="MHA Community Benefit Report"
-                    vintage="2023-2024, system-reported"
-                    className="mt-3"
-                  />
+                <CardContent className="space-y-2 py-5">
+                  <h3 className="font-bold text-foreground">Michigan Health &amp; Hospital Association</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Michigan hospitals reported more than $4.5 billion in
+                    community benefit activities in fiscal year 2023 through
+                    the MHA survey.
+                  </p>
+                  <a
+                    className="text-sm text-primary underline"
+                    href="https://www.mha.org/newsroom/publications/community-impact-report/"
+                  >
+                    MHA Community Impact Report
+                  </a>
                 </CardContent>
               </Card>
             </div>

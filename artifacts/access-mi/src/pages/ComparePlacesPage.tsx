@@ -1,12 +1,11 @@
 /**
  * ComparePlacesPage - Side-by-side county comparison.
  * Phase 2 upgrades:
- *   • Community Voice column with ratings, notes, report count, CTA
  *   • Equity Lens toggle that highlights worst-performer cells
  *   • PDF / print export
  *   • State benchmark reference line in radar chart
  *   • Civic Insight Score (0-100 gauge) per county
- *   • Specialists-to-population, insurance breakdown, medical debt rows
+ *   • Specialists-to-population, medical debt rows
  */
 import {
   useState,
@@ -17,7 +16,7 @@ import {
   useEffect,
 } from "react";
 import { useSearchParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import ConfettiBurst from "@/components/shared/ConfettiBurst";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import {
@@ -27,11 +26,6 @@ import {
   MapPin,
   Download,
   Sparkles,
-  Users,
-  Star,
-  MessageSquare,
-  Eye,
-  EyeOff,
   TrendingDown,
   TrendingUp,
   Minus as MInusDash,
@@ -106,156 +100,6 @@ const COMPARE_TABLES = [
   "B01001",
   "B02001",
 ];
-
-// ── Simulated community voice data (anonymized, modeled) ─────────────────
-const COMMUNITY_VOICE: Record<
-  string,
-  {
-    score: number; // 1–5
-    reports: number;
-    notes: string[];
-  }
-> = {
-  Wayne: {
-    score: 3.2,
-    reports: 47,
-    notes: [
-      "ER wait times improved but still long",
-      "More mental health options needed on east side",
-      "Good 211 service, very responsive",
-    ],
-  },
-  Oakland: {
-    score: 4.1,
-    reports: 29,
-    notes: [
-      "Excellent specialist network",
-      "Transportation to clinics is a barrier for seniors",
-      "Need more Medicaid-accepting dentists",
-    ],
-  },
-  Macomb: {
-    score: 3.6,
-    reports: 18,
-    notes: [
-      "New urgent care on Hall Rd. is great",
-      "Food pantry hours could be extended",
-      "Energy assistance enrollment is confusing",
-    ],
-  },
-  Washtenaw: {
-    score: 4.3,
-    reports: 12,
-    notes: [
-      "Strong public health programs",
-      "UofM resources accessible for county residents",
-      "Need more rural outreach in eastern townships",
-    ],
-  },
-  Genesee: {
-    score: 2.8,
-    reports: 61,
-    notes: [
-      "Water quality still a concern for many",
-      "Community health workers doing amazing work",
-      "More dental clinics needed urgently",
-    ],
-  },
-  Ingham: {
-    score: 3.9,
-    reports: 22,
-    notes: [
-      "Sparrow's charity care program is a lifeline",
-      "MSU extension services very helpful",
-      "Transit gaps in rural Ingham areas",
-    ],
-  },
-  Kent: {
-    score: 4.0,
-    reports: 31,
-    notes: [
-      "Strong nonprofit health ecosystem",
-      "Latino health services expanding",
-      "Winter shelter capacity still insufficient",
-    ],
-  },
-  Kalamazoo: {
-    score: 3.7,
-    reports: 19,
-    notes: [
-      "Expo Health Center does great work",
-      "More substance abuse beds needed",
-      "Free clinic volunteers are heroes",
-    ],
-  },
-};
-
-function getCommunityVoice(county: string) {
-  return (
-    COMMUNITY_VOICE[county] ?? {
-      score: 3.5,
-      reports: 5,
-      notes: ["Be the first to share a local insight for this county."],
-    }
-  );
-}
-
-// ── Simulated insurance breakdown (% of population) ───────────────────────────
-const INSURANCE: Record<
-  string,
-  {
-    medicare: number;
-    medicaid: number;
-    dual: number;
-    commercial: number;
-    uninsured: number;
-  }
-> = {
-  Wayne: { medicare: 16, medicaid: 24, dual: 6, commercial: 44, uninsured: 10 },
-  Oakland: {
-    medicare: 18,
-    medicaid: 10,
-    dual: 3,
-    commercial: 64,
-    uninsured: 5,
-  },
-  Macomb: { medicare: 20, medicaid: 14, dual: 4, commercial: 56, uninsured: 6 },
-  Washtenaw: {
-    medicare: 12,
-    medicaid: 11,
-    dual: 2,
-    commercial: 70,
-    uninsured: 5,
-  },
-  Genesee: {
-    medicare: 18,
-    medicaid: 28,
-    dual: 7,
-    commercial: 37,
-    uninsured: 10,
-  },
-  Ingham: { medicare: 13, medicaid: 20, dual: 4, commercial: 57, uninsured: 6 },
-  Kent: { medicare: 14, medicaid: 16, dual: 3, commercial: 62, uninsured: 5 },
-  Kalamazoo: {
-    medicare: 15,
-    medicaid: 18,
-    dual: 4,
-    commercial: 56,
-    uninsured: 7,
-  },
-};
-
-function getInsurance(county: string) {
-  return (
-    INSURANCE[county] ?? {
-      medicare: 16,
-      medicaid: 18,
-      dual: 4,
-      commercial: 54,
-      uninsured: 8,
-    }
-  );
-}
 
 /** Returns true when the ACS proxy returned a usable response with at
  *  least the income table. Without this, every comparison would fall
@@ -471,7 +315,7 @@ export default function ComparePlacesPage() {
   usePageMeta({
     title: "Compare Places - Side-by-Side Census Data | Access Michigan",
     description:
-      "Compare up to 4 Michigan counties or ZIP codes with live Census ACS data, community voice, equity lens, and PDF export.",
+      "Compare up to 4 Michigan counties or ZIP codes with live Census ACS data, equity lens, and PDF export.",
     path: "/compare",
   });
 
@@ -522,7 +366,6 @@ export default function ComparePlacesPage() {
     useState<CompareSelection[]>(initialSelections);
   const [addInput, setAddInput] = useState("");
   const [equityLens, setEquityLens] = useState(false);
-  const [showCommunityVoice, setShowCommunityVoice] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>("standard");
   const [confettiBurst, setConfettiBurst] = useState(false);
   const printRef = useRef<HTMLDivElement>(null);
@@ -588,7 +431,7 @@ export default function ComparePlacesPage() {
 
   const handlePrint = useCallback(() => {
     setConfettiBurst(true);
-    toast.success("Preparing PDF export…", { duration: 2000 });
+    toast.success("Opening print options…", { duration: 2000 });
     setTimeout(() => window.print(), 400);
   }, []);
 
@@ -693,9 +536,8 @@ export default function ComparePlacesPage() {
 
       <div ref={printRef} className="container max-w-6xl py-8 space-y-8">
         {/* ── Data disclaimer ── */}
-        <div className="rounded-lg border border-amber-300/40 bg-amber-50/60 dark:bg-amber-950/20 px-4 py-3 text-sm text-muted-foreground print:hidden">
-          <strong className="text-foreground">Note:</strong> Community voice and
-          insurance breakdown figures are modeled pending live integration.
+        <div className="rounded-lg border border-amber-300/40 bg-amber-50/60 dark:bg-amber-950/20 px-4 py-3 text-sm text-muted-foreground">
+          <strong className="text-foreground">Note:</strong> Verified resident feedback and insurance breakdowns are unavailable here.
           Census ACS economic metrics are sourced directly from the US Census
           Bureau API. Source datasets are listed at{" "}
           <a
@@ -797,18 +639,6 @@ export default function ComparePlacesPage() {
                 Equity Lens
               </Label>
             </div>
-            <button
-              onClick={() => setShowCommunityVoice(!showCommunityVoice)}
-              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-              aria-pressed={showCommunityVoice}
-            >
-              {showCommunityVoice ? (
-                <Eye className="h-3.5 w-3.5" />
-              ) : (
-                <EyeOff className="h-3.5 w-3.5" />
-              )}
-              Community Voice
-            </button>
             <Button
               size="sm"
               variant="outline"
@@ -816,7 +646,7 @@ export default function ComparePlacesPage() {
               className="gap-1.5 text-xs print:hidden"
             >
               <Download className="h-3.5 w-3.5" />
-              Export PDF
+              Print / Save PDF
             </Button>
             <ViewModeToggle value={viewMode} onChange={setViewMode} />
           </div>
@@ -1294,189 +1124,6 @@ export default function ComparePlacesPage() {
             </Card>
           </motion.div>
         )}
-
-        {/* ── Insurance Breakdown ── */}
-        {selected.length >= 2 && (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            custom={4}
-          >
-            <Card className="bg-white/80 dark:bg-card/90 backdrop-blur-sm border-border/60 shadow-xl">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-base">
-                  Insurance Coverage Breakdown
-                </CardTitle>
-                <p className="text-xs text-muted-foreground">
-                  Estimated % of population by coverage type.
-                </p>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm min-w-[420px]">
-                    <caption className="sr-only">Insurance coverage breakdown across selected places</caption>
-                    <thead>
-                      <tr className="border-b border-border">
-                        <th scope="col" className="text-left py-2 text-xs font-semibold text-muted-foreground w-[130px] sm:w-[160px] break-words whitespace-normal">
-                          Coverage Type
-                        </th>
-                        {selected.map((sel, i) => (
-                          <th
-                            key={sel.id}
-                            scope="col"
-                            className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground"
-                          >
-                            <div className="flex items-center justify-end gap-1.5">
-                              <div
-                                className="h-2 w-2 rounded-full"
-                                style={{
-                                  backgroundColor:
-                                    CHART_COLORS[i % CHART_COLORS.length],
-                                }}
-                              />
-                              {sel.label}
-                            </div>
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {[
-                        {
-                          key: "commercial",
-                          label: "Commercial / Employer",
-                          good: true,
-                        },
-                        { key: "medicare", label: "Medicare", good: null },
-                        { key: "medicaid", label: "Medicaid", good: null },
-                        {
-                          key: "dual",
-                          label: "Dual (Medicare + Medicaid)",
-                          good: null,
-                        },
-                        { key: "uninsured", label: "Uninsured", good: false },
-                      ].map(({ key, label }) => (
-                        <tr
-                          key={key}
-                          className="border-b border-border/40 hover:bg-muted/20 transition-colors"
-                        >
-                          <td className="py-2.5 text-sm font-medium text-foreground">
-                            {label}
-                          </td>
-                          {selected.map((sel, i) => {
-                            const ins = getInsurance(sel.countyName);
-                            const val = ins[key as keyof typeof ins];
-                            return (
-                              <td key={i} className="py-2.5 px-3 text-right">
-                                <span
-                                  className={[
-                                    "font-mono text-sm",
-                                    key === "uninsured" && val > 8 && equityLens
-                                      ? "text-red-600 dark:text-red-400 font-bold"
-                                      : "text-foreground",
-                                  ].join(" ")}
-                                >
-                                  {val}%
-                                </span>
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-
-        {/* ── Community Voice ── */}
-        <AnimatePresence>
-          {selected.length >= 2 && showCommunityVoice && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25 }}
-            >
-              <Card className="border-michigan-gold/20 bg-michigan-gold/[0.04]">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4 text-michigan-gold-deep" />
-                    Community Voice
-                    <Badge variant="outline" className="text-[10px] ml-1">
-                      Anonymized
-                    </Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div
-                    className={`grid gap-6 ${selected.length <= 2 ? "sm:grid-cols-2" : selected.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"}`}
-                  >
-                    {selected.map((sel, i) => {
-                      const voice = getCommunityVoice(sel.countyName);
-                      const fullStars = Math.floor(voice.score);
-                      const hasHalf = voice.score - fullStars >= 0.5;
-                      return (
-                        <div key={sel.id} className="space-y-3">
-                          <div className="flex items-center gap-1.5">
-                            <div
-                              className="h-2.5 w-2.5 rounded-full"
-                              style={{
-                                backgroundColor:
-                                  CHART_COLORS[i % CHART_COLORS.length],
-                              }}
-                            />
-                            <span className="text-sm font-bold text-foreground">
-                              {sel.label}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-1">
-                            <div
-                              role="img"
-                              className="flex"
-                              aria-label={`Rating: ${voice.score} out of 5`}
-                            >
-                              {[1, 2, 3, 4, 5].map((s) => (
-                                <Star
-                                  key={s}
-                                  className={`h-4 w-4 ${s <= fullStars ? "fill-michigan-gold text-michigan-gold-deep" : s === fullStars + 1 && hasHalf ? "text-michigan-gold-deep" : "text-border"}`}
-                                />
-                              ))}
-                            </div>
-                            <span className="text-xs font-bold text-foreground ml-1">
-                              {voice.score.toFixed(1)}
-                            </span>
-                          </div>
-
-                          <div className="flex items-center gap-1 text-[11px] text-muted-foreground">
-                            <Users className="h-3 w-3" />
-                            <span>{voice.reports} reports</span>
-                          </div>
-
-                          <div className="space-y-1.5">
-                            {voice.notes.map((note, ni) => (
-                              <p
-                                key={ni}
-                                className="text-xs text-foreground/80 border-l-2 border-border pl-2"
-                              >
-                                "{note}"
-                              </p>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Partner CTA */}
         {selected.length >= 2 && <PartnerCTABar context="compare" />}

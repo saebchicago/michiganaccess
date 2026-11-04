@@ -220,32 +220,17 @@ export default function ContextBar() {
         const row = data as { updated_at?: string } | null;
         if (row?.updated_at) {
           const dbDate = new Date(row.updated_at);
-          // Use the DB date only if it's from the current month or later;
-          // otherwise fall back to the current month to avoid stale display.
-          const now = new Date();
-          const currentMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-          const display = dbDate >= currentMonth ? dbDate : now;
-          setLastUpdated(
-            display.toLocaleDateString("en-US", {
-              month: "short",
-              year: "numeric",
-            }),
-          );
-        } else {
-          setLastUpdated(
-            new Date().toLocaleDateString("en-US", {
-              month: "short",
-              year: "numeric",
-            }),
-          );
+          if (Number.isFinite(dbDate.getTime())) {
+            setLastUpdated(
+              dbDate.toLocaleDateString("en-US", {
+                month: "short",
+                year: "numeric",
+              }),
+            );
+          }
         }
       } catch {
-        setLastUpdated(
-          new Date().toLocaleDateString("en-US", {
-            month: "short",
-            year: "numeric",
-          }),
-        );
+        // Omit freshness when the source cannot provide a date.
       }
     })();
   }, []);
@@ -401,7 +386,7 @@ export default function ContextBar() {
                 <span className="text-muted-foreground/40">·</span>
                 <div className="flex items-center gap-1 shrink-0">
                   <Clock className="h-2.5 w-2.5" aria-hidden="true" />
-                  <span>Updated {lastUpdated}</span>
+                  <span>Facility listings updated {lastUpdated}</span>
                 </div>
               </>
             )}
@@ -495,7 +480,7 @@ export default function ContextBar() {
         {lastUpdated && (
           <div className="flex items-center gap-1 shrink-0">
             <Clock className="h-2.5 w-2.5" aria-hidden="true" />
-            <span>Updated {lastUpdated}</span>
+            <span>Facility listings updated {lastUpdated}</span>
           </div>
         )}
 

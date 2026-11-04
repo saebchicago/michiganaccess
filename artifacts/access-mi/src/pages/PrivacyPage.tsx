@@ -35,7 +35,7 @@ export default function PrivacyPage() {
   });
 
   const effectiveDate = "February 27, 2026";
-  const lastUpdated = "October 16, 2026";
+  const lastUpdated = "November 4, 2026";
 
   return (
     <Layout>
@@ -136,11 +136,9 @@ export default function PrivacyPage() {
               fingerprint browsers, track across sites, or build user profiles.
             </li>
             <li>
-              <strong>No storage of Protected Health Information (PHI)</strong>{" "}
-              - Health-related tools (AI appeals generator, benefits wizard,
-              symptom information) are processed via secure server functions
-              that do not store your inputs after the response is returned. We
-              do not retain health information beyond the immediate request.
+              <strong>Keep health information private.</strong> Please avoid
+              submitting medical records or identifiable health information
+              through public forms.
             </li>
           </ul>
         </Section>
@@ -301,35 +299,11 @@ export default function PrivacyPage() {
         {/* 4 - AI Features */}
         <Section icon={Eye} title="4. Automated Features" index={3}>
           <p>
-            Access Michigan includes AI-powered tools such as the chat assistant
-            and insurance appeal letter generator. Important privacy details
-            about these features:
+            Access Michigan has paused its public AI chat and appeal-letter
+            generator while it verifies provider data handling and request
+            limits. The appeal guides remain available. Avoid sharing medical
+            records or other sensitive information through public forms.
           </p>
-          <ul className="list-disc pl-6 space-y-2 mt-3">
-            <li>
-              <strong>No conversation logging:</strong> AI chat messages are
-              processed in real-time via secure backend functions and are{" "}
-              <strong>not stored</strong> on our servers after the response is
-              delivered.
-            </li>
-            <li>
-              <strong>No PHI storage:</strong> Any health details, insurance
-              information, or personal circumstances you enter into the appeal
-              generator or chat are processed transiently and discarded
-              immediately after generating a response.
-            </li>
-            <li>
-              <strong>Third-party AI models:</strong> AI responses are generated
-              by third-party language model providers. Your prompts are sent to
-              these providers under their data processing terms. We select
-              providers that do not use input data for model training.
-            </li>
-            <li>
-              <strong>Not medical advice:</strong> AI-generated content is
-              informational only and does not constitute medical, legal, or
-              insurance advice. See Section 7 for HIPAA disclaimers.
-            </li>
-          </ul>
         </Section>
 
         <Separator />
@@ -352,11 +326,6 @@ export default function PrivacyPage() {
                 name: "Federal & State Data APIs",
                 purpose: "CMS, HRSA, CDC, EPA, NWS data",
                 note: "Requests routed through our secure proxy functions; your IP is not forwarded",
-              },
-              {
-                name: "AI Model Providers",
-                purpose: "Chat and appeal generation",
-                note: "Prompts processed under provider terms; no personal data included in requests by design",
               },
               {
                 name: "First-party analytics service",
@@ -462,18 +431,6 @@ export default function PrivacyPage() {
                 <li>
                   We design tools so that health-related data is processed
                   client-side whenever possible.
-                </li>
-                <li>
-                  When server-side processing is necessary (e.g., AI features),
-                  data is processed transiently and not persisted.
-                </li>
-                <li>
-                  We do not combine health-related inputs with any identifying
-                  information.
-                </li>
-                <li>
-                  We do not share any user inputs with third parties for
-                  purposes beyond immediate response generation.
                 </li>
               </ul>
               <p className="font-medium text-foreground">
@@ -609,11 +566,6 @@ export default function PrivacyPage() {
                     "Search analytics",
                     "Aggregated, indefinitely",
                     "Improve search relevance",
-                  ],
-                  [
-                    "AI chat / appeal inputs",
-                    "Not retained",
-                    "Processed transiently only",
                   ],
                   [
                     "Browser localStorage",

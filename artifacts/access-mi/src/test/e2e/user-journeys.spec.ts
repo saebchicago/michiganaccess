@@ -115,6 +115,16 @@ test.describe('AccessMI User Journeys', () => {
     }
   });
 
+  test('Escape dismisses site search without triggering Quick Exit', async ({ page }) => {
+    const searchButton = page.getByRole('button', { name: /search site/i });
+    await searchButton.click();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole('combobox').press('Escape');
+    await expect(dialog).toBeHidden();
+    await expect(page.getByRole('heading', { name: /local data for/i })).toBeVisible();
+  });
+
   test('J8: domain dashboard loads all 9 domain tabs', async ({ page }) => {
     await page.goto('/domain-dashboard');
     await page.waitForLoadState('networkidle');
