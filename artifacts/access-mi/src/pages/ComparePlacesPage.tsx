@@ -11,13 +11,12 @@ import {
   useState,
   useMemo,
   useCallback,
-  useRef,
   Fragment,
   useEffect,
 } from "react";
 import { useSearchParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import ConfettiBurst from "@/components/shared/ConfettiBurst";
+import { motion } from "framer-motion";
 import { CivicInsightGauge } from "@/components/shared/CivicInsightGauge";
 import {
   Plus,
@@ -367,8 +366,6 @@ export default function ComparePlacesPage() {
   const [addInput, setAddInput] = useState("");
   const [equityLens, setEquityLens] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("standard");
-  const [confettiBurst, setConfettiBurst] = useState(false);
-  const printRef = useRef<HTMLDivElement>(null);
 
   const countyNames = Object.keys(MI_COUNTY_FIPS).sort();
   const selectedIds = new Set(selected.map((s) => s.id));
@@ -425,14 +422,15 @@ export default function ComparePlacesPage() {
     setAddInput("");
   };
 
+  const [confettiBurst, setConfettiBurst] = useState(false);
+
   const handleRemove = (index: number) => {
     setSelected(selected.filter((_, i) => i !== index));
   };
 
   const handlePrint = useCallback(() => {
     setConfettiBurst(true);
-    toast.success("Opening print options…", { duration: 2000 });
-    setTimeout(() => window.print(), 400);
+    window.print();
   }, []);
 
   // Radar data
@@ -534,12 +532,15 @@ export default function ComparePlacesPage() {
         </div>
       </section>
 
-      <div ref={printRef} className="container max-w-6xl py-8 space-y-8">
+      <div className="comparison-print container max-w-6xl py-8 space-y-8">
+        <h1 className="comparison-print-keep hidden print:block text-2xl font-bold">
+          Access Michigan | Place Comparison
+        </h1>
         {/* ── Data disclaimer ── */}
-        <div className="rounded-lg border border-amber-300/40 bg-amber-50/60 dark:bg-amber-950/20 px-4 py-3 text-sm text-muted-foreground">
+        <div className="comparison-print-keep rounded-lg border border-amber-300/40 bg-amber-50/60 dark:bg-amber-950/20 px-4 py-3 text-sm text-muted-foreground">
           <strong className="text-foreground">Note:</strong> Verified resident feedback and insurance breakdowns are unavailable here.
           Census ACS economic metrics are sourced directly from the US Census
-          Bureau API. Source datasets are listed at{" "}
+          Bureau API. N/A indicates unavailable data. Source datasets are listed at{" "}
           <a
             href="/data-sources"
             className="text-primary underline hover:no-underline"
@@ -643,6 +644,7 @@ export default function ComparePlacesPage() {
               size="sm"
               variant="outline"
               onClick={handlePrint}
+              disabled={selected.length < 2}
               className="gap-1.5 text-xs print:hidden"
             >
               <Download className="h-3.5 w-3.5" />
@@ -952,6 +954,7 @@ export default function ComparePlacesPage() {
         {/* ── Main comparison table ── */}
         {selected.length >= 2 && (
           <motion.div
+            className="comparison-print-keep"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -972,8 +975,8 @@ export default function ComparePlacesPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm min-w-[420px]">
+                <div className="overflow-x-auto print:overflow-visible">
+                  <table className="w-full text-sm min-w-[420px] print:min-w-0">
                     <caption className="sr-only">Detailed comparison across selected places</caption>
                     <thead>
                       <tr className="border-b border-border">
@@ -1001,7 +1004,7 @@ export default function ComparePlacesPage() {
                             </div>
                           </th>
                         ))}
-                        <th scope="col" className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground hidden lg:table-cell">
+                        <th scope="col" className="text-right py-2 px-3 text-xs font-semibold text-muted-foreground hidden lg:table-cell print:table-cell">
                           MI Avg
                         </th>
                       </tr>
@@ -1109,7 +1112,7 @@ export default function ComparePlacesPage() {
                                     </td>
                                   );
                                 })}
-                                <td className="py-2.5 px-3 text-right text-xs text-muted-foreground hidden lg:table-cell">
+                                <td className="py-2.5 px-3 text-right text-xs text-muted-foreground hidden lg:table-cell print:table-cell">
                                   {mi !== undefined ? metric.format(mi) : "-"}
                                 </td>
                               </tr>
@@ -1130,7 +1133,7 @@ export default function ComparePlacesPage() {
 
         {/* Attribution */}
         {selected.length >= 2 && (
-          <p className="text-[10px] text-muted-foreground text-center">
+          <p className="comparison-print-keep text-[10px] text-muted-foreground text-center">
             Census data: U.S. Census Bureau, ACS 5-Year Estimates (2022). ★ =
             best; ⚠ = needs attention (Equity Lens). ZIP data from ZCTA-level
             ACS tables.

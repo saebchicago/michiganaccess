@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Zap, AlertTriangle, Users, ArrowUpDown, Filter, Download, Activity } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import ConsumersOutageReports from "@/components/shared/ConsumersOutageReports";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -137,9 +138,7 @@ export default function OutagesPage() {
         </div>
 
         {!data ? (
-          <p role="status" className="rounded-lg border p-4">
-            {isLoading ? "Checking live outage data…" : "Live outage data unavailable. Check your utility’s outage center for current information."}
-          </p>
+          isLoading ? <p role="status">Checking outage reports…</p> : <ConsumersOutageReports />
         ) : (
           <div className="space-y-6">
         {/* KPI Cards */}
