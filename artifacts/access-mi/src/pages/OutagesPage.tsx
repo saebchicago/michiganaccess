@@ -29,7 +29,7 @@ type SortKey = "county" | "utility" | "severity" | "customersAffected";
 export default function OutagesPage() {
   usePageMeta({
     title: "Utility Outage Dashboard",
-    description: "Check available DTE Energy and Consumers Energy outage reports and visit official utility outage centers.",
+    description: "View Consumers Energy county outage reports and find official utility outage centers.",
     path: "/outages",
   });
 
@@ -121,7 +121,7 @@ export default function OutagesPage() {
             <div>
               <h1 className="text-2xl font-bold text-foreground">Utility Outage Dashboard</h1>
               <p className="text-sm text-muted-foreground">
-                Outage reports from DTE Energy and Consumers Energy where data is available.
+                Consumers Energy county reports when available, with links to official outage centers.
                 {meta && (
                    <Badge variant="outline" className="ml-2 text-[10px]">
                     Live feed · Updated {new Date(meta.timestamp).toLocaleTimeString()}

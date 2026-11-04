@@ -320,7 +320,6 @@ export default function AccessibilityPage() {
               "Interactive map (Leaflet.js) has limited screen reader support for individual facility markers. A fully accessible list-view alternative is always available.",
               "Some data visualizations (Recharts) may not fully convey information to screen readers. Text summaries accompany all charts.",
               "PDF resources linked from external agencies may not meet accessibility standards. We link to HTML alternatives where available.",
-              "AI chat widget responses are generated dynamically and may occasionally produce content that is not optimally structured for screen readers.",
             ].map((item, i) => (
               <motion.div
                 key={i}

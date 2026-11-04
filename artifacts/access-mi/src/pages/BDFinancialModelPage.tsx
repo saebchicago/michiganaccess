@@ -1,3 +1,4 @@
+import { AI_CHAT_ENABLED } from "@/config/aiChat";
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, Link } from "react-router-dom";
@@ -450,6 +451,7 @@ function ServiceLineTab({ sl, onSl }: ServiceLineTabProps) {
 
   // ── AI Scenario Narrator (debounced 500ms) ────────────────────────────────
   useEffect(() => {
+    if (!AI_CHAT_ENABLED) return;
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(async () => {
       setAiLoading(true);
@@ -948,6 +950,7 @@ function MarketOpportunityTab() {
   // ── County click → AI explainer ───────────────────────────────────────────
   const handleCountyClick = useCallback(async (county: County) => {
     setSelected(county);
+    if (!AI_CHAT_ENABLED) return;
     setCountyAI(null);
     setAiLoading(true);
     try {
@@ -1079,19 +1082,24 @@ function MarketOpportunityTab() {
       <div className="rounded-lg border border-border bg-muted/20 p-4 min-h-[80px]">
         {!selected && (
           <p className="text-xs text-muted-foreground italic text-center py-3">
-            ↑ Click any county above to get an market opportunity analysis.
+            Select a county to review its opportunity score and indicators.
           </p>
         )}
         {selected && (
           <>
             <div className="flex items-center gap-2 mb-3">
               <p className="text-xs font-semibold text-foreground">
-                {selected.name} County - AI Analysis
+                {selected.name} County
               </p>
               <Badge variant="outline" className="text-xs">
                 {selected.opp}/100 opportunity
               </Badge>
             </div>
+            {!AI_CHAT_ENABLED && (
+              <p className="text-xs text-muted-foreground">
+                Shortage ratio {selected.shortage}× · Social Vulnerability Index {selected.svi.toFixed(2)}
+              </p>
+            )}
             {aiLoading && (
               <p className="text-xs text-muted-foreground animate-pulse">
                 Generating AI analysis for {selected.name} County…
@@ -1463,90 +1471,91 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
       </div>
 
       {/* ── AI Program Designer ───────────────────────────────────────────── */}
-      <div className="rounded-lg border border-border p-5 space-y-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          Design your program
-        </p>
+      {AI_CHAT_ENABLED && (
+        <div className="rounded-lg border border-border p-5 space-y-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Design your program
+          </p>
 
-        <div className="grid gap-4 sm:grid-cols-3">
-          <div>
-            <p className="text-xs text-muted-foreground mb-1.5">
-              Target population
-            </p>
-            <Select value={progPop} onValueChange={setProgPop}>
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Seniors 65+">Seniors 65+</SelectItem>
-                <SelectItem value="Adults 18-64">Adults 18–64</SelectItem>
-                <SelectItem value="Children & Youth">
-                  Children & Youth
-                </SelectItem>
-                <SelectItem value="All ages">All ages</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <p className="text-xs text-muted-foreground mb-1.5">
-              Primary SDOH need
-            </p>
-            <Select value={progNeed} onValueChange={setProgNeed}>
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Food insecurity">Food insecurity</SelectItem>
-                <SelectItem value="Housing instability">
-                  Housing instability
-                </SelectItem>
-                <SelectItem value="Transportation barriers">
-                  Transportation barriers
-                </SelectItem>
-                <SelectItem value="Behavioral health">
-                  Behavioral health
-                </SelectItem>
-                <SelectItem value="Multiple needs">Multiple needs</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <p className="text-xs text-muted-foreground mb-1.5">
-              Delivery model
-            </p>
-            <Select value={progDelivery} onValueChange={setProgDelivery}>
-              <SelectTrigger className="h-8 text-xs">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Community health workers (CHW)">
-                  Community health workers (CHW)
-                </SelectItem>
-                <SelectItem value="Telehealth">Telehealth</SelectItem>
-                <SelectItem value="In-person clinic">
-                  In-person clinic
-                </SelectItem>
-                <SelectItem value="Hybrid">Hybrid</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <Button
-          size="sm"
-          className="gap-2"
-          onClick={handleDesignProgram}
-          disabled={progLoading}
-        >
-          {progLoading ? "Designing…" : "Design Program →"}
-        </Button>
-
-        {(progLoading || programAI) && (
-          <div className="rounded-lg bg-muted/30 border border-border px-4 py-3 mt-2">
-            {progLoading && (
-              <p className="text-xs text-muted-foreground animate-pulse">
-                Generating program design…
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div>
+              <p className="text-xs text-muted-foreground mb-1.5">
+                Target population
               </p>
+              <Select value={progPop} onValueChange={setProgPop}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Seniors 65+">Seniors 65+</SelectItem>
+                  <SelectItem value="Adults 18-64">Adults 18–64</SelectItem>
+                  <SelectItem value="Children & Youth">
+                    Children & Youth
+                  </SelectItem>
+                  <SelectItem value="All ages">All ages</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1.5">
+                Primary SDOH need
+              </p>
+              <Select value={progNeed} onValueChange={setProgNeed}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Food insecurity">Food insecurity</SelectItem>
+                  <SelectItem value="Housing instability">
+                    Housing instability
+                  </SelectItem>
+                  <SelectItem value="Transportation barriers">
+                    Transportation barriers
+                  </SelectItem>
+                  <SelectItem value="Behavioral health">
+                    Behavioral health
+                  </SelectItem>
+                  <SelectItem value="Multiple needs">Multiple needs</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground mb-1.5">
+                Delivery model
+              </p>
+              <Select value={progDelivery} onValueChange={setProgDelivery}>
+                <SelectTrigger className="h-8 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Community health workers (CHW)">
+                    Community health workers (CHW)
+                  </SelectItem>
+                  <SelectItem value="Telehealth">Telehealth</SelectItem>
+                  <SelectItem value="In-person clinic">
+                    In-person clinic
+                  </SelectItem>
+                  <SelectItem value="Hybrid">Hybrid</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <Button
+            size="sm"
+            className="gap-2"
+            onClick={handleDesignProgram}
+            disabled={progLoading}
+          >
+            {progLoading ? "Designing…" : "Design Program →"}
+          </Button>
+
+          {(progLoading || programAI) && (
+            <div className="rounded-lg bg-muted/30 border border-border px-4 py-3 mt-2">
+              {progLoading && (
+                <p className="text-xs text-muted-foreground animate-pulse">
+                  Generating program design…
+                </p>
             )}
             {!progLoading && programAI && (
               <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">
@@ -1556,6 +1565,7 @@ function SdohImpactTab({ sdoh, onSdoh }: SdohImpactTabProps) {
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }
@@ -2085,8 +2095,6 @@ export default function BDFinancialModelPage() {
             hospitalization reduction, FY2025 - not independently verified).
             Baseline presets are illustrative assumptions. Not actuarial
             projections.
-            AI-generated narratives are for strategic planning illustration
-            only.
           </p>
         </motion.div>
       </section>

@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
   MapPin,
-  FileCheck,
   Users,
   ArrowRight,
   Info,
@@ -57,38 +56,6 @@ const studies = [
         label: "Coverage gap addressable",
         value: "+34%",
         basis: "Catchment analysis",
-      },
-    ],
-  },
-  {
-    icon: FileCheck,
-    tag: "Insurance Appeal Automation",
-    title: "Reducing Barriers to Insurance Denial Appeals",
-    challenge:
-      "Nationally, an estimated 50–80% of insurance denials go uncontested. In Michigan, the average time to prepare a manual appeal is estimated at 4–8 hours, creating a significant barrier for working families and vulnerable populations.",
-    challengeSource:
-      "Kaiser Family Foundation (2023); ASPE/HHS denial rate reports",
-    approach: [
-      "Template-assisted appeal letter generation using denial code mapping and Michigan insurance regulations (MCL 500.2213)",
-      "Automated extraction of carrier-specific submission requirements and deadlines",
-      "Template library covering the six most common denial categories with clinical justification frameworks",
-      "Step-by-step guided workflow designed to reduce preparation time significantly",
-    ],
-    projectedOutcomes: [
-      {
-        label: "Denial categories covered",
-        value: "6",
-        basis: "Platform template library (AIAppealGenerator DENIAL_TYPES)",
-      },
-      {
-        label: "Prep time reduction target",
-        value: "~85%",
-        basis: "Workflow analysis",
-      },
-      {
-        label: "Avg. recovery per successful appeal (national)",
-        value: "$3,000–5,000",
-        basis: "ASPE/HHS estimates",
       },
     ],
   },
@@ -306,7 +273,7 @@ const CaseStudiesPage = () => {
           <div className="mt-10 text-center">
             <ShareButton
               title="Access Michigan - Illustrative Scenarios"
-              description="Illustrative scenarios: ambulatory gap analysis, insurance appeal automation, and SDOH navigation across Michigan."
+              description="Illustrative scenarios: ambulatory gap analysis and SDOH navigation across Michigan."
             />
           </div>
         </div>

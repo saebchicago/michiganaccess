@@ -1,3 +1,4 @@
+import { AI_CHAT_ENABLED } from "@/config/aiChat";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -99,31 +100,32 @@ export const ProfessionalGateway = () => {
           })}
         </div>
 
-        {/* AI Assistant examples */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="rounded-xl border border-michigan-navy/15 bg-card p-6 mb-8"
-        >
-          <div className="flex items-center gap-2 mb-4">
-            <MessageSquare className="h-5 w-5 text-michigan-navy" />
-            <h3 className="font-bold text-foreground">Try asking Access Michigan</h3>
-          </div>
-          <div className="grid gap-2 sm:grid-cols-3">
-            {aiExamples.map((example) => (
-              <div
-                key={example}
-                className="rounded-lg border border-border bg-muted/40 px-3 py-2.5 text-xs text-muted-foreground italic"
-              >
-                "{example}"
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-muted-foreground mt-3">
-            Use the "Ask Access Michigan" chat at the bottom of any page to explore data and programs.
-          </p>
-        </motion.div>
+        {AI_CHAT_ENABLED && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="rounded-xl border border-michigan-navy/15 bg-card p-6 mb-8"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <MessageSquare className="h-5 w-5 text-michigan-navy" />
+              <h3 className="font-bold text-foreground">Try asking Access Michigan</h3>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-3">
+              {aiExamples.map((example) => (
+                <div
+                  key={example}
+                  className="rounded-lg border border-border bg-muted/40 px-3 py-2.5 text-xs text-muted-foreground italic"
+                >
+                  "{example}"
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">
+              Use the "Ask Access Michigan" chat at the bottom of any page to explore data and programs.
+            </p>
+          </motion.div>
+        )}
 
         {/* CTAs */}
         <motion.div

@@ -1,3 +1,4 @@
+import { AI_CHAT_ENABLED } from "@/config/aiChat";
 import { useMemo, useState, useCallback } from "react";
 import {
   useParams,
@@ -1758,22 +1759,24 @@ export default function ZipScorecardPage() {
                   </CardContent>
                 </Card>
 
-                {/* Narrative + CHNA */}
-                <Suspense fallback={null}>
-                  <ZIPNarratives
-                    zip={zip}
-                    county={primary.county ?? ""}
-                    equityScore={primary.compositeScore}
-                    equityTier={compositeTier.tier}
-                    topHealthConcern={
-                      primary.healthResult.concerns[0] ?? "Multiple factors"
-                    }
-                    medianIncome={demographics.medianHouseholdIncome}
-                    renterPct={demographics.renter_pct}
-                    lepPct={demographics.lep_pct}
-                    disabilityPct={demographics.disability_pct}
-                  />
-                </Suspense>
+                {/* Optional generated narrative */}
+                {AI_CHAT_ENABLED && (
+                  <Suspense fallback={null}>
+                    <ZIPNarratives
+                      zip={zip}
+                      county={primary.county ?? ""}
+                      equityScore={primary.compositeScore}
+                      equityTier={compositeTier.tier}
+                      topHealthConcern={
+                        primary.healthResult.concerns[0] ?? "Multiple factors"
+                      }
+                      medianIncome={demographics.medianHouseholdIncome}
+                      renterPct={demographics.renter_pct}
+                      lepPct={demographics.lep_pct}
+                      disabilityPct={demographics.disability_pct}
+                    />
+                  </Suspense>
+                )}
 
                 <div className="flex justify-end">
                   <Suspense fallback={null}>

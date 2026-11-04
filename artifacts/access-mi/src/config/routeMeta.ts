@@ -564,9 +564,9 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/outages",
     title: "Utility Outage Dashboard",
     description:
-      "Check available DTE Energy and Consumers Energy outage reports and visit official utility outage centers.",
+      "View Consumers Energy county outage reports and find official utility outage centers.",
     h1: "Utility Outage Dashboard",
-    summary: "Live DTE and Consumers Energy outage tracking by county.",
+    summary: "Consumers Energy county outage reports and links to official utility outage centers.",
   },
   {
     path: "/find-your-city",

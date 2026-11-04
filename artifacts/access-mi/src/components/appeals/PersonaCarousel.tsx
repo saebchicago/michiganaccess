@@ -51,13 +51,13 @@ const PERSONAS: Persona[] = [
     title: "Rural Senior on Medicare",
     location: "Traverse City, Grand Traverse County",
     situation:
-      "Dorothy's Medicare Advantage plan denied physical therapy for her hip replacement recovery. Employer plans can also use the free DIFS external review process to independently overturn denials.",
+      "Dorothy's Medicare Advantage plan denied physical therapy for her hip replacement recovery.",
     solution:
       "Built an appeal letter using CMS coverage criteria → peer-to-peer review → PT approved for 12 weeks.",
     illustrativeOutcome:
       "In this scenario, the appeal letter translates the physician's medical-necessity rationale into the coverage criteria the plan reviews against.",
     links: [
-      { label: "Medicare appeal guide", href: "#ai-generator" },
+      { label: "Medicare appeal guide", href: "https://www.medicare.gov/providers-services/claims-appeals-complaints/appeals" },
       { label: "DIFS external review", href: "#flowchart" },
     ],
     color: "bg-accent/10 text-accent",
@@ -148,7 +148,7 @@ const PersonaCarousel = () => {
                         size="sm"
                         asChild
                       >
-                        {link.href.startsWith("#") ? (
+                        {(link.href.startsWith("#") || link.href.startsWith("https://")) ? (
                           <a href={link.href}>
                             {link.label} <ArrowRight className="h-3 w-3" />
                           </a>
