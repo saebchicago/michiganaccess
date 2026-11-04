@@ -508,6 +508,23 @@
   .overflow-hidden {
     overflow: visible !important;
   }
+  body:has(.comparison-print) #root > *,
+  main:has(.comparison-print) {
+    min-height: 0 !important;
+  }
+  body:has(.comparison-print) #root *:has(> main .comparison-print) > :not(main),
+  main:has(> .comparison-print) > :not(.comparison-print),
+  .comparison-print > :not(.comparison-print-keep) {
+    display: none !important;
+  }
+  main:has(.comparison-print),
+  .comparison-print-keep {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .comparison-print :is(h1, h2, h3, p, th, td, td span, a) {
+    color: #172334 !important;
+  }
   /* Show all carousel items in print */
   [aria-roledescription="carousel"] .overflow-hidden {
     overflow: visible !important;

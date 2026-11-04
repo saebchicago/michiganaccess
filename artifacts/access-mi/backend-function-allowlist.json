@@ -3,8 +3,6 @@
   "_migrationBackupIsLoadBearing": "IMPORTANT: .migration-backup/ is NOT dead weight. It holds the only in-repo source for the functions declared below. It is excluded from every other guard, so a routine dead-code sweep will delete it - one nearly did on 2026-08-17. Do not remove it without first promoting these functions into supabase/functions/.",
   "netlify": {},
   "supabaseBackupOnly": {
-    "appeal-generator": "Deployed to Supabase out-of-band; .migration-backup/supabase/functions/appeal-generator is the authoritative repo record. Powers the AI appeals generator.",
-    "civic-copilot": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers the AIChatWidget.",
     "airnow-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers real-time AQI on /environment/air.",
     "cdc-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers CDC data reads.",
     "gtfs-rt-proxy": "Deployed to Supabase out-of-band; backup tree is the authoritative repo record. Powers realtime transit feeds.",
