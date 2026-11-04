@@ -1,3 +1,5 @@
+import { AI_CHAT_ENABLED } from "@/config/aiChat";
+import AIAppealGenerator from "@/components/appeals/AIAppealGenerator";
 import Layout from "@/components/layout/Layout";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import { motion } from "framer-motion";
@@ -5,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Shield, ArrowDown } from "lucide-react";
 import AppealFlowchart from "@/components/appeals/AppealFlowchart";
-import AIAppealGenerator from "@/components/appeals/AIAppealGenerator";
 import MedicaidSpecialist from "@/components/appeals/MedicaidSpecialist";
 import ImpactDashboard from "@/components/appeals/ImpactDashboard";
 import PersonaCarousel from "@/components/appeals/PersonaCarousel";
@@ -103,13 +104,9 @@ const InsuranceAppealsPage = () => {
               </span>
             </h1>
             <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
-              Michigan law guarantees your right to appeal. Free tools. No
-              sign-up. Nothing stored.
+              Learn how to appeal a health insurance denial in Michigan.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
-              <Button size="lg" variant="secondary" asChild>
-                <a href="#ai-generator">Generate Appeal Letter</a>
-              </Button>
               <Button
                 size="lg"
                 variant="outline"
@@ -122,8 +119,7 @@ const InsuranceAppealsPage = () => {
               </Button>
             </div>
             <p className="text-xs text-primary-foreground/60">
-              No personal health information stored · No account required · 100%
-              free
+              Free appeal guides. No account required.
             </p>
           </motion.div>
         </div>
@@ -141,7 +137,14 @@ const InsuranceAppealsPage = () => {
 
         {/* AI Generator */}
         <div id="ai-generator">
-          <AIAppealGenerator />
+          {AI_CHAT_ENABLED ? (
+            <AIAppealGenerator />
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              The automated letter generator is paused. Use the appeal process
+              guide above to prepare your next step.
+            </p>
+          )}
         </div>
 
         {/* Medicaid Specialist */}

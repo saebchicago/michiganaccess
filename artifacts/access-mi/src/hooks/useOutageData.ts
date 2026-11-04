@@ -27,10 +27,14 @@ interface OutageResponse {
 export function useOutageData(enabled = true) {
   return useQuery({
     queryKey: ["outage-data"],
-    queryFn: async (): Promise<OutageResponse> => {
+    queryFn: async (): Promise<OutageResponse | null> => {
       const { data, error } = await supabase.functions.invoke("outage-proxy");
       if (error) throw error;
-      return data as OutageResponse;
+      const response = data as OutageResponse | null;
+      return response?.meta?.source === "live" &&
+        Array.isArray(response.zones)
+        ? response
+        : null;
     },
     enabled,
     refetchInterval: 15 * 60 * 1000, // 15 minutes

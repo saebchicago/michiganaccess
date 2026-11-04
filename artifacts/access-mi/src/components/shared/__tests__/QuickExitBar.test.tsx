@@ -9,22 +9,24 @@ describe("QuickExitBar", () => {
     document.body.style.visibility = "";
   });
 
-  it("QuickExitBar ESC keydown triggers the exit handler", () => {
+  it("focused Quick Exit button activates through its click handler", () => {
+    const replaceSpy = vi.fn();
+    vi.stubGlobal("location", { replace: replaceSpy });
+
+    const { getByRole } = render(<QuickExitBar />);
+    const button = getByRole("button", { name: /quick exit/i });
+    button.focus();
+    fireEvent.click(button);
+
+    expect(replaceSpy).toHaveBeenCalledWith("https://www.weather.com");
+  });
+
+  it("Escape is available for dismissing dialogs", () => {
     const replaceSpy = vi.fn();
     vi.stubGlobal("location", { replace: replaceSpy });
 
     render(<QuickExitBar />);
     fireEvent.keyDown(window, { key: "Escape" });
-
-    expect(replaceSpy).toHaveBeenCalledWith("https://www.weather.com");
-  });
-
-  it("QuickExitBar non-Escape keydown does not trigger exit", () => {
-    const replaceSpy = vi.fn();
-    vi.stubGlobal("location", { replace: replaceSpy });
-
-    render(<QuickExitBar />);
-    fireEvent.keyDown(window, { key: "Enter" });
 
     expect(replaceSpy).not.toHaveBeenCalled();
   });

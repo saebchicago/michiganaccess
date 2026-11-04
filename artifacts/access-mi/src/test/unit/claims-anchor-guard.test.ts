@@ -172,13 +172,10 @@ describe("Claims anchor guard  -  VERIFIED rows", () => {
 });
 
 describe("Claims anchor guard  -  FALSE-fixed rows", () => {
-  // F-1 fix: PrivacyPage no longer says "client-side" for appeal generator
-  it("F-1 fix: PrivacyPage does not claim AI tools process data 'client-side'", () => {
+  it("F-1 fix: PrivacyPage discloses the pause without promising AI input retention terms", () => {
     const src = read("src/pages/PrivacyPage.tsx");
-    expect(src).not.toContain(
-      "process data client-side. We do not store, transmit",
-    );
-    // Replacement copy is present
-    expect(src).toContain("processed via secure server functions");
+    expect(src).toContain("has paused its public AI chat and appeal-letter");
+    expect(src).not.toContain("process data client-side. We do not store, transmit");
+    expect(src).not.toContain("discarded immediately after generating a response");
   });
 });

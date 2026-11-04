@@ -5,7 +5,7 @@ import { useOutageData, type OutageZone } from "@/hooks/useOutageData";
 /**
  * Utility Outage Tracking Layer
  * Fetches outage data from the outage-proxy edge function which attempts
- * live DTE/Consumers Energy API calls with aggregated fallback.
+ * live DTE/Consumers Energy API calls. Only live data is displayed.
  */
 
 /** Escape HTML special chars to prevent XSS from API-sourced strings in Leaflet popup innerHTML */
@@ -42,15 +42,14 @@ interface UtilityOutageLayerProps {
 export default function UtilityOutageLayer({ map, visible = true }: UtilityOutageLayerProps) {
   const layerRef = useRef<L.LayerGroup | null>(null);
   const legendRef = useRef<L.Control | null>(null);
-  const { data: outageData } = useOutageData(visible);
+  const { data: outageData, isError } = useOutageData(visible);
 
-  const zones = outageData?.zones ?? [];
-  const source = outageData?.meta?.source ?? "demo";
+  const zones = isError ? undefined : outageData?.zones;
 
   useEffect(() => {
     if (!map) return;
 
-    if (!visible || zones.length === 0) {
+    if (!visible || !zones?.length) {
       if (layerRef.current) { map.removeLayer(layerRef.current); layerRef.current = null; }
       if (legendRef.current) { map.removeControl(legendRef.current); legendRef.current = null; }
       return;
@@ -71,7 +70,6 @@ export default function UtilityOutageLayer({ map, visible = true }: UtilityOutag
       });
 
       const utilityColor = zone.utility === "DTE" ? "#0A4C95" : "#2D5F3F";
-      const sourceLabel = source === "live" ? "Live data" : "Public beta";
 
       circle.bindPopup(`
         <div style="font-family:system-ui,sans-serif;min-width:220px;">
@@ -91,7 +89,7 @@ export default function UtilityOutageLayer({ map, visible = true }: UtilityOutag
             <div style="background:#22C55E;color:#fff;padding:4px 8px;border-radius:4px;font-size:12px;font-weight:600;margin-bottom:6px;">✓ No active outages</div>
           `}
           <div style="font-size:10px;color:#64748b;margin-top:4px;">${zone.customersServed.toLocaleString()} total customers served</div>
-          <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: ${zone.utility === "DTE" ? "DTE Energy Outage Center" : "Consumers Energy Outage Map"} · ${escHtml(sourceLabel)}</div>
+          <div style="font-size:9px;color:#94a3b8;margin-top:4px;">Source: ${zone.utility === "DTE" ? "DTE Energy Outage Center" : "Consumers Energy Outage Map"} · Live data</div>
         </div>
       `);
 
@@ -119,7 +117,7 @@ export default function UtilityOutageLayer({ map, visible = true }: UtilityOutag
           <div><span style="display:inline-block;width:14px;height:10px;background:#F59E0B;border-radius:2px;margin-right:4px"></span>Moderate</div>
           <div><span style="display:inline-block;width:14px;height:10px;background:#DC2626;border-radius:2px;margin-right:4px"></span>High (&gt;1%)</div>
           <div><span style="display:inline-block;width:14px;height:10px;background:#7E0023;border-radius:2px;margin-right:4px"></span>Critical (&gt;2%)</div>
-          <div style="font-size:9px;color:#999;margin-top:4px">DTE Energy · Consumers Energy<br/>${source === "live" ? "Live data" : "Public beta"} · Refresh: 15 min</div>
+          <div style="font-size:9px;color:#999;margin-top:4px">DTE Energy · Consumers Energy<br/>Live data · Refresh: 15 min</div>
         </div>
       `;
       return div;
@@ -131,7 +129,7 @@ export default function UtilityOutageLayer({ map, visible = true }: UtilityOutag
       if (layerRef.current) { map.removeLayer(layerRef.current); layerRef.current = null; }
       if (legendRef.current) { map.removeControl(legendRef.current); legendRef.current = null; }
     };
-  }, [map, visible, zones, source]);
+  }, [map, visible, zones]);
 
   return null;
 }

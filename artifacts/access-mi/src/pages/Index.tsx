@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 import Layout from "@/components/layout/Layout";
-import { STATE_UNCONTESTED_COMPARISON } from "@/data/uncontestedRaces";
 import OutageAlertBanner from "@/components/home/OutageAlertBanner";
 import CountyWelcomeBanner from "@/components/home/CountyWelcomeBanner";
 import IntelligenceBriefing from "@/components/home/IntelligenceBriefing";
@@ -441,15 +440,10 @@ function IntentCardsSection({ mode }: { mode: PersonaView }) {
 
 // ─── Worth a look (editorial picks) ─────────────────────────────────────────
 // The taxonomy's `featured` flags: an editorial pick set, not a popularity
-// measurement. Card copy is each page's ROUTE_META summary. The
-// uncontested-races figure keeps its inline source line exactly as the old
-// Belong door disclosed it.
+// measurement. Card copy is each page's ROUTE_META summary.
 
 function WorthALookRail() {
   const featured = getFeaturedRail();
-  const miUncontested = STATE_UNCONTESTED_COMPARISON.find(
-    (st) => st.state === "Michigan",
-  );
   return (
     <section
       className="container mx-auto max-w-6xl px-4 pb-14"
@@ -482,29 +476,6 @@ function WorthALookRail() {
               >
                 {d.description}
               </p>
-            )}
-            {d.href === "/civic-power" && miUncontested && (
-              <div
-                className="mt-3 border-t pt-3"
-                style={{ borderColor: `${C.emerald}14` }}
-              >
-                <p className="font-serif text-3xl leading-none">
-                  {miUncontested.pct}%
-                </p>
-                <p
-                  className="mt-1 text-xs leading-snug"
-                  style={{ color: `${C.emerald}CC` }}
-                >
-                  of Michigan local races ran uncontested (2024).
-                </p>
-                <p
-                  className="mt-1.5 text-[10px] leading-snug"
-                  style={{ color: `${C.emerald}bf` }}
-                >
-                  Source: Ballotpedia analysis / Michigan SOS 2024. Formal
-                  provenance label pending.
-                </p>
-              </div>
             )}
             <span
               className="mt-4 inline-flex items-center gap-1 text-[11px] font-semibold uppercase"

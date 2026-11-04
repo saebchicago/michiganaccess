@@ -1,3 +1,4 @@
+import { AI_CHAT_ENABLED } from "@/config/aiChat";
 import { useState } from "react";
 import { MessageSquare, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -79,6 +80,8 @@ export default function AskCopilotButton({ context, label = "Ask Access Michigan
       setLoading(false);
     }
   };
+
+  if (!AI_CHAT_ENABLED) return null;
 
   if (!open) {
     return (

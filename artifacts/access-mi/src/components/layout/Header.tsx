@@ -291,11 +291,7 @@ function DesktopSearchTrigger() {
  *
  * - Enter/Space toggles open (native button behavior)
  * - ArrowDown from the trigger opens and focuses the first link
- * - Escape closes and returns focus to the trigger - but note the
- *   sacrosanct QuickExitBar binds Escape on window as the DV-safety
- *   panic key (immediate exit to weather.com), so in practice Escape
- *   leaves the site entirely. These handlers deliberately do NOT call
- *   stopPropagation: the menu must never swallow the safety key.
+ * - Escape closes and returns focus to the trigger.
  * - Outside click and route change close
  *
  * Entry descriptions are resolved from the route manifest at render time

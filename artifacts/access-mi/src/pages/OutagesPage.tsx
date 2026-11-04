@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
-import DataProvenance from "@/components/shared/DataProvenance";
 import { motion } from "framer-motion";
-import { Zap, AlertTriangle, Users, Clock, ArrowUpDown, Filter, Download, Activity, TrendingUp } from "lucide-react";
+import { Zap, AlertTriangle, Users, ArrowUpDown, Filter, Download, Activity } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useOutageData, type OutageZone } from "@/hooks/useOutageData";
 import { usePageMeta } from "@/hooks/usePageMeta";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 import { toast } from "sonner";
 
 const SEVERITY_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
@@ -24,26 +23,17 @@ const SEVERITY_CONFIG: Record<string, { label: string; color: string; bg: string
   none: { label: "None", color: "text-muted-foreground", bg: "bg-muted" },
 };
 
-// Source: DTE Energy Outage Center, Consumers Energy (Kubra StormCenter API)
-const TREND_DATA = [
-  { month: "Sep", DTE: 12, Consumers: 8 },
-  { month: "Oct", DTE: 18, Consumers: 14 },
-  { month: "Nov", DTE: 25, Consumers: 20 },
-  { month: "Dec", DTE: 30, Consumers: 22 },
-  { month: "Jan", DTE: 22, Consumers: 16 },
-  { month: "Feb", DTE: 15, Consumers: 11 },
-];
-
 type SortKey = "county" | "utility" | "severity" | "customersAffected";
 
 export default function OutagesPage() {
   usePageMeta({
     title: "Utility Outage Dashboard",
-    description: "Real-time utility outage tracking across all 83 Michigan counties. Monitor DTE and Consumers Energy outages with severity levels, affected customers, and historical trends.",
+    description: "Check available DTE Energy and Consumers Energy outage reports and visit official utility outage centers.",
     path: "/outages",
   });
 
-  const { data, isLoading } = useOutageData();
+  const { data: liveData, isLoading, isError } = useOutageData();
+  const data = isError ? null : liveData;
   const [search, setSearch] = useState("");
   const [utilityFilter, setUtilityFilter] = useState("all");
   const [severityFilter, setSeverityFilter] = useState("all");
@@ -130,10 +120,10 @@ export default function OutagesPage() {
             <div>
               <h1 className="text-2xl font-bold text-foreground">Utility Outage Dashboard</h1>
               <p className="text-sm text-muted-foreground">
-                Real-time monitoring of DTE & Consumers Energy outages across Michigan
+                Outage reports from DTE Energy and Consumers Energy where data is available.
                 {meta && (
                    <Badge variant="outline" className="ml-2 text-[10px]">
-                    🟢 Public Beta · Updated {new Date(meta.timestamp).toLocaleTimeString()}
+                    Live feed · Updated {new Date(meta.timestamp).toLocaleTimeString()}
                   </Badge>
                 )}
               </p>
@@ -141,13 +131,23 @@ export default function OutagesPage() {
           </div>
         </motion.div>
 
+        <div className="flex flex-wrap gap-4 text-sm">
+          <a className="text-primary underline" href="https://outage.dteenergy.com/">DTE Energy Outage Center</a>
+          <a className="text-primary underline" href="https://www.consumersenergy.com/outages-and-safety/outage-center">Consumers Energy Outage Center</a>
+        </div>
+
+        {!data ? (
+          <p role="status" className="rounded-lg border p-4">
+            {isLoading ? "Checking live outage data…" : "Live outage data unavailable. Check your utility’s outage center for current information."}
+          </p>
+        ) : (
+          <div className="space-y-6">
         {/* KPI Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {[
             { label: "Active Outages", value: activeZones.length, icon: Zap, color: "text-amber-500" },
             { label: "Customers Affected", value: totalAffected.toLocaleString(), icon: Users, color: "text-primary" },
             { label: "Critical", value: criticalCount, icon: AlertTriangle, color: "text-destructive" },
-            { label: "Avg Restore", value: activeZones.length > 0 ? "2–6 hrs" : "N/A", icon: Clock, color: "text-muted-foreground" },
           ].map((kpi) => (
             <Card key={kpi.label}>
               <CardContent className="py-3 flex items-center gap-3">
@@ -165,7 +165,6 @@ export default function OutagesPage() {
           <TabsList className="mb-4">
             <TabsTrigger value="table"><Filter className="mr-1 h-3.5 w-3.5" />Active Outages</TabsTrigger>
             <TabsTrigger value="charts"><Activity className="mr-1 h-3.5 w-3.5" />Analytics</TabsTrigger>
-            <TabsTrigger value="trends"><TrendingUp className="mr-1 h-3.5 w-3.5" />Historical Trends</TabsTrigger>
           </TabsList>
 
           {/* Active Outages Table */}
@@ -198,11 +197,7 @@ export default function OutagesPage() {
 
             <p className="text-xs text-muted-foreground"><strong className="text-foreground">{filtered.length}</strong> active outages</p>
 
-            {isLoading ? (
-              <div className="flex justify-center py-12">
-                <div className="h-6 w-6 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-              </div>
-            ) : filtered.length === 0 ? (
+            {filtered.length === 0 ? (
               <Card><CardContent className="py-12 text-center text-muted-foreground">No active outages match your filters</CardContent></Card>
             ) : (
               <Card>
@@ -317,36 +312,9 @@ export default function OutagesPage() {
             </div>
           </TabsContent>
 
-          {/* Historical Trends */}
-          <TabsContent value="trends" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">6-Month Outage Trend (Sept 2025 – March 2026)</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={TREND_DATA}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                    <YAxis tick={{ fontSize: 12 }} />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="DTE" stroke="#1e3a5f" strokeWidth={2} dot={{ r: 4 }} />
-                    <Line type="monotone" dataKey="Consumers" stroke="#00A3A1" strokeWidth={2} dot={{ r: 4 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-                <p className="text-[10px] text-muted-foreground mt-3">
-                  Historical data represents aggregated monthly outage events. Peak outage activity correlates with storm seasons (Oct–Dec).
-                </p>
-              </CardContent>
-            </Card>
-
-            <DataProvenance
-              source="DTE Energy Outage Center, Consumers Energy (Kubra StormCenter API)"
-              updated="15-min refresh"
-            />
-          </TabsContent>
         </Tabs>
+          </div>
+        )}
       </section>
     </Layout>
   );

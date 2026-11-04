@@ -149,7 +149,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/compare",
     title: "Compare Places | Side-by-Side Census Data | Access Michigan",
     description:
-      "Compare up to 4 Michigan counties or ZIP codes with live Census ACS data, community voice, equity lens, and PDF export.",
+      "Compare up to 4 Michigan counties or ZIP codes with live Census ACS data, equity lens, and PDF export.",
     h1: "Compare Michigan counties and ZIP codes",
     summary:
       "Side-by-side civic, economic, and housing data with a shareable, exportable view.",
@@ -564,7 +564,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/outages",
     title: "Utility Outage Dashboard",
     description:
-      "Real-time utility outage tracking across all 83 Michigan counties. Monitor DTE and Consumers Energy outages with severity levels, affected customers, and historical trends.",
+      "Check available DTE Energy and Consumers Energy outage reports and visit official utility outage centers.",
     h1: "Utility Outage Dashboard",
     summary: "Live DTE and Consumers Energy outage tracking by county.",
   },
@@ -644,9 +644,9 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/civic-power",
     title: "Civic Power Map - Access Michigan",
     description:
-      "Michigan's democracy has open seats. 79.7% of races uncontested. Find where to serve, who represents you, and where candidates are needed.",
+      "Find where to serve, who represents you, and where candidates are needed in Michigan.",
     h1: "Democracy has open seats.",
-    summary: "Most local races go uncontested. See where your community needs you.",
+    summary: "Explore local offices, uncontested races, and ways to serve your community.",
   },
   {
     path: "/civic-power/races",

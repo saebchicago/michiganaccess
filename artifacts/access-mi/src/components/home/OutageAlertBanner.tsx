@@ -8,11 +8,11 @@ import { useCounty } from "@/contexts/CountyContext";
 export default function OutageAlertBanner() {
   const [dismissed, setDismissed] = useState(false);
   const { county } = useCounty();
-  const { data } = useOutageData();
+  const { data, isError } = useOutageData();
 
-  if (dismissed || !data) return null;
+  if (dismissed || isError || !data) return null;
 
-  const { zones, meta } = data;
+  const { zones } = data;
 
   const relevantZones = county
     ? zones.filter((z) => z.county === county && z.severity !== "none")

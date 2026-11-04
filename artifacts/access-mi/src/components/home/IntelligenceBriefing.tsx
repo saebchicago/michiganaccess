@@ -284,6 +284,14 @@ export default function IntelligenceBriefing() {
                 />
               </p>
             </Link>
+            {story.sourceUrl && (
+              <a
+                href={story.sourceUrl}
+                className="block bg-background px-5 py-2 text-xs text-primary underline"
+              >
+                Read the United For ALICE Michigan report
+              </a>
+            )}
           </li>
         ))}
       </ul>

@@ -5,6 +5,7 @@ export interface DataStory {
   narrative: string;
   stat: { value: number; label: string; suffix: string };
   source: string;
+  sourceUrl?: string;
   href: string;
   color: string;
   /** Counties this story names directly (by county name, e.g. "Wayne").
@@ -15,16 +16,17 @@ export interface DataStory {
 export const DATA_STORIES: DataStory[] = [
   {
     id: "alice-gap",
-    title: "The Invisible 41%",
-    hook: "They work full-time but can't afford the basics.",
+    title: "40% of Michigan households faced financial hardship",
+    hook: "The figure includes households in poverty and those above poverty who cannot afford basic expenses.",
     narrative:
-      "40% of Michigan households fall below the ALICE Threshold - earning too much for most assistance programs but not enough to cover housing, childcare, food, and healthcare.",
+      "40% of Michigan households fell below the ALICE Threshold in 2024, including households in poverty and households above poverty that could not afford basic expenses.",
     stat: {
       value: 40,
       label: "of households below ALICE Threshold",
       suffix: "%",
     },
     source: "United For ALICE 2026 Report (2024 data)",
+    sourceUrl: "https://www.unitedforalice.org/michigan",
     href: "/equity",
     color: "hsl(var(--coral-deep))",
   },
