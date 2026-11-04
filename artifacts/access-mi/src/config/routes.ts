@@ -1026,7 +1026,7 @@ export const SITEMAP_SECTIONS: SitemapSection[] = [
       {
         label: "Insurance Appeals",
         href: "/health/insurance-appeals",
-        badge: "Tool",
+        badge: "Guide",
       },
       { label: "Complex Care Navigation", href: "/complex-care" },
       { label: "Life Navigator Assessment", href: "/life-navigator" },

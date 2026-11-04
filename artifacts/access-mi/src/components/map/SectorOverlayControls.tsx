@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator";
 const HEALTH_OVERLAYS = [
   { id: "county-boundaries", label: "County Boundaries", icon: Construction, defaultOn: true, color: "text-primary" },
   { id: "energy-burden", label: "Energy Burden Choropleth", icon: Zap, defaultOn: false, color: "text-michigan-gold-deep", badge: "ACEEE" },
-  { id: "utility-outages", label: "Utility Outages", icon: Zap, defaultOn: false, color: "text-destructive", badge: "Live" },
   { id: "aqi-stations", label: "EPA AQI Index", icon: CloudSun, defaultOn: false, color: "text-michigan-forest-deep", badge: "Real-time" },
   { id: "egle-air", label: "EGLE Air Monitors", icon: Wind, defaultOn: false, color: "text-michigan-sky" },
 ];

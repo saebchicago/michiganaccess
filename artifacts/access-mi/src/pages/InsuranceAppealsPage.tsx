@@ -16,9 +16,9 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 const InsuranceAppealsPage = () => {
   usePageMeta({
-    title: "Insurance Denial Appeal Tool - Michigan",
+    title: "Michigan Health Insurance Appeals Guide",
     description:
-      "Fight health insurance denials in Michigan. Appeal letter generator, Medicaid fair hearing templates, and DIFS external review guidance.",
+      "Learn about Michigan health insurance appeals, Medicaid fair hearings, and DIFS external review.",
     path: "/health/insurance-appeals",
     jsonLd: {
       "@type": "HowTo",
@@ -26,7 +26,6 @@ const InsuranceAppealsPage = () => {
       description:
         "Step-by-step guide to fighting insurance denials using Michigan's internal appeal and DIFS external review processes.",
       url: "https://accessmi.org/health/insurance-appeals",
-      totalTime: "PT30M",
       step: [
         {
           "@type": "HowToStep",
@@ -36,38 +35,12 @@ const InsuranceAppealsPage = () => {
         {
           "@type": "HowToStep",
           name: "File internal appeal",
-          text: "Submit a formal appeal to your insurance company within 180 days.",
+          text: "Check the deadline and submission instructions in your denial notice.",
         },
         {
           "@type": "HowToStep",
           name: "Request DIFS external review",
-          text: "If denied again, file for external review with Michigan DIFS.",
-        },
-      ],
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "How long do I have to appeal a health insurance denial in Michigan?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "You have 180 days from the date of denial to file an internal appeal with your insurance company.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Can I appeal a health insurance denial?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes. Michigan law gives you the right to an internal appeal with your insurer and, if denied again, an external review through DIFS.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Does Access Michigan store my health information?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "No. Access Michigan does not store any personal health information. All appeal letter generation happens locally.",
-          },
+          text: "Check whether your plan and denial qualify for Michigan DIFS external review.",
         },
       ],
     },
@@ -135,17 +108,11 @@ const InsuranceAppealsPage = () => {
           <AppealFlowchart />
         </div>
 
-        {/* AI Generator */}
-        <div id="ai-generator">
-          {AI_CHAT_ENABLED ? (
+        {AI_CHAT_ENABLED && (
+          <div id="ai-generator">
             <AIAppealGenerator />
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              The automated letter generator is paused. Use the appeal process
-              guide above to prepare your next step.
-            </p>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Medicaid Specialist */}
         <MedicaidSpecialist />

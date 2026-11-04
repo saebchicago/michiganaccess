@@ -219,7 +219,7 @@ const QUICK_PATHS = [
   {
     question: "My claim was denied",
     answer:
-      "You have the right to appeal. Access Michigan can generate a free appeal letter.",
+      "Review the appeal instructions on your denial notice and find guidance for your coverage.",
     tab: "appeals",
   },
 ];
@@ -507,13 +507,12 @@ export default function InsuranceCoveragePage() {
                     Claim denied? You have the right to appeal.
                   </p>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    Access Michigan can generate a free appeal letter using AI,
-                    with step-by-step guidance.
+                    Find step-by-step guidance and official appeal resources.
                   </p>
                 </div>
                 <Button asChild size="sm" className="gap-1.5">
                   <Link to="/health/insurance-appeals">
-                    <FileText className="h-3.5 w-3.5" /> Appeal Generator{" "}
+                    <FileText className="h-3.5 w-3.5" /> Appeal Guide{" "}
                     <ArrowRight className="h-3 w-3" />
                   </Link>
                 </Button>
