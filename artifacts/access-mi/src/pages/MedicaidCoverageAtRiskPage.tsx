@@ -243,10 +243,12 @@ export default function MedicaidCoverageAtRiskPage() {
                 Exposure is not disenrollment
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                These are people in affected categories, per Urban Institute,
-                CBO, and CBPP. Not a forecast of who loses coverage. Outcomes
-                depend on state rules, compliance paths, income, and admin
-                factors.{" "}
+                Urban Institute projects fewer Medicaid expansion enrollees
+                statewide in 2028 under two mitigation scenarios. County figures
+                are that statewide range split by each county's share of adults
+                with Medicaid. They are an allocation, not a county forecast,
+                and say nothing about any individual. Outcomes depend on state
+                rules, exemptions, compliance help, and income changes.{" "}
                 <Link
                   to={METHODOLOGY_URL}
                   className="underline hover:text-primary"
@@ -442,7 +444,7 @@ export default function MedicaidCoverageAtRiskPage() {
                       Allocation basis: ACS 2024 5-year C27007_007E +
                       C27007_017E, adults 19-64 with Medicaid/means-tested
                       coverage (survey proxy for Healthy Michigan Plan
-                      enrollment; ±90% MOE). Projected range: Urban Institute
+                      enrollment; ± values are 90% margins of error). Projected range: Urban Institute
                       Michigan 2028 range (171,000-355,000, work requirements +
                       six-month redeterminations) × county share.{" "}
                       <Link

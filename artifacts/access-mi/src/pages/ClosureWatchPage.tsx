@@ -129,9 +129,10 @@ function EntryRow({ entry }: { entry: ClosureEntry }) {
           data-testid="closure-event-status"
           className="text-xs font-medium text-sky-800 dark:text-sky-300"
         >
-          Event status: {entry.eventStatus}
-          {entry.announcedDate ? ` (announced ${formatDate(entry.announcedDate)})` : ""}. Not
-          counted as a service loss.
+          {entry.eventStatus === "announced"
+            ? `Announced${entry.announcedDate ? ` ${formatDate(entry.announcedDate)}` : ""}; not yet confirmed as having happened.`
+            : `Status: ${entry.eventStatus}.`}{" "}
+          Not counted as a service loss.
           {entry.occurrenceNote ? ` ${entry.occurrenceNote}` : ""}
         </p>
       )}
@@ -377,7 +378,7 @@ export default function ClosureWatchPage() {
             <StatCard
               icon={<Building2 className="h-5 w-5" />}
               value={isLoading ? "…" : verified.length}
-              label={`Verified entries since 2020 (${occurredLosses.length} occurred service losses, ${pendingEvents} announced, rest ownership changes or conversions)`}
+              label={`Verified entries since 2020: ${occurredLosses.length} completed service losses, ${pendingEvents} announced changes, the rest ownership changes or conversions`}
               provenance={
                 <DataProvenance
                   sourceName="Sheps Center · Becker's · Bridge MI"
@@ -392,7 +393,7 @@ export default function ClosureWatchPage() {
             <StatCard
               icon={<AlertTriangle className="h-5 w-5" />}
               value={isLoading ? "…" : obLost}
-              label="OB / Labor & Delivery units eliminated since 2020 (occurred only)"
+              label="OB / Labor & Delivery units closed since 2020 (completed closures only)"
               provenance={
                 <DataProvenance
                   sourceName="Sheps Center · Becker's Hospital Review"
@@ -407,7 +408,7 @@ export default function ClosureWatchPage() {
             <StatCard
               icon={<MapPin className="h-5 w-5" />}
               value={isLoading ? "…" : countiesAffected}
-              label="Counties with an occurred service loss"
+              label="Counties with a completed service loss"
               provenance={
                 <DataProvenance
                   sourceName="accessmi.org derived from entry data"

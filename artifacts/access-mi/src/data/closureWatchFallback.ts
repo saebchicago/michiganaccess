@@ -292,7 +292,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
     eventStatus: "announced",
     announcedDate: "2023-09-27",
     occurrenceNote:
-      "Not confirmed as occurred. Munson's maternity pages (munsonhealthcare.org/maternity, seen via search 2026-11-08, not yet second-sourced) state the Otsego Memorial birthing center temporarily relocated TO Grayling on August 1, 2025, and a March 2026 report placed the move of deliveries to Gaylord in fall 2026. Reverify before treating Grayling delivery services as closed.",
+      "Munson's maternity pages (munsonhealthcare.org/maternity, checked November 8, 2026; one source so far) state the Otsego Memorial birthing center temporarily relocated TO Grayling on August 1, 2025, and a March 2026 report placed the move of deliveries to Gaylord in fall 2026. Reverify before treating Grayling delivery services as closed.",
     asOf: "2026-11-08",
   },
 

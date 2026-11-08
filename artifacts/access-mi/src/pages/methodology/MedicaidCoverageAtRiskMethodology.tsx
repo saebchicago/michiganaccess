@@ -86,13 +86,13 @@ export default function MedicaidCoverageAtRiskMethodology() {
             Exposure is not disenrollment
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            This page identifies Michigan Medicaid enrollees who fall into categories that Urban
-            Institute, CBO, and CBPP project may be affected by provisions of P.L. 119-21. Being
-            in an affected category is not the same as losing coverage. Individual outcomes depend
-            on state implementation decisions, work requirement compliance pathways, income and
-            employment changes, and administrative factors that vary by county and over time. The
-            ranges on this page describe populations at elevated exposure - they do not predict who
-            will or will not retain Medicaid enrollment.
+            Urban Institute projects a statewide reduction in Michigan Medicaid expansion
+            enrollment in 2028 under work requirements and six-month redeterminations, across
+            mitigation scenarios. This page splits that statewide range across counties. A county
+            figure is an allocation of a statewide projection, not a county-level forecast, and it
+            does not predict whether any individual keeps coverage. Outcomes depend on MDHHS
+            implementation, exemptions, compliance support, and income and employment changes that
+            vary by county and over time.
           </p>
         </section>
 

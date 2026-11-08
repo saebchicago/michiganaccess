@@ -207,6 +207,20 @@ export default function SnapCoverageAtRiskPage() {
           <ProvenanceDisclaimer />
         </section>
 
+        <section
+          data-testid="snap-correction-notice"
+          className="rounded-lg border border-border bg-muted/30 px-5 py-4 text-sm text-muted-foreground"
+        >
+          <p className="font-semibold text-foreground">Correction, November 8, 2026</p>
+          <p className="mt-1 leading-relaxed">
+            Earlier versions said the ±40% band came from a GAO study (GAO-19-56).
+            We could not find support for that in the report, so the citation was
+            removed. The band is our own sensitivity range, chosen to show
+            uncertainty. It is not a statistical interval. County values did not
+            change.
+          </p>
+        </section>
+
         {/* ── Exposure ≠ Loss callout ── */}
         <section className="rounded-lg border-2 border-amber-400/60 bg-amber-50/40 dark:bg-amber-950/20 px-6 py-5 space-y-3">
           <div className="flex items-start gap-2">
