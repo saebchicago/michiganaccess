@@ -3,6 +3,10 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 /**
  * Medicaid Coverage at Risk - county projection.
  *
+ * NOT CALLED BY THE APP since 2026-11-08: the client serves the committed
+ * static dataset instead (see src/hooks/useMedicaidCoverageAtRisk.ts). Kept
+ * as the method-2.0 reference implementation; redeploying is optional.
+ *
  * Re-runs the proportional-allocation model that backs
  * src/data/medicaidCoverageAtRiskFallback.ts against live ACS data so the
  * county distribution tracks the latest 5-year enrollment shares.
