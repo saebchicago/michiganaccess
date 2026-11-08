@@ -25,7 +25,7 @@ type SortDir = "asc" | "desc";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-// Statewide range from MLPP 74,000 × GAO uncertainty band (×0.60 / ×1.40)
+// Statewide range from MLPP 74,000 × judgment-based sensitivity band (×0.60 / ×1.40)
 const STATE_RANGE_LOW = 44_400; // 74,000 × 0.60
 const STATE_RANGE_HIGH = 103_600; // 74,000 × 1.40
 const MLPP_STATE_ESTIMATE = 74_000;
@@ -116,7 +116,7 @@ export default function SnapCoverageAtRiskPage() {
       "@type": "Dataset",
       name: "Michigan SNAP Coverage at Risk - P.L. 119-21 County Projections",
       description:
-        "County-level modeled ranges of Michigan SNAP participants in categories affected by P.L. 119-21 work requirement provisions. Based on MLPP Michigan estimate (74,000), allocated by county enrollment share with ±40% GAO-19-56 uncertainty band.",
+        "County-level modeled ranges of Michigan SNAP participants in categories affected by P.L. 119-21 work requirement provisions. Based on MLPP Michigan estimate (74,000), allocated by county enrollment share with a ±40% judgment-based sensitivity band (not a statistical interval).",
       url: "https://accessmi.org/data/snap-coverage-at-risk",
       creator: {
         "@type": "Organization",
@@ -134,7 +134,7 @@ export default function SnapCoverageAtRiskPage() {
         "county projections",
       ],
       measurementTechnique:
-        "Proportional county allocation from MLPP Michigan state estimate (74,000) with ±40% GAO-19-56 uncertainty band",
+        "Proportional county allocation from MLPP Michigan state estimate (74,000) with a ±40% judgment-based sensitivity band",
     },
   });
 
@@ -199,7 +199,8 @@ export default function SnapCoverageAtRiskPage() {
               </h1>
               <p className="text-muted-foreground mt-1">
                 County-level exposure to P.L. 119-21 ABAWD rules. MODELED
-                ranges. ±40% GAO uncertainty band.
+                ranges. ±40% sensitivity band (judgment-based, not a confidence
+                interval).
               </p>
             </div>
           </div>
@@ -261,7 +262,7 @@ export default function SnapCoverageAtRiskPage() {
                   ? "…"
                   : fmtN(STATE_RANGE_LOW) + "–" + fmtN(STATE_RANGE_HIGH)
               }
-              label="Statewide modeled range (±40% GAO uncertainty band) - not a point estimate"
+              label="Statewide modeled range (±40% judgment-based sensitivity band) - not a point estimate or confidence interval"
               provenance={
                 <DataProvenance {...modeled_provenance_props} compact />
               }
@@ -404,8 +405,10 @@ export default function SnapCoverageAtRiskPage() {
                     <p className="text-[10px] text-muted-foreground mt-1">
                       County enrollment: USDA FNA (formerly FNS) FY2022 (annual
                       average monthly participants). At-risk range: MLPP 74,000
-                      × county enrollment share, ±40% GAO-19-56 uncertainty
-                      band. Low = midpoint × 0.60, High = midpoint × 1.40.
+                      × county enrollment share, ±40% judgment-based
+                      sensitivity band (Low = midpoint × 0.60, High = midpoint ×
+                      1.40). Not derived from GAO or any empirical study;
+                      corrected November 8, 2026.
                     </p>
                   </td>
                 </tr>

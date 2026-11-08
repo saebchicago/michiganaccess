@@ -5,6 +5,7 @@ import {
 } from "@/integrations/supabase/client";
 import {
   MEDICAID_COVERAGE_AT_RISK_FALLBACK,
+  MEDICAID_ALLOCATION_METHOD_VERSION,
   type MedicaidCoverageRangeEntry,
 } from "@/data/medicaidCoverageAtRiskFallback";
 
@@ -16,7 +17,7 @@ const EXPECTED_COUNTY_COUNT = MEDICAID_COVERAGE_AT_RISK_FALLBACK.length;
 /**
  * Live county Medicaid-coverage-at-risk projection via the
  * medicaid-coverage-at-risk edge function, which re-runs the proportional
- * model against fresh ACS C27007 shares. If the function is unavailable or
+ * model against fresh ACS C27007 adult (19-64) Medicaid shares. If the function is unavailable or
  * returns an incomplete payload, we fall back to the provenance-labeled
  * static dataset so the UI never renders partial data.
  */
@@ -41,6 +42,17 @@ async function fetchMedicaidCoverageAtRisk(): Promise<MedicaidCoverageRangeEntry
     }
 
     const json = JSON.parse(bodyText) as { data?: MedicaidCoverageRangeEntry[] };
+    // Reject payloads from an edge build that predates the 2026-11-08
+    // variable correction (method 1.0 allocated by population totals).
+    const stale =
+      (json as { methodVersion?: string }).methodVersion !== MEDICAID_ALLOCATION_METHOD_VERSION ||
+      (json.data ?? []).some((e) => e.methodVersion !== MEDICAID_ALLOCATION_METHOD_VERSION);
+    if (stale) {
+      console.warn(
+        "[useMedicaidCoverageAtRisk] edge function methodVersion mismatch; using corrected fallback",
+      );
+      return MEDICAID_COVERAGE_AT_RISK_FALLBACK;
+    }
     if (!Array.isArray(json.data) || json.data.length < EXPECTED_COUNTY_COUNT) {
       console.warn(
         `[useMedicaidCoverageAtRisk] edge function returned ${json.data?.length ?? 0}/${EXPECTED_COUNTY_COUNT} counties; using fallback`,

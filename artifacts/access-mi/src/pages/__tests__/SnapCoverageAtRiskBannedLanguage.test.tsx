@@ -138,9 +138,24 @@ describe("SnapCoverageAtRisk  -  civic neutrality: required framing", () => {
     expect(src).toMatch(/74,000|74_000/);
   });
 
-  it("fallback data file cites GAO-19-56 uncertainty band", () => {
+  it("fallback labels ±40% as a judgment-based sensitivity band, not GAO-sourced", () => {
     const src = readSourceFile("src/data/snapCoverageAtRiskFallback.ts");
-    expect(src).toContain("GAO-19-56");
+    expect(src).toMatch(/JUDGMENT-BASED SENSITIVITY RANGE/);
+    expect(src).not.toMatch(/GAO_(LOW|HIGH)_MULTIPLIER/);
+  });
+
+  it("no rendered SNAP surface attributes the ±40% band to GAO (2026-11-08 correction)", () => {
+    for (const f of [
+      "src/pages/SnapCoverageAtRiskPage.tsx",
+      "src/pages/methodology/SnapCoverageAtRiskMethodology.tsx",
+    ]) {
+      // The append-only CHANGE_LOG may record the original wording; check rendered body only.
+      const full = readSourceFile(f);
+      const src = full.slice(full.indexOf("export default function"));
+      expect(src).not.toMatch(/GAO[^"\n]{0,20}uncertainty/i);
+      expect(src).not.toMatch(/60% to 140%/);
+      expect(src).not.toMatch(/basis for the ±40%/);
+    }
   });
 
   it("fallback data comments cite MLPP source URL", () => {

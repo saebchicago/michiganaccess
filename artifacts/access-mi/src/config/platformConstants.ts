@@ -170,7 +170,7 @@ export const MONITORED_API_FEEDS_COUNT = 4;
  * 20 -> 22 on 2026-09-02 (tranche 2): CDC/ATSDR SVI county and NCHS
  * provisional county overdose counts ingested.
  */
-export const FRESHNESS_TRACKED_COUNT = 23;
+export const FRESHNESS_TRACKED_COUNT = 24;
 
 /**
  * Number of sources with live endpoint health checks on the /status page.

@@ -1,0 +1,436 @@
+{
+  "provenance": {
+    "value_label": "VERIFIED",
+    "source_name": "U.S. Census Bureau, ACS 2024 5-year Summary File, table C27007",
+    "source_url": "https://data.census.gov/table/ACSDT5Y2024.C27007",
+    "download_url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/5YRData/acsdt5y2024-c27007.dat",
+    "metadata_url": "https://api.census.gov/data/2024/acs/acs5/groups/C27007.json",
+    "variables": {
+      "C27007_007E": "Estimate!!Total:!!Male:!!19 to 64 years:!!With Medicaid/means-tested public coverage",
+      "C27007_017E": "Estimate!!Total:!!Female:!!19 to 64 years:!!With Medicaid/means-tested public coverage"
+    },
+    "universe": "Civilian noninstitutionalized population ages 19-64",
+    "construct": "Adults 19-64 reporting Medicaid/means-tested public coverage (survey). Proxy for Healthy Michigan Plan exposure; not administrative HMP enrollment.",
+    "moe_note": "90% margin of error; sum MOE approximated as sqrt(M007^2 + M017^2).",
+    "ingested_at": "2026-11-08T12:11:50.949Z",
+    "ingest_script": "scripts/refresh-medicaid-adult-county.mjs",
+    "statewide_total": 1192197
+  },
+  "counties": [
+    {
+      "fips": "26001",
+      "adultsWithMedicaid": 1353,
+      "moe": 123
+    },
+    {
+      "fips": "26003",
+      "adultsWithMedicaid": 1102,
+      "moe": 150
+    },
+    {
+      "fips": "26005",
+      "adultsWithMedicaid": 10130,
+      "moe": 791
+    },
+    {
+      "fips": "26007",
+      "adultsWithMedicaid": 4849,
+      "moe": 364
+    },
+    {
+      "fips": "26009",
+      "adultsWithMedicaid": 2549,
+      "moe": 240
+    },
+    {
+      "fips": "26011",
+      "adultsWithMedicaid": 2142,
+      "moe": 179
+    },
+    {
+      "fips": "26013",
+      "adultsWithMedicaid": 907,
+      "moe": 119
+    },
+    {
+      "fips": "26015",
+      "adultsWithMedicaid": 5751,
+      "moe": 520
+    },
+    {
+      "fips": "26017",
+      "adultsWithMedicaid": 13795,
+      "moe": 777
+    },
+    {
+      "fips": "26019",
+      "adultsWithMedicaid": 1549,
+      "moe": 168
+    },
+    {
+      "fips": "26021",
+      "adultsWithMedicaid": 18476,
+      "moe": 893
+    },
+    {
+      "fips": "26023",
+      "adultsWithMedicaid": 5428,
+      "moe": 416
+    },
+    {
+      "fips": "26025",
+      "adultsWithMedicaid": 16725,
+      "moe": 819
+    },
+    {
+      "fips": "26027",
+      "adultsWithMedicaid": 5536,
+      "moe": 409
+    },
+    {
+      "fips": "26029",
+      "adultsWithMedicaid": 2171,
+      "moe": 214
+    },
+    {
+      "fips": "26031",
+      "adultsWithMedicaid": 3917,
+      "moe": 337
+    },
+    {
+      "fips": "26033",
+      "adultsWithMedicaid": 4648,
+      "moe": 359
+    },
+    {
+      "fips": "26035",
+      "adultsWithMedicaid": 5784,
+      "moe": 363
+    },
+    {
+      "fips": "26037",
+      "adultsWithMedicaid": 5756,
+      "moe": 587
+    },
+    {
+      "fips": "26039",
+      "adultsWithMedicaid": 2258,
+      "moe": 232
+    },
+    {
+      "fips": "26041",
+      "adultsWithMedicaid": 4459,
+      "moe": 385
+    },
+    {
+      "fips": "26043",
+      "adultsWithMedicaid": 2302,
+      "moe": 339
+    },
+    {
+      "fips": "26045",
+      "adultsWithMedicaid": 10567,
+      "moe": 669
+    },
+    {
+      "fips": "26047",
+      "adultsWithMedicaid": 3105,
+      "moe": 354
+    },
+    {
+      "fips": "26049",
+      "adultsWithMedicaid": 69344,
+      "moe": 1897
+    },
+    {
+      "fips": "26051",
+      "adultsWithMedicaid": 3485,
+      "moe": 242
+    },
+    {
+      "fips": "26053",
+      "adultsWithMedicaid": 2236,
+      "moe": 235
+    },
+    {
+      "fips": "26055",
+      "adultsWithMedicaid": 7808,
+      "moe": 722
+    },
+    {
+      "fips": "26057",
+      "adultsWithMedicaid": 4380,
+      "moe": 366
+    },
+    {
+      "fips": "26059",
+      "adultsWithMedicaid": 5305,
+      "moe": 350
+    },
+    {
+      "fips": "26061",
+      "adultsWithMedicaid": 3957,
+      "moe": 346
+    },
+    {
+      "fips": "26063",
+      "adultsWithMedicaid": 3524,
+      "moe": 259
+    },
+    {
+      "fips": "26065",
+      "adultsWithMedicaid": 31601,
+      "moe": 1414
+    },
+    {
+      "fips": "26067",
+      "adultsWithMedicaid": 7314,
+      "moe": 600
+    },
+    {
+      "fips": "26069",
+      "adultsWithMedicaid": 3691,
+      "moe": 271
+    },
+    {
+      "fips": "26071",
+      "adultsWithMedicaid": 1577,
+      "moe": 164
+    },
+    {
+      "fips": "26073",
+      "adultsWithMedicaid": 8689,
+      "moe": 597
+    },
+    {
+      "fips": "26075",
+      "adultsWithMedicaid": 19480,
+      "moe": 1030
+    },
+    {
+      "fips": "26077",
+      "adultsWithMedicaid": 25912,
+      "moe": 1256
+    },
+    {
+      "fips": "26079",
+      "adultsWithMedicaid": 2431,
+      "moe": 221
+    },
+    {
+      "fips": "26081",
+      "adultsWithMedicaid": 57146,
+      "moe": 2002
+    },
+    {
+      "fips": "26083",
+      "adultsWithMedicaid": 213,
+      "moe": 54
+    },
+    {
+      "fips": "26085",
+      "adultsWithMedicaid": 2540,
+      "moe": 200
+    },
+    {
+      "fips": "26087",
+      "adultsWithMedicaid": 9518,
+      "moe": 631
+    },
+    {
+      "fips": "26089",
+      "adultsWithMedicaid": 1319,
+      "moe": 173
+    },
+    {
+      "fips": "26091",
+      "adultsWithMedicaid": 10183,
+      "moe": 677
+    },
+    {
+      "fips": "26093",
+      "adultsWithMedicaid": 10979,
+      "moe": 720
+    },
+    {
+      "fips": "26095",
+      "adultsWithMedicaid": 763,
+      "moe": 123
+    },
+    {
+      "fips": "26097",
+      "adultsWithMedicaid": 1512,
+      "moe": 162
+    },
+    {
+      "fips": "26099",
+      "adultsWithMedicaid": 101821,
+      "moe": 2579
+    },
+    {
+      "fips": "26101",
+      "adultsWithMedicaid": 3024,
+      "moe": 238
+    },
+    {
+      "fips": "26103",
+      "adultsWithMedicaid": 7016,
+      "moe": 511
+    },
+    {
+      "fips": "26105",
+      "adultsWithMedicaid": 3534,
+      "moe": 323
+    },
+    {
+      "fips": "26107",
+      "adultsWithMedicaid": 5548,
+      "moe": 353
+    },
+    {
+      "fips": "26109",
+      "adultsWithMedicaid": 2402,
+      "moe": 260
+    },
+    {
+      "fips": "26111",
+      "adultsWithMedicaid": 8569,
+      "moe": 648
+    },
+    {
+      "fips": "26113",
+      "adultsWithMedicaid": 1886,
+      "moe": 143
+    },
+    {
+      "fips": "26115",
+      "adultsWithMedicaid": 14731,
+      "moe": 987
+    },
+    {
+      "fips": "26117",
+      "adultsWithMedicaid": 8731,
+      "moe": 648
+    },
+    {
+      "fips": "26119",
+      "adultsWithMedicaid": 1530,
+      "moe": 164
+    },
+    {
+      "fips": "26121",
+      "adultsWithMedicaid": 25540,
+      "moe": 1040
+    },
+    {
+      "fips": "26123",
+      "adultsWithMedicaid": 6920,
+      "moe": 436
+    },
+    {
+      "fips": "26125",
+      "adultsWithMedicaid": 94137,
+      "moe": 2470
+    },
+    {
+      "fips": "26127",
+      "adultsWithMedicaid": 3995,
+      "moe": 256
+    },
+    {
+      "fips": "26129",
+      "adultsWithMedicaid": 3326,
+      "moe": 219
+    },
+    {
+      "fips": "26131",
+      "adultsWithMedicaid": 723,
+      "moe": 101
+    },
+    {
+      "fips": "26133",
+      "adultsWithMedicaid": 3043,
+      "moe": 214
+    },
+    {
+      "fips": "26135",
+      "adultsWithMedicaid": 1236,
+      "moe": 148
+    },
+    {
+      "fips": "26137",
+      "adultsWithMedicaid": 2353,
+      "moe": 291
+    },
+    {
+      "fips": "26139",
+      "adultsWithMedicaid": 17724,
+      "moe": 1239
+    },
+    {
+      "fips": "26141",
+      "adultsWithMedicaid": 1619,
+      "moe": 155
+    },
+    {
+      "fips": "26143",
+      "adultsWithMedicaid": 3324,
+      "moe": 274
+    },
+    {
+      "fips": "26145",
+      "adultsWithMedicaid": 27183,
+      "moe": 1175
+    },
+    {
+      "fips": "26147",
+      "adultsWithMedicaid": 18192,
+      "moe": 876
+    },
+    {
+      "fips": "26149",
+      "adultsWithMedicaid": 6723,
+      "moe": 440
+    },
+    {
+      "fips": "26151",
+      "adultsWithMedicaid": 5440,
+      "moe": 275
+    },
+    {
+      "fips": "26153",
+      "adultsWithMedicaid": 1107,
+      "moe": 130
+    },
+    {
+      "fips": "26155",
+      "adultsWithMedicaid": 8341,
+      "moe": 569
+    },
+    {
+      "fips": "26157",
+      "adultsWithMedicaid": 7300,
+      "moe": 432
+    },
+    {
+      "fips": "26159",
+      "adultsWithMedicaid": 8550,
+      "moe": 580
+    },
+    {
+      "fips": "26161",
+      "adultsWithMedicaid": 28857,
+      "moe": 1445
+    },
+    {
+      "fips": "26163",
+      "adultsWithMedicaid": 322466,
+      "moe": 4303
+    },
+    {
+      "fips": "26165",
+      "adultsWithMedicaid": 5140,
+      "moe": 350
+    }
+  ]
+}

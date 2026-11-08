@@ -1148,3 +1148,39 @@ from the build environment) and populate on `dataset-refresh.yml`.
   carries 2015-2019 data. Needs the OOXML reader from
   `build-snap-county-dataset.mjs` and a confirmed URL; deferred for the same
   reason.
+
+## 2027 readiness: semantic corrections (2026-11-08)
+
+External readiness review flagged that passing structural guards had not
+caught a wrong-construct Census variable. Verified and fixed:
+
+- **Medicaid Coverage at Risk allocated by population totals.** Method 1.0
+  summed C27007_003E ("Male: Under 19 years") + C27007_012E ("Female:"), all
+  coverage types. Census metadata confirms; the summary file reproduces the
+  old 6,206,095 exactly. Now C27007_007E + C27007_017E (adults 19-64 with
+  Medicaid/means-tested coverage), ACS 2024 5-year, with MOE, from
+  `scripts/refresh-medicaid-adult-county.mjs` (keyless Summary File; asserts
+  Census labels before writing). Wayne's share 18.3% -> 27.0%. The client hook
+  rejects edge payloads without `methodVersion: "2.0"`, so the out-of-band
+  edge function cannot leak method-1.0 numbers until it is redeployed.
+- **Urban range scope.** Was "work requirements only"; the report covers
+  work requirements + six-month redeterminations (title verified). A
+  limitation telling readers to add redetermination losses on top was removed.
+- **SNAP ±40% band.** GAO-19-56 attribution could not be substantiated;
+  relabeled as a judgment-based sensitivity range. Values unchanged.
+- **Closure Watch.** New `eventStatus` separates record verification from
+  event occurrence. Grayling OB (still delivering; OMH births moved to
+  Grayling Aug 2025) and Charlevoix (announcement date only) are
+  `announced`; summary counts use only occurred closures/eliminations;
+  mergers never count as loss. Tawas record named "West Branch"; fixed.
+
+Named sacrosanct exceptions taken (additive, guard-prescribed):
+`dataFreshness.ts` (one entry for the new generated file, per
+check-data-freshness's remedy) and `platformConstants.ts`
+(`FRESHNESS_TRACKED_COUNT` 23 -> 24, per check-counts). No guard script was
+modified.
+
+Not fixed here (see docs/2027-READINESS.md): HMP administrative county
+enrollment as the preferred basis, dual-eligible omits B27010_013E/_029E
+(ages <35), edge function redeploy, the `.migration-backup/` copy still
+holding method 1.0 (non-shipping archive, left intact).

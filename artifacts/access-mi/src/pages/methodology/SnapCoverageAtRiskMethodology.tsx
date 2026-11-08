@@ -29,6 +29,12 @@ const CHANGE_LOG = [
     description:
       "Second browser QA pass corrections: removed stale KFF reference from data page source list (inconsistency with methodology); named MLPP and CBPP on methodology page callout to match data page; corrected the 83-county stat card from (Modeled estimate) to measured count; replaced snapMichiganFallback.ts code reference with direct USDA FNS citation in technical step 3; removed the unsourced Michigan ~3.3% share parenthetical; replaced 'bear the practical weight' with 'are responsible for' in the 'Why we publish this' section.",
   },
+  {
+    id: "2026-11-08-sensitivity-band-correction",
+    date: "2026-11-08",
+    description:
+      "CORRECTION. The ±40% band was attributed to GAO-19-56 as an empirical finding that historical losses ran 60%-140% of projections. That report covers SNAP Employment & Training data, and no supporting page, table, or derivation could be produced. The GAO attribution was removed. The ±40% band is now labeled what it is: a judgment-based sensitivity range chosen by accessmi.org, not a statistical or validated predictive interval. County values are unchanged.",
+  },
 ];
 
 export default function SnapCoverageAtRiskMethodology() {
@@ -42,10 +48,10 @@ export default function SnapCoverageAtRiskMethodology() {
       headline:
         "Methodology: SNAP Coverage at Risk - Michigan County Projections",
       description:
-        "How county-level SNAP exposure ranges are computed under P.L. 119-21 work requirement provisions. County allocation from MLPP Michigan estimate (74,000) with ±40% GAO-19-56 uncertainty band.",
+        "How county-level SNAP exposure ranges are computed under P.L. 119-21 work requirement provisions. County allocation from MLPP Michigan estimate (74,000) with a ±40% judgment-based sensitivity band.",
       url: "https://accessmi.org/methodology/snap-coverage-at-risk",
       datePublished: "2026-04-09",
-      dateModified: "2026-04-09",
+      dateModified: "2026-11-08",
       author: {
         "@type": "Organization",
         name: "accessmi.org",
@@ -167,28 +173,6 @@ export default function SnapCoverageAtRiskMethodology() {
 
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                GAO-19-56: SNAP - Improved Monitoring of States' Use of
-                Work-Related Exemptions and Reporting of Work Requirements
-              </p>
-              <p className="text-muted-foreground">
-                U.S. Government Accountability Office, 2019.{" "}
-                <a
-                  href="https://www.gao.gov/products/gao-19-56"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-primary"
-                >
-                  gao.gov/products/gao-19-56
-                </a>{" "}
-                - Historical analysis of SNAP work requirement implementation
-                across states, including actual vs. projected participation
-                loss. Provides the basis for the ±40% uncertainty band used in
-                county range estimates. Accessed April 2026.
-              </p>
-            </div>
-
-            <div className="border-l-2 border-border pl-4">
-              <p className="font-medium">
                 USDA FNA: SNAP Employment and Training
               </p>
               <p className="text-muted-foreground">
@@ -235,18 +219,15 @@ export default function SnapCoverageAtRiskMethodology() {
           <div className="space-y-3 text-sm text-muted-foreground">
             <h3 className="font-semibold text-foreground">Plain language</h3>
             <p className="leading-relaxed">
-              We take CBO's national projection of 2.4 million monthly SNAP
-              participant reductions under P.L. 119-21 and apply it
-              proportionally to each Michigan county based on each county's
-              share of the state's total SNAP enrollment (the most current
-              available county-level data, USDA FNA (formerly FNS) FY2022). We
-              then apply Michigan's share of the national projection using
-              MLPP's Michigan-specific estimate of 74,000 adults in affected
-              categories. We present the result as a range - never a point
-              estimate - using an uncertainty band derived from GAO's historical
-              study of work requirement implementation, which found actual
-              participation losses ranging from approximately 60% to 140% of
-              projected amounts.
+              We start from MLPP's Michigan estimate of 74,000 adults in
+              affected categories and split it across counties by each county's
+              share of statewide SNAP participants (USDA FNA, formerly FNS,
+              FY2022). CBO's national figure of 2.4 million is context only; it
+              is not an input to the county math. We show each county as a
+              range from 0.6 to 1.4 times its allocated share. That ±40% band is a
+              judgment-based sensitivity range we chose to show that the result
+              is uncertain. It is not drawn from an empirical study and is not
+              a confidence interval.
             </p>
           </div>
 
@@ -303,11 +284,10 @@ export default function SnapCoverageAtRiskMethodology() {
                 published tables.
               </li>
               <li>
-                <strong className="text-foreground">Uncertainty band</strong> -
-                GAO-19-56 examined historical SNAP work requirement
-                implementations and found that actual participation losses
-                ranged widely relative to projections. We apply a ±40%
-                uncertainty band:{" "}
+                <strong className="text-foreground">Sensitivity band</strong> -
+                accessmi.org applies a judgment-based ±40% sensitivity band (not
+                sourced to an empirical study; see the 2026-11-08 change log
+                entry):{" "}
                 <code className="bg-muted px-1 rounded text-xs">
                   low = midpoint × 0.60
                 </code>

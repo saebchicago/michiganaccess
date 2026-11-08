@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { ProvenanceDisclaimer } from "@/components/shared/ProvenanceDisclaimer";
 import { DataProvenance } from "@/components/shared/DataProvenance";
 import { useClosureWatch } from "@/hooks/useClosureWatch";
-import type { ClosureEntry } from "@/data/closureWatchFallback";
+import { isOccurredServiceLoss, type ClosureEntry } from "@/data/closureWatchFallback";
 
 const ClosureMap = lazy(() => import("@/components/closure/ClosureMap"));
 
@@ -124,6 +124,25 @@ function EntryRow({ entry }: { entry: ClosureEntry }) {
         </Badge>
       </div>
 
+      {entry.eventStatus !== "occurred" && (
+        <p
+          data-testid="closure-event-status"
+          className="text-xs font-medium text-sky-800 dark:text-sky-300"
+        >
+          Event status: {entry.eventStatus}
+          {entry.announcedDate ? ` (announced ${formatDate(entry.announcedDate)})` : ""}. Not
+          counted as a service loss.
+          {entry.occurrenceNote ? ` ${entry.occurrenceNote}` : ""}
+        </p>
+      )}
+
+      {entry.closureType === "merger" && (
+        <p className="text-xs text-muted-foreground">
+          Ownership change. Not counted as a service loss unless a service was
+          separately documented as ending.
+        </p>
+      )}
+
       {entry.serviceLineAffected && (
         <p className="text-xs text-amber-700 dark:text-amber-400 font-medium">
           Affected: {entry.serviceLineAffected}
@@ -180,6 +199,15 @@ function MethodologySection() {
             Hospital Closures Database, AHA Hospital Closure Tracker, MDHHS
             licensure actions, Becker's Hospital Review, Bridge Michigan,
             Crain's Detroit Business, Modern Healthcare, and Fierce Healthcare.
+          </p>
+          <p>
+            <strong className="text-foreground">Record vs. event.</strong>{" "}
+            A record can be verified while the event it describes is only
+            announced. Each entry carries an event status (announced,
+            scheduled, occurred, delayed, canceled, reversed). Summary counts
+            include only occurred full closures and service-line eliminations.
+            Ownership transfers and conversions are listed for context and do
+            not count as lost access unless a service separately ended.
           </p>
           <p>
             <strong className="text-foreground">Neutrality.</strong> Entry copy
@@ -243,18 +271,31 @@ export default function ClosureWatchPage() {
     [entries],
   );
 
+  // Only events that actually happened and removed or reduced a clinical
+  // service count toward loss statistics. Announced/future events and
+  // ownership transfers are listed but not counted (2026-11-08 audit).
+  const occurredLosses = useMemo(
+    () => verified.filter(isOccurredServiceLoss),
+    [verified],
+  );
+
   const obLost = useMemo(
     () =>
-      verified.filter(
+      occurredLosses.filter(
         (e) =>
           e.closureType === "service-line-elimination" &&
           e.serviceLineAffected?.toLowerCase().includes("obstetric"),
       ).length,
-    [verified],
+    [occurredLosses],
   );
 
   const countiesAffected = useMemo(
-    () => new Set(verified.map((e) => e.county)).size,
+    () => new Set(occurredLosses.map((e) => e.county)).size,
+    [occurredLosses],
+  );
+
+  const pendingEvents = useMemo(
+    () => verified.filter((e) => e.eventStatus !== "occurred").length,
     [verified],
   );
 
@@ -336,7 +377,7 @@ export default function ClosureWatchPage() {
             <StatCard
               icon={<Building2 className="h-5 w-5" />}
               value={isLoading ? "…" : verified.length}
-              label="Verified entries since 2020"
+              label={`Verified entries since 2020 (${occurredLosses.length} occurred service losses, ${pendingEvents} announced, rest ownership changes or conversions)`}
               provenance={
                 <DataProvenance
                   sourceName="Sheps Center · Becker's · Bridge MI"
@@ -351,7 +392,7 @@ export default function ClosureWatchPage() {
             <StatCard
               icon={<AlertTriangle className="h-5 w-5" />}
               value={isLoading ? "…" : obLost}
-              label="OB / Labor & Delivery units eliminated since 2020"
+              label="OB / Labor & Delivery units eliminated since 2020 (occurred only)"
               provenance={
                 <DataProvenance
                   sourceName="Sheps Center · Becker's Hospital Review"
@@ -366,7 +407,7 @@ export default function ClosureWatchPage() {
             <StatCard
               icon={<MapPin className="h-5 w-5" />}
               value={isLoading ? "…" : countiesAffected}
-              label="Michigan counties affected"
+              label="Counties with an occurred service loss"
               provenance={
                 <DataProvenance
                   sourceName="accessmi.org derived from entry data"

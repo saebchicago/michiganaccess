@@ -74,7 +74,7 @@ describe("MedicaidCoverageAtRiskPage", () => {
     renderPage();
     expect(screen.getByRole("button", { name: /county/i })).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /current medicaid enrollment/i }),
+      screen.getByRole("button", { name: /adults 19-64 with medicaid/i }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /projected loss low/i }),
