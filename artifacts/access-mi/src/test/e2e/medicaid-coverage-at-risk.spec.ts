@@ -18,7 +18,7 @@ test.describe("Medicaid Coverage at Risk  -  V2 Feature 3", () => {
   // T2: Scope qualifier labels visible on stat cards
   test("stat cards display scope qualifier labels", async ({ page }) => {
     await page.goto("/data/medicaid-coverage-at-risk");
-    await expect(page.getByTestId("medicaid-stat-urban")).toContainText("Work requirement provisions only");
+    await expect(page.getByTestId("medicaid-stat-urban")).toContainText("Work requirements + six-month redeterminations combined");
     await expect(page.getByTestId("medicaid-stat-kff")).toContainText("All P.L. 119-21 Medicaid provisions");
     await expect(page.getByTestId("medicaid-stat-counties")).toContainText("Statewide coverage");
   });

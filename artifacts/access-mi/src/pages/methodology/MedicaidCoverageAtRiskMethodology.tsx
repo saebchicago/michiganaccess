@@ -16,19 +16,42 @@ const CHANGE_LOG = [
       "allocation denominator. Six sources cited: Urban Institute, KFF Dec 2025, CBO pub. 61570, " +
       "GAO-20-149, Sommers et al. NEJM 2019, ACS B27010/C27007.",
   },
+  {
+    id: "2026-11-08-variable-correction",
+    date: "2026-11-08",
+    description:
+      "CORRECTION (method 2.0). The county allocation basis used C27007_003E + C27007_012E, " +
+      "which Census defines as 'Male: Under 19 years' and 'Female:' (all coverage types): " +
+      "population totals, not Medicaid counts (statewide sum 6,206,095). Replaced with " +
+      "C27007_007E + C27007_017E, adults 19-64 with Medicaid/means-tested coverage " +
+      "(1,192,197 statewide, ACS 2024 5-year), read from the Census Summary File by a script that asserts " +
+      "Census metadata labels. County shares changed (e.g. Wayne 18.3% to 27.0%); the " +
+      "statewide 171,000-355,000 range did not. All county ranges and CSV exports from " +
+      "2026-04-09 to 2026-11-08 are superseded. Margins of error now shown per county.",
+  },
+  {
+    id: "2026-11-08-scope-correction",
+    date: "2026-11-08",
+    description:
+      "CORRECTION. The Urban Institute range was described as 'work requirement provisions " +
+      "only'. Urban's report covers work requirements and six-month redeterminations combined, " +
+      "as a reduction in 2028 Medicaid expansion enrollment versus its no-change baseline; " +
+      "low/high are mitigation scenarios, not a confidence interval. The limitation that said " +
+      "redetermination losses would add to this range was removed: they are already inside it.",
+  },
 ];
 
 export default function MedicaidCoverageAtRiskMethodology() {
   usePageMeta({
     title: "Methodology: Medicaid Coverage at Risk | accessmi.org",
     description:
-      "How accessmi.org models county-level Medicaid exposure ranges under P.L. 119-21 work requirement provisions.",
+      "How accessmi.org allocates Urban Institute's Michigan 2028 Medicaid expansion range (work requirements + six-month redeterminations) to counties. Method 2.0, corrected November 2026.",
     path: "/methodology/medicaid-coverage-at-risk",
     jsonLd: {
       "@type": "TechArticle",
       "headline": "Methodology: Medicaid Coverage at Risk - Michigan County Projections",
       "description":
-        "How county-level Medicaid exposure ranges are computed under P.L. 119-21 work requirement provisions. Proportional allocation from Urban Institute Michigan statewide projection using ACS C27007 county enrollment shares.",
+        "Proportional county allocation of Urban Institute's Michigan 2028 range (work requirements and six-month redeterminations combined) using ACS 2024 5-year adults 19-64 with Medicaid/means-tested coverage (C27007_007E + C27007_017E).",
       "url": "https://accessmi.org/methodology/medicaid-coverage-at-risk",
       "datePublished": "2026-04-09",
       "dateModified": "2026-04-09",
@@ -63,13 +86,13 @@ export default function MedicaidCoverageAtRiskMethodology() {
             Exposure is not disenrollment
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            This page identifies Michigan Medicaid enrollees who fall into categories that Urban
-            Institute, CBO, and CBPP project may be affected by provisions of P.L. 119-21. Being
-            in an affected category is not the same as losing coverage. Individual outcomes depend
-            on state implementation decisions, work requirement compliance pathways, income and
-            employment changes, and administrative factors that vary by county and over time. The
-            ranges on this page describe populations at elevated exposure - they do not predict who
-            will or will not retain Medicaid enrollment.
+            Urban Institute projects a statewide reduction in Michigan Medicaid expansion
+            enrollment in 2028 under work requirements and six-month redeterminations, across
+            mitigation scenarios. This page splits that statewide range across counties. A county
+            figure is an allocation of a statewide projection, not a county-level forecast, and it
+            does not predict whether any individual keeps coverage. Outcomes depend on MDHHS
+            implementation, exemptions, compliance support, and income and employment changes that
+            vary by county and over time.
           </p>
         </section>
 
@@ -93,9 +116,12 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 >
                   urban.org - Medicaid work requirements projection
                 </a>{" "}
-                - Post-enactment Michigan-specific projection: 171,000–355,000 Michigan adults
-                in categories projected to be affected by P.L. 119-21 work requirement
-                provisions by 2028. This is the primary state-level input to the county allocation model.
+                - Report title: "Projected Reductions in Medicaid Expansion Enrollment Under
+                OBBBA's Work Requirements and Six-Month Redeterminations." Michigan range:
+                171,000-355,000 fewer Medicaid expansion enrollees in 2028 than Urban's
+                no-change baseline, with both policies combined. Low and high are mitigation
+                scenarios (how well the state and enrollees manage compliance), not a
+                statistical confidence interval. This is the primary state-level input to the county allocation model.
                 This is the most current post-enactment Michigan-specific figure available as of
                 April 2026. Accessed April 2026.
               </p>
@@ -193,28 +219,31 @@ export default function MedicaidCoverageAtRiskMethodology() {
 
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                ACS B27010 / C27007 (5-year 2023): Michigan County Medicaid Enrollment
+                ACS C27007 (5-year 2024): adults 19-64 with Medicaid/means-tested coverage
               </p>
               <p className="text-muted-foreground">
-                U.S. Census Bureau, American Community Survey 5-year 2023.{" "}
+                U.S. Census Bureau, American Community Survey 5-year 2024 (2020-2024).{" "}
                 <a
-                  href="https://data.census.gov/table/ACSDT5Y2023.C27007"
+                  href="https://data.census.gov/table/ACSDT5Y2024.C27007"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
                   data.census.gov - ACS C27007
                 </a>{" "}
-                - County-level Medicaid/means-tested public coverage enrollment. ACS B27010 is the
-                design-document denominator; ACS C27007 (Medicaid/Means-Tested Public Coverage by
-                Sex by Age) was used as the implementable county-level equivalent. County
-                proportional shares - not absolute ACS values - are used for county allocation.
-                The ACS county total (6,206,095 statewide) differs from the CMS MBES
-                administrative enrollment (~2.4M point-in-time); the county proportion method
-                preserves Urban Institute's statewide range regardless of this difference. ACS
-                surveys are known to undercount low-income, non-citizen, and highly mobile
-                populations; county shares used here may slightly underrepresent counties with
-                higher concentrations of these groups. Accessed April 2026.
+                - Variables C27007_007E (Male: 19 to 64 years: With Medicaid/means-tested
+                public coverage) and C27007_017E (the female equivalent), with 90% margins of
+                error, read from the Census table-based Summary File. Statewide sum: 1,192,197 (ACS 2024 5-year, 2020-2024).
+                This is a survey proxy for Healthy Michigan Plan enrollment: it also counts
+                traditional-Medicaid adults and self-reported means-tested coverage, and it is
+                not an administrative count. County shares - not absolute values - drive the
+                allocation. ACS surveys are known to undercount low-income, non-citizen, and
+                highly mobile populations. Preferred future basis: MDHHS county-level Healthy
+                Michigan Plan enrollment. Reproduce with{" "}
+                <code className="bg-muted px-0.5 rounded text-xs">
+                  node scripts/refresh-medicaid-adult-county.mjs
+                </code>
+                . Ingested November 2026.
               </p>
             </div>
 
@@ -256,10 +285,10 @@ export default function MedicaidCoverageAtRiskMethodology() {
           <div className="space-y-3 text-sm text-muted-foreground">
             <h3 className="font-semibold text-foreground">Plain language</h3>
             <p className="leading-relaxed">
-              We take Urban Institute's Michigan-specific projection of 171,000–355,000 adults
-              in affected categories under P.L. 119-21 work requirements by 2028 (March 2026)
-              and apply it proportionally to each Michigan county based on each county's share of
-              the state's total ACS-reported Medicaid enrollment. We use Urban's range directly -
+              We take Urban Institute's Michigan range of 171,000-355,000 fewer Medicaid
+              expansion enrollees in 2028 (work requirements and six-month redeterminations
+              combined, March 2026) and split it across counties by each county's share of
+              Michigan adults ages 19-64 who report Medicaid coverage in the ACS. We use Urban's range directly -
               without adding a second uncertainty band - because Urban's low and high endpoints
               already encode their own implementation scenario modeling. We present the result as
               a range, never a point estimate.
@@ -270,27 +299,23 @@ export default function MedicaidCoverageAtRiskMethodology() {
             <h3 className="font-semibold">Technical steps</h3>
             <ol className="list-decimal list-inside space-y-2 text-muted-foreground leading-relaxed">
               <li>
-                <strong className="text-foreground">Baseline county enrollment</strong> - County
-                Medicaid enrollment is sourced from ACS 2023 5-year, table C27007 (Medicaid/
-                Means-Tested Public Coverage by Sex by Age), variables C27007_003E (male) and
-                C27007_012E (female) summed per county. All 83 Michigan counties returned clean
-                values. Source: ACS B27010 / C27007 5-year 2023 (see Sources above).
+                <strong className="text-foreground">Allocation basis</strong> - ACS 2024 5-year
+                table C27007, C27007_007E + C27007_017E (adults 19-64 with Medicaid/means-tested
+                coverage) per county. The ingest script checks both variable labels against
+                Census metadata and refuses to write on a mismatch. All 83 counties returned
+                unsuppressed values.
               </li>
               <li>
-                <strong className="text-foreground">Statewide calibration</strong> - The ACS
-                county survey total (6,206,095 statewide - sum of C27007 estimates for all 83
-                Michigan counties) differs from the CMS MBES administrative point-in-time
-                enrollment (~2.4M). The ACS "means-tested public coverage" definition is broader,
-                and the 5-year window averages PHE-era enrollment peaks. We do not apply a
-                calibration multiplier to county values - doing so would require assumptions not
-                supported by public data. The ACS county totals are used only for their relative
-                distribution (shares), not as absolute enrollment counts. This is disclosed here
-                and on every county row's tooltip.
+                <strong className="text-foreground">No calibration</strong> - The ACS adult
+                total (1,192,197) is a survey estimate and differs from administrative HMP
+                enrollment. No calibration multiplier is applied. ACS values are used only for
+                relative county shares.
               </li>
               <li>
                 <strong className="text-foreground">State-level projection input</strong> - Urban
-                Institute (March 2026) projects 171,000–355,000 Michigan adults are in categories
-                at elevated exposure under work requirement provisions by 2028. This range is
+                Institute (March 2026) projects 171,000-355,000 fewer Michigan Medicaid expansion
+                enrollees in 2028 under work requirements and six-month redeterminations
+                combined. This range is
                 used directly as the state-level input. Urban's range already encodes
                 implementation scenario uncertainty; no additional band is applied by
                 accessmi.org.
@@ -301,9 +326,10 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 <code className="bg-muted px-1 rounded text-xs">
                   county_loss = county_ACS_enrollment / sum(all_county_ACS_enrollments) × urban_state_figure
                 </code>{" "}
-                computed at both the low (171,000) and high (355,000) endpoints. This uses
-                straight ACS enrollment share as a proxy for work-requirement-eligible adult
-                share at the county level. A more precise allocation would require county-level
+                computed at both the low (171,000) and high (355,000) endpoints. This uses each
+                county's share of adults with Medicaid as a proxy for its share of expansion
+                adults subject to both policies. Counties with more exempt adults (disability,
+                caregiving) will be overstated. A more precise allocation would require county-level
                 PUMS microdata on Medicaid participation by age, household type, and employment
                 status - not available in published tables.
               </li>
@@ -329,16 +355,15 @@ export default function MedicaidCoverageAtRiskMethodology() {
           <h2 className="text-xl font-semibold">Limitations</h2>
           <ul className="list-disc list-inside space-y-2 text-sm text-muted-foreground leading-relaxed">
             <li>
-              ACS enrollment values reflect means-tested public coverage (broader than
-              administrative Medicaid enrollment) and include PHE-era enrollment peaks in the
-              5-year window. County absolute values should not be cited as Michigan Medicaid
-              enrollment counts; they are used only for proportional allocation.
+              ACS values reflect self-reported Medicaid/means-tested coverage among adults 19-64
+              (broader than HMP enrollment) averaged over 2020-2024, including public-health-
+              emergency enrollment peaks. Do not cite them as HMP enrollment counts.
             </li>
             <li>
-              The work-requirements-only scope does not model separate coverage loss from
-              redetermination changes ($63B / 700,000 nationally per CBO pub. 61570) or provider
-              tax restrictions. Those provisions would increase projected coverage loss beyond
-              this range.{" "}
+              Urban's range already includes six-month redeterminations. Do not add CBO's
+              separate redetermination estimate to it. It does not model provider tax or
+              state-directed payment changes, which could affect coverage through other
+              channels.{" "}
               <a
                 href="https://www.michigan.gov/mdhhs/-/media/Project/Websites/mdhhs/Assistance-Programs/Medicaid/MDHHS-Presentation---SNAPMA---HR1.pdf"
                 target="_blank"
@@ -348,16 +373,16 @@ export default function MedicaidCoverageAtRiskMethodology() {
                 MDHHS (August 2025)
               </a>{" "}
               estimates &gt;500,000 Michiganders at risk across all P.L. 119-21 Medicaid
-              provisions combined.
+              provisions combined. That is a different measure (people at risk, all provisions)
+              and should not be compared directly with Urban's range.
             </li>
             <li>
-              For small counties (Keweenaw, Luce, Ontonagon, Schoolcraft), ACS C27007 5-year 2023
-              coefficients of variation for Medicaid enrollment estimates are high (typically
-              20–50% for populations under 5,000). Keweenaw County (1,173 ACS-estimated enrollees)
-              has a particularly high coefficient of variation; its county-level projection should
-              be treated as modeled only. Exact margins of error are available at{" "}
+              Small-county estimates are imprecise. Keweenaw County's basis is 213 ± 54 adults
+              (90% MOE), so its allocated range carries that uncertainty on top of Urban's
+              scenarios. Each county's MOE is shown on the data page and in the CSV. Source
+              table:{" "}
               <a
-                href="https://data.census.gov/table/ACSDT5Y2023.C27007"
+                href="https://data.census.gov/table/ACSDT5Y2024.C27007"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline hover:text-primary"

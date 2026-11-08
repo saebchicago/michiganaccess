@@ -18,7 +18,7 @@ import type { MedicaidCoverageRangeEntry } from "@/data/medicaidCoverageAtRiskFa
 
 type SortKey =
   | "county"
-  | "currentEnrollment"
+  | "acsAdultMedicaid"
   | "projectedLossLow"
   | "projectedLossHigh";
 type SortDir = "asc" | "desc";
@@ -113,13 +113,13 @@ export default function MedicaidCoverageAtRiskPage() {
   usePageMeta({
     title: "Medicaid Coverage at Risk | accessmi.org",
     description:
-      "County-level modeled ranges of Michigan Medicaid enrollees in categories affected by P.L. 119-21 work requirement provisions. Not a point estimate. Exposure is not disenrollment.",
+      "County-allocated modeled ranges of projected 2028 Medicaid expansion enrollment reduction in Michigan under P.L. 119-21 work requirements and six-month redeterminations. Not a point estimate.",
     path: "/data/medicaid-coverage-at-risk",
     jsonLd: {
       "@type": "Dataset",
       name: "Michigan Medicaid Coverage at Risk - P.L. 119-21 County Projections",
       description:
-        "County-level modeled ranges of Michigan Medicaid enrollees in categories affected by P.L. 119-21 work requirement provisions. Urban Institute Michigan projection (171,000–355,000) allocated proportionally by ACS C27007 5-year 2023 county enrollment share.",
+        "Urban Institute Michigan 2028 projection (171,000-355,000; work requirements and six-month redeterminations combined) allocated to counties by ACS 2024 5-year adults 19-64 with Medicaid/means-tested coverage (C27007_007E + C27007_017E). Method 2.0, corrected 2026-11-08.",
       url: "https://accessmi.org/data/medicaid-coverage-at-risk",
       creator: {
         "@type": "Organization",
@@ -127,9 +127,9 @@ export default function MedicaidCoverageAtRiskPage() {
         url: "https://accessmi.org",
       },
       datePublished: "2026-04-09",
-      dateModified: "2026-04-09",
+      dateModified: "2026-11-08",
       spatialCoverage: "Michigan",
-      temporalCoverage: "2023/2028",
+      temporalCoverage: "2020/2028",
       keywords: [
         "Medicaid",
         "Michigan",
@@ -172,7 +172,7 @@ export default function MedicaidCoverageAtRiskPage() {
 
   const modeled_provenance_props = {
     sourceName:
-      "Urban Institute / CBO P.L. 119-21 Medicaid work requirements score",
+      "Urban Institute - work requirements + six-month redeterminations (Michigan, 2028)",
     sourceUrl:
       "https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work",
     asOfDate: "March 2026",
@@ -203,12 +203,32 @@ export default function MedicaidCoverageAtRiskPage() {
                 Who could lose Medicaid.
               </h1>
               <p className="text-muted-foreground mt-1">
-                County-level exposure to P.L. 119-21 work requirements. MODELED
-                ranges. Urban Institute, March 2026.
+                County-allocated 2028 range under P.L. 119-21 work requirements
+                and six-month redeterminations. MODELED. Urban Institute, March
+                2026.
               </p>
             </div>
           </div>
           <ProvenanceDisclaimer />
+        </section>
+
+        {/* ── Correction notice (method 2.0) ── */}
+        <section
+          data-testid="medicaid-correction-notice"
+          className="rounded-lg border border-border bg-muted/30 px-5 py-4 text-sm text-muted-foreground"
+        >
+          <p className="font-semibold text-foreground">Correction, November 8, 2026</p>
+          <p className="mt-1 leading-relaxed">
+            County ranges published April 9 to November 8, 2026 used the wrong
+            Census cells (C27007_003E + C27007_012E, which are population
+            totals, not Medicaid counts). They are now allocated by adults
+            19-64 with Medicaid coverage. The statewide range did not change;
+            county shares did. The scope label also now names both policies the
+            Urban range covers. Discard earlier county figures and exports.{" "}
+            <Link to={METHODOLOGY_URL} className="underline hover:text-primary">
+              What changed →
+            </Link>
+          </p>
         </section>
 
         {/* ── Exposure ≠ Disenrollment callout ── */}
@@ -223,10 +243,12 @@ export default function MedicaidCoverageAtRiskPage() {
                 Exposure is not disenrollment
               </h2>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                These are people in affected categories, per Urban Institute,
-                CBO, and CBPP. Not a forecast of who loses coverage. Outcomes
-                depend on state rules, compliance paths, income, and admin
-                factors.{" "}
+                Urban Institute projects fewer Medicaid expansion enrollees
+                statewide in 2028 under two mitigation scenarios. County figures
+                are that statewide range split by each county's share of adults
+                with Medicaid. They are an allocation, not a county forecast,
+                and say nothing about any individual. Outcomes depend on state
+                rules, exemptions, compliance help, and income changes.{" "}
                 <Link
                   to={METHODOLOGY_URL}
                   className="underline hover:text-primary"
@@ -246,11 +268,11 @@ export default function MedicaidCoverageAtRiskPage() {
               testId="medicaid-stat-urban"
               icon={<Users className="h-5 w-5" />}
               value={isLoading ? "…" : "171,000–355,000"}
-              label="Michigan adults in categories affected by P.L. 119-21 work requirement provisions (Urban Institute projection, 2028 horizon)"
-              scope="Work requirement provisions only"
+              label="Projected reduction in Michigan Medicaid expansion enrollment in 2028, vs. Urban's no-change baseline (low/high = mitigation scenarios, not a confidence interval)"
+              scope="Work requirements + six-month redeterminations combined"
               provenance={
                 <DataProvenance
-                  sourceName="Urban Institute - P.L. 119-21 Medicaid work requirements"
+                  sourceName="Urban Institute - work requirements and six-month redeterminations"
                   sourceUrl="https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work"
                   asOfDate="March 2026"
                   cadence="Updated when Urban Institute publishes revised Michigan estimates"
@@ -334,10 +356,10 @@ export default function MedicaidCoverageAtRiskPage() {
                       onSort={handleSort}
                     />
                   </th>
-                  <th className="text-right px-4 py-3" aria-sort={sortKey === "currentEnrollment" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
+                  <th className="text-right px-4 py-3" aria-sort={sortKey === "acsAdultMedicaid" ? (sortDir === "asc" ? "ascending" : "descending") : undefined}>
                     <SortButton
-                      col="currentEnrollment"
-                      label="Current Medicaid enrollment"
+                      col="acsAdultMedicaid"
+                      label="Adults 19-64 with Medicaid (ACS, ±MOE)"
                       sortKey={sortKey}
                       sortDir={sortDir}
                       onSort={handleSort}
@@ -399,7 +421,10 @@ export default function MedicaidCoverageAtRiskPage() {
                         </Link>
                       </td>
                       <td className="px-4 py-2.5 text-right tabular-nums text-muted-foreground">
-                        {fmtN(entry.currentEnrollment)}
+                        {fmtN(entry.acsAdultMedicaid)}
+                        <span className="block text-[10px] text-muted-foreground/70">
+                          ±{fmtN(entry.acsAdultMedicaidMoe)}
+                        </span>
                       </td>
                       <td className="px-4 py-2.5 text-right tabular-nums text-amber-700 dark:text-amber-400">
                         {fmtN(entry.projectedLossLow)}
@@ -416,10 +441,12 @@ export default function MedicaidCoverageAtRiskPage() {
                   <td colSpan={4} className="px-4 py-3">
                     <DataProvenance {...modeled_provenance_props} compact />
                     <p className="text-[10px] text-muted-foreground mt-1">
-                      Current enrollment: ACS 2023 5-year C27007 (means-tested
-                      public coverage, county-level estimates). Projected loss
-                      range: Urban Institute Michigan projection
-                      (171,000–355,000) × county ACS enrollment share.{" "}
+                      Allocation basis: ACS 2024 5-year C27007_007E +
+                      C27007_017E, adults 19-64 with Medicaid/means-tested
+                      coverage (survey proxy for Healthy Michigan Plan
+                      enrollment; ± values are 90% margins of error). Projected range: Urban Institute
+                      Michigan 2028 range (171,000-355,000, work requirements +
+                      six-month redeterminations) × county share.{" "}
                       <Link
                         to={METHODOLOGY_URL}
                         className="underline hover:text-primary"

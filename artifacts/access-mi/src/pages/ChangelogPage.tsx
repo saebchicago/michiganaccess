@@ -42,6 +42,20 @@ const TAG_STYLES: Record<string, string> = {
 // external citation.
 const entries: ChangelogEntry[] = [
   {
+    month: "November",
+    year: "2026",
+    title: "Methods Corrections & 2027 Readiness - v1.19",
+    icon: Shield,
+    tag: "improvement",
+    items: [
+      "Correction: Medicaid Coverage at Risk county ranges used Census cells that are population totals (C27007_003E + C27007_012E), not Medicaid counts. Counties are now allocated by adults 19-64 with Medicaid coverage (C27007_007E + C27007_017E), with margins of error, from a script that checks Census labels before writing. The statewide range is unchanged; county figures and exports before November 8, 2026 are superseded",
+      "Correction: the Urban Institute Medicaid range now states its full scope, work requirements and six-month redeterminations combined, as a 2028 enrollment reduction with mitigation scenarios rather than a confidence interval",
+      "Correction: the SNAP ±40% band is no longer attributed to GAO-19-56. It is labeled as a judgment-based sensitivity range",
+      "Closure Watch separates record verification from event status. Announced events (Grayling obstetrics, Charlevoix inpatient) and ownership transfers no longer count toward service-loss totals; the Tawas record now names the right facility",
+      "Health conditions page links to ConditionMap and Values in Care, sibling projects from the same builder, for condition evidence and values in serious illness",
+    ],
+  },
+  {
     month: "July",
     year: "2026",
     title: "Audit Hardening & Open Data Gaps - v1.18",

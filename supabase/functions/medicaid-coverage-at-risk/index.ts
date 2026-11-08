@@ -8,12 +8,17 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
  * county distribution tracks the latest 5-year enrollment shares.
  *
  * Model (identical to the fallback module, see its header for full sourcing):
- *   1. Pull ACS table C27007 (means-tested public coverage) for every Michigan
- *      county: medicaidEnrollment = C27007_003E (male) + C27007_012E (female).
- *   2. county share = countyEnrollment / sum(all county enrollment).
- *   3. Allocate the Urban Institute Michigan-specific P.L. 119-21 work-
- *      requirements projection range (171,000-355,000 adults by 2028) to each
- *      county by that share. Range only - never a point estimate.
+ *   1. Pull ACS table C27007 for every Michigan county: adults 19-64 with
+ *      Medicaid/means-tested coverage = C27007_007E (male) + C27007_017E
+ *      (female). Proxy for Healthy Michigan Plan enrollment.
+ *      CORRECTION 2026-11-08: method 1.0 used C27007_003E ("Male: Under 19
+ *      years", all coverage) + C27007_012E ("Female:", all coverage), which
+ *      are population totals. The client rejects any payload whose
+ *      methodVersion is not "2.0", so an undeployed old build cannot leak.
+ *   2. county share = county value / sum(all county values).
+ *   3. Allocate the Urban Institute Michigan 2028 range (171,000-355,000;
+ *      work requirements + six-month redeterminations combined, mitigation
+ *      scenarios) by that share. Range only - never a point estimate.
  *
  * Hardening conventions mirror census-acs-proxy:
  *   - CENSUS_API_KEY is REQUIRED. Missing key -> 500, never a keyless request.
@@ -29,7 +34,8 @@ const CORS = {
     "authorization, x-client-info, apikey, content-type",
 };
 
-const FUNCTION_VERSION = "1.0";
+const FUNCTION_VERSION = "2.0";
+const METHOD_VERSION = "2.0";
 
 // Server-side cache so a burst of clients does not each hit the Census API.
 // The function takes no parameters (always the full 83-county set), so a single
@@ -38,32 +44,37 @@ const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 let cached: { payload: unknown; ts: number } | null = null;
 
 // Michigan FIPS and the ACS dataset/table that the fallback methodology pins.
+// NOTE: api.census.gov requires a key; keep ACS_YEAR in step with
+// src/data/acs-medicaid-adult-county.generated.json.
 const MI_STATE_FIPS = "26";
-const ACS_YEAR = "2023";
-const ACS_MALE_VAR = "C27007_003E"; // Male: with Medicaid/means-tested public coverage
-const ACS_FEMALE_VAR = "C27007_012E"; // Female: with Medicaid/means-tested public coverage
+const ACS_YEAR = "2024";
+const ACS_MALE_VAR = "C27007_007E"; // Male: 19 to 64 years: With Medicaid/means-tested public coverage
+const ACS_FEMALE_VAR = "C27007_017E"; // Female: 19 to 64 years: With Medicaid/means-tested public coverage
 
-// Urban Institute, March 2026 - Michigan-specific P.L. 119-21 (OBBBA) work
-// requirements projection. Range only; do not present as point estimates.
+// Urban Institute, March 2026 - Michigan 2028 reduction in Medicaid expansion
+// enrollment under work requirements + six-month redeterminations combined.
+// Range only; do not present as point estimates.
 // https://www.urban.org/research/publication/projected-reductions-medicaid-expansion-enrollment-under-obbbas-work
 const URBAN_MICHIGAN_LOW = 171_000;
 const URBAN_MICHIGAN_HIGH = 355_000;
 
 const PROJECTION_SOURCE_NAME =
-  "Modeled from Urban Institute / CBO P.L. 119-21 Medicaid work requirements score (county-allocated)";
+  "Modeled: Urban Institute Michigan 2028 range (work requirements + six-month redeterminations), county-allocated by ACS adults 19-64 with Medicaid";
 const METHODOLOGY_URL = "/methodology/medicaid-coverage-at-risk";
-const PROJECTION_AS_OF = "2026-04";
+const PROJECTION_AS_OF = "2026-11";
 
 interface MedicaidCoverageRangeEntry {
   county: string;
   slug: string;
   fips: string;
-  currentEnrollment: number;
+  acsAdultMedicaid: number;
+  acsAdultMedicaidMoe: number;
   projectedLossLow: number;
   projectedLossHigh: number;
   projectionSourceName: string;
   methodologyUrl: string;
   projectionAsOf: string;
+  methodVersion: string;
 }
 
 function slugify(county: string): string {
@@ -96,7 +107,7 @@ serve(async (req) => {
 
   const censusUrl =
     `https://api.census.gov/data/${ACS_YEAR}/acs/acs5` +
-    `?get=NAME,${ACS_MALE_VAR},${ACS_FEMALE_VAR}` +
+    `?get=NAME,${ACS_MALE_VAR},${ACS_FEMALE_VAR},${ACS_MALE_VAR.replace(/E$/, "M")},${ACS_FEMALE_VAR.replace(/E$/, "M")}` +
     `&for=county:*&in=state:${MI_STATE_FIPS}&key=${censusKey}`;
 
   let rows: string[][];
@@ -130,14 +141,15 @@ serve(async (req) => {
     return jsonResponse({ error: `Census ACS fetch failed: ${String(err)}` }, 502);
   }
 
-  // First row is the header: [NAME, C27007_003E, C27007_012E, state, county].
+  // Header: [NAME, C27007_007E, C27007_017E, C27007_007M, C27007_017M, state, county].
   const [, ...dataRows] = rows;
   const counties = dataRows.map((row) => {
     const male = Number(row[1]);
     const female = Number(row[2]);
-    const fips = `${row[3]}${row[4]}`;
+    const moe = Math.round(Math.sqrt(Number(row[3]) ** 2 + Number(row[4]) ** 2));
+    const fips = `${row[5]}${row[6]}`;
     const county = row[0].replace(/ County, Michigan$/, "");
-    return { county, fips, male, female, enrollment: male + female };
+    return { county, fips, male, female, moe, enrollment: male + female };
   });
 
   // Suppressed ACS values surface as large negatives (e.g. -666666666). Refuse
@@ -167,18 +179,21 @@ serve(async (req) => {
       county: c.county,
       slug: slugify(c.county),
       fips: c.fips,
-      currentEnrollment: c.enrollment,
+      acsAdultMedicaid: c.enrollment,
+      acsAdultMedicaidMoe: c.moe,
       projectedLossLow: Math.max(1, Math.round(URBAN_MICHIGAN_LOW * share)),
       projectedLossHigh: Math.max(1, Math.round(URBAN_MICHIGAN_HIGH * share)),
       projectionSourceName: PROJECTION_SOURCE_NAME,
       methodologyUrl: METHODOLOGY_URL,
       projectionAsOf: PROJECTION_AS_OF,
+      methodVersion: METHOD_VERSION,
     };
   });
 
   const payload = {
     data,
     version: FUNCTION_VERSION,
+    methodVersion: METHOD_VERSION,
     acsYear: ACS_YEAR,
     countyCount: data.length,
     fetched_at: new Date().toISOString(),

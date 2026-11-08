@@ -1,6 +1,11 @@
 import { describe, it, expect } from "vitest";
 import {
   MEDICAID_COVERAGE_AT_RISK_FALLBACK,
+  MEDICAID_ALLOCATION_VARIABLES,
+  MEDICAID_ALLOCATION_PROVENANCE,
+  MEDICAID_ALLOCATION_STATEWIDE_TOTAL,
+  MEDICAID_ALLOCATION_METHOD_VERSION,
+  MEDICAID_SCENARIO_SCOPE,
   type MedicaidCoverageRangeEntry,
 } from "../medicaidCoverageAtRiskFallback";
 
@@ -69,9 +74,9 @@ describe("MEDICAID_COVERAGE_AT_RISK_FALLBACK", () => {
     }
   });
 
-  it("projectionAsOf is '2026-04' on every entry", () => {
+  it("projectionAsOf is '2026-11' (method 2.0) on every entry", () => {
     for (const entry of MEDICAID_COVERAGE_AT_RISK_FALLBACK) {
-      expect(entry.projectionAsOf).toBe("2026-04");
+      expect(entry.projectionAsOf).toBe("2026-11");
     }
   });
 
@@ -99,10 +104,55 @@ describe("MEDICAID_COVERAGE_AT_RISK_FALLBACK", () => {
     }
   });
 
-  it("all currentEnrollment values are positive integers", () => {
+  it("all acsAdultMedicaid values are positive integers with a non-negative MOE", () => {
     for (const entry of MEDICAID_COVERAGE_AT_RISK_FALLBACK) {
-      expect(entry.currentEnrollment).toBeGreaterThan(0);
-      expect(Number.isInteger(entry.currentEnrollment)).toBe(true);
+      expect(entry.acsAdultMedicaid).toBeGreaterThan(0);
+      expect(Number.isInteger(entry.acsAdultMedicaid)).toBe(true);
+      expect(entry.acsAdultMedicaidMoe).toBeGreaterThanOrEqual(0);
     }
+  });
+});
+
+// ── Semantic regression (2026-11-08 correction) ───────────────────────────────
+// Method 1.0 summed C27007_003E ("Male: Under 19 years") + C27007_012E
+// ("Female:"), population totals rather than Medicaid counts. These tests
+// pin the construct, not just the arithmetic.
+describe("Medicaid allocation basis - semantic checks", () => {
+  it("uses only the 19-64 'With Medicaid' C27007 cells", () => {
+    expect([...MEDICAID_ALLOCATION_VARIABLES]).toEqual(["C27007_007E", "C27007_017E"]);
+    for (const v of MEDICAID_ALLOCATION_VARIABLES) {
+      const label = (MEDICAID_ALLOCATION_PROVENANCE.variables as Record<string, string>)[v];
+      expect(label).toMatch(/19 to 64 years:!!With Medicaid\/means-tested public coverage$/);
+    }
+  });
+
+  it("never reintroduces the population-total cells from method 1.0", () => {
+    const vars = Object.keys(MEDICAID_ALLOCATION_PROVENANCE.variables);
+    expect(vars).not.toContain("C27007_003E");
+    expect(vars).not.toContain("C27007_012E");
+  });
+
+  it("statewide basis is plausible for adults with Medicaid, not a population total", () => {
+    // Michigan's total population is ~10M; 6.2M was the method-1.0 artifact.
+    expect(MEDICAID_ALLOCATION_STATEWIDE_TOTAL).toBeGreaterThan(500_000);
+    expect(MEDICAID_ALLOCATION_STATEWIDE_TOTAL).toBeLessThan(2_500_000);
+    expect(MEDICAID_ALLOCATION_PROVENANCE.statewide_total).toBe(MEDICAID_ALLOCATION_STATEWIDE_TOTAL);
+  });
+
+  it("every entry carries the current method version", () => {
+    for (const e of MEDICAID_COVERAGE_AT_RISK_FALLBACK) {
+      expect(e.methodVersion).toBe(MEDICAID_ALLOCATION_METHOD_VERSION);
+    }
+  });
+
+  it("every county resolves to a registry name (no raw FIPS fallthrough)", () => {
+    for (const e of MEDICAID_COVERAGE_AT_RISK_FALLBACK) {
+      expect(e.county).not.toMatch(/^\d+$/);
+    }
+  });
+
+  it("scope names both policy components", () => {
+    expect(MEDICAID_SCENARIO_SCOPE).toMatch(/work requirements/i);
+    expect(MEDICAID_SCENARIO_SCOPE).toMatch(/six-month redeterminations/i);
   });
 });

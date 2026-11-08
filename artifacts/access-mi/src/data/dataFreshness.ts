@@ -393,6 +393,22 @@ export const DATA_FRESHNESS_SOURCES: DataSource[] = [
     vintageStatus: "current",
   }),
   entry({
+    // Added 2026-11-08 with the Medicaid Coverage at Risk variable
+    // correction: county allocation basis (C27007_007E + C27007_017E, adults
+    // 19-64 with Medicaid/means-tested coverage), read keyless from the
+    // Census table-based Summary File. ACS 2025 5-year is the next vintage.
+    id: "census-acs-c27007-adult-medicaid",
+    name: "Census ACS C27007 Adults 19-64 with Medicaid (county)",
+    category: "Health",
+    url: "https://data.census.gov/table/ACSDT5Y2024.C27007",
+    generatedFrom: "acs-medicaid-adult-county.generated.json",
+    updateFrequency: "Annual",
+    currentVersion: "ACS 2024 5-year (2020-2024)",
+    nextExpectedUpdate: "2027-01-31",
+    isLive: false,
+    vintageStatus: "current",
+  }),
+  entry({
     id: "hud-fmr",
     name: "HUD Fair Market Rents",
     category: "Housing",

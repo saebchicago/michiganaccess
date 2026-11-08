@@ -4,10 +4,9 @@
  * Primary source: Cecil G. Sheps Center for Health Services Research - Rural Hospital Closures
  *   URL: https://www.shepscenter.unc.edu/programs-projects/rural-health/rural-hospital-closures/
  *   Format: Excel (.xlsx) download only - no JSON, CSV, or RSS feed available.
- *   PHASE B BLOCKER: Because Sheps Center publishes Excel only (not a machine-readable API),
- *   the `sheps-closures` Edge Function cannot be built as a scheduled JSON fetch.
- *   Resolution: ship fallback data only; revisit Phase B when/if Sheps publishes a CSV/API,
- *   or build an XLSX → Supabase ingest pipeline via scheduled function.
+ *   Excel is ingestible: scripts/check-sheps-closures.mjs parses the workbook and diffs
+ *   Michigan rows against this file (advisory drift report). The curated list stays
+ *   hand-edited because the two-source rule, geocodes, and summaries are editorial.
  *
  * Secondary sources: AHA Hospital Closure Tracker, MDHHS licensure actions, Becker's Hospital
  * Review, Bridge Michigan, Crain's Detroit Business, Modern Healthcare, Fierce Healthcare.
@@ -35,8 +34,32 @@ export interface ClosureEntry {
     accessedDate: string;
     verified: boolean;
   }>;
+  /** Editorial status of the RECORD (are the sources confirmed?). */
   status: "verified" | "pending-second-source" | "disputed";
+  /**
+   * Status of the real-world EVENT, independent of record verification.
+   * A verified announcement of a future closure is status="verified",
+   * eventStatus="announced". Only "occurred" events count toward service-loss
+   * statistics. Added 2026-11-08 (2027 readiness audit).
+   */
+  eventStatus: "announced" | "scheduled" | "occurred" | "delayed" | "canceled" | "reversed";
+  /** Date the change was publicly announced, when known. */
+  announcedDate?: string;
+  /** Free-text note on what remains unverified about occurrence or timing. */
+  occurrenceNote?: string;
   asOf: string;               // ISO date of most recent verification
+}
+
+/**
+ * Does this event represent a documented loss or reduction of a clinical
+ * service that actually happened? Ownership transfers and REH conversions are
+ * tracked but are not counted as service loss without separate evidence.
+ */
+export function isOccurredServiceLoss(e: ClosureEntry): boolean {
+  return (
+    e.eventStatus === "occurred" &&
+    (e.closureType === "full-closure" || e.closureType === "service-line-elimination")
+  );
 }
 
 export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
@@ -70,6 +93,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
@@ -102,6 +126,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
@@ -133,12 +158,13 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
   {
     id: "ascension-mymichigan-tawas-transfer-2024",
-    facilityName: "Ascension St. Joseph of Tawas → MyMichigan Medical Center West Branch",
+    facilityName: "Ascension St. Joseph of Tawas → MyMichigan Medical Center Tawas",
     facilityType: "hospital",
     address: "200 Hemlock St",
     city: "Tawas City",
@@ -164,6 +190,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
@@ -195,6 +222,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
@@ -228,6 +256,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
@@ -241,10 +270,10 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
     county: "Crawford",
     latitude: 44.660,
     longitude: -84.712,
-    closureDate: "2026-07-01",  // projected - summer 2026 per Munson announcement
+    closureDate: "2026-09-01",  // EXPECTED, not occurred - fall 2026 per March 2026 report
     closureType: "service-line-elimination",
     summary:
-      "Munson Healthcare announced in September 2023 that delivery services at Grayling Hospital will close when a new regional birthing center opens at Otsego Memorial Hospital in Gaylord, projected summer 2026; prenatal and postnatal care will continue in Grayling.",
+      "Munson Healthcare announced in September 2023 that delivery services at Grayling Hospital will close when a new regional birthing center opens at Otsego Memorial Hospital in Gaylord, originally projected for summer 2026. As of the last check, delivery services were still operating at Grayling (Otsego Memorial deliveries temporarily moved there in August 2025); prenatal and postnatal care are expected to continue in Grayling.",
     sources: [
       {
         name: "Bridge Michigan",
@@ -260,7 +289,11 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
-    asOf: "2026-04-09",
+    eventStatus: "announced",
+    announcedDate: "2023-09-27",
+    occurrenceNote:
+      "Munson's maternity pages (munsonhealthcare.org/maternity, checked November 8, 2026; one source so far) state the Otsego Memorial birthing center temporarily relocated TO Grayling on August 1, 2025, and a March 2026 report placed the move of deliveries to Gaylord in fall 2026. Reverify before treating Grayling delivery services as closed.",
+    asOf: "2026-11-08",
   },
 
   {
@@ -292,6 +325,10 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "announced",
+    announcedDate: "2023-09-27",
+    occurrenceNote:
+      "The date shown is the announcement date. Phased implementation; the date and extent of the actual inpatient reduction are not yet verified.",
     asOf: "2026-04-09",
   },
 
@@ -324,6 +361,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
@@ -358,6 +396,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
@@ -391,6 +430,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 
@@ -423,6 +463,7 @@ export const CLOSURE_WATCH_FALLBACK: ClosureEntry[] = [
       },
     ],
     status: "verified",
+    eventStatus: "occurred",
     asOf: "2026-04-09",
   },
 ];

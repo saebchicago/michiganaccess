@@ -70,12 +70,12 @@ describe("SnapCoverageAtRiskMethodology", () => {
     expect(mlppLinks.length).toBeGreaterThan(0);
   });
 
-  it("renders GAO-19-56 source link", () => {
+  it("does not cite GAO-19-56 as a source (unsubstantiated band attribution removed 2026-11-08)", () => {
     renderPage();
     const gaoLinks = screen
       .getAllByRole("link")
-      .filter((el) => el.getAttribute("href")?.includes("gao.gov"));
-    expect(gaoLinks.length).toBeGreaterThan(0);
+      .filter((el) => el.getAttribute("href")?.includes("gao-19-56"));
+    expect(gaoLinks.length).toBe(0);
   });
 
   it("renders USDA FNA E&T source link", () => {

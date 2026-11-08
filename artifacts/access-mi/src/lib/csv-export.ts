@@ -41,32 +41,37 @@ export function exportMedicaidCoverageAtRiskCsv(
   entries: Array<{
     county: string;
     fips: string;
-    currentEnrollment: number;
+    acsAdultMedicaid: number;
+    acsAdultMedicaidMoe: number;
     projectedLossLow: number;
     projectedLossHigh: number;
+    methodVersion?: string;
   }>,
 ): void {
   const date = new Date().toISOString().slice(0, 10);
+  const total = entries.reduce((s, e) => s + e.acsAdultMedicaid, 0);
   const meta = [
-    `accessmi.org - Michigan Medicaid Coverage at Risk`,
+    `accessmi.org - Michigan Medicaid Coverage at Risk (method ${entries[0]?.methodVersion ?? "2.0"})`,
     `Generated: ${date}`,
-    `Source: Urban Institute Michigan projection (171,000–355,000) × ACS C27007 5-year 2023 county enrollment share`,
-    `Denominator: 6,206,095 (sum of ACS C27007 county estimates for all 83 Michigan counties)`,
+    `Scenario: Urban Institute Michigan 2028 reduction in Medicaid expansion enrollment (171,000-355,000), work requirements and six-month redeterminations combined. Low/high are mitigation scenarios, not a confidence interval.`,
+    `County allocation basis: ACS 2024 5-year C27007_007E + C27007_017E (adults 19-64 with Medicaid/means-tested coverage). Statewide basis: ${total.toLocaleString()}. Proxy for Healthy Michigan Plan enrollment, not administrative HMP counts.`,
+    `Correction 2026-11-08: county ranges published before this date used an invalid basis (C27007_003E + C27007_012E, population totals). Discard earlier exports.`,
     `Methodology: https://accessmi.org/methodology/medicaid-coverage-at-risk`,
-    `IMPORTANT: These are modeled ranges, not point estimates. Exposure is not disenrollment.`,
-    `ACS enrollment column reflects means-tested public coverage (broader than CMS MBES ~2.4M administrative enrollment).`,
+    `IMPORTANT: Modeled ranges, not point estimates. Exposure is not disenrollment.`,
   ];
   const headers = [
     "county",
     "fips",
-    "acs_medicaid_enrollment_2023",
+    "acs_adults_19_64_with_medicaid_2024",
+    "acs_moe_90",
     "projected_loss_low",
     "projected_loss_high",
   ];
   const rows = entries.map((e) => ({
     county: e.county,
     fips: e.fips,
-    acs_medicaid_enrollment_2023: e.currentEnrollment,
+    acs_adults_19_64_with_medicaid_2024: e.acsAdultMedicaid,
+    acs_moe_90: e.acsAdultMedicaidMoe,
     projected_loss_low: e.projectedLossLow,
     projected_loss_high: e.projectedLossHigh,
   }));

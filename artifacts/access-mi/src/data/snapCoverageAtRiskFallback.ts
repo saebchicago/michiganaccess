@@ -4,7 +4,13 @@
 //         proportionally by county SNAP enrollment share (USDA FNA (formerly FNS) FY2022 county data).
 //         Straight enrollment share is used as proxy for adult ABAWD-eligible share -
 //         this simplification is documented at /methodology/snap-coverage-at-risk.
-// Uncertainty band: GAO-19-56 historical range → low = midpoint × 0.60, high = midpoint × 1.40
+// Sensitivity band: low = midpoint × 0.60, high = midpoint × 1.40. This is a
+//   JUDGMENT-BASED SENSITIVITY RANGE chosen by accessmi.org, not an empirical
+//   or statistical interval. CORRECTION 2026-11-08: earlier versions attributed
+//   the ±40% band to GAO-19-56 (a report on SNAP Employment & Training data).
+//   No page, table, or derivation in that report supporting ±40% or a
+//   "60%-140% of projections" finding could be produced, so the attribution
+//   was removed. Do not cite GAO-19-56 as the basis for this band.
 // Re-compute when: CBO updates P.L. 119-21 scoring, MLPP revises Michigan estimate,
 //                  Feature 1 baseline refreshes beyond FY2022, MDHHS Green Book extractor
 //                  replaces FY2022 county data.
@@ -18,7 +24,7 @@
 //     Source: https://www.cbo.gov/system/files/2025-08/61367-SNAP.pdf
 //   - County SNAP enrollment baseline: USDA FNA (formerly FNS) FY2022 county data
 //     (from snapMichiganFallback.ts - Feature 1 data layer)
-//   - Uncertainty multipliers: 0.60 (low), 1.40 (high) - GAO-19-56
+//   - Sensitivity multipliers: 0.60 (low), 1.40 (high) - accessmi.org judgment, not sourced
 
 // SNAP_COUNTY_FALLBACK is sourced from snapCountyGenerated.json (refreshed by
 // scripts/build-snap-county-dataset.mjs). Because the projection below is
@@ -46,9 +52,9 @@ export interface SnapCoverageRangeEntry {
 // Source: MLPP November 2025, https://mlpp.org/the-cost-of-the-federal-megabill-food-assistance/
 const MLPP_MICHIGAN_STATE_ESTIMATE = 74_000;
 
-// GAO-19-56 uncertainty band multipliers
-const GAO_LOW_MULTIPLIER = 0.6;
-const GAO_HIGH_MULTIPLIER = 1.4;
+// Judgment-based sensitivity multipliers (see header). Not an empirical band.
+export const SNAP_SENSITIVITY_LOW_MULTIPLIER = 0.6;
+export const SNAP_SENSITIVITY_HIGH_MULTIPLIER = 1.4;
 
 const PROJECTION_SOURCE_NAME =
   "Modeled from MLPP/CBO P.L. 119-21 SNAP score (county-allocated)";
@@ -86,8 +92,8 @@ export const SNAP_COVERAGE_AT_RISK_FALLBACK: SnapCoverageRangeEntry[] =
 
     const countyShare = enrollment / COUNTY_ENROLLMENT_TOTAL;
     const midpoint = MLPP_MICHIGAN_STATE_ESTIMATE * countyShare;
-    const low = Math.max(1, Math.round(midpoint * GAO_LOW_MULTIPLIER));
-    const high = Math.round(midpoint * GAO_HIGH_MULTIPLIER);
+    const low = Math.max(1, Math.round(midpoint * SNAP_SENSITIVITY_LOW_MULTIPLIER));
+    const high = Math.round(midpoint * SNAP_SENSITIVITY_HIGH_MULTIPLIER);
 
     return {
       county: c.county,

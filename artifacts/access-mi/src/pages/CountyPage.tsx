@@ -937,7 +937,8 @@ export default function CountyPage() {
                       </p>
                     )}
                     <p className="text-[10px] text-muted-foreground">
-                      P.L. 119-21 work requirement exposure
+                      Modeled 2028 range, work requirements + six-month
+                      redeterminations (corrected Nov 2026)
                     </p>
                     <Link
                       to="/data/medicaid-coverage-at-risk"

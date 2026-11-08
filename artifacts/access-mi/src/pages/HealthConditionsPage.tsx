@@ -1,3 +1,4 @@
+import SisterProjectLinks from "@/components/shared/SisterProjectLinks";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -596,6 +597,37 @@ export default function HealthConditionsPage() {
             </TabsContent>
           </Tabs>
         )}
+
+        <div className="mt-10">
+          <SisterProjectLinks
+            links={[
+              {
+                project: "ConditionMap",
+                path: "/conditions",
+                label: "Condition evidence and treatment landscape",
+                why: "AccessMI shows where care is in Michigan. ConditionMap covers burden, evidence, trials, and treatment for each condition.",
+              },
+              {
+                project: "ConditionMap",
+                path: "/insurance-access",
+                label: "Prior authorization, step therapy, and appeals",
+                why: "Plain-language guide to insurance barriers that sit between finding a provider and getting treated.",
+              },
+              {
+                project: "Values in Care",
+                path: "/eol-care",
+                label: "Values in serious illness and end-of-life care",
+                why: "Source-cited reference on how faith and cultural values shape palliative, hospice, and end-of-life decisions.",
+              },
+              {
+                project: "Values in Care",
+                path: "/caregivers",
+                label: "Dementia and caregiver support",
+                why: "For families coordinating care, keeping the person's own voice at the center.",
+              },
+            ]}
+          />
+        </div>
       </div>
     </Layout>
   );
