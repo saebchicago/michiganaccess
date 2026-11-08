@@ -24,8 +24,9 @@ confirm), **Fixed** (in PR for branch `claude/accessmi-2027-readiness-4cfxuu`).
 
 - Dual-eligible model (B27010_046E + _062E) is semantically correct but omits
   duals under 35 (_013E, _029E). Small share; fix with same Summary File recipe.
-- `supabase/functions/medicaid-coverage-at-risk` source is corrected but must be
-  redeployed out-of-band. Client rejects stale payloads meanwhile.
+- The app no longer calls the `medicaid-coverage-at-risk` Supabase function
+  (2026-11-08, cost and reliability); it serves the committed static dataset.
+  The function source is kept, corrected, as a reference; no redeploy needed.
 - Preferred Medicaid basis is MDHHS county Healthy Michigan Plan enrollment;
   ACS adults 19-64 is a labeled proxy.
 
