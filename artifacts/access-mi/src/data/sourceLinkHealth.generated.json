@@ -1,9 +1,9 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": "2026-09-30T18:30:03.214Z",
+  "generated_at": "2026-10-07T19:25:51.198Z",
   "checked": 74,
-  "dead": 10,
-  "timed_out": 8,
+  "dead": 11,
+  "timed_out": 7,
   "redirected": 0,
   "results": [
     {
@@ -112,10 +112,9 @@
     },
     {
       "url": "https://ruralhospitals.chqpr.org",
-      "status": "timeout",
-      "httpStatus": null,
-      "finalUrl": null,
-      "error": "This operation was aborted",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://ruralhospitals.chqpr.org/",
       "contexts": [
         "At-risk rural hospitals (5 immediate risk)"
       ]
@@ -311,28 +310,29 @@
     },
     {
       "url": "https://api.census.gov/",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.census.gov/data/developers.html",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Census ACS API"
       ]
     },
     {
       "url": "https://www.census.gov/programs-surveys/saipe.html",
-      "status": "ok",
-      "httpStatus": 200,
+      "status": "timeout",
+      "httpStatus": null,
       "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "Census SAIPE County Estimates"
       ]
     },
     {
       "url": "https://hazards.fema.gov/nri/",
-      "status": "network-error",
-      "httpStatus": null,
-      "finalUrl": null,
-      "error": "fetch failed",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://www.fema.gov/emergency-managers/practitioners/resilience-analysis-and-planning-tool",
       "contexts": [
         "FEMA NRI"
       ]
@@ -394,10 +394,9 @@
     },
     {
       "url": "https://www.irs.gov/statistics/soi-tax-stats",
-      "status": "timeout",
-      "httpStatus": null,
+      "status": "client-error",
+      "httpStatus": 404,
       "finalUrl": null,
-      "error": "This operation was aborted",
       "contexts": [
         "IRS Statistics of Income"
       ]
