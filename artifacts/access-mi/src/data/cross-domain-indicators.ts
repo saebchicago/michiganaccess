@@ -1,6 +1,6 @@
 /**
  * Cross-Domain County Indicators - Static curated data for all 83 Michigan counties.
- * Sources: ACS 5-Year (2022), BLS LAUS (2024), NCES/MI DOE (2023), FBI UCR (2022), EPA SDWIS (2024).
+ * Sources: ACS 5-year 2018-2022, BLS LAUS (2024), NCES/MI DOE (2023), FBI UCR (2022), EPA SDWIS (2024).
  * Where a metric is genuinely unavailable, use null.
  */
 
@@ -164,7 +164,7 @@ export interface CrossDomainMetricMeta {
 
 /**
  * Per-metric provenance and display metadata for CountyCrossDomain fields.
- * Sources mirror the file header: ACS 5-Year (2022), BLS LAUS (2024),
+ * Sources mirror the file header: ACS 5-year 2018-2022, BLS LAUS (2024),
  * NCES/MI DOE (2023), FBI UCR (2022), EPA SDWIS (2024). Every tile rendered
  * from this map carries a named source; values are direct tabulations
  * (VERIFIED), nothing here is composited or modeled.
@@ -174,7 +174,7 @@ export const CROSS_DOMAIN_METRIC_META: Record<keyof CountyCrossDomain, CrossDoma
     label: "Median household income",
     unit: "",
     source: "Census ACS 5-Year",
-    vintage: "2022",
+    vintage: "2018-2022",
     higherIsBetter: true,
     format: "currency",
   },
@@ -182,7 +182,7 @@ export const CROSS_DOMAIN_METRIC_META: Record<keyof CountyCrossDomain, CrossDoma
     label: "Poverty rate",
     unit: "%",
     source: "Census ACS 5-Year",
-    vintage: "2022",
+    vintage: "2018-2022",
     higherIsBetter: false,
     format: "percent",
   },
@@ -190,7 +190,7 @@ export const CROSS_DOMAIN_METRIC_META: Record<keyof CountyCrossDomain, CrossDoma
     label: "Median gross rent",
     unit: "",
     source: "Census ACS 5-Year",
-    vintage: "2022",
+    vintage: "2018-2022",
     higherIsBetter: false,
     format: "currency",
   },
@@ -198,7 +198,7 @@ export const CROSS_DOMAIN_METRIC_META: Record<keyof CountyCrossDomain, CrossDoma
     label: "Rent-burdened households",
     unit: "%",
     source: "Census ACS 5-Year",
-    vintage: "2022",
+    vintage: "2018-2022",
     higherIsBetter: false,
     format: "percent",
   },
@@ -206,7 +206,7 @@ export const CROSS_DOMAIN_METRIC_META: Record<keyof CountyCrossDomain, CrossDoma
     label: "Households with a vehicle",
     unit: "%",
     source: "Census ACS 5-Year",
-    vintage: "2022",
+    vintage: "2018-2022",
     higherIsBetter: true,
     format: "percent",
   },
@@ -214,7 +214,7 @@ export const CROSS_DOMAIN_METRIC_META: Record<keyof CountyCrossDomain, CrossDoma
     label: "Average commute",
     unit: " min",
     source: "Census ACS 5-Year",
-    vintage: "2022",
+    vintage: "2018-2022",
     higherIsBetter: false,
     format: "minutes",
   },

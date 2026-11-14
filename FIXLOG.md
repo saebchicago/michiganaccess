@@ -1184,3 +1184,35 @@ Not fixed here (see docs/2027-READINESS.md): HMP administrative county
 enrollment as the preferred basis, dual-eligible omits B27010_013E/_029E
 (ages <35), edge function redeploy, the `.migration-backup/` copy still
 holding method 1.0 (non-shipping archive, left intact).
+
+---
+
+## Agent-ready data fixes (2026-11-14)
+
+Branch `fix/agent-ready-data`. Applies the standards from the talk "Open Data Is Not Agent-Ready (Yet)" (Michigan DevFest, Nov 14, 2026). No dataset was refetched or regenerated.
+
+### Census error codes (steps 2-4)
+- New `src/lib/censusValue.ts`: `parseAcsEstimate`, `parseAcsMoe`, `ESTIMATE_CODES` (-666666666, -999999999, -888888888), `MOE_CODES` (-222222222, -333333333); -555555555 in a margin column means MOE 0. Zero, missing, suppressed and not applicable are four distinct outcomes.
+- `useCensusDemographics.ts` and `useEconomicData.ts` no longer use `parseFloat/parseInt(...) || 0` or `|| 1`. A null numerator or denominator gives a null percentage. The UI shows "Data unavailable" with the reason.
+- Also fixed in `useEconomicData.ts`: county FIPS was built as `26${row[8]}` where column 8 is the state code, so every county key was "2626". Now state plus county.
+- `useCHNATractData.ts` (ACS tracts) skips tracts with no usable count instead of plotting 0.
+- `useEnergyData.ts` and `useTractHealthData.ts` drop non-numeric values instead of coercing to 0.
+- Edge functions: `census-acs-proxy` had no sentinel guard (confirmed); it now returns null plus a `notes` reason. `chna-data-proxy` does the same. `dual-eligible-exposure` and `medicaid-coverage-at-risk` already reject negative values and were left as is.
+
+### ACS vintage (step 5)
+- New `src/config/acsVintage.ts` (`ACS5_PERIOD = "2020-2024"`, `ACS5_YEAR = 2024`). Used by `useCensusDemographics`, `useEconomicData`, `useCensusACS` (default year), `census-acs-proxy` (default year) and `chna-data-proxy` (duplicated constant).
+- Live-API labels use the constant. Static dataset labels state their true period as a range (2018-2022, 2019-2023). Single-year "ACS 5-Year 20XX" labels are gone.
+- "ACS 2022" and "ACS 2023" labels with no "5-year" in the text were converted only where the data is ZIP or all-83-county level (ACS 1-year does not cover those geographies). Others are listed in GAPS.md for audit.
+
+### ZIP margins of error (step 6)
+- `ratioMoe` and `ratioOnlyMoe` in `src/lib/reliability.ts` (Census proportion formula, ratio fallback when the radicand is negative). Each ZIP percentage now carries a derived MOE in percentage points, fed to `MoEBadge`.
+
+### Michigan portal (step 7)
+- Named exception: `src/data/sourcesRegistry.ts`, `data.michigan.gov` entry only. Added `urlNote`, replaced "500+ public datasets". One-line optional `urlNote?: string` was added to the `SourceEntry` interface because the field did not exist; nothing else in the file changed.
+- Mirrored in `MethodologyPage.tsx` and `CivicDataPage.tsx`. `socrata.py` calls only `/resource/{id}.json`, sends `AccessMI-pipeline/1.0 (+https://accessmi.org/contact)`, caps at 1 request per second, and raises `DatasetMovedError` on 404 or 410.
+
+### Open Data Gaps (step 8)
+- Added `state-portal-agent-access` and `state-open-data-policy`.
+
+### Agent sign (step 9)
+- `public/llms.txt`: new `## Data access for agents` section. `robots.txt` unchanged.

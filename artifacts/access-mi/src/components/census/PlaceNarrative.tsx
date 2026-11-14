@@ -11,6 +11,7 @@ import { BookOpen, Sparkles, RefreshCw } from "lucide-react";
 import { useCensusACS, getCensusValue, formatDollars, formatCount, formatPercent } from "@/hooks/useCensusACS";
 import { getCountyFips } from "@/data/census-geographies";
 import type { Place } from "@/models/Place";
+import { ACS5_LABEL, ACS5_PERIOD } from "@/config/acsVintage";
 
 // Cache narratives per place slug to avoid repeat AI calls
 const narrativeCache = new Map<string, string>();
@@ -58,7 +59,7 @@ function buildStaticNarrative(place: Place, data: any): string {
   }
 
   lines.push(
-    `Data reflects the 2023 American Community Survey 5-Year Estimates from the U.S. Census Bureau.`
+    `Data reflects the ${ACS5_PERIOD} American Community Survey 5-Year Estimates from the U.S. Census Bureau.`
   );
 
   return lines.join(" ");
@@ -104,7 +105,7 @@ export default function PlaceNarrative({ place }: { place: Place }) {
         <div className="flex items-center gap-2 mb-3">
           <BookOpen className="h-4 w-4 text-primary" />
           <h3 className="text-sm font-bold text-foreground">Community Profile</h3>
-          <Badge variant="outline" className="text-[9px] h-4">ACS 2023</Badge>
+          <Badge variant="outline" className="text-[9px] h-4">{ACS5_LABEL}</Badge>
         </div>
         <p className="text-sm text-foreground/90 leading-relaxed">{narrative}</p>
         <p className="text-[10px] text-muted-foreground mt-3">

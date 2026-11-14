@@ -31,12 +31,13 @@ export function useTractHealthData(countyFips: string, measureId: string = "DIAB
         if (!res.ok) return [];
         const data = await res.json();
         return data
-          .filter((d: any) => d.data_value)
+          // Rows with a missing or non-numeric value are dropped, never shown as 0.
+          .filter((d: any) => d.data_value && Number.isFinite(Number.parseFloat(d.data_value)))
           .map((d: any) => ({
             countyname: d.countyname || "",
             locationname: d.locationname || d.tractfips || "",
             measure: d.measure || "",
-            data_value: parseFloat(d.data_value) || 0,
+            data_value: Number.parseFloat(d.data_value),
             short_question_text: d.short_question_text || "",
             totalpopulation: d.totalpopulation || "",
             year: d.year || "",

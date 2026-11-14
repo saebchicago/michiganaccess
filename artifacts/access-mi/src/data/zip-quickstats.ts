@@ -1,5 +1,5 @@
 /** Instant ZIP quick stats - hardcoded for ~30 major Michigan ZIPs.
- * Source: Census ACS 2022, MI Treasury, MI School Data */
+ * Source: Census ACS 5-year 2018-2022, MI Treasury, MI School Data */
 
 export interface ZipQuickStat {
   zip: string;

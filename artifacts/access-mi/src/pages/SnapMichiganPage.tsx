@@ -26,7 +26,7 @@ import type { SnapCountyData } from "@/data/snapMichiganFallback";
 type SortKey = "county" | "enrollmentTotal" | "enrollmentPct" | "retailerCount";
 type SortDir = "asc" | "desc";
 
-// Michigan county populations (ACS 2022 5-year estimates, approximate)
+// Michigan county populations (ACS 5-year 2018-2022 estimates, approximate)
 // Used only to compute enrollment % of population - does not affect source-cited figures.
 const COUNTY_POP: Record<string, number> = {
   Alcona: 10_600,
@@ -364,9 +364,9 @@ export default function SnapMichiganPage() {
               label="Counties where SNAP enrollment exceeds 20% of population (FY2022)"
               provenance={
                 <DataProvenance
-                  sourceName="USDA FNA · ACS 2022 population estimates"
+                  sourceName="USDA FNA · ACS 5-year 2018-2022 population estimates"
                   sourceUrl="https://www.fna.usda.gov/pd/supplemental-nutrition-assistance-program-snap"
-                  asOfDate="FY2022 / ACS 2022"
+                  asOfDate="FY2022 / ACS 5-year 2018-2022"
                   cadence="Annual"
                   dataKind="measured"
                   compact
@@ -485,7 +485,7 @@ export default function SnapMichiganPage() {
           </div>
 
           <p className="text-[11px] text-muted-foreground mt-2">
-            % of population derived from ACS 2022 5-year estimates. Retailer
+            % of population derived from ACS 5-year 2018-2022 estimates. Retailer
             counts pending USDA SNAP Retailer Locator CSV parse - county-level
             data not yet extracted.{" "}
             <a
@@ -556,7 +556,7 @@ export default function SnapMichiganPage() {
                 <strong className="text-foreground">
                   Enrollment % of population.
                 </strong>{" "}
-                Derived by dividing SNAP enrollment by ACS 2022 5-year county
+                Derived by dividing SNAP enrollment by ACS 5-year 2018-2022 county
                 population estimates. This is a rough indicator of relative
                 participation - not an eligibility rate or coverage rate.
               </p>

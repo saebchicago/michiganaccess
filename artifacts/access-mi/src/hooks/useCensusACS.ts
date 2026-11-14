@@ -2,6 +2,7 @@
  * React hook for live Census Bureau ACS data via the census-acs-proxy edge function.
  */
 import { useQuery } from "@tanstack/react-query";
+import { ACS5_YEAR } from "@/config/acsVintage";
 import {
   SUPABASE_URL,
   SUPABASE_ANON_KEY as SUPABASE_KEY,
@@ -58,7 +59,7 @@ function makeUnavailable(
 }
 
 export function useCensusACS(options: UseCensusACSOptions) {
-  const { tables, geoType, geoFips, year = 2022, enabled = true } = options;
+  const { tables, geoType, geoFips, year = ACS5_YEAR, enabled = true } = options;
 
   return useQuery<CensusACSResponse>({
     queryKey: ["census-acs", tables.join(","), geoType, geoFips, year],

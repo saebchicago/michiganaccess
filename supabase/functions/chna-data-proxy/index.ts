@@ -6,6 +6,48 @@ const CORS = {
     "authorization, x-client-info, apikey, content-type",
 };
 
+// ACS 5-year vintage this function requests. Mirrors src/config/acsVintage.ts
+// in the app (edge functions deploy separately, so it cannot be imported).
+// Keep both in step. ACS5_YEAR is the API path year, the period is 5 years ending then.
+const ACS5_YEAR = 2024;
+const ACS5_PERIOD = "2020-2024";
+
+// Census encodes "no usable number" as negative sentinels in numeric columns.
+// Small duplicate of src/lib/censusValue.ts (kept in sync by hand).
+const CENSUS_SENTINEL_REASONS: Record<string, string> = {
+  "-666666666": "Suppressed by Census: too few sample observations to compute an estimate",
+  "-999999999": "Not available from Census for this geography",
+  "-888888888": "Not applicable for this geography",
+  "-222222222": "Margin of error not computed: too few sample observations",
+  "-333333333": "Margin of error not computed: median falls in an open-ended interval",
+};
+
+/** Replace sentinel cells with null and record why, keyed "row:column". -555555555 in a margin column means controlled, MOE 0. */
+function nullCensusSentinels(data: unknown): { rows: unknown; notes: Record<string, string> } {
+  const notes: Record<string, string> = {};
+  if (!Array.isArray(data) || data.length < 2) return { rows: data, notes };
+  const header = data[0] as string[];
+  const rows = [header];
+  for (let i = 1; i < data.length; i++) {
+    const row = (data[i] as (string | null)[]).map((cell, j) => {
+      if (cell === null || cell === undefined || cell === "") {
+        if (/^B\d/.test(header[j] ?? "")) notes[`${i - 1}:${header[j]}`] = "Missing from Census response";
+        return null;
+      }
+      const key = String(cell);
+      if (key === "-555555555" && /M$/.test(header[j] ?? "")) return "0";
+      const reason = CENSUS_SENTINEL_REASONS[key];
+      if (reason) {
+        notes[`${i - 1}:${header[j]}`] = reason;
+        return null;
+      }
+      return cell;
+    });
+    rows.push(row as unknown as string[]);
+  }
+  return { rows, notes };
+}
+
 // Michigan FIPS and county filters for HFH service area
 const MI_STATE_FIPS = "26";
 const HFH_COUNTY_FIPS = ["163", "125", "099", "075"]; // Wayne, Oakland, Macomb, Jackson
@@ -95,7 +137,7 @@ serve(async (req) => {
 
     const counties = HFH_COUNTY_FIPS.join(",");
     const censusUrl =
-      `https://api.census.gov/data/2022/acs/acs5` +
+      `https://api.census.gov/data/${ACS5_YEAR}/acs/acs5` +
       `?get=NAME,B08201_001E,B08201_002E,B25044_001E,B25044_003E,B08303_001E,B08303_013E` +
       `&for=tract:*&in=state:${MI_STATE_FIPS}+county:${counties}&key=${censusKey}`;
 
@@ -112,8 +154,15 @@ serve(async (req) => {
           { status: 502, headers: JSON_HEADERS },
         );
       }
+      const { rows, notes } = nullCensusSentinels(JSON.parse(text));
       return new Response(
-        JSON.stringify({ data: JSON.parse(text), fetched_at: new Date().toISOString() }),
+        JSON.stringify({
+          data: rows,
+          // Census error codes are returned as null with a reason, never as numbers.
+          notes,
+          acs_period: ACS5_PERIOD,
+          fetched_at: new Date().toISOString(),
+        }),
         { headers: JSON_HEADERS },
       );
     } catch (err) {

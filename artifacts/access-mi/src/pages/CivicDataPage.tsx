@@ -840,7 +840,7 @@ const CivicDataPage = () => {
                       {
                         name: "Michigan Open Data Portal",
                         url: "https://data.michigan.gov",
-                        desc: "State government datasets  -  health, education, infrastructure, and more",
+                        desc: "State government datasets  -  health, education, infrastructure, and more. Browse freely; for automated access use only the dataset APIs (the state's named official route, MCDA (DTMB) email, Nov 6, 2026). The Michigan.gov Terms of Use otherwise bar automated access. The portal is moving to ArcGIS (MCDA (DTMB) email, Nov 13, 2026).",
                       },
                       {
                         name: "Data.gov",

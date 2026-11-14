@@ -54,3 +54,11 @@ AccessMI organizes authoritative public datasets (including CDC PLACES, Census, 
 - [Closure Watch](/closure-watch): Two-source-verified facility closures and status changes.
 - [Site Report](/site-report): Printable site summary report.
 - [Status](/status): Platform uptime and data freshness.
+
+## Data access for agents
+
+- Automated access is welcome. Keep it to 1 request per second or less and send an identifying User-Agent.
+- Data files and provenance: /data-sources and /methodology.
+- Labels: VERIFIED (confirmed from a primary source), MODELED (derived from verified inputs), PROJECTED (forward-looking estimate), PENDING (not ingested yet).
+- Census error codes are returned as empty values with a reason, never as numbers.
+- Contact: /contact. License: not yet declared.

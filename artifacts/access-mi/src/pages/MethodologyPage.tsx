@@ -591,7 +591,7 @@ export default function MethodologyPage() {
               },
               {
                 source: "data.michigan.gov (Socrata SODA API)",
-                desc: "State open data portal with 500+ datasets. SoQL-queryable JSON endpoints, no authentication required for public data.",
+                desc: "State open data portal. We use only its dataset APIs (SoQL-queryable JSON endpoints), which the state's data office named as the official route for automated access (MCDA (DTMB) email to the maintainer, Nov 6, 2026). The Michigan.gov Terms of Use otherwise bar automated access. The portal is moving to ArcGIS (MCDA (DTMB) email, Nov 13, 2026), so endpoints may change.",
                 frequency: "Varies by dataset",
                 url: "https://data.michigan.gov/",
               },

@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { getReliability } from "@/lib/reliability";
 import { SuppressedEstimate, MoeUnavailableNote } from "@/components/shared/ReliabilityNote";
+import { ACS5_LABEL } from "@/config/acsVintage";
 
 interface Props {
   countyName: string;
@@ -152,7 +153,7 @@ export default function ACSIndicatorCard({
             )}
           </div>
         )}
-        <p className="text-[10px] text-muted-foreground">ACS 5-Year 2022</p>
+        <p className="text-[10px] text-muted-foreground">{ACS5_LABEL}</p>
       </CardContent>
     </Card>
   );

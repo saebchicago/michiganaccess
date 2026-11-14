@@ -10,6 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useCensusACS, getCensusValue, formatDollars, formatCount, formatPercent } from "@/hooks/useCensusACS";
 import { getCountyFips } from "@/data/census-geographies";
 import type { Place } from "@/models/Place";
+import { ACS5_LABEL, ACS5_PERIOD } from "@/config/acsVintage";
 
 const CHART_COLORS = [
   "hsl(var(--primary))",
@@ -96,7 +97,7 @@ export default function DemographicBreakdown({ place }: { place: Place }) {
     <div className="space-y-6">
       <div className="flex items-center gap-2 flex-wrap">
         <h3 className="text-lg font-bold text-foreground">Census Demographics</h3>
-        <Badge variant="outline" className="text-[10px]">ACS 5-Year 2022</Badge>
+        <Badge variant="outline" className="text-[10px]">{ACS5_LABEL}</Badge>
         <Badge variant="secondary" className="text-[10px]">U.S. Census Bureau</Badge>
       </div>
 
@@ -186,7 +187,7 @@ export default function DemographicBreakdown({ place }: { place: Place }) {
       </div>
 
       <p className="text-[10px] text-muted-foreground text-center">
-        Source: U.S. Census Bureau, American Community Survey 5-Year Estimates (2022). Margins of error apply.
+        Source: U.S. Census Bureau, American Community Survey 5-year estimates, {ACS5_PERIOD}. Margins of error apply.
       </p>
     </div>
   );

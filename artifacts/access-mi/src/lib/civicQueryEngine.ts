@@ -48,7 +48,7 @@ const ACS_SDOH_SOURCE = `U.S. Census ACS 5-Year ${ACS_SDOH_COUNTY_PROVENANCE.vin
 
 /**
  * Poverty point: the ACS bundle (2020-2024, B17001) when populated,
- * otherwise the static cross-domain "ACS 5-Year 2022" column. Shared by
+ * otherwise the static cross-domain "ACS 5-year 2018-2022" column. Shared by
  * resolveEconomicHardship and resolveGeneral so the two never disagree.
  */
 function povertyPoint(county: string, cdPovertyRate: number | null): CivicDataPoint | null {
@@ -71,7 +71,7 @@ function povertyPoint(county: string, cdPovertyRate: number | null): CivicDataPo
     label: "Poverty rate",
     value: `${cdPovertyRate}%`,
     valueLabel: "VERIFIED",
-    source: "ACS 5-Year 2022",
+    source: "ACS 5-year 2018-2022",
     vintage: "2022",
     note:
       cdPovertyRate > MI_STATE_AVERAGES.povertyRate!
@@ -374,7 +374,7 @@ function resolveFoodInsecurity(county: string): CivicDataPoint[] {
       label: "Poverty rate",
       value: `${cd.povertyRate}%`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022 (NCES/MI DOE 2023)",
+      source: "ACS 5-year 2018-2022 (NCES/MI DOE 2023)",
       vintage: "2022",
     });
   }
@@ -383,7 +383,7 @@ function resolveFoodInsecurity(county: string): CivicDataPoint[] {
       label: "Median household income",
       value: `$${cd.medianIncome.toLocaleString()}`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
+      source: "ACS 5-year 2018-2022",
       vintage: "2022",
     });
   }
@@ -445,7 +445,7 @@ function resolveEconomicHardship(county: string): CivicDataPoint[] {
       label: "Median household income",
       value: `$${cd.medianIncome.toLocaleString()}`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
+      source: "ACS 5-year 2018-2022",
       vintage: "2022",
     });
   }
@@ -521,7 +521,7 @@ function resolveHousing(county: string): CivicDataPoint[] {
       label: "Rent-burdened households (>30% of income on rent)",
       value: `${cd.rentBurden}%`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
+      source: "ACS 5-year 2018-2022",
       vintage: "2022",
       note:
         cd.rentBurden > MI_STATE_AVERAGES.rentBurden!
@@ -535,7 +535,7 @@ function resolveHousing(county: string): CivicDataPoint[] {
       label: "Median gross rent",
       value: `$${cd.medianRent.toLocaleString()}/mo`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
+      source: "ACS 5-year 2018-2022",
       vintage: "2022",
     });
   }
@@ -544,7 +544,7 @@ function resolveHousing(county: string): CivicDataPoint[] {
       label: "Median household income",
       value: `$${cd.medianIncome.toLocaleString()}`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
+      source: "ACS 5-year 2018-2022",
       vintage: "2022",
     });
   }
@@ -584,7 +584,7 @@ function resolveUnemployment(county: string): CivicDataPoint[] {
         label: "Unemployment rate (ACS-derived)",
         value: `${cd.unemploymentRate}%`,
         valueLabel: "VERIFIED",
-        source: "ACS 5-Year 2022 / BLS LAUS",
+        source: "ACS 5-year 2018-2022 / BLS LAUS",
         vintage: "2022",
       });
     }
@@ -606,7 +606,7 @@ function resolveBroadband(county: string): CivicDataPoint[] {
       label: "Households with broadband subscription",
       value: `${bbData.broadbandSubscriptionRate.toFixed(1)}%`,
       valueLabel: "VERIFIED",
-      source: "U.S. Census ACS 5-Year 2019-2023 (B28002)",
+      source: "U.S. Census ACS 5-year 2019-2023 (B28002)",
       vintage: "2019-2023",
     });
   }
@@ -648,7 +648,7 @@ function resolveBroadband(county: string): CivicDataPoint[] {
       label: "Households with vehicle access",
       value: `${cd.vehicleAccess}%`,
       valueLabel: "VERIFIED",
-      source: "ACS 5-Year 2022",
+      source: "ACS 5-year 2018-2022",
       vintage: "2022",
       note: "Related access measure, not a broadband figure.",
       isFallback: true,

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-11-08T12:11:51.381Z",
+    "generated": "2026-11-14T18:28:23.708Z",
     "source": "src/data/sourcesRegistry.ts",
     "entryCount": 52,
     "schema": "v1",
@@ -582,7 +582,7 @@
       "name": "data.michigan.gov",
       "agency": "State of MI",
       "url": "https://data.michigan.gov/",
-      "description": "500+ public datasets",
+      "description": "State open data portal datasets",
       "updateFrequency": "Varies",
       "license": null,
       "licenseReviewStatus": "pending",

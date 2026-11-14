@@ -56,6 +56,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { ACS5_LABEL } from "@/config/acsVintage";
 
 const DOMAIN_ICONS: Record<CensusDomain, typeof Users> = {
   demographics: Users,
@@ -281,7 +282,7 @@ export default function DataExplorerPage() {
                         {selectedTable.id}
                       </Badge>
                       <Badge variant="secondary" className="text-[10px]">
-                        ACS 5-Year 2023
+                        {ACS5_LABEL}
                       </Badge>
                     </div>
                   </div>

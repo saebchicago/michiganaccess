@@ -47,7 +47,7 @@ const METRICS: MetricDef[] = [
     label: "Median Income",
     unit: "$",
     getter: (zip) => ZIP_QUICKSTATS[zip]?.medianIncome ?? null,
-    source: "Census ACS 2022",
+    source: "Census ACS 5-year 2018-2022",
   },
   {
     key: "ej_index",
@@ -391,7 +391,7 @@ export default function ZipFinderPage() {
         <Separator />
 
         <DataProvenance
-          source="IRS SOI 2021, Census ACS 2022, EPA EJSCREEN v2.3, HUD SAFMR FY2024, HRSA GeoCare 2023"
+          source="IRS SOI 2021, Census ACS 5-year 2018-2022, EPA EJSCREEN v2.3, HUD SAFMR FY2024, HRSA GeoCare 2023"
           updated="2025"
           methodologyHref="/methodology"
         />

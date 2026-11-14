@@ -174,7 +174,7 @@ export default function CountySparklineGrid() {
         </div>
 
         <p className="text-[9px] text-muted-foreground mt-2">
-          Sources: Census ACS 2022, CDC PLACES, MI DOE, FBI UCR, BLS LAUS. State avg: {
+          Sources: Census ACS 5-year 2018-2022, CDC PLACES, MI DOE, FBI UCR, BLS LAUS. State avg: {
             metric === "poverty" ? `${MI_STATE_AVERAGES.povertyRate}%` :
             metric === "graduation" ? `${MI_STATE_AVERAGES.hsGradRate}%` :
             metric === "violent_crime" ? `${MI_STATE_AVERAGES.violentCrimeRate}/100K` :

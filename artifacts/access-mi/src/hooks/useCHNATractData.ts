@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { DataMode, IntegrityLabel } from "@/types/chna";
+import { ACS5_PERIOD } from "@/config/acsVintage";
+import { parseAcsEstimate } from "@/lib/censusValue";
 
 const PROXY_BASE =
   (import.meta.env.VITE_SUPABASE_URL ??
@@ -469,7 +471,7 @@ export const ACS_META: {
 } = {
   integrityLabel: "VERIFIED",
   source: "ACS 5-Year Estimates (Census B08201)",
-  vintage: "2022",
+  vintage: ACS5_PERIOD,
 };
 
 export function useACSTract(enabled = true): {
@@ -485,24 +487,28 @@ export function useACSTract(enabled = true): {
         const [header, ...dataRows] = rows;
         const idx = (key: string) => header.indexOf(key);
 
-        return dataRows.map((row) => {
-          const total = parseInt(row[idx("B08201_001E")] ?? "0", 10);
-          const noVeh = parseInt(row[idx("B08201_002E")] ?? "0", 10);
+        const out: ACSTractVehicle[] = [];
+        for (const row of dataRows) {
+          // The proxy returns Census error codes as null. A tract without a
+          // usable count is skipped, never plotted as 0 households.
+          const total = parseAcsEstimate(row[idx("B08201_001E")]).value;
+          const noVeh = parseAcsEstimate(row[idx("B08201_002E")]).value;
+          if (total === null || noVeh === null || total <= 0) continue;
           const state = row[idx("state")] ?? "";
           const county = row[idx("county")] ?? "";
           const tract = row[idx("tract")] ?? "";
-          return {
+          out.push({
             id: `acs-${state}${county}-${tract}`,
             tractFips: `${state}${county}${tract}`,
             county: String(row[idx("NAME")] ?? ""),
             totalHouseholds: total,
             noVehicleHouseholds: noVeh,
-            noVehiclePct:
-              total > 0 ? Math.round((noVeh / total) * 1000) / 10 : 0,
+            noVehiclePct: Math.round((noVeh / total) * 1000) / 10,
             lat: 42.33,
             lng: -83.05,
-          };
-        });
+          });
+        }
+        return out;
       }),
     enabled,
     staleTime: 7 * 24 * 60 * 60 * 1000,

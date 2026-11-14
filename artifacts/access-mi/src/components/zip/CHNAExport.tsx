@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Download, Loader2 } from "lucide-react";
+import { ACS5_LABEL } from "@/config/acsVintage";
 
 interface CHNAExportProps {
   zip: string;
@@ -80,7 +81,7 @@ export default function CHNAExport({ zip, county, equityScore, equityTier, topCo
       pdf.setFontSize(9);
       pdf.setFont("helvetica", "normal");
       const sources = [
-        "Census ACS 5-Year Estimates 2022 \u2014 api.census.gov",
+        `Census ${ACS5_LABEL} \u2014 api.census.gov`,
         "CDC PLACES 2024 \u2014 data.cdc.gov",
         "HUD Fair Market Rents \u2014 huduser.gov",
         "HRSA Health Center Finder \u2014 findahealthcenter.hrsa.gov",

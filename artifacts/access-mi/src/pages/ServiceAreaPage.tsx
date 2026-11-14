@@ -368,7 +368,7 @@ export default function ServiceAreaPage() {
         <Separator />
 
         <DataProvenance
-          source="Census ACS 2022, IRS SOI 2021, HRSA GeoCare 2023"
+          source="Census ACS 5-year 2018-2022, IRS SOI 2021, HRSA GeoCare 2023"
           updated="2025"
           methodologyHref="/methodology"
         />

@@ -74,6 +74,7 @@ import ViewModeToggle, {
 } from "@/components/shared/ViewModeToggle";
 import PartnerCTABar from "@/components/brief/PartnerCTABar";
 import { DataUnavailable } from "@/components/shared/EmptyState";
+import { ACS5_LABEL } from "@/config/acsVintage";
 
 // ── Animation variants ────────────────────────────────────────────────────────
 const fadeUp = {
@@ -238,7 +239,7 @@ const METRICS: CompareMetric[] = [
   },
 ];
 
-// Michigan state-average reference values (ACS 2022 estimates)
+// Michigan state-average reference values (ACS 5-year 2018-2022 estimates)
 const MI_BENCHMARKS: Record<string, number> = {
   income: 63_202,
   poverty: 13.0,
@@ -1134,7 +1135,7 @@ export default function ComparePlacesPage() {
         {/* Attribution */}
         {selected.length >= 2 && (
           <p className="comparison-print-keep text-[10px] text-muted-foreground text-center">
-            Census data: U.S. Census Bureau, ACS 5-Year Estimates (2022). ★ =
+            Census data: U.S. Census Bureau, {ACS5_LABEL} (state averages: ACS 5-year 2018-2022). ★ =
             best; ⚠ = needs attention (Equity Lens). ZIP data from ZCTA-level
             ACS tables.
           </p>

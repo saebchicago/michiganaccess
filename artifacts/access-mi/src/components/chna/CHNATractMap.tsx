@@ -25,6 +25,7 @@ import {
   type ACSTractVehicle,
 } from "@/hooks/useCHNATractData";
 import type { CHNADomain, DataMode, IntegrityLabel } from "@/types/chna";
+import { ACS5_PERIOD } from "@/config/acsVintage";
 
 // HFH service area: Wayne, Oakland, Macomb, Jackson
 const MAP_CENTER: [number, number] = [42.45, -83.2];
@@ -177,7 +178,7 @@ function buildACSGroup(tracts: ACSTractVehicle[]): L.LayerGroup {
         `Tract: ${t.tractFips}<br>` +
         `Households without a vehicle: ${t.noVehiclePct}%<br>` +
         `(${t.noVehicleHouseholds.toLocaleString()} of ${t.totalHouseholds.toLocaleString()})<br>` +
-        `<em style="font-size:11px">Source: ACS B08201 2022 · Verified survey estimate</em>`,
+        `<em style="font-size:11px">Source: ACS B08201 ${ACS5_PERIOD} · Verified survey estimate</em>`,
     );
     group.addLayer(m);
   }

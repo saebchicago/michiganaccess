@@ -75,6 +75,7 @@ import { getFoodAccessByCounty } from "@/hooks/useFoodAccess";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import { useZIPDemographics } from "@/hooks/useCensusDemographics";
+import { ACS5_LABEL } from "@/config/acsVintage";
 import { getReliability } from "@/lib/reliability";
 import MoEBadge from "@/components/shared/MoEBadge";
 import { SuppressedEstimate, MoeUnavailableNote } from "@/components/shared/ReliabilityNote";
@@ -254,6 +255,11 @@ function MetricRow({
       </div>
     </div>
   );
+}
+
+/** Null means Census returned no usable number: say so, never print 0 or a negative. */
+function fmtPct(v: number | null): string {
+  return v === null ? "Data unavailable" : `${v.toFixed(1)}%`;
 }
 
 // ── Economic Metric Card ─────────────────────────────────────────────────
@@ -1339,19 +1345,19 @@ export default function ZipScorecardPage() {
                   <EconCard
                     label="Population"
                     value={primary.quickStats.population.toLocaleString()}
-                    source="Census ACS 2022"
+                    source="Census ACS 5-year 2018-2022"
                   />
                   <EconCard
                     label="Median Household Income"
                     value={primary.quickStats.medianIncome}
                     format="$"
-                    source="Census ACS 2022"
+                    source="Census ACS 5-year 2018-2022"
                   />
                   <EconCard
                     label="Median Rent"
                     value={primary.quickStats.medianRent}
                     format="$"
-                    source="Census ACS 2022"
+                    source="Census ACS 5-year 2018-2022"
                   />
                   <EconCard
                     label="Property Tax (est.)"
@@ -1604,13 +1610,29 @@ export default function ZipScorecardPage() {
                       Population
                     </p>
                     <p className="text-2xl font-bold text-foreground tabular-nums">
-                      {demographics.totalPop.toLocaleString()}
+                      {demographics.totalPop === null ? "Data unavailable" : demographics.totalPop.toLocaleString()}
                     </p>
                     <p className="text-[9px] text-muted-foreground">
+                      {demographics.totalPop === null
+                        ? `${demographics.unavailableReasons.totalPop ?? "Reason not reported"}. `
+                        : ""}
                       {demographics.source}
                     </p>
                   </CardContent>
                 </Card>
+
+                {Object.keys(demographics.unavailableReasons).length > 0 && (
+                  <p
+                    className="text-[10px] text-muted-foreground"
+                    data-testid="zip-demographics-unavailable-reasons"
+                  >
+                    Data unavailable for:{" "}
+                    {Object.entries(demographics.unavailableReasons)
+                      .map(([field, reason]) => `${field.replace(/_pct$/, "").replace(/_/g, " ")} (${reason})`)
+                      .join("; ")}
+                    .
+                  </p>
+                )}
 
                 {/* Race/Ethnicity */}
                 <Card>
@@ -1621,75 +1643,75 @@ export default function ZipScorecardPage() {
                     <div className="h-6 rounded-full overflow-hidden flex mb-3">
                       <div
                         className="h-full bg-[#4f86c6]"
-                        style={{ width: `${demographics.white_alone_pct}%` }}
-                        title={`White ${demographics.white_alone_pct.toFixed(1)}%`}
+                        style={{ width: `${demographics.white_alone_pct ?? 0}%` }}
+                        title={`White ${fmtPct(demographics.white_alone_pct)}`}
                       />
                       <div
                         className="h-full bg-[#f59e0b]"
-                        style={{ width: `${demographics.black_alone_pct}%` }}
-                        title={`Black ${demographics.black_alone_pct.toFixed(1)}%`}
+                        style={{ width: `${demographics.black_alone_pct ?? 0}%` }}
+                        title={`Black ${fmtPct(demographics.black_alone_pct)}`}
                       />
                       <div
                         className="h-full bg-[#10b981]"
-                        style={{ width: `${demographics.hispanic_pct}%` }}
-                        title={`Hispanic ${demographics.hispanic_pct.toFixed(1)}%`}
+                        style={{ width: `${demographics.hispanic_pct ?? 0}%` }}
+                        title={`Hispanic ${fmtPct(demographics.hispanic_pct)}`}
                       />
                       <div
                         className="h-full bg-[#8b5cf6]"
-                        style={{ width: `${demographics.asian_alone_pct}%` }}
-                        title={`Asian ${demographics.asian_alone_pct.toFixed(1)}%`}
+                        style={{ width: `${demographics.asian_alone_pct ?? 0}%` }}
+                        title={`Asian ${fmtPct(demographics.asian_alone_pct)}`}
                       />
                       <div
                         className="h-full bg-[#94a3b8]"
-                        style={{ width: `${demographics.multiracial_pct}%` }}
-                        title={`Other ${demographics.multiracial_pct.toFixed(1)}%`}
+                        style={{ width: `${demographics.multiracial_pct ?? 0}%` }}
+                        title={`Other ${fmtPct(demographics.multiracial_pct)}`}
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 text-xs">
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#4f86c6] mr-1" />
-                        White {demographics.white_alone_pct.toFixed(1)}%{" "}
+                        White {fmtPct(demographics.white_alone_pct)}{" "}
                         <span className="text-muted-foreground">
                           (MI: {demographics.miStateWhitePct}%)
                         </span>{" "}
                         <MoEBadge
-                          estimate={(demographics.white_alone_pct / 100) * demographics.totalPop}
-                          moe={demographics.moe["B02001_002E"] ?? null}
+                          estimate={demographics.white_alone_pct}
+                          moe={demographics.pctMoe.white_alone_pct}
                         />
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#f59e0b] mr-1" />
-                        Black {demographics.black_alone_pct.toFixed(1)}%{" "}
+                        Black {fmtPct(demographics.black_alone_pct)}{" "}
                         <span className="text-muted-foreground">
                           (MI: {demographics.miStateBlackPct}%)
                         </span>{" "}
                         <MoEBadge
-                          estimate={(demographics.black_alone_pct / 100) * demographics.totalPop}
-                          moe={demographics.moe["B02001_003E"] ?? null}
+                          estimate={demographics.black_alone_pct}
+                          moe={demographics.pctMoe.black_alone_pct}
                         />
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#10b981] mr-1" />
-                        Hispanic {demographics.hispanic_pct.toFixed(1)}%{" "}
+                        Hispanic {fmtPct(demographics.hispanic_pct)}{" "}
                         <span className="text-muted-foreground">
                           (MI: {demographics.miStateHispanicPct}%)
                         </span>{" "}
                         <MoEBadge
-                          estimate={(demographics.hispanic_pct / 100) * demographics.totalPop}
-                          moe={demographics.moe["B03003_003E"] ?? null}
+                          estimate={demographics.hispanic_pct}
+                          moe={demographics.pctMoe.hispanic_pct}
                         />
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#8b5cf6] mr-1" />
-                        Asian {demographics.asian_alone_pct.toFixed(1)}%{" "}
+                        Asian {fmtPct(demographics.asian_alone_pct)}{" "}
                         <MoEBadge
-                          estimate={(demographics.asian_alone_pct / 100) * demographics.totalPop}
-                          moe={demographics.moe["B02001_005E"] ?? null}
+                          estimate={demographics.asian_alone_pct}
+                          moe={demographics.pctMoe.asian_alone_pct}
                         />
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#94a3b8] mr-1" />
-                        Other {demographics.multiracial_pct.toFixed(1)}%
+                        Other {fmtPct(demographics.multiracial_pct)}
                       </span>
                     </div>
                     <p className="text-[9px] text-muted-foreground mt-2">
@@ -1707,20 +1729,22 @@ export default function ZipScorecardPage() {
                       </p>
                       <EconCard
                         label="Limited English Proficiency"
-                        value={`${demographics.lep_pct.toFixed(1)}%`}
+                        value={fmtPct(demographics.lep_pct)}
+                        estimate={demographics.lep_pct ?? undefined}
+                        moe={demographics.pctMoe.lep_pct}
                         benchmark={`MI avg: ${demographics.miStateLEPPct}%`}
                         source={demographics.source}
                       />
-                      {demographics.spanish_speakers_pct > 1 && (
+                      {demographics.spanish_speakers_pct !== null && demographics.spanish_speakers_pct > 1 && (
                         <p className="text-xs text-muted-foreground mt-1">
                           Spanish speakers:{" "}
-                          {demographics.spanish_speakers_pct.toFixed(1)}%
+                          {fmtPct(demographics.spanish_speakers_pct)}
                         </p>
                       )}
-                      {demographics.arabic_speakers_pct > 1 && (
+                      {demographics.arabic_speakers_pct !== null && demographics.arabic_speakers_pct > 1 && (
                         <p className="text-xs text-muted-foreground mt-1">
                           Arabic speakers:{" "}
-                          {demographics.arabic_speakers_pct.toFixed(1)}%
+                          {fmtPct(demographics.arabic_speakers_pct)}
                         </p>
                       )}
                     </CardContent>
@@ -1732,13 +1756,15 @@ export default function ZipScorecardPage() {
                       </p>
                       <EconCard
                         label="Disability Rate"
-                        value={`${demographics.disability_pct.toFixed(1)}%`}
+                        value={fmtPct(demographics.disability_pct)}
+                        estimate={demographics.disability_pct ?? undefined}
+                        moe={demographics.pctMoe.disability_pct}
                         benchmark={`MI avg: ${demographics.miStateDisabilityPct}%`}
                         source={demographics.source}
                       />
                       <p className="text-xs text-muted-foreground mt-2">
-                        Renter: {demographics.renter_pct.toFixed(1)}% · Owner:{" "}
-                        {demographics.owner_pct.toFixed(1)}%
+                        Renter: {fmtPct(demographics.renter_pct)} · Owner:{" "}
+                        {fmtPct(demographics.owner_pct)}
                       </p>
                     </CardContent>
                   </Card>
@@ -1760,7 +1786,11 @@ export default function ZipScorecardPage() {
                 </Card>
 
                 {/* Optional generated narrative */}
-                {AI_CHAT_ENABLED && (
+                {AI_CHAT_ENABLED &&
+                  demographics.medianHouseholdIncome !== null &&
+                  demographics.renter_pct !== null &&
+                  demographics.lep_pct !== null &&
+                  demographics.disability_pct !== null && (
                   <Suspense fallback={null}>
                     <ZIPNarratives
                       zip={zip}
@@ -1803,7 +1833,7 @@ export default function ZipScorecardPage() {
                     Loading Census demographics for ZIP {zip}...
                   </p>
                   <p className="text-[9px] text-muted-foreground/60 mt-1">
-                    Source: Census ACS 5-Year Estimates 2022
+                    Source: Census {ACS5_LABEL}
                   </p>
                 </CardContent>
               </Card>
@@ -1908,7 +1938,7 @@ export default function ZipScorecardPage() {
 
         {/* ── Source Attributions ── */}
         <DataProvenance
-          source="CDC PLACES 2024 (BRFSS), IRS Statistics of Income 2021, HUD FMR FY2025, Census ACS 2022, USDA RUCA"
+          source="CDC PLACES 2024 (BRFSS), IRS Statistics of Income 2021, HUD FMR FY2025, Census ACS 5-year 2018-2022, USDA RUCA"
           updated="2025"
           methodologyHref="/methodology"
         />

@@ -95,6 +95,47 @@ export const OPEN_DATA_GAPS: OpenDataGap[] = [
     },
   },
   {
+    id: "state-portal-agent-access",
+    title: "Public guidance on automated access to the state data portal",
+    domain: "Transparency",
+    lane: "not-published",
+    status: "never-published",
+    whatExists:
+      "The portal's dataset APIs, which the state's data office named as the official route for automated access.",
+    whatIsMissing:
+      "A public page on the portal saying what automated tools and agents may use, why, and where to go.",
+    holder: "DTMB / MCDA",
+    statedReason: "Michigan.gov Terms of Use, Dec 2021.",
+    whyItMatters:
+      "A rule-following tool stops at the terms and never learns the API exists.",
+    gapSource: {
+      name: "Michigan.gov Terms of Use (Dec 2021); MCDA (DTMB) email to the maintainer, Nov 6, 2026",
+    },
+    action: {
+      kind: "link",
+      label: "A working in-state model: the Michigan Legislature's Automated Data Collection Policy",
+      href: "https://legislature.mi.gov/Home/AutomatedDataCollectionPolicy",
+    },
+  },
+  {
+    id: "state-open-data-policy",
+    title: "A current statewide open data policy",
+    domain: "Transparency",
+    lane: "not-published",
+    status: "never-published",
+    whatExists:
+      "Michigan FOIA (1976 PA 442). The portal and its APIs.",
+    whatIsMissing:
+      "A current, public statewide open data policy with an owner and a review date. The state's data office knows of none.",
+    holder: "DTMB / MCDA",
+    noStatedReason: true,
+    whyItMatters:
+      "Without a stated policy, publishers, residents and tools cannot tell what the state commits to publish, in what form, or who to ask.",
+    gapSource: {
+      name: "MCDA (DTMB) email to the maintainer, Nov 6, 2026; Center for Data Innovation, Aug 2014 (last independent score)",
+    },
+  },
+  {
     id: "kindergarten-readiness",
     title: "Kindergarten readiness assessment",
     domain: "Education",

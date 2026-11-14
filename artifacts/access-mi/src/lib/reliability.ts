@@ -85,3 +85,44 @@ export function getReliability(
 export function isRenderable(result: ReliabilityResult): boolean {
   return result.status !== "suppressed";
 }
+
+/**
+ * MOE for a ratio num/den where num is NOT a subset of den (Census ACS
+ * General Handbook, ratio formula):
+ *   MOE = (1/den) * sqrt(numMoe^2 + (num/den)^2 * denMoe^2)
+ * Returns the MOE of the ratio as a fraction (multiply by 100 for points).
+ * Any null input returns null: a missing margin is never treated as zero.
+ */
+export function ratioOnlyMoe(
+  num: number | null,
+  numMoe: number | null,
+  den: number | null,
+  denMoe: number | null,
+): number | null {
+  if (num === null || numMoe === null || den === null || denMoe === null) return null;
+  if (den === 0) return null;
+  const r = num / den;
+  return Math.sqrt(numMoe ** 2 + r ** 2 * denMoe ** 2) / den;
+}
+
+/**
+ * MOE for a proportion p = num/den where num is a subset of den (Census ACS
+ * General Handbook, proportion formula):
+ *   MOE = (1/den) * sqrt(numMoe^2 - p^2 * denMoe^2)
+ * When the radicand is negative the handbook prescribes the ratio formula
+ * (same expression with + in place of -), which this function falls back to.
+ * Returns a fraction; null when any input is null or den is 0.
+ */
+export function ratioMoe(
+  num: number | null,
+  numMoe: number | null,
+  den: number | null,
+  denMoe: number | null,
+): number | null {
+  if (num === null || numMoe === null || den === null || denMoe === null) return null;
+  if (den === 0) return null;
+  const p = num / den;
+  const radicand = numMoe ** 2 - p ** 2 * denMoe ** 2;
+  if (radicand < 0) return ratioOnlyMoe(num, numMoe, den, denMoe);
+  return Math.sqrt(radicand) / den;
+}
