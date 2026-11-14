@@ -12,7 +12,7 @@ const CHANGE_LOG = [
     date: "2026-04-09",
     description:
       "Initial methodology published. Proportional county allocation from Urban Institute Michigan " +
-      "projection (171,000–355,000). ACS C27007 5-year 2023 county enrollment shares used as " +
+      "projection (171,000–355,000). ACS C27007 5-year 2019-2023 county enrollment shares used as " +
       "allocation denominator. Six sources cited: Urban Institute, KFF Dec 2025, CBO pub. 61570, " +
       "GAO-20-149, Sommers et al. NEJM 2019, ACS B27010/C27007.",
   },

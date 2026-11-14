@@ -97,7 +97,7 @@ export function exportDualEligibleExposureCsv(
     `Framing: "Two programs, shared geography" - descriptive intersection, not a coverage-loss claim`,
     `Dual-eligible residents are exempt from P.L. 119-21 work requirements (§71119 applies to expansion enrollees only)`,
     `State range: ~335,000–405,000 Michigan dual-eligible residents (MACPAC CY2022 / KFF 2024–2025)`,
-    `County allocation: ACS B27010 5-year 2023 county shares × statewide range endpoints`,
+    `County allocation: ACS B27010 5-year 2019-2023 county shares × statewide range endpoints`,
     `ACS denominator: 216,635 (sum of B27010_046E + B27010_062E for all 83 Michigan counties)`,
     `Methodology: https://accessmi.org/methodology/dual-eligible-exposure`,
     `IMPORTANT: ACS values are survey estimates with margins of error. Small-county figures have high relative MoE.`,

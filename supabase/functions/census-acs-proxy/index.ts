@@ -223,6 +223,45 @@ async function readJsonStrict(
 interface TableResult {
   name: string;
   variables: Record<string, string | number | null>;
+  /** Reason for each variable returned as null because Census sent an error code. */
+  notes?: Record<string, string>;
+}
+
+/**
+ * Census encodes "no usable number" as negative sentinels inside numeric
+ * columns. They must never reach a client as numbers (they turn into huge
+ * negative percentages). Small duplicate of src/lib/censusValue.ts in the
+ * app: edge functions deploy separately, so keep the mapping in sync.
+ *   estimate columns (...E): -666666666, -999999999, -888888888 -> null
+ *   margin columns   (...M): -222222222, -333333333 -> null; -555555555 -> 0
+ */
+const ESTIMATE_SENTINEL_REASONS: Record<number, string> = {
+  [-666666666]: "Suppressed by Census: too few sample observations to compute an estimate",
+  [-999999999]: "Not available from Census for this geography",
+  [-888888888]: "Not applicable for this geography",
+};
+const MOE_SENTINEL_REASONS: Record<number, string> = {
+  [-222222222]: "Margin of error not computed: too few sample observations",
+  [-333333333]: "Margin of error not computed: median falls in an open-ended interval",
+};
+
+function parseCensusCell(
+  header: string,
+  val: string | null | undefined,
+): { value: string | number | null; note?: string } {
+  if (val === null || val === undefined || val === "") {
+    return { value: null, note: "Missing from Census response" };
+  }
+  if (isNaN(Number(val))) return { value: val };
+  const n = Number(val);
+  const isMoe = /M$/.test(header);
+  if (isMoe && n === -555555555) return { value: 0 };
+  const reasons = isMoe
+    ? { ...MOE_SENTINEL_REASONS, ...ESTIMATE_SENTINEL_REASONS }
+    : ESTIMATE_SENTINEL_REASONS;
+  if (n in reasons) return { value: null, note: reasons[n] };
+  if (n <= -222222222) return { value: null, note: "Unrecognized Census error code" };
+  return { value: n };
 }
 
 interface TableError {
@@ -257,7 +296,8 @@ serve(async (req) => {
     const tables = url.searchParams.get("tables")?.split(",") ?? [];
     const geoType = url.searchParams.get("geoType") ?? "county";
     const geoFips = url.searchParams.get("geoFips") ?? "";
-    const year = url.searchParams.get("year") ?? "2022";
+    // Default mirrors ACS5_YEAR in src/config/acsVintage.ts (2020-2024 5-year).
+    const year = url.searchParams.get("year") ?? "2024";
     const dataset = url.searchParams.get("dataset") ?? "acs/acs5";
 
     if (tables.length === 0) {
@@ -297,6 +337,7 @@ serve(async (req) => {
       }
 
       const allData: Record<string, string | number | null> = {};
+      const notes: Record<string, string> = {};
       let geoName = "";
 
       const chunks: string[][] = [];
@@ -365,25 +406,18 @@ serve(async (req) => {
           for (let j = 1; j < headers.length; j++) {
             if (headers[j] === "state" || headers[j] === "county") continue;
             const val = row[j];
-            allData[headers[j]] =
-              val !== null && val !== ""
-                ? isNaN(Number(val))
-                  ? val
-                  : Number(val)
-                : null;
+            const parsed = parseCensusCell(headers[j], val);
+            allData[headers[j]] = parsed.value;
+            if (parsed.note) notes[headers[j]] = parsed.note;
           }
         } else {
-          const rows = data.slice(1).map((row: unknown) => {
+          const rows = data.slice(1).map((row: unknown, rowIdx: number) => {
             const obj: Record<string, string | number | null> = {};
             const r = row as (string | null)[];
             for (let j = 0; j < headers.length; j++) {
-              const val = r[j];
-              obj[headers[j]] =
-                val !== null && val !== ""
-                  ? isNaN(Number(val))
-                    ? val
-                    : Number(val)
-                  : null;
+              const parsed = parseCensusCell(headers[j], r[j]);
+              obj[headers[j]] = parsed.value;
+              if (parsed.note) notes[`${rowIdx}:${headers[j]}`] = parsed.note;
             }
             return obj;
           });
@@ -394,6 +428,7 @@ serve(async (req) => {
       if (chunkFailed) continue;
 
       const tableResult: TableResult = { name: geoName, variables: allData };
+      if (Object.keys(notes).length > 0) tableResult.notes = notes;
       cache.set(cacheKey, { data: tableResult, ts: Date.now() });
       results[table] = tableResult;
     }

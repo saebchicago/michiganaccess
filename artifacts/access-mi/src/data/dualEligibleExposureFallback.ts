@@ -10,7 +10,7 @@
 //   expansion enrollees ages 19–64. Do NOT frame this as overlapping or additive risk.
 //
 // COUNTY ALLOCATION METHOD:
-//   1. ACS B27010 5-year 2023, variables:
+//   1. ACS B27010 5-year 2019-2023, variables:
 //        B27010_046E - ages 35–64: simultaneous Medicare + Medicaid/means-tested coverage
 //        B27010_062E - ages 65+:   simultaneous Medicare + Medicaid/means-tested coverage
 //      API: https://api.census.gov/data/2023/acs/acs5?get=NAME,B27010_046E,B27010_062E&for=county:*&in=state:26
@@ -53,7 +53,7 @@ export const DISPLAY_RANGE_LOW = 335_000;
 export const DISPLAY_RANGE_HIGH = 405_000;
 
 // ── Raw ACS county data ────────────────────────────────────────────────────────
-// Source: ACS 2023 5-year, B27010_046E + B27010_062E per county. All 83 counties
+// Source: ACS 5-year 2019-2023, B27010_046E + B27010_062E per county. All 83 counties
 // returned clean (no suppressed values). Fetched April 2026.
 
 interface DualEligibleAcsEntry {

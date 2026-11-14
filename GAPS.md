@@ -98,3 +98,19 @@ returns a clean 500 naming the missing key rather than a 404.
 
 **Q:** "What is the unemployment rate in Genesee County?"  
 **Expected:** BLS LAUS May 2026 value (8.2%, Preliminary) with VERIFIED label and preliminary caveat.
+
+---
+
+## Open items from the 2026-11-14 agent-ready data pass
+
+Nothing below was regenerated in that pass.
+
+- [ ] LICENSE: the repo has no LICENSE file and `llms.txt` says "License: not yet declared". Note: root `package.json` declares `"license": "MIT"`; the maintainer should confirm that is intended, then add a LICENSE file and update `llms.txt`.
+- [ ] Stale static vintage, ACS broadband (B28002, county): ships ACS 5-year 2019-2023. Refresh to 2020-2024 from https://api.census.gov/data/2024/acs/acs5 by setting `ACS_VINTAGE = 2024` in `scripts/refresh-acs-broadband-county.mjs` and running `node artifacts/access-mi/scripts/refresh-acs-broadband-county.mjs --apply` (or the `build-data.yml` workflow), then update labels in `civicQueryEngine.ts` and `BriefPage.tsx`.
+- [ ] Stale static vintage, dual-eligible fallback (B27010) and `dual-eligible-exposure` function: ACS 5-year 2019-2023 (`ACS_YEAR = "2023"`). Bump to 2024 together with `src/data/dualEligibleExposureFallback.ts`; source https://api.census.gov/data/2024/acs/acs5. Methodology and page labels then change to 2020-2024.
+- [ ] Stale static vintage, `cross-domain-indicators.ts` and `state-benchmarks.ts`, `zip-quickstats.ts`: ACS 5-year 2018-2022. Re-pull from https://api.census.gov/data/2024/acs/acs5 (county and ZCTA geographies) and update `vintage` fields.
+- [ ] Mixed vintages on one page: ZIP and compare pages show live ACS 5-year 2020-2024 next to static 2018-2022 benchmarks until the items above are refreshed.
+- [ ] Ambiguous labels left unchanged (period not stated in the text, needs a source check): "Census ACS 2023" in `FoodAccessMap.tsx`, `CostOfLivingSnapshot.tsx`, `CountyCompare.tsx`, `DataAndInsightsPage.tsx`; "Census ACS 2022" in `impactStories.ts`; "ACS 2022-2024" in `language-access.ts`.
+- [ ] `dataCatalog.ts`, `dataFreshness.ts` (sacrosanct) and `sources.ts`/`sources.test.ts` still reference the 2023 B27010 table for the dual-eligible dataset; update with the refresh above.
+- [ ] Supabase functions changed in this pass deploy out of band (see PR body, "Deploy manually").
+- [ ] `ACS_FALLBACK` in `useCHNATractData.ts` holds three hand-entered tracts; review against the no-placeholder-data rule.

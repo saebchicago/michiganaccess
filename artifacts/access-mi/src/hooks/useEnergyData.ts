@@ -58,9 +58,10 @@ export function useEnergyData() {
           (raw || [])
             .map((d: any) => ({
               period: d.period as string,
-              price: parseFloat(d.price) || 0,
+              price: Number.parseFloat(d.price),
             }))
-            .filter((d) => d.price > 0)
+            // A non-numeric price is dropped, never coerced to 0.
+            .filter((d) => Number.isFinite(d.price) && d.price > 0)
             .reverse();
 
         const mi = parse(miJson?.response?.data);

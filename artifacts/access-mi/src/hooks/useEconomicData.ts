@@ -1,13 +1,42 @@
 import { useQuery } from "@tanstack/react-query";
+import { ACS5_YEAR } from "@/config/acsVintage";
+import { parseAcsEstimate } from "@/lib/censusValue";
 
 export interface CountyEconomicData {
   county: string;
   fips: string;
+  /** Rows with no usable median income are dropped, so this is always a number. */
   medianIncome: number;
-  povertyRate: number;
-  unemploymentRate: number;
-  medianHomeValue: number;
-  medianRent: number;
+  /** Null when Census returned a sentinel or blank for the figure, its numerator or its denominator. */
+  povertyRate: number | null;
+  unemploymentRate: number | null;
+  medianHomeValue: number | null;
+  medianRent: number | null;
+}
+
+const ratePct = (num: number | null, den: number | null): number | null =>
+  num === null || den === null || den === 0 ? null : Math.round((num / den) * 1000) / 10;
+
+/** Parse one Census county row (columns: NAME, B19013, B17001_002, B01003,
+ * B23025_005, B23025_003, B25077, B25064, state, county). Exported for tests.
+ * Returns null when median income is unusable. */
+export function parseCountyEconomicRow(row: string[]): CountyEconomicData | null {
+  const income = parseAcsEstimate(row[1]).value;
+  if (income === null || income <= 0) return null;
+  const povertyPop = parseAcsEstimate(row[2]).value;
+  const totalPop = parseAcsEstimate(row[3]).value;
+  const unemployed = parseAcsEstimate(row[4]).value;
+  const laborForce = parseAcsEstimate(row[5]).value;
+  return {
+    county: (row[0] || "").replace(" County, Michigan", ""),
+    // Columns 8 and 9 are the state and county codes the API appends.
+    fips: `${row[8]}${row[9]}`,
+    medianIncome: income,
+    povertyRate: ratePct(povertyPop, totalPop),
+    unemploymentRate: ratePct(unemployed, laborForce),
+    medianHomeValue: parseAcsEstimate(row[6]).value,
+    medianRent: parseAcsEstimate(row[7]).value,
+  };
 }
 
 const FALLBACK: CountyEconomicData[] = [
@@ -48,28 +77,13 @@ export function useEconomicData() {
     queryKey: ["census-economic-mi"],
     queryFn: async () => {
       try {
-        const url = "https://api.census.gov/data/2023/acs/acs5?get=NAME,B19013_001E,B17001_002E,B01003_001E,B23025_005E,B23025_003E,B25077_001E,B25064_001E&for=county:*&in=state:26";
+        const url = `https://api.census.gov/data/${ACS5_YEAR}/acs/acs5?get=NAME,B19013_001E,B17001_002E,B01003_001E,B23025_005E,B23025_003E,B25077_001E,B25064_001E&for=county:*&in=state:26`;
         const res = await fetch(url);
         if (!res.ok) return { counties: FALLBACK, isFallback: true };
         const data = await res.json();
-        const counties = data
-          .slice(1)
-          .map((row: string[]) => {
-            const totalPop = parseInt(row[3]) || 1;
-            const povertyPop = parseInt(row[2]) || 0;
-            const unemployed = parseInt(row[4]) || 0;
-            const laborForce = parseInt(row[5]) || 1;
-            return {
-              county: (row[0] || "").replace(" County, Michigan", ""),
-              fips: `26${row[8]}`,
-              medianIncome: parseInt(row[1]) || 0,
-              povertyRate: Math.round((povertyPop / totalPop) * 1000) / 10,
-              unemploymentRate: Math.round((unemployed / laborForce) * 1000) / 10,
-              medianHomeValue: parseInt(row[6]) || 0,
-              medianRent: parseInt(row[7]) || 0,
-            };
-          })
-          .filter((d: CountyEconomicData) => d.medianIncome > 0)
+        const counties = (data.slice(1) as string[][])
+          .map(parseCountyEconomicRow)
+          .filter((d): d is CountyEconomicData => d !== null)
           .sort((a: CountyEconomicData, b: CountyEconomicData) => b.medianIncome - a.medianIncome);
         // An empty parse is a failure, not "Michigan has no counties".
         if (counties.length === 0) return { counties: FALLBACK, isFallback: true };

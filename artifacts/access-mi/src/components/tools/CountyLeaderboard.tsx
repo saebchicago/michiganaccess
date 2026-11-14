@@ -400,7 +400,7 @@ export default function CountyLeaderboard() {
 
         <p className="text-[10px] text-muted-foreground text-center">
           Data: County Health Rankings & Roadmaps, 2025 edition (uninsured
-          rate, primary care access, food insecurity); ACS 5-Year 2022
+          rate, primary care access, food insecurity); ACS 5-year 2018-2022
           (poverty rate).
         </p>
       </CardContent>

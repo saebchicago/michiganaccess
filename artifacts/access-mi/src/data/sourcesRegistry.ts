@@ -40,6 +40,8 @@ export interface SourceEntry {
    * attributions stay visible instead of hardening into fact.
    */
   attributionUnverified?: boolean;
+  /** Access or URL caveat shown next to the entry (named exception, 2026-11-14). */
+  urlNote?: string;
 }
 
 export type SourceCategory =
@@ -331,8 +333,10 @@ export const SOURCES_BY_CATEGORY: Record<SourceCategory, SourceEntry[]> = {
       name: "data.michigan.gov",
       org: "State of MI",
       url: "https://data.michigan.gov/",
-      powers: "500+ public datasets",
+      powers: "State open data portal datasets",
       frequency: "Varies",
+      urlNote:
+        "Automated access goes only through the portal's dataset APIs, which the state's data office (MCDA, DTMB) named as the official route (MCDA (DTMB) email to the maintainer, Nov 6, 2026). The Michigan.gov Terms of Use otherwise bar automated access, and the state's data office said that includes its open data portals (same email). The portal is moving to ArcGIS (MCDA (DTMB) email to the maintainer, Nov 13, 2026), so dataset URLs may change.",
     },
     {
       name: "LARA Provider Search",

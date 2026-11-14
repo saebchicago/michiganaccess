@@ -11,7 +11,7 @@ const CHANGE_LOG = [
     id: "2026-04-09-initial",
     date: "2026-04-09",
     description:
-      "Initial methodology published. ACS B27010 5-year 2023 county shares (B27010_046E + B27010_062E) " +
+      "Initial methodology published. ACS B27010 5-year 2019-2023 county shares (B27010_046E + B27010_062E) " +
       "applied to MACPAC 2022 / KFF 2024–2025 statewide range (335,000–405,000). Seven sources cited: " +
       "MACPAC Dec 2025 Data Book, KFF 2024/2025 state fact sheets, ACS B27010, Justice in Aging §71119 " +
       "analysis, CBO pub. 61570, KFF MSP/LIS provision analysis, MACPAC dual-eligible enrollment pathways.",
@@ -126,17 +126,17 @@ export default function DualEligibleExposureMethodology() {
             {/* Source c - ACS B27010 */}
             <div className="border-l-2 border-border pl-4">
               <p className="font-medium">
-                ACS B27010 5-year 2023 - County-Level Simultaneous Medicare + Medicaid Coverage
+                ACS B27010 5-year 2019-2023 - County-Level Simultaneous Medicare + Medicaid Coverage
               </p>
               <p className="text-muted-foreground">
-                U.S. Census Bureau, American Community Survey 5-year 2023.{" "}
+                U.S. Census Bureau, American Community Survey 5-year 2019-2023.{" "}
                 <a
                   href="https://data.census.gov/table/ACSDT5Y2023.B27010"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-primary"
                 >
-                  data.census.gov - ACS B27010 5-year 2023
+                  data.census.gov - ACS B27010 5-year 2019-2023
                 </a>{" "}
                 - Variables: B27010_046E (ages 35–64: With two or more types of health insurance
                 including Medicare and Medicaid/means-tested public coverage) and B27010_062E
@@ -270,7 +270,7 @@ export default function DualEligibleExposureMethodology() {
               KFF's 2024 enrollment count (353,820), and KFF's 2025 enrollment count (334,716) -
               into a statewide display range of approximately 335,000–405,000 Michigan dual-eligible
               residents. We then distribute that range to all 83 Michigan counties using each
-              county's share of the ACS B27010 5-year 2023 statewide simultaneous Medicare +
+              county's share of the ACS B27010 5-year 2019-2023 statewide simultaneous Medicare +
               Medicaid survey estimate. The result is a geographic distribution of a protected
               population - not a projection of coverage loss.
             </p>

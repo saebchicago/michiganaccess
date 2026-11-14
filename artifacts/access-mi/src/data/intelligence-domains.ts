@@ -51,7 +51,7 @@ export const INTELLIGENCE_DOMAINS = [
     icon: Home,
     slug: "housing",
     updateFrequency: "Annual",
-    dataSource: "ACS 5-Year 2022",
+    dataSource: "ACS 5-year 2018-2022",
     metrics: ["renter_burden_rate"],
     contextMetrics: ["medianRent", "rentBurden", "medianIncome", "vehicleAccess"],
   },

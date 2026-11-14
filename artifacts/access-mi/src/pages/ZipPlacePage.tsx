@@ -38,7 +38,7 @@ import { useCensusACS, getCensusValue, getCensusMOE, formatDollars, formatPercen
 import { MI_COUNTY_FIPS } from "@/data/census-geographies";
 import { ZipDataGrainBanner } from "@/components/shared/ZipDataGrainBanner";
 
-/** State-level ACS benchmarks (2022 estimates) */
+/** State-level ACS benchmarks (ACS 5-year 2018-2022 estimates) */
 const MI_STATE_BENCHMARKS = {
   medianIncome: 63202,
   povertyRate: 13.0,

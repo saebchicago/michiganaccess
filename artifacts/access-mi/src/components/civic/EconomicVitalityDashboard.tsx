@@ -5,10 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { useEconomicData, type CountyEconomicData } from "@/hooks/useEconomicData";
+import { ACS5_LABEL } from "@/config/acsVintage";
 
 type SortKey = "medianIncome" | "povertyRate" | "unemploymentRate" | "medianHomeValue" | "medianRent";
 
-const fmt = (n: number) => n >= 1000 ? `$${(n / 1000).toFixed(0)}K` : `$${n}`;
+const UNAVAILABLE = "Data unavailable";
+const fmt = (n: number | null) => n === null ? UNAVAILABLE : n >= 1000 ? `$${(n / 1000).toFixed(0)}K` : `$${n}`;
+const fmtRate = (n: number | null) => n === null ? UNAVAILABLE : `${n}%`;
+/** Nulls sort last in either direction. */
+const cmp = (a: number | null, b: number | null, asc: boolean) =>
+  a === null ? (b === null ? 0 : 1) : b === null ? -1 : asc ? a - b : b - a;
 
 export default function EconomicVitalityDashboard() {
   const { data: result, isLoading } = useEconomicData();
@@ -19,7 +25,7 @@ export default function EconomicVitalityDashboard() {
 
   const sorted = useMemo(() => {
     if (!data) return [];
-    return [...data].sort((a, b) => sortAsc ? a[sortKey] - b[sortKey] : b[sortKey] - a[sortKey]);
+    return [...data].sort((a, b) => cmp(a[sortKey], b[sortKey], sortAsc));
   }, [data, sortKey, sortAsc]);
 
   const toggleSort = (key: SortKey) => {
@@ -34,7 +40,7 @@ export default function EconomicVitalityDashboard() {
   const handleCSV = () => {
     if (!sorted.length) return;
     const header = "County,Median Income,Poverty Rate,Unemployment Rate,Median Home Value,Median Rent\n";
-    const rows = sorted.map((d) => `${d.county},${d.medianIncome},${d.povertyRate},${d.unemploymentRate},${d.medianHomeValue},${d.medianRent}`).join("\n");
+    const rows = sorted.map((d) => [d.county, d.medianIncome, d.povertyRate, d.unemploymentRate, d.medianHomeValue, d.medianRent].map((v) => v ?? "").join(",")).join("\n");
     const blob = new Blob([header + rows], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -117,13 +123,13 @@ export default function EconomicVitalityDashboard() {
                     <td className="py-2 font-medium text-foreground">{d.county}</td>
                     <td className="py-2 text-right tabular-nums">{fmt(d.medianIncome)}</td>
                     <td className="py-2 text-right tabular-nums">
-                      <span className={d.povertyRate > 18 ? "text-michigan-coral-deep font-semibold" : ""}>{d.povertyRate}%</span>
+                      <span className={d.povertyRate !== null && d.povertyRate > 18 ? "text-michigan-coral-deep font-semibold" : ""}>{fmtRate(d.povertyRate)}</span>
                     </td>
                     <td className="py-2 text-right tabular-nums">
-                      <span className={d.unemploymentRate > 7 ? "text-michigan-coral-deep font-semibold" : ""}>{d.unemploymentRate}%</span>
+                      <span className={d.unemploymentRate !== null && d.unemploymentRate > 7 ? "text-michigan-coral-deep font-semibold" : ""}>{fmtRate(d.unemploymentRate)}</span>
                     </td>
                     <td className="py-2 text-right tabular-nums">{fmt(d.medianHomeValue)}</td>
-                    <td className="py-2 text-right tabular-nums">${d.medianRent}</td>
+                    <td className="py-2 text-right tabular-nums">{d.medianRent === null ? UNAVAILABLE : `$${d.medianRent}`}</td>
                   </tr>
                 ))}
               </tbody>
@@ -131,7 +137,7 @@ export default function EconomicVitalityDashboard() {
           </div>
           <p className="text-[10px] text-muted-foreground mt-3">
             Showing top 25 by {sortKey === "medianIncome" ? "income" : sortKey}. Download CSV for all counties.
-            Source: U.S. Census Bureau, American Community Survey 2023.
+            Source: U.S. Census Bureau, American Community Survey {ACS5_LABEL}. Blank or suppressed Census values show as Data unavailable.
           </p>
         </CardContent>
       </Card>

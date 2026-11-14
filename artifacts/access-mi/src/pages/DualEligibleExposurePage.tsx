@@ -143,7 +143,7 @@ export default function DualEligibleExposurePage() {
         "county map",
       ],
       measurementTechnique:
-        "Proportional county allocation from MACPAC/KFF statewide range using ACS B27010 5-year 2023 county shares",
+        "Proportional county allocation from MACPAC/KFF statewide range using ACS B27010 5-year 2019-2023 county shares",
     },
   });
 
@@ -272,11 +272,11 @@ export default function DualEligibleExposurePage() {
               testId="dual-stat-counties"
               icon={<MapPin className="h-5 w-5" />}
               value={isLoading ? "…" : String(COUNTIES_COVERED)}
-              label="Michigan counties with dual-eligible data (ACS B27010 5-year 2023)"
+              label="Michigan counties with dual-eligible data (ACS B27010 5-year 2019-2023)"
               scope="Complete statewide coverage"
               provenance={
                 <DataProvenance
-                  sourceName="U.S. Census Bureau ACS B27010 5-year 2023"
+                  sourceName="U.S. Census Bureau ACS B27010 5-year 2019-2023"
                   sourceUrl="https://data.census.gov/table/ACSDT5Y2023.B27010"
                   asOfDate="2023"
                   cadence="Updated with each ACS 5-year release"
@@ -293,7 +293,7 @@ export default function DualEligibleExposurePage() {
               scope="Half of Michigan counties have more, half have fewer"
               provenance={
                 <DataProvenance
-                  sourceName="U.S. Census Bureau ACS B27010 5-year 2023"
+                  sourceName="U.S. Census Bureau ACS B27010 5-year 2019-2023"
                   sourceUrl="https://data.census.gov/table/ACSDT5Y2023.B27010"
                   asOfDate="2023"
                   cadence="Updated with each ACS 5-year release"
@@ -420,7 +420,7 @@ export default function DualEligibleExposurePage() {
                 <tr>
                   <td colSpan={4} className="px-4 py-3">
                     <DataProvenance
-                      sourceName="ACS B27010 5-year 2023 × MACPAC/KFF statewide range (335,000–405,000)"
+                      sourceName="ACS B27010 5-year 2019-2023 × MACPAC/KFF statewide range (335,000–405,000)"
                       sourceUrl="https://data.census.gov/table/ACSDT5Y2023.B27010"
                       asOfDate="2023"
                       cadence="Updated when MACPAC or KFF publish revised Michigan figures"

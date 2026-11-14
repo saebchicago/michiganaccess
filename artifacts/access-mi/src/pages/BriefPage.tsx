@@ -442,7 +442,7 @@ export default function BriefPage() {
                 ? `${bb!.broadbandSubscriptionRate!.toFixed(1)}%`
                 : "no data",
               badge: hasVal ? "VERIFIED" : "no data",
-              source: "ACS 5-Year 2019-2023 (B28002)",
+              source: "ACS 5-year 2019-2023 (B28002)",
               vintage: "2019-2023",
             };
           })(),
