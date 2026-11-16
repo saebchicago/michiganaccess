@@ -431,38 +431,10 @@ export interface ACSTractVehicle {
   lng: number;
 }
 
-const ACS_FALLBACK: ACSTractVehicle[] = [
-  {
-    id: "acs-26163-0001",
-    tractFips: "26163000100",
-    county: "Wayne",
-    totalHouseholds: 1842,
-    noVehicleHouseholds: 621,
-    noVehiclePct: 33.7,
-    lat: 42.3314,
-    lng: -83.0458,
-  },
-  {
-    id: "acs-26163-0025",
-    tractFips: "26163002500",
-    county: "Wayne",
-    totalHouseholds: 2104,
-    noVehicleHouseholds: 441,
-    noVehiclePct: 21.0,
-    lat: 42.3584,
-    lng: -83.0732,
-  },
-  {
-    id: "acs-26125-0101",
-    tractFips: "26125010100",
-    county: "Oakland",
-    totalHouseholds: 1987,
-    noVehicleHouseholds: 98,
-    noVehiclePct: 4.9,
-    lat: 42.5783,
-    lng: -83.2645,
-  },
-];
+// The previous fallback held three hand-entered tracts with approximate
+// coordinates, which rendered as if they were survey readings. Like the
+// EJScreen layer, this now renders nothing when the live call fails.
+const ACS_FALLBACK: ACSTractVehicle[] = [];
 
 export const ACS_META: {
   integrityLabel: IntegrityLabel;
