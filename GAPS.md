@@ -105,7 +105,7 @@ returns a clean 500 naming the missing key rather than a 404.
 
 Nothing below was regenerated in that pass.
 
-- [ ] LICENSE: the repo has no LICENSE file and `llms.txt` says "License: not yet declared". Note: root `package.json` declares `"license": "MIT"`; the maintainer should confirm that is intended, then add a LICENSE file and update `llms.txt`.
+- [x] LICENSE: MIT chosen by the maintainer 2026-11-14. `LICENSE` added at the repo root, `llms.txt` updated. Open: add `"license": "MIT"` to `artifacts/access-mi/package.json` if wanted; copyright line uses the site byline "Saeb Ahsan" (confirm).
 - [ ] Stale static vintage, ACS broadband (B28002, county): ships ACS 5-year 2019-2023. Refresh to 2020-2024 from https://api.census.gov/data/2024/acs/acs5 by setting `ACS_VINTAGE = 2024` in `scripts/refresh-acs-broadband-county.mjs` and running `node artifacts/access-mi/scripts/refresh-acs-broadband-county.mjs --apply` (or the `build-data.yml` workflow), then update labels in `civicQueryEngine.ts` and `BriefPage.tsx`.
 - [ ] Stale static vintage, dual-eligible fallback (B27010) and `dual-eligible-exposure` function: ACS 5-year 2019-2023 (`ACS_YEAR = "2023"`). Bump to 2024 together with `src/data/dualEligibleExposureFallback.ts`; source https://api.census.gov/data/2024/acs/acs5. Methodology and page labels then change to 2020-2024.
 - [ ] Stale static vintage, `cross-domain-indicators.ts` and `state-benchmarks.ts`, `zip-quickstats.ts`: ACS 5-year 2018-2022. Re-pull from https://api.census.gov/data/2024/acs/acs5 (county and ZCTA geographies) and update `vintage` fields.

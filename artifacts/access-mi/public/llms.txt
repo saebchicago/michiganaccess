@@ -61,4 +61,4 @@ AccessMI organizes authoritative public datasets (including CDC PLACES, Census, 
 - Data files and provenance: /data-sources and /methodology.
 - Labels: VERIFIED (confirmed from a primary source), MODELED (derived from verified inputs), PROJECTED (forward-looking estimate), PENDING (not ingested yet).
 - Census error codes are returned as empty values with a reason, never as numbers.
-- Contact: /contact. License: not yet declared.
+- Contact: /contact. License: MIT (see /LICENSE in the repository); upstream source data keeps its publishers' terms.

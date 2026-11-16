@@ -506,7 +506,7 @@ export default function ZipScorecardPage() {
   const compZip = compareZip.length === 5 ? compareZip : "";
   const comp = useZipMetrics(compZip);
 
-  const { data: demographics } = useZIPDemographics(zip || null);
+  const { data: demographics, isLoading: demographicsLoading } = useZIPDemographics(zip || null);
 
   const compositeColor = scoreColor(primary.compositeScore);
   const compositeTier = scoreGrade(primary.compositeScore);
@@ -1825,6 +1825,17 @@ export default function ZipScorecardPage() {
                   </Suspense>
                 </div>
               </div>
+            ) : !demographicsLoading ? (
+              <Card>
+                <CardContent className="py-8 text-center" data-testid="zip-demographics-unavailable">
+                  <p className="text-sm text-muted-foreground">
+                    Data unavailable: the Census request for ZIP {zip} did not return usable data.
+                  </p>
+                  <p className="text-[9px] text-muted-foreground/60 mt-1">
+                    Source: Census {ACS5_LABEL}
+                  </p>
+                </CardContent>
+              </Card>
             ) : (
               <Card>
                 <CardContent className="py-8 text-center">
