@@ -42,7 +42,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/",
     title: "Access Michigan: Independent Michigan civic intelligence platform.",
     description:
-      "Independent civic data for all 83 Michigan counties. Every figure is traced to a primary federal source and labeled verified, modeled, or projected.",
+      "Independent civic data for all 83 Michigan counties. Explore health, housing and economic indicators with sources, reporting periods and data limitations.",
     h1: "Michigan's public data, organized for action",
     summary:
       "ZCTA-level health, economic, and housing data across 83 counties.",

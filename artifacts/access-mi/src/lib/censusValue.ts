@@ -34,9 +34,9 @@ export interface ParsedAcsEstimate {
 }
 
 const ESTIMATE_REASONS: Record<number, string> = {
-  [-666666666]: "Suppressed by Census: too few sample observations to compute an estimate",
-  [-999999999]: "Not available from Census for this geography",
-  [-888888888]: "Not applicable for this geography",
+  [-666666666]: "Suppressed by Census: the estimate could not be computed or published under ACS rules",
+  [-999999999]: "Census withheld this value because the geographic sample was too small",
+  [-888888888]: "Not applicable or unavailable for this geography",
 };
 
 const MOE_REASONS: Record<number, string> = {

@@ -15,9 +15,9 @@ const ACS5_PERIOD = "2020-2024";
 // Census encodes "no usable number" as negative sentinels in numeric columns.
 // Small duplicate of src/lib/censusValue.ts (kept in sync by hand).
 const CENSUS_SENTINEL_REASONS: Record<string, string> = {
-  "-666666666": "Suppressed by Census: too few sample observations to compute an estimate",
-  "-999999999": "Not available from Census for this geography",
-  "-888888888": "Not applicable for this geography",
+  "-666666666": "Suppressed by Census: the estimate could not be computed or published under ACS rules",
+  "-999999999": "Census withheld this value because the geographic sample was too small",
+  "-888888888": "Not applicable or unavailable for this geography",
   "-222222222": "Margin of error not computed: too few sample observations",
   "-333333333": "Margin of error not computed: median falls in an open-ended interval",
 };

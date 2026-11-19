@@ -15,8 +15,8 @@ const headers = [...ZIP_ESTIMATE_VARS, ...moeVars];
 function row(over: Record<string, string> = {}): string[] {
   const base: Record<string, string> = {
     B01003_001E: "10000", B02001_002E: "6000", B02001_003E: "2000", B02001_005E: "500",
-    B03003_003E: "800", B16001_001E: "9000", B16001_004E: "300", B16001_024E: "100",
-    B18101_001E: "9900", B18101_004E: "700", B19013_001E: "58000",
+    B03003_003E: "800", B16001_001E: "9000", B16001_003E: "300", B16001_105E: "100",
+    B02001_008E: "600", B19013_001E: "58000",
     B25003_001E: "4000", B25003_002E: "2500", B25003_003E: "1500",
   };
   for (const v of ZIP_ESTIMATE_VARS) base[v.replace(/E$/, "M")] = "100";
@@ -28,11 +28,20 @@ describe("ZIP demographics with Census sentinels", () => {
     const d = buildZIPDemographics("48201", headers, row({ B02001_003E: "-666666666" }));
     expect(d.black_alone_pct).toBeNull();
     expect(d.unavailableReasons.black_alone_pct).toMatch(/Suppressed/);
-    // Dependent remainder is null too, not computed from a missing part.
-    expect(d.multiracial_pct).toBeNull();
+    // Two or more races has its own published count.
+    expect(d.multiracial_pct).toBe(6);
     for (const v of Object.values(d)) {
       if (typeof v === "number") expect(v).toBeGreaterThanOrEqual(0);
     }
+  });
+
+  it("reads profile percentages and published percentage-point uncertainty directly", () => {
+    const d = buildZIPDemographics("48201", [...headers, "DP02_0072PE", "DP02_0072PM", "DP02_0115PE", "DP02_0115PM"],
+      [...row(), "12.3", "1.5", "0", "-222222222"]);
+    expect([d.disability_pct, d.pctMoe.disability_pct]).toEqual([12.3, 1.5]);
+    expect([d.lep_pct, d.pctMoe.lep_pct]).toEqual([0, null]);
+    expect(d.spanish_speakers_pct).toBeCloseTo(300 / 9000 * 100);
+    expect(d.arabic_speakers_pct).toBeCloseTo(100 / 9000 * 100);
   });
 
   it("a sentinel denominator makes every dependent percentage null", () => {
@@ -92,8 +101,8 @@ describe("ZIP demographics with Census sentinels", () => {
 });
 
 describe("county economic rows with Census sentinels", () => {
-  // NAME, B19013, B17001_002, B01003, B23025_005, B23025_003, B25077, B25064, state, county
-  const ok = ["Wayne County, Michigan", "50000", "100", "1000", "50", "500", "150000", "900", "26", "163"];
+  // NAME, B19013, B17001_002, B17001_001, B23025_005, B23025_003, B25077, B25064, state, county
+  const ok = ["Wayne County, Michigan", "50000", "100", "1000", "50", "500", "150000", "900", "1500", "26", "163"];
 
   it("parses a normal row", () => {
     const r = parseCountyEconomicRow(ok);
@@ -133,7 +142,7 @@ vi.mock("@/hooks/useEconomicData", async (orig) => {
         counties: [
           {
             county: "Alcona", fips: "26001", medianIncome: 50000,
-            povertyRate: null, unemploymentRate: null, medianHomeValue: null, medianRent: null,
+            incomeInterval: [], povertyInterval: [], povertyRate: null, unemploymentRate: null, medianHomeValue: null, medianRent: null,
           },
         ],
       },
