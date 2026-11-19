@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import readingNotes from "@/data/catalog-reading-notes.json";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import {
   DATA_SOURCE_DISPLAY,
@@ -60,13 +61,25 @@ export default function DataSourcesPage() {
               {totalSources} distinct feeds published by {DATA_PUBLISHER_COUNT}{" "}
               organizations - several publishers ship more than one dataset, so
               the two numbers differ by design.{" "}
-              <a href="/data/source-catalog.json" className="underline">Download the source catalog (JSON)</a>.
+              <a href="/data/source-catalog.json" className="underline">Download the source catalog (JSON)</a>.{" "}
+              <a href="#reading-notes" className="underline">How to read and reuse these data</a>.
             </p>
           </motion.div>
         </div>
       </section>
 
       <div className="container max-w-4xl py-10 space-y-10">
+        <section id="reading-notes" aria-labelledby="reading-notes-title" className="space-y-3">
+          <h2 id="reading-notes-title" className="text-lg font-bold">How to read and reuse these data</h2>
+          <dl className="space-y-3 text-sm">
+            {readingNotes.map((note) => (
+              <div key={note.id} id={note.id}>
+                <dt className="font-semibold">{note.title}</dt>
+                <dd className="text-muted-foreground">{note.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
         {Object.entries(SOURCES).map(([category, sources]) => (
           <section key={category}>
             <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">

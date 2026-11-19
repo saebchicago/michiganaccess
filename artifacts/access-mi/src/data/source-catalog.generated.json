@@ -1,9 +1,26 @@
 {
   "_meta": {
-    "generated": "2026-11-19T20:01:28.055Z",
+    "generated": "2026-11-19T20:24:03.816Z",
     "source": "src/data/sourcesRegistry.ts",
     "entryCount": 52,
     "schema": "v1",
+    "readingNotes": [
+      {
+        "id": "source-date",
+        "title": "Reporting period",
+        "text": "The catalog build date records when this list was generated. If a feed has no vintage or verification date, check the individual dataset before describing a figure as current."
+      },
+      {
+        "id": "access-terms",
+        "title": "Automated access and reuse",
+        "text": "A blank license means the catalog has no recorded reuse terms. Read the publisher’s terms and any access note before fetching upstream data. Use an AccessMI download when one is listed."
+      },
+      {
+        "id": "uncertainty",
+        "title": "Missing values and county comparisons",
+        "text": "Keep the geography, period, source and uncertainty with each estimate. Leave unavailable values blank. A zero is a reported value. Overlapping confidence intervals alone cannot establish which county has the higher underlying rate."
+      }
+    ],
     "note": "Machine-readable source catalog. license fields are null pending legal review."
   },
   "sources": [
