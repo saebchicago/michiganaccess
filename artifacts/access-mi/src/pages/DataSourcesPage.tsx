@@ -28,7 +28,7 @@ const facilityFetchedAt = new Date(
 export default function DataSourcesPage() {
   usePageMeta({
     title: "Data Sources - Access Michigan",
-    description: `${DATA_SOURCE_DISPLAY} verified public data feeds (${DATA_SOURCE_BREAKDOWN.federal} federal, ${DATA_SOURCE_BREAKDOWN.state} state, ${DATA_SOURCE_BREAKDOWN.nonprofit} nonprofit) from ${DATA_PUBLISHER_COUNT} publishers powering the Independent Michigan civic intelligence platform. Every publisher credited.`,
+    description: `${DATA_SOURCE_DISPLAY} public data feeds (${DATA_SOURCE_BREAKDOWN.federal} federal, ${DATA_SOURCE_BREAKDOWN.state} state, ${DATA_SOURCE_BREAKDOWN.nonprofit} nonprofit) from ${DATA_PUBLISHER_COUNT} publishers used across Access Michigan. Browse publishers, update schedules and access notes.`,
     path: "/data-sources",
   });
 
@@ -51,15 +51,16 @@ export default function DataSourcesPage() {
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
               <AnimatedCounter value={totalSources} className="text-primary" />{" "}
-              Verified Data Sources
+              Public Data Sources
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Every number, a public source. No contribution changes rankings.
+              Browse the publisher, update schedule and access notes for each feed.
             </p>
             <p className="text-xs text-muted-foreground/80 mt-2 max-w-xl mx-auto">
               {totalSources} distinct feeds published by {DATA_PUBLISHER_COUNT}{" "}
               organizations - several publishers ship more than one dataset, so
-              the two numbers differ by design.
+              the two numbers differ by design.{" "}
+              <a href="/data/source-catalog.json" className="underline">Download the source catalog (JSON)</a>.
             </p>
           </motion.div>
         </div>
@@ -110,6 +111,10 @@ export default function DataSourcesPage() {
                     <p className="text-xs text-muted-foreground mt-2">
                       Powers: {src.powers}
                     </p>
+                    {src.urlNote && <p className="mt-2 text-xs">{src.urlNote}</p>}
+                    {src.attributionUnverified && (
+                      <p className="mt-2 text-xs">Publisher attribution awaits confirmation.</p>
+                    )}
                     {FACILITY_ORGS.has(src.org) && (
                       <p className="text-[10px] text-muted-foreground mt-1">
                         Last fetched: {facilityFetchedAt}

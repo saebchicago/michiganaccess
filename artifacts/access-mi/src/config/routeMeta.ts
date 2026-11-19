@@ -131,8 +131,8 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/data-sources",
     title: "Data Sources | Access Michigan",
     description:
-      "52 verified public data feeds (31 federal, 9 state, 12 nonprofit) from 42 publishers powering the Independent Michigan civic intelligence platform. Every publisher credited.",
-    h1: "52 Verified Data Sources",
+      "52 public data feeds (31 federal, 9 state, 12 nonprofit) from 42 publishers used across Access Michigan. Browse publishers, update schedules and access notes.",
+    h1: "52 Public Data Sources",
     summary:
       "Federal, state, and nonprofit data sources behind every metric on the platform.",
   },
