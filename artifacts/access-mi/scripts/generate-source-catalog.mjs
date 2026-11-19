@@ -6,6 +6,11 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
 
+function readAccessNote(entry) {
+  const note = /urlNote:\s*("(?:[^"\\]|\\.)*")/.exec(entry);
+  return note ? { urlNote: JSON.parse(note[1]) } : {};
+}
+
 async function main() {
   const registryText = await readFile(join(root, "src/data/sourcesRegistry.ts"), "utf8");
 
@@ -27,6 +32,8 @@ async function main() {
       url,
       description: powers,
       updateFrequency: frequency,
+      ...(/attributionUnverified:\s*true/.test(m[0]) && { attributionUnverified: true }),
+      ...readAccessNote(m[0]),
       license: null,
       licenseReviewStatus: "pending",
       vintage: null,
@@ -55,6 +62,7 @@ async function main() {
       source: "src/data/sourcesRegistry.ts",
       entryCount: entries.length,
       schema: "v1",
+      readingNotes: JSON.parse(await readFile(join(root, "src/data/catalog-reading-notes.json"), "utf8")),
       note: "Machine-readable source catalog. license fields are null pending legal review.",
     },
     sources: entries,

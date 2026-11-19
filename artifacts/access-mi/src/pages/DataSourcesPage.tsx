@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
+import readingNotes from "@/data/catalog-reading-notes.json";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import {
   DATA_SOURCE_DISPLAY,
@@ -28,7 +29,7 @@ const facilityFetchedAt = new Date(
 export default function DataSourcesPage() {
   usePageMeta({
     title: "Data Sources - Access Michigan",
-    description: `${DATA_SOURCE_DISPLAY} verified public data feeds (${DATA_SOURCE_BREAKDOWN.federal} federal, ${DATA_SOURCE_BREAKDOWN.state} state, ${DATA_SOURCE_BREAKDOWN.nonprofit} nonprofit) from ${DATA_PUBLISHER_COUNT} publishers powering the Independent Michigan civic intelligence platform. Every publisher credited.`,
+    description: `${DATA_SOURCE_DISPLAY} public data feeds (${DATA_SOURCE_BREAKDOWN.federal} federal, ${DATA_SOURCE_BREAKDOWN.state} state, ${DATA_SOURCE_BREAKDOWN.nonprofit} nonprofit) from ${DATA_PUBLISHER_COUNT} publishers used across Access Michigan. Browse publishers, update schedules and access notes.`,
     path: "/data-sources",
   });
 
@@ -51,21 +52,34 @@ export default function DataSourcesPage() {
             </Badge>
             <h1 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
               <AnimatedCounter value={totalSources} className="text-primary" />{" "}
-              Verified Data Sources
+              Public Data Sources
             </h1>
             <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-              Every number, a public source. No contribution changes rankings.
+              Browse the publisher, update schedule and access notes for each feed.
             </p>
             <p className="text-xs text-muted-foreground/80 mt-2 max-w-xl mx-auto">
               {totalSources} distinct feeds published by {DATA_PUBLISHER_COUNT}{" "}
               organizations - several publishers ship more than one dataset, so
-              the two numbers differ by design.
+              the two numbers differ by design.{" "}
+              <a href="/data/source-catalog.json" className="underline">Download the source catalog (JSON)</a>.{" "}
+              <a href="#reading-notes" className="underline">How to read and reuse these data</a>.
             </p>
           </motion.div>
         </div>
       </section>
 
       <div className="container max-w-4xl py-10 space-y-10">
+        <section id="reading-notes" aria-labelledby="reading-notes-title" className="space-y-3">
+          <h2 id="reading-notes-title" className="text-lg font-bold">How to read and reuse these data</h2>
+          <dl className="space-y-3 text-sm">
+            {readingNotes.map((note) => (
+              <div key={note.id} id={note.id}>
+                <dt className="font-semibold">{note.title}</dt>
+                <dd className="text-muted-foreground">{note.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
         {Object.entries(SOURCES).map(([category, sources]) => (
           <section key={category}>
             <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
@@ -110,6 +124,10 @@ export default function DataSourcesPage() {
                     <p className="text-xs text-muted-foreground mt-2">
                       Powers: {src.powers}
                     </p>
+                    {src.urlNote && <p className="mt-2 text-xs">{src.urlNote}</p>}
+                    {src.attributionUnverified && (
+                      <p className="mt-2 text-xs">Publisher attribution awaits confirmation.</p>
+                    )}
                     {FACILITY_ORGS.has(src.org) && (
                       <p className="text-[10px] text-muted-foreground mt-1">
                         Last fetched: {facilityFetchedAt}

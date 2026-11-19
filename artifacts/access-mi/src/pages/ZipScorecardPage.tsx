@@ -75,7 +75,7 @@ import { getFoodAccessByCounty } from "@/hooks/useFoodAccess";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import { countyToSlug } from "@/utils/countyUtils";
 import { useZIPDemographics } from "@/hooks/useCensusDemographics";
-import { ACS5_LABEL } from "@/config/acsVintage";
+import { ACS5_LABEL, ACS5_YEAR } from "@/config/acsVintage";
 import { getReliability } from "@/lib/reliability";
 import MoEBadge from "@/components/shared/MoEBadge";
 import { SuppressedEstimate, MoeUnavailableNote } from "@/components/shared/ReliabilityNote";
@@ -1640,40 +1640,13 @@ export default function ZipScorecardPage() {
                     <p className="text-sm font-bold text-foreground mb-3">
                       Race & Ethnicity
                     </p>
-                    <div className="h-6 rounded-full overflow-hidden flex mb-3">
-                      <div
-                        className="h-full bg-[#4f86c6]"
-                        style={{ width: `${demographics.white_alone_pct ?? 0}%` }}
-                        title={`White ${fmtPct(demographics.white_alone_pct)}`}
-                      />
-                      <div
-                        className="h-full bg-[#f59e0b]"
-                        style={{ width: `${demographics.black_alone_pct ?? 0}%` }}
-                        title={`Black ${fmtPct(demographics.black_alone_pct)}`}
-                      />
-                      <div
-                        className="h-full bg-[#10b981]"
-                        style={{ width: `${demographics.hispanic_pct ?? 0}%` }}
-                        title={`Hispanic ${fmtPct(demographics.hispanic_pct)}`}
-                      />
-                      <div
-                        className="h-full bg-[#8b5cf6]"
-                        style={{ width: `${demographics.asian_alone_pct ?? 0}%` }}
-                        title={`Asian ${fmtPct(demographics.asian_alone_pct)}`}
-                      />
-                      <div
-                        className="h-full bg-[#94a3b8]"
-                        style={{ width: `${demographics.multiracial_pct ?? 0}%` }}
-                        title={`Other ${fmtPct(demographics.multiracial_pct)}`}
-                      />
-                    </div>
+                    <p className="text-xs text-muted-foreground mb-3">
+                      Hispanic origin can overlap any race. Selected groups are shown separately.
+                    </p>
                     <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 text-xs">
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#4f86c6] mr-1" />
-                        White {fmtPct(demographics.white_alone_pct)}{" "}
-                        <span className="text-muted-foreground">
-                          (MI: {demographics.miStateWhitePct}%)
-                        </span>{" "}
+                        White alone {fmtPct(demographics.white_alone_pct)}{" "}
                         <MoEBadge
                           estimate={demographics.white_alone_pct}
                           moe={demographics.pctMoe.white_alone_pct}
@@ -1681,10 +1654,7 @@ export default function ZipScorecardPage() {
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#f59e0b] mr-1" />
-                        Black {fmtPct(demographics.black_alone_pct)}{" "}
-                        <span className="text-muted-foreground">
-                          (MI: {demographics.miStateBlackPct}%)
-                        </span>{" "}
+                        Black alone {fmtPct(demographics.black_alone_pct)}{" "}
                         <MoEBadge
                           estimate={demographics.black_alone_pct}
                           moe={demographics.pctMoe.black_alone_pct}
@@ -1693,9 +1663,6 @@ export default function ZipScorecardPage() {
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#10b981] mr-1" />
                         Hispanic {fmtPct(demographics.hispanic_pct)}{" "}
-                        <span className="text-muted-foreground">
-                          (MI: {demographics.miStateHispanicPct}%)
-                        </span>{" "}
                         <MoEBadge
                           estimate={demographics.hispanic_pct}
                           moe={demographics.pctMoe.hispanic_pct}
@@ -1703,7 +1670,7 @@ export default function ZipScorecardPage() {
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#8b5cf6] mr-1" />
-                        Asian {fmtPct(demographics.asian_alone_pct)}{" "}
+                        Asian alone {fmtPct(demographics.asian_alone_pct)}{" "}
                         <MoEBadge
                           estimate={demographics.asian_alone_pct}
                           moe={demographics.pctMoe.asian_alone_pct}
@@ -1711,7 +1678,7 @@ export default function ZipScorecardPage() {
                       </span>
                       <span>
                         <span className="inline-block h-2 w-2 rounded-full bg-[#94a3b8] mr-1" />
-                        Other {fmtPct(demographics.multiracial_pct)}
+                        Two or more races {fmtPct(demographics.multiracial_pct)}
                       </span>
                     </div>
                     <p className="text-[9px] text-muted-foreground mt-2">
@@ -1728,22 +1695,21 @@ export default function ZipScorecardPage() {
                         Language Access
                       </p>
                       <EconCard
-                        label="Limited English Proficiency"
+                        label="Age 5 and older who speak English less than very well"
                         value={fmtPct(demographics.lep_pct)}
                         estimate={demographics.lep_pct ?? undefined}
                         moe={demographics.pctMoe.lep_pct}
-                        benchmark={`MI avg: ${demographics.miStateLEPPct}%`}
                         source={demographics.source}
                       />
                       {demographics.spanish_speakers_pct !== null && demographics.spanish_speakers_pct > 1 && (
                         <p className="text-xs text-muted-foreground mt-1">
-                          Spanish speakers:{" "}
+                          Speak Spanish at home (age 5+):{" "}
                           {fmtPct(demographics.spanish_speakers_pct)}
                         </p>
                       )}
                       {demographics.arabic_speakers_pct !== null && demographics.arabic_speakers_pct > 1 && (
                         <p className="text-xs text-muted-foreground mt-1">
-                          Arabic speakers:{" "}
+                          Speak Arabic at home (age 5+):{" "}
                           {fmtPct(demographics.arabic_speakers_pct)}
                         </p>
                       )}
@@ -1755,11 +1721,10 @@ export default function ZipScorecardPage() {
                         Disability & Housing
                       </p>
                       <EconCard
-                        label="Disability Rate"
+                        label="Civilian noninstitutionalized population with a disability"
                         value={fmtPct(demographics.disability_pct)}
                         estimate={demographics.disability_pct ?? undefined}
                         moe={demographics.pctMoe.disability_pct}
-                        benchmark={`MI avg: ${demographics.miStateDisabilityPct}%`}
                         source={demographics.source}
                       />
                       <p className="text-xs text-muted-foreground mt-2">
@@ -1829,10 +1794,10 @@ export default function ZipScorecardPage() {
               <Card>
                 <CardContent className="py-8 text-center" data-testid="zip-demographics-unavailable">
                   <p className="text-sm text-muted-foreground">
-                    Data unavailable: the Census request for ZIP {zip} did not return usable data.
+                    Census demographics are unavailable for ZIP Code Tabulation Area {zip}.
                   </p>
                   <p className="text-[9px] text-muted-foreground/60 mt-1">
-                    Source: Census {ACS5_LABEL}
+                    <a className="underline" href={`https://data.census.gov/table/ACSDP5Y${ACS5_YEAR}.DP02?g=860XX00US${zip}`}>View this area in the Census {ACS5_LABEL} profile</a>
                   </p>
                 </CardContent>
               </Card>

@@ -57,8 +57,10 @@ AccessMI organizes authoritative public datasets (including CDC PLACES, Census, 
 
 ## Data access for agents
 
-- Automated access is welcome. Keep it to 1 request per second or less and send an identifying User-Agent.
-- Data files and provenance: /data-sources and /methodology.
-- Labels: VERIFIED (confirmed from a primary source), MODELED (derived from verified inputs), PROJECTED (forward-looking estimate), PENDING (not ingested yet).
-- Census error codes are returned as empty values with a reason, never as numbers.
-- Contact: /contact. License: MIT (see /LICENSE in the repository); upstream source data keeps its publishers' terms.
+- AccessMI welcomes automated reads of its public pages and static data files. Limit requests to one per second and send an identifying User-Agent. Contact the maintainer at [/contact](/contact). Guidance reviewed 2026-11-19.
+- The source catalog includes reading notes in `_meta.readingNotes`. Apply these before interpreting entries with missing metadata. Expect JSON for data downloads. If the response is HTML or the requested dataset is absent, report it as unavailable.
+- Start with the [source catalog](https://accessmi.org/data/source-catalog.json) for publisher links. A null license or vintage is unknown. Check each publisher's terms before requesting upstream data. AccessMI's crawl policy applies only to this site.
+- [Michigan county income and poverty](https://accessmi.org/data/michigan-county-income-poverty.json) contains Census SAIPE estimates. Keep each value with its county FIPS string, unit, estimate year, MODELED label and primary download URL. The confidence arrays hold lower and upper 90% bounds where available. Overlapping intervals do not establish a difference. A null value is unavailable. Zero is a measurement.
+- The [download manifest](https://accessmi.org/data/manifest.json) lists files from the open-data ingestion job. Its [Census county file](https://accessmi.org/data/census_acs_county.json) is a national geographic lookup with names and state/county codes. Preserve leading zeros. It contains no household income, poverty estimates or margins of error.
+- For survey estimates, keep the ACS period and geography. A ZIP Code Tabulation Area approximates a postal ZIP. Preserve reported uncertainty, exclude unavailable values from calculations and flag missing margins of error. A retrieval date is separate from the observation period.
+- [Methodology](/methodology) explains provenance labels. The repository's MIT license covers code. Upstream data retains its publishers' terms.

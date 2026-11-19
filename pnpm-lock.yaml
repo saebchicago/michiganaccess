@@ -108,9 +108,6 @@ importers:
       leaflet.markercluster:
         specifier: ^1.5.3
         version: 1.5.3(leaflet@1.9.4)
-      mi-federal-data:
-        specifier: git+https://github.com/saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742
-        version: https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742
       react-i18next:
         specifier: ^17.0.8
         version: 17.0.8(i18next@26.2.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -371,6 +368,9 @@ importers:
       '@esbuild/darwin-arm64':
         specifier: 0.27.3
         version: 0.27.3
+      mi-federal-data:
+        specifier: git+https://github.com/saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742
+        version: https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742
 
   artifacts/access-mi-mobile:
     dependencies:
@@ -16153,7 +16153,8 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  mi-federal-data@https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742: {}
+  mi-federal-data@https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742:
+    optional: true
 
   micromark-core-commonmark@2.0.3:
     dependencies:

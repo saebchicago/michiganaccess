@@ -1,9 +1,26 @@
 {
   "_meta": {
-    "generated": "2026-11-14T18:28:23.708Z",
+    "generated": "2026-11-19T20:24:03.816Z",
     "source": "src/data/sourcesRegistry.ts",
     "entryCount": 52,
     "schema": "v1",
+    "readingNotes": [
+      {
+        "id": "source-date",
+        "title": "Reporting period",
+        "text": "The catalog build date records when this list was generated. If a feed has no vintage or verification date, check the individual dataset before describing a figure as current."
+      },
+      {
+        "id": "access-terms",
+        "title": "Automated access and reuse",
+        "text": "A blank license means the catalog has no recorded reuse terms. Read the publisher’s terms and any access note before fetching upstream data. Use an AccessMI download when one is listed."
+      },
+      {
+        "id": "uncertainty",
+        "title": "Missing values and county comparisons",
+        "text": "Keep the geography, period, source and uncertainty with each estimate. Leave unavailable values blank. A zero is a reported value. Overlapping confidence intervals alone cannot establish which county has the higher underlying rate."
+      }
+    ],
     "note": "Machine-readable source catalog. license fields are null pending legal review."
   },
   "sources": [
@@ -584,6 +601,7 @@
       "url": "https://data.michigan.gov/",
       "description": "State open data portal datasets",
       "updateFrequency": "Varies",
+      "urlNote": "Automated access goes only through the portal's dataset APIs, which the state's data office (MCDA, DTMB) named as the official route (MCDA (DTMB) email to the maintainer, Nov 6, 2026). The Michigan.gov Terms of Use otherwise bar automated access, and the state's data office said that includes its open data portals (same email). The portal is moving to ArcGIS (MCDA (DTMB) email to the maintainer, Nov 13, 2026), so dataset URLs may change.",
       "license": null,
       "licenseReviewStatus": "pending",
       "vintage": null,
@@ -764,6 +782,7 @@
       "url": "https://monitoringthefuture.org",
       "description": "Adolescent substance use prevalence charts on /support-groups",
       "updateFrequency": "Annual",
+      "attributionUnverified": true,
       "license": null,
       "licenseReviewStatus": "pending",
       "vintage": null,
@@ -779,6 +798,7 @@
       "url": "https://mi-suddr.com/resources-2",
       "description": "Michigan Substance Use Disorder Data Repository - treatment admissions and drug trend charts on /support-groups",
       "updateFrequency": "Annual",
+      "attributionUnverified": true,
       "license": null,
       "licenseReviewStatus": "pending",
       "vintage": null,

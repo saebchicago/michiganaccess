@@ -1,10 +1,11 @@
 import { useState, useMemo } from "react";
-import { DollarSign, Loader2, ExternalLink, ArrowUpDown, Download } from "lucide-react";
+import { DollarSign, Loader2, ArrowUpDown, Download } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { useEconomicData, type CountyEconomicData } from "@/hooks/useEconomicData";
+import { useEconomicData, ECONOMIC_ACS_URL } from "@/hooks/useEconomicData";
+import { SAIPE_PROVENANCE, saipeVintageLabel } from "@/data/saipe-county";
 import { ACS5_LABEL } from "@/config/acsVintage";
 
 type SortKey = "medianIncome" | "povertyRate" | "unemploymentRate" | "medianHomeValue" | "medianRent";
@@ -20,6 +21,8 @@ export default function EconomicVitalityDashboard() {
   const { data: result, isLoading } = useEconomicData();
   const data = result?.counties;
   const isFallback = result?.isFallback ?? false;
+  const source = isFallback ? saipeVintageLabel() : ACS5_LABEL;
+  const sourceUrl = isFallback ? SAIPE_PROVENANCE.download_url ?? SAIPE_PROVENANCE.source_url : ECONOMIC_ACS_URL;
   const [sortKey, setSortKey] = useState<SortKey>("medianIncome");
   const [sortAsc, setSortAsc] = useState(false);
 
@@ -39,9 +42,14 @@ export default function EconomicVitalityDashboard() {
 
   const handleCSV = () => {
     if (!sorted.length) return;
-    const header = "County,Median Income,Poverty Rate,Unemployment Rate,Median Home Value,Median Rent\n";
-    const rows = sorted.map((d) => [d.county, d.medianIncome, d.povertyRate, d.unemploymentRate, d.medianHomeValue, d.medianRent].map((v) => v ?? "").join(",")).join("\n");
-    const blob = new Blob([header + rows], { type: "text/csv" });
+    const header = ["County", "County FIPS", "Median household income USD", "Income lower 90%", "Income upper 90%",
+      "Poverty percent", "Poverty lower 90%", "Poverty upper 90%", "Unemployment percent", "Median home value USD",
+      "Median gross rent USD", "Source and period", "Estimate type", "Primary source URL", "Missing values"];
+    const rows = sorted.map((d) => [d.county, d.fips, d.medianIncome, d.incomeInterval[0], d.incomeInterval[1],
+      d.povertyRate, d.povertyInterval[0], d.povertyInterval[1], d.unemploymentRate, d.medianHomeValue, d.medianRent,
+      source, isFallback ? "MODELED" : "ACS survey estimate", sourceUrl, "Blank means unavailable"]);
+    const csv = [header, ...rows].map((row) => row.map((v) => `"${String(v ?? "").replaceAll('"', '""')}"`).join(",")).join("\r\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -69,13 +77,11 @@ export default function EconomicVitalityDashboard() {
                 <DollarSign className="h-5 w-5 text-michigan-gold-deep" /> Economic Vitality by County
               </CardTitle>
               <CardDescription>Income, poverty, employment, and housing costs across Michigan</CardDescription>
-              {/* The hook falls back to a 20-county static snapshot when the
-                  Census ACS API is unreachable. Say so, rather than passing
-                  cached figures off as a live statewide read. */}
               {isFallback && (
-                <p className="mt-1 text-[11px] text-amber-700 dark:text-amber-400">
-                  Live Census ACS request failed. Showing a cached 20-county
-                  snapshot (ACS 5-year), not a live statewide read.
+                <p className="mt-1 text-xs text-muted-foreground">
+                  The live ACS request was unavailable. Income and poverty come from Census {source} (MODELED).
+                  This release does not cover unemployment, home value or rent.{" "}
+                  <a className="underline" href="/data/michigan-county-income-poverty.json">Download estimates and intervals (JSON)</a>.
                 </p>
               )}
             </div>
@@ -86,15 +92,10 @@ export default function EconomicVitalityDashboard() {
           </div>
         </CardHeader>
         <CardContent>
-          {/* Income gap highlight */}
-          {data && data.length > 1 && (
-            <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 mb-4">
-              <p className="text-xs text-foreground">
-                <strong>Income gap:</strong> The wealthiest county ({data[0].county}: {fmt(data[0].medianIncome)}) has{" "}
-                {((data[0].medianIncome / (data[data.length - 1]?.medianIncome || 1))).toFixed(1)}× the median income of the poorest ({data[data.length - 1]?.county}: {fmt(data[data.length - 1]?.medianIncome || 0)})
-              </p>
-            </div>
-          )}
+          <p className="mb-3 text-xs text-muted-foreground">
+            Counties are ordered by point estimate. Their 90% uncertainty intervals can overlap.
+            Published income intervals appear below each estimate and in the CSV.
+          </p>
 
           {/* Table */}
           <div className="overflow-x-auto">
@@ -121,7 +122,14 @@ export default function EconomicVitalityDashboard() {
                 {sorted.slice(0, 25).map((d) => (
                   <tr key={d.fips} className="border-b border-border/50 last:border-0">
                     <td className="py-2 font-medium text-foreground">{d.county}</td>
-                    <td className="py-2 text-right tabular-nums">{fmt(d.medianIncome)}</td>
+                    <td className="py-2 text-right tabular-nums">
+                      {fmt(d.medianIncome)}
+                      {d.incomeInterval.length === 2 && d.incomeInterval.every((v) => v !== null) && (
+                        <span className="block text-xs text-muted-foreground">
+                          90% interval: {d.incomeInterval.map((v) => "$" + v?.toLocaleString()).join(" to ")}
+                        </span>
+                      )}
+                    </td>
                     <td className="py-2 text-right tabular-nums">
                       <span className={d.povertyRate !== null && d.povertyRate > 18 ? "text-michigan-coral-deep font-semibold" : ""}>{fmtRate(d.povertyRate)}</span>
                     </td>
@@ -136,8 +144,8 @@ export default function EconomicVitalityDashboard() {
             </table>
           </div>
           <p className="text-[10px] text-muted-foreground mt-3">
-            Showing top 25 by {sortKey === "medianIncome" ? "income" : sortKey}. Download CSV for all counties.
-            Source: U.S. Census Bureau, American Community Survey {ACS5_LABEL}. Blank or suppressed Census values show as Data unavailable.
+            Showing {Math.min(sorted.length, 25)} of {sorted.length} available counties. Download the CSV for all rows.
+            {" "}<a className="underline" href={sourceUrl}>U.S. Census Bureau, {source}</a>. Empty CSV fields indicate unavailable values.
           </p>
         </CardContent>
       </Card>

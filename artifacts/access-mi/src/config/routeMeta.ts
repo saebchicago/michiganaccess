@@ -42,7 +42,7 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/",
     title: "Access Michigan: Independent Michigan civic intelligence platform.",
     description:
-      "Independent civic data for all 83 Michigan counties. Every figure is traced to a primary federal source and labeled verified, modeled, or projected.",
+      "Independent civic data for all 83 Michigan counties. Explore health, housing and economic indicators with sources, reporting periods and data limitations.",
     h1: "Michigan's public data, organized for action",
     summary:
       "ZCTA-level health, economic, and housing data across 83 counties.",
@@ -131,8 +131,8 @@ export const ROUTE_META: RouteMeta[] = [
     path: "/data-sources",
     title: "Data Sources | Access Michigan",
     description:
-      "52 verified public data feeds (31 federal, 9 state, 12 nonprofit) from 42 publishers powering the Independent Michigan civic intelligence platform. Every publisher credited.",
-    h1: "52 Verified Data Sources",
+      "52 public data feeds (31 federal, 9 state, 12 nonprofit) from 42 publishers used across Access Michigan. Browse publishers, update schedules and access notes.",
+    h1: "52 Public Data Sources",
     summary:
       "Federal, state, and nonprofit data sources behind every metric on the platform.",
   },

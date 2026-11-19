@@ -551,7 +551,7 @@ const HeroSection = () => {
               </Button>
             </div>
             <p className="text-white/60 text-xs font-medium tracking-wide">
-              {DATA_SOURCE_DISPLAY} verified data sources · {COUNTIES_COVERED}{" "}
+              {DATA_SOURCE_DISPLAY} public data sources · {COUNTIES_COVERED}{" "}
               counties · Independent
             </p>
           </motion.div>
