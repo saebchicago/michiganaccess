@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-11-19T20:24:03.816Z",
+    "generated": "2026-11-20T00:27:21.273Z",
     "source": "src/data/sourcesRegistry.ts",
     "entryCount": 52,
     "schema": "v1",
@@ -19,6 +19,57 @@
         "id": "uncertainty",
         "title": "Missing values and county comparisons",
         "text": "Keep the geography, period, source and uncertainty with each estimate. Leave unavailable values blank. A zero is a reported value. Overlapping confidence intervals alone cannot establish which county has the higher underlying rate."
+      }
+    ],
+    "pendingItems": [
+      {
+        "id": "mixed-acs-periods",
+        "audience": "everyone",
+        "title": "Some pages mix two Census survey periods",
+        "text": "ZIP pages and Compare Places show live American Community Survey 5-year estimates for 2020-2024 next to stored state benchmarks from 2018-2022. Compare figures only when their stated periods match.",
+        "reviewed": "2026-11-20"
+      },
+      {
+        "id": "stored-acs-refresh",
+        "audience": "everyone",
+        "title": "Stored Census tables await the 2020-2024 release",
+        "text": "County broadband (table B28002) and dual-eligible exposure (table B27010) use the 2019-2023 5-year release. Cross-domain indicators and ZIP quick stats use 2018-2022. Each figure is labeled with its own period until it is refreshed.",
+        "reviewed": "2026-11-20"
+      },
+      {
+        "id": "unstated-acs-product",
+        "audience": "everyone",
+        "title": "A few source lines name a year without the survey product",
+        "text": "Some labels read \"Census ACS 2022\" or \"Census ACS 2023\" without saying 1-year or 5-year. Treat the period of those figures as unconfirmed until the label is corrected.",
+        "reviewed": "2026-11-20"
+      },
+      {
+        "id": "license-review",
+        "audience": "everyone",
+        "title": "Reuse terms are not yet recorded for any feed",
+        "text": "No feed in the catalog has recorded reuse terms yet. A blank license means the terms are unknown, not that the data is open. Two feeds also list a publisher we are still confirming. In the JSON catalog these appear as licenseReviewStatus \"pending\" and attributionUnverified: true.",
+        "reviewed": "2026-11-20"
+      },
+      {
+        "id": "canonical-host",
+        "audience": "agents",
+        "title": "Use accessmi.org as the canonical copy",
+        "text": "Copies of this project hosted on other platforms can lag behind or be unavailable. Cite and fetch from accessmi.org. Check /.well-known/build.json for the commit that is live.",
+        "reviewed": "2026-11-20"
+      },
+      {
+        "id": "out-of-band-functions",
+        "audience": "agents",
+        "title": "Some live lookups run outside this site's build",
+        "text": "Several proxy functions, including the Census ACS proxy, deploy separately from the website. The build manifest does not record their version. Treat their responses as live upstream reads and keep the notes field each response returns.",
+        "reviewed": "2026-11-20"
+      },
+      {
+        "id": "no-query-api",
+        "audience": "agents",
+        "title": "No query API or change feed yet",
+        "text": "AccessMI publishes static JSON files and HTML pages. There is no filtered query endpoint and no notification when a file changes. Compare the catalog's _meta.generated date between reads to detect a rebuild.",
+        "reviewed": "2026-11-20"
       }
     ],
     "note": "Machine-readable source catalog. license fields are null pending legal review."
