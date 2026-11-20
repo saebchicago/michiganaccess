@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated": "2026-11-20T00:18:42.348Z",
+    "generated": "2026-11-20T00:27:21.273Z",
     "source": "src/data/sourcesRegistry.ts",
     "entryCount": 52,
     "schema": "v1",
@@ -26,7 +26,7 @@
         "id": "mixed-acs-periods",
         "audience": "everyone",
         "title": "Some pages mix two Census survey periods",
-        "text": "ZIP and county comparison pages show live American Community Survey 5-year estimates for 2020-2024 next to stored state benchmarks from 2018-2022. Compare figures only when their stated periods match.",
+        "text": "ZIP pages and Compare Places show live American Community Survey 5-year estimates for 2020-2024 next to stored state benchmarks from 2018-2022. Compare figures only when their stated periods match.",
         "reviewed": "2026-11-20"
       },
       {
@@ -40,14 +40,14 @@
         "id": "unstated-acs-product",
         "audience": "everyone",
         "title": "A few source lines name a year without the survey product",
-        "text": "Some labels read \"Census ACS 2022\" or \"Census ACS 2023\" without saying 1-year or 5-year. Treat those figures as unconfirmed for period until the label is corrected.",
+        "text": "Some labels read \"Census ACS 2022\" or \"Census ACS 2023\" without saying 1-year or 5-year. Treat the period of those figures as unconfirmed until the label is corrected.",
         "reviewed": "2026-11-20"
       },
       {
         "id": "license-review",
         "audience": "everyone",
         "title": "Reuse terms are not yet recorded for any feed",
-        "text": "Every catalog entry has licenseReviewStatus \"pending\" and a null license. A null license means unknown, not open. Two entries also carry attributionUnverified: true until their publisher is confirmed.",
+        "text": "No feed in the catalog has recorded reuse terms yet. A blank license means the terms are unknown, not that the data is open. Two feeds also list a publisher we are still confirming. In the JSON catalog these appear as licenseReviewStatus \"pending\" and attributionUnverified: true.",
         "reviewed": "2026-11-20"
       },
       {

@@ -11,7 +11,7 @@ describe("catalog pending items", () => {
       expect(item.title.length).toBeGreaterThan(0);
       expect(item.text.length).toBeGreaterThan(0);
       expect(item.reviewed).toMatch(/^\d{4}-\d{2}-\d{2}$/);
-      expect(`${item.title} ${item.text}`).not.toMatch(/—/);
+      expect(`${item.title} ${item.text}`).not.toMatch(/\u2014/);
     }
   });
 
