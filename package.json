@@ -12,6 +12,9 @@
   },
   "private": true,
   "devDependencies": {
+    "drizzle-kit": "0.x",
+    "drizzle-orm": "0.x",
+    "postgres": "^4.1.1",
     "prettier": "^3.8.3",
     "typescript": "~5.9.3"
   },
