@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 
@@ -79,6 +79,7 @@ vi.mock("@/routes/manifest", () => ({
 
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
+import { OPEN_MENU_EVENT } from "@/lib/menuEvents";
 
 // ── tests ─────────────────────────────────────────────────────────────────────
 
@@ -134,5 +135,20 @@ describe("Header  -  D2 tagline", () => {
     expect(homeLink).toContainElement(
       screen.getByText("Independent civic intelligence · Michigan-wide"),
     );
+  });
+});
+
+describe("Header  -  location picker fallback", () => {
+  it("opens the menu sheet when the context bar asks for the location picker", () => {
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>,
+    );
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    act(() => {
+      window.dispatchEvent(new Event(OPEN_MENU_EVENT));
+    });
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 });

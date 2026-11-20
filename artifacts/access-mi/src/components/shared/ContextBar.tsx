@@ -21,6 +21,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Badge } from "@/components/ui/badge";
+import { OPEN_MENU_EVENT } from "@/lib/menuEvents";
 import {
   Popover,
   PopoverContent,
@@ -186,6 +187,20 @@ function EligibilityPopover() {
     </Popover>
   );
 }
+
+/**
+ * Open the county picker the user can actually see. The header copy is hidden
+ * below xl; there the picker lives in the menu sheet, which Header opens on
+ * OPEN_MENU_EVENT.
+ */
+function openLocationPicker() {
+  const visible = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-county-selector]"),
+  ).find((el) => el.offsetParent !== null);
+  if (visible) visible.click();
+  else window.dispatchEvent(new Event(OPEN_MENU_EVENT));
+}
+
 export default function ContextBar() {
   const {
     filterLabel,
@@ -361,11 +376,7 @@ export default function ContextBar() {
                   to="/#"
                   onClick={(e) => {
                     e.preventDefault();
-                    document
-                      .querySelector<HTMLButtonElement>(
-                        "[data-county-selector]",
-                      )
-                      ?.click();
+                    openLocationPicker();
                   }}
                   className="text-primary hover:underline ml-1 inline-flex items-center gap-0.5"
                 >
@@ -452,11 +463,7 @@ export default function ContextBar() {
               to="/#"
               onClick={(e) => {
                 e.preventDefault();
-                document
-                  .querySelector<HTMLButtonElement>(
-                    "[data-county-selector]",
-                  )
-                  ?.click();
+                openLocationPicker();
               }}
               className="text-amber-700 dark:text-amber-400 hover:underline ml-1 inline-flex items-center gap-0.5 font-semibold"
             >

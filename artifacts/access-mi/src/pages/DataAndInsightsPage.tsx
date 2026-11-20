@@ -297,20 +297,20 @@ export default function DataAndInsightsPage() {
           className="space-y-8"
         >
           <TabsList className="grid w-full max-w-lg grid-cols-4">
-            <TabsTrigger value="dashboards" className="gap-1.5">
-              <BarChart3 className="h-4 w-4" />
+            <TabsTrigger value="dashboards" className="gap-1.5" aria-label="Dashboards">
+              <BarChart3 className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Dashboards</span>
             </TabsTrigger>
-            <TabsTrigger value="equity" className="gap-1.5">
-              <Heart className="h-4 w-4" />
+            <TabsTrigger value="equity" className="gap-1.5" aria-label="Equity">
+              <Heart className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Equity</span>
             </TabsTrigger>
-            <TabsTrigger value="data" className="gap-1.5">
-              <Database className="h-4 w-4" />
+            <TabsTrigger value="data" className="gap-1.5" aria-label="Open Data">
+              <Database className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Open Data</span>
             </TabsTrigger>
-            <TabsTrigger value="analysts" className="gap-1.5">
-              <Newspaper className="h-4 w-4" />
+            <TabsTrigger value="analysts" className="gap-1.5" aria-label="For Analysts">
+              <Newspaper className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">For Analysts</span>
             </TabsTrigger>
           </TabsList>

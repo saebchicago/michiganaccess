@@ -63,16 +63,15 @@ export const IMPACT_STORIES: ImpactStory[] = [
   {
     id: "fqhc-reach",
     title: "The FQHC Reach Problem",
-    subtitle: "Federally qualified health centers serve millions - but coverage is uneven",
+    subtitle: "Health centers are a core safety net - travel distance to them is not yet measured here",
     narrative:
-      "Michigan's 42 FQHCs operate 340+ delivery sites and serve over 750,000 patients annually. Yet HRSA GeoCare data shows that 28% of Michigan ZIPs have no FQHC within 30 minutes' drive. Statewide, 5.2% of residents were uninsured in the 2018-2022 Census survey.",
+      "Michigan's federally qualified health centers served 683,234 patients in 2024, according to HRSA's Uniform Data System. Statewide, 5.2% of residents were uninsured in the 2018-2022 Census survey. AccessMI does not yet measure how far residents live from the nearest health center, so it makes no claim about coverage gaps by ZIP.",
     stats: [
-      { label: "FQHC patients", value: "750K+", source: "HRSA UDS 2023" },
-      { label: "ZIPs without FQHC", value: "28%", source: "HRSA GeoCare Navigator" },
+      { label: "FQHC patients", value: "683,234", source: "HRSA UDS 2024" },
       { label: "Michigan uninsured", value: "5.2%", source: "Census ACS 5-year 2018-2022, table B27010" },
     ],
     takeaway:
-      "FQHC expansion alone won't close the access gap. Mobile health units and telehealth integration are needed for the 28% of ZIPs beyond a 30-minute drive.",
+      "Health centers serve patients regardless of insurance or ability to pay. Use Find Care to locate the nearest one.",
     href: "/find-care",
   },
   {

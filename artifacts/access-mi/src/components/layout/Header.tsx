@@ -15,6 +15,7 @@ import {
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 import CountySelector from "@/components/shared/CountySelector";
+import { OPEN_MENU_EVENT } from "@/lib/menuEvents";
 import SiteSearch, { commandSiteSearch } from "@/components/shared/SiteSearch";
 import { useCounty } from "@/contexts/CountyContext";
 import {
@@ -42,6 +43,11 @@ const Header = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  useEffect(() => {
+    const open = () => setMobileOpen(true);
+    window.addEventListener(OPEN_MENU_EVENT, open);
+    return () => window.removeEventListener(OPEN_MENU_EVENT, open);
+  }, []);
 
   // Resolve i18n labels
   const resolvedNavGroups = NAV_GROUPS.map((item) => {
@@ -74,12 +80,12 @@ const Header = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="group flex min-w-0 shrink-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 xl:min-w-[16.5rem]"
+            className="group flex min-w-0 shrink sm:shrink-0 items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 xl:min-w-[16.5rem]"
             aria-label="Access Michigan Home"
           >
             <AccessMILogo className="h-9 w-9 shrink-0" variant="compact" />
             <div className="flex min-w-0 flex-col leading-tight">
-              <span className="whitespace-nowrap text-sm font-bold text-foreground">
+              <span className="truncate whitespace-nowrap text-sm font-bold text-foreground">
                 Access Michigan
               </span>
               <span
@@ -152,7 +158,11 @@ const Header = () => {
               <BarChart2 className="h-3.5 w-3.5" />
               Compare
             </Link>
-            <CountySelector variant="header" />
+            {/* Below xl, location changes from the context bar under the header and
+                from the menu sheet; this copy would push Menu off-screen. */}
+            <div className="hidden xl:block">
+              <CountySelector variant="header" />
+            </div>
             <MySettingsDrawer />
             <ThemeToggle />
             <Button
