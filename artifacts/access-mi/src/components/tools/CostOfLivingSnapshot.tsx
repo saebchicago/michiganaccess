@@ -1,51 +1,32 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { DollarSign, Home, Fuel, Zap, ShoppingCart, Heart } from "lucide-react";
+import { DollarSign, Home } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-// Rent and mortgage: Census ACS 1-year 2024, tables B25064 (median gross rent) and
-// B25088 (median monthly owner costs, housing units with a mortgage), Michigan and US.
-// Other rows: AAA (gas), EIA (electricity), BLS CPI (groceries), KFF (health premiums).
+// Census ACS 1-year 2024, Michigan and United States:
+//   Median gross rent: table B25064.
+//   Median monthly owner costs, housing units with a mortgage: table B25088.
+// Gas, electricity, grocery and premium rows were removed 2026-11-20: their
+// values had no recorded period and could not be traced to a primary release
+// (BLS CPI also publishes no state price levels, so a "grocery index" cannot
+// come from it). Re-add only with a primary source and period.
 const COST_DATA = [
   { label: "Median Rent", icon: Home, mi: 1168, nat: 1487, unit: "/mo" },
   { label: "Median Mortgage", icon: Home, mi: 1573, nat: 2035, unit: "/mo" },
-  { label: "Gas Price", icon: Fuel, mi: 3.92, nat: 3.68, unit: "/gal" },
-  { label: "Electricity", icon: Zap, mi: 19.8, nat: 17.5, unit: "¢/kWh" },
-  { label: "Grocery Index", icon: ShoppingCart, mi: 95.2, nat: 100, unit: " (100=avg)" },
-  { label: "Health Premium", icon: Heart, mi: 7200, nat: 7739, unit: "/yr" },
 ];
 
 export default function CostOfLivingSnapshot() {
-  const [householdSize, setHouseholdSize] = useState(2);
-
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
             <DollarSign className="h-5 w-5 text-michigan-gold-deep" />
-            Michigan vs. National Cost of Living
+            Michigan vs. National Housing Costs
           </CardTitle>
-          <CardDescription>Based on statewide averages. Your county may vary.</CardDescription>
+          <CardDescription>Statewide medians. Your county may vary.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Household toggle */}
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span>Household:</span>
-            {[1, 2, 4].map((n) => (
-              <button
-                key={n}
-                onClick={() => setHouseholdSize(n)}
-                className={`px-2.5 py-1 rounded-full text-[10px] font-medium transition-colors ${
-                  householdSize === n ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                }`}
-              >
-                {n} {n === 1 ? "person" : "people"}
-              </button>
-            ))}
-          </div>
-
           {/* Comparison bars */}
           <div className="space-y-3">
             {COST_DATA.map((item) => {
@@ -106,7 +87,7 @@ export default function CostOfLivingSnapshot() {
           </div>
 
           <p className="text-[10px] text-muted-foreground">
-            Sources: Census ACS 1-year 2024, tables B25064 and B25088 (rent, owner costs with a mortgage), AAA (gas), EIA (electricity), BLS CPI (groceries), KFF (health premiums).
+            Source: Census ACS 1-year 2024, tables B25064 (median gross rent) and B25088 (median monthly owner costs with a mortgage).
           </p>
         </CardContent>
       </Card>

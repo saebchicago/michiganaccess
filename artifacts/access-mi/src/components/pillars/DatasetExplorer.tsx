@@ -274,7 +274,7 @@ export default function DatasetExplorer({ defaultPillar, geographyFilter, county
             {(["health", "environment", "mobility", "economic"] as Pillar[]).map((p) => {
               const Icon = PILLAR_ICONS[p];
               return (
-                <TabsTrigger key={p} value={p} className="gap-1.5 text-xs">
+                <TabsTrigger key={p} value={p} className="gap-1.5 text-xs" aria-label={PILLAR_META[p].label}>
                   <Icon className="h-3.5 w-3.5" aria-hidden="true" />
                   <span className="hidden sm:inline">{PILLAR_META[p].label}</span>
                 </TabsTrigger>

@@ -111,10 +111,10 @@ Nothing below was regenerated in that pass.
 - [ ] Stale static vintage, `cross-domain-indicators.ts` and `state-benchmarks.ts`, `zip-quickstats.ts`: ACS 5-year 2018-2022. Re-pull from https://api.census.gov/data/2024/acs/acs5 (county and ZCTA geographies) and update `vintage` fields.
 - [ ] Mixed vintages on one page: ZIP and compare pages show live ACS 5-year 2020-2024 next to static 2018-2022 benchmarks until the items above are refreshed.
 - [x] Ambiguous labels source-checked 2026-11-20 against Census table-based summary files (www2.census.gov, keyless):
-  - `CostOfLivingSnapshot.tsx`: rent/mortgage matched no single release (US rent = 2017-2021 5-year, US mortgage = 2021 1-year, MI values matched none). Replaced with ACS 1-year 2024 B25064/B25088. Gas, electricity, grocery and premium rows were not checked.
+  - `CostOfLivingSnapshot.tsx`: rent/mortgage matched no single release (US rent = 2017-2021 5-year, US mortgage = 2021 1-year, MI values matched none). Replaced with ACS 1-year 2024 B25064/B25088. Follow-up 2026-11-20: gas, electricity, grocery and premium rows removed (no period, no primary source reachable; BLS CPI publishes no state price levels). Unused household-size toggle removed.
   - `CountyCompare.tsx`: no ACS measure on the card; label now names PEP V2024, SAHIE 2022, HRSA AHRF 2021, Feeding America 2022.
   - `DataAndInsightsPage.tsx`: "Rural uninsured 14%, twice urban" had no derivation; replaced with statewide 5.1% (ACS 1-year 2024, B27010).
-  - `impactStories.ts`: 9.2% "uninsured in gap ZIPs" had no derivation; removed. State 5.2% confirmed as ACS 5-year 2018-2022 (B27010). FQHC counts and the 28% HRSA figure were not checked.
+  - `impactStories.ts`: 9.2% "uninsured in gap ZIPs" had no derivation; removed. State 5.2% confirmed as ACS 5-year 2018-2022 (B27010). Follow-up 2026-11-20: patients corrected to 683,234 (HRSA UDS 2024, matching `sourceManifest.ts`); "42 FQHCs", "340+ sites", "28% of ZIPs" and "serve millions" removed as untraceable. Re-add with HRSA site data if wanted (data.hrsa.gov is not reachable from the build container).
   - `language-access.ts`: Spanish, Arabic, Chinese matched ACS 5-year 2020-2024 B16001; the other seven matched no 2021-2024 release. All ten replaced from 2020-2024 B16001. "Southeast Michigan" attribution of the statewide Arabic count removed.
   - `FoodAccessMap.tsx`: SNAP rates matched no B22003 release and tract/percent columns contradicted `usda-fara-county.generated.json`. Card now reads that dataset; SNAP column, "1.4M+" and "14.6%" removed.
 - [ ] `dataCatalog.ts`, `dataFreshness.ts` (sacrosanct) and `sources.ts`/`sources.test.ts` still reference the 2023 B27010 table for the dual-eligible dataset; update with the refresh above.
@@ -132,3 +132,8 @@ matching the catalog's license state.
 
 Blocked in the 2026-11-20 session: the ACS refreshes above need a Census API key; api.census.gov
 redirected keyless requests to its "Missing Key" page from the build container.
+
+## Mobile header and tab names (2026-11-20)
+
+- [x] Header actions were 538px wide at every phone width, so Settings, Theme and Menu sat off-screen on 360-414px phones. The header county picker now shows at `lg` and up (it also overflowed tablets at 768px); phones keep the context bar and the menu sheet, which both carry the picker. Brand text truncates instead of widening the row.
+- [x] Icon-only tabs on phones had no accessible name in `DataAndInsightsPage` and `DatasetExplorer`; each now has `aria-label`.
