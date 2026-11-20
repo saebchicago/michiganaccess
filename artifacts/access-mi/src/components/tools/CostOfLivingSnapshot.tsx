@@ -4,10 +4,12 @@ import { DollarSign, Home, Fuel, Zap, ShoppingCart, Heart } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-// Source: Census ACS 2023 (rent/mortgage), AAA (gas), EIA (electricity), BLS CPI (groceries), KFF (health premiums)
+// Rent and mortgage: Census ACS 1-year 2024, tables B25064 (median gross rent) and
+// B25088 (median monthly owner costs, housing units with a mortgage), Michigan and US.
+// Other rows: AAA (gas), EIA (electricity), BLS CPI (groceries), KFF (health premiums).
 const COST_DATA = [
-  { label: "Median Rent", icon: Home, mi: 1058, nat: 1163, unit: "/mo" },
-  { label: "Median Mortgage", icon: Home, mi: 1339, nat: 1672, unit: "/mo" },
+  { label: "Median Rent", icon: Home, mi: 1168, nat: 1487, unit: "/mo" },
+  { label: "Median Mortgage", icon: Home, mi: 1573, nat: 2035, unit: "/mo" },
   { label: "Gas Price", icon: Fuel, mi: 3.92, nat: 3.68, unit: "/gal" },
   { label: "Electricity", icon: Zap, mi: 19.8, nat: 17.5, unit: "¢/kWh" },
   { label: "Grocery Index", icon: ShoppingCart, mi: 95.2, nat: 100, unit: " (100=avg)" },
@@ -104,7 +106,7 @@ export default function CostOfLivingSnapshot() {
           </div>
 
           <p className="text-[10px] text-muted-foreground">
-            Sources: Census ACS 2023 (rent/mortgage), AAA (gas), EIA (electricity), BLS CPI (groceries), KFF (health premiums).
+            Sources: Census ACS 1-year 2024, tables B25064 and B25088 (rent, owner costs with a mortgage), AAA (gas), EIA (electricity), BLS CPI (groceries), KFF (health premiums).
           </p>
         </CardContent>
       </Card>

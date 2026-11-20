@@ -26,7 +26,7 @@ import { computeCivicScore } from "@/lib/civic-score";
 import { getBlsLausForCountyName } from "@/data/bls-laus-county";
 import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
 import { getPlacesForCountyName } from "@/data/cdc-places-county";
-import { getAcsBroadbandForCountyName } from "@/data/acs-broadband-county";
+import { getAcsBroadbandForCountyName, ACS_BROADBAND_COUNTY_PROVENANCE } from "@/data/acs-broadband-county";
 import {
   HUD_CHAS_COUNTY_PROVENANCE,
   getChasForCountyName,
@@ -442,8 +442,8 @@ export default function BriefPage() {
                 ? `${bb!.broadbandSubscriptionRate!.toFixed(1)}%`
                 : "no data",
               badge: hasVal ? "VERIFIED" : "no data",
-              source: "ACS 5-year 2019-2023 (B28002)",
-              vintage: "2019-2023",
+              source: `ACS 5-year ${ACS_BROADBAND_COUNTY_PROVENANCE.vintage_window} (B28002)`,
+              vintage: ACS_BROADBAND_COUNTY_PROVENANCE.vintage_window,
             };
           })(),
           (() => {
