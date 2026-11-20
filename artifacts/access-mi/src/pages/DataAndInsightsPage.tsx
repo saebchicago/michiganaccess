@@ -112,11 +112,11 @@ const equityInsights = [
   },
   {
     icon: Users,
-    title: "Rural Uninsured Rate",
-    stat: "14%",
+    title: "Uninsured Rate",
+    stat: "5.1%",
     description:
-      "Rural Michiganders are twice as likely to be uninsured as urban residents.",
-    source: "Census ACS 2023",
+      "About 1 in 20 Michigan residents had no health insurance in 2024, compared with 8.2% nationally.",
+    source: "Census ACS 1-year 2024, table B27010 (civilian noninstitutionalized population)",
     color: "gold" as const,
     trend: "stable" as const,
   },

@@ -52,7 +52,7 @@ const APPLY = process.argv.includes("--apply");
 const REQUIRE_LIVE = process.argv.includes("--require-live");
 const CENSUS_API_KEY = process.env.CENSUS_API_KEY ?? "";
 
-const ACS_VINTAGE = 2023; // most recent ACS 5-Year stable release
+const ACS_VINTAGE = 2024; // 2020-2024 5-Year release
 const ACS_WINDOW = `${ACS_VINTAGE - 4}-${ACS_VINTAGE}`;
 const ACS_BASE = "https://api.census.gov/data";
 const ACS_TABLE = "B28002";

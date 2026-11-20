@@ -30,7 +30,7 @@ import { getALICEByCounty, MICHIGAN_ALICE_STATEWIDE } from "@/data/aliceData";
 import { getBlsLausForCountyName } from "@/data/bls-laus-county";
 import { getPlacesForCountyName } from "@/data/cdc-places-county";
 import { getHpsaForCountyName } from "@/data/hrsa-hpsa-county";
-import { getAcsBroadbandForCountyName } from "@/data/acs-broadband-county";
+import { getAcsBroadbandForCountyName, ACS_BROADBAND_COUNTY_PROVENANCE } from "@/data/acs-broadband-county";
 import {
   HUD_CHAS_COUNTY_PROVENANCE,
   getChasForCountyName,
@@ -606,8 +606,8 @@ function resolveBroadband(county: string): CivicDataPoint[] {
       label: "Households with broadband subscription",
       value: `${bbData.broadbandSubscriptionRate.toFixed(1)}%`,
       valueLabel: "VERIFIED",
-      source: "U.S. Census ACS 5-year 2019-2023 (B28002)",
-      vintage: "2019-2023",
+      source: `U.S. Census ACS 5-year ${ACS_BROADBAND_COUNTY_PROVENANCE.vintage_window} (B28002)`,
+      vintage: ACS_BROADBAND_COUNTY_PROVENANCE.vintage_window,
     });
   }
 

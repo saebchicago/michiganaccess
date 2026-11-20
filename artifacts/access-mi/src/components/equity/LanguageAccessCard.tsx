@@ -19,7 +19,7 @@ export default function LanguageAccessCard() {
             <Globe className="h-5 w-5 text-primary" /> Language Access in Michigan
           </CardTitle>
           <CardDescription>
-            Spanish is Michigan's second most-spoken language statewide (298K speakers per Census ACS). Southeast Michigan is also home to 172K Arabic speakers - one of the largest Arabic-speaking populations in the US.
+            After English, Spanish (298,830 speakers) and Arabic (172,609) are the languages most spoken at home in Michigan, among residents age 5 and older.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -57,7 +57,7 @@ export default function LanguageAccessCard() {
             </p>
           </div>
 
-          <p className="text-[10px] text-muted-foreground">Source: Census ACS 2022-2024, Data USA, AAPI Vote Michigan</p>
+          <p className="text-[10px] text-muted-foreground">Speakers: Census ACS 5-year 2020-2024, table B16001. *Census group: Amharic, Somali, or other Afro-Asiatic languages. County hotspots: Data USA, AAPI Vote Michigan.</p>
         </CardContent>
       </Card>
     </motion.div>

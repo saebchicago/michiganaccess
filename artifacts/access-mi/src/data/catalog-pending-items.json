@@ -14,13 +14,6 @@
     "reviewed": "2026-11-20"
   },
   {
-    "id": "unstated-acs-product",
-    "audience": "everyone",
-    "title": "A few source lines name a year without the survey product",
-    "text": "Some labels read \"Census ACS 2022\" or \"Census ACS 2023\" without saying 1-year or 5-year. Treat the period of those figures as unconfirmed until the label is corrected.",
-    "reviewed": "2026-11-20"
-  },
-  {
     "id": "license-review",
     "audience": "everyone",
     "title": "Reuse terms are not yet recorded for any feed",

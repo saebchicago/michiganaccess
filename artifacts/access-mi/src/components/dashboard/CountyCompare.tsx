@@ -170,7 +170,7 @@ export default function CountyCompare() {
           </div>
 
           <p className="text-[10px] text-muted-foreground">
-            Green highlights indicate the better value. Source: County Health Rankings & Roadmaps, 2025 edition, Census ACS 2023.
+            Green highlights indicate the better value. Sources: Census Bureau Population Estimates (Vintage 2024); County Health Rankings & Roadmaps, 2025 edition (uninsured: Census SAHIE 2022; primary care: HRSA AHRF 2021; food insecurity: Feeding America Map the Meal Gap 2022).
           </p>
 
           {/* Links to place pages */}

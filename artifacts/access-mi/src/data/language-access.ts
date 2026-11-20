@@ -1,16 +1,23 @@
-/** Michigan language access data. Source: Census ACS 2022-2024, Data USA, AAPI Vote Michigan */
+/**
+ * Michigan languages spoken at home, population age 5 and older (9,536,435).
+ * Source: Census ACS 5-year 2020-2024, table B16001, Michigan. Top ten single
+ * languages; the residual "Other Indo-European languages" group is omitted.
+ * pctOfPop = speakers / population age 5+. "Somali/Amharic*" is the Census
+ * group "Amharic, Somali, or other Afro-Asiatic languages".
+ * LANGUAGE_HOTSPOTS: Data USA and AAPI Vote Michigan county profiles.
+ */
 
 export const MI_LANGUAGES = [
-  { code: "es", name: "Spanish", speakers: 298830, pctOfPop: 3.0 },
-  { code: "ar", name: "Arabic", speakers: 172609, pctOfPop: 1.7 },
+  { code: "es", name: "Spanish", speakers: 298830, pctOfPop: 3.1 },
+  { code: "ar", name: "Arabic", speakers: 172609, pctOfPop: 1.8 },
   { code: "zh", name: "Chinese", speakers: 46756, pctOfPop: 0.5 },
-  { code: "de", name: "German", speakers: 32254, pctOfPop: 0.3 },
-  { code: "so", name: "Somali/Amharic", speakers: 30293, pctOfPop: 0.3 },
-  { code: "bn", name: "Bengali", speakers: 21627, pctOfPop: 0.2 },
-  { code: "fr", name: "French", speakers: 21522, pctOfPop: 0.2 },
-  { code: "hi", name: "Hindi", speakers: 20831, pctOfPop: 0.2 },
-  { code: "pl", name: "Polish", speakers: 18036, pctOfPop: 0.2 },
-  { code: "tl", name: "Tagalog", speakers: 15674, pctOfPop: 0.2 },
+  { code: "de", name: "German", speakers: 30618, pctOfPop: 0.3 },
+  { code: "bn", name: "Bengali", speakers: 29564, pctOfPop: 0.3 },
+  { code: "so", name: "Somali/Amharic*", speakers: 29447, pctOfPop: 0.3 },
+  { code: "fr", name: "French", speakers: 20857, pctOfPop: 0.2 },
+  { code: "hi", name: "Hindi", speakers: 20783, pctOfPop: 0.2 },
+  { code: "ko", name: "Korean", speakers: 16978, pctOfPop: 0.2 },
+  { code: "tl", name: "Tagalog", speakers: 16539, pctOfPop: 0.2 },
 ];
 
 export const LANGUAGE_HOTSPOTS: Record<string, string[]> = {

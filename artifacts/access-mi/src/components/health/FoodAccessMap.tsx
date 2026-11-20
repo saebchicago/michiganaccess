@@ -5,28 +5,19 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-// Source: USDA Economic Research Service, Food Access Research Atlas. SNAP rates from ACS 2023.
-const FOOD_DESERT_DATA = [
-  { county: "Wayne", tracts: 185, pctPop: 38.2, snapRate: 32.1 },
-  { county: "Genesee", tracts: 48, pctPop: 35.8, snapRate: 28.4 },
-  { county: "Saginaw", tracts: 24, pctPop: 28.6, snapRate: 25.2 },
-  { county: "Muskegon", tracts: 18, pctPop: 26.4, snapRate: 23.8 },
-  { county: "Berrien", tracts: 16, pctPop: 24.1, snapRate: 21.5 },
-  { county: "Calhoun", tracts: 14, pctPop: 22.8, snapRate: 22.1 },
-  { county: "Jackson", tracts: 12, pctPop: 19.6, snapRate: 18.4 },
-  { county: "Ingham", tracts: 15, pctPop: 17.2, snapRate: 19.6 },
-  { county: "Kent", tracts: 22, pctPop: 14.8, snapRate: 15.2 },
-  { county: "Lake", tracts: 4, pctPop: 52.1, snapRate: 34.8 },
-  { county: "Oscoda", tracts: 3, pctPop: 48.6, snapRate: 31.2 },
-  { county: "Crawford", tracts: 3, pctPop: 42.4, snapRate: 28.6 },
-  { county: "Macomb", tracts: 14, pctPop: 8.2, snapRate: 12.4 },
-  { county: "Oakland", tracts: 12, pctPop: 5.1, snapRate: 8.2 },
-  { county: "Washtenaw", tracts: 8, pctPop: 6.4, snapRate: 10.1 },
-];
+import { MICHIGAN_FOOD_ACCESS, FOOD_ACCESS_SOURCE } from "@/hooks/useFoodAccess";
+
+// USDA ERS Food Access Research Atlas 2019, summed from tracts to counties by
+// scripts/refresh-usda-fara-county.mjs. "Food desert" = USDA's low-income,
+// low-access (LILA) tract flag at 1 mile urban / 10 miles rural.
+const TOP_COUNTIES = [...MICHIGAN_FOOD_ACCESS]
+  .sort((a, b) => b.lilaTracts - a.lilaTracts)
+  .slice(0, 15);
+const TOTAL_LILA_TRACTS = MICHIGAN_FOOD_ACCESS.reduce((sum, d) => sum + d.lilaTracts, 0);
+const TOTAL_TRACTS = MICHIGAN_FOOD_ACCESS.reduce((sum, d) => sum + d.totalTracts, 0);
+const TOTAL_LILA_POP = MICHIGAN_FOOD_ACCESS.reduce((sum, d) => sum + d.lowIncomeLowAccessPop, 0);
 
 export default function FoodAccessMap() {
-  const totalTracts = FOOD_DESERT_DATA.reduce((sum, d) => sum + d.tracts, 0);
-
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
       <Card>
@@ -42,16 +33,16 @@ export default function FoodAccessMap() {
           {/* Stats */}
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-lg border border-border p-3 text-center">
-              <p className="text-2xl font-bold text-michigan-coral-deep">{totalTracts}+</p>
-              <p className="text-xs text-muted-foreground">Food desert census tracts</p>
+              <p className="text-2xl font-bold text-michigan-coral-deep">{TOTAL_LILA_TRACTS.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground">Food desert census tracts (of {TOTAL_TRACTS.toLocaleString()})</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
-              <p className="text-2xl font-bold text-foreground">1.4M+</p>
-              <p className="text-xs text-muted-foreground">Residents in food deserts</p>
+              <p className="text-2xl font-bold text-foreground">{TOTAL_LILA_POP.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground">Low-income residents with low food access</p>
             </div>
             <div className="rounded-lg border border-border p-3 text-center">
-              <p className="text-2xl font-bold text-michigan-gold-deep">14.6%</p>
-              <p className="text-xs text-muted-foreground">Statewide food insecurity</p>
+              <p className="text-2xl font-bold text-michigan-gold-deep">2019</p>
+              <p className="text-xs text-muted-foreground">Latest USDA atlas year</p>
             </div>
           </div>
 
@@ -59,7 +50,7 @@ export default function FoodAccessMap() {
           <div className="rounded-lg border border-michigan-coral/20 bg-michigan-coral/5 p-3 flex items-start gap-2">
             <AlertTriangle className="h-4 w-4 text-michigan-coral-deep shrink-0 mt-0.5" />
             <p className="text-xs text-foreground">
-              Rural counties like <strong>Lake (52%)</strong>, <strong>Oscoda (49%)</strong>, and <strong>Crawford (42%)</strong> have the highest % of population in food deserts - but <strong>Wayne County</strong> has the most food desert tracts (185) by total count.
+              <strong>{TOP_COUNTIES[0].county} County</strong> has the most food desert tracts ({TOP_COUNTIES[0].lilaTracts}).
             </p>
           </div>
 
@@ -69,20 +60,20 @@ export default function FoodAccessMap() {
               <thead>
                 <tr className="border-b border-border text-left">
                   <th className="pb-2 text-xs font-medium text-muted-foreground">County</th>
-                  <th className="pb-2 text-xs font-medium text-muted-foreground text-right">Desert Tracts</th>
-                  <th className="pb-2 text-xs font-medium text-muted-foreground text-right">Pop in Deserts</th>
-                  <th className="pb-2 text-xs font-medium text-muted-foreground text-right">SNAP Rate</th>
+                  <th className="pb-2 text-xs font-medium text-muted-foreground text-right">Food desert tracts</th>
+                  <th className="pb-2 text-xs font-medium text-muted-foreground text-right">Tracts with low access</th>
+                  <th className="pb-2 text-xs font-medium text-muted-foreground text-right">Low-income, low-access residents</th>
                 </tr>
               </thead>
               <tbody>
-                {FOOD_DESERT_DATA.map((d) => (
+                {TOP_COUNTIES.map((d) => (
                   <tr key={d.county} className="border-b border-border/50 last:border-0">
                     <td className="py-2 font-medium text-foreground">{d.county}</td>
-                    <td className="py-2 text-right tabular-nums">{d.tracts}</td>
+                    <td className="py-2 text-right tabular-nums">{d.lilaTracts}</td>
                     <td className="py-2 text-right">
-                      <span className={d.pctPop > 25 ? "text-michigan-coral-deep font-semibold" : ""}>{d.pctPop}%</span>
+                      <span className={d.lowAccessPct > 50 ? "text-michigan-coral-deep font-semibold" : ""}>{d.lowAccessPct}%</span>
                     </td>
-                    <td className="py-2 text-right tabular-nums">{d.snapRate}%</td>
+                    <td className="py-2 text-right tabular-nums">{d.lowIncomeLowAccessPop.toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
@@ -102,7 +93,7 @@ export default function FoodAccessMap() {
           </div>
 
           <p className="text-[10px] text-muted-foreground">
-            Source: USDA Economic Research Service, Food Access Research Atlas. SNAP rates from ACS 2023.
+            Source: {FOOD_ACCESS_SOURCE}, tract data summed to counties (MODELED). Tracts with low access: share of the county's tracts USDA flags low access. Low access: more than 1 mile (urban) or 10 miles (rural) from a supermarket. Population counts are 2010 Census based. Top 15 counties by food desert tracts.
           </p>
         </CardContent>
       </Card>
