@@ -5,6 +5,7 @@ import Layout from "@/components/layout/Layout";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import readingNotes from "@/data/catalog-reading-notes.json";
+import pendingItems from "@/data/catalog-pending-items.json";
 import AnimatedCounter from "@/components/ui/AnimatedCounter";
 import {
   DATA_SOURCE_DISPLAY,
@@ -62,7 +63,8 @@ export default function DataSourcesPage() {
               organizations - several publishers ship more than one dataset, so
               the two numbers differ by design.{" "}
               <a href="/data/source-catalog.json" className="underline">Download the source catalog (JSON)</a>.{" "}
-              <a href="#reading-notes" className="underline">How to read and reuse these data</a>.
+              <a href="#reading-notes" className="underline">How to read and reuse these data</a>.{" "}
+              <a href="#pending-items" className="underline">What is still pending</a>.
             </p>
           </motion.div>
         </div>
@@ -79,6 +81,25 @@ export default function DataSourcesPage() {
               </div>
             ))}
           </dl>
+        </section>
+        <section id="pending-items" aria-labelledby="pending-items-title" className="space-y-3">
+          <h2 id="pending-items-title" className="text-lg font-bold">What is still pending</h2>
+          <p className="text-sm text-muted-foreground">
+            Known limits we have not fixed yet. Items marked for automated readers
+            describe how software and AI agents should treat these files.
+          </p>
+          <ol className="space-y-3 text-sm list-decimal pl-5">
+            {pendingItems.map((item) => (
+              <li key={item.id} id={`pending-${item.id}`}>
+                <span className="font-semibold">{item.title}</span>
+                {item.audience === "agents" && (
+                  <Badge variant="outline" className="ml-2 text-[10px]">For automated readers</Badge>
+                )}
+                <p className="text-muted-foreground">{item.text}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="text-xs text-muted-foreground">Reviewed {pendingItems[0]?.reviewed}.</p>
         </section>
         {Object.entries(SOURCES).map(([category, sources]) => (
           <section key={category}>

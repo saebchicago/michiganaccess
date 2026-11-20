@@ -63,6 +63,7 @@ async function main() {
       entryCount: entries.length,
       schema: "v1",
       readingNotes: JSON.parse(await readFile(join(root, "src/data/catalog-reading-notes.json"), "utf8")),
+      pendingItems: JSON.parse(await readFile(join(root, "src/data/catalog-pending-items.json"), "utf8")),
       note: "Machine-readable source catalog. license fields are null pending legal review.",
     },
     sources: entries,

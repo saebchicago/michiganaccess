@@ -113,4 +113,16 @@ Nothing below was regenerated in that pass.
 - [ ] Ambiguous labels left unchanged (period not stated in the text, needs a source check): "Census ACS 2023" in `FoodAccessMap.tsx`, `CostOfLivingSnapshot.tsx`, `CountyCompare.tsx`, `DataAndInsightsPage.tsx`; "Census ACS 2022" in `impactStories.ts`; "ACS 2022-2024" in `language-access.ts`.
 - [ ] `dataCatalog.ts`, `dataFreshness.ts` (sacrosanct) and `sources.ts`/`sources.test.ts` still reference the 2023 B27010 table for the dual-eligible dataset; update with the refresh above.
 - [ ] Supabase functions changed in this pass deploy out of band (see PR body, "Deploy manually").
-- [ ] `ACS_FALLBACK` in `useCHNATractData.ts` holds three hand-entered tracts; review against the no-placeholder-data rule.
+- [x] `ACS_FALLBACK` in `useCHNATractData.ts`: emptied in #263 (verified 2026-11-20); no hand-entered tracts remain.
+
+## Public disclosure of open items (2026-11-20)
+
+Open items that affect how a figure should be read are now published, not only tracked here:
+`artifacts/access-mi/src/data/catalog-pending-items.json` feeds the "What is still pending"
+section of `/data-sources`, `_meta.pendingItems` in `/data/source-catalog.json`, and a pointer in
+`llms.txt`. When an item above is closed, remove or edit its pending entry in the same change.
+`catalog-pending-items.test.ts` fails if the catalog copy drifts or the license item stops
+matching the catalog's license state.
+
+Blocked in the 2026-11-20 session: the ACS refreshes above need a Census API key; api.census.gov
+redirected keyless requests to its "Missing Key" page from the build container.
