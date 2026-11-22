@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accessmi.org/data/schema/data-index.schema.json",
+  "title": "AccessMI public data index",
+  "type": "object",
+  "required": [
+    "_meta",
+    "datasets"
+  ],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "required": [
+        "schema",
+        "reviewed",
+        "access"
+      ]
+    },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "path",
+          "media_type",
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "supported",
+              "unsupported"
+            ]
+          },
+          "schema": {
+            "type": "string"
+          },
+          "epistemic_label": {
+            "enum": [
+              "VERIFIED",
+              "MODELED",
+              "PROJECTED",
+              "PENDING",
+              "REPORTED",
+              "INSUFFICIENT_DATA",
+              null
+            ]
+          },
+          "upstream_terms_status": {
+            "enum": [
+              "established",
+              "not_established",
+              "restricted"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

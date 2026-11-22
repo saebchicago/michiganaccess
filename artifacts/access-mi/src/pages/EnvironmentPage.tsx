@@ -809,7 +809,7 @@ const EnvironmentPage = () => {
                         </ul>
                         <div className="flex flex-col gap-2 pt-2">
                           <a
-                            href="https://www.michigan.gov/egle/about/featured/mi-lead-safe"
+                            href="https://www.michigan.gov/mileadsafe"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-1 text-xs text-primary hover:underline"

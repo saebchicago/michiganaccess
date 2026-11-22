@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accessmi.org/data/schema/census-county-lookup.schema.json",
+  "title": "Census county lookup",
+  "type": "object",
+  "required": [
+    "_meta",
+    "data"
+  ],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "required": [
+        "id",
+        "source_url",
+        "fetched_at"
+      ]
+    },
+    "data": {
+      "type": "array",
+      "description": "Row 0 is the header [NAME, state, county]. Codes are strings; preserve leading zeros.",
+      "items": {
+        "type": "array",
+        "minItems": 3,
+        "maxItems": 3,
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

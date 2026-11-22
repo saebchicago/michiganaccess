@@ -466,7 +466,7 @@ export default function MethodologyPage() {
                 source: "MiLeadSafe (Lead Service Line Replacement Tracker)",
                 desc: "Statewide dashboard tracking lead service line inventories and replacement progress by water system. Supports the federal Lead & Copper Rule Revisions (LCRR).",
                 frequency: "Updated as replacements occur",
-                url: "https://www.michigan.gov/egle/about/featured/mi-lead-safe",
+                url: "https://www.michigan.gov/mileadsafe",
               },
               {
                 source: "NWS Weather API (Alerts & Forecast)",

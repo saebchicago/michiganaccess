@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accessmi.org/data/schema/download-manifest.schema.json",
+  "title": "Open-data ingestion manifest",
+  "type": "object",
+  "required": [
+    "built_at",
+    "datasets"
+  ],
+  "properties": {
+    "built_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "provider",
+          "path"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "records": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

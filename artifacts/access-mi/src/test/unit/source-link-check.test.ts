@@ -159,3 +159,21 @@ describe("checkAllUrls", () => {
     expect(byStatus["https://dead.example.com"]).toBe("network-error");
   });
 });
+
+describe("checkUrl bot-block handling", () => {
+  it("classifies 401/403/429 as blocked, not dead", async () => {
+    for (const code of [401, 403, 429]) {
+      const fetchImpl = vi.fn().mockResolvedValue(fakeResponse(code));
+      const result = await checkUrl("https://example.com/gated", { fetchImpl });
+      expect(result.status).toBe("blocked");
+    }
+  });
+
+  it("retries a failed HEAD as GET before judging the URL", async () => {
+    const fetchImpl = vi.fn().mockResolvedValueOnce(fakeResponse(404)).mockResolvedValueOnce(fakeResponse(200));
+    const result = await checkUrl("https://example.com/head-hostile", { fetchImpl });
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+    expect(fetchImpl.mock.calls[1][1].method).toBe("GET");
+    expect(result.status).toBe("ok");
+  });
+});
