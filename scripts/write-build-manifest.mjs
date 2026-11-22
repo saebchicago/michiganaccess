@@ -49,6 +49,11 @@ export function hashTree(dir) {
   return { digest: h.digest("hex"), files: files.length };
 }
 
+/** The src of the page's module script (Vite's content-hashed entry bundle). */
+export function moduleScript(html) {
+  return html.match(/<script[^>]+type="module"[^>]+src="([^"]+)"/)?.[1] ?? null;
+}
+
 /** Pure validation, exported for tests. Returns a list of problems. */
 export function validateManifest(manifest, { headSha } = {}) {
   const problems = [];
@@ -58,6 +63,7 @@ export function validateManifest(manifest, { headSha } = {}) {
     problems.push(`commit ${manifest.commit} does not match checked-out HEAD ${headSha}`);
   }
   if (!manifest.entry_html_sha256) problems.push("dist/index.html is missing");
+  else if (!manifest.entry_module_script) problems.push("dist/index.html has no module script");
   for (const [file, info] of Object.entries(manifest.datasets ?? {})) {
     if (!info.present) problems.push(`critical dataset missing: ${file}`);
     else if (info.populated === false) problems.push(`critical dataset not populated: ${file}`);
@@ -126,6 +132,9 @@ function main() {
     package_manager: pkg.packageManager ?? null,
     lockfile_sha256: existsSync("pnpm-lock.yaml") ? sha256File("pnpm-lock.yaml") : null,
     entry_html_sha256: existsSync(entry) ? sha256File(entry) : null,
+    // Fallback identity for verify-release when a CDN alters index.html
+    // bytes: the content-hashed entry bundle the page must still load.
+    entry_module_script: existsSync(entry) ? moduleScript(readFileSync(entry, "utf8")) : null,
     published_tree: tree,
     datasets: Object.fromEntries(CRITICAL_DATASETS.map((p) => [p, datasetInfo(p)])),
     dataset_ingested_at: ingestedAt,

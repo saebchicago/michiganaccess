@@ -10,7 +10,8 @@
     "built_at",
     "lockfile_sha256",
     "entry_html_sha256",
-    "datasets"
+    "datasets",
+    "entry_module_script"
   ],
   "properties": {
     "schema": {
@@ -59,6 +60,13 @@
           "present"
         ]
       }
+    },
+    "entry_module_script": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "src of the homepage's content-hashed module script"
     }
   }
 }

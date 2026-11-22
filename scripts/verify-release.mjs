@@ -41,10 +41,23 @@ export function checkHomepage(html, sha256, manifest) {
   out.push({ id: "home.h1", ok: /<h1[^>]*>[^<]{3,}/.test(html), detail: "H1 present in initial HTML" });
   out.push({ id: "home.no-placeholder", ok: !/lorem ipsum|TODO:|PLACEHOLDER/i.test(html), detail: "no placeholder copy" });
   // Byte-identical index.html is the strongest link between build and serve.
-  // If a CDN transform ever changes bytes, the module-script name still has
-  // to match, which ties the served HTML to this build's asset hashes.
+  // If a CDN transform changed the bytes, the page must still load exactly
+  // the content-hashed entry bundle this build produced. Any other module
+  // script (or none, or a manifest that does not record one) fails: a stale
+  // homepage from another release must never pass.
   const exact = sha256 === manifest?.entry_html_sha256;
-  out.push({ id: "home.entry-html", ok: exact || Boolean(mainScript(html)), detail: exact ? "served index.html matches build.json entry_html_sha256" : `bytes differ from build.json; module script ${mainScript(html) ?? "missing"}` , strict: exact });
+  const served = mainScript(html);
+  const expected = manifest?.entry_module_script ?? null;
+  const sameBundle = Boolean(expected) && served === expected;
+  out.push({
+    id: "home.entry-html",
+    ok: exact || sameBundle,
+    detail: exact
+      ? "served index.html matches build.json entry_html_sha256"
+      : sameBundle
+        ? `bytes differ from build.json but the page loads the expected entry bundle ${expected}`
+        : `bytes differ from build.json and module script ${served ?? "missing"} is not the expected ${expected ?? "(not recorded)"}`,
+  });
   return out;
 }
 
