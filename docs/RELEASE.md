@@ -52,3 +52,11 @@ Manual follow-up: `node scripts/verify-release.mjs --base https://accessmi.org -
 - **Lovable** (project "Michigan Access"): two-way synced with `main`, and its latest commit matched `main` on 2026-11-22. It commits directly to `main` without PR or CI, as it did with `bun.lock`, `drizzle/` and root `src/` on 2026-11-20. Review its commits before each release.
 - **Replit**: `artifacts/access-mi/.replit-artifact/artifact.toml` serves `artifacts/access-mi/dist`. It has not been verified on a live Replit deployment.
 - **Supabase** (project `znahhtdbcgepezrxwnah`): functions deploy out-of-band from `.migration-backup/` and `supabase/functions/`. They are not covered by `build.json`.
+
+## Before enabling branch protection on `main`
+
+Several workflows push to `main` with the default `GITHUB_TOKEN`: the release marker (`release-automated-updates.yml`), `dataset-refresh.yml`, `build-data.yml`, `opportunity-data-refresh.yml` and the no-change path of `source-link-check.yml`. A rule that blocks direct pushes will make all of them fail. Either add the GitHub Actions app to the rule's bypass list, or switch those jobs to open pull requests first. `workflow-failure-alert.yml` will open an issue if any of them starts failing.
+
+## First release after 2026-11-22
+
+Netlify has not yet run the new build command (`pnpm run build` with every integrity guard). Confirm that a deploy preview built from a PR into `main` is green before dispatching the release workflow.

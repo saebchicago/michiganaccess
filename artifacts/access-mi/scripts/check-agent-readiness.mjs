@@ -13,7 +13,7 @@
  * Local mode is deterministic and runs in `pnpm build` and CI. Live mode
  * reads the deployed site; results depend on what production serves.
  */
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { compareValues, describe, discover, getJson, readCountyValue, reusePosition } from "./lib/agent-consumer.mjs";
@@ -67,6 +67,26 @@ if (disc.ok) {
   const saipe = await describe(fetcher, index, "michigan-county-income-poverty");
   record("C2", "Retrieve without credentials and validate against the published schema", saipe.ok && index._meta?.access?.credentials === "none",
     saipe.ok ? `credentials=${index._meta.access.credentials}; schema valid` : saipe.refusal + (saipe.schemaErrors ? `: ${saipe.schemaErrors.slice(0, 3).join("; ")}` : ""));
+
+  // Completeness (local mode only): every file shipped under /data must be
+  // declared in the index as supported or unsupported, and every indexed
+  // path must exist. A new export cannot ship without stated meaning.
+  if (!base) {
+    const walk = (dir, rel = "") =>
+      readdirSync(path.join(dir, rel), { withFileTypes: true }).flatMap((e) =>
+        e.isDirectory() ? walk(dir, path.join(rel, e.name)) : [path.join(rel, e.name).split(path.sep).join("/")]);
+    const dataDir = path.join(ROOT, "public", "data");
+    const shipped = walk(dataDir).filter((f) => f !== "index.json" && !f.startsWith("schema/")).map((f) => `/data/${f}`);
+    const indexed = new Set(index.datasets.map((d) => d.path));
+    const undeclared = shipped.filter((f) => !indexed.has(f));
+    const dangling = [...indexed].filter((p) => p.startsWith("/data/") && !existsSync(path.join(ROOT, "public", p)));
+    const missingSchemas = index.datasets.filter((d) => d.schema && !existsSync(path.join(ROOT, "public", d.schema))).map((d) => d.schema);
+    record("C1b", "Data index is complete: every shipped /data file is declared, every declared file exists",
+      undeclared.length === 0 && dangling.length === 0 && missingSchemas.length === 0,
+      undeclared.length || dangling.length || missingSchemas.length
+        ? `undeclared: ${undeclared.join(", ") || "none"}; missing files: ${dangling.join(", ") || "none"}; missing schemas: ${missingSchemas.join(", ") || "none"}`
+        : `${shipped.length} shipped files all declared`);
+  }
 
   const others = [];
   for (const d of index.datasets.filter((x) => x.status === "supported" && x.id !== "build-manifest")) {

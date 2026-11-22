@@ -1244,3 +1244,16 @@ Stacked on PR #268 (lockfile resync). Details and evidence: the PR description, 
 ### Resident-facing
 - Submission forms are disabled, with a notice, when the build has no Supabase config. `PageFeedback` is hidden in that case, because it swallowed insert errors and thanked users anyway.
 - Open Data Gaps entries can carry a gap type, what AccessMI can do, and the closure condition. Added `upstream-reuse-terms`, an AccessMI-side legal gap.
+
+### Follow-up, same day: full audit of hand-typed claim collections
+- All five hand-typed collections (weekly insights, data stories, signals, quiz, homepage rotating stats) were reviewed claim by claim. An automated reviewer checked publisher pages; only michigan.gov was reachable.
+- Kept, with a specific source: MDOC population and recidivism, PFAS sites (now 350, July 2026) and state limits, MSP bicyclist and seat belt figures (2025 added), GSRP enrollment, Vocational Village recidivism (12% vs about 22%).
+- Corrected from committed data: dental shortage areas are 76 of 83 counties, not 59.
+- Withdrawn as unverifiable or contradicted: NFIP Wayne claims, disaster-declaration pace, IRS ZIP EITC and AGI comparisons, SBA lending totals, the pedestrian data gap (76 of 83), the childcare gap (125,000), the Rx Kids 18% figure, "102 Do Not Eat water bodies", "only state with a PFAS deer advisory", and 11 March 2026 signals. Originals and what would restore each are in `docs/claim-ledger.json`.
+- Insights went from 15 to 8, stories 9 to 6, signals 19 to 5. The quiz stays at 10 with 7 questions replaced. Hero stats stay at 4 with 2 replaced.
+- New enforcement: `src/data/claimReviews.ts` holds a review record per rendered claim, and `claimReview.test.ts` fails on a new, edited or unevidenced claim. Dataset-backed figures are asserted in `insights-claims.test.ts`.
+- Michigan Pulse (About page) showed March 2026 events with a pulsing "live" dot and no date. It now shows each note's source and month; the live indicator is gone.
+- `workflow-failure-alert.yml` opens one issue per failing scheduled workflow and closes it on recovery.
+- `check-agent-readiness` now fails if a file ships under `/data` without an index entry.
+- The `/domain-dashboard` contrast failure was a test timing bug: axe scanned while the header and main fade-ins were running. The spec now waits for animations to finish.
+- `docs/proposals/civic-insight-score.md`: two different formulas share the name "Civic Insight Score"; proposal to retire it. Not implemented.

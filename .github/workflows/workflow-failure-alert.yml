@@ -1,0 +1,63 @@
+name: workflow-failure-alert
+
+# Scheduled data and release jobs failed silently for two weeks in 2026-11
+# (every install died on a private dependency) and nobody was told. This
+# watchdog opens one issue per failing workflow, comments on it while the
+# failure repeats, and closes it when the workflow next succeeds.
+on:
+  workflow_run:
+    workflows:
+      - build-data
+      - dataset-refresh
+      - facility-refresh
+      - Refresh Opportunity Atlas tract data
+      - sheps-closures-watch
+      - snap-refresh
+      - source-link-check
+      - Publish production release
+    types: [completed]
+
+permissions:
+  issues: write
+
+concurrency:
+  group: workflow-failure-alert-${{ github.event.workflow_run.name }}
+  cancel-in-progress: false
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    if: >-
+      github.event.workflow_run.head_branch == 'main' &&
+      contains(fromJSON('["failure","timed_out","success"]'), github.event.workflow_run.conclusion)
+    steps:
+      - name: Open, update or close the tracking issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          WF_NAME: ${{ github.event.workflow_run.name }}
+          WF_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          WF_URL: ${{ github.event.workflow_run.html_url }}
+          WF_EVENT: ${{ github.event.workflow_run.event }}
+        run: |
+          set -euo pipefail
+          title="Workflow failing: ${WF_NAME}"
+          existing="$(gh issue list --state open --search "in:title \"${title}\"" --json number,title \
+            --jq "map(select(.title == \"${title}\")) | .[0].number // empty")"
+          stamp="$(date -u +%Y-%m-%dT%H:%MZ)"
+          if [ "$WF_CONCLUSION" = "success" ]; then
+            if [ -n "$existing" ]; then
+              gh issue close "$existing" --comment "Recovered ${stamp}: ${WF_URL}"
+            fi
+            exit 0
+          fi
+          body="\`${WF_NAME}\` ended with **${WF_CONCLUSION}** (${WF_EVENT}) at ${stamp}.
+
+          Run: ${WF_URL}
+
+          Until this is fixed, the data this job refreshes is not being updated. This issue closes itself on the next successful run."
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "Failed again ${stamp}: ${WF_URL}"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi
