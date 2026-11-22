@@ -1257,3 +1257,4 @@ Stacked on PR #268 (lockfile resync). Details and evidence: the PR description, 
 - `check-agent-readiness` now fails if a file ships under `/data` without an index entry.
 - The `/domain-dashboard` contrast failure was a test timing bug: axe scanned while the header and main fade-ins were running. The spec now waits for animations to finish.
 - `docs/proposals/civic-insight-score.md`: two different formulas share the name "Civic Insight Score"; proposal to retire it. Not implemented.
+- CI fix (2026-11-22): `pnpm/action-setup@v4` refuses to run when both its `version` input and `packageManager` in `package.json` are set. The 11 workflow steps no longer pass `version`; the pnpm version comes from `packageManager` only.
