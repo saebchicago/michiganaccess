@@ -64,6 +64,7 @@ jobs:
           const dead = report.results.filter(
             (r) => r.status === "client-error" || r.status === "server-error",
           );
+          const blocked = report.results.filter((r) => r.status === "blocked");
           const rows = dead.map(
             (r) => `| ${r.url} | ${r.httpStatus} | ${r.contexts.join("; ")} |`,
           );
@@ -74,6 +75,11 @@ jobs:
             "|---|---|---|",
             ...rows,
             "",
+            `${blocked.length} other link(s) refused automated requests (HTTP 401/403/429). ` +
+              "Those are reported as blocked, not dead; check them in a browser if needed.",
+            "",
+            `Report updated ${new Date().toISOString().slice(0, 10)}. This PR is updated in place each week.`,
+            "",
             "Report-only check - this PR does not edit `sourceManifest.ts` or " +
               "`sourcesRegistry.ts`. Find the correct replacement URL for each " +
               "dead citation and update the relevant file by hand, then merge " +
@@ -81,18 +87,30 @@ jobs:
           ].join("\n");
           fs.writeFileSync("/tmp/pr-body.md", body);
           EOF
-      - name: Create PR (new dead link found)
+      - name: Open or update the single rolling PR (new dead link found)
+        # One fixed branch and at most one open PR. The old per-run branches
+        # (data/source-link-check-YYYYMMDD-HHMM) produced five identical open
+        # PRs (#242-#256) because main's baseline never refreshed while a dead
+        # link stayed dead. Now each run force-updates the same branch and the
+        # open PR's body instead of opening another one.
         if: steps.check.outputs.new_dead == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH="data/source-link-check-$(date -u +%Y%m%d-%H%M)"
+          set -euo pipefail
+          BRANCH="data/source-link-check"
           git config user.name "source-link-check-bot"
           git config user.email "actions@users.noreply.github.com"
-          git checkout -b "$BRANCH"
+          git checkout -B "$BRANCH"
           git add artifacts/access-mi/src/data/sourceLinkHealth.generated.json
           git commit -m "chore: source link health report - dead link(s) found $(date -u +%Y-%m-%d)"
-          git push origin "$BRANCH"
-          gh pr create \
-            --title "Dead source citation link(s) found - $(date -u +%Y-%m-%d)" \
-            --body-file /tmp/pr-body.md
+          git push --force origin "$BRANCH"
+          existing="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --title "Dead source citation link(s) - rolling report" --body-file /tmp/pr-body.md
+            echo "Updated open PR #$existing."
+          else
+            gh pr create --head "$BRANCH" \
+              --title "Dead source citation link(s) - rolling report" \
+              --body-file /tmp/pr-body.md
+          fi
