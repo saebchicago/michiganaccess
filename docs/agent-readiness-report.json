@@ -1,0 +1,84 @@
+{
+  "harness": "scripts/check-agent-readiness.mjs",
+  "mode": "live http://localhost:4173",
+  "ran_at": "2026-11-22T00:58:21.730Z",
+  "totals": {
+    "pass": 12,
+    "fail": 0,
+    "not_executed": 0
+  },
+  "cases": [
+    {
+      "id": "C1",
+      "capability": "Discover a supported public dataset from llms.txt",
+      "status": "pass",
+      "detail": "index /data/index.json: 5 supported datasets"
+    },
+    {
+      "id": "C2",
+      "capability": "Retrieve without credentials and validate against the published schema",
+      "status": "pass",
+      "detail": "credentials=none; schema valid"
+    },
+    {
+      "id": "C2b",
+      "capability": "Every supported dataset matches its published schema",
+      "status": "pass",
+      "detail": "michigan-county-income-poverty ok; source-catalog ok; census-county-lookup ok; download-manifest ok"
+    },
+    {
+      "id": "C3",
+      "capability": "Identify the original source",
+      "status": "pass",
+      "detail": "source=https://www.census.gov/programs-surveys/saipe.html download=https://www2.census.gov/programs-surveys/saipe/datasets/2024/2024-state-and-county/est24-mi.txt"
+    },
+    {
+      "id": "C4",
+      "capability": "Determine reporting year and geography (retrieval date kept separate)",
+      "status": "pass",
+      "detail": "estimate year=2024, geography=county, retrieved=2026-11-03T07:26:44.468Z"
+    },
+    {
+      "id": "C5",
+      "capability": "Distinguish observed from modeled data",
+      "status": "pass",
+      "detail": "dataset label=MODELED; index declares MODELED"
+    },
+    {
+      "id": "C6",
+      "capability": "Identify unavailable or suppressed values",
+      "status": "pass",
+      "detail": "0 null cells in the live file; suppressed fixture refused: \"povertyPct is unavailable for Keweenaw (null means unavailable, not zero)\"; measures without published bounds: schoolAgePovertyPct"
+    },
+    {
+      "id": "C7",
+      "capability": "Detect incompatible geographies, periods and units (intentional refusal)",
+      "status": "pass",
+      "detail": "county vs ZCTA: geography units differ (county vs zcta); SAIPE 2024 vs ACS 2020-2024: reporting periods differ (2024 vs 2020-2024); percent vs dollars: units differ (percent vs dollars)"
+    },
+    {
+      "id": "C8",
+      "capability": "Recover material methodological caveats",
+      "status": "pass",
+      "detail": "2 comparability notes; 6 catalog pendingItems; Wayne vs Oakland poverty: difference (90% intervals do not overlap); overlapping fixture: no_established_difference; missing-interval fixture: no_established_difference"
+    },
+    {
+      "id": "C9",
+      "capability": "Understand whether automated reuse is permitted",
+      "status": "pass",
+      "detail": "AccessMI reads: permitted; upstream terms: not_established; robots.txt treated as not a license: true"
+    },
+    {
+      "id": "C10",
+      "capability": "Fail safely when information is missing",
+      "status": "pass",
+      "detail": "unknown id: \"dataset does-not-exist is not in the index\"; unsupported: \"dataset sam-exclusions is marked unsupported: Not populated (count 0; the ingest needs a SAM_API_KEY that is not configured). An empty list does NOT mean no exclusions exist.\"; missing file: \"dataset michigan-county-income-poverty unavailable (HTTP 404)\"; wrong file: \"dataset michigan-county-income-poverty does not match its schema\""
+    },
+    {
+      "id": "P1",
+      "capability": "Live build provenance is machine-readable",
+      "status": "pass",
+      "detail": "schema=accessmi-build/v2 commit=2984b234947ba48e317f6a02c0a51b116147bde2"
+    }
+  ]
+}

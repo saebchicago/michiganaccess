@@ -8,7 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
+import BackendUnavailableNotice from "@/components/shared/BackendUnavailableNotice";
 import { toast } from "sonner";
 
 const RESOURCE_TYPES = [
@@ -208,7 +209,8 @@ export default function ResourceSubmissionForm() {
               No personal data is collected beyond what you provide here. Submissions are reviewed within 5 business days.
             </p>
 
-            <Button type="submit" disabled={sending} className="w-full sm:w-auto">
+            {!supabaseConfigured && <BackendUnavailableNotice what="Resource submissions" />}
+            <Button type="submit" disabled={sending || !supabaseConfigured} className="w-full sm:w-auto">
               <Send className="mr-2 h-4 w-4" />
               {sending ? "Submitting..." : "Submit for Review"}
             </Button>

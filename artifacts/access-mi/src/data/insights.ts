@@ -18,25 +18,28 @@ export interface WeeklyInsight {
 export const WEEKLY_INSIGHTS: WeeklyInsight[] = [
   {
     week: 0,
-    text: "Rural Michigan counties have 7x fewer PCPs per capita than urban counties - yet rural residents travel 3x further for specialty care.",
-    source: "HRSA HPSA data + County Health Rankings & Roadmaps, 2025 edition",
+    // Figures checked against hrsa-hpsa-county.generated.json and
+    // alice-county.generated.json by src/data/__tests__/insights-claims.test.ts.
+    // The earlier rural/urban claims (7x fewer PCPs, 1:3,200 vs 1:460, 42 mi,
+    // 47 of 83) had no dataset or citation in the repo and were removed.
+    text: "79 of Michigan's 83 counties contain at least one designated primary care Health Professional Shortage Area. Most shortage areas cover part of a county, not all of it.",
+    source: "HRSA HPSA Primary Care detail file (dated 11/02/2026), county rollup by AccessMI (MODELED)",
     href: "/health-equity-atlas",
     dataPoints: [
-      { label: "Rural PCP ratio", value: "1:3,200", context: "vs 1:460 urban" },
-      { label: "Avg travel (rural)", value: "42 mi", context: "for specialty care" },
-      { label: "Rural counties", value: "47 of 83", context: "below PCP threshold" },
+      { label: "Counties with a primary care HPSA", value: "79 of 83", context: "designated status" },
+      { label: "Counties without one", value: "4", context: "Antrim, Clinton, Livingston, Midland" },
     ],
   },
   {
     week: 1,
-    text: "40% of Michigan households fall below the ALICE threshold - earning too much for aid but not enough for basics.",
+    text: "40% of Michigan households were below the ALICE Threshold in 2024: 13% in poverty and 26% above the poverty line but unable to afford basic costs.",
     source: "United For ALICE 2026 Report (2024 data)",
     href: "/equity",
-    counties: ["Lake"],
+    counties: ["Clare"],
     dataPoints: [
-      { label: "ALICE households", value: "40%", context: "statewide" },
-      { label: "Survival budget", value: "$27,156", context: "single adult/yr" },
-      { label: "Worst county", value: "Lake Co.", context: "64% below ALICE" },
+      { label: "Below ALICE Threshold", value: "39.7%", context: "statewide; published as 40%" },
+      { label: "Survival budget", value: "$29,580", context: "single adult/yr" },
+      { label: "Highest county", value: "Clare Co.", context: "55.4% below threshold" },
     ],
   },
   {

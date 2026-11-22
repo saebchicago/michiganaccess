@@ -14,7 +14,7 @@ import type { Place, PlaceIndicator } from "@/models/Place";
 import { buildFullIndicators, buildStandouts } from "@/models/Place";
 import { MICHIGAN_REGIONS } from "@/data/michigan-regions";
 import { COUNTY_PROFILES } from "@/data/michigan-county-profiles";
-import { computeCivicScore, CIVIC_SCORE_METHODOLOGY } from "@/lib/civic-score";
+import { explainCivicScore, CIVIC_SCORE_METHODOLOGY } from "@/lib/civic-score";
 
 interface Props {
   place: Place;
@@ -154,35 +154,38 @@ function generateExecutiveBrief(place: Place, indicators: PlaceIndicator[]): str
 
   // Civic Insight Score breakdown
   const countyKey = place.parentCounty || place.name.replace(/ County$/, "");
-  const profile = COUNTY_PROFILES[countyKey];
+  const explanation = explainCivicScore(countyKey);
   let civicScoreSection = "";
-  if (profile) {
-    const uninsured = parseFloat(profile.healthHighlights[0]?.value || "6");
-    const food = parseFloat(profile.healthHighlights[2]?.value || "13");
-    const pcrRaw = profile.healthHighlights[1]?.value || "1500:1";
-    const compositeScore = computeCivicScore(countyKey);
+  if (explanation) {
+    // Same inputs and point rules as the on-screen breakdown and the
+    // displayed score (src/lib/civic-score.ts). Values come from the
+    // committed county profile, not user input.
+    const rows = explanation.inputs
+      .map(
+        (i) => `
+        <tr>
+          <td style="padding:6px 10px;font-size:13px;font-weight:600;">${i.label}</td>
+          <td style="padding:6px 10px;font-size:13px;">${i.imputed ? `Not reported (${i.value ?? "blank"})` : i.value}</td>
+          <td style="padding:6px 10px;font-size:13px;">${i.points > 0 ? "+" : ""}${i.points}</td>
+          <td style="padding:6px 10px;font-size:12px;">${i.rule}. ${i.source}.</td>
+        </tr>`,
+      )
+      .join("");
 
     civicScoreSection = `
     <div class="section">
-      <h2>Civic Insight Score - Segmented Breakdown <span style="font-size:10px;font-weight:600;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">(modeled)</span></h2>
-      <table><thead><tr><th>Sub-Index</th><th>Weight</th><th>Components</th></tr></thead><tbody>
-        <tr>
-          <td style="padding:6px 10px;font-size:13px;font-weight:600;">Community Vulnerability</td>
-          <td style="padding:6px 10px;font-size:13px;">40%</td>
-          <td style="padding:6px 10px;font-size:13px;">Uninsured ${uninsured}% · Food insecurity ${food}% · PCP ratio ${pcrRaw}</td>
-        </tr>
-        <tr>
-          <td style="padding:6px 10px;font-size:13px;font-weight:600;">Access Friction</td>
-          <td style="padding:6px 10px;font-size:13px;">60%</td>
-          <td style="padding:6px 10px;font-size:13px;">Appeals, community reports & outage exposure per 1K residents</td>
-        </tr>
+      <h2>Civic Insight Score - How It Is Calculated <span style="font-size:10px;font-weight:600;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;">(modeled)</span></h2>
+      <table><thead><tr><th>Input</th><th>Value</th><th>Points</th><th>Rule and source</th></tr></thead><tbody>
+        <tr><td style="padding:6px 10px;font-size:13px;font-weight:600;">Starting value</td><td style="padding:6px 10px;font-size:13px;">-</td><td style="padding:6px 10px;font-size:13px;">${explanation.base}</td><td style="padding:6px 10px;font-size:12px;">Fixed base, then clamped to 10-95</td></tr>
+        ${rows}
         <tr style="background:#f1f5f9;">
-          <td style="padding:6px 10px;font-size:13px;font-weight:700;">Composite Score</td>
-          <td style="padding:6px 10px;font-size:13px;">100%</td>
-          <td style="padding:6px 10px;font-size:13px;font-weight:700;">${compositeScore}/100</td>
+          <td style="padding:6px 10px;font-size:13px;font-weight:700;">Civic Insight Score</td>
+          <td></td>
+          <td style="padding:6px 10px;font-size:13px;font-weight:700;">${explanation.score}/100</td>
+          <td></td>
         </tr>
       </tbody></table>
-      <p style="font-size:10px;color:#6b7280;margin-top:8px;">Modeled - AccessMI-derived composite, not a directly sourced statistic. Methodology: ${CIVIC_SCORE_METHODOLOGY} Inputs: Census ACS 2022 5-year + real-time platform data.</p>
+      <p style="font-size:10px;color:#6b7280;margin-top:8px;">Modeled - AccessMI-derived score, not a directly sourced statistic and without an uncertainty range. Methodology: ${CIVIC_SCORE_METHODOLOGY}</p>
     </div>`;
   }
 

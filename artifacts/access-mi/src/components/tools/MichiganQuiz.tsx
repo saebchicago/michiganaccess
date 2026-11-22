@@ -32,7 +32,7 @@ const QUESTIONS: Question[] = [
     q: "What percentage of Michigan households are below the ALICE threshold?",
     options: ["22%", "31%", "40%", "55%"],
     answer: 2,
-    fact: "40% of Michigan households earn too much for safety nets but can't afford basics.",
+    fact: "40% of Michigan households were below the ALICE Threshold in 2024: 13% in poverty and 26% above the poverty line but unable to afford basics.",
     source: "United For ALICE 2026 Report (2024 data)",
   },
   {

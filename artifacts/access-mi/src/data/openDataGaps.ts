@@ -66,6 +66,12 @@ export interface OpenDataGap {
     label: string;
     href: string;
   };
+  /** What kind of barrier this is. Optional; set where it is documented. */
+  gapType?: "technical" | "legal" | "methodological" | "administrative";
+  /** What this platform can and cannot do about it. */
+  accessmiRole?: string;
+  /** The observable change that would close the gap. */
+  closedWhen?: string;
 }
 
 export const OPEN_DATA_GAPS: OpenDataGap[] = [
@@ -116,6 +122,11 @@ export const OPEN_DATA_GAPS: OpenDataGap[] = [
       label: "A working in-state model: the Michigan Legislature's Automated Data Collection Policy",
       href: "https://legislature.mi.gov/Home/AutomatedDataCollectionPolicy",
     },
+    gapType: "administrative",
+    accessmiRole:
+      "AccessMI can document the API route and pace its own requests. It cannot grant or interpret permission for the state portal.",
+    closedWhen:
+      "The portal publishes a page naming permitted automated uses, rate limits and a contact.",
   },
   {
     id: "state-open-data-policy",
@@ -355,6 +366,32 @@ export const OPEN_DATA_GAPS: OpenDataGap[] = [
     gapSource: {
       name: "pillarRegistry.ts env-ejscreen (pending)",
     },
+  },
+  {
+    id: "upstream-reuse-terms",
+    title: "Reuse terms for each upstream data feed",
+    domain: "Transparency",
+    lane: "not-yet-ingested",
+    status: "partial-coverage",
+    whatExists:
+      "Every feed in the source catalog names its publisher and a canonical link, and the machine-readable data index states AccessMI's own access terms.",
+    whatIsMissing:
+      "A recorded license or terms-of-use link for each feed. All 52 catalog entries have a blank license today, and two publisher names are still being confirmed.",
+    holder: "Each publisher (terms) / this platform (recording them)",
+    statedReason:
+      "Our gap, not the government's: terms review has not been done feed by feed, so the catalog leaves the field blank instead of guessing.",
+    coverage: "0 of 52 feeds with recorded terms",
+    whyItMatters:
+      "An AI agent or analyst that reads a blank license as 'open' can reuse data in a way the publisher does not allow. robots.txt allowing a crawl is not a license.",
+    gapSource: {
+      name: "Source catalog _meta.pendingItems: license-review",
+      url: "/data/source-catalog.json",
+    },
+    gapType: "legal",
+    accessmiRole:
+      "AccessMI can record each publisher's published terms with a link and review date. It cannot grant reuse rights for third-party data.",
+    closedWhen:
+      "Every feed has a license or terms link and a review date, and the license-review pending item is removed.",
   },
   {
     id: "alice-trend-depth",

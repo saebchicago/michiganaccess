@@ -38,7 +38,7 @@ Identical to prior sprints:
 - Every rendered number must carry a named source and vintage.
 - Modeled or estimated values are labeled with the integrity pill (VERIFIED /
   MODELED / PROJECTED / PENDING).
-- No em dashes (—) in code or copy; use hyphens or spaced en dashes.
+- No em dashes (-) in code or copy; use hyphens or spaced en dashes.
 
 ---
 
@@ -88,9 +88,9 @@ cannot drift again.
 ### Test runner
 
 Vitest v3.2.4. Live run (2026-06-11):
-- Test files: 33 run (2 failing pre-existing — `localStorage.clear()` in
+- Test files: 33 run (2 failing pre-existing - `localStorage.clear()` in
   `DomainDashboard.test.tsx` and `CivicIntelligenceHub.test.tsx`)
-- Tests: 541 total — **537 passing**, 3 failing, 1 skipped
+- Tests: 541 total - **537 passing**, 3 failing, 1 skipped
 
 Pre-existing failures are unrelated to this sprint.
 
@@ -139,12 +139,12 @@ Zero reviewer premises imported as fact before code verification.
 
 ### F-1: PrivacyPage PHI/client-side false claim (FIXED, Phase 2)
 
-**Claim:** `PrivacyPage.tsx:67` — "Health-related tools (AI appeals generator, benefits wizard,
+**Claim:** `PrivacyPage.tsx:67` - "Health-related tools (AI appeals generator, benefits wizard,
 symptom information) process data **client-side**. We do not **store, transmit**, or retain
 any health information you enter."
 
 **Evidence of falsity:** `AIAppealGenerator.tsx:65` fetches
-`${supabaseUrl}/functions/v1/appeal-generator` — a server-side Supabase Edge Function.
+`${supabaseUrl}/functions/v1/appeal-generator` - a server-side Supabase Edge Function.
 Data IS transmitted to a server. "client-side" is false; "do not transmit" is false.
 
 **Fix:** Replaced with "are processed via secure server functions that do not store
@@ -168,12 +168,12 @@ The original (now stale) entry follows.
 
 ### F-2 (original entry): QuickExitBar ESC key false claim (LOGGED, fix blocked by sacrosanct rule)
 
-**Claim:** `QuickExitBar.tsx:31` aria-label — "Quick exit - leave this site immediately
-**(also press Escape)**"; `QuickExitBar.tsx:32` title — "**Press ESC to quickly leave
-this page**"; `QuickExitBar.tsx:36-40` — `<kbd>ESC</kbd>` visual hint and "Press ESC
+**Claim:** `QuickExitBar.tsx:31` aria-label - "Quick exit - leave this site immediately
+**(also press Escape)**"; `QuickExitBar.tsx:32` title - "**Press ESC to quickly leave
+this page**"; `QuickExitBar.tsx:36-40` - `<kbd>ESC</kbd>` visual hint and "Press ESC
 to quickly leave this page" span rendered in the UI.
 
-**Evidence of falsity:** `QuickExitBar.tsx:19` comment — "Quick Exit is button-only -
+**Evidence of falsity:** `QuickExitBar.tsx:19` comment - "Quick Exit is button-only -
 Escape key closes modals/dropdowns, not Quick Exit." No `keydown` / `useEffect`
 Escape handler in the component. ESC does NOT trigger Quick Exit.
 
@@ -1216,3 +1216,31 @@ Branch `fix/agent-ready-data`. Applies the standards from the talk "Open Data Is
 
 ### Agent sign (step 9)
 - `public/llms.txt`: new `## Data access for agents` section. `robots.txt` unchanged.
+
+## Gap closure and release hardening (2026-11-22)
+
+Stacked on PR #268 (lockfile resync). Details and evidence: the PR description, `docs/RELEASE.md`, `docs/claim-ledger.json`, `docs/agent-readiness-report.json`.
+
+### Release integrity
+- Root cause of every scheduled workflow failing since 2026-11-09: `mi-federal-data` (private repo) was an optionalDependency; pnpm 404s without a token and aborts the install. Removed from the lockfile; `refresh-cdc-places-zcta.mjs` imports it on demand; `dataset-refresh.yml` clones it only when `MI_FEDERAL_DATA_TOKEN` is set. `ci.yml` `pull_request` trigger restored.
+- The Netlify (root) build skipped every `check-*.mjs` guard. It now runs all of them; `check-guard-parity.mjs` fails the build if the two entry points diverge.
+- `packageManager: pnpm@10.28.0` and `NODE_VERSION = "22"` pinned. The Lovable editor commits `bun.lock` to main; without the pin Netlify could install with bun and skip pnpm's lockfile and security overrides.
+- `/.well-known/build.json` v2 (commit, source tree, lockfile hash, entry HTML hash, critical dataset hashes and ingest dates). A production build with a short or mismatched commit, or a missing or unpopulated critical dataset, fails.
+- The release workflow tests the exact tree it marks, then `scripts/verify-release.mjs` polls production and checks commit, homepage H1 and entry HTML hash, a county page, data exports, discovery files and the 404 route.
+- Replit `publicDir` pointed at `dist/public`, which Vite never writes. Now `dist`. The fix has not been checked on a live Replit deploy.
+
+### Data and claims
+- Homepage insight week 0: the rural/urban PCP claims (7x, 1:3,200 vs 1:460, 42 mi, 47 of 83) had no dataset or computation, so they were withdrawn. Replaced with the HRSA county count (79 of 83).
+- Insight week 1 and quiz: the ALICE definition is corrected. The stale Lake 64% and $27,156 figures are replaced with Clare 55.4% and $29,580. `insights-claims.test.ts` enforces the figures.
+- Civic Insight Score breakdown and downloadable brief previously described a different 40/60 model, whose composite did not match the displayed score. That model counted outages as zero, scored missing Supabase counts as the best case and inverted the PCP ratio. The breakdown and brief now explain `computeCivicScore` exactly (`explainCivicScore`, tested), and missing inputs are flagged.
+- MiLeadSafe page links: the EGLE URL is a genuine 404, replaced with michigan.gov/mileadsafe. `sourcesRegistry.ts` still has the old URL and needs a named exception.
+
+### Agent readiness
+- `public/data/index.json` and `public/data/schema/*.schema.json` were added. `check-agent-readiness.mjs` runs a naive consumer that starts from llms.txt through 10 capabilities, including intentional refusals. It runs in both builds and in CI.
+
+### Citations and refresh PRs
+- The link checker classifies 401/403/429 as `blocked`, not dead, and retries a failed HEAD as GET. `source-link-check.yml` and `facility-refresh.yml` now each use one rolling branch and PR. This replaces the five duplicate citation PRs (#242-#256) and six stacked facility PRs (#238-#245).
+
+### Resident-facing
+- Submission forms are disabled, with a notice, when the build has no Supabase config. `PageFeedback` is hidden in that case, because it swallowed insert errors and thanked users anyway.
+- Open Data Gaps entries can carry a gap type, what AccessMI can do, and the closure condition. Added `upstream-reuse-terms`, an AccessMI-side legal gap.

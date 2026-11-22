@@ -1,0 +1,140 @@
+{
+  "_meta": {
+    "schema": "accessmi-claim-ledger/v1",
+    "reviewed": "2026-11-22",
+    "scope": "Prominent figures modified or reviewed in the 2026-11 gap-closure PR. Not a full inventory of every number on the site.",
+    "status_values": ["VERIFIED", "REPORTED", "MODELED", "PROJECTED", "INSUFFICIENT_DATA"],
+    "verification_note": "'Checked against' names the committed file a figure was compared with. Upstream publisher pages could not be fetched from the review environment (egress proxy), so upstream values were not re-read; the committed ingests and their recorded download URLs are the evidence."
+  },
+  "claims": [
+    {
+      "id": "alice-statewide-2024",
+      "claim": "40% of Michigan households were below the ALICE Threshold in 2024 (39.7% unrounded): 13% in poverty and 26% above poverty but unable to afford basics.",
+      "locations": ["src/data/insights.ts (week 1)", "src/components/tools/MichiganQuiz.tsx", "src/data/data-stories.ts"],
+      "status": "MODELED",
+      "source": "United For ALICE, Michigan Data Sheet 2026 (2024 data)",
+      "source_url": "https://www.unitedforalice.org/michigan",
+      "publication_year": 2026,
+      "reporting_period": "2024",
+      "geography": "Michigan, statewide",
+      "denominator": "All Michigan households (4,109,904)",
+      "methodology": "ALICE Threshold = household survival budget by county and household type; below-threshold = poverty + ALICE households.",
+      "checked_against": "artifacts/access-mi/src/data/alice-county.generated.json (statewide.belowAliceThresholdPct 39.7, povertyPct 13.4, alicePct 26.3)",
+      "change": "Insight and quiz said households below the threshold 'earn too much for aid', which describes only the ALICE (above-poverty) group, not the 40%. Reworded. The historical 41% statewide figure is gone from rendered copy (only a code comment documents it).",
+      "enforced_by": "src/data/__tests__/insights-claims.test.ts",
+      "qualification": "ALICE is a modeled threshold. United For ALICE rounds 39.7% to 40%."
+    },
+    {
+      "id": "alice-highest-county-2024",
+      "claim": "Highest county below the ALICE Threshold: Clare, 55.4%.",
+      "locations": ["src/data/insights.ts (week 1)"],
+      "status": "MODELED",
+      "source": "United For ALICE, Michigan Data Sheet 2026 (2024 data)",
+      "source_url": "https://www.unitedforalice.org/michigan",
+      "publication_year": 2026,
+      "reporting_period": "2024",
+      "geography": "Michigan counties (83)",
+      "denominator": "Households in each county",
+      "methodology": "Maximum of belowAliceThresholdPct across county records.",
+      "checked_against": "artifacts/access-mi/src/data/alice-county.generated.json",
+      "change": "Previously 'Lake Co., 64% below ALICE' (an older report's figure; Lake is 51.5% in the 2026 sheet and not the highest). Survival budget corrected from $27,156 to $29,580 (single adult).",
+      "enforced_by": "src/data/__tests__/insights-claims.test.ts",
+      "qualification": "No published uncertainty range; small-county estimates are less stable."
+    },
+    {
+      "id": "rural-pcp-access",
+      "claim": "Removed: 'Rural Michigan counties have 7x fewer PCPs per capita than urban counties; rural residents travel 3x further'; data points 1:3,200 vs 1:460, 42 mi, 47 of 83.",
+      "locations": ["src/data/insights.ts (week 0, former)"],
+      "status": "INSUFFICIENT_DATA",
+      "source": "Cited 'HRSA HPSA data + County Health Rankings 2025' with no dataset, rural definition or computation in the repo.",
+      "source_url": null,
+      "change": "Withheld. Replaced with a figure computed from the committed HRSA rollup (next entry).",
+      "qualification": "Could be restored only with a named rurality definition (e.g. RUCC/RUCA), a primary-care ratio source and vintage, and a reproducible computation."
+    },
+    {
+      "id": "pc-hpsa-county-count",
+      "claim": "79 of Michigan's 83 counties contain at least one designated primary care HPSA; none in Antrim, Clinton, Livingston, Midland.",
+      "locations": ["src/data/insights.ts (week 0)"],
+      "status": "MODELED",
+      "source": "HRSA HPSA Primary Care facility detail file (BCD_HPSA_FCT_DET_PC.csv)",
+      "source_url": "https://data.hrsa.gov/data/download?data=SHORT",
+      "publication_year": 2026,
+      "reporting_period": "Designations as of file date 11/02/2026",
+      "geography": "Michigan counties (83); HPSAs themselves are often sub-county",
+      "denominator": "83 counties",
+      "methodology": "County rollup of designated-status records by AccessMI (scripts/refresh-hrsa-hpsa-county.mjs).",
+      "checked_against": "artifacts/access-mi/src/data/hrsa-hpsa-county.generated.json",
+      "enforced_by": "src/data/__tests__/insights-claims.test.ts",
+      "qualification": "A county containing an HPSA does not mean the whole county is a shortage area."
+    },
+    {
+      "id": "civic-insight-score",
+      "claim": "Civic Insight Score (0-100) on county briefs and the downloadable brief.",
+      "locations": ["src/lib/civic-score.ts", "src/components/shared/CivicScoreBreakdown.tsx", "src/components/place/DownloadLocalInsights.tsx"],
+      "status": "MODELED",
+      "source": "AccessMI threshold score from County Health Rankings 2025 inputs (SAHIE 2022 uninsured; Map the Meal Gap 2022 food insecurity) and county type",
+      "source_url": null,
+      "methodology": "Base 60 plus fixed points per threshold, clamped 10-95 (CIVIC_SCORE_METHODOLOGY).",
+      "change": "The breakdown panel and the PDF/HTML brief described a different 40/60 model (z-score vulnerability + 'Access Friction'). Its composite did not equal the displayed score, counted outages as 0 with no feed, scored missing Supabase counts as best case, inverted the primary-care ratio, and attributed CHR inputs to 'Census ACS'. Both now show the real inputs and points; missing inputs are flagged.",
+      "enforced_by": "src/lib/__tests__/civic-score.test.ts",
+      "qualification": "No uncertainty range. Comparison aid only."
+    },
+    {
+      "id": "saipe-county-poverty-export",
+      "claim": "Michigan county poverty and median household income, /data/michigan-county-income-poverty.json",
+      "status": "MODELED",
+      "source": "U.S. Census Bureau SAIPE, 2024 state and county estimates",
+      "source_url": "https://www.census.gov/programs-surveys/saipe.html",
+      "publication_year": 2025,
+      "publication_year_note": "Year of release inferred from estimate year 2024; the file records ingested_at 2026-11-03, not the release date.",
+      "reporting_period": "2024",
+      "geography": "83 Michigan counties (5-digit FIPS strings)",
+      "denominator": "SAIPE poverty universe per measure (see Census SAIPE methodology)",
+      "uncertainty": "90% bounds for povertyPct, childPovertyPct, medianHouseholdIncome; none in file for schoolAgePovertyPct",
+      "change": "Unchanged values. Added JSON Schema, data-index entry with comparability rules, and agent-consumer tests (overlapping intervals refuse a ranking).",
+      "enforced_by": "scripts/check-agent-readiness.mjs"
+    },
+    {
+      "id": "source-and-publisher-counts",
+      "claim": "52 data feeds from 42 publishers",
+      "status": "VERIFIED",
+      "source": "artifacts/access-mi/src/data/sourcesRegistry.ts (derived counts in platformConstants.ts)",
+      "checked_against": "check-data-catalog.mjs output: 32 catalog entries against 52 feeds from 42 publishers",
+      "change": "None. The 2026-11-19 note that Lovable showed an 'older 52-source catalog' is not a discrepancy: the current catalog also has 52 feeds, and the Lovable project tracks main (latest_commit_sha 423b294)."
+    },
+    {
+      "id": "facility-count",
+      "claim": "Verified health facilities in Michigan (CMS hospitals + HRSA active service sites)",
+      "status": "VERIFIED",
+      "source": "CMS Hospital General Information (xubh-q36u) + HRSA Health Center Service Delivery Sites",
+      "reporting_period": "fetched_at 2026-09-09 on main",
+      "geography": "Michigan",
+      "denominator": "Definition B: CMS-certified hospital OR HRSA-active health center service site",
+      "change": "None on this branch. Main has 614 records; open refresh PR #245 (fetched 2026-10-19) has 609 (+1 / -6 HRSA sites, 14 changed) and supersedes #238-#243.",
+      "qualification": "Main's snapshot is about 10 weeks old; the facility-refresh workflow failed at install from 2026-11-09 to this fix."
+    },
+    {
+      "id": "mileadsafe-citation",
+      "claim": "MiLeadSafe statewide lead service line replacement information",
+      "status": "REPORTED",
+      "source": "State of Michigan, MiLeadSafe",
+      "source_url": "https://www.michigan.gov/mileadsafe",
+      "change": "Old EGLE URL redirects to /egle/404 (genuine dead link). Pages now cite michigan.gov/mileadsafe (HTTP 200, title 'Mi Lead Safe', checked 2026-11-22). sourcesRegistry.ts still holds the old URL: sacrosanct, needs owner exception.",
+      "qualification": "The replacement is the program home page; a specific replacement-tracker deep link was not verified."
+    },
+    {
+      "id": "sam-exclusions",
+      "claim": "/data/sam-exclusions.json",
+      "status": "INSUFFICIENT_DATA",
+      "source": "SAM.gov v4 Exclusions API",
+      "change": "File is empty (count 0, SAM_API_KEY not set). Marked unsupported in /data/index.json so an empty list is not read as 'no exclusions'. The contractors page only shows a badge when a record matches, so no false 'clear' claim renders."
+    },
+    {
+      "id": "outage-language",
+      "claim": "Outage figures",
+      "status": "REPORTED",
+      "source": "Consumers Energy outage feed via netlify/functions/consumers-outages",
+      "change": "ConsumersOutageReports already states 'Outage feed unavailable' on failure. The only stale outage logic was the Civic Score friction index (removed, above)."
+    }
+  ]
+}

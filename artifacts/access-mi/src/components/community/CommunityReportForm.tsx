@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
+import BackendUnavailableNotice from "@/components/shared/BackendUnavailableNotice";
 import { toast } from "sonner";
 
 const CATEGORIES = [
@@ -101,7 +102,8 @@ export default function CommunityReportForm({ county, placeSlug, zipcode }: Prop
               required
             />
           </div>
-          <Button type="submit" size="sm" disabled={sending} className="w-full">
+          {!supabaseConfigured && <BackendUnavailableNotice what="Your report" />}
+          <Button type="submit" size="sm" disabled={sending || !supabaseConfigured} className="w-full">
             <Send className="mr-1.5 h-3.5 w-3.5" />
             {sending ? "Submitting..." : "Submit Report"}
           </Button>
