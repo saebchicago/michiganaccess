@@ -34,7 +34,7 @@ GitHub → Actions → **Publish production release** → Run workflow on `main`
 | Check | Passes when |
 |---|---|
 | `manifest.*` | `build.json` schema v2, commit equals the release marker, context `production`, deploy id present, critical datasets present and populated |
-| `home.*` | `/` returns 200, has an H1 in the initial HTML and no placeholder copy, and its bytes match `entry_html_sha256` (otherwise a module script must be present, and the report says the bytes differ) |
+| `home.*` | `/` returns 200, has an H1 in the initial HTML and no placeholder copy, and its bytes match `entry_html_sha256` (otherwise the page must load the exact entry bundle recorded in `entry_module_script`) |
 | `county.wayne` | `/county/wayne/` returns 200 and names Wayne County |
 | `data.*` | Source catalog, SAIPE export and data index parse and have the expected shape |
 | `route*` | `llms.txt`, `robots.txt`, `sitemap.xml`, `/methodology`, `/data-sources` return 200, and an unknown path returns 404 |
@@ -44,7 +44,7 @@ Manual follow-up: `node scripts/verify-release.mjs --base https://accessmi.org -
 ## 4. If verification fails
 
 - **Commit mismatch after 20 minutes.** Open the Netlify deploy log. The ignore step may have skipped the build, or the build may have failed. `write-build-manifest.mjs` now fails production builds whose commit or critical data cannot be verified.
-- **HTML hash mismatch only.** A CDN or Netlify post-processing step changed `index.html`. Confirm that the module script name matches `dist/index.html` from the tested build.
+- **HTML hash mismatch only.** A CDN or Netlify post-processing step changed `index.html`. The check passes only if the page still loads the entry bundle recorded in `build.json`; any other script fails.
 - **Rollback.** In Netlify Deploys, publish the previous deploy (the "Prior production" id recorded in the release commit message).
 
 ## Other deployment surfaces

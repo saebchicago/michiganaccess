@@ -12,6 +12,7 @@ const good = {
   context: "production",
   deploy_id: "abc123",
   entry_html_sha256: "f".repeat(64),
+  entry_module_script: "/assets/index-AB.js",
   datasets: { "x.json": { present: true, populated: true } },
 };
 
@@ -34,9 +35,20 @@ test("verifier rejects a production build.json for another commit or context", (
 test("homepage checks require an H1 and tie served HTML to the build", () => {
   const html = '<html><h1>Michigan data</h1><script type="module" crossorigin src="/assets/index-AB.js"></script></html>';
   assert.equal(mainScript(html), "/assets/index-AB.js");
-  const r = checkHomepage(html, good.entry_html_sha256, good);
-  assert.ok(r.every((x) => x.ok));
+  assert.ok(checkHomepage(html, good.entry_html_sha256, good).every((x) => x.ok));
   assert.equal(checkHomepage("<html></html>", "0", good).find((x) => x.id === "home.h1").ok, false);
+});
+
+test("transformed HTML passes only when it loads this build's entry bundle", () => {
+  const entry = (r) => r.find((x) => x.id === "home.entry-html").ok;
+  const same = '<h1>Michigan data</h1><!-- injected --><script type="module" src="/assets/index-AB.js"></script>';
+  const stale = '<h1>Michigan data</h1><script type="module" src="/assets/old-release.js"></script>';
+  assert.equal(entry(checkHomepage(same, "different-hash", good)), true);
+  assert.equal(entry(checkHomepage(stale, "different-hash", good)), false);
+  assert.equal(entry(checkHomepage("<h1>Michigan data</h1>", "different-hash", good)), false);
+  // A manifest that records no entry bundle cannot vouch for transformed HTML.
+  assert.equal(entry(checkHomepage(same, "different-hash", { ...good, entry_module_script: null })), false);
+  assert.match(validateManifest({ ...good, entry_module_script: null }).join(), /no module script/);
 });
 
 test("netlify ignore policy only builds production for release markers", () => {
