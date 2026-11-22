@@ -14,7 +14,7 @@
  *
  * The measure catalog, row parsing, provenance shape, and sanity gates
  * live in the `mi-federal-data` shared package (saebchicago/mi-federal-data),
- * consumed here as a git dependency and also by ourintel.org's
+ * loaded on demand (see the import below) and also used by ourintel.org's
  * Michigan ingest path -- one canonical source instead of two independently
  * maintained (and drift-prone) copies. This script keeps its own fetch loop
  * (routed through fetchAndRecord for archival) and its own file-writing /
@@ -35,14 +35,35 @@ import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { fetchAndRecord, writeManifest } from "./lib/ingest-manifest.mjs";
-import {
+// mi-federal-data lives in a PRIVATE repository. It used to be an
+// optionalDependency, but pnpm cannot fetch a private codeload tarball
+// without a token and fails the whole install, so every CI and data
+// workflow died at `pnpm install` (2026-11). It is now loaded on demand:
+// the dataset-refresh workflow clones it into node_modules only when the
+// MI_FEDERAL_DATA_TOKEN secret is configured. Pinned commit:
+//   saebchicago/mi-federal-data@afb52547eaa8269ca9f6cbd343d81dcd35f97742
+let federal;
+try {
+  federal = await import("mi-federal-data");
+} catch (error) {
+  console.error(
+    "[refresh-cdc-places-zcta] mi-federal-data is not installed. It is a private package " +
+      "and is no longer a declared dependency. Clone saebchicago/mi-federal-data at commit " +
+      "afb52547eaa8269ca9f6cbd343d81dcd35f97742 into artifacts/access-mi/node_modules/mi-federal-data " +
+      "(the dataset-refresh workflow does this when MI_FEDERAL_DATA_TOKEN is set). " +
+      "Existing data is left untouched.",
+  );
+  console.error(error instanceof Error ? error.message : error);
+  process.exit(1);
+}
+const {
   MEASURES,
   SOCRATA_METADATA_URL,
   SOCRATA_ROWS_URL,
   extractZctaRow,
   buildProvenance,
   runSanityGates,
-} from "mi-federal-data";
+} = federal;
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(here, "..");

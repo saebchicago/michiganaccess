@@ -1,0 +1,147 @@
+{
+  "$schema": "/data/schema/data-index.schema.json",
+  "_meta": {
+    "title": "AccessMI public data index",
+    "schema": "accessmi-data-index/v1",
+    "reviewed": "2026-11-22",
+    "canonical_base": "https://accessmi.org",
+    "description": "Machine-readable list of the static files AccessMI publishes for reuse, with the meaning each value needs to keep. This is a project-specific index, not an implementation of an external catalog standard.",
+    "access": {
+      "credentials": "none",
+      "accessmi_automated_reads": "permitted",
+      "accessmi_policy_source": "/llms.txt",
+      "rate_limit": "Limit requests to one per second and send an identifying User-Agent (llms.txt). Not enforced by the server.",
+      "query_api": "none. Every dataset is a whole-file download; there is no filtering, pagination or change notification.",
+      "caching": "/data/* responses carry Cache-Control: public, max-age=3600, stale-while-revalidate=86400 (netlify.toml).",
+      "errors": "An unknown path returns HTTP 404 with an HTML body. Treat any non-200 response, or any non-JSON body for a .json path, as unavailable.",
+      "change_detection": "Compare _meta.generated (source catalog) or provenance.ingested_at (datasets) between reads. /.well-known/build.json records the live commit.",
+      "robots_txt_scope": "robots.txt allows crawling of this site. It is not a license and says nothing about upstream publishers' terms or about model training.",
+      "upstream_terms": "AccessMI has not recorded reuse terms for any upstream feed (source catalog pendingItems: license-review). A null license means unknown, not open.",
+      "code_license": "MIT (repository code only). Upstream data keeps its publishers' terms."
+    }
+  },
+  "datasets": [
+    {
+      "id": "michigan-county-income-poverty",
+      "title": "Michigan county income and poverty (Census SAIPE)",
+      "path": "/data/michigan-county-income-poverty.json",
+      "media_type": "application/json",
+      "schema": "/data/schema/michigan-county-income-poverty.schema.json",
+      "status": "supported",
+      "publisher": "U.S. Census Bureau",
+      "source_program": "Small Area Income and Poverty Estimates (SAIPE)",
+      "source_url_field": "provenance.source_url",
+      "download_url_field": "provenance.download_url",
+      "release_version_field": "provenance.estimate_year",
+      "retrieval_date_field": "provenance.ingested_at",
+      "reporting_period": "Calendar-year estimate named by provenance.estimate_year. The retrieval date is not the reporting period.",
+      "epistemic_label": "MODELED",
+      "epistemic_label_field": "provenance.value_label",
+      "geography": {
+        "unit": "county",
+        "coverage": "All 83 Michigan counties",
+        "id_field": "counties[].countyFips",
+        "id_format": "5-character string with leading zero, state 26"
+      },
+      "measures_field": "measures",
+      "uncertainty": "counties[].confidence holds 90% lower and upper bounds published by the Census Bureau. schoolAgePovertyPct has no bounds in this file; treat its uncertainty as unavailable. Overlapping intervals do not establish a difference.",
+      "missingness": "A suppressed or unpublished cell is null, never zero. counties[].status and pendingReason explain unavailable rows.",
+      "comparability": [
+        "SAIPE is model-based and differs from ACS poverty estimates; do not mix SAIPE and ACS values in one comparison.",
+        "County estimates do not apply to ZIP Code Tabulation Areas or tracts."
+      ],
+      "attribution": "Cite the U.S. Census Bureau SAIPE program and the estimate year. Upstream reuse terms are not recorded by AccessMI.",
+      "upstream_terms_status": "not_established"
+    },
+    {
+      "id": "source-catalog",
+      "title": "AccessMI source catalog",
+      "path": "/data/source-catalog.json",
+      "media_type": "application/json",
+      "schema": "/data/schema/source-catalog.schema.json",
+      "status": "supported",
+      "publisher": "AccessMI (catalog); each entry names its own publisher",
+      "release_version_field": "_meta.generated",
+      "retrieval_date_field": "sources[].lastVerified",
+      "epistemic_label": null,
+      "epistemic_label_note": "The catalog describes feeds; it holds no measurements. Per-feed vintage, geography and license are null where unknown.",
+      "geography": {
+        "unit": "varies by feed",
+        "coverage": "sources[].geographyLevel, null when not recorded"
+      },
+      "missingness": "null license, vintage, geographyLevel or lastVerified means unknown. attributionUnverified: true means the publisher name is still being confirmed.",
+      "caveats_field": "_meta.pendingItems",
+      "reading_notes_field": "_meta.readingNotes",
+      "upstream_terms_status": "not_established"
+    },
+    {
+      "id": "census-county-lookup",
+      "title": "Census county name and code lookup (national)",
+      "path": "/data/census_acs_county.json",
+      "media_type": "application/json",
+      "schema": "/data/schema/census-county-lookup.schema.json",
+      "status": "supported",
+      "publisher": "U.S. Census Bureau",
+      "source_url_field": "_meta.source_url",
+      "retrieval_date_field": "_meta.fetched_at",
+      "epistemic_label": "VERIFIED",
+      "epistemic_label_note": "Names and FIPS codes only. Contains no income, poverty or margin-of-error values.",
+      "geography": {
+        "unit": "county",
+        "coverage": "All U.S. counties and equivalents",
+        "id_field": "data rows: state + county",
+        "id_format": "strings; preserve leading zeros"
+      },
+      "missingness": "Row 0 of data is the header row.",
+      "upstream_terms_status": "not_established",
+      "upstream_terms_note": "_meta.license reads \"US Public Domain\" as recorded by the ingest job; AccessMI has not independently reviewed it (pendingItems: license-review)."
+    },
+    {
+      "id": "download-manifest",
+      "title": "Open-data ingestion manifest",
+      "path": "/data/manifest.json",
+      "media_type": "application/json",
+      "schema": "/data/schema/download-manifest.schema.json",
+      "status": "supported",
+      "publisher": "AccessMI",
+      "release_version_field": "built_at",
+      "epistemic_label": null,
+      "epistemic_label_note": "Lists files produced by the ingestion job; holds no measurements."
+    },
+    {
+      "id": "build-manifest",
+      "title": "Live build and release provenance",
+      "path": "/.well-known/build.json",
+      "media_type": "application/json",
+      "schema": "/data/schema/build-manifest.schema.json",
+      "status": "supported",
+      "publisher": "AccessMI",
+      "description": "Commit, source tree, lockfile hash, critical dataset hashes and ingest dates of the deployed build. Written at build time by scripts/write-build-manifest.mjs.",
+      "epistemic_label": "VERIFIED"
+    },
+    {
+      "id": "sam-exclusions",
+      "title": "SAM.gov exclusions snapshot",
+      "path": "/data/sam-exclusions.json",
+      "media_type": "application/json",
+      "status": "unsupported",
+      "reason": "Not populated (count 0; the ingest needs a SAM_API_KEY that is not configured). An empty list does NOT mean no exclusions exist."
+    },
+    {
+      "id": "us-counties-topology",
+      "title": "U.S. county boundaries (TopoJSON, map rendering asset)",
+      "path": "/data/us-counties-10m.json",
+      "media_type": "application/json",
+      "status": "unsupported",
+      "reason": "Map rendering asset for the site; provenance and vintage are not documented here."
+    },
+    {
+      "id": "wayne-environmental-pack",
+      "title": "Wayne County environmental data pack (CSV, partner export)",
+      "path": "/data/wayne-county-environmental-data-pack.csv",
+      "media_type": "text/csv",
+      "status": "unsupported",
+      "reason": "Static partner export generated 2026-04-10 and not refreshed; read the per-section source URLs inside the file before reuse."
+    }
+  ]
+}

@@ -421,9 +421,6 @@ importers:
       '@esbuild/darwin-arm64':
         specifier: 0.27.3
         version: 0.27.3
-      mi-federal-data:
-        specifier: git+https://github.com/saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742
-        version: https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742
 
   artifacts/access-mi-mobile:
     dependencies:
@@ -7008,11 +7005,6 @@ packages:
     resolution: {integrity: sha512-SPaPEyvTsTmd0LpT7RaZciQyDw2i/JB7+iY9L5VfBo72+psescFxBqpI1TL9dnL+pmnfkU+l/J1mEEGLeF65EQ==}
     engines: {node: '>=20.19.4'}
     hasBin: true
-
-  mi-federal-data@https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742:
-    resolution: {gitHosted: true, integrity: sha512-Snn5D47YQmv3k32D5R1wSQOIEnYeLx37D8C8bJnqsxB+xgqJPQdUYN2Dn6qgEbbjA95IzRY4FHVKCJbTHhpgnA==, tarball: https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742}
-    version: 0.1.0
-    engines: {node: '>=18'}
 
   micromark-core-commonmark@2.0.3:
     resolution: {integrity: sha512-RDBrHEMSxVFLg6xvnXmb1Ayr2WzLAWjeSATAoxwKYJV94TeNavgoIdA0a9ytzDSVzBy2YKFK+emCPOEibLeCrg==}
@@ -16202,9 +16194,6 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
-
-  mi-federal-data@https://codeload.github.com/saebchicago/mi-federal-data/tar.gz/afb52547eaa8269ca9f6cbd343d81dcd35f97742:
-    optional: true
 
   micromark-core-commonmark@2.0.3:
     dependencies:

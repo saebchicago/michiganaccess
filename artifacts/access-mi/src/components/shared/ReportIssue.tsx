@@ -7,7 +7,8 @@ import { MessageSquare, Send, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
+import BackendUnavailableNotice from "@/components/shared/BackendUnavailableNotice";
 import { useLocation } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
@@ -77,7 +78,7 @@ export default function ReportIssue({ variant = "inline" }: { variant?: "inline"
               rows={2}
               className="text-xs"
             />
-            <Button size="sm" onClick={handleSubmit} disabled={sending || !comment.trim()} className="gap-1.5 text-xs">
+            <Button size="sm" onClick={handleSubmit} disabled={sending || !comment.trim() || !supabaseConfigured} className="gap-1.5 text-xs">
               <Send className="h-3 w-3" /> Submit
             </Button>
           </div>
@@ -119,7 +120,7 @@ export default function ReportIssue({ variant = "inline" }: { variant?: "inline"
             rows={2}
             className="text-xs"
           />
-          <Button size="sm" onClick={handleSubmit} disabled={sending || !comment.trim()} className="gap-1.5 text-xs">
+          <Button size="sm" onClick={handleSubmit} disabled={sending || !comment.trim() || !supabaseConfigured} className="gap-1.5 text-xs">
             <Send className="h-3 w-3" /> Submit
           </Button>
           <p className="text-[9px] text-muted-foreground">No personal data collected. Submissions are anonymous.</p>

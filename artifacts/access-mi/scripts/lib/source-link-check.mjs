@@ -94,7 +94,9 @@ export async function checkUrl(url, { timeoutMs = DEFAULT_TIMEOUT_MS, fetchImpl 
 
   try {
     let res = await attempt("HEAD");
-    if (res.status === 405 || res.status === 501) {
+    // Many publishers answer HEAD with 404/403 while GET works, so any
+    // HEAD failure is retried as GET before the URL is judged.
+    if (res.status >= 400) {
       res = await attempt("GET");
     }
     const finalUrl = res.url && res.url !== url ? res.url : null;
@@ -103,6 +105,12 @@ export async function checkUrl(url, { timeoutMs = DEFAULT_TIMEOUT_MS, fetchImpl 
     }
     if (res.status >= 300 && res.status < 400) {
       return { url, status: "redirect", httpStatus: res.status, finalUrl };
+    }
+    // 401/403/429 mean the server refused an automated client (auth gate,
+    // bot filter, rate limit). That is not evidence the citation is dead, and
+    // reporting it as dead produced the same weekly PR for months (#242-#256).
+    if (res.status === 401 || res.status === 403 || res.status === 429) {
+      return { url, status: "blocked", httpStatus: res.status, finalUrl };
     }
     if (res.status >= 400 && res.status < 500) {
       return { url, status: "client-error", httpStatus: res.status, finalUrl };

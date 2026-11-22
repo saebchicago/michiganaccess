@@ -46,6 +46,15 @@ so a generated dataset committed as a stub shipped empty and crashed every
 county brief. Both now run the same generators, and the guard fails the
 build if one gains a generator the other lacks.
 
+### Guards added by the 2026-11-22 gap closure
+`check-guard-parity` (the root/Netlify build must run every `check-*.mjs` the
+app build runs; before this, Netlify ran none of them) and `check-agent-readiness`
+(an independent consumer must discover, cite and correctly refuse data via
+llms.txt -> /data/index.json -> schemas). Release provenance tests:
+`node --test scripts/release.test.mjs`. Release runbook: `docs/RELEASE.md`.
+Do not re-add `mi-federal-data` to any package.json: it is private and breaks
+every token-less install (see dataset-refresh.yml).
+
 ### .migration-backup/ is load-bearing - do not delete
 It holds the ONLY in-repo source for seven Supabase functions the app calls
 (appeal-generator, civic-copilot, airnow-proxy, arcgis-proxy, cdc-proxy,
@@ -76,6 +85,6 @@ from their linked feed need a written `cadenceNote` / `urlNote`.
 Replace `—` with `-` or spaced en dash ` - ` in all files you touch.
 
 ## CI
-`.github/workflows/ci.yml` runs typecheck + vitest + a11y gate on every push and PR.
+`.github/workflows/ci.yml` runs typecheck + vitest + a11y gate + integrity guards on every PR to main (and manual dispatch).
 `.github/workflows/facility-refresh.yml` runs the facility data refresh (schedule + dispatch).
 `.github/workflows/build-data.yml` runs the open-data rebuild (schedule + dispatch).

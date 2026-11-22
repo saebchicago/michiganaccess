@@ -76,6 +76,33 @@ jobs:
 
           echo "release_needed=true" >> "$GITHUB_OUTPUT"
 
+      # Test the exact tree that will be published. The release marker is an
+      # empty commit, so its tree is identical to HEAD's. Netlify's own build
+      # also runs every integrity guard, but nothing here may assume that a
+      # green Netlify build means the right tree is live.
+      - uses: pnpm/action-setup@v4
+        if: steps.drift.outputs.release_needed != 'false'
+        with:
+          version: 10
+          run_install: false
+      - uses: actions/setup-node@v4
+        if: steps.drift.outputs.release_needed != 'false'
+        with:
+          node-version: "22"
+          cache: pnpm
+      - name: Verify the release tree (install, typecheck, tests, full build)
+        if: steps.drift.outputs.release_needed != 'false'
+        run: |
+          set -euo pipefail
+          pnpm install --frozen-lockfile
+          (cd artifacts/access-mi && pnpm typecheck && pnpm check:tests)
+          node --test scripts/release.test.mjs
+          pnpm run build
+          node scripts/write-build-manifest.mjs
+          echo "tested_tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_ENV"
+          # The build rewrites generated timestamps; never commit them here.
+          git checkout -- .
+
       - name: Create production release commit
         if: steps.drift.outputs.release_needed != 'false'
         env:
@@ -94,5 +121,26 @@ jobs:
           git commit --allow-empty \
             -m "chore(release): publish production $timestamp" \
             -m "$body"
+          if [ "$(git rev-parse 'HEAD^{tree}')" != "$tested_tree" ]; then
+            echo "::error::Release marker tree differs from the tested tree."
+            exit 1
+          fi
           git push origin HEAD:main
+          echo "release_sha=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
           echo "Created the explicit production release marker. Netlify will build this commit once."
+
+      - name: Verify production serves the release
+        # Polls /.well-known/build.json for up to 20 minutes, then checks the
+        # homepage, a county page, the data exports, discovery files and the
+        # 404 route. A failure here means production is NOT verified, even if
+        # Netlify reports the deploy as ready.
+        if: steps.drift.outputs.release_needed != 'false'
+        run: node scripts/verify-release.mjs --base https://accessmi.org --expect "$release_sha" --wait 1200 --report release-verification.json
+
+      - name: Keep the verification report
+        if: always() && steps.drift.outputs.release_needed != 'false'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-verification
+          path: release-verification.json
+          if-no-files-found: warn

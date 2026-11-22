@@ -1,12 +1,12 @@
 name: ci
 
-# Cost architecture:
-# - manual-only for now: PR runs fail at install on the private
-#   mi-federal-data dependency (no CI token). Restore the pull_request
-#   trigger below once CI can read that repo.
+# Runs on every PR to main and on manual dispatch. It was manual-only from
+# 2026-11 because installs failed on the private mi-federal-data optional
+# dependency; that package is no longer declared (see dataset-refresh.yml),
+# so token-less installs work again and the PR gate is restored.
 on:
-  # pull_request:
-  #   branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 # A newer commit supersedes an in-flight run for the same PR (or manual run).
@@ -79,6 +79,10 @@ jobs:
           node scripts/check-form-labels.mjs
           node scripts/check-page-provenance.mjs
           node scripts/check-build-parity.mjs
+          node scripts/check-guard-parity.mjs
+          node scripts/check-agent-readiness.mjs
+      - name: Release provenance tests
+        run: node --test scripts/release.test.mjs
       - name: Allowlist shrink-only check
         working-directory: artifacts/access-mi
         run: |

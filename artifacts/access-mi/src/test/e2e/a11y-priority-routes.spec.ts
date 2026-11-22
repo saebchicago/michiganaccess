@@ -57,6 +57,24 @@ test.describe('A11y audit - priority routes', () => {
     test(`axe scan ${route}`, async ({ page }) => {
       await page.goto(route, { waitUntil: 'domcontentloaded' });
       await page.waitForLoadState('networkidle').catch(() => {});
+      // The header and <main> fade in (framer-motion, Web Animations API).
+      // Under parallel load, networkidle can resolve while those fades are
+      // still running; axe then samples semi-transparent text and reports
+      // 20-26 false color-contrast nodes (seen on /domain-dashboard,
+      // 2026-11-22; reproduced by scanning before settle, 0 nodes after).
+      // Wait for every finite animation to finish before scanning.
+      await page.waitForFunction(
+        () =>
+          document
+            .getAnimations()
+            .every(
+              (a) =>
+                a.playState !== 'running' ||
+                a.effect?.getComputedTiming().iterations === Infinity,
+            ),
+        undefined,
+        { timeout: 10_000 },
+      );
 
       const results = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])

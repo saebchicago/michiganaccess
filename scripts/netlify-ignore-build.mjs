@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
 // Netlify ignore commands use inverted exit semantics:
 //   exit 0 -> skip this build
@@ -16,33 +17,36 @@ export function shouldNetlifyBuild(context, commitMessage) {
   return RELEASE_SUBJECT.test((commitMessage ?? "").trim());
 }
 
-const context = process.env.CONTEXT ?? "";
+// Only run when executed directly, so tests can import shouldNetlifyBuild.
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  const context = process.env.CONTEXT ?? "";
 
-if (context !== "production") {
-  process.exit(1);
-}
+  if (context !== "production") {
+    process.exit(1);
+  }
 
-let message = "";
-try {
-  message = execFileSync("git", ["log", "-1", "--pretty=%B"], {
-    encoding: "utf8",
-  }).trim();
-} catch (error) {
-  // Production is intentionally fail-closed: an unreadable commit identity must
-  // not accidentally consume a production deploy or publish an unreviewed HEAD.
-  console.error(
-    "Skipping production deploy because the commit message could not be read.",
-    error instanceof Error ? error.message : error,
+  let message = "";
+  try {
+    message = execFileSync("git", ["log", "-1", "--pretty=%B"], {
+      encoding: "utf8",
+    }).trim();
+  } catch (error) {
+    // Production is intentionally fail-closed: an unreadable commit identity must
+    // not accidentally consume a production deploy or publish an unreviewed HEAD.
+    console.error(
+      "Skipping production deploy because the commit message could not be read.",
+      error instanceof Error ? error.message : error,
+    );
+    process.exit(0);
+  }
+
+  if (shouldNetlifyBuild(context, message)) {
+    console.log(`Production release approved: ${message.split("\n")[0]}`);
+    process.exit(1);
+  }
+
+  console.log(
+    `Skipping production deploy until an explicit release is requested: ${message.split("\n")[0] || "unknown commit"}`,
   );
   process.exit(0);
 }
-
-if (shouldNetlifyBuild(context, message)) {
-  console.log(`Production release approved: ${message.split("\n")[0]}`);
-  process.exit(1);
-}
-
-console.log(
-  `Skipping production deploy until an explicit release is requested: ${message.split("\n")[0] || "unknown commit"}`,
-);
-process.exit(0);

@@ -19,6 +19,12 @@ const CATEGORY_BORDER: Record<Signal["category"], string> = {
   safety: "border-l-michigan-coral",
 };
 
+/** "2026-03" -> "Mar 2026". Signals are dated notes, not a live feed. */
+function formatSignalDate(ym: string): string {
+  const [y, m] = ym.split("-").map(Number);
+  return `${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]} ${y}`;
+}
+
 export default function MichiganPulse() {
   const [idx, setIdx] = useState(0);
   const signals = SIGNALS_2026_03;
@@ -42,15 +48,6 @@ export default function MichiganPulse() {
             <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground hidden sm:inline">
               Michigan Pulse
             </span>
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            <motion.span
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="h-1.5 w-1.5 rounded-full bg-michigan-teal"
-            />
           </div>
 
           <AnimatePresence mode="wait">
@@ -67,7 +64,12 @@ export default function MichiganPulse() {
                 className="flex items-center gap-2 text-sm text-foreground hover:text-primary transition-colors group"
               >
                 <Icon className={`h-3.5 w-3.5 shrink-0 ${config.color}`} />
-                <span className="truncate">{signal.text}</span>
+                <span className="truncate">
+                  {signal.text}
+                  <span className="text-xs text-muted-foreground">
+                    {" "}- {signal.source}, as of {formatSignalDate(signal.date)}
+                  </span>
+                </span>
                 <ArrowRight className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
               </Link>
             </motion.div>

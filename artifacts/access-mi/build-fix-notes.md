@@ -74,6 +74,8 @@ Verified on npm: highest 4.59.x is **4.59.1** (only 4.59.0 and 4.59.1 exist).
 Vite installed: 7.3.3, rollup dep: `^4.43.0`. 4.59.1 satisfies the range.
 
 Change: `pnpm-workspace.yaml` overrides block, added `rollup: "4.59.1"` (exact
-pin, no caret). Local build exits 0, dist/public/index.html and assets/ present,
+pin, no caret). Local build exits 0, dist/index.html and assets/ present
+(correction 2026-11-22: Vite writes to dist/, never dist/public/; the Replit
+artifact.toml publicDir pointed at dist/public and was fixed to dist),
 no `vite/modulepreload-polyfill` or `/src/main.tsx` refs in dist, curl
 /civic-data returns HTML.

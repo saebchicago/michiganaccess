@@ -1,0 +1,397 @@
+{
+  "_meta": {
+    "schema": "accessmi-claim-ledger/v1",
+    "reviewed": "2026-11-22",
+    "scope": "Prominent figures modified or reviewed in the 2026-11 gap-closure PR, including every entry in the five hand-typed claim collections (weekly insights, data stories, signals, quiz, homepage rotating stats). Page-level stat blocks and hand-typed data files outside those collections are not covered; see residual_unaudited.",
+    "status_values": [
+      "VERIFIED",
+      "REPORTED",
+      "MODELED",
+      "PROJECTED",
+      "INSUFFICIENT_DATA"
+    ],
+    "verification_note": "'Checked against' names the committed file a figure was compared with. Upstream publisher pages could not be fetched from the review environment (egress proxy), so upstream values were not re-read; the committed ingests and their recorded download URLs are the evidence.",
+    "external_verification": "On 2026-11-22 an automated review agent searched for and fetched publisher pages. 'direct' means it read the figure on the publisher's page; 'snippet' means a search summary only. Only michigan.gov pages were reachable; irs.gov, fema.gov, sba.gov, bipartisanpolicy.org and hud.gov were blocked, so claims that depend on them were withdrawn as unverifiable, not judged false.",
+    "registry": "artifacts/access-mi/src/data/claimReviews.ts holds one review record per rendered claim; src/data/__tests__/claimReview.test.ts fails on a new, edited or unevidenced claim."
+  },
+  "claims": [
+    {
+      "id": "alice-statewide-2024",
+      "claim": "40% of Michigan households were below the ALICE Threshold in 2024 (39.7% unrounded): 13% in poverty and 26% above poverty but unable to afford basics.",
+      "locations": [
+        "src/data/insights.ts (week 1)",
+        "src/components/tools/MichiganQuiz.tsx",
+        "src/data/data-stories.ts"
+      ],
+      "status": "MODELED",
+      "source": "United For ALICE, Michigan Data Sheet 2026 (2024 data)",
+      "source_url": "https://www.unitedforalice.org/michigan",
+      "publication_year": 2026,
+      "reporting_period": "2024",
+      "geography": "Michigan, statewide",
+      "denominator": "All Michigan households (4,109,904)",
+      "methodology": "ALICE Threshold = household survival budget by county and household type; below-threshold = poverty + ALICE households.",
+      "checked_against": "artifacts/access-mi/src/data/alice-county.generated.json (statewide.belowAliceThresholdPct 39.7, povertyPct 13.4, alicePct 26.3)",
+      "change": "Insight and quiz said households below the threshold 'earn too much for aid', which describes only the ALICE (above-poverty) group, not the 40%. Reworded. The historical 41% statewide figure is gone from rendered copy (only a code comment documents it).",
+      "enforced_by": "src/data/__tests__/insights-claims.test.ts",
+      "qualification": "ALICE is a modeled threshold. United For ALICE rounds 39.7% to 40%."
+    },
+    {
+      "id": "alice-highest-county-2024",
+      "claim": "Highest county below the ALICE Threshold: Clare, 55.4%.",
+      "locations": [
+        "src/data/insights.ts (week 1)"
+      ],
+      "status": "MODELED",
+      "source": "United For ALICE, Michigan Data Sheet 2026 (2024 data)",
+      "source_url": "https://www.unitedforalice.org/michigan",
+      "publication_year": 2026,
+      "reporting_period": "2024",
+      "geography": "Michigan counties (83)",
+      "denominator": "Households in each county",
+      "methodology": "Maximum of belowAliceThresholdPct across county records.",
+      "checked_against": "artifacts/access-mi/src/data/alice-county.generated.json",
+      "change": "Previously 'Lake Co., 64% below ALICE' (an older report's figure; Lake is 51.5% in the 2026 sheet and not the highest). Survival budget corrected from $27,156 to $29,580 (single adult).",
+      "enforced_by": "src/data/__tests__/insights-claims.test.ts",
+      "qualification": "No published uncertainty range; small-county estimates are less stable."
+    },
+    {
+      "id": "rural-pcp-access",
+      "claim": "Removed: 'Rural Michigan counties have 7x fewer PCPs per capita than urban counties; rural residents travel 3x further'; data points 1:3,200 vs 1:460, 42 mi, 47 of 83.",
+      "locations": [
+        "src/data/insights.ts (week 0, former)"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "source": "Cited 'HRSA HPSA data + County Health Rankings 2025' with no dataset, rural definition or computation in the repo.",
+      "source_url": null,
+      "change": "Withheld. Replaced with a figure computed from the committed HRSA rollup (next entry).",
+      "qualification": "Could be restored only with a named rurality definition (e.g. RUCC/RUCA), a primary-care ratio source and vintage, and a reproducible computation."
+    },
+    {
+      "id": "pc-hpsa-county-count",
+      "claim": "79 of Michigan's 83 counties contain at least one designated primary care HPSA; none in Antrim, Clinton, Livingston, Midland.",
+      "locations": [
+        "src/data/insights.ts (week 0)"
+      ],
+      "status": "MODELED",
+      "source": "HRSA HPSA Primary Care facility detail file (BCD_HPSA_FCT_DET_PC.csv)",
+      "source_url": "https://data.hrsa.gov/data/download?data=SHORT",
+      "publication_year": 2026,
+      "reporting_period": "Designations as of file date 11/02/2026",
+      "geography": "Michigan counties (83); HPSAs themselves are often sub-county",
+      "denominator": "83 counties",
+      "methodology": "County rollup of designated-status records by AccessMI (scripts/refresh-hrsa-hpsa-county.mjs).",
+      "checked_against": "artifacts/access-mi/src/data/hrsa-hpsa-county.generated.json",
+      "enforced_by": "src/data/__tests__/insights-claims.test.ts",
+      "qualification": "A county containing an HPSA does not mean the whole county is a shortage area."
+    },
+    {
+      "id": "civic-insight-score",
+      "claim": "Civic Insight Score (0-100) on county briefs and the downloadable brief.",
+      "locations": [
+        "src/lib/civic-score.ts",
+        "src/components/shared/CivicScoreBreakdown.tsx",
+        "src/components/place/DownloadLocalInsights.tsx"
+      ],
+      "status": "MODELED",
+      "source": "AccessMI threshold score from County Health Rankings 2025 inputs (SAHIE 2022 uninsured; Map the Meal Gap 2022 food insecurity) and county type",
+      "source_url": null,
+      "methodology": "Base 60 plus fixed points per threshold, clamped 10-95 (CIVIC_SCORE_METHODOLOGY).",
+      "change": "The breakdown panel and the PDF/HTML brief described a different 40/60 model (z-score vulnerability + 'Access Friction'). Its composite did not equal the displayed score, counted outages as 0 with no feed, scored missing Supabase counts as best case, inverted the primary-care ratio, and attributed CHR inputs to 'Census ACS'. Both now show the real inputs and points; missing inputs are flagged.",
+      "enforced_by": "src/lib/__tests__/civic-score.test.ts",
+      "qualification": "No uncertainty range. Comparison aid only."
+    },
+    {
+      "id": "saipe-county-poverty-export",
+      "claim": "Michigan county poverty and median household income, /data/michigan-county-income-poverty.json",
+      "status": "MODELED",
+      "source": "U.S. Census Bureau SAIPE, 2024 state and county estimates",
+      "source_url": "https://www.census.gov/programs-surveys/saipe.html",
+      "publication_year": 2025,
+      "publication_year_note": "Year of release inferred from estimate year 2024; the file records ingested_at 2026-11-03, not the release date.",
+      "reporting_period": "2024",
+      "geography": "83 Michigan counties (5-digit FIPS strings)",
+      "denominator": "SAIPE poverty universe per measure (see Census SAIPE methodology)",
+      "uncertainty": "90% bounds for povertyPct, childPovertyPct, medianHouseholdIncome; none in file for schoolAgePovertyPct",
+      "change": "Unchanged values. Added JSON Schema, data-index entry with comparability rules, and agent-consumer tests (overlapping intervals refuse a ranking).",
+      "enforced_by": "scripts/check-agent-readiness.mjs"
+    },
+    {
+      "id": "source-and-publisher-counts",
+      "claim": "52 data feeds from 42 publishers",
+      "status": "VERIFIED",
+      "source": "artifacts/access-mi/src/data/sourcesRegistry.ts (derived counts in platformConstants.ts)",
+      "checked_against": "check-data-catalog.mjs output: 32 catalog entries against 52 feeds from 42 publishers",
+      "change": "None. The 2026-11-19 note that Lovable showed an 'older 52-source catalog' is not a discrepancy: the current catalog also has 52 feeds, and the Lovable project tracks main (latest_commit_sha 423b294)."
+    },
+    {
+      "id": "facility-count",
+      "claim": "Verified health facilities in Michigan (CMS hospitals + HRSA active service sites)",
+      "status": "VERIFIED",
+      "source": "CMS Hospital General Information (xubh-q36u) + HRSA Health Center Service Delivery Sites",
+      "reporting_period": "fetched_at 2026-09-09 on main",
+      "geography": "Michigan",
+      "denominator": "Definition B: CMS-certified hospital OR HRSA-active health center service site",
+      "change": "None on this branch. Main has 614 records; open refresh PR #245 (fetched 2026-10-19) has 609 (+1 / -6 HRSA sites, 14 changed) and supersedes #238-#243.",
+      "qualification": "Main's snapshot is about 10 weeks old; the facility-refresh workflow failed at install from 2026-11-09 to this fix."
+    },
+    {
+      "id": "mileadsafe-citation",
+      "claim": "MiLeadSafe statewide lead service line replacement information",
+      "status": "REPORTED",
+      "source": "State of Michigan, MiLeadSafe",
+      "source_url": "https://www.michigan.gov/mileadsafe",
+      "change": "Old EGLE URL redirects to /egle/404 (genuine dead link). Pages now cite michigan.gov/mileadsafe (HTTP 200, title 'Mi Lead Safe', checked 2026-11-22). sourcesRegistry.ts still holds the old URL: sacrosanct, needs owner exception.",
+      "qualification": "The replacement is the program home page; a specific replacement-tracker deep link was not verified."
+    },
+    {
+      "id": "sam-exclusions",
+      "claim": "/data/sam-exclusions.json",
+      "status": "INSUFFICIENT_DATA",
+      "source": "SAM.gov v4 Exclusions API",
+      "change": "File is empty (count 0, SAM_API_KEY not set). Marked unsupported in /data/index.json so an empty list is not read as 'no exclusions'. The contractors page only shows a badge when a record matches, so no false 'clear' claim renders."
+    },
+    {
+      "id": "outage-language",
+      "claim": "Outage figures",
+      "status": "REPORTED",
+      "source": "Consumers Energy outage feed via netlify/functions/consumers-outages",
+      "change": "ConsumersOutageReports already states 'Outage feed unavailable' on failure. The only stale outage logic was the Civic Score friction index (removed, above)."
+    },
+    {
+      "id": "pfas-sites-and-limits",
+      "claim": "350 PFAS sites identified as of July 2026; state limits of 8 ppt PFOA and 16 ppt PFOS set August 2020.",
+      "locations": [
+        "insights.ts (week 2)",
+        "data-stories.ts (pfas-water)",
+        "monthly-signals.ts (s13)",
+        "quiz"
+      ],
+      "status": "REPORTED",
+      "source": "EGLE / MPART",
+      "source_url": "https://www.michigan.gov/egle/newsroom/mi-environment/2026/08/12/pfas-contamination",
+      "publication_year": 2026,
+      "reporting_period": "Sites as of July 2026; limits effective August 2020",
+      "geography": "Michigan, statewide",
+      "verification": "direct",
+      "change": "Was '250+ sites' (outdated). Removed: '102 Do Not Eat water bodies' (no primary count found; 2025 press reported 98), 'only state with a PFAS deer advisory' (contradicted: Maine has had one since 2021), and the EPA 4.0 ppt value (confirmed only by search snippet).",
+      "qualification": "SOURCE_MANIFEST still lists 328 confirmed sites; that file is sacrosanct and needs an owner update."
+    },
+    {
+      "id": "mdoc-population-recidivism",
+      "claim": "Prison population 32,778, lowest since 1991, down from 51,554 in 2007; three-year recidivism 21.0%, lowest on state record.",
+      "locations": [
+        "insights.ts (week 6)",
+        "data-stories.ts (reentry-success)",
+        "monthly-signals.ts (s12)",
+        "quiz"
+      ],
+      "status": "REPORTED",
+      "source": "Michigan Department of Corrections press release",
+      "source_url": "https://www.michigan.gov/corrections/about/newsroom/press-releases/2025/07/02/michigan-department-of-corrections-reports-new-historic-low",
+      "publication_year": 2025,
+      "geography": "Michigan state prisons",
+      "verification": "direct",
+      "change": "Unchanged figures; source and URL made specific. Dropped the derived '36% over 17 years'."
+    },
+    {
+      "id": "vocational-village",
+      "claim": "Vocational Village graduates: roughly 12% recidivism vs approximately 22% statewide.",
+      "locations": [
+        "data-stories.ts (vocational-village-outcomes)"
+      ],
+      "status": "REPORTED",
+      "source": "Michigan Department of Corrections press release",
+      "source_url": "https://www.michigan.gov/corrections/about/newsroom/press-releases/2026/06/02/mdoc-earns-national-recognition-for-innovative-vocational-village-programming",
+      "publication_year": 2026,
+      "verification": "direct",
+      "change": "Comparison changed from '21.0% statewide' to MDOC's own wording (approximately 22%). Removed '69% employed while on parole' (only a 2017 news report and a 2022 secondary analysis found).",
+      "qualification": "src/pages/ReentryCareNavigator.tsx still shows 69% (cited to MLPP 2022) and '12% versus 21.0%'; not changed here."
+    },
+    {
+      "id": "gsrp-enrollment",
+      "claim": "Nearly 55,000 children enrolled in GSRP as of January 2026, a record.",
+      "locations": [
+        "data-stories.ts (prek-for-all-coverage)"
+      ],
+      "status": "REPORTED",
+      "source": "Governor's office and MiLEAP press release",
+      "source_url": "https://www.michigan.gov/whitmer/news/press-releases/2026/03/25/whitmer-and-mileap-announce-record-enrollment-in-prek-for-all",
+      "publication_year": 2026,
+      "verification": "direct",
+      "change": "Removed '59,000 funded seats', '118,000 four-year-olds' and 'only half the eligible kids' (found only in news coverage, not the state release)."
+    },
+    {
+      "id": "msp-bicyclist-seatbelt",
+      "claim": "Bicyclist deaths 29 in 2024 (+21%) and 35 in 2025 (+21%); seat belt use 93.2% in 2025, highest since 2019.",
+      "locations": [
+        "insights.ts (week 13)",
+        "quiz"
+      ],
+      "status": "REPORTED",
+      "source": "Michigan State Police news releases, 2025-08-26, 2026-02-10, 2026-08-06",
+      "source_url": "https://www.michigan.gov/mspnewsroom/news-releases/2026/08/06/final-2025-crash-data-shows-roadway-deaths-decreased-but-challenges-remain",
+      "publication_year": 2026,
+      "geography": "Michigan, statewide",
+      "verification": "direct",
+      "change": "Added the 2025 figure. Removed 'up from 24 in 2023' (snippet only) and the '+20% crashes' data point."
+    },
+    {
+      "id": "dental-hpsa-county-count",
+      "claim": "76 of 83 counties contain at least one designated dental HPSA.",
+      "locations": [
+        "insights.ts (week 5)",
+        "data-stories.ts (dental-desert)",
+        "monthly-signals.ts (s15)",
+        "quiz"
+      ],
+      "status": "MODELED",
+      "source": "HRSA HPSA Dental Health detail file (11/02/2026)",
+      "source_url": "https://data.hrsa.gov/data/download?data=SHORT",
+      "publication_year": 2026,
+      "geography": "Michigan counties (83)",
+      "denominator": "83 counties",
+      "methodology": "County rollup of designated-status records by AccessMI.",
+      "checked_against": "artifacts/access-mi/src/data/hrsa-hpsa-county.generated.json",
+      "enforced_by": "src/data/__tests__/insights-claims.test.ts",
+      "change": "Was '59 of 83' with no source found (press quoting MDHHS says 58; the committed HRSA file gives 76). Removed '340+ dentists needed' (shortage FTE is non-additive across overlapping designations), 'UP: 1 dentist per 3,800' and '12 counties have fewer than 5 dentists' (no source).",
+      "qualification": "Counts differ by definition (whole-county vs any designation). A county containing a designation is not a county without dentists."
+    },
+    {
+      "id": "rx-kids-coverage",
+      "claim": "Rx Kids communities in 28 of 83 counties; launched in Flint, January 2024.",
+      "locations": [
+        "insights.ts (week 12)",
+        "quiz"
+      ],
+      "status": "REPORTED",
+      "source": "Local government and program announcements compiled in src/data/rx-kids.ts",
+      "checked_against": "artifacts/access-mi/src/data/rx-kids.ts",
+      "enforced_by": "src/data/__tests__/insights-claims.test.ts",
+      "change": "Removed the '$250M over 3 years' data point and the 'nation's first' wording from the insight.",
+      "qualification": "rx-kids.ts and the Early Childhood page still state $250 million; University of Michigan and press coverage say $270 million. Needs a fiscal agency document."
+    },
+    {
+      "id": "rx-kids-preterm",
+      "claim": "'18% fewer preterm births in Flint' (Lancet Public Health, 2026)",
+      "locations": [
+        "data-stories.ts (rx-kids-outcomes)"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "Likely supportable: the abstract reports a 2.7 percentage point drop from a 15.1% baseline (about 18% relative), but this was seen in search snippets only.",
+      "to_restore": "Read DOI 10.1016/S2468-2667(26)00055-1 directly and quote the absolute and relative figures."
+    },
+    {
+      "id": "childcare-gap",
+      "claim": "'~125,000 more children under 5 with working parents than licensed childcare slots'; '284,000 licensed slots'; 'Northern MI 0.3 slots/child'; 'average cost exceeds $10K/year'",
+      "locations": [
+        "insights.ts (week 7)",
+        "data-stories.ts (childcare-crisis)"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "Contradicted in part: the Bipartisan Policy Center Michigan sheet (2021, snippet) gives a gap of 131,150 children under 6 and 307,890 slots. No source found for the other figures.",
+      "to_restore": "Fetch the BPC state sheet and restate with its year, age group and definition."
+    },
+    {
+      "id": "nfip-wayne",
+      "claim": "'Wayne County: 8,500 flood claims since 1978, 4,200 active policies, average claim $32,400'",
+      "locations": [
+        "insights.ts (week 3)",
+        "monthly-signals.ts (s19)"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "No primary figure found; OpenFEMA unreachable from the review environment.",
+      "to_restore": "Compute from OpenFEMA FimaNfipClaims and FimaNfipPolicies with a stated cutoff date."
+    },
+    {
+      "id": "fema-declarations-pace",
+      "claim": "'12 federal disaster declarations per decade in the 1980s; 2020s on pace for 25+'; 'severe storms 58% of events'; 'declarations have doubled in two decades'",
+      "locations": [
+        "insights.ts (week 9)",
+        "data-stories.ts (disaster-acceleration)"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "No primary tally found; public trackers show about 45 Michigan declarations in total, which makes the 2020s pace doubtful.",
+      "to_restore": "Compute from OpenFEMA DisasterDeclarationsSummaries, stating whether fire and emergency declarations are included."
+    },
+    {
+      "id": "irs-zip-eitc-agi",
+      "claim": "'48205: 44.9% of filers claim EITC, highest in Michigan'; 'MI average 17.6%'; 'Birmingham AGI $142,000 vs Detroit East $21,200, a 6.7x gap'; '~19.2% of eligible taxpayers don't claim EITC'",
+      "locations": [
+        "insights.ts (weeks 4, 11)",
+        "monthly-signals.ts (s17, s18)"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "IRS SOI ZIP file could not be downloaded. The figures match src/data/irs-zip-income.ts, but that file's values are rounded to hundreds, cover a subset of ZIPs (so 'highest in Michigan' cannot follow from it) and its state average (19.2%) disagrees with the insight (17.6%).",
+      "to_restore": "Rebuild irs-zip-income.ts from the IRS 21zpallagi.csv (or newer) with an ingest script."
+    },
+    {
+      "id": "sba-lending",
+      "claim": "'$3.2 billion in SBA lending since FY2020; Wayne $680M; average 7(a) loan $148K'",
+      "locations": [
+        "insights.ts (week 8)"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "The only in-repo source, src/data/sba-lending.ts, describes itself as 'Illustrative county-level estimates'. One external data point (FY2024: $1.3B in Michigan) suggests the total is too low.",
+      "to_restore": "Ingest SBA 7(a) and 504 FOIA files."
+    },
+    {
+      "id": "pedestrian-data-gap",
+      "claim": "'76 of 83 counties have zero pedestrian infrastructure data'; 'pedestrian fatalities 189/yr'",
+      "locations": [
+        "insights.ts (week 10)",
+        "monthly-signals.ts (s7)",
+        "quiz",
+        "HeroSection rotating stats"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "The 76 is 83 minus SEMCOG's 7 counties, which shows only that SEMCOG publishes such data, not that no one else does. MSP figures for 2020-2025 average about 175 pedestrian deaths a year, not 189."
+    },
+    {
+      "id": "misc-signals",
+      "claim": "March 2026 signals: gas price surge; Oakland boil-water advisory; MDHHS dashboard launch; infant mortality 'declined 14% (6.1/1K)'; BEAD '$1.559B for 492K homes'; MiHER 'up to $34K/household'; opioid deaths 'down 7.5%'; '2,247 pharmacies, chains down 7.4%'; language counts; '27.9% chronic absenteeism'; '31,211 experienced homelessness'",
+      "locations": [
+        "monthly-signals.ts",
+        "quiz"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "Two were time-bound events still rotating as current eight months later. The rest were not checked against a publisher page in this pass. The infant mortality figure (6.1) also disagrees with SOURCE_MANIFEST (6.3)."
+    },
+    {
+      "id": "quiz-tax-insurance",
+      "claim": "Quiz: '24 Michigan cities levy an income tax; Detroit 2.4%'; 'flat 4.25% state income tax'; 'Hamtramck auto insurance $773/month'",
+      "locations": [
+        "MichiganQuiz.tsx"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "The Michigan Treasury pages could not be fetched from the review environment (HTTP 403); the insurance figure has no public primary source.",
+      "to_restore": "Confirm on michigan.gov/taxes and restore the two tax questions."
+    },
+    {
+      "id": "hero-zip-score",
+      "claim": "'ZIP 48201 in Detroit scores 28/100 for healthcare access'",
+      "locations": [
+        "HeroSection rotating stats"
+      ],
+      "status": "INSUFFICIENT_DATA",
+      "change": "Withdrawn 2026-11-22.",
+      "finding": "Hand-typed copy of a computed score with no test tying it to the scorecard."
+    }
+  ],
+  "residual_unaudited": [
+    "src/data/irs-zip-income.ts (rounded values labeled IRS SOI TY2021; feeds ZIP pages and IRSIncomeCard)",
+    "src/data/sba-lending.ts and sba-disaster-loans.ts (self-described illustrative)",
+    "src/data/zip-quickstats.ts, federalSpending.ts, utility-stress.ts, civicBoards.ts (hand-typed; civicBoards cites secondary research)",
+    "Page-level stat arrays such as REENTRY_STATS in ReentryCareNavigator.tsx and tables in EnergyBurdenMap.tsx",
+    "src/data/sourceManifest.ts entries marked verified with only a publisher home page as URL"
+  ]
+}

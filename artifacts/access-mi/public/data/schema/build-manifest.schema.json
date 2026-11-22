@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accessmi.org/data/schema/build-manifest.schema.json",
+  "title": "AccessMI build manifest",
+  "type": "object",
+  "required": [
+    "schema",
+    "commit",
+    "context",
+    "built_at",
+    "lockfile_sha256",
+    "entry_html_sha256",
+    "datasets"
+  ],
+  "properties": {
+    "schema": {
+      "const": "accessmi-build/v2"
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "source_tree": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "context": {
+      "type": "string"
+    },
+    "deploy_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "built_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "lockfile_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "entry_html_sha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "datasets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "present"
+        ]
+      }
+    }
+  }
+}

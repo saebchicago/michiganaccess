@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ThumbsUp, ThumbsDown, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -44,6 +44,11 @@ export default function PageFeedback() {
   };
 
   const inferredCategory = isHelpful ? "suggestion" : "data_accuracy";
+
+  // Votes are written to Supabase and insert errors are swallowed, so without
+  // a configured backend the widget would thank people for feedback that was
+  // never stored. Hide it instead.
+  if (!supabaseConfigured) return null;
 
   return (
     <div className="border-t border-border bg-muted/30 py-4">

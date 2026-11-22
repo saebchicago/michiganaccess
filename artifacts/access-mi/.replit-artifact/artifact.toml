@@ -19,7 +19,7 @@ run = "pnpm --filter @workspace/access-mi run dev"
 
 [services.production]
 build = [ "pnpm", "--filter", "@workspace/access-mi", "run", "build" ]
-publicDir = "artifacts/access-mi/dist/public"
+publicDir = "artifacts/access-mi/dist"
 serve = "static"
 
 [[services.production.rewrites]]
