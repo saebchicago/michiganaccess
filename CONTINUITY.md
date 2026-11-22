@@ -17,7 +17,7 @@ Maintenance mode: quarterly data refresh, corrections acknowledged in 7 days and
 
 ## How production changes
 
-Production publishes through the GitHub Actions workflow "Publish production release", which makes a `chore(release):` commit. Package manager is pnpm only. Before merging: `pnpm check:tests`, `pnpm typecheck` and `pnpm build` from `artifacts/access-mi/`.
+Production publishes through the GitHub Actions workflow "Publish production release", which tests the tree, makes a `chore(release):` commit and then verifies what production serves (see `docs/RELEASE.md`). Package manager is pnpm only. Before merging: `pnpm check:tests`, `pnpm typecheck` and `pnpm build` from `artifacts/access-mi/`.
 
 ## Recurring upkeep
 
@@ -28,7 +28,7 @@ Production publishes through the GitHub Actions workflow "Publish production rel
 
 Set in the hosting provider's environment settings. Rotate any that leak; see the hosting provider's environment settings, then redeploy.
 
-`AIRNOW_API_KEY`, `CENSUS_API_KEY`, `EIA_API_KEY`, `SAM_API_KEY`, `MISTRAL_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `VITE_SUPABASE_ANON_KEY`, `DATABASE_URL`
+`AIRNOW_API_KEY`, `CENSUS_API_KEY` (GitHub Actions; returned "Invalid Key" on 2026-11-16, rotate), `MI_FEDERAL_DATA_TOKEN` (GitHub Actions, optional, read-only access to the private mi-federal-data repo), `EIA_API_KEY`, `SAM_API_KEY`, `MISTRAL_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `VITE_SUPABASE_ANON_KEY`, `DATABASE_URL`
 
 ## Cleanup note
 

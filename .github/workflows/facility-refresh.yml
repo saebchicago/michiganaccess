@@ -92,16 +92,21 @@ jobs:
           OLD_DATE:  ${{ steps.summary.outputs.old_date }}
           NEW_DATE:  ${{ steps.summary.outputs.new_date }}
         run: |
-          BRANCH="data/facility-refresh-$(date -u +%Y%m%d-%H%M)"
+          set -euo pipefail
+          # One rolling branch and PR. Each refresh is a complete snapshot of
+          # the CMS + HRSA sources, so the newest run supersedes every older
+          # one; per-run branches left six stacked PRs (#238-#245) where
+          # merging an older one after a newer one would reverse newer data.
+          BRANCH="data/facility-refresh"
           git config user.name "facility-refresh-bot"
           git config user.email "actions@users.noreply.github.com"
-          git checkout -b "$BRANCH"
+          git checkout -B "$BRANCH"
           git add \
             artifacts/access-mi/src/data/verifiedHealthFacilities.json \
             artifacts/access-mi/src/data/countyFacilityReference.json \
             artifacts/access-mi/src/data/trendSeries.json
           git commit -m "data: facility dataset refresh $(date -u +%Y-%m-%d)"
-          git push origin "$BRANCH"
+          git push --force origin "$BRANCH"
           {
             echo "## Facility Dataset Drift Detected"
             echo ""
@@ -119,6 +124,11 @@ jobs:
             echo "node artifacts/access-mi/scripts/load-facilities-to-supabase.mjs"
             echo '```'
           } > /tmp/pr-body.md
-          gh pr create \
-            --title "data: facility dataset refresh $(date -u +%Y-%m-%d)" \
-            --body-file /tmp/pr-body.md
+          existing="$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --title "data: facility dataset refresh (latest snapshot $(date -u +%Y-%m-%d))" --body-file /tmp/pr-body.md
+          else
+            gh pr create --head "$BRANCH" \
+              --title "data: facility dataset refresh (latest snapshot $(date -u +%Y-%m-%d))" \
+              --body-file /tmp/pr-body.md
+          fi

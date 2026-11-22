@@ -9,7 +9,8 @@ import { Switch } from "@/components/ui/switch";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, supabaseConfigured } from "@/integrations/supabase/client";
+import BackendUnavailableNotice from "@/components/shared/BackendUnavailableNotice";
 import { toast } from "sonner";
 import { EVENT_TYPES } from "@/hooks/useCommunityEvents";
 
@@ -244,7 +245,8 @@ export default function CommunityEventSubmissionForm() {
             <Input type="url" value={form.website} onChange={(e) => set("website", e.target.value)} placeholder="https://..." maxLength={500} className="text-sm" />
           </div>
 
-          <Button type="submit" disabled={sending} className="w-full gap-2">
+          {!supabaseConfigured && <BackendUnavailableNotice what="Event submissions" />}
+          <Button type="submit" disabled={sending || !supabaseConfigured} className="w-full gap-2">
             <Send className="h-3.5 w-3.5" />
             {sending ? "Submitting..." : "Submit Event for Review"}
           </Button>

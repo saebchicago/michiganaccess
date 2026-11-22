@@ -168,14 +168,14 @@ function FirstTimePrompt() {
   );
 }
 
-const ROTATING_STATS = [
+export const ROTATING_STATS = [
   {
-    text: "ZIP 48201 in Detroit scores 28/100 for healthcare access",
-    href: "/zip/48201",
+    text: "79 of 83 Michigan counties contain a primary care shortage area (HRSA, Nov 2026)",
+    href: "/health-equity-atlas",
   },
   {
-    text: "76 of 83 Michigan counties have zero pedestrian data (SEMCOG/GATIS)",
-    href: "/transportation",
+    text: "40% of Michigan households were below the ALICE Threshold in 2024 (United For ALICE)",
+    href: "/equity",
   },
   {
     text: "Michigan residents made 625,852 requests to 211 (Michigan 211)",

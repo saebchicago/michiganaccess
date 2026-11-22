@@ -6,10 +6,8 @@ name: dedupe-types-react
 # "Two different types with this name exist" tsc error in artifacts/access-mi
 # (e.g. src/components/ui/spinner.tsx).
 #
-# This must run in a clean CI runner - regenerating the lockfile in a
-# proxied/dev environment rewrites the private mi-federal-data git dependency
-# into a non-HTTPS form. On a GitHub-hosted runner, pnpm keeps the codeload
-# tarball URL, so the only meaningful change is the @types/react dedupe.
+# The private mi-federal-data package is no longer a declared dependency
+# (it broke every token-less install), so the lockfile must not mention it.
 #
 # Trigger manually from the Actions tab (Run workflow). It opens a PR with the
 # updated package.json + pnpm-lock.yaml for review; it never pushes to main.
@@ -63,10 +61,10 @@ jobs:
             echo "ERROR: expected exactly one @types/react version, found $COUNT."
             exit 1
           fi
-          echo "Verify mi-federal-data still resolves via codeload tarball (HTTPS):"
-          if ! grep -q "codeload.github.com/saebchicago/mi-federal-data" pnpm-lock.yaml; then
-            echo "ERROR: mi-federal-data no longer resolves via its codeload tarball URL."
-            echo "Refusing to open a PR with a rewritten private-dependency resolution."
+          echo "Verify the private mi-federal-data package has not re-entered the lockfile:"
+          if grep -q "mi-federal-data" pnpm-lock.yaml; then
+            echo "ERROR: mi-federal-data is back in pnpm-lock.yaml. It is private and breaks"
+            echo "token-less installs; it is loaded on demand by dataset-refresh.yml instead."
             exit 1
           fi
 

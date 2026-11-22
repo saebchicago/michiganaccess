@@ -2,10 +2,11 @@
   "name": "workspace",
   "version": "0.0.0",
   "license": "MIT",
+  "packageManager": "pnpm@10.28.0",
   "scripts": {
     "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*|bun/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
     "dev": "cd artifacts/access-mi && PORT=${PORT:-8080} BASE_PATH=${BASE_PATH:-/} node_modules/.bin/vite --config vite.config.ts --host 0.0.0.0",
-    "build": "cd artifacts/access-mi && node scripts/build-alice-county.mjs && node scripts/generate-provenance-index.mjs && node scripts/generate-source-catalog.mjs && node scripts/generate-sitemap.mjs && node scripts/check-postbuild-parity.mjs && node_modules/.bin/vite build --config vite.config.ts && node scripts/prerender-meta.mjs && node scripts/prerender-extra-meta.mjs && node scripts/generate-spa-rewrites.mjs && node scripts/normalize-project-schema.mjs && node scripts/check-extra-prerender.mjs && node scripts/check-county-prerender.mjs && node scripts/check-seo-prerender.mjs && node scripts/check-spa-rewrites.mjs && node scripts/check-precache-budget.mjs && rm -rf ../../dist && cp -r dist ../../dist",
+    "build": "cd artifacts/access-mi && node scripts/build-alice-county.mjs && node scripts/generate-provenance-index.mjs && node scripts/generate-source-catalog.mjs && node scripts/generate-sitemap.mjs && node scripts/check-links.mjs && node scripts/check-routemeta-routes.mjs && node scripts/check-extra-routes.mjs && node scripts/check-route-taxonomy.mjs && node scripts/check-counts.mjs && node scripts/check-zip-population.mjs && node scripts/check-county-facilities.mjs && node scripts/check-trend-series.mjs && node scripts/check-snap-county-dataset.mjs && node scripts/check-fabrication.mjs && node scripts/check-copy.mjs && node scripts/check-no-backend-leak.mjs && node scripts/check-provenance.mjs && node scripts/check-data-catalog.mjs && node scripts/check-data-freshness.mjs && node scripts/check-generated-populated.mjs && node scripts/check-data-workflows.mjs && node scripts/check-backend-functions.mjs && node scripts/check-dataset-labels.mjs && node scripts/check-plausibility.mjs && node scripts/check-script-syntax.mjs && node scripts/check-integrity-labels.mjs && node scripts/check-route-reachability.mjs && node scripts/check-orphan-modules.mjs && node scripts/check-form-labels.mjs && node scripts/check-page-provenance.mjs && node scripts/check-build-parity.mjs && node scripts/check-guard-parity.mjs && node scripts/check-agent-readiness.mjs && node scripts/check-postbuild-parity.mjs && node_modules/.bin/vite build --config vite.config.ts && node scripts/prerender-meta.mjs && node scripts/prerender-extra-meta.mjs && node scripts/generate-spa-rewrites.mjs && node scripts/normalize-project-schema.mjs && node scripts/check-extra-prerender.mjs && node scripts/check-county-prerender.mjs && node scripts/check-seo-prerender.mjs && node scripts/check-spa-rewrites.mjs && node scripts/check-precache-budget.mjs && rm -rf ../../dist && cp -r dist ../../dist",
     "build:dev": "cd artifacts/access-mi && node_modules/.bin/vite build --mode development --config vite.config.ts && rm -rf ../../dist && cp -r dist ../../dist",
     "typecheck:libs": "tsc --build",
     "typecheck": "tsc --build"
@@ -45,7 +46,7 @@
       "tailwind-merge": "^3.3.1",
       "tailwindcss": "^4.1.14",
       "tsx": "^4.21.0",
-      "vite": "^7.3.5",
+      "vite": "^7.3.8",
       "wouter": "^3.3.5",
       "zod": "^3.25.76"
     }
@@ -53,7 +54,39 @@
   "pnpm": {
     "overrides": {
       "@types/react": "^19.2.0",
-      "@types/react-dom": "^19.2.0"
+      "@types/react-dom": "^19.2.0",
+      "@babel/core@>=7.0.0 <7.29.6": "^7.29.6",
+      "@xmldom/xmldom@>=0.8.0 <0.8.15": "~0.8.15",
+      "@xmldom/xmldom@>=0.9.0 <0.9.12": "~0.9.12",
+      "baseline-browser-mapping@>=2.0.0 <2.11.0": "^2.11.0",
+      "body-parser@>=2.0.0 <2.4.0": "^2.4.0",
+      "brace-expansion@>=1.0.0 <1.1.21": "^1.1.21",
+      "brace-expansion@>=2.0.0 <2.1.7": "^2.1.7",
+      "brace-expansion@>=5.0.0 <5.0.12": "^5.0.12",
+      "browserslist@>=4.0.0 <4.28.7": "^4.28.7",
+      "compression@>=1.0.0 <1.8.2": "^1.8.2",
+      "dompurify@>=3.0.0 <3.4.17": "^3.4.17",
+      "fast-copy@>=4.0.0 <4.1.0": "^4.1.0",
+      "fast-uri@>=3.0.0 <3.1.9": "^3.1.9",
+      "fflate@>=0.8.0 <0.8.3": "~0.8.3",
+      "js-yaml@>=3.0.0 <3.15.2": "^3.15.2",
+      "js-yaml@>=4.0.0 <4.3.2": "^4.3.2",
+      "linkify-it@>=5.0.0 <5.0.2": "^5.0.2",
+      "markdown-it@>=14.0.0 <14.3.3": "^14.3.3",
+      "nanoid@>=3.0.0 <3.3.18": "^3.3.18",
+      "node-forge@>=1.0.0 <1.4.3": "^1.4.3",
+      "orval@>=8.0.0 <8.22.0": "~8.22.0",
+      "postcss@>=8.0.0 <8.5.23": "^8.5.23",
+      "postcss-selector-parser@>=6.0.0 <6.1.5": "^6.1.5",
+      "proxy-addr@>=2.0.0 <2.0.8": "^2.0.8",
+      "qs@>=6.0.0 <6.16.1": "^6.16.1",
+      "react-router@>=7.0.0 <7.18.2": "^7.18.2",
+      "serialize-javascript@>=7.0.0 <7.1.3": "^7.1.3",
+      "shell-quote@>=1.0.0 <1.11.0": "^1.11.0",
+      "source-map-js@>=1.0.0 <1.2.2": "^1.2.2",
+      "tar@>=7.0.0 <7.5.21": "^7.5.21",
+      "undici@>=6.0.0 <6.29.1": "^6.29.1",
+      "vite@>=7.0.0 <7.3.7": "^7.3.7"
     }
   }
 }

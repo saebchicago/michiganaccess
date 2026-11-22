@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accessmi.org/data/schema/source-catalog.schema.json",
+  "title": "AccessMI source catalog",
+  "type": "object",
+  "required": [
+    "_meta",
+    "sources"
+  ],
+  "properties": {
+    "_meta": {
+      "type": "object",
+      "required": [
+        "generated",
+        "entryCount",
+        "schema",
+        "readingNotes",
+        "pendingItems"
+      ],
+      "properties": {
+        "generated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "entryCount": {
+          "type": "integer"
+        },
+        "schema": {
+          "const": "v1"
+        },
+        "readingNotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "text"
+            ]
+          }
+        },
+        "pendingItems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "text",
+              "reviewed"
+            ]
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "agency",
+          "url",
+          "license",
+          "licenseReviewStatus",
+          "vintage",
+          "geographyLevel",
+          "lastVerified"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "license": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "null = reuse terms not recorded (unknown), not open"
+          },
+          "licenseReviewStatus": {
+            "type": "string"
+          },
+          "vintage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "geographyLevel": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lastVerified": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "attributionUnverified": {
+            "type": "boolean"
+          },
+          "urlNote": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

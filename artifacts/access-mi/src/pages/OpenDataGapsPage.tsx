@@ -215,6 +215,28 @@ export default function OpenDataGapsPage() {
                         </span>{" "}
                         {gap.whyItMatters}
                       </p>
+                      {(gap.gapType || gap.accessmiRole || gap.closedWhen) && (
+                        <dl className="grid gap-1 text-muted-foreground sm:grid-cols-[auto_1fr] sm:gap-x-2">
+                          {gap.gapType && (
+                            <>
+                              <dt className="font-semibold text-foreground/80">Type of gap:</dt>
+                              <dd className="capitalize">{gap.gapType}</dd>
+                            </>
+                          )}
+                          {gap.accessmiRole && (
+                            <>
+                              <dt className="font-semibold text-foreground/80">What AccessMI can do:</dt>
+                              <dd>{gap.accessmiRole}</dd>
+                            </>
+                          )}
+                          {gap.closedWhen && (
+                            <>
+                              <dt className="font-semibold text-foreground/80">Closed when:</dt>
+                              <dd>{gap.closedWhen}</dd>
+                            </>
+                          )}
+                        </dl>
+                      )}
                       <p className="text-[11px] text-muted-foreground">
                         Gap citation:{" "}
                         {gap.gapSource.url ? (

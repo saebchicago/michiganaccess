@@ -56,9 +56,29 @@ jobs:
           run_install: false
 
       - name: Install dependencies
-        # refresh-cdc-places-zcta.mjs imports the shared mi-federal-data
-        # package, so this cannot run on a bare checkout.
         run: pnpm install --frozen-lockfile
+
+      - name: Fetch the private mi-federal-data package (optional)
+        # refresh-cdc-places-zcta.mjs needs saebchicago/mi-federal-data, a
+        # PRIVATE repo. It used to be an optionalDependency, but pnpm fails the
+        # whole install on its 404 without a token, which broke this and every
+        # other workflow. Now it is cloned at its pinned commit only when a
+        # read-only token is configured. Without the secret, that one script
+        # fails with a clear message and the other datasets still refresh.
+        env:
+          MI_FEDERAL_DATA_TOKEN: ${{ secrets.MI_FEDERAL_DATA_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${MI_FEDERAL_DATA_TOKEN:-}" ]; then
+            echo "::warning title=mi-federal-data not fetched::MI_FEDERAL_DATA_TOKEN is not set; refresh-cdc-places-zcta will be skipped as failed."
+            exit 0
+          fi
+          dest=artifacts/access-mi/node_modules/mi-federal-data
+          rm -rf "$dest"
+          git -c "http.extraheader=AUTHORIZATION: bearer ${MI_FEDERAL_DATA_TOKEN}" \
+            clone --quiet https://github.com/saebchicago/mi-federal-data.git "$dest"
+          git -C "$dest" checkout --quiet afb52547eaa8269ca9f6cbd343d81dcd35f97742
+          rm -rf "$dest/.git"
 
       - name: Record the pre-run state of sacrosanct inputs
         # census-geographies.ts is the 83-county FIPS registry every one of

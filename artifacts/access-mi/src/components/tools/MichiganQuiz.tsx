@@ -20,76 +20,76 @@ interface Question {
   source: string;
 }
 
-const QUESTIONS: Question[] = [
+export const QUESTIONS: Question[] = [
   {
-    q: "How many Michigan cities have their own income tax?",
-    options: ["8", "14", "24", "36"],
-    answer: 2,
-    fact: "24 Michigan cities levy their own income tax. Detroit's is the highest at 2.4%.",
-    source: "MI Treasury",
-  },
-  {
-    q: "What percentage of Michigan households are below the ALICE threshold?",
+    q: "What share of Michigan households were below the ALICE Threshold in 2024?",
     options: ["22%", "31%", "40%", "55%"],
     answer: 2,
-    fact: "40% of Michigan households earn too much for safety nets but can't afford basics.",
+    fact: "40% of Michigan households were below the ALICE Threshold in 2024: 13% in poverty and 26% above the poverty line but unable to afford basics.",
     source: "United For ALICE 2026 Report (2024 data)",
   },
   {
-    q: "Which Michigan city has the most expensive auto insurance?",
-    options: ["Detroit", "Flint", "Hamtramck", "Pontiac"],
-    answer: 2,
-    fact: "Hamtramck averages $773/month - the highest in Michigan.",
-    source: "Quadrant Information Services 2025",
-  },
-  {
-    q: "How many Michigan counties have zero pedestrian infrastructure data?",
-    options: ["12", "38", "54", "76"],
-    answer: 3,
-    fact: "76 of 83 counties have no publicly available sidewalk data.",
-    source: "SEMCOG / GATIS",
-  },
-  {
-    q: "What is Michigan's statewide infant mortality rate?",
+    q: "What was Michigan's statewide infant mortality rate in 2024?",
     options: ["3.2/1K", "4.8/1K", "6.3/1K", "8.4/1K"],
     answer: 2,
-    fact: "6.3 per 1,000 live births (MDHHS 2024). Black IMR is about 3.3× the white rate.",
+    fact: "6.3 per 1,000 live births in 2024.",
     source: "MDHHS Vital Records, Summary of 2024 Infant Death Statistics",
   },
   {
-    q: "How many 'Do Not Eat' water bodies does Michigan have for PFAS?",
-    options: ["28", "55", "102", "184"],
-    answer: 2,
-    fact: "102 water bodies - Michigan has the nation's most aggressive PFAS monitoring.",
-    source: "EGLE MPART / MDHHS",
+    q: "How many of Michigan's 83 counties contain a designated dental shortage area?",
+    options: ["24", "41", "59", "76"],
+    answer: 3,
+    fact: "76 of 83 counties contain at least one HRSA-designated dental Health Professional Shortage Area. Many designations cover only part of a county or one population group.",
+    source: "HRSA HPSA Dental Health detail file (11/02/2026), AccessMI county rollup",
   },
   {
-    q: "What is Michigan's flat state income tax rate?",
-    options: ["3.25%", "4.25%", "5.0%", "5.75%"],
+    q: "How many Michigan counties contain a designated primary care shortage area?",
+    options: ["31", "47", "62", "79"],
+    answer: 3,
+    fact: "79 of 83 counties contain at least one HRSA-designated primary care Health Professional Shortage Area.",
+    source: "HRSA HPSA Primary Care detail file (11/02/2026), AccessMI county rollup",
+  },
+  {
+    q: "Michigan's prison population is at its lowest level since which year?",
+    options: ["1975", "1991", "2003", "2012"],
     answer: 1,
-    fact: "Michigan has a flat 4.25% state income tax - one of the simpler systems in the US.",
-    source: "MI Treasury",
+    fact: "32,778 people, down from 51,554 in 2007 and the lowest since 1991.",
+    source: "Michigan Department of Corrections, July 2, 2025",
   },
   {
-    q: "How many people experienced homelessness in Michigan in 2024?",
-    options: ["8,400", "18,200", "31,211", "52,500"],
-    answer: 2,
-    fact: "31,211 Michiganders experienced homelessness. Black households are 3.6× more likely.",
-    source: "HUD PIT Count 2024",
+    q: "What was Michigan's three-year recidivism rate in the 2025 MDOC report?",
+    options: ["21.0%", "29.5%", "36.0%", "44.2%"],
+    answer: 0,
+    fact: "21.0%, the lowest rate on state record.",
+    source: "Michigan Department of Corrections, July 2, 2025",
   },
   {
-    q: "What percentage of Michigan counties have dental health professional shortages?",
-    options: ["28%", "45%", "59/83 (71%)", "78/83 (94%)"],
+    q: "How many PFAS sites had Michigan identified as of July 2026?",
+    options: ["90", "180", "350", "720"],
     answer: 2,
-    fact: "59 of 83 counties have dental HPSAs. 12 counties have fewer than 5 dentists.",
-    source: "MDHHS / HRSA",
+    fact: "350 sites, according to the state's PFAS response team.",
+    source: "EGLE / MPART, Aug 12, 2026",
   },
   {
-    q: "Michigan's BEAD broadband allocation is the 4th highest in the US. How much?",
-    options: ["$450M", "$892M", "$1.559B", "$2.3B"],
+    q: "Rx Kids began in Flint in 2024. How many Michigan counties now have a participating community?",
+    options: ["3", "11", "28", "61"],
     answer: 2,
-    fact: "$1.559 billion to connect 492,000 unserved/underserved households.",
-    source: "NTIA / MIHI",
+    fact: "Communities in 28 of 83 counties, some covering the whole county and some only certain cities or townships.",
+    source: "Rx Kids coverage compiled by AccessMI from local announcements, mid-2026",
+  },
+  {
+    q: "What was Michigan's seat belt use rate in 2025?",
+    options: ["78.4%", "85.1%", "93.2%", "98.7%"],
+    answer: 2,
+    fact: "93.2%, the highest since 2019.",
+    source: "Michigan State Police, Feb 10, 2026",
+  },
+  {
+    q: "What share of Michigan residents lived below the poverty line in 2024, by the Census Bureau's SAIPE estimate?",
+    options: ["7.9%", "13.4%", "18.8%", "24.1%"],
+    answer: 1,
+    fact: "13.4% statewide. SAIPE is a model-based estimate.",
+    source: "U.S. Census Bureau SAIPE, 2024 estimates (MODELED)",
   },
 ];
 
@@ -120,7 +120,7 @@ export default function MichiganQuiz() {
   };
 
   const handleShare = () => {
-    const text = `I scored ${score}/10 on the Michigan Data Quiz! How well do you know Michigan? accessmi.org/quiz`;
+    const text = `I scored ${score}/${QUESTIONS.length} on the Michigan Data Quiz! How well do you know Michigan? accessmi.org/quiz`;
     navigator.clipboard
       .writeText(text)
       .then(() => toast.success("Score copied - share it!"));
@@ -146,7 +146,7 @@ export default function MichiganQuiz() {
     return (
       <Card className="text-center">
         <CardContent className="py-8 space-y-4">
-          <p className="text-4xl font-bold text-primary">{score}/10</p>
+          <p className="text-4xl font-bold text-primary">{score}/{QUESTIONS.length}</p>
           <Badge className="text-sm">{grade}</Badge>
           <p className="text-sm text-muted-foreground">
             You answered {score} of 10 questions correctly.
@@ -170,7 +170,7 @@ export default function MichiganQuiz() {
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm flex items-center gap-2">
             <HelpCircle className="h-4 w-4 text-primary" /> Question{" "}
-            {current + 1}/10
+            {current + 1}/{QUESTIONS.length}
           </CardTitle>
           <Badge variant="outline" className="text-[10px]">
             Score: {score}
