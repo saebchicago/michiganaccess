@@ -13,19 +13,19 @@
       {
         "name": "HRSA Health Center Service Delivery and Look-Alike Sites",
         "url": "https://data.hrsa.gov/DataDownload/DD_Files/Health_Center_Service_Delivery_and_LookAlike_Sites.csv",
-        "mi_rows": 465,
+        "mi_rows": 461,
         "filter": "Site State Abbreviation == MI AND Site Status Description == Active AND Health Center Type Description in ('Service Delivery Site','Administrative/Service Delivery Site')",
         "dedupe_key": "FQHC Site NPI Number (preferred); BHCMIS Org # + Site Address + Site Name (fallback when NPI missing)"
       }
     ],
-    "fetched_at": "2026-09-09T22:50:57.797Z",
+    "fetched_at": "2026-10-05T19:44:11.748Z",
     "transform_script": "scripts/build-facility-dataset.mjs",
     "counties_covered": 82,
     "counties_total": 83,
     "expected_zero_counties": [
       "Keweenaw"
     ],
-    "mi_total": 614,
+    "mi_total": 610,
     "note": "Per-county counts derived from the same extract as verifiedHealthFacilities.json. The build-time guard (scripts/check-county-facilities.mjs) fails if the seed file drops below these counts."
   },
   "counts": {
@@ -79,7 +79,7 @@
     "Luce": 1,
     "Mackinac": 1,
     "Macomb": 13,
-    "Manistee": 6,
+    "Manistee": 2,
     "Marquette": 5,
     "Mason": 2,
     "Mecosta": 4,
@@ -316,7 +316,7 @@
     },
     "Manistee": {
       "hospital": 1,
-      "fqhc": 5
+      "fqhc": 1
     },
     "Marquette": {
       "hospital": 2,
