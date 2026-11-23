@@ -119,7 +119,6 @@
       },
       "optionalDependencies": {
         "@esbuild/darwin-arm64": "0.27.3",
-        "mi-federal-data": "git+https://github.com/saebchicago/mi-federal-data.git#afb52547eaa8269ca9f6cbd343d81dcd35f97742",
       },
     },
     "artifacts/access-mi-mobile": {
@@ -332,7 +331,7 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
-    "vite": "^7.3.5",
+    "vite": "^7.3.8",
     "wouter": "^3.3.5",
     "zod": "^3.25.76",
   },
