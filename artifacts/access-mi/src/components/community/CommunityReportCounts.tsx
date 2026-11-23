@@ -12,16 +12,20 @@ export default function CommunityReportCounts({ county, placeSlug }: Props) {
   const { data: counts } = useQuery({
     queryKey: ["community-reports-count", county, placeSlug],
     queryFn: async () => {
-      let query = (supabase as any).from("community_reports").select("category", { count: "exact", head: false });
-      if (county) query = query.eq("county", county);
-      if (placeSlug) query = query.eq("place_slug", placeSlug);
-      const { data, error } = await query;
+      // Aggregate counts only; individual report text is staff-only.
+      const { data, error } = await (supabase as any).rpc("community_report_counts", {
+        _county: county ?? null,
+        _place_slug: placeSlug ?? null,
+      });
       if (error) return { total: 0, categories: {} as Record<string, number> };
       const categories: Record<string, number> = {};
-      (data || []).forEach((r: any) => {
-        categories[r.category] = (categories[r.category] || 0) + 1;
+      let total = 0;
+      ((data || []) as { category: string; report_count: number | string }[]).forEach((r) => {
+        const n = Number(r.report_count);
+        categories[r.category] = n;
+        total += n;
       });
-      return { total: (data || []).length, categories };
+      return { total, categories };
     },
     staleTime: 1000 * 60 * 10,
   });

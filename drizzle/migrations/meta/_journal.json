@@ -8,6 +8,13 @@
       "when": 1795184158687,
       "tag": "0000_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795400856837,
+      "tag": "0001_private_reports_and_appeal_outcomes",
+      "breakpoints": true
     }
   ]
 }

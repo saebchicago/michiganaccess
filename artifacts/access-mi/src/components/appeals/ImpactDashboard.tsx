@@ -19,28 +19,26 @@ const ImpactDashboard = () => {
   const [reportCarrier, setReportCarrier] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  // Fetch live anonymous outcomes from DB
-  const { data: outcomes = [] } = useQuery({
-    queryKey: ["appeal-outcomes"],
+  // Fetch aggregate totals only; individual anonymous outcomes are staff-only.
+  const { data: summary } = useQuery({
+    queryKey: ["appeal-outcomes-summary"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("appeal_outcomes")
-        .select("outcome, estimated_savings, carrier, created_at")
-        .order("created_at", { ascending: false })
-        .limit(500);
+      const { data, error } = await (supabase as any).rpc("appeal_outcome_summary");
       if (error) throw error;
-      return data || [];
+      const row = (Array.isArray(data) ? data[0] : data) as
+        | { total_outcomes: number | string; wins: number | string; total_saved: number | string }
+        | undefined;
+      return {
+        total: Number(row?.total_outcomes ?? 0),
+        wins: Number(row?.wins ?? 0),
+        saved: Number(row?.total_saved ?? 0),
+      };
     },
   });
 
-  const liveWins = outcomes.filter((o) => o.outcome === "won").length;
-  const liveSaved = outcomes
-    .filter((o) => o.outcome === "won" && o.estimated_savings)
-    .reduce((sum, o) => sum + Number(o.estimated_savings), 0);
-
-  const totalAppeals = outcomes.length;
-  const totalSaved = liveSaved;
-  const successRate = totalAppeals > 0 ? Math.round((liveWins / totalAppeals) * 100) : 0;
+  const totalAppeals = summary?.total ?? 0;
+  const totalSaved = summary?.saved ?? 0;
+  const successRate = totalAppeals > 0 ? Math.round(((summary?.wins ?? 0) / totalAppeals) * 100) : 0;
 
   const handleSubmitOutcome = async () => {
     if (!reportOutcome) return;

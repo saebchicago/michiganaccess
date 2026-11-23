@@ -1111,6 +1111,21 @@ export type Database = {
       }
     }
     Functions: {
+      appeal_outcome_summary: {
+        Args: never
+        Returns: {
+          total_outcomes: number
+          total_saved: number
+          wins: number
+        }[]
+      }
+      community_report_counts: {
+        Args: { _county?: string; _place_slug?: string }
+        Returns: {
+          category: string
+          report_count: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
