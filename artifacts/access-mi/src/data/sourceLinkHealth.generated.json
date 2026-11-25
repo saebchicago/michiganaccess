@@ -1,9 +1,9 @@
 {
   "schema": "sourceLinkHealth.v1",
-  "generated_at": "2026-09-30T18:30:03.214Z",
+  "generated_at": "2026-11-25T13:32:04.632Z",
   "checked": 74,
-  "dead": 10,
-  "timed_out": 8,
+  "dead": 4,
+  "timed_out": 6,
   "redirected": 0,
   "results": [
     {
@@ -17,8 +17,8 @@
     },
     {
       "url": "https://www.unitedforalice.org/michigan",
-      "status": "client-error",
-      "httpStatus": 403,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
       "contexts": [
         "Michigan households below ALICE threshold (39.7% unrounded; 13.4% poverty + 26.3% ALICE)"
@@ -112,10 +112,9 @@
     },
     {
       "url": "https://ruralhospitals.chqpr.org",
-      "status": "timeout",
-      "httpStatus": null,
-      "finalUrl": null,
-      "error": "This operation was aborted",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://ruralhospitals.chqpr.org/",
       "contexts": [
         "At-risk rural hospitals (5 immediate risk)"
       ]
@@ -177,7 +176,7 @@
     {
       "url": "https://michwa.org",
       "status": "ok",
-      "httpStatus": 202,
+      "httpStatus": 200,
       "finalUrl": "https://michwa.org/",
       "contexts": [
         "CHW programs surveyed across 93 orgs"
@@ -203,7 +202,7 @@
     },
     {
       "url": "https://findhelp.org",
-      "status": "client-error",
+      "status": "blocked",
       "httpStatus": 403,
       "finalUrl": "https://findhelp.org/",
       "contexts": [
@@ -284,7 +283,7 @@
     },
     {
       "url": "https://api.eia.gov/",
-      "status": "client-error",
+      "status": "blocked",
       "httpStatus": 403,
       "finalUrl": null,
       "contexts": [
@@ -293,9 +292,10 @@
     },
     {
       "url": "https://waterservices.usgs.gov/",
-      "status": "ok",
-      "httpStatus": 200,
+      "status": "timeout",
+      "httpStatus": null,
       "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "USGS Water Services"
       ]
@@ -375,10 +375,9 @@
     },
     {
       "url": "https://www.fema.gov/about/openfema/api",
-      "status": "timeout",
-      "httpStatus": null,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
-      "error": "This operation was aborted",
       "contexts": [
         "FEMA OpenFEMA API"
       ]
@@ -394,20 +393,18 @@
     },
     {
       "url": "https://www.irs.gov/statistics/soi-tax-stats",
-      "status": "timeout",
-      "httpStatus": null,
+      "status": "client-error",
+      "httpStatus": 404,
       "finalUrl": null,
-      "error": "This operation was aborted",
       "contexts": [
         "IRS Statistics of Income"
       ]
     },
     {
       "url": "https://enviro.epa.gov/triexplorer",
-      "status": "timeout",
-      "httpStatus": null,
-      "finalUrl": null,
-      "error": "This operation was aborted",
+      "status": "ok",
+      "httpStatus": 200,
+      "finalUrl": "https://enviro.epa.gov/envirofacts/tri/explorer",
       "contexts": [
         "EPA Toxic Release Inventory"
       ]
@@ -432,10 +429,9 @@
     },
     {
       "url": "https://www.fema.gov/about/openfema/data-sets",
-      "status": "timeout",
-      "httpStatus": null,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
-      "error": "This operation was aborted",
       "contexts": [
         "FEMA National Flood Insurance Program"
       ]
@@ -460,8 +456,8 @@
     },
     {
       "url": "https://cde.ucr.cjis.gov/",
-      "status": "client-error",
-      "httpStatus": 404,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
       "contexts": [
         "FBI Crime Data Explorer"
@@ -469,18 +465,19 @@
     },
     {
       "url": "https://www.samhsa.gov/find-help/national-helpline",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://www.samhsa.gov/find-help/helplines/national-helpline",
+      "status": "blocked",
+      "httpStatus": 403,
+      "finalUrl": null,
       "contexts": [
         "SAMHSA"
       ]
     },
     {
       "url": "https://data.cdc.gov/NCHS/VSRR-Provisional-County-Level-Drug-Overdose-Death-C/gb4e-yj24",
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://data.cdc.gov/National-Center-for-Health-Statistics/VSRR-Provisional-County-Level-Drug-Overdose-Death-/gb4e-yj24",
+      "status": "timeout",
+      "httpStatus": null,
+      "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "NCHS Vital Statistics Rapid Release"
       ]
@@ -568,9 +565,10 @@
     },
     {
       "url": "https://data.michigan.gov/",
-      "status": "ok",
-      "httpStatus": 200,
+      "status": "timeout",
+      "httpStatus": null,
       "finalUrl": null,
+      "error": "This operation was aborted",
       "contexts": [
         "data.michigan.gov"
       ]
@@ -587,8 +585,8 @@
     },
     {
       "url": "https://unitedforalice.org/michigan",
-      "status": "client-error",
-      "httpStatus": 403,
+      "status": "ok",
+      "httpStatus": 200,
       "finalUrl": null,
       "contexts": [
         "United For ALICE"
@@ -632,7 +630,7 @@
     },
     {
       "url": "https://gis.semcog.org/",
-      "status": "client-error",
+      "status": "blocked",
       "httpStatus": 401,
       "finalUrl": null,
       "contexts": [
@@ -668,7 +666,7 @@
     },
     {
       "url": "https://monitoringthefuture.org",
-      "status": "client-error",
+      "status": "blocked",
       "httpStatus": 403,
       "finalUrl": "https://monitoringthefuture.org/",
       "contexts": [
